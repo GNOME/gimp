@@ -147,7 +147,7 @@ struct _GimpContextClass
 };
 
 GtkType       gimp_context_get_type          (void);
-GimpContext * gimp_context_new               (gchar       *name,
+GimpContext * gimp_context_new               (const gchar *name,
 					      GimpContext *template);
 
 /*  TODO: - gimp_context_find ()
@@ -179,7 +179,7 @@ GimpContext * gimp_context_get_standard      (void);
  */
 gchar       * gimp_context_get_name          (GimpContext *context);
 void          gimp_context_set_name          (GimpContext *context,
-					      gchar       *name);
+					      const gchar *name);
 
 GimpContext * gimp_context_get_parent        (GimpContext *context);
 void          gimp_context_set_parent        (GimpContext *context,

@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpwidgets.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
@@ -44,13 +44,12 @@
  * @...: A #NULL terminated @va_list describing the menu items.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
- *
- */
+ **/
 GtkWidget *
 gimp_option_menu_new (gboolean            menu_only,
 
 		      /* specify menu items as va_list:
-		       *  gchar          *label,
+		       *  const gchar    *label,
 		       *  GtkSignalFunc   callback,
 		       *  gpointer        data,
 		       *  gpointer        user_data,
@@ -64,7 +63,7 @@ gimp_option_menu_new (gboolean            menu_only,
   GtkWidget *menuitem;
 
   /*  menu item variables  */
-  gchar          *label;
+  const gchar    *label;
   GtkSignalFunc   callback;
   gpointer        data;
   gpointer        user_data;
@@ -79,8 +78,10 @@ gimp_option_menu_new (gboolean            menu_only,
 
   /*  create the menu items  */
   initial_index = 0;
+
   va_start (args, menu_only);
-  label = va_arg (args, gchar*);
+  label = va_arg (args, const gchar *);
+
   for (i = 0; label; i++)
     {
       callback   = va_arg (args, GtkSignalFunc);
@@ -116,7 +117,7 @@ gimp_option_menu_new (gboolean            menu_only,
       if (active)
 	initial_index = i;
 
-      label = va_arg (args, gchar*);
+      label = va_arg (args, const gchar *);
     }
   va_end (args);
 
@@ -146,18 +147,17 @@ gimp_option_menu_new (gboolean            menu_only,
  * @...: A #NULL terminated @va_list describing the menu items.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
- *
- */
+ **/
 GtkWidget *
-gimp_option_menu_new2 (gboolean        menu_only,
-		       GtkSignalFunc   menu_item_callback,
-		       gpointer        data,
-		       gpointer        initial, /* user_data */
+gimp_option_menu_new2 (gboolean         menu_only,
+		       GtkSignalFunc    menu_item_callback,
+		       gpointer         data,
+		       gpointer         initial, /* user_data */
 
 		       /* specify menu items as va_list:
-			*  gchar      *label,
-			*  gpointer    user_data,
-			*  GtkWidget **widget_ptr,
+			*  const gchar *label,
+			*  gpointer     user_data,
+			*  GtkWidget  **widget_ptr,
 			*/
 
 		       ...)
@@ -166,9 +166,9 @@ gimp_option_menu_new2 (gboolean        menu_only,
   GtkWidget *menuitem;
 
   /*  menu item variables  */
-  gchar      *label;
-  gpointer    user_data;
-  GtkWidget **widget_ptr;
+  const gchar  *label;
+  gpointer      user_data;
+  GtkWidget   **widget_ptr;
 
   va_list args;
   gint    i;
@@ -178,8 +178,10 @@ gimp_option_menu_new2 (gboolean        menu_only,
 
   /*  create the menu items  */
   initial_index = 0;
+
   va_start (args, initial);
-  label = va_arg (args, gchar*);
+  label = va_arg (args, const gchar *);
+
   for (i = 0; label; i++)
     {
       user_data  = va_arg (args, gpointer);
@@ -212,7 +214,7 @@ gimp_option_menu_new2 (gboolean        menu_only,
       if (user_data == initial)
 	initial_index = i;
 
-      label = va_arg (args, gchar*);
+      label = va_arg (args, const gchar *);
     }
   va_end (args);
 
@@ -237,8 +239,7 @@ gimp_option_menu_new2 (gboolean        menu_only,
  * @option_menu: A #GtkOptionMenu as returned by gimp_option_menu_new() or
  *               gimp_option_menu_new2().
  * @user_data: The @user_data of the menu item you want to select.
- *
- */
+ **/
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
 			      gpointer       user_data)
@@ -276,14 +277,13 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
  * @...: A #NULL terminated @va_list describing the radio buttons.
  *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
- *
- */
+ **/
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
-		      gchar              *frame_title,
+		      const gchar        *frame_title,
 
 		      /* specify radio buttons as va_list:
-		       *  gchar          *label,
+		       *  const gchar    *label,
 		       *  GtkSignalFunc   callback,
 		       *  gpointer        data,
 		       *  gpointer        user_data,
@@ -298,7 +298,7 @@ gimp_radio_group_new (gboolean            in_frame,
   GSList    *group;
 
   /*  radio button variables  */
-  gchar          *label;
+  const gchar    *label;
   GtkSignalFunc   callback;
   gpointer        data;
   gpointer        user_data;
@@ -313,7 +313,7 @@ gimp_radio_group_new (gboolean            in_frame,
 
   /*  create the radio buttons  */
   va_start (args, frame_title);
-  label = va_arg (args, gchar*);
+  label = va_arg (args, const gchar *);
   while (label)
     {
       callback   = va_arg (args, GtkSignalFunc);
@@ -345,7 +345,7 @@ gimp_radio_group_new (gboolean            in_frame,
 
       gtk_widget_show (button);
 
-      label = va_arg (args, gchar*);
+      label = va_arg (args, const gchar *);
     }
   va_end (args);
 
@@ -376,19 +376,18 @@ gimp_radio_group_new (gboolean            in_frame,
  * @...: A #NULL terminated @va_list describing the radio buttons.
  *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
- *
- */
+ **/
 GtkWidget *
-gimp_radio_group_new2 (gboolean        in_frame,
-		       gchar          *frame_title,
-		       GtkSignalFunc   radio_button_callback,
-		       gpointer        data,
-		       gpointer        initial, /* user_data */
+gimp_radio_group_new2 (gboolean         in_frame,
+		       const gchar     *frame_title,
+		       GtkSignalFunc    radio_button_callback,
+		       gpointer         data,
+		       gpointer         initial, /* user_data */
 
 		       /* specify radio buttons as va_list:
-			*  gchar      *label,
-			*  gpointer    user_data,
-			*  GtkWidget **widget_ptr,
+			*  const gchar *label,
+			*  gpointer     user_data,
+			*  GtkWidget  **widget_ptr,
 			*/
 
 		       ...)
@@ -398,9 +397,9 @@ gimp_radio_group_new2 (gboolean        in_frame,
   GSList    *group;
 
   /*  radio button variables  */
-  gchar      *label;
-  gpointer    user_data;
-  GtkWidget **widget_ptr;
+  const gchar *label;
+  gpointer     user_data;
+  GtkWidget  **widget_ptr;
 
   va_list args;
 
@@ -410,7 +409,8 @@ gimp_radio_group_new2 (gboolean        in_frame,
 
   /*  create the radio buttons  */
   va_start (args, initial);
-  label = va_arg (args, gchar*);
+  label = va_arg (args, const gchar *);
+
   while (label)
     {
       user_data  = va_arg (args, gpointer);
@@ -439,7 +439,7 @@ gimp_radio_group_new2 (gboolean        in_frame,
 
       gtk_widget_show (button);
 
-      label = va_arg (args, gchar*);
+      label = va_arg (args, const gchar *);
     }
   va_end (args);
 
@@ -476,8 +476,7 @@ gimp_radio_group_new2 (gboolean        in_frame,
  * setting a standard minimun horizontal size.
  *
  * Returns: A #GtkSpinbutton and it's #GtkAdjustment.
- *
- */
+ **/
 GtkWidget *
 gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 		      gfloat      value,
@@ -545,26 +544,25 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
  * have to initialize GIMP's help system with gimp_help_init() before using it.
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
- *
- */
+ **/
 GtkObject *
-gimp_scale_entry_new (GtkTable *table,
-		      gint      column,
-		      gint      row,
-		      gchar    *text,
-		      gint      scale_usize,
-		      gint      spinbutton_usize,
-		      gfloat    value,
-		      gfloat    lower,
-		      gfloat    upper,
-		      gfloat    step_increment,
-		      gfloat    page_increment,
-		      guint     digits,
-		      gboolean  constrain,
-		      gfloat    unconstrained_lower,
-		      gfloat    unconstrained_upper,
-		      gchar    *tooltip,
-		      gchar    *help_data)
+gimp_scale_entry_new (GtkTable    *table,
+		      gint         column,
+		      gint         row,
+		      const gchar *text,
+		      gint         scale_usize,
+		      gint         spinbutton_usize,
+		      gfloat       value,
+		      gfloat       lower,
+		      gfloat       upper,
+		      gfloat       step_increment,
+		      gfloat       page_increment,
+		      guint        digits,
+		      gboolean     constrain,
+		      gfloat       unconstrained_lower,
+		      gfloat       unconstrained_upper,
+		      const gchar *tooltip,
+		      const gchar *help_data)
 {
   GtkWidget *label;
   GtkWidget *scale;
@@ -682,8 +680,7 @@ gimp_random_seed_toggle_update (GtkWidget *widget,
  *
  * Returns: A #GtkHBox containing a #GtkSpinButton for the random seed and
  *          a #GtkToggleButton for toggling the @use_time behaviour.
- *
- */
+ **/
 GtkWidget *
 gimp_random_seed_new (gint       *seed,
 		      gint       *use_time,
@@ -845,11 +842,10 @@ gimp_coordinates_callback (GtkWidget *widget,
  * Returns: A #GimpSizeEntry with two fields for x/y coordinates/sizes with
  *          a #GimpChainButton attached to constrain either the two fields'
  *          values or the ratio between them.
- *
- */
+ **/
 GtkWidget *
 gimp_coordinates_new (GimpUnit         unit,
-		      gchar           *unit_format,
+		      const gchar     *unit_format,
 		      gboolean         menu_show_pixels,
 		      gboolean         menu_show_percent,
 		      gint             spinbutton_usize,
@@ -858,7 +854,7 @@ gimp_coordinates_new (GimpUnit         unit,
 		      gboolean         chainbutton_active,
 		      gboolean         chain_constrains_ratio,
 
-		      gchar           *xlabel,
+		      const gchar     *xlabel,
 		      gdouble          x,
 		      gdouble          xres,
 		      gdouble          lower_boundary_x,
@@ -866,7 +862,7 @@ gimp_coordinates_new (GimpUnit         unit,
 		      gdouble          xsize_0,   /* % */
 		      gdouble          xsize_100, /* % */
 
-		      gchar           *ylabel,
+		      const gchar     *ylabel,
 		      gdouble          y,
 		      gdouble          yres,
 		      gdouble          lower_boundary_y,
@@ -993,7 +989,7 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
  * @adjustment: The adjustment containing the memsize and it's limits.
  *
  * Returns: A #GtkHBox with a #GtkSpinButton and a #GtkOptionMenu.
- */
+ **/
 GtkWidget *
 gimp_mem_size_entry_new (GtkAdjustment *adjustment)
 {
@@ -1063,11 +1059,10 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
  * @text: An optional text which will appear right of the pixmap.
  *
  * Returns: A #GtkButton with a #GimpPixmap and an optional #GtkLabel.
- *
- */
+ **/
 GtkWidget *
-gimp_pixmap_button_new (gchar **xpm_data,
-			gchar  *text)
+gimp_pixmap_button_new (gchar       **xpm_data,
+			const gchar  *text)
 {
   GtkWidget *button;
   GtkWidget *pixmap;
@@ -1126,8 +1121,7 @@ gimp_pixmap_button_new (gchar **xpm_data,
  * This function can also set the sensitive state according to the toggle
  * button's inverse "active" state by attaching widgets with the
  * "inverse_sensitive" key.
- *
- */
+ **/
 void
 gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
 {
@@ -1162,8 +1156,7 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
  *        gtk_toggle_button_get_active().
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
- *
- */
+ **/
 void
 gimp_toggle_button_update (GtkWidget *widget,
 			   gpointer   data)
@@ -1187,8 +1180,7 @@ gimp_toggle_button_update (GtkWidget *widget,
  *        (#gint) gtk_object_get_user_data().
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
- *
- */
+ **/
 void
 gimp_radio_button_update (GtkWidget *widget,
 			  gpointer   data)
@@ -1210,8 +1202,7 @@ gimp_radio_button_update (GtkWidget *widget,
  * @widget: A #GtkMenuItem.
  * @data: A pointer to a #gint variable which will store the value of
  *        (#gint) gtk_object_get_user_data().
- *
- */
+ **/
 void
 gimp_menu_item_update (GtkWidget *widget,
 		       gpointer   data)
@@ -1231,8 +1222,7 @@ gimp_menu_item_update (GtkWidget *widget,
  *
  * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
  * with (#gint) (value + 0.5).
- *
- */
+ **/
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
 			    gpointer       data)
@@ -1251,8 +1241,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
  *
  * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
  * with (#guint) (value + 0.5).
- *
- */
+ **/
 void
 gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 			     gpointer       data)
@@ -1268,8 +1257,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
  * @adjustment: A #GtkAdjustment.
  * @data: A pointer to a #gfloat varaiable which willl store the adjustment's
  *        value.
- *
- */
+ **/
 void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
 			      gpointer       data)
@@ -1285,8 +1273,7 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
  * @adjustment: A #GtkAdjustment.
  * @data: A pointer to a #gdouble variable which will store the adjustment's
  *        value.
- *
- */
+ **/
 void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
 			       gpointer       data)
@@ -1310,8 +1297,7 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
  *
  * See gimp_toggle_button_sensitive_update() for a description of how
  * to set up the list.
- *
- */
+ **/
 void
 gimp_unit_menu_update (GtkWidget *widget,
 		       gpointer   data)
@@ -1355,18 +1341,17 @@ gimp_unit_menu_update (GtkWidget *widget,
  *
  * Note that the @label_text can be #NULL and that the widget will be attached
  * starting at (@column + 1) in this case, too.
- *
- */
+ **/
 void
-gimp_table_attach_aligned (GtkTable  *table,
-			   gint       column,
-			   gint       row,
-			   gchar     *label_text,
-			   gfloat     xalign,
-			   gfloat     yalign,
-			   GtkWidget *widget,
-			   gint       colspan,
-			   gboolean   left_align)
+gimp_table_attach_aligned (GtkTable    *table,
+			   gint         column,
+			   gint         row,
+			   const gchar *label_text,
+			   gfloat       xalign,
+			   gfloat       yalign,
+			   GtkWidget   *widget,
+			   gint         colspan,
+			   gboolean     left_align)
 {
   if (label_text)
     {

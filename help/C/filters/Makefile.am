@@ -56,7 +56,6 @@ helpdata_DATA = \
         gauss_rle.html \
         gbr.html \
         gdyntext.html \
-        gee.html \
         gfig.html \
         gflare.html \
         gfli.html \

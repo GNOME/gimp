@@ -94,19 +94,19 @@ struct _ToolInfo
 {
   ToolOptions *tool_options;
 
-  gchar     *tool_name;
+  gchar       *tool_name;
 
-  gchar     *menu_path;  
-  gchar     *menu_accel; 
+  gchar       *menu_path;  
+  gchar       *menu_accel; 
 
-  gchar    **icon_data;
-  GdkPixmap *icon_pixmap;
-  GdkBitmap *icon_mask;
+  gchar      **icon_data;
+  GdkPixmap   *icon_pixmap;
+  GdkBitmap   *icon_mask;
 
-  gchar     *tool_desc;
-  gchar     *private_tip;
+  gchar       *tool_desc;
+  const gchar *private_tip;
 
-  ToolType  tool_id;
+  ToolType     tool_id;
 
   ToolInfoNewFunc  new_func;
   ToolInfoFreeFunc free_func;
@@ -135,7 +135,7 @@ void     tools_initialize           (ToolType     tool_type,
 void     active_tool_control        (ToolAction   action,
 				     void        *gdisp_ptr);
 
-void     tools_help_func            (gchar       *help_data);
+void     tools_help_func            (const gchar *help_data);
 
 void     tools_register             (ToolType     tool_type,
 				     ToolOptions *tool_options);

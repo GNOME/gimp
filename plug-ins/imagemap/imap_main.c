@@ -1251,13 +1251,13 @@ factory_menu_zoom_out(void)
 static Command_t*
 factory_zoom_in(void)
 {
-   return command_new(zoom_in);
+   return command_new((void (*)(void)) zoom_in);
 }
 
 static Command_t*
 factory_zoom_out(void)
 {
-   return command_new(zoom_out);
+   return command_new((void (*)(void)) zoom_out);
 }
 
 static Command_t*

@@ -575,7 +575,7 @@ gimp_context_get_type (void)
 }
 
 GimpContext *
-gimp_context_new (gchar       *name,
+gimp_context_new (const gchar *name,
 		  GimpContext *template)
 {
   GimpContext *context;
@@ -663,7 +663,7 @@ gimp_context_get_name (GimpContext *context)
 
 void
 gimp_context_set_name (GimpContext *context,
-		       gchar       *name)
+		       const gchar *name)
 {
   context_check_current (context);
   context_return_if_fail (context);

@@ -99,14 +99,14 @@ GtkWidget *
 gimp_dialog_new (const gchar       *title,
 		 const gchar       *wmclass_name,
 		 GimpHelpFunc       help_func,
-		 gchar             *help_data,
+		 const gchar       *help_data,
 		 GtkWindowPosition  position,
 		 gint               allow_shrink,
 		 gint               allow_grow,
 		 gint               auto_shrink,
 
 		 /* specify action area buttons as va_list:
-		  *  gchar          *label,
+		  *  const gchar    *label,
 		  *  GtkSignalFunc   callback,
 		  *  gpointer        data,
 		  *  GtkObject      *slot_object,
@@ -167,7 +167,7 @@ GtkWidget *
 gimp_dialog_newv (const gchar       *title,
 		  const gchar       *wmclass_name,
 		  GimpHelpFunc       help_func,
-		  gchar             *help_data,
+		  const gchar       *help_data,
 		  GtkWindowPosition  position,
 		  gint               allow_shrink,
 		  gint               allow_grow,
@@ -237,7 +237,7 @@ void
 gimp_dialog_create_action_area (GtkDialog *dialog,
 
 				/* specify action area buttons as va_list:
-				 *  gchar          *label,
+				 *  const gchar    *label,
 				 *  GtkSignalFunc   callback,
 				 *  gpointer        data,
 				 *  GtkObject      *slot_object,
@@ -272,7 +272,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
   GtkWidget *button;
 
   /*  action area variables  */
-  gchar          *label;
+  const gchar    *label;
   GtkSignalFunc   callback;
   gpointer        data;
   GtkObject      *slot_object;
@@ -286,7 +286,7 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
   g_return_if_fail (GTK_IS_DIALOG (dialog));
 
   /*  prepare the action_area  */
-  label = va_arg (args, gchar *);
+  label = va_arg (args, const gchar *);
 
   if (label)
     {

@@ -99,7 +99,7 @@ gimp_file_selection_destroy (GtkObject *object)
     gdk_bitmap_unref (gfs->no_mask);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -127,7 +127,6 @@ gimp_file_selection_class_init (GimpFileSelectionClass *class)
   class->filename_changed = NULL;
 
   object_class->destroy = gimp_file_selection_destroy;
-
   widget_class->realize = gimp_file_selection_realize;
 }
 
@@ -201,13 +200,12 @@ gimp_file_selection_get_type (void)
  * Creates a new #GimpFileSelection widget.
  *
  * Returns: A pointer to the new #GimpFileSelection widget.
- *
- */
+ **/
 GtkWidget *
-gimp_file_selection_new (gchar    *title,
-			 gchar    *filename,
-			 gboolean  dir_only,
-			 gboolean  check_valid)
+gimp_file_selection_new (const gchar *title,
+			 const gchar *filename,
+			 gboolean     dir_only,
+			 gboolean     check_valid)
 {
   GimpFileSelection *gfs;
 
@@ -229,8 +227,7 @@ gimp_file_selection_new (gchar    *title,
  * Note that you have to g_free() the returned string.
  *
  * Returns: The file or directory the user has entered.
- *
- */
+ **/
 gchar *
 gimp_file_selection_get_filename (GimpFileSelection *gfs)
 {
@@ -252,7 +249,7 @@ gimp_file_selection_get_filename (GimpFileSelection *gfs)
  */
 void
 gimp_file_selection_set_filename (GimpFileSelection *gfs,
-				  gchar             *filename)
+				  const gchar       *filename)
 {
   g_return_if_fail (gfs != NULL);
   g_return_if_fail (GIMP_IS_FILE_SELECTION (gfs));
@@ -441,6 +438,7 @@ gimp_file_selection_check_filename (GimpFileSelection *gfs)
 
   if (! gfs->check_valid)
     return;
+
   if (gfs->file_exists == NULL)
     return;
 

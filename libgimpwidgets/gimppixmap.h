@@ -43,7 +43,7 @@ struct _GimpPixmap
 {
   GtkPixmap   pixmap;
 
-  gchar     **xpm_data;
+  gchar **xpm_data;
 };
 
 struct _GimpPixmapClass

@@ -69,8 +69,8 @@ struct _GimpPathEditorClass
 
 GtkType     gimp_path_editor_get_type (void);
 
-GtkWidget * gimp_path_editor_new      (gchar          *filesel_title,
-				       gchar          *path);
+GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
+				       const gchar    *path);
 
 gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
 

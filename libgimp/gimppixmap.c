@@ -31,7 +31,9 @@ static void gimp_pixmap_destroy           (GtkObject  *object);
 static void gimp_pixmap_realize           (GtkWidget  *widget);
 static void gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
 
+
 static GtkPixmapClass *parent_class = NULL;
+
 
 static void
 gimp_pixmap_destroy (GtkObject *object)
@@ -41,7 +43,7 @@ gimp_pixmap_destroy (GtkObject *object)
   g_return_if_fail (pixmap = GIMP_PIXMAP (object));
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -56,7 +58,6 @@ gimp_pixmap_class_init (GimpPixmapClass *class)
   parent_class = gtk_type_class (gtk_pixmap_get_type ());
 
   object_class->destroy = gimp_pixmap_destroy;
-
   widget_class->realize = gimp_pixmap_realize;
 }
 
@@ -98,8 +99,7 @@ gimp_pixmap_get_type (void)
  * Creates a new #GimpPixmap widget.
  *
  * Returns: A pointer to the new #GimpPixmap widget.
- *
- */
+ **/
 GtkWidget *
 gimp_pixmap_new (gchar **xpm_data)
 {
@@ -119,8 +119,7 @@ gimp_pixmap_new (gchar **xpm_data)
  * @xpm_data: A pointer to a XPM data structure as found in XPM files.
  *
  * Sets a new image for an existing #GimpPixmap widget.
- *
- */
+ **/
 void
 gimp_pixmap_set (GimpPixmap  *pixmap,
 		 gchar      **xpm_data)
@@ -162,7 +161,7 @@ static void
 gimp_pixmap_realize (GtkWidget *widget)
 {
   if (GTK_WIDGET_CLASS (parent_class)->realize)
-    (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+    GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   gimp_pixmap_create_from_xpm_d (GIMP_PIXMAP (widget));
 }

@@ -26,8 +26,8 @@ struct _GimpItemFactoryEntry
 {
   GtkItemFactoryEntry  entry;
 
-  gchar *help_page;
-  gchar *description;
+  const gchar *help_page;
+  gchar       *description;
 };
 
 void menus_get_toolbox_menubar (GtkWidget            **menubar,

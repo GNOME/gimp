@@ -113,8 +113,11 @@ static TgaSaveInterface tsint =
 
 
  /* TRUEVISION-XFILE magic signature string */
-static guchar magic[18] = { 0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53,
-  0x49, 0x4f, 0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x0 };
+static guchar magic[18] =
+{
+  0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53, 0x49, 0x4f,
+  0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x0
+};
 
 typedef struct tga_info_struct
 {
@@ -172,22 +175,24 @@ typedef struct tga_info_struct
 /* Declare some local functions.
  */
 static void   query               (void);
-static void   run                 (gchar   *name,
-				   gint     nparams,
+static void   run                 (gchar      *name,
+				   gint        nparams,
 				   GimpParam  *param,
-				   gint    *nreturn_vals,
+				   gint       *nreturn_vals,
 				   GimpParam **return_vals);
 
-static gint32 load_image           (gchar  *filename);
-static gint   save_image           (gchar  *filename,
-				    gint32  image_ID,
-				    gint32  drawable_ID);
+static gint32 load_image           (gchar     *filename);
+static gint   save_image           (gchar     *filename,
+				    gint32     image_ID,
+				    gint32     drawable_ID);
 
 static gint   save_dialog          (void);
 static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 
-static gint32 ReadImage (FILE *fp, tga_info *info, gchar *filename);
+static gint32 ReadImage            (FILE      *fp,
+				    tga_info  *info,
+				    gchar     *filename);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -261,17 +266,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunModeType      run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
 #ifdef PROFILE
@@ -404,11 +409,13 @@ run (gchar   *name,
 static gint32
 load_image (gchar *filename)
 {
-  FILE *fp;
-  gchar *name_buf;
-  tga_info info;
-  guchar header[18], footer[26], extension[495];
-  long offset;
+  FILE     *fp;
+  gchar    *name_buf;
+  tga_info  info;
+  guchar    header[18];
+  guchar    footer[26];
+  guchar    extension[495];
+  long      offset;
 
   gint32 image_ID = -1;
 
@@ -424,21 +431,21 @@ load_image (gchar *filename)
   g_free (name_buf);
 
   /* Check the footer. */
-  if (fseek (fp, -26L, SEEK_END)
-      || fread (footer, sizeof (footer), 1, fp) != 1)
+  if (fseek (fp, -26L, SEEK_END) ||
+      fread (footer, sizeof (footer), 1, fp) != 1)
     {
       g_message (_("TGA: Cannot read footer from \"%s\"\n"), filename);
       return -1;
     }
 
   /* Check the signature. */
-  if (memcmp (footer + 8, magic, sizeof(magic)) == 0)
+  if (memcmp (footer + 8, magic, sizeof (magic)) == 0)
     {
       offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
                         + (footer[3] * 16777216);
 
       if (fseek (fp, offset, SEEK_SET) ||
-         fread (extension, sizeof (extension), 1, fp) != 1)
+	  fread (extension, sizeof (extension), 1, fp) != 1)
       {
         g_message (_("TGA: Cannot read extension from \"%s\"\n"), filename);
         return -1;
@@ -454,54 +461,55 @@ load_image (gchar *filename)
       return -1;
     }
 
-  switch (header[2]) {
+  switch (header[2])
+    {
     case 1:
-      info.imageType= TGA_TYPE_MAPPED;
-      info.imageCompression= TGA_COMP_NONE;
+      info.imageType = TGA_TYPE_MAPPED;
+      info.imageCompression = TGA_COMP_NONE;
       break;
     case 2:
-      info.imageType= TGA_TYPE_COLOR;
-      info.imageCompression= TGA_COMP_NONE;
+      info.imageType = TGA_TYPE_COLOR;
+      info.imageCompression = TGA_COMP_NONE;
       break;
     case 3:
-      info.imageType= TGA_TYPE_GRAY;
-      info.imageCompression= TGA_COMP_NONE;
+      info.imageType = TGA_TYPE_GRAY;
+      info.imageCompression = TGA_COMP_NONE;
       break;
 
     case 9:
-      info.imageType= TGA_TYPE_MAPPED;
-      info.imageCompression= TGA_COMP_RLE;
+      info.imageType = TGA_TYPE_MAPPED;
+      info.imageCompression = TGA_COMP_RLE;
       break;
     case 10:
-      info.imageType= TGA_TYPE_COLOR;
-      info.imageCompression= TGA_COMP_RLE;
+      info.imageType = TGA_TYPE_COLOR;
+      info.imageCompression = TGA_COMP_RLE;
       break;
     case 11:
-      info.imageType= TGA_TYPE_GRAY;
-      info.imageCompression= TGA_COMP_RLE;
+      info.imageType = TGA_TYPE_GRAY;
+      info.imageCompression = TGA_COMP_RLE;
       break;
 
     default:
-      info.imageType= 0;
-  }
+      info.imageType = 0;
+    }
 
-  info.idLength= header[0];
-  info.colorMapType= header[1];
+  info.idLength     = header[0];
+  info.colorMapType = header[1];
 
-  info.colorMapIndex= header[3] + header[4] * 256;
-  info.colorMapLength= header[5] + header[6] * 256;
-  info.colorMapSize= header[7];
+  info.colorMapIndex  = header[3] + header[4] * 256;
+  info.colorMapLength = header[5] + header[6] * 256;
+  info.colorMapSize   = header[7];
 
-  info.xOrigin= header[8] + header[9] * 256;
-  info.yOrigin= header[10] + header[11] * 256;
-  info.width= header[12] + header[13] * 256;
-  info.height= header[14] + header[15] * 256;
+  info.xOrigin = header[8] + header[9] * 256;
+  info.yOrigin = header[10] + header[11] * 256;
+  info.width   = header[12] + header[13] * 256;
+  info.height  = header[14] + header[15] * 256;
   
-  info.bpp= header[16];
-  info.bytes= (info.bpp + 7) / 8;
-  info.alphaBits= header[17] & 0x0f; /* Just the low 4 bits */
-  info.flipHoriz= (header[17] & 0x10) ? 1 : 0;
-  info.flipVert= (header[17] & 0x20) ? 0 : 1;
+  info.bpp       = header[16];
+  info.bytes     = (info.bpp + 7) / 8;
+  info.alphaBits = header[17] & 0x0f; /* Just the low 4 bits */
+  info.flipHoriz = (header[17] & 0x10) ? 1 : 0;
+  info.flipVert  = (header[17] & 0x20) ? 0 : 1;
 
   switch (info.imageType)
     {
@@ -576,201 +584,283 @@ load_image (gchar *filename)
   return image_ID;
 }
 
-static void rle_write(FILE *fp, guchar *buffer, guint width, guint bytes) {
-  int repeat= 0, direct= 0;
-  guchar *from= buffer;
-  int x;
+static void
+rle_write (FILE   *fp,
+	   guchar *buffer,
+	   guint   width,
+	   guint   bytes)
+{
+  gint    repeat = 0;
+  gint    direct = 0;
+  guchar *from   = buffer;
+  gint    x;
   
-  for (x= 1; x < width; ++x) {
-    if (memcmp(buffer, buffer + bytes, bytes)) {
-      /* next pixel is different */
-      if (repeat) {
-        putc(128 + repeat, fp);
-        fwrite(from, bytes, 1, fp);
-        from= buffer+ bytes; /* point to first different pixel */
-        repeat= 0; direct= 0;
-      } else {
-        direct+= 1;
-      }
-    } else {
-      /* next pixel is the same */
-      if (direct) {
-        putc(direct - 1, fp);
-        fwrite(from, bytes, direct, fp);
-        from= buffer; /* point to first identical pixel */
-        direct= 0; repeat= 1;
-      } else {
-        repeat+= 1;
-      }
-    }
-    if (repeat == 128) {
-        putc(255, fp);
-        fwrite(from, bytes, 1, fp);
-        from= buffer+ bytes;
-        direct= 0; repeat= 0;
-    } else if (direct == 128) {
-        putc(127, fp);
-        fwrite(from, bytes, direct, fp);
-        from= buffer+ bytes;
-        direct= 0; repeat= 0;
-    }
-    buffer+= bytes;
-  }
+  for (x = 1; x < width; ++x)
+    {
+      if (memcmp (buffer, buffer + bytes, bytes))
+	{
+	  /* next pixel is different */
+	  if (repeat)
+	    {
+	      putc (128 + repeat, fp);
+	      fwrite (from, bytes, 1, fp);
+	      from = buffer+ bytes; /* point to first different pixel */
+	      repeat = 0;
+	      direct = 0;
+	    }
+	  else
+	    {
+	      direct += 1;
+	    }
+	}
+      else
+	{
+	  /* next pixel is the same */
+	  if (direct)
+	    {
+	      putc (direct - 1, fp);
+	      fwrite (from, bytes, direct, fp);
+	      from = buffer; /* point to first identical pixel */
+	      direct = 0;
+	      repeat = 1;
+	    }
+	  else
+	    {
+	      repeat += 1;
+	    }
+	}
 
-  if (repeat > 0) {
-    putc(128 + repeat, fp);
-    fwrite(from, bytes, 1, fp);
-  } else {
-    putc(direct, fp);
-    fwrite(from, bytes, direct + 1, fp);
-  }
+      if (repeat == 128)
+	{
+	  putc (255, fp);
+	  fwrite (from, bytes, 1, fp);
+	  from = buffer+ bytes;
+	  direct = 0;
+	  repeat = 0;
+	}
+      else if (direct == 128)
+	{
+	  putc (127, fp);
+	  fwrite (from, bytes, direct, fp);
+	  from = buffer+ bytes;
+	  direct = 0;
+	  repeat = 0;
+	}
 
+      buffer += bytes;
+    }
+
+  if (repeat > 0)
+    {
+      putc (128 + repeat, fp);
+      fwrite (from, bytes, 1, fp);
+    }
+  else
+    {
+      putc (direct, fp);
+      fwrite (from, bytes, direct + 1, fp);
+    }
 }
 
-static int rle_read(FILE *fp, guchar *buffer, tga_info *info) {
-
-  static int repeat= 0, direct= 0;
+static gint
+rle_read (FILE     *fp,
+	  guchar   *buffer,
+	  tga_info *info)
+{
+  static gint   repeat = 0;
+  static gint   direct = 0;
   static guchar sample[4];
-  int head;
-  int x, k;
+  gint head;
+  gint x, k;
 
-  for (x= 0; x < info->width; x++) {
+  for (x = 0; x < info->width; x++)
+    {
+      if (repeat == 0 && direct == 0)
+	{
+	  head = getc (fp);
 
-    if (repeat == 0 && direct == 0) {
-      head= getc(fp);
-      if (head == EOF) {
-        return EOF;
-      } else if (head >= 128) {
-        repeat= head - 127;
-        if (fread(sample, info->bytes, 1, fp) < 1)
-          return EOF;
-      } else {
-        direct= head + 1;
-      }
+	  if (head == EOF)
+	    {
+	      return EOF;
+	    }
+	  else if (head >= 128)
+	    {
+	      repeat = head - 127;
+
+	      if (fread (sample, info->bytes, 1, fp) < 1)
+		return EOF;
+	    }
+	  else
+	    {
+	      direct = head + 1;
+	    }
+	}
+
+      if (repeat > 0)
+	{
+	  for (k = 0; k < info->bytes; ++k)
+	    {
+	      buffer[k] = sample[k];
+	    }
+
+	  repeat--;
+	}
+      else /* direct > 0 */
+	{
+	  if (fread (buffer, info->bytes, 1, fp) < 1)
+	    return EOF;
+
+	  direct--;
+	}
+
+      buffer += info->bytes;
     }
-
-    if (repeat > 0) {
-      for (k = 0; k < info->bytes; ++k) {
-        buffer[k]= sample[k];
-      }
-      repeat--;
-    } else /* direct > 0 */ {
-      if (fread(buffer, info->bytes, 1, fp) < 1)
-        return EOF;
-      direct--;
-    }
-
-    buffer+= info->bytes;
-  }
 
   return 0;
 }
 
-static void flip_line(guchar *buffer, tga_info *info) {
-  guchar temp, *alt;
-  int x, s;
+static void
+flip_line (guchar   *buffer,
+	   tga_info *info)
+{
+  guchar  temp;
+  guchar *alt;
+  gint    x, s;
 
-  alt= buffer + (info->bytes * (info->width - 1));
-  for (x= 0; x * 2 <= info->width; x++) {
-    for (s= 0; s < info->bytes; ++s) {
-      temp= buffer[s];
-      buffer[s]= alt[s];
-      alt[s]= temp;
+  alt = buffer + (info->bytes * (info->width - 1));
+
+  for (x = 0; x * 2 <= info->width; x++)
+    {
+      for (s = 0; s < info->bytes; ++s)
+	{
+	  temp = buffer[s];
+	  buffer[s] = alt[s];
+	  alt[s] = temp;
+	}
+
+      buffer += info->bytes;
+      alt -= info->bytes;
     }
-      
-    buffer+= info->bytes;
-    alt-= info->bytes;
-  }
-
 }
 
 /* Some people write 16-bit RGB TGA files. The spec would probably
    allow 27-bit RGB too, for what it's worth, but I won't fix that
    unless someone actually provides an existence proof */
 
-static void upsample(guchar *dest, guchar *src, guint width, guint bytes) {
-  int x;
-  
-  for (x= 0; x < width; x++) {
+static void
+upsample (guchar *dest,
+	  guchar *src,
+	  guint   width,
+	  guint   bytes)
+{
+  gint x;
 
-    dest[0]= ((src[1] << 1) & 0xf8);
-    dest[0]+= (dest[0] >> 5);
+  for (x = 0; x < width; x++)
+    {
+      dest[0] =  ((src[1] << 1) & 0xf8);
+      dest[0] += (dest[0] >> 5);
 
-    dest[1]= ((src[0] & 0xe0) >> 2) + ((src[1] & 0x03) << 6);
-    dest[1]+= (dest[1] >> 5);
+      dest[1] =  ((src[0] & 0xe0) >> 2) + ((src[1] & 0x03) << 6);
+      dest[1] += (dest[1] >> 5);
 
-    dest[2]= ((src[0] << 3) & 0xf8);
-    dest[2]+= (dest[2] >> 5);
+      dest[2] =  ((src[0] << 3) & 0xf8);
+      dest[2] += (dest[2] >> 5);
 
-    dest+= 3;
-    src+= bytes;
-  }
+      dest += 3;
+      src += bytes;
+    }
 }
 
-static void bgr2rgb(guchar *dest, guchar *src,
-                    guint width, guint bytes, guint alpha) {
+static void
+bgr2rgb (guchar *dest,
+	 guchar *src,
+	 guint   width,
+	 guint   bytes,
+	 guint   alpha)
+{
   guint x;
 
-  if (alpha) {
-    for (x= 0; x < width; x++) {
-      *(dest++)= src[2];
-      *(dest++)= src[1];
-      *(dest++)= src[0];
-      *(dest++)= src[3];
+  if (alpha)
+    {
+      for (x = 0; x < width; x++)
+	{
+	  *(dest++) = src[2];
+	  *(dest++) = src[1];
+	  *(dest++) = src[0];
+	  *(dest++) = src[3];
 
-      src+= bytes;
+	  src += bytes;
+	}
     }
-  } else {
-    for (x= 0; x < width; x++) {
-      *(dest++)= src[2];
-      *(dest++)= src[1];
-      *(dest++)= src[0];
+  else
+    {
+      for (x = 0; x < width; x++)
+	{
+	  *(dest++) = src[2];
+	  *(dest++) = src[1];
+	  *(dest++) = src[0];
 
-      src+= bytes;
+	  src += bytes;
+	}
     }
-  }
 }
 
-static void read_line(FILE *fp, guchar *row, guchar *buffer,
-                      tga_info *info, GimpDrawable *drawable) {
-
-  if (info->imageCompression == TGA_COMP_RLE) {
-    rle_read(fp, buffer, info);
-  } else {
-    fread(buffer, info->bytes, info->width, fp);
-  }
-
-  if (info->flipHoriz) {
-    flip_line(buffer, info);
-  }
-
-  if (info->imageType == TGA_TYPE_COLOR) {
-    if (info->bpp == 16) {
-      upsample(row, buffer, info->width, info->bytes);
-    } else {
-      bgr2rgb(row, buffer,info->width,info->bytes,info->alphaBits);
+static void
+read_line (FILE         *fp,
+	   guchar       *row,
+	   guchar       *buffer,
+	   tga_info     *info,
+	   GimpDrawable *drawable)
+{
+  if (info->imageCompression == TGA_COMP_RLE)
+    {
+      rle_read (fp, buffer, info);
     }
-  } else {
-    memcpy(row, buffer, info->width * drawable->bpp);
-  }
+  else
+    {
+      fread (buffer, info->bytes, info->width, fp);
+    }
+
+  if (info->flipHoriz)
+    {
+      flip_line (buffer, info);
+    }
+
+  if (info->imageType == TGA_TYPE_COLOR)
+    {
+      if (info->bpp == 16)
+	{
+	  upsample (row, buffer, info->width, info->bytes);
+	}
+      else
+	{
+	  bgr2rgb (row, buffer,info->width,info->bytes,info->alphaBits);
+	}
+    }
+  else
+    {
+      memcpy (row, buffer, info->width * drawable->bpp);
+    }
 }
 
 static gint32
-ReadImage (FILE *fp, tga_info *info, char *filename)
+ReadImage (FILE     *fp,
+	   tga_info *info,
+	   gchar    *filename)
 {
   static gint32 image_ID;
-  gint32 layer_ID;
+  gint32        layer_ID;
 
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  guchar *data, *buffer, *row;
-  GimpImageType dtype;
-  GimpImageBaseType itype;
-  int i, y;
+  GimpPixelRgn       pixel_rgn;
+  GimpDrawable      *drawable;
+  guchar            *data, *buffer, *row;
+  GimpImageType      dtype = 0;
+  GimpImageBaseType  itype = 0;
+  gint               i, y;
 
-  int max_tileheight, tileheight;
+  gint max_tileheight, tileheight;
 
-  guint cmap_bytes;
+  guint  cmap_bytes;
   guchar tga_cmap[4 * 256], gimp_cmap[3 * 256];
 
   switch (info->imageType)
@@ -901,148 +991,182 @@ ReadImage (FILE *fp, tga_info *info, char *filename)
 
 
 static gint
-save_image (gchar *filename, gint32 image_ID, gint32 drawable_ID)
+save_image (gchar  *filename,
+	    gint32  image_ID,
+	    gint32  drawable_ID)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType dtype;
-  int width, height;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  dtype;
+  gint           width;
+  gint           height;
 
-  FILE *fp;
-  guchar *name_buf;
-  int tileheight, out_bpp, status= TRUE;
-  int i, row;
+  FILE     *fp;
+  guchar   *name_buf;
+  gint      tileheight;
+  gint      out_bpp = 0;
+  gboolean  status  = TRUE;
+  gint      i, row;
 
-  guchar header[18], footer[26];
-  guchar *pixels, *data;
+  guchar  header[18];
+  guchar  footer[26];
+  guchar *pixels;
+  guchar *data;
 
-  guint num_colors;
-  guchar *gimp_cmap;
+  guint   num_colors;
+  guchar *gimp_cmap = NULL;
 
-  drawable = gimp_drawable_get(drawable_ID);
-  dtype = gimp_drawable_type(drawable_ID);
-  width = drawable->width;
+  drawable = gimp_drawable_get (drawable_ID);
+  dtype    = gimp_drawable_type (drawable_ID);
+
+  width  = drawable->width;
   height = drawable->height;
 
-  name_buf = g_strdup_printf( _("Saving %s:"), filename);
-  gimp_progress_init((char *)name_buf);
-  g_free(name_buf);
+  name_buf = g_strdup_printf (_("Saving %s:"), filename);
+  gimp_progress_init ((gchar *)name_buf);
+  g_free (name_buf);
 
-  if((fp = fopen(filename, "wb")) == NULL)
+  if ((fp = fopen (filename, "wb")) == NULL)
     {
       g_message ("TGA: can't create \"%s\"\n", filename);
       return FALSE;
     }
 
-  header[0]= 0; /* No image identifier / description */
+  header[0] = 0; /* No image identifier / description */
 
-  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE) {
-    gimp_cmap= gimp_image_get_cmap(image_ID, &num_colors);
-    header[1]= 1; /* cmap type */
-    header[2]= (tsvals.rle) ? 9 : 1;
-    header[3]= header[4]= 0; /* no offset */
-    header[5]= num_colors % 256;
-    header[6]= num_colors / 256; 
-    header[7]= 24; /* cmap size / bits */
-  } else {
-    header[1]= 0;
-    if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE) {
-      header[2]= (tsvals.rle) ? 10 : 2;
-    } else {
-      header[2]= (tsvals.rle) ? 11 : 3;
+  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE)
+    {
+      gimp_cmap = gimp_image_get_cmap (image_ID, &num_colors);
+
+      header[1] = 1; /* cmap type */
+      header[2] = (tsvals.rle) ? 9 : 1;
+      header[3] = header[4]= 0; /* no offset */
+      header[5] = num_colors % 256;
+      header[6] = num_colors / 256; 
+      header[7] = 24; /* cmap size / bits */
+    }
+  else
+    {
+      header[1]= 0;
+
+      if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE)
+	{
+	  header[2]= (tsvals.rle) ? 10 : 2;
+	}
+      else
+	{
+	  header[2]= (tsvals.rle) ? 11 : 3;
+	}
+
+      header[3] = header[4] = header[5] = header[6] = header[7] = 0;
     }
 
-    header[3]= header[4]= header[5]= header[6]= header[7]= 0;
-  }
+  header[8]  = header[9]  = 0; /* xorigin */
+  header[10] = header[11] = 0; /* yorigin */
 
-  header[8]= header[9]= 0; /* xorigin */
-  header[10]= header[11]= 0; /* yorigin */
+  header[12] = width % 256;
+  header[13] = width / 256;
 
-  header[12]= width % 256;
-  header[13]= width / 256;
+  header[14] = height % 256;
+  header[15] = height / 256;
 
-  header[14]= height % 256;
-  header[15]= height / 256;
+  switch (dtype)
+    {
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_GRAY_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      out_bpp = 1;
+      header[16] = 8; /* bpp */
+      header[17] = 0x20; /* alpha + orientation */
+      break;
 
-  switch (dtype) {
-  case GIMP_INDEXED_IMAGE:
-  case GIMP_GRAY_IMAGE:
-  case GIMP_INDEXEDA_IMAGE:
-    out_bpp= 1;
-    header[16]= 8; /* bpp */
-    header[17]= 0x20; /* alpha + orientation */
-    break;
+    case GIMP_GRAYA_IMAGE:
+      out_bpp = 2;
+      header[16] = 16; /* bpp */
+      header[17] = 0x28; /* alpha + orientation */
+      break;
 
-  case GIMP_GRAYA_IMAGE:
-    out_bpp= 2;
-    header[16]= 16; /* bpp */
-    header[17]= 0x28; /* alpha + orientation */
-    break;
-  case GIMP_RGB_IMAGE:
-    out_bpp= 3;
-    header[16]= 24; /* bpp */
-    header[17]= 0x20; /* alpha + orientation */
-    break;
-  case GIMP_RGBA_IMAGE:
-    out_bpp= 4;
-    header[16]= 32; /* bpp */
-    header[17]= 0x28; /* alpha + orientation */
-    break;
-  }
+    case GIMP_RGB_IMAGE:
+      out_bpp = 3;
+      header[16] = 24; /* bpp */
+      header[17] = 0x20; /* alpha + orientation */
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      out_bpp = 4;
+      header[16] = 32; /* bpp */
+      header[17] = 0x28; /* alpha + orientation */
+      break;
+    }
 
   /* write header to front of file */
-  fwrite(header, sizeof(header), 1, fp);
+  fwrite (header, sizeof (header), 1, fp);
 
-  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE) {
-    /* write out palette */
-    for (i= 0; i < num_colors; ++i) {
-      fputc(gimp_cmap[(i * 3) + 2], fp);
-      fputc(gimp_cmap[(i * 3) + 1], fp);
-      fputc(gimp_cmap[(i * 3) + 0], fp);
+  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE)
+    {
+      /* write out palette */
+      for (i= 0; i < num_colors; ++i)
+	{
+	  fputc (gimp_cmap[(i * 3) + 2], fp);
+	  fputc (gimp_cmap[(i * 3) + 1], fp);
+	  fputc (gimp_cmap[(i * 3) + 0], fp);
+	}
     }
-  }
 
   /* Allocate a new set of pixels. */
   tileheight = gimp_tile_height ();
 
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  pixels= g_new(guchar, width * drawable->bpp);
-  data= g_new(guchar, width * out_bpp);
+  pixels = g_new (guchar, width * drawable->bpp);
+  data   = g_new (guchar, width * out_bpp);
 
-  for (row= 0; row < height; ++row)
+  for (row = 0; row < height; ++row)
     {
-      gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, row, width, 1);
+      gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, row, width, 1);
 
-      if (dtype == GIMP_RGB_IMAGE) {
-        bgr2rgb(data, pixels, width, drawable->bpp, 0);
-      } else if (dtype == GIMP_RGBA_IMAGE) {
-        bgr2rgb(data, pixels, width, drawable->bpp, 1);
-      } else if (dtype == GIMP_INDEXEDA_IMAGE) {
-        for (i= 0; i < width; ++i) {
-          data[i]= pixels[i*2];
-        }
-      } else {
-        memcpy(data, pixels, width * drawable->bpp);
-      }
+      if (dtype == GIMP_RGB_IMAGE)
+	{
+	  bgr2rgb(data, pixels, width, drawable->bpp, 0);
+	}
+      else if (dtype == GIMP_RGBA_IMAGE)
+	{
+	  bgr2rgb(data, pixels, width, drawable->bpp, 1);
+	}
+      else if (dtype == GIMP_INDEXEDA_IMAGE)
+	{
+	  for (i = 0; i < width; ++i)
+	    {
+	      data[i]= pixels[i*2];
+	    }
+	}
+      else
+	{
+	  memcpy (data, pixels, width * drawable->bpp);
+	}
 
-      if (tsvals.rle) {
-        rle_write(fp, data, width, out_bpp);
-      } else {
-        fwrite(data, width * out_bpp, 1, fp);
-      }
-      gimp_progress_update ((double) row / (double) height);
+      if (tsvals.rle)
+	{
+	  rle_write (fp, data, width, out_bpp);
+	}
+      else
+	{
+	  fwrite (data, width * out_bpp, 1, fp);
+	}
+
+      gimp_progress_update ((gdouble) row / (gdouble) height);
     }
 
   gimp_drawable_detach (drawable);
   g_free (data);
 
   /* footer must be the last thing written to file */
-  memset(footer, 0, 8); /* No extensions, no developer directory */
-  memcpy(footer + 8, magic, sizeof(magic)); /* magic signature */
-  fwrite(footer, sizeof(footer), 1, fp);
+  memset (footer, 0, 8); /* No extensions, no developer directory */
+  memcpy (footer + 8, magic, sizeof (magic)); /* magic signature */
+  fwrite (footer, sizeof (footer), 1, fp);
 
   fclose (fp);
+
   return status;
 }
 

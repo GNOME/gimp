@@ -82,7 +82,7 @@ GtkType     gimp_size_entry_get_type (void);
 
 GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
 				 GimpUnit                   unit,
-				 gchar                     *unit_format,
+				 const gchar               *unit_format,
 				 gboolean                   menu_show_pixels,
 				 gboolean                   menu_show_percent,
 				 gboolean                   show_refval,
@@ -94,7 +94,7 @@ void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
 					GtkSpinButton   *refval_spinbutton);
 
 void        gimp_size_entry_attach_label          (GimpSizeEntry *gse,
-						   gchar         *text,
+						   const gchar   *text,
 						   gint           row,
 						   gint           column,
 						   gfloat         alignment);

@@ -50,7 +50,7 @@ typedef enum
 
 GimpExportReturnType gimp_export_image (gint32                 *image_ID,
 					gint32                 *drawable_ID,
-					gchar                  *format_name,
+					const gchar            *format_name,
 					GimpExportCapabilities  capabilities);
 
 

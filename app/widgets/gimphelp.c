@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimphelp.c
- * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,13 +53,13 @@ struct _GimpIdleHelp
 };
 
 /*  local function prototypes  */
-static gint      gimp_idle_help     (gpointer  data);
-static gboolean  gimp_help_internal (gchar    *help_path,
-				     gchar    *current_locale,
-				     gchar    *help_data);
-static void      gimp_help_netscape (gchar    *help_path,
-				     gchar    *current_locale,
-				     gchar    *help_data);
+static gint      gimp_idle_help     (gpointer     data);
+static gboolean  gimp_help_internal (const gchar *help_path,
+				     const gchar *current_locale,
+				     const gchar *help_data);
+static void      gimp_help_netscape (const gchar *help_path,
+				     const gchar *current_locale,
+				     const gchar *help_data);
 
 /**********************/
 /*  public functions  */
@@ -67,15 +67,15 @@ static void      gimp_help_netscape (gchar    *help_path,
 
 /*  The standard help function  */
 void
-gimp_standard_help_func (gchar *help_data)
+gimp_standard_help_func (const gchar *help_data)
 {
   gimp_help (NULL, help_data);
 }
 
 /*  the main help function  */
 void
-gimp_help (gchar *help_path,
-	   gchar *help_data)
+gimp_help (const gchar *help_path,
+	   const gchar *help_data)
 {
   if (use_help)
     {
@@ -169,9 +169,9 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 }
 
 static gboolean
-gimp_help_internal (gchar *help_path,
-		    gchar *current_locale,
-		    gchar *help_data)
+gimp_help_internal (const gchar *help_path,
+		    const gchar *current_locale,
+		    const gchar *help_data)
 {
   ProcRecord *proc_rec;
 
@@ -207,11 +207,11 @@ gimp_help_internal (gchar *help_path,
       args[0].arg_type = PDB_INT32;
       args[0].value.pdb_int = RUN_INTERACTIVE;
       args[1].arg_type = PDB_STRING;
-      args[1].value.pdb_pointer = help_path;
+      args[1].value.pdb_pointer = (gpointer) help_path;
       args[2].arg_type = PDB_STRING;
-      args[2].value.pdb_pointer = current_locale;
+      args[2].value.pdb_pointer = (gpointer) current_locale;
       args[3].arg_type = PDB_STRING;
-      args[3].value.pdb_pointer = help_data;
+      args[3].value.pdb_pointer = (gpointer) help_data;
 
       plug_in_run (proc_rec, args, 4, FALSE, TRUE, 0);
 
@@ -237,9 +237,9 @@ gimp_help_internal (gchar *help_path,
 }
 
 static void
-gimp_help_netscape (gchar *help_path,
-		    gchar *current_locale,
-		    gchar *help_data)
+gimp_help_netscape (const gchar *help_path,
+		    const gchar *current_locale,
+		    const gchar *help_data)
 {
   Argument *return_vals;
   gint      nreturn_vals;

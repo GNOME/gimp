@@ -35,7 +35,7 @@ extern "C" {
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
 					     GimpHelpFunc        help_func,
-					     gchar              *help_data,
+					     const gchar        *help_data,
 					     GtkWindowPosition   position,
 					     gint                allow_shrink,
 					     gint                allow_grow,
@@ -43,7 +43,7 @@ GtkWidget * gimp_dialog_new                 (const gchar        *title,
 
 					     /* specify action area buttons
 					      * as va_list:
-					      *  gchar          *label,
+					      *  const gchar    *label,
 					      *  GtkSignalFunc   callback,
 					      *  gpointer        data,
 					      *  GtkObject      *slot_object,
@@ -57,7 +57,7 @@ GtkWidget * gimp_dialog_new                 (const gchar        *title,
 GtkWidget * gimp_dialog_newv                (const gchar        *title,
 					     const gchar        *wmclass_name,
 					     GimpHelpFunc        help_func,
-					     gchar              *help_data,
+					     const gchar        *help_data,
 					     GtkWindowPosition   position,
 					     gint                allow_shrink,
 					     gint                allow_grow,
@@ -70,7 +70,7 @@ void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
 
 					     /* specify action area buttons
 					      * as va_list:
-					      *  gchar          *label,
+					      *  const gchar    *label,
 					      *  GtkSignalFunc   callback,
 					      *  gpointer        data,
 					      *  GtkObject      *slot_object,

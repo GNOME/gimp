@@ -89,8 +89,8 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   GtkWidget *button;
   GtkWidget *scrolled_window;
 
-  gpe->file_selection = NULL;
-  gpe->selected_item = NULL;
+  gpe->file_selection  = NULL;
+  gpe->selected_item   = NULL;
   gpe->number_of_items = 0;
 
   gpe->upper_hbox = gtk_hbox_new (FALSE, 2);
@@ -183,16 +183,16 @@ gimp_path_editor_get_type (void)
  * #G_SEARCHPATH_SEPARATOR character.
  *
  * Returns: A pointer to the new #GimpPathEditor widget.
- *
- */
+ **/
 GtkWidget *
-gimp_path_editor_new (gchar *filesel_title,
-		      gchar *path)
+gimp_path_editor_new (const gchar *filesel_title,
+		      const gchar *path)
 {
   GimpPathEditor *gpe;
   GtkWidget      *list_item;
   GList          *directory_list;
   gchar          *directory;
+  gchar          *mypath;
 
   g_return_val_if_fail ((filesel_title != NULL), NULL);
   g_return_val_if_fail ((path != NULL), NULL);
@@ -209,7 +209,7 @@ gimp_path_editor_new (gchar *filesel_title,
   gtk_widget_show (gpe->file_selection);
 
   directory_list = NULL;
-  directory = path = g_strdup (path);
+  directory      = mypath = g_strdup (path);
 
   /*  split up the path  */
   while (strlen (directory))
@@ -243,7 +243,7 @@ gimp_path_editor_new (gchar *filesel_title,
 	break;
     }
 
-  g_free (path);
+  g_free (mypath);
 
   if (directory_list)
     gtk_list_append_items (GTK_LIST (gpe->dir_list), directory_list);
@@ -261,8 +261,7 @@ gimp_path_editor_new (gchar *filesel_title,
  * Note that you have to g_free() the returned string.
  *
  * Returns: The search path the user has selected in the path editor.
- *
- */
+ **/
 gchar *
 gimp_path_editor_get_path (GimpPathEditor *gpe)
 {

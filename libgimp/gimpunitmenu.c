@@ -31,10 +31,10 @@
 
 
 /*  private functions  */
-static const gchar * gimp_unit_menu_build_string (gchar     *format,
-						  GimpUnit   unit);
-static void          gimp_unit_menu_callback     (GtkWidget *widget,
-						  gpointer   data);
+static const gchar * gimp_unit_menu_build_string (const gchar *format,
+						  GimpUnit     unit);
+static void          gimp_unit_menu_callback     (GtkWidget   *widget,
+						  gpointer     data);
 
 enum
 {
@@ -144,11 +144,11 @@ gimp_unit_menu_get_type (void)
  *
  */
 GtkWidget *
-gimp_unit_menu_new (gchar    *format,
-		    GimpUnit  unit,
-		    gboolean  show_pixels,
-		    gboolean  show_percent,
-		    gboolean  show_custom)
+gimp_unit_menu_new (const gchar *format,
+		    GimpUnit     unit,
+		    gboolean     show_pixels,
+		    gboolean     show_percent,
+		    gboolean     show_custom)
 {
   GimpUnitMenu *gum;
   GtkWidget    *menu;
@@ -375,8 +375,8 @@ print (gchar       *buf,
 }
 
 static const gchar *
-gimp_unit_menu_build_string (gchar    *format,
-			     GimpUnit  unit)
+gimp_unit_menu_build_string (const gchar *format,
+			     GimpUnit     unit)
 {
   static gchar buffer[64];
   gint i = 0;

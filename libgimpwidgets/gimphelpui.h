@@ -27,10 +27,12 @@
 extern "C" {
 #endif /* __cplusplus */
 
+
 /* For information look into the C source or the html documentation */
 
 
-typedef void (* GimpHelpFunc) (gchar *help_data);
+typedef void (* GimpHelpFunc) (const gchar *help_data);
+
 
 void  gimp_help_init               (void);
 void  gimp_help_free               (void);
@@ -41,17 +43,17 @@ void  gimp_help_disable_tooltips   (void);
 /*  the standard gimp help function
  *  (has different implementations in the main app and in libgimp)
  */
-void  gimp_standard_help_func      (gchar        *help_data);
+void  gimp_standard_help_func      (const gchar  *help_data);
 
 /*  connect the "F1" accelerator of a window  */
 void  gimp_help_connect_help_accel (GtkWidget    *widget,
 				    GimpHelpFunc  help_func,
-				    gchar        *help_data);
+				    const gchar  *help_data);
 
 /*  set help data for non-window widgets  */
 void  gimp_help_set_help_data      (GtkWidget    *widget,
 				    const gchar  *tooltip,
-				    gchar        *help_data);
+				    const gchar  *help_data);
 
 /*  activate the context help inspector  */
 void  gimp_context_help            (void);

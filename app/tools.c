@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include "appenv.h"
@@ -1487,7 +1488,7 @@ tools_new_tool (ToolType tool_type)
 }
 
 void
-tools_help_func (gchar *help_data)
+tools_help_func (const gchar *help_data)
 {
   gimp_standard_help_func (tool_info[(gint) active_tool->type].private_tip);
 }

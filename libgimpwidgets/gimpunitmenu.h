@@ -67,7 +67,7 @@ struct _GimpUnitMenuClass
 
 GtkType     gimp_unit_menu_get_type (void);
 
-GtkWidget * gimp_unit_menu_new      (gchar       *format,
+GtkWidget * gimp_unit_menu_new      (const gchar *format,
 				     GimpUnit     unit,
 				     gboolean     show_pixels,
 				     gboolean     show_percent,

@@ -69,15 +69,15 @@ struct _GimpFileSelectionClass
 
 GtkType     gimp_file_selection_get_type    (void);
 
-GtkWidget*  gimp_file_selection_new         (gchar              *title,
-					     gchar              *filename,
+GtkWidget*  gimp_file_selection_new         (const gchar        *title,
+					     const gchar        *filename,
 					     gboolean            dir_only,
 					     gboolean            check_valid);
 
 gchar*      gimp_file_selection_get_filename (GimpFileSelection *gfs);
 
 void        gimp_file_selection_set_filename (GimpFileSelection *gfs,
-					      gchar             *filename);
+					      const gchar       *filename);
 
 
 #ifdef __cplusplus

@@ -56,8 +56,7 @@ static GtkWidget   * tips_query = NULL;
  *
  * Currently it only creates a #GtkTooltips object with gtk_tooltips_new()
  * which will be used by gimp_help_set_help_data().
- *
- */
+ **/
 void
 gimp_help_init (void)
 {
@@ -69,8 +68,7 @@ gimp_help_init (void)
  *
  * This function frees the memory used by the #GtkTooltips created by
  * gimp_help_init().
- *
- */
+ **/
 void
 gimp_help_free (void)
 {
@@ -82,8 +80,7 @@ gimp_help_free (void)
  * gimp_help_enable_tooltips:
  *
  * This function calls gtk_tooltips_enable().
- *
- */
+ **/
 void
 gimp_help_enable_tooltips (void)
 {
@@ -94,8 +91,7 @@ gimp_help_enable_tooltips (void)
  * gimp_help_disable_tooltips:
  *
  * This function calls gtk_tooltips_disable().
- *
- */
+ **/
 void
 gimp_help_disable_tooltips (void)
 {
@@ -116,12 +112,11 @@ gimp_help_disable_tooltips (void)
  * For convenience, gimp_help_connect_help_accel() calls
  * gimp_dialog_set_icon() if the passed widget is a #GtkWindow, so you
  * don't have to worry about this.
- *
- */
+ **/
 void
 gimp_help_connect_help_accel (GtkWidget    *widget,
 			      GimpHelpFunc  help_func,
-			      gchar        *help_data)
+			      const gchar  *help_data)
 {
   GtkAccelGroup *accel_group;
 
@@ -134,7 +129,8 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   if (GTK_IS_WINDOW (widget))
     gimp_dialog_set_icon (GTK_WINDOW (widget));
 
-  /*  set up the help signals and tips query widget  */
+  /*  set up the help signals and tips query widget
+   */
   if (!tips_query)
     {
       tips_query = gtk_tips_query_new ();
@@ -229,20 +225,25 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
  * help system will automatically ascend the widget hierarchy until it
  * finds another widget with @help_data attached and concatenates both
  * to a complete help path.
- *
- */
+ **/
 void
 gimp_help_set_help_data (GtkWidget   *widget,
 			 const gchar *tooltip,
-			 gchar       *help_data)
+			 const gchar *help_data)
 {
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltip)
-    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
+    {
+      gtk_tooltips_set_tip (tool_tips, widget, tooltip,
+			    (gpointer) help_data);
+    }
   else if (help_data)
-    gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
+    {
+      gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data",
+			   (gpointer) help_data);
+    }
 }
 
 /**
@@ -258,8 +259,7 @@ gimp_help_set_help_data (GtkWidget   *widget,
  * be displayed. Otherwise the help system will ascend the widget hierarchy
  * until it finds an attached @help_data string (which should be the
  * case at least for every window/dialog).
- * 
- */
+ **/
 void
 gimp_context_help (void)
 {
@@ -275,12 +275,12 @@ static void
 gimp_help_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  GimpHelpFunc help_function;
-  gchar *help_data;
+  GimpHelpFunc  help_function;
+  const gchar  *help_data;
 
   help_function = (GimpHelpFunc) data;
-  help_data     = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
-						 "gimp_help_data");
+  help_data     = (const gchar *) gtk_object_get_data (GTK_OBJECT (widget),
+						       "gimp_help_data");
 
   if (help_function)
     (* help_function) (help_data);

@@ -629,17 +629,13 @@ file_revert_callback (GtkWidget *widget,
 					  FALSE,
 					  text,
 					  _("Yes"), _("No"),
-					  NULL, NULL,
+					  GTK_OBJECT (gimage), "destroy",
 					  file_revert_confirm_callback,
 					  gimage);
 
-      gtk_object_set_data (GTK_OBJECT (gimage), REVERT_DATA_KEY, query_box);
-
-      gtk_signal_connect_object_while_alive (GTK_OBJECT (gimage), "destroy",
-					     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-					     GTK_OBJECT (query_box));
-
       g_free (text);
+
+      gtk_object_set_data (GTK_OBJECT (gimage), REVERT_DATA_KEY, query_box);
 
       gtk_widget_show (query_box);
     }

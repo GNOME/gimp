@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include "appenv.h"
@@ -32,48 +33,65 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpmath.h"
 
-#define MENU_THUMBNAIL_WIDTH 24
+
+#define MENU_THUMBNAIL_WIDTH  24
 #define MENU_THUMBNAIL_HEIGHT 24
 
-/*  local function prototypes  */
-static void  lc_dialog_update              (GimpImage *);
-static void  lc_dialog_image_menu_callback (GtkWidget *, gpointer);
-static void  lc_dialog_auto_callback       (GtkWidget *, gpointer);
-static gint  lc_dialog_close_callback      (GtkWidget *, gpointer);
-static void  lc_dialog_add_callback        (GimpSet *, GimpImage *, gpointer);
-static void  lc_dialog_remove_callback     (GimpSet *, GimpImage *, gpointer);
-static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
-					    gpointer);
-static void  lc_dialog_help_func           (gchar *);
 
-static void  lc_dialog_image_menu_preview_update_callback (GtkWidget *,
-							   gpointer);
-static void  lc_dialog_fill_preview_with_thumb (GtkWidget *, GimpImage *,
-						gint, gint);
+/*  local function prototypes  */
+static void  lc_dialog_update              (GimpImage   *gimage);
+static void  lc_dialog_image_menu_callback (GtkWidget   *widget,
+					    gpointer     data);
+static void  lc_dialog_auto_callback       (GtkWidget   *widget,
+					    gpointer     data);
+static gint  lc_dialog_close_callback      (GtkWidget   *widget,
+					    gpointer     data);
+static void  lc_dialog_add_callback        (GimpSet     *set,
+					    GimpImage   *gimage,
+					    gpointer     data);
+static void  lc_dialog_remove_callback     (GimpSet     *set,
+					    GimpImage   *gimage,
+					    gpointer     data);
+static void  lc_dialog_change_image        (GimpContext *context,
+					    GimpImage   *gimage,
+					    gpointer     data);
+static void  lc_dialog_help_func           (const gchar *help_data);
+
+static void  lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
+							   gpointer   data);
+static void  lc_dialog_fill_preview_with_thumb            (GtkWidget *widget,
+							   GimpImage *gimage,
+							   gint       width,
+							   gint       height);
 
 
 /*  FIXME: move these to a better place  */
-static GtkWidget * lc_dialog_create_image_menu          (GimpImage **, gint *,
-							 GtkSignalFunc);
-static void        lc_dialog_create_image_menu_callback (gpointer, gpointer);
+static GtkWidget * lc_dialog_create_image_menu    (GimpImage     **def,
+						   gint           *default_index,
+						   GtkSignalFunc   callback);
+static void        lc_dialog_create_image_menu_callback (gpointer  image,
+							 gpointer  data);
+
 
 /*  the main dialog structure  */
 LCDialog * lc_dialog = NULL;
+
 
 /*********************************/
 /*  Public L&C dialog functions  */
 /*********************************/
 
 void
-lc_dialog_create (GimpImage* gimage)
+lc_dialog_create (GimpImage *gimage)
 {
   GtkWidget *util_box;
   GtkWidget *auto_button;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *separator;
-  gint default_index;
+  gint       default_index;
 
   if (lc_dialog)
     {
@@ -240,8 +258,8 @@ lc_dialog_free (void)
 void
 lc_dialog_rebuild (gint new_preview_size)
 {
-  GimpImage* gimage;
-  gboolean flag;
+  GimpImage *gimage;
+  gboolean   flag;
 
   gimage = NULL;
   flag   = FALSE;
@@ -341,8 +359,8 @@ lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
 void
 lc_dialog_update_image_list (void)
 {
-  GimpImage* default_gimage;
-  gint default_index;
+  GimpImage *default_gimage;
+  gint       default_index;
 
   if (lc_dialog == NULL)
     return;
@@ -382,7 +400,7 @@ lc_dialog_update_image_list (void)
 /**********************************/
 
 static void
-lc_dialog_update (GimpImage* gimage)
+lc_dialog_update (GimpImage *gimage)
 {
   if (! lc_dialog || lc_dialog->gimage == gimage)
     return;
@@ -429,13 +447,13 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
   /* Get right aspect ratio */  
   if (dwidth > dheight)
     {
-      height = (gint)(((gdouble)width * (gdouble)dheight) / (gdouble)dwidth + 0.5);
-      width = (gint)(((gdouble)dwidth * (gdouble)height) / (gdouble)dheight + 0.5);
+      height = RINT (((gdouble)width * (gdouble)dheight) / (gdouble)dwidth);
+      width  = RINT (((gdouble)dwidth * (gdouble)height) / (gdouble)dheight);
     }
   else
     {
-      width = (gint)(((gdouble)height * (gdouble)dwidth) / (gdouble)dheight + 0.5);
-      height = (gint)(((gdouble)dheight * (gdouble)width) / (gdouble)dwidth + 0.5);
+      width  = RINT (((gdouble)height * (gdouble)dwidth) / (gdouble)dheight);
+      height = RINT (((gdouble)dheight * (gdouble)width) / (gdouble)dwidth);
     }
 
   buf = gimp_image_construct_composite_preview (gimage, width, height);
@@ -459,16 +477,16 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 	{
 	  if (bpp == 4)
 	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
+	      r = ((gdouble) src[x * 4 + 0]) / 255.0;
+	      g = ((gdouble) src[x * 4 + 1]) / 255.0;
+	      b = ((gdouble) src[x * 4 + 2]) / 255.0;
+	      a = ((gdouble) src[x * 4 + 3]) / 255.0;
 	    }
 	  else
 	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
+	      r = ((gdouble) src[x * bpp + 0]) / 255.0;
 	      g = b = r;
-	      a = ((gdouble)src[x*bpp+1])/255.0;
+	      a = ((gdouble) src[x * bpp + 1]) / 255.0;
 	    }
 
 	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
@@ -710,7 +728,7 @@ lc_dialog_change_image (GimpContext *context,
 }
 
 static void
-lc_dialog_help_func (gchar *help_data)
+lc_dialog_help_func (const gchar *help_data)
 {
   gchar *help_page;
   gint page_num;

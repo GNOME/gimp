@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,23 +54,39 @@ typedef enum
 
 /*  preferences local functions  */
 static PrefsState  prefs_check_settings          (void);
-static void        prefs_ok_callback             (GtkWidget *, GtkWidget *);
-static void        prefs_save_callback           (GtkWidget *, GtkWidget *);
-static void        prefs_cancel_callback         (GtkWidget *, GtkWidget *);
+static void        prefs_ok_callback             (GtkWidget *widget,
+						  GtkWidget *dlg);
+static void        prefs_save_callback           (GtkWidget *widget,
+						  GtkWidget *dlg);
+static void        prefs_cancel_callback         (GtkWidget *widget,
+						  GtkWidget *dlg);
 
-static void  prefs_toggle_callback               (GtkWidget *widget, gpointer data);
-static void  prefs_preview_size_callback         (GtkWidget *widget, gpointer data);
-static void  prefs_nav_preview_size_callback     (GtkWidget *widget, gpointer data);
-static void  prefs_string_callback               (GtkWidget *widget, gpointer data);
-static void  prefs_text_callback                 (GtkWidget *widget, gpointer data);
-static void  prefs_filename_callback             (GtkWidget *widget, gpointer data);
-static void  prefs_path_callback                 (GtkWidget *widget, gpointer data);
-static void  prefs_clear_session_info_callback   (GtkWidget *widget, gpointer data);
-static void  prefs_default_size_callback         (GtkWidget *widget, gpointer data);
-static void  prefs_default_resolution_callback   (GtkWidget *widget, gpointer data);
-static void  prefs_res_source_callback           (GtkWidget *widget, gpointer data);
-static void  prefs_monitor_resolution_callback   (GtkWidget *widget, gpointer data);
-static void  prefs_resolution_calibrate_callback (GtkWidget *widget, gpointer data);
+static void  prefs_toggle_callback               (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_preview_size_callback         (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_nav_preview_size_callback     (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_string_callback               (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_text_callback                 (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_filename_callback             (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_path_callback                 (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_clear_session_info_callback   (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_default_size_callback         (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_default_resolution_callback   (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_res_source_callback           (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_monitor_resolution_callback   (GtkWidget *widget,
+						  gpointer   data);
+static void  prefs_resolution_calibrate_callback (GtkWidget *widget,
+						  gpointer   data);
 static void  prefs_restart_notification          (void);
 
 
@@ -1295,7 +1311,7 @@ prefs_frame_new (gchar  *label,
 }
 
 static void
-prefs_help_func (gchar *help_data)
+prefs_help_func (const gchar *help_data)
 {
   GtkWidget *notebook;
   GtkWidget *event_box;

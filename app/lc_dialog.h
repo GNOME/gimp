@@ -15,15 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __LC_DIALOG_H__
 #define  __LC_DIALOG_H__
 
+
 #include "gimpimageF.h"
+
 
 void   lc_dialog_create            (GimpImage *gimage);
 void   lc_dialog_free              (void);
 
-void   lc_dialog_rebuild           (int);  /*  implies free & create  */
+/*  implies free & create
+ */
+void   lc_dialog_rebuild           (gint       new_preview_size);
 
 void   lc_dialog_flush             (void);
 

@@ -30,7 +30,9 @@
 #include "libgimp-intl.h"
 
 
-typedef void (* ExportFunc) (gint32 imageID, gint32 *drawable_ID);
+typedef void (* ExportFunc) (gint32  imageID,
+			     gint32 *drawable_ID);
+
 
 /* the export action structure */
 typedef struct 
@@ -307,8 +309,8 @@ export_toggle_callback (GtkWidget *widget,
 }
 
 static gint
-export_dialog (GSList *actions,
-	       gchar  *format)
+export_dialog (GSList      *actions,
+	       const gchar *format)
 {
   GtkWidget    *frame;
   GtkWidget    *vbox;
@@ -451,11 +453,11 @@ export_dialog (GSList *actions,
  * save_plugin should quit itself with status #STATUS_CANCEL.
  *
  * Returns: An enum of #GimpExportReturnType describing the user_action.
- */
+ **/
 GimpExportReturnType
 gimp_export_image (gint32                 *image_ID,
 		   gint32                 *drawable_ID,
-		   gchar                  *format_name,
+		   const gchar            *format_name,
 		   GimpExportCapabilities  capabilities)
 {
   GSList *actions = NULL;

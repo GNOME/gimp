@@ -1,3 +1,36 @@
+2000-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/fileops.c
+	* libgimp/gimpquerybox.[ch]: Make sure that we don't try to destroy
+	query_boxes twice or try to disconnect not-any-more connected
+	handlers.
+
+	* app/color_notebook.c
+	* app/gimpcontext.[ch]
+	* app/gimphelp.[ch]
+	* app/lc_dialog.[ch]
+	* app/menus.h
+	* app/preferences_dialog.c
+	* app/tools.[ch]
+	* libgimp/gimpcolorbutton.[ch]
+	* libgimp/gimpdialog.[ch]
+	* libgimp/gimpexport.[ch]
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimphelpui.[ch]
+	* libgimp/gimppatheditor.[ch]
+	* libgimp/gimppixmap.[ch]
+	* libgimp/gimpsizeentry.[ch]
+	* libgimp/gimpui.[ch]
+	* libgimp/gimpunitmenu.[ch]
+	* libgimp/gimpwidgets.[ch]: in a coding attack, changed help_data
+	and many other strings passed to UI functions to (const gchar *).
+	As a consequence, I had to fix lots of warnings ;)
+
+	* plug-ins/common/tga.c
+	* plug-ins/imagemap/imap_main.c: fixed warnings.
+
+	Code cleanup and indentation all over the place.
+
 2000-11-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/Makefile.am

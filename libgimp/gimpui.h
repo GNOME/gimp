@@ -36,6 +36,7 @@
 #include <libgimp/gimpunitmenu.h>
 #include <libgimp/gimpwidgets.h>
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -43,8 +44,8 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void gimp_ui_init (gchar    *prog_name,
-		   gboolean  preview);
+void gimp_ui_init (const gchar *prog_name,
+		   gboolean     preview);
 
 
 #ifdef __cplusplus

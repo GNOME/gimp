@@ -37,11 +37,10 @@
  *
  * The GIMP's colormap policy can be determinded by the user with the
  * gimprc variables @min_colors and @install_cmap.
- *
- */
+ **/
 void
-gimp_ui_init (gchar    *prog_name,
-	      gboolean  preview)
+gimp_ui_init (const gchar *prog_name,
+	      gboolean     preview)
 {
   gint    argc;
   gchar **argv;
