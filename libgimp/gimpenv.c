@@ -71,7 +71,11 @@ gimp_directory ()
     }
   else
     {
-      if (NULL != home_dir)
+#ifdef __EMX__       
+	gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
+	return gimp_dir;  
+#endif      
+	if (NULL != home_dir)
 	{
 	  gimp_dir = g_strconcat (home_dir, G_DIR_SEPARATOR_S,
 				  GIMPDIR, NULL);

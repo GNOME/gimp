@@ -1,3 +1,11 @@
+Fri Aug  6 13:07:58 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* libgimp/gimpenv.c (gimp_directory): set gimp_directory
+	to GIMPDIR if it isn't defined (for OS/2 only).
+
+	* app/datafiles.c (datafiles_read_directories): Handle drives in 
+	directory paths. For OS/2.
+
 1999-08-05  Tor Lillqvist  <tml@iki.fi>
 
 	* app/appenv.h: Define ROUND(), RINT(), SQR(), G_PI and

@@ -80,7 +80,15 @@ datafiles_read_directories (char *path_str,
    */
   home = g_get_home_dir ();
   local_path = g_strdup (path_str);
-
+#ifdef __EMX__
+  /*
+   *  Change drive so opendir works.
+   */
+  if (local_path[1] == ':')
+  {
+      _chdrive(local_path[0]);
+  }
+#endif  
   /* Search through all directories in the local path */
 
   next_token = local_path;
