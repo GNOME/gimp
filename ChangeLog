@@ -1,3 +1,8 @@
+2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tiff.c (load_image): added handling of 
+	TIFFTAG_ORIENTATION tag (fixes #96611).
+
 2003-01-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpvectortool.c (gimp_vector_tool_button_press):

@@ -431,6 +431,8 @@ load_image (gchar *filename)
   guchar *icc_profile;
 #endif
 
+  guint16 orientation;
+
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
   TIFFSetWarningHandler (tiff_warning);
@@ -683,6 +685,62 @@ load_image (gchar *filename)
     load_tiles (tif, channel, bps, photomet, alpha, extra);
   } else { /* Load scanlines in tile_height chunks */
     load_lines (tif, channel, bps, photomet, alpha, extra);
+  }
+
+  if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation)) {
+    GimpParam *return_vals;
+    int nreturn_vals;
+    gint32 drawable_ID;
+    gboolean flip_horizontal;
+    gboolean flip_vertical;
+
+    drawable_ID = gimp_image_active_drawable (image);
+
+    switch (orientation)
+      {
+      case ORIENTATION_TOPLEFT:
+	flip_horizontal = FALSE;
+	flip_vertical = FALSE;
+	break;
+      case ORIENTATION_TOPRIGHT:
+	flip_horizontal = TRUE;
+	flip_vertical = FALSE;	
+	break;
+      case ORIENTATION_BOTRIGHT:
+	flip_horizontal = TRUE;
+	flip_vertical = TRUE;
+	break;
+      case ORIENTATION_BOTLEFT:
+	flip_horizontal = FALSE;
+	flip_vertical = TRUE;
+	break;
+      default:
+	flip_horizontal = FALSE;
+	flip_vertical = FALSE;	
+	printf("Orientation %d not handled yet!\n", orientation);
+	break;
+      }
+
+    gimp_image_undo_disable(image);
+    if (flip_horizontal)
+      {
+	return_vals = gimp_run_procedure("gimp_flip",
+					 &nreturn_vals,
+					 GIMP_PDB_DRAWABLE, drawable_ID,
+					 GIMP_PDB_INT32, 0,
+					 GIMP_PDB_END);
+	gimp_destroy_params(return_vals, nreturn_vals);
+      }
+    if (flip_vertical)
+      {
+	return_vals = gimp_run_procedure("gimp_flip",
+					 &nreturn_vals,
+					 GIMP_PDB_DRAWABLE, drawable_ID,
+					 GIMP_PDB_INT32, 1,
+					 GIMP_PDB_END);
+	gimp_destroy_params(return_vals, nreturn_vals);
+      }
+    gimp_image_undo_enable(image);
   }
 
   for (i= 0; !worst_case && i < extra; ++i) {
@@ -1607,19 +1665,19 @@ save_dialog (void)
                                  &tsvals.compression,
                                  GINT_TO_POINTER (tsvals.compression),
 
-                                 _("None"),
+                                 _("_None"),
                                  GINT_TO_POINTER (COMPRESSION_NONE), NULL,
 
-                                 _("LZW"),
+                                 _("_LZW"),
                                  GINT_TO_POINTER (COMPRESSION_LZW), NULL,
 
-                                 _("Pack Bits"),
+                                 _("_Pack Bits"),
                                  GINT_TO_POINTER (COMPRESSION_PACKBITS), NULL,
 
-                                 _("Deflate"),
+                                 _("_Deflate"),
                                  GINT_TO_POINTER (COMPRESSION_DEFLATE), NULL,
 
-                                 _("JPEG"),
+                                 _("_JPEG"),
                                  GINT_TO_POINTER (COMPRESSION_JPEG), NULL,
 
                                  NULL);
