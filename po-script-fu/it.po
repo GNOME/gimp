@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-04 15:03+0100\n"
-"PO-Revision-Date: 2005-02-04 15:04+0100\n"
+"POT-Creation-Date: 2005-02-28 22:23+0100\n"
+"PO-Revision-Date: 2005-02-28 23:07+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -62,74 +62,74 @@ msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: ../plug-ins/script-fu/script-fu-interface.c:254
+#: ../plug-ins/script-fu/script-fu-interface.c:261
 msgid "Script Arguments"
 msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:285
+#: ../plug-ins/script-fu/script-fu-interface.c:292
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:328
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:454
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:461
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:476
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:484
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:544
+#: ../plug-ins/script-fu/script-fu-interface.c:551
 msgid "Script Progress"
 msgstr "Avanzamento dello script"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:552
+#: ../plug-ins/script-fu/script-fu-interface.c:559
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1078
+#: ../plug-ins/script-fu/script-fu-interface.c:1085
 #: ../plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1085
+#: ../plug-ins/script-fu/script-fu-interface.c:1092
 #: ../plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1092
+#: ../plug-ins/script-fu/script-fu-interface.c:1099
 #: ../plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Data:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1101
+#: ../plug-ins/script-fu/script-fu-interface.c:1108
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
@@ -144,15 +144,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:647
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:670
+#: ../plug-ins/script-fu/script-fu-server.c:675
 msgid "Server Port:"
 msgstr "Porta server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:681
 msgid "Server Logfile:"
 msgstr "File di log server:"
 
@@ -1962,8 +1962,8 @@ msgid "_Round Button..."
 msgstr "Pulsante _rotondo..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Behaviour"
-msgstr "Caratteristiche"
+msgid "Behavior"
+msgstr "Comportamento"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -1982,8 +1982,8 @@ msgid "Black"
 msgstr "Nero"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge behaviour"
-msgstr "Comportamento del bordo"
+msgid "Edge behavior"
+msgstr "Comportamento bordo"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-13 15:21+0100\n"
-"PO-Revision-Date: 2005-02-11 13:39+0100\n"
+"POT-Creation-Date: 2005-02-28 22:13+0100\n"
+"PO-Revision-Date: 2005-02-28 23:03+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,7 @@ msgid "_Export"
 msgstr "_Esporta"
 
 #. the headline
-#: ../libgimp/gimpexport.c:487
+#: ../libgimp/gimpexport.c:493
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -170,11 +170,11 @@ msgstr ""
 "seguenti ragioni:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:558
+#: ../libgimp/gimpexport.c:564
 msgid "The export conversion won't modify your original image."
 msgstr "L'esportazione non modificherà l'immagine originale."
 
-#: ../libgimp/gimpexport.c:658
+#: ../libgimp/gimpexport.c:664
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -183,7 +183,7 @@ msgstr ""
 "Si è in procinto di salvare una maschera di livello con nome %s.\n"
 "Non verranno salvati i livelli visibili."
 
-#: ../libgimp/gimpexport.c:664
+#: ../libgimp/gimpexport.c:670
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -604,21 +604,21 @@ msgstr "Display a colore gestito"
 msgid "Print simulation"
 msgstr "Simulazione di stampa"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:57
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
 msgid "Perceptual"
 msgstr "Percettivo"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
 msgid "Relative Colorimetric"
 msgstr "Colorimetrico relativo"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 #: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Saturazione"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:60
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
 msgid "Absolute Colorimetric"
 msgstr "Colorimetrico assoluto"
 
@@ -723,40 +723,49 @@ msgstr "stringa UTF-8 non valida"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'elaborazione di '%s' alla riga  %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:177
+#: ../libgimpmodule/gimpmodule.c:180
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Caricamento modulo: '%s'\n"
 
-#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
-#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
-#: ../libgimpmodule/gimpmodule.c:478
+#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
+#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
+#: ../libgimpmodule/gimpmodule.c:482
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulo '%s' errore di caricamento: %s"
 
-#: ../libgimpmodule/gimpmodule.c:282
+#: ../libgimpmodule/gimpmodule.c:286
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Ignorato modulo: '%s'\n"
 
-#: ../libgimpmodule/gimpmodule.c:422
+#: ../libgimpmodule/gimpmodule.c:426
 msgid "Module error"
 msgstr "Errore modulo"
 
-#: ../libgimpmodule/gimpmodule.c:423
+#: ../libgimpmodule/gimpmodule.c:427
 msgid "Loaded"
 msgstr "Caricato"
 
-#: ../libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:428
 msgid "Load failed"
 msgstr "Caricamento fallito"
 
-#: ../libgimpmodule/gimpmodule.c:425
+#: ../libgimpmodule/gimpmodule.c:429
 msgid "Not loaded"
 msgstr "Non caricato"
 
-#: ../libgimpthumb/gimpthumb-utils.c:228 ../libgimpthumb/gimpthumb-utils.c:296
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"Impossibile determinare una directory home valida.\n"
+"Le miniature saranno perciò memorizzate nella cartella per i file temporanei (%s)."
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella miniature '%s'."
@@ -1057,27 +1066,35 @@ msgstr "Contrasto"
 msgid "Contrast C_ycles:"
 msgstr "_Ciclo di contrasto:"
 
-#: ../modules/cdisplay_proof.c:129
+#: ../modules/cdisplay_lcms.c:95
+msgid "Color management display filter using ICC color profiles"
+msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
+
+#: ../modules/cdisplay_lcms.c:163
+msgid "Color Management"
+msgstr "Gestione del colore"
+
+#: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
 msgstr "Fitro a prova di colore usando i profili di colore ICC"
 
-#: ../modules/cdisplay_proof.c:223
+#: ../modules/cdisplay_proof.c:221
 msgid "Color Proof"
 msgstr "A prova di colore"
 
-#: ../modules/cdisplay_proof.c:348
+#: ../modules/cdisplay_proof.c:346
 msgid "_Intent:"
 msgstr "_Intento:"
 
-#: ../modules/cdisplay_proof.c:352
+#: ../modules/cdisplay_proof.c:350
 msgid "Choose an ICC Color Profile"
 msgstr "Scegli un profilo di colore ICC"
 
-#: ../modules/cdisplay_proof.c:355
+#: ../modules/cdisplay_proof.c:353
 msgid "_Profile:"
 msgstr "_Profilo:"
 
-#: ../modules/cdisplay_proof.c:360
+#: ../modules/cdisplay_proof.c:358
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 

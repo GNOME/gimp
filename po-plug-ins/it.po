@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-13 15:23+0100\n"
-"PO-Revision-Date: 2005-02-13 15:24+0100\n"
+"POT-Creation-Date: 2005-02-28 22:14+0100\n"
+"PO-Revision-Date: 2005-02-28 23:05+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -379,11 +379,11 @@ msgstr "_Frattali"
 #: ../plug-ins/common/compressor.c:535 ../plug-ins/common/curve_bend.c:861
 #: ../plug-ins/common/dicom.c:647 ../plug-ins/common/gbr.c:583
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1257
-#: ../plug-ins/common/gtm.c:224 ../plug-ins/common/mng.c:557
-#: ../plug-ins/common/mng.c:941 ../plug-ins/common/pat.c:431
+#: ../plug-ins/common/gtm.c:224 ../plug-ins/common/mng.c:558
+#: ../plug-ins/common/mng.c:946 ../plug-ins/common/pat.c:431
 #: ../plug-ins/common/pcx.c:581 ../plug-ins/common/pix.c:511
 #: ../plug-ins/common/png.c:1175 ../plug-ins/common/pnm.c:807
-#: ../plug-ins/common/postscript.c:1121 ../plug-ins/common/psd_save.c:1611
+#: ../plug-ins/common/postscript.c:1121 ../plug-ins/common/psd_save.c:1335
 #: ../plug-ins/common/raw.c:517 ../plug-ins/common/raw.c:544
 #: ../plug-ins/common/spheredesigner.c:2099 ../plug-ins/common/sunras.c:510
 #: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:1917
@@ -419,10 +419,10 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/channel_mixer.c:983 ../plug-ins/common/curve_bend.c:913
 #: ../plug-ins/common/dicom.c:290 ../plug-ins/common/gbr.c:326
 #: ../plug-ins/common/gifload.c:296 ../plug-ins/common/gih.c:647
-#: ../plug-ins/common/mng.c:1112 ../plug-ins/common/pat.c:300
+#: ../plug-ins/common/mng.c:1117 ../plug-ins/common/pat.c:300
 #: ../plug-ins/common/pcx.c:301 ../plug-ins/common/pix.c:331
 #: ../plug-ins/common/png.c:673 ../plug-ins/common/pnm.c:431
-#: ../plug-ins/common/postscript.c:990 ../plug-ins/common/psd.c:1758
+#: ../plug-ins/common/postscript.c:990 ../plug-ins/common/psd.c:1782
 #: ../plug-ins/common/psp.c:1462 ../plug-ins/common/raw.c:230
 #: ../plug-ins/common/raw.c:634 ../plug-ins/common/spheredesigner.c:1989
 #: ../plug-ins/common/sunras.c:381 ../plug-ins/common/svg.c:311
@@ -1213,7 +1213,7 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/pat.c:306 ../plug-ins/common/pcx.c:307
 #: ../plug-ins/common/pix.c:337 ../plug-ins/common/png.c:681
 #: ../plug-ins/common/pnm.c:437 ../plug-ins/common/postscript.c:997
-#: ../plug-ins/common/psd.c:1764 ../plug-ins/common/raw.c:640
+#: ../plug-ins/common/psd.c:1788 ../plug-ins/common/raw.c:640
 #: ../plug-ins/common/sunras.c:436 ../plug-ins/common/tga.c:420
 #: ../plug-ins/common/tiff.c:535 ../plug-ins/common/wmf.c:957
 #: ../plug-ins/common/xbm.c:723 ../plug-ins/common/xpm.c:341
@@ -1254,7 +1254,7 @@ msgstr "Formato di compressione BMP non riconosciuto o non valido."
 #: ../plug-ins/common/gifload.c:865 ../plug-ins/common/pcx.c:332
 #: ../plug-ins/common/pcx.c:338 ../plug-ins/common/pix.c:371
 #: ../plug-ins/common/png.c:806 ../plug-ins/common/pnm.c:515
-#: ../plug-ins/common/psd.c:2171 ../plug-ins/common/raw.c:675
+#: ../plug-ins/common/psd.c:2196 ../plug-ins/common/raw.c:675
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:921
 #: ../plug-ins/common/tga.c:927 ../plug-ins/common/tiff.c:883
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/winclipboard.c:579
@@ -1285,7 +1285,7 @@ msgstr "Impossibile operare su immagini di tipo sconosciuto."
 #: ../plug-ins/common/pat.c:437 ../plug-ins/common/pcx.c:543
 #: ../plug-ins/common/pix.c:517 ../plug-ins/common/png.c:1183
 #: ../plug-ins/common/pnm.c:812 ../plug-ins/common/postscript.c:1127
-#: ../plug-ins/common/psd_save.c:1617 ../plug-ins/common/sunras.c:516
+#: ../plug-ins/common/psd_save.c:1341 ../plug-ins/common/sunras.c:516
 #: ../plug-ins/common/tga.c:1033 ../plug-ins/common/tiff.c:1923
 #: ../plug-ins/common/xbm.c:998 ../plug-ins/common/xpm.c:622
 #: ../plug-ins/common/xwd.c:573 ../plug-ins/fits/fits.c:455
@@ -3346,7 +3346,7 @@ msgid "_Polar"
 msgstr "_Polare"
 
 #: ../plug-ins/common/displace.c:452
-msgid "Edge behaviour"
+msgid "Edge Behavior"
 msgstr "Comportamento bordo"
 
 #: ../plug-ins/common/displace.c:458 ../plug-ins/common/edge.c:734
@@ -3931,7 +3931,7 @@ msgid "Spacing:"
 msgstr "Spaziatura:"
 
 #: ../plug-ins/common/gbr.c:695 ../plug-ins/common/gih.c:907
-#: ../plug-ins/common/pat.c:523 ../plug-ins/gimpressionist/presets.c:647
+#: ../plug-ins/common/pat.c:523 ../plug-ins/gimpressionist/presets.c:650
 msgid "Description:"
 msgstr "Descrizione:"
 
@@ -4059,7 +4059,7 @@ msgstr "Cic_lo infinito"
 msgid "_Delay between frames where unspecified:"
 msgstr "Ritar_do predefinito tra fotogrammi:"
 
-#: ../plug-ins/common/gif.c:1385 ../plug-ins/common/mng.c:1527
+#: ../plug-ins/common/gif.c:1385 ../plug-ins/common/mng.c:1532
 msgid "milliseconds"
 msgstr "millisecondi"
 
@@ -4898,108 +4898,108 @@ msgstr "Centro sfocatura"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:494 ../plug-ins/common/png.c:1558
+#: ../plug-ins/common/mng.c:495 ../plug-ins/common/png.c:1558
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Impossibile salvare senza degrado la trasparenza; salvataggio dell'opacità."
 
-#: ../plug-ins/common/mng.c:1309
+#: ../plug-ins/common/mng.c:1314
 msgid "Save as MNG"
 msgstr "Salva come MNG"
 
-#: ../plug-ins/common/mng.c:1327
+#: ../plug-ins/common/mng.c:1332
 msgid "MNG Options"
 msgstr "Opzioni MNG"
 
-#: ../plug-ins/common/mng.c:1333
+#: ../plug-ins/common/mng.c:1338
 msgid "Interlace"
 msgstr "Interlaccia"
 
-#: ../plug-ins/common/mng.c:1345
+#: ../plug-ins/common/mng.c:1350
 msgid "Save background color"
 msgstr "Salva colore di sfondo"
 
-#: ../plug-ins/common/mng.c:1356
+#: ../plug-ins/common/mng.c:1361
 msgid "Save gamma"
 msgstr "Salva la gamma"
 
-#: ../plug-ins/common/mng.c:1366
+#: ../plug-ins/common/mng.c:1371
 msgid "Save resolution"
 msgstr "Salva la risoluzione"
 
-#: ../plug-ins/common/mng.c:1377
+#: ../plug-ins/common/mng.c:1382
 msgid "Save creation time"
 msgstr "Salva la data di creazione"
 
-#: ../plug-ins/common/mng.c:1396
+#: ../plug-ins/common/mng.c:1401
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1397
+#: ../plug-ins/common/mng.c:1402
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1400
+#: ../plug-ins/common/mng.c:1405
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1401
+#: ../plug-ins/common/mng.c:1406
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1402
+#: ../plug-ins/common/mng.c:1407
 msgid "All PNG"
 msgstr "Tutti i PNG"
 
-#: ../plug-ins/common/mng.c:1403
+#: ../plug-ins/common/mng.c:1408
 msgid "All JNG"
 msgstr "Tutti i JNG"
 
-#: ../plug-ins/common/mng.c:1415
+#: ../plug-ins/common/mng.c:1420
 msgid "Default chunks type:"
 msgstr "Tipo blocchi predefiniti:"
 
-#: ../plug-ins/common/mng.c:1418
+#: ../plug-ins/common/mng.c:1423
 msgid "Combine"
 msgstr "Combina"
 
-#: ../plug-ins/common/mng.c:1419
+#: ../plug-ins/common/mng.c:1424
 msgid "Replace"
 msgstr "Rimpiazza"
 
-#: ../plug-ins/common/mng.c:1430
+#: ../plug-ins/common/mng.c:1435
 msgid "Default frame disposal:"
 msgstr "Disposizione predefinita fotogrammi:"
 
-#: ../plug-ins/common/mng.c:1442
+#: ../plug-ins/common/mng.c:1447
 msgid "PNG compression level:"
 msgstr "Livello di compressione PNG:"
 
-#: ../plug-ins/common/mng.c:1450 ../plug-ins/common/png.c:1706
+#: ../plug-ins/common/mng.c:1455 ../plug-ins/common/png.c:1706
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere una compressione alta per ottenere file piccoli"
 
-#: ../plug-ins/common/mng.c:1464
+#: ../plug-ins/common/mng.c:1469
 msgid "JPEG compression quality:"
 msgstr "Livello di compressione JPEG:"
 
-#: ../plug-ins/common/mng.c:1481
+#: ../plug-ins/common/mng.c:1486
 msgid "JPEG smoothing factor:"
 msgstr "Fattore di sfocatura JPEG:"
 
-#: ../plug-ins/common/mng.c:1491
+#: ../plug-ins/common/mng.c:1496
 msgid "Animated MNG options"
 msgstr "Opzioni MNG animata"
 
-#: ../plug-ins/common/mng.c:1497
+#: ../plug-ins/common/mng.c:1502
 msgid "Loop"
 msgstr "Ciclico"
 
-#: ../plug-ins/common/mng.c:1511
+#: ../plug-ins/common/mng.c:1516
 msgid "Default frame delay:"
 msgstr "Ritardo predefinito fotogrammi:"
 
-#: ../plug-ins/common/mng.c:1589
+#: ../plug-ins/common/mng.c:1594
 msgid "MNG animation"
 msgstr "Animazione MNG"
 
@@ -5879,15 +5879,15 @@ msgstr "_Anteprima"
 msgid "Preview _size:"
 msgstr "_Dimensioni anteprima:"
 
-#: ../plug-ins/common/psd.c:489
+#: ../plug-ins/common/psd.c:495
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Stringa UTF-8 non valida nel file PSD"
 
-#: ../plug-ins/common/psd_save.c:183
+#: ../plug-ins/common/psd_save.c:192
 msgid "Photoshop image"
 msgstr "Immagine Photoshop"
 
-#: ../plug-ins/common/psd_save.c:1587
+#: ../plug-ins/common/psd_save.c:1311
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5896,7 +5896,7 @@ msgstr ""
 "Impossibile salvare '%s'. Il formato del file psd non supporta immagini più "
 "larghe o alte di 30000 pixel."
 
-#: ../plug-ins/common/psd_save.c:1599
+#: ../plug-ins/common/psd_save.c:1323
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -8080,7 +8080,9 @@ msgstr "Impossibile leggere i colori"
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
-msgstr "Il file XWD %s ha formato %d, profondità %d e bit per pixel %d. Attualmente non è supportato."
+msgstr ""
+"Il file XWD %s ha formato %d, profondità %d e bit per pixel %d. Attualmente "
+"non è supportato."
 
 #: ../plug-ins/common/xwd.c:548
 msgid "Cannot save images with alpha channels."
@@ -9500,35 +9502,35 @@ msgstr "Focalizza i tratti di pennello attorno al centro dell'immagine"
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Fallito il salvataggio del file PPM '%s': %s"
 
-#: ../plug-ins/gimpressionist/presets.c:621
+#: ../plug-ins/gimpressionist/presets.c:624
 msgid "Save Current"
 msgstr "Salva corrente"
 
-#: ../plug-ins/gimpressionist/presets.c:868
+#: ../plug-ins/gimpressionist/presets.c:871
 msgid "The Gimpressionist Defaults"
 msgstr "Preimpostazioni del Gimpressionista"
 
-#: ../plug-ins/gimpressionist/presets.c:984
+#: ../plug-ins/gimpressionist/presets.c:987
 msgid "_Presets"
 msgstr "_Preimpostazioni"
 
-#: ../plug-ins/gimpressionist/presets.c:999
+#: ../plug-ins/gimpressionist/presets.c:1002
 msgid "Save current..."
 msgstr "Salva corrente..."
 
-#: ../plug-ins/gimpressionist/presets.c:1004
+#: ../plug-ins/gimpressionist/presets.c:1007
 msgid "Save the current settings to the specified file"
 msgstr "Salva le impostazioni correnti sul file specificato"
 
-#: ../plug-ins/gimpressionist/presets.c:1032
+#: ../plug-ins/gimpressionist/presets.c:1035
 msgid "Reads the selected Preset into memory"
 msgstr "Leggi le preimpostazioni selezionate in memoria"
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/gimpressionist/presets.c:1041
 msgid "Deletes the selected Preset"
 msgstr "Cancella le impostazioni selezionate"
 
-#: ../plug-ins/gimpressionist/presets.c:1044
+#: ../plug-ins/gimpressionist/presets.c:1047
 msgid "Reread the folder of Presets"
 msgstr "Ri-leggi le impostazioni della cartella"
 
@@ -10261,36 +10263,36 @@ msgstr "Mappa_immagine..."
 msgid "<Untitled>"
 msgstr "<senzatitolo>"
 
-#: ../plug-ins/imagemap/imap_main.c:747
+#: ../plug-ins/imagemap/imap_main.c:745
 msgid "Some data has been changed!"
 msgstr "Alcuni dati sono cambiati!"
 
-#: ../plug-ins/imagemap/imap_main.c:748
+#: ../plug-ins/imagemap/imap_main.c:746
 msgid "Do you really want to discard your changes?"
 msgstr "Se sicuro di voler abbandonare i cambiamenti?"
 
-#: ../plug-ins/imagemap/imap_main.c:959
+#: ../plug-ins/imagemap/imap_main.c:956
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" salvato."
 
-#: ../plug-ins/imagemap/imap_main.c:963
+#: ../plug-ins/imagemap/imap_main.c:960
 msgid "Couldn't save file:"
 msgstr "Impossibile salvare il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:978
+#: ../plug-ins/imagemap/imap_main.c:973
 msgid "Image size has changed."
 msgstr "La dimensione immagine è cambiata"
 
-#: ../plug-ins/imagemap/imap_main.c:979
+#: ../plug-ins/imagemap/imap_main.c:974
 msgid "Resize area's?"
 msgstr "Ridimensionamento area?"
 
-#: ../plug-ins/imagemap/imap_main.c:1014
+#: ../plug-ins/imagemap/imap_main.c:1008
 msgid "Couldn't read file:"
 msgstr "Impossibile leggere il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:1061
+#: ../plug-ins/imagemap/imap_main.c:1055
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -11505,12 +11507,13 @@ msgid "URI"
 msgstr "URI"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:95
-#: ../plug-ins/uri/uri-backend-wget.c:247
+#: ../plug-ins/uri/uri-backend-wget.c:278
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Scaricamento %s di dati immagine..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:96
+#: ../plug-ins/uri/uri-backend-wget.c:319
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Scaricato %s di dati immagine"
@@ -11526,7 +11529,7 @@ msgid "Uploaded %s of image data"
 msgstr "Caricato %s di dati immagine"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:185
-#: ../plug-ins/uri/uri-backend-wget.c:157
+#: ../plug-ins/uri/uri-backend-wget.c:170
 msgid "Connecting to server..."
 msgstr "Connessione al server..."
 
@@ -11540,30 +11543,35 @@ msgstr "Fallita la lettura di %s da '%s': %s"
 msgid "Failed to write %s to '%s': %s"
 msgstr "Fallita la scrittura di %s su '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:145
-#: ../plug-ins/uri/uri-backend-wget.c:163
-#: ../plug-ins/uri/uri-backend-wget.c:186
-#: ../plug-ins/uri/uri-backend-wget.c:205
+#: ../plug-ins/uri/uri-backend-wget.c:138
+#: ../plug-ins/uri/uri-backend-wget.c:158
+#: ../plug-ins/uri/uri-backend-wget.c:176
+#: ../plug-ins/uri/uri-backend-wget.c:199
+#: ../plug-ins/uri/uri-backend-wget.c:228
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget è uscito in modo inatteso dall'URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:153
+#: ../plug-ins/uri/uri-backend-wget.c:166
 #, c-format
 msgid "(timeout is %s seconds)"
 msgstr "(la scadenza è di %s secondi)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:181
+#: ../plug-ins/uri/uri-backend-wget.c:194
 msgid "Opening URI..."
 msgstr "Apertura URI..."
 
-#: ../plug-ins/uri/uri-backend-wget.c:192
-#: ../plug-ins/uri/uri-backend-wget.c:215
+#: ../plug-ins/uri/uri-backend-wget.c:205
+#: ../plug-ins/uri/uri-backend-wget.c:238
 #, c-format
 msgid "A network error occured: %s"
 msgstr "Si è verificato un errore di rete: %s"
+
+#: ../plug-ins/uri/uri-backend-wget.c:283
+msgid "Downloading unknown amount of image data..."
+msgstr "Scaricamento quantità di dati immagine sconosciuta..."
 
 #: ../plug-ins/winicon/icodialog.c:123
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
