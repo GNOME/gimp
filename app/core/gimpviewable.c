@@ -447,8 +447,25 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
                                           width, height, dot_for_dot,
                                           &w, &h))
         {
-          w = MIN (w, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
-          h = MIN (h, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+          if (w < 1)  w = 1;
+          if (h < 1)  h = 1;
+
+          if (w > GIMP_VIEWABLE_MAX_POPUP_SIZE ||
+              h > GIMP_VIEWABLE_MAX_POPUP_SIZE)
+            {
+              gdouble aspect = w / h;
+
+              if (w > h)
+                {
+                  w = GIMP_VIEWABLE_MAX_POPUP_SIZE;
+                  h = w / aspect;
+                }
+              else
+                {
+                  h = GIMP_VIEWABLE_MAX_POPUP_SIZE;
+                  w = h * aspect;
+                }
+            }
 
           if (popup_width)  *popup_width  = w;
           if (popup_height) *popup_height = h;

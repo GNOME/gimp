@@ -36,9 +36,9 @@
 
 /* This is a so-called pangram; it's supposed to
    contain all characters found in the alphabet. */
-#define GIMP_TEXT_PANGRAM N_("Pack my box with\nfive dozen liquor jugs.")
+#define GIMP_TEXT_PANGRAM     N_("Pack my box with\nfive dozen liquor jugs.")
 
-#define GIMP_FONT_POPUP_SIZE  (PANGO_SCALE * 32)
+#define GIMP_FONT_POPUP_SIZE  (PANGO_SCALE * 20)
 
 
 enum
@@ -197,7 +197,7 @@ gimp_font_set_property (GObject       *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}  
+}
 
 static void
 gimp_font_get_preview_size (GimpViewable *viewable,
@@ -247,8 +247,8 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
   pango_layout_get_pixel_extents (font->popup_layout, NULL, &logical);
 
-  *popup_width  = MIN (logical.width  + 6, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
-  *popup_height = MIN (logical.height + 6, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  *popup_width  = MIN (logical.width  + 6, GIMP_VIEWABLE_MAX_POPUP_SIZE);
+  *popup_height = MIN (logical.height + 6, GIMP_VIEWABLE_MAX_POPUP_SIZE);
 
   font->popup_width  = *popup_width;
   font->popup_height = *popup_height;
