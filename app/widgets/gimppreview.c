@@ -216,28 +216,29 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
-  preview->viewable     = NULL;
+  preview->viewable          = NULL;
 
-  preview->width        = 8;
-  preview->height       = 8;
-  preview->border_width = 0;
-  preview->dot_for_dot  = TRUE;
+  preview->width             = 8;
+  preview->height            = 8;
+  preview->border_width      = 0;
+  preview->dot_for_dot       = TRUE;
 
   gimp_rgba_set (&preview->border_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-  preview->is_popup     = FALSE;
-  preview->clickable    = FALSE;
-  preview->show_popup   = FALSE;
+  preview->is_popup          = FALSE;
+  preview->clickable         = FALSE;
+  preview->eat_button_events = TRUE;
+  preview->show_popup        = FALSE;
 
-  preview->buffer       = NULL;
-  preview->rowstride    = 0;
+  preview->buffer            = NULL;
+  preview->rowstride         = 0;
 
-  preview->size         = -1;
-  preview->in_button    = FALSE;
-  preview->idle_id      = 0;
-  preview->popup_id     = 0;
-  preview->popup_x      = 0;
-  preview->popup_y      = 0;
+  preview->size              = -1;
+  preview->in_button         = FALSE;
+  preview->idle_id           = 0;
+  preview->popup_id          = 0;
+  preview->popup_x           = 0;
+  preview->popup_y           = 0;
 
   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_EVENT_MASK);
 }
@@ -398,7 +399,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 	}
     }
 
-  return TRUE;
+  return preview->eat_button_events ? TRUE : FALSE;
 }
   
 static gboolean
@@ -446,7 +447,7 @@ gimp_preview_button_release_event (GtkWidget      *widget,
       return FALSE;
     }
 
-  return TRUE;
+  return preview->eat_button_events ? TRUE : FALSE;
 }
 
 static gboolean

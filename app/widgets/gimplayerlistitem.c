@@ -450,7 +450,8 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
                                                    list_item->preview_size,
                                                    2, FALSE);
 
-      GIMP_PREVIEW (layer_item->mask_preview)->clickable = TRUE;
+      GIMP_PREVIEW (layer_item->mask_preview)->clickable         = TRUE;
+      GIMP_PREVIEW (layer_item->mask_preview)->eat_button_events = FALSE;
 
       gtk_box_pack_start (GTK_BOX (list_item->hbox), layer_item->mask_preview,
                           FALSE, FALSE, 0);

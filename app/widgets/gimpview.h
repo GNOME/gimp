@@ -55,6 +55,7 @@ struct _GimpPreview
 
   gboolean        is_popup;
   gboolean        clickable;
+  gboolean        eat_button_events;
   gboolean        show_popup;
 
   /*< private >*/

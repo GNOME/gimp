@@ -138,7 +138,8 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
   if (GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable)
     GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item, viewable);
 
-  GIMP_PREVIEW (list_item->preview)->clickable = TRUE;
+  GIMP_PREVIEW (list_item->preview)->clickable         = TRUE;
+  GIMP_PREVIEW (list_item->preview)->eat_button_events = FALSE;
 
   drawable_item = GIMP_DRAWABLE_LIST_ITEM (list_item);
   drawable      = GIMP_DRAWABLE (GIMP_PREVIEW (list_item->preview)->viewable);
