@@ -11,11 +11,11 @@
 
 2002-02-08  Nathan Summers  <rock@gimp.org>
 
-        * app/tools/gimptoolmodule.[ch]: split registering classes and
+	* app/tools/gimptoolmodule.[ch]: split registering classes and
         registering tools into separate functions. Makes tool plug-ins
         actually work!
 
-        * app/tools/tools.c: replaced extremely ugly temporary hack for
+	* app/tools/tools.c: replaced extremely ugly temporary hack for
         loading tool modules with ugly temporary hack for loading tool
         modules.
 
