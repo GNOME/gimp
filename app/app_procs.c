@@ -274,10 +274,10 @@ app_run (const gchar         *full_prog_name,
 
   /* display a warning when no test swap file could be generated */
   if (! swap_is_ok)
-    g_message (_("Unable to open a test swap file. To avoid data loss "
-                 "please check the location and permissions of the swap "
-                 "directory defined in your Preferences "
-                 "(currently \"%s\")."),
+    g_message (_("Unable to open a test swap file.\n\n"
+                 "To avoid data loss, please check the location "
+                 "and permissions of the swap directory defined in "
+                 "your Preferences (currently \"%s\")."),
                GIMP_BASE_CONFIG (gimp->config)->swap_path);
 
   /*  enable autosave late so we don't autosave when the
