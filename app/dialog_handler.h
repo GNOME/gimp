@@ -19,8 +19,13 @@
 #ifndef __DIALOG_HANDLER_H_
 #define __DIALOG_HANDLER_H_
 
+#ifndef __DIALOG_HANDLER_C_
+/* Bypass these declarations when compiling the file with the definitions,
+ * because of the G_MODULE_EXPORT attribute in it.
+ */
 void dialog_register          (GtkWidget *dialog);
 void dialog_unregister        (GtkWidget *dialog);
+#endif
 
 void dialog_register_toolbox  (GtkWidget *dialog);
 void dialog_register_fileload (GtkWidget *dialog);

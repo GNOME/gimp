@@ -101,6 +101,7 @@ gimp_OBJECTS = \
 	devices.o		\
 	dialog_handler.o	\
 	disp_callbacks.o	\
+	display_cmds.o		\
 	docindex.o		\
 	dodgeburn.o		\
 	draw_core.o		\
@@ -122,15 +123,12 @@ gimp_OBJECTS = \
 	free_select.o		\
 	fuzzy_select.o		\
 	gdisplay.o		\
-	gdisplay_cmds.o		\
 	gdisplay_color.o	\
 	gdisplay_color_ui.o	\
 	gdisplay_ops.o		\
 	general.o		\
 	gimage.o		\
-	gimage_cmds.o		\
 	gimage_mask.o		\
-	gimage_mask_cmds.o	\
 	gimpbrush.o		\
 	gimpbrushgenerated.o	\
 	gimpbrushlist.o		\
@@ -139,7 +137,6 @@ gimp_OBJECTS = \
 	gimpcontextpreview.o	\
 	gimpdnd.o		\
 	gimphelp.o		\
-	gimphelp_cmds.o		\
 	gimphistogram.o		\
 	gimplist.o		\
 	gimplut.o		\
@@ -154,14 +151,17 @@ gimp_OBJECTS = \
 	gradient_cmds.o		\
 	gradient_select.o	\
 	gradient_select_cmds.o	\
+	gradients_cmds.o	\
 	guides_cmds.o		\
 	gtkwrapbox.o		\
 	gtkhwrapbox.o		\
 	gtkvwrapbox.o		\
 	gximage.o		\
+	help_cmds.o		\
 	histogramwidget.o 	\
 	histogram_tool.o	\
 	hue_saturation.o	\
+	image_cmds.o		\
 	image_map.o		\
 	image_new.o		\
 	image_render.o		\
@@ -170,7 +170,6 @@ gimp_OBJECTS = \
 	info_window.o		\
 	ink.o         		\
 	interface.o		\
-	interface_cmds.o	\
 	internal_procs.o	\
 	invert.o		\
 	iscissors.o		\
@@ -185,6 +184,7 @@ gimp_OBJECTS = \
 	main.o			\
 	measure.o		\
 	menus.o			\
+	message_cmds.o		\
 	misc_cmds.o		\
 	module_db.o		\
 	move.o			\
@@ -225,6 +225,7 @@ gimp_OBJECTS = \
 	scan_convert.o		\
 	scroll.o		\
 	selection.o		\
+	selection_cmds.o	\
 	session.o		\
 	shear_tool.o		\
 	smudge.o		\

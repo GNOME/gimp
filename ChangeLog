@@ -1,5 +1,44 @@
+2000-06-07  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gimphelp.c (gimp_help_netscape): Test for help_path being
+	non-NULL was wrong way.
+
+	* app/preferences_dialog.c (file_pref_cmd_callback): Change
+	"From X Server" to "From windowing system".
+
+	* app/makefile.cygwin: Update according to file name changes.
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def
+	* libgimp/makefile.{cygwin,msc}: Update for Mitch's and Sven's
+	changes.
+
+	* plug-ins/libgck/gck/gckcolor.c: Include <glib.h> before
+	gimpmath.h, so G_PI don't get redefined when glib.h is included
+	later.
+
+	From Hans Breuer, portability fixes for MSVC compilation:
+
+	* app/dialog_handler.h: Bypass decalration of exported functions
+	which are marked with G_MODULE_EXPORT in dialog_handler.c when
+	compiling that file. Otherwise some compilers will get confused.
+
+	* app/dialog_handler.c: Define a test macro for above bypass.
+
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/MapObject/mapobject_image.c
+	* plug-ins/MapObject/mapobject_shade.c: Include <string.h>.
+
+	* plug-ins/flame/flame.c: Define S_ISREG if needed.
+
+	* plug-ins/makefile.{cygwin,msc}: Updates.
+
+	* plug-ins/sel2path/global.h: Include <stdlib.h>.
+
+	* plug-ins/winsnap/winsnap.c: Include libgimp/gimpui.h.
+
 2000-06-05  Sven Neumann  <sven@gimp.org>
-	
+
 	* plug-ins/script-fu/scripts/ripply-anim.scm
 	* plug-ins/script-fu/scripts/spinning_globe.scm
 	* plug-ins/script-fu/scripts/waves-anim.scm: applied

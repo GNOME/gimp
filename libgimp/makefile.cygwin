@@ -27,6 +27,38 @@ all : \
 ../config.h : ../config.h.win32
 	cp $@ $<
 
+PDB_WRAPPERS_O = \
+	gimpbrushes_pdb.o		\
+	gimpbrushselect_pdb.o		\
+	gimpchannel_pdb.o		\
+	gimpchannelops_pdb.o		\
+	gimpcolor_pdb.o			\
+	gimpconvert_pdb.o		\
+	gimpdisplay_pdb.o		\
+	gimpdrawable_pdb.o		\
+	gimpedit_pdb.o			\
+	gimpfileops_pdb.o		\
+	gimpfloatingsel_pdb.o		\
+	gimpgimprc_pdb.o		\
+	gimpgradients_pdb.o		\
+	gimpgradientselect_pdb.o	\
+	gimpguides_pdb.o		\
+	gimphelp_pdb.o			\
+	gimpimage_pdb.o			\
+	gimplayer_pdb.o			\
+	gimpmessage_pdb.o		\
+	gimppalette_pdb.o		\
+	gimpparasite_pdb.o		\
+	gimppatterns_pdb.o		\
+	gimppatternselect_pdb.o		\
+	gimpplugin_pdb.o		\
+	gimpproceduraldb_pdb.o		\
+	gimpselection_pdb.o		\
+	gimptexttool_pdb.o		\
+	gimptools_pdb.o			\
+	gimpundo_pdb.o			\
+	gimpunit_pdb.o
+
 gimpi_OBJECTS = \
 	gimpenv.o \
 	gimpchainbutton.o \
@@ -44,6 +76,7 @@ gimpi_OBJECTS = \
 	gimpquerybox.o \
 	gimpsizeentry.o \
 	gimpunitmenu.o \
+	gimputils.c \
 	gimpvector.o \
 	gimpwidgets.o \
 	gimpwire.o
@@ -53,25 +86,24 @@ libgimpi.a : $(gimpi_OBJECTS)
 
 gimp_OBJECTS = \
 	gimp.o \
-	gimpchannel_pdb.o \
+	$(PDB_WRAPPERS_O) \
+	gimpchannel.o \
 	gimpcolorspace.o \
-	gimpdisplay_pdb.o \
-	gimpdrawable_pdb.o \
+	gimpdrawable.o \
 	gimpenv.o \
-	gimpgradient_pdb.o \
-	gimphelp_pdb.o \
-	gimpimage_pdb.o \
-	gimplayer_pdb.o \
+	gimpgradientselect.o \
+	gimphelp.o \
+	gimpimage.o \
+	gimplayer.o \
 	gimpmatrix.o \
-	gimppalette_pdb.o \
 	gimpparasite.o \
-	gimpparasite_pdb.o \
 	gimpparasiteio.o \
 	gimppixelrgn.o \
+	gimpproceduraldb.o \
 	gimpprotocol.o \
-	gimpselection_pdb.o \
+	gimpselection.o \
 	gimptile.o \
-	gimpunit_pdb.o \
+	gimpunit.o \
 	gimpvector.o \
 	gimpwire.o
 

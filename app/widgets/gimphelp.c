@@ -217,7 +217,7 @@ gimp_help_netscape (gchar *help_path,
     }
   else
     {
-      if (help_path)
+      if (!help_path)
 	{
 	  url = g_strconcat ("file:",
 			     gimp_data_directory (),

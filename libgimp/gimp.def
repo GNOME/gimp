@@ -1,24 +1,27 @@
 EXPORTS
 	gimp_attach_new_parasite
+	gimp_brushes_close_popup
+	gimp_brushes_get_brush_data
+	gimp_brushes_set_popup
 	gimp_channel_copy
 	gimp_channel_delete
 	gimp_channel_get_color
-	gimp_channel_get_image_id
-	gimp_channel_get_layer_id
 	gimp_channel_get_name
 	gimp_channel_get_opacity
 	gimp_channel_get_show_masked
 	gimp_channel_get_tattoo
 	gimp_channel_get_visible
-	gimp_channel_height
 	gimp_channel_new
+	gimp_channel_ops_duplicate
 	gimp_channel_set_color
 	gimp_channel_set_name
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
 	gimp_channel_set_visible
-	gimp_channel_width
 	gimp_color_cube
+	gimp_convert_grayscale
+	gimp_convert_indexed
+	gimp_convert_rgb
 	gimp_data_directory
 	gimp_default_display
 	gimp_destroy_paramdefs
@@ -28,7 +31,7 @@ EXPORTS
 	gimp_display_new
 	gimp_displays_flush
 	gimp_drawable_attach_new_parasite
-	gimp_drawable_bpp
+	gimp_drawable_bytes
 	gimp_drawable_delete
 	gimp_drawable_detach
 	gimp_drawable_fill
@@ -39,7 +42,7 @@ EXPORTS
 	gimp_drawable_get_tile2
 	gimp_drawable_has_alpha
 	gimp_drawable_height
-	gimp_drawable_image_id
+	gimp_drawable_image
 	gimp_drawable_is_channel
 	gimp_drawable_is_gray
 	gimp_drawable_is_indexed
@@ -62,14 +65,15 @@ EXPORTS
 	gimp_extension_ack
 	gimp_extension_process
 	gimp_gamma
-	gimp_get_data
-	gimp_get_data_size
 	gimp_get_progname
+	gimp_gradients_close_popup
 	gimp_gradients_get_active
+	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
 	gimp_gradients_sample_custom
 	gimp_gradients_sample_uniform
 	gimp_gradients_set_active
+	gimp_gradients_set_popup
 	gimp_gtkrc
 	gimp_help
 	gimp_hls_to_rgb
@@ -84,12 +88,8 @@ EXPORTS
 	gimp_image_attach_new_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
-	gimp_image_convert_grayscale
-	gimp_image_convert_indexed
-	gimp_image_convert_rgb
 	gimp_image_delete
 	gimp_image_delete_guide
-	gimp_image_duplicate
 	gimp_image_find_next_guide
 	gimp_image_flatten
 	gimp_image_floating_selection
@@ -110,6 +110,7 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_height
+	gimp_image_list
 	gimp_image_lower_channel
 	gimp_image_lower_layer
 	gimp_image_merge_visible_layers
@@ -141,23 +142,20 @@ EXPORTS
 	gimp_install_procedure
 	gimp_install_temp_proc
 	gimp_layer_add_alpha
-	gimp_layer_bpp
 	gimp_layer_copy
 	gimp_layer_create_mask
 	gimp_layer_delete
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
-	gimp_layer_get_image_id
-	gimp_layer_get_mask_id
 	gimp_layer_get_mode
 	gimp_layer_get_name
 	gimp_layer_get_opacity
-	gimp_layer_get_preserve_transparency
+	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
 	gimp_layer_get_tattoo
 	gimp_layer_get_visible
-	gimp_layer_height
-	gimp_layer_is_floating_selection
+	gimp_layer_is_floating_sel
+	gimp_layer_mask
 	gimp_layer_new
 	gimp_layer_resize
 	gimp_layer_scale
@@ -167,12 +165,10 @@ EXPORTS
 	gimp_layer_set_name
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
-	gimp_layer_set_preserve_transparency
+	gimp_layer_set_preserve_trans
 	gimp_layer_set_show_mask
 	gimp_layer_set_visible
 	gimp_layer_translate
-	gimp_layer_type
-	gimp_layer_width
 	gimp_main
 	gimp_major_version
 	gimp_matrix3_determinant
@@ -217,6 +213,9 @@ EXPORTS
 	gimp_path_get_user_writable_dir
 	gimp_path_parse
 	gimp_path_to_str
+	gimp_patterns_close_popup
+	gimp_patterns_get_pattern_data
+	gimp_patterns_set_popup
 	gimp_personal_rc_file
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
@@ -231,17 +230,18 @@ EXPORTS
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
-	gimp_pixpipe_params_init
 	gimp_pixpipe_params_build
+	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
-	gimp_plugin_domain_add
-	gimp_plugin_domain_add_with_path
+	gimp_plugin_domain_register
 	gimp_plugin_help_register
+	gimp_procedural_db_get_data
+	gimp_procedural_db_proc_info
+	gimp_procedural_db_query
+	gimp_procedural_db_set_data
+	gimp_procedural_db_get_data_size
 	gimp_progress_init
 	gimp_progress_update
-	gimp_query_database
-	gimp_query_images
-	gimp_query_procedure
 	gimp_quit
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
@@ -259,7 +259,6 @@ EXPORTS
 	gimp_selection_float
 	gimp_selection_is_empty
 	gimp_selection_none
-	gimp_set_data
 	gimp_standard_help_func
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size

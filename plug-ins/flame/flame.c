@@ -39,6 +39,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef G_OS_WIN32
+#  include <io.h>
+#  ifndef S_ISREG
+#    define S_ISREG(m) ((m) & _S_IFREG)
+#  endif
+#endif
+
 #include "flame.h"
 
 #define VARIATION_SAME   (-2)

@@ -20,6 +20,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <stdlib.h>
+
 #include "types.h"
 
 /* Define common sorts of messages.  */

@@ -27,6 +27,8 @@
 
 #include "stdlib.h"
 
+#include <glib.h>
+
 #include "libgimp/gimpmath.h"
 
 #include "gck.h"

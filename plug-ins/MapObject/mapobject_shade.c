@@ -2,6 +2,8 @@
 /* Shading stuff */
 /*****************/
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 
 #include <gck/gck.h>

@@ -160,7 +160,6 @@ guash-data-install :
 
 !IFDEF EXTRA_FractalExplorer
 OBJECTS = \
-	Callbacks.obj \
 	Dialogs.obj \
 	Events.obj \
 	FractalExplorer.obj \
@@ -220,7 +219,6 @@ OBJECTS = \
 	cmap.obj \
 	flame.obj \
 	libifs.obj \
-	megawidget.obj \
 	rect.obj
 !ENDIF
 
@@ -526,6 +524,10 @@ OBJECTS = \
 	tw_util.obj \
 	twain.obj
 EXTRALIBS = user32.lib
+!ENDIF
+
+!IFDEF EXTRA_webbrowser
+EXTRALIBS = shell32.lib
 !ENDIF
 
 !IFDEF EXTRA_winprint

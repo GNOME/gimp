@@ -2406,7 +2406,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (sizeentry, !using_xserver_resolution);
 
   group = NULL;
-  button = gtk_radio_button_new_with_label (group, _("From X Server"));
+  button = gtk_radio_button_new_with_label (group, _("From windowing system"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_res_source_callback),

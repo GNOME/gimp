@@ -42,9 +42,9 @@ INTL = ..\..\intl
 CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
-	..\config.h	\
-	gimpi.lib	\
-	gimp-$(GIMP_VER).dll	\
+	..\config.h \
+	gimpi.lib \
+	gimp-$(GIMP_VER).dll \
 	gimpui-$(GIMP_VER).dll
 
 ..\config.h : ..\config.h.win32
@@ -53,6 +53,38 @@ all : \
 install : all
 	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
 	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
+
+PDB_WRAPPERS_O = \
+	gimpbrushes_pdb.obj \
+	gimpbrushselect_pdb.obj \
+	gimpchannel_pdb.obj \
+	gimpchannelops_pdb.obj \
+	gimpcolor_pdb.obj \
+	gimpconvert_pdb.obj \
+	gimpdisplay_pdb.obj \
+	gimpdrawable_pdb.obj \
+	gimpedit_pdb.obj \
+	gimpfileops_pdb.obj \
+	gimpfloatingsel_pdb.obj \
+	gimpgimprc_pdb.obj \
+	gimpgradients_pdb.obj \
+	gimpgradientselect_pdb.obj \
+	gimpguides_pdb.obj \
+	gimphelp_pdb.obj \
+	gimpimage_pdb.obj \
+	gimplayer_pdb.obj \
+	gimpmessage_pdb.obj \
+	gimppalette_pdb.obj \
+	gimpparasite_pdb.obj \
+	gimppatterns_pdb.obj \
+	gimppatternselect_pdb.obj \
+	gimpplugin_pdb.obj \
+	gimpproceduraldb_pdb.obj \
+	gimpselection_pdb.obj \
+	gimptexttool_pdb.obj \
+	gimptools_pdb.obj \
+	gimpundo_pdb.obj \
+	gimpunit_pdb.obj
 
 gimpi_OBJECTS = \
 	gimpenv.obj \
@@ -63,43 +95,42 @@ gimpi_OBJECTS = \
 	gimpfileselection.obj \
 	gimphelpui.obj \
 	gimpmatrix.obj \
+	gimpparasite.obj \
+	gimpparasiteio.obj \
 	gimppatheditor.obj \
 	gimppixmap.obj \
 	gimpprotocol.obj \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \
 	gimpunitmenu.obj \
+	gimputils.c \
 	gimpvector.obj \
 	gimpwidgets.obj \
-	gimpwire.obj \
-	gserialize.obj \
-	parasite.obj \
-	parasiteio.obj
+	gimpwire.obj
 
 gimpi.lib : $(gimpi_OBJECTS)
 	lib /out:gimpi.lib $(gimpi_OBJECTS)
 
 gimp_OBJECTS = \
 	gimp.obj \
-	gimpchannel_pdb.obj \
+	$(PDB_WRAPPERS_O) \
+	gimpchannel.obj \
 	gimpcolorspace.obj \
-	gimpdisplay_pdb.obj \
-	gimpdrawable_pdb.obj \
+	gimpdrawable.obj \
 	gimpenv.obj \
-	gimpgradient_pdb.obj \
-	gimphelp_pdb.obj \
-	gimpimage_pdb.obj \
-	gimplayer_pdb.obj \
+	gimpgradientselect.obj \
+	gimphelp.obj \
+	gimpimage.obj \
+	gimplayer.obj \
 	gimpmatrix.obj \
-	gimppalette_pdb.obj \
 	gimpparasite.obj \
-	gimpparasite_pdb.obj \
 	gimpparasiteio.obj \
 	gimppixelrgn.obj \
+	gimpproceduraldb.obj \
 	gimpprotocol.obj \
-	gimpselection_pdb.obj \
+	gimpselection.obj \
 	gimptile.obj \
-	gimpunit_pdb.obj \
+	gimpunit.obj \
 	gimpvector.obj \
 	gimpwire.obj
 
@@ -119,8 +150,8 @@ gimpui_OBJECTS = \
 	gimpdialog.obj \
 	gimpexport.obj \
 	gimpfileselection.obj \
-	gimpgradientmenu.obj \
 	gimphelpui.obj \
+	gimpgradientmenu.obj \
 	gimppatheditor.obj \
 	gimppatternmenu.obj \
 	gimppixmap.obj \
