@@ -1,8 +1,13 @@
 2003-04-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainermenuimpl.c; keep the "(none)" item at
+	the top of the menu, not at the bottom.
+
+2003-04-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainermenu.c
 	(gimp_container_menu_item_selected): call
-	gimp_cotainer_menu_select_item() before notifying the context of
+	gimp_container_menu_select_item() before notifying the context of
 	the change.
 
 2003-04-05  Michael Natterer  <mitch@gimp.org>

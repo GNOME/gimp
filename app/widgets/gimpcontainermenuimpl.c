@@ -183,11 +183,12 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
                     G_CALLBACK (gimp_container_menu_impl_item_selected),
                     menu);
 
-  gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, index);
-  gtk_widget_show (menu_item);
+  if (index == -1)
+    gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, -1);
+  else
+    gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, index + 1);
 
-  gtk_menu_reorder_child (GTK_MENU (menu),
-			  GIMP_CONTAINER_MENU_IMPL (menu)->empty_item, -1);
+  gtk_widget_show (menu_item);
 
   return (gpointer) menu_item;
 }
@@ -240,10 +241,10 @@ gimp_container_menu_impl_reorder_item (GimpContainerMenu *menu,
       active = (gtk_menu_get_active (GTK_MENU (menu)) == menu_item);
 
       gtk_menu_reorder_child (GTK_MENU (menu),
-			      GTK_WIDGET (menu_item), new_index);
+			      GTK_WIDGET (menu_item), new_index + 1);
 
       if (active)
-	gimp_container_menu_impl_set_history (menu, new_index);
+	gimp_container_menu_impl_set_history (menu, new_index + 1);
     }
 }
 
@@ -267,15 +268,13 @@ gimp_container_menu_impl_select_item (GimpContainerMenu *menu,
       index = gimp_container_get_child_index (menu->container,
 					      GIMP_OBJECT (viewable));
 
-      gimp_container_menu_impl_set_history (menu, index);
+      gimp_container_menu_impl_set_history (menu, index + 1);
     }
   else
     {
       gtk_widget_show (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
 
-      index = gimp_container_num_children (menu->container);
-
-      gimp_container_menu_impl_set_history (menu, index);
+      gimp_container_menu_impl_set_history (menu, 0);
     }
 }
 
