@@ -1,3 +1,8 @@
+2001-10-10  DindinX <dindinx@wanadoo.fr>
+
+	* app/display/gimpdisplay-callbacks.c: fixed a buglet. Key-release
+	  events are now correctly handled.
+
 2001-10-08  Dave Neary <nearyd@eircom.net>
 
         * HACKING

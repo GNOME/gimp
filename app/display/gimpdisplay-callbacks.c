@@ -610,8 +610,8 @@ gdisplay_canvas_events (GtkWidget   *canvas,
 #if 0
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 	                                    &tx, &ty, NULL, NULL, NULL, NULL);
-	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
 #endif
+	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
 	  break;
