@@ -129,6 +129,53 @@ file_utils_filename_to_uri (GSList       *procs,
   return uri;
 }
 
+/**
+ * file_utils_filename_from_uri:
+ * @uri: a URI
+ *
+ * A utility function to be used as a replacement for
+ * g_filename_from_uri(). It deals with file: URIs with hostname in a
+ * platform-specific way. On Win32, a UNC path is created and
+ * returned, on other platforms the URI is detected as non-local and
+ * NULL is returned.
+ *
+ * Returns: newly allocated filename or %NULL if @uri is a remote file
+ **/
+gchar *
+file_utils_filename_from_uri (const gchar *uri)
+{
+  gchar *filename;
+  gchar *hostname;
+
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  filename = g_filename_from_uri (uri, &hostname, NULL);
+
+  if (!filename)
+    return NULL;
+
+  if (hostname)
+    {
+      /*  we have a file: URI with a hostname                           */
+#ifdef G_OS_WIN32
+      /*  on Win32, create a valid UNC path and use it as the filename  */
+
+      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
+
+      g_free (filename);
+      filename = tmp;
+#else
+      /*  otherwise return NULL, caller should use URI then             */
+      g_free (filename);
+      filename = NULL;
+#endif
+
+      g_free (hostname);
+    }
+
+  return filename;
+}
+
 PlugInProcDef *
 file_utils_find_proc (GSList       *procs,
                       const gchar  *uri)
@@ -146,7 +193,7 @@ file_utils_find_proc (GSList       *procs,
   if (file_proc)
     return file_proc;
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
+  filename = file_utils_filename_from_uri (uri);
 
   /* Then look for magics */
   if (filename)
@@ -254,9 +301,10 @@ file_utils_uri_to_utf8_filename (const gchar *uri)
 {
   g_return_val_if_fail (uri != NULL, NULL);
 
-  if (! strncmp (uri, "file:", strlen ("file:")))
+  if (g_str_has_prefix (uri, "file:"))
     {
-      gchar  *filename = g_filename_from_uri (uri, NULL, NULL);
+      gchar *filename = file_utils_filename_from_uri (uri);
+
       if (filename)
         {
           GError *error = NULL;

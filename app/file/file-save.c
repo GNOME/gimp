@@ -133,7 +133,7 @@ file_save_as (GimpImage      *gimage,
       return GIMP_PDB_CALLING_ERROR;
     }
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
+  filename = file_utils_filename_from_uri (uri);
 
   if (filename)
     {

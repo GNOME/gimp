@@ -1,3 +1,14 @@
+2005-02-03  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-utils.[ch]: added new utility function
+	file_utils_filename_from_uri().
+	
+	* app/file/file-open.c (file_open_image)
+	* app/file/file-save.c (file_save_as):
+	* app/file/file-utils.c (file_utils_find_proc)
+	(file_utils_uri_to_utf8_filename): replaced g_filename_from_uri()
+	with file_utils_filename_from_uri().
+
 2005-02-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimppropwidgets.c:  add gtk-doc comments to 
