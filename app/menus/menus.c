@@ -108,107 +108,128 @@ menus_init (Gimp *gimp)
   global_menu_factory = gimp_menu_factory_new (gimp);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Toolbox>",
+                                   GIMP_HELP_TOOLBOX,
                                    toolbox_menu_setup, NULL, FALSE,
                                    n_toolbox_menu_entries,
                                    toolbox_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Image>",
+                                   GIMP_HELP_IMAGE_WINDOW,
                                    image_menu_setup, image_menu_update, FALSE,
                                    n_image_menu_entries,
                                    image_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Load>",
+                                   GIMP_HELP_FILE_OPEN,
                                    file_open_menu_setup, NULL, FALSE,
                                    n_file_open_menu_entries,
                                    file_open_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Save>",
+                                   GIMP_HELP_FILE_SAVE,
                                    file_save_menu_setup,
                                    file_save_menu_update, FALSE,
                                    n_file_save_menu_entries,
                                    file_save_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Layers>",
+                                   GIMP_HELP_LAYER_DIALOG,
                                    NULL, layers_menu_update, TRUE,
                                    n_layers_menu_entries,
                                    layers_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Channels>",
+                                   GIMP_HELP_CHANNEL_DIALOG,
                                    NULL, channels_menu_update, TRUE,
                                    n_channels_menu_entries,
                                    channels_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Vectors>",
+                                   GIMP_HELP_PATH_DIALOG,
                                    NULL, vectors_menu_update, TRUE,
                                    n_vectors_menu_entries,
                                    vectors_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Dialogs>",
+                                   GIMP_HELP_DOCK,
                                    NULL, dialogs_menu_update, TRUE,
                                    n_dialogs_menu_entries,
                                    dialogs_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Brushes>",
+                                   GIMP_HELP_BRUSH_DIALOG,
                                    NULL, brushes_menu_update, TRUE,
                                    n_brushes_menu_entries,
                                    brushes_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Patterns>",
+                                   GIMP_HELP_PATTERN_DIALOG,
                                    NULL, patterns_menu_update, TRUE,
                                    n_patterns_menu_entries,
                                    patterns_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Gradients>",
+                                   GIMP_HELP_GRADIENT_DIALOG,
                                    NULL, gradients_menu_update, TRUE,
                                    n_gradients_menu_entries,
                                    gradients_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Palettes>",
+                                   GIMP_HELP_PALETTE_DIALOG,
                                    NULL, palettes_menu_update, TRUE,
                                    n_palettes_menu_entries,
                                    palettes_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Buffers>",
+                                   GIMP_HELP_BUFFER_DIALOG,
                                    NULL, buffers_menu_update, TRUE,
                                    n_buffers_menu_entries,
                                    buffers_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Documents>",
+                                   GIMP_HELP_DOCUMENT_DIALOG,
                                    NULL, documents_menu_update, TRUE,
                                    n_documents_menu_entries,
                                    documents_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Templates>",
+                                   GIMP_HELP_TEMPLATE_DIALOG,
                                    NULL, templates_menu_update, TRUE,
                                    n_templates_menu_entries,
                                    templates_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Images>",
+                                   GIMP_HELP_IMAGE_DIALOG,
                                    NULL, images_menu_update, TRUE,
                                    n_images_menu_entries,
                                    images_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<GradientEditor>",
+                                   GIMP_HELP_GRADIENT_EDITOR_DIALOG,
                                    NULL, gradient_editor_menu_update, TRUE,
                                    n_gradient_editor_menu_entries,
                                    gradient_editor_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<PaletteEditor>",
+                                   GIMP_HELP_PALETTE_EDITOR_DIALOG,
                                    NULL, palette_editor_menu_update, TRUE,
                                    n_palette_editor_menu_entries,
                                    palette_editor_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<ColormapEditor>",
+                                   GIMP_HELP_INDEXED_PALETTE_DIALOG,
                                    NULL, colormap_editor_menu_update, TRUE,
                                    n_colormap_editor_menu_entries,
                                    colormap_editor_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<QMask>",
+                                   GIMP_HELP_QMASK,
                                    NULL, qmask_menu_update, TRUE,
                                    n_qmask_menu_entries,
                                    qmask_menu_entries);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<ErrorConsole>",
+                                   GIMP_HELP_ERRORS_DIALOG,
                                    NULL, error_console_menu_update, TRUE,
                                    n_error_console_menu_entries,
                                    error_console_menu_entries);

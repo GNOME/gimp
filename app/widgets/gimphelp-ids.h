@@ -88,6 +88,7 @@
 #define GIMP_HELP_VIEW_SHRINK_WRAP                "view/shrink_wrap.html"
 #define GIMP_HELP_VIEW_FULLSCREEN                 "view/fullscreen.html"
 
+#define GIMP_HELP_IMAGE_WINDOW                    "dialogs/image_window.html"
 #define GIMP_HELP_IMAGE_DIALOG                    "dialogs/image_dialog.html"
 #define GIMP_HELP_IMAGE_CONVERT_RGB               "image/mode/convert_to_rgb.html"
 #define GIMP_HELP_IMAGE_CONVERT_GRAYSCALE         "image/mode/convert_to_grayscale.html"
@@ -161,6 +162,7 @@
 #define GIMP_HELP_CHANNEL_SELECTION_INTERSECT     "channels/channel_to_selection.html#intersect"
 #define GIMP_HELP_CHANNEL_EDIT                    "dialogs/edit_channel_attributes.html"
 
+#define GIMP_HELP_QMASK                           "select/quickmask.html"
 #define GIMP_HELP_QMASK_TOGGLE                    "select/quickmask.html"
 #define GIMP_HELP_QMASK_INVERT                    "select/quickmask.html"
 #define GIMP_HELP_QMASK_EDIT                      "dialogs/edit_qmask_attributes.html"
@@ -348,6 +350,14 @@
 #define GIMP_HELP_PREFS_FOLDERS_MODULES           "dialogs/preferences/folders.html#modules"
 #define GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT       "dialogs/preferences/folders.html#environ"
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "dialogs/preferences/folders.html#themes"
+
+#define GIMP_HELP_DOCK                            "dialogs/dock.html"
+#define GIMP_HELP_DOCK_TAB_ADD                    "dialogs/dock.html"
+#define GIMP_HELP_DOCK_TAB_REMOVE                 "dialogs/dock.html"
+#define GIMP_HELP_DOCK_PREVIEW_SIZE               "dialogs/dock.html"
+#define GIMP_HELP_DOCK_TAB_STYLE                  "dialogs/dock.html"
+#define GIMP_HELP_DOCK_VIEW_AS_LIST               "dialogs/dock.html"
+#define GIMP_HELP_DOCK_VIEW_AS_GRID               "dialogs/dock.html"
 
 #define GIMP_HELP_COLOR_DIALOG                    "dialogs/color.html"
 #define GIMP_HELP_DEVICE_STATUS_DIALOG            "dialogs/device_status.html"

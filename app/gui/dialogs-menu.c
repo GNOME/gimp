@@ -48,10 +48,12 @@
     (id), (help_id), NULL }
 #define PREVIEW_SIZE(path,size) \
   { { (path), NULL, dialogs_preview_size_cmd_callback, \
-      (size), "/Preview Size/Tiny" }, NULL, NULL, NULL }
+      (size), "/Preview Size/Tiny" }, \
+    NULL, GIMP_HELP_DOCK_PREVIEW_SIZE, NULL }
 #define TAB_STYLE(path,style) \
   { { (path), NULL, dialogs_tab_style_cmd_callback, \
-      (style), "/Tab Style/Icon" }, NULL, NULL, NULL }
+      (style), "/Tab Style/Icon" }, \
+    NULL, GIMP_HELP_DOCK_TAB_STYLE, NULL }
 
 
 GimpItemFactoryEntry dialogs_menu_entries[] =
@@ -119,7 +121,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/_Remove Tab"), NULL,
       dialogs_remove_tab_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REMOVE },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_TAB_REMOVE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -128,7 +131,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/Preview Size/_Tiny"), NULL,
       dialogs_preview_size_cmd_callback,
       GIMP_PREVIEW_SIZE_TINY, "<RadioItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_PREVIEW_SIZE, NULL },
 
   PREVIEW_SIZE (N_("/Preview Size/E_xtra Small"), GIMP_PREVIEW_SIZE_EXTRA_SMALL),
   PREVIEW_SIZE (N_("/Preview Size/_Small"),       GIMP_PREVIEW_SIZE_SMALL),
@@ -144,7 +148,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/Tab Style/_Icon"), NULL,
       dialogs_tab_style_cmd_callback,
       GIMP_TAB_STYLE_ICON, "<RadioItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_TAB_STYLE, NULL },
 
   TAB_STYLE (N_("/Tab Style/Current _Status"), GIMP_TAB_STYLE_PREVIEW),
   TAB_STYLE (N_("/Tab Style/_Text"),           GIMP_TAB_STYLE_NAME),
@@ -153,10 +158,12 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   { { N_("/View as _List"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_VIEW_AS_LIST, NULL },
   { { N_("/View as _Grid"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_GRID, "/View as List" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_VIEW_AS_GRID, NULL },
 
   MENU_SEPARATOR ("/image-menu-separator"),
 
