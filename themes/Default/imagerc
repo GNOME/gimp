@@ -122,76 +122,81 @@ style "gimp-icons"
   #
   stock["gimp-convert-rgb"] =
     {
-      { "images/stock-menu-convert-rgb.png", *, *, "gtk-menu" },
-      { "images/stock-menu-convert-rgb.png", *, *, * }
+      { "images/stock-convert-rgb-16.png", *, *, "gtk-menu" },
+      { "images/stock-convert-rgb-16.png", *, *, * }
     }
   stock["gimp-convert-grayscale"] =
     {
-      { "images/stock-menu-convert-grayscale.png", *, *, "gtk-menu" },
-      { "images/stock-menu-convert-grayscale.png", *, *, * }
+      { "images/stock-convert-grayscale-16.png", *, *, "gtk-menu" },
+      { "images/stock-convert-grayscale-16.png", *, *, * }
     }
   stock["gimp-convert-indexed"] =
     {
-      { "images/stock-menu-convert-indexed.png", *, *, "gtk-menu" },
-      { "images/stock-menu-convert-indexed.png", *, *, * }
+      { "images/stock-convert-indexed-16.png", *, *, "gtk-menu" },
+      { "images/stock-convert-indexed-16.png", *, *, * }
     }
   stock["gimp-merge-down"] =
     {
-      { "images/stock-menu-merge-down.png", *, *, "gtk-menu" },
-      { "images/stock-menu-merge-down.png", *, *, * }
+      { "images/stock-merge-down-16.png", *, *, "gtk-menu" },
+      { "images/stock-merge-down-16.png", *, *, * }
     }
   stock["gimp-reshow-filter"] =
     {
-      { "images/stock-menu-reshow-filter.png", *, *, "gtk-menu" },
-      { "images/stock-menu-reshow-filter.png", *, *, * }
+      { "images/stock-reshow-filter-16.png", *, *, "gtk-menu" },
+      { "images/stock-reshow-filter-16.png", *, *, * }
     }
   stock["gimp-rotate-90"] =
     {
-      { "images/stock-menu-rotate-90.png", *, *, "gtk-menu" },
-      { "images/stock-menu-rotate-90.png", *, *, * }
+      { "images/stock-rotate-90-16.png", *, *, "gtk-menu" },
+      { "images/stock-rotate-90-16.png", *, *, * }
     }
   stock["gimp-rotate-180"] =
     {
-      { "images/stock-menu-rotate-180.png", *, *, "gtk-menu" },
-      { "images/stock-menu-rotate-180.png", *, *, * }
+      { "images/stock-rotate-180-16.png", *, *, "gtk-menu" },
+      { "images/stock-rotate-180-16.png", *, *, * }
     }
   stock["gimp-rotate-270"] =
     {
-      { "images/stock-menu-rotate-270.png", *, *, "gtk-menu" },
-      { "images/stock-menu-rotate-270.png", *, *, * }
+      { "images/stock-rotate-270-16.png", *, *, "gtk-menu" },
+      { "images/stock-rotate-270-16.png", *, *, * }
     }
   stock["gimp-resize"] =
     {
-      { "images/stock-menu-resize.png", *, *, "gtk-menu" },
-      { "images/stock-menu-resize.png", *, *, * }
+      { "images/stock-resize-16.png", *, *, "gtk-menu" },
+      { "images/stock-resize-16.png", *, *, * }
     }
   stock["gimp-scale"] =
     {
-      { "images/stock-menu-scale.png", *, *, "gtk-menu" },
-      { "images/stock-menu-scale.png", *, *, * }
+      { "images/stock-scale-16.png", *, *, "gtk-menu" },
+      { "images/stock-scale-16.png", *, *, * }
     }
   stock["gimp-selection-to-channel"] =
     {
-      { "images/stock-menu-selection-to-channel.png", *, *, "gtk-menu" },
-      { "images/stock-menu-selection-to-channel.png", *, *, * }
+      { "images/stock-selection-to-channel-16.png", *, *, "gtk-menu" },
+      { "images/stock-selection-to-channel-16.png", *, *, * }
+    }
+  stock["gimp-tool-options"] =
+    {
+      { "images/stock-tool-options-16.png", *, *, "gtk-menu" },
+      { "images/stock-tool-options-16.png", *, *, * }
     }
 
   # Image window icons
   #
   stock["gimp-navigation"] =
     {
-      { "images/stock-menu-navigation.png", *, *, "gtk-menu" },
-      { "images/stock-menu-navigation.png", *, *, * }
+      { "images/stock-navigation-16.png", *, *, "gtk-menu" },
+      { "images/stock-navigation-16.png", *, *, * }
     }
   stock["gimp-qmask-off"] =
     {
-      { "images/stock-menu-qmask-off.png", *, *, "gtk-menu" },
-      { "images/stock-menu-qmask-off.png", *, *, * }
+      { "images/stock-qmask-off-16.png", *, *, "gtk-menu" },
+      { "images/stock-qmask-off-16.png", *, *, * }
     }
   stock["gimp-qmask-on"] =
     {
-      { "images/stock-menu-qmask-on.png", *, *, "gtk-menu" },
-      { "images/stock-menu-qmask-on.png", *, *, * }
+      { "images/stock-qmask-on-16.png", *, *, "gtk-menu" },
+      { "images/stock-qmask-on-16.png", *, *, * }
     }
 
   # X & Y linked or not

@@ -82,6 +82,7 @@ STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
 	stock-navigation-16.png			\
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
+	stock-tool-options-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\
 	stock-wilber-16.png			\

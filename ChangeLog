@@ -1,3 +1,17 @@
+2002-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmovetool.c: <shift>+click toggles the active
+	layer's "linked" property now.
+
+	* themes/Default/images/stock-tool-options-16.png: new icon.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/imagerc
+	* libgimpwidgets/gimpstock.[ch]: added it to the stock system.
+
+	* app/gui/menus.c: use it for the tool_options dialog's menu
+	entries.
+
 2002-05-15  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/pagecurl/pagecurl.c: tiny fix, there was an

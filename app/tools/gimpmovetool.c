@@ -292,6 +292,10 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  else
 	    {
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
+
+              if (state & GDK_SHIFT_MASK)
+                gimp_layer_set_linked (layer, ! gimp_layer_get_linked (layer));
+
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 

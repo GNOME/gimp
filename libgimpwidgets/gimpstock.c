@@ -124,6 +124,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, "gimp-libgimp" },
 
+  { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_WARNING,                  NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_WILBER,                   NULL,        0, 0, "gimp-libgimp" },
@@ -265,6 +266,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_QMASK_OFF,            stock_qmask_off_16            },
   { GIMP_STOCK_QMASK_ON,             stock_qmask_on_16             },
 
+  { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
   { GIMP_STOCK_INFO,                 stock_info_16                 },
   { GIMP_STOCK_WARNING,              stock_warning_16              },
   { GIMP_STOCK_WILBER,               stock_wilber_16               }
