@@ -12,7 +12,7 @@ Overview of Changes in GIMP 1.3.21
 ==================================
 - Allow to save tool options as named presets [Mitch].
 - Stroke paths using libart [Simon, Bolsh, Mitch, Sven, Ville]
-- Better looking and more accessible dockables [Mitch]
+- Better looking and more accessible dockables [Mitch, Sven]
 - Fixes for right-to-left rendering [Sven, Mitch]
 - Rewritten webbroswer plug-in [Brix]
 - Much improved path tool [Simon, Mitch]
@@ -33,7 +33,7 @@ Overview of Changes in GIMP 1.3.21
 Other contributors: 
   Adam D. Moss, Dom Lachowicz, Manish Singh, Jakub Steiner,
   Christian Neumair, Seth Burgess, Maurits Rijk, David Necas,
-  Tor Lillqvist, Ville Pätsi
+  Tor Lillqvist, Ville Pätsi, Morten Eriksen, Pedro Gimeno
 
 
 Overview of Changes in GIMP 1.3.20
