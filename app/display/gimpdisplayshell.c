@@ -962,7 +962,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  the statusbar  */
   shell->statusbar = gimp_statusbar_new (shell);
-  gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar), FALSE);
   gimp_help_set_help_data (shell->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
 

@@ -19,10 +19,9 @@
 #ifndef __GIMP_STATUSBAR_H__
 #define __GIMP_STATUSBAR_H__
 
-#include <gtk/gtkstatusbar.h>
+#include <gtk/gtkhbox.h>
 
 G_BEGIN_DECLS
-
 
 /*  maximal length of the format string for the cursor-coordinates  */
 #define CURSOR_FORMAT_LENGTH 32
@@ -35,12 +34,16 @@ G_BEGIN_DECLS
 #define GIMP_IS_STATUSBAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STATUSBAR))
 #define GIMP_STATUSBAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STATUSBAR, GimpStatusbarClass))
 
-
 typedef struct _GimpStatusbarClass GimpStatusbarClass;
 
 struct _GimpStatusbar
 {
-  GtkStatusbar      parent_instance;
+  GtkHBox           parent_instance;
+
+  GSList           *messages;
+  GSList           *keys;
+  guint             seq_context_id;
+  guint             seq_message_id;
 
   GimpDisplayShell *shell;
 
@@ -57,31 +60,41 @@ struct _GimpStatusbar
 
 struct _GimpStatusbarClass
 {
-  GtkStatusbarClass  parent_class;
+  GtkHBoxClass      parent_class;
+
+  GMemChunk        *messages_mem_chunk;
+
+  void  (*text_pushed) (GimpStatusbar   *statusbar,
+                        const gchar     *context_id,
+                        const gchar     *text);
+  void  (*text_popped) (GimpStatusbar   *statusbar,
+                        const gchar     *context_id,
+                        const gchar     *text);
 };
 
 
-GType       gimp_statusbar_get_type     (void) G_GNUC_CONST;
-
-GtkWidget * gimp_statusbar_new          (GimpDisplayShell *shell);
-
-void        gimp_statusbar_push         (GimpStatusbar    *statusbar,
-                                         const gchar      *context_id,
-                                         const gchar      *message);
-void        gimp_statusbar_push_coords  (GimpStatusbar    *statusbar,
-                                         const gchar      *context_id,
-                                         const gchar      *title,
-                                         gdouble           x,
-                                         const gchar      *separator,
-                                         gdouble           y);
-void        gimp_statusbar_pop          (GimpStatusbar    *statusbar,
-                                         const gchar      *context_id);
-
-void	    gimp_statusbar_set_cursor   (GimpStatusbar    *statusbar,
-                                         gdouble           x,
-                                         gdouble           y);
-void	    gimp_statusbar_clear_cursor (GimpStatusbar    *statusbar);
-
+GType       gimp_statusbar_get_type            (void) G_GNUC_CONST;
+GtkWidget * gimp_statusbar_new                 (GimpDisplayShell *shell);
+void        gimp_statusbar_pop                 (GimpStatusbar    *statusbar,
+                                                const gchar      *context);
+void        gimp_statusbar_remove              (GimpStatusbar    *statusbar,
+                                                const gchar      *context,
+                                                guint             message_id);
+guint       gimp_statusbar_push_coords         (GimpStatusbar    *statusbar,
+                                                const gchar      *context,
+                                                const gchar      *title,
+                                                gdouble           x,
+                                                const gchar      *separator,
+                                                gdouble           y);
+guint       gimp_statusbar_push                (GimpStatusbar    *statusbar,
+                                                const gchar      *context,
+                                                const gchar      *message);
+void	    gimp_statusbar_set_cursor          (GimpStatusbar    *statusbar,
+                                                gdouble           x,
+                                                gdouble           y);
+void	    gimp_statusbar_clear_cursor        (GimpStatusbar    *statusbar);
+guint       gimp_statusbar_get_context_id      (GimpStatusbar    *statusbar,
+                                                const gchar      *context_description);
 
 G_END_DECLS
 
