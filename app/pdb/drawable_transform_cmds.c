@@ -37,11 +37,11 @@
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
 
+static ProcRecord drawable_transform_flip_simple_proc;
 static ProcRecord drawable_transform_flip_proc;
-static ProcRecord drawable_transform_flip_free_proc;
 static ProcRecord drawable_transform_perspective_proc;
+static ProcRecord drawable_transform_rotate_simple_proc;
 static ProcRecord drawable_transform_rotate_proc;
-static ProcRecord drawable_transform_rotate_free_proc;
 static ProcRecord drawable_transform_scale_proc;
 static ProcRecord drawable_transform_shear_proc;
 static ProcRecord drawable_transform_2d_proc;
@@ -50,11 +50,11 @@ static ProcRecord drawable_transform_matrix_proc;
 void
 register_drawable_transform_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &drawable_transform_flip_simple_proc);
   procedural_db_register (gimp, &drawable_transform_flip_proc);
-  procedural_db_register (gimp, &drawable_transform_flip_free_proc);
   procedural_db_register (gimp, &drawable_transform_perspective_proc);
+  procedural_db_register (gimp, &drawable_transform_rotate_simple_proc);
   procedural_db_register (gimp, &drawable_transform_rotate_proc);
-  procedural_db_register (gimp, &drawable_transform_rotate_free_proc);
   procedural_db_register (gimp, &drawable_transform_scale_proc);
   procedural_db_register (gimp, &drawable_transform_shear_proc);
   procedural_db_register (gimp, &drawable_transform_2d_proc);
@@ -62,10 +62,10 @@ register_drawable_transform_procs (Gimp *gimp)
 }
 
 static Argument *
-drawable_transform_flip_invoker (Gimp         *gimp,
-                                 GimpContext  *context,
-                                 GimpProgress *progress,
-                                 Argument     *args)
+drawable_transform_flip_simple_invoker (Gimp         *gimp,
+                                        GimpContext  *context,
+                                        GimpProgress *progress,
+                                        Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -105,7 +105,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_flip_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_flip_simple_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -113,7 +113,7 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_flip_inargs[] =
+static ProcArg drawable_transform_flip_simple_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -142,7 +142,7 @@ static ProcArg drawable_transform_flip_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_flip_outargs[] =
+static ProcArg drawable_transform_flip_simple_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -151,9 +151,9 @@ static ProcArg drawable_transform_flip_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_flip_proc =
+static ProcRecord drawable_transform_flip_simple_proc =
 {
-  "gimp_drawable_transform_flip",
+  "gimp_drawable_transform_flip_simple",
   "Flip the specified drawable either vertically or horizontally.",
   "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to true, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
   "João S. O. Bueno Calligaris",
@@ -162,17 +162,17 @@ static ProcRecord drawable_transform_flip_proc =
   NULL,
   GIMP_INTERNAL,
   5,
-  drawable_transform_flip_inargs,
+  drawable_transform_flip_simple_inargs,
   1,
-  drawable_transform_flip_outargs,
-  { { drawable_transform_flip_invoker } }
+  drawable_transform_flip_simple_outargs,
+  { { drawable_transform_flip_simple_invoker } }
 };
 
 static Argument *
-drawable_transform_flip_free_invoker (Gimp         *gimp,
-                                      GimpContext  *context,
-                                      GimpProgress *progress,
-                                      Argument     *args)
+drawable_transform_flip_invoker (Gimp         *gimp,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -245,7 +245,7 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_flip_free_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_flip_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -253,7 +253,7 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_flip_free_inargs[] =
+static ProcArg drawable_transform_flip_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -307,7 +307,7 @@ static ProcArg drawable_transform_flip_free_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_flip_free_outargs[] =
+static ProcArg drawable_transform_flip_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -316,9 +316,9 @@ static ProcArg drawable_transform_flip_free_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_flip_free_proc =
+static ProcRecord drawable_transform_flip_proc =
 {
-  "gimp_drawable_transform_flip_free",
+  "gimp_drawable_transform_flip",
   "Flip the specified drawable around a given line.",
   "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable. The clip results parameter specifies wheter current selection will affect the transform.",
   "João S. O. Bueno Calligaris",
@@ -327,10 +327,10 @@ static ProcRecord drawable_transform_flip_free_proc =
   NULL,
   GIMP_INTERNAL,
   10,
-  drawable_transform_flip_free_inargs,
+  drawable_transform_flip_inargs,
   1,
-  drawable_transform_flip_free_outargs,
-  { { drawable_transform_flip_free_invoker } }
+  drawable_transform_flip_outargs,
+  { { drawable_transform_flip_invoker } }
 };
 
 static Argument *
@@ -528,10 +528,10 @@ static ProcRecord drawable_transform_perspective_proc =
 };
 
 static Argument *
-drawable_transform_rotate_invoker (Gimp         *gimp,
-                                   GimpContext  *context,
-                                   GimpProgress *progress,
-                                   Argument     *args)
+drawable_transform_rotate_simple_invoker (Gimp         *gimp,
+                                          GimpContext  *context,
+                                          GimpProgress *progress,
+                                          Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -574,7 +574,7 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_rotate_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_rotate_simple_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -582,7 +582,7 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_rotate_inargs[] =
+static ProcArg drawable_transform_rotate_simple_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -616,7 +616,7 @@ static ProcArg drawable_transform_rotate_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_rotate_outargs[] =
+static ProcArg drawable_transform_rotate_simple_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -625,9 +625,9 @@ static ProcArg drawable_transform_rotate_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_rotate_proc =
+static ProcRecord drawable_transform_rotate_simple_proc =
 {
-  "gimp_drawable_transform_rotate",
+  "gimp_drawable_transform_rotate_simple",
   "Rotate the specified drawable about given coordinates through the specified angle.",
   "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
   "João S. O. Bueno Calligaris",
@@ -636,17 +636,17 @@ static ProcRecord drawable_transform_rotate_proc =
   NULL,
   GIMP_INTERNAL,
   6,
-  drawable_transform_rotate_inargs,
+  drawable_transform_rotate_simple_inargs,
   1,
-  drawable_transform_rotate_outargs,
-  { { drawable_transform_rotate_invoker } }
+  drawable_transform_rotate_simple_outargs,
+  { { drawable_transform_rotate_simple_invoker } }
 };
 
 static Argument *
-drawable_transform_rotate_free_invoker (Gimp         *gimp,
-                                        GimpContext  *context,
-                                        GimpProgress *progress,
-                                        Argument     *args)
+drawable_transform_rotate_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -723,7 +723,7 @@ drawable_transform_rotate_free_invoker (Gimp         *gimp,
         }
     }
 
-  return_args = procedural_db_return_args (&drawable_transform_rotate_free_proc, success);
+  return_args = procedural_db_return_args (&drawable_transform_rotate_proc, success);
 
   if (success)
     return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -731,7 +731,7 @@ drawable_transform_rotate_free_invoker (Gimp         *gimp,
   return return_args;
 }
 
-static ProcArg drawable_transform_rotate_free_inargs[] =
+static ProcArg drawable_transform_rotate_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -785,7 +785,7 @@ static ProcArg drawable_transform_rotate_free_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_rotate_free_outargs[] =
+static ProcArg drawable_transform_rotate_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -794,9 +794,9 @@ static ProcArg drawable_transform_rotate_free_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_rotate_free_proc =
+static ProcRecord drawable_transform_rotate_proc =
 {
-  "gimp_drawable_transform_rotate_free",
+  "gimp_drawable_transform_rotate",
   "Rotate the specified drawable about given coordinates through the specified angle.",
   "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
   "João S. O. Bueno Calligaris",
@@ -805,10 +805,10 @@ static ProcRecord drawable_transform_rotate_free_proc =
   NULL,
   GIMP_INTERNAL,
   10,
-  drawable_transform_rotate_free_inargs,
+  drawable_transform_rotate_inargs,
   1,
-  drawable_transform_rotate_free_outargs,
-  { { drawable_transform_rotate_free_invoker } }
+  drawable_transform_rotate_outargs,
+  { { drawable_transform_rotate_invoker } }
 };
 
 static Argument *

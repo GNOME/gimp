@@ -1,5 +1,17 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb: renamed flip() and
+	rotate() to flip_simple() and rotate_simple(). Renamed flip_free()
+	and rotate_free() to flip() and rotate() (the special cases should
+	have a special suffix, not the general ones).
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* app/pdb/drawable_transform_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/compressor.c (compressors): added missing bzip2
 	command lines for Win32.
 

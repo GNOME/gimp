@@ -26,7 +26,7 @@
 #include "gimp.h"
 
 /**
- * gimp_drawable_transform_flip:
+ * gimp_drawable_transform_flip_simple:
  * @drawable_ID: The affected drawable.
  * @flip_type: Type of flip.
  * @auto_center: Whether to automatically position the axis in the selection center.
@@ -50,17 +50,17 @@
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_flip (gint32              drawable_ID,
-			      GimpOrientationType flip_type,
-			      gboolean            auto_center,
-			      gdouble             axis,
-			      gboolean            clip_result)
+gimp_drawable_transform_flip_simple (gint32              drawable_ID,
+				     GimpOrientationType flip_type,
+				     gboolean            auto_center,
+				     gdouble             axis,
+				     gboolean            clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_simple",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, flip_type,
@@ -78,7 +78,7 @@ gimp_drawable_transform_flip (gint32              drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_flip_free:
+ * gimp_drawable_transform_flip:
  * @drawable_ID: The affected drawable.
  * @x0: horz. coord. of one end of axis.
  * @y0: vert. coord. of one end of axis.
@@ -108,22 +108,22 @@ gimp_drawable_transform_flip (gint32              drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_flip_free (gint32                 drawable_ID,
-				   gdouble                x0,
-				   gdouble                y0,
-				   gdouble                x1,
-				   gdouble                y1,
-				   GimpTransformDirection transform_direction,
-				   GimpInterpolationType  interpolation,
-				   gboolean               supersample,
-				   gint                   recursion_level,
-				   gboolean               clip_result)
+gimp_drawable_transform_flip (gint32                 drawable_ID,
+			      gdouble                x0,
+			      gdouble                y0,
+			      gdouble                x1,
+			      gdouble                y1,
+			      GimpTransformDirection transform_direction,
+			      GimpInterpolationType  interpolation,
+			      gboolean               supersample,
+			      gint                   recursion_level,
+			      gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip_free",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_flip",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, x0,
@@ -232,7 +232,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_rotate:
+ * gimp_drawable_transform_rotate_simple:
  * @drawable_ID: The affected drawable.
  * @rotate_type: Type of rotation.
  * @auto_center: Whether to automatically rotate around the selection center.
@@ -256,18 +256,18 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_rotate (gint32           drawable_ID,
-				GimpRotationType rotate_type,
-				gboolean         auto_center,
-				gint             center_x,
-				gint             center_y,
-				gboolean         clip_result)
+gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
+				       GimpRotationType rotate_type,
+				       gboolean         auto_center,
+				       gint             center_x,
+				       gint             center_y,
+				       gboolean         clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_simple",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, rotate_type,
@@ -286,7 +286,7 @@ gimp_drawable_transform_rotate (gint32           drawable_ID,
 }
 
 /**
- * gimp_drawable_transform_rotate_free:
+ * gimp_drawable_transform_rotate:
  * @drawable_ID: The affected drawable.
  * @angle: The angle of rotation (radians).
  * @auto_center: Whether to automatically rotate around the selection center.
@@ -314,22 +314,22 @@ gimp_drawable_transform_rotate (gint32           drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_rotate_free (gint32                 drawable_ID,
-				     gdouble                angle,
-				     gboolean               auto_center,
-				     gint                   center_x,
-				     gint                   center_y,
-				     GimpTransformDirection transform_direction,
-				     GimpInterpolationType  interpolation,
-				     gboolean               supersample,
-				     gint                   recursion_level,
-				     gboolean               clip_result)
+gimp_drawable_transform_rotate (gint32                 drawable_ID,
+				gdouble                angle,
+				gboolean               auto_center,
+				gint                   center_x,
+				gint                   center_y,
+				GimpTransformDirection transform_direction,
+				GimpInterpolationType  interpolation,
+				gboolean               supersample,
+				gint                   recursion_level,
+				gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_free",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,

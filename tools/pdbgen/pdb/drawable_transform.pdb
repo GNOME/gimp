@@ -59,7 +59,7 @@ sub drawable_out_arg {
 
 # The defs
 
-sub drawable_transform_flip {
+sub drawable_transform_flip_simple {
     $blurb = <<'BLURB';
 Flip the specified drawable either vertically or horizontally.
 BLURB
@@ -114,7 +114,7 @@ CODE
 }
 
 
-sub drawable_transform_flip_free {
+sub drawable_transform_flip {
     $blurb = <<'BLURB';
 Flip the specified drawable around a given line.
 BLURB
@@ -270,7 +270,7 @@ CODE
     );
 }
 
-sub drawable_transform_rotate {
+sub drawable_transform_rotate_simple {
     $blurb = <<'BLURB';
 Rotate the specified drawable about given coordinates through the specified angle.
 BLURB
@@ -323,7 +323,7 @@ CODE
     );
 }
 
-sub drawable_transform_rotate_free {
+sub drawable_transform_rotate {
     $blurb = <<'BLURB';
 Rotate the specified drawable about given coordinates through the specified angle.
 BLURB
@@ -707,9 +707,9 @@ CODE
               "core/gimpprogress.h"
               "gimp-intl.h");
 
-@procs = qw(drawable_transform_flip drawable_transform_flip_free
+@procs = qw(drawable_transform_flip_simple drawable_transform_flip
             drawable_transform_perspective
-            drawable_transform_rotate drawable_transform_rotate_free
+            drawable_transform_rotate_simple drawable_transform_rotate
             drawable_transform_scale drawable_transform_shear
             drawable_transform_2d drawable_transform_matrix);
 

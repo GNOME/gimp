@@ -131,11 +131,11 @@ EXPORTS
 	gimp_drawable_set_pixel
 	gimp_drawable_set_tattoo
 	gimp_drawable_set_visible
+	gimp_drawable_transform_flip_simple
 	gimp_drawable_transform_flip
-	gimp_drawable_transform_flip_free
 	gimp_drawable_transform_perspective
+	gimp_drawable_transform_rotate_simple
 	gimp_drawable_transform_rotate
-	gimp_drawable_transform_rotate_free
 	gimp_drawable_transform_scale
 	gimp_drawable_transform_shear
 	gimp_drawable_transform_2d
