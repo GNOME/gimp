@@ -757,7 +757,7 @@ open_idea_window (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *scrolled_win;
-  GtkWidget *hbox;
+  GtkWidget *abox;
   GtkWidget *button_box;
   gint       i;
 
@@ -806,12 +806,13 @@ open_idea_window (void)
   gtk_widget_show (ideas->list);
 
   /*  The ops buttons  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ideas->window)->action_area), abox,
+		      FALSE, FALSE, 4);
+  gtk_widget_show (abox);
 
   button_box = ops_button_box_new (ops_buttons, OPS_BUTTON_NORMAL);
-  gtk_box_pack_start (GTK_BOX (hbox), button_box, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (abox), button_box);
   gtk_widget_show (button_box);
 
   for (i = 0; ; i++)

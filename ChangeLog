@@ -1,3 +1,8 @@
+2000-05-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/docindex.c (open_idea_window): put the ops_buttons box
+	into the action_area. Makes the dialog smaller.
+
 2000-05-07  Sven Neumann  <sven@gimp.org>
 
 	* app/menus.c: in Image/Filters move all entries that are not 
