@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
 "POT-Creation-Date: 2001-10-20 18:07+0800\n"
-"PO-Revision-Date: 2001-10-26 19:45+0800\n"
+"PO-Revision-Date: 2001-11-04 22:09+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -239,9 +239,8 @@ msgid "Repeat:"
 msgstr "重複："
 
 #: app/blend.c:372
-#, fuzzy
 msgid "Adaptive Supersampling"
-msgstr "Adaptive Supersampling"
+msgstr "最適性超倍率取樣"
 
 #: app/blend.c:400
 msgid "Max Depth:"
@@ -1500,7 +1499,7 @@ msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
-"使用中的圖層沒有 alpha 色版\n"
+"使用中的圖層沒有透明色版\n"
 "可以轉換為選擇區域。"
 
 #: app/gimage_mask.c:518
@@ -1672,7 +1671,7 @@ msgid ""
 "with no alpha channel."
 msgstr ""
 "無法新增圖層遮罩到沒有\n"
-"alpha 色版的圖層。"
+"透明色版的圖層。"
 
 #: app/gimpimage.c:3094
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -1798,11 +1797,11 @@ msgstr "點"
 
 #: app/gimpunit.c:71
 msgid "pica"
-msgstr "pica"
+msgstr "pica（鉛點）"
 
 #: app/gimpunit.c:71
 msgid "picas"
-msgstr "pica"
+msgstr "pica（鉛點）"
 
 #: app/gimpunit.c:78
 msgid "percent"
@@ -3300,16 +3299,16 @@ msgstr "/圖像/模式/索引色..."
 #. <Image>/Image/Colors
 #: app/menus.c:376
 msgid "/Image/Colors/Desaturate"
-msgstr "/圖像/顏色/去飽和度"
+msgstr "/圖像/色彩/去飽和度"
 
 #: app/menus.c:378
 msgid "/Image/Colors/Invert"
-msgstr "/圖像/顏色/反色"
+msgstr "/圖像/色彩/反相"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:386
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/圖像/顏色/自動/亮度等化"
+msgstr "/圖像/色彩/自動/亮度等化"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:394
@@ -3481,7 +3480,7 @@ msgstr "/濾鏡/模糊化"
 
 #: app/menus.c:539
 msgid "/Filters/Colors"
-msgstr "/濾鏡/顏色"
+msgstr "/濾鏡/色彩"
 
 #: app/menus.c:541
 msgid "/Filters/Noise"
@@ -5442,7 +5441,7 @@ msgstr "依顏色選擇區域"
 
 #: app/tools.c:1027
 msgid "/Image/Colors/Color Balance..."
-msgstr "/圖像/顏色/色彩平衡..."
+msgstr "/圖像/色彩/色彩平衡..."
 
 #: app/tools.c:1032
 msgid "Adjust color balance"
@@ -5450,7 +5449,7 @@ msgstr "調整色彩平衡"
 
 #: app/tools.c:1055
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/圖像/顏色/亮度及反差..."
+msgstr "/圖像/色彩/亮度及反差..."
 
 #: app/tools.c:1060
 msgid "Adjust brightness and contrast"
@@ -5458,7 +5457,7 @@ msgstr "調整亮度和反差"
 
 #: app/tools.c:1083
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/圖像/顏色/色相及飽和度..."
+msgstr "/圖像/色彩/色相及飽和度..."
 
 #: app/tools.c:1088
 msgid "Adjust hue and saturation"
@@ -5466,7 +5465,7 @@ msgstr "調整色相及飽和度"
 
 #: app/tools.c:1111
 msgid "/Image/Colors/Posterize..."
-msgstr "/圖像/顏色/色調分離..."
+msgstr "/圖像/色彩/色調分離..."
 
 #: app/tools.c:1116
 msgid "Reduce image to a fixed numer of colors"
@@ -5474,7 +5473,7 @@ msgstr "減少圖像所使用的顏色"
 
 #: app/tools.c:1139
 msgid "/Image/Colors/Threshold..."
-msgstr "/圖像/顏色/臨界值..."
+msgstr "/圖像/色彩/臨界值..."
 
 #: app/tools.c:1144
 msgid "Reduce image to two colors using a threshold"
@@ -5482,7 +5481,7 @@ msgstr "將圖像的顏色減為兩個，由某臨界值決定"
 
 #: app/tools.c:1167
 msgid "/Image/Colors/Curves..."
-msgstr "/圖像/顏色/曲線..."
+msgstr "/圖像/色彩/曲線..."
 
 #: app/tools.c:1172
 msgid "Adjust color curves"
@@ -5490,7 +5489,7 @@ msgstr "調校顏色曲線"
 
 #: app/tools.c:1195
 msgid "/Image/Colors/Levels..."
-msgstr "/圖像/顏色/色階..."
+msgstr "/圖像/色彩/色階..."
 
 #: app/tools.c:1200
 msgid "Adjust color levels"

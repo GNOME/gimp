@@ -231,7 +231,7 @@ msgstr "pica¡]¹]ÂI¡^"
 
 #: libgimp/gimpunit.c:57
 msgid "picas"
-msgstr "picas¡]¹]ÂI¡^"
+msgstr "pica¡]¹]ÂI¡^"
 
 #: libgimp/gimpunit.c:64
 msgid "percent"
