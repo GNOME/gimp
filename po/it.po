@@ -17,6 +17,7 @@
 # feather = sfumata
 # undo history = cronologia annullamenti
 # stroke = delineare
+# shear = inclina
 #
 msgid ""
 msgstr ""
