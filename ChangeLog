@@ -1,3 +1,13 @@
+2004-11-03  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
+	plugged a mem-leak.
+
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_render): don't leak the pixbuf here.
+
+	* app/widgets/gimpviewrenderer-frame.c: added a comment.
+
 2004-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (combine_sub_region): applied

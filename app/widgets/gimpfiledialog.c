@@ -503,13 +503,17 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
       if (file_proc->extensions_list)
         {
           const gchar *domain;
-          GString     *label;
+          gchar       *label;
+          GString     *str;
           GSList      *ext;
           gboolean     first = TRUE;
 
           domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
 
-          label = g_string_new (plug_in_proc_def_get_label (file_proc, domain));
+          label = plug_in_proc_def_get_label (file_proc, domain);
+
+          str = g_string_new (label);
+          g_free (label);
 
           filter = gtk_file_filter_new ();
 
@@ -524,16 +528,16 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
               if (first)
                 {
-                  g_string_append (label, " (*.");
+                  g_string_append (str, " (*.");
                   first = FALSE;
                 }
 
-              g_string_append (label, extension);
-              g_string_append (label, ext->next ? ", *." : ")");
+              g_string_append (str, extension);
+              g_string_append (str, ext->next ? ", *." : ")");
             }
 
-          gtk_file_filter_set_name (filter, label->str);
-          g_string_free (label, TRUE);
+          gtk_file_filter_set_name (filter, str->str);
+          g_string_free (str, TRUE);
 
           gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
         }

@@ -256,6 +256,8 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
       if (!pixbuf)
         return NULL;
 
+      /*  as fallback, render the preview with a 1 pixel wide black border  */
+
       x = 1;
       y = 1;
       w = gdk_pixbuf_get_width (pixbuf);
