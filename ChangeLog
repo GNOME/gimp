@@ -1,3 +1,21 @@
+Sat Oct  3 21:01:34 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/channel.c app/channel_ops.c app/disp_callbacks.c
+	app/floating_sel.c app/gdisplay.c app/gdisplay.h
+	app/gdisplay_ops.c app/gimpimage.c app/image_map.c
+	app/interface.c app/layers_dialog.c app/plug_in.c app/undo.c
+	app/xcf.c:
+
+	Resizing image canvases should be less horrible to look at.
+	I've removed the implicit clear of the whole area when a
+	window is resized by the user, and clear the exposed area around
+	the image manually when appropriate.
+
+	Dialogs which want synchronous updates for previews and
+	such use displays_update_now().
+
+	Removed some old debugging nonsense which I don't want any more.
+
 Thu Oct  1 22:39:14 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/patterns.c app/pattern_select.c app/internal_procs.c

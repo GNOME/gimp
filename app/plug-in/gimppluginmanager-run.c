@@ -3026,8 +3026,6 @@ plug_in_disconnect_cancel (PlugIn    *plug_in)
 {
   GDisplay *gdisp = NULL;
   
-  /*printf("\nplug_in_disconnect_cancel\n");fflush(stdout);*/
-  
   gdisp = gdisplay_get_ID (plug_in->progress_gdisp_ID);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
   
@@ -3065,7 +3063,6 @@ plug_in_progress_init (PlugIn *plug_in,
 					     context_id, message);
       plug_in->progress_gdisp_ID = gdisp_ID;
 
-      /*printf("\nHERE\n");fflush(stdout);*/
       gtk_signal_connect (GTK_OBJECT (gdisp->cancelbutton), "clicked",
 			  (GtkSignalFunc) plug_in_progress_cancel,
 			  plug_in);

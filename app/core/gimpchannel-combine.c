@@ -271,8 +271,6 @@ channel_scale (Channel *channel, int new_width, int new_height)
   if (new_width == 0 || new_height == 0)
     return;
 
-  printf(" channel_scale ");fflush(stdout);
-
   /*  Update the old channel position  */
   drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
 
@@ -315,8 +313,6 @@ channel_resize (Channel *channel, int new_width, int new_height,
 
   if (!new_width || !new_height)
     return;
-
-  printf(" channel_resize ");fflush(stdout);
 
   x1 = BOUNDS (offx, 0, new_width);
   y1 = BOUNDS (offy, 0, new_height);

@@ -85,7 +85,7 @@ image_map_do (gpointer data)
   if (_image_map->gdisp)
     {
       drawable_update ( (_image_map->drawable), x, y, w, h);
-      gdisplay_flush (_image_map->gdisp);
+      gdisplay_flush_now (_image_map->gdisp);
     }
 
   _image_map->pr = pixel_regions_process (_image_map->pr);

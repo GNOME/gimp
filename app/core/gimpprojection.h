@@ -49,7 +49,7 @@ typedef struct _IdleRenderStruct
   int basex;
   int basey;
   guint idleid;
-  guint handlerid;
+  /*guint handlerid;*/
   gboolean active;
   GSList *update_areas;           /*  flushed update areas */
 
@@ -135,6 +135,7 @@ void       gdisplay_expose_area            (GDisplay *, int, int, int, int);
 void       gdisplay_expose_guide           (GDisplay *, Guide *);
 void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
+void       gdisplay_flush_now              (GDisplay *);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, int);
 Guide*     gdisplay_find_guide             (GDisplay *, int, int);

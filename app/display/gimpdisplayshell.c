@@ -679,6 +679,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_object_set_user_data (GTK_OBJECT (gdisp->canvas), (gpointer) gdisp);
 
 
+
   /*  pack all the widgets  */
   gtk_table_attach (GTK_TABLE (table), table_inner, 0, 1, 0, 1,
 		    GTK_FILL | GTK_EXPAND | GTK_SHRINK,
@@ -763,6 +764,10 @@ create_display_shell (GDisplay* gdisp,
     }
   gtk_widget_show (vbox);
   gtk_widget_show (gdisp->shell);
+
+#warning DODGY?
+  gtk_widget_realize (gdisp->canvas);
+  gdk_window_set_back_pixmap(gdisp->canvas->window, NULL, 0);
 
   /*  set the focus to the canvas area  */
   gtk_widget_grab_focus (gdisp->canvas);

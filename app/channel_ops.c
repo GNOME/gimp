@@ -431,17 +431,17 @@ offset (GImage *gimage,
     }
 
   /*  push an undo  */
-  drawable_apply_image (drawable, 0, 0, drawable_width (drawable), drawable_height (drawable),
+  drawable_apply_image (drawable, 0, 0,
+			drawable_width (drawable), drawable_height (drawable),
 			drawable_data (drawable), FALSE);
 
   /*  swap the tiles  */
   drawable->tiles = new_tiles;
 
 
-  printf(" offset ");fflush(stdout);
-
   /*  update the drawable  */
-  drawable_update (drawable, 0, 0, drawable_width (drawable), drawable_height (drawable));
+  drawable_update (drawable, 0, 0,
+		   drawable_width (drawable), drawable_height (drawable));
 }
 
 /*

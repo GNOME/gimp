@@ -105,9 +105,12 @@ gdisplay_close_window (GDisplay *gdisp,
 }
 
 
+
 void
 gdisplay_shrink_wrap (GDisplay *gdisp)
 {
+  /* FIXME: There's something wrong here - ..set_usize() seems to not
+     be doing the right thing when it could... GTK problem? */
   gint x, y;
   gint disp_width, disp_height;
   gint width, height;
@@ -147,6 +150,12 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       gtk_widget_set_usize (gdisp->canvas,
 			    width, height);
 
+      /*printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+	     width, height,
+	     disp_width, disp_height,
+	     shell_width, shell_height,
+	     border_x, border_y);fflush(stdout);*/
+
       gtk_widget_show (gdisp->canvas);
 
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
@@ -175,6 +184,12 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       
       gtk_widget_set_usize (gdisp->canvas,
 			    max_auto_width, max_auto_height);
+
+      /*printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+	     width, height,
+	     disp_width, disp_height,
+	     shell_width, shell_height,
+	     border_x, border_y);fflush(stdout);*/
 
       gtk_widget_show (gdisp->canvas);
 

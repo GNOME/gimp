@@ -1990,8 +1990,6 @@ xcf_load_level (XcfInfo     *info,
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
     }
 
-  /*  fflush(stdout);*/
-
   if (offset != 0)
     {
       g_message ("encountered garbage after reading level: %d", offset);

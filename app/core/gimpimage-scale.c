@@ -2034,8 +2034,6 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 
   gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[RESTRUCTURE]);
 
-  printf(" gimp_image_merge_layers ");fflush(stdout);
-
   drawable_update (GIMP_DRAWABLE(merge_layer), 0, 0, drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
 
   /*reinit_layer_idlerender (gimage, merge_layer);*/

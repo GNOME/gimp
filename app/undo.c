@@ -1133,9 +1133,9 @@ undo_pop_layer (GImage *gimage,
 	  floating_sel_reset (lu->layer);
 	}
 
-      /*printf (" undo_pop1 ");fflush(stdout);*/
-      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0, GIMP_DRAWABLE(lu->layer)->width, GIMP_DRAWABLE(lu->layer)->height);
-      /*reinit_layer_idlerender (gimage, lu->layer);*/
+      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0,
+		       GIMP_DRAWABLE(lu->layer)->width,
+		       GIMP_DRAWABLE(lu->layer)->height);
     }
   /*  restore layer  */
   else
@@ -1152,13 +1152,14 @@ undo_pop_layer (GImage *gimage,
 	gimage->floating_sel = lu->layer;
 
       /*  add the new layer  */
-      gimage->layers = g_slist_insert (gimage->layers, lu->layer, lu->prev_position);
+      gimage->layers = g_slist_insert (gimage->layers, lu->layer,
+				       lu->prev_position);
       gimage->layer_stack = g_slist_prepend (gimage->layer_stack, lu->layer);
       gimage->active_layer = lu->layer;
 
-      /*printf (" undo_pop2 ");fflush(stdout);*/
-      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0, GIMP_DRAWABLE(lu->layer)->width, GIMP_DRAWABLE(lu->layer)->height);
-      /*reinit_layer_idlerender (gimage, lu->layer);*/
+      drawable_update (GIMP_DRAWABLE(lu->layer), 0, 0,
+		       GIMP_DRAWABLE(lu->layer)->width,
+		       GIMP_DRAWABLE(lu->layer)->height);
     }
 
   return TRUE;

@@ -119,7 +119,7 @@ gdisplay_new (GimpImage       *gimage,
   gdisp->progressid = FALSE;
 
   gdisp->idle_render.idleid = -1;
-  gdisp->idle_render.handlerid = -1;
+  /*gdisp->idle_render.handlerid = -1;*/
   gdisp->idle_render.update_areas = NULL;
   gdisp->idle_render.active = FALSE;
 
@@ -337,6 +337,11 @@ idle_render_next_area (GDisplay *gdisp)
 }
 
 
+/* Unless specified otherwise, display re-rendering is organised
+ by IdleRender, which amalgamates areas to be re-rendered and
+ breaks them into bite-sized chunks which are chewed on in a low-
+ priority idle thread.  This greatly improves responsiveness for
+ many GIMP operations.  -- Adam */
 static int
 idlerender_callback (gpointer data)
 {
@@ -607,7 +612,8 @@ gdisplay_draw_guide (GDisplay *gdisp,
       values.foreground.pixel = gdisplay_black_pixel (gdisp);
       values.background.pixel = g_normal_guide_pixel;
       values.fill = GDK_OPAQUE_STIPPLED;
-      values.stipple = gdk_bitmap_create_from_data (gdisp->canvas->window, (char*) stipple, 8, 1);
+      values.stipple = gdk_bitmap_create_from_data (gdisp->canvas->window,
+						    (char*) stipple, 8, 1);
       normal_hgc = gdk_gc_new_with_values (gdisp->canvas->window, &values,
 					  GDK_GC_FOREGROUND |
 					  GDK_GC_BACKGROUND |
@@ -624,7 +630,8 @@ gdisplay_draw_guide (GDisplay *gdisp,
       values.foreground.pixel = gdisplay_black_pixel (gdisp);
       values.background.pixel = g_normal_guide_pixel;
       values.fill = GDK_OPAQUE_STIPPLED;
-      values.stipple = gdk_bitmap_create_from_data (gdisp->canvas->window, (char*) stipple, 1, 8);
+      values.stipple = gdk_bitmap_create_from_data (gdisp->canvas->window,
+						    (char*) stipple, 1, 8);
       normal_vgc = gdk_gc_new_with_values (gdisp->canvas->window, &values,
 					  GDK_GC_FOREGROUND |
 					  GDK_GC_BACKGROUND |
@@ -640,7 +647,9 @@ gdisplay_draw_guide (GDisplay *gdisp,
     }
 
   gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, gdisp->gimage->width, gdisp->gimage->height, &x2, &y2, FALSE);
+  gdisplay_transform_coords (gdisp,
+			     gdisp->gimage->width, gdisp->gimage->height,
+			     &x2, &y2, FALSE);
   gdk_window_get_size (gdisp->canvas->window, &w, &h);
 
   if (x1 < 0) x1 = 0;
@@ -1002,36 +1011,53 @@ gdisplay_display_area (GDisplay *gdisp,
   x2 = BOUNDS (x + w, 0, gdisp->disp_width);
   y2 = BOUNDS (y + h, 0, gdisp->disp_height);
 
-  if (x1 < gdisp->disp_xoffset)
-    {
-      gdk_window_clear_area (gdisp->canvas->window,
-			     x, y, gdisp->disp_xoffset - x, h);
-
-      x1 = gdisp->disp_xoffset;
-    }
-
   if (y1 < gdisp->disp_yoffset)
     {
-      gdk_window_clear_area (gdisp->canvas->window,
-			     x, y, w, gdisp->disp_yoffset - y);
+      gdk_draw_rectangle (gdisp->canvas->window,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  x, y, w, gdisp->disp_yoffset - y);
+      /* X X X
+         . # .
+         . . . */
 
       y1 = gdisp->disp_yoffset;
     }
 
+  if (x1 < gdisp->disp_xoffset)
+    {
+      gdk_draw_rectangle (gdisp->canvas->window,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  x, y1, gdisp->disp_xoffset - x, h);
+      /* . . .
+         X # .
+         X . . */
+
+      x1 = gdisp->disp_xoffset;
+    }
+
   if (x2 > (gdisp->disp_xoffset + sx))
     {
-      gdk_window_clear_area (gdisp->canvas->window,
-			     gdisp->disp_xoffset + sx, y,
-			     x2 - (gdisp->disp_xoffset + sx), h);
+      gdk_draw_rectangle (gdisp->canvas->window,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  gdisp->disp_xoffset + sx, y1,
+			  x2 - (gdisp->disp_xoffset + sx), h - (y1-y));
+      /* . . .
+         . # X
+         . . X */
 
       x2 = gdisp->disp_xoffset + sx;
     }
 
   if (y2 > (gdisp->disp_yoffset + sy))
     {
-      gdk_window_clear_area (gdisp->canvas->window,
-			     x, gdisp->disp_yoffset + sy,
-			     w, y2 - (gdisp->disp_yoffset + sy));
+      gdk_draw_rectangle (gdisp->canvas->window,
+			  gdisp->canvas->style->bg_gc[GTK_STATE_NORMAL], 1,
+			  x1, gdisp->disp_yoffset + sy,
+			  x2-x1,
+			  y2 - (gdisp->disp_yoffset + sy));
+      /* . . .
+         . # .
+         . X . */
 
       y2 = gdisp->disp_yoffset + sy;
     }
@@ -1040,9 +1066,10 @@ gdisplay_display_area (GDisplay *gdisp,
   for (i = y1; i < y2; i += GXIMAGE_HEIGHT)
     for (j = x1; j < x2; j += GXIMAGE_WIDTH)
       {
-	dx = (x2 - j < GXIMAGE_WIDTH) ? x2 - j : GXIMAGE_WIDTH;
-	dy = (y2 - i < GXIMAGE_HEIGHT) ? y2 - i : GXIMAGE_HEIGHT;
-	render_image (gdisp, j - gdisp->disp_xoffset, i - gdisp->disp_yoffset, dx, dy);
+	dx = MIN (x2 - j, GXIMAGE_WIDTH);
+	dy = MIN (y2 - i, GXIMAGE_HEIGHT);
+	render_image (gdisp, j - gdisp->disp_xoffset, i - gdisp->disp_yoffset,
+		      dx, dy);
 	gximage_put (gdisp->canvas->window,
 		     j, i, dx, dy,
 		     gdisp->offset_x,

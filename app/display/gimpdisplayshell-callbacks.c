@@ -54,12 +54,10 @@ redraw (GDisplay *gdisp,
   y1 = y;
   x2 = (x+w);
   y2 = (y+h);
-
   x1 = BOUNDS (x1, 0, gdisp->disp_width);
   y1 = BOUNDS (y1, 0, gdisp->disp_height);
   x2 = BOUNDS (x2, 0, gdisp->disp_width);
   y2 = BOUNDS (y2, 0, gdisp->disp_height);
-
   if ((x2 - x1) && (y2 - y1))
     {
       gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
@@ -150,11 +148,14 @@ gdisplay_canvas_events (GtkWidget *canvas,
     {
     case GDK_EXPOSE:
       eevent = (GdkEventExpose *) event;
+      /*printf(" EXP:%d,%d(%dx%d) ",eevent->area.x, eevent->area.y,
+	eevent->area.width, eevent->area.height);fflush(stdout);*/
       redraw (gdisp, eevent->area.x, eevent->area.y,
 	      eevent->area.width, eevent->area.height);
       break;
 
     case GDK_CONFIGURE:
+      /*printf(" CNF ");fflush(stdout);*/
       if ((gdisp->disp_width != gdisp->canvas->allocation.width) ||
 	  (gdisp->disp_height != gdisp->canvas->allocation.height))
 	{
