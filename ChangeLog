@@ -1,5 +1,7 @@
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
+	* app/config/Makefile.am (gimpconfig_libs): added libgimpmath.
+
 	* app/composite/Makefile.am (libappcomposite_a_sources)
 	* libgimp/Makefile.am (libgimp_1_3_la_SOURCES): fixed typos.
 
