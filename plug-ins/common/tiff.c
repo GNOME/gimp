@@ -884,6 +884,7 @@ read_16bit (guchar       *source,
           if (alpha) {
             gray_val= *source; source+= 2;
             alpha_val= *source; source+= 2;
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
               *dest++ = gray_val * 255 / alpha_val;
             else
@@ -898,8 +899,9 @@ read_16bit (guchar       *source,
           if (alpha) {
             gray_val= *source; source+= 2;
             alpha_val= *source; source+= 2;
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
-              *dest++ = ((255 - gray_val) * 255) / alpha_val;
+              *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
             else
               *dest++ = 0;
             *dest++ = alpha_val;
@@ -919,6 +921,9 @@ read_16bit (guchar       *source,
             green_val= *source; source+= 2;
             blue_val= *source; source+= 2;
             alpha_val= *source; source+= 2;
+            red_val= MIN(red_val, alpha_val);
+            green_val= MIN(green_val, alpha_val);
+            blue_val= MIN(blue_val, alpha_val);
             if (alpha_val) {
               *dest++ = (red_val * 255) / alpha_val;
               *dest++ = (green_val * 255) / alpha_val;
@@ -997,6 +1002,7 @@ read_8bit (guchar       *source,
           if (alpha) {
             gray_val= *source++;
             alpha_val= *source++;
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
               *dest++ = gray_val * 255 / alpha_val;
             else
@@ -1011,8 +1017,9 @@ read_8bit (guchar       *source,
           if (alpha) {
             gray_val= *source++;
             alpha_val= *source++;
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
-              *dest++ = ((255 - gray_val) * 255) / alpha_val;
+              *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
             else
               *dest++ = 0;
             *dest++ = alpha_val;
@@ -1032,6 +1039,9 @@ read_8bit (guchar       *source,
             green_val= *source++;
             blue_val= *source++;
             alpha_val= *source++;
+            red_val= MIN(red_val, alpha_val);
+            blue_val= MIN(blue_val, alpha_val);
+            green_val= MIN(green_val, alpha_val);
             if (alpha_val) {
               *dest++ = (red_val * 255) / alpha_val;
               *dest++ = (green_val * 255) / alpha_val;
@@ -1125,6 +1135,7 @@ read_default (guchar       *source,
           NEXTSAMPLE(gray_val);
           if (alpha) {
             NEXTSAMPLE(alpha_val);
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
               *dest++ = (gray_val * 65025) / (alpha_val * maxval);
             else
@@ -1139,6 +1150,7 @@ read_default (guchar       *source,
           NEXTSAMPLE(gray_val);
           if (alpha) {
             NEXTSAMPLE(alpha_val);
+            gray_val= MIN(gray_val, alpha_val);
             if (alpha_val)
               *dest++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
             else
@@ -1162,6 +1174,9 @@ read_default (guchar       *source,
           NEXTSAMPLE(blue_val)
           if (alpha) {
             NEXTSAMPLE(alpha_val)
+            red_val= MIN(red_val, alpha_val);
+            blue_val= MIN(blue_val, alpha_val);
+            green_val= MIN(green_val, alpha_val);
             if (alpha_val) {
               *dest++ = (red_val * 255) / alpha_val;
               *dest++ = (green_val * 255) / alpha_val;
