@@ -36,7 +36,7 @@
  */
 
 /*  29 July 2003   Dave Neary  <bolsh@gimp.org>
- *  Added more edge detection routines, from the thin_line 
+ *  Added more edge detection routines, from the thin_line
  *  plug-in by iccii
  */
 
@@ -63,7 +63,7 @@ static gchar rcsid[] = "$Id$";
 
 #define TILE_CACHE_SIZE 48
 
-enum 
+enum
 {
   SOBEL,
   PREWITT,
@@ -204,13 +204,15 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 6)
-        status = GIMP_PDB_CALLING_ERROR;
+      if (nparams != 5 || nparams != 6)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       if (status == GIMP_PDB_SUCCESS)
         {
           evals.amount   = param[3].data.d_float;
           evals.wrapmode = param[4].data.d_int32;
-          evals.edgemode = param[5].data.d_int32;
+          evals.edgemode = nparams > 5 ? param[5].data.d_int32 : SOBEL;
         }
       break;
 
@@ -304,7 +306,7 @@ edge (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); 
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
@@ -329,7 +331,7 @@ edge (GimpDrawable *drawable)
                   */
                   for (chan = 0; chan < alpha; chan++)
                     {
-                      /* get the 3x3 kernel into a guchar array, 
+                      /* get the 3x3 kernel into a guchar array,
                        * and send it to edge_detect */
                       guchar kernel[9];
                       int i,j;
@@ -348,7 +350,7 @@ edge (GimpDrawable *drawable)
                   ** The kernel is not inside of the tile -- do slow
                   ** version
                   */
-                  
+
                   gimp_pixel_fetcher_get_pixel2(pft, x-1, y-1, wrapmode, pix00);
                   gimp_pixel_fetcher_get_pixel2(pft, x  , y-1, wrapmode, pix10);
                   gimp_pixel_fetcher_get_pixel2(pft, x+1, y-1, wrapmode, pix20);
@@ -362,7 +364,7 @@ edge (GimpDrawable *drawable)
                   for (chan = 0; chan < alpha; chan++)
                     {
                       guchar kernel[9];
-                      
+
                       kernel[0] = pix00[chan];
                       kernel[1] = pix01[chan];
                       kernel[2] = pix02[chan];
@@ -448,13 +450,13 @@ sobel (guchar *data)
 
   v_grad = 0;
   h_grad = 0;
-  
+
   for (i = 0; i < 9; i++)
-    { 
+    {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
-  return CLAMP(sqrt (v_grad * v_grad * evals.amount + 
+  return CLAMP(sqrt (v_grad * v_grad * evals.amount +
         h_grad * h_grad * evals.amount), 0, 255);
 }
 
@@ -468,36 +470,36 @@ prewitt (guchar *data)
   gint    k, max;
   gint    m[8];
 
-  m[0] =   data [0] +   data [1] + data [2] 
-         + data [3] - 2*data [4] + data [5] 
+  m[0] =   data [0] +   data [1] + data [2]
+         + data [3] - 2*data [4] + data [5]
          - data [6] -   data [7] - data [8];
-  m[1] =   data [0] +   data [1] + data [2] 
-         + data [3] - 2*data [4] - data [5] 
+  m[1] =   data [0] +   data [1] + data [2]
+         + data [3] - 2*data [4] - data [5]
          + data [6] -   data [7] - data [8];
-  m[2] =   data [0] +   data [1] - data [2] 
-         + data [3] - 2*data [4] - data [5] 
+  m[2] =   data [0] +   data [1] - data [2]
+         + data [3] - 2*data [4] - data [5]
          + data [6] +   data [7] - data [8];
-  m[3] =   data [0] -   data [1] - data [2] 
-         + data [3] - 2*data [4] - data [5] 
+  m[3] =   data [0] -   data [1] - data [2]
+         + data [3] - 2*data [4] - data [5]
          + data [6] +   data [7] + data [8];
-  m[4] = - data [0] -   data [1] - data [2] 
-         + data [3] - 2*data [4] + data [5] 
+  m[4] = - data [0] -   data [1] - data [2]
+         + data [3] - 2*data [4] + data [5]
          + data [6] +   data [7] + data [8];
-  m[5] = - data [0] -   data [1] + data [2] 
-         - data [3] - 2*data [4] + data [5] 
+  m[5] = - data [0] -   data [1] + data [2]
+         - data [3] - 2*data [4] + data [5]
          + data [6] +   data [7] + data [8];
-  m[6] = - data [0] +   data [1] + data [2] 
-         - data [3] - 2*data [4] + data [5] 
+  m[6] = - data [0] +   data [1] + data [2]
+         - data [3] - 2*data [4] + data [5]
          - data [6] +   data [7] + data [8];
-  m[7] =   data [0] +   data [1] + data [2] 
-         - data [3] - 2*data [4] + data [5] 
+  m[7] =   data [0] +   data [1] + data [2]
+         - data [3] - 2*data [4] + data [5]
          - data [6] -   data [7] + data [8];
 
   max = 0;
   for (k = 0; k < 8; k++)
     if (max < m[k])
       max = m[k];
-  
+
   return CLAMP(evals.amount * max, 0, 255);
 }
 
@@ -520,9 +522,9 @@ gradient (guchar *data)
 
   v_grad = 0;
   h_grad = 0;
-  
+
   for (i = 0; i < 9; i++)
-    { 
+    {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
@@ -551,9 +553,9 @@ roberts (guchar *data)
 
   v_grad = 0;
   h_grad = 0;
-  
+
   for (i = 0; i < 9; i++)
-    { 
+    {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
@@ -583,9 +585,9 @@ differential (guchar *data)
 
   v_grad = 0;
   h_grad = 0;
-  
+
   for (i = 0; i < 9; i++)
-    { 
+    {
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
@@ -609,9 +611,9 @@ laplace (guchar *data)
   gint    grad;
 
   grad = 0;
-  
+
   for (i = 0; i < 9; i++)
-    { 
+    {
       grad += kernel[i] * data[i];
     }
 

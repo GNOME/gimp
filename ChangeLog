@@ -1,3 +1,8 @@
+2003-08-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/edge.c (run): made the PDB interface backwards
+	compatible by allowing the last parameter to be omitted.
+
 2003-08-27  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Update NEWS file, split path tool improvements into
@@ -5,7 +10,7 @@
 
 2003-08-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/common/curve_bend.c: (party) applied patch from 
+	* plug-ins/common/curve_bend.c: (partly) applied patch from 
 	hof@gimp.org. Fixes both #119937 and #119938. Some cleanup of the 
 	code.
 
