@@ -86,6 +86,7 @@ static gint palette_color_area_events (GtkWidget *, GdkEvent *, PaletteP);
 static void palette_scroll_update (GtkAdjustment *, gpointer);
 static void palette_new_callback (GtkWidget *, gpointer);
 static void palette_delete_callback (GtkWidget *, gpointer);
+static void palette_refresh_callback (GtkWidget *, gpointer);
 static void palette_edit_callback (GtkWidget *, gpointer);
 static void palette_close_callback (GtkWidget *, gpointer);
 static gint palette_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
@@ -107,6 +108,9 @@ static int              num_palette_entries = 0;
 static unsigned char    foreground[3] = { 0, 0, 0 };
 static unsigned char    background[3] = { 255, 255, 255 };
 
+/*  Color select dialog  */
+static ColorSelectP color_select = NULL;
+static int color_select_active = 0;
 
 static ActionAreaItem action_items[] =
 {
@@ -119,8 +123,8 @@ static ActionAreaItem action_items[] =
 static MenuItem palette_ops[] =
 {
   { "New Palette", 0, 0, palette_new_entries_callback, NULL, NULL, NULL },
-  { "Merge Palette", 0, 0, palette_merge_entries_callback, NULL, NULL, NULL },
   { "Delete Palette", 0, 0, palette_delete_entries_callback, NULL, NULL, NULL },
+  { "Refresh Pallettes", 0, 0, palette_refresh_callback, NULL, NULL, NULL },
   { "Close", 0, 0, palette_close_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -751,18 +755,18 @@ palette_color_area_events (GtkWidget *widget,
     {
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-
+      width = palette->color_area->requisition.width;
+      height = palette->color_area->requisition.height;
+      entry_width = ((width - (SPACING * (COLUMNS + 1))) / COLUMNS) + SPACING;
+      entry_height = ((height - (SPACING * (ROWS + 1))) / ROWS) + SPACING;
+      
+      col = (bevent->x - 1) / entry_width;
+      row = (palette->scroll_offset + bevent->y - 1) / entry_height;
+      pos = row * COLUMNS + col;
+      
       if (bevent->button == 1 && palette->entries)
 	{
-	  width = palette->color_area->requisition.width;
-	  height = palette->color_area->requisition.height;
-	  entry_width = ((width - (SPACING * (COLUMNS + 1))) / COLUMNS) + SPACING;
-	  entry_height = ((height - (SPACING * (ROWS + 1))) / ROWS) + SPACING;
-
-	  col = (bevent->x - 1) / entry_width;
-	  row = (palette->scroll_offset + bevent->y - 1) / entry_height;
-	  pos = row * COLUMNS + col;
-
+	  
 	  tmp_link = g_slist_nth (palette->entries->colors, pos);
 	  if (tmp_link)
 	    {
@@ -782,11 +786,11 @@ palette_color_area_events (GtkWidget *widget,
 	    }
 	}
       break;
-
+      
     default:
       break;
     }
-
+  
   return FALSE;
 }
 
@@ -840,6 +844,25 @@ palette_delete_callback (GtkWidget *w,
   if (palette)
     palette_delete_entry (palette);
 }
+
+
+static void
+palette_refresh_callback (GtkWidget *w,
+			  gpointer client_data)
+{
+  PaletteP palette;
+  
+  palette = client_data;
+  if(palette)
+    {
+      palette_free_palettes (); 
+      palette_init_palettes();
+    }
+  palette_create_palette_menu (palette, default_palette_entries); 
+  
+}
+
+
 
 static void
 palette_edit_callback (GtkWidget *w,
@@ -1050,7 +1073,7 @@ palette_select_callback (int   r,
 	  }
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:
-	color_select_hide (palette->color_select);
+        color_select_hide (palette->color_select);
 	palette->color_select_active = 0;
       }
     }
@@ -1428,6 +1451,52 @@ palette_calc_scrollbar (PaletteP palette)
 
 /****************************/
 /*  PALETTE_GET_FOREGROUND  */
+
+
+static Argument *
+palette_refresh_invoker (Argument *args)
+{
+  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
+   *        void function right now.  It'd be nice if it returned a value at 
+   *        some future date, so we could tell if things blew up when reparsing
+   *        the list (for whatever reason). 
+   *                       - Seth "Yes, this is a kludge" Burgess
+   *                         <sjburges@ou.edu>
+   *   -and shaemlessly stolen by Adrian Likins for use here...
+   */
+  
+  int success = TRUE ;
+  if(palette)
+    palette_free_palettes ();      
+
+  palette_init_palettes();
+  return procedural_db_return_args (&palette_refresh_proc, success);
+}
+
+
+ProcRecord palette_refresh_proc =
+{
+  "gimp_palette_refresh",
+  "Refreshes current palettes",
+  "This procedure incorporates all palettes currently in the users palette path. ",
+  "Adrian Likins <adrain@gimp.org>",
+  "Adrian Likins",
+  "1998",
+  PDB_INTERNAL,
+
+  /* input aarguments */
+  0,
+  NULL,
+
+  /* Output arguments */
+  0,
+  NULL,
+  
+  /* Exec mehtos  */
+  { { palette_refresh_invoker } },
+};
+
+
 
 static Argument *
 palette_get_foreground_invoker (Argument *args)

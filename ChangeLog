@@ -1,4 +1,10 @@
-Thu Mar 19 21:36:41 PST 1998 Manish Singh <yosh@gimp.org>
+Fri Mar 20 16:54:47 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/palette.c:
+	* app/palette.h:
+	* app/internal_procs.c: Fixed some brokenness in palette refreshing.
+
+Mar 19 21:36:41 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.22 release
 	* app/undo.c: handle exposure correctly

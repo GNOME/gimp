@@ -298,6 +298,7 @@ internal_procs_init ()
   procedural_db_register (&palette_set_background_proc); pcount++;
   procedural_db_register (&palette_set_default_colors_proc); pcount++;
   procedural_db_register (&palette_swap_colors_proc); pcount++; 
+  procedural_db_register (&palette_refresh_proc); pcount++;
 
   app_init_update_status(NULL, "Interface procedures",
 			 pcount/total_pcount);
