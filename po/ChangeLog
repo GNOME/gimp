@@ -1,3 +1,8 @@
+2000-01-03  Kjartan Maraas  <kmaraas@online.no>
+
+	* update.sh: A little script that lets people
+	update the .pot file without makefiles etc.
+
 2000-01-02  Tor Lillqvist  <tml@iki.fi>
 
 	* fi.po: Small update to Finnish translation.
