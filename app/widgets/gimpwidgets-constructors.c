@@ -20,11 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#ifdef __GNUC__
-#warning GIMP_DISABLE_DEPRECATED
-#endif
-#undef GIMP_DISABLE_DEPRECATED
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -34,89 +29,142 @@
 #include "gimp-intl.h"
 
 
-GtkWidget *
-gimp_paint_mode_menu_new (GCallback            callback,
-			  gpointer             data,
-			  gboolean             with_behind_mode,
-			  GimpLayerModeEffects initial)
+/*  local function prototypes  */
+
+static gboolean   gimp_paint_mode_menu_separator_func (GtkTreeModel *model,
+                                                       GtkTreeIter  *iter,
+                                                       gpointer      data);
+
+
+/*  public functions  */
+
+static void
+gimp_int_store_insert_separator_after (GimpIntStore *store,
+                                       gint          value,
+                                       gint          separator_value)
 {
-  GtkWidget *menu;
+  GtkTreeIter value_iter;
+  GtkTreeIter sep_iter;
+
+  g_return_if_fail (GIMP_IS_INT_STORE (store));
+
+  if (gimp_int_store_lookup_by_value (GTK_TREE_MODEL (store),
+                                      value, &value_iter))
+    {
+      gtk_list_store_insert_after (GTK_LIST_STORE (store),
+                                   &sep_iter, &value_iter);
+      gtk_list_store_set (GTK_LIST_STORE (store), &sep_iter,
+                          GIMP_INT_STORE_VALUE, separator_value,
+                          -1);
+    }
+}
+
+GtkWidget *
+gimp_paint_mode_menu_new (gboolean with_behind_mode)
+{
+  GtkListStore *store;
+  GtkWidget    *combo;
 
   if (with_behind_mode)
     {
-      menu = gimp_int_option_menu_new
-        (FALSE, callback, data, initial,
+      store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                               23,
+                                               GIMP_NORMAL_MODE,
+                                               GIMP_DISSOLVE_MODE,
+                                               GIMP_BEHIND_MODE,
+                                               GIMP_COLOR_ERASE_MODE,
 
-         _("Normal"),        GIMP_NORMAL_MODE,        NULL,
-         _("Dissolve"),      GIMP_DISSOLVE_MODE,      NULL,
-         _("Behind"),        GIMP_BEHIND_MODE,        NULL,
-         _("Color erase"),   GIMP_COLOR_ERASE_MODE,   NULL,
-	 "---",              0,                       NULL,
-         _("Multiply"),      GIMP_MULTIPLY_MODE,      NULL,
-         _("Divide"),        GIMP_DIVIDE_MODE,        NULL,
-         _("Screen"),        GIMP_SCREEN_MODE,        NULL,
-         _("Overlay"),       GIMP_OVERLAY_MODE,       NULL,
-	 "---",              0,                       NULL,
-         _("Dodge"),         GIMP_DODGE_MODE,         NULL,
-         _("Burn"),          GIMP_BURN_MODE,          NULL,
-         _("Hard light"),    GIMP_HARDLIGHT_MODE,     NULL,
-         _("Soft light"),    GIMP_SOFTLIGHT_MODE,     NULL,
-         _("Grain extract"), GIMP_GRAIN_EXTRACT_MODE, NULL,
-         _("Grain merge"),   GIMP_GRAIN_MERGE_MODE,   NULL,
-	 "---",              0,                       NULL,
-         _("Difference"),    GIMP_DIFFERENCE_MODE,    NULL,
-         _("Addition"),      GIMP_ADDITION_MODE,      NULL,
-         _("Subtract"),      GIMP_SUBTRACT_MODE,      NULL,
-         _("Darken only"),   GIMP_DARKEN_ONLY_MODE,   NULL,
-         _("Lighten only"),  GIMP_LIGHTEN_ONLY_MODE,  NULL,
-	 "---",              0,                       NULL,
-         _("Hue"),           GIMP_HUE_MODE,           NULL,
-         _("Saturation"),    GIMP_SATURATION_MODE,    NULL,
-         _("Color"),         GIMP_COLOR_MODE,         NULL,
-         _("Value"),         GIMP_VALUE_MODE,         NULL,
+                                               GIMP_MULTIPLY_MODE,
+                                               GIMP_DIVIDE_MODE,
+                                               GIMP_SCREEN_MODE,
+                                               GIMP_OVERLAY_MODE,
 
-         NULL);
+                                               GIMP_DODGE_MODE,
+                                               GIMP_BURN_MODE,
+                                               GIMP_HARDLIGHT_MODE,
+                                               GIMP_SOFTLIGHT_MODE,
+                                               GIMP_GRAIN_EXTRACT_MODE,
+                                               GIMP_GRAIN_MERGE_MODE,
+
+                                               GIMP_DIFFERENCE_MODE,
+                                               GIMP_ADDITION_MODE,
+                                               GIMP_SUBTRACT_MODE,
+                                               GIMP_DARKEN_ONLY_MODE,
+                                               GIMP_LIGHTEN_ONLY_MODE,
+
+                                               GIMP_HUE_MODE,
+                                               GIMP_SATURATION_MODE,
+                                               GIMP_COLOR_MODE,
+                                               GIMP_VALUE_MODE);
+
+      gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                             GIMP_COLOR_ERASE_MODE, -1);
     }
   else
     {
-      menu = gimp_int_option_menu_new
-        (FALSE, callback, data, initial,
+      store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                               21,
+                                               GIMP_NORMAL_MODE,
+                                               GIMP_DISSOLVE_MODE,
 
-         _("Normal"),        GIMP_NORMAL_MODE,        NULL,
-         _("Dissolve"),      GIMP_DISSOLVE_MODE,      NULL,
-	 "---",              0,                       NULL,
-         _("Multiply"),      GIMP_MULTIPLY_MODE,      NULL,
-         _("Divide"),        GIMP_DIVIDE_MODE,        NULL,
-         _("Screen"),        GIMP_SCREEN_MODE,        NULL,
-         _("Overlay"),       GIMP_OVERLAY_MODE,       NULL,
-	 "---",              0,                       NULL,
-         _("Dodge"),         GIMP_DODGE_MODE,         NULL,
-         _("Burn"),          GIMP_BURN_MODE,          NULL,
-         _("Hard light"),    GIMP_HARDLIGHT_MODE,     NULL,
-         _("Soft light"),    GIMP_SOFTLIGHT_MODE,     NULL,
-         _("Grain extract"), GIMP_GRAIN_EXTRACT_MODE, NULL,
-         _("Grain merge"),   GIMP_GRAIN_MERGE_MODE,   NULL,
-	 "---",              0,                       NULL,
-         _("Difference"),    GIMP_DIFFERENCE_MODE,    NULL,
-         _("Addition"),      GIMP_ADDITION_MODE,      NULL,
-         _("Subtract"),      GIMP_SUBTRACT_MODE,      NULL,
-         _("Darken only"),   GIMP_DARKEN_ONLY_MODE,   NULL,
-         _("Lighten only"),  GIMP_LIGHTEN_ONLY_MODE,  NULL,
-	 "---",              0,                       NULL,
-         _("Hue"),           GIMP_HUE_MODE,           NULL,
-         _("Saturation"),    GIMP_SATURATION_MODE,    NULL,
-         _("Color"),         GIMP_COLOR_MODE,         NULL,
-         _("Value"),         GIMP_VALUE_MODE,         NULL,
+                                               GIMP_MULTIPLY_MODE,
+                                               GIMP_DIVIDE_MODE,
+                                               GIMP_SCREEN_MODE,
+                                               GIMP_OVERLAY_MODE,
 
-         NULL);
+                                               GIMP_DODGE_MODE,
+                                               GIMP_BURN_MODE,
+                                               GIMP_HARDLIGHT_MODE,
+                                               GIMP_SOFTLIGHT_MODE,
+                                               GIMP_GRAIN_EXTRACT_MODE,
+                                               GIMP_GRAIN_MERGE_MODE,
+
+                                               GIMP_DIFFERENCE_MODE,
+                                               GIMP_ADDITION_MODE,
+                                               GIMP_SUBTRACT_MODE,
+                                               GIMP_DARKEN_ONLY_MODE,
+                                               GIMP_LIGHTEN_ONLY_MODE,
+
+                                               GIMP_HUE_MODE,
+                                               GIMP_SATURATION_MODE,
+                                               GIMP_COLOR_MODE,
+                                               GIMP_VALUE_MODE);
+
+      gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                             GIMP_DISSOLVE_MODE, -1);
     }
 
-  return menu;
+  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                         GIMP_OVERLAY_MODE, -1);
+  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                         GIMP_GRAIN_MERGE_MODE, -1);
+  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                         GIMP_LIGHTEN_ONLY_MODE, -1);
+
+  combo = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                        "model", store,
+                        NULL);
+  g_object_unref (store);
+
+  gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),
+                                        gimp_paint_mode_menu_separator_func,
+                                        GINT_TO_POINTER (-1),
+                                        NULL);
+
+  return combo;
 }
 
-void
-gimp_paint_mode_menu_set_history (GtkOptionMenu        *menu,
-                                  GimpLayerModeEffects  value)
+
+/*  private functions  */
+
+static gboolean
+gimp_paint_mode_menu_separator_func (GtkTreeModel *model,
+                                     GtkTreeIter  *iter,
+                                     gpointer      data)
 {
-  gimp_int_option_menu_set_history (menu, value);
+  gint value;
+
+  gtk_tree_model_get (model, iter, GIMP_INT_STORE_VALUE, &value, -1);
+
+  return value == GPOINTER_TO_INT (data);
 }

@@ -20,13 +20,7 @@
 #define __GIMP_WIDGETS_CONSTRUCTORS_H__
 
 
-GtkWidget * gimp_paint_mode_menu_new (GCallback             callback,
-				      gpointer              data,
-				      gboolean              with_behind_mode,
-				      GimpLayerModeEffects  initial);
-
-void        gimp_paint_mode_menu_set_history (GtkOptionMenu        *menu,
-                                              GimpLayerModeEffects  value);
+GtkWidget * gimp_paint_mode_menu_new (gboolean with_behind_mode);
 
 
 #endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */

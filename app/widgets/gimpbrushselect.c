@@ -209,14 +209,15 @@ gimp_brush_select_constructor (GType                  type,
                     select);
 
   /*  Create the paint mode option menu  */
-  select->paint_mode_menu =
-    gimp_paint_mode_menu_new (G_CALLBACK (gimp_brush_select_mode_update),
-			      select,
-			      TRUE,
-			      gimp_context_get_paint_mode (dialog->context));
+  select->paint_mode_menu = gimp_paint_mode_menu_new (TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Mode:"), 0.0, 0.5,
 			     select->paint_mode_menu, 2, FALSE);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (select->paint_mode_menu),
+                              gimp_context_get_paint_mode (dialog->context),
+                              G_CALLBACK (gimp_brush_select_mode_update),
+			      select);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (dialog->view)->spacing_adjustment;
 
@@ -325,8 +326,16 @@ gimp_brush_select_mode_changed (GimpContext          *context,
                                 GimpLayerModeEffects  paint_mode,
                                 GimpBrushSelect      *select)
 {
-  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (select->paint_mode_menu),
-				    paint_mode);
+  g_signal_handlers_block_by_func (select->paint_mode_menu,
+                                   gimp_brush_select_mode_update,
+				   select);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (select->paint_mode_menu),
+                                 paint_mode);
+
+  g_signal_handlers_unblock_by_func (select->paint_mode_menu,
+                                     gimp_brush_select_mode_update,
+                                     select);
 
   gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
 }
@@ -343,12 +352,14 @@ static void
 gimp_brush_select_mode_update (GtkWidget       *widget,
                                GimpBrushSelect *select)
 {
-  GimpLayerModeEffects  paint_mode;
+  gint paint_mode;
 
-  paint_mode = (GimpLayerModeEffects)
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
-
-  gimp_context_set_paint_mode (GIMP_PDB_DIALOG (select)->context, paint_mode);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                     &paint_mode))
+    {
+      gimp_context_set_paint_mode (GIMP_PDB_DIALOG (select)->context,
+                                   (GimpLayerModeEffects) paint_mode);
+    }
 }
 
 static void

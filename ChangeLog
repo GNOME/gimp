@@ -1,5 +1,16 @@
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpwidgets-constructors.[ch]: undeprecated the
+	paint mode menu (ported to GimpEnumComboBox with separators).
+	The separator code is quite hackish and therefore still
+	implemented privately here.
+
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
+2005-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: depend on GTK+ >= 2.6.0 and pango >= 1.8.0.
 
 	* app/gui/gui.c (gui_sanity_check): changed accordingly.

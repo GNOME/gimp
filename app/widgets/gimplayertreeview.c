@@ -288,13 +288,14 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Paint mode menu  */
 
-  view->paint_mode_menu =
-    gimp_paint_mode_menu_new (G_CALLBACK (gimp_layer_tree_view_paint_mode_menu_callback),
-                              view,
-                              FALSE,
-                              GIMP_NORMAL_MODE);
+  view->paint_mode_menu = gimp_paint_mode_menu_new (FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, TRUE, TRUE, 0);
   gtk_widget_show (view->paint_mode_menu);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (view->paint_mode_menu),
+                              GIMP_NORMAL_MODE,
+                              G_CALLBACK (gimp_layer_tree_view_paint_mode_menu_callback),
+                              view);
 
   gimp_help_set_help_data (view->paint_mode_menu, NULL,
                            GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU);
@@ -922,20 +923,21 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
                                                GimpLayerTreeView *view)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
+  GimpLayer *layer = NULL;
 
   gimage = GIMP_ITEM_TREE_VIEW (view)->gimage;
 
-  layer = (GimpLayer *)
-    GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
+  if (gimage)
+    layer = (GimpLayer *)
+      GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
   if (layer)
     {
-      GimpLayerModeEffects mode =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                            "gimp-item-data"));
+      gint mode;
 
-      if (gimp_layer_get_mode (layer) != mode)
+      if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                         &mode) &&
+          gimp_layer_get_mode (layer) != (GimpLayerModeEffects) mode)
         {
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
@@ -948,12 +950,12 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
             push_undo = FALSE;
 
           BLOCK();
-          gimp_layer_set_mode (layer, mode, push_undo);
+          gimp_layer_set_mode (layer, (GimpLayerModeEffects) mode, push_undo);
           UNBLOCK();
 
           gimp_image_flush (gimage);
 
-          if (!push_undo)
+          if (! push_undo)
             gimp_undo_refresh_preview (undo);
         }
     }
@@ -1032,7 +1034,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
           gimp_image_flush (gimage);
 
-          if (!push_undo)
+          if (! push_undo)
             gimp_undo_refresh_preview (undo);
         }
     }
@@ -1067,8 +1069,14 @@ static void
 gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
                                      GimpLayer         *layer)
 {
-  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (view->paint_mode_menu),
-                                    layer->mode);
+  BLOCK (view->paint_mode_menu,
+         gimp_layer_tree_view_paint_mode_menu_callback);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (view->paint_mode_menu),
+                                 layer->mode);
+
+  UNBLOCK (view->paint_mode_menu,
+           gimp_layer_tree_view_paint_mode_menu_callback);
 
   if (layer->preserve_trans !=
       GTK_TOGGLE_BUTTON (view->preserve_trans_toggle)->active)

@@ -107,10 +107,12 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  menu = gimp_paint_mode_menu_new (G_CALLBACK (gimp_prop_paint_menu_callback),
-                                   config,
-                                   with_behind_mode,
-                                   value);
+  menu = gimp_paint_mode_menu_new (with_behind_mode);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (menu),
+                              value,
+                              G_CALLBACK (gimp_prop_paint_menu_callback),
+                              config);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
@@ -125,28 +127,18 @@ static void
 gimp_prop_paint_menu_callback (GtkWidget *widget,
                                GObject   *config)
 {
-  if (GTK_IS_MENU (widget->parent))
+  GParamSpec *param_spec;
+  gint        value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      GtkWidget *menu;
-
-      menu = gtk_menu_get_attach_widget (GTK_MENU (widget->parent));
-
-      if (menu)
-        {
-          GParamSpec *param_spec;
-          gint        value;
-
-          param_spec = get_param_spec (G_OBJECT (menu));
-          if (! param_spec)
-            return;
-
-          value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                      "gimp-item-data"));
-
-          g_object_set (config,
-                        param_spec->name, value,
-                        NULL);
-        }
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
     }
 }
 
@@ -161,7 +153,16 @@ gimp_prop_paint_menu_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_paint_mode_menu_set_history (GTK_OPTION_MENU (menu), value);
+  g_signal_handlers_block_by_func (menu,
+                                   gimp_prop_paint_menu_callback,
+                                   config);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (menu), value);
+
+  g_signal_handlers_unblock_by_func (menu,
+                                     gimp_prop_paint_menu_callback,
+                                     config);
+
 }
 
 
