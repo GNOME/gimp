@@ -93,7 +93,7 @@ main (int argc, char **argv)
   gchar *display_name, *display_env;
 #endif
 
-  ATEXIT (g_mem_profile);
+  g_atexit (g_mem_profile);
 
   /* Initialize variables */
   prog_name = argv[0];

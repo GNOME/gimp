@@ -1,3 +1,7 @@
+Mon Sep  7 22:30:53 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/main.c: s/ATEXIT/g_atexit/ to sync with gtk changes
+
 Sun Sep  6 12:55:45 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: see if CC needs -posix (for NeXTStep)
