@@ -1,3 +1,7 @@
+2000-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/tmpl/gimphelpui.sgml: updated.
+
 2000-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt

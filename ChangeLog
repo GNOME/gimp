@@ -1,3 +1,7 @@
+2000-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimphelpui.c: added documentation.
+
 Sun Feb 27 13:07:31 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpimage.c
