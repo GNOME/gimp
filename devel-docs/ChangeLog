@@ -1,3 +1,8 @@
+2002-10-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/tmpl/gimpmodule.sgml: added missing declarations.
+
 2002-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/libgimpbase-docs.sgml
