@@ -1,3 +1,12 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/selection-round.scm: use a
+	scale_entry instead of a spinbutton, changed mnemonic from "R" to
+	"E", indentation.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: s/SF_BRUSH/SF-BRUSH/
+	in a comment.
+
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/selection-round.scm: applied patch by

@@ -111,30 +111,30 @@
 			       ADD
 			       TRUE
 			       FALSE 0)
-      (gimp-ellipse-select image
-			   select-x1
-			   (- select-y2 ellipse-radius)
-			   ellipse-radius
-			   ellipse-radius
-			   ADD
-			   TRUE
-			   FALSE 0)
-      (gimp-ellipse-select image
-			   (- select-x2 ellipse-radius)
-			   select-y1
-			   ellipse-radius
-			   ellipse-radius
-			   ADD
-			   TRUE
-			   FALSE 0)
-      (gimp-ellipse-select image
-			   (- select-x2 ellipse-radius)
-			   (- select-y2 ellipse-radius)
-			   ellipse-radius
-			   ellipse-radius
-			   ADD
-			   TRUE
-			   FALSE 0)))
+	  (gimp-ellipse-select image
+			       select-x1
+			       (- select-y2 ellipse-radius)
+			       ellipse-radius
+			       ellipse-radius
+			       ADD
+			       TRUE
+			       FALSE 0)
+	  (gimp-ellipse-select image
+			       (- select-x2 ellipse-radius)
+			       select-y1
+			       ellipse-radius
+			       ellipse-radius
+			       ADD
+			       TRUE
+			       FALSE 0)
+	  (gimp-ellipse-select image
+			       (- select-x2 ellipse-radius)
+			       (- select-y2 ellipse-radius)
+			       ellipse-radius
+			       ellipse-radius
+			       ADD
+			       TRUE
+			       FALSE 0)))
 
     (gimp-image-undo-group-end image)
     (gimp-displays-flush)))
@@ -147,7 +147,7 @@
 
 
 (script-fu-register "script-fu-selection-rounded-rectangle"
-		    _"<Image>/Select/Modify/_Rounded Rectangle..."  
+		    _"<Image>/Select/Modify/Rounded R_ectangle..."  
 		    "Converts the current selection, to a rectangular selection with rounded edges. The radius is a percentage of half the selection width or height, whichever is smaller. Select 'Concave' if you want the round edges will to be indented. Round Edges works by subtracting and adding circles to the selection.  "
 		    "Alan Horkan, Sven Neumann" ; authors
 		    "Sven Neumann"              ; copyright
@@ -156,7 +156,7 @@
 		    SF-IMAGE       "Image"      0
 		    SF-DRAWABLE    "Drawable"   0
 		    
-		    SF-ADJUSTMENT _"Radius (%)" '(50 0 100 1 10 0 1) 
+		    SF-ADJUSTMENT _"Radius (%)" '(50 0 100 1 10 0 0)
 		    SF-TOGGLE     _"Concave"    FALSE)
 
 (script-fu-register "script-fu-selection-rounded"

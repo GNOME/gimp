@@ -41,7 +41,7 @@
 ; units as passed in as the default value.
 ;
 ; Usage:
-; SF_BRUSH "Brush" '("Circle (03)" 1.0 44 0)
+; SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
 ;
 ; Here the brush dialog will be popped up with a default brush of Circle (03)
 ; opacity 1.0, spacing 44 and paint mode of Normal (value 0).
