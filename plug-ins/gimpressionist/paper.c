@@ -19,15 +19,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkWidget *paperprev = NULL;
-static GtkListStore *paperstore;
-static GtkWidget *paperinvert = NULL;
-static GtkWidget *paperlist = NULL;
-static GtkObject *paperreliefadjust = NULL;
-static GtkObject *paperscaleadjust = NULL;
-static GtkWidget *paperoverlay = NULL;
+static GtkWidget *paper_preview = NULL;
+static GtkWidget *paper_invert = NULL;
+static GtkWidget *paper_list = NULL;
+static GtkObject *paper_relief_adjust = NULL;
+static GtkObject *paper_scale_adjust = NULL;
+static GtkWidget *paper_overlay = NULL;
 
-static void updatepaperprev(void)
+static void paper_update_preview(void)
 {
   gint    i, j;
   guchar  buf[100];
@@ -44,18 +43,18 @@ static void updatepaperprev(void)
     if(i < p.height) {
       for(j = 0; j < p.width; j++)
         buf[j] = p.col[k + j * 3];
-      if (GTK_TOGGLE_BUTTON(paperinvert)->active)
+      if (GTK_TOGGLE_BUTTON(paper_invert)->active)
         for (j = 0; j < p.width; j++)
           buf[j] = 255 - buf[j];
     }
-    gtk_preview_draw_row (GTK_PREVIEW (paperprev), buf, 0, i, 100);
+    gtk_preview_draw_row (GTK_PREVIEW (paper_preview), buf, 0, i, 100);
   }
   ppm_kill(&p);
 
-  gtk_widget_queue_draw (paperprev);
+  gtk_widget_queue_draw (paper_preview);
 }
 
-static void selectpaper(GtkTreeSelection *selection, gpointer data)
+static void paper_select(GtkTreeSelection *selection, gpointer data)
 {
   GtkTreeIter   iter;
   GtkTreeModel *model;
@@ -73,7 +72,7 @@ static void selectpaper(GtkTreeSelection *selection, gpointer data)
           g_strlcpy (pcvals.selectedpaper,
                      fname, sizeof (pcvals.selectedpaper));
 
-          updatepaperprev ();
+          paper_update_preview ();
 
           g_free (fname);
           g_free (paper);
@@ -83,18 +82,18 @@ static void selectpaper(GtkTreeSelection *selection, gpointer data)
 
 void paper_restore(void)
 {
-  reselect(paperlist, pcvals.selectedpaper);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(paperreliefadjust), pcvals.paperrelief);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(paperscaleadjust), pcvals.paperscale);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperinvert), pcvals.paperinvert);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
+  reselect(paper_list, pcvals.selectedpaper);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_relief_adjust), pcvals.paperrelief);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_scale_adjust), pcvals.paperscale);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paper_invert), pcvals.paper_invert);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paper_overlay), pcvals.paper_overlay);
 }
 
 void paper_store(void)
 {
-  pcvals.paperinvert = GTK_TOGGLE_BUTTON(paperinvert)->active;
-  pcvals.paperinvert = GTK_TOGGLE_BUTTON(paperinvert)->active;
-  pcvals.paperoverlay = GTK_TOGGLE_BUTTON(paperoverlay)->active;
+  pcvals.paper_invert = GTK_TOGGLE_BUTTON(paper_invert)->active;
+  pcvals.paper_invert = GTK_TOGGLE_BUTTON(paper_invert)->active;
+  pcvals.paper_overlay = GTK_TOGGLE_BUTTON(paper_overlay)->active;
 }
 
 void create_paperpage(GtkNotebook *notebook)
@@ -105,6 +104,7 @@ void create_paperpage(GtkNotebook *notebook)
   GtkWidget *frame;
   GtkTreeSelection *selection;
   GtkTreeIter iter;
+  GtkListStore *paper_store_list;
 
   label = gtk_label_new_with_mnemonic (_("P_aper"));
 
@@ -116,8 +116,8 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  paperlist = view = create_one_column_list (box1, selectpaper);
-  paperstore = GTK_LIST_STORE(gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
+  paper_list = view = create_one_column_list (box1, paper_select);
+  paper_store_list = GTK_LIST_STORE(gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
   box2 = gtk_vbox_new (FALSE, 12);
@@ -129,27 +129,27 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  paperprev = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  paper_preview = tmpw = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size(GTK_PREVIEW (tmpw), 100, 100);
   gtk_container_add (GTK_CONTAINER (frame), tmpw);
   gtk_widget_show(tmpw);
 
-  paperinvert = tmpw = gtk_check_button_new_with_mnemonic( _("_Invert"));
+  paper_invert = tmpw = gtk_check_button_new_with_mnemonic( _("_Invert"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   g_signal_connect_swapped (tmpw, "clicked",
-			    G_CALLBACK(selectpaper), selection);
+			    G_CALLBACK(paper_select), selection);
   gimp_help_set_help_data (tmpw, _("Inverts the Papers texture"), NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperinvert);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paper_invert);
 
-  paperoverlay = tmpw = gtk_check_button_new_with_mnemonic( _("O_verlay"));
+  paper_overlay = tmpw = gtk_check_button_new_with_mnemonic( _("O_verlay"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperoverlay);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paper_overlay);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -157,7 +157,7 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  paperscaleadjust =
+  paper_scale_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Scale:"),
 			  150, -1, pcvals.paperscale,
@@ -165,11 +165,11 @@ void create_paperpage(GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("Specifies the scale of the texture (in percent of original file)"),
 			  NULL);
-  g_signal_connect (paperscaleadjust, "value_changed",
+  g_signal_connect (paper_scale_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paperscale);
 
-  paperreliefadjust =
+  paper_relief_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
 			  150, -1, pcvals.paperrelief,
@@ -177,15 +177,15 @@ void create_paperpage(GtkNotebook *notebook)
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);
-  g_signal_connect (paperreliefadjust, "value_changed",
+  g_signal_connect (paper_relief_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paperrelief);
 
 
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(paperstore), &iter))
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(paper_store_list), &iter))
     gtk_tree_selection_select_iter (selection, &iter);
 
-  selectpaper(selection, NULL);
+  paper_select(selection, NULL);
   readdirintolist("Paper", view, pcvals.selectedpaper);
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

@@ -346,10 +346,10 @@ static void set_values (const gchar *key, const gchar *val)
     pcvals.paperrelief = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "paperscale"))
     pcvals.paperscale = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "paperinvert"))
-    pcvals.paperinvert = atoi(val);
-  else if(!strcmp(key, "paperoverlay"))
-    pcvals.paperoverlay = atoi(val);
+  else if(!strcmp(key, "paper_invert"))
+    pcvals.paper_invert = atoi(val);
+  else if(!strcmp(key, "paper_overlay"))
+    pcvals.paper_overlay = atoi(val);
 
   else if(!strcmp(key, "placetype"))
     pcvals.placetype = atoi(val);
@@ -725,8 +725,8 @@ static void save_preset(void)
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paperrelief));
   fprintf(f, "paperscale=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paperscale));
-  fprintf(f, "paperinvert=%d\n", pcvals.paperinvert);
-  fprintf(f, "paperoverlay=%d\n", pcvals.paperoverlay);
+  fprintf(f, "paper_invert=%d\n", pcvals.paper_invert);
+  fprintf(f, "paper_overlay=%d\n", pcvals.paper_overlay);
 
   fprintf(f, "selectedbrush=%s\n", pcvals.selectedbrush);
   fprintf(f, "selectedpaper=%s\n", pcvals.selectedpaper);

@@ -52,7 +52,7 @@ typedef struct
   double     generaldarkedge;
   double     paperrelief;
   double     paperscale;
-  int        paperinvert;
+  int        paper_invert;
   int        run;
   char       selectedbrush[200];
   char       selectedpaper[200];
@@ -66,7 +66,7 @@ typedef struct
   double     orientangoff;
   double     orientstrexp;
   int        generaltileable;
-  int        paperoverlay;
+  int        paper_overlay;
   int        orientvoronoi;
   int        colorbrushes;
   int        generaldropshadow;

@@ -440,7 +440,7 @@ void repaint(ppm_t *p, ppm_t *a)
     ppm_new(&tmp, p->width, p->height);
     ppm_load(runningvals.selectedpaper, &paperppm);
     resize(&paperppm, paperppm.width * scale, paperppm.height * scale);
-    if(runningvals.paperinvert)
+    if(runningvals.paper_invert)
       ppm_apply_gamma(&paperppm, -1.0, 1, 1, 1);
     for(x = 0; x < tmp.width; x++) {
       int rx = x % paperppm.width;
@@ -865,7 +865,7 @@ void repaint(ppm_t *p, ppm_t *a)
       tmp.col = NULL;
       ppm_load(runningvals.selectedpaper, &tmp);
       resize(&tmp, tmp.width * scale, tmp.height * scale);
-      if(runningvals.paperinvert)
+      if(runningvals.paper_invert)
         ppm_apply_gamma(&tmp, -1.0, 1,1,1);
     }
     for(x = 0; x < p->width; x++) {
@@ -874,7 +874,7 @@ void repaint(ppm_t *p, ppm_t *a)
       for(y = 0; y < p->height; y++) {
         int k = y * p->width * 3 + x * 3;
         py = y % tmp.height;
-        if(runningvals.paperoverlay)
+        if(runningvals.paper_overlay)
           h = (tmp.col[py*tmp.width*3+px*3]-128) * relief;
         else
           h = (tmp.col[py*tmp.width*3+px*3] - (int)tmp.col[((py+1)%tmp.height)*tmp.width*3+((px+1)%tmp.width)*3]) / -2.0 * relief;
