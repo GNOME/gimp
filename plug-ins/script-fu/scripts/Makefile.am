@@ -72,6 +72,7 @@ scriptdata_DATA = \
 	rendermap.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\
+	script-fu-util.scm			\
 	select-to-brush.scm			\
 	select-to-image.scm			\
 	select-to-pattern.scm			\
