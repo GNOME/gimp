@@ -15,12 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "gimpimageP.h"
+
 #include "drawable.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "general.h"
-#include "gimpimageP.h"
-#include "gimpimage.h"
 #include "gimage_mask.h"
 #include "paint_funcs.h"
 #include "palette.h"
@@ -75,8 +74,6 @@ int valid_combinations[][MAX_CHANNELS + 1] =
 /*
  *  Static variables
  */
-GSList *image_list = NULL;
-
 
 enum{
   DIRTY,
@@ -151,17 +148,12 @@ static void gimp_image_init (GimpImage *gimage)
 
 GtkType gimp_image_get_type(void){
 	static GtkType type;
-	if(!type){
-		GtkTypeInfo info={
-			"GimpImage",
-			sizeof(GimpImage),
-			sizeof(GimpImageClass),
-			(GtkClassInitFunc)gimp_image_class_init,
-			(GtkObjectInitFunc)gimp_image_init,
-			NULL,
-			NULL};
-		type=gtk_type_unique(gimp_object_get_type(), &info);
-	}
+	GIMP_TYPE_INIT(type,
+		       GimpImage,
+		       GimpImageClass,
+		       gimp_image_init,
+		       gimp_image_class_init,
+		       GIMP_TYPE_OBJECT);
 	return type;
 }
 
@@ -190,8 +182,7 @@ gimp_image_allocate_projection (GimpImage *gimage)
       gimage->proj_type = GRAYA_GIMAGE;
       break;
     default:
-      g_message ("gimage type unsupported.\n");
-      break;
+      g_assert_not_reached();
     }
 
   /*  allocate the new projection  */
@@ -299,11 +290,7 @@ gimp_image_resize (GimpImage *gimage, int new_width, int new_height,
   Layer *floating_layer;
   GSList *list;
 
-  if (new_width <= 0 || new_height <= 0) 
-    {
-      g_message ("gimp_image_resize: width and height must be positive");
-      return;
-    }
+  g_assert (new_width > 0 && new_height > 0);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -415,27 +402,6 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
     floating_sel_rigor (floating_layer, TRUE);
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESIZE]);
-}
-
-
-GimpImage *
-gimp_image_get_named (char *name)
-{
-  GSList *tmp = image_list;
-  GimpImage *gimage;
-  char *str;
-
-  while (tmp)
-    {
-      gimage = tmp->data;
-      str = prune_filename (gimp_image_filename (gimage));
-      if (strcmp (str, name) == 0)
-	return gimage;
-
-      tmp = g_slist_next (tmp);
-    }
-
-  return NULL;
 }
 
 
@@ -2899,19 +2865,5 @@ gimp_image_invalidate_preview (GimpImage *gimage)
   gimage->comp_preview_valid[0] = FALSE;
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;
-}
-
-void
-gimp_image_invalidate_previews (void)
-{
-  GSList *tmp = image_list;
-  GimpImage *gimage;
-
-  while (tmp)
-    {
-      gimage = (GimpImage *) tmp->data;
-      gimp_image_invalidate_preview (gimage);
-      tmp = g_slist_next (tmp);
-    }
 }
 

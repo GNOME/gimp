@@ -17,6 +17,7 @@
 #include "layer_pvt.h"
 #include "channel.h"
 #include "tools.h"
+#include "general.h"
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
    to proper places. That is, the handlers should be moved to
@@ -29,6 +30,8 @@ static int global_gimage_ID = 1;
 
 /* Any global vars like this are damn well app-specific, and don't
    belong in class implementations */
+
+/* To do: a more generic "set" class */
 
 GSList* image_list;
 
@@ -176,14 +179,13 @@ gimage_repaint_handler (GimpImage* gimage, gint x, gint y, gint w, gint h)
 /* These really belong in the layer class */
 
 void
-gimage_set_layer_mask_apply (GImage *gimage, int layer_id)
+gimage_set_layer_mask_apply (GImage *gimage, GimpLayer* layer)
 {
-  Layer *layer;
   int off_x, off_y;
 
-  /*  find the layer  */
-  if (! (layer = layer_get_ID (layer_id)))
-    return;
+  g_return_if_fail(gimage);
+  g_return_if_fail(layer);
+  
   if (! layer->mask)
     return;
 
@@ -209,14 +211,13 @@ gimage_set_layer_mask_edit (GImage *gimage, Layer * layer, int edit)
 
 
 void
-gimage_set_layer_mask_show (GImage *gimage, int layer_id)
+gimage_set_layer_mask_show (GImage *gimage, GimpLayer* layer)
 {
-  Layer *layer;
   int off_x, off_y;
 
-  /*  find the layer  */
-  if (! (layer = layer_get_ID (layer_id)))
-    return;
+  g_return_if_fail(gimage);
+  g_return_if_fail(layer);
+  
   if (! layer->mask)
     return;
 
@@ -224,5 +225,30 @@ gimage_set_layer_mask_show (GImage *gimage, int layer_id)
   drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
   gdisplays_update_area (gimage, off_x, off_y,
 			 drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
+}
+
+void
+gimage_foreach (GFunc func, gpointer user_data){
+	GSList* l;
+	for(l=image_list;l;l=l->next)
+		func(l->data, user_data);
+}
+
+GImage *
+gimage_get_named (gchar *name)
+{
+  GSList *tmp = image_list;
+  GimpImage *gimage;
+  char *str;
+  while (tmp)
+    {
+      gimage = tmp->data;
+      str = prune_filename (gimp_image_filename (gimage));
+      if (strcmp (str, name) == 0)
+	return gimage;
+
+      tmp = g_slist_next (tmp);
+    }
+  return NULL;
 }
 

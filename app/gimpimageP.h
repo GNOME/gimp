@@ -2,7 +2,7 @@
 #define __GIMPIMAGEP_H__
 
 #include "gimpobjectP.h"
-#include "gimpimageF.h"
+#include "gimpimage.h"
 
 #include "tile_manager.h"
 #include "temp_buf.h"
@@ -83,6 +83,6 @@ struct _GimpImageClass
 typedef struct _GimpImageClass GimpImageClass;
 
 #define GIMP_IMAGE_CLASS(klass) \
-GTK_CHECK_CLASS_CAST (klass, gimp_image_get_type(), GimpImageClass)
+GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_IMAGE, GimpImageClass)
 
 #endif

@@ -581,7 +581,7 @@ layer_translate (layer, off_x, off_y)
      int off_x, off_y;
 {
   /*  the undo call goes here  */
-  undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, GIMP_DRAWABLE(layer)->ID);
+  undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, layer);
 
   /*  update the affected region  */
   drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);

@@ -24,7 +24,8 @@
 TileManager *  crop_buffer            (TileManager *, int);
 TileManager *  edit_cut               (GImage *, GimpDrawable *);
 TileManager *  edit_copy              (GImage *, GimpDrawable *);
-int            edit_paste             (GImage *, GimpDrawable *, TileManager *, int);
+GimpLayer*     edit_paste             (GImage *, GimpDrawable *,
+				       TileManager *, int);
 int            edit_clear             (GImage *, GimpDrawable *);
 int            edit_fill              (GImage *, GimpDrawable *);
 

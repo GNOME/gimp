@@ -179,6 +179,7 @@ edit_paste_invoker (Argument *args)
 {
   GImage *gimage;
   GimpDrawable *drawable;
+  GimpLayer *layer=NULL;
   int paste_into;
 
   drawable = NULL;
@@ -206,12 +207,12 @@ edit_paste_invoker (Argument *args)
 
   /*  create the new image  */
   if (success)
-    success = edit_paste (gimage, drawable, global_buf, paste_into);
+    layer = edit_paste (gimage, drawable, global_buf, paste_into);
 
-  return_args = procedural_db_return_args (&edit_paste_proc, success);
+  return_args = procedural_db_return_args (&edit_paste_proc, !!layer);
 
-  if (success)
-    return_args[1].value.pdb_int = success;
+  if (layer)
+    return_args[1].value.pdb_int = drawable_ID(GIMP_DRAWABLE(layer));
 
   return return_args;
 }

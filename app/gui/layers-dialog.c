@@ -743,73 +743,80 @@ layers_dialog_create ()
   return layersD->vbox;
 }
 
+typedef struct{
+  GImage** def;
+  int* default_index;
+  MenuItemCallback callback;
+  GtkWidget* menu;
+  int num_items;
+  GImage* id;
+}IMCBData;
+
+static void
+create_image_menu_cb (gpointer im, gpointer d)
+{
+  GimpImage* gimage = GIMP_IMAGE (im);
+  IMCBData* data = (IMCBData*)d;
+  char* image_name;
+  char* menu_item_label;
+  GtkWidget *menu_item;
+  
+  /*  make sure the default index gets set to _something_, if possible  */
+  if (*data->default_index == -1)
+    {
+      data->id = gimage;
+      *data->default_index = data->num_items;
+    }
+
+  if (gimage == *data->def)
+    {
+      data->id = *data->def;
+      *data->default_index = data->num_items;
+    }
+
+  image_name = prune_filename (gimage_filename (gimage));
+  menu_item_label = (char *) g_malloc (strlen (image_name) + 15);
+  sprintf (menu_item_label, "%s-%d", image_name, gimage->ID);
+  menu_item = gtk_menu_item_new_with_label (menu_item_label);
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+		      (GtkSignalFunc) data->callback,
+		      (gpointer) ((long) gimage));
+  gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
+  gtk_widget_show (menu_item);
+
+  g_free (menu_item_label);
+  data->num_items ++;  
+}
 
 GtkWidget *
-create_image_menu (GimpImage**       default_gimage,
+create_image_menu (GimpImage**          def,
 		   int              *default_index,
 		   MenuItemCallback  callback)
 {
-  extern GSList *image_list;
-
-  GImage *gimage;
-  GtkWidget *menu_item;
-  GtkWidget *menu;
-  char *menu_item_label;
-  char *image_name;
-  GSList *tmp;
-  int num_items = 0;
-  GimpImage* gid;
-
-  gid = NULL;
-
+  IMCBData data = {
+    def,
+    default_index,
+    callback,
+    gtk_menu_new (),
+    0,
+    NULL};
+  
   *default_index = -1;
-  menu = gtk_menu_new ();
 
-  tmp = image_list;
-  while (tmp)
+  gimage_foreach (create_image_menu_cb, &data);
+  
+  if (!data.num_items)
     {
-      gimage = tmp->data;
-      tmp = g_slist_next (tmp);
-
-      /*  make sure the default index gets set to _something_, if possible  */
-      if (*default_index == -1)
-	{
-	  gid = gimage;
-	  *default_index = num_items;
-	}
-
-      if (gimage == *default_gimage)
-	{
-	  gid = *default_gimage;
-	  *default_index = num_items;
-	}
-
-      image_name = prune_filename (gimage_filename (gimage));
-      menu_item_label = (char *) g_malloc (strlen (image_name) + 15);
-      sprintf (menu_item_label, "%s-%d", image_name, gimage->ID);
-      menu_item = gtk_menu_item_new_with_label (menu_item_label);
-      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-			  (GtkSignalFunc) callback,
-			  gimage);
-      gtk_container_add (GTK_CONTAINER (menu), menu_item);
-      gtk_widget_show (menu_item);
-
-      g_free (menu_item_label);
-      num_items ++;
-    }
-
-  if (!num_items)
-    {
+      GtkWidget* menu_item;
       menu_item = gtk_menu_item_new_with_label ("none");
-      gtk_container_add (GTK_CONTAINER (menu), menu_item);
+      gtk_container_add (GTK_CONTAINER (data.menu), menu_item);
       gtk_widget_show (menu_item);
     }
 
-  *default_gimage = gid;
+  *def = data.id;
 
-  return menu;
+  return data.menu;
 }
-
 
 void
 layers_dialog_update (GimpImage* gimage)
@@ -2148,7 +2155,7 @@ layer_widget_button_events (GtkWidget *widget,
       if (widget == layer_widget->eye_widget)
 	{
 	  if (exclusive)
-	    {
+       	    {
 	      gimage_invalidate_preview (layer_widget->gimage);
 	      gdisplays_update_area (layer_widget->gimage, 0, 0,
 				     layer_widget->gimage->width,
@@ -2258,7 +2265,7 @@ layer_widget_preview_events (GtkWidget *widget,
 	{
 	  if (preview_type == MASK_PREVIEW)
 	    {
-	      gimage_set_layer_mask_apply (layer_widget->gimage, GIMP_DRAWABLE(layer_widget->layer)->ID);
+	      gimage_set_layer_mask_apply (layer_widget->gimage, layer_widget->layer);
 	      gdisplays_flush ();
 	    }
 	}
@@ -2267,7 +2274,7 @@ layer_widget_preview_events (GtkWidget *widget,
 	{
 	  if (preview_type == MASK_PREVIEW)
 	    {
-	      gimage_set_layer_mask_show (layer_widget->gimage, GIMP_DRAWABLE(layer_widget->layer)->ID);
+	      gimage_set_layer_mask_show (layer_widget->gimage, layer_widget->layer);
 	      gdisplays_flush ();
 	    }
 	}
@@ -3150,7 +3157,7 @@ typedef struct _EditLayerOptions EditLayerOptions;
 struct _EditLayerOptions {
   GtkWidget *query_box;
   GtkWidget *name_entry;
-  int        layer_ID;
+  GimpLayer *layer;
 };
 
 static void
@@ -3162,7 +3169,7 @@ edit_layer_query_ok_callback (GtkWidget *w,
 
   options = (EditLayerOptions *) client_data;
 
-  if ((layer = layer_get_ID (options->layer_ID)))
+  if ((layer = options->layer))
     {
       /*  Set the new layer name  */
       if (GIMP_DRAWABLE(layer)->name)
@@ -3221,7 +3228,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 
   /*  the new options structure  */
   options = (EditLayerOptions *) g_malloc (sizeof (EditLayerOptions));
-  options->layer_ID = drawable_ID (GIMP_DRAWABLE (layer_widget->layer));
+  options->layer = layer_widget->layer;
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");

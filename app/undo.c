@@ -784,13 +784,10 @@ undo_free_mask (int   state,
 
 int
 undo_push_layer_displace (GImage *gimage,
-			  int     layer_ID)
+			  GimpLayer *layer)
 {
   Undo * new;
-  Layer * layer;
   int * info;
-
-  layer = layer_get_ID (layer_ID);
 
   if ((new = undo_push (gimage, 12, LAYER_DISPLACE_UNDO)))
     {
@@ -799,7 +796,7 @@ undo_push_layer_displace (GImage *gimage,
       new->free_func     = undo_free_layer_displace;
 
       info = (int *) new->data;
-      info[0] = layer_ID;
+      info[0] = drawable_ID(GIMP_DRAWABLE(layer));
       info[1] = GIMP_DRAWABLE(layer)->offset_x;
       info[2] = GIMP_DRAWABLE(layer)->offset_y;
 

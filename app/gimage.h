@@ -37,19 +37,23 @@ void
 gimage_invalidate_previews (void);
 
 void
-gimage_set_layer_mask_apply (GImage *gimage, int layer_id);
+gimage_set_layer_mask_apply (GImage *gimage, GimpLayer* layer);
 
 void
-gimage_set_layer_mask_edit (GImage *gimage, Layer * layer, int edit);
+gimage_set_layer_mask_edit (GImage *gimage, GimpLayer * layer, int edit);
 
 void
-gimage_set_layer_mask_show (GImage *gimage, int layer_id);
+gimage_set_layer_mask_show (GImage *gimage, GimpLayer* layer);
+
+void
+gimage_foreach (GFunc func, gpointer user_data);
+
+GImage * gimage_get_named (gchar *name);
 
 
 #define gimage_set_filename gimp_image_set_filename
 #define gimage_resize gimp_image_resize
 #define gimage_scale gimp_image_scale
-#define gimage_get_named gimp_image_get_named
 #define gimage_shadow gimp_image_shadow
 #define gimage_free_shadow gimp_image_free_shadow
 #define gimage_apply_image gimp_image_apply_image

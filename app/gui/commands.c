@@ -358,7 +358,7 @@ select_border_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_border_radius);
   query_string_box ("Border Selection", "Border selection by:", initial,
-		    gimage_mask_border_callback, (gpointer) gdisp->gimage->ID);
+		    gimage_mask_border_callback, gdisp->gimage);
 }
 
 void
@@ -372,7 +372,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%f", gimage_mask_feather_radius);
   query_string_box ("Feather Selection", "Feather selection by:", initial,
-		    gimage_mask_feather_callback, (gpointer) gdisp->gimage->ID);
+		    gimage_mask_feather_callback, gdisp->gimage);
 }
 
 void
@@ -386,7 +386,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_grow_pixels);
   query_string_box ("Grow Selection", "Grow selection by:", initial,
-		    gimage_mask_grow_callback, (gpointer) gdisp->gimage->ID);
+		    gimage_mask_grow_callback, gdisp->gimage);
 }
 
 void
@@ -400,7 +400,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_shrink_pixels);
   query_string_box ("Shrink Selection", "Shrink selection by:", initial,
-		    gimage_mask_shrink_callback, (gpointer) gdisp->gimage->ID);
+		    gimage_mask_shrink_callback, gdisp->gimage);
 }
 
 void
@@ -1135,11 +1135,8 @@ gimage_mask_feather_callback (GtkWidget *w,
 			      gpointer   client_data,
 			      gpointer   call_data)
 {
-  GImage *gimage;
+  GImage *gimage=GIMP_IMAGE(client_data);
   double feather_radius;
-
-  if (!(gimage = gimage_get_ID ((int)client_data)))
-    return;
 
   feather_radius = atof (call_data);
 
@@ -1156,9 +1153,8 @@ gimage_mask_border_callback (GtkWidget *w,
   GImage *gimage;
   int border_radius;
 
-  if (!(gimage = gimage_get_ID ((int)client_data)))
-    return;
-
+  gimage=GIMP_IMAGE(client_data);
+  
   border_radius = atoi (call_data);
 
   gimage_mask_border (gimage, border_radius);
@@ -1171,11 +1167,8 @@ gimage_mask_grow_callback (GtkWidget *w,
 			   gpointer   client_data,
 			   gpointer   call_data)
 {
-  GImage *gimage;
+  GImage *gimage=GIMP_IMAGE(client_data);
   int grow_pixels;
-
-  if (!(gimage = gimage_get_ID ((int)client_data)))
-    return;
 
   grow_pixels = atoi (call_data);
 
@@ -1189,11 +1182,8 @@ gimage_mask_shrink_callback (GtkWidget *w,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage *gimage;
+  GImage *gimage=GIMP_IMAGE(client_data);
   int shrink_pixels;
-
-  if (!(gimage = gimage_get_ID ((int)client_data)))
-    return;
 
   shrink_pixels = atoi (call_data);
 

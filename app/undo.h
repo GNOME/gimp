@@ -64,7 +64,7 @@ int      undo_push_group_end         (GImage *);
 int      undo_push_image             (GImage *, GimpDrawable *, int, int, int, int);
 int      undo_push_image_mod         (GImage *, GimpDrawable *, int, int, int, int, void *, int);
 int      undo_push_mask              (GImage *, void *);
-int      undo_push_layer_displace    (GImage *, int);
+int      undo_push_layer_displace    (GImage *, GimpLayer*);
 int      undo_push_transform         (GImage *, void *);
 int      undo_push_paint             (GImage *, void *);
 int      undo_push_layer             (GImage *, void *);

@@ -268,7 +268,7 @@ edit_copy (GImage *gimage,
     return NULL;
 }
 
-int
+GimpLayer*
 edit_paste (GImage      *gimage,
 	    GimpDrawable *drawable,
 	    TileManager *paste,
@@ -308,13 +308,13 @@ edit_paste (GImage      *gimage,
       /*  end the group undo  */
       undo_push_group_end (gimage);
 
-      return GIMP_DRAWABLE(float_layer)->ID;
+      return float_layer;
     }
   else
-    return 0;
+    return NULL;
 }
 
-int
+gboolean
 edit_clear (GImage *gimage,
 	    GimpDrawable *drawable)
 {
@@ -352,7 +352,7 @@ edit_clear (GImage *gimage,
   return TRUE;
 }
 
-int
+gboolean
 edit_fill (GImage *gimage,
 	   GimpDrawable *drawable)
 {

@@ -178,7 +178,7 @@ gdisplay_format_title (GimpImage *gimage,
 	image_type_str = NULL;
       }
 
-  sprintf (title, "%s" /*"-%d"*/ ".%d (%s)",
+  sprintf (title, "%s" "-%d" ".%d (%s)",
 	   prune_filename (gimage_filename (gimage)),
 	   /*gimage->ID,*/
 	   gimage->instance_count,

@@ -9,11 +9,13 @@
 #include "layer.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#define GIMP_IMAGE(obj) GTK_CHECK_CAST (obj, gimp_image_get_type (), GimpImage)
 
 
+#define GIMP_TYPE_IMAGE gimp_image_get_type()
+
+#define GIMP_IMAGE(obj) GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage)
      
-#define GIMP_IS_GIMAGE(obj) GTK_CHECK_TYPE (obj, gimp_image_get_type())
+#define GIMP_IS_GIMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
      
 
 /* the image types */

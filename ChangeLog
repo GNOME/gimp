@@ -1,3 +1,30 @@
+Tue Jun 30 04:00:38 EEST 1998  Lauri Alanko  <nether@gimp.org>
+
+	* app/commands.c:
+	* app/edit_cmds.c:
+	* app/gdisplay.c:
+	* app/gimage.c:
+	* app/gimage.h:
+	* app/gimpimage.c:
+	* app/gimpimage.h:
+	* app/gimpimageP.h:
+	* app/gimpobject.c:
+	* app/gimpobject.h:
+	* app/gimpobjectP.h:
+	* app/global_edit.c:
+	* app/global_edit.h:
+	* app/indexed_palette.c:
+	* app/layer.c:
+	* app/layers_dialog.c:
+	* app/move.c:
+	* app/undo.c:
+	* app/undo.h:
+
+	Misc cleaning up here and there. Note that since the ids were used
+ 	to detect if an image still exists, some things may, for now,
+ 	access freed images and break. This will be fixed once proper
+ 	destroy handlers are added.
+	
 Sun Jun 28 19:32:06 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_swap.c: Added a mutex on the swapfile to avoid a

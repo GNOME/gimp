@@ -33,7 +33,7 @@ struct _MoveTool
 {
   Layer *layer;
   Guide *guide;
-  int guide_disp;
+  GDisplay *disp;
 };
 
 /*  move tool action functions  */
@@ -69,7 +69,7 @@ move_tool_button_press (Tool           *tool,
   tool->gdisp_ptr = gdisp_ptr;
   move->layer = NULL;
   move->guide = NULL;
-  move->guide_disp = -1;
+  move->disp = NULL;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
  
@@ -97,7 +97,7 @@ move_tool_button_press (Tool           *tool,
 	  gimage_add_guide (gdisp->gimage, guide);
 
 	  move->guide = guide;
-	  move->guide_disp = gdisp->ID;
+	  move->disp = gdisp;
 
 	  tool->scroll_lock = TRUE;
 	  tool->state = ACTIVE;
@@ -215,7 +215,7 @@ move_tool_button_release (Tool           *tool,
 	  move_draw_guide (gdisp, move->guide);
 	  move->guide->position = -1;
 	  move->guide = NULL;
-	  move->guide_disp = -1;
+	  move->disp = NULL;
 	}
       else
 	{
@@ -304,7 +304,7 @@ move_tool_cursor_update (Tool           *tool,
 	    {
 	      if (move->guide)
 		{
-		  gdisp = gdisplay_get_ID (move->guide_disp);
+		  gdisp = move->disp;
 		  if (gdisp)
 		    gdisplay_draw_guide (gdisp, move->guide, FALSE);
 		}
@@ -312,7 +312,7 @@ move_tool_cursor_update (Tool           *tool,
 	      gdisp = gdisp_ptr;
 	      gdisplay_draw_guide (gdisp, guide, TRUE);
 	      move->guide = guide;
-	      move->guide_disp = gdisp->ID;
+	      move->disp = gdisp;
 	    }
 	}
       else if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
