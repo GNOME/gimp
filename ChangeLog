@@ -1,3 +1,9 @@
+2003-08-30  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]: fixed stupid int vs. float
+	error that caused rounding errors when moving in a zoomed view.
+	Fixed drawing artefact when connecting strokes did not succeed.
+
 2003-08-29  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: further modifier changes.

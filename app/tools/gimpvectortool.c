@@ -535,13 +535,14 @@ gimp_vector_tool_button_release (GimpTool        *tool,
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
+  gimp_vectors_freeze (vector_tool->vectors);
+
   if (vector_tool->function == VECTORS_CONNECT_STROKES
       && gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
                                      gdisp, &anchor, &stroke)
       && anchor != vector_tool->cur_anchor
       && gimp_stroke_is_extendable (stroke, anchor))
     {
-      gimp_vectors_freeze (vector_tool->vectors);
       gimp_stroke_connect_stroke (vector_tool->cur_stroke,
                                   vector_tool->cur_anchor,
                                   stroke, anchor);
@@ -550,10 +551,11 @@ gimp_vector_tool_button_release (GimpTool        *tool,
         gimp_vectors_stroke_remove (vector_tool->vectors, stroke);
 
       vector_tool->cur_anchor = anchor;
-      gimp_vectors_thaw (vector_tool->vectors);
     }
 
   vector_tool->function = VECTORS_FINISHED;
+
+  gimp_vectors_thaw (vector_tool->vectors);
 
   /* THIS DOES NOT BELONG HERE! */
   if (vector_tool->vectors)
