@@ -920,10 +920,6 @@ AC_ARG_ENABLE(python,
 
 
 if test "x$enable_python" != xno; then
-  if test "x$am__api_version" != "x1.6"; then
-    AC_MSG_ERROR([Sorry, python support is disabled in this version])
-  fi
-
   dnl check for Python
   AM_PATH_PYTHON(2.2)
   AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
@@ -1082,13 +1078,6 @@ dnl plug-ins/perl/po/Makefile.in
 dnl plug-ins/plugin-helper/Makefile
 dnl plug-ins/tools/common/Makefile
 
-if test "x$enable_python" != xno; then
-  AC_CONFIG_FILES([
-plug-ins/pygimp/Makefile
-plug-ins/pygimp/doc/Makefile
-plug-ins/pygimp/plug-ins/Makefile])
-fi
-
 AC_OUTPUT([
 build/Makefile
 build/win32/Makefile
@@ -1162,6 +1151,9 @@ plug-ins/maze/Makefile
 plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
+plug-ins/pygimp/Makefile
+plug-ins/pygimp/doc/Makefile
+plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile

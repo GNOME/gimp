@@ -1,5 +1,9 @@
 2002-11-06  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: remove automake 1.4 special casing here too
+
+2002-11-06  Manish Singh  <yosh@gimp.org>
+
 	* autogen.sh: require automake 1.6
 
 	* m4compat: removed, unneeded now
