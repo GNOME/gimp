@@ -371,18 +371,20 @@ run (const gchar      *name,
 static gboolean
 warp_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *toggle;
-  GtkWidget *toggle_hbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *combo;
-  GSList    *group = NULL;
-  gboolean   run;
+  GtkWidget    *dlg;
+  GtkWidget    *vbox;
+  GtkWidget    *label;
+  GtkWidget    *toggle;
+  GtkWidget    *toggle_hbox;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkWidget    *spinbutton;
+  GtkObject    *adj;
+  GtkWidget    *combo;
+  GtkSizeGroup *label_group;
+  GtkSizeGroup *spin_group;
+  GSList       *group = NULL;
+  gboolean      run;
 
   gimp_ui_init ("warp", FALSE);
 
@@ -411,29 +413,42 @@ warp_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
+  spin_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  amount, iter */
   spinbutton = gimp_spin_button_new (&adj, dvals.amount,
 				     -1000, 1000, /* ??? */
 				     1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Step Size:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+  g_object_unref (spin_group);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("Step Size:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+  g_object_unref (label_group);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.iter,
 				     1, 100, 1, 5, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Iterations:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("Iterations:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.iter);
 
   /*  Displacement map menu  */
   label = gtk_label_new (_("Displacement Map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -539,34 +554,46 @@ warp_dialog (GimpDrawable *drawable)
 
   spinbutton = gimp_spin_button_new (&adj, dvals.dither,
 				     0, 100, 1, 10, 0, 1, 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Dither Size:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("Dither Size:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.dither);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.angle,
 				     0, 360, 1, 15, 0, 1, 1);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Rotation Angle:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("Rotation Angle:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.angle);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
 				     1, 100, 1, 5, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Substeps:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                     _("Substeps:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.substeps);
 
   /*  Magnitude map menu  */
   label = gtk_label_new (_("Magnitude Map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -614,9 +641,13 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.grad_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Gradient Scale:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("Gradient Scale:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.grad_scale);
@@ -639,9 +670,13 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Vector Mag:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("Vector Mag:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_scale);
@@ -650,9 +685,13 @@ warp_dialog (GimpDrawable *drawable)
 
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_angle,
 				     0, 360, 1, 15, 0, 1, 1);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Angle:"), 0.0, 0.5,
-			     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (spin_group, spinbutton);
+
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                     _("Angle:"), 0.0, 0.5,
+                                     spinbutton, 1, FALSE);
+  gtk_size_group_add_widget (label_group, label);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_angle);
