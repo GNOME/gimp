@@ -8,6 +8,8 @@ gimpdata_DATA = gimprc gimprc_user gtkrc gimp_logo.ppm gimp_splash.ppm gimp_tips
 
 gimpdata_SCRIPTS = user_install
 
+man_MANS=gimp.1
+
 scriptdata =
 
 .PHONY: files populate checkin release

@@ -12,7 +12,6 @@ BUILT_SOURCES = pdb_dump.texi
 
 info_TEXINFOS = pdb.texi
 pdb_TEXINFOS = pdb_dump.texi
-man_MANS = gimp.1
 
 pdb_dump.texi: $(srcdir)/pdb_self_doc.el $(srcdir)/pdb_dump
 	cd $(srcdir) && \
