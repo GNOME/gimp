@@ -1,3 +1,9 @@
+2003-03-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdatalist.c (gimp_data_list_uniquefy_data_name): use
+	gimp_data_list_data_compare_func(), not just strcmp(), so the
+	ordering of internal items is correct.
+
 2003-03-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/deinterlace.c

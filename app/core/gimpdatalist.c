@@ -257,17 +257,14 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 	  if (object == object2)
 	    continue;
 
-	  if (strcmp (object->name, object2->name) > 0)
+	  if (gimp_data_list_data_compare_func (object, object2) > 0)
 	    new_index++;
 	  else
 	    break;
 	}
 
       if (new_index != old_index)
-	{
-	  gimp_container_reorder (GIMP_CONTAINER (data_list),
-				  object, new_index);
-	}
+        gimp_container_reorder (GIMP_CONTAINER (data_list), object, new_index);
     }
 }
 
@@ -289,6 +286,6 @@ gimp_data_list_data_compare_func (gconstpointer first,
   if (first_data->internal != second_data->internal)
     return first_data->internal ? -1 : 1;
 
-  return strcmp (((const GimpObject *) first)->name, 
+  return strcmp (((const GimpObject *) first)->name,
 		 ((const GimpObject *) second)->name);
 }
