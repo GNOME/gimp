@@ -37,7 +37,7 @@
     (gimp-ellipse-select img (+ x (- width diameter)) y 
 			 diameter height ADD FALSE 0 0)
     (gimp-rect-select img (+ x (/ diameter 2)) y
-		      (- width diameter) height ADD FALSE 0 0)))
+		      (- width diameter) height ADD FALSE 0)))
   
 (define (script-fu-round-button text
 			    size

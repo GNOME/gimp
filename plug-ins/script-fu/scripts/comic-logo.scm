@@ -38,13 +38,13 @@
     (gimp-image-add-layer img black-layer 1)
     (gimp-layer-set-name black-layer "Black")
   
-    (gimp-selection-all img bg-layer)
+    (gimp-selection-all img)
     (gimp-edit-fill img bg-layer)
     (gimp-selection-none img)
 
     (gimp-layer-set-preserve-trans white-layer TRUE)
     (gimp-palette-set-background '(255 255 255))
-    (gimp-selection-all img white-layer)
+    (gimp-selection-all img)
     (gimp-edit-fill img white-layer)
     (gimp-layer-set-preserve-trans white-layer FALSE)
     (plug-in-spread 1 img white-layer (* 3 ol-width) (* 3 ol-width))
@@ -54,7 +54,7 @@
 
     (gimp-palette-set-background '(0 0 0))
     (gimp-layer-set-preserve-trans black-layer TRUE)
-    (gimp-selection-all img black-layer)
+    (gimp-selection-all img)
     (gimp-edit-fill img black-layer)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans black-layer FALSE)
@@ -63,7 +63,7 @@
 
     (gimp-gradients-set-active gradient)
     (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-selection-all img text-layer)
+    (gimp-selection-all img)
     (gimp-blend img text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 (* 2 border) 0 (- height border))
     (plug-in-noisify 1 img text-layer 0 0.20 0.20 0.20 0.20)
     (gimp-selection-none img)

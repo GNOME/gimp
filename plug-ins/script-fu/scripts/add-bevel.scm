@@ -210,7 +210,7 @@
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Thickness" "5"
+		    SF-ADJUSTMENT "Thickness" "5"
 		    SF-TOGGLE "Work on copy" TRUE
 		    SF-TOGGLE "Keep bump layer" FALSE
 		    ) 

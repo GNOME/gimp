@@ -1,3 +1,18 @@
+Mon Oct  5 01:08:11 CST 1998 Seth Burgess <sjburges@gimp.org>
+	
+	*  app/layer_cmds.c: Changed "is_floating_sel" from PDB_CHANNEL
+	to PDB_INT32
+
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/pupi-button.scm:
+	removed extra paramters from some function calls that
+	didn't break script-fu but were wrong anyway.	
+
+	Many thanks to Marc Lehman for reporting these.  More to come.
+	
 Mon Oct  5 23:56:09 EEST 1998 Lauri Alanko <nether@gimp.org>
 	* po/fr.po: fixed a compile-halting typo
 	
@@ -30,6 +45,7 @@ Mon Oct  5 00:28:58 PDT 1998 Manish Singh <yosh@gimp.org>
 	* configure.in: added German translation from Daniel Egger
 	<Daniel.Egger@t-online.de>
 
+>>>>>>> 1.651
 Sun Oct  4 22:18:11 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/palette.c: Had a look at making the window resizable,
