@@ -274,7 +274,7 @@ maze_dialog (void)
   trow++;
 
   /* entscale == Entry and Scale pair function found in pixelize.c */
-  width_entry = entscale_int_new (table, 0, trow, "Width (Pixels):", 
+  width_entry = entscale_int_new (table, 0, trow, _("Width (Pixels):"), 
 				  &mvals.width, 
 				  1, sel_w/4, TRUE, 
 				  (EntscaleIntCallbackFunc) height_width_callback,

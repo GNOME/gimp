@@ -149,9 +149,7 @@ query ()
   static int nreturn_vals = 0;
   gchar *help;
 
-  INIT_I18N();
-
-  help = g_strdup_printf (_("Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See %s for more help."), MAZE_URL);
+  help = g_strdup_printf ( "Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See %s for more help.", MAZE_URL);
   gimp_install_procedure ("plug_in_maze",
 			  "Draws a maze.",
 			  help,

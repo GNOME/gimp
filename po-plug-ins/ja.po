@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.17\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-02-11 12:41+09:00\n"
+"Project-Id-Version: gimp 1.1.18\n"
+"POT-Creation-Date: 2000-02-12 21:54+0900\n"
+"PO-Revision-Date: 2000-02-12 21:54+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -91,8 +91,8 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/whirlpinch.c:829 plug-ins/common/wind.c:703
 #: plug-ins/common/wind.c:758 plug-ins/common/wmf.c:938
 #: plug-ins/common/xbm.c:973 plug-ins/common/xpm.c:799
-#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
-#: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
+#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:586
+#: plug-ins/flame/flame.c:898 plug-ins/fp/fp_gtk.c:882
 #: plug-ins/gap/gap_arr_dialog.c:965 plug-ins/gap/gap_arr_dialog.c:1189
 #: plug-ins/gap/gap_decode_xanim.c:176 plug-ins/gap/gap_mod_layer.c:145
 #: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:191
@@ -107,7 +107,7 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:798
 #: plug-ins/imagemap/imap_default_dialog.c:101 plug-ins/maze/maze_face.c:203
-#: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:581
+#: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:584
 #: plug-ins/print/print.c:1497 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/script-fu/script-fu-scripts.c:1475
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
@@ -174,8 +174,8 @@ msgstr "Î»²ò"
 #: plug-ins/common/whirlpinch.c:831 plug-ins/common/wind.c:760
 #: plug-ins/common/wmf.c:940 plug-ins/common/xbm.c:725
 #: plug-ins/common/xbm.c:975 plug-ins/common/xpm.c:801
-#: plug-ins/fits/fits.c:1005 plug-ins/flame/flame.c:590
-#: plug-ins/flame/flame.c:903 plug-ins/fp/fp_gtk.c:886
+#: plug-ins/fits/fits.c:1005 plug-ins/flame/flame.c:594
+#: plug-ins/flame/flame.c:907 plug-ins/fp/fp_gtk.c:886
 #: plug-ins/gap/gap_arr_dialog.c:1191 plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:147
 #: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:470
@@ -190,7 +190,7 @@ msgstr "Î»²ò"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:806
 #: plug-ins/imagemap/imap_default_dialog.c:116 plug-ins/maze/maze_face.c:207
-#: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:583
+#: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:586
 #: plug-ins/print/print.c:1395 plug-ins/print/print.c:1505
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/script-fu/script-fu-scripts.c:1484
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
@@ -448,7 +448,7 @@ msgstr "¥¨¥¤¥ê¥¢¥ó¥Þ¥Ã¥× 2 ¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
 #: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
 #: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1060
+#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1064
 #: plug-ins/gflare/gflare.c:2514 plug-ins/gflare/gflare.c:3519
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
@@ -960,7 +960,7 @@ msgid "Waves"
 msgstr "ÇÈ"
 
 #: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
-#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
+#: plug-ins/flame/flame.c:671 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
 msgstr "Àþ·Á"
 
@@ -968,11 +968,11 @@ msgstr "Àþ·Á"
 msgid "Logarithmic"
 msgstr "ÂÐ¿ô·¿"
 
-#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:668
+#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:672
 msgid "Sinusoidal"
 msgstr "ÇÈ¾õ"
 
-#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:669
+#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:673
 msgid "Spherical"
 msgstr "µåÌÌ"
 
@@ -2203,13 +2203,13 @@ msgstr "¸þ¤­"
 #. attach labels
 #: plug-ins/common/blinds.c:392 plug-ins/common/grid.c:526
 #: plug-ins/common/ripple.c:654 plug-ins/common/tileit.c:470
-#: plug-ins/pagecurl/pagecurl.c:710
+#: plug-ins/pagecurl/pagecurl.c:713
 msgid "Horizontal"
 msgstr "¿åÊ¿"
 
 #: plug-ins/common/blinds.c:393 plug-ins/common/grid.c:527
 #: plug-ins/common/ripple.c:655 plug-ins/common/tileit.c:478
-#: plug-ins/pagecurl/pagecurl.c:711
+#: plug-ins/pagecurl/pagecurl.c:714
 msgid "Vertical"
 msgstr "±ôÄ¾"
 
@@ -2950,8 +2950,8 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
-"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤"
-"Æ»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
+"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤Æ"
+"»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
 
 #: plug-ins/common/despeckle.c:182
 msgid "<Image>/Filters/Enhance/Despeckle..."
@@ -3143,7 +3143,7 @@ msgstr "¤Ü¤«¤¹"
 #: plug-ins/common/displace.c:434 plug-ins/common/edge.c:715
 #: plug-ins/common/fractaltrace.c:789 plug-ins/common/newsprint.c:447
 #: plug-ins/common/ripple.c:669 plug-ins/common/warp.c:540
-#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:968
+#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:972
 msgid "Black"
 msgstr "¹õ"
 
@@ -3725,9 +3725,8 @@ msgid "Create images based on a random genetic formula"
 msgstr "Íð¿ôÈÆ´Ø¿ô¤Ë¤è¤Ã¤Æ²èÁü¤ò¤Ä¤¯¤ê½Ð¤¹"
 
 #: plug-ins/common/gqbist.c:335
-#, fuzzy
 msgid ""
-"This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
+"This Plug-in is based on an article by Jöòn Loviscach (appeared in c't "
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
@@ -4245,7 +4244,7 @@ msgid "Effect Channel"
 msgstr "ÂÐ¾Ý¥Á¥ã¥ó¥Í¥ë"
 
 #. this zoom - gamma should redraw flame preview
-#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:933
+#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:937
 msgid "Brightness"
 msgstr "ÌÀ¤ë¤µ"
 
@@ -4259,7 +4258,7 @@ msgstr "Æ³È¡¿ô"
 
 #: plug-ins/common/lic.c:1071 plug-ins/sinus/sinus.c:1035
 msgid "Gradient"
-msgstr "¸ûÇÛ"
+msgstr "¸ûÇÛ/¥°¥é¥Ç¡¼¥·¥ç¥ó"
 
 #: plug-ins/common/lic.c:1077
 msgid "Convolve"
@@ -4440,7 +4439,7 @@ msgstr "¤Ü¤«¤·¤Î¼ïÎà"
 msgid "Radial"
 msgstr "È¾·Â"
 
-#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
+#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1038
 #: plug-ins/imagemap/imap_popup.c:140
 msgid "Zoom"
 msgstr "³ÈÂç"
@@ -5020,7 +5019,7 @@ msgid "Load PostScript"
 msgstr "PostScript ÆÉ¤ß¹þ¤ß"
 
 #. Rendering
-#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:911
+#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:915
 msgid "Rendering"
 msgstr "¥ì¥ó¥À¥ê¥ó¥°"
 
@@ -6767,116 +6766,116 @@ msgstr "DATAMIN/DATAMAX ¤Ç"
 msgid "Image Composing"
 msgstr "²èÁü¤ò¹½À®¤·¤Æ¤¤¤Þ¤¹"
 
-#: plug-ins/flame/flame.c:133
+#: plug-ins/flame/flame.c:135
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¼«Á³/±ê..."
 
-#: plug-ins/flame/flame.c:210
+#: plug-ins/flame/flame.c:214
 msgid "Drawing Flame..."
 msgstr "±ê¤òÉÁ¤¤¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/flame/flame.c:408
+#: plug-ins/flame/flame.c:412
 msgid "Load/Save Flame"
 msgstr "±ê¤ÎÊÝÂ¸/ÆÉ¹þ"
 
-#: plug-ins/flame/flame.c:566 plug-ins/flame/flame.c:1083
+#: plug-ins/flame/flame.c:570 plug-ins/flame/flame.c:1087
 msgid "Edit Flame"
 msgstr "±ê¤òÊÔ½¸"
 
-#: plug-ins/flame/flame.c:597
+#: plug-ins/flame/flame.c:601
 msgid "Directions"
 msgstr "Êý¸þ"
 
-#: plug-ins/flame/flame.c:628
+#: plug-ins/flame/flame.c:632
 msgid "Controls"
 msgstr "¥³¥ó¥È¥í¡¼¥ë"
 
-#: plug-ins/flame/flame.c:645
+#: plug-ins/flame/flame.c:649
 msgid "Speed"
 msgstr "Â®ÅÙ"
 
-#: plug-ins/flame/flame.c:652
+#: plug-ins/flame/flame.c:656
 msgid "Randomize"
 msgstr "Íð¿ô¤ò¿¶¤ë"
 
-#: plug-ins/flame/flame.c:665
+#: plug-ins/flame/flame.c:669
 msgid "Same"
 msgstr "Æ±¤¸"
 
-#: plug-ins/flame/flame.c:666 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:670 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr "Íð¿ô"
 
-#: plug-ins/flame/flame.c:670
+#: plug-ins/flame/flame.c:674
 msgid "Swirl"
 msgstr "±²´¬"
 
-#: plug-ins/flame/flame.c:671
+#: plug-ins/flame/flame.c:675
 msgid "Horseshoe"
 msgstr "ÄýÅ´"
 
-#: plug-ins/flame/flame.c:672
+#: plug-ins/flame/flame.c:676
 msgid "Polar"
 msgstr "¶Ë"
 
-#: plug-ins/flame/flame.c:673
+#: plug-ins/flame/flame.c:677
 msgid "Bent"
 msgstr "¶Ê¤²¤ë"
 
-#: plug-ins/flame/flame.c:685
+#: plug-ins/flame/flame.c:689
 msgid "Variation:"
 msgstr "¼ïÎà:"
 
-#: plug-ins/flame/flame.c:726 plug-ins/flame/flame.c:1091
+#: plug-ins/flame/flame.c:730 plug-ins/flame/flame.c:1095
 msgid "Load Flame"
 msgstr "±êÆÉ¹þ"
 
-#: plug-ins/flame/flame.c:741 plug-ins/flame/flame.c:1099
+#: plug-ins/flame/flame.c:745 plug-ins/flame/flame.c:1103
 msgid "Save Flame"
 msgstr "±êÊÝÂ¸"
 
-#: plug-ins/flame/flame.c:881
+#: plug-ins/flame/flame.c:885
 msgid "Flame"
 msgstr "±ê"
 
-#: plug-ins/flame/flame.c:935
+#: plug-ins/flame/flame.c:939
 msgid "Contrast"
 msgstr "¥³¥ó¥È¥é¥¹¥È"
 
-#: plug-ins/flame/flame.c:937
+#: plug-ins/flame/flame.c:941
 msgid "Gamma"
 msgstr "¥¬¥ó¥Þ"
 
-#: plug-ins/flame/flame.c:939
+#: plug-ins/flame/flame.c:943
 msgid "Sample Density"
 msgstr "¥µ¥ó¥×¥ëÌ©ÅÙ"
 
-#: plug-ins/flame/flame.c:941
+#: plug-ins/flame/flame.c:945
 msgid "Spatial Oversample"
 msgstr "¶õ´Ö¥ª¡¼¥Ð¡¼¥µ¥ó¥×¥ë"
 
-#: plug-ins/flame/flame.c:943
+#: plug-ins/flame/flame.c:947
 msgid "Spatial Filter Radius"
 msgstr "¶õ´Ö¥Õ¥£¥ë¥¿È¾·Â"
 
-#: plug-ins/flame/flame.c:957
+#: plug-ins/flame/flame.c:961
 msgid "Colormap"
 msgstr "¥«¥é¡¼¥Þ¥Ã¥×"
 
-#: plug-ins/flame/flame.c:998
+#: plug-ins/flame/flame.c:1002
 msgid "Custom Gradient"
 msgstr "Ç¤°Õ¤Î¥°¥é¥Ç¡¼¥·¥ç¥ó"
 
-#: plug-ins/flame/flame.c:1018
+#: plug-ins/flame/flame.c:1022
 msgid "Camera"
 msgstr "¥«¥á¥é"
 
-#: plug-ins/flame/flame.c:1036
+#: plug-ins/flame/flame.c:1040
 msgid "X"
 msgstr "X"
 
-#: plug-ins/flame/flame.c:1038
+#: plug-ins/flame/flame.c:1042
 msgid "Y"
 msgstr "Y"
 
@@ -7092,7 +7091,7 @@ msgstr "¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Õ¥£¥ë¥¿Å¬ÍÑ"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
@@ -7100,7 +7099,7 @@ msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
@@ -7512,7 +7511,7 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/Á´¥ì¥¤¥ä¤ËÅ¬ÍÑ..."
 
 #: plug-ins/gap/gap_frontends_main.c:129
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/XANIM ¤ÇÆÉ¤ß¹þ¤á¤ë¤â¤ÎÁ´¤Æ..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/XANIM ¤ÇÆÉ¤ß¹þ¤á¤ë¤â¤ÎÁ´¤Æ..."
 
 #: plug-ins/gap/gap_frontends_main.c:141
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
@@ -7520,11 +7519,11 @@ msgstr "<Toolbox>/³ÈÄ¥/¥Õ¥ì¡¼¥à¤ËÊ¬³ä/XANIM ¤ÇÆÉ¤ß¹þ¤á¤ë¤â¤ÎÁ´¤Æ..."
 
 #: plug-ins/gap/gap_frontends_main.c:153
 msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥¨¥ó¥³¡¼¥É/MPEG1..."
+msgstr "<Image>/Æ°²è/¥¨¥ó¥³¡¼¥É/MPEG1..."
 
 #: plug-ins/gap/gap_frontends_main.c:166
 msgid "<Image>/Video/Encode/MPEG2..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥¨¥ó¥³¡¼¥É/MPEG2..."
+msgstr "<Image>/Æ°²è/¥¨¥ó¥³¡¼¥É/MPEG2..."
 
 #: plug-ins/gap/gap_lib.c:999
 msgid ""
@@ -7575,7 +7574,7 @@ msgstr "¥Õ¥ì¡¼¥àºï½ü (%ld/%ld)"
 #: plug-ins/gap/gap_lib.c:2017
 #, c-format
 msgid "Delete Frames from %ld to (Number)"
-msgstr ""
+msgstr "ºï½ü¤¹¤ë¥Õ¥ì¡¼¥à¤Ï %ld ¤«¤é"
 
 #: plug-ins/gap/gap_lib.c:2080
 #, c-format
@@ -7584,137 +7583,141 @@ msgstr "¥Õ¥ì¡¼¥àÊ£À½ (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2090
 msgid "Source Range starts at this framenumber"
-msgstr ""
+msgstr "¸µÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤«¤é³«»Ï"
 
 #: plug-ins/gap/gap_lib.c:2098
 msgid "Source Range ends at this framenumber"
-msgstr ""
+msgstr "¸µÈÏ°Ï¤¬¤³¤Î¥Õ¥ì¡¼¥à¤Ç½ª¤ê"
 
 #: plug-ins/gap/gap_lib.c:2101
 msgid "N-Times :"
-msgstr ""
+msgstr "²ó¿ô :"
 
 #: plug-ins/gap/gap_lib.c:2106
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
 msgstr ""
+"ÁªÂòÈÏ°Ï¤ò n ²ó¥³¥Ô¡¼  \n"
+"(99 ¤è¤êÂç¤­¤¤²ó¿ô)"
 
 #: plug-ins/gap/gap_lib.c:2108
 msgid "Duplicate Framerange"
-msgstr ""
+msgstr "Ê£À½¤¹¤ë¥Õ¥ì¡¼¥àÈÏ°Ï"
 
 #: plug-ins/gap/gap_lib.c:2211
 #, c-format
 msgid "Exchange current Frame (%ld)"
-msgstr ""
+msgstr "¸½ºß¤Î¥Õ¥ì¡¼¥à (%ld) ¤È¸ò´¹"
 
 #: plug-ins/gap/gap_lib.c:2214
 msgid "With Frame (Number)"
-msgstr ""
+msgstr "¤¹¤ë¥Õ¥ì¡¼¥àÈÖ¹æ¤Ï"
 
 #: plug-ins/gap/gap_lib.c:2255
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
-msgstr ""
+msgstr "¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤· (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2265
 msgid "Affected Range starts at this framenumber"
-msgstr ""
+msgstr "Å¬ÍÑ¤¹¤ëÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤«¤é³«»Ï"
 
 #: plug-ins/gap/gap_lib.c:2273
 msgid "Affected Range ends at this framenumber"
-msgstr ""
+msgstr "Å¬ÍÑ¤¹¤ëÈÏ°Ï¤Ï¤³¤Î¥Õ¥ì¡¼¥à¤Ç½ª¤ê"
 
 #: plug-ins/gap/gap_lib.c:2276
 msgid "N-Shift :"
-msgstr ""
+msgstr "¤º¤é¤¹ÎÌ :"
 
 #: plug-ins/gap/gap_lib.c:2281
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
 msgstr ""
+"Å¬ÍÑÉôÊ¬¤Î¥Õ¥ì¡¼¥àÊÂ¤Ó¤òºÆ³ä¤êÉÕ¤±    \n"
+"(ÈÖ¹æ¤Ï¤º¤é¤·ÎÌÊ¬¤º¤ì¤ë)"
 
 #: plug-ins/gap/gap_lib.c:2283
 msgid "Framesequence shift"
-msgstr ""
+msgstr "¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤·"
 
 #: plug-ins/gap/gap_main.c:343
 msgid "<Image>/Video/Goto Next"
-msgstr "<Image>/¥Ó¥Ç¥ª/¼¡¤Ø"
+msgstr "<Image>/Æ°²è/¼¡¤Ø"
 
 #: plug-ins/gap/gap_main.c:355
 msgid "<Image>/Video/Goto Prev"
-msgstr "<Image>/¥Ó¥Ç¥ª/Á°¤Ø"
+msgstr "<Image>/Æ°²è/Á°¤Ø"
 
 #: plug-ins/gap/gap_main.c:367
 msgid "<Image>/Video/Goto First"
-msgstr "<Image>/¥Ó¥Ç¥ª/ºÇ½é¤Ø"
+msgstr "<Image>/Æ°²è/ºÇ½é¤Ø"
 
 #: plug-ins/gap/gap_main.c:379
 msgid "<Image>/Video/Goto Last"
-msgstr "<Image>/¥Ó¥Ç¥ª/ºÇ¸å¤Ø"
+msgstr "<Image>/Æ°²è/ºÇ¸å¤Ø"
 
 #: plug-ins/gap/gap_main.c:391
 msgid "<Image>/Video/Goto Any"
-msgstr "<Image>/¥Ó¥Ç¥ª/»ØÄê¤¹¤ë"
+msgstr "<Image>/Æ°²è/»ØÄê¤¹¤ë"
 
 #: plug-ins/gap/gap_main.c:403
 msgid "<Image>/Video/Delete Frames"
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àºï½ü"
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àºï½ü"
 
 #: plug-ins/gap/gap_main.c:415
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àÊ£À½..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊ£À½..."
 
 #: plug-ins/gap/gap_main.c:427
 msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¸ò´¹..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¸ò´¹..."
 
 #: plug-ins/gap/gap_main.c:439
 msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Ñ¥¹°ÜÆ°..."
+msgstr "<Image>/Æ°²è/¥Ñ¥¹°ÜÆ°..."
 
 #: plug-ins/gap/gap_main.c:451
 msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¤ò²èÁü¤Ë..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¤ò²èÁü¤Ë..."
 
 #: plug-ins/gap/gap_main.c:463
 msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àÅý¹ç..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÅý¹ç..."
 
 #: plug-ins/gap/gap_main.c:475
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¥ì¥¤¥ä¡¼ºï½ü..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¥ì¥¤¥ä¡¼ºï½ü..."
 
 #: plug-ins/gap/gap_main.c:499
 msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àÊÑ´¹..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊÑ´¹..."
 
 #: plug-ins/gap/gap_main.c:511
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à¥µ¥¤¥ºÊÑ¹¹..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à¥µ¥¤¥ºÊÑ¹¹..."
 
 #: plug-ins/gap/gap_main.c:523
 msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àÀÚ¤êÈ´¤­..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÀÚ¤êÈ´¤­..."
 
 #: plug-ins/gap/gap_main.c:535
 msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à³ÈÂç½Ì¾®..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à³ÈÂç½Ì¾®..."
 
 #: plug-ins/gap/gap_main.c:547
 msgid "<Image>/Video/Split Img to Frames..."
-msgstr "<Image>/¥Ó¥Ç¥ª/²èÁü¤ò¥Õ¥ì¡¼¥à¤ËÊ¬³ä..."
+msgstr "<Image>/Æ°²è/²èÁü¤ò¥Õ¥ì¡¼¥à¤ËÊ¬³ä..."
 
 #: plug-ins/gap/gap_main.c:560
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤·..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥àÊÂ¤Ó¤º¤é¤·..."
 
 #: plug-ins/gap/gap_main.c:572
 msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/¥Ó¥Ç¥ª/¥Õ¥ì¡¼¥à½¤Àµ..."
+msgstr "<Image>/Æ°²è/¥Õ¥ì¡¼¥à½¤Àµ..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:556
@@ -8564,7 +8567,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_navigator_dialog.c:448
 msgid "<Image>/Video/VCR Navigator..."
-msgstr "<Image>/"
+msgstr "<Image>/Æ°²è/VCR ¥Ê¥Ó¥²¡¼¥¿..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:2689
 msgid "Videoframes:"
@@ -8581,7 +8584,7 @@ msgstr ""
 #. The main shell
 #: plug-ins/gap/gap_navigator_dialog.c:2821
 msgid "Video Navigator"
-msgstr ""
+msgstr "Æ°²è¥Ê¥Ó¥²¡¼¥¿"
 
 #: plug-ins/gap/gap_range_ops.c:117
 msgid "New Width :"
@@ -8977,7 +8980,7 @@ msgstr "³ÈÂç½Ì¾®"
 
 #: plug-ins/gap/resize.c:111
 msgid "Resize"
-msgstr ""
+msgstr "¥µ¥¤¥ºÊÑ¹¹"
 
 #: plug-ins/gap/resize.c:127
 msgid "New width:"
@@ -9616,27 +9619,27 @@ msgstr "FLI: ¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤ò»ý¤Ã¤¿²èÁü¤ÏÊÝÂ¸¤Ç¤­¤Þ¤»¤ó\n"
 
 #: plug-ins/gfli/gfli.c:663
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images.\n"
-msgstr ""
+msgstr "FLI: ¥¤¥ó¥Ç¥Ã¥¯¥¹¤â¤·¤¯¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë²èÁü¤·¤«ÊÝÂ¸¤Ç¤­¤Þ¤»¤ó.\n"
 
 #: plug-ins/gfli/gfli.c:832
 msgid "GFLI 1.2 - Load framestack"
-msgstr ""
+msgstr "GFLI 1.2 - ¥Õ¥ì¡¼¥à¥¹¥¿¥Ã¥¯ÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/gfli/gfli.c:903
 msgid "GFLI 1.2 - Save framestack"
-msgstr ""
+msgstr "GFLI 1.2 - ¥Õ¥ì¡¼¥à¥¹¥¿¥Ã¥¯ÊÝÂ¸"
 
 #: plug-ins/gimpressionist/brush.c:183
 msgid "GIMPressionist: Can only save drawables!\n"
-msgstr ""
+msgstr "GIMPressionist: ÉÁ²èÂÐ¾Ý¤Î¤ßÊÝÂ¸¤Ç¤­¤Þ¤¹!\n"
 
 #: plug-ins/gimpressionist/brush.c:189
 msgid "Save brush"
-msgstr ""
+msgstr "¥Ö¥é¥·ÊÝÂ¸"
 
 #: plug-ins/gimpressionist/brush.c:392
 msgid "Brush Preview:"
-msgstr ""
+msgstr "¥Ö¥é¥·¥×¥ì¥Ó¥å¡¼:"
 
 #.
 #. * Gamma slider...
@@ -9647,11 +9650,11 @@ msgstr "¥¬¥ó¥Þ:"
 
 #: plug-ins/gimpressionist/brush.c:414
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr ""
+msgstr "ÁªÂò¤·¤¿¥Ö¥é¥·¤Î¥¬¥ó¥Þ (ÌÀ¤ë¤µ) ¤òÊÑ¤¨¤ë"
 
 #: plug-ins/gimpressionist/brush.c:426
 msgid "Select:"
-msgstr ""
+msgstr "ÁªÂò:"
 
 #: plug-ins/gimpressionist/brush.c:431
 msgid "Aspect ratio:"
@@ -9659,7 +9662,7 @@ msgstr "¥¢¥¹¥Ú¥¯¥ÈÈæ:"
 
 #: plug-ins/gimpressionist/brush.c:435 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
-msgstr ""
+msgstr "Éâ¤­Ä¦¤ê:"
 
 #: plug-ins/gimpressionist/brush.c:450
 msgid "(None)"
@@ -9671,43 +9674,43 @@ msgstr "ÊÝÂ¸..."
 
 #: plug-ins/gimpressionist/brush.c:477
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "¥Ö¥é¥·¤Î¥¢¥¹¥Ú¥¯¥ÈÈæ¤ò»ØÄê¤¹¤ë"
 
 #: plug-ins/gimpressionist/brush.c:488
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "¸Ä¡¹¤Î¥Ö¥é¥·ÉÁ²è¤ËÅ¬ÍÑ¤¹¤ëÉâ¤­Ä¦¤ê¤ÎÄøÅÙ¤ò»ØÄê¤¹¤ë"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
-msgstr ""
+msgstr "¥Ö¥é¥·²¼¤ÎÊ¿¶Ñ"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
+msgstr "¿§¤Ï¥Ö¥é¥·¤Î²¼¤Ë¤¢¤ë¥Ô¥¯¥»¥ë¤ÎÊ¿¶Ñ¤ò¼è¤ë"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr ""
+msgstr "¥Ö¥é¥·¤ÎÃæ¿´"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr ""
+msgstr "¿§¤ò¥Ö¥é¥·¤ÎÃæ¿´¤Ë¤¢¤ë¥Ô¥¯¥»¥ë¤«¤é¼èÆÀ¤¹¤ë"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
-msgstr ""
+msgstr "¿§¥Î¥¤¥º:"
 
 #: plug-ins/gimpressionist/color.c:122
 msgid "Adds random noise to the color"
-msgstr ""
+msgstr "¿§¤Ë¥é¥ó¥À¥à¥Î¥¤¥º¤òÉÕ²Ã¤¹¤ë"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
-msgstr ""
+msgstr "Ã¼¤ò°Å¤¯:"
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr ""
+msgstr "¥Ö¥é¥·ÉÁ²è¤ÎÃ¼¤ò \"°Å¤¯\" ¤¹¤ëÎÌ"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
@@ -9719,7 +9722,7 @@ msgstr "¥ª¥ê¥¸¥Ê¥ë¤ò»Ä¤¹"
 
 #: plug-ins/gimpressionist/general.c:194
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "¸µ²èÁü¤òÇØ·Ê¤È¤·¤Æ»Ä¤¹"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "From paper"
@@ -9727,68 +9730,68 @@ msgstr "»æ¤«¤é"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr ""
+msgstr "ÁªÂò¤·¤¿»æ¤Î¥Æ¥¯¥¹¥Á¥ã¤òÇØ·Ê¤Ë¥³¥Ô¡¼¤¹¤ë"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "ÇØ·Ê¥Ù¥¿ÅÉ¤ê"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
+msgstr "ÇØ·Ê¤òÆ©ÌÀ¤Ë¤¹¤ë; ÅÉ¤Ã¤¿ÉôÊ¬¤À¤±¤¬¸«¤¨¤Þ¤¹"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Ã¼¤âÅÉ¤ë"
 
 #: plug-ins/gimpressionist/general.c:269
 msgid "Tileable"
-msgstr ""
+msgstr "¥¿¥¤¥ë²½²ÄÇ½"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "·ë²Ì²èÁü¤¬·ÑÌÜÌµ¤·¤ËÊÂ¤Ù¤é¤ì¤ë¤è¤¦¤Ë¤¹¤ë¤«¤É¤¦¤«"
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr ""
+msgstr "±Æ¤òÍî¤¹"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "¸Ä¡¹¤Î¥Ö¥é¥·ÉÁ²è¤Ç±Æ¤òÉÕ¤±¤ë"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "±Æ¤Ç°Å¤¯¤¹¤ëÎÌ"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
-msgstr ""
+msgstr "±Æ¿¼ÅÙ:"
 
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "±Æ¤Î¿¼¤µ, ÊªÂÎ¤«¤é¤É¤ÎÄøÅÙ±Æ¤òÎ¥¤¹¤«"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
-msgstr ""
+msgstr "±Æ¤Ü¤«¤·:"
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "Íî¤·¤¿±Æ¤ò¤Ü¤«¤¹ÎÌ"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
-msgstr ""
+msgstr "ÊÐ¸þïçÃÍ:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Å¬±þÅªÁªÂò¤ò¤ä¤á¤ëïçÃÍ"
 
 #: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
 msgid "Performs various artistic operations on an image"
-msgstr ""
+msgstr "²èÁü¤ËÍÍ¡¹¤Ê·Ý½ÑÅª¸ú²Ì¤òÍ¿¤¨¤ë"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
@@ -9796,7 +9799,7 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/·Ý½ÑÅª¸ú²Ì/GIMPressionist..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
-msgstr ""
+msgstr "ÉÁ²è¤·¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:90
 #, c-format
@@ -9806,17 +9809,23 @@ msgid ""
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
 msgstr ""
+"*** ·Ù¹ð ***\n"
+"  (gimpressionist-path \"%s\")\n"
+"¤Î¤è¤¦¤Ë gimprc ¤ËÉÕ¤±Â­¤¹¤³¤È¤ò\n"
+"¶¯¤¯¤ª´«¤á¤·¤Þ¤¹.\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:107
 msgid ""
 "*** Warning ***\n"
 "No home directory!\n"
 msgstr ""
+"*** ·Ù¹ð ***\n"
+"¥Û¡¼¥à¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó!\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:358
 #: plug-ins/gimpressionist/gimpressionist.c:455
 msgid "The GIMPressionist!"
-msgstr ""
+msgstr "The GIMPressionist!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:497
 msgid "Run with the selected settings"
@@ -9824,7 +9833,7 @@ msgstr "ÁªÂò¤µ¤ì¤¿ÀßÄê¤Ç¼Â¹Ô"
 
 #: plug-ins/gimpressionist/gimpressionist.c:504
 msgid "Quit the program"
-msgstr ""
+msgstr "¥×¥í¥°¥é¥à½ªÎ»"
 
 #: plug-ins/gimpressionist/gimpressionist.c:506
 msgid "About..."
@@ -9832,7 +9841,7 @@ msgstr "¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:511
 msgid "Show some information about program"
-msgstr ""
+msgstr "¥×¥í¥°¥é¥à¤Ë´Ø¤¹¤ë¾ðÊó¤òÉ½¼¨¤¹¤ë"
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
@@ -9840,30 +9849,30 @@ msgstr "Êý¸þ:"
 
 #: plug-ins/gimpressionist/orientation.c:77
 msgid "Start angle:"
-msgstr ""
+msgstr "³«»Ï³ÑÅÙ:"
 
 #: plug-ins/gimpressionist/orientation.c:81
 msgid "Angle span:"
-msgstr ""
+msgstr "³ÑÅÙÈÏ°Ï:"
 
 #: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "»ÈÍÑ¤¹¤ëÊý¸þ (¥Ö¥é¥·) ¤Î¿ô"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
-msgstr ""
+msgstr "ºÇ½é¤ËºîÀ®¤¹¤ë¥Ö¥é¥·¤Î³ÑÅÙ"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
-msgstr ""
+msgstr "»ÈÍÑ¤¹¤ë³ÑÅÙÈÏ°Ï (360 ¤¬Á´±ß)"
 
 #.
 #. * Orientation option menu...
 #.
 #: plug-ins/gimpressionist/orientation.c:121 plug-ins/print/print.c:889
 msgid "Orientation:"
-msgstr "°õºþÊý¸þ:"
+msgstr "¸þ¤­:"
 
 #: plug-ins/gimpressionist/orientation.c:137
 msgid ""
@@ -9911,7 +9920,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
 msgid "Manual"
-msgstr "¼êº¹¤·"
+msgstr "¥Þ¥Ë¥å¥¢¥ë"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
@@ -9920,7 +9929,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
 msgid "Edit..."
-msgstr ""
+msgstr "ÊÔ½¸..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
@@ -10032,7 +10041,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "»æ"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
@@ -10045,19 +10054,19 @@ msgstr "È¿Å¾"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "»æ¥Æ¥¯¥¹¥Á¥ã¤òÈ¿Å¾¤¹¤ë"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "Éâ¤­Ä¦¤ê¤Ë¤»¤º¤Ë¤½¤Î¤Þ¤Þ»æ¤òÅ¬ÍÑ¤¹¤ë"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
+msgstr "¥Æ¥¯¥¹¥Á¥ã¤Î³ÈÂçÎ¨ (¥Ñ¡¼¥»¥ó¥È¤Ç»ØÄê¤¹¤ë)"
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
+msgstr "²èÁü¤ËÅ¬ÍÑ¤¹¤ëÉâ¤­Ä¦¤ê¸ú²Ì¤Î¶¯ÅÙ¤ò»ØÄê¤¹¤ë (Ã±°Ì¤Ï¥Ñ¡¼¥»¥ó¥È)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
@@ -10155,7 +10164,7 @@ msgstr "¥µ¥¤¥º"
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
-msgstr ""
+msgstr "¥µ¥¤¥º:"
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "Min size:"
@@ -10276,11 +10285,11 @@ msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:133
 msgid "Contents"
-msgstr ""
+msgstr "ÌÜ¼¡"
 
 #: plug-ins/helpbrowser/helpbrowser.c:142
 msgid "Index"
-msgstr ""
+msgstr "º÷°ú"
 
 #: plug-ins/helpbrowser/helpbrowser.c:397 plug-ins/imagemap/imap_main.c:509
 #: plug-ins/imagemap/imap_settings.c:148
@@ -10293,6 +10302,9 @@ msgid ""
 "\n"
 "Couldn't find my root html directory."
 msgstr ""
+"GIMP ¥Ø¥ë¥×¥Ö¥é¥¦¥¶¥¨¥é¡¼.\n"
+"\n"
+"¥ë¡¼¥È HTML ¥Ç¥£¥ì¥¯¥È¥ê¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó."
 
 #: plug-ins/helpbrowser/helpbrowser.c:791
 msgid "GIMP Help Browser"
@@ -10313,7 +10325,7 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¼«Á³/Ifs¹çÀ®..."
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:569
 msgid "Asymmetry:"
-msgstr ""
+msgstr "ÈóÂÐ¾Î:"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:583
@@ -10393,7 +10405,7 @@ msgstr "¿§ÊÑ´¹"
 
 #: plug-ins/ifscompose/ifscompose.c:969
 msgid "Relative Probability:"
-msgstr ""
+msgstr "ÁêÂÐÅª³ÎÎ¨:"
 
 #: plug-ins/ifscompose/ifscompose.c:1176
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
@@ -10419,11 +10431,11 @@ msgstr "ºÇÂç¥á¥â¥ê:"
 
 #: plug-ins/ifscompose/ifscompose.c:1292
 msgid "Subdivide:"
-msgstr ""
+msgstr "ºÙÊ¬²½:"
 
 #: plug-ins/ifscompose/ifscompose.c:1305
 msgid "Spot Radius:"
-msgstr ""
+msgstr "¥¹¥Ý¥Ã¥ÈÈ¾·Â:"
 
 #: plug-ins/ifscompose/ifscompose.c:1375
 #, c-format
@@ -10434,7 +10446,7 @@ msgstr "IFS ÉÁ²è¤·¤Æ¤¤¤Þ¤¹ (%d/%d)..."
 #: plug-ins/ifscompose/ifscompose.c:1394
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr ""
+msgstr "IFS ¤ò²èÁü¤Ë¥³¥Ô¡¼¤·¤Æ¤¤¤Þ¤¹ (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:39
 msgid ""
@@ -10445,6 +10457,12 @@ msgid ""
 "\n"
 "  Released under the GNU General Public License  "
 msgstr ""
+"¥¤¥á¡¼¥¸¥Þ¥Ã¥× ¥×¥é¥°¥¤¥ó 1.3\n"
+"\n"
+"Copyright(c) 1999 by Maurits Rijk\n"
+"lpeek.mrijk@consunet.nl \n"
+"\n"
+"GNU °ìÈÌ¸øÍ­»ÈÍÑµöÂú½ñ¤Ë´ð¤Å¤¤¤Æ¸ø³«  "
 
 #: plug-ins/imagemap/imap_circle.c:260
 msgid "Center x:"
@@ -10471,7 +10489,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
-msgstr ""
+msgstr "¥ª¥Ö¥¸¥§¥¯¥ÈÊÔ½¸"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:70
 msgid "Create Guides"
@@ -10533,7 +10551,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:263
 msgid "Guides"
-msgstr ""
+msgstr "¥¬¥¤¥É"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:679
@@ -10631,7 +10649,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "Relative link"
-msgstr ""
+msgstr "ÁêÂÐ¥ê¥ó¥¯"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:240
 msgid "Target frame name/ID: (optional - used for FRAMES only)"
@@ -10639,7 +10657,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:244
 msgid "Comment about this area: (optional)"
-msgstr ""
+msgstr "¤³¤ÎÎÎ°è¤Ë´Ø¤¹¤ë¥³¥á¥ó¥È: (¥ª¥×¥·¥ç¥ó)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:247
 msgid "Link"
@@ -10655,12 +10673,12 @@ msgstr "JavaScript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:415
 msgid "Area Settings"
-msgstr ""
+msgstr "ÎÎ°èÀßÄê"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:458
 #, c-format
 msgid "Area #%d Settings"
-msgstr ""
+msgstr "ÎÎ°è #%d ÀßÄê"
 
 #: plug-ins/imagemap/imap_file.c:46 plug-ins/imagemap/imap_menu.c:65
 msgid "Error opening file"
@@ -10668,7 +10686,7 @@ msgstr "¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó¥¨¥é¡¼"
 
 #: plug-ins/imagemap/imap_file.c:55
 msgid "Load Imagemap"
-msgstr ""
+msgstr "¥¤¥á¡¼¥¸¥Þ¥Ã¥×ÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/imagemap/imap_file.c:78
 msgid "File exists!"
@@ -10679,14 +10697,16 @@ msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
+"¥Õ¥¡¥¤¥ë¤Ï´û¤ËÂ¸ºß¤·¤Þ¤¹.\n"
+"  ¾å½ñ¤­¤·¤Þ¤¹¤«?  "
 
 #: plug-ins/imagemap/imap_file.c:115
 msgid "Save Imagemap"
-msgstr ""
+msgstr "¥¤¥á¡¼¥¸¥Þ¥Ã¥×ÊÝÂ¸"
 
 #: plug-ins/imagemap/imap_file.c:138
 msgid "Error"
-msgstr ""
+msgstr "¥¨¥é¡¼"
 
 #: plug-ins/imagemap/imap_grid.c:142
 msgid "Grid Settings"
@@ -10744,7 +10764,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:214
 msgid "Open..."
-msgstr ""
+msgstr "³«¤¯..."
 
 #: plug-ins/imagemap/imap_menu.c:220
 msgid "Save As..."
@@ -10766,7 +10786,7 @@ msgstr "¥ê¥É¥¥ %s"
 
 #: plug-ins/imagemap/imap_menu.c:300
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "ÎÎ°è¾ðÊó¤òÊÔ½¸..."
 
 #: plug-ins/imagemap/imap_menu.c:312
 msgid "View"
@@ -10774,11 +10794,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:316
 msgid "Area List"
-msgstr ""
+msgstr "ÎÎ°è°ìÍ÷"
 
 #: plug-ins/imagemap/imap_menu.c:320
 msgid "Source..."
-msgstr ""
+msgstr "¥½¡¼¥¹..."
 
 #: plug-ins/imagemap/imap_menu.c:328
 msgid "Grayscale"
@@ -10831,11 +10851,11 @@ msgstr "ImageMap ¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ..."
 
 #: plug-ins/imagemap/imap_polygon.c:390
 msgid "x (pixels)"
-msgstr ""
+msgstr "X (¥Ô¥¯¥»¥ë)"
 
 #: plug-ins/imagemap/imap_polygon.c:390
 msgid "y (pixels)"
-msgstr ""
+msgstr "Y (¥Ô¥¯¥»¥ë)"
 
 #: plug-ins/imagemap/imap_polygon.c:454
 msgid "Append"
@@ -10863,15 +10883,15 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_rectangle.c:374
 msgid "Upper left x:"
-msgstr ""
+msgstr "º¸¾å X:"
 
 #: plug-ins/imagemap/imap_rectangle.c:380
 msgid "Upper left y:"
-msgstr ""
+msgstr "º¸¾å Y:"
 
 #: plug-ins/imagemap/imap_selection.c:335
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:335
 msgid "Target"
@@ -10888,7 +10908,7 @@ msgstr "ÁªÂò"
 
 #: plug-ins/imagemap/imap_settings.c:67
 msgid "Settings for this Mapfile"
-msgstr ""
+msgstr "¤³¤Î¥Þ¥Ã¥×¥Õ¥¡¥¤¥ë¤ËÂÐ¤¹¤ëÀßÄê"
 
 #: plug-ins/imagemap/imap_settings.c:81
 msgid "Image name:"
@@ -10896,11 +10916,11 @@ msgstr "²èÁüÌ¾:"
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Select Image File"
-msgstr ""
+msgstr "²èÁü¥Õ¥¡¥¤¥ëÁªÂò"
 
 #: plug-ins/imagemap/imap_settings.c:86
 msgid "Title:"
-msgstr ""
+msgstr "¥¿¥¤¥È¥ë:"
 
 #: plug-ins/imagemap/imap_settings.c:88
 #: plug-ins/script-fu/script-fu-scripts.c:1927
@@ -10913,7 +10933,7 @@ msgstr "¥Ç¥Õ¥©¥ë¥È URL:"
 
 #: plug-ins/imagemap/imap_settings.c:107
 msgid "Map file format"
-msgstr ""
+msgstr "¥Þ¥Ã¥×¥Õ¥¡¥¤¥ë·Á¼°"
 
 #: plug-ins/imagemap/imap_source.c:54
 msgid "View Source"
@@ -10921,19 +10941,19 @@ msgstr "¥½¡¼¥¹¤òÉ½¼¨"
 
 #: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Preferences"
-msgstr ""
+msgstr "´Ä¶­ÀßÄê"
 
 #: plug-ins/imagemap/imap_toolbar.c:141
 msgid "Zoom in"
-msgstr ""
+msgstr "³ÈÂç"
 
 #: plug-ins/imagemap/imap_toolbar.c:144
 msgid "Zoom out"
-msgstr ""
+msgstr "½Ì¾®"
 
 #: plug-ins/imagemap/imap_toolbar.c:149
 msgid "Edit Map Info"
-msgstr ""
+msgstr "¥Þ¥Ã¥×¾ðÊó¤òÊÔ½¸"
 
 #: plug-ins/imagemap/imap_toolbar.c:153
 msgid "Move To Front"
@@ -10945,19 +10965,19 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_tools.c:131
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "¶ë·ÁÎÎ°è¤òÄêµÁ"
 
 #: plug-ins/imagemap/imap_tools.c:135
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "±ß/ÂÊ±ßÎÎ°è¤òÄêµÁ"
 
 #: plug-ins/imagemap/imap_tools.c:139
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Â¿³Ñ·ÁÎÎ°è¤òÄêµÁ"
 
 #: plug-ins/imagemap/imap_tools.c:143
 msgid "Edit selected area info"
-msgstr ""
+msgstr "ÁªÂò¤·¤¿ÎÎ°è¾ðÊó¤òÊÔ½¸"
 
 #: plug-ins/imagemap/imap_tools.c:147
 msgid "Delete selected area"
@@ -10965,24 +10985,17 @@ msgstr "ÁªÂò¤·¤¿¥Õ¥ì¡¼¥à¤òºï½ü"
 
 #: plug-ins/maze/algorithms.c:282
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Prim ¥¢¥ë¥´¥ê¥º¥à¤ÇÌÂÏ©¤ò·ÁÀ®¤·¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/maze/algorithms.c:451
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "ÊÂ¤Ù¤é¤ì¤ëÌÂÏ©¤ò Prim ¥¢¥ë¥´¥ê¥º¥à¤Ç·ÁÀ®¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/maze/maze.c:154
-#, c-format
-msgid ""
-"Generates a maze using either the depth-first search method or Prim's "
-"algorithm.  Can make tileable mazes too.  See %s for more help."
-msgstr ""
-
-#: plug-ins/maze/maze.c:161
+#: plug-ins/maze/maze.c:159
 msgid "<Image>/Filters/Render/Pattern/Maze..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¥Ñ¥¿¡¼¥ó/ÌÂÏ©..."
 
-#: plug-ins/maze/maze.c:403
+#: plug-ins/maze/maze.c:401
 msgid "Drawing Maze..."
 msgstr "ÌÂÏ©¤òÉÁ¤¤¤Æ¤¤¤Þ¤¹..."
 
@@ -10999,11 +11012,16 @@ msgstr "ÌÂÏ©¥ª¥×¥·¥ç¥ó"
 #. Tileable checkbox
 #: plug-ins/maze/maze_face.c:266
 msgid "Tileable?"
-msgstr ""
+msgstr "ÊÂ¤Ù¤ë¤«?"
+
+#. entscale == Entry and Scale pair function found in pixelize.c
+#: plug-ins/maze/maze_face.c:277
+msgid "Width (Pixels):"
+msgstr "Éý (¥Ô¥¯¥»¥ë):"
 
 #: plug-ins/maze/maze_face.c:287 plug-ins/maze/maze_face.c:315
 msgid "Pieces:"
-msgstr ""
+msgstr "ÉôÉÊ¿ô:"
 
 #: plug-ins/maze/maze_face.c:307
 msgid "Height (Pixels):"
@@ -11012,12 +11030,12 @@ msgstr "¹â¤µ (¥Ô¥¯¥»¥ë):"
 #. Set up other page
 #: plug-ins/maze/maze_face.c:341
 msgid "At Your Own Risk"
-msgstr ""
+msgstr "³Æ¼«¤ÎÀÕÇ¤¤Ç¤É¤¦¤¾"
 
 #. Multiple input box
 #: plug-ins/maze/maze_face.c:353
 msgid "Multiple (57):"
-msgstr ""
+msgstr "ÇÜ¿ô (57):"
 
 #. Offset input box
 #: plug-ins/maze/maze_face.c:370
@@ -11034,28 +11052,30 @@ msgstr "¥¢¥ë¥´¥ê¥º¥à:"
 
 #: plug-ins/maze/maze_face.c:427
 msgid "Depth First"
-msgstr ""
+msgstr "¿¼ÅÙÍ¥Àè"
 
 #: plug-ins/maze/maze_face.c:438
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Prim ¥¢¥ë¥´¥ê¥º¥à"
 
 #: plug-ins/maze/maze_face.c:565
 msgid ""
 "Selection size is not even.  \n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"ÁªÂò¥µ¥¤¥º¤¬¶ö¿ô¤Ç¤Ï¤¢¤ê¤Þ¤»¤ó.   \n"
+"ÊÂ¤Ù¤ëÌÂÏ©¤¬¤¦¤Þ¤¯¤Ç¤­¤Ê¤¤¤«¤â¤·¤ì¤Þ¤»¤ó."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:717
 #, c-format
 msgid "Opening %s"
-msgstr ""
+msgstr "%s ¤ò³«¤¤¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/maze/maze_face.c:728
 #, c-format
 msgid "See %s"
-msgstr ""
+msgstr "%s ¤ò¸«¤Æ²¼¤µ¤¤"
 
 #: plug-ins/mosaic/mosaic.c:324
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
@@ -11090,19 +11110,19 @@ msgstr "Á°·Ê/ÇØ·Ê ¸÷¸»"
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:642
 msgid "Tiling Primitives"
-msgstr ""
+msgstr "ÊÂ¤Ù¤ë¿Þ·Á"
 
 #: plug-ins/mosaic/mosaic.c:646
 msgid "Squares"
-msgstr ""
+msgstr "»Í³Ñ·Á"
 
 #: plug-ins/mosaic/mosaic.c:648
 msgid "Hexagons"
-msgstr ""
+msgstr "Ï»³Ñ·Á"
 
 #: plug-ins/mosaic/mosaic.c:650
 msgid "Octagons & Squares"
-msgstr ""
+msgstr "È¬³Ñ·Á¤È»Í³Ñ"
 
 #: plug-ins/mosaic/mosaic.c:689
 msgid "Tile Spacing:"
@@ -11122,161 +11142,163 @@ msgstr "¿§¤Î¼ïÎà:"
 
 #: plug-ins/mosaic/mosaic.c:2486
 msgid "Unable to add additional point.\n"
-msgstr ""
+msgstr "¤³¤ì°Ê¾åÅÀ¤òÄÉ²Ã¤Ç¤­¤Þ¤»¤ó.\n"
 
-#: plug-ins/pagecurl/pagecurl.c:223
+#: plug-ins/pagecurl/pagecurl.c:224
 msgid "Pagecurl effect"
 msgstr "¥Ú¡¼¥¸¤á¤¯¤ê¸ú²Ì"
 
-#: plug-ins/pagecurl/pagecurl.c:224
+#: plug-ins/pagecurl/pagecurl.c:225
 msgid "This plug-in creates a pagecurl-effect."
 msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ï¥Ú¡¼¥¸¤á¤¯¤ê¸ú²Ì¤òÍ¿¤¨¤Þ¤¹."
 
-#: plug-ins/pagecurl/pagecurl.c:228
+#: plug-ins/pagecurl/pagecurl.c:229
 msgid "<Image>/Filters/Distorts/Pagecurl..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/ÏÄ¤ß/¥Ú¡¼¥¸¤á¤¯¤ê..."
 
-#: plug-ins/pagecurl/pagecurl.c:576
+#: plug-ins/pagecurl/pagecurl.c:579
 msgid "Pagecurl Effect"
 msgstr "¥Ú¡¼¥¸¤á¤¯¤ê¸ú²Ì"
 
-#: plug-ins/pagecurl/pagecurl.c:599
+#: plug-ins/pagecurl/pagecurl.c:602
 msgid "Curl Location"
 msgstr "¤á¤¯¤ë°ÌÃÖ"
 
-#: plug-ins/pagecurl/pagecurl.c:664
+#: plug-ins/pagecurl/pagecurl.c:667
 msgid "Upper Left"
 msgstr "º¸¾å"
 
-#: plug-ins/pagecurl/pagecurl.c:665
+#: plug-ins/pagecurl/pagecurl.c:668
 msgid "Upper Right"
 msgstr "±¦¾å"
 
-#: plug-ins/pagecurl/pagecurl.c:666
+#: plug-ins/pagecurl/pagecurl.c:669
 msgid "Lower Left"
 msgstr "º¸²¼"
 
-#: plug-ins/pagecurl/pagecurl.c:667
+#: plug-ins/pagecurl/pagecurl.c:670
 msgid "Lower Right"
 msgstr "±¦²¼"
 
-#: plug-ins/pagecurl/pagecurl.c:698
+#: plug-ins/pagecurl/pagecurl.c:701
 msgid "Curl Orientation"
 msgstr "¤á¤¯¤ë¸þ¤­"
 
-#: plug-ins/pagecurl/pagecurl.c:737
+#: plug-ins/pagecurl/pagecurl.c:740
 msgid "Shade under Curl"
-msgstr ""
+msgstr "¤á¤¯¤Ã¤¿²¼¤Ë±Æ¤ò¤Ä¤±¤ë"
 
-#: plug-ins/pagecurl/pagecurl.c:747
+#: plug-ins/pagecurl/pagecurl.c:750
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
+"Á°·Ê/ÇØ·Ê¿§¤ÎÂå¤ï¤ê¤Ë\n"
+"¸½ºß¤Î¥°¥é¥Ç¡¼¥·¥ç¥ó¤ò»È¤¦"
 
-#: plug-ins/pagecurl/pagecurl.c:759
+#: plug-ins/pagecurl/pagecurl.c:762
 msgid "Curl Opacity"
-msgstr ""
+msgstr "¶Ê¤¬¤Ã¤¿ÉôÊ¬¤ÎÉÔÆ©ÌÀÅÙ"
 
-#: plug-ins/pagecurl/pagecurl.c:885
+#: plug-ins/pagecurl/pagecurl.c:888
 msgid "Curl layer"
-msgstr ""
+msgstr "¤á¤¯¤êÉôÊ¬¥ì¥¤¥ä"
 
-#: plug-ins/pagecurl/pagecurl.c:1136
+#: plug-ins/pagecurl/pagecurl.c:1139
 msgid "Page Curl..."
-msgstr ""
+msgstr "¥Ú¡¼¥¸¤ò¤á¤¯¤Ã¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/print/print.c:187
 msgid "PostScript Level 1"
-msgstr ""
+msgstr "¥Ý¥¹¥È¥¹¥¯¥ê¥×¥È ¥ì¥Ù¥ë1"
 
 #: plug-ins/print/print.c:191
 msgid "HP DeskJet 500, 520"
-msgstr ""
+msgstr "HP DeskJet 500, 520"
 
 #: plug-ins/print/print.c:193
 msgid "HP DeskJet 500C, 540C"
-msgstr ""
+msgstr "HP DeskJet 500C, 540C"
 
 #: plug-ins/print/print.c:195
 msgid "HP DeskJet 550C, 560C"
-msgstr ""
+msgstr "HP DeskJet 550C, 560C"
 
 #: plug-ins/print/print.c:197
 msgid "HP DeskJet 600 series"
-msgstr ""
+msgstr "HP DeskJet 600 ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:199
 msgid "HP DeskJet 800 series"
-msgstr ""
+msgstr "HP DeskJet 800 ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:201
 msgid "HP DeskJet 1100C, 1120C"
-msgstr ""
+msgstr "HP DeskJet 1100C, 1120C"
 
 #: plug-ins/print/print.c:203
 msgid "HP DeskJet 1200C, 1600C"
-msgstr ""
+msgstr "HP DeskJet 1200C, 1600C"
 
 #: plug-ins/print/print.c:205
 msgid "HP LaserJet II series"
-msgstr ""
+msgstr "HP LaserJet II ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:207
 msgid "HP LaserJet III series"
-msgstr ""
+msgstr "HP LaserJet III ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:209
 msgid "HP LaserJet 4 series"
-msgstr ""
+msgstr "HP LaserJet 4 ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:211
 msgid "HP LaserJet 4V, 4Si"
-msgstr ""
+msgstr "HP LaserJet 4V, 4Si"
 
 #: plug-ins/print/print.c:213
 msgid "HP LaserJet 5 series"
-msgstr ""
+msgstr "HP LaserJet 5 ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:215
 msgid "HP LaserJet 5Si"
-msgstr ""
+msgstr "HP LaserJet 5Si"
 
 #: plug-ins/print/print.c:217
 msgid "HP LaserJet 6 series"
-msgstr ""
+msgstr "HP LaserJet 6 ¥·¥ê¡¼¥º"
 
 #: plug-ins/print/print.c:219
 msgid "EPSON Stylus Color"
-msgstr ""
+msgstr "EPSON Stylus Color"
 
 #: plug-ins/print/print.c:221
 msgid "EPSON Stylus Color Pro"
-msgstr ""
+msgstr "EPSON Stylus Color Pro"
 
 #: plug-ins/print/print.c:223
 msgid "EPSON Stylus Color Pro XL"
-msgstr ""
+msgstr "EPSON Stylus Color Pro XL"
 
 #: plug-ins/print/print.c:225
 msgid "EPSON Stylus Color 1500"
-msgstr ""
+msgstr "EPSON Stylus Color 1500"
 
 #: plug-ins/print/print.c:227
 msgid "EPSON Stylus Color 400"
-msgstr ""
+msgstr "EPSON MJ-400"
 
 #: plug-ins/print/print.c:229
 msgid "EPSON Stylus Color 500"
-msgstr ""
+msgstr "EPSON MJ-500C"
 
 #: plug-ins/print/print.c:231
 msgid "EPSON Stylus Color 600"
-msgstr ""
+msgstr "EPSON PM-600C"
 
 #: plug-ins/print/print.c:233
 msgid "EPSON Stylus Color 800"
-msgstr ""
+msgstr "EPSON MJ-800C"
 
 #: plug-ins/print/print.c:235
 msgid "EPSON Stylus Color 1520"
@@ -11284,15 +11306,15 @@ msgstr ""
 
 #: plug-ins/print/print.c:237
 msgid "EPSON Stylus Color 3000"
-msgstr ""
+msgstr "EPSON MJ-3000C"
 
 #: plug-ins/print/print.c:239
 msgid "EPSON Stylus Photo 700"
-msgstr ""
+msgstr "EPSON PM-700C"
 
 #: plug-ins/print/print.c:241 plug-ins/print/print.c:243
 msgid "EPSON Stylus Photo EX"
-msgstr ""
+msgstr "EPSON Stylus Photo EX"
 
 #: plug-ins/print/print.c:387
 msgid "<Image>/File/Print..."
@@ -11309,7 +11331,7 @@ msgstr "²£ÃÖ¤­"
 #: plug-ins/print/print.c:790
 #, c-format
 msgid "Print v%s"
-msgstr ""
+msgstr "°õºþ v%s"
 
 #.
 #. * Media size option menu...
@@ -11356,7 +11378,7 @@ msgstr "É¸½à¿§ÊäÀµ"
 
 #: plug-ins/print/print.c:982
 msgid "Experimental linear scale"
-msgstr ""
+msgstr "¼Â¸³Ãæ¤ÎÀþ·Á¥¹¥±¡¼¥ë"
 
 #.
 #. * Scaling...
@@ -11441,11 +11463,11 @@ msgstr "¥«¥é¡¼¥Þ¥Ã¥×¤ò²óÅ¾¤·¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/rcm/rcm_callback.c:150 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to clockwise"
-msgstr ""
+msgstr "»þ·×¼þ¤ê¤ËÊÑ¹¹"
 
 #: plug-ins/rcm/rcm_callback.c:150 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to c/clockwise"
-msgstr ""
+msgstr "È¿»þ·×¼þ¤ê¤ËÊÑ¹¹"
 
 #: plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
@@ -11453,7 +11475,7 @@ msgstr "¥ª¥ê¥¸¥Ê¥ë"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
-msgstr ""
+msgstr "Ìð°õ¤Î¾ì½ê¤òÊÑ¹¹"
 
 #: plug-ins/rcm/rcm_dialog.c:275
 msgid "Select all"
@@ -11462,21 +11484,21 @@ msgstr "Á´¤Æ¤òÁªÂò"
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:307
 msgid "to"
-msgstr ""
+msgstr "¤«¤é"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
 msgid "Treat as this"
-msgstr ""
+msgstr "¤³¤Î¿§¤È¤·¤Æ°·¤¦"
 
 #: plug-ins/rcm/rcm_dialog.c:490
 msgid "Change to this"
-msgstr ""
+msgstr "¤³¤Î¿§¤Ë¤¹¤ë"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "What is Gray?"
-msgstr ""
+msgstr "¥°¥ì¡¼¤È¤Ï?"
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:589
@@ -11486,11 +11508,11 @@ msgstr "Ã±°Ì"
 #. Misc: Used unit selection: 3 radio buttons
 #: plug-ins/rcm/rcm_dialog.c:598
 msgid "Radians"
-msgstr ""
+msgstr "¥é¥¸¥¢¥ó"
 
 #: plug-ins/rcm/rcm_dialog.c:607
 msgid "Radians/Pi"
-msgstr ""
+msgstr "¥é¥¸¥¢¥ó/¦Ð"
 
 #: plug-ins/rcm/rcm_dialog.c:616
 msgid "Degrees"
@@ -11498,28 +11520,28 @@ msgstr "ÅÙ"
 
 #: plug-ins/rcm/rcm_dialog.c:635
 msgid "Continuous update"
-msgstr ""
+msgstr "Ãà¼¡¹¹¿·"
 
 #: plug-ins/rcm/rcm_dialog.c:650
 msgid "Area:"
-msgstr ""
+msgstr "ÎÎ°è:"
 
 #: plug-ins/rcm/rcm_dialog.c:671
 msgid "Context"
-msgstr ""
+msgstr "¥³¥ó¥Æ¥­¥¹¥È"
 
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:741
 msgid "Colormap Rotation"
-msgstr ""
+msgstr "¥«¥é¡¼¥Þ¥Ã¥×²óÅ¾"
 
 #: plug-ins/rcm/rcm_dialog.c:792
 msgid "Main"
-msgstr ""
+msgstr "¥á¥¤¥ó"
 
 #: plug-ins/rcm/rcm_dialog.c:795
 msgid "Misc"
-msgstr ""
+msgstr "¤½¤ÎÂ¾"
 
 #: plug-ins/script-fu/script-fu-console.c:157
 msgid "Script-Fu console mode allows only interactive invocation"
@@ -11735,20 +11757,20 @@ msgstr "±é»»ÀßÄê"
 
 #: plug-ins/sinus/sinus.c:876
 msgid "Force Tiling?"
-msgstr ""
+msgstr "¶¯À©Åª¤ËÊÂ¤Ù¤ë?"
 
 #: plug-ins/sinus/sinus.c:889
 msgid "Ideal"
-msgstr ""
+msgstr "Åµ·¿"
 
 #: plug-ins/sinus/sinus.c:890
 msgid "Distorted"
-msgstr ""
+msgstr "¤æ¤¬¤á¤ë"
 
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/sinus/sinus.c:921
 msgid "The colors are white and black."
-msgstr ""
+msgstr "¿§¤ÏÇò¹õ¤Ç¤¹."
 
 #: plug-ins/sinus/sinus.c:932
 msgid "Black & White"
@@ -11760,15 +11782,15 @@ msgstr "Á°·Ê/ÇØ·Ê"
 
 #: plug-ins/sinus/sinus.c:936
 msgid "Choose here:"
-msgstr ""
+msgstr "¤³¤³¤ÇÁªÂò:"
 
 #: plug-ins/sinus/sinus.c:950
 msgid "First Color"
-msgstr ""
+msgstr "Âè°ì¿§"
 
 #: plug-ins/sinus/sinus.c:955
 msgid "Second Color"
-msgstr ""
+msgstr "ÂèÆó¿§"
 
 #: plug-ins/sinus/sinus.c:963
 msgid "Alpha Channels"
@@ -11788,15 +11810,15 @@ msgstr "º®¿§ÀßÄê"
 
 #: plug-ins/sinus/sinus.c:1041
 msgid "Sinusodial"
-msgstr ""
+msgstr "Sin ¶ÊÀþ"
 
 #: plug-ins/sinus/sinus.c:1053
 msgid "Exponent:"
-msgstr ""
+msgstr "¥Ù¥­»Ø¿ô"
 
 #: plug-ins/sinus/sinus.c:1063
 msgid "Blend"
-msgstr ""
+msgstr "º®¿§"
 
 #: plug-ins/struc/struc.c:129
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
@@ -11804,11 +11826,11 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/·Ý½ÑÅª¸ú²Ì/¥­¥ã¥ó¥Ð¥¹ÃÏ..."
 
 #: plug-ins/struc/struc.c:215
 msgid "Applying Canvas..."
-msgstr "¥ì¥ó¥º¸ú²Ì¤òÅ¬ÍÑ¤·¤Æ¤¤¤Þ¤¹..."
+msgstr "¥­¥ã¥ó¥Ñ¥¹ÃÏ¤òÅ¬ÍÑ¤·¤Æ¤¤¤Þ¤¹..."
 
 #: plug-ins/struc/struc.c:256
 msgid "Apply Canvas"
-msgstr ""
+msgstr "¥­¥ã¥ó¥Ð¥¹ÃÏ"
 
 #: plug-ins/struc/struc.c:288
 msgid "Top-Right"
@@ -11871,27 +11893,27 @@ msgstr "²èÌÌÁ´ÂÎ¤ò¼è¤ê¹þ¤à"
 
 #: plug-ins/winsnap/winsnap.c:1188
 msgid "No data captured"
-msgstr ""
+msgstr "²¿¤â¼è¤ê¹þ¤Þ¤ì¤Þ¤»¤ó¤Ç¤·¤¿"
 
 #: plug-ins/xjt/xjt.c:651
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr ""
+msgstr "XJT ¥Õ¥¡¥¤¥ëÃæ¤ËÉÔÌÀ¤Ê¥ì¥¤¥ä¥â¡¼¥É %d ¤¬¤¢¤ê¤Þ¤¹"
 
 #: plug-ins/xjt/xjt.c:681
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr ""
+msgstr "·Ù¹ð: ¥µ¥Ý¡¼¥È¤µ¤ì¤Ê¤¤¥ì¥¤¥ä¥â¡¼¥É %d ¤¬ XJT ¤ËÊÝÂ¸¤µ¤ì¤Þ¤·¤¿"
 
 #: plug-ins/xjt/xjt.c:697
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr ""
+msgstr "XJT ¥Õ¥¡¥¤¥ëÃæ¤ËÉÔÌÀ¤Ê¥Ñ¥¹¼ï %d ¤¬¤¢¤ê¤Þ¤¹"
 
 #: plug-ins/xjt/xjt.c:713
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr ""
+msgstr "·Ù¹ð: ¥µ¥Ý¡¼¥È¤µ¤ì¤Ê¤¤¥Ñ¥¹¼ï %d ¤¬ XJT ¤ËÊÝÂ¸¤µ¤ì¤Þ¤·¤¿"
 
 #: plug-ins/xjt/xjt.c:742
 msgid "Save as XJT"
@@ -11899,7 +11921,7 @@ msgstr "XJT ·Á¼°¤ÇÊÝÂ¸"
 
 #: plug-ins/xjt/xjt.c:779
 msgid "Clear Transparent"
-msgstr ""
+msgstr "Æ©ÌÀ¥¯¥ê¥¢"
 
 #: plug-ins/xjt/xjt.c:1174
 #, c-format
