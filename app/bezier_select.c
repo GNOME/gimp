@@ -1695,6 +1695,13 @@ bezier_insert_in_list (GSList * list,
   return orig;
 }
 
+gboolean 
+bezier_tool_selected()
+{
+  return(active_tool_type == BEZIER_SELECT &&
+	 active_tool->state == ACTIVE);
+}
+
 void
 bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 {
@@ -1798,8 +1805,8 @@ bezier_to_sel_internal(BezierSelect  *bezier_sel,
 			  bezier_sel->mask, op, 0, 0);
   
   /*  show selection on all views  */
-  bezier_sel->draw = BEZIER_DRAW_HANDLES;
-  draw_core_resume (bezier_sel->core, tool); 
+  /*   bezier_sel->draw = BEZIER_DRAW_HANDLES; */
+  /*   draw_core_resume (bezier_sel->core, tool);  */
 
   gdisplays_flush ();
 }

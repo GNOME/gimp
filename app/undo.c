@@ -924,6 +924,8 @@ undo_pop_transform (GImage *gimage,
   tc = (TransformCore *) active_tool->private;
   tu = (TransformUndo *) tu_ptr;
 
+  paths_transform_do_undo(gimage,tu->path_undo);
+
   /*  only pop if the active tool is the tool that pushed this undo  */
   if (tu->tool_ID != active_tool->ID)
     return TRUE;
@@ -962,6 +964,7 @@ undo_free_transform (int   state,
   tu = (TransformUndo *) tu_ptr;
   if (tu->original)
     tile_manager_destroy (tu->original);
+  paths_transform_free_undo(tu->path_undo);
   g_free (tu);
 }
 

@@ -18,6 +18,8 @@
 #ifndef  __PATHSP_H__
 #define  __PATHSP_H__
 
+#include "libgimp/gimpmatrix.h"
+
 /* Cutdown representation of the bezier curve description */
 /* Will be used to hopefully store in XCF format...
  */
@@ -67,6 +69,9 @@ void          paths_stroke(GimpImage *,PathsList *,PATHP);
 gint          paths_distance(PATHP ,gdouble ,gint *,gint *, gdouble *);
 Tattoo        paths_get_tattoo(PATHP);
 PATHP         paths_get_path_by_tattoo(GimpImage *,Tattoo);
-
+void        * paths_transform_start_undo(GimpImage  *);
+void          paths_transform_free_undo(void *);
+void          paths_transform_do_undo(GimpImage *,void *);
+void          paths_transform_current_path(GimpImage  *,GimpMatrix,gboolean);
 
 #endif  /*  __PATHSP_H__  */

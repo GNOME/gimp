@@ -25,5 +25,6 @@
 void    bezier_select_dialog      (void);
 Tool *  tools_new_bezier_select   (void);
 void    tools_free_bezier_select  (Tool *);
+gboolean bezier_tool_selected(void);
 
 #endif /* __BEZIER_SELECT_H__ */

@@ -1,3 +1,29 @@
+Tue Apr 13 22:17:23 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+
+	* app/bezier_select.c 
+	* app/bezier_select.h 
+	* app/pathsP.h 
+	* app/paths_dialog.c 
+	* app/transform_core.c 
+	* app/transform_core.h 
+	* app/undo.c 	
+
+	New:-
+
+	* pixmap/locked.xpm
+
+	New image. (Your welcome to improve upon it...)
+
+	Paths can now be locked down for transformations. Click next to the
+	paths preview and a icon will appear. This path will "locked" during
+	transformations (via the transforms tool). Undo for these path 
+	transformations is also available.
+
+	Fixed bug when creating a path for the first time when no paths dialog
+	visible.	
+
 Tue Apr 13 00:01:24 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: bumped up to 1.1.5

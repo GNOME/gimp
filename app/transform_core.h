@@ -115,6 +115,7 @@ struct _transform_undo
   int             tool_type;
   TranInfo        trans_info;
   TileManager *   original;
+  void        *   path_undo;
 };
 
 

@@ -50,6 +50,7 @@
 #include "resize.h"
 #include "session.h"
 #include "undo.h"
+#include "libgimp/gimpmatrix.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -63,6 +64,7 @@
 #include "pixmaps/penstroke.xpm"
 #include "pixmaps/toselection.xpm"
 #include "pixmaps/path.xbm"
+#include "pixmaps/locked.xpm"
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 
@@ -82,6 +84,7 @@ typedef struct {
   /* pixmaps for the no preview bitmap */
   GdkPixmap * pixmap_normal;
   GdkPixmap * pixmap_selected;
+  GdkPixmap * pixmap_locked;
 
   /*  state information  */
   gint        selsigid;
@@ -97,12 +100,17 @@ typedef struct {
 static PATHSLISTP paths_dialog = NULL;
 
 typedef struct {
-  GdkPixmap *paths_pixmap;
-  GString   *text;
-  PATHP   bzp;
+  GdkPixmap   *paths_pixmap;
+  GString     *text;
+  PATHP        bzp;
 } PATHWIDGET, *PATHWIDGETP;
 
-static gchar * unique_name(gchar *);
+typedef struct {
+  Tattoo tattoo;
+  PATHP  copy_path;
+} PATHUNDO;
+
+static gchar * unique_name(GimpImage *,gchar *);
 
 static gint path_widget_preview_events (GtkWidget *, GdkEvent *);
 static void paths_dialog_realized      (GtkWidget *widget);
@@ -272,13 +280,16 @@ GtkWidget * paths_dialog_create()
 				      GTK_POLICY_AUTOMATIC,
 				      GTK_POLICY_ALWAYS);
 
-      paths_dialog->paths_list = paths_list = gtk_clist_new (1);
+      paths_dialog->paths_list = paths_list = gtk_clist_new (2);
 
       gtk_signal_connect (GTK_OBJECT (vbox), "destroy",
 			  (GtkSignalFunc) paths_list_destroy, NULL);
 
-/*       gtk_clist_set_column_title(GTK_CLIST(paths_list), 0, "col1"); */
-/*       gtk_clist_column_titles_show(GTK_CLIST(paths_list)); */
+/*       gtk_clist_set_column_title(GTK_CLIST(paths_list), 0, _("Locked"));    */
+/*       gtk_clist_set_column_title(GTK_CLIST(paths_list), 1, _("Path"));    */
+/*       gtk_clist_column_titles_show(GTK_CLIST(paths_list));   */
+      /*      gtk_clist_columns_autosize(GTK_CLIST(paths_list));  */
+      gtk_clist_set_column_width (GTK_CLIST(paths_list),0,30);
 
       gtk_container_add (GTK_CONTAINER (scrolled_win), paths_list);
       gtk_clist_set_selection_mode (GTK_CLIST (paths_list), GTK_SELECTION_BROWSE);
@@ -395,7 +406,7 @@ path_dialog_new(GimpImage *gimage,gint name_seed, gpointer udata)
   gchar   *suniq;
 
   g_string_sprintf (s, "path %d",name_seed);
-  suniq = unique_name(s->str);
+  suniq = unique_name(gimage,s->str);
   if(suniq)
     {
       g_string_free(s,TRUE);
@@ -440,7 +451,7 @@ strip_off_cnumber(gchar *str)
 /* Return NULL is already unique else a unique string */
 
 static gchar *
-unique_name(gchar *cstr)
+unique_name(GimpImage *gimage,gchar *cstr)
 {
   GSList *tlist;
   PATHIMAGELISTP plp;
@@ -451,9 +462,7 @@ unique_name(gchar *cstr)
   gint counter = 1;
 
   /* Get bzpath structure  */
-  plp = paths_dialog->current_path_list;
-
-  if(!plp)
+  if(!gimage || !(plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage)))
     return NULL;
 
   tlist = plp->bz_paths;
@@ -505,14 +514,17 @@ path_copy(GimpImage *gimage,PATHP p)
   PATHP p_copy = g_new0(PATH,1);
   gchar *ext;
 
-  ext = unique_name(p->name->str);
+  ext = unique_name(gimage,p->name->str);
   p_copy->name = g_string_new(ext);
   g_free(ext);
   p_copy->closed = p->closed;
   p_copy->state = p->state;
   p_copy->pathtype = p->pathtype;
   p_copy->path_details = pathpoints_copy(p->path_details);
-  p_copy->tattoo = gimp_image_get_new_tattoo(gimage);
+  if(gimage)
+    p_copy->tattoo = gimp_image_get_new_tattoo(gimage);
+  else
+    p_copy->tattoo = p->tattoo;
   return p_copy;
 }
 
@@ -678,7 +690,8 @@ void paths_add_path(PATHP bzp,gint insrow)
   /* Create a new entry in the list */
   PATHWIDGETP pwidget;
   gint row;
-  gchar *row_data[1];
+  gchar *row_data[2];
+  GdkBitmap *mask;
 
   pwidget = g_new0(PATHWIDGET,1);
 
@@ -720,10 +733,20 @@ void paths_add_path(PATHP bzp,gint insrow)
        pwidget->paths_pixmap = paths_dialog->pixmap_normal;
     }
 
+  if(!paths_dialog->pixmap_locked)
+    {
+      paths_dialog->pixmap_locked = 
+	gdk_pixmap_create_from_xpm_d (paths_dialog->vbox->window,
+				      &mask,
+				      &paths_dialog->vbox->style->fg[GTK_STATE_NORMAL],
+				      locked_xpm);
+    }
+
   gtk_clist_set_row_height(GTK_CLIST(paths_dialog->paths_list),
 			   paths_dialog->image_height + 6);
 
   row_data[0] = "";
+  row_data[1] = "";
 
   if(insrow == -1)
     row = gtk_clist_append(GTK_CLIST(paths_dialog->paths_list),
@@ -735,7 +758,7 @@ void paths_add_path(PATHP bzp,gint insrow)
 
   gtk_clist_set_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			row,
-			0,
+			1,
 			bzp->name->str,
 			2,
 			pwidget->paths_pixmap,
@@ -749,7 +772,7 @@ void paths_add_path(PATHP bzp,gint insrow)
   gtk_signal_handler_block(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
   gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 		       paths_dialog->current_path_list->last_selected_row,
-		       0);
+		       1);
   gtk_signal_handler_unblock(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
 
   pwidget->bzp = bzp;
@@ -838,21 +861,69 @@ paths_select_row(GtkWidget *widget,
   PATHP bzp;
   BezierSelect * bsel;
   GDisplay *gdisp;
+  gint last_row;
 
   pwidget = (PATHWIDGETP)gtk_clist_get_row_data(GTK_CLIST(widget),row);
 
   if(!pwidget ||
      (paths_dialog->current_path_list->last_selected_row == row &&
-     paths_dialog->been_selected == TRUE))
-    return;
+      paths_dialog->been_selected == TRUE))
+    {
+      if(column)
+	return;
+    }
 
-  paths_dialog->selected_row_num = row;
-  paths_dialog->current_path_list->last_selected_row = row;
-  paths_dialog->been_selected = TRUE;
+  last_row = paths_dialog->current_path_list->last_selected_row;
 
   bzp = (PATHP)g_slist_nth_data(paths_dialog->current_path_list->bz_paths,row);
 
   g_return_if_fail(bzp != NULL);
+
+  if(column == 0)
+    {
+      if(bzp->locked == 0)
+	{
+	  bzp->locked = 1;
+	  gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+			       row,
+			       0,
+			       paths_dialog->pixmap_locked,
+			       NULL);
+      	}
+      else
+	{
+	  gint tmprow;
+
+	  bzp->locked = 0;
+	  gtk_clist_set_text(GTK_CLIST(paths_dialog->paths_list),
+			     row,
+			     0,
+			     "");
+	  /* There should be an easier way of updating the preview! */
+	  bsel = path_to_beziersel(bzp);
+	  tmprow = paths_dialog->current_path_list->last_selected_row;
+	  paths_dialog->current_path_list->last_selected_row = row;
+	  paths_update_preview(bsel);
+	  beziersel_free(bsel);
+	  paths_dialog->current_path_list->last_selected_row = tmprow;
+	  paths_dialog->selected_row_num = tmprow;
+	}
+
+      /* Put hightlight back on the old original selection */
+      gtk_signal_handler_block(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
+
+      gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
+			   last_row,
+			   1);
+
+      gtk_signal_handler_unblock(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
+
+      return;
+    }
+
+  paths_dialog->selected_row_num = row;
+  paths_dialog->current_path_list->last_selected_row = row;
+  paths_dialog->been_selected = TRUE;
 
   bsel = path_to_beziersel(bzp);
   gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
@@ -981,14 +1052,12 @@ paths_dialog_update (GimpImage* gimage)
   paths_dialog->current_path_list->last_selected_row = tmprow;
   paths_dialog->selected_row_num = tmprow;
 
-  /*   g_slist_foreach(plist,paths_update_paths,NULL); */
-
   /* select last one */
 
   gtk_signal_handler_block(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
   gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 		       paths_dialog->current_path_list->last_selected_row,
-		       0);
+		       1);
   gtk_signal_handler_unblock(GTK_OBJECT(paths_dialog->paths_list),paths_dialog->selsigid);
 
   gtk_clist_moveto(GTK_CLIST(paths_dialog->paths_list),
@@ -1010,6 +1079,13 @@ paths_update_paths(gpointer data,gint row)
   paths_dialog->current_path_list->last_selected_row = row;
   paths_update_preview(bezier_sel);
   beziersel_free(bezier_sel);
+ 
+  if(bzp->locked)
+    gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+			 row,
+			 0,
+			 paths_dialog->pixmap_locked,
+			 NULL);
 }
 
 static void
@@ -1027,7 +1103,7 @@ do_rename_paths_callback(GtkWidget *widget, gpointer call_data, gpointer client_
 
   gtk_clist_get_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			paths_dialog->selected_row_num,
-			0,
+			1,
 			NULL,
 			&spacing,
 			&pixmap,
@@ -1036,7 +1112,7 @@ do_rename_paths_callback(GtkWidget *widget, gpointer call_data, gpointer client_
 
   gtk_clist_set_pixtext(GTK_CLIST(call_data),
 			paths_dialog->selected_row_num,
-			0,
+			1,
 			text,
 			spacing,
 			pixmap,
@@ -1054,7 +1130,7 @@ paths_dialog_edit_path_query(GtkWidget *widget)
   /* Get the current name */
   ret = gtk_clist_get_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			      paths_dialog->selected_row_num,
-			      0,
+			      1,
 			      &text,
 			      NULL,
 			      NULL,
@@ -1071,9 +1147,10 @@ static gint
 paths_list_events (GtkWidget *widget,
 		   GdkEvent  *event)
 {
-  GdkEventKey *kevent;
+  GdkEventKey    *kevent;
   GdkEventButton *bevent;
-  static gint last_row = -1;
+  static gint     last_row = -1;
+  gint            this_colunm;
 
   switch (event->type)
     {
@@ -1082,7 +1159,7 @@ paths_list_events (GtkWidget *widget,
       if(!gtk_clist_get_selection_info (GTK_CLIST(paths_dialog->paths_list),
 				       bevent->x,
 				       bevent->y,
-				       &last_row,NULL))
+				       &last_row,&this_colunm))
 	last_row = -1;
       else
 	{
@@ -1101,10 +1178,15 @@ paths_list_events (GtkWidget *widget,
 	 gtk_clist_get_selection_info (GTK_CLIST(paths_dialog->paths_list),
 				       bevent->x,
 				       bevent->y,
-				       NULL,NULL))
+				       NULL,&this_colunm))
 	{
-	  paths_dialog_edit_path_query(widget);
-	  return TRUE;
+	  if(this_colunm == 1)
+	    {
+	      paths_dialog_edit_path_query(widget);
+	      return TRUE;
+	    }
+	  else
+	    return FALSE;
 	}
       else
 	return FALSE;
@@ -1278,7 +1360,7 @@ paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
   plp = paths_dialog->current_path_list;
   bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
 
-  /* Now do the stroke....*/
+  /* Now do the selection....*/
   gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
 				paths_dialog->gimage);
 
@@ -1290,6 +1372,11 @@ paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
       bezier_sel = path_to_beziersel(bzpcopy);
       path_free(bzpcopy,NULL);
       bezier_to_selection (bezier_sel, gdisp);
+      beziersel_free(bezier_sel);
+
+      /* Force display to show no closed curve */
+      bezier_sel = path_to_beziersel(bzp);
+      bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
       beziersel_free(bezier_sel);
     }
   else
@@ -1534,7 +1621,7 @@ paths_update_preview(BezierSelect *bezier_sel)
 
       gtk_clist_set_pixtext(GTK_CLIST(paths_dialog->paths_list),
 			    row,
-			    0,
+			    1,
 			    pwidget->bzp->name->str,
 			    2,
 			    pwidget->paths_pixmap,
@@ -1823,7 +1910,7 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 
 	  gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			       paths_dialog->current_path_list->last_selected_row,
-			       0);
+			       1);
 
 	  paths_ops_button_set_sensitive(DUP_PATH_BUTTON,val);
 	  paths_ops_button_set_sensitive(DEL_PATH_BUTTON,val);
@@ -1931,6 +2018,215 @@ paths_dialog_export_path_callback (GtkWidget * widget, gpointer udata)
   path_store_callback();
 }
 
+/*************************************/
+/* Function for transforming paths   */
+/*************************************/
+
+/* These functions are the undo functions for the paths
+ * that have undergone transformations. 
+ *
+ * Generally speaking paths do not belong with the undo 
+ * structures. However when a path undergoes a transformation 
+ * then THIS path transformation should be part of the undo.
+ * We do have a problem here since a point could have been
+ * added to the path after the transformation. This 
+ * point will be lost if the undo stuff is performed. It would 
+ * then appear that this point is part of the undo structure.
+ * I think it is fair that this happens since the user is telling
+ * us to restore the state before the transformation took place.
+ * Note tattoos are used to find which paths have been stored in the
+ * undo buffer. So deleted paths will not suddenly reappear. (I did say
+ * generally paths are not part of the undo structures).
+ */
+
+void *
+paths_transform_start_undo(GimpImage  *gimage)
+{
+  /* Save only the locked paths away */
+  PATHIMAGELISTP plp;
+  GSList        *plist;
+  PATHP          p;
+  PATHP          p_copy;
+  GSList        *undo_list = NULL;
+
+  /* Get bzpath structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+  
+  if(!plp)
+    return NULL;
+  
+  plist = plp->bz_paths;
+
+  while(plist)
+    {
+      p = (PATHP)plist->data;
+      if(p->locked)
+	{
+	  /* save away for a rainly day */
+	  p_copy = path_copy(NULL,p); /* NULL means dont want new tattoo */
+	  undo_list = g_slist_append(undo_list,p_copy);
+	}
+      plist = g_slist_next(plist);
+    }
+  return undo_list;
+}
+
+void
+paths_transform_free_undo(void *data)
+{
+  GSList *pundolist = data;
+  PATHP   p;
+  /* free data associated with the transform path undo */
+
+  while(pundolist)
+    {
+      p = (PATHP)pundolist->data;
+      path_free(p,NULL);
+      pundolist = g_slist_next(pundolist);
+    }
+
+  g_slist_free((GSList *)data);
+}
+
+void
+paths_transform_do_undo(GimpImage *gimage,void *data)
+{
+  GSList *pundolist = data;
+  /* Restore the paths as they were before this transform took place. */
+  PATHP   p_undo;
+  PATHP   p;
+  BezierSelect  *bezier_sel;
+  gint           tmprow;
+  gint           loop;
+  gboolean       preview_update = FALSE;
+  PATHIMAGELISTP plp;
+  GSList        *plist;
+
+  /* free data associated with the transform path undo */
+
+  while(pundolist)
+    {
+      p_undo = (PATHP)pundolist->data;
+      /* Find the old path and replace it */
+      p = paths_get_path_by_tattoo(gimage,p_undo->tattoo);
+      if(p)
+	{
+	  /* Path is still around... undo the transform stuff */
+	  pathpoints_free(p->path_details);
+	  p->closed = p_undo->closed;
+	  p->state = p_undo->state;
+	  p->pathtype = p_undo->pathtype;
+	  p->path_details = pathpoints_copy(p_undo->path_details);
+	  preview_update = TRUE;
+	}
+      pundolist = g_slist_next(pundolist);
+    }
+  
+  if(preview_update && paths_dialog)
+    {
+      /* Heck the previews need updating...*/
+      plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+      plist = plp->bz_paths;
+      loop = 0;
+      
+      while(plist)
+	{
+	  bezier_sel = path_to_beziersel(plist->data);
+	  tmprow = paths_dialog->current_path_list->last_selected_row;
+	  paths_dialog->current_path_list->last_selected_row = loop;
+	  paths_update_preview(bezier_sel);
+	  beziersel_free(bezier_sel);
+	  paths_dialog->current_path_list->last_selected_row = tmprow;
+	  paths_dialog->selected_row_num = tmprow;
+	  loop++;
+	  plist = g_slist_next(plist);
+	}
+
+      /* Force selection .. it may have changed */
+      if(bezier_tool_selected())
+	{
+	  gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
+			       paths_dialog->current_path_list->last_selected_row,
+			       1);
+	}
+    }
+}
+
+void
+paths_transform_current_path(GimpImage  *gimage,
+			     GimpMatrix  transform,
+			     gboolean    forpreview)
+{
+  PATHIMAGELISTP plp;
+  PATHP          p;
+  PATHP          p_copy;
+  GSList        *points_list;
+  BezierSelect  *bezier_sel;
+  GSList        *plist;
+  gint           loop;
+  gint           tmprow;
+
+  /* As a first off lets just translate the current path */
+
+  /* Get bzpath structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+
+  if(!plp)
+    return;
+
+  plist = plp->bz_paths;
+  loop = 0;
+
+  while(plist)
+    {
+      p = (PATHP)plist->data;
+      if(p->locked)
+	{
+	  if(forpreview)
+	    p_copy = path_copy(NULL,p); /* NULL means dont want new tattoo */
+	  else
+	    p_copy = p;
+	  
+	  points_list = p_copy->path_details;
+	  
+	  while (points_list)
+	    {
+	      gdouble newx,newy;
+	      PATHPOINTP ppoint = points_list->data;
+	      
+	      /*       printf("[x,y] = [%g,%g]\n",ppoint->x, ppoint->y); */
+	      
+	      gimp_matrix_transform_point (transform,
+					   ppoint->x,
+					   ppoint->y,
+					   &newx,&newy);
+	      
+	      /*       printf("->[x,y] = [%g,%g]\n", newx, newy); */
+	      
+	      ppoint->x = newx;
+	      ppoint->y = newy;
+	      points_list = points_list->next;
+	    }
+	  
+	  if(paths_dialog)
+	    {
+	      /* Now fudge the drawing....*/
+	      bezier_sel = path_to_beziersel(p_copy);
+	      tmprow = paths_dialog->current_path_list->last_selected_row;
+	      paths_dialog->current_path_list->last_selected_row = loop;
+	      paths_update_preview(bezier_sel);
+	      beziersel_free(bezier_sel);
+	      paths_dialog->current_path_list->last_selected_row = tmprow;
+	      paths_dialog->selected_row_num = tmprow;
+	    }
+
+	  if(forpreview)
+	    path_free(p_copy,NULL);
+	}
+      plist = g_slist_next(plist);
+      loop++;
+    }
+}
 
 /*************************************/
 /* PDB function aids                 */
@@ -1974,7 +2270,7 @@ paths_set_path(GimpImage * gimage,
     {
       gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			   row,
-			   0);
+			   1);
     }
   else
     {
@@ -2088,7 +2384,7 @@ paths_set_path_points(GimpImage * gimage,
 	  if(paths_dialog)
 	    gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 				 row,
-				 0);
+				 1);
 	  return TRUE;
 	}
       else
@@ -2118,7 +2414,7 @@ paths_set_path_points(GimpImage * gimage,
 
       gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			   paths_dialog->current_path_list->last_selected_row,
-			   0);
+			   1);
       
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);

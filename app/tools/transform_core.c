@@ -312,7 +312,8 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 	}
       else
 	{
-	  /*  Do nothing, keep the grid visible  */
+	  /*  Only update the paths preview */
+	  paths_transform_current_path(gdisp->gimage,transform_core->transform,TRUE);
 	}
     }
   else
@@ -328,6 +329,9 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 
       /*  resume drawing the current tool  */
       draw_core_resume (transform_core->core, tool);
+
+      /* Update the paths preview */
+      paths_transform_current_path(gdisp->gimage,transform_core->transform,TRUE);
     }
 
   /*  if this tool is non-interactive, make it inactive after use  */
@@ -341,6 +345,7 @@ transform_core_doit (tool, gdisp_ptr)
      gpointer gdisp_ptr;
 {
   GDisplay *gdisp;
+  void *pundo;
   TransformCore *transform_core;
   TileManager *new_tiles;
   TransformUndo *tu;
@@ -376,6 +381,8 @@ transform_core_doit (tool, gdisp_ptr)
 						 gimage_active_drawable (gdisp->gimage),
 						 &new_layer);
 
+  pundo = paths_transform_start_undo(gdisp->gimage);
+
   /*  Send the request for the transformation to the tool...
    */
   new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr, FINISH);
@@ -399,6 +406,7 @@ transform_core_doit (tool, gdisp_ptr)
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = old_trans_info[i];
       tu->original = NULL;
+      tu->path_undo = pundo;
 
       /* Make a note of the new current drawable (since we may have
 	 a floating selection, etc now. */
@@ -755,6 +763,7 @@ transform_bounding_box (tool)
   TransformCore * transform_core;
   int i, k;
   int gci;
+  GDisplay * gdisp;
 
   transform_core = (TransformCore *) tool->private;
 
@@ -791,6 +800,8 @@ transform_bounding_box (tool)
 	  gci += 2;
 	}
     }
+
+  gdisp = (GDisplay *) tool->gdisp_ptr;
 }
 
 void
@@ -1035,6 +1046,8 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix,
       /*  Find the inverse of the transformation matrix  */
       gimp_matrix_invert (matrix, m);
     }
+
+  paths_transform_current_path(gimage,matrix,FALSE);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
