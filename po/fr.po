@@ -304,15 +304,13 @@ msgstr "R.à.Z."
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
-#, fuzzy
 msgid "Brightness:"
-msgstr "Luminosité"
+msgstr "Luminosité :"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:265
-#, fuzzy
 msgid "Contrast:"
-msgstr "Contraste"
+msgstr "Contraste :"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
@@ -471,18 +469,16 @@ msgid "Fuzziness Threshold"
 msgstr "Seuil de Flou"
 
 #: app/by_color_select.c:819
-#, fuzzy
 msgid "Selection"
-msgstr "Sélection : "
+msgstr "Sélection"
 
 #: app/by_color_select.c:830
-#, fuzzy
 msgid "Invert"
-msgstr "Convertir"
+msgstr "Inverser"
 
 #: app/by_color_select.c:837
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #: app/channel.c:188 app/channel.c:190 app/layer.c:321 app/layer.c:323
 msgid "copy"
@@ -747,15 +743,15 @@ msgstr "N/C"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "T"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -1073,20 +1069,25 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Ouvrir le document sélectionné\n"
+"<Shift> Mettre la fenêtre au dessus si déjà ouvert\n"
+"<Ctrl>  Dialogue de chargement d'image"
 
 #: app/docindex.c:118
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Déplacer l'entrée sélectionnée vers le haut de l'index"
+msgstr ""
+"Déplacer l'entrée sélectionnée vers le haut de l'index\n"
+"<Shift> Tout en haut"
 
 #: app/docindex.c:122
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Déplacer l'entrée sélectionnée vers le bas de l'index"
+msgstr ""
+"Déplacer l'entrée sélectionnée vers le bas de l'index\n"
+"<Shift> Tout en bas"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1250,11 +1251,13 @@ msgid "No Selection."
 msgstr "Pas de sélection."
 
 #: app/fileops.c:453 app/fileops.c:1710
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Échec de l'enregistrement: %s"
+msgstr ""
+"Échec de l'enregistrement.\n"
+"%s"
 
 #: app/fileops.c:478 app/fileops.c:510
 msgid "Save Image"
@@ -1269,7 +1272,6 @@ msgid "Determine File Type:"
 msgstr "Déterminer le type du fichier:"
 
 #: app/fileops.c:596
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1278,30 +1280,35 @@ msgstr ""
 "Pas de fichier associé à cette image."
 
 #: app/fileops.c:603
-#, fuzzy
 msgid "Revert"
-msgstr "R.à.Z."
+msgstr "Revenir à l'image enregistrée"
 
 #: app/fileops.c:614
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Échec lors du retour à l'image sur disque."
+msgstr ""
+"Échec lors du retour à l'image sur disque.\n"
+"%s"
 
 #: app/fileops.c:711
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "Impossible de remplir un type d'image inconnu."
+msgstr ""
+"%s a échoué.\n"
+"%s : type de fichier inconnu."
 
 #: app/fileops.c:728
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s n'est pas un fichier ordinaire (%s)"
+msgstr ""
+"%s a échoué.\n"
+"%s n'est pas un fichier ordinaire."
 
 #: app/fileops.c:749
 #, c-format
@@ -1309,24 +1316,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s a échoué.\n"
+"%s : Permission non accordée."
 
 #: app/fileops.c:798
 msgid "Open"
 msgstr "Ouvrir"
 
 #: app/fileops.c:1105
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "Impossible de remplir un type d'image inconnu."
+msgstr ""
+"L'enregistrement a échoué.\n"
+"%s : type de fichier inconnu."
 
 #: app/fileops.c:1120
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s n'est pas un fichier ordinaire (%s)"
+msgstr ""
+"L'enregistrement a échoué.\n"
+"%s n'est pas un fichier ordinaire."
 
 #: app/fileops.c:1139
 #, c-format
@@ -1334,6 +1347,8 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"L'enregistrement a échoué.\n"
+"%s : permission non accordée."
 
 #: app/fileops.c:1389
 msgid "(This thumbnail may be out of date)"
@@ -1364,11 +1379,13 @@ msgid "(could not make preview)"
 msgstr "(impossible de créer un aperçu)"
 
 #: app/fileops.c:1594 app/fileops.c:1636
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Échec de l'ouverture : %s"
+msgstr ""
+"Échec de l'ouverture.\n"
+"%s"
 
 #: app/fileops.c:1800
 #, c-format
@@ -2256,27 +2273,26 @@ msgstr "Teinte / Luminosité / Ajustements de la Saturation"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:454
-#, fuzzy
 msgid "Hue:"
-msgstr "Teinte"
+msgstr "Teinte :"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:488
-#, fuzzy
 msgid "Lightness:"
-msgstr "Luminosité"
+msgstr "Luminosité :"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:522
-#, fuzzy
 msgid "Saturation:"
-msgstr "Saturation"
+msgstr "Saturation :"
 
 #: app/image_cmds.c:3463
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"La résolution de l'image dépasse les bornes,\n"
+"j'utilise donc à sa place la résolution par défaut."
 
 #: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1634
@@ -2446,7 +2462,6 @@ msgstr "couleurs"
 
 #. adjust sliders
 #: app/ink.c:291
-#, fuzzy
 msgid "Adjustment"
 msgstr "Ajustement :"
 
@@ -2456,19 +2471,16 @@ msgstr "Taille :"
 
 #. sens sliders
 #: app/ink.c:329
-#, fuzzy
 msgid "Sensitivity"
 msgstr "Sensibilité :"
 
 #: app/ink.c:359
-#, fuzzy
 msgid "Tilt:"
-msgstr "Inclinaison"
+msgstr "Inclinaison :"
 
 #: app/ink.c:372
-#, fuzzy
 msgid "Speed:"
-msgstr "Vitesse"
+msgstr "Vitesse :"
 
 #. Brush shape widget
 #: app/ink.c:454
@@ -2707,9 +2719,8 @@ msgid "Keep Trans."
 msgstr "Garder trans."
 
 #: app/layers_dialog.c:405
-#, fuzzy
 msgid "Keep Transparency"
-msgstr "Transparence"
+msgstr "Garder la transparence"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -2950,13 +2961,11 @@ msgstr ""
 msgid ""
 "  --debug-handlers         Enable debugging signal handlers for non-fatal "
 "signals.\n"
-msgstr ""
-"  --debug-handlers         Active le déboguage des gestionnaires de "
-"signaux.\n"
+msgstr "  --debug-handlers         Active les gestionnaires de signaux de déboguage pour les signaux non fatals.\n"
 
 #: app/main.c:317
 msgid "                           Debugging mode for fatal signals.\n"
-msgstr ""
+msgstr "                           Mode de déboguage pour les signaux fatals.\n"
 
 #: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
@@ -3795,37 +3804,30 @@ msgid "Unload"
 msgstr "Décharger"
 
 #: app/module_db.c:890
-#, fuzzy
 msgid "Purpose:"
 msgstr "But : "
 
 #: app/module_db.c:891
-#, fuzzy
 msgid "Author:"
 msgstr "Auteur : "
 
 #: app/module_db.c:892
-#, fuzzy
 msgid "Version:"
 msgstr "Version : "
 
 #: app/module_db.c:893
-#, fuzzy
 msgid "Copyright:"
 msgstr "Copyright : "
 
 #: app/module_db.c:894
-#, fuzzy
 msgid "Date:"
 msgstr "Date : "
 
 #: app/module_db.c:895
-#, fuzzy
 msgid "Location:"
 msgstr "Emplacement : "
 
 #: app/module_db.c:896
-#, fuzzy
 msgid "State:"
 msgstr "État : "
 
@@ -3956,9 +3958,9 @@ msgstr ""
 "valeur RVB hors norme"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "impossible d'enregistrer la palette \"%s\"\n"
+msgstr "impossible d'enregistrer la palette \"%s\".\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -4209,9 +4211,9 @@ msgid "Extensions"
 msgstr "Extensions"
 
 #: app/plug_in.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
-msgstr "Impossible de trouver le module chargeable : \"%s\""
+msgstr "Impossible de trouver le module chargeable : \"%s\"."
 
 #: app/plug_in.c:1467
 #, c-format
@@ -4223,6 +4225,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"Le plug-in \"%s\" a quitté intempestivement.\n"
+"(%s)\n"
+"\n"
+"Le plug-in, en disparaissant brutalement, a pu mettre en\n"
+"désordre l'état interne de Gimp. Il serait prudent que\n"
+"vous enregistriez vos images et relanciez Gimp."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -4306,7 +4314,7 @@ msgstr "Vous devez relancer GIMP pour que ces changements prennent effet."
 #: app/preferences_dialog.c:1029
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr ""
+msgstr "Le commentaire par défaut est limité à %d caractères."
 
 #: app/preferences_dialog.c:1455
 msgid "Preferences"
@@ -4418,7 +4426,7 @@ msgstr "Affichages 8-bits"
 
 #: app/preferences_dialog.c:1760
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Nombre minimal de couleurs :"
 
 #: app/preferences_dialog.c:1763
 msgid "Install Colormap"
@@ -4566,21 +4574,20 @@ msgid "Disable Cursor Updating"
 msgstr "Désactive la mise à jour du curseur"
 
 #: app/preferences_dialog.c:2081
-#, fuzzy
 msgid "Tool Icon"
-msgstr "Options des outils"
+msgstr "Icône de l'outil"
 
 #: app/preferences_dialog.c:2083
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "Croix de visée et icône de l'outil"
 
 #: app/preferences_dialog.c:2085
 msgid "Crosshair only"
-msgstr ""
+msgstr "Croix de visée"
 
 #: app/preferences_dialog.c:2090
 msgid "Cursor Mode:"
-msgstr ""
+msgstr "Type de curseur souris :"
 
 #: app/preferences_dialog.c:2096 app/preferences_dialog.c:2098
 #: app/tools.c:1536
@@ -4596,14 +4603,12 @@ msgid "Use Global Paint Options"
 msgstr "Appliquer les options de dessin globales"
 
 #: app/preferences_dialog.c:2118
-#, fuzzy
 msgid "Finding Contiguous Regions"
 msgstr "Sélectionne des régions continues."
 
 #: app/preferences_dialog.c:2137
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Seuil :"
+msgstr "Seuil par défaut :"
 
 #: app/preferences_dialog.c:2146 app/preferences_dialog.c:2148
 msgid "Environment"
@@ -4716,7 +4721,7 @@ msgstr "(actuellement %d x %d ppp)"
 
 #: app/preferences_dialog.c:2409
 msgid "From windowing system"
-msgstr ""
+msgstr "Auprès du système d'exploitation"
 
 #: app/preferences_dialog.c:2424
 msgid "Manually:"
@@ -5047,7 +5052,6 @@ msgid "GIMP Tip of the Day"
 msgstr "Conseil du jour GIMP"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
 msgstr "Afficher un conseil la prochaine fois"
 
@@ -5060,14 +5064,13 @@ msgid "Next Tip"
 msgstr "Conseil suivant"
 
 #: app/tips_dialog.c:285
-#, fuzzy
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
 "There should be a file called gimp_tips.txt in\n"
 "the tips subdirectory of the GIMP data directory.\n"
 "Please check your installation."
 msgstr ""
-"Votre fichier de conseils GIMP manque!\n"
+"Votre fichier de conseils GIMP manque !\n"
 "Il devrait y avoir un fichier nommé gimp_conseils.fr.txt\n"
 "dans le répertoire de données de GIMP.\n"
 "Vérifiez votre installation."
@@ -5173,9 +5176,8 @@ msgid "Opacity"
 msgstr "Opacité"
 
 #: app/tool_options.c:752
-#, fuzzy
 msgid "Hardness"
-msgstr "Dureté :"
+msgstr "Dureté"
 
 #: app/tool_options.c:772
 msgid "Rate"
@@ -6113,6 +6115,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Veuillez patienter pendant que je crée\n"
+"votre répertoire Gimp personnel..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
@@ -6124,17 +6128,16 @@ msgstr "Continuer"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/user_install.c:587
-#, fuzzy
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-iso8859-1,*"
 
 #: app/user_install.c:684
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
 msgstr ""
-"Bienvenue dans\n"
-"GIMP"
+"Bienvenue dans l'installation\n"
+"de GIMP pour les utilisateurs"
 
 #: app/user_install.c:686
 msgid "Click \"Continue\" to enter the GIMP user installation."
@@ -6330,7 +6333,7 @@ msgstr "Calibrer la Résolution du Moniteur"
 
 #: app/user_install.c:1291
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
+msgstr "Mesurez les réglets et donner leur longueur ci-dessous."
 
 #: app/user_install.c:1306
 msgid "Horizontal:"
@@ -6341,19 +6344,17 @@ msgid "Vertical:"
 msgstr "Verticale :"
 
 #: app/user_install.c:1352
-#, fuzzy
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP peut obtenir ces informations auprès de votre\n"
-"serveur X. Toutefois, la plupart des serveurs retournent\n"
-"une valeur inutilisable."
+"GIMP peut obtenir ces informations auprès de votre système\n"
+"d'exploitation. Toutefois, cette valeur peut être incorrecte.."
 
 #: app/user_install.c:1359
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Obtenir la Résolution auprès du serveur X (actuellement %d x %d dpi)"
+msgstr "Obtenir la résolution auprès du système (actuellement %d x %d dpi)"
 
 #: app/user_install.c:1373
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6406,19 +6407,16 @@ msgid "Gamma:"
 msgstr "Gamma :"
 
 #: modules/cdisplay_highcontrast.c:96
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Filtres de correction du gamma"
+msgstr "Filtres de correction des couleurs très contrastées"
 
 #: modules/cdisplay_highcontrast.c:318
-#, fuzzy
 msgid "High Contrast"
-msgstr "Contraste"
+msgstr "Fort contraste"
 
 #: modules/cdisplay_highcontrast.c:337
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Contraste"
+msgstr "Cycles de contraste :"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
