@@ -1,3 +1,26 @@
+2004-02-20  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.[ch]: put the color bars into an event
+	box and draw the sliders on the event box window.
+
+	* app/widgets/gimpcolorbar.[ch]: removed support for input events
+	which is no longer needed. For consistency, renamed "channel"
+	property to "histogram-channel".
+
+	* app/widgets/gimphistogrambox.c: changed accordingly.
+
+	* app/widgets/gimpenummenu.[ch]: added new function
+	gimp_enum_stock_box_set_child_padding().
+
+	* app/tools/gimpcurvestool.c: let the graph widget expand with the
+	dialog plus some other dialog tweaks.
+
+	* app/widgets/gimphistogrameditor.c: let the channel menu shrink
+	as in the other dialogs.
+
+	* libgimpwidgets/gimpcolorselect.c (gimp_color_select_image_fill):
+	allocate temporary buffer on the stack.
+
 2004-02-20  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/pygimp/plug-ins/sphere.py: Moved to the Test menu,

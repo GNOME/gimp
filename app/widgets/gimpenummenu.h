@@ -136,5 +136,9 @@ GtkWidget * gimp_enum_stock_box_new_with_range    (GType         enum_type,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);
 
+void        gimp_enum_stock_box_set_child_padding (GtkWidget    *stock_box,
+                                                   gint          xpad,
+                                                   gint          ypad);
+
 
 #endif  /* __GIMP_ENUM_MENU_H__ */

@@ -154,7 +154,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                                         0, 0);
   gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
                                           "gimp-channel");
-  gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
   menu = gimp_prop_enum_stock_box_new (G_OBJECT (view),

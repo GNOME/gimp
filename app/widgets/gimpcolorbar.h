@@ -38,9 +38,6 @@ struct _GimpColorBar
   GtkMisc         parent_class;
 
   GtkOrientation  orientation;
-  gboolean        input;
-  GdkWindow      *input_window;
-
   guchar          buf[3 * 256];
 };
 

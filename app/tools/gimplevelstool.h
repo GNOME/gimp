@@ -39,14 +39,15 @@ struct _GimpLevelsTool
   GimpImageMapTool      parent_instance;
 
   GimpLut              *lut;
-  gboolean              color;
-  gboolean              alpha;
   Levels               *levels;
 
   /* dialog */
+  gboolean              color;
+  gboolean              alpha;
   GimpHistogramChannel  channel;
+
   gint                  active_slider;
-  gint                  slider_pos[5];  /*  positions for the five sliders  */
+  gint                  slider_pos[5];
 
   GimpHistogram        *hist;
   GtkWidget            *hist_view;
@@ -56,8 +57,10 @@ struct _GimpLevelsTool
   GtkAdjustment        *low_output;
   GtkAdjustment        *high_input;
   GtkAdjustment        *high_output;
-  GtkWidget            *input_area[2];
-  GtkWidget            *output_area[2];
+  GtkWidget            *input_area;
+  GtkWidget            *input_bar;
+  GtkWidget            *output_area;
+  GtkWidget            *output_bar;
   GtkWidget            *channel_menu;
 
   GtkWidget            *file_dialog;

@@ -124,9 +124,9 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_widget_show (frame);
 
   bar = g_object_new (GIMP_TYPE_COLOR_BAR,
-                      "channel", box->view->channel,
-                      "xpad",    box->view->border_width,
-                      "ypad",    box->view->border_width,
+                      "histogram-channel", box->view->channel,
+                      "xpad",              box->view->border_width,
+                      "ypad",              box->view->border_width,
                       NULL);
 
   gtk_widget_set_size_request (bar,

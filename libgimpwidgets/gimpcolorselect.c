@@ -857,7 +857,7 @@ gimp_color_select_image_fill (GtkWidget           *preview,
   ColorSelectFill csf;
   gint            height;
 
-  csf.buffer = g_malloc (preview->allocation.width * 3);
+  csf.buffer = g_alloca (preview->allocation.width * 3);
 
   csf.update = update_procs[fill_type];
 
@@ -869,16 +869,17 @@ gimp_color_select_image_fill (GtkWidget           *preview,
 
   height = csf.height;
   if (height > 0)
-    while (height--)
-      {
-	if (csf.update)
-	  (* csf.update) (&csf);
+    {
+      do
+        {
+          if (csf.update)
+            (* csf.update) (&csf);
 
-	gtk_preview_draw_row (GTK_PREVIEW (preview),
-			      csf.buffer, 0, csf.y, csf.width);
-      }
-
-  g_free (csf.buffer);
+          gtk_preview_draw_row (GTK_PREVIEW (preview),
+                                csf.buffer, 0, csf.y, csf.width);
+        }
+      while (--height);
+    }
 }
 
 static void
