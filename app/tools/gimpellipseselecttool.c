@@ -36,7 +36,6 @@
 
 #include "gimpellipseselecttool.h"
 #include "selection_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

@@ -294,9 +294,10 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *gdisp)
 {
-  GimpImage        *gimage;
   GimpBlendTool    *blend_tool;
+  BlendOptions     *options;
   GimpDisplayShell *shell;
+  GimpImage        *gimage;
 #ifdef BLEND_UI_CALLS_VIA_PDB
   Argument         *return_vals;
   gint              nreturn_vals;
@@ -305,6 +306,8 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 #endif
 
   blend_tool = GIMP_BLEND_TOOL (tool);
+
+  options = (BlendOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -331,15 +334,15 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 	procedural_db_run_proc ("gimp_blend",
 				&nreturn_vals,
 				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gimage)),
-				PDB_INT32, (gint32) blend_options->blend_mode,
-				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (blend_options),
-				PDB_INT32, (gint32) blend_options->gradient_type,
-				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (blend_options) * 100,
-				PDB_FLOAT, (gdouble) blend_options->offset,
-				PDB_INT32, (gint32) blend_options->repeat,
-				PDB_INT32, (gint32) blend_options->supersample,
-				PDB_INT32, (gint32) blend_options->max_depth,
-				PDB_FLOAT, (gdouble) blend_options->threshold,
+				PDB_INT32, (gint32) options->blend_mode,
+				PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (options),
+				PDB_INT32, (gint32) options->gradient_type,
+				PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (options) * 100,
+				PDB_FLOAT, (gdouble) options->offset,
+				PDB_INT32, (gint32) options->repeat,
+				PDB_INT32, (gint32) options->supersample,
+				PDB_INT32, (gint32) options->max_depth,
+				PDB_FLOAT, (gdouble) options->threshold,
 				PDB_FLOAT, (gdouble) blend_tool->startx,
 				PDB_FLOAT, (gdouble) blend_tool->starty,
 				PDB_FLOAT, (gdouble) blend_tool->endx,
@@ -358,15 +361,15 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
-                           blend_options->blend_mode,
+                           options->blend_mode,
                            gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
-                           blend_options->gradient_type,
+                           options->gradient_type,
                            gimp_context_get_opacity (gimp_get_current_context (gimage->gimp)),
-                           blend_options->offset,
-                           blend_options->repeat,
-                           blend_options->supersample,
-                           blend_options->max_depth,
-                           blend_options->threshold,
+                           options->offset,
+                           options->repeat,
+                           options->supersample,
+                           options->max_depth,
+                           options->threshold,
                            blend_tool->startx,
                            blend_tool->starty,
                            blend_tool->endx,

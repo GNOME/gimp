@@ -36,12 +36,12 @@
 
 #include "core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
-#include "core/gimpdatafiles.h"
-#include "core/gimplist.h"
-#include "core/gimpmoduleinfo.h"
-#include "core/gimpmodules.h"
+#include "gimp.h"
+#include "gimpcoreconfig.h"
+#include "gimpdatafiles.h"
+#include "gimplist.h"
+#include "gimpmoduleinfo.h"
+#include "gimpmodules.h"
 
 #include "gimprc.h"
 

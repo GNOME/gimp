@@ -43,7 +43,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "selection_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
 
 #include "floating_sel.h"

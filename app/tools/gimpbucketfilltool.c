@@ -31,6 +31,7 @@
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
 
@@ -191,16 +192,19 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
 				    GimpDisplay     *gdisp)
 {
   GimpBucketFillTool *bucket_tool;
+  BucketOptions      *options;
   GimpDisplayShell   *shell;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+
+  options = (BucketOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   bucket_tool->target_x = coords->x;
   bucket_tool->target_y = coords->y;
 
-  if (! bucket_options->sample_merged)
+  if (! options->sample_merged)
     {
       gint off_x, off_y;
 
@@ -230,10 +234,13 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
 				      GimpDisplay     *gdisp)
 {
   GimpBucketFillTool *bucket_tool;
+  BucketOptions      *options;
   Argument           *return_vals;
   gint                nreturn_vals;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+
+  options = (BucketOptions *) tool->tool_info->tool_options;
 
   gdk_pointer_ungrab (time);
   gdk_flush ();
@@ -250,11 +257,11 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
 				"gimp_bucket_fill",
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
-				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,
+				GIMP_PDB_INT32, (gint32) options->fill_mode,
 				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (context),
 				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (context) * 100,
-				GIMP_PDB_FLOAT, (gdouble) bucket_options->threshold,
-				GIMP_PDB_INT32, (gint32) bucket_options->sample_merged,
+				GIMP_PDB_FLOAT, (gdouble) options->threshold,
+				GIMP_PDB_INT32, (gint32) options->sample_merged,
 				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
 				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_y,
 				GIMP_PDB_END);
@@ -277,19 +284,21 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
+  BucketOptions *options;
+
+  options = (BucketOptions *) tool->tool_info->tool_options;
+
   if (key == GDK_CONTROL_MASK)
     {
-      switch (bucket_options->fill_mode)
+      switch (options->fill_mode)
         {
         case FG_BUCKET_FILL:
 	  gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[BG_BUCKET_FILL]),
-             TRUE);
+            (GTK_TOGGLE_BUTTON (options->fill_mode_w[BG_BUCKET_FILL]), TRUE);
           break;
         case BG_BUCKET_FILL:
 	  gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[FG_BUCKET_FILL]),
-             TRUE);
+            (GTK_TOGGLE_BUTTON (options->fill_mode_w[FG_BUCKET_FILL]), TRUE);
           break;
         default:
           break;
@@ -303,11 +312,14 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 				     GdkModifierType  state,
 				     GimpDisplay     *gdisp)
 {
+  BucketOptions      *options;
   GimpDisplayShell   *shell;
   GimpLayer          *layer;
   GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
   gint                off_x, off_y;
+
+  options = (BucketOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -328,7 +340,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	    {
 	      ctype = GIMP_MOUSE_CURSOR;
 
-	      switch (bucket_options->fill_mode)
+	      switch (options->fill_mode)
 		{
 		case FG_BUCKET_FILL:
 		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;

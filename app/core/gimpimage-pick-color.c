@@ -285,11 +285,14 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
 				     GdkModifierType  state,
 			   	     GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool *cp_tool;
-  GimpDisplayShell    *shell;
-  gint                 off_x, off_y;
+  GimpColorPickerTool        *cp_tool;
+  GimpColorPickerToolOptions *options;
+  GimpDisplayShell           *shell;
+  gint                        off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
+
+  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -391,28 +394,30 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
    */
   if (state & GDK_SHIFT_MASK)
     {
-      gimp_color_picker_tool_info_update
-	(tool, pick_color_do (gdisp->gimage, tool->drawable,
-                              coords->x,
-                              coords->y,
-			      gimp_color_picker_tool_options->sample_merged,
-			      gimp_color_picker_tool_options->sample_average,
-			      gimp_color_picker_tool_options->average_radius,
-			      gimp_color_picker_tool_options->update_active,
-			      COLOR_NEW));
+      gimp_color_picker_tool_info_update (tool,
+                                          pick_color_do (gdisp->gimage,
+                                                         tool->drawable,
+                                                         coords->x,
+                                                         coords->y,
+                                                         options->sample_merged,
+                                                         options->sample_average,
+                                                         options->average_radius,
+                                                         options->update_active,
+                                                         COLOR_NEW));
       update_type = COLOR_UPDATE_NEW;
     }
   else
     {
-      gimp_color_picker_tool_info_update
-	(tool, pick_color_do (gdisp->gimage, tool->drawable,
-                              coords->x,
-                              coords->y,
-			      gimp_color_picker_tool_options->sample_merged,
-			      gimp_color_picker_tool_options->sample_average,
-			      gimp_color_picker_tool_options->average_radius,
-			      gimp_color_picker_tool_options->update_active,
-			      COLOR_UPDATE));
+      gimp_color_picker_tool_info_update (tool,
+                                          pick_color_do (gdisp->gimage,
+                                                         tool->drawable,
+                                                         coords->x,
+                                                         coords->y,
+                                                         options->sample_merged,
+                                                         options->sample_average,
+                                                         options->average_radius,
+                                                         options->update_active,
+                                                         COLOR_UPDATE));
       update_type = COLOR_UPDATE;
     }
 
@@ -427,22 +432,26 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
 				       GdkModifierType  state,
 				       GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool *cp_tool;
+  GimpColorPickerTool        *cp_tool;
+  GimpColorPickerToolOptions *options;
+
+  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
+
+  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
 
   gdk_pointer_ungrab (time);
   gdk_flush ();
 
-  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
-
-  gimp_color_picker_tool_info_update
-    (tool, pick_color_do (gdisp->gimage, tool->drawable,
-                          coords->x,
-                          coords->y,
-			  gimp_color_picker_tool_options->sample_merged,
-			  gimp_color_picker_tool_options->sample_average,
-			  gimp_color_picker_tool_options->average_radius,
-			  gimp_color_picker_tool_options->update_active,
-			  update_type));
+  gimp_color_picker_tool_info_update (tool,
+                                      pick_color_do (gdisp->gimage,
+                                                     tool->drawable,
+                                                     coords->x,
+                                                     coords->y,
+                                                     options->sample_merged,
+                                                     options->sample_average,
+                                                     options->average_radius,
+                                                     options->update_active,
+                                                     update_type));
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
 
@@ -456,10 +465,13 @@ gimp_color_picker_tool_motion (GimpTool        *tool,
 		               GdkModifierType  state,
 		               GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool *cp_tool;
-  gint                 off_x, off_y;
+  GimpColorPickerTool        *cp_tool;
+  GimpColorPickerToolOptions *options;
+  gint                        off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
+
+  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -469,15 +481,16 @@ gimp_color_picker_tool_motion (GimpTool        *tool,
   cp_tool->centerx = coords->x - off_x;
   cp_tool->centery = coords->y - off_y;
 
-  gimp_color_picker_tool_info_update
-    (tool, pick_color_do (gdisp->gimage, tool->drawable,
-                          coords->x,
-                          coords->y,
-			  gimp_color_picker_tool_options->sample_merged,
-			  gimp_color_picker_tool_options->sample_average,
-			  gimp_color_picker_tool_options->average_radius,
-			  gimp_color_picker_tool_options->update_active,
-			  update_type));
+  gimp_color_picker_tool_info_update (tool,
+                                      pick_color_do (gdisp->gimage,
+                                                     tool->drawable,
+                                                     coords->x,
+                                                     coords->y,
+                                                     options->sample_merged,
+                                                     options->sample_average,
+                                                     options->average_radius,
+                                                     options->update_active,
+                                                     update_type));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

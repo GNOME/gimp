@@ -32,12 +32,13 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-mask.h"
-
-#include "gui/info-dialog.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+
+#include "gui/info-dialog.h"
 
 #include "gimpcroptool.h"
 #include "gimpdrawtool.h"
@@ -422,9 +423,12 @@ gimp_crop_tool_button_release (GimpTool        *tool,
 			       GimpDisplay     *gdisp)
 {
   GimpCropTool     *crop;
+  CropOptions      *options;
   GimpDisplayShell *shell;
 
   crop = GIMP_CROP_TOOL (tool);
+
+  options = (CropOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -437,17 +441,17 @@ gimp_crop_tool_button_release (GimpTool        *tool,
     {
       if (crop->function == CROPPING)
 	{
-	  if (crop_options->type == CROP_CROP)
+	  if (options->type == CROP_CROP)
 	    crop_tool_crop_image (gdisp->gimage,
 				  crop->x1, crop->y1,
                                   crop->x2, crop->y2, 
-				  crop_options->layer_only,
+				  options->layer_only,
                                   TRUE);
 	  else
 	    crop_tool_crop_image (gdisp->gimage,
 				  crop->x1, crop->y1,
                                   crop->x2, crop->y2, 
-				  crop_options->layer_only,
+				  options->layer_only,
                                   FALSE);
 
 	  /*  Finish the tool  */
@@ -468,6 +472,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
 		       GimpDisplay     *gdisp)
 {
   GimpCropTool     *crop;
+  CropOptions      *options;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   gint              x1, y1, x2, y2;
@@ -477,6 +482,8 @@ gimp_crop_tool_motion (GimpTool        *tool,
   gint              min_x, min_y, max_x, max_y; 
 
   crop = GIMP_CROP_TOOL (tool);
+
+  options = (CropOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -502,7 +509,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (crop_options->layer_only)
+  if (options->layer_only)
     {
       layer = gimp_image_get_active_layer (gdisp->gimage);
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
@@ -519,7 +526,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
   switch (crop->function)
     {
     case CREATING:
-      if (! crop_options->allow_enlarge)
+      if (! options->allow_enlarge)
 	{
 	  x1 = CLAMP (x1, min_x, max_x);
 	  y1 = CLAMP (y1, min_y, max_y);
@@ -531,7 +538,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
     case RESIZING_LEFT:
       x1 = crop->x1 + inc_x;
       y1 = crop->y1 + inc_y;
-      if (! crop_options->allow_enlarge)
+      if (! options->allow_enlarge)
 	{
 	  x1 = CLAMP (x1, min_x, max_x);
 	  y1 = CLAMP (y1, min_y, max_y);
@@ -545,7 +552,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
     case RESIZING_RIGHT:
       x2 = crop->x2 + inc_x;
       y2 = crop->y2 + inc_y;
-      if (! crop_options->allow_enlarge)
+      if (! options->allow_enlarge)
 	{
 	  x2 = CLAMP (x2, min_x, max_x);
 	  y2 = CLAMP (y2, min_y, max_y);
@@ -556,8 +563,8 @@ gimp_crop_tool_motion (GimpTool        *tool,
       crop->starty = cury;
       break;
 
-    case MOVING :
-      if (! crop_options->allow_enlarge)
+    case MOVING:
+      if (! options->allow_enlarge)
 	{
 	  inc_x = CLAMP (inc_x, min_x - crop->x1, max_x - crop->x2);
 	  inc_y = CLAMP (inc_y, min_y - crop->y1, max_y - crop->y2);
@@ -619,13 +626,16 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 			  GdkEventKey *kevent,
 			  GimpDisplay *gdisp)
 {
-  GimpLayer    *layer;
   GimpCropTool *crop;
+  CropOptions  *options;
+  GimpLayer    *layer;
   gint          inc_x, inc_y;
   gint          min_x, min_y;
   gint          max_x, max_y;
 
   crop = GIMP_CROP_TOOL (tool);
+
+  options = (CropOptions *) tool->tool_info->tool_options;
 
   if (tool->state == ACTIVE)
     {
@@ -648,7 +658,7 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      if (crop_options->layer_only)
+      if (options->layer_only)
 	{
 	  layer = gimp_image_get_active_layer (gdisp->gimage);
 	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
@@ -666,7 +676,7 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 	{
 	  crop->x2 = crop->x2 + inc_x;
 	  crop->y2 = crop->y2 + inc_y;
-	  if (!crop_options->allow_enlarge)
+	  if (! options->allow_enlarge)
 	    {
 	      crop->x2 = CLAMP (crop->x2, min_x, max_x);
 	      crop->y2 = CLAMP (crop->y2, min_y, max_y);
@@ -676,7 +686,7 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 	}
       else
 	{
-	  if (!crop_options->allow_enlarge)
+	  if (! options->allow_enlarge)
 	    {	  
 	      inc_x = CLAMP (inc_x,
 			     -crop->x1, gdisp->gimage->width - crop->x2);
@@ -702,34 +712,38 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
+  CropOptions *options;
+
+  options = (CropOptions *) tool->tool_info->tool_options;
+
   if (state & GDK_MOD1_MASK)
     {
-      if (! crop_options->allow_enlarge)
+      if (! options->allow_enlarge)
         {
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), TRUE);
+            (GTK_TOGGLE_BUTTON (options->allow_enlarge_w), TRUE);
         }
     }
   else
     {
-      if (crop_options->allow_enlarge)
+      if (options->allow_enlarge)
         {
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), FALSE);
+            (GTK_TOGGLE_BUTTON (options->allow_enlarge_w), FALSE);
         }
     }
 
   if (key == GDK_CONTROL_MASK)
     {
-      switch (crop_options->type)
+      switch (options->type)
         {
         case CROP_CROP:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[RESIZE_CROP]), TRUE);
           break;
         case RESIZE_CROP:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[CROP_CROP]), TRUE);
           break;
         default:
           break;
@@ -745,12 +759,15 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 {
   GimpCropTool      *crop;
   GimpDrawTool      *draw_tool;
+  CropOptions       *options;
   GimpDisplayShell  *shell;
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   crop      = GIMP_CROP_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
+
+  options = (CropOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -801,7 +818,7 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 
   gimp_display_shell_install_tool_cursor (shell,
                                           ctype,
-                                          crop_options->type == CROP_CROP ?
+                                          options->type == CROP_CROP ?
                                           GIMP_CROP_TOOL_CURSOR :
                                           GIMP_RESIZE_TOOL_CURSOR,
                                           cmodifier);
@@ -1091,19 +1108,26 @@ static void
 crop_crop_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  GimpTool     *tool;
-  GimpCropTool *crop;
+  GimpTool *tool;
 
   /* XXX active_tool is bad */
   tool = tool_manager_get_active (the_gimp);
 
-  crop = GIMP_CROP_TOOL (tool);
+  if (GIMP_IS_CROP_TOOL (tool))
+    {
+      GimpCropTool *crop;
+      CropOptions  *options;
 
-  crop_tool_crop_image (tool->gdisp->gimage,
-			crop->x1, crop->y1,
-			crop->x2, crop->y2,
-			crop_options->layer_only,
-			TRUE);
+      crop = GIMP_CROP_TOOL (tool);
+
+      options = (CropOptions *) tool->tool_info->tool_options;
+
+      crop_tool_crop_image (tool->gdisp->gimage,
+                            crop->x1, crop->y1,
+                            crop->x2, crop->y2,
+                            options->layer_only,
+                            TRUE);
+    }
 
   /*  Finish the tool  */
   crop_close_callback (NULL, NULL);
@@ -1113,19 +1137,26 @@ static void
 crop_resize_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  GimpTool     *tool;
-  GimpCropTool *crop;
+  GimpTool *tool;
   
   /* XXX active_tool is bad */
   tool = tool_manager_get_active (the_gimp);
 
-  crop = GIMP_CROP_TOOL (tool);
+  if (GIMP_IS_CROP_TOOL (tool))
+    {
+      GimpCropTool *crop;
+      CropOptions  *options;
 
-  crop_tool_crop_image (tool->gdisp->gimage,
-			crop->x1, crop->y1,
-			crop->x2, crop->y2, 
-			crop_options->layer_only,
-			FALSE);
+      crop = GIMP_CROP_TOOL (tool);
+
+      options = (CropOptions *) tool->tool_info->tool_options;
+
+      crop_tool_crop_image (tool->gdisp->gimage,
+                            crop->x1, crop->y1,
+                            crop->x2, crop->y2, 
+                            options->layer_only,
+                            FALSE);
+    }
 
   /*  Finish the tool  */
   crop_close_callback (NULL, NULL);
@@ -1140,122 +1171,140 @@ crop_close_callback (GtkWidget *widget,
   /* XXX active_tool is bad */
   tool = tool_manager_get_active (the_gimp);
 
-  if (tool->state == ACTIVE)
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+  if (GIMP_IS_CROP_TOOL (tool))
+    {
+      if (tool->state == ACTIVE)
+        gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+      tool->state = INACTIVE;
+    }
 
   info_dialog_popdown (crop_info);
-
-  tool->state = INACTIVE;
 }
 
 static void
 crop_selection_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GimpTool     *tool;
-  GimpCropTool *crop;
-  GimpLayer    *layer;
-  GimpDisplay  *gdisp;
+  GimpTool *tool;
 
   /* XXX active_tool is bad */
   tool = tool_manager_get_active (the_gimp);
 
-  crop = GIMP_CROP_TOOL (tool);
-  
-  gdisp = tool->gdisp;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  if (! gimage_mask_bounds (gdisp->gimage,
-			    &crop->x1, &crop->y1, &crop->x2, &crop->y2))
+  if (GIMP_IS_CROP_TOOL (tool))
     {
-      if (crop_options->layer_only)
-	{
-	  layer = gimp_image_get_active_layer (gdisp->gimage);
-	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &crop->x1, &crop->y1);
-	  crop->x2 = gimp_drawable_width  (GIMP_DRAWABLE (layer)) + crop->x1;
-	  crop->y2 = gimp_drawable_height (GIMP_DRAWABLE (layer)) + crop->y1;
-	}
-      else
-	{
-	  crop->x1 = crop->y1 = 0;
-	  crop->x2 = gdisp->gimage->width;
-	  crop->y2 = gdisp->gimage->height;
-	}
+      GimpCropTool *crop;
+      CropOptions  *options;
+      GimpLayer    *layer;
+      GimpDisplay  *gdisp;
+
+      crop = GIMP_CROP_TOOL (tool);
+
+      options = (CropOptions *) tool->tool_info->tool_options;
+ 
+      gdisp = tool->gdisp;
+
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      if (! gimage_mask_bounds (gdisp->gimage,
+                                &crop->x1, &crop->y1, &crop->x2, &crop->y2))
+        {
+          if (options->layer_only)
+            {
+              layer = gimp_image_get_active_layer (gdisp->gimage);
+              gimp_drawable_offsets (GIMP_DRAWABLE (layer),
+                                     &crop->x1, &crop->y1);
+              crop->x2 = gimp_drawable_width  (GIMP_DRAWABLE (layer)) + crop->x1;
+              crop->y2 = gimp_drawable_height (GIMP_DRAWABLE (layer)) + crop->y1;
+            }
+          else
+            {
+              crop->x1 = crop->y1 = 0;
+              crop->x2 = gdisp->gimage->width;
+              crop->y2 = gdisp->gimage->height;
+            }
+        }
+
+      crop_recalc (tool, crop);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-
-  crop_recalc (tool, crop);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
 crop_automatic_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GimpTool        *tool;
-  GimpCropTool    *crop;
-  GimpDisplay     *gdisp;
-  GimpDrawable    *active_drawable;
-  gint             offset_x, offset_y;
-  gint             width, height;
-  gint             x1, y1, x2, y2;
-  gint             shrunk_x1;
-  gint             shrunk_y1;
-  gint             shrunk_x2;
-  gint             shrunk_y2;
+  GimpTool *tool;
   
   /* FIXME: active_tool is bad */
   tool = tool_manager_get_active (the_gimp);
 
-  crop  = GIMP_CROP_TOOL (tool);
-
-  gdisp = tool->gdisp;
-
-  if (crop_options->layer_only)
+  if (GIMP_IS_CROP_TOOL (tool))
     {
-      active_drawable = gimp_image_active_drawable (gdisp->gimage);
+      GimpCropTool *crop;
+      CropOptions  *options;
+      GimpDisplay  *gdisp;
+      GimpDrawable *active_drawable;
+      gint          offset_x, offset_y;
+      gint          width, height;
+      gint          x1, y1, x2, y2;
+      gint          shrunk_x1;
+      gint          shrunk_y1;
+      gint          shrunk_x2;
+      gint          shrunk_y2;
 
-      if (! active_drawable)
-	return;
+      crop  = GIMP_CROP_TOOL (tool);
 
-      width  = gimp_drawable_width  (GIMP_DRAWABLE (active_drawable)); 
-      height = gimp_drawable_height (GIMP_DRAWABLE (active_drawable));
-      gimp_drawable_offsets (GIMP_DRAWABLE (active_drawable),
-			     &offset_x, &offset_y);
+      options = (CropOptions *) tool->tool_info->tool_options;
+
+      gdisp = tool->gdisp;
+
+      if (options->layer_only)
+        {
+          active_drawable = gimp_image_active_drawable (gdisp->gimage);
+
+          if (! active_drawable)
+            return;
+
+          width  = gimp_drawable_width  (GIMP_DRAWABLE (active_drawable)); 
+          height = gimp_drawable_height (GIMP_DRAWABLE (active_drawable));
+          gimp_drawable_offsets (GIMP_DRAWABLE (active_drawable),
+                                 &offset_x, &offset_y);
+        }
+      else
+        {
+          width    = gdisp->gimage->width;
+          height   = gdisp->gimage->height;
+          offset_x = 0;
+          offset_y = 0;
+        }
+
+      x1 = crop->x1 - offset_x  > 0      ? crop->x1 - offset_x : 0;
+      x2 = crop->x2 - offset_x  < width  ? crop->x2 - offset_x : width;
+      y1 = crop->y1 - offset_y  > 0      ? crop->y1 - offset_y : 0;
+      y2 = crop->y2 - offset_y  < height ? crop->y2 - offset_y : height;
+
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      if (gimp_image_crop_auto_shrink (gdisp->gimage,
+                                       x1, y1, x2, y2,
+                                       options->layer_only,
+                                       &shrunk_x1,
+                                       &shrunk_y1,
+                                       &shrunk_x2,
+                                       &shrunk_y2))
+        {
+          crop->x1 = offset_x + shrunk_x1;
+          crop->x2 = offset_x + shrunk_x2;
+          crop->y1 = offset_y + shrunk_y1;
+          crop->y2 = offset_y + shrunk_y2;
+
+          crop_recalc (tool, crop);
+        }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-  else
-    {
-      width    = gdisp->gimage->width;
-      height   = gdisp->gimage->height;
-      offset_x = 0;
-      offset_y = 0;
-    }
-
-  x1 = crop->x1 - offset_x  > 0      ? crop->x1 - offset_x : 0;
-  x2 = crop->x2 - offset_x  < width  ? crop->x2 - offset_x : width;
-  y1 = crop->y1 - offset_y  > 0      ? crop->y1 - offset_y : 0;
-  y2 = crop->y2 - offset_y  < height ? crop->y2 - offset_y : height;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  if (gimp_image_crop_auto_shrink (gdisp->gimage,
-				   x1, y1, x2, y2,
-				   crop_options->layer_only,
-				   &shrunk_x1,
-				   &shrunk_y1,
-				   &shrunk_x2,
-				   &shrunk_y2))
-    {
-      crop->x1 = offset_x + shrunk_x1;
-      crop->x2 = offset_x + shrunk_x2;
-      crop->y1 = offset_y + shrunk_y1;
-      crop->y2 = offset_y + shrunk_y2;
-
-      crop_recalc (tool, crop);
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void

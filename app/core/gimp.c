@@ -417,9 +417,9 @@ gimp_initialize (Gimp               *gimp,
    */
   context = gimp_create_context (gimp, "User", context);
   gimp_set_user_context (gimp, context);
+  g_object_unref (G_OBJECT (context));
 
   gimp_set_current_context (gimp, context);
-  g_object_unref (G_OBJECT (context));
 
   /*  register all internal procedures  */
   (* status_callback) (_("Procedural Database"), NULL, -1);

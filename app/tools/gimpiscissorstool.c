@@ -58,6 +58,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpscanconvert.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -70,26 +71,6 @@
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
-
-
-struct _ICurve
-{
-  gint       x1, y1;
-  gint       x2, y2;
-  GPtrArray *points;
-};
-
-
-typedef struct _IScissorsOptions IScissorsOptions;
-
-struct _IScissorsOptions
-{
-  SelectionOptions  selection_options;
-};
-
-
-/**********************************************/
-/*  Intelligent scissors selection apparatus  */
 
 
 /*  Other defines...  */
@@ -123,7 +104,23 @@ struct _IScissorsOptions
 #define  PIXEL_DIR(x)      (x & 0x000000ff)
 
 
-/*  Local function prototypes  */
+struct _ICurve
+{
+  gint       x1, y1;
+  gint       x2, y2;
+  GPtrArray *points;
+};
+
+
+typedef struct _IScissorsOptions IScissorsOptions;
+
+struct _IScissorsOptions
+{
+  SelectionOptions  selection_options;
+};
+
+
+/*  local function prototypes  */
 
 static void   gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass);
 static void   gimp_iscissors_tool_init       (GimpIscissorsTool      *iscissors);
@@ -208,9 +205,6 @@ static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
 
 /*  static variables  */
 
-static IScissorsOptions *iscissors_options = NULL;
-
-
 /*  where to move on a given link direction  */
 static gint move[8][2] =
 {
@@ -268,6 +262,8 @@ static gint      diagonal_weight[256];
 static gint      direction_value[256][4];
 static gboolean  initialized = FALSE;
 static Tile     *cur_tile = NULL;
+
+static IScissorsOptions *iscissors_options = NULL;
 
 static GimpDrawTool *parent_class = NULL;
 
@@ -451,11 +447,14 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GimpDisplay     *gdisp)
 {
   GimpIscissorsTool *iscissors;
+  SelectionOptions  *sel_options;
   GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
   gboolean           grab_pointer = FALSE;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -508,7 +507,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  iscissors->state = SEED_ADJUSTMENT;
 	  iscissors->draw  = DRAW_ACTIVE_CURVE;
 
-          if (((SelectionOptions *) iscissors_options)->interactive)
+          if (sel_options->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -530,9 +529,9 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                           NULL, TRUE,
                                           iscissors->mask,
                                           iscissors->op,
-                                          ((SelectionOptions *) iscissors_options)->feather,
-                                          ((SelectionOptions *) iscissors_options)->feather_radius,
-                                          ((SelectionOptions *) iscissors_options)->feather_radius);
+                                          sel_options->feather,
+                                          sel_options->feather_radius,
+                                          sel_options->feather_radius);
 
 	  gimp_iscissors_tool_reset (iscissors);
 
@@ -544,7 +543,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  iscissors->state = SEED_PLACEMENT;
 	  iscissors->draw  = DRAW_CURRENT_SEED;
 
-          if (((SelectionOptions *) iscissors_options)->interactive)
+          if (sel_options->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  grab_pointer = TRUE;
@@ -617,9 +616,12 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
                                     GimpDisplay     *gdisp)
 {
   GimpIscissorsTool *iscissors;
+  SelectionOptions  *sel_options;
   ICurve            *curve;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -635,12 +637,12 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
     {
     case SEED_PLACEMENT:
       iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
-      if (((SelectionOptions *) iscissors_options)->interactive)
+      if (sel_options->interactive)
 	iscissors->draw |= DRAW_LIVEWIRE;
       break;
     case SEED_ADJUSTMENT:
       iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
-      if (((SelectionOptions *) iscissors_options)->interactive)
+      if (sel_options->interactive)
 	iscissors->draw |= DRAW_LIVEWIRE;
       break;
     default:
@@ -733,8 +735,11 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GimpDisplay     *gdisp)
 {
   GimpIscissorsTool *iscissors;
+  SelectionOptions  *sel_options;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   if (tool->state != ACTIVE || iscissors->state == NO_ACTION)
     return;
@@ -743,7 +748,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
     {
       iscissors->draw = DRAW_CURRENT_SEED;
 
-      if (((SelectionOptions *) iscissors_options)->interactive)
+      if (sel_options->interactive)
 	iscissors->draw = DRAW_CURRENT_SEED | DRAW_LIVEWIRE;
     }
   else if (iscissors->state == SEED_ADJUSTMENT)

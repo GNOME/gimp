@@ -1,3 +1,39 @@
+2001-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.c: put a g_object_ref() on a different line.
+
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpmodules.c: ne need to #include "core/..." here.
+
+	* app/display/gimpdisplay-handlers.c: added debugging output
+	because we have an image refcounting problem :(
+
+	* app/display/gimpdisplayshell-handlers.c: fixed a signal
+	disconnection.
+
+	* app/tools/gimpbezierselecttool.[ch]
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpsmudgetool.c: get the tool's options via
+	tool->tool_info->tool_options, not from the local statis pointer.
+	Some minor cleanups & function reordering.
+
+	* app/widgets/gimpdockbook.c: return TRUE from the notebook tabs'
+	"button_press" handler, connect DND before cnnecting to
+	"button_press" because we now stop it's emission.
+
 2001-11-19  Daniel Egger  <degger@fhm.edu>
 	
 	* app/paint-funcs/paint-funcs.h: Added magic comment to prevent

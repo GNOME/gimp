@@ -27,6 +27,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimptoolinfo.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
@@ -87,23 +89,23 @@ static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
 
 static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
 
+static void   zoom_in                           (gint            *src,
+                                                 gint            *dest,
+                                                 gint             scale);
+static void   zoom_out                          (gint            *src,
+                                                 gint            *dest,
+                                                 gint             scale);
 
-/*  magnify utility functions  */
-static void   zoom_in                   (gint           *src,
-					 gint           *dest,
-					 gint            scale);
-static void   zoom_out                  (gint           *src,
-					 gint           *dest,
-					 gint            scale);
-
-static MagnifyOptions * magnify_options_new   (void);
-static void             magnify_options_reset (GimpToolOptions *tool_options);
+static MagnifyOptions * magnify_options_new     (void);
+static void             magnify_options_reset   (GimpToolOptions *tool_options);
 
 
 static MagnifyOptions *magnify_options = NULL;
 
 static GimpDrawToolClass *parent_class = NULL;
 
+
+/*  public functions  */
 
 void
 gimp_magnify_tool_register (Gimp *gimp)
@@ -146,6 +148,9 @@ gimp_magnify_tool_get_type (void)
 
   return tool_type;
 }
+
+
+/*  private functions  */
 
 static void
 gimp_magnify_tool_class_init (GimpMagnifyToolClass *klass)
@@ -193,111 +198,6 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
 }
 
-
-/*  magnify tool options functions  */
-
-static void
-magnify_options_reset (GimpToolOptions *tool_options)
-{
-  MagnifyOptions *options;
-
-  options = (MagnifyOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				options->allow_resize_d);
-
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
-}
-
-static MagnifyOptions *
-magnify_options_new (void)
-{
-  MagnifyOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *frame;
-
-  /*  the new magnify tool options structure  */
-  options = g_new0 (MagnifyOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options,
-		     magnify_options_reset);
-
-  options->allow_resize_d = gimprc.resize_windows_on_zoom;
-  options->type_d         = options->type = GIMP_ZOOM_IN;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the allow_resize toggle button  */
-  options->allow_resize_w =
-    gtk_check_button_new_with_label (_("Allow Window Resizing"));
-  g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &(gimprc.resize_windows_on_zoom));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				gimprc.resize_windows_on_zoom);
-  gtk_box_pack_start (GTK_BOX (vbox), 
-                      options->allow_resize_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_resize_w);
-
-  /*  tool toggle  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-                           G_CALLBACK (gimp_radio_button_update),
-                           &options->type,
-			   (gpointer) options->type,
-
-                           _("Zoom in"),  (gpointer) GIMP_ZOOM_IN,
-                           &options->type_w[0],
-                           _("Zoom out"), (gpointer) GIMP_ZOOM_OUT,
-                           &options->type_w[1],
-
-                           NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return options;
-}
-
-/*  magnify utility functions  */
-
-static void
-zoom_in (gint *src,
-	 gint *dest,
-	 gint  scale)
-{
-  while (scale--)
-    {
-      if (*src > 1)
-	(*src)--;
-      else
-	if (*dest < 0x10)
-	  (*dest)++;
-    }
-}
-
-
-static void
-zoom_out (gint *src,
-	  gint *dest,
-	  gint  scale)
-{
-  while (scale--)
-    {
-      if (*dest > 1)
-	(*dest)--;
-      else
-	if (*src < 0x10)
-	  (*src)++;
-    }
-}
-
-
-/*  magnify action functions  */
-
 static void
 gimp_magnify_tool_button_press (GimpTool        *tool,
                                 GimpCoords      *coords,
@@ -337,6 +237,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 				  GimpDisplay     *gdisp)
 {
   GimpMagnifyTool  *magnify;
+  MagnifyOptions   *options;
   GimpDisplayShell *shell;
   gint              win_width, win_height;
   gint              width, height;
@@ -345,6 +246,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   gint              x1, y1, x2, y2, w, h;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
+
+  options = (MagnifyOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
@@ -381,7 +284,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       else
 	scale = MIN ((width / w), (height / h));
 
-      magnify->op = magnify_options->type;
+      magnify->op = options->type;
 
       switch (magnify->op)
 	{
@@ -435,17 +338,21 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
 				GdkModifierType  state,
 				GimpDisplay     *gdisp)
 {
+  MagnifyOptions *options;
+
+  options = (MagnifyOptions *) tool->tool_info->tool_options;
+
   if (key == GDK_CONTROL_MASK)
     {
-      switch (magnify_options->type)
+      switch (options->type)
         {
         case GIMP_ZOOM_IN:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_OUT]), TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[GIMP_ZOOM_OUT]), TRUE);
           break;
         case GIMP_ZOOM_OUT:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (magnify_options->type_w[GIMP_ZOOM_IN]), TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[GIMP_ZOOM_IN]), TRUE);
           break;
         default:
           break;
@@ -459,11 +366,14 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
+  MagnifyOptions   *options;
   GimpDisplayShell *shell;
+
+  options = (MagnifyOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (magnify_options->type == GIMP_ZOOM_IN)
+  if (options->type == GIMP_ZOOM_IN)
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_ZOOM_CURSOR,
@@ -493,4 +403,107 @@ gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
                                  magnify->w,
                                  magnify->h,
                                  FALSE);
+}
+
+
+/*  magnify utility functions  */
+
+static void
+zoom_in (gint *src,
+	 gint *dest,
+	 gint  scale)
+{
+  while (scale--)
+    {
+      if (*src > 1)
+	(*src)--;
+      else
+	if (*dest < 0x10)
+	  (*dest)++;
+    }
+}
+
+
+static void
+zoom_out (gint *src,
+	  gint *dest,
+	  gint  scale)
+{
+  while (scale--)
+    {
+      if (*dest > 1)
+	(*dest)--;
+      else
+	if (*src < 0x10)
+	  (*src)++;
+    }
+}
+
+
+/*  magnify tool options functions  */
+
+static MagnifyOptions *
+magnify_options_new (void)
+{
+  MagnifyOptions *options;
+
+  GtkWidget *vbox;
+  GtkWidget *frame;
+
+  /*  the new magnify tool options structure  */
+  options = g_new0 (MagnifyOptions, 1);
+
+  tool_options_init ((GimpToolOptions *) options,
+		     magnify_options_reset);
+
+  options->allow_resize_d = gimprc.resize_windows_on_zoom;
+  options->type_d         = options->type = GIMP_ZOOM_IN;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  the allow_resize toggle button  */
+  options->allow_resize_w =
+    gtk_check_button_new_with_label (_("Allow Window Resizing"));
+  g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &(gimprc.resize_windows_on_zoom));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				gimprc.resize_windows_on_zoom);
+  gtk_box_pack_start (GTK_BOX (vbox), 
+                      options->allow_resize_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->allow_resize_w);
+
+  /*  tool toggle  */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+                           G_CALLBACK (gimp_radio_button_update),
+                           &options->type,
+			   (gpointer) options->type,
+
+                           _("Zoom in"),  (gpointer) GIMP_ZOOM_IN,
+                           &options->type_w[0],
+                           _("Zoom out"), (gpointer) GIMP_ZOOM_OUT,
+                           &options->type_w[1],
+
+                           NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return options;
+}
+
+static void
+magnify_options_reset (GimpToolOptions *tool_options)
+{
+  MagnifyOptions *options;
+
+  options = (MagnifyOptions *) tool_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				options->allow_resize_d);
+
+  gtk_toggle_button_set_active
+    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 }

@@ -33,12 +33,13 @@
 #include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
-
-#include "gui/info-dialog.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+
+#include "gui/info-dialog.h"
 
 #include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"
@@ -248,10 +249,13 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                 GimpDisplay     *gdisp)
 {
   GimpMeasureTool  *measure_tool;
+  MeasureOptions   *options;
   GimpDisplayShell *shell;
   gint              i;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  options = (MeasureOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -402,9 +406,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
     }
 
   /*  create the info window if necessary  */
-  if (! measure_tool_info &&
-      (measure_tool_options->use_info_window ||
-       ! GTK_WIDGET_VISIBLE (shell->statusarea)))
+  if (! measure_tool_info && (options->use_info_window ||
+                              ! GTK_WIDGET_VISIBLE (shell->statusarea)))
     {
       measure_tool_info = info_dialog_new (_("Measure Tool"),
 					   tool_manager_help_func, NULL);
@@ -462,6 +465,7 @@ gimp_measure_tool_motion (GimpTool        *tool,
                           GimpDisplay     *gdisp)
 {
   GimpMeasureTool  *measure_tool;
+  MeasureOptions   *options;
   GimpDisplayShell *shell;
   gint              ax, ay;
   gint              bx, by;
@@ -473,6 +477,8 @@ gimp_measure_tool_motion (GimpTool        *tool,
   gchar             status_str[STATUSBAR_SIZE];
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
+
+  options = (MeasureOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -606,14 +612,11 @@ gimp_measure_tool_motion (GimpTool        *tool,
 	
 	  g_snprintf (status_str, sizeof (status_str), "%.1f %s, %.2f %s",
 		      distance, _("pixels"), angle, _("degrees"));
-	
-	  if (measure_tool_options)
-	    {
-	      g_snprintf (distance_buf, sizeof (distance_buf), "%.1f %s",
-                          distance, _("pixels"));
-	      g_snprintf (angle_buf, sizeof (angle_buf), "%.2f %s",
-                          angle, _("degrees"));
-	    }
+
+          g_snprintf (distance_buf, sizeof (distance_buf), "%.1f %s",
+                      distance, _("pixels"));
+          g_snprintf (angle_buf, sizeof (angle_buf), "%.2f %s",
+                      angle, _("degrees"));
 	}
       else /* show real world units */
 	{
@@ -644,18 +647,15 @@ gimp_measure_tool_motion (GimpTool        *tool,
                       distance, angle);
 	  g_free (format_str);
 
-	  if (measure_tool_options)
-	    {
-	      gchar *format_str =
-		g_strdup_printf ("%%.%df %s",
-				 gimp_unit_get_digits (gdisp->gimage->unit),
-				 gimp_unit_get_symbol (gdisp->gimage->unit));
-	      g_snprintf (distance_buf, sizeof (distance_buf), format_str,
-                          distance);
-	      g_snprintf (angle_buf, sizeof (angle_buf), "%.2f %s",
-                          angle, _("degrees"));
-	      g_free (format_str);
-	    }
+          format_str =
+            g_strdup_printf ("%%.%df %s",
+                             gimp_unit_get_digits (gdisp->gimage->unit),
+                             gimp_unit_get_symbol (gdisp->gimage->unit));
+          g_snprintf (distance_buf, sizeof (distance_buf), format_str,
+                      distance);
+          g_snprintf (angle_buf, sizeof (angle_buf), "%.2f %s",
+                      angle, _("degrees"));
+          g_free (format_str);
 	}
 
       /*  show info in statusbar  */

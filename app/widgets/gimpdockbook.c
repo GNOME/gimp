@@ -212,6 +212,28 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_object_set_data (G_OBJECT (tab_widget), "gimp-dockable", dockable);
 
+  /*  set the drag source *before* connecting button_press because we
+   *  stop button_press emission by returning TRUE from the callback
+   */
+  gtk_drag_source_set (GTK_WIDGET (tab_widget),
+		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+		       dialog_target_table, G_N_ELEMENTS (dialog_target_table),
+		       GDK_ACTION_MOVE);
+  g_signal_connect (G_OBJECT (tab_widget), "drag_begin",
+		    G_CALLBACK (gimp_dockbook_tab_drag_begin),
+		    dockable);
+  g_signal_connect (G_OBJECT (tab_widget), "drag_end",
+		    G_CALLBACK (gimp_dockbook_tab_drag_end),
+		    dockable);
+
+  gtk_drag_dest_set (GTK_WIDGET (tab_widget),
+                     GTK_DEST_DEFAULT_ALL,
+                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
+                     GDK_ACTION_MOVE);
+  g_signal_connect (G_OBJECT (tab_widget), "drag_drop",
+		    G_CALLBACK (gimp_dockbook_tab_drag_drop),
+		    dockbook);
+
   g_signal_connect (G_OBJECT (tab_widget), "button_press_event",
 		    G_CALLBACK (gimp_dockbook_tab_button_press),
 		    dockable);
@@ -306,25 +328,6 @@ gimp_dockbook_add (GimpDockbook *dockbook,
   }
 
   gtk_widget_show (GTK_WIDGET (dockable));
-
-  gtk_drag_source_set (GTK_WIDGET (tab_widget),
-		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-		       dialog_target_table, G_N_ELEMENTS (dialog_target_table),
-		       GDK_ACTION_MOVE);
-  g_signal_connect (G_OBJECT (tab_widget), "drag_begin",
-		    G_CALLBACK (gimp_dockbook_tab_drag_begin),
-		    dockable);
-  g_signal_connect (G_OBJECT (tab_widget), "drag_end",
-		    G_CALLBACK (gimp_dockbook_tab_drag_end),
-		    dockable);
-
-  gtk_drag_dest_set (GTK_WIDGET (tab_widget),
-                     GTK_DEST_DEFAULT_ALL,
-                     dialog_target_table, G_N_ELEMENTS (dialog_target_table),
-                     GDK_ACTION_MOVE);
-  g_signal_connect (G_OBJECT (tab_widget), "drag_drop",
-		    G_CALLBACK (gimp_dockbook_tab_drag_drop),
-		    dockbook);
 
   dockable->dockbook = dockbook;
 
@@ -484,7 +487,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 					3, bevent->time);
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

@@ -127,7 +127,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
 
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
-                                        gimp_display_shell_update_title,
+                                        gimp_display_shell_update_title_handler,
                                         shell);
 }
 

@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
@@ -189,18 +190,23 @@ gimp_smudge_tool_paint (GimpPaintTool *paint_tool,
 			GimpDrawable  *drawable,
 			PaintState     state)
 {
+  SmudgeOptions *options;
+
   /* initialization fails if the user starts outside the drawable */
   static gboolean initialized = FALSE;
+
+  options = (SmudgeOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
 
   switch (state)
     {
     case MOTION_PAINT:
-      if (!initialized)
+      if (! initialized)
 	initialized = gimp_smudge_tool_start (paint_tool, drawable);
       if (initialized)
 	gimp_smudge_tool_motion (paint_tool,
-				 smudge_options->paint_options.pressure_options,
-				 smudge_options->rate, drawable);
+				 options->paint_options.pressure_options,
+				 options->rate,
+                                 drawable);
       break;
 
     case FINISH_PAINT:

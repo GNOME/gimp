@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -41,7 +42,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "selection_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
 
 #include "errors.h"
@@ -245,8 +245,11 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GimpDisplay     *gdisp)
 {
   GimpFreeSelectTool *free_sel;
+  SelectionOptions   *sel_options;
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   gdk_pointer_ungrab (time);
   gdk_flush ();
@@ -275,10 +278,10 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       free_sel->num_points,
                                       free_sel->points,
                                       GIMP_SELECTION_TOOL (tool)->op,
-                                      free_options->antialias,
-                                      free_options->feather,
-                                      free_options->feather_radius,
-                                      free_options->feather_radius);
+                                      sel_options->antialias,
+                                      sel_options->feather,
+                                      sel_options->feather_radius,
+                                      sel_options->feather_radius);
 
       gdisplays_flush ();
     }

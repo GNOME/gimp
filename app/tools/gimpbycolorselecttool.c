@@ -33,13 +33,14 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-contiguous-region.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
 
@@ -49,7 +50,6 @@
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
 
 #include "gimprc.h"
@@ -313,10 +313,13 @@ by_color_select_button_press (GimpTool        *tool,
 {
   GimpByColorSelectTool *by_color_sel;
   GimpDrawTool          *draw_tool;
+  SelectionOptions      *sel_options;
   GimpDisplayShell      *shell;
 
   draw_tool    = GIMP_DRAW_TOOL (tool);
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -331,7 +334,7 @@ by_color_select_button_press (GimpTool        *tool,
   by_color_sel->x = coords->x;
   by_color_sel->y = coords->y;
 
-  if (! by_color_options->sample_merged)
+  if (! sel_options->sample_merged)
     {
       gint off_x, off_y;
 
@@ -374,11 +377,14 @@ by_color_select_button_release (GimpTool        *tool,
 				GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
+  SelectionOptions      *sel_options;
   GimpDrawable          *drawable;
   guchar                *col;
   GimpRGB                color;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
+
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -395,7 +401,7 @@ by_color_select_button_release (GimpTool        *tool,
           by_color_sel->y < gimp_drawable_height (drawable))
 	{
 	  /*  Get the start color  */
-	  if (by_color_options->sample_merged)
+	  if (sel_options->sample_merged)
 	    {
 	      if (!(col = gimp_image_get_color_at (gdisp->gimage,
                                                    by_color_sel->x,
@@ -416,14 +422,14 @@ by_color_select_button_release (GimpTool        *tool,
 
 	  /*  select the area  */
 	  gimp_image_mask_select_by_color (gdisp->gimage, drawable,
-                                           by_color_options->sample_merged,
+                                           sel_options->sample_merged,
                                            &color,
                                            by_color_dialog->threshold,
                                            by_color_sel->operation,
-                                           by_color_options->antialias,
-                                           by_color_options->feather,
-                                           by_color_options->feather_radius,
-                                           by_color_options->feather_radius);
+                                           sel_options->antialias,
+                                           sel_options->feather,
+                                           sel_options->feather_radius,
+                                           sel_options->feather_radius);
 
 	  /*  show selection on all views  */
 	  gdisplays_flush ();
@@ -481,16 +487,19 @@ by_color_select_cursor_update (GimpTool        *tool,
 			       GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
+  SelectionOptions      *sel_options;
   GimpDisplayShell      *shell;
   GimpLayer             *layer;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
-  if (by_color_options->sample_merged ||
+  if (sel_options->sample_merged ||
       (layer && layer == gdisp->gimage->active_layer))
     {
       switch (by_col_sel->operation)
@@ -992,7 +1001,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   guchar       *col;
   GimpRGB       color;
 
-  if (!bcd->gimage)
+  if (! bcd->gimage)
     return;
 
   drawable = gimp_image_active_drawable (bcd->gimage);
@@ -1081,6 +1090,7 @@ by_color_select_color_drop (GtkWidget     *widget,
   ByColorDialog *bcd;
 
   bcd = (ByColorDialog*) data;
+
   drawable = gimp_image_active_drawable (bcd->gimage);
 
   gimp_image_mask_select_by_color (bcd->gimage, drawable,

@@ -61,6 +61,9 @@ gimp_display_connect (GimpDisplay *gdisp,
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
 
+  g_print ("%s: gimage->ref_count before refing: %d\n",
+           G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
+
   g_object_ref (G_OBJECT (gimage));
 
   g_signal_connect (G_OBJECT (gimage), "update",
@@ -97,6 +100,9 @@ gimp_display_disconnect (GimpDisplay *gdisp)
                                         gdisp);
 
   gdisp->gimage->disp_count--;
+
+  g_print ("%s: gimage->ref_count before unrefing: %d\n",
+           G_GNUC_FUNCTION, G_OBJECT (gdisp->gimage)->ref_count);
 
   g_object_unref (G_OBJECT (gdisp->gimage));
   gdisp->gimage = NULL;

@@ -33,12 +33,13 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimppattern.h"
-#include "core/gimpcontext.h"
-#include "core/gimpbrush.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -279,16 +280,21 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 		       GimpDrawable  *drawable,
 		       PaintState     state)
 {
+  GimpTool     *tool;
+  GimpDrawTool *draw_tool;
+  CloneOptions *options;
   GimpDisplay  *gdisp;
   GimpDisplay  *src_gdisp;
   gint          x1, y1, x2, y2;
   static gint   orig_src_x, orig_src_y;
-  GimpDrawTool *draw_tool;
   GimpContext  *context;
 
-  gdisp = (GimpDisplay *) tool_manager_get_active (drawable->gimage->gimp)->gdisp;
-
+  tool      = GIMP_TOOL (paint_tool);
   draw_tool = GIMP_DRAW_TOOL (paint_tool);
+
+  options = (CloneOptions *) tool->tool_info->tool_options;
+
+  gdisp = tool->gdisp;
 
   context = gimp_get_current_context (gdisp->gimage->gimp);
 
@@ -317,7 +323,7 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	  dest_x = x1;
 	  dest_y = y1;
 
-          if (clone_options->aligned == ALIGN_REGISTERED)
+          if (options->aligned == ALIGN_REGISTERED)
             {
 	      offset_x = 0;
 	      offset_y = 0;
@@ -333,8 +339,9 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	  src_y = dest_y + offset_y;
 
 	  gimp_clone_tool_motion (paint_tool, drawable, src_drawable_, 
-				  clone_options->paint_options.pressure_options, 
-				  clone_options->type, offset_x, offset_y);
+				  options->paint_options.pressure_options, 
+				  options->type,
+                                  offset_x, offset_y);
 	}
 
       break;
@@ -348,20 +355,21 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 	  src_y = paint_tool->cur_coords.y;
 	  first = TRUE;
 	}
-      else if (clone_options->aligned == ALIGN_NO)
+      else if (options->aligned == ALIGN_NO)
 	{
 	  first = TRUE;
 	  orig_src_x = src_x;
 	  orig_src_y = src_y;
 	}
-      if (clone_options->type == PATTERN_CLONE)
+
+      if (options->type == PATTERN_CLONE)
 	if (! gimp_context_get_pattern (context))
 	  g_message (_("No patterns available for this operation."));
       break;
 
     case FINISH_PAINT:
       gimp_draw_tool_stop (draw_tool);
-      if (clone_options->aligned == ALIGN_NO && !first)
+      if (options->aligned == ALIGN_NO && !first)
 	{
 	  src_x = orig_src_x;
 	  src_y = orig_src_y;
@@ -405,9 +413,12 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
+  CloneOptions     *options;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
+
+  options = (CloneOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -432,7 +443,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	}
     }
   
-  if (clone_options->type == IMAGE_CLONE)
+  if (options->type == IMAGE_CLONE)
     {
       if (state & GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
@@ -451,7 +462,11 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->gc != NULL && clone_options->type == IMAGE_CLONE)
+  CloneOptions *options;
+
+  options = (CloneOptions *) GIMP_TOOL (draw_tool)->tool_info->tool_options;
+
+  if (draw_tool->gc != NULL && options->type == IMAGE_CLONE)
     {
       gdk_draw_line (draw_tool->win, draw_tool->gc,
 		     trans_tx - (TARGET_WIDTH >> 1), trans_ty,

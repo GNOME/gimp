@@ -90,12 +90,6 @@ struct _GimpBezierSelectTool
 struct _GimpBezierSelectToolClass
 {
   GimpSelectionToolClass parent_class;
-
-  void (* bezier_select) (GimpBezierSelectTool *rect_tool,
-                        gint                x,
-                        gint                y,
-                        gint                w,
-                        gint                h);
 };
 
 typedef void (* GimpBezierSelectPointsFunc) (GimpBezierSelectTool *bezier_sel,

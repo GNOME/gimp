@@ -50,7 +50,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpbezierselecttool.h"
 #include "selection_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
 
 #include "app_procs.h"
@@ -118,45 +117,6 @@ typedef struct
   gint         found;
 } BezierCheckPnts;
 
-/*  the bezier selection tool options  */ 
-static SelectionOptions *bezier_options = NULL;
-
-/*  local variables  */
-static BezierMatrix basis =
-{
-  { -1,  3, -3,  1 },
-  {  3, -6,  3,  0 },
-  { -3,  3,  0,  0 },
-  {  1,  0,  0,  0 },
-};
-
-/*
-static BezierMatrix basis =
-{
-  { -1/6.0,  3/6.0, -3/6.0,  1/6.0 },
-  {  3/6.0, -6/6.0,  3/6.0,  0 },
-  { -3/6.0,  0,  3/6.0,  0 },
-  {  1/6.0,  4/6.0,  1,  0 },
-};
-*/
-
-/*  Global Static Variable to maintain informations about the "context"  */
-static GimpBezierSelectTool *curSel   = NULL;
-static GimpTool             *curTool  = NULL;
-static GimpDisplay          *curGdisp = NULL;
-static GimpDrawTool         *curCore  = NULL;
-static gint                  ModeEdit = EXTEND_NEW;
-
-
-enum
-{
-  BEZIER_SELECT,
-  LAST_SIGNAL
-};
-
-static GimpSelectionToolClass *parent_class = NULL;
-
-static guint bezier_select_signals[LAST_SIGNAL] = { 0 };
 
 static void  gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass);
 static void  gimp_bezier_select_tool_init       (GimpBezierSelectTool      *bezier_select);
@@ -281,6 +241,37 @@ static void bezier_start_new_segment (GimpBezierSelectTool *bezier_sel,
 				      gint          y);
 
 
+/*  local variables  */
+
+static BezierMatrix basis =
+{
+  { -1,  3, -3,  1 },
+  {  3, -6,  3,  0 },
+  { -3,  3,  0,  0 },
+  {  1,  0,  0,  0 },
+};
+
+/*
+static BezierMatrix basis =
+{
+  { -1/6.0,  3/6.0, -3/6.0,  1/6.0 },
+  {  3/6.0, -6/6.0,  3/6.0,  0 },
+  { -3/6.0,  0,  3/6.0,  0 },
+  {  1/6.0,  4/6.0,  1,  0 },
+};
+*/
+
+/*  Global Static Variable to maintain informations about the "context"  */
+static GimpBezierSelectTool *curSel   = NULL;
+static GimpTool             *curTool  = NULL;
+static GimpDisplay          *curGdisp = NULL;
+static GimpDrawTool         *curCore  = NULL;
+static gint                  ModeEdit = EXTEND_NEW;
+
+static SelectionOptions *bezier_options = NULL;
+
+static GimpSelectionToolClass *parent_class = NULL;
+
 
 /* Public functions */
 
@@ -342,19 +333,6 @@ gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  bezier_select_signals[BEZIER_SELECT] =
-    g_signal_new ("bezier_select",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpBezierSelectToolClass, bezier_select),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_INT_INT_INT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
-
   tool_class->button_press   = gimp_bezier_select_tool_button_press;
   tool_class->button_release = gimp_bezier_select_tool_button_release;
   tool_class->motion         = gimp_bezier_select_tool_motion;
@@ -362,8 +340,6 @@ gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass)
   tool_class->cursor_update  = gimp_bezier_select_tool_cursor_update;
 
   draw_tool_class->draw      = bezier_select_draw;
-
-  /*  klass->bezier_select       = gimp_bezier_select_tool_real_bezier_select; */
 }
 
 static void
@@ -3034,18 +3010,22 @@ bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
                         GimpDisplay          *gdisp,
                         ChannelOps            op)
 {
+  SelectionOptions *sel_options;
+
+  sel_options = (SelectionOptions *) GIMP_TOOL (bezier_sel)->tool_info->tool_options;
+
   /*  If we're antialiased, then recompute the mask...
    */
-  if (bezier_options->antialias)
+  if (sel_options->antialias)
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
 
   gimp_image_mask_select_channel (gdisp->gimage,
                                   NULL, FALSE,
                                   bezier_sel->mask,
                                   op,
-                                  bezier_options->feather,
-                                  bezier_options->feather_radius, 
-                                  bezier_options->feather_radius);
+                                  sel_options->feather,
+                                  sel_options->feather_radius, 
+                                  sel_options->feather_radius);
   
   /*  show selection on all views  */
   gdisplays_flush ();

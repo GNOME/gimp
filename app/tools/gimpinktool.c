@@ -40,6 +40,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -122,31 +123,35 @@ static void        gimp_ink_tool_init            (GimpInkTool      *tool);
 
 static void        gimp_ink_tool_finalize        (GObject          *object);
 
-static InkOptions * ink_options_new     (void);
-static void         ink_options_reset   (GimpToolOptions *tool_options);
+static void        gimp_ink_tool_control         (GimpTool         *tool,
+                                                  ToolAction        tool_action,
+                                                  GimpDisplay      *gdisp);
+static void        gimp_ink_tool_button_press    (GimpTool         *tool,
+                                                  GimpCoords       *coords,
+                                                  guint32           time,
+                                                  GdkModifierType   state,
+                                                  GimpDisplay      *gdisp);
+static void        gimp_ink_tool_button_release  (GimpTool         *tool,
+                                                  GimpCoords       *coords,
+                                                  guint32           time,
+                                                  GdkModifierType   state,
+                                                  GimpDisplay      *gdisp);
+static void        gimp_ink_tool_motion          (GimpTool         *tool,
+                                                  GimpCoords       *coords,
+                                                  guint32           time,
+                                                  GdkModifierType   state,
+                                                  GimpDisplay      *gdisp);
+static void        gimp_ink_tool_cursor_update   (GimpTool         *tool,
+                                                  GimpCoords       *coords,
+                                                  GdkModifierType   state,
+                                                  GimpDisplay      *gdisp);
 
-static void        ink_control          (GimpTool        *tool,
-					 ToolAction       tool_action,
-					 GimpDisplay     *gdisp);
-static void        ink_button_press     (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         guint32          time,
-					 GdkModifierType  state,
-					 GimpDisplay     *gdisp);
-static void        ink_button_release   (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         guint32          time,
-					 GdkModifierType  state,
-					 GimpDisplay     *gdisp);
-static void        ink_motion           (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         guint32          time,
-					 GdkModifierType  state,
-					 GimpDisplay     *gdisp);
-static void        ink_cursor_update    (GimpTool        *tool,
-                                         GimpCoords      *coords,
-					 GdkModifierType  state,
-					 GimpDisplay     *gdisp);
+static Blob *      ink_pen_ellipse      (gdouble          x_center,
+                                         gdouble          y_center,
+                                         gdouble          pressure,
+                                         gdouble          xtilt,
+                                         gdouble          ytilt,
+                                         gdouble          velocity);
 
 static void        time_smoother_add    (GimpInkTool     *ink_tool,
 					 guint32          value);
@@ -216,6 +221,11 @@ static void   brush_widget_motion_notify  (GtkWidget      *widget,
 					   GdkEventMotion *event,
 					   BrushWidget    *brush_widget);
 
+static InkOptions * ink_options_new     (void);
+static void         ink_options_reset   (GimpToolOptions *tool_options);
+static void         ink_type_update     (GtkWidget       *radio_button,
+                                         BlobFunc         function);
+
 
 /* local variables */
 
@@ -236,7 +246,7 @@ static TempBuf *canvas_buf = NULL;
 static GimpToolClass *parent_class      = NULL;
 
 
-/*  functions  */
+/*  public functions  */
 
 void
 gimp_ink_tool_register (Gimp *gimp)
@@ -280,6 +290,9 @@ gimp_ink_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
@@ -293,11 +306,11 @@ gimp_ink_tool_class_init (GimpInkToolClass *klass)
 
   object_class->finalize     = gimp_ink_tool_finalize;
 
-  tool_class->control        = ink_control;
-  tool_class->button_press   = ink_button_press;
-  tool_class->button_release = ink_button_release;
-  tool_class->motion         = ink_motion;
-  tool_class->cursor_update  = ink_cursor_update;
+  tool_class->control        = gimp_ink_tool_control;
+  tool_class->button_press   = gimp_ink_tool_button_press;
+  tool_class->button_release = gimp_ink_tool_button_release;
+  tool_class->motion         = gimp_ink_tool_motion;
+  tool_class->cursor_update  = gimp_ink_tool_cursor_update;
 }
 
 static void
@@ -339,300 +352,240 @@ gimp_ink_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void 
-ink_type_update (GtkWidget      *radio_button,
-		 BlobFunc        function)
+static void
+gimp_ink_tool_control (GimpTool    *tool,
+                       ToolAction   action,
+                       GimpDisplay *gdisp)
 {
-  InkOptions *options = ink_options;
+  GimpInkTool *ink_tool;
 
-  if (GTK_TOGGLE_BUTTON (radio_button)->active)
-    options->function = function;
+  ink_tool = GIMP_INK_TOOL (tool);
 
-  gtk_widget_queue_draw (options->brush_w->widget);
+  switch (action)
+    {
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      ink_cleanup ();
+      break;
+
+    default:
+      break;
+    }
 }
 
 static void
-ink_options_reset (GimpToolOptions *tool_options)
+gimp_ink_tool_button_press (GimpTool        *tool,
+                            GimpCoords      *coords,
+                            guint32          time,
+                            GdkModifierType  state,
+                            GimpDisplay     *gdisp)
 {
-  InkOptions *options;
+  GimpInkTool      *ink_tool;
+  GimpDisplayShell *shell;
+  GimpDrawable     *drawable;
+  Blob             *b;
 
-  options = (InkOptions *) tool_options;
+  ink_tool = GIMP_INK_TOOL (tool);
 
-  paint_options_reset (tool_options);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
-			    options->size_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
-			    options->sensitivity_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_sensitivity_w),
-			    options->tilt_sensitivity_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->vel_sensitivity_w),
-			    options->vel_sensitivity_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
-			    options->tilt_angle_d);
-  gtk_toggle_button_set_active (((options->function_d == blob_ellipse) ?
-				 GTK_TOGGLE_BUTTON (options->function_w[0]) :
-				 ((options->function_d == blob_square) ?
-				  GTK_TOGGLE_BUTTON (options->function_w[1]) :
-				  GTK_TOGGLE_BUTTON (options->function_w[2]))),
-				TRUE);
-  options->aspect = options->aspect_d;
-  options->angle  = options->angle_d;
-  gtk_widget_queue_draw (options->brush_w->widget);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  ink_init (ink_tool, drawable, coords->x, coords->y);
+
+  tool->state        = ACTIVE;
+  tool->gdisp        = gdisp;
+  tool->paused_count = 0;
+
+  /*  pause the current selection and grab the pointer  */
+  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
+
+  /* add motion memory if you press mod1 first ^ perfectmouse */
+  if (((state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
+  else
+    {
+      gdk_pointer_grab (shell->canvas->window, FALSE,
+                        GDK_POINTER_MOTION_HINT_MASK |
+                        GDK_BUTTON1_MOTION_MASK |
+                        GDK_BUTTON_RELEASE_MASK,
+                        NULL, NULL, time);
+    }
+  
+  b = ink_pen_ellipse (coords->x,
+                       coords->y,
+		       coords->pressure,
+                       coords->xtilt,
+                       coords->ytilt,
+		       10.0);
+
+  ink_paste (ink_tool, drawable, b);
+  ink_tool->last_blob = b;
+
+  time_smoother_init (ink_tool, time);
+  ink_tool->last_time = time;
+  dist_smoother_init (ink_tool, 0.0);
+  ink_tool->init_velocity = TRUE;
+  ink_tool->lastx = coords->x;
+  ink_tool->lasty = coords->y;
+
+  gimp_display_flush_now (gdisp);
 }
 
-static InkOptions *
-ink_options_new (void)
+static void
+gimp_ink_tool_button_release (GimpTool        *tool,
+                              GimpCoords      *coords,
+                              guint32          time,
+                              GdkModifierType  state,
+                              GimpDisplay     *gdisp)
 {
-  InkOptions *options;
-  GtkWidget  *table;
-  GtkWidget  *vbox;
-  GtkWidget  *hbox;
-  GtkWidget  *hbox2;
-  GtkWidget  *radio_button;
-  GtkWidget  *pixmap_widget;
-  GtkWidget  *slider;
-  GtkWidget  *frame;
-  GtkWidget  *darea;
-  GdkPixmap  *pixmap;
+  GimpInkTool *ink_tool;
+  GimpImage   *gimage;
 
-  options = g_new0 (InkOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_INK_TOOL,
-		      ink_options_reset);
+  ink_tool = GIMP_INK_TOOL (tool);
 
-  options->size             = options->size_d             = 4.4;
-  options->sensitivity      = options->sensitivity_d      = 1.0;
-  options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
-  options->tilt_sensitivity = options->tilt_sensitivity_d = 0.4;
-  options->tilt_angle       = options->tilt_angle_d       = 0.0;
-  options->function         = options->function_d         = blob_ellipse;
-  options->aspect           = options->aspect_d           = 1.0;
-  options->angle            = options->angle_d            = 0.0;
+  gimage = gdisp->gimage;
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (((GimpToolOptions *) options)->main_vbox), vbox,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  /*  resume the current selection and ungrab the pointer  */
+  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
-  /* adjust sliders */
-  frame = gtk_frame_new (_("Adjustment"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
+  gdk_pointer_ungrab (time);
+  gdk_flush ();
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  /*  Set tool state to inactive -- no longer painting */
+  tool->state = INACTIVE;
 
-  /*  size slider  */
-  options->size_w =
-    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 2.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Size:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  /*  free the last blob  */
+  g_free (ink_tool->last_blob);
+  ink_tool->last_blob = NULL;
 
-  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
-		    G_CALLBACK (gimp_double_adjustment_update),
-		    &options->size);
+  ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage));
+  gdisplays_flush ();
+}
 
-  /* angle adjust slider */
-  options->tilt_angle_w =
-    gtk_adjustment_new (options->tilt_angle_d, -90.0, 90.0, 1, 10.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_angle_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Angle:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+static void
+gimp_ink_tool_motion (GimpTool        *tool,
+                      GimpCoords      *coords,
+                      guint32          time,
+                      GdkModifierType  state,
+                      GimpDisplay     *gdisp)
+{
+  GimpInkTool  *ink_tool;
+  GimpDrawable *drawable;
+  Blob         *b, *blob_union;
 
-  g_signal_connect (G_OBJECT (options->tilt_angle_w), "value_changed",
-		    G_CALLBACK (gimp_double_adjustment_update),
-		    &options->tilt_angle);
-
-  /* sens sliders */
-  frame = gtk_frame_new (_("Sensitivity"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  /* size sens slider */
-  options->sensitivity_w =
-    gtk_adjustment_new (options->sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Size:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-
-  g_signal_connect (G_OBJECT (options->sensitivity_w), "value_changed",
-		    G_CALLBACK (gimp_double_adjustment_update),
-		    &options->sensitivity);
+  gdouble velocity;
+  gdouble dist;
+  gdouble lasttime, thistime;
   
-  /* tilt sens slider */
-  options->tilt_sensitivity_w =
-    gtk_adjustment_new (options->tilt_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Tilt:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  ink_tool = GIMP_INK_TOOL (tool);
 
-  g_signal_connect (G_OBJECT (options->tilt_sensitivity_w), "value_changed",
-		    G_CALLBACK (gimp_double_adjustment_update),
-		    &options->tilt_sensitivity);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  /* velocity sens slider */
-  options->vel_sensitivity_w =
-    gtk_adjustment_new (options->vel_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->vel_sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Speed:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  lasttime = ink_tool->last_time;
 
-  g_signal_connect (G_OBJECT (options->vel_sensitivity_w), "value_changed",
-		    G_CALLBACK (gimp_double_adjustment_update),
-		    &options->vel_sensitivity);
+  time_smoother_add (ink_tool, time);
+  thistime = ink_tool->last_time = time_smoother_result (ink_tool);
 
-  /*  bottom hbox */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  /* The time resolution on X-based GDK motion events is
+     bloody awful, hence the use of the smoothing function.
+     Sadly this also means that there is always the chance of
+     having an indeterminite velocity since this event and
+     the previous several may still appear to issue at the same
+     instant. -ADM */
 
-  /* Brush type radiobuttons */
-  frame = gtk_frame_new (_("Type"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  if (thistime == lasttime)
+    thistime = lasttime + 1;
 
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), hbox2);
-  
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (hbox2), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  if (ink_tool->init_velocity)
+    {
+      dist_smoother_init (ink_tool,
+			  dist = sqrt ((ink_tool->lastx - coords->x) *
+                                       (ink_tool->lastx - coords->x) +
+				       (ink_tool->lasty - coords->y) *
+                                       (ink_tool->lasty - coords->y)));
+      ink_tool->init_velocity = FALSE;
+    }
+  else
+    {
+      dist_smoother_add (ink_tool,
+			 sqrt ((ink_tool->lastx - coords->x) *
+                               (ink_tool->lastx - coords->x) +
+			       (ink_tool->lasty - coords->y) *
+                               (ink_tool->lasty - coords->y)));
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_ellipse);
+      dist = dist_smoother_result (ink_tool);
+    }
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+  ink_tool->lastx = coords->x;
+  ink_tool->lasty = coords->y;
 
-  radio_button = gtk_radio_button_new (NULL);
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+  velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
-		    G_CALLBACK (ink_type_update),
-		    (gpointer) blob_ellipse);
+  b = ink_pen_ellipse (coords->x,
+                       coords->y,
+                       coords->pressure,
+                       coords->xtilt,
+		       coords->ytilt,
+                       velocity);
 
+  blob_union = blob_convex_union (ink_tool->last_blob, b);
+  g_free (ink_tool->last_blob);
+  ink_tool->last_blob = b;
 
-  options->function_w[0] = radio_button;
+  ink_paste (ink_tool, drawable, blob_union);  
+  g_free (blob_union);
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_square);
+  gimp_display_flush_now (gdisp);
+}
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+static void
+gimp_ink_tool_cursor_update (GimpTool        *tool,
+                             GimpCoords      *coords,
+                             GdkModifierType  state,
+                             GimpDisplay     *gdisp)
+{
+  GimpDisplayShell *shell;
+  GimpLayer        *layer;
+  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
 
-  radio_button =
-    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
-		    G_CALLBACK (ink_type_update), 
-		    (gpointer) blob_square);
-  
+  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
+    {
+      gint off_x, off_y;
 
-  options->function_w[1] = radio_button;
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
-			gtk_widget_get_visual (vbox),
-			blob_diamond);
+      if (coords->x >= off_x &&
+          coords->y >= off_y &&
+	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
+	{
+	  /*  One more test--is there a selected region?
+	   *  if so, is cursor inside?
+	   */
+	  if (gimage_mask_is_empty (gdisp->gimage))
+	    ctype = GIMP_MOUSE_CURSOR;
+	  else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
+	    ctype = GIMP_MOUSE_CURSOR;
+	}
+    }
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
-  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
-
-  radio_button =
-    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
-
-  g_signal_connect (G_OBJECT (radio_button), "toggled",
-		    G_CALLBACK (ink_type_update), 
-		    (gpointer) blob_diamond);
-
-
-  options->function_w[2] = radio_button;
-
-  /* Brush shape widget */
-  frame = gtk_frame_new (_("Shape"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-
-  options->brush_w = g_new (BrushWidget, 1);
-  options->brush_w->state = FALSE;
-
-  darea = gtk_drawing_area_new();
-  options->brush_w->widget = darea;
-
-  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
-  gtk_container_add (GTK_CONTAINER (frame), darea);
-
-  gtk_widget_set_events (darea, 
-			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
-			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
-
-  g_signal_connect (G_OBJECT (darea), "button_press_event",
-		    G_CALLBACK (brush_widget_button_press),
-		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "button_release_event",
-		    G_CALLBACK (brush_widget_button_release),
-		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "motion_notify_event",
-		    G_CALLBACK (brush_widget_motion_notify),
-		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "expose_event",
-		    G_CALLBACK (brush_widget_expose), 
-		    options->brush_w);
-  g_signal_connect (G_OBJECT (darea), "realize",
-		    G_CALLBACK (brush_widget_realize),
-		    options->brush_w);
-
-  gtk_widget_show_all (hbox);
-
-  return options;
+  gimp_display_shell_install_tool_cursor (shell,
+                                          ctype,
+                                          GIMP_INK_TOOL_CURSOR,
+                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 
@@ -935,128 +888,6 @@ ink_pen_ellipse (gdouble x_center,
 }
 
 static void
-ink_control (GimpTool    *tool,
-	     ToolAction   action,
-	     GimpDisplay *gdisp)
-{
-  GimpInkTool *ink_tool;
-
-  ink_tool = GIMP_INK_TOOL (tool);
-
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      ink_cleanup ();
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
-ink_button_press (GimpTool        *tool,
-                  GimpCoords      *coords,
-                  guint32          time,
-		  GdkModifierType  state,
-		  GimpDisplay     *gdisp)
-{
-  GimpInkTool      *ink_tool;
-  GimpDisplayShell *shell;
-  GimpDrawable     *drawable;
-  Blob             *b;
-
-  ink_tool = GIMP_INK_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  ink_init (ink_tool, drawable, coords->x, coords->y);
-
-  tool->state        = ACTIVE;
-  tool->gdisp        = gdisp;
-  tool->paused_count = 0;
-
-  /*  pause the current selection and grab the pointer  */
-  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
-
-  /* add motion memory if you press mod1 first ^ perfectmouse */
-  if (((state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
-  else
-    {
-      gdk_pointer_grab (shell->canvas->window, FALSE,
-                        GDK_POINTER_MOTION_HINT_MASK |
-                        GDK_BUTTON1_MOTION_MASK |
-                        GDK_BUTTON_RELEASE_MASK,
-                        NULL, NULL, time);
-    }
-  
-  b = ink_pen_ellipse (coords->x,
-                       coords->y,
-		       coords->pressure,
-                       coords->xtilt,
-                       coords->ytilt,
-		       10.0);
-
-  ink_paste (ink_tool, drawable, b);
-  ink_tool->last_blob = b;
-
-  time_smoother_init (ink_tool, time);
-  ink_tool->last_time = time;
-  dist_smoother_init (ink_tool, 0.0);
-  ink_tool->init_velocity = TRUE;
-  ink_tool->lastx = coords->x;
-  ink_tool->lasty = coords->y;
-
-  gimp_display_flush_now (gdisp);
-}
-
-static void
-ink_button_release (GimpTool        *tool,
-                    GimpCoords      *coords,
-                    guint32          time,
-		    GdkModifierType  state,
-		    GimpDisplay     *gdisp)
-{
-  GimpInkTool *ink_tool;
-  GimpImage   *gimage;
-
-  ink_tool = GIMP_INK_TOOL (tool);
-
-  gimage = gdisp->gimage;
-
-  /*  resume the current selection and ungrab the pointer  */
-  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
-
-  gdk_pointer_ungrab (time);
-  gdk_flush ();
-
-  /*  Set tool state to inactive -- no longer painting */
-  tool->state = INACTIVE;
-
-  /*  free the last blob  */
-  g_free (ink_tool->last_blob);
-  ink_tool->last_blob = NULL;
-
-  ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage));
-  gdisplays_flush ();
-}
-
-
-static void
 dist_smoother_init (GimpInkTool *ink_tool,
 		    gdouble      initval)
 {
@@ -1135,122 +966,6 @@ time_smoother_add (GimpInkTool *ink_tool,
 
   if ((++ink_tool->ts_index) == TIME_SMOOTHER_BUFFER)
     ink_tool->ts_index = 0;
-}
-
-
-static void
-ink_motion (GimpTool        *tool,
-            GimpCoords      *coords,
-            guint32          time,
-	    GdkModifierType  state,
-	    GimpDisplay     *gdisp)
-{
-  GimpInkTool  *ink_tool;
-  GimpDrawable *drawable;
-  Blob         *b, *blob_union;
-
-  gdouble velocity;
-  gdouble dist;
-  gdouble lasttime, thistime;
-  
-  ink_tool = GIMP_INK_TOOL (tool);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
-
-  lasttime = ink_tool->last_time;
-
-  time_smoother_add (ink_tool, time);
-  thistime = ink_tool->last_time = time_smoother_result (ink_tool);
-
-  /* The time resolution on X-based GDK motion events is
-     bloody awful, hence the use of the smoothing function.
-     Sadly this also means that there is always the chance of
-     having an indeterminite velocity since this event and
-     the previous several may still appear to issue at the same
-     instant. -ADM */
-
-  if (thistime == lasttime)
-    thistime = lasttime + 1;
-
-  if (ink_tool->init_velocity)
-    {
-      dist_smoother_init (ink_tool,
-			  dist = sqrt ((ink_tool->lastx - coords->x) *
-                                       (ink_tool->lastx - coords->x) +
-				       (ink_tool->lasty - coords->y) *
-                                       (ink_tool->lasty - coords->y)));
-      ink_tool->init_velocity = FALSE;
-    }
-  else
-    {
-      dist_smoother_add (ink_tool,
-			 sqrt ((ink_tool->lastx - coords->x) *
-                               (ink_tool->lastx - coords->x) +
-			       (ink_tool->lasty - coords->y) *
-                               (ink_tool->lasty - coords->y)));
-
-      dist = dist_smoother_result (ink_tool);
-    }
-
-  ink_tool->lastx = coords->x;
-  ink_tool->lasty = coords->y;
-
-  velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
-
-  b = ink_pen_ellipse (coords->x,
-                       coords->y,
-                       coords->pressure,
-                       coords->xtilt,
-		       coords->ytilt,
-                       velocity);
-
-  blob_union = blob_convex_union (ink_tool->last_blob, b);
-  g_free (ink_tool->last_blob);
-  ink_tool->last_blob = b;
-
-  ink_paste (ink_tool, drawable, blob_union);  
-  g_free (blob_union);
-
-  gimp_display_flush_now (gdisp);
-}
-
-static void
-ink_cursor_update (GimpTool        *tool,
-                   GimpCoords      *coords,
-		   GdkModifierType  state,
-		   GimpDisplay     *gdisp)
-{
-  GimpDisplayShell *shell;
-  GimpLayer        *layer;
-  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
-    {
-      gint off_x, off_y;
-
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-      if (coords->x >= off_x &&
-          coords->y >= off_y &&
-	  coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	  coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
-	{
-	  /*  One more test--is there a selected region?
-	   *  if so, is cursor inside?
-	   */
-	  if (gimage_mask_is_empty (gdisp->gimage))
-	    ctype = GIMP_MOUSE_CURSOR;
-	  else if (gimage_mask_value (gdisp->gimage, coords->x, coords->y))
-	    ctype = GIMP_MOUSE_CURSOR;
-	}
-    }
-
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          GIMP_INK_TOOL_CURSOR,
-                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -1702,4 +1417,303 @@ ink_set_canvas_tiles (gint x,
 	    }
 	}
     }
+}
+
+
+/*  tool options stuff  */
+
+static InkOptions *
+ink_options_new (void)
+{
+  InkOptions *options;
+  GtkWidget  *table;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  GtkWidget  *hbox2;
+  GtkWidget  *radio_button;
+  GtkWidget  *pixmap_widget;
+  GtkWidget  *slider;
+  GtkWidget  *frame;
+  GtkWidget  *darea;
+  GdkPixmap  *pixmap;
+
+  options = g_new0 (InkOptions, 1);
+  paint_options_init ((PaintOptions *) options,
+		      GIMP_TYPE_INK_TOOL,
+		      ink_options_reset);
+
+  options->size             = options->size_d             = 4.4;
+  options->sensitivity      = options->sensitivity_d      = 1.0;
+  options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
+  options->tilt_sensitivity = options->tilt_sensitivity_d = 0.4;
+  options->tilt_angle       = options->tilt_angle_d       = 0.0;
+  options->function         = options->function_d         = blob_ellipse;
+  options->aspect           = options->aspect_d           = 1.0;
+  options->angle            = options->angle_d            = 0.0;
+
+  /*  the main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (((GimpToolOptions *) options)->main_vbox), vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  /* adjust sliders */
+  frame = gtk_frame_new (_("Adjustment"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  /*  size slider  */
+  options->size_w =
+    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 2.0, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Size:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->size);
+
+  /* angle adjust slider */
+  options->tilt_angle_w =
+    gtk_adjustment_new (options->tilt_angle_d, -90.0, 90.0, 1, 10.0, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_angle_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Angle:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (G_OBJECT (options->tilt_angle_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->tilt_angle);
+
+  /* sens sliders */
+  frame = gtk_frame_new (_("Sensitivity"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  /* size sens slider */
+  options->sensitivity_w =
+    gtk_adjustment_new (options->sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->sensitivity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Size:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (G_OBJECT (options->sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->sensitivity);
+  
+  /* tilt sens slider */
+  options->tilt_sensitivity_w =
+    gtk_adjustment_new (options->tilt_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_sensitivity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+			     _("Tilt:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (G_OBJECT (options->tilt_sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->tilt_sensitivity);
+
+  /* velocity sens slider */
+  options->vel_sensitivity_w =
+    gtk_adjustment_new (options->vel_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->vel_sensitivity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+			     _("Speed:"), 1.0, 1.0,
+			     slider, 1, FALSE);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
+  g_signal_connect (G_OBJECT (options->vel_sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->vel_sensitivity);
+
+  /*  bottom hbox */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  /* Brush type radiobuttons */
+  frame = gtk_frame_new (_("Type"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox2);
+  
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (hbox2), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
+			blob_ellipse);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_drawable_unref (pixmap);
+  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+
+  radio_button = gtk_radio_button_new (NULL);
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update),
+		    (gpointer) blob_ellipse);
+
+
+  options->function_w[0] = radio_button;
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
+			blob_square);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_drawable_unref (pixmap);
+  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+
+  radio_button =
+    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update), 
+		    (gpointer) blob_square);
+  
+
+  options->function_w[1] = radio_button;
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
+			blob_diamond);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_drawable_unref (pixmap);
+  gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
+
+  radio_button =
+    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update), 
+		    (gpointer) blob_diamond);
+
+
+  options->function_w[2] = radio_button;
+
+  /* Brush shape widget */
+  frame = gtk_frame_new (_("Shape"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+  options->brush_w = g_new (BrushWidget, 1);
+  options->brush_w->state = FALSE;
+
+  darea = gtk_drawing_area_new();
+  options->brush_w->widget = darea;
+
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
+  gtk_container_add (GTK_CONTAINER (frame), darea);
+
+  gtk_widget_set_events (darea, 
+			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
+			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
+
+  g_signal_connect (G_OBJECT (darea), "button_press_event",
+		    G_CALLBACK (brush_widget_button_press),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "button_release_event",
+		    G_CALLBACK (brush_widget_button_release),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "motion_notify_event",
+		    G_CALLBACK (brush_widget_motion_notify),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "expose_event",
+		    G_CALLBACK (brush_widget_expose), 
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "realize",
+		    G_CALLBACK (brush_widget_realize),
+		    options->brush_w);
+
+  gtk_widget_show_all (hbox);
+
+  return options;
+}
+
+static void
+ink_options_reset (GimpToolOptions *tool_options)
+{
+  InkOptions *options;
+
+  options = (InkOptions *) tool_options;
+
+  paint_options_reset (tool_options);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
+			    options->size_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
+			    options->sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_sensitivity_w),
+			    options->tilt_sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->vel_sensitivity_w),
+			    options->vel_sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
+			    options->tilt_angle_d);
+  gtk_toggle_button_set_active (((options->function_d == blob_ellipse) ?
+				 GTK_TOGGLE_BUTTON (options->function_w[0]) :
+				 ((options->function_d == blob_square) ?
+				  GTK_TOGGLE_BUTTON (options->function_w[1]) :
+				  GTK_TOGGLE_BUTTON (options->function_w[2]))),
+				TRUE);
+  options->aspect = options->aspect_d;
+  options->angle  = options->angle_d;
+  gtk_widget_queue_draw (options->brush_w->widget);
+}
+
+static void
+ink_type_update (GtkWidget *radio_button,
+		 BlobFunc   function)
+{
+  InkOptions *options = ink_options;
+
+  if (GTK_TOGGLE_BUTTON (radio_button)->active)
+    options->function = function;
+
+  gtk_widget_queue_draw (options->brush_w->widget);
 }
