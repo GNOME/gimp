@@ -33,8 +33,6 @@
 #include "gimptransformtool-undo.h"
 #include "tool_manager.h"
 
-#include "path_transform.h"
-
 #include "gimp-intl.h"
 
 
@@ -51,7 +49,6 @@ struct _TransformUndo
 
   TransInfo    trans_info;
   TileManager *original;
-  gpointer     path_undo;
 };
 
 static gboolean undo_pop_transform  (GimpUndo            *undo,
@@ -66,8 +63,7 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
                                gint         tool_ID,
                                GType        tool_type,
                                gdouble     *trans_info,
-                               TileManager *original,
-                               GSList      *path_undo)
+                               TileManager *original)
 {
   GimpUndo *new;
 
@@ -91,7 +87,6 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
 	tu->trans_info[i] = trans_info[i];
 
       tu->original  = original;
-      tu->path_undo = path_undo;
 
       return TRUE;
     }
@@ -115,8 +110,6 @@ undo_pop_transform (GimpUndo            *undo,
 
       tt = GIMP_TRANSFORM_TOOL (active_tool);
       tu = (TransformUndo *) undo->data;
-
-      path_transform_do_undo (undo->gimage, tu->path_undo);
 
       /*  only pop if the active tool is the tool that pushed this undo  */
       if (tu->tool_ID == active_tool->ID)
@@ -162,8 +155,6 @@ undo_free_transform (GimpUndo     *undo,
 
   if (tu->original)
     tile_manager_destroy (tu->original);
-
-  path_transform_free_undo (tu->path_undo);
 
   g_free (tu);
 }

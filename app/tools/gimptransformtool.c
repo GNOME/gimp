@@ -828,7 +828,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 {
   GimpTool    *tool;
   TileManager *new_tiles;
-  GSList      *path_undo;
   gboolean     new_layer;
 
   gimp_set_busy (gdisp->gimage->gimp);
@@ -861,8 +860,6 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
                                                    &new_layer);
 
-  path_undo = path_transform_start_undo (gdisp->gimage);
-
   /*  Send the request for the transformation to the tool...
    */
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
@@ -890,8 +887,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
                                      tool->ID,
                                      G_TYPE_FROM_INSTANCE (tool),
                                      tr_tool->old_trans_info,
-                                     NULL,
-                                     path_undo);
+                                     NULL);
     }
 
   /*  push the undo group end  */

@@ -25,8 +25,7 @@ gboolean   gimp_transform_tool_push_undo (GimpImage   *gimage,
                                           gint         tool_ID,
                                           GType        tool_type,
                                           gdouble     *trans_info,
-                                          TileManager *original,
-                                          GSList      *path_undo);
+                                          TileManager *original);
 
 
 #endif  /* __GIMP_TRANSFORM_TOOL_UNDO_H__ */
