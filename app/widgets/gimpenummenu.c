@@ -599,6 +599,7 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
 GtkWidget *
 gimp_enum_stock_box_new (GType         enum_type,
                          const gchar  *stock_prefix,
+                         GtkIconSize   icon_size,
                          GCallback     callback,
                          gpointer      callback_data,
                          GtkWidget   **first_button)
@@ -613,7 +614,7 @@ gimp_enum_stock_box_new (GType         enum_type,
   box = gimp_enum_stock_box_new_with_range (enum_type,
                                             enum_class->minimum,
                                             enum_class->maximum,
-                                            stock_prefix,
+                                            stock_prefix, icon_size,
                                             callback, callback_data,
                                             first_button);
   
@@ -627,6 +628,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
                                     gint          minimum,
                                     gint          maximum,
                                     const gchar  *stock_prefix,
+                                    GtkIconSize   icon_size,
                                     GCallback     callback,
                                     gpointer      callback_data,
                                     GtkWidget   **first_button)
@@ -665,7 +667,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 
       stock_id = g_strconcat (stock_prefix, "-", value->value_nick, NULL);
 
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      image = gtk_image_new_from_stock (stock_id, icon_size);
 
       g_free (stock_id);
 

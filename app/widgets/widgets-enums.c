@@ -65,5 +65,24 @@ gimp_histogram_scale_get_type (void)
 }
 
 
+static const GEnumValue gimp_view_type_enum_values[] =
+{
+  { GIMP_VIEW_TYPE_LIST, N_("View as list"), "list" },
+  { GIMP_VIEW_TYPE_GRID, N_("View as grid"), "grid" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_view_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpViewType", gimp_view_type_enum_values);
+
+  return enum_type;
+}
+
+
 /* Generated data ends here */
 

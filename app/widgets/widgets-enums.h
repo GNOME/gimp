@@ -59,6 +59,17 @@ typedef enum
 } GimpHistogramScale;
 
 
+#define GIMP_TYPE_VIEW_TYPE (gimp_view_type_get_type ())
+
+GType gimp_view_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_VIEW_TYPE_LIST,  /*< desc="View as list" >*/
+  GIMP_VIEW_TYPE_GRID   /*< desc="View as grid" >*/
+} GimpViewType;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -68,12 +79,6 @@ typedef enum  /*< skip >*/
   GIMP_PREVIEW_BG_CHECKS,
   GIMP_PREVIEW_BG_WHITE
 } GimpPreviewBG;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_VIEW_TYPE_GRID,
-  GIMP_VIEW_TYPE_LIST
-} GimpViewType;
 
 typedef enum  /*< skip >*/
 {

@@ -123,6 +123,7 @@ GtkWidget * gimp_enum_radio_frame_new_with_range  (GType         enum_type,
 
 GtkWidget * gimp_enum_stock_box_new               (GType         enum_type,
                                                    const gchar  *stock_prefix,
+                                                   GtkIconSize   icon_size,
                                                    GCallback     callback,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);
@@ -130,6 +131,7 @@ GtkWidget * gimp_enum_stock_box_new_with_range    (GType         enum_type,
                                                    gint          minimum,
                                                    gint          maximum,
                                                    const gchar  *stock_prefix,
+                                                   GtkIconSize   icon_size,
                                                    GCallback     callback,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);

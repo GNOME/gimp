@@ -577,6 +577,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
       box = gimp_enum_stock_box_new_with_range (param_spec->value_type,
                                                 minimum, maximum,
                                                 stock_prefix,
+                                                GTK_ICON_SIZE_MENU,
                                                 G_CALLBACK (gimp_prop_radio_button_callback),
                                                 config,
                                                 &button);
@@ -585,6 +586,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
     {
       box = gimp_enum_stock_box_new (param_spec->value_type,
                                      stock_prefix,
+                                     GTK_ICON_SIZE_MENU,
                                      G_CALLBACK (gimp_prop_radio_button_callback),
                                      config,
                                      &button);

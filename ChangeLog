@@ -1,5 +1,21 @@
 2003-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpenummenu.[ch]: added "icon_size" parameters
+	to gimp_enum_stock_box_new[_with_range]().
+
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
+	* app/widgets/gimpeditor.[ch]: added gimp_editor_add_stock_box().
+
+	* app/widgets/widgets-enums.[ch]: register GimpViewType with
+	the type system.
+
+	* app/widgets/gimpcontainerpopup.c: use a stock box for the
+	view as list/grid buttons.
+
+2003-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/xpm.c (save_image): free the original cmap
 	pointer, not the one we used for iteration (fixes bug #109567).
 

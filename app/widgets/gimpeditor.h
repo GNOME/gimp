@@ -52,22 +52,27 @@ struct _GimpEditorClass
 };
 
 
-GType       gimp_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_editor_new         (void);
+GtkWidget * gimp_editor_new           (void);
 
-void        gimp_editor_create_menu (GimpEditor      *editor,
-                                     GimpMenuFactory *menu_factory,
-                                     const gchar     *menu_identifier,
-                                     gpointer         callback_data);
+void        gimp_editor_create_menu   (GimpEditor      *editor,
+                                       GimpMenuFactory *menu_factory,
+                                       const gchar     *menu_identifier,
+                                       gpointer         callback_data);
 
-GtkWidget * gimp_editor_add_button  (GimpEditor      *editor,
-                                     const gchar     *stock_id,
-                                     const gchar     *tooltip,
-                                     const gchar     *help_data,
-                                     GCallback        callback,
-                                     GCallback        extended_callback,
-                                     gpointer         callback_data);
+GtkWidget * gimp_editor_add_button    (GimpEditor      *editor,
+                                       const gchar     *stock_id,
+                                       const gchar     *tooltip,
+                                       const gchar     *help_data,
+                                       GCallback        callback,
+                                       GCallback        extended_callback,
+                                       gpointer         callback_data);
+GtkWidget * gimp_editor_add_stock_box (GimpEditor      *editor,
+                                       GType            enum_type,
+                                       const gchar     *stock_prefix,
+                                       GCallback        callback,
+                                       gpointer         callback_data);
 
 
 #endif  /*  __GIMP_EDITOR_H__  */

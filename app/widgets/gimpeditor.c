@@ -29,6 +29,7 @@
 
 #include "gimpeditor.h"
 #include "gimpdnd.h"
+#include "gimpenummenu.h"
 #include "gimpmenufactory.h"
 
 
@@ -269,4 +270,59 @@ gimp_editor_add_button (GimpEditor  *editor,
   gtk_widget_show (image);
 
   return button;
+}
+
+GtkWidget *
+gimp_editor_add_stock_box (GimpEditor  *editor,
+                           GType        enum_type,
+                           const gchar *stock_prefix,
+                           GCallback    callback,
+                           gpointer     callback_data)
+{
+  GtkWidget   *hbox;
+  GtkWidget   *first_button;
+  gint         button_spacing;
+  GtkIconSize  button_icon_size;
+  GList       *children;
+  GList       *list;
+
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
+  g_return_val_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM), NULL);
+  g_return_val_if_fail (stock_prefix != NULL, NULL);
+
+  gtk_widget_style_get (GTK_WIDGET (editor),
+                        "button_spacing",   &button_spacing,
+                        "button_icon_size", &button_icon_size,
+                        NULL);
+
+  if (! editor->button_box)
+    {
+      editor->button_box = gtk_hbox_new (TRUE, button_spacing);
+      gtk_box_pack_end (GTK_BOX (editor), editor->button_box, FALSE, FALSE, 0);
+      gtk_widget_show (editor->button_box);
+    }
+
+  hbox = gimp_enum_stock_box_new (enum_type, stock_prefix, button_icon_size,
+                                  callback, callback_data,
+                                  &first_button);
+
+  children = gtk_container_get_children (GTK_CONTAINER (hbox));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *button = list->data;
+
+      g_object_ref (button);
+
+      gtk_container_remove (GTK_CONTAINER (hbox), button);
+      gtk_box_pack_start (GTK_BOX (editor->button_box), button,
+                          TRUE, TRUE, 0);
+
+      g_object_unref (button);
+    }
+
+  g_list_free (children);
+  gtk_widget_destroy (hbox);
+
+  return first_button;
 }

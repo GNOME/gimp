@@ -719,7 +719,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   hbox = gimp_enum_stock_box_new (GIMP_TYPE_CURVE_TYPE,
-				  "gimp-curve",
+				  "gimp-curve", GTK_ICON_SIZE_MENU,
 				  G_CALLBACK (curves_curve_type_callback),
 				  c_tool,
 				  &c_tool->curve_type);

@@ -35,6 +35,7 @@
 #include "gimpcontainereditor.h"
 #include "gimpcontainerpopup.h"
 #include "gimpcontainergridview.h"
+#include "gimpcontainertreeview.h"
 #include "gimpdialogfactory.h"
 #include "gimppreview.h"
 
@@ -64,15 +65,13 @@ static void     gimp_container_popup_real_confirm (GimpContainerPopup *popup);
 static void     gimp_container_popup_create_view  (GimpContainerPopup *popup,
                                                    GimpViewType        view_type);
 
-static void  gimp_container_popup_smaller_clicked (GtkWidget          *button,
+static void gimp_container_popup_smaller_clicked  (GtkWidget          *button,
                                                    GimpContainerPopup *popup);
-static void  gimp_container_popup_larger_clicked  (GtkWidget          *button,
+static void gimp_container_popup_larger_clicked   (GtkWidget          *button,
                                                    GimpContainerPopup *popup);
-static void  gimp_container_popup_list_clicked    (GtkWidget          *button,
+static void gimp_container_popup_view_type_toggled(GtkWidget          *button,
                                                    GimpContainerPopup *popup);
-static void  gimp_container_popup_grid_clicked    (GtkWidget          *button,
-                                                   GimpContainerPopup *popup);
-static void  gimp_container_popup_dialog_clicked  (GtkWidget          *button,
+static void gimp_container_popup_dialog_clicked   (GtkWidget          *button,
                                                    GimpContainerPopup *popup);
 
 
@@ -468,33 +467,21 @@ gimp_container_popup_create_view (GimpContainerPopup *popup,
   editor = GIMP_EDITOR (popup->editor->view);
 
   gimp_editor_add_button (editor, GTK_STOCK_ZOOM_OUT,
-                          _("Smaller Previews"), NULL,
+                          _("Smaller previews"), NULL,
                           G_CALLBACK (gimp_container_popup_smaller_clicked),
                           NULL,
                           popup);
   gimp_editor_add_button (editor, GTK_STOCK_ZOOM_IN,
-                          _("Larger Previews"), NULL,
+                          _("Larger previews"), NULL,
                           G_CALLBACK (gimp_container_popup_larger_clicked),
                           NULL,
                           popup);
 
-  button =
-    gimp_editor_add_button (editor, GIMP_STOCK_LIST,
-                            _("View as List"), NULL,
-                            G_CALLBACK (gimp_container_popup_list_clicked),
-                            NULL,
-                            popup);
-  if (view_type == GIMP_VIEW_TYPE_LIST)
-    gtk_widget_set_sensitive (button, FALSE);
-
-  button =
-    gimp_editor_add_button (editor, GIMP_STOCK_GRID,
-                            _("View as Grid"), NULL,
-                            G_CALLBACK (gimp_container_popup_grid_clicked),
-                            NULL,
-                            popup);
-  if (view_type == GIMP_VIEW_TYPE_GRID)
-    gtk_widget_set_sensitive (button, FALSE);
+  button = gimp_editor_add_stock_box (editor, GIMP_TYPE_VIEW_TYPE, "gimp",
+                                      G_CALLBACK (gimp_container_popup_view_type_toggled),
+                                      popup);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                               GINT_TO_POINTER (view_type));
 
   if (popup->dialog_factory)
     gimp_editor_add_button (editor, popup->dialog_stock_id,
@@ -533,21 +520,33 @@ gimp_container_popup_larger_clicked (GtkWidget          *button,
 }
 
 static void
-gimp_container_popup_list_clicked (GtkWidget          *button,
-                                   GimpContainerPopup *popup)
+gimp_container_popup_view_type_toggled (GtkWidget          *button,
+                                        GimpContainerPopup *popup)
 {
-  gtk_container_remove (GTK_CONTAINER (popup->frame),
-                        GTK_WIDGET (popup->editor));
-  gimp_container_popup_create_view (popup, GIMP_VIEW_TYPE_LIST);
-}
+  if (GTK_TOGGLE_BUTTON (button)->active)
+    {
+      GimpViewType view_type;
 
-static void
-gimp_container_popup_grid_clicked (GtkWidget          *button,
-                                   GimpContainerPopup *popup)
-{
-  gtk_container_remove (GTK_CONTAINER (popup->frame),
-                        GTK_WIDGET (popup->editor));
-  gimp_container_popup_create_view (popup, GIMP_VIEW_TYPE_GRID);
+      view_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
+                                                      "gimp-item-data"));
+
+      switch (view_type)
+        {
+        case GIMP_VIEW_TYPE_LIST:
+          if (GIMP_IS_CONTAINER_TREE_VIEW (popup->editor->view))
+            return;
+          break;
+
+        case GIMP_VIEW_TYPE_GRID:
+          if (GIMP_IS_CONTAINER_GRID_VIEW (popup->editor->view))
+            return;
+          break;
+        }
+
+      gtk_container_remove (GTK_CONTAINER (popup->frame),
+                            GTK_WIDGET (popup->editor));
+      gimp_container_popup_create_view (popup, view_type);
+    }
 }
 
 static void
