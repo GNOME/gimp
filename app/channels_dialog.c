@@ -41,15 +41,10 @@
 #include "tools/eye.xbm"
 #include "tools/channel.xbm"
 #include "tools/new.xpm"
-#include "tools/new_is.xpm"
 #include "tools/raise.xpm"
-#include "tools/raise_is.xpm"
 #include "tools/lower.xpm"
-#include "tools/lower_is.xpm"
 #include "tools/duplicate.xpm"
-#include "tools/duplicate_is.xpm"
 #include "tools/delete.xpm"
-#include "tools/delete_is.xpm"
 
 #include "libgimp/gimpintl.h"
 
@@ -179,12 +174,12 @@ static MenuItem channels_ops[] =
 /* the ops buttons */
 static OpsButton channels_ops_buttons[] =
 {
-  { new_xpm, new_is_xpm, channels_dialog_new_channel_callback, N_("New Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
-  { raise_xpm, raise_is_xpm, channels_dialog_raise_channel_callback, N_("Raise Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
-  { lower_xpm, lower_is_xpm, channels_dialog_lower_channel_callback, N_("Lower Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
-  { duplicate_xpm, duplicate_is_xpm, channels_dialog_duplicate_channel_callback, N_("Duplicate Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
-  { delete_xpm, delete_is_xpm, channels_dialog_delete_channel_callback, N_("Delete Channel"), NULL, NULL, NULL, NULL, NULL, NULL },
-  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
+  { new_xpm, channels_dialog_new_channel_callback, N_("New Channel"), NULL },
+  { raise_xpm, channels_dialog_raise_channel_callback, N_("Raise Channel"), NULL },
+  { lower_xpm, channels_dialog_lower_channel_callback, N_("Lower Channel"), NULL },
+  { duplicate_xpm, channels_dialog_duplicate_channel_callback, N_("Duplicate Channel"), NULL },
+  { delete_xpm, channels_dialog_delete_channel_callback, N_("Delete Channel"), NULL },
+  { NULL, NULL, NULL, NULL }
 };
 
 /**************************************/
@@ -549,19 +544,19 @@ channels_dialog_set_menu_sensitivity ()
 
   /* new channel */
   gtk_widget_set_sensitive (channels_ops[0].widget, !fs_sensitive);
-  ops_button_set_sensitive (channels_ops_buttons[0], !fs_sensitive);
+  gtk_widget_set_sensitive (channels_ops_buttons[0].widget, !fs_sensitive);
   /* raise channel */
   gtk_widget_set_sensitive (channels_ops[1].widget, !fs_sensitive && aux_sensitive);
-  ops_button_set_sensitive (channels_ops_buttons[1], !fs_sensitive && aux_sensitive);
+  gtk_widget_set_sensitive (channels_ops_buttons[1].widget, !fs_sensitive && aux_sensitive);
   /* lower channel */
   gtk_widget_set_sensitive (channels_ops[2].widget, !fs_sensitive && aux_sensitive);
-  ops_button_set_sensitive (channels_ops_buttons[2], !fs_sensitive && aux_sensitive);
+  gtk_widget_set_sensitive (channels_ops_buttons[2].widget, !fs_sensitive && aux_sensitive);
   /* duplicate channel */
   gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive && aux_sensitive);
-  ops_button_set_sensitive (channels_ops_buttons[3], !fs_sensitive && aux_sensitive);
+  gtk_widget_set_sensitive (channels_ops_buttons[3].widget, !fs_sensitive && aux_sensitive);
   /* delete channel */
   gtk_widget_set_sensitive (channels_ops[4].widget, !fs_sensitive && aux_sensitive);
-  ops_button_set_sensitive (channels_ops_buttons[4], !fs_sensitive && aux_sensitive);
+  gtk_widget_set_sensitive (channels_ops_buttons[4].widget, !fs_sensitive && aux_sensitive);
   /* channel to selection */
   gtk_widget_set_sensitive (channels_ops[5].widget, aux_sensitive);
 }

@@ -1,3 +1,12 @@
+Wed Nov 18 16:44:32 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/ops_buttons.[ch]
+	* app/layers_dialog.c
+	* app/channels_dialog.c: new GTK feature greys out buttons
+	automatically. Much simpler code now.
+
+	* app/tools/*_is.xpm: removed pixmaps for insensitive state
+
 Tue Nov 17 17:34:34 1998  Raph Levien  <raph@acm.org>
 
 	* plug-ins/waterselect/waterselect.c: Trying to make the response
