@@ -95,6 +95,8 @@ libappgui_a_SOURCES = \
 	plug-in-commands.h		\
 	plug-in-menus.c			\
 	plug-in-menus.h			\
+	preferences-dialog.c		\
+	preferences-dialog.h		\
 	qmask-commands.c		\
 	qmask-commands.h		\
 	resize-dialog.c			\

@@ -135,6 +135,8 @@ libappwidgets_a_sources = \
 	gimppreview.h			\
 	gimppreview-utils.c		\
 	gimppreview-utils.h		\
+	gimppropwidgets.c		\
+	gimppropwidgets.h		\
 	gimpselectioneditor.c		\
 	gimpselectioneditor.h		\
 	gimptoolbox.c			\

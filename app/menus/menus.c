@@ -2080,11 +2080,6 @@ menus_init (Gimp *gimp)
   menus_last_opened_add (toolbox_factory, gimp);
   ADD_FACTORY (toolbox_factory);
 
-  /* preferences dialog is temporarily disabled */
-  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (toolbox_factory),
-                                   "/File/Preferences...",
-                                   FALSE);
-
   image_factory = gimp_item_factory_new (gimp,
                                          GTK_TYPE_MENU,
                                          "<Image>", "image",

@@ -1,0 +1,71 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifndef __GIMP_PROP_WIDGETS_H__
+#define __GIMP_PROP_WIDGETS_H__
+
+
+GtkWidget     * gimp_prop_check_button_new        (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *label);
+GtkWidget     * gimp_prop_enum_option_menu_new    (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gint         minimum,
+                                                   gint         maximum);
+GtkWidget     * gimp_prop_enum_option_menu_new_with_values (GObject     *config,
+                                                            const gchar *property_name,
+                                                            gint         n_values,
+                                                            ...);
+GtkWidget     * gimp_prop_enum_option_menu_new_valist      (GObject     *config,
+                                                            const gchar *property_name,
+                                                            gint         n_values,
+                                                            va_list      args);
+GtkWidget     * gimp_prop_boolean_option_menu_new (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *true_text,
+                                                   const gchar *false_text);
+GtkWidget     * gimp_prop_spin_button_new         (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gdouble      step_increment,
+                                                   gdouble      page_increment,
+                                                   gint         digits);
+GtkWidget     * gimp_prop_memsize_entry_new       (GObject     *config,
+                                                   const gchar *property_name);
+GtkTextBuffer * gimp_prop_text_buffer_new         (GObject     *config,
+                                                   const gchar *property_name,
+                                                   gint         max_len);
+GtkWidget     * gimp_prop_file_entry_new          (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *filesel_title,
+                                                   gboolean     dir_only,
+                                                   gboolean     check_valid);
+GtkWidget     * gimp_prop_path_editor_new         (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *filesel_title);
+GtkWidget     * gimp_prop_coordinates_new         (GObject     *config,
+                                                   const gchar *x_property_name,
+                                                   const gchar *y_property_name,
+                                                   const gchar *unit_property_name,
+                                                   const gchar *unit_format,
+                                                   GimpSizeEntryUpdatePolicy  update_policy,
+                                                   gdouble      xresolution,
+                                                   gdouble      yresolution,
+                                                   gboolean     has_chainbutton);
+
+
+#endif /* __GIMP_PROP_WIDGETS_H__ */

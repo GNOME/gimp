@@ -1,3 +1,20 @@
+2002-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimppropwidgets.[ch]: new files containing
+	constructors for views on GObject properties.
+
+	* app/gui/Makefile.am: the build preferences-dialog again.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c
+	* app/gui/menus.c: added it back to the dialog system (as a non
+	signleton to get the new model <-> view stuff some testing).
+
+	* app/gui/preferences-dialog.c: here it is again, using property
+	view widgets. Lots of stuff removed & simplified. Some things
+	still #if 0'ed and/or non-working. No saving yet, stuff...
+
 2002-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.[ch]: store the gimprc filenames in the
