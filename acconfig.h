@@ -22,6 +22,7 @@
 #undef HAVE_IPC_H
 #undef HAVE_LC_MESSAGES
 #undef HAVE_NDIR_H
+#undef HAVE_PROGRESSIVE_JPEG
 #undef HAVE_PUTENV
 #undef HAVE_SHM_H
 #undef HAVE_STPCPY
@@ -43,6 +44,8 @@
 #undef SRAND_FUNC
 
 #undef USE_PTHREADS
+
+#undef WITH_SYMBOL_UNDERSCORE
 
 
 /* Leave that blank line there!!  Autoheader needs it.

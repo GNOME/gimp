@@ -232,6 +232,9 @@ dnl Test for libjpeg
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
 	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg'
+	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
+	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
+	  AC_MSG_WARN(JPEG library does not support progressive saving.))
       else
 	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
       fi

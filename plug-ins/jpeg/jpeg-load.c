@@ -24,21 +24,58 @@
  *  from that file. The filter, therefore, also uses libjpeg.
  */
 
+/* 11-JAN-99 - Added support for JPEG comments and Progressive saves.
+ *  -pete whiting <pwhiting@sprint.net>
+ *
+ * Comments of size up to 32k can be stored in the header of jpeg
+ * files.  (They are not compressed.)  The JPEG specs and libraries
+ * support the storing of multiple comments.  The behavior of this
+ * code is to merge all comments in a loading image into a single
+ * comment (putting \n between each) and attach that string as a
+ * parasite - gimp-comment - to the image.  When saving, the image is
+ * checked to see if it has the gimp-comment parasite - if so, that is
+ * used as the default comment in the save dialog.  Further, the other
+ * jpeg parameters (quaility, smoothing, compression and progressive)
+ * are attached to the image as a parasite.  This allows the
+ * parameters to remain consistent between saves.  I was not able to
+ * figure out how to determine the quaility, smoothing or compression
+ * values of an image as it is being loaded, but the code is there to
+ * support it if anyone knows how.  Progressive mode is a method of
+ * saving the image such that as a browser (or other app supporting
+ * progressive loads - gimp doesn't) loads the image it first gets a
+ * low res version displayed and then the image is progressively
+ * enhanced until you get the final version.  It doesn't add any size
+ * to the image - the only draw back is some might find it annoying.
+ */
+
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <jpeglib.h>
+#include "config.h"    /* configure cares about HAVE_PROGRESSIVE_JPEG */
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
 #define SCALE_WIDTH 125
+
+/* if you are not compiling this from inside the gimp tree, you have to  */
+/* take care yourself if your JPEG library supports progressive mode     */
+/* #undef HAVE_PROGRESSIVE_JPEG   if your library don't support it       */
+/* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
+
+#define DEFAULT_QUALITY 0.75
+#define DEFAULT_SMOOTHING 0.0
+#define DEFAULT_OPTIMIZE 1
+#define DEFAULT_PROGRESSIVE 0
+#define DEFAULT_COMMENT "Created with The GIMP"
 
 typedef struct
 {
   gdouble quality;
   gdouble smoothing;
   gint optimize;
+  gint progressive;
 } JpegSaveVals;
 
 typedef struct
@@ -69,7 +106,8 @@ static void   save_scale_update    (GtkAdjustment *adjustment,
 				    double        *scale_val);
 static void   save_optimize_update (GtkWidget *widget,
 				    gpointer   data);
-
+static void   save_progressive_toggle (GtkWidget *widget,
+				       gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -81,9 +119,10 @@ GPlugInInfo PLUG_IN_INFO =
 
 static JpegSaveVals jsvals =
 {
-  0.75,  /*  quality  */
-  0.0,   /*  smoothing  */
-  1      /*  optimize  */
+  DEFAULT_QUALITY,
+  DEFAULT_SMOOTHING,
+  DEFAULT_OPTIMIZE,
+  DEFAULT_PROGRESSIVE
 };
 
 static JpegSaveInterface jsint =
@@ -91,6 +130,7 @@ static JpegSaveInterface jsint =
   FALSE   /*  run  */
 };
 
+char *image_comment=NULL;
 
 MAIN ()
 
@@ -120,6 +160,8 @@ query ()
     { PARAM_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
     { PARAM_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
     { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters" },
+    { PARAM_INT32, "progressive", "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG" },
+    { PARAM_STRING, "comment", "Image comment" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -162,6 +204,9 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+#ifdef GIMP_HAVE_PARASITES
+  Parasite *parasite;
+#endif /* GIMP_HAVE_PARASITES */
 
   run_mode = param[0].data.d_int32;
 
@@ -188,12 +233,43 @@ run (char    *name,
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
     {
+      image_ID = param[1].data.d_int32;
+      if(image_comment) {
+	g_free(image_comment);
+	image_comment=NULL;
+      }
+#ifdef GIMP_HAVE_PARASITES
+      parasite = gimp_image_find_parasite(image_ID, "gimp-comment");
+      if (parasite) {
+        image_comment = g_strdup(parasite->data);
+	parasite_free(parasite);
+      }
+#endif /* GIMP_HAVE_PARASITES */
+      if (!image_comment) image_comment = g_strdup(DEFAULT_COMMENT);
+      jsvals.quality = DEFAULT_QUALITY;
+      jsvals.smoothing = DEFAULT_SMOOTHING;
+      jsvals.optimize = DEFAULT_OPTIMIZE;
+      jsvals.progressive = DEFAULT_PROGRESSIVE;
+      
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 
+#ifdef GIMP_HAVE_PARASITES
+	  /* load up the previously used values */
+	  parasite = gimp_image_find_parasite(image_ID, "jpeg-save-options");
+	  if (parasite)
+	  {
+	    jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
+	    jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
+	    jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
+	    jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
+	    parasite_free(parasite);
+	  }
+#endif /* GIMP_HAVE_PARASITES */
+	  
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
 	    return;
@@ -201,13 +277,20 @@ run (char    *name,
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 8)
+	  /*  pw - added two more progressive and comment */
+	  if (nparams != 10)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
 	      jsvals.quality = param[5].data.d_float;
 	      jsvals.smoothing = param[6].data.d_float;
 	      jsvals.optimize = param[7].data.d_int32;
+#ifdef HAVE_PROGRESSIVE_JPEG
+	      jsvals.progressive = param[8].data.d_int32;
+#endif /* HAVE_PROGRESSIVE_JPEG */
+	      /* free up the default -- wasted some effort earlier */
+	      if(image_comment) g_free(image_comment);
+	      image_comment=g_strdup(param[9].data.d_string);
 	    }
 	  if (status == STATUS_SUCCESS &&
 	      (jsvals.quality < 0.0 || jsvals.quality > 1.0))
@@ -220,6 +303,17 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
+#ifdef GIMP_HAVE_PARASITES
+	  parasite = gimp_image_find_parasite(image_ID, "jpeg-save-options");
+	  if (parasite)
+	  {
+	    jsvals.quality     = ((JpegSaveVals *)parasite->data)->quality;
+	    jsvals.smoothing   = ((JpegSaveVals *)parasite->data)->smoothing;
+	    jsvals.optimize    = ((JpegSaveVals *)parasite->data)->optimize;
+	    jsvals.progressive = ((JpegSaveVals *)parasite->data)->progressive;
+	    parasite_free(parasite);
+	  }
+#endif /* GIMP_HAVE_PARASITES */
 	  break;
 
 	default:
@@ -227,7 +321,9 @@ run (char    *name,
 	}
 
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (save_image (param[3].data.d_string,
+		      param[1].data.d_int32,
+		      param[2].data.d_int32))
 	{
 	  /*  Store mvals data  */
 	  gimp_set_data ("file_jpeg_save", &jsvals, sizeof (JpegSaveVals));
@@ -236,6 +332,32 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+#ifdef GIMP_HAVE_PARASITES
+
+      /* pw - now we need to change the defaults to be whatever
+       * was used to save this image.  Dump the old parasites
+       * and add new ones. */
+      
+      gimp_image_detach_parasite(image_ID,"gimp-comment");
+      if(strlen(image_comment)) {
+	parasite=parasite_new("gimp-comment",
+			      PARASITE_PERSISTENT,
+			      strlen(image_comment)+1,
+			      image_comment);
+	gimp_image_attach_parasite(image_ID,parasite);
+	parasite_free(parasite);
+      }
+      gimp_image_detach_parasite(image_ID, "jpeg-save-options");
+      
+      parasite=parasite_new("jpeg-save-options",0,sizeof(jsvals),&jsvals);
+      gimp_image_attach_parasite(image_ID,parasite);
+      parasite_free(parasite);
+    
+#endif /* Have Parasites */  
+      
+
+      
     }
 }
 
@@ -284,6 +406,17 @@ load_image (char *filename)
   int scanlines;
   int i, start, end;
 
+  
+  
+#ifdef GIMP_HAVE_PARASITES
+  JpegSaveVals local_save_vals;
+  jpeg_saved_marker_ptr curr_marker;
+  Parasite *comment_parasite;
+  Parasite *vals_parasite;
+  GString *local_image_comments=NULL;
+#endif GIMP_HAVE_PARASITES
+
+  
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
@@ -320,6 +453,10 @@ load_image (char *filename)
 
   jpeg_stdio_src (&cinfo, infile);
 
+  /* pw - step 2.1 let the lib know we want the comments. */
+  
+  jpeg_save_markers(&cinfo,JPEG_COM,0xFFFF);
+
   /* Step 3: read file parameters with jpeg_read_header() */
 
   (void) jpeg_read_header (&cinfo, TRUE);
@@ -329,6 +466,62 @@ load_image (char *filename)
    * See libjpeg.doc for more info.
    */
 
+#ifdef GIMP_HAVE_PARASITES
+
+  /* pw - Walk the marker list looking for comments (that is the only
+   * thing that should be in there - but be explicit.)  If there are
+   * multiple comments, merge them into one with a /n between each. */
+  
+  for(curr_marker=cinfo.marker_list;
+      curr_marker!=NULL;
+      curr_marker=curr_marker->next) {
+    
+    if(curr_marker->marker==JPEG_COM) {
+      int len=curr_marker->data_length;
+      char *string=g_strndup(curr_marker->data,len);
+      if(len != curr_marker->original_length) {
+	g_warning("*** Warning *** comment truncated\n");
+      }
+      if(image_comment) {
+	g_string_append_c(local_image_comments,'\n');
+	g_string_append(local_image_comments,string);
+      } else {
+	local_image_comments=g_string_new(string);
+      }
+      g_free(string);
+    }
+  }
+
+  if(local_image_comments) {
+    char *string=local_image_comments->str;
+    g_string_free(local_image_comments,FALSE);
+    comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
+				    strlen(string)+1,string);
+  } else {
+    comment_parasite=NULL;
+  }
+  
+  /* pw - figuring out what the saved values were is non-trivial.
+   * They don't seem to be in the cinfo structure. For now, I will
+   * just use the defaults, but if someone figures out how to derive
+   * them this is the place to store them. */
+
+  local_save_vals.quality=DEFAULT_QUALITY;
+  local_save_vals.smoothing=DEFAULT_SMOOTHING;
+  local_save_vals.optimize=DEFAULT_OPTIMIZE;
+  
+#ifdef HAVE_PROGRESSIVE_JPEG 
+  local_save_vals.progressive=cinfo.progressive_mode;
+#else
+  local_save_vals.progressive=0;
+#endif /* HAVE_PROGRESSIVE_JPEG */
+  
+  vals_parasite = parasite_new("jpeg-save-options", 0,
+			       sizeof(local_save_vals), &local_save_vals);
+  
+#endif /* GIMP_HAVE_PARASITES */
+  
+  
   /* Step 4: set parameters for decompression */
 
   /* In this example, we don't need to change any of the defaults set by
@@ -437,6 +630,18 @@ load_image (char *filename)
   /* Tell the GIMP to display the image.
    */
   gimp_drawable_flush (drawable);
+
+  /* pw - Last of all, attach the parasites (couldn't do it earlier -
+     there was no image. */
+  
+  if(comment_parasite){
+    gimp_image_attach_parasite(image_ID, comment_parasite);
+    parasite_free(comment_parasite);
+  }
+  if(vals_parasite){
+    gimp_image_attach_parasite(image_ID, vals_parasite);
+    parasite_free(vals_parasite);
+  }   
 
   return image_ID;
 }
@@ -565,6 +770,12 @@ save_image (char   *filename,
   cinfo.smoothing_factor = (int) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
 
+#ifdef HAVE_PROGRESSIVE_JPEG
+  if(jsvals.progressive) {
+    jpeg_simple_progression(&cinfo);
+  }
+#endif HAVE_PROGRESSIVE_JPEG
+  
   /* Step 4: Start compressor */
 
   /* TRUE ensures that we will write a complete interchange-JPEG file.
@@ -572,6 +783,14 @@ save_image (char   *filename,
    */
   jpeg_start_compress (&cinfo, TRUE);
 
+  /* Step 4.1: Write the comment out - pw */
+  if(image_comment) {
+    jpeg_write_marker(&cinfo,
+		      JPEG_COM,
+		      image_comment,
+		      strlen(image_comment));
+  }
+    
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
 
@@ -651,6 +870,14 @@ save_dialog ()
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *scale_data;
+
+  GtkWidget *progressive;
+  
+  GtkWidget *text;
+  GtkWidget *com_frame;
+  GtkWidget *com_table;
+  GtkWidget *vscrollbar;
+  
   gchar **argv;
   gint argc;
 
@@ -691,7 +918,7 @@ save_dialog ()
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
@@ -734,6 +961,56 @@ save_dialog ()
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
   gtk_widget_show(toggle);
 
+
+  progressive = gtk_check_button_new_with_label("Progressive");
+  gtk_table_attach(GTK_TABLE(table), progressive, 0, 2, 3, 4,
+		   GTK_FILL, 0, 0, 0);
+  gtk_signal_connect(GTK_OBJECT(progressive), "toggled",
+                     (GtkSignalFunc)save_progressive_toggle, NULL);
+  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(progressive),
+			      jsvals.progressive);
+  gtk_widget_show(progressive);
+
+#ifndef HAVE_PROGRESSIVE_JPEG
+  gtk_widget_set_sensitive(progressive,FALSE);
+#endif
+  
+  com_frame = gtk_frame_new ("Image Comments");
+  gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (com_frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), com_frame, TRUE, TRUE, 0
+);
+  com_table = gtk_table_new (1, 1, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (com_table), 10);
+  gtk_container_add (GTK_CONTAINER (com_frame), com_table);
+
+  text = gtk_text_new (NULL, NULL);
+  gtk_text_set_editable (GTK_TEXT (text), TRUE);
+  if(image_comment) 
+    gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,image_comment,-1);
+  gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+    /* Add a vertical scrollbar to the GtkText widget */
+  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+  gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
+                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (vscrollbar);
+
+  /* pw - mild hack here.  I didn't like redoing the comment string
+   * each time a character was typed, so I associated the text area
+   * with the dialog.  That way, just before the dialog destroys
+   * itself (once the ok button is hit) it can save whatever was in
+   * the comment text area to the comment string.  See the
+   * save-ok-callback for more details.  */
+  
+  gtk_object_set_data((GtkObject *)dlg,"text",text); 
+  
+  gtk_widget_show (text);
+  gtk_widget_show (com_frame);
+  gtk_widget_show (com_table);
+ 
   gtk_widget_show (frame);
   gtk_widget_show (table);
   gtk_widget_show (dlg);
@@ -758,7 +1035,21 @@ static void
 save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
+  GtkWidget *text;
   jsint.run = TRUE;
+
+  /* pw - get the comment text object and grab it's data */
+  text=gtk_object_get_data(GTK_OBJECT(data),"text");
+  if(image_comment!=NULL) {
+    g_free(image_comment);
+    image_comment=NULL;
+  }
+  
+  /* pw - gtk_editable_get_chars allocates a copy of the string, so
+   * don't worry about the gtk_widget_destroy killing it.  */
+
+  image_comment=gtk_editable_get_chars(GTK_EDITABLE (text),0,-1);
+  
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -775,3 +1066,12 @@ save_optimize_update(GtkWidget *widget,
 {
   jsvals.optimize = GTK_TOGGLE_BUTTON(widget)->active;
 }
+
+static void
+save_progressive_toggle(GtkWidget *widget,
+			gpointer  data)
+{
+  jsvals.progressive = GTK_TOGGLE_BUTTON(widget)->active;
+}
+
+
