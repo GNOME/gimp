@@ -139,7 +139,7 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-	$(MAKE) UNINST=1 really-install install-plugins'."
+	$(MAKE) UNINST=0 really-install install-plugins'."
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 ".$install;
