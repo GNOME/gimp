@@ -5,3 +5,4 @@ _libs
 .libs
 .deps
 *.la
+gimpfeatures.h

@@ -60,6 +60,10 @@ int _writefd = 0;
 int _shm_ID = -1;
 guchar *_shm_addr = NULL;
 
+const guint gimp_major_version = GIMP_MAJOR_VERSION;
+const guint gimp_minor_version = GIMP_MINOR_VERSION;
+const guint gimp_micro_version = GIMP_MICRO_VERSION;
+
 static gdouble _gamma_val;
 static gint _install_cmap;
 static gint _use_xshm;

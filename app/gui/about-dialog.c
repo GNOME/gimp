@@ -18,7 +18,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include <gtk/gtk.h>
+
+#include "libgimp/gimpfeatures.h"
+
 #include "about_dialog.h"
 #include "interface.h"
 

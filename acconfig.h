@@ -14,11 +14,6 @@
    Leave the following blank line there!!  Autoheader needs it.  */
 
 
-#undef GIMP_MAJOR_VERSION
-#undef GIMP_MINOR_VERSION
-#undef GIMP_MICRO_VERSION
-#undef GIMP_VERSION
-
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT
 #undef HAVE_IPC_H
@@ -39,9 +34,6 @@
 
 #undef RAND_FUNC
 #undef SRAND_FUNC
-
-/* #undef PACKAGE */
-/* #undef VERSION */
 
 
 /* Leave that blank line there!!  Autoheader needs it.

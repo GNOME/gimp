@@ -1,3 +1,13 @@
+Wed Jul 15 23:01:14 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* acconfig.h
+	* configure.in
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/main.c
+	* libgimp/gimp.[ch]
+	* libgimp/gimpfeatures.h.in: added features header
+
 Mon Jul 13 23:15:15 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: check for inline by ourselves if it's not

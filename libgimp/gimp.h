@@ -21,12 +21,18 @@
 
 
 #include <glib.h>
+#include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpenums.h>
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+
+extern const guint gimp_major_version;
+extern const guint gimp_minor_version;
+extern const guint gimp_micro_version;
 
 
 typedef struct _GPlugInInfo  GPlugInInfo;

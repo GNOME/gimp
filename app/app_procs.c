@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimp/gimpfeatures.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"

@@ -25,6 +25,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "libgimp/gimpfeatures.h"
+
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
 #endif   /*  WAIT_ANY  */
