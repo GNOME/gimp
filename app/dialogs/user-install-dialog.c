@@ -117,19 +117,17 @@ static GdkColor    title_color;
 
 typedef enum
 {
-  TREE_ITEM_DONT,              /* Don't pre-create            */
-  TREE_ITEM_MKDIR_ONLY,        /* Just mkdir                  */
+  TREE_ITEM_DO_NOTHING,        /* Don't pre-create            */
+  TREE_ITEM_MKDIR,             /* Create the directory        */
   TREE_ITEM_FROM_SYSCONF_DIR,  /* Copy from sysconf directory */
-  TREE_ITEM_FROM_DATA_DIR      /* ... from data directory     */
 } TreeItemType;
 
 static struct
 {
   gboolean      directory;
-  gchar        *text;
+  gchar        *name;
   gchar        *description;
   TreeItemType  type;
-  gchar        *source_filename;  /* If NULL, use text */
 }
 tree_items[] =
 {
@@ -140,13 +138,13 @@ tree_items[] =
        "Paths to search for brushes, palettes, gradients,\n"
        "patterns, plug-ins and modules can also configured\n"
        "here."),
-    TREE_ITEM_DONT, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "gtkrc",
     N_("GIMP uses an additional gtkrc file so you can\n"
        "configure it to look differently than other GTK apps."),
-    TREE_ITEM_FROM_SYSCONF_DIR, "gtkrc_user"
+    TREE_ITEM_FROM_SYSCONF_DIR
   },
   {
     FALSE, "pluginrc",
@@ -156,7 +154,7 @@ tree_items[] =
        "information about their functionality and mod-times\n"
        "is cached in this file.  This file is intended to\n"
        "be GIMP-readable only, and should not be edited."),
-    TREE_ITEM_DONT, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "menurc",
@@ -166,20 +164,20 @@ tree_items[] =
        "file if you wish, but it is much easier to define the\n"
        "keys from within The GIMP.  Deleting this file will\n"
        "restore the default shortcuts."),
-    TREE_ITEM_DONT, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "sessionrc",
     N_("The sessionrc is used to store what dialog windows were\n"
        "open the last time you quit The GIMP.  You can configure\n"
        "The GIMP to reopen these dialogs at the saved position."),
-    TREE_ITEM_FROM_SYSCONF_DIR, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "templaterc",
     N_("This file holds a collection of standard media sizes that\n"
        "serve as image templates."),
-    TREE_ITEM_FROM_SYSCONF_DIR, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "unitrc",
@@ -188,7 +186,7 @@ tree_items[] =
        "like you use the built-in units inches, millimeters,\n"
        "points and picas.  This file is overwritten each time\n"
        "you quit the GIMP."),
-    TREE_ITEM_FROM_SYSCONF_DIR, NULL
+    TREE_ITEM_DO_NOTHING
   },
   {
     TRUE, "brushes",
@@ -196,7 +194,7 @@ tree_items[] =
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP brushes installation when searching for\n"
        "brushes."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "fonts",
@@ -206,7 +204,7 @@ tree_items[] =
        "when searching for fonts. Use this only if you really\n"
        "want to have GIMP-only fonts, otherwise put things\n"
        "in your global font directory."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "gradients",
@@ -214,7 +212,7 @@ tree_items[] =
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP gradients installation when searching for\n"
        "gradients."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "palettes",
@@ -222,7 +220,7 @@ tree_items[] =
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP palettes installation when searching for\n"
        "palettes."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "patterns",
@@ -230,7 +228,7 @@ tree_items[] =
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP patterns installation when searching for\n"
        "patterns."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "plug-ins",
@@ -238,7 +236,7 @@ tree_items[] =
        "or otherwise non-system-supported plug-ins.  The GIMP\n"
        "checks this folder in addition to the system-wide\n"
        "GIMP plug-in folder when searching for plug-ins."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "modules",
@@ -247,7 +245,7 @@ tree_items[] =
        "GIMP checks this folder in addition to the system-wide\n"
        "GIMP module folder when searching for modules to load\n"
        "during initialization."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "environ",
@@ -257,7 +255,7 @@ tree_items[] =
        "addition to the system-wide GIMP environment folder\n"
        "when searching for plug-in environment modification\n"
        "files."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "scripts",
@@ -265,17 +263,17 @@ tree_items[] =
        "scripts.  The GIMP checks this folder in addition to\n"
        "the systemwide GIMP scripts folder when searching for\n"
        "scripts."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "templates",
     N_("This folder is searched for image templates."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "themes",
     N_("This folder is searched for user-installed themes."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "tmp",
@@ -284,44 +282,44 @@ tree_items[] =
        "killed, files of the form: gimp<#>.<#> may persist in\n"
        "this folder.  These files are useless across GIMP\n"
        "sessions and can be destroyed with impunity."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "tool-options",
     N_("This folder is used to store tool options."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "curves",
     N_("This folder is used to store parameter files for the\n"
        "Curves tool."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "levels",
     N_("This folder is used to store parameter files for the\n"
        "Levels tool."),
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "fractalexplorer",
     NULL,
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "gfig",
     NULL,
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "gflare",
     NULL,
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   },
   {
     TRUE, "gimpressionist",
     NULL,
-    TREE_ITEM_MKDIR_ONLY, NULL
+    TREE_ITEM_MKDIR
   }
 };
 
@@ -892,7 +890,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
 	gtk_tree_store_append (tree, &child, &iter);
 	gtk_tree_store_set (tree, &child,
-			    DIRENT_COLUMN, tree_items[i].text,
+			    DIRENT_COLUMN, tree_items[i].name,
 			    PIXBUF_COLUMN,
 			    tree_items[i].directory ? folder_pixbuf
 						    : file_pixbuf,
@@ -901,7 +899,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
  	page2 = gtk_vbox_new (FALSE, 8);
 
-        foo = g_strdup_printf ("<b>%s</b>", tree_items[i].text);
+        foo = g_strdup_printf ("<b>%s</b>", tree_items[i].name);
 	label = gtk_label_new (NULL);
  	gtk_label_set_markup (GTK_LABEL (label), foo);
         g_free (foo);
@@ -1022,9 +1020,9 @@ user_install_run (void)
   GtkTextBuffer *log_buffer;
   GtkWidget     *log_view;
   GError        *error = NULL;
-  gchar          dest[1000];
-  gchar          source[1000];
-  gchar          log_line[1000];
+  gchar          dest[1024];
+  gchar          source[1024];
+  gchar          log_line[1024];
   gint           i;
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1073,16 +1071,16 @@ user_install_run (void)
   for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
     {
       g_snprintf (dest, sizeof (dest), "%s%c%s",
-		  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].text);
+		  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].name);
 
       switch (tree_items[i].type)
 	{
-	case TREE_ITEM_DONT:
+	case TREE_ITEM_DO_NOTHING:
 	  break;
 
-	case TREE_ITEM_MKDIR_ONLY:
-	  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'..."),
-		      dest);
+	case TREE_ITEM_MKDIR:
+	  g_snprintf (log_line, sizeof (log_line),
+                      _("Creating folder '%s'..."), dest);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
           while (gtk_events_pending ())
@@ -1103,21 +1101,11 @@ user_install_run (void)
 	case TREE_ITEM_FROM_SYSCONF_DIR:
 	  g_snprintf (source, sizeof (source), "%s%c%s",
 		      gimp_sysconf_directory (), G_DIR_SEPARATOR,
-		      tree_items[i].source_filename ?
-		      tree_items[i].source_filename : tree_items[i].text);
-	  goto do_copy;
+                      tree_items[i].name);
 
-	case TREE_ITEM_FROM_DATA_DIR:
-	  g_snprintf (source, sizeof (source), "%s%c%s",
-		      gimp_data_directory (), G_DIR_SEPARATOR,
-		      tree_items[i].source_filename ?
-		      tree_items[i].source_filename : tree_items[i].text);
-
-	do_copy:
           g_assert (! tree_items[i].directory);
 	  g_snprintf (log_line, sizeof (log_line),
-                      _("Copying file '%s' from '%s'..."),
-		      dest, source);
+                      _("Copying file '%s' from '%s'..."), dest, source);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
           while (gtk_events_pending ())
@@ -1132,7 +1120,7 @@ user_install_run (void)
           break;
 	}
 
-      if (tree_items[i].type != TREE_ITEM_DONT)
+      if (tree_items[i].type != TREE_ITEM_DO_NOTHING)
         print_log (log_view, log_buffer, NULL);
     }
 

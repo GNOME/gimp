@@ -47,13 +47,28 @@ gimp_templates_load (Gimp *gimp)
   filename = gimp_personal_rc_file ("templaterc");
 
   if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
-				     filename,
-				     NULL,
-				     &error))
+				     filename, NULL, &error))
     {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        g_message (error->message);
-      g_error_free (error);
+      if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        {
+          g_clear_error (&error);
+          g_free (filename);
+
+          filename = g_build_filename (gimp_sysconf_directory (),
+                                       "templaterc", NULL);
+
+          if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+                                             filename, NULL, &error))
+            {
+              g_message (error->message);
+            }
+        }
+      else
+        {
+          g_message (error->message);
+        }
+
+      g_clear_error (&error);
     }
 
   gimp_list_reverse (GIMP_LIST (gimp->templates));

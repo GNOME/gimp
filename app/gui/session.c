@@ -30,6 +30,7 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfig-error.h"
 #include "config/gimpconfig-utils.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpguiconfig.h"
@@ -69,8 +70,19 @@ session_init (Gimp *gimp)
   filename = gimp_personal_rc_file ("sessionrc");
   scanner = gimp_scanner_new_file (filename, &error);
 
+  if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+    {
+      g_clear_error (&error);
+      g_free (filename);
+
+      filename = g_build_filename (gimp_sysconf_directory (),
+                                   "sessionrc", NULL);
+      scanner = gimp_scanner_new_file (filename, NULL);
+    }
+
   if (! scanner)
     {
+      g_clear_error (&error);
       g_free (filename);
       return;
     }

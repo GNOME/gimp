@@ -149,12 +149,12 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gimp/%{subver}/patterns/
 %{prefix}/share/gimp/%{subver}/scripts/
 
-%{sysconfdir}/gimp/%{subver}/gtkrc_user
-%{sysconfdir}/gimp/%{subver}/unitrc
-%{sysconfdir}/gimp/%{subver}/ps-menurc
 %{sysconfdir}/gimp/%{subver}/gimprc
+%{sysconfdir}/gimp/%{subver}/gtkrc
+%{sysconfdir}/gimp/%{subver}/ps-menurc
 %{sysconfdir}/gimp/%{subver}/sessionrc
 %{sysconfdir}/gimp/%{subver}/templaterc
+%{sysconfdir}/gimp/%{subver}/unitrc
 
 %defattr (0555, bin, bin)
 

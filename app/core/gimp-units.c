@@ -31,6 +31,8 @@
 #include "gimp-units.h"
 #include "gimpunit.h"
 
+#include "config/gimpconfig-error.h"
+#include "config/gimpconfig-utils.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
@@ -98,10 +100,22 @@ gimp_unitrc_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("unitrc");
   scanner = gimp_scanner_new_file (filename, &error);
-  g_free (filename);
+
+  if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+    {
+      g_clear_error (&error);
+      g_free (filename);
+
+      filename = g_build_filename (gimp_sysconf_directory (), "unitrc", NULL);
+      scanner = gimp_scanner_new_file (filename, NULL);
+    }
 
   if (! scanner)
-    return;
+    {
+      g_clear_error (&error);
+      g_free (filename);
+      return;
+    }
 
   g_scanner_scope_add_symbol (scanner, 0,
                               "unit-info", GINT_TO_POINTER (UNIT_INFO));
@@ -158,9 +172,12 @@ gimp_unitrc_load (Gimp *gimp)
 
       g_message (error->message);
       g_clear_error (&error);
+
+      gimp_config_file_backup_on_error (filename, "unitrc", NULL);
     }
 
   gimp_scanner_destroy (scanner);
+  g_free (filename);
 }
 
 void
