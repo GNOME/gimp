@@ -1,3 +1,9 @@
+2003-09-26  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: apply Simon's changes (GIMP_OBJECT
+	casts) to here, since they are generated files.
+
 2003-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: #include

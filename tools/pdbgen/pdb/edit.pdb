@@ -173,7 +173,8 @@ HELP
   tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
 
   success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                              drawable, tool_info->paint_info);
+                              drawable,
+                              GIMP_OBJECT (tool_info->paint_info));
 }
 CODE
     );

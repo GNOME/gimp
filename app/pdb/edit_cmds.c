@@ -341,7 +341,7 @@ edit_stroke_invoker (Gimp     *gimp,
     
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
 				  drawable,
-                                  GIMP_OBJECT (tool_info->paint_info));
+				  GIMP_OBJECT (tool_info->paint_info));
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);
