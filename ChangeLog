@@ -1,3 +1,11 @@
+2001-03-01  Stanislav Brabec  <utx@penguin.cz>
+
+        * plugins/common/despeckle.c: Fixed black_level range.
+        Valid range should be -1..255, not 0..256, because comaparison
+        is > and <=. Bug became visible after last Martin Weber's fix.
+        There must be for both black and white levels one extra value
+        to cover all numbers 0..255.
+
 2001-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/crop.[ch]: we need to override GimpDrawTool's "draw"
