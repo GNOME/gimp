@@ -1,3 +1,10 @@
+2005-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimppaintoptions.[ch]
+	* app/tools/gimppaintoptions-gui.c: renamed "invsize" to
+	"inverse-size" and reordered it to be after "size".
+
 2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	* etc/ps-menurc: another update from Eric Pierce.

@@ -35,25 +35,25 @@
 #include "gimppaintoptions.h"
 
 
-#define DEFAULT_APPLICATION_MODE  GIMP_PAINT_CONSTANT
-#define DEFAULT_HARD              FALSE
+#define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
+#define DEFAULT_HARD                  FALSE
 
-#define DEFAULT_PRESSURE_OPACITY  TRUE
-#define DEFAULT_PRESSURE_HARDNESS FALSE
-#define DEFAULT_PRESSURE_RATE     FALSE
-#define DEFAULT_PRESSURE_SIZE     FALSE
-#define DEFAULT_PRESSURE_COLOR    FALSE
-#define DEFAULT_PRESSURE_INVSIZE  FALSE
+#define DEFAULT_PRESSURE_OPACITY      TRUE
+#define DEFAULT_PRESSURE_HARDNESS     FALSE
+#define DEFAULT_PRESSURE_RATE         FALSE
+#define DEFAULT_PRESSURE_SIZE         FALSE
+#define DEFAULT_PRESSURE_INVERSE_SIZE FALSE
+#define DEFAULT_PRESSURE_COLOR        FALSE
 
-#define DEFAULT_USE_FADE          FALSE
-#define DEFAULT_FADE_LENGTH       100.0
-#define DEFAULT_FADE_UNIT         GIMP_UNIT_PIXEL
+#define DEFAULT_USE_FADE              FALSE
+#define DEFAULT_FADE_LENGTH           100.0
+#define DEFAULT_FADE_UNIT             GIMP_UNIT_PIXEL
 
-#define DEFAULT_USE_GRADIENT      FALSE
-#define DEFAULT_GRADIENT_REVERSE  FALSE
-#define DEFAULT_GRADIENT_REPEAT   GIMP_REPEAT_TRIANGULAR
-#define DEFAULT_GRADIENT_LENGTH   100.0
-#define DEFAULT_GRADIENT_UNIT     GIMP_UNIT_PIXEL
+#define DEFAULT_USE_GRADIENT          FALSE
+#define DEFAULT_GRADIENT_REVERSE      FALSE
+#define DEFAULT_GRADIENT_REPEAT       GIMP_REPEAT_TRIANGULAR
+#define DEFAULT_GRADIENT_LENGTH       100.0
+#define DEFAULT_GRADIENT_UNIT         GIMP_UNIT_PIXEL
 
 
 enum
@@ -66,8 +66,8 @@ enum
   PROP_PRESSURE_HARDNESS,
   PROP_PRESSURE_RATE,
   PROP_PRESSURE_SIZE,
+  PROP_PRESSURE_INVERSE_SIZE,
   PROP_PRESSURE_COLOR,
-  PROP_PRESSURE_INVSIZE,
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
@@ -175,9 +175,9 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "pressure-color", NULL,
                                     DEFAULT_PRESSURE_COLOR,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVSIZE,
-                                    "pressure-invsize", NULL,
-                                    DEFAULT_PRESSURE_INVSIZE,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVERSE_SIZE,
+                                    "pressure-inverse-size", NULL,
+                                    DEFAULT_PRESSURE_INVERSE_SIZE,
                                     0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
@@ -279,11 +279,11 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PRESSURE_SIZE:
       pressure_options->size = g_value_get_boolean (value);
       break;
+    case PROP_PRESSURE_INVERSE_SIZE:
+      pressure_options->inverse_size = g_value_get_boolean (value);
+      break;
     case PROP_PRESSURE_COLOR:
       pressure_options->color = g_value_get_boolean (value);
-      break;
-    case PROP_PRESSURE_INVSIZE:
-      pressure_options->inv_size = g_value_get_boolean (value);
       break;
 
     case PROP_USE_FADE:
@@ -358,11 +358,11 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_PRESSURE_SIZE:
       g_value_set_boolean (value, pressure_options->size);
       break;
+    case PROP_PRESSURE_INVERSE_SIZE:
+      g_value_set_boolean (value, pressure_options->inverse_size);
+      break;
     case PROP_PRESSURE_COLOR:
       g_value_set_boolean (value, pressure_options->color);
-      break;
-    case PROP_PRESSURE_INVSIZE:
-      g_value_set_boolean (value, pressure_options->inv_size);
       break;
 
     case PROP_USE_FADE:

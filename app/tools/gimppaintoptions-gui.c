@@ -279,6 +279,15 @@ pressure_options_gui (GimpPressureOptions *pressure,
       gtk_widget_show (button);
     }
 
+  /* the inverse size toggle */
+  if (g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
+    {
+      button = gimp_prop_check_button_new (config, "pressure-inverse-size",
+                                           _("Size"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
   /*  the color toggle  */
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
     {
@@ -287,15 +296,6 @@ pressure_options_gui (GimpPressureOptions *pressure,
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
-
-  /* the inverse size toggle */
-  if (g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
-  {
-    button = gimp_prop_check_button_new (config, "pressure-invsize",
-                                         _("Size"));
-    gtk_container_add (GTK_CONTAINER (wbox), button);
-    gtk_widget_show (button);
-  }
 
   return frame;
 }
