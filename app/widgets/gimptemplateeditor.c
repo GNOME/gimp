@@ -419,7 +419,7 @@ gimp_template_editor_new (Gimp     *gimp,
 
       button = gimp_viewable_button_new (editor->stock_id_container,
                                          editor->stock_id_context,
-                                         GIMP_PREVIEW_SIZE_SMALL,
+                                         GIMP_PREVIEW_SIZE_SMALL, 0,
                                          NULL, NULL, NULL, NULL);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,

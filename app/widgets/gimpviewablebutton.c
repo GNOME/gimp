@@ -34,6 +34,7 @@
 #include "gimpcontainerpopup.h"
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
+#include "gimppreviewrenderer.h"
 #include "gimpviewablebutton.h"
 
 #include "gimp-intl.h"
@@ -99,6 +100,8 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
 static void
 gimp_viewable_button_init (GimpViewableButton *button)
 {
+  button->preview_size         = GIMP_PREVIEW_SIZE_SMALL;
+  button->preview_border_width = 1;
 }
 
 static void
@@ -191,6 +194,8 @@ gimp_viewable_button_clicked (GtkButton *button)
 
   popup = gimp_container_popup_new (viewable_button->container,
                                     viewable_button->context,
+                                    viewable_button->preview_size,
+                                    viewable_button->preview_border_width,
                                     viewable_button->dialog_factory,
                                     viewable_button->dialog_identifier,
                                     viewable_button->dialog_stock_id,
@@ -202,6 +207,7 @@ GtkWidget *
 gimp_viewable_button_new (GimpContainer     *container,
                           GimpContext       *context,
                           gint               preview_size,
+                          gint               preview_border_width,
                           GimpDialogFactory *dialog_factory,
                           const gchar       *dialog_identifier,
                           const gchar       *dialog_stock_id,
@@ -214,6 +220,9 @@ gimp_viewable_button_new (GimpContainer     *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size >  0 &&
                         preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
+  g_return_val_if_fail (preview_border_width >= 0 &&
+                        preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
+                        NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   if (dialog_factory)
@@ -227,6 +236,9 @@ gimp_viewable_button_new (GimpContainer     *container,
 
   button->container = container;
   button->context   = context;
+
+  button->preview_size         = preview_size;
+  button->preview_border_width = preview_border_width;
 
   if (dialog_factory)
     {

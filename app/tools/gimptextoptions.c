@@ -259,7 +259,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   button = gimp_viewable_button_new (GIMP_CONTEXT (options)->gimp->fonts,
-                                     GIMP_CONTEXT (options), 24,
+                                     GIMP_CONTEXT (options),
+                                     GIMP_PREVIEW_SIZE_SMALL, 1,
                                      dialog_factory,
                                      "gimp-font-list",
                                      GIMP_STOCK_TOOL_TEXT,

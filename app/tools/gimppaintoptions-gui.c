@@ -127,7 +127,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_options->tool_info->tool_type != GIMP_TYPE_INK_TOOL)
     {
       button = gimp_viewable_button_new (context->gimp->brush_factory->container,
-                                         context, 24,
+                                         context,
+                                         GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-brush-grid",
                                          GIMP_STOCK_TOOL_PAINTBRUSH,
@@ -143,7 +144,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_options->tool_info->tool_type == GIMP_TYPE_CLONE_TOOL)
     {
       button = gimp_viewable_button_new (context->gimp->pattern_factory->container,
-                                         context, 24,
+                                         context,
+                                         GIMP_PREVIEW_SIZE_SMALL, 1,
                                          dialog_factory,
                                          "gimp-pattern-grid",
                                          GIMP_STOCK_TOOL_BUCKET_FILL,
@@ -158,7 +160,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       button = gimp_viewable_button_new (context->gimp->gradient_factory->container,
-                                         context, 32,
+                                         context,
+                                         GIMP_PREVIEW_SIZE_SMALL * 2, 1,
                                          dialog_factory,
                                          "gimp-gradient-list",
                                          GIMP_STOCK_TOOL_BLEND,

@@ -1,5 +1,17 @@
 2003-04-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerpopup.[ch]
+	* app/widgets/gimpviewablebutton.[ch]: added "preview_size" and
+	"preview_border_width" parameters to the constructors and use them
+	when creating the popup.
+
+	* app/tools/gimptextoptions.c
+	* app/tools/paint_options.c
+	* app/widgets/gimptemplateeditor.c: changed accordingly. Create the
+	icon popup without borders.
+
+2003-04-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpconfig-params.h: made object properties
 	G_PARAM_READWRITE by default. Added flag GIMP_PARAM_AGGREGATE
 	which indicates that an object property is not a reference but a

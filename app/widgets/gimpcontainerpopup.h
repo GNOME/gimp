@@ -44,6 +44,9 @@ struct _GimpContainerPopup
   GimpContext         *orig_context;
   GimpContext         *context;
 
+  gint                 preview_size;
+  gint                 preview_border_width;
+
   GtkWidget           *frame;
   GimpContainerEditor *editor;
 
@@ -66,6 +69,8 @@ GType       gimp_container_popup_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            GimpContext        *context,
+                                           gint                preview_size,
+                                           gint                preview_border_width,
                                            GimpDialogFactory  *dialog_factory,
                                            const gchar        *dialog_identifier,
                                            const gchar        *dialog_stock_id,
