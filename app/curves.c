@@ -42,6 +42,8 @@
 #define DRAW               0x10
 #define ALL                0xFF
 
+ /* NB: take care when changing these values: make sure the curve[] array in
+ * curves.h is large enough. */
 #define GRAPH_WIDTH      256
 #define GRAPH_HEIGHT     256
 #define XRANGE_WIDTH     256
@@ -592,7 +594,7 @@ curves_new_dialog ()
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
-  cd->yrange = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  cd->yrange = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (cd->yrange), YRANGE_WIDTH, YRANGE_HEIGHT);
   gtk_widget_set_events (cd->yrange, RANGE_MASK);
   gtk_signal_connect (GTK_OBJECT (cd->yrange), "event",
@@ -627,7 +629,7 @@ curves_new_dialog ()
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
 
-  cd->xrange = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  cd->xrange = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (cd->xrange), XRANGE_WIDTH, XRANGE_HEIGHT);
   gtk_widget_set_events (cd->xrange, RANGE_MASK);
   gtk_signal_connect (GTK_OBJECT (cd->xrange), "event",
@@ -678,6 +680,7 @@ curves_new_dialog ()
   return cd;
 }
 
+/* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
 static void
 curves_update (CurvesDialog *cd,
 	       int           update)
@@ -687,10 +690,47 @@ curves_update (CurvesDialog *cd,
 
   if (update & XRANGE_TOP)
     {
-      for (i = 0; i < XRANGE_HEIGHT / 2; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
-			      cd->curve[cd->channel],
-			      0, i, XRANGE_WIDTH);
+      unsigned char buf[XRANGE_WIDTH * 3];
+
+      switch (cd->channel) {
+      case HISTOGRAM_VALUE:
+      case HISTOGRAM_ALPHA:
+	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
+	  {
+	      for (j = 0; j < XRANGE_WIDTH ; j++)
+	      {
+		  buf[j*3+0] = cd->curve[cd->channel][j];
+		  buf[j*3+1] = cd->curve[cd->channel][j];
+		  buf[j*3+2] = cd->curve[cd->channel][j];
+	      }
+	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
+				    buf, 0, i, XRANGE_WIDTH);
+	  }
+	  break;
+
+      case HISTOGRAM_RED:
+      case HISTOGRAM_GREEN:
+      case HISTOGRAM_BLUE:
+      {	  
+	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
+	  {
+	      for (j = 0; j < XRANGE_WIDTH; j++)
+	      {
+		  buf[j*3+0] = cd->curve[HISTOGRAM_RED][j];
+		  buf[j*3+1] = cd->curve[HISTOGRAM_GREEN][j];
+		  buf[j*3+2] = cd->curve[HISTOGRAM_BLUE][j];
+	      }
+	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
+				    buf, 0, i, XRANGE_WIDTH);
+	  }
+	  break;
+      }
+
+      default:
+	  g_warning ("unknown channel type %d, can't happen!?!?",
+		     cd->channel);
+	  break;
+      } /* end switch */
 
       if (update & DRAW)
 	{
@@ -703,10 +743,14 @@ curves_update (CurvesDialog *cd,
     }
   if (update & XRANGE_BOTTOM)
     {
-      unsigned char buf[XRANGE_WIDTH];
+      unsigned char buf[XRANGE_WIDTH * 3];
 
       for (i = 0; i < XRANGE_WIDTH; i++)
-	buf[i] = i;
+      {
+	buf[i*3+0] = i;
+	buf[i*3+1] = i;
+	buf[i*3+2] = i;
+      }
 
       for (i = XRANGE_HEIGHT / 2; i < XRANGE_HEIGHT; i++)
 	gtk_preview_draw_row (GTK_PREVIEW (cd->xrange), buf, 0, i, XRANGE_WIDTH);
@@ -722,12 +766,32 @@ curves_update (CurvesDialog *cd,
     }
   if (update & YRANGE)
     {
-      unsigned char buf[YRANGE_WIDTH];
+      unsigned char buf[YRANGE_WIDTH * 3];
+      unsigned char pix[3];
 
       for (i = 0; i < YRANGE_HEIGHT; i++)
 	{
-	  for (j = 0; j < YRANGE_WIDTH; j++)
-	    buf[j] = (255 - i);
+	  switch (cd->channel) {
+	  case HISTOGRAM_VALUE:
+	  case HISTOGRAM_ALPHA:
+	      pix[0] = pix[1] = pix[2] = (255 - i);
+	      break;
+
+	  case HISTOGRAM_RED:
+	  case HISTOGRAM_GREEN:
+	  case HISTOGRAM_BLUE:
+	      pix[0] = pix[1] = pix[2] = 0;
+	      pix[cd->channel - 1] = (255 - i);
+	      break;
+
+	  default:
+	      g_warning ("unknown channel type %d, can't happen!?!?",
+			 cd->channel);
+	      break;
+	  }
+
+	  for (j = 0; j < YRANGE_WIDTH * 3; j++)
+	      buf[j] = pix[j%3];
 
 	  gtk_preview_draw_row (GTK_PREVIEW (cd->yrange), buf, 0, i, YRANGE_WIDTH);
 
@@ -945,7 +1009,7 @@ curves_value_callback (GtkWidget *w,
   if (cd->channel != HISTOGRAM_VALUE)
     {
       cd->channel = HISTOGRAM_VALUE;
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
     }
 }
 
@@ -960,7 +1024,7 @@ curves_red_callback (GtkWidget *w,
   if (cd->channel != HISTOGRAM_RED)
     {
       cd->channel = HISTOGRAM_RED;
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
     }
 }
 
@@ -975,7 +1039,7 @@ curves_green_callback (GtkWidget *w,
   if (cd->channel != HISTOGRAM_GREEN)
     {
       cd->channel = HISTOGRAM_GREEN;
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
     }
 }
 
@@ -990,7 +1054,7 @@ curves_blue_callback (GtkWidget *w,
   if (cd->channel != HISTOGRAM_BLUE)
     {
       cd->channel = HISTOGRAM_BLUE;
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
     }
 }
 
@@ -1005,7 +1069,7 @@ curves_alpha_callback (GtkWidget *w,
   if (cd->channel != HISTOGRAM_ALPHA)
     {
       cd->channel = HISTOGRAM_ALPHA;
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
     }
 }
 

@@ -1,3 +1,11 @@
+Thu May 20 16:38:05 BST 1999  Austin Donnelly  <austin@gimp.org
+
+	* app/curves.c: colour in the previously greyscale bars to the
+	    left and below the curve itself.  Might want to take alpha and
+	    value into account, but currently we don't.  Incidentally
+	    fixes a few redraw problems I found along the way.  Done in
+	    about an hour and a half, to show Wavey Dave what's possible :)
+
 Wed May 19 19:48:10 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* modules/colorsel_gtk.c : 
