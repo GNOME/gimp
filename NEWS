@@ -6,6 +6,21 @@ here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
 
+Bugs fixed in GIMP 2.0.5
+========================
+- added sanity checks for misconfigured filesystem encodings (#149464,
+  #150917)
+- don't expose unnecessary information in Postscript files we generate
+  (#149669)
+- improved behaviour of Shear tool (#149467)
+- fixed labels in CMYK color-picker (#150213)
+- removed non-functional button from Device Status dialog (#150177)
+- fixed parsing of SVG transform attributes
+- guard against bogus logical screen dimensions in GIF images (#151053)
+- fixed use of global context for stroke operations (#150716)
+- avoid stack overflows when buecket-filling complex regions (#151124)
+
+
 Bugs fixed in GIMP 2.0.4
 ========================
 - several build fixes (#147799, #148813, #147013)
