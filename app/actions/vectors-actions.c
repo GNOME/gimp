@@ -1,0 +1,230 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "actions-types.h"
+
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimplist.h"
+
+#include "widgets/gimpactiongroup.h"
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpitemtreeview.h"
+
+#include "vectors-actions.h"
+#include "gui/vectors-commands.h"
+
+#include "gimp-intl.h"
+
+
+static GimpActionEntry vectors_actions[] =
+{
+  { "vectors-path-tool", GIMP_STOCK_TOOL_PATH,
+    N_("Path _Tool"), NULL, NULL,
+    G_CALLBACK (vectors_vectors_tool_cmd_callback),
+    GIMP_HELP_TOOL_VECTORS },
+
+  { "vectors-edit-attributes", GIMP_STOCK_EDIT,
+    N_("_Edit Path Attributes..."), NULL, NULL,
+    G_CALLBACK (vectors_edit_attributes_cmd_callback),
+    GIMP_HELP_PATH_EDIT },
+
+  { "vectors-new", GTK_STOCK_NEW,
+    N_("_New Path..."), "", NULL,
+    G_CALLBACK (vectors_new_cmd_callback),
+    GIMP_HELP_PATH_NEW },
+
+  { "vectors-duplicate", GIMP_STOCK_DUPLICATE,
+    N_("D_uplicate Path"), NULL, NULL,
+    G_CALLBACK (vectors_duplicate_cmd_callback),
+    GIMP_HELP_PATH_DUPLICATE },
+
+  { "vectors-delete", GTK_STOCK_DELETE,
+    N_("_Delete Path"), "", NULL,
+    G_CALLBACK (vectors_delete_cmd_callback),
+    GIMP_HELP_PATH_DELETE },
+
+  { "vectors-merge-visible", NULL,
+    N_("Merge _Visible Paths"), NULL, NULL,
+    G_CALLBACK (vectors_merge_visible_cmd_callback),
+    GIMP_HELP_PATH_MERGE_VISIBLE },
+
+  { "vectors-raise", GTK_STOCK_GO_UP,
+    N_("_Raise Path"), "", NULL,
+    G_CALLBACK (vectors_raise_cmd_callback),
+    GIMP_HELP_PATH_RAISE },
+
+  { "vectors-raise-to-top", GTK_STOCK_GOTO_TOP,
+    N_("Raise Path to _Top"), "", NULL,
+    G_CALLBACK (vectors_raise_to_top_cmd_callback),
+    GIMP_HELP_PATH_RAISE_TO_TOP },
+
+  { "vectors-lower", GTK_STOCK_GO_DOWN,
+    N_("_Lower Path"), "", NULL,
+    G_CALLBACK (vectors_lower_cmd_callback),
+    GIMP_HELP_PATH_LOWER },
+
+  { "vectors-lower-to-bottom", GTK_STOCK_GOTO_BOTTOM,
+    N_("Lower Path to _Bottom"), "", NULL,
+    G_CALLBACK (vectors_lower_to_bottom_cmd_callback),
+    GIMP_HELP_PATH_LOWER_TO_BOTTOM },
+
+  { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
+    N_("Selecti_on to Path"), NULL, NULL,
+    G_CALLBACK (vectors_selection_to_vectors_cmd_callback),
+    GIMP_HELP_SELECTION_TO_PATH },
+
+  { "vectors-stroke", GIMP_STOCK_PATH_STROKE,
+    N_("Stro_ke Path..."), NULL, NULL,
+    G_CALLBACK (vectors_stroke_cmd_callback),
+    GIMP_HELP_PATH_STROKE },
+
+  { "vectors-copy", GTK_STOCK_COPY,
+    N_("Co_py Path"), "", NULL,
+    G_CALLBACK (vectors_copy_cmd_callback),
+    GIMP_HELP_PATH_COPY },
+
+  { "vectors-paste", GTK_STOCK_PASTE,
+    N_("Paste Pat_h"), "", NULL,
+    G_CALLBACK (vectors_paste_cmd_callback),
+    GIMP_HELP_PATH_PASTE },
+
+  { "vectors-import", GTK_STOCK_OPEN,
+    N_("I_mport Path..."), "", NULL,
+    G_CALLBACK (vectors_import_cmd_callback),
+    GIMP_HELP_PATH_IMPORT },
+
+  { "vectors-export", GTK_STOCK_SAVE,
+    N_("E_xport Path..."), "", NULL,
+    G_CALLBACK (vectors_export_cmd_callback),
+    GIMP_HELP_PATH_EXPORT }
+};
+
+static GimpEnumActionEntry vectors_to_selection_actions[] =
+{
+  { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+    N_("Path to Sele_ction"), NULL, NULL,
+    GIMP_CHANNEL_OP_REPLACE,
+    GIMP_HELP_PATH_SELECTION_REPLACE },
+
+  { "vectors-selection-add", GIMP_STOCK_SELECTION_ADD,
+    N_("_Add to Selection"), NULL, NULL,
+    GIMP_CHANNEL_OP_ADD,
+    GIMP_HELP_PATH_SELECTION_ADD },
+
+  { "vectors-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+    N_("_Subtract from Selection"), NULL, NULL,
+    GIMP_CHANNEL_OP_SUBTRACT,
+    GIMP_HELP_PATH_SELECTION_SUBTRACT },
+
+  { "vectors-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+    N_("_Intersect with Selection"), NULL, NULL,
+    GIMP_CHANNEL_OP_INTERSECT,
+    GIMP_HELP_PATH_SELECTION_INTERSECT }
+};
+
+
+void
+vectors_actions_setup (GimpActionGroup *group,
+                       gpointer         data)
+{
+  gimp_action_group_add_actions (group,
+                                 vectors_actions,
+                                 G_N_ELEMENTS (vectors_actions),
+                                 data);
+
+  gimp_action_group_add_enum_actions (group,
+                                      vectors_to_selection_actions,
+                                      G_N_ELEMENTS (vectors_to_selection_actions),
+                                      G_CALLBACK (vectors_to_selection_cmd_callback),
+                                      data);
+}
+
+void
+vectors_actions_update (GimpActionGroup *group,
+                        gpointer         data)
+{
+  GimpImage   *gimage     = NULL;
+  GimpVectors *vectors    = NULL;
+  gboolean     mask_empty = TRUE;
+  gboolean     global_buf = FALSE;
+  GList       *next       = NULL;
+  GList       *prev       = NULL;
+
+  if (GIMP_IS_ITEM_TREE_VIEW (data))
+    gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
+
+  if (gimage)
+    {
+      GList *list;
+
+      vectors = gimp_image_get_active_vectors (gimage);
+
+      mask_empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+
+      global_buf = FALSE;
+
+      for (list = GIMP_LIST (gimage->vectors)->list;
+           list;
+           list = g_list_next (list))
+        {
+          if (vectors == (GimpVectors *) list->data)
+            {
+              prev = g_list_previous (list);
+              next = g_list_next (list);
+              break;
+            }
+        }
+    }
+
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+
+  SET_SENSITIVE ("vectors-path-tool",       vectors);
+  SET_SENSITIVE ("vectors-edit-attributes", vectors);
+
+  SET_SENSITIVE ("vectors-new",       gimage);
+  SET_SENSITIVE ("vectors-duplicate", vectors);
+  SET_SENSITIVE ("vectors-delete",    vectors);
+
+  SET_SENSITIVE ("vectors-raise",           vectors && prev);
+  SET_SENSITIVE ("vectors-raise-to-top",    vectors && prev);
+  SET_SENSITIVE ("vectors-lower",           vectors && next);
+  SET_SENSITIVE ("vectors-lower-to-bottom", vectors && next);
+
+  SET_SENSITIVE ("vectors-selection-to-vectors", ! mask_empty);
+  SET_SENSITIVE ("vectors-stroke",               vectors);
+
+  SET_SENSITIVE ("vectors-copy",   vectors);
+  SET_SENSITIVE ("vectors-paste",  global_buf);
+  SET_SENSITIVE ("vectors-import", gimage);
+  SET_SENSITIVE ("vectors-export", vectors);
+
+  SET_SENSITIVE ("vectors-selection-replace",   vectors);
+  SET_SENSITIVE ("vectors-selection-add",       vectors);
+  SET_SENSITIVE ("vectors-selection-subtract",  vectors);
+  SET_SENSITIVE ("vectors-selection-intersect", vectors);
+
+#undef SET_SENSITIVE
+}

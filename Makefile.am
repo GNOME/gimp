@@ -11,6 +11,7 @@ SUBDIRS = \
 	po-plug-ins		\
 	po-script-fu		\
 	data			\
+	menus			\
 	tips			\
 	libgimpbase		\
 	libgimpcolor		\

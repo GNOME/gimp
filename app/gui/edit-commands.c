@@ -140,17 +140,10 @@ edit_copy_cmd_callback (GtkWidget *widget,
     gimp_image_flush (gimage);
 }
 
-void
-edit_paste_cmd_callback (GtkWidget *widget,
-                         gpointer   data,
-                         guint      action)
+static void
+edit_paste (GimpDisplay *gdisp,
+            gboolean     paste_into)
 {
-  GimpDisplay *gdisp;
-  gboolean     paste_into;
-  return_if_no_display (gdisp, data);
-
-  paste_into = (gboolean) action;
-
   if (gdisp->gimage->gimp->global_buffer)
     {
       GimpDisplayShell *shell;
@@ -168,6 +161,26 @@ edit_paste_cmd_callback (GtkWidget *widget,
           gimp_image_flush (gdisp->gimage);
 	}
     }
+}
+
+void
+edit_paste_cmd_callback (GtkWidget *widget,
+                         gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  edit_paste (gdisp, FALSE);
+}
+
+void
+edit_paste_into_cmd_callback (GtkWidget *widget,
+                              gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  edit_paste (gdisp, TRUE);
 }
 
 void

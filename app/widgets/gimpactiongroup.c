@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
+
 #include "gimpactiongroup.h"
 #include "gimpenumaction.h"
 #include "gimpstringaction.h"
@@ -35,6 +37,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_TRANSLATION_DOMAIN
 };
 
@@ -95,6 +98,13 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
   object_class->set_property = gimp_action_group_set_property;
   object_class->get_property = gimp_action_group_get_property;
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_TRANSLATION_DOMAIN,
                                    g_param_spec_string ("translation-domain",
                                                         NULL, NULL,
@@ -133,6 +143,9 @@ gimp_action_group_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_GIMP:
+      group->gimp = g_value_get_object (value);
+      break;
     case PROP_TRANSLATION_DOMAIN:
       g_free (group->translation_domain);
       group->translation_domain = g_value_dup_string (value);
@@ -153,6 +166,9 @@ gimp_action_group_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, group->gimp);
+      break;
     case PROP_TRANSLATION_DOMAIN:
       g_value_set_string (value, group->translation_domain);
       break;
@@ -173,9 +189,14 @@ gimp_action_group_get_property (GObject    *object,
  * Returns: the new #GimpActionGroup
  */
 GimpActionGroup *
-gimp_action_group_new (const gchar *name)
+gimp_action_group_new (Gimp        *gimp,
+                       const gchar *name)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
   return g_object_new (GIMP_TYPE_ACTION_GROUP,
+                       "gimp", gimp,
                        "name", name,
                        NULL);
 }
@@ -368,4 +389,141 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
 					      entries[i].accelerator);
       g_object_unref (action);
     }
+}
+
+void
+gimp_action_group_set_action_visible (GimpActionGroup *group,
+                                      const gchar     *action_name,
+                                      gboolean         visible)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set visibility of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  g_object_set (action, "visible", visible, NULL);
+}
+
+void
+gimp_action_group_set_action_sensitive (GimpActionGroup *group,
+                                        const gchar     *action_name,
+                                        gboolean         sensitive)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set sensitivity of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  g_object_set (action, "sensitive", sensitive, NULL);
+}
+
+void
+gimp_action_group_set_action_active (GimpActionGroup *group,
+                                     const gchar     *action_name,
+                                     gboolean         active)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set \"active\" of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), active);
+}
+
+void
+gimp_action_group_set_action_label (GimpActionGroup *group,
+                                    const gchar     *action_name,
+                                    const gchar     *label)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set label of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  g_object_set (action, "label", label, NULL);
+}
+
+void
+gimp_action_group_set_action_color (GimpActionGroup *group,
+                                    const gchar     *action_name,
+                                    const GimpRGB   *color,
+                                    gboolean         set_label)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set color of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+}
+
+void
+gimp_action_group_set_action_important (GimpActionGroup *group,
+                                        const gchar     *action_name,
+                                        gboolean         is_important)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set \"is_important\" of action "
+                 "which doesn't exist: %s",
+                 G_STRLOC, action_name);
+      return;
+    }
+
+  g_object_set (action, "is-important", is_important, NULL);
 }

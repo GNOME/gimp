@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="qmask-toggle" />
+    <separator />
+    <menuitem action="qmask-invert-on" />
+    <menuitem action="qmask-invert-off" />
+    <separator />
+    <menuitem action="qmask-configure" />
+  </popup>
+</ui>

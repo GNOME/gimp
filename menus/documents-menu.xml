@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="documents-open" />
+    <menuitem action="documents-raise-or-open" />
+    <menuitem action="documents-file-new-dialog" />
+    <menuitem action="documents-remove" />
+    <separator />
+    <menuitem action="documents-recreate-preview" />
+    <menuitem action="documents-reload-previews" />
+    <menuitem action="documents-remove-dangling" />
+  </popup>
+</ui>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="brushes-edit" />
+    <separator />
+    <menuitem action="brushes-new" />
+    <menuitem action="brushes-duplicate" />
+    <menuitem action="brushes-delete" />
+    <separator />
+    <menuitem action="brushes-refresh" />
+  </popup>
+</ui>

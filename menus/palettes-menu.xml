@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="palettes-edit" />
+    <separator />
+    <menuitem action="palettes-new" />
+    <menuitem action="palettes-import" />
+    <menuitem action="palettes-duplicate" />
+    <menuitem action="palettes-merge" />
+    <menuitem action="palettes-delete" />
+    <separator />
+    <menuitem action="palettes-refresh" />
+  </popup>
+</ui>

@@ -105,6 +105,18 @@ channels_raise_cmd_callback (GtkWidget *widget,
 }
 
 void
+channels_raise_to_top_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel, data);
+
+  gimp_image_raise_channel_to_top (gimage, active_channel);
+  gimp_image_flush (gimage);
+}
+
+void
 channels_lower_cmd_callback (GtkWidget *widget,
                              gpointer   data)
 {
@@ -113,6 +125,18 @@ channels_lower_cmd_callback (GtkWidget *widget,
   return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_lower_channel (gimage, active_channel);
+  gimp_image_flush (gimage);
+}
+
+void
+channels_lower_to_bottom_cmd_callback (GtkWidget *widget,
+                                       gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel, data);
+
+  gimp_image_lower_channel_to_bottom (gimage, active_channel);
   gimp_image_flush (gimage);
 }
 

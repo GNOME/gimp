@@ -2965,6 +2965,28 @@ gimp_image_raise_channel (GimpImage   *gimage,
 }
 
 gboolean
+gimp_image_raise_channel_to_top (GimpImage   *gimage,
+                                 GimpChannel *channel)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  index = gimp_container_get_child_index (gimage->channels,
+					  GIMP_OBJECT (channel));
+
+  if (index == 0)
+    {
+      g_message (_("Channel is already on top."));
+      return FALSE;
+    }
+
+  return gimp_image_position_channel (gimage, channel, 0,
+                                      TRUE, _("Raise Channel to Top"));
+}
+
+gboolean
 gimp_image_lower_channel (GimpImage   *gimage,
 			  GimpChannel *channel)
 {
@@ -2984,6 +3006,31 @@ gimp_image_lower_channel (GimpImage   *gimage,
 
   return gimp_image_position_channel (gimage, channel, index + 1,
                                       TRUE, _("Lower Channel"));
+}
+
+gboolean
+gimp_image_lower_channel_to_bottom (GimpImage   *gimage,
+                                    GimpChannel *channel)
+{
+  gint index;
+  gint length;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  index = gimp_container_get_child_index (gimage->channels,
+					  GIMP_OBJECT (channel));
+
+  length = gimp_container_num_children (gimage->channels);
+
+  if (index == length - 1)
+    {
+      g_message (_("Channel is already on the bottom."));
+      return FALSE;
+    }
+
+  return gimp_image_position_channel (gimage, channel, length - 1,
+                                      TRUE, _("Lower Channel to Bottom"));
 }
 
 gboolean
@@ -3158,6 +3205,28 @@ gimp_image_raise_vectors (GimpImage   *gimage,
 }
 
 gboolean
+gimp_image_raise_vectors_to_top (GimpImage   *gimage,
+                                 GimpVectors *vectors)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+
+  index = gimp_container_get_child_index (gimage->vectors,
+					  GIMP_OBJECT (vectors));
+
+  if (index == 0)
+    {
+      g_message (_("Path is already on top."));
+      return FALSE;
+    }
+
+  return gimp_image_position_vectors (gimage, vectors, 0,
+                                      TRUE, _("Raise Path to Top"));
+}
+
+gboolean
 gimp_image_lower_vectors (GimpImage   *gimage,
 			  GimpVectors *vectors)
 {
@@ -3177,6 +3246,31 @@ gimp_image_lower_vectors (GimpImage   *gimage,
 
   return gimp_image_position_vectors (gimage, vectors, index + 1,
                                       TRUE, _("Lower Path"));
+}
+
+gboolean
+gimp_image_lower_vectors_to_bottom (GimpImage   *gimage,
+                                    GimpVectors *vectors)
+{
+  gint index;
+  gint length;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+
+  index = gimp_container_get_child_index (gimage->vectors,
+					  GIMP_OBJECT (vectors));
+
+  length = gimp_container_num_children (gimage->vectors);
+
+  if (index == length - 1)
+    {
+      g_message (_("Path is already on the bottom."));
+      return FALSE;
+    }
+
+  return gimp_image_position_vectors (gimage, vectors, length - 1,
+                                      TRUE, _("Lower Path to Bottom"));
 }
 
 gboolean

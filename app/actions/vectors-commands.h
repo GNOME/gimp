@@ -24,7 +24,11 @@ void   vectors_new_cmd_callback                  (GtkWidget   *widget,
                                                   gpointer     data);
 void   vectors_raise_cmd_callback                (GtkWidget   *widget,
                                                   gpointer     data);
+void   vectors_raise_to_top_cmd_callback         (GtkWidget   *widget,
+                                                  gpointer     data);
 void   vectors_lower_cmd_callback                (GtkWidget   *widget,
+                                                  gpointer     data);
+void   vectors_lower_to_bottom_cmd_callback      (GtkWidget   *widget,
                                                   gpointer     data);
 void   vectors_duplicate_cmd_callback            (GtkWidget   *widget,
                                                   gpointer     data);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="colormap-editor-edit-color" />
+    <menuitem action="colormap-editor-add-color-from-fg" />
+    <menuitem action="colormap-editor-add-color-from-bg" />
+  </popup>
+</ui>

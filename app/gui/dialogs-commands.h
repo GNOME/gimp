@@ -21,8 +21,7 @@
 
 
 void   dialogs_show_toolbox_cmd_callback      (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   dialogs_create_toplevel_cmd_callback   (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
@@ -30,45 +29,12 @@ void   dialogs_create_dockable_cmd_callback   (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
 
-void   dialogs_add_tab_cmd_callback           (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-void   dialogs_close_tab_cmd_callback         (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-void   dialogs_detach_tab_cmd_callback        (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-
-void   dialogs_toggle_view_cmd_callback       (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-void   dialogs_preview_size_cmd_callback      (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-void   dialogs_tab_style_cmd_callback         (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-
-void   dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
-					       gpointer   data,
-					       guint      action);
-void   dialogs_toggle_auto_cmd_callback       (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-void   dialogs_change_screen_cmd_callback     (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
-
 void   dialogs_create_lc_cmd_callback         (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   dialogs_create_data_cmd_callback       (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   dialogs_create_stuff_cmd_callback      (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 
 void   dialogs_show_toolbox                   (void);
 

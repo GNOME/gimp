@@ -39,6 +39,7 @@ struct _GimpActionGroup
 {
   GtkActionGroup  parent_instance;
 
+  Gimp           *gimp;
   gchar          *translation_domain;
 };
 
@@ -110,33 +111,54 @@ struct _GimpStringActionEntry
 
 
 GType            gimp_action_group_get_type (void);
-GimpActionGroup *gimp_action_group_new      (const gchar           *name);
+GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
+                                             const gchar           *name);
 
-void   gimp_action_group_add_actions        (GimpActionGroup       *action_group,
+void   gimp_action_group_add_actions        (GimpActionGroup       *group,
                                              GimpActionEntry       *entries,
                                              guint                  n_entries,
                                              gpointer               user_data);
-void   gimp_action_group_add_toggle_actions (GimpActionGroup       *action_group,
+void   gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                                              GimpToggleActionEntry *entries,
                                              guint                  n_entries,
                                              gpointer               user_data);
-void   gimp_action_group_add_radio_actions  (GimpActionGroup       *action_group,
+void   gimp_action_group_add_radio_actions  (GimpActionGroup       *group,
                                              GimpRadioActionEntry  *entries,
                                              guint                  n_entries,
                                              gint                   value,
                                              GCallback              on_change,
                                              gpointer               user_data);
 
-void   gimp_action_group_add_enum_actions   (GimpActionGroup       *action_group,
+void   gimp_action_group_add_enum_actions   (GimpActionGroup       *group,
                                              GimpEnumActionEntry   *entries,
                                              guint                  n_entries,
                                              GCallback              callback,
                                              gpointer               user_data);
-void   gimp_action_group_add_string_actions (GimpActionGroup       *action_group,
+void   gimp_action_group_add_string_actions (GimpActionGroup       *group,
                                              GimpStringActionEntry *entries,
                                              guint                  n_entries,
                                              GCallback              callback,
                                              gpointer               user_data);
+
+void   gimp_action_group_set_action_visible   (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               gboolean             visible);
+void   gimp_action_group_set_action_sensitive (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               gboolean             sensitive);
+void   gimp_action_group_set_action_active    (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               gboolean             active);
+void   gimp_action_group_set_action_label     (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               const gchar         *label);
+void   gimp_action_group_set_action_color     (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               const GimpRGB       *color,
+                                               gboolean             set_label);
+void   gimp_action_group_set_action_important (GimpActionGroup     *group,
+                                               const gchar         *action_name,
+                                               gboolean             is_important);
 
 
 #endif  /* __GIMP_ACTION_GROUP_H__ */

@@ -1,3 +1,56 @@
+2004-04-19  Michael Natterer  <mitch@gimp.org>
+
+	More GtkAction stuff (still unused):
+
+	* configure.in: added new directories menus/ and app/actions/
+
+	* Makefile.am: build menus/
+
+	* menus/.cvsignore
+	* menus/Makefile.am
+	* menus/*-menu.xml: new files: XML menu descriptions for each menu
+	which is now defined in gui/*-menu.c.
+
+	* app/widgets/widgets-types.h: some typedefs for GimpActionGroup.
+
+	* app/widgets/gimpactiongroup.[ch]: added a "Gimp" construct-only
+	property. Added APIs to set actions visible/sensitive/active
+	and an unimplemented stub for setting the action's color.
+
+	* app/Makefile.am: build actions/ and link libappactions.a
+
+	* app/actions/.cvsignore
+	* app/actions/Makefile.am
+	* app/actions/*-actions.[ch]: new files: GtkActions for each
+	*-commands.c file in gui/. Ported all "update" functions from the
+	*-menu.c files.
+	(everything completely unused, untested and partly #if 0'ed)
+
+	* app/core/gimpimage.[ch]: for reasons of (action-) symmetry, added
+	API to raise/lower channels/vectors to top/bottom.
+
+	* app/gui/channels-commands.[ch]
+	* app/gui/vectors-commands.[ch]: added callbacks for the new
+	to top/bottom functions.
+
+	* app/gui/Makefile.am
+	* app/gui/dockable-commands.[ch]: new files split out of
+	dialogs-commands.[ch].
+
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/dialogs-menu.c: changed accordingly.
+
+	* app/gui/edit-commands.[ch]: added edit_paste_into_cmd_callback()
+	and remove usage of "guint action".
+
+	* app/gui/image-menu.c: changed accordingly.
+
+	* app/gui/palette-editor-commands.[ch]: split
+	+palette_editor_new_color_cmd_callback() into separate callbacks
+	for adding from FG and BG.
+
+	* app/gui/palette-editor-menu.c: changed accordingly.
+
 2004-04-19  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/script-fu/scripts/gimp-headers.scm

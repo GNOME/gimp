@@ -33,8 +33,7 @@
 
 void
 palette_editor_edit_color_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+                                        gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -43,21 +42,29 @@ palette_editor_edit_color_cmd_callback (GtkWidget *widget,
 }
 
 void
-palette_editor_new_color_cmd_callback (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action)
+palette_editor_new_color_fg_cmd_callback (GtkWidget *widget,
+                                          gpointer   data)
+{
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+
+  if (GTK_WIDGET_SENSITIVE (editor->new_button))
+    gimp_button_extended_clicked (GIMP_BUTTON (editor->new_button), 0);
+}
+
+void
+palette_editor_new_color_bg_cmd_callback (GtkWidget *widget,
+                                          gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
   if (GTK_WIDGET_SENSITIVE (editor->new_button))
     gimp_button_extended_clicked (GIMP_BUTTON (editor->new_button),
-                                  action ? GDK_CONTROL_MASK : 0);
+                                  GDK_CONTROL_MASK);
 }
 
 void
 palette_editor_delete_color_cmd_callback (GtkWidget *widget,
-                                          gpointer   data,
-                                          guint      action)
+                                          gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -67,8 +74,7 @@ palette_editor_delete_color_cmd_callback (GtkWidget *widget,
 
 void
 palette_editor_zoom_in_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action)
+                                     gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -78,8 +84,7 @@ palette_editor_zoom_in_cmd_callback (GtkWidget *widget,
 
 void
 palette_editor_zoom_out_cmd_callback (GtkWidget *widget,
-                                      gpointer   data,
-                                      guint      action)
+                                      gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -89,8 +94,7 @@ palette_editor_zoom_out_cmd_callback (GtkWidget *widget,
 
 void
 palette_editor_zoom_all_cmd_callback (GtkWidget *widget,
-                                      gpointer   data,
-                                      guint      action)
+                                      gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 

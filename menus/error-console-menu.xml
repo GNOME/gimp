@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui>
+  <popup>
+    <menuitem action="error-console-clear" />
+    <separator />
+    <menuitem action="error-console-save-all" />
+    <menuitem action="error-console-save-selection" />
+  </popup>
+</ui>

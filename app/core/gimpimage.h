@@ -454,7 +454,11 @@ void            gimp_image_remove_channel        (GimpImage          *gimage,
 
 gboolean        gimp_image_raise_channel         (GimpImage          *gimage,
 						  GimpChannel        *channel);
+gboolean        gimp_image_raise_channel_to_top  (GimpImage          *gimage,
+						  GimpChannel        *channel);
 gboolean        gimp_image_lower_channel         (GimpImage          *gimage,
+						  GimpChannel        *channel);
+gboolean      gimp_image_lower_channel_to_bottom (GimpImage          *gimage,
 						  GimpChannel        *channel);
 gboolean        gimp_image_position_channel      (GimpImage          *gimage,
 						  GimpChannel        *channel,
@@ -470,7 +474,11 @@ void            gimp_image_remove_vectors        (GimpImage          *gimage,
 
 gboolean        gimp_image_raise_vectors         (GimpImage          *gimage,
 						  GimpVectors        *vectors);
+gboolean        gimp_image_raise_vectors_to_top  (GimpImage          *gimage,
+						  GimpVectors        *vectors);
 gboolean        gimp_image_lower_vectors         (GimpImage          *gimage,
+						  GimpVectors        *vectors);
+gboolean      gimp_image_lower_vectors_to_bottom (GimpImage          *gimage,
 						  GimpVectors        *vectors);
 gboolean        gimp_image_position_vectors      (GimpImage          *gimage,
 						  GimpVectors        *vectors,

@@ -31,7 +31,6 @@
 
 typedef struct _GimpDeviceInfo               GimpDeviceInfo;
 typedef struct _GimpDialogFactory            GimpDialogFactory;
-typedef struct _GimpItemFactory              GimpItemFactory;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 
 typedef struct _GimpActionGroup              GimpActionGroup;
@@ -135,8 +134,6 @@ typedef struct _GimpToggleActionEntry   GimpToggleActionEntry;
 typedef struct _GimpRadioActionEntry    GimpRadioActionEntry;
 typedef struct _GimpEnumActionEntry     GimpEnumActionEntry;
 typedef struct _GimpStringActionEntry   GimpStringActionEntry;
-
-typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
 typedef struct _GimpDialogFactoryEntry  GimpDialogFactoryEntry;
 typedef struct _GimpSessionInfo         GimpSessionInfo;
 typedef struct _GimpSessionInfoBook     GimpSessionInfoBook;
@@ -146,10 +143,10 @@ typedef struct _GimpSessionInfoAux      GimpSessionInfoAux;
 
 /*  function types  */
 
-typedef void (* GimpItemFactorySetupFunc)   (GimpItemFactory *factory,
-                                             gpointer         callback_data);
-typedef void (* GimpItemFactoryUpdateFunc)  (GtkItemFactory  *factory,
-                                             gpointer         update_data);
+typedef void (* GimpActionGroupSetupFunc)   (GimpActionGroup *factory,
+                                             gpointer         data);
+typedef void (* GimpActionGroupUpdateFunc)  (GimpActionGroup *factory,
+                                             gpointer         data);
 
 typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
                                              gint            *x,
@@ -160,6 +157,17 @@ typedef void (* GimpStrokeItemFunc)         (GimpItem        *item,
                                              GtkWidget       *parent);
 typedef void (* GimpSelectionToVectorsFunc) (GimpImage       *gimage,
                                              gboolean         advanced);
+
+
+/*  deprecated stuff, to be removed  */
+
+typedef struct _GimpItemFactory      GimpItemFactory;
+typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
+
+typedef void (* GimpItemFactorySetupFunc)  (GimpItemFactory *factory,
+                                            gpointer         callback_data);
+typedef void (* GimpItemFactoryUpdateFunc) (GtkItemFactory  *factory,
+                                            gpointer         update_data);
 
 
 #endif /* __WIDGETS_TYPES_H__ */

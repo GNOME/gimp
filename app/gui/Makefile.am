@@ -51,10 +51,6 @@ dialogs_sources = \
 	resolution-calibrate-dialog.h	\
 	stroke-dialog.c			\
 	stroke-dialog.h			\
-	templates-commands.c		\
-	templates-commands.h		\
-	templates-menu.c		\
-	templates-menu.h		\
 	tips-dialog.c			\
 	tips-dialog.h			\
 	tips-parser.c			\
@@ -85,6 +81,8 @@ menus_sources = \
 	dialogs-commands.h		\
 	dialogs-menu.c			\
 	dialogs-menu.h			\
+	dockable-commands.c		\
+	dockable-commands.h		\
 	documents-commands.c		\
 	documents-commands.h		\
 	documents-menu.c		\
@@ -151,6 +149,10 @@ menus_sources = \
 	qmask-menu.h			\
 	select-commands.c		\
 	select-commands.h		\
+	templates-commands.c		\
+	templates-commands.h		\
+	templates-menu.c		\
+	templates-menu.h		\
 	tool-options-menu.c		\
 	tool-options-menu.h		\
 	tool-options-commands.c		\

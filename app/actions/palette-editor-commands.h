@@ -21,24 +21,20 @@
 
 
 void   palette_editor_edit_color_cmd_callback   (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
-void   palette_editor_new_color_cmd_callback    (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
+                                                 gpointer   data);
+void   palette_editor_new_color_fg_cmd_callback (GtkWidget *widget,
+                                                 gpointer   data);
+void   palette_editor_new_color_bg_cmd_callback (GtkWidget *widget,
+                                                 gpointer   data);
 void   palette_editor_delete_color_cmd_callback (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
+                                                 gpointer   data);
 
 void   palette_editor_zoom_in_cmd_callback      (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
+                                                 gpointer   data);
 void   palette_editor_zoom_out_cmd_callback     (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
+                                                 gpointer   data);
 void   palette_editor_zoom_all_cmd_callback     (GtkWidget *widget,
-                                                 gpointer   data,
-                                                 guint      action);
+                                                 gpointer   data);
 
 
 #endif /* __PALETTE_EDITOR_COMMANDS_H__ */

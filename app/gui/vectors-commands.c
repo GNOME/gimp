@@ -102,6 +102,18 @@ vectors_new_cmd_callback (GtkWidget *widget,
 }
 
 void
+vectors_raise_to_top_cmd_callback (GtkWidget *widget,
+                                   gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors, data);
+
+  gimp_image_raise_vectors_to_top (gimage, active_vectors);
+  gimp_image_flush (gimage);
+}
+
+void
 vectors_raise_cmd_callback (GtkWidget *widget,
                             gpointer   data)
 {
@@ -122,6 +134,18 @@ vectors_lower_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors, data);
 
   gimp_image_lower_vectors (gimage, active_vectors);
+  gimp_image_flush (gimage);
+}
+
+void
+vectors_lower_to_bottom_cmd_callback (GtkWidget *widget,
+                                      gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors, data);
+
+  gimp_image_lower_vectors_to_bottom (gimage, active_vectors);
   gimp_image_flush (gimage);
 }
 

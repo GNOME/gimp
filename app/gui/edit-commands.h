@@ -29,8 +29,9 @@ void   edit_cut_cmd_callback          (GtkWidget *widget,
 void   edit_copy_cmd_callback         (GtkWidget *widget,
                                        gpointer   data);
 void   edit_paste_cmd_callback        (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action);
+                                       gpointer   data);
+void   edit_paste_into_cmd_callback   (GtkWidget *widget,
+                                       gpointer   data);
 void   edit_paste_as_new_cmd_callback (GtkWidget *widget,
                                        gpointer   data);
 void   edit_named_cut_cmd_callback    (GtkWidget *widget,

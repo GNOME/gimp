@@ -36,7 +36,7 @@
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "dialogs-commands.h"
+#include "dockable-commands.h"
 #include "dialogs-menu.h"
 #include "menus.h"
 
@@ -44,15 +44,15 @@
 
 
 #define ADD_TAB(path,id,stock_id,help_id) \
-  { { (path), "", dialogs_add_tab_cmd_callback, 0, \
+  { { (path), "", dockable_add_tab_cmd_callback, 0, \
       "<StockItem>", (stock_id) }, \
     (id), (help_id), NULL }
 #define PREVIEW_SIZE(path,size) \
-  { { (path), NULL, dialogs_preview_size_cmd_callback, \
+  { { (path), NULL, dockable_preview_size_cmd_callback, \
       (size), "/Preview Size/Tiny" }, \
     NULL, GIMP_HELP_DOCK_PREVIEW_SIZE, NULL }
 #define TAB_STYLE(path,style) \
-  { { (path), NULL, dialogs_tab_style_cmd_callback, \
+  { { (path), NULL, dockable_tab_style_cmd_callback, \
       (style), "/Tab Style/Icon" }, \
     NULL, GIMP_HELP_DOCK_TAB_STYLE, NULL }
 
@@ -120,12 +120,12 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            GIMP_STOCK_WARNING,               GIMP_HELP_ERRORS_DIALOG),
 
   { { N_("/_Close Tab"), "",
-      dialogs_close_tab_cmd_callback, 0,
+      dockable_close_tab_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CLOSE },
     NULL,
     GIMP_HELP_DOCK_TAB_CLOSE, NULL },
   { { N_("/_Detach Tab"), "",
-      dialogs_detach_tab_cmd_callback, 0,
+      dockable_detach_tab_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CONVERT },
     NULL,
     GIMP_HELP_DOCK_TAB_DETACH, NULL },
@@ -135,7 +135,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   MENU_BRANCH (N_("/Preview Si_ze")),
 
   { { N_("/Preview Size/_Tiny"), NULL,
-      dialogs_preview_size_cmd_callback,
+      dockable_preview_size_cmd_callback,
       GIMP_PREVIEW_SIZE_TINY, "<RadioItem>" },
     NULL,
     GIMP_HELP_DOCK_PREVIEW_SIZE, NULL },
@@ -152,7 +152,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   MENU_BRANCH (N_("/_Tab Style")),
 
   { { N_("/Tab Style/_Icon"), NULL,
-      dialogs_tab_style_cmd_callback,
+      dockable_tab_style_cmd_callback,
       GIMP_TAB_STYLE_ICON, "<RadioItem>" },
     NULL,
     GIMP_HELP_DOCK_TAB_STYLE, NULL },
@@ -163,26 +163,26 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   TAB_STYLE (N_("/Tab Style/St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME),
 
   { { N_("/View as _List"), NULL,
-      dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
+      dockable_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
     NULL,
     GIMP_HELP_DOCK_VIEW_AS_LIST, NULL },
   { { N_("/View as _Grid"), NULL,
-      dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_GRID, "/View as List" },
+      dockable_toggle_view_cmd_callback, GIMP_VIEW_TYPE_GRID, "/View as List" },
     NULL,
     GIMP_HELP_DOCK_VIEW_AS_GRID, NULL },
 
   MENU_SEPARATOR ("/image-menu-separator"),
 
   { { N_("/Show Image _Menu"), NULL,
-      dialogs_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },
+      dockable_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     GIMP_HELP_DOCK_IMAGE_MENU, NULL },
   { { N_("/Auto Follow Active _Image"), NULL,
-      dialogs_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
+      dockable_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     GIMP_HELP_DOCK_AUTO_BUTTON, NULL },
   { { N_("/Move to Screen..."), NULL,
-      dialogs_change_screen_cmd_callback, 0,
+      dockable_change_screen_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_MOVE_TO_SCREEN },
     NULL,
     GIMP_HELP_DOCK_CHANGE_SCREEN, NULL }

@@ -22,6 +22,7 @@ SUBDIRS = \
 	tools		\
 	widgets		\
 	display		\
+	actions		\
 	gui		\
 	pdb
 
@@ -83,6 +84,7 @@ gimp_2_1_LDFLAGS = \
 gimp_2_1_LDADD = \
 	config/libappconfig.a		\
 	gui/libappgui.a			\
+	actions/libappactions.a		\
 	display/libappdisplay.a		\
 	tools/libapptools.a		\
 	widgets/libappwidgets.a		\
