@@ -77,7 +77,7 @@
 		    SF-ADJUSTMENT _"Random Seed" '(32 0 15000000 1 10 0 1)
 		    SF-ADJUSTMENT _"Detail Level" '(4 1 15 1 5 0 0)
 		    SF-ADJUSTMENT _"Land Height" '(60 1 65 1 10 0 1)
-		    SF-ADJUSTMENT _"Land Height" '(4 1 65 1 10 0 1)
+		    SF-ADJUSTMENT _"Sea Depth" '(4 1 65 1 10 0 1)
 		    SF-ADJUSTMENT _"Scale X" '(4 0.1 16 1 5 0.1 0)
 		    SF-ADJUSTMENT _"Scale Y" '(4 0.1 16 1 5 0.1 0)
 		    SF-GRADIENT   _"Gradient" "Land_1")
