@@ -203,8 +203,7 @@ do_parallel_regions_single(PixelProcessor  *p_s)
 static void
 pixel_regions_do_parallel(PixelProcessor *p_s)
 {
-
-  IF_THREAD(
+    IF_THREAD(
     int nthreads;
     nthreads = MIN(num_processors, MAX_THREADS);
 
@@ -227,7 +226,11 @@ pixel_regions_do_parallel(PixelProcessor *p_s)
       }
       for (i = 0; i < nthreads; i++)
       {
-	pthread_join(threads[i], NULL);
+	int ret;
+	if ((ret = pthread_join(threads[i], NULL)))
+	  {
+	    fprintf(stderr, "pixel_regions_do_parallel:: pthread_join returned: %d\n", ret);
+	  }
       }
       if (p_s->nthreads != 0)
 	fprintf(stderr, "pixel_regions_do_prarallel: we lost a thread\n");
@@ -247,7 +250,7 @@ pixel_regions_real_process_parallel(p_func f, void *data,
   PixelProcessor *p_s;
 
 
-  p_s = g_new(PixelProcessor, 200);
+  p_s = g_new(PixelProcessor, 1);
 
 
   for (i = 0; i < num_regions; i++)
@@ -286,7 +289,8 @@ pixel_regions_real_process_parallel(p_func f, void *data,
     pixel_processor_free(p_s);
     return NULL;
   }
-  IF_THREAD(p_s->PRI->dirty_tiles = 0;)
+  /* Why would we wan't to set dirty_tiles to 0 here? */
+  /*  IF_THREAD(p_s->PRI->dirty_tiles = 0;) */
   p_s->f = f;
   p_s->data = data;
   p_s->n_regions = num_regions;

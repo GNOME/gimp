@@ -1,3 +1,9 @@
+2000-09-14  Jay Cox  <jaycox@gimp.org>
+
+	* app/pixel_processor.c: fix bug #24188.
+	* app/preferences_dialog.c: allow num_processors to be set on
+	the fly.
+
 2000-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/disp_callbacks.c: always position the menu inside the

@@ -138,7 +138,6 @@ static gint               edit_min_colors;
 static gint               edit_install_cmap;
 static gint               edit_cycled_marching_ants;
 static gint               edit_last_opened_size;
-static gint               edit_num_processors;
 static gint               edit_show_indicators;
 static gint               edit_nav_window_per_display;
 static gint               edit_info_window_follows_mouse;
@@ -170,7 +169,6 @@ static GtkWidget *        prefs_dlg = NULL;
    install-cmap
    cycled-marching-ants
    last-opened-size
-   num-processors
    show-indicators
    nav-window-per-display
    info_window_follows_mouse
@@ -303,10 +301,10 @@ file_prefs_check_settings (void)
       return PREFS_CORRUPT;
     }
 
-  if (edit_num_processors < 1 || edit_num_processors > 30) 
+  if (num_processors < 1 || num_processors > 30) 
     {
       g_message (_("Error: Number of processors must be between 1 and 30."));
-      edit_num_processors = old_num_processors;
+      num_processors = old_num_processors;
       return PREFS_CORRUPT;
     }
 
@@ -316,7 +314,6 @@ file_prefs_check_settings (void)
       edit_install_cmap              != old_install_cmap              ||
       edit_cycled_marching_ants      != old_cycled_marching_ants      ||
       edit_last_opened_size          != old_last_opened_size          ||
-      edit_num_processors            != old_num_processors            ||
       edit_show_indicators           != old_show_indicators           ||
       edit_nav_window_per_display    != old_nav_window_per_display    ||
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
@@ -448,7 +445,6 @@ file_prefs_save_callback (GtkWidget *widget,
   gint   save_install_cmap;
   gint   save_cycled_marching_ants;
   gint   save_last_opened_size;
-  gint   save_num_processors;
   gint   save_show_indicators;
   gint   save_nav_window_per_display;
   gint   save_info_window_follows_mouse;
@@ -498,7 +494,6 @@ file_prefs_save_callback (GtkWidget *widget,
   save_install_cmap              = install_cmap;
   save_cycled_marching_ants      = cycled_marching_ants;
   save_last_opened_size          = last_opened_size;
-  save_num_processors            = num_processors;
   save_show_indicators           = show_indicators;
   save_nav_window_per_display    = nav_window_per_display;
   save_info_window_follows_mouse = info_window_follows_mouse;
@@ -684,6 +679,10 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "default-threshold");
     }
+  if (num_processors != old_num_processors)
+    {
+      update = g_list_append (update, "num-processors");
+    }
 
   /*  values which can't be changed on the fly  */
   if (edit_stingy_memory_use != old_stingy_memory_use)
@@ -710,11 +709,6 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       last_opened_size = edit_last_opened_size;
       update = g_list_append (update, "last-opened-size");
-    }
-  if (edit_num_processors != old_num_processors)
-    {
-      num_processors = edit_num_processors;
-      update = g_list_append (update, "num-processors");
     }
   if (edit_show_indicators != old_show_indicators)
     {
@@ -801,7 +795,6 @@ file_prefs_save_callback (GtkWidget *widget,
   install_cmap              = save_install_cmap;
   cycled_marching_ants      = save_cycled_marching_ants;
   last_opened_size          = save_last_opened_size;
-  num_processors            = save_num_processors;
   show_indicators           = save_show_indicators;
   nav_window_per_display    = save_nav_window_per_display;
   info_window_follows_mouse = save_info_window_follows_mouse;
@@ -861,6 +854,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   help_browser             = old_help_browser;
   cursor_mode              = old_cursor_mode;
   default_threshold        = old_default_threshold;
+  num_processors           = old_num_processors;
 
   /*  restore variables which need some magic  */
   if (preview_size != old_preview_size)
@@ -897,7 +891,6 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_install_cmap              = old_install_cmap;
   edit_cycled_marching_ants      = old_cycled_marching_ants;
   edit_last_opened_size          = old_last_opened_size;
-  edit_num_processors            = old_num_processors;
   edit_show_indicators           = old_show_indicators;
   edit_nav_window_per_display    = old_nav_window_per_display;
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
@@ -1363,7 +1356,6 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_install_cmap              = install_cmap;
       edit_cycled_marching_ants      = cycled_marching_ants;
       edit_last_opened_size          = last_opened_size;
-      edit_num_processors            = num_processors;
       edit_show_indicators           = show_indicators;
       edit_nav_window_per_display    = nav_window_per_display;
       edit_info_window_follows_mouse = info_window_follows_mouse;
@@ -1422,6 +1414,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_help_browser             = help_browser;
   old_cursor_mode              = cursor_mode;
   old_default_threshold        = default_threshold;
+  old_num_processors           = num_processors;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_default_comment, default_comment);	
@@ -1432,7 +1425,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_install_cmap              = edit_install_cmap;
   old_cycled_marching_ants      = edit_cycled_marching_ants;
   old_last_opened_size          = edit_last_opened_size;
-  old_num_processors            = edit_num_processors;
   old_show_indicators           = edit_show_indicators;
   old_nav_window_per_display    = edit_nav_window_per_display;
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
@@ -2200,11 +2192,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 #ifdef ENABLE_MP
   spinbutton =
-    gimp_spin_button_new (&adjustment, edit_num_processors,
+    gimp_spin_button_new (&adjustment, num_processors,
 			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &edit_num_processors);
+		      &num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
