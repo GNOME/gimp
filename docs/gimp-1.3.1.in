@@ -1,10 +1,10 @@
-.TH GIMP 1 "13 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "30 November 2003" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
-[\-\-no\-mmx] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
+[\-\-no\-cpu\-accel] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
 [\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
 [\-S] [\-\-no\-splash\-image] [\-\-session \fI<name>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
@@ -50,8 +50,9 @@ Do not use shared memory between GIMP and its plugins.
 Instead of using shared memory, GIMP will send the data via pipe. This
 will result in slower performance than using shared memory.
 .TP 8
-.B \-\-no\-mmx
-Do not use MMX routines even if GIMP detects the availability of MMX.
+.B \-\-no\-cpu\-accel
+Do not use CPU accelerations such as MMX or SSE even if GIMP detects
+that your CPU provides this functionality.
 .TP 8
 .B \-d, \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful

@@ -95,10 +95,9 @@ base_init (GimpBaseConfig *config,
 
   g_free (path);
 
-  /*  FIXME: pass use_cpu_accel to GimpComposite  */
   gimp_composite_init (use_cpu_accel);
 
-  paint_funcs_setup (use_cpu_accel);
+  paint_funcs_setup ();
 }
 
 void

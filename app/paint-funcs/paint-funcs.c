@@ -40,8 +40,10 @@
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
 
-#define RANDOM_SEED        314159265
-#define EPSILON            0.0001
+
+#define RANDOM_SEED   314159265
+#define EPSILON       0.0001
+
 
 typedef enum
 {
@@ -436,10 +438,10 @@ cubic (gdouble dx,
 /*********************/
 
 void
-paint_funcs_setup (gboolean use_mmx)
+paint_funcs_setup (void)
 {
-  guint i;
   GRand *gr;
+  gint   i;
 
   /*  generate a table of random seeds  */
   gr = g_rand_new_with_seed (RANDOM_SEED);

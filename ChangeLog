@@ -1,3 +1,15 @@
+2003-11-30  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: renamed remaining occurences of "use_mmx" to
+	"use_cpu_accel".
+
+	* app/paint-funcs/paint-funcs.[ch]: removed unused "use_mmx"
+	parameter.
+
+	* app/base/base.c: changed accordingly.
+
+	* docs/gimp-1.3.1.in: documented the changed command-line option.
+
 2003-11-30  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* configure.in: backed out inadvertant changes.

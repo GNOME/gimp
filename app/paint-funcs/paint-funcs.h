@@ -20,8 +20,8 @@
 #define __PAINT_FUNCS_H__
 
 
-/*  Called initially to setup accelerated rendering features  */
-void  paint_funcs_setup     (gboolean  use_mmx);
+/*  Called initially to setup rendering features  */
+void  paint_funcs_setup     (void);
 void  paint_funcs_free      (void);
 
 

@@ -104,7 +104,7 @@ main (int    argc,
   gboolean            no_splash_image         = FALSE;
   gboolean            be_verbose              = FALSE;
   gboolean            use_shm                 = FALSE;
-  gboolean            use_mmx                 = TRUE;
+  gboolean            use_cpu_accel           = TRUE;
   gboolean            console_messages        = FALSE;
   gboolean            use_debug_handler       = FALSE;
   GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
@@ -318,7 +318,7 @@ main (int    argc,
 	}
       else if (strcmp (argv[i], "--no-cpu-accel") == 0)
 	{
-	  use_mmx = FALSE;
+	  use_cpu_accel = FALSE;
  	  argv[i] = NULL;
 	}
       else if (strcmp (argv[i], "--debug-handlers") == 0)
@@ -454,7 +454,7 @@ main (int    argc,
            no_splash_image,
            be_verbose,
            use_shm,
-           use_mmx,
+           use_cpu_accel,
            console_messages,
            stack_trace_mode);
 
