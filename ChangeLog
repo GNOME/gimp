@@ -1,5 +1,7 @@
 2003-08-17  Helvetix Victorinox  <helvetix@gimp.org>
 
+	* app/composite/gimp-composite-sse2-test.c: added
+
 	* app/composite/Makefile.am: Removed 'test' target
 
 	* app/composite/gimp-composite-dispatch.[ch]: retired and removed.
