@@ -1,3 +1,7 @@
+1999-01-10  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* configure.in (AC_OUTPUT): Use `test -f' instead of `test -e'.
+
 Sun Jan 11 00:24:21 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
 
 	Bit of a large checkin this - it's basically three things:

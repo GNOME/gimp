@@ -792,7 +792,7 @@ data/patterns/Makefile],
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
-      if test -e plug-ins/perl/config.status; then
+      if test -f plug-ins/perl/config.status; then
          ( cd plug-ins/perl; . config.status )
       fi
       ;;
