@@ -1,5 +1,40 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
+if OS_WIN32
+gimptool_def = gimptool.def
+libgimptool_export_symbols = -export-symbols gimptool.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimptool-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimptool-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimptool-1.3.lib
+
+install-ms-lib:
+	$(INSTALL) gimptool-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimptool-1.3.lib
+
+gimptool-1.3.lib: gimptool.def
+	lib -name:libgimptool-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimptool.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 libgimptoolincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimptool
 
 AM_CPPFLAGS = \
@@ -9,6 +44,7 @@ AM_CPPFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
+	$(GMODULE_CFLAGS) \
 	-I$(includedir)
 
 lib_LTLIBRARIES = libgimptool-1.3.la
@@ -21,7 +57,8 @@ libgimptool_1_3_la_SOURCES = \
 	gimptool.h		\
 	gimptoolcontrol.h	\
 	gimptoolmodule.c	\
-	gimptoolmodule.h
+	gimptoolmodule.h	\
+	glue.c
 
 libgimptoolinclude_HEADERS = \
 	gimptool.h		\
@@ -30,9 +67,13 @@ libgimptoolinclude_HEADERS = \
 	gimptoolmodule.h
 
 libgimptool_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	$(no_undefined) \
+	$(libgimptool_export_symbols)
 
-libgimptool_1_3_la_LIBADD = $(GLIB_LIBS) 
+libgimptool_1_3_la_LIBADD = $(GLIB_LIBS) $(GMODULE_LIBS)
+
+libgimptool_1_3_la_DEPENDENCIES = $(gimptool_def)
 
 #
 # rules to generate built sources
@@ -51,3 +92,7 @@ $(srcdir)/gimptoolenums.c: $(srcdir)/gimptoolenums.h $(GIMP_MKENUMS)
 		$(srcdir)/gimptoolenums.h > xgen-tec \
 	&& cp xgen-tec $(@F) \
 	&& rm -f xgen-tec
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

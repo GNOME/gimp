@@ -1,0 +1,14 @@
+EXPORTS
+	gimp_tool_arrow_key
+	gimp_tool_button_press
+	gimp_tool_button_release
+	gimp_tool_control
+	gimp_tool_cursor_update
+	gimp_tool_get_type
+	gimp_tool_initialize
+	gimp_tool_modifier_key
+	gimp_tool_module_get_type
+	gimp_tool_module_new
+	gimp_tool_motion
+	gimp_tool_oper_update
+	gimp_tool_set_cursor

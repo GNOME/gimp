@@ -1,11 +1,19 @@
 2002-12-25  Tor Lillqvist  <tml@iki.fi>
 
-	* libgimpproxy/Makefile.am: Similar additions for Win32 as in the
+	* libgimpproxy/Makefile.am
+	* libgimptool/Makefile.am: Similar additions for Win32 as in the
 	other libgimp*/Makefile.am files: Use -no-undefined. Use the .def
 	file. Produce MS style import library if possible. Install and
 	uninstall import libraries.
 
-	* libgimpproxy/gimpproxy.def: New file.
+	* libgimpproxy/gimpproxy.def
+	* libgimptool/gimptool.def: New files.
+
+	* libgimptool/glue.c: New file. Used on Win32 to be able to link
+	at run-time against entries in the main executable that has loaded
+	the libgimptool DLL. (If I understand correctly how things are
+	supposed to work, this will be either gimp.exe or
+	tool-safe-mode.exe, but that doesn't matter.)
 
 2002-12-23  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
