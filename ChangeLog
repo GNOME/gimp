@@ -1,3 +1,11 @@
+Thu Aug 27 18:53:50 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/CEL/CEL.c
+	* plug-ins/palette/palette.c
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-ps.c: s/strdup/g_strdup/ for portability
+
 Tue Aug 25 14:55:25 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: use LDFLAGS and LIBS for building too
