@@ -1,3 +1,10 @@
+2002-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/color-notebook.c (color_notebook_new_internal): removed
+	the non-dialog variant (all color notebooks have "Cancel" and "OK"
+	buttons again). We have the color dockable which can be always
+	open now and don't need this hack any more.
+
 2002-11-16  Manish Sing  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.c: use g_spawn_async now. If the OS/2 port

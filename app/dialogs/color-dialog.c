@@ -315,39 +315,20 @@ color_notebook_new_internal (GimpViewable          *viewable,
                                      NULL);
    }
 
-  if (wants_updates)
-    {
-      gimp_dialog_create_action_area (GIMP_DIALOG (cnp->shell),
+  gimp_dialog_create_action_area (GIMP_DIALOG (cnp->shell),
 
-                                      "_delete_event_",
-                                      color_notebook_ok_callback,
-                                      cnp, NULL, NULL, TRUE, TRUE,
+                                  GTK_STOCK_CANCEL,
+                                  color_notebook_cancel_callback,
+                                  cnp, NULL, NULL, FALSE, TRUE,
 
-                                      NULL);
+                                  GTK_STOCK_OK,
+                                  color_notebook_ok_callback,
+                                  cnp, NULL, NULL, TRUE, FALSE,
 
-      gtk_window_set_type_hint (GTK_WINDOW (cnp->shell),
-                                GDK_WINDOW_TYPE_HINT_NORMAL);
-
-      gtk_dialog_set_has_separator (GTK_DIALOG (cnp->shell), FALSE);
-      gtk_widget_hide (GTK_DIALOG (cnp->shell)->action_area);
-    }
-  else
-    {
-      gimp_dialog_create_action_area (GIMP_DIALOG (cnp->shell),
-
-                                      GTK_STOCK_CANCEL,
-                                      color_notebook_cancel_callback,
-                                      cnp, NULL, NULL, FALSE, TRUE,
-
-                                      GTK_STOCK_OK,
-                                      color_notebook_ok_callback,
-                                      cnp, NULL, NULL, TRUE, FALSE,
-
-                                      NULL);
-    }
+                                  NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cnp->shell)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
