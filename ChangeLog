@@ -1,3 +1,7 @@
+2003-07-04  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: minor fixes to the checks for assembler support.
+
 2003-07-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_color): use
