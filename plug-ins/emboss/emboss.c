@@ -314,21 +314,30 @@ int pluginCore(struct piArgs *argp) {
   GPixelRgn src, dst;
   gint p_update;
   gint y;
+  gint x1, y1, x2, y2;
   guint width, height;
   gint bypp, rowsize, has_alpha;
   guchar *srcbuf, *dstbuf;
 
   drw=gimp_drawable_get(argp->drw);
 
-  width=drw->width;
-  height=drw->height;
+  gimp_drawable_mask_bounds(argp->drw, &x1, &y1, &x2, &y2);
+
+  /* expand the bounds a little */
+  x1 = MAX(0, x1 - 5);
+  y1 = MAX(0, y1 - 5);
+  x2 = MIN(drw->width, x2+5);
+  y2 = MIN(drw->height, y2+5);
+
+  width = x2 - x1;
+  height = y2 - y1;
   bypp=drw->bpp;
   p_update = height/20;
   rowsize = width * bypp;
   has_alpha = gimp_drawable_has_alpha (argp->drw);
 
-  gimp_pixel_rgn_init (&src, drw, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst, drw, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src, drw, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst, drw, x1, y1, width, height, TRUE, TRUE);
 
   srcbuf=(guchar*)malloc(rowsize*3);
   dstbuf=(guchar*)malloc(rowsize);
@@ -342,25 +351,25 @@ int pluginCore(struct piArgs *argp) {
   gimp_tile_cache_ntiles((width + gimp_tile_width() - 1) / gimp_tile_width());
 
   /* first row */
-  gimp_pixel_rgn_get_rect(&src, srcbuf, 0, 0, width, 3);
+  gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y1, width, 3);
   memcpy(srcbuf, srcbuf+rowsize, rowsize);
   EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
             dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row(&dst, dstbuf, 0, 0, width);
 
   /* last row */
-  gimp_pixel_rgn_get_rect(&src, srcbuf, 0, height-3, width, 3);
+  gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y2-3, width, 3);
   memcpy(srcbuf+rowsize*2, srcbuf+rowsize, rowsize);
   EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
             dstbuf, width, bypp, has_alpha);
-  gimp_pixel_rgn_set_row(&dst, dstbuf, 0, height-1, width);
+  gimp_pixel_rgn_set_row(&dst, dstbuf, x1, y2-1, width);
 
   for(y=0 ;y<height-2; y++){
      if (y%p_update==0) gimp_progress_update((gdouble)y/(gdouble)height);
-     gimp_pixel_rgn_get_rect(&src, srcbuf, 0, y, width, 3);
+     gimp_pixel_rgn_get_rect(&src, srcbuf, x1, y1+y, width, 3);
      EmbossRow(srcbuf, argp->embossp ? (guchar *)0 : srcbuf,
                dstbuf, width, bypp, has_alpha);
-     gimp_pixel_rgn_set_row(&dst, dstbuf, 0, y+1, width);
+     gimp_pixel_rgn_set_row(&dst, dstbuf, x1, y1+y+1, width);
   }
 
   free(srcbuf);
@@ -368,7 +377,7 @@ int pluginCore(struct piArgs *argp) {
 
   gimp_drawable_flush(drw);
   gimp_drawable_merge_shadow (drw->id, TRUE);
-  gimp_drawable_update(drw->id, 0, 0, width, height);
+  gimp_drawable_update(drw->id, x1, y1, width, height);
   gimp_displays_flush();
 
   return 0;

@@ -160,17 +160,17 @@ change_scale (GDisplay *gdisp,
 
 /* scale image coord to realworld units (cm, inches, pixels) */
 static gdouble
-img2real (GDisplay *g, gboolean xdir, gdouble a)
+img2real (GDisplay *gdisp, gboolean xdir, gdouble a)
 {
   float res;  
 
-  if (g->dot_for_dot)
+  if (gdisp->dot_for_dot)
     return a;
 
   if (xdir)
-    res = monitor_xres;
+    res = gdisp->gimage->xresolution;
   else
-    res = monitor_yres;
+    res = gdisp->gimage->yresolution;
 
   switch (ruler_units) {
   case GTK_PIXELS:

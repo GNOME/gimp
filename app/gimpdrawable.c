@@ -111,6 +111,9 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable, int undo)
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
+  if (! gimage->shadow)
+    return;
+
   /*  A useful optimization here is to limit the update to the
    *  extents of the selection mask, as it cannot extend beyond
    *  them.

@@ -1,3 +1,15 @@
+Wed Jan 27 21:52:43 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/scale.c: oops - should use the image resolution, not the
+	    screen resolution.  D'oh!
+
+	* app/gimpdrawable.c: only merge shadow image if there actually is
+	    one.
+
+	* plug-ins/emboss/emboss.c: small optimisation: use
+ 	    gimp_drawable_mask_bounds() to calculate only the pixels that
+ 	    are actually in the selection.
+
 Wed Jan 27 12:25:00 CST 1999 Seth Burgess <sbjurges@gimp.org>
 	
 	* plug-ins/script-fu/scripts/add-bevel.scm: fixed the SF-ADJUSTMENT so that
