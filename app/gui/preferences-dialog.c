@@ -46,7 +46,6 @@
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
-#include "colormaps.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 
@@ -1914,7 +1913,7 @@ preferences_dialog_create (Gimp *gimp)
 
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
 
-  if (g_visual->depth != 8)
+  if (gdk_rgb_get_visual ()->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
 
   table = gtk_table_new (1, 2, FALSE);

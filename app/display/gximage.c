@@ -22,7 +22,6 @@
 
 #include "display-types.h"
 
-#include "colormaps.h"
 #include "gximage.h"
 
 
@@ -47,7 +46,9 @@ static GXImage *gximage = NULL;
 /*  STATIC functions  */
 
 static GXImage *
-create_gximage (GdkVisual *visual, int width, int height)
+create_gximage (GdkVisual *visual,
+                gint       width,
+                gint       height)
 {
   GXImage * gximage;
 
@@ -78,7 +79,8 @@ delete_gximage (GXImage *gximage)
 void
 gximage_init (void)
 {
-  gximage = create_gximage (g_visual, GXIMAGE_WIDTH, GXIMAGE_HEIGHT);
+  gximage = create_gximage (gdk_rgb_get_visual (),
+                            GXIMAGE_WIDTH, GXIMAGE_HEIGHT);
 }
 
 void

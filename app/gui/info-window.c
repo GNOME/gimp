@@ -46,8 +46,6 @@
 #include "info-dialog.h"
 #include "info-window.h"
 
-#include "colormaps.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -657,15 +655,21 @@ info_window_update (GimpDisplay *gdisp)
 		_("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
 
   /*  visual class  */
-  if (type == RGB || type == INDEXED)
-    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
-		gettext (visual_classes[g_visual->type]));
-  else if (type == GRAY)
-    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
-		gettext (visual_classes[g_visual->type]));
+  {
+    GdkVisual *visual;
 
-  /*  visual depth  */
-  g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", g_visual->depth);
+    visual = gdk_rgb_get_visual ();
+
+    if (type == RGB || type == INDEXED)
+      g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
+                  gettext (visual_classes[visual->type]));
+    else if (type == GRAY)
+      g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
+                  gettext (visual_classes[visual->type]));
+
+    /*  visual depth  */
+    g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", visual->depth);
+  }
 
   info_dialog_update (info_win);
 }

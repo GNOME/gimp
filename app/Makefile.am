@@ -22,8 +22,6 @@ bin_PROGRAMS = gimp-1.3
 ## gui stuff that needs to go to libgimp/, gui/ or /dev/null
 ##
 gui_sources = \
-	colormaps.c		\
-	colormaps.h		\
 	devices.c		\
 	devices.h		\
 	gimpprogress.c		\

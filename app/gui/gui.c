@@ -201,6 +201,13 @@ gui_themes_init (Gimp *gimp)
 
   if (! gimprc.show_tool_tips)
     gimp_help_disable_tooltips ();
+
+  gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 256);
+
+  gdk_rgb_set_min_colors (gimprc.min_colors);
+  gdk_rgb_set_install (gimprc.install_cmap);
+
+  gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
 }
 
 void

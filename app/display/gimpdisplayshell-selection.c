@@ -32,11 +32,9 @@
 #include "gimpdisplayshell-marching-ants.h"
 #include "gimpdisplayshell-selection.h"
 
-#include "colormaps.h"
 #include "gimprc.h"
 
 
-#define USE_XDRAWPOINTS
 #undef VERBOSE
 
 /*  The possible internal drawing states...  */
@@ -69,8 +67,10 @@ static gboolean    selection_start_marching  (gpointer    data);
 static gboolean    selection_march_ants      (gpointer    data);
 
 
-GdkPixmap * marching_ants[9]  = { NULL };
-GdkPixmap * cycled_ants_pixmap = NULL;
+static GdkColor    marching_ants_colors[8];
+
+static GdkPixmap * marching_ants[9]  = { NULL };
+static GdkPixmap * cycled_ants_pixmap = NULL;
 
 
 /*  public functions  */
@@ -95,17 +95,27 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   if (gimprc.cycled_marching_ants)
     {
       new->cycle = TRUE;
-      if (!cycled_ants_pixmap)
-	cycled_ants_pixmap = create_cycled_ants_pixmap (win, g_visual->depth);
+
+      if (! cycled_ants_pixmap)
+        {
+          GdkVisual *visual;
+
+          visual = gdk_rgb_get_visual ();
+
+          cycled_ants_pixmap = create_cycled_ants_pixmap (win, visual->depth);
+        }
 
       new->cycle_pix = cycled_ants_pixmap;
     }
   else
     {
       new->cycle = FALSE;
-      if (!marching_ants[0])
+
+      if (! marching_ants[0])
 	for (i = 0; i < 8; i++)
-	  marching_ants[i] = gdk_bitmap_create_from_data (win, (char*) ant_data[i], 8, 8);
+	  marching_ants[i] = gdk_bitmap_create_from_data (win,
+                                                          (gchar *) ant_data[i],
+                                                          8, 8);
     }
 
   new->win            = win;
@@ -136,49 +146,66 @@ gimp_display_shell_selection_create (GdkWindow        *win,
     {
       gdk_gc_set_fill (new->gc_in, GDK_TILED);
       gdk_gc_set_tile (new->gc_in, new->cycle_pix);
-      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+      gdk_gc_set_line_attributes (new->gc_in, 1,
+                                  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
     }
   else
     {
       /*  get black and white pixels for this gdisplay  */
-      fg.pixel = g_black_pixel;
-      bg.pixel = g_white_pixel;
+      fg.red   = 0x0;
+      fg.green = 0x0;
+      fg.blue  = 0x0;
 
-      gdk_gc_set_foreground (new->gc_in, &fg);
-      gdk_gc_set_background (new->gc_in, &bg);
+      bg.red   = 0xffff;
+      bg.green = 0xffff;
+      bg.blue  = 0xffff;
+
+      gdk_gc_set_rgb_fg_color (new->gc_in, &fg);
+      gdk_gc_set_rgb_bg_color (new->gc_in, &bg);
       gdk_gc_set_fill (new->gc_in, GDK_OPAQUE_STIPPLED);
-      gdk_gc_set_line_attributes (new->gc_in, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+      gdk_gc_set_line_attributes (new->gc_in, 1,
+                                  GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
     }
 
-#ifdef USE_XDRAWPOINTS
   new->gc_white = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_white, &bg);
+  gdk_gc_set_rgb_fg_color (new->gc_white, &bg);
 
   new->gc_black = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_black, &fg);
-#endif
+  gdk_gc_set_rgb_fg_color (new->gc_black, &fg);
 
   /*  Setup 2nd & 3rd GCs  */
-  fg.pixel = g_white_pixel;
-  bg.pixel = g_gray_pixel;
+  fg.red   = 0xffff;
+  fg.green = 0xffff;
+  fg.blue  = 0xffff;
+
+  bg.red   = 0x7f7f;
+  bg.green = 0x7f7f;
+  bg.blue  = 0x7f7f;
 
   /*  create a new graphics context  */
   new->gc_out = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_out, &fg);
-  gdk_gc_set_background (new->gc_out, &bg);
+  gdk_gc_set_rgb_fg_color (new->gc_out, &fg);
+  gdk_gc_set_rgb_bg_color (new->gc_out, &bg);
   gdk_gc_set_fill (new->gc_out, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_line_attributes (new->gc_out, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+  gdk_gc_set_line_attributes (new->gc_out, 1,
+                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
   /*  get black and color pixels for this gdisplay  */
-  fg.pixel = g_black_pixel;
-  bg.pixel = g_color_pixel;
+  fg.red   = 0x0;
+  fg.green = 0x0;
+  fg.blue  = 0x0;
+
+  bg.red   = 0xffff;
+  bg.green = 0xffff;
+  bg.blue  = 0x0;
 
   /*  create a new graphics context  */
   new->gc_layer = gdk_gc_new (new->win);
-  gdk_gc_set_foreground (new->gc_layer, &fg);
-  gdk_gc_set_background (new->gc_layer, &bg);
+  gdk_gc_set_rgb_fg_color (new->gc_layer, &fg);
+  gdk_gc_set_rgb_bg_color (new->gc_layer, &bg);
   gdk_gc_set_fill (new->gc_layer, GDK_OPAQUE_STIPPLED);
-  gdk_gc_set_line_attributes (new->gc_layer, 1, GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+  gdk_gc_set_line_attributes (new->gc_layer, 1,
+                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
 
   return new;
 }
@@ -196,12 +223,11 @@ gimp_display_shell_selection_free (Selection *select)
     gdk_gc_unref (select->gc_out);
   if (select->gc_layer)
     gdk_gc_unref (select->gc_layer);
-#ifdef USE_XDRAWPOINTS
   if (select->gc_white)
     gdk_gc_unref (select->gc_white);
   if (select->gc_black)
     gdk_gc_unref (select->gc_black);
-#endif
+
   selection_free_segs (select);
 
   g_free (select);
@@ -370,7 +396,6 @@ create_cycled_ants_pixmap (GdkWindow *window,
 {
   GdkPixmap *pixmap;
   GdkGC     *gc;
-  GdkColor   col;
   gint       i, j;
 
   pixmap = gdk_pixmap_new (window, 8, 8, depth);
@@ -379,8 +404,8 @@ create_cycled_ants_pixmap (GdkWindow *window,
   for (i = 0; i < 8; i++)
     for (j = 0; j < 8; j++)
       {
-	col.pixel = marching_ants_pixels[((i + j) % 8)];
-	gdk_gc_set_foreground (gc, &col);
+	gdk_gc_set_rgb_fg_color (gc, &marching_ants_colors[((i + j) % 8)]);
+
 	gdk_draw_line (pixmap, gc, i, j, i, j);
       }
 
@@ -399,10 +424,19 @@ cycle_ant_colors (Selection *select)
   for (i = 0; i < 8; i++)
     {
       index = (i + (8 - select->index_in)) % 8;
+
       if (index < 4)
-	marching_ants_pixels[i] = get_color (0, 0, 0);
+        {
+          marching_ants_colors[i].red   = 0x0;
+          marching_ants_colors[i].green = 0x0;
+          marching_ants_colors[i].blue  = 0x0;
+        }
       else
-	marching_ants_pixels[i] = get_color (255, 255, 255);
+        {
+          marching_ants_colors[i].red   = 0xffff;
+          marching_ants_colors[i].green = 0xffff;
+          marching_ants_colors[i].blue  = 0xffff;
+        }
     }
 }
 
@@ -537,7 +571,6 @@ selection_draw (Selection *select)
   if (select->hidden)
     return;
 
-#ifdef USE_XDRAWPOINTS
 #ifdef VERBOSE
   {
     gint j, sum;
@@ -575,14 +608,12 @@ selection_draw (Selection *select)
 			     select->points_in[i], select->num_points_in[i]);
 	}
     }
-#else
-  if (select->segs_in)
-    gdk_draw_segments (select->win, select->gc_in,
-		       select->segs_in, select->num_segs_in);
-#endif
+
   if (select->segs_out && select->index_out == 0)
-    gdk_draw_segments (select->win, select->gc_out,
-		       select->segs_out, select->num_segs_out);
+    {
+      gdk_draw_segments (select->win, select->gc_out,
+                         select->segs_out, select->num_segs_out);
+    }
 }
 
 
@@ -655,9 +686,8 @@ selection_generate_segs (Selection *select)
       select->segs_in = g_new (GdkSegment, select->num_segs_in);
       selection_transform_segs (select, segs_in, select->segs_in,
 				select->num_segs_in);
-#ifdef USE_XDRAWPOINTS
+
       selection_render_points (select);
-#endif
     }
   else
     {
@@ -752,7 +782,9 @@ selection_start_marching (gpointer data)
 
   /*  Draw the ants  */
   if (select->cycle)
-    cycle_ant_colors (select);
+    {
+      cycle_ant_colors (select);
+    }
   else
     {
       gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
@@ -781,10 +813,8 @@ selection_march_ants (gpointer data)
   /*  increment stipple index  */
   select->index_in++;
 
-#ifndef USE_XDRAWPOINTS
   if (select->index_in > 7)
     select->index_in = 0;
-#endif
 
   /*  outside segments do not march, so index does not cycle  */
   select->index_out++;
@@ -794,12 +824,12 @@ selection_march_ants (gpointer data)
 
   /*  Draw the ants  */
   if (select->cycle)
-    cycle_ant_colors (select);
+    {
+      cycle_ant_colors (select);
+    }
   else
     {
-#ifndef USE_XDRAWPOINTS
       gdk_gc_set_stipple (select->gc_in, marching_ants[select->index_in]);
-#endif
 
       selection_draw (select);
     }

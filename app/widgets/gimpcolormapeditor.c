@@ -43,8 +43,6 @@
 #include "colormap-dialog.h"
 #include "color-area.h"
 
-#include "colormaps.h"
-
 #include "libgimp/gimpintl.h"
 
 

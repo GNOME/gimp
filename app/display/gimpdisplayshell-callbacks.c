@@ -56,93 +56,43 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 
-#include "colormaps.h"
 #include "devices.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void
-gimp_display_shell_redraw (GimpDisplayShell *shell,
-                           gint              x,
-                           gint              y,
-                           gint              w,
-                           gint              h)
-{
-  glong x1, y1, x2, y2;    /*  coordinates of rectangle corners  */
+/*  local function prototypes  */
 
-  x1 = x;
-  y1 = y;
-  x2 = (x + w);
-  y2 = (y + h);
+static void     gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
+                                                      GimpDisplayShell *shell);
+static void     gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
+                                                      GimpDisplayShell *shell);
 
-  x1 = CLAMP (x1, 0, shell->disp_width);
-  y1 = CLAMP (y1, 0, shell->disp_height);
-  x2 = CLAMP (x2, 0, shell->disp_width);
-  y2 = CLAMP (y2, 0, shell->disp_height);
-
-  if ((x2 - x1) && (y2 - y1))
-    {
-      gimp_display_shell_add_expose_area (shell,
-                                          x1, y1,
-                                          (x2 - x1), (y2 - y1));
-      gimp_display_shell_flush (shell);
-    }
-}
-
-static void
-gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
-{
-  GList *list;
-
-  /*  gdk_devices_list() returns an internal list, so we shouldn't
-   *  free it afterwards
-   */
-  for (list = gdk_devices_list (); list; list = g_list_next (list))
-    {
-      GdkDevice *device = (GdkDevice *) list->data;
-
-      if (device == current_device)
-	{
-	  shell->draw_cursor = ! device->has_cursor;
-	  break;
-	}
-    }
-}
+static gboolean gimp_display_shell_get_state         (GimpDisplayShell *shell,
+                                                      GdkEvent         *event,
+                                                      GdkDevice        *device,
+                                                      GdkModifierType  *state);
+static void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
+                                                      GdkDevice        *device,
+                                                      GdkModifierType  *state);
+static gboolean gimp_display_shell_get_coords        (GimpDisplayShell *shell,
+                                                      GdkEvent         *event,
+                                                      GdkDevice        *device,
+                                                      GimpCoords       *coords);
+static void     gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
+                                                      GdkDevice        *device,
+                                                      GimpCoords       *coords);
 
 static GdkModifierType
-gimp_display_shell_key_to_state (gint key)
-{
-  switch (key)
-    {
-    case GDK_Alt_L:
-    case GDK_Alt_R:
-      return GDK_MOD1_MASK;
-    case GDK_Shift_L:
-    case GDK_Shift_R:
-      return GDK_SHIFT_MASK;
-    case GDK_Control_L:
-    case GDK_Control_R:
-      return GDK_CONTROL_MASK;
-    default:
-      return 0;
-    }
-}
+                gimp_display_shell_key_to_state      (gint              key);
 
-static void
-gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
-                                      GimpDisplayShell *shell)
-{
-  gimp_display_shell_scroll (shell, 0, (adjustment->value - shell->offset_y));
-}
+static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
+                                                      gint             *x,
+                                                      gint             *y,
+                                                      gpointer          data);
 
-static void
-gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
-                                      GimpDisplayShell *shell)
-{
-  gimp_display_shell_scroll (shell, (adjustment->value - shell->offset_x), 0);
-}
+/*  public functions  */
 
 gboolean
 gimp_display_shell_events (GtkWidget        *widget,
@@ -245,82 +195,101 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                           GIMP_CURSOR_MODIFIER_NONE);
 }
 
-static void
-gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
-                                      GdkDevice        *device,
-                                      GimpCoords       *coords)
+gboolean
+gimp_display_shell_canvas_configure (GtkWidget         *widget,
+                                     GdkEventConfigure *cevent,
+                                     GimpDisplayShell  *shell)
 {
-  gdouble axes[GDK_AXIS_LAST];
-
-  gdk_device_get_state (device, shell->canvas->window, axes, NULL);
-
-  gdk_device_get_axis (device, axes, GDK_AXIS_X,        &coords->x);
-  gdk_device_get_axis (device, axes, GDK_AXIS_Y,        &coords->y);
-  gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure);
-  gdk_device_get_axis (device, axes, GDK_AXIS_XTILT,    &coords->xtilt);
-  gdk_device_get_axis (device, axes, GDK_AXIS_YTILT,    &coords->ytilt);
-  gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL,    &coords->wheel);
-}
-
-static gboolean
-gimp_display_shell_get_coords (GimpDisplayShell *shell,
-                               GdkEvent         *event,
-                               GdkDevice        *device,
-                               GimpCoords       *coords)
-{
-  /*  initialize extended axes to something meaningful because each of
-   *  the following *_get_axis() calls may return FALSE and leave the
-   *  passed gdouble location untouched
-   */
-  coords->pressure = 1.0;
-  coords->xtilt    = 0.5;
-  coords->ytilt    = 0.5;
-  coords->wheel    = 0.5;
-
-  if (gdk_event_get_axis (event, GDK_AXIS_X, &coords->x))
+  if ((shell->disp_width  != shell->canvas->allocation.width) ||
+      (shell->disp_height != shell->canvas->allocation.height))
     {
-      gdk_event_get_axis (event, GDK_AXIS_Y,        &coords->y);
-      gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure);
-      gdk_event_get_axis (event, GDK_AXIS_XTILT,    &coords->xtilt);
-      gdk_event_get_axis (event, GDK_AXIS_YTILT,    &coords->ytilt);
-      gdk_event_get_axis (event, GDK_AXIS_WHEEL,    &coords->wheel);
+      shell->disp_width  = shell->canvas->allocation.width;
+      shell->disp_height = shell->canvas->allocation.height;
 
-      return TRUE;
+      gimp_display_shell_scale_resize (shell, FALSE, FALSE);
     }
 
-  gimp_display_shell_get_device_coords (shell, device, coords);
-
-  return FALSE;
-}
-
-static void
-gimp_display_shell_get_device_state (GimpDisplayShell *shell,
-                                     GdkDevice        *device,
-                                     GdkModifierType  *state)
-{
-  gdk_device_get_state (device, shell->canvas->window, NULL, state);
-}
-
-static gboolean
-gimp_display_shell_get_state (GimpDisplayShell *shell,
-                              GdkEvent         *event,
-                              GdkDevice        *device,
-                              GdkModifierType  *state)
-{
-  if (gdk_event_get_state (event, state))
-    {
-      return TRUE;
-    }
-
-  gimp_display_shell_get_device_state (shell, device, state);
-
-  return FALSE;
+  return TRUE;
 }
 
 gboolean
-gimp_display_shell_canvas_events (GtkWidget        *canvas,
-                                  GdkEvent         *event,
+gimp_display_shell_canvas_expose (GtkWidget        *widget,
+                                  GdkEventExpose   *eevent,
                                   GimpDisplayShell *shell)
+{
+  glong x1, y1, x2, y2;
+
+  x1 = eevent->area.x;
+  y1 = eevent->area.y;
+  x2 = (eevent->area.x + eevent->area.width);
+  y2 = (eevent->area.y + eevent->area.height);
+
+  x1 = CLAMP (x1, 0, shell->disp_width);
+  y1 = CLAMP (y1, 0, shell->disp_height);
+  x2 = CLAMP (x2, 0, shell->disp_width);
+  y2 = CLAMP (y2, 0, shell->disp_height);
+
+  if ((x2 - x1) && (y2 - y1))
+    {
+      gimp_display_shell_add_expose_area (shell,
+                                          x1, y1,
+                                          (x2 - x1), (y2 - y1));
+      gimp_display_shell_flush (shell);
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_display_shell_canvas_focus_in (GtkWidget        *widget,
+                                    GdkEventFocus    *fevent,
+                                    GimpDisplayShell *shell)
+{
+  GTK_WIDGET_SET_FLAGS (widget, GTK_HAS_FOCUS);
+
+  /*  stop the signal because otherwise gtk+ exposes the whole
+   *  canvas to get the non-existant focus indicator drawn
+   */
+  return TRUE;
+}
+
+gboolean
+gimp_display_shell_canvas_focus_out (GtkWidget        *widget,
+                                     GdkEventFocus    *fevent,
+                                     GimpDisplayShell *shell)
+{
+  GTK_WIDGET_UNSET_FLAGS (widget, GTK_HAS_FOCUS);
+
+  /*  stop the signal because otherwise gtk+ exposes the whole
+   *  canvas to get the non-existant focus indicator drawn
+   */
+  return TRUE;
+}
+
+static void
+gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
+{
+  GList *list;
+
+  /*  gdk_devices_list() returns an internal list, so we shouldn't
+   *  free it afterwards
+   */
+  for (list = gdk_devices_list (); list; list = g_list_next (list))
+    {
+      GdkDevice *device = (GdkDevice *) list->data;
+
+      if (device == current_device)
+	{
+	  shell->draw_cursor = ! device->has_cursor;
+	  break;
+	}
+    }
+}
+
+gboolean
+gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
+                                       GdkEvent         *event,
+                                       GimpDisplayShell *shell)
 {
   GimpDisplay     *gdisp;
   GimpImage       *gimage;
@@ -364,49 +333,6 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      {
-        GdkEventExpose *eevent;
-
-        eevent = (GdkEventExpose *) event;
-
-        gimp_display_shell_redraw (shell,
-                                   eevent->area.x, eevent->area.y,
-                                   eevent->area.width, eevent->area.height);
-      }
-      break;
-
-    case GDK_CONFIGURE:
-      {
-        if ((shell->disp_width  != shell->canvas->allocation.width) ||
-            (shell->disp_height != shell->canvas->allocation.height))
-          {
-            shell->disp_width  = shell->canvas->allocation.width;
-            shell->disp_height = shell->canvas->allocation.height;
-
-            gimp_display_shell_scale_resize (shell, FALSE, FALSE);
-          }
-      }
-      break;
-
-    case GDK_FOCUS_CHANGE:
-      {
-        GdkEventFocus *fevent;
-
-        fevent = (GdkEventFocus *) event;
-
-        if (fevent->in)
-          GTK_WIDGET_SET_FLAGS (canvas, GTK_HAS_FOCUS);
-        else
-          GTK_WIDGET_UNSET_FLAGS (canvas, GTK_HAS_FOCUS);
-
-        /*  stop the signal because otherwise gtk+ exposes the whole
-         *  canvas to get the non-existant focus indicator drawn
-         */
-        return TRUE;
-      }
-      break;
-
     case GDK_ENTER_NOTIFY:
       {
         GdkEventCrossing *cevent;
@@ -1105,30 +1031,6 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
   return FALSE;
 }
 
-static void
-gimp_display_shell_origin_menu_position (GtkMenu  *menu,
-                                         gint     *x,
-                                         gint     *y,
-                                         gpointer  data)
-{
-  GtkWidget *origin;
-  gint       origin_x;
-  gint       origin_y;
-
-  origin = (GtkWidget *) data;
-
-  gdk_window_get_origin (origin->window, &origin_x, &origin_y);
-
-  *x = origin_x + origin->allocation.x + origin->allocation.width - 1;
-  *y = origin_y + origin->allocation.y + (origin->allocation.height - 1) / 2;
-
-  if (*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width ())
-    *x -= (GTK_WIDGET (menu)->allocation.width + origin->allocation.width);
-
-  if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
-    *y -= (GTK_WIDGET (menu)->allocation.height);
-}
-
 gboolean
 gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
@@ -1211,4 +1113,136 @@ gimp_display_shell_qmask_toggled (GtkWidget        *widget,
                               GTK_TOGGLE_BUTTON (widget)->active);
 
   gdisplays_flush ();
+}
+
+
+/*  private functions  */
+
+static void
+gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
+                                      GimpDisplayShell *shell)
+{
+  gimp_display_shell_scroll (shell, 0, (adjustment->value - shell->offset_y));
+}
+
+static void
+gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
+                                      GimpDisplayShell *shell)
+{
+  gimp_display_shell_scroll (shell, (adjustment->value - shell->offset_x), 0);
+}
+
+static gboolean
+gimp_display_shell_get_coords (GimpDisplayShell *shell,
+                               GdkEvent         *event,
+                               GdkDevice        *device,
+                               GimpCoords       *coords)
+{
+  /*  initialize extended axes to something meaningful because each of
+   *  the following *_get_axis() calls may return FALSE and leave the
+   *  passed gdouble location untouched
+   */
+  coords->pressure = 1.0;
+  coords->xtilt    = 0.5;
+  coords->ytilt    = 0.5;
+  coords->wheel    = 0.5;
+
+  if (gdk_event_get_axis (event, GDK_AXIS_X, &coords->x))
+    {
+      gdk_event_get_axis (event, GDK_AXIS_Y,        &coords->y);
+      gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure);
+      gdk_event_get_axis (event, GDK_AXIS_XTILT,    &coords->xtilt);
+      gdk_event_get_axis (event, GDK_AXIS_YTILT,    &coords->ytilt);
+      gdk_event_get_axis (event, GDK_AXIS_WHEEL,    &coords->wheel);
+
+      return TRUE;
+    }
+
+  gimp_display_shell_get_device_coords (shell, device, coords);
+
+  return FALSE;
+}
+
+static void
+gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
+                                      GdkDevice        *device,
+                                      GimpCoords       *coords)
+{
+  gdouble axes[GDK_AXIS_LAST];
+
+  gdk_device_get_state (device, shell->canvas->window, axes, NULL);
+
+  gdk_device_get_axis (device, axes, GDK_AXIS_X,        &coords->x);
+  gdk_device_get_axis (device, axes, GDK_AXIS_Y,        &coords->y);
+  gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure);
+  gdk_device_get_axis (device, axes, GDK_AXIS_XTILT,    &coords->xtilt);
+  gdk_device_get_axis (device, axes, GDK_AXIS_YTILT,    &coords->ytilt);
+  gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL,    &coords->wheel);
+}
+
+static gboolean
+gimp_display_shell_get_state (GimpDisplayShell *shell,
+                              GdkEvent         *event,
+                              GdkDevice        *device,
+                              GdkModifierType  *state)
+{
+  if (gdk_event_get_state (event, state))
+    {
+      return TRUE;
+    }
+
+  gimp_display_shell_get_device_state (shell, device, state);
+
+  return FALSE;
+}
+
+static void
+gimp_display_shell_get_device_state (GimpDisplayShell *shell,
+                                     GdkDevice        *device,
+                                     GdkModifierType  *state)
+{
+  gdk_device_get_state (device, shell->canvas->window, NULL, state);
+}
+
+static GdkModifierType
+gimp_display_shell_key_to_state (gint key)
+{
+  switch (key)
+    {
+    case GDK_Alt_L:
+    case GDK_Alt_R:
+      return GDK_MOD1_MASK;
+    case GDK_Shift_L:
+    case GDK_Shift_R:
+      return GDK_SHIFT_MASK;
+    case GDK_Control_L:
+    case GDK_Control_R:
+      return GDK_CONTROL_MASK;
+    default:
+      return 0;
+    }
+}
+
+static void
+gimp_display_shell_origin_menu_position (GtkMenu  *menu,
+                                         gint     *x,
+                                         gint     *y,
+                                         gpointer  data)
+{
+  GtkWidget *origin;
+  gint       origin_x;
+  gint       origin_y;
+
+  origin = (GtkWidget *) data;
+
+  gdk_window_get_origin (origin->window, &origin_x, &origin_y);
+
+  *x = origin_x + origin->allocation.x + origin->allocation.width - 1;
+  *y = origin_y + origin->allocation.y + (origin->allocation.height - 1) / 2;
+
+  if (*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width ())
+    *x -= (GTK_WIDGET (menu)->allocation.width + origin->allocation.width);
+
+  if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
+    *y -= (GTK_WIDGET (menu)->allocation.height);
 }

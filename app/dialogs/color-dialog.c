@@ -37,8 +37,6 @@
 #include "color-area.h"
 #include "color-notebook.h"
 
-#include "colormaps.h"
-
 #include "libgimp/gimpintl.h"
 
 

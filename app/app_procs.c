@@ -54,7 +54,6 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
 #include "plug_in.h"
@@ -134,8 +133,6 @@ app_init (gint    gimp_argc,
   if (! no_interface)
     {
       gui_themes_init (the_gimp);
-
-      get_standard_colormaps ();
 
       if (! no_splash)
 	splash_create (! no_splash_image);

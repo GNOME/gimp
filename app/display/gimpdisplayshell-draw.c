@@ -62,7 +62,6 @@
 #include "gimpdisplayshell-selection.h"
 #include "gximage.h"
 
-#include "colormaps.h"
 #include "gimprc.h"
 #include "nav_window.h"
 #include "plug_in.h"
@@ -601,8 +600,20 @@ gimp_display_shell_new (GimpDisplay *gdisp)
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
 
+  g_signal_connect (G_OBJECT (shell->canvas), "expose_event",
+		    G_CALLBACK (gimp_display_shell_canvas_expose),
+		    shell);
+  g_signal_connect (G_OBJECT (shell->canvas), "configure_event",
+		    G_CALLBACK (gimp_display_shell_canvas_configure),
+		    shell);
+  g_signal_connect (G_OBJECT (shell->canvas), "focus_in_event",
+		    G_CALLBACK (gimp_display_shell_canvas_focus_in),
+		    shell);
+  g_signal_connect (G_OBJECT (shell->canvas), "focus_out_event",
+		    G_CALLBACK (gimp_display_shell_canvas_focus_in),
+		    shell);
   g_signal_connect (G_OBJECT (shell->canvas), "event",
-		    G_CALLBACK (gimp_display_shell_canvas_events),
+		    G_CALLBACK (gimp_display_shell_canvas_tool_events),
 		    shell);
 
   /*  create the contents of the right_vbox  *********************************/
@@ -1636,11 +1647,11 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                GimpGuide        *guide,
                                gboolean          active)
 {
-  static GdkGC    *normal_hgc = NULL;
-  static GdkGC    *active_hgc = NULL;
-  static GdkGC    *normal_vgc = NULL;
-  static GdkGC    *active_vgc = NULL;
-  static gboolean  initialize = TRUE;
+  static GdkGC    *normal_hgc  = NULL;
+  static GdkGC    *active_hgc  = NULL;
+  static GdkGC    *normal_vgc  = NULL;
+  static GdkGC    *active_vgc  = NULL;
+  static gboolean  initialized = FALSE;
   gint x1, x2;
   gint y1, y2;
   gint w, h;
@@ -1652,10 +1663,13 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
   if (guide->position < 0)
     return;
 
-  if (initialize)
+  if (! initialized)
     {
       GdkGCValues values;
-      const char stipple[] =
+      GdkColor    fg;
+      GdkColor    bg;
+
+      const gchar stipple[] =
       {
 	0xF0,    /*  ####----  */
 	0xE1,    /*  ###----#  */
@@ -1667,43 +1681,67 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 	0x78,    /*  -####---  */
       };
 
-      initialize = FALSE;
+      initialized = TRUE;
 
-      values.foreground.pixel = g_black_pixel;
-      values.background.pixel = g_normal_guide_pixel;
-      values.fill = GDK_OPAQUE_STIPPLED;
-      values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-						    (gchar *) stipple, 8, 1);
-      normal_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                           GDK_GC_FOREGROUND |
-                                           GDK_GC_BACKGROUND |
-                                           GDK_GC_FILL       |
-                                           GDK_GC_STIPPLE);
+      {
+        fg.red   = 0x0;
+        fg.green = 0x0;
+        fg.blue  = 0x0;
 
-      values.background.pixel = g_active_guide_pixel;
-      active_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-					   GDK_GC_FOREGROUND |
-					   GDK_GC_BACKGROUND |
-					   GDK_GC_FILL       |
-					   GDK_GC_STIPPLE);
+        bg.red   = 0x0;
+        bg.green = 0x7f7f;
+        bg.blue  = 0xffff;
 
-      values.foreground.pixel = g_black_pixel;
-      values.background.pixel = g_normal_guide_pixel;
-      values.fill = GDK_OPAQUE_STIPPLED;
-      values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-						    (gchar *) stipple, 1, 8);
-      normal_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                           GDK_GC_FOREGROUND |
-                                           GDK_GC_BACKGROUND |
-                                           GDK_GC_FILL       |
-                                           GDK_GC_STIPPLE);
+        values.fill = GDK_OPAQUE_STIPPLED;
+        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
+                                                      (gchar *) stipple, 8, 1);
+        normal_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
+                                             GDK_GC_FILL       |
+                                             GDK_GC_STIPPLE);
 
-      values.background.pixel = g_active_guide_pixel;
-      active_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-					   GDK_GC_FOREGROUND |
-					   GDK_GC_BACKGROUND |
-					   GDK_GC_FILL       |
-					   GDK_GC_STIPPLE);
+        gdk_gc_set_rgb_fg_color (normal_hgc, &fg);
+        gdk_gc_set_rgb_bg_color (normal_hgc, &bg);
+
+        values.fill = GDK_OPAQUE_STIPPLED;
+        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
+                                                      (gchar *) stipple, 1, 8);
+        normal_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
+                                             GDK_GC_FILL       |
+                                             GDK_GC_STIPPLE);
+
+        gdk_gc_set_rgb_fg_color (normal_vgc, &fg);
+        gdk_gc_set_rgb_bg_color (normal_vgc, &bg);
+      }
+
+      {
+        fg.red   = 0x0;
+        fg.green = 0x0;
+        fg.blue  = 0x0;
+
+        bg.red   = 0xffff;
+        bg.green = 0x0;
+        bg.blue  = 0x0;
+
+        values.fill = GDK_OPAQUE_STIPPLED;
+        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
+                                                      (gchar *) stipple, 8, 1);
+        active_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
+                                             GDK_GC_FILL       |
+                                             GDK_GC_STIPPLE);
+
+        gdk_gc_set_rgb_fg_color (active_hgc, &fg);
+        gdk_gc_set_rgb_bg_color (active_hgc, &bg);
+
+        values.fill = GDK_OPAQUE_STIPPLED;
+        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
+                                                      (gchar *) stipple, 1, 8);
+        active_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
+                                             GDK_GC_FILL       |
+                                             GDK_GC_STIPPLE);
+
+        gdk_gc_set_rgb_fg_color (active_vgc, &fg);
+        gdk_gc_set_rgb_bg_color (active_vgc, &bg);
+      }
     }
 
   gdisplay_transform_coords (shell->gdisp, 0, 0, &x1, &y1, FALSE);
@@ -1842,14 +1880,11 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       allocation.width  = width  + border_x;
       allocation.height = height + border_y;
 
-      /*  don't call gdisplay_canvas_events() on any of the following
+      /*  block the resulting expose event on any of the following
        *  changes because our caller has to do a full display update anyway
        */
       g_signal_handlers_block_by_func (G_OBJECT (shell->canvas),
-                                       gimp_display_shell_events,
-                                       shell);
-      g_signal_handlers_block_by_func (G_OBJECT (shell->canvas),
-                                       gimp_display_shell_canvas_events,
+                                       gimp_display_shell_canvas_expose,
                                        shell);
 
       gtk_widget_size_allocate (GTK_WIDGET (shell), &allocation);
@@ -1875,10 +1910,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 	}
 
       g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
-                                         gimp_display_shell_events,
-                                         shell);
-      g_signal_handlers_unblock_by_func (G_OBJECT (shell->canvas),
-                                         gimp_display_shell_canvas_events,
+                                         gimp_display_shell_canvas_expose,
                                          shell);
     }
 

@@ -40,7 +40,6 @@
 #include "gimpmovetool.h"
 #include "tool_options.h"
 
-#include "colormaps.h"
 #include "floating_sel.h"
 #include "undo.h"
 

@@ -36,7 +36,6 @@
 #include "color-select.h"
 #include "color-area.h"
 
-#include "colormaps.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

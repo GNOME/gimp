@@ -1,5 +1,31 @@
 2001-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/colormaps.[ch]: removed.
+
+	* app/app_procs.c: don't call it.
+
+	* app/gui/gui.c: configure GdkRGB here.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gximage.c
+	* app/gui/color-notebook.c
+	* app/gui/color-select.c
+	* app/gui/colormap-dialog.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/tools/gimpmovetool.c
+	* app/display/gimpdisplayshell-selection.c: changed accordingly
+	(simply removed the unneded include or use
+	gdk_gc_set_rgb_[fg|bg]_color() instead).
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-callbacks.[ch]: chopped
+	gimp_display_shell_canvas_events() in smaller callbacks. Only the
+	events that trigger tool actions are handled in a single callback.
+
+2001-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpimage-qmask.[ch]: new files: the QMask stuff
 	stripped from GUI code. Added gimp_image_qmask_invert().
