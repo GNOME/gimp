@@ -1,3 +1,10 @@
+Tus Apr 21 01:59:12 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/iscissors.c: Remove the iscissors outline by stopping the
+	draw_core before bezierifying the selection.  There may be
+	memory leaks here (the iscissors stuff does not appear to be freed
+	on bezierify)
+
 Mon Apr 20 18:15:54 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/main.c

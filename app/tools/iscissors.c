@@ -1799,6 +1799,7 @@ bezierify_boundary (Tool *tool)
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
+  draw_core_stop (iscissors->core, tool);
 
   if (iscissors->num_pts < 4)
     {
