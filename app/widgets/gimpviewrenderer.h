@@ -57,8 +57,7 @@ struct _GimpViewRenderer
   guchar             *buffer;
   gint                rowstride;
   gint                bytes;
-
-  GdkPixbuf          *no_view_pixbuf;
+  GdkPixbuf          *pixbuf;
   gchar              *bg_stock_id;
 
   gint                size;
@@ -141,6 +140,8 @@ void   gimp_view_renderer_render_buffer         (GimpViewRenderer *renderer,
                                                  gint              channel,
                                                  GimpViewBG        inside_bg,
                                                  GimpViewBG        outside_bg);
+void    gimp_view_renderer_render_pixbuf        (GimpViewRenderer *renderer,
+                                                 GdkPixbuf        *pixbuf);
 
 
 /*  general purpose temp_buf to buffer projection function  */

@@ -30,8 +30,6 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpimagefile.h"
 
 #include "gimpviewrendererimagefile.h"
@@ -102,19 +100,13 @@ static void
 gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
                                      GtkWidget        *widget)
 {
-  TempBuf *temp_buf = gimp_viewable_get_preview (renderer->viewable,
-                                                 renderer->width,
-                                                 renderer->height);
-
-  if (temp_buf)
-    {
-      gimp_view_renderer_default_render_buffer (renderer, widget, temp_buf);
-    }
-  else
-    {
-      GdkPixbuf *pixbuf = NULL;
+  GdkPixbuf *pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
+                                                renderer->width,
+                                                renderer->height);
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
+  if (! pixbuf)
+    {
       if (GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system)
         {
           GtkFileSystem *file_system;
@@ -136,54 +128,17 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
               gtk_file_path_free (path);
             }
         }
+    }
 #endif /* ENABLE_FILE_SYSTEM_ICONS */
 
-      if (pixbuf)
-        {
-          gint    width;
-          gint    height;
-          gint    bytes;
-          guchar *src;
-          guchar *dest;
-          gint    y;
+  if (pixbuf)
+    {
+      gimp_view_renderer_render_pixbuf (renderer, pixbuf);
+    }
+  else
+    {
+      const gchar *stock_id = gimp_viewable_get_stock_id (renderer->viewable);
 
-          width  = gdk_pixbuf_get_width (pixbuf);
-          height = gdk_pixbuf_get_height (pixbuf);
-          bytes  = gdk_pixbuf_get_n_channels (pixbuf);
-
-          temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
-
-          dest = temp_buf_data (temp_buf);
-          src  = gdk_pixbuf_get_pixels (pixbuf);
-
-          for (y = 0; y < height; y++)
-            {
-              memcpy (dest, src, width * bytes);
-              dest += width * bytes;
-              src += gdk_pixbuf_get_rowstride (pixbuf);
-            }
-
-          if (temp_buf->width < renderer->width)
-            temp_buf->x = (renderer->width - temp_buf->width)  / 2;
-
-          if (temp_buf->height < renderer->height)
-            temp_buf->y = (renderer->height - temp_buf->height) / 2;
-
-          gimp_view_renderer_render_buffer (renderer, temp_buf, -1,
-                                            GIMP_VIEW_BG_WHITE,
-                                            GIMP_VIEW_BG_WHITE);
-
-          temp_buf_free (temp_buf);
-          g_object_unref (pixbuf);
-        }
-      else
-        {
-          const gchar  *stock_id;
-
-          stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-
-          gimp_view_renderer_default_render_stock (renderer, widget,
-                                                   stock_id);
-        }
+      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
     }
 }

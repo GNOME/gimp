@@ -1,5 +1,24 @@
 2004-09-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.c: removed conversion to TempBuf.
+	Instead implement GimpViewable::get_new_pixbuf by compositing the
+	thumbnail on a checkerboard.
+
+	* app/widgets/gimpviewrenderer.[ch]: renamed the no_view_pixbuf
+	struct member to pixbuf.
+	(gimp_view_renderer_real_render): try gimp_viewable_get_pixbuf()
+	and render the pixbuf before falling back to the TempBuf preview.
+	(gimp_view_renderer_render_pixbuf): new function that sets a
+	pixbuf for the renderer and flushes the render_buffer.
+
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_render): render the pixbuf.
+
+	* app/dialogs/dialogs-constructors.c: create the document history
+	dockable with a zero borderwidth.
+
+2004-09-27  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail_invoker): use
 	the GIMP_CHECK_SIZE_SM define, not the enum value
 	GIMP_CHECK_SIZE_SMALL_CHECKS which is 0 (eeek!).

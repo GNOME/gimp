@@ -163,7 +163,7 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->rowstride      = 0;
   renderer->bytes          = 3;
 
-  renderer->no_view_pixbuf = NULL;
+  renderer->pixbuf = NULL;
   renderer->bg_stock_id    = NULL;
 
   renderer->size           = -1;
@@ -195,10 +195,10 @@ gimp_view_renderer_finalize (GObject *object)
       renderer->buffer = NULL;
     }
 
-  if (renderer->no_view_pixbuf)
+  if (renderer->pixbuf)
     {
-      g_object_unref (renderer->no_view_pixbuf);
-      renderer->no_view_pixbuf = NULL;
+      g_object_unref (renderer->pixbuf);
+      renderer->pixbuf = NULL;
     }
 
   if (renderer->bg_stock_id)
@@ -301,10 +301,10 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
       renderer->buffer = NULL;
     }
 
-  if (renderer->no_view_pixbuf)
+  if (renderer->pixbuf)
     {
-      g_object_unref (renderer->no_view_pixbuf);
-      renderer->no_view_pixbuf = NULL;
+      g_object_unref (renderer->pixbuf);
+      renderer->pixbuf = NULL;
     }
 
   if (renderer->viewable)
@@ -663,7 +663,7 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
   if (renderer->needs_render)
     GIMP_VIEW_RENDERER_GET_CLASS (renderer)->render (renderer, widget);
 
-  if (renderer->no_view_pixbuf)
+  if (renderer->pixbuf)
     {
       if (renderer->bg_stock_id)
         {
@@ -682,8 +682,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
             }
         }
 
-      rect.width  = gdk_pixbuf_get_width  (renderer->no_view_pixbuf);
-      rect.height = gdk_pixbuf_get_height (renderer->no_view_pixbuf);
+      rect.width  = gdk_pixbuf_get_width  (renderer->pixbuf);
+      rect.height = gdk_pixbuf_get_height (renderer->pixbuf);
       rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
       rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
 
@@ -692,7 +692,7 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
         {
           gdk_draw_pixbuf (GDK_DRAWABLE (window),
                            widget->style->bg_gc[widget->state],
-                           renderer->no_view_pixbuf,
+                           renderer->pixbuf,
                            render_rect.x - rect.x,
                            render_rect.y - rect.y,
                            render_rect.x,
@@ -738,24 +738,30 @@ static void
 gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                 GtkWidget        *widget)
 {
-  TempBuf *temp_buf;
+  GdkPixbuf   *pixbuf;
+  TempBuf     *temp_buf;
+  const gchar *stock_id;
+
+  pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
+                                     renderer->width,
+                                     renderer->height);
+  if (pixbuf)
+    {
+      gimp_view_renderer_render_pixbuf (renderer, pixbuf);
+      return;
+    }
 
   temp_buf = gimp_viewable_get_preview (renderer->viewable,
                                         renderer->width,
                                         renderer->height);
-
   if (temp_buf)
     {
       gimp_view_renderer_default_render_buffer (renderer, widget, temp_buf);
+      return;
     }
-  else /* no preview available */
-    {
-      const gchar  *stock_id;
 
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-
-      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
-    }
+  stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+  gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
 }
 
 static void
@@ -804,10 +810,10 @@ gimp_view_renderer_default_render_stock (GimpViewRenderer *renderer,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (stock_id != NULL);
 
-  if (renderer->no_view_pixbuf)
+  if (renderer->pixbuf)
     {
-      g_object_unref (renderer->no_view_pixbuf);
-      renderer->no_view_pixbuf = NULL;
+      g_object_unref (renderer->pixbuf);
+      renderer->pixbuf = NULL;
     }
 
   if (renderer->buffer)
@@ -845,7 +851,7 @@ gimp_view_renderer_default_render_stock (GimpViewRenderer *renderer,
           pixbuf = scaled_pixbuf;
         }
 
-      renderer->no_view_pixbuf = pixbuf;
+      renderer->pixbuf = pixbuf;
     }
 
   renderer->needs_render = FALSE;
@@ -858,14 +864,14 @@ gimp_view_renderer_render_buffer (GimpViewRenderer *renderer,
                                   GimpViewBG        inside_bg,
                                   GimpViewBG        outside_bg)
 {
+  if (renderer->pixbuf)
+    {
+      g_object_unref (renderer->pixbuf);
+      renderer->pixbuf = NULL;
+    }
+
   if (! renderer->buffer)
     renderer->buffer = g_new0 (guchar, renderer->height * renderer->rowstride);
-
-  if (renderer->no_view_pixbuf)
-    {
-      g_object_unref (renderer->no_view_pixbuf);
-      renderer->no_view_pixbuf = NULL;
-    }
 
   gimp_view_render_to_buffer (temp_buf,
                               channel,
@@ -1057,6 +1063,26 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
               render_temp_buf,
               dest_width * dest_bytes);
     }
+}
+
+void
+gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
+                                  GdkPixbuf        *pixbuf)
+{
+  if (renderer->buffer)
+    {
+      g_free (renderer->buffer);
+      renderer->buffer = NULL;
+    }
+
+  g_object_ref (pixbuf);
+
+  if (renderer->pixbuf)
+    g_object_unref (renderer->pixbuf);
+
+  renderer->pixbuf = pixbuf;
+
+  renderer->needs_render = FALSE;
 }
 
 static GdkGC *

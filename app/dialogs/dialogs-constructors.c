@@ -380,7 +380,7 @@ dialogs_document_list_new (GimpDialogFactory *factory,
   return gimp_document_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->documents,
                                  context,
-                                 preview_size, 1,
+                                 preview_size, 0,
                                  factory->menu_factory);
 }
 

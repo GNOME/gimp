@@ -32,8 +32,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
@@ -57,27 +55,27 @@ enum
 };
 
 
-static void       gimp_imagefile_class_init       (GimpImagefileClass *klass);
-static void       gimp_imagefile_init             (GimpImagefile  *imagefile);
-static void       gimp_imagefile_finalize         (GObject        *object);
-static void       gimp_imagefile_name_changed     (GimpObject     *object);
-static void       gimp_imagefile_info_changed     (GimpImagefile  *imagefile);
-static void       gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
-                                                   GParamSpec     *pspec);
+static void        gimp_imagefile_class_init       (GimpImagefileClass *klass);
+static void        gimp_imagefile_init             (GimpImagefile  *imagefile);
+static void        gimp_imagefile_finalize         (GObject        *object);
+static void        gimp_imagefile_name_changed     (GimpObject     *object);
+static void        gimp_imagefile_info_changed     (GimpImagefile  *imagefile);
+static void        gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
+                                                    GParamSpec     *pspec);
 
-static TempBuf  * gimp_imagefile_get_new_preview  (GimpViewable   *viewable,
-                                                   gint            width,
-                                                   gint            height);
-static TempBuf  * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
-                                                   gint            width,
-                                                   gint            height);
-static gboolean   gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
-                                                   GimpImage      *gimage,
-                                                   gint            size,
-                                                   GError        **error);
+static GdkPixbuf * gimp_imagefile_get_new_pixbuf   (GimpViewable   *viewable,
+                                                    gint            width,
+                                                    gint            height);
+static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
+                                                    gint            width,
+                                                    gint            height);
+static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
+                                                    GimpImage      *gimage,
+                                                    gint            size,
+                                                    GError        **error);
 
-static gchar    * gimp_imagefile_get_description  (GimpViewable   *viewable,
-                                                   gchar         **tooltip);
+static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
+                                                    gchar         **tooltip);
 
 
 static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
@@ -137,7 +135,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   gimp_object_class->name_changed     = gimp_imagefile_name_changed;
 
   viewable_class->name_changed_signal = "info_changed";
-  viewable_class->get_new_preview     = gimp_imagefile_get_new_preview;
+  viewable_class->get_new_pixbuf      = gimp_imagefile_get_new_pixbuf;
   viewable_class->get_description     = gimp_imagefile_get_description;
 
   g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
@@ -357,20 +355,20 @@ gimp_imagefile_notify_thumbnail (GimpImagefile *imagefile,
     }
 }
 
-static TempBuf *
-gimp_imagefile_get_new_preview (GimpViewable *viewable,
-                                gint          width,
-                                gint          height)
+static GdkPixbuf *
+gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
+                               gint          width,
+                               gint          height)
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
-  TempBuf       *temp_buf;
+  GdkPixbuf     *pixbuf;
 
   if (! GIMP_OBJECT (imagefile)->name)
     return NULL;
 
-  temp_buf = gimp_imagefile_load_thumb (imagefile, width, height);
+  pixbuf = gimp_imagefile_load_thumb (imagefile, width, height);
 
-  if (temp_buf)
+  if (pixbuf)
     {
       gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
     }
@@ -391,7 +389,7 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
       gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
     }
 
-  return temp_buf;
+  return pixbuf;
 }
 
 static gchar *
@@ -551,13 +549,12 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
   return (const gchar *) imagefile->description;
 }
 
-static TempBuf *
+static GdkPixbuf *
 gimp_imagefile_load_thumb (GimpImagefile *imagefile,
                            gint           width,
                            gint           height)
 {
   GimpThumbnail *thumbnail = imagefile->thumbnail;
-  TempBuf       *temp_buf  = NULL;
   GdkPixbuf     *pixbuf    = NULL;
   GError        *error     = NULL;
   gint           size      = MAX (width, height);
@@ -574,9 +571,13 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
   if (! pixbuf)
     {
       if (error)
-        g_message (_("Could not open thumbnail '%s': %s"),
-                   thumbnail->thumb_filename, error->message);
-      goto cleanup;
+        {
+          g_message (_("Could not open thumbnail '%s': %s"),
+                     thumbnail->thumb_filename, error->message);
+          g_error_free (error);
+        }
+
+      return NULL;
     }
 
   pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
@@ -593,48 +594,34 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
 
   if (preview_width < pixbuf_width || preview_height < pixbuf_height)
     {
-      GdkPixbuf *scaled;
-
-      scaled = gdk_pixbuf_scale_simple (pixbuf,
-                                        preview_width, preview_height,
-                                        GDK_INTERP_BILINEAR);
+      GdkPixbuf *scaled = gdk_pixbuf_scale_simple (pixbuf,
+                                                   preview_width,
+                                                   preview_height,
+                                                   GDK_INTERP_BILINEAR);
       g_object_unref (pixbuf);
-
       pixbuf = scaled;
 
-      pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
-      pixbuf_height = gdk_pixbuf_get_height (pixbuf);
+      pixbuf_width  = preview_width;
+      pixbuf_height = preview_height;
     }
 
-  {
-    gint    bytes;
-    guchar *src;
-    guchar *dest;
-    gint    y;
+  if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
+    {
+      GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+                                       pixbuf_width, pixbuf_height);
 
-    bytes  = gdk_pixbuf_get_n_channels (pixbuf);
+      gdk_pixbuf_composite_color (pixbuf, tmp,
+                                  0, 0, pixbuf_width, pixbuf_height,
+                                  0.0, 0.0, 1.0, 1.0,
+                                  GDK_INTERP_NEAREST, 255,
+                                  0, 0, GIMP_CHECK_SIZE_SM,
+                                  0x66666666, 0x99999999);
 
-    temp_buf = temp_buf_new (pixbuf_width, pixbuf_height, bytes, 0, 0, NULL);
+      g_object_unref (pixbuf);
+      pixbuf = tmp;
+    }
 
-    dest = temp_buf_data (temp_buf);
-    src  = gdk_pixbuf_get_pixels (pixbuf);
-
-    for (y = 0; y < pixbuf_height; y++)
-      {
-        memcpy (dest, src, pixbuf_width * bytes);
-
-        dest += pixbuf_width * bytes;
-        src  += gdk_pixbuf_get_rowstride (pixbuf);
-      }
-  }
-
- cleanup:
-  if (pixbuf)
-    g_object_unref (pixbuf);
-  if (error)
-    g_error_free (error);
-
-  return temp_buf;
+  return pixbuf;
 }
 
 static gboolean
