@@ -296,7 +296,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr ""
+msgstr "<Image>/Скрипт-Фу/Ан╕матори/Сум╕ш..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
@@ -412,7 +412,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Розш./Скрипт-Фу/Кругла кнопка..."
+msgstr "<Toolbox>/Розш./Скрипт-Фу/Кнопки/Кругла кнопка..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."

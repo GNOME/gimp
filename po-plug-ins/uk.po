@@ -7430,40 +7430,42 @@ msgstr "Розбити MPEG1-в╕део на кадри"
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
 #: plug-ins/gap/gap_range_ops.c:1461
 msgid "Select Frame Range"
-msgstr ""
+msgstr "Виб╕р д╕апазону кадр╕в"
 
 #: plug-ins/gap/gap_decode_xanim.c:113
 msgid "Conditions to run the xanim based video split"
-msgstr ""
+msgstr "Умови для запуску разкладання кадр╕в основаного на XANIM"
 
 #: plug-ins/gap/gap_decode_xanim.c:121
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr ""
+msgstr "1) xanim 2.80.0 exporting edition (верс╕я loki)"
 
 #: plug-ins/gap/gap_decode_xanim.c:125
 msgid "    must be installed somewhere in your PATH"
-msgstr ""
+msgstr "   мусить бути прописаним десь у ваш╕й зм╕нн╕й PATH"
 
 #: plug-ins/gap/gap_decode_xanim.c:129
 msgid "    you can get xanim exporting edition at"
-msgstr ""
+msgstr "   ви можете отримати xanim exporting edition за адресою"
 
 #: plug-ins/gap/gap_decode_xanim.c:145
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
+"2) якщо ваш xanim exporting edition в╕дсутн╕й в PATH чи назива╓ться не "
+"xanim"
 
 #: plug-ins/gap/gap_decode_xanim.c:149
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
-msgstr ""
+msgstr "   ви мусите встановити зм╕нну середовища GAP_XANIM_PROG "
 
 #: plug-ins/gap/gap_decode_xanim.c:153
 msgid "    to your xanim exporting program and restart gimp"
-msgstr ""
+msgstr "   на вашу програму xanim ╕ перезапустити GIMP"
 
 #: plug-ins/gap/gap_decode_xanim.c:161
 msgid "An ERROR occured while trying to call xanim:"
-msgstr ""
+msgstr "На спроб╕ виклику xanim виникла ПОМИЛКА:"
 
 #: plug-ins/gap/gap_decode_xanim.c:180
 msgid "XANIM Information"
@@ -7527,7 +7529,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:287
 msgid "Run asynchronously"
-msgstr ""
+msgstr "Запускати асинхронно"
 
 #: plug-ins/gap/gap_decode_xanim.c:288
 msgid ""
