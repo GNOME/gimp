@@ -242,7 +242,9 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
       if (new_ui)
 	{
 	  /*  In the new UI, shift-clicking means perform the transform  */
-	  if (bevent->state & GDK_SHIFT_MASK)
+	  if ((bevent->state & GDK_SHIFT_MASK) 
+               || (tool->type == FLIP_HORZ)
+               || (tool->type == FLIP_VERT))
 	    {
 	      transform_core_doit (tool, gdisp_ptr);
 	    }
