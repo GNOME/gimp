@@ -1,3 +1,11 @@
+Mon Nov 15 02:09:30 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/plugin-defs.pl, plug-ins/common/Makefile.am,
+        plug-ins/common/colortoalpha.c: add Color To Alpha plug-in by Seth
+        that is on my disk since ages....
+
+        * app/fileops.c: preset the filename on "Save as".
+
 Sun Nov 14 23:47:10 MET 1999  Sven Neumann <sven.gimp.org>
 
 	* app/ink.c: plugged a memleak

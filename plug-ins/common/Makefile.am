@@ -34,6 +34,7 @@ libexec_PROGRAMS = \
 	checkerboard \
 	color_enhance \
 	colorify \
+	colortoalpha \
 	compose \
 	convmatrix \
 	csource \
@@ -292,6 +293,14 @@ colorify_SOURCES = \
 	colorify.c
 
 colorify_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+colortoalpha_SOURCES = \
+	colortoalpha.c
+
+colortoalpha_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

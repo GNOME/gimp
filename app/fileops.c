@@ -460,6 +460,10 @@ file_save_as_callback (GtkWidget *widget,
   GtkWidget *save_menu;
   GDisplay *gdisplay;
 
+  gdisplay = gdisplay_active ();
+  if (!gdisplay) return;
+  the_gimage = gdisplay->gimage;
+
   if (!filesave)
     {
       filesave = gtk_file_selection_new (_("Save Image"));
@@ -491,13 +495,11 @@ file_save_as_callback (GtkWidget *widget,
 	return;
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
-				       "." G_DIR_SEPARATOR_S);
+                                       gdisplay->gimage->has_filename
+                                       ? gimage_filename(gdisplay->gimage)
+                                       : "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
     }
-
-  gdisplay = gdisplay_active ();
-  if (!gdisplay) return;
-  the_gimage = gdisplay->gimage;
 
   if (!save_options)
     {
