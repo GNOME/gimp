@@ -45,12 +45,12 @@ struct _GimpBrushData
 
 /*  local function prototypes  */
 
-static void      gimp_temp_brush_run      (gchar          *name,
-                                           gint            nparams,
-                                           GimpParam      *param,
-                                           gint           *nreturn_vals,
-                                           GimpParam     **return_vals);
-static gboolean  gimp_temp_brush_run_idle (GimpBrushData  *brush_data);
+static void      gimp_temp_brush_run      (const gchar      *name,
+                                           gint              nparams,
+                                           const GimpParam  *param,
+                                           gint             *nreturn_vals,
+                                           GimpParam       **return_vals);
+static gboolean  gimp_temp_brush_run_idle (GimpBrushData    *brush_data);
 
 
 /*  private variables  */
@@ -162,11 +162,11 @@ gimp_brush_select_destroy (const gchar *brush_callback)
 /*  private functions  */
 
 static void
-gimp_temp_brush_run (gchar      *name,
-                     gint        nparams,
-                     GimpParam  *param,
-                     gint       *nreturn_vals,
-                     GimpParam **return_vals)
+gimp_temp_brush_run (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpBrushData    *brush_data;

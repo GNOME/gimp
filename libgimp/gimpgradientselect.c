@@ -41,9 +41,9 @@ struct _GimpGradientData
 
 /*  local function prototypes  */
 
-static void      gimp_temp_gradient_run      (gchar             *name,
+static void      gimp_temp_gradient_run      (const gchar       *name,
                                               gint               nparams,
-                                              GimpParam         *param,
+                                              const GimpParam   *param,
                                               gint              *nreturn_vals,
                                               GimpParam        **return_vals);
 static gboolean  gimp_temp_gradient_run_idle (GimpGradientData  *gradient_data);
@@ -96,7 +96,8 @@ gimp_gradient_select_new (const gchar             *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_gradient_select_ht)
-        gimp_gradient_select_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
+        gimp_gradient_select_ht = g_hash_table_new_full (g_str_hash,
+							 g_str_equal,
                                                          g_free, g_free);
 
       gradient_data = g_new0 (GimpGradientData, 1);
@@ -153,11 +154,11 @@ gimp_gradient_select_destroy (const gchar *gradient_callback)
 /*  private functions  */
 
 static void
-gimp_temp_gradient_run (gchar      *name,
-                        gint        nparams,
-                        GimpParam  *param,
-                        gint       *nreturn_vals,
-                        GimpParam **return_vals)
+gimp_temp_gradient_run (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpGradientData *gradient_data;

@@ -39,12 +39,12 @@ struct _GimpFontData
 
 /*  local function prototypes  */
 
-static void      gimp_temp_font_run      (gchar         *name,
-                                          gint           nparams,
-                                          GimpParam     *param,
-                                          gint          *nreturn_vals,
-                                          GimpParam    **return_vals);
-static gboolean  gimp_temp_font_run_idle (GimpFontData  *font_data);
+static void      gimp_temp_font_run      (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
+static gboolean  gimp_temp_font_run_idle (GimpFontData     *font_data);
 
 
 /*  private variables  */
@@ -144,11 +144,11 @@ gimp_font_select_destroy (const gchar *font_callback)
 /*  private functions  */
 
 static void
-gimp_temp_font_run (gchar      *name,
-                    gint        nparams,
-                    GimpParam  *param,
-                    gint       *nreturn_vals,
-                    GimpParam **return_vals)
+gimp_temp_font_run (const gchar      *name,
+                    gint              nparams,
+                    const GimpParam  *param,
+                    gint             *nreturn_vals,
+                    GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpFontData     *font_data;

@@ -43,9 +43,9 @@ struct _GimpPatternData
 
 /*  local function prototypes  */
 
-static void      gimp_temp_pattern_run      (gchar            *name,
+static void      gimp_temp_pattern_run      (const gchar      *name,
                                              gint              nparams,
-                                             GimpParam        *param,
+                                             const GimpParam  *param,
                                              gint             *nreturn_vals,
                                              GimpParam       **return_vals);
 static gboolean  gimp_temp_pattern_run_idle (GimpPatternData  *pattern_data);
@@ -156,11 +156,11 @@ gimp_pattern_select_destroy (const gchar *pattern_callback)
 /*  private functions  */
 
 static void
-gimp_temp_pattern_run (gchar      *name,
-                       gint        nparams,
-                       GimpParam  *param,
-                       gint       *nreturn_vals,
-                       GimpParam **return_vals)
+gimp_temp_pattern_run (const gchar      *name,
+                       gint              nparams,
+                       const GimpParam  *param,
+                       gint             *nreturn_vals,
+                       GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPatternData  *pattern_data;

@@ -374,7 +374,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   gint          x1, x2, y1, y2;
   gint          bpp;
   gint          y;
-  const guchar *src;
+  guchar       *src;
   
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -404,7 +404,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
 
   preview->even = g_malloc (width * 3);
   preview->odd  = g_malloc (width * 3);
-  src  = g_malloc (width * bpp);
+  src = g_malloc (width * bpp);
   preview->cache = g_malloc(width * bpp * height);
   preview->rowstride = width * bpp;
   preview->bpp = bpp;
@@ -417,8 +417,8 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   
   for (y = 0; y < height; y++)
     {
-      gimp_fixme_preview_do_row(preview, y, width, 
-				preview->cache + (y * width * bpp));
+      gimp_fixme_preview_do_row (preview, y, width, 
+				 preview->cache + (y * width * bpp));
     }
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
