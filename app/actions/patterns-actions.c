@@ -44,13 +44,13 @@ static GimpActionEntry patterns_actions[] =
 
   { "patterns-edit", GIMP_STOCK_EDIT,
     N_("_Edit Pattern..."), NULL,
-    N_("Edit Pattern"),
+    N_("Edit pattern"),
     G_CALLBACK (data_edit_data_cmd_callback),
     GIMP_HELP_PATTERN_EDIT },
 
   { "patterns-new", GTK_STOCK_NEW,
     N_("_New Pattern"), "",
-    N_("New Pattern"),
+    N_("New pattern"),
     G_CALLBACK (data_new_data_cmd_callback),
     GIMP_HELP_PATTERN_NEW },
 

@@ -45,32 +45,38 @@ static GimpActionEntry gradients_actions[] =
     GIMP_HELP_GRADIENT_DIALOG },
 
   { "gradients-edit", GIMP_STOCK_EDIT,
-    N_("_Edit Gradient..."), NULL, NULL,
+    N_("_Edit Gradient..."), NULL,
+    N_("Edit gradient"),
     G_CALLBACK (data_edit_data_cmd_callback),
     GIMP_HELP_GRADIENT_EDIT },
 
   { "gradients-new", GTK_STOCK_NEW,
-    N_("_New Gradient"), "", NULL,
+    N_("_New Gradient"), "",
+    N_("New gradient"),
     G_CALLBACK (data_new_data_cmd_callback),
     GIMP_HELP_GRADIENT_NEW },
 
   { "gradients-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Gradient"), NULL, NULL,
+    N_("D_uplicate Gradient"), NULL,
+    N_("Duplicate gradient"),
     G_CALLBACK (data_duplicate_data_cmd_callback),
     GIMP_HELP_GRADIENT_DUPLICATE },
 
   { "gradients-save-as-pov", GTK_STOCK_SAVE_AS,
-    N_("Save as _POV-Ray..."), "", NULL,
+    N_("Save as _POV-Ray..."), "",
+    N_("Save gradient as POV-Ray"),
     G_CALLBACK (gradients_save_as_pov_ray_cmd_callback),
     GIMP_HELP_GRADIENT_SAVE_AS_POV },
 
   { "gradients-delete", GTK_STOCK_DELETE,
-    N_("_Delete Gradient..."), "", NULL,
+    N_("_Delete Gradient..."), "",
+    N_("Delete gradient"),
     G_CALLBACK (data_delete_data_cmd_callback),
     GIMP_HELP_GRADIENT_DELETE },
 
   { "gradients-refresh", GTK_STOCK_REFRESH,
-    N_("_Refresh Gradients"), "", NULL,
+    N_("_Refresh Gradients"), "",
+    N_("Refresh gradients"),
     G_CALLBACK (data_refresh_data_cmd_callback),
     GIMP_HELP_GRADIENT_REFRESH }
 };
