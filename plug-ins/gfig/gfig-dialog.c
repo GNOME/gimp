@@ -234,7 +234,7 @@ gfig_dialog (void)
    * If not, we create a new transparent layer.
    */
   gfig_list = NULL;
-  undo_water_mark = -1;
+  undo_level = -1;
   parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
   for (k=0; k < 1000; k++)
     gfig_context->style[k] = NULL;
@@ -328,7 +328,7 @@ gfig_dialog (void)
                       toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
-  gfig_dialog_action_set_sensitive ("undo", undo_water_mark >= 0);
+  gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
 
   /* Main box */
   main_hbox = gtk_hbox_new (FALSE, 12);
@@ -733,21 +733,24 @@ static void
 gfig_undo_action_callback (GtkAction *action,
                            gpointer   data)
 {
-  if (undo_water_mark >= 0)
+  if (undo_level >= 0)
     {
       /* Free current objects an reinstate previous */
       free_all_objs (gfig_context->current_obj->obj_list);
       gfig_context->current_obj->obj_list = NULL;
       tmp_bezier = tmp_line = obj_creating = NULL;
-      gfig_context->current_obj->obj_list = undo_table[undo_water_mark];
-      undo_water_mark--;
+      gfig_context->current_obj->obj_list = undo_table[undo_level];
+      /* FIXME: this only work when undoing the only object in the list */
+      if (gfig_context->current_obj->obj_list == NULL)
+        gfig_context->current_style = &gfig_context->default_style;
+      undo_level--;
       /* Update the screen */
       gtk_widget_queue_draw (gfig_context->preview);
       /* And preview */
       gfig_context->current_obj->obj_status |= GFIG_MODIFIED;
     }
 
-  gfig_dialog_action_set_sensitive ("undo", undo_water_mark >= 0);
+  gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
   gfig_paint_callback ();
 }
 
@@ -763,6 +766,7 @@ gfig_clear_action_callback (GtkWidget *widget,
   /* Free all objects */
   free_all_objs (gfig_context->current_obj->obj_list);
   gfig_context->current_obj->obj_list = NULL;
+  gfig_context->current_style = &gfig_context->default_style;
   obj_creating = NULL;
   tmp_line = NULL;
   tmp_bezier = NULL;

@@ -996,13 +996,13 @@ clear_undo (void)
 {
   int lv;
 
-  for (lv = undo_water_mark; lv >= 0; lv--)
+  for (lv = undo_level; lv >= 0; lv--)
     {
       free_all_objs (undo_table[lv]);
       undo_table[lv] = NULL;
     }
 
-  undo_water_mark = -1;
+  undo_level = -1;
 
   gfig_dialog_action_set_sensitive ("undo", FALSE);
 }
@@ -1012,7 +1012,7 @@ setup_undo (void)
 {
   /* Copy object list to undo buffer */
 #if DEBUG
-  printf ("setup undo level [%d]\n", undo_water_mark);
+  printf ("setup undo level [%d]\n", undo_level);
 #endif /*DEBUG*/
 
   if (!gfig_context->current_obj)
@@ -1021,22 +1021,22 @@ setup_undo (void)
       return;
     }
 
-  if (undo_water_mark >= selvals.maxundo - 1)
+  if (undo_level >= selvals.maxundo - 1)
     {
       int loop;
       /* the little one in the bed said "roll over".. */
       if (undo_table[0])
         free_one_obj (undo_table[0]->data);
-      for (loop = 0; loop < undo_water_mark; loop++)
+      for (loop = 0; loop < undo_level; loop++)
         {
           undo_table[loop] = undo_table[loop + 1];
         }
     }
   else
     {
-      undo_water_mark++;
+      undo_level++;
     }
-  undo_table[undo_water_mark] =
+  undo_table[undo_level] =
     copy_all_objs (gfig_context->current_obj->obj_list);
 
   gfig_dialog_action_set_sensitive ("undo", TRUE);

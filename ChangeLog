@@ -1,3 +1,14 @@
+2004-11-28  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dialog.h
+	 plug-ins/gfig/gfig-dobject.c: renamed undo_water_mark to undo_level.
+	 Fixed the style handling when clearing the whole thing and undoing in
+	 some very particular cases. The undo part should certainly be redone
+	 to some extent.
+
+	 Btw, this is the revision 1.10000 of the ChangeLog, yeah!
+
 2004-11-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/gfig-style.c: make sure PaintType is saved and

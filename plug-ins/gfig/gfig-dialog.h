@@ -26,7 +26,7 @@
 #ifndef __GFIG_DIALOG_H__
 #define __GFIG_DIALOG_H__
 
-gint   undo_water_mark;  /* Last slot filled in -1 = no undo */
+gint   undo_level;  /* Last slot filled in -1 = no undo */
 GList *undo_table[MAX_UNDO];
 
 gboolean  gfig_dialog                      (void);
