@@ -121,10 +121,6 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
       if (! gimage && status != GIMP_PDB_CANCEL)
         {
           gchar *filename = file_utils_uri_to_utf8_filename (uri);
-          gchar *p;
-
-          while ( (p = strchr (filename, '%')) )
-            *p = ' ';
 
           g_message (_("Opening '%s' failed:\n\n%s"),
                      filename, error->message);

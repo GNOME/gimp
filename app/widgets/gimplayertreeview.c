@@ -799,11 +799,7 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
         }
       else if (status != GIMP_PDB_CANCEL)
         {
-          gchar *p;
           gchar *filename = file_utils_uri_to_utf8_filename (uri);
-
-          while ( (p = strchr (filename, '%')) )
-            *p = ' ';
 
           g_message (_("Opening '%s' failed:\n\n%s"),
                      filename, error->message);
