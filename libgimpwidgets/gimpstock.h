@@ -132,6 +132,7 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_IMAGE                "gimp-image"
 #define GIMP_STOCK_LAYER                "gimp-layer"
+#define GIMP_STOCK_TEXT_LAYER           "gimp-text-layer"
 #define GIMP_STOCK_CHANNEL              "gimp-channel"
 #define GIMP_STOCK_CHANNEL_RED          "gimp-channel-red"
 #define GIMP_STOCK_CHANNEL_GREEN        "gimp-channel-green"
@@ -158,6 +159,9 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_TOOL_OPTIONS         "gimp-tool-options"
 #define GIMP_STOCK_DEVICE_STATUS        "gimp-device-status"
+
+#define GIMP_STOCK_LIST                 "gimp-list"
+#define GIMP_STOCK_GRID                 "gimp-grid"
 
 /*  in dialog size:  */
 

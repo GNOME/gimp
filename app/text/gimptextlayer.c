@@ -110,7 +110,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   gimp_object_class->get_memsize   = gimp_text_layer_get_memsize;
 
-  viewable_class->default_stock_id = "gimp-tool-text";
+  viewable_class->default_stock_id = "gimp-text-layer";
   viewable_class->get_preview      = gimp_text_layer_get_preview;
 
   item_class->duplicate            = gimp_text_layer_duplicate;

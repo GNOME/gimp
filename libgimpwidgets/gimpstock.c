@@ -165,6 +165,7 @@ static GtkStockItem gimp_stock_items[] =
 
   { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEXT_LAYER,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_RED,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_GREEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -180,6 +181,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_ERROR,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -282,14 +286,15 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_CHANNELS,                 stock_channels_24                 },
   { GIMP_STOCK_PATHS,                    stock_paths_22                    },
 
-  { GIMP_STOCK_IMAGE,                    stock_image_24                    },
-  { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_24              },
   { GIMP_STOCK_CHANNEL_GREEN,            stock_channel_green_24            },
   { GIMP_STOCK_CHANNEL_BLUE,             stock_channel_blue_24             },
   { GIMP_STOCK_CHANNEL_GRAY,             stock_channel_gray_24             },
   { GIMP_STOCK_CHANNEL_ALPHA,            stock_channel_alpha_24            },
+  { GIMP_STOCK_IMAGE,                    stock_image_24                    },
+  { GIMP_STOCK_LAYER,                    stock_layer_24                    },
+  { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_24               },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
@@ -366,14 +371,15 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_CHANNELS,                 stock_channels_16                 },
   { GIMP_STOCK_PATHS,                    stock_paths_16                    },
 
-  { GIMP_STOCK_IMAGE,                    stock_image_16                    },
-  { GIMP_STOCK_LAYER,                    stock_layer_16                    },
   { GIMP_STOCK_CHANNEL,                  stock_channel_16                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_16              },
   { GIMP_STOCK_CHANNEL_GREEN,            stock_channel_green_16            },
   { GIMP_STOCK_CHANNEL_BLUE,             stock_channel_blue_16             },
   { GIMP_STOCK_CHANNEL_GRAY,             stock_channel_gray_16             },
   { GIMP_STOCK_CHANNEL_ALPHA,            stock_channel_alpha_16            },
+  { GIMP_STOCK_IMAGE,                    stock_image_16                    },
+  { GIMP_STOCK_LAYER,                    stock_layer_16                    },
+  { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_16               },
 
   { GIMP_STOCK_LINKED,                   stock_linked_12                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_12                      },
@@ -386,6 +392,9 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_NAVIGATION,               stock_navigation_16               },
   { GIMP_STOCK_QMASK_OFF,                stock_qmask_off_16                },
   { GIMP_STOCK_QMASK_ON,                 stock_qmask_on_16                 },
+
+  { GIMP_STOCK_LIST,                     stock_list_16                     },
+  { GIMP_STOCK_GRID,                     stock_grid_16                     },
 
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
@@ -438,8 +447,36 @@ static struct
   const gchar   *stock_id;
   gconstpointer  inline_data;
 }
+gimp_stock_dnd_pixbufs[] =
+{
+  { GIMP_STOCK_CHANNEL,              stock_channel_32              },
+  { GIMP_STOCK_CHANNEL_RED,          stock_channel_red_32          },
+  { GIMP_STOCK_CHANNEL_GREEN,        stock_channel_green_32        },
+  { GIMP_STOCK_CHANNEL_BLUE,         stock_channel_blue_32         },
+  { GIMP_STOCK_CHANNEL_GRAY,         stock_channel_gray_32         },
+  /* { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_32        }, */
+  { GIMP_STOCK_IMAGE,                stock_image_32                },
+  { GIMP_STOCK_LAYER,                stock_layer_32                },
+  { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_32           }
+};
+
+static struct
+{
+  const gchar   *stock_id;
+  gconstpointer  inline_data;
+}
 gimp_stock_dialog_pixbufs[] =
 {
+  { GIMP_STOCK_CHANNEL,              stock_channel_48              },
+  { GIMP_STOCK_CHANNEL_RED,          stock_channel_red_48          },
+  { GIMP_STOCK_CHANNEL_GREEN,        stock_channel_green_48        },
+  { GIMP_STOCK_CHANNEL_BLUE,         stock_channel_blue_48         },
+  { GIMP_STOCK_CHANNEL_GRAY,         stock_channel_gray_48         },
+  /* { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_48        }, */
+  { GIMP_STOCK_IMAGE,                stock_image_48                },
+  { GIMP_STOCK_LAYER,                stock_layer_48                },
+  { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_48           },
+
   { GIMP_STOCK_ERROR,                stock_error_64                },
   { GIMP_STOCK_INFO,                 stock_info_64                 },
   { GIMP_STOCK_QUESTION,             stock_question_64             },
@@ -466,6 +503,14 @@ gimp_stock_init (void)
 				    gimp_stock_dialog_pixbufs[i].inline_data,
 				    GTK_ICON_SIZE_DIALOG,
 				    gimp_stock_dialog_pixbufs[i].stock_id);
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_dnd_pixbufs); i++)
+    {
+      add_sized_with_same_fallback (gimp_stock_factory,
+				    gimp_stock_dnd_pixbufs[i].inline_data,
+				    GTK_ICON_SIZE_DND,
+				    gimp_stock_dnd_pixbufs[i].stock_id);
     }
 
   for (i = 0; i < G_N_ELEMENTS (gimp_stock_button_pixbufs); i++)

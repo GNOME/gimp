@@ -1,3 +1,44 @@
+2003-03-27  Michael Natterer  <mitch@gimp.org>
+
+	More great icons from Jimmac:
+
+	* themes/Default/images/stock-channel-16.png
+	* themes/Default/images/stock-channel-24.png
+	* themes/Default/images/stock-channel-blue-16.png
+	* themes/Default/images/stock-channel-blue-24.png
+	* themes/Default/images/stock-channel-gray-16.png
+	* themes/Default/images/stock-channel-gray-24.png
+	* themes/Default/images/stock-channel-green-16.png
+	* themes/Default/images/stock-channel-green-24.png
+	* themes/Default/images/stock-channel-red-16.png
+	* themes/Default/images/stock-channel-red-24.png: updated.
+
+	* themes/Default/images/stock-channel-32.png
+	* themes/Default/images/stock-channel-48.png
+	* themes/Default/images/stock-channel-blue-32.png
+	* themes/Default/images/stock-channel-blue-48.png
+	* themes/Default/images/stock-channel-gray-32.png
+	* themes/Default/images/stock-channel-gray-48.png
+	* themes/Default/images/stock-channel-green-32.png
+	* themes/Default/images/stock-channel-green-48.png
+	* themes/Default/images/stock-channel-red-32.png
+	* themes/Default/images/stock-channel-red-48.png
+	* themes/Default/images/stock-grid-16.png
+	* themes/Default/images/stock-image-32.png
+	* themes/Default/images/stock-image-48.png
+	* themes/Default/images/stock-layer-32.png
+	* themes/Default/images/stock-layer-48.png
+	* themes/Default/images/stock-list-16.png
+	* themes/Default/images/stock-text-layer-16.png
+	* themes/Default/images/stock-text-layer-24.png
+	* themes/Default/images/stock-text-layer-32.png
+	* themes/Default/images/stock-text-layer-48.png: new ones.
+
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: added them to the stock system.
+
+	* app/text/gimptextlayer.c: use GIMP_STOCK_TEXT_LAYER.
+
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpmarshal.list: added a new marshaller.
