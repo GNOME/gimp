@@ -1,3 +1,18 @@
+Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
+	* app/iscissors.c: This version works much better.
+	outstanding bugs <VERY IMPORTANT>: 
+
+	1. the edgemap does not seem to be constructed quite right
+	(construct_edge_map) -- uncomment #define 
+	ISCISSORS_STILL_DOES_NOT_WORK and take a look at the edgemap -- it 
+	will be saved to the file "dump"
+
+	2. sigsegvs if the layer offset isn't 0,0.  dunno why.
+
+	3. convert to bezier still does not work!  Any tools experts wanna
+	help me with it?  (it converts to bezier fine, it just doesn't set
+	the active tool to bezier currectly.)
+
 Thu Mar 26 12:15:38 MST 1998 Nathan Summers <rock@gimp.org>
 	* app/iscissors.c: fixes the display artifact where the preview
 	outline of the selected area would not appear or would appear in the 

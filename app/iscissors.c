@@ -840,12 +840,12 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  /* add the point to the point buffer */
 		      	  
 	  /*gdisplay_transform_coords (gdisp, newx, newy, &tx, &ty,1 );*/
-	  drawable_offsets(drawable, &tx, &ty);
+	  /*drawable_offsets(drawable, &tx, &ty);
 	  tx += newx;
-	  ty += newy;
+	  ty += newy;*/
 	  
-	  gdk_points[index].x = tx;
-	  gdk_points[index].y = ty;
+	  gdk_points[index].x = newx;
+	  gdk_points[index].y = newy;
 
 
 	  index++;
@@ -1894,14 +1894,14 @@ calculate_edge_map (GImage *gimage,
   pixel_region_init(&srcPR, drawable_data(drawable), x1, y1, width, height, 1);
 
   /*  Get the horizontal derivative  */
-  destPR.data = conv1 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
+  destPR.data = conv1 /*+ MAX_CHANNELS * (CONV_WIDTH * offy + offx)*/;
   destPR.rowstride = CONV_WIDTH * MAX_CHANNELS;
   destPR.tiles = NULL;
-  destPR.bytes = 1;
+  destPR.bytes = MAX_CHANNELS;
   destPR.x = x1;
   destPR.y = y1;
-  destPR.w = w;
-  destPR.h = h;
+  destPR.w = CONV_WIDTH;
+  destPR.h = CONV_HEIGHT;
   destPR.dirty = 1;
   
   for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -2022,8 +2022,8 @@ construct_edge_map (Tool    *tool,
   /*  init some variables  */
   srcPR.bytes = edge_buf->bytes;
   destPR.rowstride = edge_buf->bytes * edge_buf->width;
-  destPR.x = edge_buf->x;
-  destPR.y = edge_buf->y;
+  destPR.x = 0 /*edge_buf->x*/;
+  destPR.y = 0 /*edge_buf->y*/;
   destPR.h = edge_buf->height;
   destPR.w = edge_buf->width;
   destPR.bytes = edge_buf->bytes;
@@ -2105,7 +2105,7 @@ construct_edge_map (Tool    *tool,
     }
     
 #ifdef ISCISSORS_STILL_DOES_NOT_WORK
-
+    
   /*  dump the edge buffer for debugging*/
 
    dump=fopen("dump", "w"); 
@@ -2537,9 +2537,12 @@ CR_convert (Iscissors *iscissors,
   int *vals, val;
   int x, w;
   int i, j;
+  int offx, offy;
   PixelRegion maskPR;
   unsigned char *buf, *b;
-
+  GimpDrawable *drawable;
+  
+  drawable = gimage_active_drawable(gdisp->gimage);
   vals = NULL;
 
   /* destroy previous region */
@@ -2591,6 +2594,7 @@ CR_convert (Iscissors *iscissors,
       iscissors_draw_CR (gdisp, iscissors, pts, indices, draw_type);
     }
 
+  drawable_offsets(drawable, &offx, &offy);
   pixel_region_init (&maskPR, iscissors->mask->drawable.tiles, 0, 0,
 		     iscissors->mask->drawable.width,
 		     iscissors->mask->drawable.height, TRUE);
@@ -2616,7 +2620,7 @@ CR_convert (Iscissors *iscissors,
 		  if (w+x > width) w = width - x;
 		  
 	      if (!antialias)
-		 channel_add_segment (iscissors->mask, x, i, w, 255);
+		 channel_add_segment (iscissors->mask, x+offx, i+offy, w, 255);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
@@ -2636,7 +2640,7 @@ CR_convert (Iscissors *iscissors,
 
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), iscissors->mask->drawable.width, buf);
+	  pixel_region_set_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, iscissors->mask->drawable.width, buf);
 	}
 
       g_slist_free (CR_scanlines[i]);
