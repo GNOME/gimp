@@ -19,6 +19,15 @@ gimptile
 
 </para>
 
+@ewidth: 
+@eheight: 
+@bpp: 
+@tile_num: 
+@ref_count: 
+@dirty: 
+@shadow: 
+@data: 
+@drawable: 
 
 <!-- ##### FUNCTION gimp_tile_ref ##### -->
 <para>

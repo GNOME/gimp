@@ -15,29 +15,11 @@ supports Drag and Drop and has a right-click menu that allows to choose
 the color from the current FG or BG color. If the user changes the 
 color, the "color_changed" signal is emitted.
 </para>
-<para>
-Note that the color is changed in place. 
-</para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-#libgimp-gimpcolorspace
+#libgimpcolor-gimpcolorspace
 </para>
-
-<!-- ##### STRUCT GimpColorButton ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### MACRO GIMP_COLOR_BUTTON ##### -->
-<para>
-Checks if the passed pointer is a pointer to a #GimpColorButton and
-performs the cast if valid.
-</para>
-
-@obj: The pointer to cast.
-
 
 <!-- ##### FUNCTION gimp_color_button_new ##### -->
 <para>
@@ -48,29 +30,46 @@ performs the cast if valid.
 @width: 
 @height: 
 @color: 
-@bpp: 
+@type: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@alpha: 
 
 
-<!-- ##### FUNCTION gimp_color_button_double_new ##### -->
-<para>
-
-</para>
-
-@title: 
-@width: 
-@height: 
-@color: 
-@bpp: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_color_button_update ##### -->
+<!-- ##### FUNCTION gimp_color_button_set_color ##### -->
 <para>
 
 </para>
 
 @gcb: 
+@color: 
+
+
+<!-- ##### FUNCTION gimp_color_button_get_color ##### -->
+<para>
+
+</para>
+
+@gcb: 
+@color: 
+
+
+<!-- ##### FUNCTION gimp_color_button_has_alpha ##### -->
+<para>
+
+</para>
+
+@gcb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_button_set_type ##### -->
+<para>
+
+</para>
+
+@gcb: 
+@alpha: 
 
 
 <!-- ##### SIGNAL GimpColorButton::color-changed ##### -->

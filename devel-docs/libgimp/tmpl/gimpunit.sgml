@@ -20,12 +20,6 @@ user-defined units.
 #GimpSizeEntry
 </para>
 
-<!-- ##### ENUM GimpUnit ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION gimp_unit_get_number_of_units ##### -->
 <para>
 

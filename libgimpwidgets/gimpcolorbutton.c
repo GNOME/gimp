@@ -254,6 +254,7 @@ gimp_color_button_set_color (GimpColorButton *gcb,
 /**
  * gimp_color_button_get_color:
  * @gcb: Pointer to a #GimpColorButton.
+ * @color:
  * 
  **/
 void
@@ -271,7 +272,9 @@ gimp_color_button_get_color (GimpColorButton *gcb,
 /**
  * gimp_color_button_has_alpha:
  * @gcb: Pointer to a #GimpColorButton.
- * 
+ *
+ *
+ * Returns:
  **/
 gboolean
 gimp_color_button_has_alpha (GimpColorButton *gcb)

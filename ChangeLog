@@ -1,3 +1,23 @@
+2001-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* devel-docs/Makefile.am
+	* devel-docs/libgimpcolor/*
+	* devel-docs/libgimpmath/*
+	* devel-docs/libgimpwidgets/*: added new gtk-doc modules for
+	libgimpcolor, libgimpmath and libgimpwidgets. Moved existing
+	documentation from the old files to the new templates.
+
+	* devel-docs/libgimp/*: regenerated all files and removed the
+	stuff which is in the new modules now.
+
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.[ch]: some documentation fixes.
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in: updated.
+
 2001-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h: removed typedefs from the widgets/ subdir.

@@ -1,0 +1,174 @@
+<!-- ##### SECTION Title ##### -->
+gimpcolorspace
+
+<!-- ##### SECTION Short_Description ##### -->
+Utility functions which convert colors between different color models.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+When programming pixel data manipulation functions you will often use
+algorithms operating on a color model different from the one GIMP
+uses.  This file provides utility functions to concert colors between
+different color spaces.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@hsv: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsl ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@hue: 
+@saturation: 
+@lightness: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb ##### -->
+<para>
+
+</para>
+
+@hsv: 
+@rgb: 
+
+
+<!-- ##### FUNCTION gimp_hsl_to_rgb ##### -->
+<para>
+
+</para>
+
+@hue: 
+@saturation: 
+@lightness: 
+@rgb: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hwb ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@hue: 
+@whiteness: 
+@blackness: 
+
+
+<!-- ##### FUNCTION gimp_hwb_to_rgb ##### -->
+<para>
+
+</para>
+
+@hue: 
+@whiteness: 
+@blackness: 
+@rgb: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv_int ##### -->
+<para>
+
+</para>
+
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb_int ##### -->
+<para>
+
+</para>
+
+@hue: 
+@saturation: 
+@value: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hls_int ##### -->
+<para>
+
+</para>
+
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_l_int ##### -->
+<para>
+
+</para>
+
+@red: 
+@green: 
+@blue: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_hls_to_rgb_int ##### -->
+<para>
+
+</para>
+
+@hue: 
+@lightness: 
+@saturation: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv_double ##### -->
+<para>
+
+</para>
+
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb_double ##### -->
+<para>
+
+</para>
+
+@hue: 
+@saturation: 
+@value: 
+
+
+<!-- ##### FUNCTION gimp_rgb_to_hsv4 ##### -->
+<para>
+
+</para>
+
+@hsv: 
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_hsv_to_rgb4 ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@hue: 
+@saturation: 
+@value: 
+
+

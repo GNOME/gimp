@@ -20,73 +20,55 @@ color selector module.
 #libgimp-gimpmodule
 </para>
 
-<!-- ##### USER_FUNCTION GimpColorSelector_Callback ##### -->
+<!-- ##### USER_FUNCTION GimpColorSelectorCallback ##### -->
 <para>
-A function of this type should be called by the color selector each
-time the user modifies the selected color.
+
 </para>
 
-@data: The @data passed to the #GimpColorSelector_NewFunc function.
-@r: The new color's red component.
-@g: The new color's green component.
-@b: The new color's blue component.
+@data: 
+@hsv: 
+@rgb: 
 
 
-<!-- ##### USER_FUNCTION GimpColorSelector_NewFunc ##### -->
+<!-- ##### USER_FUNCTION GimpColorSelectorNewFunc ##### -->
 <para>
-A function of this type is called to create a new instance of the
-color selector.  The new selector should set its current color to
-the RGB triple given (each component is in the range 0 - 255
-inclusive, with white at 255,255,255 and black at 0,0,0).
-</para>
-<para>
-The selector should call @cb with argument @data each time the
-user modifies the selected color.
-</para>
-<para>
-The selector must return a #GtkWidget which implements the color
-selection UI.  The selector can optionally return @selector_data,
-an opaque pointer which will be passed in to subsequent invokations
-on the selector.
+
 </para>
 
-@r: The red component of intitial color.
-@g: The green component of intitial color.
-@b: The blue component of intitial color.
-@cb: The function to call each time the user modifies the selected color.
-@data: The @data to pass to @cb.
-@selector_data: An optional data pointer which will be passed in to subsequent invokations on the selector.
-@Returns: A #GtkWidget which implements the color selection UI.
+@hsv: 
+@rgb: 
+@show_alpha: 
+@cb: 
+@data: 
+@selector_data: 
+@Returns: 
 
 
-<!-- ##### USER_FUNCTION GimpColorSelector_FreeFunc ##### -->
+<!-- ##### USER_FUNCTION GimpColorSelectorFreeFunc ##### -->
 <para>
-A function of this type is called when the color selector is no
-longer required.  This function should *not* free widgets that are
-containted within the UI widget returned by new(), since they are
-destroyed on behalf of the selector by the caller of this
-function.
+
 </para>
 
-@selector_data: The @selector_data pointer returned by the #GimpColorSelector_NewFunc function.
+@selector_data: 
 
 
-<!-- ##### USER_FUNCTION GimpColorSelector_SetColorFunc ##### -->
+<!-- ##### USER_FUNCTION GimpColorSelectorSetColorFunc ##### -->
 <para>
-A function of this type is called to change the selector's current
-color.  The required color is specified as in the new() function.
-If the @set_current parameter is #FALSE, then only the old color
-should be set - if @set_current is #TRUE, both the old color and
-the current color should be set to the RGB triple given.  This
-function merely gives a hint to the color selector; the selector
-can choose to ignore this information.
+
 </para>
 
-@selector_data: The @selector_data pointer returned by the #GimpColorSelector_NewFunc function.
-@r: The new color's red component.
-@g: The new color's green component.
-@b: The new color's blue component.
-@set_current: Set the current color.
+@selector_data: 
+@hsv: 
+@rgb: 
+
+
+<!-- ##### USER_FUNCTION GimpColorSelectorSetChannelFunc ##### -->
+<para>
+
+</para>
+
+@selector_data: 
+@type: 
 
 
 <!-- ##### STRUCT GimpColorSelectorMethods ##### -->
@@ -94,12 +76,29 @@ can choose to ignore this information.
 
 </para>
 
+@new: 
+@free: 
+@set_color: 
+@set_channel: 
 
 <!-- ##### TYPEDEF GimpColorSelectorID ##### -->
 <para>
 
 </para>
 
+
+<!-- ##### ENUM GimpColorSelectorChannelType ##### -->
+<para>
+
+</para>
+
+@GIMP_COLOR_SELECTOR_HUE: 
+@GIMP_COLOR_SELECTOR_SATURATION: 
+@GIMP_COLOR_SELECTOR_VALUE: 
+@GIMP_COLOR_SELECTOR_RED: 
+@GIMP_COLOR_SELECTOR_GREEN: 
+@GIMP_COLOR_SELECTOR_BLUE: 
+@GIMP_COLOR_SELECTOR_ALPHA: 
 
 <!-- ##### FUNCTION gimp_color_selector_register ##### -->
 <para>

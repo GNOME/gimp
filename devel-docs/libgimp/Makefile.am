@@ -9,8 +9,8 @@ DOC_MAIN_SGML_FILE=libgimp-docs.sgml
 # The directory containing the source code (if it contains documentation).
 DOC_SOURCE_DIR=$(top_srcdir)/libgimp
 
-CFLAGS=`gimptool --cflags`
-LDFLAGS=`gimptool --libs`
+CFLAGS=`gimptool-1.4 --cflags`
+LDFLAGS=`gimptool-1.4 --libs`
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)
 
@@ -90,8 +90,3 @@ dist-hook:
 	-cp $(srcdir)/sgml/*.bottom $(srcdir)/sgml/*.top $(distdir)/sgml
 
 .PHONY : html sgml templates scan
-
-# devel-docs/libgimp/Makefile.am ends here
-
-
-

@@ -19,10 +19,12 @@ gimppalette
 
 </para>
 
+@foreground: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_get_background ##### -->
@@ -30,10 +32,12 @@ gimppalette
 
 </para>
 
+@background: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_foreground ##### -->
@@ -41,10 +45,12 @@ gimppalette
 
 </para>
 
+@foreground: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_background ##### -->
@@ -52,10 +58,12 @@ gimppalette
 
 </para>
 
+@background: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_default_colors ##### -->

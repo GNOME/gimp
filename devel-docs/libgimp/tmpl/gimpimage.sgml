@@ -653,13 +653,12 @@ gimpimage
 @palette: 
 
 
-<!-- ##### MACRO gimp_image_duplicate ##### -->
+<!-- ##### FUNCTION gimp_image_duplicate ##### -->
 <para>
 
 </para>
 
-@Returns: 
-<!-- # Unused Parameters # -->
 @image_ID: 
+@Returns: 
 
 

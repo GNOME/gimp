@@ -1,4 +1,4 @@
-SUBDIRS = libgimp pdb
+SUBDIRS = libgimpcolor libgimpmath libgimpwidgets libgimp pdb
 
 EXTRA_DIST = \
 	README			\
@@ -13,5 +13,3 @@ files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files macros/*; do \
 	  echo $$p; \
 	done
-
-# devel-docs/Makefile.am ends here

@@ -1,0 +1,19 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity libgimpmath-gimpmatht SYSTEM "sgml/gimpmatht.sgml">
+<!entity libgimpmath-gimpmathtypes SYSTEM "sgml/gimpmathtypes.sgml">
+<!entity libgimpmath-gimpmatrix SYSTEM "sgml/gimpmatrix.sgml">
+<!entity libgimpmath-gimpvector SYSTEM "sgml/gimpvector.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GIMP Math Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimpcolor">
+    <title>GIMP Math Library</title>
+    &libgimpmath-gimpmatht;
+    &libgimpmath-gimpmathtypes;
+    &libgimpmath-gimpmatrix;
+    &libgimpmath-gimpvector;
+  </chapter>
+</book>

@@ -7,21 +7,12 @@ Mathematical definitions and macros.
 <!-- ##### SECTION Long_Description ##### -->
 <para>
 Mathematical definitions and macros.
-
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
-<!-- ##### MACRO FINITE ##### -->
-<para>
-
-</para>
-
-@x: 
-
 
 <!-- ##### MACRO G_PI ##### -->
 <para>
@@ -112,5 +103,13 @@ Mathematical definitions and macros.
 </para>
 
 @angle: 
+
+
+<!-- ##### MACRO FINITE ##### -->
+<para>
+
+</para>
+
+@x: 
 
 

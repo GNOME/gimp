@@ -1,0 +1,271 @@
+<!-- ##### SECTION Title ##### -->
+gimprgb
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpRGBCompositeMode ##### -->
+<para>
+
+</para>
+
+@GIMP_RGB_COMPOSITE_NONE: 
+@GIMP_RGB_COMPOSITE_NORMAL: 
+@GIMP_RGB_COMPOSITE_BEHIND: 
+
+<!-- ##### FUNCTION gimp_rgb_set ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### FUNCTION gimp_rgb_set_alpha ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@a: 
+
+
+<!-- ##### FUNCTION gimp_rgb_set_uchar ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### FUNCTION gimp_rgb_get_uchar ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@r: 
+@g: 
+@b: 
+
+
+<!-- ##### FUNCTION gimp_rgb_add ##### -->
+<para>
+
+</para>
+
+@rgb1: 
+@rgb2: 
+
+
+<!-- ##### FUNCTION gimp_rgb_subtract ##### -->
+<para>
+
+</para>
+
+@rgb1: 
+@rgb2: 
+
+
+<!-- ##### FUNCTION gimp_rgb_multiply ##### -->
+<para>
+
+</para>
+
+@rgb1: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_rgb_distance ##### -->
+<para>
+
+</para>
+
+@rgb1: 
+@rgb2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_max ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_min ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_clamp ##### -->
+<para>
+
+</para>
+
+@rgb: 
+
+
+<!-- ##### FUNCTION gimp_rgb_gamma ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@gamma: 
+
+
+<!-- ##### FUNCTION gimp_rgb_intensity ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_intensity_uchar ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_rgb_composite ##### -->
+<para>
+
+</para>
+
+@color1: 
+@color2: 
+@mode: 
+
+
+<!-- ##### FUNCTION gimp_rgba_set ##### -->
+<para>
+
+</para>
+
+@rgba: 
+@r: 
+@g: 
+@b: 
+@a: 
+
+
+<!-- ##### FUNCTION gimp_rgba_set_uchar ##### -->
+<para>
+
+</para>
+
+@rgba: 
+@r: 
+@g: 
+@b: 
+@a: 
+
+
+<!-- ##### FUNCTION gimp_rgba_get_uchar ##### -->
+<para>
+
+</para>
+
+@rgba: 
+@r: 
+@g: 
+@b: 
+@a: 
+
+
+<!-- ##### FUNCTION gimp_rgba_add ##### -->
+<para>
+
+</para>
+
+@rgba1: 
+@rgba2: 
+
+
+<!-- ##### FUNCTION gimp_rgba_subtract ##### -->
+<para>
+
+</para>
+
+@rgba1: 
+@rgba2: 
+
+
+<!-- ##### FUNCTION gimp_rgba_multiply ##### -->
+<para>
+
+</para>
+
+@rgba: 
+@factor: 
+
+
+<!-- ##### FUNCTION gimp_rgba_distance ##### -->
+<para>
+
+</para>
+
+@rgba1: 
+@rgba2: 
+@Returns: 
+
+
+<!-- ##### MACRO INTENSITY_RED ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY_GREEN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY_BLUE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO INTENSITY ##### -->
+<para>
+
+</para>
+
+@r: 
+@g: 
+@b: 
+
+

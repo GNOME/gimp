@@ -71,7 +71,7 @@ GtkWidget * gimp_color_button_new        (const gchar       *title,
 					  gint               width,
 					  gint               height,
 					  const GimpRGB     *color,
-					  GimpColorAreaType  alpha);
+					  GimpColorAreaType  type);
 void        gimp_color_button_set_color  (GimpColorButton   *gcb,
 					  const GimpRGB     *color);
 void        gimp_color_button_get_color  (GimpColorButton   *gcb,
@@ -85,4 +85,4 @@ void        gimp_color_button_set_type   (GimpColorButton   *gcb,
 }
 #endif /* __cplusplus */
 
-#endif /* __COLOR_BUTTON_H__ */
+#endif /* __GIMP_COLOR_BUTTON_H__ */

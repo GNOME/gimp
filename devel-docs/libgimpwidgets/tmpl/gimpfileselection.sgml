@@ -31,21 +31,6 @@ will be emitted.
 #GimpPathEditor
 </para>
 
-<!-- ##### STRUCT GimpFileSelection ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### MACRO GIMP_FILE_SELECTION ##### -->
-<para>
-Checks if the passed pointer is a pointer to a #GimpFileSelection and
-performs the cast if valid.
-</para>
-
-@obj: The pointer to cast.
-
-
 <!-- ##### FUNCTION gimp_file_selection_new ##### -->
 <para>
 

@@ -2,7 +2,6 @@
 <!entity libgimp-gimp SYSTEM "sgml/gimp.sgml">
 <!entity libgimp-gimpbrushes SYSTEM "sgml/gimpbrushes.sgml">
 <!entity libgimp-gimpchannel SYSTEM "sgml/gimpchannel.sgml">
-<!entity libgimp-gimpchannelops SYSTEM "sgml/gimpchannelops.sgml">
 <!entity libgimp-gimpcolor SYSTEM "sgml/gimpcolor.sgml">
 <!entity libgimp-gimpconvert SYSTEM "sgml/gimpconvert.sgml">
 <!entity libgimp-gimpdisplay SYSTEM "sgml/gimpdisplay.sgml">
@@ -33,34 +32,19 @@
 <!entity libgimp-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
 <!entity libgimp-gimpenums SYSTEM "sgml/gimpenums.sgml">
 <!entity libgimp-gimpwire SYSTEM "sgml/gimpwire.sgml">
-<!entity libgimp-gimpmatrix SYSTEM "sgml/gimpmatrix.sgml">
 <!entity libgimp-gimpparasite SYSTEM "sgml/gimpparasite.sgml">
 <!entity libgimp-gimpcolorselector SYSTEM "sgml/gimpcolorselector.sgml">
 <!entity libgimp-gimpmodule SYSTEM "sgml/gimpmodule.sgml">
-<!entity libgimp-gimpmath SYSTEM "sgml/gimpmath.sgml">
 <!entity libgimp-gimpcolordisplay SYSTEM "sgml/gimpcolordisplay.sgml">
 <!entity libgimp-gimpenv SYSTEM "sgml/gimpenv.sgml">
 <!entity libgimp-gimplimits SYSTEM "sgml/gimplimits.sgml">
 <!entity libgimp-gimpexport SYSTEM "sgml/gimpexport.sgml">
 <!entity libgimp-gimpparasiteio SYSTEM "sgml/gimpparasiteio.sgml">
-<!entity libgimp-gimpcompat SYSTEM "sgml/gimpcompat.sgml">
 <!entity libgimp-gimpfeatures SYSTEM "sgml/gimpfeatures.sgml">
-<!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
-<!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
-<!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
-<!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
-<!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
-<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
-<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
-<!entity libgimp-gimpdialog SYSTEM "sgml/gimpdialog.sgml">
-<!entity libgimp-gimphelpui SYSTEM "sgml/gimphelpui.sgml">
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
-<!entity libgimp-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity libgimp-gimpui SYSTEM "sgml/gimpui.sgml">
 <!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
 <!entity libgimp-gimputils SYSTEM "sgml/gimputils.sgml">
-<!entity libgimp-gimpvector SYSTEM "sgml/gimpvector.sgml">
-<!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -72,18 +56,14 @@
     &libgimp-gimpenums;
     &libgimp-gimpfeatures;
     &libgimp-gimplimits;
-    &libgimp-gimpmath;
   </chapter>
 
   <chapter id="libgimp">
     <title>GIMP Library</title>
     &libgimp-gimp;
     &libgimp-gimpenv;
-    &libgimp-gimpcompat;
     &libgimp-gimpbrushes;
     &libgimp-gimpchannel;
-    &libgimp-gimpchannelops;
-    &libgimp-gimpcolorspace;
     &libgimp-gimpcolor;
     &libgimp-gimpconvert;
     &libgimp-gimpdisplay;
@@ -97,7 +77,6 @@
     &libgimp-gimphelp;
     &libgimp-gimpimage;
     &libgimp-gimplayer;
-    &libgimp-gimpmatrix;
     &libgimp-gimpmessage;
     &libgimp-gimpmisc;
     &libgimp-gimppalette;
@@ -116,26 +95,14 @@
     &libgimp-gimpundo;
     &libgimp-gimpunit;
     &libgimp-gimputils;
-    &libgimp-gimpvector;
     &libgimp-gimpwire;
   </chapter>
 
   <chapter id="libgimpui">
     <title>GIMP User Interface Library</title>
     &libgimp-gimpui;
-    &GimpChainButton;
-    &GimpColorButton; 
-    &GimpFileSelection;
-    &GimpPathEditor;
-    &GimpPixmap;
-    &GimpSizeEntry;
-    &GimpUnitMenu;
-    &libgimp-gimpdialog;
     &libgimp-gimpexport;
-    &libgimp-gimphelpui;
     &libgimp-gimpmenu;
-    &libgimp-gimpquerybox;
-    &libgimp-gimpwidgets;
   </chapter>
 
   <chapter id="gimpmodule">

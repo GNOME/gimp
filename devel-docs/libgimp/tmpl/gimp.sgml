@@ -24,6 +24,24 @@ all other GIMP Library headers.
 
 
 
+<!-- ##### VARIABLE gimp_major_version ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gimp_minor_version ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gimp_micro_version ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### MACRO gimp_get_data ##### -->
 <para>
 
@@ -53,26 +71,6 @@ all other GIMP Library headers.
 @id: 
 @data: 
 @length: 
-
-
-<!-- ##### MACRO gimp_query_procedure ##### -->
-<para>
-
-</para>
-
-@Returns: 
-<!-- # Unused Parameters # -->
-@proc_name: 
-@proc_blurb: 
-@proc_help: 
-@proc_author: 
-@proc_copyright: 
-@proc_date: 
-@proc_type: 
-@nparams: 
-@nreturn_vals: 
-@params: 
-@return_vals: 
 
 
 <!-- ##### USER_FUNCTION GimpInitProc ##### -->
@@ -113,12 +111,19 @@ all other GIMP Library headers.
 
 </para>
 
+@init_proc: 
+@quit_proc: 
+@query_proc: 
+@run_proc: 
 
 <!-- ##### STRUCT GimpParamDef ##### -->
 <para>
 
 </para>
 
+@type: 
+@name: 
+@description: 
 
 <!-- ##### STRUCT GimpParamColor ##### -->
 <para>
@@ -131,6 +136,10 @@ all other GIMP Library headers.
 
 </para>
 
+@x: 
+@y: 
+@width: 
+@height: 
 
 <!-- ##### UNION GimpParamData ##### -->
 <para>
@@ -143,6 +152,8 @@ all other GIMP Library headers.
 
 </para>
 
+@type: 
+@data: 
 
 <!-- ##### MACRO MAIN ##### -->
 <para>

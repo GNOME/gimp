@@ -19,6 +19,17 @@ gimppixelrgn
 
 </para>
 
+@data: 
+@drawable: 
+@bpp: 
+@rowstride: 
+@x: 
+@y: 
+@w: 
+@h: 
+@dirty: 
+@shadow: 
+@process_count: 
 
 <!-- ##### FUNCTION gimp_pixel_rgn_init ##### -->
 <para>

@@ -845,6 +845,9 @@ modules/makefile.mingw
 cursors/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
+devel-docs/libgimpcolor/Makefile
+devel-docs/libgimpmath/Makefile
+devel-docs/libgimpwidgets/Makefile
 devel-docs/pdb/Makefile
 docs/Makefile
 pixmaps/Makefile

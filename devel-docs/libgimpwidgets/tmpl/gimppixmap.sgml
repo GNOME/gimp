@@ -26,21 +26,6 @@ gimp_pixmap_button_new()
 #GtkPixmap
 </para>
 
-<!-- ##### STRUCT GimpPixmap ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### MACRO GIMP_PIXMAP ##### -->
-<para>
-Checks if the passed pointer is a pointer to a #GimpPixmap and
-performs the cast if valid.
-</para>
-
-@obj: The pointer to cast.
-
-
 <!-- ##### FUNCTION gimp_pixmap_new ##### -->
 <para>
 

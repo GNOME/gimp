@@ -1,0 +1,55 @@
+<!-- ##### SECTION Title ##### -->
+gimpmathtypes
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### TYPEDEF GimpMatrix3[3][3] ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF GimpMatrix4[4][4] ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpVector2 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+
+<!-- ##### STRUCT GimpVector3 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+
+<!-- ##### STRUCT GimpVector4 ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@z: 
+@w: 
+

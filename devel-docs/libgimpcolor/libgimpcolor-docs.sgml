@@ -1,0 +1,19 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity libgimpcolor-gimpcolortypes SYSTEM "sgml/gimpcolortypes.sgml">
+<!entity libgimpcolor-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
+<!entity libgimpcolor-gimprgb SYSTEM "sgml/gimprgb.sgml">
+<!entity libgimpcolor-gimphsv SYSTEM "sgml/gimphsv.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GIMP Color Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimpcolor">
+    <title>GIMP Color Library</title>
+    &libgimpcolor-gimpcolortypes;
+    &libgimpcolor-gimpcolorspace;
+    &libgimpcolor-gimprgb;
+    &libgimpcolor-gimphsv;
+  </chapter>
+</book>

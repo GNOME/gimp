@@ -1,0 +1,69 @@
+<!-- ##### SECTION Title ##### -->
+gimpadaptivesupersample
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### USER_FUNCTION GimpRenderFunc ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@color: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpPutPixelFunc ##### -->
+<para>
+
+</para>
+
+@x: 
+@y: 
+@color: 
+@data: 
+
+
+<!-- ##### USER_FUNCTION GimpProgressFunc ##### -->
+<para>
+
+</para>
+
+@min: 
+@max: 
+@current: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_adaptive_supersample_area ##### -->
+<para>
+
+</para>
+
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@max_depth: 
+@threshold: 
+@render_func: 
+@render_data: 
+@put_pixel_func: 
+@put_pixel_data: 
+@progress_func: 
+@progress_data: 
+@Returns: 
+
+

@@ -188,3 +188,13 @@ gimpselection
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_selection_combine ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@operation: 
+@Returns: 
+
+

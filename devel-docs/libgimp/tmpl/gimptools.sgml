@@ -81,9 +81,7 @@ gimptools
 </para>
 
 @drawable_ID: 
-@red: 
-@green: 
-@blue: 
+@color: 
 @threshold: 
 @operation: 
 @antialias: 
@@ -91,6 +89,10 @@ gimptools
 @feather_radius: 
 @sample_merged: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@red: 
+@green: 
+@blue: 
 
 
 <!-- ##### FUNCTION gimp_clone ##### -->
@@ -132,10 +134,12 @@ gimptools
 @sample_average: 
 @average_radius: 
 @save_color: 
+@color: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_convolve ##### -->

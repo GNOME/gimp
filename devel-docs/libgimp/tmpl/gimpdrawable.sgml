@@ -19,6 +19,14 @@ gimpdrawable
 
 </para>
 
+@id: 
+@width: 
+@height: 
+@bpp: 
+@ntile_rows: 
+@ntile_cols: 
+@tiles: 
+@shadow_tiles: 
 
 <!-- ##### FUNCTION gimp_drawable_get ##### -->
 <para>
@@ -303,11 +311,17 @@ gimpdrawable
 @Returns: 
 
 
-<!-- ##### MACRO gimp_drawable_offset ##### -->
+<!-- ##### FUNCTION gimp_drawable_offset ##### -->
 <para>
 
 </para>
 
+@drawable_ID: 
+@wrap_around: 
+@fill_type: 
+@offset_x: 
+@offset_y: 
+@Returns: 
 
 
 <!-- ##### MACRO gimp_drawable_image_id ##### -->

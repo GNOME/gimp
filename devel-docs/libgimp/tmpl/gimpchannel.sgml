@@ -128,10 +128,12 @@ gimpchannel
 </para>
 
 @channel_ID: 
+@color: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_set_color ##### -->
@@ -140,10 +142,12 @@ gimpchannel
 </para>
 
 @channel_ID: 
+@color: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @red: 
 @green: 
 @blue: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_tattoo ##### -->
@@ -170,5 +174,18 @@ gimpchannel
 
 </para>
 
+
+
+<!-- ##### FUNCTION gimp_channel_combine_masks ##### -->
+<para>
+
+</para>
+
+@channel1_ID: 
+@channel2_ID: 
+@operation: 
+@offx: 
+@offy: 
+@Returns: 
 
 

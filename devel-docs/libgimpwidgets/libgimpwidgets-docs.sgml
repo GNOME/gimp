@@ -1,0 +1,35 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity libgimpwidgets-gimpwidgetstypes SYSTEM "sgml/gimpwidgetstypes.sgml">
+<!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
+<!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
+<!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
+<!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
+<!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
+<!entity GimpSizeEntry SYSTEM "sgml/gimpsizeentry.sgml">
+<!entity GimpUnitMenu SYSTEM "sgml/gimpunitmenu.sgml">
+<!entity libgimpwidgets-gimpdialog SYSTEM "sgml/gimpdialog.sgml">
+<!entity libgimpwidgets-gimphelpui SYSTEM "sgml/gimphelpui.sgml">
+<!entity libgimpwidgets-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
+<!entity libgimpwidgets-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GIMP Widgets Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimpwidgets">
+    <title>GIMP Widgets Library</title>
+    &libgimpwidgets-gimpwidgetstypes;
+    &GimpChainButton;
+    &GimpColorButton; 
+    &GimpFileSelection;
+    &GimpPathEditor;
+    &GimpPixmap;
+    &GimpSizeEntry;
+    &GimpUnitMenu;
+    &libgimpwidgets-gimpdialog;
+    &libgimpwidgets-gimphelpui;
+    &libgimpwidgets-gimpquerybox;
+    &libgimpwidgets-gimpwidgets;
+  </chapter>
+</book>

@@ -1,0 +1,19 @@
+GtkObject
+  GtkWidget
+    GtkContainer
+      GtkTable
+        GimpChainButton
+        GimpSizeEntry
+      GtkBin
+        GtkButton
+          GimpColorButton
+          GtkOptionMenu
+            GimpUnitMenu
+      GtkBox
+        GtkHBox
+          GimpFileSelection
+        GtkVBox
+          GimpPathEditor
+    GtkMisc
+      GtkPixmap
+        GimpPixmap

@@ -29,21 +29,9 @@ Whenever the user selects a unit from the menu or the dialog, the
 <para>
 #GimpSizeEntry
 </para>
-
-<!-- ##### STRUCT GimpUnitMenu ##### -->
 <para>
-
+gimp_coordinates_new()
 </para>
-
-
-<!-- ##### MACRO GIMP_UNIT_MENU ##### -->
-<para>
-Checks if the passed pointer is a pointer to a #GimpUnitMenu and
-performs the cast if valid.
-</para>
-
-@obj: The pointer to cast.
-
 
 <!-- ##### FUNCTION gimp_unit_menu_new ##### -->
 <para>

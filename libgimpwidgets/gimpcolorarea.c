@@ -173,8 +173,8 @@ gimp_color_area_destroy (GtkObject *object)
 
 /**
  * gimp_color_area_new:
- * @color: A pointer to a #GimpRGB struct.
- * @alpha: If the color_area should show alpha.
+ * @color:     A pointer to a #GimpRGB struct.
+ * @type:      The type of color area to create.
  * @drag_mask: The event_mask that should trigger drags.
  * 
  * Creates a new #GimpColorArea widget.

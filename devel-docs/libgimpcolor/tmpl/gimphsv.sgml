@@ -1,0 +1,47 @@
+<!-- ##### SECTION Title ##### -->
+gimphsv
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_hsv_set ##### -->
+<para>
+
+</para>
+
+@hsv: 
+@h: 
+@s: 
+@v: 
+
+
+<!-- ##### FUNCTION gimp_hsv_clamp ##### -->
+<para>
+
+</para>
+
+@hsv: 
+
+
+<!-- ##### FUNCTION gimp_hsva_set ##### -->
+<para>
+
+</para>
+
+@hsva: 
+@h: 
+@s: 
+@v: 
+@a: 
+
+

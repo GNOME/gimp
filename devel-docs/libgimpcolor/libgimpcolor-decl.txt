@@ -1,0 +1,247 @@
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,GimpHSV       *hsv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsl</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,gdouble       *hue,gdouble       *saturation,gdouble       *lightness
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+const GimpHSV *hsv,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsl_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+gdouble        hue,gdouble        saturation,gdouble        lightness,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hwb</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,gdouble       *hue,gdouble       *whiteness,gdouble       *blackness
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hwb_to_rgb</NAME>
+<RETURNS>void  </RETURNS>
+gdouble        hue,gdouble        whiteness,gdouble        blackness,GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *red         ,gint    *green       ,gint    *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *hue         ,gint    *saturation  ,gint    *value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hls_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *red         ,gint    *green       ,gint    *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_l_int</NAME>
+<RETURNS>gint  </RETURNS>
+gint     red,gint     green,gint     blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hls_to_rgb_int</NAME>
+<RETURNS>void  </RETURNS>
+gint    *hue         ,gint    *lightness   ,gint    *saturation
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv_double</NAME>
+<RETURNS>void  </RETURNS>
+gdouble *red         ,gdouble *green       ,gdouble *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb_double</NAME>
+<RETURNS>void  </RETURNS>
+gdouble *hue         ,gdouble *saturation,gdouble *value
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_to_hsv4</NAME>
+<RETURNS>void  </RETURNS>
+guchar  *hsv,gdouble *red,gdouble *green,gdouble *blue
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_to_rgb4</NAME>
+<RETURNS>void  </RETURNS>
+guchar  *rgb,gdouble  hue,gdouble  saturation,gdouble  value
+</FUNCTION>
+<STRUCT>
+<NAME>GimpRGB</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpRGB</NAME>
+struct GimpRGB
+{
+  gdouble r, g, b, a;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpHSV</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpHSV</NAME>
+struct GimpHSV
+{
+  gdouble h, s, v, a;
+};
+</STRUCT>
+<FUNCTION>
+<NAME>gimp_hsv_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsv,gdouble        h,gdouble        s,gdouble        v
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsv_clamp</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsv
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_hsva_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpHSV       *hsva,gdouble        h,gdouble        s,gdouble        v,gdouble        a
+</FUNCTION>
+<ENUM>
+<NAME>GimpRGBCompositeMode</NAME>
+typedef enum
+{
+  GIMP_RGB_COMPOSITE_NONE = 0,
+  GIMP_RGB_COMPOSITE_NORMAL,
+  GIMP_RGB_COMPOSITE_BEHIND
+} GimpRGBCompositeMode;
+</ENUM>
+<FUNCTION>
+<NAME>gimp_rgb_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb,gdouble        r,gdouble        g,gdouble        b
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_set_alpha</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb,gdouble        a
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_set_uchar</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb,guchar         r,guchar         g,guchar         b
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_get_uchar</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgb,guchar        *r,guchar        *g,guchar        *b
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_add</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb1,const GimpRGB *rgb2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_subtract</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb1,const GimpRGB *rgb2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_multiply</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb1,gdouble        factor
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_distance</NAME>
+<RETURNS>gdouble  </RETURNS>
+const GimpRGB *rgb1,const GimpRGB *rgb2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_max</NAME>
+<RETURNS>gdouble  </RETURNS>
+const GimpRGB *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_min</NAME>
+<RETURNS>gdouble  </RETURNS>
+const GimpRGB *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_clamp</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_gamma</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgb,gdouble        gamma
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_intensity</NAME>
+<RETURNS>gdouble  </RETURNS>
+const GimpRGB *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_intensity_uchar</NAME>
+<RETURNS>guchar  </RETURNS>
+const GimpRGB *rgb
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgb_composite</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB              *color1,const GimpRGB        *color2,GimpRGBCompositeMode  mode
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgba,gdouble        r,gdouble        g,gdouble        b,gdouble        a
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_set_uchar</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgba,guchar         r,guchar         g,guchar         b,guchar         a
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_get_uchar</NAME>
+<RETURNS>void  </RETURNS>
+const GimpRGB *rgba,guchar        *r,guchar        *g,guchar        *b,guchar        *a
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_add</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgba1,const GimpRGB *rgba2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_subtract</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgba1,const GimpRGB *rgba2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_multiply</NAME>
+<RETURNS>void  </RETURNS>
+GimpRGB       *rgba,gdouble        factor
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_rgba_distance</NAME>
+<RETURNS>gdouble  </RETURNS>
+const GimpRGB *rgba1,const GimpRGB *rgba2
+</FUNCTION>
+<MACRO>
+<NAME>INTENSITY_RED</NAME>
+#define INTENSITY_RED   0.30
+</MACRO>
+<MACRO>
+<NAME>INTENSITY_GREEN</NAME>
+#define INTENSITY_GREEN 0.59
+</MACRO>
+<MACRO>
+<NAME>INTENSITY_BLUE</NAME>
+#define INTENSITY_BLUE  0.11
+</MACRO>
+<MACRO>
+<NAME>INTENSITY</NAME>
+#define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
+			  (g) * INTENSITY_GREEN + \
+			  (b) * INTENSITY_BLUE  + 0.001)
+</MACRO>
