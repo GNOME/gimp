@@ -278,10 +278,8 @@ tile_swap_init ()
       swap_files = g_hash_table_new ((GHashFunc) tile_swap_hash,
 				     (GCompareFunc) tile_swap_compare);
 
-#ifdef USE_PTHREADS
-#if 0
+#ifdef NOTDEF /* USE_PTHREADS */
       pthread_create (&swapin_thread, NULL, &tile_swap_in_thread, NULL);
-#endif
 #endif
     }
 }
@@ -408,8 +406,7 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 		            int          fd,
 		            Tile        *tile)
 {
-#if 0 /* disable -- broken */
-#ifdef USE_PTHREADS
+#ifdef NOTDEF /* USE_PTHREADS */
   AsyncSwapArgs *args;
 
   args = g_new(AsyncSwapArgs, 1);
@@ -419,12 +416,10 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
 
   /* add this tile to the list of tiles for the async swapin task */
   pthread_mutex_lock (&async_swapin_mutex);
-  g_slist_append (async_swapin_tiles, args);
+  g_slist_append (async_swapin_tiles_end, args);
 
-  if (async_swapin_tiles_end)
-    async_swapin_tiles_end = async_swapin_tiles_end->next;
-  else
-    async_swapin_tiles_end = async_swapin_tiles;
+  if (!async_swapin_tiles)
+    async_swapin_tiles = async_swapin_tiles_end;
   
   pthread_cond_signal (&async_swapin_signal);
   pthread_mutex_unlock (&async_swapin_mutex);
@@ -434,7 +429,6 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
   /* this could be changed to call out to another program that
    * tries to make the OS read the data in from disk.
    */
-#endif
 #endif
 
   return;
@@ -749,11 +743,11 @@ tile_swap_gap_destroy (Gap *gap)
 }
 
 
-#if USE_PTHREADS
+#ifdef NOTDEF /* USE_PTHREADS */
 /* go through the list of tiles that are likely to be used soon and
  * try to swap them in.  If any tile is not in a state to be swapped
  * in, ignore it, and the error will get dealt with when the tile
- *  is really needed -- assuming that the error still happens.
+ * is really needed -- assuming that the error still happens.
  *
  * Potential future enhancement: for non-threaded systems, we could
  * fork() a process which merely attempts to bring tiles into the
@@ -814,7 +808,6 @@ out:
   TILE_MUTEX_UNLOCK (tile);
 }
 
-#if 0
 static void *
 tile_swap_in_thread (void *data)
 {
@@ -844,5 +837,4 @@ tile_swap_in_thread (void *data)
       g_free(args);
     }
 }
-#endif
 #endif
