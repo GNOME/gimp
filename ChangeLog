@@ -1,3 +1,12 @@
+2001-12-17  Sven Neumann  <sven@gimp.org>
+
+	* gimpconfig.[ch]: don't serialize unknown tokens; leave that to
+	the gimprc implementation. Create file with correct permissions.
+	
+	* test-config.c: changed accordingly.
+	
+	* gimpguiconfig.[ch]: added more properties.
+
 2001-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am

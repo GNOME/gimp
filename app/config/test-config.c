@@ -69,7 +69,7 @@ main (int   argc,
 
   g_print (" Serializing %s to '%s' ... ", 
            g_type_name (G_TYPE_FROM_INSTANCE (config)), filename);
-  gimp_config_serialize (config, filename, TRUE);
+  gimp_config_serialize (config, filename);
   g_print ("done.\n\n");
 
   g_signal_connect (config, "notify",

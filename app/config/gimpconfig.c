@@ -25,6 +25,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 
 #include <glib-object.h>
@@ -43,8 +44,7 @@
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
 static void      gimp_config_iface_serialize    (GObject  *object,
-                                                 gint      fd,
-                                                 gboolean  put_unknown);
+                                                 gint      fd);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner,
                                                  gboolean  store_unknown);
@@ -84,13 +84,9 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 }
 
 static void
-gimp_config_iface_serialize (GObject  *object,
-                             gint      fd,
-                             gboolean  put_unknown)
+gimp_config_iface_serialize (GObject *object,
+                             gint     fd)
 {
-  if (put_unknown)
-    gimp_config_serialize_unknown_tokens (object, fd);
-
   gimp_config_serialize_properties (object, fd);
 }
 
@@ -106,8 +102,7 @@ gimp_config_iface_deserialize (GObject  *object,
 
 gboolean
 gimp_config_serialize (GObject      *object,
-                       const gchar  *filename,
-                       gboolean      put_unknown)
+                       const gchar  *filename)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
@@ -119,7 +114,8 @@ gimp_config_serialize (GObject      *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  fd = open (filename, O_WRONLY | O_CREAT);
+  fd = open (filename, O_WRONLY | O_CREAT, 
+             S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 
   if (fd == -1)
     {
@@ -128,7 +124,7 @@ gimp_config_serialize (GObject      *object,
       return FALSE;
     }
 
-  gimp_config_iface->serialize (object, fd, put_unknown);
+  gimp_config_iface->serialize (object, fd);
 
   close (fd);
 
@@ -290,7 +286,6 @@ gimp_config_foreach_unknown_token (GObject               *object,
       func (token->key, token->value, user_data);
     }  
 }
-
 
 static void
 gimp_config_destroy_unknown_tokens (GSList *unknown_tokens)
