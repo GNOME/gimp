@@ -579,11 +579,6 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         }
       else
         {
-          /*
-     	    g_message (_("Trying fallback loader on file '%s' "
-		         "with unknown extension."),
-                       gimp_filename_to_utf8 (file_data->filename));
-          */
 	  goto insert;
         }
     }

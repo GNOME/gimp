@@ -567,20 +567,20 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
-    { gimp_pattern_native_load, GIMP_PATTERN_FILE_EXTENSION },
-    { gimp_pattern_load, NULL /* Fallback - try to load all files */ }
+    { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION         },
+    { gimp_pattern_load_pixbuf,  NULL                                }
   };
 
   static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
   {
-    { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
-    { gimp_gradient_load, NULL /* fallback loader */     }
+    { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION        },
+    { gimp_gradient_load,        NULL /* legacy loader */            }
   };
 
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
-    { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
-    { gimp_palette_load, NULL /* fallback loader */    }
+    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION         },
+    { gimp_palette_load,          NULL /* legacy loader */           }
   };
 
   if (gimp->be_verbose)

@@ -1,3 +1,14 @@
+2004-06-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_load_data):
+	removed commented-out message.
+
+	* app/core/gimppattern.[ch]: fixed handling of errors and PNG
+	comments in new pattern loader. Renamed functions for consistency
+	with other data loaders.
+
+	* app/core/gimp.c: changed accordingly.
+
 2004-06-03  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/gimp.c:
