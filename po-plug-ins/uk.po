@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2001-01-15 14:06-0800\n"
+"POT-Creation-Date: 2001-04-18 14:55+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -72,7 +72,7 @@ msgstr "Про"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1183 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tga.c:1173 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
@@ -153,7 +153,7 @@ msgstr "Гаразд"
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1185
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1175
 #: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
@@ -836,7 +836,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
-#: plug-ins/common/struc.c:1324
+#: plug-ins/common/fractaltrace.c:831 plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "Глибина:"
 
@@ -904,9 +904,8 @@ msgstr "Позиц╕я"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:786
 #: plug-ins/common/nova.c:610 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
-#: plug-ins/gap/gap_mov_dialog.c:1837 plug-ins/gflare/gflare.c:2876
-#: plug-ins/ifscompose/ifscompose.c:535
+#: plug-ins/flame/flame.c:1189 plug-ins/gap/gap_mov_dialog.c:1837
+#: plug-ins/gflare/gflare.c:2876 plug-ins/ifscompose/ifscompose.c:535
 msgid "X:"
 msgstr "X:"
 
@@ -922,8 +921,9 @@ msgstr "Позиц╕я джерела св╕тла по X в простор╕ XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:1855
-#: plug-ins/gflare/gflare.c:2880 plug-ins/ifscompose/ifscompose.c:549
+#: plug-ins/common/xbm.c:1243 plug-ins/flame/flame.c:1202
+#: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2880
+#: plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
 msgstr "Y:"
 
@@ -1093,6 +1093,7 @@ msgstr "Зображення середовища"
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
 #: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4010
+#: plug-ins/mosaic/mosaic.c:577
 msgid "Options"
 msgstr "Параметри"
 
@@ -1336,7 +1337,7 @@ msgstr ""
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:51 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:296 plug-ins/common/gifload.c:306
 #: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:333
 #: plug-ins/common/jpeg.c:739 plug-ins/common/pat.c:266
@@ -1352,32 +1353,34 @@ msgstr ""
 msgid "Loading %s:"
 msgstr "Завантаження %s:"
 
-#: plug-ins/bmp/bmpread.c:63
+#: plug-ins/bmp/bmpread.c:64
 #, c-format
 msgid "%s: can't open \"%s\""
 msgstr "%s: неможливо в╕дкрити \"%s\""
 
-#: plug-ins/bmp/bmpread.c:71
+#: plug-ins/bmp/bmpread.c:75 plug-ins/bmp/bmpread.c:83
+#: plug-ins/bmp/bmpread.c:88 plug-ins/bmp/bmpread.c:95
+#: plug-ins/bmp/bmpread.c:108
 #, c-format
 msgid "%s: %s is not a valid BMP file"
 msgstr "%s: %s - нев╕рний BMP-файл"
 
-#: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
-#: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
-#: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
-#: plug-ins/bmp/bmpread.c:173
+#: plug-ins/bmp/bmpread.c:120 plug-ins/bmp/bmpread.c:138
+#: plug-ins/bmp/bmpread.c:158 plug-ins/bmp/bmpread.c:176
+#: plug-ins/bmp/bmpread.c:194 plug-ins/bmp/bmpread.c:199
+#: plug-ins/bmp/bmpread.c:204
 #, c-format
 msgid "%s: error reading BMP file header"
 msgstr "%s: помилка зчитування заголовку BMP-файлу"
 
-#: plug-ins/bmp/bmpread.c:246
+#: plug-ins/bmp/bmpread.c:279
 #, c-format
 msgid "%s: bad colormap"
 msgstr ""
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
-#: plug-ins/bmp/bmpread.c:302 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:321 plug-ins/bmp/bmpread.c:328
+#: plug-ins/bmp/bmpread.c:335 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gifload.c:849 plug-ins/common/hrz.c:374
@@ -1387,8 +1390,8 @@ msgstr ""
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:923 plug-ins/common/tiff.c:680
-#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:515
+#: plug-ins/common/tga.c:913 plug-ins/common/tiff.c:680
+#: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
@@ -1416,7 +1419,7 @@ msgstr "Неможливо в╕дкрити %s"
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
 #: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1337
+#: plug-ins/common/tga.c:1012 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
 #: plug-ins/common/xwd.c:534 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -3601,6 +3604,22 @@ msgstr "Б╕лий"
 msgid "Mandelbrot Parameters"
 msgstr "Параметри фрактала Мандельброта"
 
+#: plug-ins/common/fractaltrace.c:795
+msgid "X1:"
+msgstr "X1:"
+
+#: plug-ins/common/fractaltrace.c:804
+msgid "X2:"
+msgstr "X2:"
+
+#: plug-ins/common/fractaltrace.c:813
+msgid "Y1:"
+msgstr "Y1:"
+
+#: plug-ins/common/fractaltrace.c:822
+msgid "Y2:"
+msgstr "Y2:"
+
 #: plug-ins/common/gauss_iir.c:184
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
 msgstr "<Image>/Ф╕льтри/Розмивання/Гаусеве розмивання (IIR)..."
@@ -4191,6 +4210,14 @@ msgstr "╤люз╕я"
 #: plug-ins/common/illusion.c:612
 msgid "Division:"
 msgstr "Д╕дення:"
+
+#: plug-ins/common/illusion.c:621
+msgid "Mode 1"
+msgstr "Режим 1"
+
+#: plug-ins/common/illusion.c:633
+msgid "Mode 2"
+msgstr "Режим 2"
 
 #: plug-ins/common/iwarp.c:255
 msgid "<Image>/Filters/Distorts/IWarp..."
@@ -5632,7 +5659,7 @@ msgstr ""
 msgid "Holdness:"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1076
+#: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1074
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Файл/Захопити/Зн╕мок екрану..."
 
@@ -6149,17 +6176,17 @@ msgstr "TGA: неможливо зчитати нижн╕й колонтитул з \"%s\"\n"
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr "TGA: неможливо зчитати розширення з \"%s\"\n"
 
-#: plug-ins/common/tga.c:1178
+#: plug-ins/common/tga.c:1168
 msgid "Save as TGA"
 msgstr "Зберегти як TGA"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1195
+#: plug-ins/common/tga.c:1185
 msgid "Targa Options"
 msgstr "Параметри Targa"
 
 #. rle
-#: plug-ins/common/tga.c:1205
+#: plug-ins/common/tga.c:1195
 msgid "RLE compression"
 msgstr "стиснення RLE"
 
@@ -6752,13 +6779,13 @@ msgstr "<Toolbox>/Файл/Захопити/З буферу обм╕ну"
 msgid "Copying ..."
 msgstr "Коп╕ювання..."
 
-#. ??? gimp_convert_rgb(image_ID);
+#. ??? gimp_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:523
+#: plug-ins/common/winclipboard.c:565
 msgid "Pasted"
 msgstr "Вставлено"
 
-#: plug-ins/common/winclipboard.c:536
+#: plug-ins/common/winclipboard.c:578
 msgid "Pasting..."
 msgstr "Вставляння..."
 
@@ -10021,9 +10048,13 @@ msgstr ""
 msgid "Create reg polygon"
 msgstr ""
 
+#: plug-ins/gfig/gfig.c:2151
+msgid "Create star"
+msgstr "Створити з╕рку"
+
 #: plug-ins/gfig/gfig.c:2160
 msgid "Create spiral"
-msgstr "творити сп╕раль"
+msgstr "Створити сп╕раль"
 
 #: plug-ins/gfig/gfig.c:2170
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -10031,11 +10062,11 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2176
 msgid "Move an object"
-msgstr ""
+msgstr "Перем╕стити об'╓кт"
 
 #: plug-ins/gfig/gfig.c:2181
 msgid "Move a single point"
-msgstr ""
+msgstr "Перем╕стити одну точку"
 
 #: plug-ins/gfig/gfig.c:2186
 msgid "Copy an object"
@@ -10152,6 +10183,10 @@ msgid ""
 "these types of objects."
 msgstr ""
 
+#: plug-ins/gfig/gfig.c:2934
+msgid "Gfig brush selection"
+msgstr ""
+
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
 msgstr "Згасання:"
@@ -10167,6 +10202,11 @@ msgstr "Натиск:"
 #: plug-ins/gfig/gfig.c:3036
 msgid "No Options..."
 msgstr "Нема╓ параметр╕в..."
+
+#. Start of new brush selection code
+#: plug-ins/gfig/gfig.c:3051
+msgid "Set Brush..."
+msgstr "Встановити пензель..."
 
 #: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
@@ -10749,11 +10789,11 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:433
 msgid "Aspect ratio:"
-msgstr ""
+msgstr "Пропорц╕╖:"
 
 #: plug-ins/gimpressionist/brush.c:437 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
-msgstr ""
+msgstr "Рель╓ф:"
 
 #: plug-ins/gimpressionist/brush.c:452
 msgid "(None)"
@@ -10765,7 +10805,7 @@ msgstr "Зберегти..."
 
 #: plug-ins/gimpressionist/brush.c:479
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "Вказати пропорц╕╖ пензля"
 
 #: plug-ins/gimpressionist/brush.c:490
 msgid "Specifies the amount of embossing to apply to each brush stroke"
@@ -10842,6 +10882,11 @@ msgstr ""
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
 msgstr ""
+
+#: plug-ins/gimpressionist/general.c:265
+#, fuzzy
+msgid "Selects if to place strokes all the way out to the edges of the image"
+msgstr "Зосередити мазки навколо центру зображення"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
@@ -11633,6 +11678,10 @@ msgstr "Вертикальний ╕нтервал"
 msgid "No. Down"
 msgstr ""
 
+#: plug-ins/imagemap/imap_cmd_guides.c:207
+msgid "Base URL:"
+msgstr "Основний URL:"
+
 #: plug-ins/imagemap/imap_cmd_guides.c:224
 #, c-format
 msgid "Image dimensions: %d x %d"
@@ -11658,7 +11707,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:52
 msgid "Move Selected Objects"
-msgstr ""
+msgstr "Перем╕стити вибран╕ об'╓кти"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:51
@@ -12850,6 +12899,3 @@ msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Помилка: файл властивостей XJT %s порожн╕й"
-
-#~ msgid "Treshold:"
-#~ msgstr "Пор╕г:"
