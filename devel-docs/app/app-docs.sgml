@@ -656,6 +656,7 @@
 
     <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
+      <xi:include href="xml/gimpcolorframe.xml"/>
       <xi:include href="xml/gimpcolorpanel.xml"/>
       <xi:include href="xml/gimpcontainerpopup.xml"/>
       <xi:include href="xml/gimpfontselection-dialog.xml"/>

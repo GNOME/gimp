@@ -2988,15 +2988,15 @@ gimp_tool_control
 gimp_tool_button_press
 gimp_tool_button_release
 gimp_tool_motion
+gimp_tool_set_focus_display
 gimp_tool_arrow_key
+gimp_tool_set_modifier_state
 gimp_tool_oper_update
 gimp_tool_cursor_update
 gimp_tool_push_status
 gimp_tool_push_status_coords
 gimp_tool_pop_status
 gimp_tool_set_cursor
-gimp_tool_set_focus_display
-gimp_tool_set_modifier_state
 <SUBSECTION Standard>
 GIMP_TOOL
 GIMP_IS_TOOL
@@ -3402,6 +3402,26 @@ gimp_colormap_editor_get_type
 GIMP_COLORMAP_EDITOR_CLASS
 GIMP_IS_COLORMAP_EDITOR_CLASS
 GIMP_COLORMAP_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcolorframe</FILE>
+GIMP_COLOR_FRAME_ROWS
+<TITLE>GimpColorFrame</TITLE>
+GimpColorFrame
+gimp_color_frame_new
+gimp_color_frame_set_mode
+gimp_color_frame_set_color
+gimp_color_frame_set_invalid
+<SUBSECTION Standard>
+GimpColorFrameClass
+GIMP_COLOR_FRAME
+GIMP_IS_COLOR_FRAME
+GIMP_TYPE_COLOR_FRAME
+gimp_color_frame_get_type
+GIMP_COLOR_FRAME_CLASS
+GIMP_IS_COLOR_FRAME_CLASS
+GIMP_COLOR_FRAME_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6823,9 +6843,9 @@ tool_manager_control_active
 tool_manager_button_press_active
 tool_manager_button_release_active
 tool_manager_motion_active
+tool_manager_focus_display_active
 tool_manager_arrow_key_active
 tool_manager_modifier_state_active
-tool_manager_focus_display_active
 tool_manager_oper_update_active
 tool_manager_cursor_update_active
 </SECTION>
@@ -7033,6 +7053,8 @@ gimp_rgb_get_gdk_color
 <FILE>widgets-enums</FILE>
 GIMP_TYPE_ASPECT_TYPE
 GimpAspectType
+GIMP_TYPE_COLOR_FRAME_MODE
+GimpColorFrameMode
 GIMP_TYPE_HELP_BROWSER_TYPE
 GimpHelpBrowserType
 GIMP_TYPE_HISTOGRAM_SCALE
@@ -7051,6 +7073,7 @@ GimpCursorModifier
 GimpDeviceValues
 <SUBSECTION Standard>
 gimp_aspect_type_get_type
+gimp_color_frame_mode_get_type
 gimp_help_browser_type_get_type
 gimp_histogram_scale_get_type
 gimp_tab_style_get_type

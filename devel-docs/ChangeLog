@@ -1,3 +1,8 @@
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: added GimpColorFrame stuff, updates.
+
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
