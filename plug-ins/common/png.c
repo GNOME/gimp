@@ -79,6 +79,7 @@ typedef struct
   gboolean  phys;
   gboolean  time;
   gboolean  comment;
+  gboolean  save_transp_pixels;
 }
 PngSaveVals;
 
@@ -88,11 +89,11 @@ PngSaveVals;
  */
 
 static void query (void);
-static void run (const gchar      *name,
-                 gint              nparams,
-                 const GimpParam  *param,
-                 gint             *nreturn_vals,
-                 GimpParam       **return_vals);
+static void run   (const gchar      *name,
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static gint32 load_image (const gchar *filename,
                           gboolean     interactive);
@@ -107,7 +108,8 @@ static void respin_cmap (png_structp   pp,
                          gint32        image_ID,
                          GimpDrawable *drawable);
 
-static gint save_dialog      (gint32     image_ID);
+static gint save_dialog      (gint32     image_ID,
+                              gboolean   alpha);
 
 static int find_unused_ia_colour (guchar *pixels,
                                   gint    numpixels,
@@ -122,7 +124,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   NULL,
   NULL,
   query,
-  run,
+  run
 };
 
 PngSaveVals pngvals =
@@ -132,6 +134,7 @@ PngSaveVals pngvals =
   TRUE,
   FALSE,
   FALSE,
+  TRUE,
   TRUE,
   TRUE,
   TRUE
@@ -177,6 +180,24 @@ query (void)
     {GIMP_PDB_INT32, "time", "Write tIME chunk?"}
   };
 
+  static GimpParamDef save_args2[] = {
+    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE, "image", "Input image"},
+    {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},
+    {GIMP_PDB_STRING, "filename",
+     "The name of the file to save the image in"},
+    {GIMP_PDB_STRING, "raw_filename",
+     "The name of the file to save the image in"},
+    {GIMP_PDB_INT32, "interlace", "Use Adam7 interlacing?"},
+    {GIMP_PDB_INT32, "compression", "Deflate Compression factor (0--9)"},
+    {GIMP_PDB_INT32, "bkgd", "Write bKGD chunk?"},
+    {GIMP_PDB_INT32, "gama", "Write gAMA chunk?"},
+    {GIMP_PDB_INT32, "offs", "Write oFFs chunk?"},
+    {GIMP_PDB_INT32, "phys", "Write pHYs chunk?"},
+    {GIMP_PDB_INT32, "time", "Write tIME chunk?"},
+    {GIMP_PDB_INT32, "svtrans", "Preserve color of transparent pixels?"}
+  };
+
   gimp_install_procedure ("file_png_load",
                           "Loads files in PNG file format",
                           "This plug-in loads Portable Network Graphics (PNG) files.",
@@ -200,6 +221,18 @@ query (void)
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0, save_args, NULL);
+
+  gimp_install_procedure ("file_png_save2",
+                          "Saves files in PNG file format",
+                          "This plug-in saves Portable Network Graphics (PNG) files. "
+                          "This procedure adds an extra parameter to file_png_save that allows to control whether transparent pixels are saved or nullified",
+                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
+                          "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
+                          PLUG_IN_VERSION,
+                          "<Save>/PNG",
+                          "RGB*,GRAY*,INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args2), 0, save_args2, NULL);
 
   gimp_register_magic_load_handler ("file_png_load",
                                     "png", "", "0,string,\211PNG\r\n\032\n");
@@ -252,10 +285,13 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_png_save") == 0)
+  else if (strcmp (name, "file_png_save")  == 0 ||
+           strcmp (name, "file_png_save2") == 0 )
     {
-      run_mode = param[0].data.d_int32;
-      image_ID = orig_image_ID = param[1].data.d_int32;
+      gboolean alpha;
+
+      run_mode    = param[0].data.d_int32;
+      image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */
@@ -288,18 +324,20 @@ run (const gchar      *name,
            */
           gimp_get_data ("file_png_save", &pngvals);
 
+          alpha = gimp_drawable_has_alpha (drawable_ID);
+
 	  /*
 	   * If the image has no transparency, then there is usually
 	   * no need to save a bKGD chunk.  For more information, see:
 	   * http://bugzilla.gnome.org/show_bug.cgi?id=92395
 	   */
-	  if (! gimp_drawable_has_alpha (drawable_ID))
+	  if (! alpha)
 	    pngvals.bkgd = FALSE;
 
           /*
            * Then acquire information with a dialog...
            */
-          if (!save_dialog (orig_image_ID))
+          if (! save_dialog (orig_image_ID, alpha))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -307,7 +345,7 @@ run (const gchar      *name,
           /*
            * Make sure all the arguments are there!
            */
-          if (nparams != 12)
+          if (nparams != 12 && nparams !=13)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -320,6 +358,10 @@ run (const gchar      *name,
               pngvals.offs              = param[9].data.d_int32;
               pngvals.phys              = param[10].data.d_int32;
               pngvals.time              = param[11].data.d_int32;
+              if (nparams==13)
+                pngvals.save_transp_pixels  = param[12].data.d_int32;
+              else
+                pngvals.save_transp_pixels  = TRUE;
 
               if (pngvals.compression_level < 0 ||
                   pngvals.compression_level > 9)
@@ -1090,6 +1132,13 @@ save_image (const gchar *filename,
       background.gray = gimp_rgb_intensity_uchar (&color);
       png_set_bKGD (pp, info, &background);
     }
+  else
+    {
+      /*used to save_transp_pixels*/
+      red = green = blue = 0;
+    }
+
+
 
   if (pngvals.gama)
     {
@@ -1183,6 +1232,25 @@ save_image (const gchar *filename,
 
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
+          /*if we are with a RGBA image and have to pre-multiply the alpha channel */
+          if (bpp==4 && ! pngvals.save_transp_pixels)
+            {
+              for (i = 0; i < num; ++i)
+                {
+                  fixed = pixels[i];
+                  for (k = 0; k < drawable->width; ++k)
+                    {
+                      int aux;
+                      aux = k << 2;
+                      if (! fixed[aux + 3])
+                        {
+                          fixed[aux] = red;
+                          fixed[aux + 1] = green;
+                          fixed[aux + 2] = blue;
+                        }
+                    }
+                }
+            }
 
           /* If we're dealing with a paletted image with
            * transparency set, write out the remapped palette */
@@ -1330,7 +1398,8 @@ respin_cmap (png_structp pp,
 }
 
 static gint
-save_dialog (gint32 image_ID)
+save_dialog (gint32    image_ID,
+             gboolean  alpha)
 {
   GtkWidget    *dlg;
   GtkWidget    *frame;
@@ -1354,7 +1423,7 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (8, 3, FALSE);
+  table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -1411,8 +1480,18 @@ save_dialog (gint32 image_ID)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update), &pngvals.time);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Save Comme_nt"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save Color Values From Transparent Pixels"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                alpha && pngvals.save_transp_pixels);
+  gtk_widget_set_sensitive (toggle, alpha);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update), &pngvals.save_transp_pixels);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Save Comme_nt"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 pngvals.comment);
   gtk_widget_show (toggle);
@@ -1427,7 +1506,7 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &pngvals.comment);
 
-  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
                                 _("Co_mpression Level:"),
                                 SCALE_WIDTH, 0,
                                 pngvals.compression_level,

@@ -1,5 +1,12 @@
 2004-01-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: applied a modified patch provided by
+	Joao S. O. Bueno and Dave Neary. The user can now specify whether
+	color values for transparent pixels should be saved or nullified
+	(bug #129472).
+
+2004-01-05  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.[ch]: added GIMP_UNDO_TEXT_LAYER to
 	GimpUndoType enum.
 
