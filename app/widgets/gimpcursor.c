@@ -581,7 +581,11 @@ gimp_cursor_new (GdkDisplay         *display,
                               0.0, 0.0, 1.0, 1.0,
                               GDK_INTERP_NEAREST, 200);
 
-      if (cursor_format == GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY)
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.4
+#endif
+      /*  premultiply the cursor pixels manually for GTK+ < 2.4.4  */
+      if (gtk_check_version (2, 4, 4))
         {
           guint   rowstride;
           guchar *pixels, *p;

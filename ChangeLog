@@ -1,3 +1,13 @@
+2004-06-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-enums.[ch] (enum GimpCursorFormat): removed
+	value GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY because it's the job
+	of GDK to do that (it was GDK that was broken, not some of the X
+	servers).
+
+	* app/widgets/gimpcursor.c (gimp_cursor_new): premultiply the
+	cursor's pixels for GTK+ < 2.4.4.
+
 2004-06-21  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_exit_callback): improved message in quit

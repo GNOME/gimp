@@ -71,8 +71,7 @@ gimp_color_frame_mode_get_type (void)
 static const GEnumValue gimp_cursor_format_enum_values[] =
 {
   { GIMP_CURSOR_FORMAT_BITMAP, N_("Black & White"), "bitmap" },
-  { GIMP_CURSOR_FORMAT_PIXBUF, N_("RGBA"), "pixbuf" },
-  { GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY, N_("RGBA Premultiplied"), "pixbuf-premultiply" },
+  { GIMP_CURSOR_FORMAT_PIXBUF, N_("Fancy"), "pixbuf" },
   { 0, NULL, NULL }
 };
 

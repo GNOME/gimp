@@ -66,9 +66,8 @@ GType gimp_cursor_format_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CURSOR_FORMAT_BITMAP,            /*< desc="Black & White"      >*/
-  GIMP_CURSOR_FORMAT_PIXBUF,            /*< desc="RGBA"               >*/
-  GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY /*< desc="RGBA Premultiplied" >*/
+  GIMP_CURSOR_FORMAT_BITMAP, /*< desc="Black & White" >*/
+  GIMP_CURSOR_FORMAT_PIXBUF  /*< desc="Fancy"         >*/
 } GimpCursorFormat;
 
 
