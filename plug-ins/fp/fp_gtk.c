@@ -2,11 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
+
 #include "fp.h"
 #include "fp_hsv.h"
+
 
 AdvancedWindow AW={NULL,NULL,NULL,NULL,NULL,NULL,NULL};
 

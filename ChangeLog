@@ -1,3 +1,12 @@
+Tue Dec 28 20:26:34 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/fp/fp.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c: 
+	including config.h appearantly does the trick...
+
 Tue Dec 28 19:48:37 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/align_layers.c

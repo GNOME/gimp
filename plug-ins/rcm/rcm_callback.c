@@ -40,8 +40,9 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
-#include <libgimp/gimp.h>
+#include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
