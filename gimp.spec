@@ -17,7 +17,6 @@ Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
 Requires: 	gtk+ >= 1.2.0
-Requires:	perl >= 5.004
 Source: 	ftp://ftp.gimp.org/pub/gimp/unstable/v%{PACKAGE_VERSION}/%{name}-%{PACKAGE_VERSION}.tar.gz
 
 %description
@@ -87,11 +86,11 @@ if [ -d $RPM_BUILD_ROOT/usr/man ]; then
 fi
 
 #
-# I can't get this to work..
-#perl '-V:archname'
-#export archname
+# This perl madness will drive me batty
+#
+eval perl '-V:archname'
+find $RPM_BUILD_ROOT/usr/lib/perl5 -type f -print | sed "s@^$RPM_BUILD_ROOT@@g" | grep -v perllocal.pod > gimp-perl-filelist
 
-%define archname i386-linux
 
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
@@ -100,7 +99,7 @@ fi
 
 %postun -p /sbin/ldconfig
 
-%files 
+%files -f gimp-perl-filelist
 %attr (0555, bin, man) %doc AUTHORS COPYING ChangeLog MAINTAINERS NEWS README TODO
 %attr (0555, bin, man) %doc docs/*.txt docs/*.eps ABOUT-NLS README.i18n README.perl README.win32 TODO
 %defattr (0555, bin, bin)
@@ -990,49 +989,6 @@ fi
 %defattr (0555, bin, bin)
 %{prefix}/share/gimp/user_install
 
-%{prefix}/lib/perl5/site_perl/%{archname}/auto/Gimp/Lib/Lib.so
-%{prefix}/lib/perl5/site_perl/%{archname}/auto/Gimp/Net/Net.so
-%{prefix}/lib/perl5/site_perl/%{archname}/auto/Gimp/UI/UI.so
-%{prefix}/lib/perl5/site_perl/%{archname}/auto/Gimp/Gimp.so
-
-#%{prefix}/lib/perl5/%{archname}/5.00405/perllocal.pod
-
-%{prefix}/lib/perl5/man/man3/Gimp::Module.3
-%{prefix}/lib/perl5/man/man3/Gimp::Lib.3
-%{prefix}/lib/perl5/man/man3/Gimp::Pixel.3
-%{prefix}/lib/perl5/man/man3/Gimp::Data.3
-%{prefix}/lib/perl5/man/man3/Gimp::Fu.3
-%{prefix}/lib/perl5/man/man3/Gimp::Feature.3
-%{prefix}/lib/perl5/man/man3/Gimp::Util.3
-%{prefix}/lib/perl5/man/man3/Gimp::PDL.3
-%{prefix}/lib/perl5/man/man3/Gimp::Pod.3
-%{prefix}/lib/perl5/man/man3/Gimp::OO.3
-%{prefix}/lib/perl5/man/man3/Gimp::Compat.3
-%{prefix}/lib/perl5/man/man3/Gimp::Net.3
-%{prefix}/lib/perl5/man/man3/Gimp::UI.3
-%{prefix}/lib/perl5/man/man3/Gimp::basewidget.3
-%{prefix}/lib/perl5/man/man3/UI::UI.3
-%{prefix}/lib/perl5/man/man3/UI::basewidget.3
-%{prefix}/lib/perl5/man/man3/Gimp.3
-%{prefix}/lib/perl5/man/man3/Net::Net.3
-
-%{prefix}/lib/perl5/site_perl/Gimp/Data.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Fu.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Feature.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Util.pm
-%{prefix}/lib/perl5/site_perl/Gimp/UI.pm
-%{prefix}/lib/perl5/site_perl/Gimp/basewidget.pm
-%{prefix}/lib/perl5/site_perl/Gimp/PDL.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Net.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Module.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Config.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Lib.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Pixel.pod
-%{prefix}/lib/perl5/site_perl/Gimp/Pod.pm
-%{prefix}/lib/perl5/site_perl/Gimp/Compat.pm
-%{prefix}/lib/perl5/site_perl/Gimp/OO.pod
-%{prefix}/lib/perl5/site_perl/Gimp.pm
-
 %{prefix}/lib/libgimp-%{subver}.so.14.0.0
 %{prefix}/lib/libgimp-%{subver}.so.14
 %{prefix}/lib/libgimpui-%{subver}.so.14.0.0
@@ -1339,4 +1295,10 @@ fi
 %defattr (0444, bin, man, 0555)
 %{prefix}/man/man1/gimptool.1.gz
 %{prefix}/man/man3/gpc.3.gz
+
+
+%changelog
+* Wed Dec 22 1999 Gregory McLean <gregm@comstar.net>
+- Version 1.1.14
+
 

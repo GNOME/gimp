@@ -1,3 +1,7 @@
+Wed Dec 22 23:18:48 EST 1999 Gregory McLean <gregm@comstar.net>
+
+	* gimp.spec: More portable perl handling.
+
 Thu Dec 23 00:29:27 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/clone.c: enums should be all UPPER_CASE
