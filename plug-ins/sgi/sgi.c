@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.1.1.1.2.3  1998/05/05 10:35:19  film
+ *   Small bug fix for HOLLYWOODS sgi plugin for converting shorts from
+ *   sgilib to unsigned shorts which everyone using 16bit channel
+ *   sgi files seems to use.
+ *   --calvin (cwilliamson@berlin.snafu.de)
+ *
  *   Revision 1.1.1.1.2.2  1998/03/26 15:41:44  film
  *   Added an include and a comment about minpixel and  maxpixel.
  *   -calvin (cwilliamson@berlin.snafu.de)
@@ -443,15 +449,16 @@ load_image(char *filename)	/* I - File to load */
     else if (sgip->bpp == 2)
     {
      /*
-      * 16-bit (signed) pixels...
+      * 16-bit pixels...assumes unsigned short codes [0,65535].
       */
-
+      
       for (x = 0, pptr_u16 = (guint16*)pixels[count]; x < sgip->xsize; x ++)
       {
 	for (i = 0; i < sgip->zsize ; i ++)
-	  /* *pptr = (unsigned)(rows[i][x] + 32768) >> 8; */
-	  /* Are minpixel, maxpixel values for this image only or reference white, black? */
-          *pptr_u16++ = (65535 * ((gint32)rows[i][x] - minpixel)) / (maxpixel - minpixel);
+	  {
+	   /* rows are declared as shorts so we cast like this */
+           *pptr_u16++ = *((guint16*)&rows[i][x]); 
+	  }
       }
     };
   };
@@ -653,7 +660,7 @@ save_image(char   *filename,	/* I - File to save to */
       {
 	for (x = 0; x < drawable->width; x ++)
 	  for (j = 0; j < zsize; j ++, pptr_u16 ++)
-            rows[j][x] = *pptr_u16;
+            rows[j][x] = *((gint16 *)pptr_u16);
           
 
 	for (j = 0; j < zsize; j ++)
