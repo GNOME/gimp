@@ -141,7 +141,7 @@ gimp_pattern_select_widget_new (const gchar            *title,
                     G_CALLBACK (gimp_pattern_select_preview_events),
                     pattern_sel);
 
-  pattern_sel->button = gtk_button_new_with_label (_("Browse... "));
+  pattern_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, FALSE, FALSE, 0);
   gtk_widget_show (pattern_sel->button);
 

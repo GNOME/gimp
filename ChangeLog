@@ -1,5 +1,10 @@
 2003-11-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c 
+	* libgimp/gimppatternmenu.c: added mnenonic for "Browse...".
+
+2003-11-02  Sven Neumann  <sven@gimp.org>
+
 	* m4macros/gimp-2.0.m4: rewritten to use pkg-config instead of
 	gimptool; closely modeled after gtk-2.0.m4.
 

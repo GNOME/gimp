@@ -158,7 +158,7 @@ gimp_brush_select_widget_new (const gchar          *title,
                     G_CALLBACK (gimp_brush_select_preview_events),
                     brush_sel);
 
-  brush_sel->button = gtk_button_new_with_label (_("Browse..."));
+  brush_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_end (GTK_BOX (hbox), brush_sel->button, FALSE, FALSE, 0);
   gtk_widget_show (brush_sel->button);
 
