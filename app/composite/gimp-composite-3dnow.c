@@ -36,7 +36,9 @@
 #if defined(USE_MMX)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
+#if defined(ARCH_X86_64) || !defined(PIC)
 
+#endif /* ARCH_X86_64 || !PIC */
 #endif /* __GNUC__ > 3 */
 #endif /* ARCH_X86 */
 #endif  /* USE_MMX */
@@ -44,7 +46,7 @@
 gboolean
 gimp_composite_3dnow_init (void)
 {
-#if defined(USE_MMX) && defined(ARCH_X86)
+#if defined(USE_MMX) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
   if (cpu_accel () & CPU_ACCEL_X86_3DNOW)
     {
       return (TRUE);

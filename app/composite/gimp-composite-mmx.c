@@ -45,6 +45,7 @@
 #if defined(USE_MMX)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
+#if defined(ARCH_X86_64) || !defined(PIC)
 
 #define pminub(src,dst,tmp)  "\tmovq %%" #dst ", %%" #tmp ";" "psubusb %%" #src ", %%" #tmp ";" "psubb %%" #tmp ", %%" #dst "\n"
 #define pmaxub(a,b,tmp)      "\tmovq %%" #a ", %%" #tmp ";" "psubusb %%" #b ", %%" #tmp ";" "paddb %%" #tmp ", %%" #b "\n"
@@ -2211,6 +2212,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 }
 #endif
 
+#endif /* ARCH_X86_64 || !PIC */
 #endif /* __GNUC__ > 3 */
 #endif /* ARCH_X86 */
 #endif  /* USE_MMX */
@@ -2218,7 +2220,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx (GimpCompositeContext *_op)
 gboolean
 gimp_composite_mmx_init (void)
 {
-#if defined(USE_MMX) && defined(ARCH_X86)
+#if defined(USE_MMX) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
   if (cpu_accel () & CPU_ACCEL_X86_MMX)
     {
       return (TRUE);

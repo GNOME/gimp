@@ -19,7 +19,7 @@
 int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
-#if (__GNUC__ >= 3) && defined(USE_3DNOW)   && defined(ARCH_X86)
+#if (__GNUC__ >= 3) && defined(USE_3DNOW) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
   GimpCompositeContext generic_ctx;
   GimpCompositeContext special_ctx;
   double ft0;

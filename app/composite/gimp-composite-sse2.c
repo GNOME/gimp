@@ -39,6 +39,7 @@
 #if defined(USE_SSE)
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
+#if defined(ARCH_X86_64) || !defined(PIC)
 
 static const guint32 rgba8_alpha_mask_128[4] = { 0xFF000000, 0xFF000000, 0xFF000000, 0xFF000000 };
 static const guint32 rgba8_b1_128[4] =         { 0x01010101, 0x01010101, 0x01010101, 0x01010101 };
@@ -802,6 +803,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   asm("emms");
 }
 
+#endif /* ARCH_X86_64 || !PIC */
 #endif /* __GNUC__ > 3 */
 #endif /* defined(ARCH_X86) */
 #endif /* defined(USE_SSE) */
@@ -809,7 +811,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 gboolean
 gimp_composite_sse2_init (void)
 {
-#if defined(USE_SSE) && defined(ARCH_X86)
+#if defined(USE_SSE) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
   guint32 cpu = cpu_accel ();
 
   if (cpu & CPU_ACCEL_X86_SSE2)

@@ -16,7 +16,7 @@ static struct install_table {
   GimpPixelFormat D;
   void (*function)(GimpCompositeContext *);
 } _gimp_composite_sse[] = {
-#if (__GNUC__ >= 3) && defined(USE_SSE)     && defined(ARCH_X86)
+#if (__GNUC__ >= 3) && defined(USE_SSE) && defined(ARCH_X86) && (defined(ARCH_X86_64) || !defined(PIC))
  { GIMP_COMPOSITE_MULTIPLY, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_multiply_rgba8_rgba8_rgba8_sse }, 
  { GIMP_COMPOSITE_SCREEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_screen_rgba8_rgba8_rgba8_sse }, 
  { GIMP_COMPOSITE_DIFFERENCE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_difference_rgba8_rgba8_rgba8_sse }, 

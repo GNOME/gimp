@@ -73,14 +73,25 @@ enum
   ARCH_X86_CYRIX_FEATURE_MMXEXT   = 1 << 24
 };
 
-/* FIXME: This should save off ebx/rbx if compiled for PIC */
-#define cpuid(op,eax,ebx,ecx,edx) \
-  asm ("cpuid\n\t"                \
-       : "=a" (eax),             \
-         "=b" (ebx),             \
-         "=c" (ecx),             \
-         "=d" (edx)              \
-       : "0" (op))
+#if !defined(ARCH_X86_64) && defined(PIC)
+#define cpuid(op,eax,ebx,ecx,edx)  \
+  __asm__ ("movl %%ebx, %%esi\n\t" \
+           "cpuid\n\t"             \
+           "xchgl %%ebx,%%esi"     \
+           : "=a" (eax),           \
+             "=S" (ebx),           \
+             "=c" (ecx),           \
+             "=d" (edx)            \
+           : "0" (op))
+#else
+#define cpuid(op,eax,ebx,ecx,edx)  \
+  __asm__ ("cpuid"                 \
+           : "=a" (eax),           \
+             "=b" (ebx),           \
+             "=c" (ecx),           \
+             "=d" (edx)            \
+           : "0" (op))
+#endif
 
 
 static X86Vendor
@@ -91,22 +102,22 @@ arch_get_vendor (void)
 
 #ifndef ARCH_X86_64
   /* Only need to check this on ia32 */
-  asm ("pushfl\n\t"
-       "pushfl\n\t"
-       "popl %0\n\t"
-       "movl %0,%1\n\t"
-       "xorl $0x200000,%0\n\t"
-       "push %0\n\t"
-       "popfl\n\t"
-       "pushfl\n\t"
-       "popl %0\n\t"
-       "popfl\n\t"
-       : "=a" (eax),
-         "=b" (ebx)
-       :
-       : "cc");
+  __asm__ ("pushfl\n\t"
+           "pushfl\n\t"
+           "popl %0\n\t"
+           "movl %0,%1\n\t"
+           "xorl $0x200000,%0\n\t"
+           "pushl %0\n\t"
+           "popfl\n\t"
+           "pushfl\n\t"
+           "popl %0\n\t"
+           "popfl"
+           : "=a" (eax),
+             "=c" (ecx)
+           :
+           : "cc");
 
-  if (eax == ebx)
+  if (eax == ecx)
     return ARCH_X86_VENDOR_NONE;
 #endif
 
@@ -380,7 +391,6 @@ cpu_accel (void)
   accel = arch_accel ();
 
 #ifdef USE_SSE
-
   /* test OS support for SSE */
   if (accel & CPU_ACCEL_X86_SSE)
     {
@@ -391,7 +401,7 @@ cpu_accel (void)
       else
 	{
 	  signal (SIGILL, sigill_handler);
-	  __asm __volatile ("xorps %xmm0, %xmm0");
+	  __asm__ __volatile__ ("xorps %xmm0, %xmm0");
 	  signal (SIGILL, SIG_DFL);
 	}
     }
