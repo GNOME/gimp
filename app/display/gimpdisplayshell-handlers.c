@@ -37,7 +37,6 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
@@ -531,8 +530,8 @@ gimp_display_shell_ants_speed_notify_handler (GObject          *config,
                                               GParamSpec       *param_spec,
                                               GimpDisplayShell *shell)
 {
-  gimp_display_shell_selection_pause (shell->select);
-  gimp_display_shell_selection_resume (shell->select);
+  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
 }
 
 static gboolean

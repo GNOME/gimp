@@ -1,5 +1,13 @@
 2003-07-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_ants_speed_notify_handler): use the
+	gimp_display_shell_selection_control() wrapper instead of
+	calling gimp_display_shell_selection_*() functions directly.
+	Don't #include "gimpdisplayshell-selection.h".
+
+2003-07-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_[hv]ruler_button_press): skip double clicks by
 	checking event->type == GDK_BUTTON_PRESS. Brings press and release
