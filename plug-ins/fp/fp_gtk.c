@@ -54,7 +54,7 @@ static GtkWidget *rPreview, *gPreview, *bPreview;
 static GtkWidget *cPreview, *yPreview, *mPreview;
 static GtkWidget *centerPreview;
 static GtkWidget *darkerPreview, *lighterPreview, *middlePreview;
-static GtkWidget *allOrSell, *dlg;
+static GtkWidget *dlg;
 static GtkWidget *plusSatPreview, *SatPreview, *minusSatPreview;
 
 struct

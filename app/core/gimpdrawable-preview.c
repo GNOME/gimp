@@ -222,7 +222,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
       PixelRegion        srcPR;
       PixelRegion        destPR;
       GimpImageBaseType  base_type;
-      gint               bytes;
+      gint               bytes = 0;
       gint               subsample;
 
       item = GIMP_ITEM (drawable);
