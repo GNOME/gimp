@@ -218,23 +218,17 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
                                      GimpTemplateView    *view)
 {
   GimpContainerTreeView *tree_view;
-  GimpContainerView     *container_view;
   GtkTreePath           *path;
   GtkTreeIter            iter;
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_EDITOR (view)->view);
 
-  container_view = GIMP_CONTAINER_VIEW (tree_view);
-
   path = gtk_tree_path_new_from_string (path_str);
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpContainer       *container;
       GimpPreviewRenderer *renderer;
       GimpObject          *object;
-
-      container = gimp_container_view_get_container (container_view);
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,

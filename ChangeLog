@@ -1,3 +1,8 @@
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptemplateview.c
+	(gimp_template_view_tree_name_edited): removed unused local variables.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: don't g_free() a GdkPixbuf, it's an
