@@ -133,7 +133,7 @@ fi
 
 
 dnl i18n stuff
-ALL_LINGUAS="ca cs da de en_GB es fi fr ga gl hu hr it ja ko lt nl nn no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko lt nl nn no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
 if test x$os_win32 = xyes; then
   AM_GLIB_GNU_GETTEXT
   dnl Awful hacks so AC_OUTPUT doesn't complain...

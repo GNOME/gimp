@@ -1,3 +1,7 @@
+2001-12-27  Simos Xenitellis  <simos@hellug.gr>
+
+	* configure.in: Added Greek (el) to ALL_LINGUAS.
+
 2001-12-21  Sven Neumann  <sven@gimp.org>
 
 	* configure.in (ALL_LINGUAS): removed portuguese (pt) again until

@@ -1,0 +1,1032 @@
+# Greek translation for gimp-perl.
+# Copyright (C) 2001 Free Software Foundation.
+# Simos Xenitellis <simos@hellug.gr>, 2001.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl 1.0\n"
+"POT-Creation-Date: 2001-09-28 15:50+0200\n"
+"PO-Revision-Date: 2001-12-27 17:28+0000\n"
+"Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
+"Language-Team: Greek <nls@tux.hellug.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-7\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, fuzzy
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr "Αδύνατη η δημιουργία αρχείου: %s\n"
+
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "<Image>/Filters/Animation/Animate Cells..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid ""
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Font Table..."
+msgstr ""
+
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr ""
+
+msgid "argument type %s expected (not %s)"
+msgstr ""
+
+#
+msgid "Browse"
+msgstr "Εξερεύνηση"
+
+#, fuzzy
+msgid "Reset all values to their default"
+msgstr "Επιλογή όλων των αρχείων της λίστας"
+
+msgid "WARNING: client tried to unlock without holding a lock"
+msgstr ""
+
+msgid "required callback 'run' not found\n"
+msgstr ""
+
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr ""
+
+#, fuzzy
+msgid "Brush Selection Dialog"
+msgstr "Διάλογος Επιλογής Χρώματος"
+
+#, fuzzy
+msgid "gimp procedure '%s' not found"
+msgstr "Το αρχείο %s δεν βρέθηκε"
+
+#, fuzzy
+msgid "Pattern Selection Dialog"
+msgstr "Διάλογος Επιλογής Χρώματος"
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr ""
+
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr ""
+
+#
+msgid "Load"
+msgstr "Φόρτωση"
+
+#, fuzzy
+msgid "/Xtns/Render"
+msgstr "Υπενθύμιση"
+
+msgid "<Toolbox>/Xtns/Perl/Control Center..."
+msgstr ""
+
+msgid "illegal parasite specification, reference expected"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Date/Version"
+msgstr "Έκδοση"
+
+#
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgid "<Image>/Layers/Center Layer"
+msgstr ""
+
+#, fuzzy
+msgid "wrong authorization, aborting connection"
+msgstr "Η αρχικοποίηση των αγωγών απέτυχε, ακύρωση διαδικασίας"
+
+msgid "BG"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Bricks..."
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
+msgstr ""
+
+msgid "illegal type for colour specification"
+msgstr ""
+
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Random Blends..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "Plug-In Path"
+msgstr "Διαδρομή info"
+
+msgid "You can't run this script with an INDEXED image!!"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Terral Text..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Image>/Guides/Guide Grid..."
+msgstr ""
+
+#, fuzzy
+msgid "accepted unix connection"
+msgstr "Ενεργές συνδέσεις"
+
+#, fuzzy
+msgid "server going down..."
+msgstr "Νέο Παράθυρο Διακομιστή.."
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr ""
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr ""
+
+msgid "pdl height != region height"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
+msgstr ""
+
+#, fuzzy
+msgid "received QUIT request"
+msgstr "Ελήφθη Αίτηση Συνομιλίας"
+
+msgid " = [argument error]\n"
+msgstr ""
+
+#, fuzzy
+msgid "%s arguments for function '%s'"
+msgstr "Απούσα τιμή για τη συνάρτηση"
+
+#, fuzzy
+msgid " matching functions"
+msgstr "Κλήση μη-συνάρτησης"
+
+msgid "<Toolbox>/Xtns/Render/Random Art #1..."
+msgstr ""
+
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n                                      (for more info, see "
+"Gimp::Net(3))\n"
+msgstr ""
+
+msgid ""
+"An even number of frames is needed for spin back.\n"
+"Adjusted frames up to $frames"
+msgstr ""
+
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr ""
+
+msgid "<Image>/Filters/Logulator/SOTA Chrome"
+msgstr ""
+
+msgid "%s: procedural database execution failed"
+msgstr ""
+
+#, fuzzy
+msgid "authorization required for tcp connections"
+msgstr "Αναμονή σύνδεσης..."
+
+msgid "<Toolbox>/Xtns/Perl/Server"
+msgstr ""
+
+msgid "function name contains dashes instead of underscores"
+msgstr ""
+
+#, fuzzy
+msgid "authorization ok, but: $r[1]\n"
+msgstr "Αίτηση Έγκρισης"
+
+msgid "a color must have three components (array elements)"
+msgstr ""
+
+msgid "Spin Layer SRC (250ms)"
+msgstr ""
+
+msgid "$_: unknown/illegal file-save option"
+msgstr ""
+
+msgid "TYPE"
+msgstr "ΕΙΔΟΣ"
+
+#, fuzzy
+msgid "Gradient Selection Dialog"
+msgstr "Διάλογος Επιλογής Χρώματος"
+
+#, fuzzy
+msgid "Function Info"
+msgstr "Συνάρτηση"
+
+#
+#, fuzzy
+msgid "unable to open $rgb_db_path"
+msgstr "Αδύνατο το άνοιγμα σωλήνωσης"
+
+msgid "<Image>/Filters/Logulator/Imigre-26"
+msgstr ""
+
+#
+msgid "Text"
+msgstr "Κείμενο"
+
+#, fuzzy
+msgid "<Image>/Filters/Colors/Colour To Alpha..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "/Xtns/Perl"
+msgstr ""
+
+msgid "no additional information available, use --help\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Parasite Editor..."
+msgstr ""
+
+#, fuzzy
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr "Προς το παρόν μη υλοποιημένο"
+
+#, fuzzy
+msgid "Visual Scriptor"
+msgstr "Visualisation"
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Map/Image Tile..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Image>/Guides/To Selection..."
+msgstr ""
+
+msgid "<Image>/Guides/Remove Guides"
+msgstr ""
+
+#, fuzzy
+msgid "get current background colour from the gimp"
+msgstr "Καθορισμός τελικού χρώματος διαβάθμισης για το φόντο"
+
+msgid "<Toolbox>/Xtns/PDB Explorer..."
+msgstr ""
+
+msgid "WARNING: shared locking requested but not implemented"
+msgstr ""
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr ""
+
+msgid "$s: not an integer\n"
+msgstr ""
+
+#, fuzzy
+msgid "unable to read '$fn': $!"
+msgstr "Αδύνατη η δημιουργία αρχείου: %s\n"
+
+#, fuzzy
+msgid "[undefined]"
+msgstr "Αόριστο"
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr ""
+
+#, fuzzy
+msgid "accepted tcp connection from "
+msgstr "ftpfs: Αποσύνδεση από το %s"
+
+msgid "illegal parasite specification, expected three array members"
+msgstr ""
+
+#
+#, fuzzy
+msgid "unable to read temporary file $tmp: $!"
+msgstr "Αδύνατη η δημιουργία προσωρινού αρχείου!"
+
+msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
+msgstr ""
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr ""
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr ""
+
+msgid "<Image>/Select/Round Rectangular Selection..."
+msgstr ""
+
+msgid ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HELP:\n"
+"\n"
+"$help"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Fileselector for $name"
+msgstr "Παρακαλώ εισάγετε το όνομά σας."
+
+#, fuzzy
+msgid "accepting connections on port $port"
+msgstr "Λήψη συνδέσεων στο `%s' αδύνατη: %s"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Blended II..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid ""
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
+msgstr ""
+
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Highlight Edges..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
+
+msgid "register called with too many or wrong arguments\n"
+msgstr ""
+
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr ""
+
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Colors/Map To Gradient..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
+msgstr ""
+
+#, fuzzy
+msgid "unable to accept unix connection: $!\n"
+msgstr "Δημιουργία καταλόγου χρήστη αδύνατη: %s\n"
+
+#
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
+msgstr ""
+
+msgid "/Filters/Logulator"
+msgstr ""
+
+msgid ""
+"the gtk perl module is required to run\n"
+"this plug-in in interactive mode\n"
+msgstr ""
+
+msgid "interface '$interface_type' unsupported."
+msgstr ""
+
+#, fuzzy
+msgid "unable to accept tcp connection: $!\n"
+msgstr "Αποτυχία ρύθμισης της σύνδεσης σε μη-φρασσόμενη"
+
+msgid "<Image>/Image/Alpha/Clear Alpha..."
+msgstr ""
+
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr ""
+
+msgid "[unfinished]\n"
+msgstr "[ατελές]\n"
+
+msgid ""
+"could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
+msgstr ""
+
+msgid "unauthorized command received, aborting connection"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr ""
+
+msgid "Defaults"
+msgstr "Εξ' ορισμού ρυθμίσεις"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "text string is empty"
+msgstr "άδειο ιστορικό"
+
+#, fuzzy
+msgid "server requests authorization, but no authorization available\n"
+msgstr "Στην απάντηση του διακομιστή δεν υπάρχουν δεδομένα εξουσιοδότησης\n"
+
+msgid "<Toolbox>/Xtns/Visual Scriptor..."
+msgstr ""
+
+msgid "/Xtns/Render/Logos"
+msgstr ""
+
+#, fuzzy
+msgid "Image Types"
+msgstr "Είδος MIME"
+
+#, fuzzy
+msgid "Menu Path"
+msgstr "Διαδρομή μενού"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
+
+#
+msgid "9x15bold"
+msgstr "9x15έντονο"
+
+#
+msgid "Accelerator"
+msgstr "Πλήκτρο Επιτάχυνσης"
+
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr ""
+
+msgid "dunno how to return param type %d"
+msgstr ""
+
+#
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgid "only blessed scalars accepted here"
+msgstr ""
+
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgstr ""
+
+#, fuzzy
+msgid "argument is not of type %s"
+msgstr "Το αρχείου είναι του είδους: %s"
+
+msgid "WARNING"
+msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ"
+
+#
+msgid "Description"
+msgstr "Περιγραφή"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "Unable to convert a reference to type '%s'"
+msgstr "Αδύνατη η σύνδεση στο '%s'."
+
+msgid "argument incompatible with type IMAGE"
+msgstr ""
+
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr ""
+
+#, fuzzy
+msgid "not enough"
+msgstr "Ανεπαρκής μνήμη"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+
+msgid "Synopsis"
+msgstr "Σύνοψη"
+
+#, fuzzy
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#
+msgid "Color"
+msgstr "Χρώμα"
+
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+# gconf/gconftool.c:192 gconf/gconftool.c:201
+msgid "DESCRIPTION"
+msgstr "ΠΕΡΙΓΡΑΦΗ"
+
+#, fuzzy
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr "¶νοιγμα αρχείου για εγγραφή ανεπιτυχές!"
+
+#, fuzzy
+msgid "<Image>/Filters/Distorts/MirrorSplit..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr ""
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr ""
+
+#, fuzzy
+msgid "accepting connections in $host"
+msgstr "Λήψη συνδέσεων στο `%s' αδύνατη: %s"
+
+#, fuzzy
+msgid "unable to create '$fn': $!"
+msgstr "Αδύνατη η δημιουργία αρχείου: %s\n"
+
+#
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr ""
+
+#
+msgid "Command"
+msgstr "Εντολή"
+
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr ""
+
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr ""
+
+msgid "required callback 'query' not found\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr ""
+
+#, fuzzy
+msgid "Save $name"
+msgstr "Αποθήκευση ως"
+
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr ""
+
+msgid "<Image>/Video/VCR Console..."
+msgstr ""
+
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr ""
+
+msgid "Copyright"
+msgstr "Πνευματικά Δικαιώματα"
+
+msgid "interface=... tag is no longer supported\n"
+msgstr ""
+
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Transparent Logo..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
+msgstr ""
+
+#
+msgid "Background"
+msgstr "Φόντο"
+
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Stamps..."
+msgstr ""
+
+#, fuzzy
+msgid "accepting connections on $unix_path"
+msgstr "Λήψη συνδέσεων στο `%s' αδύνατη: %s"
+
+#, fuzzy
+msgid "Load $name"
+msgstr "Όνομα στρώματος:"
+
+#, fuzzy
+msgid "<Image>/Filters/Noise/Ditherize..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "Saving '$filename' as DATAURL..."
+msgstr ""
+
+#, fuzzy
+msgid ", %d bytes data]"
+msgstr "%d byte"
+
+#, fuzzy
+msgid "unable to create listening tcp socket: $!\n"
+msgstr "Δημιουργία καταλόγου χρήστη αδύνατη: %s\n"
+
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
+"gimp-1.1 and report this error"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Brushed Metal..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#
+#, fuzzy
+msgid "Bumpmap"
+msgstr "Πλέγμα κουκίδων"
+
+msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
+msgstr ""
+
+msgid "Saving '$filename' as COLORHTML..."
+msgstr ""
+
+#, fuzzy
+msgid "too many"
+msgstr "μενού εργαλείων"
+
+msgid "required callback 'net' not found\n"
+msgstr ""
+
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr ""
+
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#
+msgid "More..."
+msgstr "Περισσότερα..."
+
+#, fuzzy
+msgid "arguments to main not yet supported!"
+msgstr "Δεν υποστηρίζεται άνοιγμα αρθρωμάτων."
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Seth Spin..."
+msgstr "Ρυθμίσεις..."
+
+#, fuzzy
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr ""
+
+#
+msgid "NAME"
+msgstr "ΟΝΟΜΑ"
+
+#
+msgid "Help"
+msgstr "Βοήθεια"
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "no font specified, using default"
+msgstr "Δεν καθορίστηκε γραμματοσειρά! Χρήση εξ΄ ορισμού γραμματοσειράς"
+
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Map/Xach Blocks..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "Προς το παρόν μη υλοποιημένο"
+
+#, fuzzy
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr "Μας συγχωρείτε, η λειτουργία αυτή δεν έχει (ακόμα) υλοποιηθεί."
+
+#, fuzzy
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "unable to grok colour specification"
+msgstr ""
+
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr ""
+
+msgid "<Image>/Edit/Repeat & Duplicate..."
+msgstr ""
+
+#, fuzzy
+msgid "too many arguments"
+msgstr "ορίσματα γραμμής"
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+
+#, fuzzy
+msgid "Restore values to the previous ones"
+msgstr "Μεταφορά στο προηγούμενο μήνυμα"
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr ""
+
+#, fuzzy
+msgid ", authorization required"
+msgstr "Απαιτείται πιστοποίηση"
+
+#, fuzzy
+msgid "<Image>/Filters/Noise/Feedback..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "unable to create listening unix socket: $!\n"
+msgstr "Δημιουργία καταλόγου χρήστη αδύνατη: %s\n"
+
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr ""
+
+msgid "<Image>/View/3D Surface..."
+msgstr ""
+
+#, fuzzy
+msgid "Last Modified"
+msgstr "Ημερομηνία Τροποποίησης"
+
+msgid "Shortcuts"
+msgstr "Συντομεύσεις"
+
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr ""
+
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Webify..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr ""
+
+#, fuzzy
+msgid "Font Selection Dialog ($desc)"
+msgstr "Δοκιμή Επιλογής Γραμματοσειράς"
+
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+
+msgid "(UNINITIALIZED)"
+msgstr ""
+
+#, fuzzy
+msgid "closing connection %d (%d requests in %g seconds)"
+msgstr "Τερματισμός σύνδεσης με %s"
+
+msgid "<Toolbox>/Xtns/Render/Golden Mean..."
+msgstr ""
+
+#, fuzzy
+msgid "authorization failed: $r[1]\n"
+msgstr "Αποτυχία ενεργοποίησης: "
+
+#, fuzzy
+msgid "<Image>/Guides/Center Guide..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "server version $Gimp::VERSION started"
+msgstr "Έκδοση διακομιστή : %s"
+
+#, fuzzy
+msgid "authorization unnecessary"
+msgstr "Αίτηση Έγκρισης"
+
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Distorts/Scratches..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgid "illegal parasite specification, arrayref expected"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Misc/Border Average..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#
+#, fuzzy
+msgid "unable to fork: $!"
+msgstr "Αδύνατο το κλείδωμα του γραμματοκιβωτίου!"
+
+#, fuzzy
+msgid "Unsupported argumenttype $type"
+msgstr "Ο τύπος δεν υποστηρίζεται"
+
+msgid "get current foreground colour from the gimp"
+msgstr ""
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Misc/Magick..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Stampify..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Image>/Select/Round..."
+msgstr ""
+
+#
+#, fuzzy
+msgid "Unable to read temporary image tile $tmp: $!"
+msgstr "Το αρχείο εικόνας δε βρέθηκε στο pixmap_path: \"%s\""
+
+#, fuzzy
+msgid "Help for "
+msgstr "Βοήθεια για %s"
+
+#, fuzzy
+msgid "export failed"
+msgstr "Εξαγωγή Αρχείου"
+
+msgid "dunno how to pass arg type %d"
+msgstr ""
+
+msgid "/Xtns/Render/Povray"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid " (press Tab to complete)"
+msgstr "Η ανανέωση ολοκληρώθηκε\n"
+
+msgid "This module was built without support for PDL."
+msgstr ""
+
+msgid "plug-in returned %d more values than expected"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Homepage-Logo"
+msgstr ""
+
+msgid "FG"
+msgstr ""
+
+#, fuzzy
+msgid "url size is too large ($max > 1024)\n"
+msgstr " Αρχείο πολύ μεγάλο: "
+
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
+#
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+msgid "<Image>/Select/Triangle..."
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Animation/BlowInOut..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr ""
+
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
+msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Colors/Fire..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#, fuzzy
+msgid "<Image>/Filters/Render/TeX String..."
+msgstr "<Image>/Φίλτρα/Κείμενο/FreeType..."
+
+#
+msgid "OK"
+msgstr "Εντάξει"
+
+msgid "illegal command received, aborting connection"
+msgstr ""
+
+msgid "(none)"
+msgstr "(κανένα)"
+
