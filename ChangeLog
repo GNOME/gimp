@@ -1,3 +1,8 @@
+2004-11-17  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/print-size-dialog.c: added missing callbacks for the
+	size entries. Needs some more work though...
+
 2004-11-17  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/Makefile.am: make libgimpprocbrowser a libtooled
