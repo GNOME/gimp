@@ -43,6 +43,7 @@ static void      gimp_frame_child_allocate      (GtkFrame       *frame,
 static gboolean  gimp_frame_expose              (GtkWidget      *widget,
                                                  GdkEventExpose *event);
 static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
+static gint      gimp_frame_left_margin         (GtkWidget      *widget);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -139,9 +140,12 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
     {
+      gint left_margin = gimp_frame_left_margin (widget);
+
       gtk_widget_size_request (bin->child, &child_requisition);
 
-      requisition->width = MAX (requisition->width, child_requisition.width);
+      requisition->width = MAX (requisition->width,
+                                child_requisition.width + left_margin);
       requisition->height += child_requisition.height;
     }
 
@@ -194,10 +198,9 @@ gimp_frame_child_allocate (GtkFrame      *frame,
 {
   GtkWidget     *widget       = GTK_WIDGET (frame);
   GtkAllocation *allocation   = &widget->allocation;
-  PangoLayout   *layout;
   gint           border_width = GTK_CONTAINER (frame)->border_width;
   gint           top_margin   = 0;
-  gint           left_margin;
+  gint           left_margin  = gimp_frame_left_margin (widget);
 
   if (frame->label_widget)
     {
@@ -212,11 +215,6 @@ gimp_frame_child_allocate (GtkFrame      *frame,
 
       top_margin += child_requisition.height;
     }
-
-  /*  the HIG suggests to use four spaces so do just that  */
-  layout = gtk_widget_create_pango_layout (widget, "    ");
-  pango_layout_get_pixel_size (layout, &left_margin, NULL);
-  g_object_unref (layout);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
     child_allocation->x    = border_width + left_margin;
@@ -268,6 +266,20 @@ gimp_frame_label_widget_notify (GtkFrame *frame)
 
       pango_attr_list_unref (attrs);
     }
+}
+
+static gint
+gimp_frame_left_margin (GtkWidget *widget)
+{
+  PangoLayout   *layout;
+  gint           width;
+
+  /*  the HIG suggests to use four spaces so do just that  */
+  layout = gtk_widget_create_pango_layout (widget, "    ");
+  pango_layout_get_pixel_size (layout, &width, NULL);
+  g_object_unref (layout);
+
+  return width;
 }
 
 /**

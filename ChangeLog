@@ -1,5 +1,14 @@
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpframe.c (gimp_frame_size_request): take the
+	left margin into account.
+
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimptemplateeditor.c: removed container borders that
+	aren't needed any longer.
+
+2004-05-02  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpenumwidgets.c
 	* app/widgets/gimpgrideditor.c
 	* app/widgets/gimptemplateeditor.c: use the GimpFrame widget,

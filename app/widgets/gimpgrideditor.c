@@ -205,7 +205,6 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);

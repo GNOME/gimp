@@ -217,7 +217,6 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -477,7 +476,6 @@ gimp_template_editor_constructor (GType                  type,
 				  GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
   gtk_widget_show (scrolled_window);
 
