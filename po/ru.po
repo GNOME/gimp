@@ -1,24 +1,25 @@
+# translation of gimp.HEAD.po to russian
 # translation of gimp.HEAD.ru.po to russian
 # translation of gimp_UTF8.po to russian
 # translation of @GIMP 1.3@.po to @RU@
 # translation of @GIMP@.po to @RU@
 # translation of gimp.po to russian
 # Copyright (C) 1999-2002,2003 Free Software Foundation, Inc.
-# Valek Filippov <frob@df.ru>, 1999-2002
-# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003
+# Valek Filippov <frob@df.ru>, 1999-2002.
+# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD.ru\n"
+"Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-08-10 15:15+0200\n"
-"PO-Revision-Date: 2003-07-13 18:20+0400\n"
+"PO-Revision-Date: 2003-08-24 20:08+0400\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: app/app_procs.c:193
 msgid ""
@@ -112,8 +113,7 @@ msgstr "  -h, --help                Вывести эту подсказку.\n"
 
 #: app/main.c:395
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr ""
-"  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+msgstr "  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
 
 #: app/main.c:396
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -121,8 +121,7 @@ msgstr "  -s, --no-splash              Не показывать окно зап
 
 #: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
+msgstr "  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
 
 #: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
@@ -145,8 +144,7 @@ msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Без  MMX расширения.\n"
 
 #: app/main.c:402
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
@@ -446,8 +444,7 @@ msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:155
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:159
@@ -521,8 +518,7 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:240
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Запомнить текущие инструменты, образцы, цвета и кисти."
 
 #: app/config/gimprc-blurbs.h:244
@@ -607,8 +603,7 @@ msgid "When enabled, menus can be torn off."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:305
-msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:308
@@ -931,7 +926,7 @@ msgstr "Треугольная волна"
 
 #: app/core/core-enums.c:391
 msgid "No Thumbnails"
-msgstr ""
+msgstr "Без миниатюр"
 
 #: app/core/core-enums.c:392
 msgid "Normal (128x128)"
@@ -2027,8 +2022,7 @@ msgstr "Вращать слой"
 
 #: app/core/gimplayer.c:833
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
+msgstr "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
 #: app/core/gimplayer.c:840
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2171,8 +2165,7 @@ msgstr "Недопустимая строка UTF-8 файле образца \"
 #: app/core/gimppattern.c:421
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr ""
-"Фатальная ошибка разбора файла: Файл образца \"%s\" вероятно поврежден."
+msgstr "Фатальная ошибка разбора файла: Файл образца \"%s\" вероятно поврежден."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -3402,8 +3395,7 @@ msgstr "/Цвет крайней правой точки..."
 
 #: app/gui/gradient-editor-menu.c:113
 msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
-msgstr ""
-"/Загрузить цвет крайней правой из/Соседних справа к крайней левой точке"
+msgstr "/Загрузить цвет крайней правой из/Соседних справа к крайней левой точке"
 
 #: app/gui/gradient-editor-menu.c:117
 msgid "/Load Right Color From/Left Endpoint"
@@ -3595,7 +3587,7 @@ msgstr "Стиль линии:"
 
 #: app/gui/grid-dialog.c:141
 msgid "Change Grid Foreground Color"
-msgstr ""
+msgstr "Изменить сетку переднего плана"
 
 #: app/gui/grid-dialog.c:145
 msgid "_Foreground Color:"
@@ -3603,7 +3595,7 @@ msgstr "Цвет переднего плана:"
 
 #: app/gui/grid-dialog.c:149
 msgid "Change Grid Background Color"
-msgstr ""
+msgstr "Изменить сетку фона"
 
 #: app/gui/grid-dialog.c:153
 msgid "_Background Color:"
@@ -3612,7 +3604,7 @@ msgstr "Цвет фона:"
 #. the spacing frame
 #: app/gui/grid-dialog.c:159
 msgid "Spacing"
-msgstr ""
+msgstr "Промежуток"
 
 #: app/gui/grid-dialog.c:186 app/gui/grid-dialog.c:227
 #: app/gui/preferences-dialog.c:1047
@@ -3783,12 +3775,10 @@ msgid "/_Edit"
 msgstr "/Правка"
 
 #: app/gui/image-menu.c:157
-#, fuzzy
 msgid "/Edit/_Undo"
 msgstr "/Правка/Отменить"
 
 #: app/gui/image-menu.c:162
-#, fuzzy
 msgid "/Edit/_Redo"
 msgstr "/Правка/Повторить"
 
@@ -3842,7 +3832,6 @@ msgid "/Edit/Fill with B_G Color"
 msgstr "/Правка/Заливка цветом фона"
 
 #: app/gui/image-menu.c:233
-#, fuzzy
 msgid "/Edit/Fill with P_attern"
 msgstr "/Правка/Заливка шаблоном"
 
@@ -3852,9 +3841,8 @@ msgid "/Edit/_Stroke Selection"
 msgstr "Сокращение выделения"
 
 #: app/gui/image-menu.c:243
-#, fuzzy
 msgid "/Edit/St_roke Active Path"
-msgstr "/Обвести по контуру"
+msgstr "/Правка/Обвести по контуру"
 
 #. <Image>/Select
 #: app/gui/image-menu.c:253
@@ -4017,7 +4005,7 @@ msgstr "/Просмотр/Показать панель меню"
 
 #: app/gui/image-menu.c:451
 msgid "/View/Show R_ulers"
-msgstr ""
+msgstr "/Просмотр/Показать линейки"
 
 #: app/gui/image-menu.c:455
 msgid "/View/Show Scroll_bars"
@@ -4108,9 +4096,8 @@ msgid "/Image/_Flatten Image"
 msgstr "/Изображение/Свести изображение"
 
 #: app/gui/image-menu.c:572
-#, fuzzy
 msgid "/Image/Configure G_rid..."
-msgstr "/Просмотр/Настроить сетку..."
+msgstr "/Изображение/Настроить сетку..."
 
 #. <Image>/Layer
 #: app/gui/image-menu.c:580
@@ -4515,14 +4502,12 @@ msgid "/Filters/_Render"
 msgstr "/Фильтры/Визуализация"
 
 #: app/gui/image-menu.c:1028
-#, fuzzy
 msgid "/Filters/Render/_Clouds"
-msgstr "/Фильтры/Визуализация"
+msgstr "/Фильтры/Визуализация/Облака"
 
 #: app/gui/image-menu.c:1029
-#, fuzzy
 msgid "/Filters/Render/_Nature"
-msgstr "/Фильтры/Визуализация"
+msgstr "/Фильтры/Визуализация/Природа"
 
 #: app/gui/image-menu.c:1030
 #, fuzzy
@@ -4556,12 +4541,10 @@ msgid "_Redo %s"
 msgstr "Возврат %s"
 
 #: app/gui/image-menu.c:1374
-#, fuzzy
 msgid "_Undo"
 msgstr "Откат"
 
 #: app/gui/image-menu.c:1375
-#, fuzzy
 msgid "_Redo"
 msgstr "Возврат"
 
@@ -4581,7 +4564,7 @@ msgstr ""
 
 #: app/gui/images-menu.c:46
 msgid "/New Display"
-msgstr ""
+msgstr "/Новый экран"
 
 #: app/gui/images-menu.c:50
 msgid "/Delete Image"
@@ -6052,9 +6035,8 @@ msgid "/File/Dialogs/Error Co_nsole..."
 msgstr "/Файл/Диалоги/Консоль ошибок..."
 
 #: app/gui/toolbox-menu.c:218
-#, fuzzy
 msgid "/File/D_ebug"
-msgstr "/Фильтры/Веб"
+msgstr "/Файл/Отладка"
 
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:238
@@ -6442,8 +6424,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Нажмите \"Продолжить\", чтобы принять предложенные настройки."
 
 #: app/gui/user-install-dialog.c:941
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Для оптимальной производительности GIMP, могут быть подрегулированны "
 "некоторые настройки.</b>"
@@ -7034,8 +7015,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(недопустимая строка UTF-8)"
 
 #: app/text/gimptext.c:162
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Инструктирование изменяет контуры символа, чтобы выдать более чёткие растры "
 "при маленьких размерах"
@@ -7134,7 +7114,6 @@ msgid "Repeat:"
 msgstr "Повтор:"
 
 #: app/tools/gimpblendoptions.c:268
-#, fuzzy
 msgid "Dithering"
 msgstr "Параметры смешивания"
 
@@ -7691,8 +7670,7 @@ msgstr "Подгонка  Тона / Осветления / Насыщеннос
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr ""
-"Тон-Насыщенность действует только на цветные изображения в формате RGB."
+msgstr "Тон-Насыщенность действует только на цветные изображения в формате RGB."
 
 #: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
@@ -7980,7 +7958,6 @@ msgid "Open the gradient selection dialog"
 msgstr "Открыть диалог выбора градиента"
 
 #: app/tools/gimppaintoptions-gui.c:196
-#, fuzzy
 msgid "Reverse"
 msgstr "Восстановить"
 
@@ -8257,9 +8234,8 @@ msgstr ""
 "интервал:"
 
 #: app/tools/gimptextoptions.c:337
-#, fuzzy
 msgid "Create Path from Text"
-msgstr "/Сохранить изображение в шаблон"
+msgstr "Создать кривую из текста"
 
 #: app/tools/gimptexttool.c:115
 msgid "Add text to the image"
@@ -9239,3 +9215,4 @@ msgstr "GIMP (нестабильный)"
 
 #~ msgid "Hex Triplet"
 #~ msgstr "Шестнадцатеричный триплет"
+
