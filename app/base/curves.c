@@ -156,7 +156,7 @@ curves_calculate_curve (Curves               *curves,
 
 gfloat
 curves_lut_func (Curves *curves,
-		 gint    nchannels,
+		 gint    n_channels,
 		 gint    channel,
 		 gfloat  value)
 {
@@ -165,33 +165,39 @@ curves_lut_func (Curves *curves,
   gdouble inten;
   gint    j;
 
-  if (nchannels == 1)
-    j = 0;
+  if (n_channels <= 2)
+    j = channel;
   else
     j = channel + 1;
 
   inten = value;
 
-  /* For color images this runs through the loop with j = channel +1
-     the first time and j = 0 the second time */
-  /* For bw images this runs through the loop with j = 0 the first and
-     only time  */
+  /* For RGB and RGBA images this runs through the loop with j = channel + 1
+   * the first time and j = 0 the second time
+   *
+   * For GRAY images this runs through the loop with j = 0 the first and
+   * only time
+   */
   for (; j >= 0; j -= (channel + 1))
     {
       /* don't apply the overall curve to the alpha channel */
-      if (j == 0 && (nchannels == 2 || nchannels == 4)
-          && channel == nchannels -1)
+      if (j == 0 && (n_channels == 2 || n_channels == 4) &&
+          channel == n_channels - 1)
         return inten;
 
       if (inten < 0.0)
-        inten = curves->curve[j][0]/255.0;
+        {
+          inten = curves->curve[j][0]/255.0;
+        }
       else if (inten >= 1.0)
-        inten = curves->curve[j][255]/255.0;
+        {
+          inten = curves->curve[j][255]/255.0;
+        }
       else /* interpolate the curve */
         {
           index = floor(inten * 255.0);
           f = inten*255.0 - index;
-          inten = ((1.0 - f) * curves->curve[j][index    ] + 
+          inten = ((1.0 - f) * curves->curve[j][index    ] +
                    (      f) * curves->curve[j][index + 1] ) / 255.0;
         }
     }

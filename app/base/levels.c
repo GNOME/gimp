@@ -212,7 +212,7 @@ levels_adjust_by_colors (Levels               *levels,
         return;
 
       /* Map selected color to corresponding lightness */
-      levels->gamma[channel] = log (inten) / log (out_light); 
+      levels->gamma[channel] = log (inten) / log (out_light);
     }
 }
 
@@ -259,32 +259,36 @@ levels_lut_func (Levels *levels,
   gdouble inten;
   gint    j;
 
-  if (n_channels == 1)
-    j = 0;
+  if (n_channels <= 2)
+    j = channel;
   else
     j = channel + 1;
 
   inten = value;
 
-  /* For color  images this runs through the loop with j = channel +1
+  /* For RGB and RGBA images this runs through the loop with j = channel + 1
    * the first time and j = 0 the second time
    *
-   * For bw images this runs through the loop with j = 0 the first and
-   *  only time
+   * For GRAY images this runs through the loop with j = 0 the first and
+   * only time
    */
   for (; j >= 0; j -= (channel + 1))
     {
       /* don't apply the overall curve to the alpha channel */
-      if (j == 0 && (n_channels == 2 || n_channels == 4)
-	  && channel == n_channels -1)
+      if (j == 0 && (n_channels == 2 || n_channels == 4) &&
+	  channel == n_channels - 1)
 	return inten;
 
       /*  determine input intensity  */
       if (levels->high_input[j] != levels->low_input[j])
-	inten = ((gdouble) (255.0 * inten - levels->low_input[j]) /
-		 (gdouble) (levels->high_input[j] - levels->low_input[j]));
+        {
+          inten = ((gdouble) (255.0 * inten - levels->low_input[j]) /
+                   (gdouble) (levels->high_input[j] - levels->low_input[j]));
+        }
       else
-	inten = (gdouble) (255.0 * inten - levels->low_input[j]);
+        {
+          inten = (gdouble) (255.0 * inten - levels->low_input[j]);
+        }
 
       if (levels->gamma[j] != 0.0)
 	{

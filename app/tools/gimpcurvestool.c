@@ -310,8 +310,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
   gimp_int_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
                                     c_tool->channel);
 
-  if (! c_tool->color && c_tool->alpha)
-    c_tool->channel = 1;
+  /* FIXME: hack */
+  if (! c_tool->color)
+    c_tool->channel = (c_tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (c_tool->graph),
@@ -361,11 +362,10 @@ gimp_curves_tool_color_picked (GimpColorTool *color_tool,
 			       GimpRGB       *color,
 			       gint           color_index)
 {
-  GimpCurvesTool *tool;
+  GimpCurvesTool *tool = GIMP_CURVES_TOOL (color_tool);
   GimpDrawable   *drawable;
   guchar          r, g, b, a;
 
-  tool = GIMP_CURVES_TOOL (color_tool);
   drawable = GIMP_IMAGE_MAP_TOOL (tool)->drawable;
 
   gimp_rgba_get_uchar (color, &r, &g, &b, &a);
@@ -754,7 +754,8 @@ curves_update (GimpCurvesTool *tool,
     }
   else
     {
-      if (tool->channel == 2)
+      /* FIXME: hack */
+      if (tool->channel == 1)
         channel = GIMP_HISTOGRAM_ALPHA;
       else
         channel = GIMP_HISTOGRAM_VALUE;
@@ -770,9 +771,9 @@ curves_update (GimpCurvesTool *tool,
 	case GIMP_HISTOGRAM_VALUE:
 	case GIMP_HISTOGRAM_ALPHA:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      tool->curves->curve[channel],
-                                      tool->curves->curve[channel],
-                                      tool->curves->curve[channel]);
+                                      tool->curves->curve[tool->channel],
+                                      tool->curves->curve[tool->channel],
+                                      tool->curves->curve[tool->channel]);
 	  break;
 
 	case GIMP_HISTOGRAM_RED:
@@ -802,8 +803,8 @@ curves_channel_callback (GtkWidget      *widget,
                                    tool->channel);
 
   /* FIXME: hack */
-  if (! tool->color && tool->alpha)
-    tool->channel = (tool->channel > 1) ? 2 : 1;
+  if (! tool->color)
+    tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
 			           tool->curves->curve_type[tool->channel]);
@@ -1152,7 +1153,8 @@ curves_graph_expose (GtkWidget      *widget,
     }
   else
     {
-      if (tool->channel == 2)
+      /* FIXME: hack */
+      if (tool->channel == 1)
         channel = GIMP_HISTOGRAM_ALPHA;
       else
         channel = GIMP_HISTOGRAM_VALUE;
