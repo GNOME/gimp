@@ -1,3 +1,19 @@
+2001-04-07  Daniel Egger  <egger@suse.de>
+
+	* app/paint-funcs/paint-funcs-gray.c:
+	* app/paint-funcs/paint-funcs-gray.h:
+	* app/paint-funcs/paint-funcs-graya.c:
+	* app/paint-funcs/paint-funcs-graya.h:
+	* app/paint-funcs/paint-funcs-indexed.c:
+	* app/paint-funcs/paint-funcs-indexed.h:
+	* app/paint-funcs/paint-funcs-indexeda.c:
+	* app/paint-funcs/paint-funcs-indexeda.h:
+	* app/paint-funcs/paint-funcs-rgb.c:
+	* app/paint-funcs/paint-funcs-rgb.h:
+	* app/paint-funcs/paint-funcs-rgba.c:
+	* app/paint-funcs/paint-funcs-rgba.h: Added new files seperated and
+	specialised from paint_funcs.c. Not used so far.
+
 2001-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpairbrushtool.c
