@@ -1,5 +1,11 @@
 2003-01-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c (gimp_toolbox_set_geometry): added
+	GDK_HINT_USER_POS again since it's set by gdk_window_parse_geometry()
+	in gimpdialogfactory.c and we don't want to reset it.
+
+2003-01-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpbezierselecttool.c
 	* app/tools/gimpbycolorselecttool.c
 	* app/tools/gimpellipseselecttool.c
