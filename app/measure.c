@@ -206,23 +206,34 @@ measure_tool_button_press (Tool           *tool,
 	    {
 	      if (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
-		  Guide *guide;
+		  gboolean  undo_group;
+		  Guide    *guide;
 
-		  if (bevent->state & GDK_CONTROL_MASK &&
-		      bevent->state & GDK_MOD1_MASK &&
-		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
+		  undo_group = (bevent->state & GDK_CONTROL_MASK &&
+				bevent->state & GDK_MOD1_MASK &&
+				(measure_tool->y[i] ==
+				 CLAMP (measure_tool->y[i],
+					0, gdisp->gimage->height)) &&
+				(measure_tool->x[i] ==
+				 CLAMP (measure_tool->x[i],
+					0, gdisp->gimage->width)));
+
+		  if (undo_group)
 		    undo_push_group_start (gdisp->gimage, GUIDE_UNDO);
 
 		  if (bevent->state & GDK_CONTROL_MASK && 
-		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
+		      (measure_tool->y[i] ==
+		       CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
 		    {
 		      guide = gimp_image_add_hguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
 		      guide->position = measure_tool->y[i];
 		      gdisplays_expose_guide (gdisp->gimage, guide);
-		    }  
+		    }
+
 		  if (bevent->state & GDK_MOD1_MASK &&
-		      (measure_tool->x[i] == CLAMP (measure_tool->x[i], 0, gdisp->gimage->width)))
+		      (measure_tool->x[i] ==
+		       CLAMP (measure_tool->x[i], 0, gdisp->gimage->width)))
 		    {
 		      guide = gimp_image_add_vguide (gdisp->gimage);
 		      undo_push_guide (gdisp->gimage, guide);
@@ -230,9 +241,7 @@ measure_tool_button_press (Tool           *tool,
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }
 
-		  if (bevent->state & GDK_CONTROL_MASK &&
-		      bevent->state & GDK_MOD1_MASK &&
-		      (measure_tool->y[i] == CLAMP (measure_tool->y[i], 0, gdisp->gimage->height)))
+		  if (undo_group)
 		    undo_push_group_end (gdisp->gimage);
 
 		  gdisplays_flush ();
