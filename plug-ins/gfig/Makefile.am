@@ -7,7 +7,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = gfig
 
 gfig_SOURCES = \
-	gfig.c
+	gfig.c pix_data.h
 
 INCLUDES = \
 	$(X_CFLAGS)			\
