@@ -481,6 +481,7 @@ tools_new_by_color_select ()
   tool->control_func = by_color_select_control;
   tool->gdisp_ptr = NULL;
   tool->drawable = NULL;
+  tool->preserve = TRUE;
 
   return tool;
 }

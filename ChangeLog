@@ -1,3 +1,7 @@
+Wed Apr  8 01:40:45 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/by_color_select.c: Don't destroy tool.
+
 Tue Apr  7 22:36:22 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* added regex.[ch] to app/ and plug-ins/script-fu/ so we REALLY
