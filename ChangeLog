@@ -1,3 +1,9 @@
+2000-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/jpeg.c: wanted to fix the "loading/saving jpeg
+	causes SEGV" bugs but ended up with just some more callbacks
+	removed (works fine on my system anyway).
+
 Tue Feb  8 14:59:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.c: Be more intelligent when dealing with invisible

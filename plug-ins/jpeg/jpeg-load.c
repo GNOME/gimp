@@ -164,7 +164,10 @@
 #define DEFAULT_COMMENT     "Created with The GIMP"
 
 /* sg - these should not be global... */
-static gint32 volatile  image_ID_global = -1, orig_image_ID_global, drawable_ID_global = -1, layer_ID_global = -1;
+static gint32 volatile  image_ID_global = -1;
+static gint32           orig_image_ID_global;
+static gint32           drawable_ID_global = -1;
+static gint32           layer_ID_global = -1;
 static GtkWidget       *preview_size = NULL;
 static GDrawable       *drawable_global = NULL;
 
@@ -233,21 +236,10 @@ static void   save_close_callback        (GtkWidget *widget,
 					  gpointer   data);
 static void   save_ok_callback           (GtkWidget *widget,
 					  gpointer   data);
-static void   save_scale_update          (GtkAdjustment *adjustment,
-					  double        *scale_val);
 static void   save_restart_toggle_update (GtkWidget     *toggle,
 					  GtkAdjustment *adjustment);
 static void   save_restart_update        (GtkAdjustment *adjustment,
 					  GtkWidget     *toggle);
-static void   save_optimize_update       (GtkWidget *widget,
-					  gpointer   data);
-static void   save_progressive_toggle    (GtkWidget *widget,
-					  gpointer   data);
-static void   save_baseline_toggle       (GtkWidget *widget,
-					  gpointer   data);
-static void   save_preview_toggle        (GtkWidget *widget,
-					  gpointer  data);
-
 
 static void   make_preview               (void);
 static void   destroy_preview            (void);
@@ -283,7 +275,7 @@ static JpegSaveInterface jsint =
   FALSE   /*  run  */
 };
 
-char *image_comment=NULL;
+static gchar     *image_comment = NULL;
 
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
@@ -687,10 +679,11 @@ COM_handler (j_decompress_ptr cinfo)
   return TRUE;
 }
 
-typedef struct my_error_mgr {
-  struct jpeg_error_mgr pub;    /* "public" fields */
+typedef struct my_error_mgr
+{
+  struct jpeg_error_mgr pub;            /* "public" fields */
 
-  jmp_buf setjmp_buffer;        /* for return to caller */
+  jmp_buf               setjmp_buffer;  /* for return to caller */
 } *my_error_ptr;
 
 /*
@@ -712,9 +705,9 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (char         *filename, 
+load_image (gchar        *filename, 
 	    GRunModeType  runmode, 
-	    int           preview)
+	    gint          preview)
 {
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -726,12 +719,12 @@ load_image (char         *filename,
   guchar *buf;
   guchar * volatile padded_buf = NULL;
   guchar **rowbuf;
-  char *name;
-  int image_type;
-  int layer_type;
-  int tile_height;
-  int scanlines;
-  int i, start, end;
+  gchar *name;
+  gint image_type;
+  gint layer_type;
+  gint tile_height;
+  gint scanlines;
+  gint i, start, end;
 
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
@@ -1086,8 +1079,8 @@ background_jpeg_save (gpointer *ptr)
   preview_persistent *pp = (preview_persistent *)ptr;
   guchar *t;
   guchar *s;
-  int i, j;
-  int yend;
+  gint i, j;
+  gint yend;
 
   if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height))
     {
@@ -1186,14 +1179,15 @@ save_image (char   *filename,
   guchar *temp, *t;
   guchar *data;
   guchar *src, *s;
-  char *name;
-  int has_alpha;
-  int rowstride, yend;
-  int i, j;
+  gchar *name;
+  gint has_alpha;
+  gint rowstride, yend;
+  gint i, j;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
   if (!preview) 
     {
@@ -1500,17 +1494,18 @@ save_image (char   *filename,
 }
 
 static void
-make_preview ()
+make_preview (void)
 {
-  char *tn;
+  gchar *tn;
 
   destroy_preview ();
 
   if (jsvals.preview) 
     {
       tn = tempnam(NULL, "gimp");	/* user temp dir? */
-      save_image (tn, image_ID_global, drawable_ID_global, orig_image_ID_global, TRUE);
-    } 
+      save_image (tn, image_ID_global,
+		  drawable_ID_global, orig_image_ID_global, TRUE);
+    }
   else 
     {
       gtk_label_set_text (GTK_LABEL (preview_size), _("Size: unknown"));
@@ -1523,7 +1518,7 @@ make_preview ()
 }
 
 static void
-destroy_preview ()
+destroy_preview (void)
 {
   if (abort_me) 
     {
@@ -1545,11 +1540,12 @@ destroy_preview ()
 
 static void
 add_menu_item (GtkWidget        *menu, 
-	       char             *label, 
+	       gchar            *label, 
 	       guint             op_no, 
 	       GtkSignalFunc     callback)
 {
   GtkWidget *menu_item = gtk_menu_item_new_with_label (label);
+
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      (GtkSignalFunc) callback, &op_no);
@@ -1557,15 +1553,15 @@ add_menu_item (GtkWidget        *menu,
 }
 
 static void 
-init_gtk ()
+init_gtk (void)
 {
   gchar **argv;
   gint argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
   argv[0] = g_strdup ("jpeg");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
@@ -1638,7 +1634,10 @@ save_dialog (void)
   preview = gtk_check_button_new_with_label (_("Preview (in Image Window)"));
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (preview), "toggled",
-		      GTK_SIGNAL_FUNC (save_preview_toggle),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.preview);
+  gtk_signal_connect (GTK_OBJECT (preview), "toggled",
+		      GTK_SIGNAL_FUNC (make_preview),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview), jsvals.preview);
   gtk_widget_show (preview);
@@ -1678,8 +1677,11 @@ save_dialog (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (save_scale_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &jsvals.quality);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (make_preview),
+		      NULL);
   gtk_widget_show (scale);
 
   label = gtk_label_new (_("Smoothing:"));
@@ -1697,8 +1699,11 @@ save_dialog (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (save_scale_update),
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &jsvals.smoothing);
+  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
+		      GTK_SIGNAL_FUNC (make_preview),
+		      NULL);
   gtk_widget_show (scale);
 
   /* sg - have to init scale here */
@@ -1747,7 +1752,10 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (save_optimize_update),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.optimize);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (make_preview),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
   gtk_widget_show (toggle);
@@ -1756,7 +1764,10 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), progressive, 0, 3, 5, 6,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
-		      GTK_SIGNAL_FUNC (save_progressive_toggle),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.progressive);
+  gtk_signal_connect (GTK_OBJECT (progressive), "toggled",
+		      GTK_SIGNAL_FUNC (make_preview),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (progressive),
 				jsvals.progressive);
@@ -1770,7 +1781,10 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), baseline, 0, 3, 6, 7,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
-		      GTK_SIGNAL_FUNC (save_baseline_toggle),
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &jsvals.baseline);
+  gtk_signal_connect (GTK_OBJECT (baseline), "toggled",
+		      GTK_SIGNAL_FUNC (make_preview),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
 				jsvals.baseline);
@@ -1903,14 +1917,6 @@ save_ok_callback (GtkWidget *widget,
 }
 
 static void
-save_scale_update (GtkAdjustment *adjustment,
-		   double        *scale_val)
-{
-  *scale_val = adjustment->value;
-  make_preview ();
-}
-
-static void
 save_restart_toggle_update (GtkWidget     *widget,
 			    GtkAdjustment *adjustment)
 {
@@ -1923,41 +1929,11 @@ save_restart_update (GtkAdjustment *adjustment,
 {
   jsvals.restart = GTK_TOGGLE_BUTTON (toggle)->active ? adjustment->value : 0;
 
-  gtk_widget_set_sensitive (restart_markers_label, (jsvals.restart ? TRUE : FALSE));
-  gtk_widget_set_sensitive (restart_markers_scale, (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_label,
+			    (jsvals.restart ? TRUE : FALSE));
+  gtk_widget_set_sensitive (restart_markers_scale,
+			    (jsvals.restart ? TRUE : FALSE));
           
-  make_preview ();
-}
-
-static void
-save_optimize_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  jsvals.optimize = GTK_TOGGLE_BUTTON (widget)->active;
-  make_preview ();
-}
-
-static void
-save_progressive_toggle (GtkWidget *widget,
-			 gpointer   data)
-{
-  jsvals.progressive = GTK_TOGGLE_BUTTON (widget)->active;
-  make_preview ();
-}
-
-static void
-save_baseline_toggle (GtkWidget *widget,
-		      gpointer   data)
-{
-  jsvals.baseline = GTK_TOGGLE_BUTTON (widget)->active;
-  make_preview ();
-}
-
-static void
-save_preview_toggle (GtkWidget *widget,
-		     gpointer   data)
-{
-  jsvals.preview = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
 }
 
@@ -1965,7 +1941,7 @@ static void
 subsmp_callback (GtkWidget *widget,
 		 gpointer   data)
 {
-  jsvals.subsmp = *((guchar *)data);
+  jsvals.subsmp = *((guchar *) data);
   make_preview ();
 }
 
@@ -1973,6 +1949,6 @@ static void
 dct_callback (GtkWidget *widget,
 	      gpointer   data)
 {
-  jsvals.dct = *((guchar *)data);
+  jsvals.dct = *((guchar *) data);
   make_preview ();
 }
