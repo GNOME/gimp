@@ -1,3 +1,12 @@
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: always do the check for perl and use the
+	substituted perl executable name in the call for gimp-mkenums.
+	Fixes the build on platforms where perl is not available as
+	/usr/bin/perl. Closes bug #148813.
+
+	* app/widgets/gimpenumstore.c: added missing include.
+
 2004-07-30  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/channel_mixer.c: GtkPreview->GtkDrawingArea, plus
