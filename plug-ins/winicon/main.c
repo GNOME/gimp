@@ -105,7 +105,7 @@ query (void)
                           "Christian Kreibich <christian@whoop.org>",
                           "2002",
                           N_("Microsoft Windows icon"),
-                          "INDEXEDA, GRAYA, RGBA",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -275,67 +275,6 @@ ico_cmap_contains_black (guchar *cmap,
   return FALSE;
 }
 
-
-void
-ico_image_reduce_layer_bpp (guint32 layer,
-                            gint    bpp)
-{
-  GimpPixelRgn  src_pixel_rgn, dst_pixel_rgn;
-  gint32        tmp_image;
-  gint32        tmp_layer;
-  gint          w, h;
-  guchar       *buffer;
-
-  w = gimp_drawable_width (layer);
-  h = gimp_drawable_height (layer);
-
-  if (bpp <= 8)
-    {
-      GimpDrawable *drawable = gimp_drawable_get (layer);
-      GimpDrawable *tmp;
-
-      buffer = g_new (guchar, w * h * 4);
-
-      tmp_image = gimp_image_new (gimp_drawable_width (layer),
-                                  gimp_drawable_height (layer),
-                                  GIMP_RGB);
-
-      tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
-                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-
-      tmp = gimp_drawable_get (tmp_layer);
-
-      gimp_pixel_rgn_init (&src_pixel_rgn, drawable,  0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_image_add_layer (tmp_image, tmp_layer, 0);
-
-      gimp_image_convert_indexed (tmp_image,
-                                  GIMP_FS_DITHER,
-                                  GIMP_MAKE_PALETTE,
-                                  1 << bpp,
-                                  TRUE,
-                                  FALSE,
-                                  "dummy");
-
-      gimp_image_convert_rgb (tmp_image);
-
-      gimp_pixel_rgn_init (&src_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dst_pixel_rgn, drawable,  0, 0, w, h, TRUE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-
-      gimp_drawable_detach (tmp);
-      gimp_image_delete (tmp_image);
-
-      gimp_drawable_detach (drawable);
-
-      g_free (buffer);
-    }
-}
-
-
 void
 ico_image_get_reduced_buf (guint32   layer,
                            gint      bpp,
@@ -358,17 +297,20 @@ ico_image_get_reduced_buf (guint32   layer,
 
   buffer = g_new (guchar, w * h * 4);
 
-  if (bpp <= 8)
+  if (bpp <= 8 || drawable->bpp != 4)
     {
+      gint32        image = gimp_drawable_get_image (layer);
       GimpDrawable *tmp;
 
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
                                   gimp_drawable_height (layer),
-                                  GIMP_RGB);
+                                  gimp_image_base_type (image));
+      gimp_image_undo_disable (tmp_image);
 
       tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
                                   gimp_drawable_type (layer),
                                   100, GIMP_NORMAL_MODE);
+      gimp_image_add_layer (tmp_image, tmp_layer, 0);
 
       tmp = gimp_drawable_get (tmp_layer);
 
@@ -376,56 +318,68 @@ ico_image_get_reduced_buf (guint32   layer,
       gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-      gimp_drawable_flush (tmp);
+      gimp_drawable_update (tmp, 0, 0, w, h);
+      gimp_drawable_detach (tmp);
 
-      gimp_image_add_layer (tmp_image, tmp_layer, 0);
+      if (! gimp_drawable_is_rgb (tmp_layer))
+        gimp_image_convert_rgb (tmp_image);
 
-      gimp_image_convert_indexed (tmp_image,
-                                  GIMP_FS_DITHER,
-                                  GIMP_MAKE_PALETTE,
-                                  1 << bpp,
-                                  TRUE,
-                                  FALSE,
-                                  "dummy");
-
-      cmap = gimp_image_get_colormap (tmp_image, num_colors);
-
-      if (*num_colors == (1 << bpp) &&
-          !ico_cmap_contains_black(cmap, *num_colors))
+      if (bpp <= 8)
         {
-          /* Damn. Windows icons with color maps need the color black.
-             We need to eliminate one more color to make room for black: */
-
-          gimp_image_convert_rgb (tmp_image);
-
-          gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, TRUE, FALSE);
-          gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-          gimp_drawable_flush (tmp);
-
           gimp_image_convert_indexed (tmp_image,
                                       GIMP_FS_DITHER,
                                       GIMP_MAKE_PALETTE,
-                                      (1 << bpp) - 1,
+                                      1 << bpp,
                                       TRUE,
                                       FALSE,
                                       "dummy");
 
           cmap = gimp_image_get_colormap (tmp_image, num_colors);
-          *cmap_out = g_memdup (cmap, *num_colors * 3);
+
+          if (*num_colors == (1 << bpp) &&
+              !ico_cmap_contains_black(cmap, *num_colors))
+            {
+              /* Windows icons with color maps need the color black.
+               * We need to eliminate one more color to make room for black.
+               */
+
+              gimp_image_convert_rgb (tmp_image);
+
+              tmp = gimp_drawable_get (tmp_layer);
+              gimp_pixel_rgn_init (&dst_pixel_rgn,
+                                   tmp, 0, 0, w, h, TRUE, FALSE);
+              gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+              gimp_drawable_update (tmp, 0, 0, w, h);
+              gimp_drawable_detach (tmp);
+
+              gimp_image_convert_indexed (tmp_image,
+                                          GIMP_FS_DITHER,
+                                          GIMP_MAKE_PALETTE,
+                                          (1 << bpp) - 1,
+                                          TRUE,
+                                          FALSE,
+                                          "dummy");
+
+              cmap = gimp_image_get_colormap (tmp_image, num_colors);
+              *cmap_out = g_memdup (cmap, *num_colors * 3);
+            }
 
           gimp_image_convert_rgb (tmp_image);
         }
 
-      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_layer_add_alpha (tmp_layer);
 
+      tmp = gimp_drawable_get (tmp_layer);
+      gimp_pixel_rgn_init (&src_pixel_rgn, tmp, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
       gimp_drawable_detach (tmp);
+
       gimp_image_delete (tmp_image);
     }
   else
     {
-      gimp_pixel_rgn_init (&dst_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
     }
 
   gimp_drawable_detach (drawable);

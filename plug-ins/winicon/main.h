@@ -96,8 +96,6 @@ guint8 * ico_alloc_map              (gint       width,
                                      gint       height,
                                      gint       bpp,
                                      gint      *len);
-void     ico_image_reduce_layer_bpp (guint32    layer,
-                                     gint       bpp);
 void     ico_image_get_reduced_buf  (guint32    layer,
                                      gint       bpp,
                                      gint      *num_colors,

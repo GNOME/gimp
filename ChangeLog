@@ -1,5 +1,13 @@
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icosave.c: don't fiddle with the source image,
+	a save plug-in should save, nothing else.
+
+	* plug-ins/winicon/main.[ch]: handle all sorts of image types.
+	Fixes bug #157803.
+
+2004-11-26  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: fixed docs for
 	gimp_drawable_type_with_alpha().
 

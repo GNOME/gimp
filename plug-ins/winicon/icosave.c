@@ -161,8 +161,8 @@ ico_show_icon_dialog (gint32  image_ID,
 
   /* Scale the thing to approximately fit its content, but not too large ... */
   gtk_window_set_default_size (GTK_WINDOW (dialog),
-                               350,
-                               (num_layers > 5 ? 500 : num_layers * 100));
+                               500,
+                               120 + (num_layers > 4 ? 400 : num_layers * 100));
 
   icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
 
@@ -707,31 +707,6 @@ ico_save (MsIcon *ico)
   return GIMP_PDB_SUCCESS;
 }
 
-
-static void
-ico_sync_image_to_ico (gint32  image,
-                       gint   *icon_depths)
-{
-  gint *layers;
-  gint  i, num_layers;
-
-  layers = gimp_image_get_layers(image, &num_layers);
-
-  for (i = 0; i < num_layers; i++)
-    {
-      if (icon_depths[i] < icon_depths[num_layers + i])
-        {
-          D(("Layer '%s' was reduced to %i bpp -- updating source image.\n",
-             gimp_layer_get_name (layers[i]), icon_depths[i]));
-
-          ico_image_reduce_layer_bpp (layers[i], icon_depths[i]);
-        }
-    }
-
-  g_free(layers);
-}
-
-
 static gboolean
 ico_layers_too_big (gint32 image)
 {
@@ -800,10 +775,7 @@ SaveICO (const gchar *filename,
 
   D(("icon data created ...\n"));
 
-  if ( (exit_state = ico_save(&ico)) == GIMP_PDB_SUCCESS)
-    {
-      ico_sync_image_to_ico (image, icon_depths);
-    }
+  exit_state = ico_save(&ico);
 
   D(("*** icon saved, exit status %i.\n\n", exit_state));
 
