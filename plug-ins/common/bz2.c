@@ -362,7 +362,7 @@ load_image (gchar             *filename,
   tmpname = gimp_temp_name (ext + 1);
 
 #ifndef __EMX__
-  /* fork off a g(un)zip and wait for it */
+  /* fork off a bzip2 and wait for it */
   if ((pid = fork ()) < 0)
     {
       g_message ("bz2: fork failed: %s\n", g_strerror (errno));

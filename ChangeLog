@@ -1,3 +1,7 @@
+2001-11-01 DindinX <odin@mandrakesoft.com>
+
+	* plug-ins/common/bz2.c: fix a little typo in a comment
+
 2001-10-31  Michael Natterer  <mitch@gimp.org>
 
 	Chopped up the display stuff (beware: unfinished)...
