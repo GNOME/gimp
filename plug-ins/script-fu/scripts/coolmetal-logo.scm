@@ -79,7 +79,7 @@
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
     (gimp-scale reflect-layer FALSE 0 0 width (* 0.85 height))
-    (gimp-flip reflect-layer 1)
+    (gimp-flip reflect-layer 2)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer WHITE-MASK)))
