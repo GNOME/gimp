@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 23:18+0100\n"
-"PO-Revision-Date: 2004-02-03 18:59+0100\n"
+"PO-Revision-Date: 2004-03-21 18:59+0100\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish  <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1345,9 +1345,8 @@ msgid "Fill with Transparency"
 msgstr ""
 
 #: app/core/gimp-edit.c:288
-#, fuzzy
 msgid "Fill with Pattern"
-msgstr "Líon le Bán"
+msgstr ""
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -1503,7 +1502,7 @@ msgstr ""
 #: app/core/gimpchannel.c:277 app/tools/gimpeditselectiontool.c:251
 #: app/tools/gimpeditselectiontool.c:1218
 msgid "Move Channel"
-msgstr "Bóg Bealach"
+msgstr "Bog Bealach"
 
 #: app/core/gimpchannel.c:278
 msgid "Feather Channel"
@@ -2326,9 +2325,9 @@ msgid "_Discard changes"
 msgstr ""
 
 #: app/display/gimpdisplayshell.c:1453
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'."
-msgstr "Athrú déeanta go %s. Dún ar aon chaoi?"
+msgstr "Athrú déanta go .%s'."
 
 #: app/display/gimpdisplayshell.c:1467
 msgid "Unsaved changes will be lost."
@@ -2367,9 +2366,8 @@ msgid "Zoom Ratio:"
 msgstr ""
 
 #: app/display/gimpdisplayshell-scale.c:567
-#, fuzzy
 msgid "Zoom:"
-msgstr "Formhéadach 1:1"
+msgstr "Súmáil:"
 
 #: app/display/gimpdisplayshell-title.c:219
 msgid "RGB-empty"
@@ -2541,9 +2539,8 @@ msgid "%s Channel Copy"
 msgstr ""
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Bealach"
+msgstr "Bealach Folamh"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -3743,9 +3740,8 @@ msgid "/Select/_Invert"
 msgstr "/Roghnaigh/_Aisiompaigh"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/Roghnaigh/"
+msgstr ""
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
@@ -3818,49 +3814,40 @@ msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr ""
 
 #: app/gui/image-menu.c:388
-#, fuzzy
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/Amharc/Súmáil/16:1"
+msgstr "/Amharc/Súmáil/16:1 (1600%)"
 
 #: app/gui/image-menu.c:392
-#, fuzzy
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/Amharc/Súmáil/8:1"
+msgstr "/Amharc/Súmáil/8:1 (800%)"
 
 #: app/gui/image-menu.c:396
-#, fuzzy
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/Amharc/Súmáil/4:1"
+msgstr "/Amharc/Súmáil/4:1 (400%)"
 
 #: app/gui/image-menu.c:400
-#, fuzzy
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/Amharc/Súmáil/2:1"
+msgstr "/Amharc/Súmáil/2:1 (200%)"
 
 #: app/gui/image-menu.c:404
-#, fuzzy
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/Amharc/Súmáil/1:1"
+msgstr "/Amharc/Súmáil/1:1 (100%)"
 
 #: app/gui/image-menu.c:408
-#, fuzzy
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/Amharc/Súmáil/1:2"
+msgstr "/Amharc/Súmáil/1:2 (50%)"
 
 #: app/gui/image-menu.c:412
-#, fuzzy
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/Amharc/Súmáil/1:2"
+msgstr "/Amharc/Súmáil/1:2 (25%)"
 
 #: app/gui/image-menu.c:416
-#, fuzzy
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/Amharc/Súmáil/1:1"
+msgstr "/Amharc/Súmáil/1:1 (12.5%)"
 
 #: app/gui/image-menu.c:420
-#, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/Amharc/Súmáil/1:16"
+msgstr "/Amharc/Súmáil/1:16 (6.25%)"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -4486,14 +4473,14 @@ msgid "_Redo"
 msgstr "_Athdheanamh"
 
 #: app/gui/image-menu.c:1750
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "Eile (%d:%d) ..."
+msgstr "Eile (%s) ..."
 
 #: app/gui/image-menu.c:1759
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "_Súmáil (%d:%d)"
+msgstr "_Súmáil (%s)"
 
 #: app/gui/images-menu.c:42
 msgid "/_Raise Views"
@@ -4648,9 +4635,8 @@ msgid "Layer Mask to Selection"
 msgstr ""
 
 #: app/gui/layers-commands.c:723
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Sraith"
+msgstr "Sraith Folamh"
 
 #: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
@@ -4710,9 +4696,8 @@ msgid "Invalid width or height. Both must be positive."
 msgstr ""
 
 #: app/gui/layers-menu.c:46
-#, fuzzy
 msgid "/Te_xt Tool"
-msgstr "Dath Theacs"
+msgstr "/Uirlís _Theacs"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -4795,14 +4780,12 @@ msgid "/Al_pha to Selection"
 msgstr ""
 
 #: app/gui/layers-menu.c:167
-#, fuzzy
 msgid "/Merge _Visible Layers..."
-msgstr "/Sraith/Sraith Nua"
+msgstr ""
 
 #: app/gui/layers-menu.c:172
-#, fuzzy
 msgid "/_Flatten Image"
-msgstr "/_Dealaigh Íomha"
+msgstr ""
 
 #: app/gui/menus.c:113
 msgid "Toolbox Menu"
@@ -4865,9 +4848,8 @@ msgid "Documents Menu"
 msgstr "Clár Capéiseanna"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
-msgstr "Clár Íomhanna"
+msgstr ""
 
 #: app/gui/menus.c:226
 msgid "Images Menu"
@@ -5151,24 +5133,20 @@ msgstr ""
 
 #. disabled because they are useless now
 #: app/gui/patterns-menu.c:47
-#, fuzzy
 msgid "/_Edit Pattern..."
-msgstr "/Eagar an Paléid..."
+msgstr ""
 
 #: app/gui/patterns-menu.c:55
-#, fuzzy
 msgid "/_New Pattern"
-msgstr "/Palêid Nua"
+msgstr ""
 
 #: app/gui/patterns-menu.c:60
-#, fuzzy
 msgid "/D_uplicate Pattern"
-msgstr "/Dúbáil Slí"
+msgstr "/_Dúbáil Patrún"
 
 #: app/gui/patterns-menu.c:66
-#, fuzzy
 msgid "/_Delete Pattern..."
-msgstr "/Dealaigh Paléid"
+msgstr ""
 
 #: app/gui/patterns-menu.c:74
 msgid "/_Refresh Patterns"
@@ -5399,14 +5377,12 @@ msgid "Paint Options Shared Between Tools"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1426
-#, fuzzy
 msgid "_Brush"
-msgstr "/Scuab _Nua"
+msgstr "/_Scuab"
 
 #: app/gui/preferences-dialog.c:1429
-#, fuzzy
 msgid "_Pattern"
-msgstr "/Palêid Nua"
+msgstr ""
 
 #. Input Devices
 #: app/gui/preferences-dialog.c:1441 app/gui/preferences-dialog.c:1444
@@ -6120,51 +6096,44 @@ msgid "Enter a new name for the saved options"
 msgstr ""
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "Sábháil roghnachais do..."
+msgstr "/_Sábháil roghnachais do..."
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "Sábháil roghnachais do..."
+msgstr ""
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "Sábháil Roghnachais na hÚrlísí"
+msgstr ""
 
 #: app/gui/tool-options-menu.c:73
 msgid "/Restore Options from/(None)"
 msgstr ""
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "Sábháil Roghnachais na hÚrlísí"
+msgstr ""
 
 #: app/gui/tool-options-menu.c:81
 msgid "/Rename Saved Options/(None)"
 msgstr ""
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "Sábháil Roghnachais na hÚrlísí"
+msgstr ""
 
 #: app/gui/tool-options-menu.c:89
 msgid "/Delete Saved Options/(None)"
 msgstr ""
 
 #: app/gui/tool-options-menu.c:98
-#, fuzzy
 msgid "/R_eset Tool Options"
-msgstr "Sábháil Roghnachais na hÚrlísí"
+msgstr ""
 
 #: app/gui/tool-options-menu.c:103
-#, fuzzy
 msgid "/Reset _all Tool Options..."
-msgstr "Sábháil Roghnachais na hÚrlísí"
+msgstr ""
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
@@ -6300,11 +6269,11 @@ msgstr ""
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:260
 msgid "/_Help"
-msgstr "/C_uidiú"
+msgstr "/Cab_hair"
 
 #: app/gui/toolbox-menu.c:262
 msgid "/Help/_Help"
-msgstr "/Cuidiú/C_uidiú"
+msgstr "/Cabhair/Cab_hair"
 
 #: app/gui/toolbox-menu.c:267
 msgid "/Help/_Context Help"
@@ -6316,7 +6285,7 @@ msgstr ""
 
 #: app/gui/toolbox-menu.c:277
 msgid "/Help/_About"
-msgstr "/Cuidiú/_Faoi"
+msgstr "/Cabhair/_Faoi"
 
 #: app/gui/user-install-dialog.c:132
 msgid ""
@@ -7163,7 +7132,7 @@ msgstr "Eagar"
 
 #: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:109
 msgid "Move"
-msgstr "Bóg"
+msgstr "Bog"
 
 #: app/tools/tools-enums.c:113
 msgid "Don't Show Grid"
@@ -7614,13 +7583,12 @@ msgstr ""
 #: app/tools/gimpeditselectiontool.c:247
 #: app/tools/gimpeditselectiontool.c:1170 app/vectors/gimpvectors.c:366
 msgid "Move Path"
-msgstr ""
+msgstr "Bog Slí"
 
 #: app/tools/gimpeditselectiontool.c:255
 #: app/tools/gimpeditselectiontool.c:1213
-#, fuzzy
 msgid "Move Layer Mask"
-msgstr "Scríos Sraith"
+msgstr ""
 
 #: app/tools/gimpeditselectiontool.c:267
 #: app/tools/gimpeditselectiontool.c:1223
@@ -7629,7 +7597,7 @@ msgstr ""
 
 #: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
 msgid "Move: "
-msgstr "Bóg: "
+msgstr "Bog: "
 
 #: app/tools/gimpellipseselecttool.c:72
 msgid "Select elliptical regions"
@@ -7781,7 +7749,7 @@ msgstr ""
 
 #: app/tools/gimpinkoptions.c:309
 msgid "Speed:"
-msgstr ""
+msgstr "Luas:"
 
 #: app/tools/gimpinkoptions.c:320
 msgid "Type"
@@ -9295,9 +9263,8 @@ msgid ""
 msgstr ""
 
 #: app/widgets/gimpthumbbox.c:239 app/widgets/gimpthumbbox.c:285
-#, fuzzy
 msgid "No Selection"
-msgstr "Roghnaigh Tada"
+msgstr ""
 
 #: app/widgets/gimpthumbbox.c:371 app/widgets/gimpthumbbox.c:391
 #, c-format
@@ -9632,13 +9599,13 @@ msgstr ""
 msgid "Create and edit images or photographs"
 msgstr ""
 
-#~ msgid "<Translator: insert your name here>"
-#~ msgstr ""
-#~ "Paul Duffy <dubhthach@zion.nuigalway.ie> \n"
-#~ "Alastair McKinstry <mckinstry@computer.org>"
+msgid "<Translator: insert your name here>"
+msgstr ""
+"Paul Duffy <dubhthach@zion.nuigalway.ie> \n"
+"Alastair McKinstry <mckinstry@computer.org>"
 
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Amharc/Súmáil/1:4"
+msgid "/View/Zoom/1:4"
+msgstr "/Amharc/Súmáil/1:4"
 
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Amharc/Súmáil/1:8"
+msgid "/View/Zoom/1:8"
+msgstr "/Amharc/Súmáil/1:8"

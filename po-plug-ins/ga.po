@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp po-plug-ins CVS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2000-08-27 00:23+0000\n"
+"PO-Revision-Date: 2004-03-21 00:23+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
 "MIME-Version: 1.0\n"
@@ -605,9 +605,8 @@ msgid "Create a new image when applying filter"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:393
-#, fuzzy
 msgid "High _Quality Preview"
-msgstr "Réamhthaispeántas Beo"
+msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:403
 msgid "Enable/disable high quality preview"
@@ -1183,7 +1182,7 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:3321
 #, c-format
 msgid "Opening '%s'..."
-msgstr "Ag oscáilt '%s'..."
+msgstr "Ag oscailt '%s'..."
 
 #: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
 #: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
@@ -2892,9 +2891,8 @@ msgstr ""
 
 #. The preview button
 #: plug-ins/common/curve_bend.c:1302
-#, fuzzy
 msgid "_Preview Once"
-msgstr "Réamhthaispeántas"
+msgstr ""
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1311
@@ -4402,7 +4400,7 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:1096
 msgid "_Move"
-msgstr "_Bóg"
+msgstr "_Bog"
 
 #: plug-ins/common/iwarp.c:1097
 msgid "_Grow"
@@ -5440,7 +5438,7 @@ msgstr ""
 #: plug-ins/common/plugindetails.c:363
 #: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
-msgstr ""
+msgstr "Ainm:"
 
 #: plug-ins/common/plugindetails.c:374
 #: plug-ins/dbbrowser/dbbrowser_utils.c:354
@@ -5450,11 +5448,11 @@ msgstr ""
 #: plug-ins/common/plugindetails.c:387
 #: plug-ins/dbbrowser/dbbrowser_utils.c:468
 msgid "Help:"
-msgstr ""
+msgstr "Cabhair:"
 
 #: plug-ins/common/plugindetails.c:414 plug-ins/common/spheredesigner.c:2616
 msgid "Type:"
-msgstr ""
+msgstr "Cinéal:"
 
 #: plug-ins/common/plugindetails.c:972
 msgid "Plugin Descriptions"
@@ -5807,14 +5805,12 @@ msgid "_Encapsulated PostScript"
 msgstr ""
 
 #: plug-ins/common/postscript.c:3042
-#, fuzzy
 msgid "P_review"
-msgstr "Réamhthaispeántas"
+msgstr "_Réamhthaispeántas"
 
 #: plug-ins/common/postscript.c:3063
-#, fuzzy
 msgid "Preview _Size:"
-msgstr "Réamhthaispeántas"
+msgstr "_Méid Réamhthaispeántas:"
 
 #: plug-ins/common/psd.c:488
 msgid "Invalid UTF-8 string in PSD file"
@@ -6599,24 +6595,23 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2803
 msgid "Pos X:"
-msgstr ""
+msgstr "Áit. X:"
 
 #: plug-ins/common/spheredesigner.c:2820
 msgid "Pos Y:"
-msgstr ""
+msgstr "Áit Y:"
 
 #: plug-ins/common/spheredesigner.c:2837
 msgid "Pos Z:"
-msgstr ""
+msgstr "Áit Z:"
 
 #: plug-ins/common/spheredesigner.c:2864
 msgid "Bump"
 msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2890
-#, fuzzy
 msgid "Amount:"
-msgstr "Faoi"
+msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2908
 msgid "Exp:"
@@ -6754,11 +6749,11 @@ msgstr ""
 #: plug-ins/common/svg.c:430
 #, c-format
 msgid "%d x %d"
-msgstr ""
+msgstr "%d x %d"
 
 #: plug-ins/common/svg.c:634
 msgid "Open SVG"
-msgstr ""
+msgstr "Oscail SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:646
@@ -6768,7 +6763,7 @@ msgstr ""
 #: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
 msgid "Height:"
-msgstr ""
+msgstr "Airde:"
 
 #: plug-ins/common/svg.c:779
 msgid "Ratio _X:"
@@ -6781,7 +6776,7 @@ msgstr ""
 #: plug-ins/common/svg.c:826
 #, c-format
 msgid "pixels/%a"
-msgstr ""
+msgstr "picsil/%a"
 
 #. Path Import
 #: plug-ins/common/svg.c:846
@@ -6809,7 +6804,7 @@ msgstr ""
 
 #: plug-ins/common/tga.c:1193
 msgid "Save as TGA"
-msgstr ""
+msgstr "Sábháil mar TGA"
 
 #. regular tga parameter settings
 #: plug-ins/common/tga.c:1203
@@ -6875,7 +6870,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:2079
 msgid "Save as TIFF"
-msgstr ""
+msgstr "Sábháil mar TIFF"
 
 #. compression
 #: plug-ins/common/tiff.c:2093
@@ -6884,7 +6879,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:2098
 msgid "_LZW"
-msgstr ""
+msgstr "_LZW"
 
 #: plug-ins/common/tiff.c:2099
 msgid "_Pack Bits"
@@ -6896,7 +6891,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:2101
 msgid "_JPEG"
-msgstr ""
+msgstr "_JPEG"
 
 #: plug-ins/common/tiff.c:2110
 msgid "Save _color values from transparent pixels"
@@ -6904,7 +6899,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
 msgid "Comment:"
-msgstr ""
+msgstr "Nota:"
 
 #: plug-ins/common/tile.c:112
 msgid "<Image>/Filters/Map/_Tile..."
@@ -6984,7 +6979,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:83
 msgid "Saved"
-msgstr ""
+msgstr "Sábháilte"
 
 #: plug-ins/common/uniteditor.c:83
 msgid ""
@@ -6994,7 +6989,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:85
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:85
 msgid ""
@@ -7164,11 +7159,11 @@ msgstr ""
 
 #: plug-ins/common/video.c:1898
 msgid "Video/RGB..."
-msgstr ""
+msgstr "Fís/RGB..."
 
 #: plug-ins/common/video.c:2141
 msgid "Video"
-msgstr ""
+msgstr "Fís"
 
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2160
@@ -9809,7 +9804,7 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:1191
 #, fuzzy
 msgid "/Move"
-msgstr "_Bóg"
+msgstr "_Bog"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
 msgid "/Rotate\\/Scale"
@@ -10389,11 +10384,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:395
 msgid "_Help"
-msgstr ""
+msgstr "Cab_hair"
 
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
-msgstr ""
+msgstr "Faoi ImageMap..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
 #, fuzzy
@@ -11526,23 +11521,23 @@ msgid "Error: XJT property file '%s' is empty."
 msgstr ""
 
 #, fuzzy
-#~ msgid "_after"
-#~ msgstr "Réamhthaispeántas Beo"
+msgid "_after"
+msgstr "Réamhthaispeántas Beo"
 
 #, fuzzy
-#~ msgid "A_bout..."
-#~ msgstr "Faoi"
+msgid "A_bout..."
+msgstr "Faoi"
 
 #, fuzzy
-#~ msgid "_Update Preview"
-#~ msgstr "Réamhthaispeántas Beo"
+msgid "_Update Preview"
+msgstr "Réamhthaispeántas Beo"
 
 #, fuzzy
-#~ msgid "Image preview"
-#~ msgstr "Réamhthaispeántas Beo"
+msgid "Image preview"
+msgstr "Réamhthaispeántas Beo"
 
-#~ msgid "OK"
-#~ msgstr "Ceart go leor"
+msgid "OK"
+msgstr "Ceart go leor"
 
-#~ msgid "Cancel"
-#~ msgstr "Cealaigh"
+msgid "Cancel"
+msgstr "Cealaigh"
