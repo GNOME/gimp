@@ -1,3 +1,8 @@
+Wed Mar  1 00:46:09 CET 2000  Sven Neumann <sven@gimp.org
+
+	* app/layers_dialog.c
+	* app/menus.c: remove ellipses from menu entries
+
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gdisplay.c: set <Image>/File/Revert... insensitive if the

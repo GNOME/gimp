@@ -1030,8 +1030,8 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("Flatten Image", fs && ac && gimage && lp);
 
   SET_SENSITIVE ("Add Layer Mask...", fs && ac && gimage && !lm && lp && alpha);
-  SET_SENSITIVE ("Apply Layer Mask...", fs && ac && gimage && lm && lp);
-  SET_SENSITIVE ("Delete Layer Mask...", fs && ac && gimage && lm && lp);
+  SET_SENSITIVE ("Apply Layer Mask", fs && ac && gimage && lm && lp);
+  SET_SENSITIVE ("Delete Layer Mask", fs && ac && gimage && lm && lp);
   SET_SENSITIVE ("Mask to Selection", fs && ac && gimage && lm && lp);
 
   SET_SENSITIVE ("Add Alpha Channel", !alpha);
