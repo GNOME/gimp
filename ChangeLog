@@ -1,3 +1,9 @@
+2004-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_grid): fixed handling of grid offsets in
+	the grid drawing routine. Merged from HEAD.
+
 2004-05-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/Makefile.am: do not install
