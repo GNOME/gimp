@@ -31,8 +31,13 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-qmask.h"
 
+#include "widgets/gimpdialogfactory.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+
+#include "dialogs.h"
+#include "select-commands.h"
 
 #include "gimp-intl.h"
 
@@ -253,6 +258,9 @@ select_save_cmd_callback (GtkWidget *widget,
 
   gimp_image_mask_save (gimage);
   gimp_image_flush (gimage);
+
+  gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                    "gimp-channel-list", -1);
 }
 
 void
