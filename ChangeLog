@@ -2,6 +2,8 @@
 
 	* plug-ins/script-fu/script-fu.c: more _() tagging.
 
+	* app/install.c: _() tagging for hardcoded fonts.
+
 Sat Jan 29 15:40:01 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/convert.c

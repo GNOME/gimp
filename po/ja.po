@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.16\n"
-"POT-Creation-Date: 2000-01-27 23:28+0900\n"
-"PO-Revision-Date: 2000-01-27 23:29+09:00\n"
+"POT-Creation-Date: 2000-01-30 02:14+0900\n"
+"PO-Revision-Date: 2000-01-30 02:14+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -2365,10 +2365,11 @@ msgid ""
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version.\n"
 msgstr ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"本プログラムはフリー・ソフトウェアです。あなたは、Free Software\n"
+"Foundation が公表したGNU一般公有使用許諾の「バージョン２」或い\n"
+"はそれ以降の各バージョンの中からいずれかを選択し、そのバージョ\n"
+"ンが定める条項に従って本プログラムを再頒布または変更することが\n"
+"できます。\n"
 
 #: app/install.c:123
 msgid ""
@@ -2377,10 +2378,10 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details.\n"
 msgstr ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details.\n"
+"本プログラムは有用とは思いますが、 頒布にあたっては、 市場性\n"
+"及び特定目的適合性についての暗黙の保証を含めて、いかなる保証\n"
+"も行ないません。詳細については GNU 一般公有使用許諾書をお読み\n"
+"ください。\n"
 
 #: app/install.c:128
 msgid ""
@@ -2389,22 +2390,22 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA.\n"
 msgstr ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"あなたは、本プログラムと一緒にGNU 一般公有使用許諾の写しを受け\n"
+"取っているはずです。そうでない場合は、Free Software Foundation,\n"
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. * へ手紙\n"
+"を書いてください。\n"
 
 #: app/install.c:134
 msgid ""
 "Personal GIMP Installation\n"
 "\n"
 msgstr ""
-"Personal GIMP Installation\n"
+"パーソナル GIMP インストール\n"
 "\n"
 
 #: app/install.c:135
 msgid "For a proper GIMP installation, a subdirectory called\n"
-msgstr "For a proper GIMP installation, a subdirectory called\n"
+msgstr "正常に GIMP がインストールされれば,\n"
 
 #. will be replaced with gimp_directory()
 #: app/install.c:137
@@ -2413,8 +2414,8 @@ msgid ""
 "subdirectory will contain a number of important files:\n"
 "\n"
 msgstr ""
-" needs to be created.  This\n"
-"subdirectory will contain a number of important files:\n"
+"というサブディレクトリが作成されます.\n"
+"このサブディレクトリには幾つかの重要なファイルが置かれます:\n"
 "\n"
 
 #: app/install.c:141
@@ -2424,10 +2425,10 @@ msgid ""
 "\t\tPaths to search for brushes, palettes, gradients,\n"
 "\t\tpatterns, plug-ins and modules can also configured here.\n"
 msgstr ""
-"\t\tThe gimprc is used to store personal preferences\n"
-"\t\tthat affect GIMP's default behavior.\n"
-"\t\tPaths to search for brushes, palettes, gradients\n"
-"\t\tpatterns, plug-ins and modules are also configured here.\n"
+"\t\tgimprc は GIMP の基本動作に関する個人設定を保存する\n"
+"\t\tために使用されます. ブラシ, パレット, グラデーション,\n"
+"\t\tパターン, プラグインやモジュール等を検索するパスも\n"
+"\t\tこのファイルで設定されます.\n"
 
 #: app/install.c:147
 msgid ""
@@ -2438,12 +2439,12 @@ msgid ""
 "\t\tis cached in this file.  This file is intended to\n"
 "\t\tbe GIMP-readable only, and should not be edited.\n"
 msgstr ""
-"\t\tPlug-ins and extensions are external programs run by\n"
-"\t\tthe GIMP which provide additional functionality.\n"
-"\t\tThese programs are searched for at run-time and\n"
-"\t\tinformation about their functionality and mod-times\n"
-"\t\tis cached in this file.  This file is intended to\n"
-"\t\tbe GIMP-readable only, and should not be edited.\n"
+"\t\t機能を追加するためのプラグインや機能拡張は,\n"
+"\t\tGIMP によって実行される外部プログラムです.\n"
+"\t\tこれらのプログラムは実行時に検索され, 機能や導入\n"
+"\t\tされた日時等の情報がこのファイルにキャッシュされ\n"
+"\t\tます. 個のファイルは GIMP によってのみ変更される\n"
+"\t\tもので, ユーザが変更を加えるべきではありません.\n"
 
 #: app/install.c:155
 msgid ""
@@ -2454,12 +2455,13 @@ msgid ""
 "\t\tkeys from within The GIMP. Deleting this file will\n"
 "\t\trestore the default shortcuts.\n"
 msgstr ""
-"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
-"\t\tThe menurc is a dump of your configuration so it can.\n"
-"\t\tbe remembered for the next session. You may edit this\n"
-"\t\tfile if you wish, but it is much easier to define the\n"
-"\t\tkeys from within The GIMP. Deleting this file will\n"
-"\t\trestore the default shortcuts.\n"
+"\t\tGIMP のキーショートカットは動的に変更することが\n"
+"\t\tできます. menurc はあなたの設定を書き出したもので,\n"
+"\t\t次に起動した際に再び同じものが有効になります.\n"
+"\t\t手でこのファイルを書き変えることもできますが,\n"
+"\t\tGIMP 自体で変更する方が楽でしょう. このファイルを\n"
+"\t\t削除することで, ショートカットを初期化することが\n"
+"\t\tできます.\n"
 
 #: app/install.c:163
 msgid ""
@@ -2467,9 +2469,10 @@ msgid ""
 "\t\topen the last time you quit The GIMP. You can configure\n"
 "\t\tThe GIMP to reopen these dialogs at the saved position.\n"
 msgstr ""
-"\t\tThe sessionrc is used to store what dialog windows were\n"
-"\t\topen the last time you quit The GIMP. You can configure\n"
-"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
+"\t\tsessionrc は GIMP 終了時にダイアログウィンドウがどこに\n"
+"\t\tあったかを保存するためのファイルです. このファイルに\n"
+"\t\t保存された位置にダイアログを開くように GIMP を設定\n"
+"\t\tできます.\n"
 
 #: app/install.c:168
 msgid ""
@@ -2479,11 +2482,11 @@ msgid ""
 "\t\tpoints and picas. This file is overwritten each time\n"
 "\t\tyou quit the GIMP.\n"
 msgstr ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
+"\t\tunitrc はユーザ単位データベースを保存するためのもの\n"
+"\t\tです. 新たに単位を追加して, あたかもインチ, ポイント,\n"
+"\t\tミリメートルやパイカといった内蔵単位と同等に用いる\n"
+"\t\tことができます. このファイルは GIMP 終了時に上書き\n"
+"\t\tされます.\n"
 
 #: app/install.c:175
 msgid ""
@@ -2493,11 +2496,10 @@ msgid ""
 "\t\twide gimp brushes installation when searching for\n"
 "\t\tbrushes.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined brushes.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp brushes installation when searching for\n"
-"\t\tbrushes.\n"
+"\t\tユーザ定義のブラシを保存するサブディレクトリです.\n"
+"\t\tデフォルトの gimprc の設定ではシステム全体のブラシ\n"
+"\t\tディレクトリに続けてこのサブディレクトリを検索する\n"
+"\t\tようになっています.\n"
 
 #: app/install.c:182
 msgid ""
@@ -2506,10 +2508,10 @@ msgid ""
 "\t\tgimprc file checks this subdirectory when searching for\n"
 "\t\tgenerated brushes.\n"
 msgstr ""
-"\t\tThis is a subdirectory which is used to store brushes\n"
-"\t\tthat are created with the brush editor.  The default\n"
-"\t\tgimprc file checks this subdirectory when searching for\n"
-"\t\tgenerated brushes.\n"
+"\t\tブラシエディタで作成したブラシを保存するためのサブ\n"
+"\t\tディレクトリです. デフォルトの gimprc の設定では生成\n"
+"\t\tされたブラシを検索する際にこのサブディレクトリを\n"
+"\t\t検索するようになっています.\n"
 
 #: app/install.c:188
 msgid ""
@@ -2519,11 +2521,10 @@ msgid ""
 "\t\twide gimp gradients installation when searching for\n"
 "\t\tgradients.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gradients.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp gradients installation when searching for\n"
-"\t\tgradients.\n"
+"\t\tユーザ定義のグラデーションを保存するサブディレクトリ\n"
+"\t\tです. デフォルトの gimprc の設定ではシステム全体の\n"
+"\t\tグラデーションディレクトリに続けてこのサブディレク\n"
+"\t\tトリを検索するようになっています.\n"
 
 #: app/install.c:195
 msgid ""
@@ -2533,11 +2534,10 @@ msgid ""
 "\t\taddition to the systemwide gimp gfig installation\n"
 "\t\twhen searching for gfig figures.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined figures to be used by the gfig plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gfig installation\n"
-"\t\twhen searching for gfig figures.\n"
+"\t\tgfig プラグインで作成されたユーザ定義の図形を保存\n"
+"\t\tするためのサブディレクトリです. デフォルトの gimprc\n"
+"\t\tの設定ではシステム全体の gfig ディレクトリに続けて\n"
+"\t\tこのサブディレクトリを検索するようになっています.\n"
 
 #: app/install.c:202
 msgid ""
@@ -2547,11 +2547,11 @@ msgid ""
 "\t\taddition to the systemwide gimp gflares installation\n"
 "\t\twhen searching for gflares.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gflares to be used by the gflare plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gflares installation\n"
-"\t\twhen searching for gflares.\n"
+"\t\tgフレア プラグインで作成されたユーザ定義の gフレア\n"
+"\t\tを保存するためのサブディレクトリです. デフォルトの\n"
+"\t\tgimprc の設定ではシステム全体の gflare ディレクトリ\n"
+"\t\tに続けてこのサブディレクトリを検索するようになって\n"
+"\t\tいます.\n"
 
 #: app/install.c:209
 msgid ""
@@ -2561,11 +2561,11 @@ msgid ""
 "\t\taddition to the systemwide gimp FractalExplorer installation\n"
 "\t\twhen searching for fractals.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined fractals to be used by the FractalExplorer\n"
-"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp FractalExplorer installation\n"
-"\t\twhen searching for fractals.\n"
+"\t\tフラクタルエクスプローラ プラグインで作成されたユーザ\n"
+"\t\t定義のフラクタルを保存するためのサブディレクトリ\n"
+"\t\tです. デフォルトの gimprc の設定ではシステム全体の\n"
+"\t\tフラクタルエクスプローラディレクトリに続けて\n"
+"\t\tこのサブディレクトリを検索するようになっています.\n"
 
 #: app/install.c:216
 msgid ""
@@ -2578,14 +2578,13 @@ msgid ""
 "\t\tpalettes during GIMP execution to persist across\n"
 "\t\tsessions.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined palettes.  The default gimprc file\n"
-"\t\tchecks only this subdirectory (not the system-wide\n"
-"\t\tinstallation) when searching for palettes.  During\n"
-"\t\tinstallation, the system palettes will be copied\n"
-"\t\there.  This is done to allow modifications made to\n"
-"\t\tpalettes during GIMP execution to persist across\n"
-"\t\tsessions.\n"
+"\t\tユーザ定義のパレットを保存するためのディレクトリです.\n"
+"\t\tデフォルトの gimprc ではパレットを検索する際に,\n"
+"\t\tこのシステムのパレットは検索せず, このディレクトリ\n"
+"\t\tのみ検索するようになっています. インストール中に\n"
+"\t\tシステムのパレットがこのディレクトリにコピーされ\n"
+"\t\tます. こうすることで, GIMP のセッションが終っても\n"
+"\t\tパレットを保持することができるようになっています.\n"
 
 #: app/install.c:226
 msgid ""
@@ -2595,11 +2594,10 @@ msgid ""
 "\t\twide gimp patterns installation when searching for\n"
 "\t\tpatterns.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined patterns.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp patterns installation when searching for\n"
-"\t\tpatterns.\n"
+"\t\tユーザ定義のパターンを保存するサブディレクトリです.\n"
+"\t\tデフォルトの gimprc の設定ではシステム全体のパターン\n"
+"\t\tディレクトリに続けてこのサブディレクトリを検索する\n"
+"\t\tようになっています.\n"
 
 #: app/install.c:233
 msgid ""
@@ -2610,12 +2608,11 @@ msgid ""
 "\t\twide GIMP plug-in directories when searching for\n"
 "\t\tplug-ins.\n"
 msgstr ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser created, temporary, or otherwise non-system-\n"
-"\t\tsupported plug-ins.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide GIMP plug-in directories when searching for\n"
-"\t\tplug-ins.\n"
+"\t\tユーザが作成した一時的な, もしくはシステムでサポート\n"
+"\t\tされないプラグインを保存するためのサブディレクトリ\n"
+"\t\tです. デフォルトの gimprc の設定ではシステム全体の\n"
+"\t\tGIMP プラグインディレクトリに続けてこのサブディレク\n"
+"\t\tトリを検索するようになっています.\n"
 
 #: app/install.c:241
 msgid ""
@@ -2623,13 +2620,13 @@ msgid ""
 "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
 "\t\tThe default gimprc file checks this subdirectory\n"
 "\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
+"\t\twhen searching for modules to load when initializing.\n"
 msgstr ""
-"\t\tThis subdirectory can be used to store user created,\n"
-"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-"\t\tThe default gimprc file checks this subdirectory\n"
-"\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
+"\t\tユーザが作成した一時的な, もしくはシステムでサポート\n"
+"\t\tされない DLL モジュールを保存するためのサブディレク\n"
+"\t\tトリです. デフォルトの gimprc の設定ではシステム全体の\n"
+"\t\tGIMP モジュールディレクトリに続けてこのサブディレク\n"
+"\t\tトリを検索するようになっています.\n"
 
 #: app/install.c:248
 msgid ""
@@ -2638,10 +2635,10 @@ msgid ""
 "\t\tfile checks this subdirectory in addition to the system\n"
 "\t\t-wide gimp scripts subdirectory when searching for scripts\n"
 msgstr ""
-"\t\tThis subdirectory is used by the GIMP to store \n"
-"\t\tuser created and installed scripts. The default gimprc\n"
-"\t\tfile checks this subdirectory in addition to the system\n"
-"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
+"\t\tユーザが作成したスクリプトを保存するためのサブ\n"
+"\t\tディレクトリトリです. デフォルトの gimprc の設定\n"
+"\t\tではシステム全体のスクリプトディレクトリに続けて\n"
+"\t\tこのサブディレクトリを検索するようになっています.\n"
 
 #: app/install.c:254
 msgid ""
@@ -2651,51 +2648,69 @@ msgid ""
 "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
 "\t\tGIMP sessions and can be destroyed with impunity.\n"
 msgstr ""
-"\t\tThis subdirectory is used by the GIMP to temporarily\n"
-"\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
-"\t\tunceremoniously killed, files may persist in this directory\n"
-"\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
-"\t\tGIMP sessions and can be destroyed with impunity.\n"
+"\t\tメモリ使用量を減らすため, GIMP がアンドゥバッファを\n"
+"\t\t一時的に置いておくためのディレクトリです. GIMP を\n"
+"\t\t強制的に終了させた場合には, gimp<番号>.<番号> という\n"
+"\t\t名前のファイルが残ってしまうかもしれません. これらの\n"
+"\t\tファイルは削除してもかまいません.\n"
 
 #: app/install.c:263
 msgid "GIMP Installation"
-msgstr "GIMP Installation"
+msgstr "GIMP インストール"
 
 #: app/install.c:268
 msgid "Install"
-msgstr "Install"
+msgstr "インストール"
 
 #: app/install.c:270
 msgid "Ignore"
-msgstr "Ignore"
+msgstr "無視"
+
+#: app/install.c:294 app/install.c:440
+msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr ""
+"-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,-misc-fixed-medium-r-normal-*-"
+"14-*-*-*-*-*-*-*,*"
+
+#: app/install.c:296
+msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr ""
+"-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,-misc-fixed-medium-r-normal-"
+"*-14-*-*-*-*-*-*-*,*"
 
 #: app/install.c:411
 msgid "Installation Log"
-msgstr "Installation Log"
+msgstr "インストールログ"
 
 #: app/install.c:416
 msgid "Continue"
-msgstr "Continue"
+msgstr "次へ"
+
+#: app/install.c:441
+msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr ""
+"-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,-misc-fixed-medium-r-normal-"
+"*-14-*-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
 "User Installation Log\n"
 "\n"
 msgstr ""
-"User Installation Log\n"
+"ユーザ インストール ログ\n"
 "\n"
 
 #: app/install.c:457
 msgid " does not exist.  Cannot install.\n"
-msgstr " does not exist.  Cannot install.\n"
+msgstr " が存在しません. インストールできません.\n"
 
 #: app/install.c:465
 msgid ""
 " has invalid permissions.\n"
 "Cannot install."
 msgstr ""
-" has invalid permissions.\n"
-"Cannot install."
+" が不正なパーミッションです.\n"
+"インストールできません."
 
 #: app/install.c:499
 msgid ""
@@ -2704,10 +2719,10 @@ msgid ""
 "was successful! Otherwise, quit and investigate\n"
 "the possible reason...\n"
 msgstr ""
-"Did you notice any error messages\n"
-"in the console window? If not, installation\n"
-"was successful! Otherwise, quit and investigate\n"
-"the possible reason...\n"
+"コンソールウィンドウに何かエラーメッセージが\n"
+"出ませんでしたか? 出ていなければインストール\n"
+"は成功です! 何か表示された場合にはここで中断\n"
+"して原因を調査しましょう...\n"
 
 #: app/install.c:531
 msgid ""
@@ -2715,7 +2730,7 @@ msgid ""
 "Installation successful!\n"
 msgstr ""
 "\n"
-"Installation successful!\n"
+"インストール成功!\n"
 
 #: app/install.c:540
 msgid ""
@@ -2723,7 +2738,7 @@ msgid ""
 "Installation failed.  Contact system administrator.\n"
 msgstr ""
 "\n"
-"Installation failed.  Contact system administrator.\n"
+"インストール失敗.  システム管理者とご相談ください.\n"
 
 #: app/interface.c:306
 msgid ""
@@ -3123,44 +3138,44 @@ msgstr "拡大オプション"
 msgid "Allow Window Resizing"
 msgstr "ウィンドウサイズの自動変更"
 
-#: app/main.c:301
+#: app/main.c:281
 msgid "GIMP version"
 msgstr "GIMP バージョン"
 
-#: app/main.c:305
+#: app/main.c:285
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "使用法: %s [オプション ...] [ファイル ...]\n"
 
-#: app/main.c:306
+#: app/main.c:286
 msgid "Valid options are:\n"
 msgstr "有効なオプション:\n"
 
-#: app/main.c:307
+#: app/main.c:287
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                このヘルプを表示。\n"
 
-#: app/main.c:308
+#: app/main.c:288
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             バージョン情報の表示。\n"
 
-#: app/main.c:309
+#: app/main.c:289
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <コマンド>   バッチモードで起動。\n"
 
-#: app/main.c:310
+#: app/main.c:290
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     指定した gimprc ファイルを使用する。\n"
 
-#: app/main.c:311
+#: app/main.c:291
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        ユーザーインターフェースなしで起動。\n"
 
-#: app/main.c:312
+#: app/main.c:292
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     保存されたセッションを再現する。\n"
 
-#: app/main.c:313
+#: app/main.c:293
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -3168,41 +3183,41 @@ msgstr ""
 "  --no-data                "
 "パターン、グラデーション、パレット、ブラシを読み込まない\n"
 
-#: app/main.c:314
+#: app/main.c:294
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                詳細起動メッセージを表示する。\n"
 
-#: app/main.c:315
+#: app/main.c:295
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              起動画面を表示しない。\n"
 
-#: app/main.c:316
+#: app/main.c:296
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        起動画面に画像を表示しない。\n"
 
-#: app/main.c:317
+#: app/main.c:297
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
 
-#: app/main.c:318
+#: app/main.c:298
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                X 共有メモリ拡張機能を使用しない。\n"
 
-#: app/main.c:319
+#: app/main.c:299
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 "  --console-messages       警告はダイアログでなく、コンソールに出力する。\n"
 
-#: app/main.c:320
+#: app/main.c:300
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         デバッグ用シグナルハンドラを有効にする。\n"
 
-#: app/main.c:321
+#: app/main.c:301
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
@@ -3210,11 +3225,11 @@ msgstr ""
 "  --display <display>      X ディスプレイの指定。\n"
 "\n"
 
-#: app/main.c:322
+#: app/main.c:302
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> 指定するシステム gimprc を使用する。\n"
 
-#: app/main.c:339
+#: app/main.c:319
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(このコンソールウィンドウは10秒後に閉じます)\n"
 

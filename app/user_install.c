@@ -242,7 +242,7 @@ install_help (InstallCallback callback)
 	    "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
 	    "\t\tThe default gimprc file checks this subdirectory\n"
 	    "\t\tin addition to the system-wide GIMP module directory\n"
-	    "\t\twhen searching for modules to load when initialising.\n") },
+	    "\t\twhen searching for modules to load when initializing.\n") },
 
     { 1, "scripts\n" },
     { 0, N_("\t\tThis subdirectory is used by the GIMP to store \n"
@@ -291,9 +291,9 @@ install_help (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
+  font_strong = gdk_fontset_load ( _("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
   font_emphasis = gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
-  font = gdk_font_load ("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*");
+  font = gdk_fontset_load ( _("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"));
 
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (text);
@@ -437,8 +437,8 @@ install_run (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    0, 0);
 
-  font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
-  font = gdk_font_load ("-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*");
+  font_strong = gdk_fontset_load ( _("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"));
+  font = gdk_fontset_load ( _("-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"));
 
   /*  Realize the text widget before inserting text strings  */
   gtk_widget_realize (text);
