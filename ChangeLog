@@ -1,3 +1,16 @@
+2004-09-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.0.6, interface_age 6,
+	binary_age 6.
+
+	Merged from HEAD:
+
+	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail_invoker): use
+	the GIMP_CHECK_SIZE_SM define, not the enum value
+	GIMP_CHECK_SIZE_SMALL_CHECKS which is 0 (eeek!).
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2004-09-25  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0.5 release.
