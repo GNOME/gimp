@@ -6,3 +6,4 @@ Makefile.in
 libappcomposite.la
 gimp-composite-dispatch.c
 ns.pyc
+test-composite
