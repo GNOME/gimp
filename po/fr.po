@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.12\n"
+"Project-Id-Version: gimp 1.1.20\n"
 "POT-Creation-Date: 2000-03-29 01:35-0800\n"
 "PO-Revision-Date: 1999-11-05 15:37+0100\n"
-"Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
+"Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -166,9 +166,8 @@ msgid "FG to Transparent"
 msgstr "AV vers Transparent"
 
 #: app/blend.c:308
-#, fuzzy
 msgid "Custom Gradient"
-msgstr "Copier dégradé"
+msgstr "Personnaliser le Dégradé"
 
 #: app/blend.c:312
 msgid "Blend:"
@@ -2422,7 +2421,6 @@ msgstr ""
 "'--nointerface'\n"
 
 #: app/install.c:151
-#, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2432,17 +2430,19 @@ msgid ""
 msgstr ""
 "Le fichier gimprc est utilisé pour stocker les préférences\n"
 "personnelles telles que les comportements par défaut.\n"
-"Les chemins pour rechercher les brosses, palettes, dégradés\n"
-"motifs, extensions et modules sont également paramétrés ici.\n"
+"Les chemins pour rechercher les brosses, palettes, dégradés, \n"
+"motifs, extensions et modules sont également paramétrés ici."
 
 #: app/install.c:159
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP utilise un fichier supplémentaire gtkrc de\n"
+"manière à ce que vous puissiez modifier son apparence\n"
+"vis à vis d'autres applications GTK."
 
 #: app/install.c:164
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2451,7 +2451,7 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"Les extensions et extensions sont des programmes\n"
+"Les modules et extensions sont des programmes\n"
 "externes, lancés par GIMP, qui fournissent des\n"
 "fonctionnalitées additionnelles. Ces programmes sont\n"
 "interrogés lors du lancement de GIMP et des\n"
@@ -2459,10 +2459,9 @@ msgstr ""
 "modifications sont stockées dans ce fichier pour des\n"
 "lancements ultérieurs plus rapides.\n"
 "Ce fichier est prévu pour n'être lu que par GIMP\n"
-"et ne doit pas être édité.\n"
+"et ne doit pas être édité."
 
 #: app/install.c:173
-#, fuzzy
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -2477,10 +2476,9 @@ msgstr ""
 "session en session. Vous pouvez éditer ce fichier à la main\n"
 "si vous le désirez, mais il est bien plus facile de définir\n"
 "les touches depuis Gimp. Effacer ce fichier redonne les\n"
-"raccourcis clavier par défaut.\n"
+"raccourcis clavier par défaut."
 
 #: app/install.c:182
-#, fuzzy
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -2488,11 +2486,10 @@ msgid ""
 msgstr ""
 "Le fichier sessionrc est utilisé pour sauvegarder la\n"
 "position des fenêtres de dialogue au moment de quitter\n"
-"Gimp. Vous pouvez configurer Gimp pour qu'il rouvre\n"
-"au lancement ces dialogues à leur positions sauvegardée.\n"
+"Gimp. Vous pouvez configurer GIMP pour qu'il rouvre\n"
+"au lancement ces dialogues à leur positions sauvegardée."
 
 #: app/install.c:188
-#, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -2504,10 +2501,9 @@ msgstr ""
 "personnelles. Vous pouvez définir des unités supplémentaires\n"
 "et les utiliser comme les unités intégrées (pouces,\n"
 "millimètres, points, picas). Ce fichier est réécrit chaque\n"
-"fois que vous quittez GIMP.\n"
+"fois que vous quittez GIMP."
 
 #: app/install.c:196
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -2515,14 +2511,13 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Répertoire qui peut être utilisé pour stocker vos\n"
-"pinceaux personnels. Avec les paramètres (gimprc)\n"
-"par défaut, GIMP regarde dans ce répertoire et dans\n"
-"le répertoire de pinceaux global à tous les\n"
-"utilisateurs lorsqu'il recherche des pinceaux.\n"
+"Il s'agit d'un sous répertoire qui peut être utilisé\n" 
+"pour stocker vos pinceaux personnels. Avec les paramètres\n"
+"(gimprc) par défaut, GIMP regarde dans ce répertoire et \n"
+"dans le répertoire de pinceaux global à tous les\n"
+"utilisateurs lorsqu'il recherche des pinceaux."
 
 #: app/install.c:204
-#, fuzzy
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -2533,10 +2528,9 @@ msgstr ""
 "pinceaux créés avec l'éditeur de pinceaux.\n"
 "Avec les paramètres (gimprc) par défaut, GIMP\n"
 "regarde dans ce répertoire lorsqu'il recherche des\n"
-"pinceaux générés.\n"
+"pinceaux générés."
 
 #: app/install.c:211
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -2548,10 +2542,9 @@ msgstr ""
 "dégradés personnels. Avec les paramètres (gimprc)\n"
 "par défaut, GIMP regarde dans ce répertoire et dans\n"
 "le répertoire de dégradés global à tous les\n"
-"utilisateurs lorsqu'il recherche des dégradés.\n"
+"utilisateurs lorsqu'il recherche des dégradés."
 
 #: app/install.c:219
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -2570,10 +2563,9 @@ msgstr ""
 "répertoire.\n"
 "Ceci est fait de sorte que les modifications faites aux\n"
 "palettes pendant l'exécution de GIMP persistent entre les\n"
-"sessions.\n"
+"sessions."
 
 #: app/install.c:230
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -2585,10 +2577,9 @@ msgstr ""
 "motifs personnels. Avec les paramètres (gimprc)\n"
 "par défaut, GIMP regarde dans ce répertoire et dans\n"
 "le répertoire de motifs global à tous les\n"
-"utilisateurs lorsqu'il recherche des motifss.\n"
+"utilisateurs lorsqu'il recherche des motifss."
 
 #: app/install.c:238
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -2601,10 +2592,9 @@ msgstr ""
 "non supportés par les administrateurs). Avec les\n"
 "paramètres (gimprc) par défaut, GIMP regarde dans ce\n"
 "répertoire et dans répertoire d'extensions global\n"
-"lorsqu'il recherche des plug-ins.\n"
+"lorsqu'il recherche des plug-ins."
 
 #: app/install.c:246
-#, fuzzy
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -2617,10 +2607,9 @@ msgstr ""
 "non supportés par les administrateurs). Avec les\n"
 "paramètres (gimprc) par défaut, GIMP regarde dans ce\n"
 "répertoire et dans répertoire de modules global\n"
-"lorsqu'il recherche des modules DLL.\n"
+"lorsqu'il recherche des modules DLL."
 
 #: app/install.c:254
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -2631,10 +2620,9 @@ msgstr ""
 "scripts personnels. Avec les paramètres (gimprc)\n"
 "par défaut, GIMP regarde dans ce répertoire et dans\n"
 "le répertoire de scripts global à tous les\n"
-"utilisateurs lorsqu'il recherche des scripts.\n"
+"utilisateurs lorsqu'il recherche des scripts."
 
 #: app/install.c:261
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2648,22 +2636,25 @@ msgstr ""
 "des fichiers de la forme gimp.<nn>.<nn> peuvent rester\n"
 "dans ce répertoire. Ces fichiers sont inutiles lors des\n"
 "utilisations ultérieures de GIMP et peuvent être détruits\n"
-"sans préjudice entre deux utilisations.\n"
+"sans préjudice entre deux utilisations."
 
 #: app/install.c:269
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Ce sous répertoire est utilisé pour stocker des fichiers\n"
+"de paramètres pour l'outil de Courbes."
 
 #: app/install.c:274
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Ce sous répertoire est utilisé pour stocker des fichiers\n"
+"de paramètres pour l'outil de Niveaux."
 
 #: app/install.c:279
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -2676,10 +2667,9 @@ msgstr ""
 "par défaut, GIMP regarde dans ce répertoire et dans\n"
 "le répertoire de dégradés global à tous les\n"
 "utilisateurs lorsqu'il recherche des figures pour\n"
-"le plug-in FractalExplorer.\n"
+"le plug-in FractalExplorer."
 
 #: app/install.c:287
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -2692,10 +2682,9 @@ msgstr ""
 "par défaut, GIMP regarde dans ce répertoire et dans\n"
 "le répertoire de dégradés global à tous les\n"
 "utilisateurs lorsqu'il recherche des figures pour\n"
-"l'extension gfig.\n"
+"l'extension gfig."
 
 #: app/install.c:295
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -2708,10 +2697,9 @@ msgstr ""
 "Avec les paramètres (gimprc) par défaut, GIMP regarde\n"
 "dans ce répertoire et dans le répertoire de dégradés\n"
 "global à tous les utilisateurs lorsqu'il recherche des\n"
-"paramètres pour l'extension gflare.\n"
+"paramètres pour l'extension gflare."
 
 #: app/install.c:303
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -2724,10 +2712,9 @@ msgstr ""
 "Avec les paramètres (gimprc) par défaut, GIMP regarde\n"
 "dans ce répertoire et dans le répertoire de dégradés\n"
 "global à tous les utilisateurs lorsqu'il recherche des\n"
-"paramètres pour l'extension gflare.\n"
+"paramètres pour l'extension gflare."
 
 #: app/install.c:526
-#, fuzzy
 msgid "GIMP User Installation"
 msgstr "Installation de GIMP"
 
@@ -2742,15 +2729,16 @@ msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-iso8859-1,*"
 
 #: app/install.c:663
-#, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "Installation de GIMP"
+msgstr ""
+"Bienvenue dans\n"
+"GIMP"
 
 #: app/install.c:665
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Cliquer \"Continuer\" pour entrer dans l'installation de GIMP."
 
 #: app/install.c:668
 msgid ""
@@ -2758,9 +2746,11 @@ msgid ""
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"The GIMP - GNU Image Manipulation Program\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis et l'équipe de developpement de GIMP."
 
 #: app/install.c:677
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -2770,10 +2760,9 @@ msgstr ""
 "Ce logiciel est un logiciel libre; vous pouvez le diffuser et le\n"
 "modifier suivant les termes de la GNU General Public License telle\n"
 "que publiée par la Free Software Foundation; soit la version 2 de cette\n"
-"license, soit (à votre convenance) une version ultérieure.\n"
+"license, soit (à votre convenance) une version ultérieure."
 
 #: app/install.c:682
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2783,10 +2772,9 @@ msgstr ""
 "Ce programme est diffusé dans l'espoir qu'il sera utile, mais\n"
 "SANS AUCUNE GARANTIE; sans même une garantie implicite de\n"
 "COMMERCIALISABILITÉ ou d'ADÉQUATION À UN USAGE PARTICULIER.\n"
-"Voyez la GNU General Public License pour plus de détails.\n"
+"Voyez la GNU General Public License pour plus de détails."
 
 #: app/install.c:687
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2796,25 +2784,24 @@ msgstr ""
 "Vous devriez avoir reçu une copie de la GNU General Public License\n"
 "avec ce programme; sinon, veuillez écrire à la Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, États-Unis.\n"
+"MA 02111-1307, États-Unis."
 
 #: app/install.c:713
-#, fuzzy
 msgid "Personal GIMP Directory"
-msgstr ""
-"Installation personnelle de GIMP\n"
-"\n"
+msgstr "Répertoire GIMP personnel"
 
 #: app/install.c:714
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
+msgstr "Cliquez \"Continuer\" pour créer votre répertoire GIMP\n"
+"personnel."
 
 #: app/install.c:731
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Pour une installation correcte de GIMP, un sous-répertoire nommé\n"
+msgstr "Pour une installation correcte de GIMP, un sous-répertoire\n"
+"nommé %s doit être créé."
 
 #: app/install.c:737
 msgid ""
@@ -2822,62 +2809,58 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Ce sous-répertoire contiendra un certain nombre de fichier\n"
+"important. Cliquez sur un des fichiers ou sous-répertoire\n"
+"de l'arborescence pour obtenir plus d'information sur l'objet\n"
+"sélectionné."
 
 #: app/install.c:821
-#, fuzzy
 msgid "User Installation Log"
-msgstr ""
-"Historique de l'installation\n"
-"\n"
+msgstr "Historique de l'Installation"
 
 #: app/install.c:827
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "Affinage des Performances de GIMP"
 
 #: app/install.c:828
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Cliquez sur \"Continuer\" pour accepter les\n"
+" paramètres ci-dessus."
 
 #: app/install.c:831
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
+msgstr "Pour des performances optimales de GIMP, certains paramètres devront\n"
+"être ajustés."
 
 #: app/install.c:840
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "Obtenir la résolution du moniteur"
+msgstr "Résolution du Moniteur"
 
 #: app/install.c:841
 msgid "Click \"Continue\" to start The GIMP."
-msgstr ""
+msgstr "Cliquez \"Continuer pour démarrer GIMP."
 
 #: app/install.c:844
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"Pour afficher les images dans leur taille naturelle, GIMP a besoin de\n"
+"de connaître la résolution de votre moniteur."
 
 #: app/install.c:853
-#, fuzzy
 msgid "Aborting Installation..."
-msgstr ""
-"Historique de l'installation\n"
-"\n"
+msgstr "Annulation de l'Installation en cours..."
 
 #: app/install.c:923
-#, fuzzy
 msgid "does not exist.  Cannot install."
-msgstr " n'existe pas. Impossible d'installer.\n"
+msgstr " n'existe pas. Impossible d'installer."
 
 #: app/install.c:935
-#, fuzzy
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-" a des permissions invalides.\n"
-"Impossible d'installer."
+msgstr "a des permissions invalides.  Impossible d'installer."
 
 #: app/install.c:973
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -2886,30 +2869,26 @@ msgstr ""
 "Avez vous remarqué des messages d'erreur dans\n"
 "la fenêtre de console ? S'il n'y en a pas, c'est\n"
 "que l'installation a réussi ! Sinon, quittez\n"
-"et recherchez les causes du problème...\n"
+"et recherchez les causes du problème..."
 
 #: app/install.c:1029
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 "Avez vous remarqué des messages d'erreur dans\n"
-"la fenêtre de console ? S'il n'y en a pas, c'est\n"
-"que l'installation a réussi ! Sinon, quittez\n"
-"et recherchez les causes du problème...\n"
+"les lignes ci-dessus ?\n"
+"S'il n'y en a pas, c'est que l'installation a réussi !\n"
+"Sinon, quittez et recherchez les causes du problème..."
 
 #: app/install.c:1041
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Cliquez sur \"Continuer\" pour compléter l'installation de GIMP."
 
 #: app/install.c:1046
-#, fuzzy
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
-"\n"
-"Échec de l'installation. Contactez votre administrateur système.\n"
+msgstr "Échec de l'installation. Contactez votre administrateur système."
 
 #: app/install.c:1067
 msgid ""
@@ -2917,10 +2896,15 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"GIMP utilises une quantité de mémoire limitée pour stocker les données\n"
+"d'une image; cette zone est nommée \"Cache de Carreaux\". Vous devrez\n"
+"ajuster cette taille pour correspondre avec votre quantité de mémoire.\n"
+"Considérez la quantité de mémoire utilisée par les autres processus\n"
+"en cours."
 
 #: app/install.c:1081 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
-msgstr "Taille du cache de carreaux:"
+msgstr "Taille du Cache Image :"
 
 #: app/install.c:1092
 msgid ""
@@ -2929,64 +2913,72 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"Toutes les images et données à défaire qui ne rentrent pas dans le\n"
+"Cache Image seront écrites dans un fichier d'échange.\n"
+"Ce fichier doit être situé sur un système de fichier local avec\n"
+"suffisament d'espace libre (quelques centaine de Mo). Sur un système\n"
+"UNIX, vous pourrez par exemple utiliser le répertoire temporaire\n"
+"commun (\"/tmp\" ou \"/var/tmp\")."
 
 #: app/install.c:1101 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
-msgstr "Choisir répertoire d'échange"
+msgstr "Choisir Répertoire d'Échange"
 
 #: app/install.c:1106
-#, fuzzy
 msgid "Swap Directory:"
-msgstr "Répertoire d'échange :"
+msgstr "Répertoire d'Échange :"
 
 #: app/install.c:1159
-#, fuzzy
 msgid "Calibrate Monitor Resolution"
-msgstr "Obtenir la résolution du moniteur"
+msgstr "Calibrer la Résolution du Moniteur"
 
 #: app/install.c:1267
 msgid "Measure the rulers and enter their lengths below."
 msgstr ""
 
 #: app/install.c:1282
-#, fuzzy
 msgid "Horizontal:"
-msgstr "Horizontal"
+msgstr "Horizontale :"
 
 #: app/install.c:1287
-#, fuzzy
 msgid "Vertical:"
-msgstr "Vertical"
+msgstr "Verticale :"
 
 #: app/install.c:1328
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
+"GIMP peut obtenir ces informations auprès de votre\n"
+"serveur X. Toutefois, la plupart des serveurs retournent\n"
+"une valeur inutilisable."
 
 #: app/install.c:1335
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "(actuellement %d x %d ppp)"
+msgstr "Obtenir la Résolution auprès du serveur X (actuellement %d x %d dpi)"
 
 #: app/install.c:1349
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Autrement vous pouvez définir la résolution de votre moniteur\n"
+"manuellement."
 
 #: app/install.c:1362
-#, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Obtenir la résolution du moniteur"
+msgstr "Résolution du moniteur X :"
 
 #: app/install.c:1398
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
+"Vous pouvez aussi presser le bouton \"Calibrer\" pour ouvrir\n"
+"une fenêtre qui vous laissera déterminer la résolution de votre\n"
+"moniteur interactivement."
 
 #: app/install.c:1405
 msgid "Calibrate"
-msgstr ""
+msgstr "Calibrer"
 
 #: app/interface.c:312
 msgid ""
@@ -3460,7 +3452,6 @@ msgstr ""
 "signaux.\n"
 
 #: app/main.c:291
-#, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <affichage>    Utilise l'affichage X spécifié.\n"
 
@@ -3662,14 +3653,12 @@ msgid "/Edit/Clear"
 msgstr "/Édition/Effacer"
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Remplir avec un dégradé de couleur"
+msgstr "/Édition/Remplir avec la Couleur d'Av. Pl."
 
 #: app/menus.c:249
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Remplir avec un dégradé de couleur"
+msgstr "/Édition/Remplir avec la Couleur d'Ar. Pl."
 
 #: app/menus.c:251
 msgid "/Edit/Stroke"
@@ -3921,7 +3910,7 @@ msgstr "/Calques/Alpha vers Sélection"
 #. <Image>/Tools
 #: app/menus.c:457
 msgid "/Tools/Toolbox"
-msgstr "/Outils/Boîte à outils"
+msgstr "/Outils/Boîte à Outils"
 
 #: app/menus.c:459
 msgid "/Tools/Default Colors"
@@ -3981,9 +3970,8 @@ msgid "/Dialogs/Display Filters..."
 msgstr "/Dialogues/Afficher les filtres..."
 
 #: app/menus.c:501
-#, fuzzy
 msgid "/Dialogs/Undo History..."
-msgstr "/Vue/Historique d'annulation..."
+msgstr "/Dialogues/Historique d'Annulation..."
 
 #. <Image>/Filters
 #: app/menus.c:510
@@ -4833,13 +4821,12 @@ msgid "Maximum Image Size:"
 msgstr "Taille maximal de l'image:"
 
 #: app/preferences_dialog.c:1623 app/preferences_dialog.c:1625
-#, fuzzy
 msgid "Default Comment"
-msgstr "Défaut"
+msgstr "Commentaire par Défaut"
 
 #: app/preferences_dialog.c:1633
 msgid "Comment Used for New Images"
-msgstr ""
+msgstr "Commentaire Utilisé pour les Nouvelles Images"
 
 #: app/preferences_dialog.c:1653 app/preferences_dialog.c:1655
 msgid "Display"

@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp 1.1.18 (script-fu)\n"
+"Project-Id-Version: Gimp 1.1.20 (script-fu)\n"
 "POT-Creation-Date: 2000-03-29 01:51+0200\n"
 "PO-Revision-Date: 2000-03-06 17:39+0100\n"
-"Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
-"Language-Team: French <fr@li.org>\n"
+"Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n" 
+"Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -150,12 +150,10 @@ msgid "Script-Fu Server Options"
 msgstr "Options du Serveur du Script-Fu"
 
 #: plug-ins/script-fu/script-fu-server.c:574
-#, fuzzy
 msgid "Server Port:"
-msgstr "Port du Serveur"
+msgstr "Port du Serveur :"
 
 #: plug-ins/script-fu/script-fu-server.c:580
-#, fuzzy
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 

@@ -228,15 +228,15 @@ msgstr ""
 
 #: libgimp/gimpwidgets.c:1030
 msgid "Bytes"
-msgstr ""
+msgstr "Octets"
 
 #: libgimp/gimpwidgets.c:1031
 msgid "KiloBytes"
-msgstr ""
+msgstr "KiloOctets"
 
 #: libgimp/gimpwidgets.c:1032
 msgid "MegaBytes"
-msgstr ""
+msgstr "MégaOctets"
 
 #~ msgid "Select"
 #~ msgstr "Sélectionner"
