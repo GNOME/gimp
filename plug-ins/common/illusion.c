@@ -381,7 +381,6 @@ dialog (GimpDrawable *mangle)
 {
   GtkWidget *dlg;  
   GtkWidget *main_vbox;
-  GtkWidget *abox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *spinbutton;
@@ -417,22 +416,8 @@ dialog (GimpDrawable *mangle)
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-
-  preview = gimp_fixme_preview_new (mangle);
-  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+  preview = gimp_fixme_preview_new (mangle, TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   filter_preview();
   gtk_widget_show (preview->widget);
   

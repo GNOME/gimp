@@ -35,12 +35,13 @@
 #include "config.h"
 
 #include "gimp.h"
+#include "gimpintl.h"
 #include "gimpmiscui.h"
 
 #define PREVIEW_SIZE  128 
 
 GimpFixMePreview*
-gimp_fixme_preview_new (GimpDrawable *drawable)
+gimp_fixme_preview_new (GimpDrawable *drawable, gboolean has_frame)
 {
   GimpFixMePreview *preview = g_new (GimpFixMePreview, 1);
 
@@ -49,12 +50,33 @@ gimp_fixme_preview_new (GimpDrawable *drawable)
   if (drawable)
     gimp_fixme_preview_fill_with_thumb (preview, drawable->drawable_id);
 
+  if (has_frame)
+    {
+      GtkWidget *frame, *abox;
+
+      preview->frame = gtk_frame_new (_("Preview"));
+      gtk_widget_show (preview->frame);
+
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+      gtk_container_add (GTK_CONTAINER (preview->frame), abox);
+      gtk_widget_show (abox);
+
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_container_add (GTK_CONTAINER (abox), frame);
+      gtk_widget_show (frame);
+
+      gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+    }
+
   return preview;
 }
 
 void 
 gimp_fixme_preview_free (GimpFixMePreview *preview)
 {
+  g_free (preview->cmap);
   g_free (preview->even);
   g_free (preview->odd);
   g_free (preview->cache);
@@ -70,43 +92,46 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
   gint    x;
   guchar *p0 = preview->even;
   guchar *p1 = preview->odd;
+  gint bpp = preview->bpp;
   gdouble r, g, b, a;
   gdouble c0, c1;
-  
+
   for (x = 0; x < width; x++) 
     {
-      switch (preview->bpp)
-        {
-        case 4:
-	  r = ((gdouble) src[x*4])     / 255.0;
+      if (bpp == 4)
+	{
+	  r = ((gdouble) src[x*4 + 0]) / 255.0;
 	  g = ((gdouble) src[x*4 + 1]) / 255.0;
 	  b = ((gdouble) src[x*4 + 2]) / 255.0;
 	  a = ((gdouble) src[x*4 + 3]) / 255.0;
-          break;
-
-        case 3:
-	  r = ((gdouble) src[x*3])     / 255.0;
+	}
+      else if (bpp == 3)
+	{
+	  r = ((gdouble) src[x*3 + 0]) / 255.0;
 	  g = ((gdouble) src[x*3 + 1]) / 255.0;
 	  b = ((gdouble) src[x*3 + 2]) / 255.0;
 	  a = 1.0;
-          break;
-
-        case 2:
-	  r = ((gdouble)src[x*2]) / 255.0;
-	  g = b = r;
-          a = ((gdouble)src[x*2 + 1]) / 255.0;
-          break;
-
-        case 1:
-	  r = ((gdouble)src[x*2]) / 255.0;
-	  g = b = r;
-          a = 1.0;
-          break;
-
-        default:
-          r = g = b = a = 1.0;  /* just to please the compiler */
-          g_assert_not_reached ();
-          break;
+	}
+      else
+	{
+	  if (preview->cmap)
+	    {
+	      gint index = MIN (src[x*bpp], preview->ncolors - 1);
+	      
+	      r = ((gdouble)preview->cmap[index * 3 + 0]) / 255.0;
+	      g = ((gdouble)preview->cmap[index * 3 + 1]) / 255.0;
+	      b = ((gdouble)preview->cmap[index * 3 + 2]) / 255.0;
+	    }
+	  else
+	    {
+	      r = ((gdouble)src[x*bpp + 0]) / 255.0;
+	      g = b = r;
+	    }
+	  
+	  if (bpp == 2)
+	    a = ((gdouble)src[x*2 + 1]) / 255.0;
+	  else
+	    a = 1.0;
 	}
       
       if ((x / GIMP_CHECK_SIZE_SM) & 1) 
@@ -160,6 +185,16 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
   preview->rowstride = width * bpp;
   preview->bpp       = bpp;
 
+  if (gimp_drawable_is_indexed (drawable_ID))
+    {
+      gint32 image_ID = gimp_drawable_image (drawable_ID);
+      preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
+    }
+  else
+    {
+      preview->cmap = NULL;
+    }
+
   gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
 
   preview->scale_x = 
@@ -205,6 +240,16 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   width  = x2 - x1;
   height = y2 - y1;
   bpp    = gimp_drawable_bpp (drawable->drawable_id);
+
+  if (gimp_drawable_is_indexed (drawable->drawable_id))
+    {
+      gint32 image_ID = gimp_drawable_image (drawable->drawable_id);
+      preview->cmap = gimp_image_get_cmap (image_ID, &preview->ncolors);
+    }
+  else
+    {
+      preview->cmap = NULL;
+    }
 
   gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
 

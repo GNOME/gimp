@@ -358,7 +358,6 @@ nova_dialog (GimpDrawable *drawable)
   center_frame = nova_center_create (drawable);
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
                     0, 0, 0, 0);
-
   button = gimp_color_button_new (_("SuperNova Color Picker"), 
 				  SCALE_WIDTH - 8, 16, 
 				  &pvals.color, GIMP_COLOR_AREA_FLAT);
@@ -384,7 +383,6 @@ nova_dialog (GimpDrawable *drawable)
   g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
                             G_CALLBACK (nova),
                             drawable);
-
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
 			      _("_Spokes:"), SCALE_WIDTH, 8,
 			      pvals.nspoke, 1, 1024, 1, 16, 0,
@@ -530,7 +528,7 @@ nova_center_create (GimpDrawable *drawable)
 		    0, 0, 0, 0);
 
   /* PREVIEW */
-  preview = gimp_fixme_preview_new (center->drawable);
+  preview = gimp_fixme_preview_new (drawable, FALSE);
   gtk_widget_set_events (preview->widget, PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
@@ -676,7 +674,9 @@ nova_center_preview_expose (GtkWidget *widget,
                             GdkEvent  *event,
 			    gpointer   data)
 {
+  printf("Before\n");
   nova_center_draw ((NovaCenter*) data, ALL);
+  printf("After\n");
   return FALSE;
 }
 

@@ -23,9 +23,6 @@
 
 #include "config.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
@@ -60,11 +57,8 @@ menu_mru(GtkWidget *widget, gpointer data)
 {
    MRU_t *mru = get_mru();
    char *filename = (char*) data;
-   struct stat buf;
-   int err;
 
-   err = stat(filename, &buf);
-   if (!err && (buf.st_mode & S_IFREG)) {
+   if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
       load(filename);
    } else {
       do_file_error_dialog(_("Error opening file"), filename);

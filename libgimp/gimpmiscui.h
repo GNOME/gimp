@@ -41,6 +41,7 @@ G_BEGIN_DECLS
 
 typedef struct {
   GtkWidget *widget;
+  GtkWidget *frame;
   guchar    *cache;
   guchar    *even;
   guchar    *odd;
@@ -49,11 +50,14 @@ typedef struct {
   gint	     height;
   gint       rowstride;
   gint       bpp;
+  guchar    *cmap;
+  gint       ncolors;
   gdouble    scale_x;
   gdouble    scale_y;
 } GimpFixMePreview;
 
-GimpFixMePreview *gimp_fixme_preview_new (GimpDrawable *drawable);
+GimpFixMePreview *gimp_fixme_preview_new (GimpDrawable *drawable,
+					  gboolean has_frame);
 void gimp_fixme_preview_free (GimpFixMePreview *preview);
 void gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 					 gint32     drawable_ID);

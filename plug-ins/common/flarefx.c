@@ -815,7 +815,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), pframe, 0, 4, 1, 2, 0, 0, 0, 0);
 
   /* PREVIEW */
-  preview = gimp_fixme_preview_new (drawable);
+  preview = gimp_fixme_preview_new (drawable, FALSE);
   gtk_widget_set_events (GTK_WIDGET (preview->widget), PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);

@@ -231,7 +231,6 @@ glass_dialog (GimpDrawable *drawable)
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *abox;
   GtkObject *adj;
 
   gimp_ui_init ("glasstile", TRUE);
@@ -258,24 +257,10 @@ glass_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-
-  preview = gimp_fixme_preview_new (drawable);
-  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
-  glasstile (drawable, TRUE); /* filter routine, initial pass */
+  preview = gimp_fixme_preview_new (drawable, TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
+  glasstile (drawable, TRUE); /* filter routine, initial pass */
   
   /*  Parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -412,28 +397,16 @@ glasstile (GimpDrawable *drawable,
       d = dest;
       ypixel2 = ymitt + yoffs * 2;
 
-      if (ypixel2 < 0)
-	ypixel2 = 0;
-
+      ypixel2 = CLAMP (ypixel2, 0, y2 - 1);
       if (preview_mode)
 	{
-          if (ypixel2 < height)
-            memcpy (cur_row, 
-		    preview->cache + (ypixel2 * preview->rowstride), 
-		    preview->rowstride);
-          else 
-	    memcpy (cur_row, 
-		    preview->cache + ((y2 - 1) * preview->rowstride), 
-		    preview->rowstride);
+	  memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride, 
+		  preview->rowstride);
 	}
       else
 	{
-	  if (ypixel2 < height) 
-            gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, ypixel2, iwidth);
-          else 
-            gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y2 - 1, iwidth);
+	  gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, ypixel2, iwidth);
 	}
-
       yoffs++;
 
       if (yoffs == yhalv) 
@@ -445,7 +418,7 @@ glasstile (GimpDrawable *drawable,
       xmitt = 0;
       xoffs = 0;
 
-      for (col = 0; col < (x2 - x1); col++) /* one pixel */
+      for (col = 0; col < x2 - x1; col++) /* one pixel */
 	{
 	  xpixel1 = (xmitt + xoffs) * bytes;
 	  xpixel2 = (xmitt + xoffs * 2) * bytes;

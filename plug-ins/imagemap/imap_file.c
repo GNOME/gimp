@@ -23,16 +23,12 @@
 
 #include "config.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "imap_default_dialog.h"
 #include "imap_file.h"
 #include "imap_main.h"
-#include "imap_table.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -41,12 +37,9 @@ static void
 open_cb(GtkWidget *widget, gpointer data)
 {
    const gchar *filename;
-   struct stat buf;
-   int err;
 
    filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   err = stat(filename, &buf);
-   if (!err && (buf.st_mode & S_IFREG)) {
+   if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
       gtk_widget_hide((GtkWidget*) data);
       load(filename);
    } else {
@@ -99,20 +92,13 @@ static void
 save_cb(GtkWidget *widget, gpointer data)
 {
    const gchar *filename;
-   struct stat buf;
-   int err;
 
    filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   err = stat(filename, &buf);
-   if (err) {
-      gtk_widget_hide((GtkWidget*) data);
-      save_as(filename);
-   } else {			/* File exists */
-      if (buf.st_mode & S_IFREG) {
-	 do_file_exists_dialog(data);
-      } else {
-				/* Fix me! */
-      }
+   if (g_file_test(filename, G_FILE_TEST_IS_REGULAR)) {
+     do_file_exists_dialog(data);
+   } else {
+     gtk_widget_hide((GtkWidget*) data);
+     save_as(filename);
    }
 }
 

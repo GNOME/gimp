@@ -332,7 +332,6 @@ noisify_dialog (GimpDrawable *drawable,
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
-  GtkWidget *abox;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
@@ -361,23 +360,11 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_widget_show (main_vbox);
 
   /* preview */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
-  gtk_widget_show (abox);
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-  preview = gimp_fixme_preview_new (NULL);
-  gimp_fixme_preview_fill (preview, drawable);
-  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
-  noisify (drawable, TRUE); /* preview noisify */
+  preview = gimp_fixme_preview_new (NULL, TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
+  gimp_fixme_preview_fill (preview, drawable);
+  noisify (drawable, TRUE); /* preview noisify */
   
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));

@@ -43,11 +43,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -58,7 +53,6 @@
 
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55
-#define PREVIEW_SIZE       128
 
 
 /* Declare local functions. */
@@ -77,11 +71,6 @@ static void        doit            (gint32        image_ID,
 				    gboolean      preview_mode);
 static gint        dialog          (gint32        image_ID, 
 				    GimpDrawable *drawable);
-static GtkWidget * preview_widget  (gint32        image_ID,
-                                    GimpDrawable *drawable);
-static void        fill_preview    (GtkWidget    *preview_widget, 
-				    gint32        image_ID,
-                                    GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -91,14 +80,12 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-gint sx1, sy1, sx2, sy2;
-gint run_flag = FALSE;
+static gint sx1, sy1, sx2, sy2;
+static gint run_flag = FALSE;
 
 static GtkWidget *hcolor_button;
 static GtkWidget *vcolor_button;
-static guchar    *preview_bits;
-static GtkWidget *preview;
-
+static GimpFixMePreview *preview;
 
 typedef struct
 {
@@ -239,7 +226,7 @@ run (gchar      *name,
 	  /* The dialog was closed, or something similarly evil happened. */
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
-      g_free(preview_bits);
+      gimp_fixme_preview_free (preview);      
     }
 
   if (grid_cfg.hspace <= 0 || grid_cfg.vspace <= 0)
@@ -397,12 +384,12 @@ doit (gint32        image_ID,
   if (preview_mode) 
     { 
       sx1 = sy1 = 0;
-      sx2 = GTK_PREVIEW (preview)->buffer_width;
-      sy2 = GTK_PREVIEW (preview)->buffer_height;
+      sx2 = preview->width;
+      sy2 = preview->height;
       width  = sx2;
       height = sy2;
       alpha  = 0;
-      bytes  = GTK_PREVIEW (preview)->bpp;
+      bytes  = preview->bpp;
     } 
   else 
     {
@@ -424,9 +411,8 @@ doit (gint32        image_ID,
   for (y = sy1; y < sy2; y++)
     {
       if (preview_mode) 
-	memcpy (dest, 
-		preview_bits + (GTK_PREVIEW (preview)->rowstride * y),
-		GTK_PREVIEW (preview)->rowstride);
+	memcpy (dest, preview->cache + preview->rowstride * y,
+		preview->rowstride);
       else 
 	gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
 
@@ -489,9 +475,8 @@ doit (gint32        image_ID,
         }
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (GTK_PREVIEW (preview)->rowstride * y),
-		  dest,
-		  GTK_PREVIEW (preview)->rowstride);
+	  memcpy (preview->buffer + preview->rowstride * y, dest,
+		  preview->rowstride);
 	} 
       else 
 	{
@@ -504,7 +489,7 @@ doit (gint32        image_ID,
   /*  update the timred region  */
   if (preview_mode) 
     {
-      gtk_widget_queue_draw (preview);
+      gtk_widget_queue_draw (preview->widget);
     } 
   else 
     {
@@ -703,10 +688,12 @@ dialog (gint32        image_ID,
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (image_ID, drawable); /* we are here */
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+
+  preview = gimp_fixme_preview_new (NULL, FALSE);
+  gimp_fixme_preview_fill (preview, drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
   doit (image_ID, drawable, TRUE); /* render preview */
-  gtk_widget_show (preview);
+  gtk_widget_show (preview->widget);
 
   /* row 2 */
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -1015,147 +1002,4 @@ dialog (gint32        image_ID,
   gdk_flush ();
 
   return run_flag;
-}
-
-static GtkWidget *
-preview_widget (gint32        image_ID,
-                GimpDrawable *drawable)
-{
-  gint       size;
-  GtkWidget *preview;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview (preview, image_ID, drawable);
-  size = 
-    GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
-  
-  return preview;
-}
-
-static void
-fill_preview (GtkWidget    *widget,
-              gint32        image_ID,
-	      GimpDrawable *drawable)
-{
-  GimpPixelRgn  srcPR;
-  gint          width;
-  gint          height;
-  gint          x1, x2, y1, y2;
-  gint          bpp;
-  gint          x, y;
-  guchar       *src;
-  gdouble       r, g, b, a;
-  gdouble       c0, c1;
-  guchar       *p0, *p1;
-  guchar       *even, *odd;
-  guchar       *cmap;
-  gint          ncolors;
-  
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  if (x2 - x1 > PREVIEW_SIZE)
-    x2 = x1 + PREVIEW_SIZE;
-  
-  if (y2 - y1 > PREVIEW_SIZE)
-    y2 = y1 + PREVIEW_SIZE;
-  
-  width  = x2 - x1;
-  height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->drawable_id);
-  
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
-
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, x2, y2, FALSE, FALSE);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src  = g_malloc (width * bpp);
-
-  if (gimp_drawable_is_indexed (drawable->drawable_id))
-    cmap = gimp_image_get_cmap (image_ID, &ncolors);
-  else
-    cmap = NULL;
-
-  for (y = 0; y < height; y++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble)src[x*4+0]) / 255.0;
-	      g = ((gdouble)src[x*4+1]) / 255.0;
-	      b = ((gdouble)src[x*4+2]) / 255.0;
-	      a = ((gdouble)src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble)src[x*3+0]) / 255.0;
-	      g = ((gdouble)src[x*3+1]) / 255.0;
-	      b = ((gdouble)src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-              if (cmap)
-                {
-                  gint index = MIN (src[x*bpp], ncolors - 1);
-
-                  r = ((gdouble)cmap[index * 3 + 0]) / 255.0;
-                  g = ((gdouble)cmap[index * 3 + 1]) / 255.0;
-                  b = ((gdouble)cmap[index * 3 + 2]) / 255.0;
-                }
-              else
-                {
-                  r = ((gdouble)src[x*bpp+0]) / 255.0;
-                  g = b = r;
-                }
-
-	      if (bpp == 2)
-		a = ((gdouble)src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-	
-	if ((x / GIMP_CHECK_SIZE) & 1) 
-	  {
-	    c0 = GIMP_CHECK_LIGHT;
-	    c1 = GIMP_CHECK_DARK;
-	  } 
-	else 
-	  {
-	    c0 = GIMP_CHECK_DARK;
-	    c1 = GIMP_CHECK_LIGHT;
-	  }
-	
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-    }
-
-  g_free (even);
-  g_free (odd);
-  g_free (src);
-
-  if (cmap)
-    g_free (cmap);
 }

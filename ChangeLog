@@ -1,3 +1,26 @@
+2002-12-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/grid.c: replace preview code by calls to libgimp
+
+	* plug-ins/imagemap/imap_file.c 
+	* plug-ins/imagemap/imap_menu.c: use g_file_test funcs to test if a
+	file already exists iso call to fstat.
+
+2002-12-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/wind.c (dialog_box)
+	* plug-ins/common/nova.c (nova_center_create)
+	* plug-ins/common/max_rgb.c (dialog)
+	* plug-ins/common/jigsaw.c (dialog_box)
+	* plug-ins/common/flarefx.c (flare_center_create)
+	* plug-ins/common/illusion.c
+	* plug-ins/common/glasstile.c: add parameter to call to 
+	gimp_fixme_preview_new
+
+	* libgimp/gimpmiscui.[ch] (gimp_fixme_preview_new): Added boolean
+	parameter has_frame to put the preview into a frame. Preview now
+	also handles indexed images correctly.
+
 2002-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorscales.c: mark "Scales" for translation.
