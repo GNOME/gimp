@@ -1,4 +1,4 @@
-#ident "@(#)g3.h	3.1 95/08/30 Copyright (c) Gert Doering"
+/* #ident "@(#)g3.h	3.1 95/08/30 Copyright (c) Gert Doering" */
 
 #ifndef NULL
 #define NULL 0L

@@ -1,3 +1,9 @@
+Mon Apr 20 01:24:10 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/faxg3/g3.h
+	* plug-ins/faxg3/run_tbl.c: commented out #ident's, since some
+	compilers complain
+
 Mon Apr 20 00:01:26 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/disp_callbacks.c: we get events in a funny order sometimes,

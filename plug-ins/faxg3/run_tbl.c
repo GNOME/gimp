@@ -1,4 +1,4 @@
-#ident "@(#)run_tbl.c	3.1 95/08/30 Copyright (c) 1994 Gert Doering"
+/* #ident "@(#)run_tbl.c	3.1 95/08/30 Copyright (c) 1994 Gert Doering" */
 
 /* run_tbl.c
  *
