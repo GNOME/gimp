@@ -1,3 +1,8 @@
+Wed May 12 15:14:25 EEST 1999 Lauri Alanko <nether@gimp.org>
+
+	* plug-ins/gfig/gfig.c: Updated calls to gimp_paintbrush to its
+ 	current pdb interface.
+		
 Mit Mai 12 01:16:07 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/Makefile.am
