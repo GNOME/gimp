@@ -1,3 +1,33 @@
+2002-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpstock.[ch]: removed stock items which are
+	already defined in Gtk+ (GTK_STOCK_NEW etc.).
+
+	* libgimpwidgets/gimpquerybox.[ch]: moved the icon code from the
+	boolean query box constructor to create_query_box() so it can be
+	used for all of them. New macro GIMP_QUERY_BOX_VBOX() to pack
+	custom widgets into the dialogs. Will probably have to make a
+	real widget out of it to get a sane API...
+
+	* app/gui/menus.c
+	* app/gui/select-commands.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpdrawablelistview.c
+	* libgimpwidgets/gimppatheditor.c
+	* plug-ins/common/uniteditor.c: changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.c: register the WM icons in
+	large -> small order.
+
+	* themes/Default/Makefile.am: don't create inline pixbufs of the
+	removed stock items' icons...
+
+	* themes/Default/gtkrc: ...but simply override them here.
+
+	* themes/Default/imagerc: removed them here too.
+
 2002-01-12  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: use GtkTreeView and multiline

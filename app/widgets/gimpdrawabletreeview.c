@@ -183,7 +183,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   view->new_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_NEW,
+				    GTK_STOCK_NEW,
 				    _("New"), NULL,
 				    G_CALLBACK (gimp_drawable_list_view_new_clicked),
 				    NULL,
@@ -191,7 +191,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   view->raise_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_RAISE,
+				    GTK_STOCK_GO_UP,
 				    _("Raise\n"
 				      "<Shift> To Top"), NULL,
 				    G_CALLBACK (gimp_drawable_list_view_raise_clicked),
@@ -200,7 +200,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   view->lower_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_LOWER,
+				    GTK_STOCK_GO_DOWN,
 				    _("Lower\n"
 				      "<Shift> To Bottom"), NULL,
 				    G_CALLBACK (gimp_drawable_list_view_lower_clicked),
@@ -225,7 +225,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   view->delete_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_DELETE,
+				    GTK_STOCK_DELETE,
 				    _("Delete"), NULL,
 				    G_CALLBACK (gimp_drawable_list_view_delete_clicked),
 				    NULL,

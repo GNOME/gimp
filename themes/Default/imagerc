@@ -32,11 +32,6 @@ style "gimp-icons"
       { "images/stock-button-anchor.png", *, *, "gtk-button" },
       { "images/stock-button-anchor.png", *, *, *            }
     }
-  stock["gimp-delete"] =
-    {
-      { "images/stock-button-delete.png", *, *, "gtk-button" },
-      { "images/stock-button-delete.png", *, *, *            }
-    }
   stock["gimp-duplicate"] =
     {
       { "images/stock-button-duplicate.png", *, *, "gtk-button" },
@@ -52,16 +47,6 @@ style "gimp-icons"
       { "images/stock-button-linked.png", *, *, "gtk-button" },
       { "images/stock-button-linked.png", *, *, *            }
     }
-  stock["gimp-lower"] =
-    {
-      { "images/stock-button-lower.png", *, *, "gtk-button" },
-      { "images/stock-button-lower.png", *, *, *            }
-    }
-  stock["gimp-new"] =
-    {
-      { "images/stock-button-new.png", *, *, "gtk-button" },
-      { "images/stock-button-new.png", *, *, *            }
-    }
   stock["gimp-paste"] =
     {
       { "images/stock-button-paste.png", *, *, "gtk-button" },
@@ -76,16 +61,6 @@ style "gimp-icons"
     {
       { "images/stock-button-paste-into.png", *, *, "gtk-button" },
       { "images/stock-button-paste-into.png", *, *, *            }
-    }
-  stock["gimp-raise"] =
-    {
-      { "images/stock-button-raise.png", *, *, "gtk-button" },
-      { "images/stock-button-raise.png", *, *, *            }
-    }
-  stock["gimp-refresh"] =
-    {
-      { "images/stock-button-refresh.png", *, *, "gtk-button" },
-      { "images/stock-button-refresh.png", *, *, *            }
     }
   stock["gimp-reset"] =
     {

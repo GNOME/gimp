@@ -606,7 +606,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/View/New View"), NULL,
       view_new_view_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "view/new_view.html", NULL },
   { { N_("/View/Shrink Wrap"), "<control>E",
@@ -673,22 +673,22 @@ static GimpItemFactoryEntry image_entries[] =
     "layers/stack/stack.html#next_layer", NULL },
   { { N_("/Layer/Stack/Raise Layer"), "<shift>Prior",
       layers_raise_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
+      "<StockItem>", GTK_STOCK_GO_UP },
     NULL,
     "layers/stack/stack.html#raise_layer", NULL },
   { { N_("/Layer/Stack/Lower Layer"), "<shift>Next",
       layers_lower_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
+      "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
     "layers/stack/stack.html#lower_layer", NULL },
   { { N_("/Layer/Stack/Layer to Top"), "<control>Prior",
       layers_raise_to_top_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
+      "<StockItem>", GTK_STOCK_GOTO_TOP },
     NULL,
     "layers/stack/stack.html#layer_to_top", NULL },
   { { N_("/Layer/Stack/Layer to Bottom"), "<control>Next",
       layers_lower_to_bottom_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
+      "<StockItem>", GTK_STOCK_GOTO_BOTTOM },
     NULL,
     "layers/stack/stack.html#layer_to_bottom", NULL },
 
@@ -696,7 +696,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Layer/New Layer..."), NULL,
       layers_new_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "layers/dialogs/new_layer.html", NULL },
   { { N_("/Layer/Duplicate Layer"), NULL,
@@ -711,7 +711,7 @@ static GimpItemFactoryEntry image_entries[] =
     "layers/anchor_layer.html", NULL },
   { { N_("/Layer/Delete Layer"), NULL,
       layers_delete_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     "layers/delete_layer.html", NULL },
 
@@ -996,28 +996,28 @@ static GimpItemFactoryEntry layers_entries[] =
 {
   { { N_("/New Layer..."), "<control>N",
       layers_new_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "dialogs/new_layer.html", NULL },
 
   { { N_("/Raise Layer"), "<control>F",
       layers_raise_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
+      "<StockItem>", GTK_STOCK_GO_UP },
     NULL,
     "stack/stack.html#raise_layer", NULL },
   { { N_("/Layer to Top"), "<control><shift>F",
       layers_raise_to_top_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
+      "<StockItem>", GTK_STOCK_GOTO_TOP },
     NULL,
     "stack/stack.html#later_to_top", NULL },
   { { N_("/Lower Layer"), "<control>B",
       layers_lower_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
+      "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
     "stack/stack.html#lower_layer", NULL },
   { { N_("/Layer to Bottom"), "<control><shift>B",
       layers_lower_to_bottom_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
+      "<StockItem>", GTK_STOCK_GOTO_BOTTOM },
     NULL,
     "stack/stack.html#layer_to_bottom", NULL },
 
@@ -1033,7 +1033,7 @@ static GimpItemFactoryEntry layers_entries[] =
     "anchor_layer.html", NULL },
   { { N_("/Delete Layer"), "<control>X",
       layers_delete_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     "delete_layer.html", NULL },
 
@@ -1114,17 +1114,17 @@ static GimpItemFactoryEntry channels_entries[] =
 {
   { { N_("/New Channel..."), "<control>N",
       channels_new_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "dialogs/new_channel.html", NULL },
   { { N_("/Raise Channel"), "<control>F",
       channels_raise_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
+      "<StockItem>", GTK_STOCK_GO_UP },
     NULL,
     "raise_channel.html", NULL },
   { { N_("/Lower Channel"), "<control>B",
       channels_lower_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
+      "<StockItem>", GTK_STOCK_GO_DOWN },
     NULL,
     "lower_channel.html", NULL },
   { { N_("/Duplicate Channel"), "<control>C",
@@ -1160,7 +1160,7 @@ static GimpItemFactoryEntry channels_entries[] =
 
   { { N_("/Delete Channel"), "<control>X",
       channels_delete_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     "delete_channel.html", NULL },
 
@@ -1180,7 +1180,7 @@ static GimpItemFactoryEntry paths_entries[] =
 {
   { { N_("/New Path"), "<control>N",
       paths_dialog_new_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     "new_path.html", NULL },
   { { N_("/Duplicate Path"), "<control>U",
@@ -1205,7 +1205,7 @@ static GimpItemFactoryEntry paths_entries[] =
     "stroke_path.html", NULL },
   { { N_("/Delete Path"), "<control>X",
       paths_dialog_delete_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     "delete_path.html", NULL },
 
@@ -1334,7 +1334,7 @@ static GimpItemFactoryEntry brushes_entries[] =
 {
   { { N_("/New Brush"), NULL,
       data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
   { { N_("/Duplicate Brush"), NULL,
@@ -1349,7 +1349,7 @@ static GimpItemFactoryEntry brushes_entries[] =
     NULL, NULL },
   { { N_("/Delete Brush..."), NULL,
       data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL },
 
@@ -1357,7 +1357,7 @@ static GimpItemFactoryEntry brushes_entries[] =
 
   { { N_("/Refresh Brushes"), NULL,
       data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
+      "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
     NULL, NULL }
 };
@@ -1369,7 +1369,7 @@ static GimpItemFactoryEntry patterns_entries[] =
 {
   { { N_("/New Pattern"), NULL,
       data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
   { { N_("/Duplicate Pattern"), NULL,
@@ -1384,7 +1384,7 @@ static GimpItemFactoryEntry patterns_entries[] =
     NULL, NULL },
   { { N_("/Delete Pattern..."), NULL,
       data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL },
 
@@ -1392,7 +1392,7 @@ static GimpItemFactoryEntry patterns_entries[] =
 
   { { N_("/Refresh Patterns"), NULL,
       data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
+      "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
     NULL, NULL }
 };
@@ -1620,7 +1620,7 @@ static GimpItemFactoryEntry gradients_entries[] =
 {
   { { N_("/New Gradient"), NULL,
       data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
   { { N_("/Duplicate Gradient"), NULL,
@@ -1635,7 +1635,7 @@ static GimpItemFactoryEntry gradients_entries[] =
     NULL, NULL },
   { { N_("/Delete Gradient..."), NULL,
       data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL },
 
@@ -1643,7 +1643,7 @@ static GimpItemFactoryEntry gradients_entries[] =
 
   { { N_("/Refresh Gradients"), NULL,
       data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
+      "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
     NULL, NULL },
 
@@ -1663,7 +1663,7 @@ static GimpItemFactoryEntry palettes_entries[] =
 {
   { { N_("/New Palette"), NULL,
       data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
+      "<StockItem>", GTK_STOCK_NEW },
     NULL,
     NULL, NULL },
   { { N_("/Duplicate Palette"), NULL,
@@ -1678,7 +1678,7 @@ static GimpItemFactoryEntry palettes_entries[] =
     NULL, NULL },
   { { N_("/Delete Palette..."), NULL,
       data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL },
 
@@ -1686,7 +1686,7 @@ static GimpItemFactoryEntry palettes_entries[] =
 
   { { N_("/Refresh Palettes"), NULL,
       data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
+      "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
     NULL, NULL },
 
@@ -1725,7 +1725,7 @@ static GimpItemFactoryEntry buffers_entries[] =
     NULL, NULL },
   { { N_("/Delete Buffer"), NULL,
       buffers_delete_buffer_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL }
 };
@@ -1752,7 +1752,7 @@ static GimpItemFactoryEntry documents_entries[] =
     NULL, NULL },
   { { N_("/Remove Entry"), NULL,
       documents_delete_document_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
+      "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     NULL, NULL },
 
@@ -1760,7 +1760,7 @@ static GimpItemFactoryEntry documents_entries[] =
 
   { { N_("/Refresh History"), NULL,
       documents_refresh_documents_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
+      "<StockItem>", GTK_STOCK_REFRESH },
     NULL,
     NULL, NULL }
 };

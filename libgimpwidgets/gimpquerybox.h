@@ -50,6 +50,11 @@ typedef void (* GimpQueryBooleanCallback) (GtkWidget *query_box,
 					   gboolean   value,
 					   gpointer   data);
 
+
+#define GIMP_QUERY_BOX_VBOX(qbox) g_object_get_data (G_OBJECT (qbox), \
+                                                     "gimp-query-box-vbox")
+
+
 /*  some simple query dialogs  */
 GtkWidget * gimp_query_string_box  (const gchar              *title,
 				    GimpHelpFunc              help_func,

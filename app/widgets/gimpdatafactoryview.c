@@ -191,7 +191,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->new_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_NEW,
+				    GTK_STOCK_NEW,
 				    _("New"), NULL,
 				    G_CALLBACK (gimp_data_factory_view_new_clicked),
 				    NULL,
@@ -215,7 +215,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->delete_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_DELETE,
+				    GTK_STOCK_DELETE,
 				    _("Delete"), NULL,
 				    G_CALLBACK (gimp_data_factory_view_delete_clicked),
 				    NULL,
@@ -223,7 +223,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->refresh_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_REFRESH,
+				    GTK_STOCK_REFRESH,
 				    _("Refresh"), NULL,
 				    G_CALLBACK (gimp_data_factory_view_refresh_clicked),
 				    NULL,
@@ -406,9 +406,9 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 
       dialog = gimp_query_boolean_box (_("Delete Data Object"),
 				       gimp_standard_help_func, NULL,
-				       FALSE,
+				       GTK_STOCK_DIALOG_QUESTION,
 				       str,
-				       GIMP_STOCK_DELETE, GTK_STOCK_CANCEL,
+				       GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 				       G_OBJECT (data),
 				       "disconnect",
 				       gimp_data_factory_view_delete_callback,

@@ -17,8 +17,34 @@
 
 # Do override some GTK stock icons however.
 
-style "gimp-dialog-icons"
+style "gimp-gtk-icons"
 {
+  stock["gtk-delete"] =
+    {
+      { "images/stock-button-delete.png", *, *, "gtk-button" },
+      { "images/stock-button-delete.png", *, *, *            }
+    }
+  stock["gtk-go-down"] =
+    {
+      { "images/stock-button-lower.png", *, *, "gtk-button" },
+      { "images/stock-button-lower.png", *, *, *            }
+    }
+  stock["gtk-go-up"] =
+    {
+      { "images/stock-button-raise.png", *, *, "gtk-button" },
+      { "images/stock-button-raise.png", *, *, *            }
+    }
+  stock["gtk-new"] =
+    {
+      { "images/stock-button-new.png", *, *, "gtk-button" },
+      { "images/stock-button-new.png", *, *, *            }
+    }
+  stock["gtk-refresh"] =
+    {
+      { "images/stock-button-refresh.png", *, *, "gtk-button" },
+      { "images/stock-button-refresh.png", *, *, *            }
+    }
+
   stock["gtk-dialog-error"] =
     {
       { "images/gimp-dialog-error.png", *, *, "gtk-dialog" }
@@ -37,7 +63,7 @@ style "gimp-dialog-icons"
     }
 }
 
-class "GtkImage" style "gimp-dialog-icons"
+class "GtkImage" style "gimp-gtk-icons"
 
 
 style "gimp-normal-font-style"

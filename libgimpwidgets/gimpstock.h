@@ -29,17 +29,12 @@ G_BEGIN_DECLS
 
 
 #define GIMP_STOCK_ANCHOR        "gimp-anchor"
-#define GIMP_STOCK_DELETE        "gimp-delete"
 #define GIMP_STOCK_DUPLICATE     "gimp-duplicate"
 #define GIMP_STOCK_EDIT          "gimp-edit"
 #define GIMP_STOCK_LINKED        "gimp-linked"
-#define GIMP_STOCK_LOWER         "gimp-lower"
-#define GIMP_STOCK_NEW           "gimp-new"
 #define GIMP_STOCK_PASTE         "gimp-paste"
 #define GIMP_STOCK_PASTE_AS_NEW  "gimp-paste-as-new"
 #define GIMP_STOCK_PASTE_INTO    "gimp-paste-into"
-#define GIMP_STOCK_RAISE         "gimp-raise"
-#define GIMP_STOCK_REFRESH       "gimp-refresh"
 #define GIMP_STOCK_RESET         "gimp-reset"
 #define GIMP_STOCK_STROKE        "gimp-stroke"
 #define GIMP_STOCK_TO_PATH       "gimp-to-path"

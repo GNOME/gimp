@@ -158,9 +158,8 @@ select_shrink_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
-  GtkWidget   *edge_lock;
   GtkWidget   *shrink_dialog;
-  GList       *children;
+  GtkWidget   *edge_lock;
   return_if_no_display (gdisp, data);
 
   shrink_dialog =
@@ -178,12 +177,8 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
 
-  /* eeek */
-  children = gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (shrink_dialog)->vbox));
-
-  gtk_box_pack_start (GTK_BOX (children->data), edge_lock, FALSE, FALSE, 0);
-
-  g_list_free (children);
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (shrink_dialog)), edge_lock,
+                      FALSE, FALSE, 0);
 
   g_object_set_data (G_OBJECT (shrink_dialog), "edge_lock_toggle", edge_lock);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),

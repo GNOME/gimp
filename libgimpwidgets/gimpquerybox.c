@@ -59,6 +59,7 @@ static QueryBox * create_query_box             (const gchar   *title,
 						const gchar   *help_data,
 						GCallback      ok_callback,
 						GCallback      cancel_callback,
+                                                const gchar   *stock_id,
 						const gchar   *message,
 						const gchar   *ok_button,
 						const gchar   *cancel_button,
@@ -96,6 +97,7 @@ create_query_box (const gchar   *title,
 		  const gchar   *help_data,
 		  GCallback      ok_callback,
 		  GCallback      cancel_callback,
+                  const gchar   *stock_id,
 		  const gchar   *message,
 		  const gchar   *ok_button,
 		  const gchar   *cancel_button,
@@ -105,6 +107,7 @@ create_query_box (const gchar   *title,
 		  gpointer       callback_data)
 {
   QueryBox  *query_box;
+  GtkWidget *hbox = NULL;
   GtkWidget *label;
 
   /*  make sure the object / signal passed are valid
@@ -143,19 +146,46 @@ create_query_box (const gchar   *title,
 
       g_signal_connect_closure (G_OBJECT (object), signal, closure, FALSE);
     }
+
+  if (stock_id)
+    {
+      GtkWidget *image;
+
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
+
+      if (image)
+        {
+          hbox = gtk_hbox_new (FALSE, 10);
+          gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+          gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
+                             hbox);
+          gtk_widget_show (hbox);
+
+          gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+          gtk_widget_show (image);
+        }
+    }
+
+  query_box->vbox = gtk_vbox_new (FALSE, 4);
+
+  g_object_set_data (G_OBJECT (query_box->qbox), "gimp-query-box-vbox",
+                     query_box->vbox);
+
+  if (hbox)
+    {
+      gtk_box_pack_start (GTK_BOX (hbox), query_box->vbox, FALSE, FALSE, 0);
+    }
   else
     {
-      object = NULL;
+      gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 10);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
+                         query_box->vbox);
     }
+
+  gtk_widget_show (query_box->vbox);
 
   if (message)
     {
-      query_box->vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 6);
-      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
-			 query_box->vbox);
-      gtk_widget_show (query_box->vbox);
-
       label = gtk_label_new (message);
       gtk_box_pack_start (GTK_BOX (query_box->vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -200,6 +230,7 @@ gimp_query_string_box (const gchar             *title,
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (string_query_box_ok_callback),
 				G_CALLBACK (query_box_cancel_callback),
+                                GTK_STOCK_DIALOG_QUESTION,
 				message,
 				GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				object, signal,
@@ -256,6 +287,7 @@ gimp_query_int_box (const gchar          *title,
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (int_query_box_ok_callback),
 				G_CALLBACK (query_box_cancel_callback),
+                                GTK_STOCK_DIALOG_QUESTION,
 				message,
 				GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				object, signal,
@@ -314,6 +346,7 @@ gimp_query_double_box (const gchar             *title,
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (double_query_box_ok_callback),
 				G_CALLBACK (query_box_cancel_callback),
+                                GTK_STOCK_DIALOG_QUESTION,
 				message,
 				GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				object, signal,
@@ -380,6 +413,7 @@ gimp_query_size_box (const gchar           *title,
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (size_query_box_ok_callback),
 				G_CALLBACK (query_box_cancel_callback),
+                                GTK_STOCK_DIALOG_QUESTION,
 				message,
 				GTK_STOCK_OK, GTK_STOCK_CANCEL,
 				object, signal,
@@ -441,38 +475,18 @@ gimp_query_boolean_box (const gchar              *title,
 			gpointer                  data)
 {
   QueryBox  *query_box;
-  GtkWidget *hbox;
-  GtkWidget *image = NULL;
-  GtkWidget *label;
-
-  if (stock_id)
-    image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
 
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (boolean_query_box_true_callback),
 				G_CALLBACK (boolean_query_box_false_callback),
-				image ? NULL : message,
+                                stock_id,
+				message,
 				true_button, false_button,
 				object, signal,
 				G_CALLBACK (callback), data);
 
   if (! query_box)
     return NULL;
-
-  if (! image)
-    return query_box->qbox;
-
-  hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox), hbox);
-  gtk_widget_show (hbox);
-
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  label = gtk_label_new (message);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   return query_box->qbox;
 }

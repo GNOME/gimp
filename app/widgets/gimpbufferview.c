@@ -169,7 +169,7 @@ gimp_buffer_view_new (GimpViewType   view_type,
 
   buffer_view->delete_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_DELETE,
+				    GTK_STOCK_DELETE,
 				    _("Delete"), NULL,
 				    G_CALLBACK (gimp_buffer_view_delete_clicked),
 				    NULL,

@@ -163,7 +163,7 @@ gimp_document_view_new (GimpViewType   view_type,
 
   document_view->delete_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_DELETE,
+				    GTK_STOCK_DELETE,
 				    _("Remove selected entry"), NULL,
 				    G_CALLBACK (gimp_document_view_delete_clicked),
 				    NULL,
@@ -171,7 +171,7 @@ gimp_document_view_new (GimpViewType   view_type,
 
   document_view->refresh_button =
     gimp_container_view_add_button (editor->view,
-				    GIMP_STOCK_REFRESH,
+				    GTK_STOCK_REFRESH,
 				    _("Refresh (check files for existence)"),
                                     NULL,
 				    G_CALLBACK (gimp_document_view_refresh_clicked),

@@ -11,8 +11,6 @@ EXTRA_DIST = $(themedata_DATA)
 STOCK_VARIABLES = @STRIP_BEGIN@ \
 	stock_button_anchor					\
 	$(srcdir)/images/stock-button-anchor.png		\
-	stock_button_delete					\
-	$(srcdir)/images/stock-button-delete.png		\
 	stock_button_duplicate					\
 	$(srcdir)/images/stock-button-duplicate.png		\
 	stock_button_edit					\
@@ -21,18 +19,12 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-eye.png			\
 	stock_button_linked					\
 	$(srcdir)/images/stock-button-linked.png		\
-	stock_button_lower					\
-	$(srcdir)/images/stock-button-lower.png			\
-	stock_button_new					\
-	$(srcdir)/images/stock-button-new.png			\
 	stock_button_paste					\
 	$(srcdir)/images/stock-button-paste.png			\
 	stock_button_paste_as_new				\
 	$(srcdir)/images/stock-button-paste-as-new.png		\
 	stock_button_paste_into					\
 	$(srcdir)/images/stock-button-paste-into.png		\
-	stock_button_raise					\
-	$(srcdir)/images/stock-button-raise.png			\
 	stock_button_refresh					\
 	$(srcdir)/images/stock-button-refresh.png		\
 	stock_button_stroke					\
