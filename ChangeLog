@@ -1,3 +1,19 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.h: removed enum GimpDndType...
+
+	* app/widgets/widgets-enums.h: ...and added it here.
+
+	* app/widgets/gimpdnd.c: added more g_return_if_fail(). Allow
+	all gimp_dnd_foo_dest_add() functions to be called without
+	callback (just add the target if callback is NULL).
+
+	(gimp_dnd_open_files): removed the checks for validity of the
+	passed filenames/uris...
+
+	(gimp_dnd_set_file_data): ...and added it here so all callbacks
+	get an already sanitized list of strings.
+
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/Makefile.am (EXTRA_DIST)

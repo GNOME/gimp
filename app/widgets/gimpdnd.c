@@ -881,7 +881,7 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                         "gimp-dnd-drop-connected"));
 
-  if (! drop_connected)
+  if (set_data_func && ! drop_connected)
     {
       g_signal_connect (widget, "drag_data_received",
                         G_CALLBACK (gimp_dnd_data_drop_handle),
@@ -893,10 +893,13 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
 
   dnd_data = dnd_data_defs + data_type;
 
-  g_object_set_data (G_OBJECT (widget), dnd_data->set_data_func_name,
-                     set_data_func);
-  g_object_set_data (G_OBJECT (widget), dnd_data->set_data_data_name,
-                     set_data_data);
+  if (set_data_func)
+    {
+      g_object_set_data (G_OBJECT (widget), dnd_data->set_data_func_name,
+                         set_data_func);
+      g_object_set_data (G_OBJECT (widget), dnd_data->set_data_data_name,
+                         set_data_data);
+    }
 
   target_list = gtk_drag_dest_get_target_list (widget);
 
@@ -919,14 +922,6 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
 {
   GimpDndDataDef *dnd_data;
   GtkTargetList  *target_list;
-  gboolean        drop_connected;
-
-  drop_connected =
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                        "gimp-dnd-drop-connected"));
-
-  if (! drop_connected)
-    return;
 
   dnd_data = dnd_data_defs + data_type;
 
@@ -992,114 +987,6 @@ gimp_dnd_get_file_data (GtkWidget *widget,
   *length = strlen (vals) + 1;
 
   return (guchar *) vals;
-}
-
-static gboolean
-gimp_dnd_set_file_data (GtkWidget *widget,
-			GCallback  set_file_func,
-			gpointer   set_file_data,
-			guchar    *vals,
-			gint       format,
-			gint       length)
-{
-  GList *files = NULL;
-  gchar *buffer;
-
-  if (format != 8)
-    {
-      g_warning ("Received invalid file data!");
-      return FALSE;
-    }
-
-  buffer = (gchar *) vals;
-
-  D (g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer));
-
-  {
-    gchar name_buffer[1024];
-
-    while (*buffer && (buffer - (gchar *) vals < length))
-      {
-	gchar *name = name_buffer;
-	gint   len  = 0;
-
-	while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
-	  {
-	    *name++ = *buffer++;
-	    len++;
-	  }
-	if (len == 0)
-	  break;
-
-	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
-	  len--;
-
-	if (len > 2)
-	  files = g_list_append (files, g_strndup (name_buffer, len));
-
-	if (*buffer)
-	  buffer++;
-      }
-  }
-
-  if (! files)
-    return FALSE;
-
-  (* (GimpDndDropFileFunc) set_file_func) (widget, files, set_file_data);
-
-  g_list_foreach (files, (GFunc) g_free, NULL);
-  g_list_free (files);
-
-  return TRUE;
-}
-
-void
-gimp_dnd_file_source_add (GtkWidget           *widget,
-                          GimpDndDragFileFunc  get_file_func,
-                          gpointer             data)
-{
-  gimp_dnd_data_source_add (GIMP_DND_TYPE_URI_LIST, widget,
-			    G_CALLBACK (get_file_func),
-			    data);
-}
-
-void
-gimp_dnd_file_source_remove (GtkWidget *widget)
-{
-  gimp_dnd_data_source_remove (GIMP_DND_TYPE_URI_LIST, widget);
-}
-
-void
-gimp_dnd_file_dest_add (GtkWidget           *widget,
-			GimpDndDropFileFunc  set_file_func,
-			gpointer             data)
-{
-  /*  Set a default drag dest if not already done. Explicitely set
-   *  COPY and MOVE for file drag destinations. Some file managers
-   *  such as Konqueror only offer MOVE by default.
-   */
-  if (! g_object_get_data (G_OBJECT (widget), "gtk-drag-dest"))
-    gtk_drag_dest_set (widget,
-                       GTK_DEST_DEFAULT_ALL, NULL, 0,
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
-  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
-}
-
-void
-gimp_dnd_file_dest_remove (GtkWidget *widget)
-{
-  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_URI_LIST, widget);
-  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_TEXT_PLAIN, widget);
-  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_NETSCAPE_URL, widget);
 }
 
 /*  the next two functions are straight cut'n'paste from glib/glib/gconvert.c,
@@ -1184,25 +1071,71 @@ gimp_unescape_uri_string (const char *escaped,
   return result;
 }
 
-void
-gimp_dnd_open_files (GtkWidget *widget,
-		     GList     *files,
-		     gpointer   data)
+static gboolean
+gimp_dnd_set_file_data (GtkWidget *widget,
+			GCallback  set_file_func,
+			gpointer   set_file_data,
+			guchar    *vals,
+			gint       format,
+			gint       length)
 {
+  GList *crap_list = NULL;
+  GList *uri_list  = NULL;
   GList *list;
+  gchar *buffer;
 
-  for (list = files; list; list = g_list_next (list))
+  if (format != 8)
+    {
+      g_warning ("Received invalid file data!");
+      return FALSE;
+    }
+
+  buffer = (gchar *) vals;
+
+  D (g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer));
+
+  {
+    gchar name_buffer[1024];
+
+    while (*buffer && (buffer - (gchar *) vals < length))
+      {
+	gchar *name = name_buffer;
+	gint   len  = 0;
+
+	while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
+	  {
+	    *name++ = *buffer++;
+	    len++;
+	  }
+	if (len == 0)
+	  break;
+
+	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
+	  len--;
+
+	if (len > 2)
+	  crap_list = g_list_prepend (crap_list, g_strndup (name_buffer, len));
+
+	if (*buffer)
+	  buffer++;
+      }
+  }
+
+  if (! crap_list)
+    return FALSE;
+
+  /*  do various checks because file drag sources send all kinds of
+   *  arbitrary crap...
+   */
+  for (list = crap_list; list; list = g_list_next (list))
     {
       const gchar *dnd_crap = list->data;
       gchar       *filename;
       gchar       *uri   = NULL;
       GError      *error = NULL;
 
-      if (!dnd_crap)
-        continue;
-
-      D (g_print ("gimp_dnd_open_files: trying to convert "
-                  "\"%s\" to an uri.\n", dnd_crap));
+      D (g_print ("%s: trying to convert \"%s\" to an uri.\n",
+                  G_STRFUNC, dnd_crap));
 
       filename = g_filename_from_uri (dnd_crap, NULL, NULL);
 
@@ -1260,8 +1193,8 @@ gimp_dnd_open_files (GtkWidget *widget,
                   g_message (_("The filename '%s' couldn't be converted to a "
                                "valid URI:\n\n%s"),
                              escaped_filename,
-                             error->message ? error->message
-                                            : _("Invalid UTF-8"));
+                             error->message ?
+                             error->message : _("Invalid UTF-8"));
                   g_free (escaped_filename);
                   g_clear_error (&error);
 
@@ -1280,30 +1213,113 @@ gimp_dnd_open_files (GtkWidget *widget,
             }
         }
 
-      D (g_print ("gimp_dnd_open_files: ...trying to open "
-                  "resulting uri \"%s\"\n", uri));
+      uri_list = g_list_prepend (uri_list, uri);
+    }
 
-      {
-        GimpImage         *gimage;
-        GimpPDBStatusType  status;
+  g_list_foreach (crap_list, (GFunc) g_free, NULL);
+  g_list_free (crap_list);
 
-        gimage = file_open_with_display (the_dnd_gimp,
-                                         gimp_get_user_context (the_dnd_gimp),
-                                         uri, &status, &error);
+  if (! uri_list)
+    return FALSE;
 
-        if (! gimage && status != GIMP_PDB_CANCEL)
-          {
-            filename = file_utils_uri_to_utf8_filename (uri);
+  (* (GimpDndDropFileFunc) set_file_func) (widget, uri_list, set_file_data);
 
-            g_message (_("Opening '%s' failed:\n\n%s"),
-                       filename, error->message);
+  g_list_foreach (uri_list, (GFunc) g_free, NULL);
+  g_list_free (uri_list);
 
-            g_clear_error (&error);
-            g_free (filename);
-          }
-      }
+  return TRUE;
+}
 
-      g_free (uri);
+void
+gimp_dnd_file_source_add (GtkWidget           *widget,
+                          GimpDndDragFileFunc  get_file_func,
+                          gpointer             data)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_source_add (GIMP_DND_TYPE_URI_LIST, widget,
+			    G_CALLBACK (get_file_func),
+			    data);
+}
+
+void
+gimp_dnd_file_source_remove (GtkWidget *widget)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_source_remove (GIMP_DND_TYPE_URI_LIST, widget);
+}
+
+void
+gimp_dnd_file_dest_add (GtkWidget           *widget,
+			GimpDndDropFileFunc  set_file_func,
+			gpointer             data)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  /*  Set a default drag dest if not already done. Explicitely set
+   *  COPY and MOVE for file drag destinations. Some file managers
+   *  such as Konqueror only offer MOVE by default.
+   */
+  if (! g_object_get_data (G_OBJECT (widget), "gtk-drag-dest"))
+    gtk_drag_dest_set (widget,
+                       GTK_DEST_DEFAULT_ALL, NULL, 0,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
+			  G_CALLBACK (set_file_func),
+			  data);
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
+			  G_CALLBACK (set_file_func),
+			  data);
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
+			  G_CALLBACK (set_file_func),
+			  data);
+}
+
+void
+gimp_dnd_file_dest_remove (GtkWidget *widget)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_URI_LIST, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_TEXT_PLAIN, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_NETSCAPE_URL, widget);
+}
+
+void
+gimp_dnd_open_files (GtkWidget *widget,
+		     GList     *files,
+		     gpointer   data)
+{
+  GList *list;
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      const gchar       *uri   = list->data;
+      GimpImage         *gimage;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
+
+      D (g_print ("%s: ...trying to open resulting uri \"%s\"\n",
+                  G_STRFUNC, uri));
+
+      gimage = file_open_with_display (the_dnd_gimp,
+                                       gimp_get_user_context (the_dnd_gimp),
+                                       uri, &status, &error);
+
+      if (! gimage && status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename;
+
+          filename = file_utils_uri_to_utf8_filename (uri);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+
+          g_clear_error (&error);
+          g_free (filename);
+        }
     }
 }
 
@@ -1394,6 +1410,8 @@ gimp_dnd_color_source_add (GtkWidget            *widget,
 			   GimpDndDragColorFunc  get_color_func,
 			   gpointer              data)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_source_add (GIMP_DND_TYPE_COLOR, widget,
 			    G_CALLBACK (get_color_func),
 			    data);
@@ -1402,6 +1420,8 @@ gimp_dnd_color_source_add (GtkWidget            *widget,
 void
 gimp_dnd_color_source_remove (GtkWidget *widget)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_source_remove (GIMP_DND_TYPE_COLOR, widget);
 }
 
@@ -1410,6 +1430,8 @@ gimp_dnd_color_dest_add (GtkWidget            *widget,
 			 GimpDndDropColorFunc  set_color_func,
 			 gpointer              data)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_COLOR, widget,
 			  G_CALLBACK (set_color_func),
 			  data);
@@ -1418,6 +1440,8 @@ gimp_dnd_color_dest_add (GtkWidget            *widget,
 void
 gimp_dnd_color_dest_remove (GtkWidget *widget)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_COLOR, widget);
 }
 
@@ -1470,6 +1494,8 @@ gimp_dnd_svg_source_add (GtkWidget          *widget,
                          GimpDndDragSvgFunc  get_svg_func,
                          gpointer            data)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_source_add (GIMP_DND_TYPE_SVG, widget,
 			    G_CALLBACK (get_svg_func),
 			    data);
@@ -1481,6 +1507,8 @@ gimp_dnd_svg_source_add (GtkWidget          *widget,
 void
 gimp_dnd_svg_source_remove (GtkWidget *widget)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_source_remove (GIMP_DND_TYPE_SVG, widget);
   gimp_dnd_data_source_remove (GIMP_DND_TYPE_SVG_XML, widget);
 }
@@ -1490,6 +1518,8 @@ gimp_dnd_svg_dest_add (GtkWidget          *widget,
                        GimpDndDropSvgFunc  set_svg_func,
                        gpointer            data)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_SVG, widget,
 			  G_CALLBACK (set_svg_func),
 			  data);
@@ -1501,6 +1531,8 @@ gimp_dnd_svg_dest_add (GtkWidget          *widget,
 void
 gimp_dnd_svg_dest_remove (GtkWidget *widget)
 {
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG, widget);
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG_XML, widget);
 }
@@ -1688,7 +1720,6 @@ gimp_dnd_viewable_dest_add (GtkWidget               *widget,
   GimpDndType dnd_type;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
-  g_return_val_if_fail (set_viewable_func != NULL, FALSE);
 
   dnd_type = gimp_dnd_data_type_get_by_g_type (type);
 

@@ -154,6 +154,35 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_DND_TYPE_NONE         = 0,
+  GIMP_DND_TYPE_URI_LIST     = 1,
+  GIMP_DND_TYPE_TEXT_PLAIN   = 2,
+  GIMP_DND_TYPE_NETSCAPE_URL = 3,
+  GIMP_DND_TYPE_COLOR        = 4,
+  GIMP_DND_TYPE_SVG          = 5,
+  GIMP_DND_TYPE_SVG_XML      = 6,
+  GIMP_DND_TYPE_IMAGE        = 7,
+  GIMP_DND_TYPE_LAYER        = 8,
+  GIMP_DND_TYPE_CHANNEL      = 9,
+  GIMP_DND_TYPE_LAYER_MASK   = 10,
+  GIMP_DND_TYPE_COMPONENT    = 11,
+  GIMP_DND_TYPE_VECTORS      = 12,
+  GIMP_DND_TYPE_BRUSH        = 13,
+  GIMP_DND_TYPE_PATTERN      = 14,
+  GIMP_DND_TYPE_GRADIENT     = 15,
+  GIMP_DND_TYPE_PALETTE      = 16,
+  GIMP_DND_TYPE_FONT         = 17,
+  GIMP_DND_TYPE_BUFFER       = 18,
+  GIMP_DND_TYPE_IMAGEFILE    = 19,
+  GIMP_DND_TYPE_TEMPLATE     = 20,
+  GIMP_DND_TYPE_TOOL         = 21,
+  GIMP_DND_TYPE_DIALOG       = 22,
+
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_DIALOG
+} GimpDndType;
+
+typedef enum  /*< skip >*/
+{
   GIMP_DROP_NONE,
   GIMP_DROP_ABOVE,
   GIMP_DROP_BELOW
