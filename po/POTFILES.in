@@ -15,7 +15,6 @@ app/gdisplay_ops.c
 app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
-app/gimpunit.c
 app/interface.c
 app/main.c
 app/module_db.c
@@ -41,6 +40,7 @@ app/core/gimplayermask.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
+app/core/gimpunit.c
 
 app/gui/about-dialog.c
 app/gui/brush-editor.c
