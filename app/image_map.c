@@ -38,11 +38,11 @@ typedef struct _ImageMap
 {
   GDisplay *        gdisp;
   GimpDrawable *    drawable;
-//TileManager *     undo_tiles;
+/*TileManager *     undo_tiles;*/
   Canvas      *     undo_canvas;
   ImageMapApplyFunc16 apply_func;
   void *            user_data;
-//PixelRegion       srcPR, destPR;
+/*PixelRegion       srcPR, destPR;*/
   PixelArea         src_area, dest_area;
   void *            pr;
   int               state;
@@ -86,7 +86,7 @@ image_map_do_16 (gpointer data)
 {
   _ImageMap *_image_map;
   GImage *gimage;
-//PixelRegion shadowPR;
+/*PixelRegion shadowPR;*/
   PixelArea shadow_area;
   int x, y, w, h;
   _image_map = (_ImageMap *) data;
@@ -102,21 +102,26 @@ image_map_do_16 (gpointer data)
   w = pixelarea_width (&_image_map->dest_area);
   h = pixelarea_height (&_image_map->dest_area);
  
-//printf("%d,%d,%d,%d : \n", x,y,w,h);
+/*printf("%d,%d,%d,%d : \n", x,y,w,h);*/
    /*  Process the pixel regions and apply the image mapping  */
-//(* _image_map->apply_func) (&_image_map->srcPR, &_image_map->destPR, _image_map->user_data);
+/*(* _image_map->apply_func) (&_image_map->srcPR, &_image_map->destPR, _image_map->user_data);*/
   (* _image_map->apply_func) (&_image_map->src_area, &_image_map->dest_area, _image_map->user_data);
 
-//x = _image_map->destPR.x;
-//y = _image_map->destPR.y;
-//w = _image_map->destPR.w;
-//h = _image_map->destPR.h;
+/*
+  x = _image_map->destPR.x;
+  y = _image_map->destPR.y;
+  w = _image_map->destPR.w;
+  h = _image_map->destPR.h;
+*/
 /* moved up higher */
 
   /*  apply the results  */
-//pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-//gimage_apply_image (gimage, _image_map->drawable, &shadowPR,
-//		      FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
+
+/*
+  pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
+  gimage_apply_image (gimage, _image_map->drawable, &shadowPR,
+		      FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
+*/
 
   pixelarea_init (&shadow_area, gimage->shadow_canvas, NULL,
 			 x, y, w, h, FALSE);
@@ -130,7 +135,7 @@ image_map_do_16 (gpointer data)
       gdisplay_flush (_image_map->gdisp);
     }
 
-//_image_map->pr = pixel_regions_process (_image_map->pr);
+/*_image_map->pr = pixel_regions_process (_image_map->pr);*/
   _image_map->pr = pixelarea_process (_image_map->pr);
 
   if (_image_map->pr == NULL)
@@ -152,7 +157,7 @@ image_map_create_16 (void *gdisp_ptr,
   _image_map = (_ImageMap *) g_malloc (sizeof (_ImageMap));
   _image_map->gdisp = (GDisplay *) gdisp_ptr;
   _image_map->drawable = drawable;
-//_image_map->undo_tiles = NULL;
+/*_image_map->undo_tiles = NULL;*/
   _image_map->undo_canvas = NULL;
   _image_map->state = WAITING;
 
@@ -175,7 +180,7 @@ image_map_apply_16 (ImageMap16           image_map,
   if (_image_map->state == WORKING)
     {
       gtk_idle_remove (_image_map->idle);
-//    pixel_regions_process_stop (_image_map->pr);
+/*    pixel_regions_process_stop (_image_map->pr);*/
       pixelarea_process_stop (_image_map->pr);
       _image_map->pr = NULL;
     }
@@ -284,11 +289,13 @@ image_map_allocate_undo(_ImageMap * _image_map )
                          x2 - x1,
                          y2 - y1,
                          STORAGE_TILED);
-//_image_map->undo_canvas = canvas_new (drawable_tag (_image_map->drawable),
-//                         x2 - x1,
-//                         y2 - y1,
-//                         STORAGE_FLAT);
-//canvas_set_autoalloc (_image_map->undo_canvas, FALSE);
+/*
+  _image_map->undo_canvas = canvas_new (drawable_tag (_image_map->drawable),
+                           x2 - x1,
+                           y2 - y1,
+                           STORAGE_FLAT);
+  canvas_set_autoalloc (_image_map->undo_canvas, FALSE);
+*/
 
   /*  Copy from the image to the new undo canvas  */
   pixelarea_init (&canvas, 
@@ -386,7 +393,7 @@ image_map_abort_16 (ImageMap16 image_map)
   if (_image_map->state == WORKING)
     {
       gtk_idle_remove (_image_map->idle);
-//    pixel_regions_process_stop (_image_map->pr);
+/*    pixel_regions_process_stop (_image_map->pr); */
       pixelarea_process_stop (_image_map->pr);
       _image_map->pr = NULL;
     }

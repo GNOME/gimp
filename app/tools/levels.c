@@ -1522,7 +1522,7 @@ levels_new_dialog ()
   /*  low input text  */
   
   ld->low_input_text = gtk_entry_new ();
-//gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), "0");
+/*gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), "0");*/
   gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), ui_strings[LOW_INPUT_STRING]);
   gtk_widget_set_usize (ld->low_input_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->low_input_text, FALSE, FALSE, 0);
@@ -1544,7 +1544,7 @@ levels_new_dialog ()
 
   /* high input text  */
   ld->high_input_text = gtk_entry_new ();
-//gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), "255");
+/*gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), "255");*/
   gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), ui_strings[HIGH_INPUT_STRING]);
   gtk_widget_set_usize (ld->high_input_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->high_input_text, FALSE, FALSE, 0);
@@ -1608,7 +1608,7 @@ levels_new_dialog ()
 
   /*  low output text  */
   ld->low_output_text = gtk_entry_new ();
-//gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), "0");
+/*gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), "0");*/
   gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), ui_strings[LOW_OUTPUT_STRING]);
   gtk_widget_set_usize (ld->low_output_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->low_output_text, FALSE, FALSE, 0);
@@ -1619,7 +1619,7 @@ levels_new_dialog ()
 
   /*  high output text  */
   ld->high_output_text = gtk_entry_new ();
-//gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), "255");
+/*gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), "255");*/
   gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), ui_strings[HIGH_OUTPUT_STRING]);
   gtk_widget_set_usize (ld->high_output_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->high_output_text, FALSE, FALSE, 0);
