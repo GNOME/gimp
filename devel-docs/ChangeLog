@@ -1,3 +1,9 @@
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt: added gimp_rgb_parse_name().
+
+	* libgimpcolor/tmpl/gimprgb.sgml: regenerated.
+
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml

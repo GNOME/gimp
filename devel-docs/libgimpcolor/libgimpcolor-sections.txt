@@ -51,6 +51,7 @@ gimp_rgb_set
 gimp_rgb_set_alpha
 gimp_rgb_set_uchar
 gimp_rgb_get_uchar
+gimp_rgb_parse_name
 gimp_rgb_add
 gimp_rgb_subtract
 gimp_rgb_multiply

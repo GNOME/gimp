@@ -75,6 +75,17 @@ GimpRGB
 @blue: 
 
 
+<!-- ##### FUNCTION gimp_rgb_parse_name ##### -->
+<para>
+
+</para>
+
+@rgb: 
+@name: 
+@len: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_rgb_add ##### -->
 <para>
 

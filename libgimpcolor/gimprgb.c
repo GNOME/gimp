@@ -40,9 +40,9 @@ static gboolean  gimp_rgb_parse (GimpRGB     *rgb,
 /**
  * gimp_rgb_set:
  * @rgb: a #GimpRGB struct
- * @r: red
- * @g: green
- * @b: blue
+ * @red:
+ * @green:
+ * @blue:
  *
  * Sets the red, green and blue components of @rgb and leaves the
  * alpha component unchanged. The color values should be between 0.0
@@ -65,7 +65,7 @@ gimp_rgb_set (GimpRGB *rgb,
 /**
  * gimp_rgb_set_alpha:
  * @rgb: a #GimpRGB struct
- * @a: alpha
+ * @alpha:
  *
  * Sets the alpha component of @rgb and leaves the RGB components unchanged.
  **/
@@ -81,9 +81,9 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
 /**
  * gimp_rgb_set_uchar:
  * @rgb: a #GimpRGB struct
- * @r: red
- * @g: green
- * @b: blue
+ * @red:
+ * @green:
+ * @blue:
  *
  * Sets the red, green and blue components of @rgb from 8bit values
  * (0 to 255) and leaves the alpha component unchanged.
@@ -121,9 +121,8 @@ gimp_rgb_get_uchar (const GimpRGB *rgb,
  * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
  *
  * Attempts to parse a color name. This function accepts RGB hex
- * values or <link
- * linkend="http://www.w3.org/TR/SVG/types.html#ColorKeywords">SVG 1.0
- * color keywords</link>.  The format of an RGB value in hexadecimal
+ * values or <ulink url="http://www.w3.org/TR/SVG/types.html">SVG 1.0
+ * color keywords</ulink>.  The format of an RGB value in hexadecimal
  * notation is a '#' immediately followed by either three or six
  * hexadecimal characters.
  *
@@ -323,10 +322,10 @@ gimp_rgb_composite (GimpRGB              *color1,
 /**
  * gimp_rgba_set:
  * @rgba: a #GimpRGB struct
- * @r: red
- * @g: green
- * @b: blue
- * @a: alpha
+ * @red:
+ * @green:
+ * @blue:
+ * @alpha:
  *
  * Sets the red, green, blue and alpha components of @rgb. The values
  * should be between 0.0 and 1.0 but there is no check to enforce this
@@ -348,12 +347,12 @@ gimp_rgba_set (GimpRGB *rgba,
 }
 
 /**
- * gimp_rgb_set_uchar:
- * @rgb: a #GimpRGB struct
- * @r: red
- * @g: green
- * @b: blue
- * @a: alpha
+ * gimp_rgba_set_uchar:
+ * @rgba: a #GimpRGB struct
+ * @red:
+ * @green:
+ * @blue:
+ * @alpha:
  *
  * Sets the red, green, blue and alpha components of @rgb from 8bit
  * values (0 to 255).
