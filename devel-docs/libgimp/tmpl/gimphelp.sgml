@@ -20,7 +20,7 @@ Loading help pages using gimp_help.
 
 </para>
 
-@prog_name: 
+@help_domain: 
 @help_id: 
 @Returns: 
 

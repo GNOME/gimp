@@ -1,3 +1,7 @@
+2004-01-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimphelp.sgml: updated.
+
 2004-01-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt
