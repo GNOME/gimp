@@ -55,6 +55,8 @@
 static void         set_param_spec     (GObject     *object,
                                         GtkWidget   *widget,
                                         GParamSpec  *param_spec);
+static void         set_radio_spec     (GObject     *object,
+                                        GParamSpec  *param_spec);
 static GParamSpec * get_param_spec     (GObject     *object);
 
 static GParamSpec * find_param_spec    (GObject     *object,
@@ -646,7 +648,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
-  set_param_spec (G_OBJECT (GTK_BIN (frame)->child), NULL, param_spec);
+  set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
@@ -695,7 +697,7 @@ gimp_prop_enum_radio_box_new (GObject     *config,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
-  set_param_spec (G_OBJECT (vbox), NULL, param_spec);
+  set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
@@ -737,7 +739,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
 
                               NULL);
 
-  set_param_spec (G_OBJECT (GTK_BIN (frame)->child), NULL, param_spec);
+  set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
@@ -791,7 +793,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
-  set_param_spec (G_OBJECT (box), NULL, param_spec);
+  set_radio_spec (G_OBJECT (button), param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_radio_button_notify),
@@ -809,7 +811,7 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
       GParamSpec *param_spec;
       gint        value;
 
-      param_spec = get_param_spec (G_OBJECT (widget->parent));
+      param_spec = get_param_spec (G_OBJECT (widget));
       if (! param_spec)
         return;
 
@@ -3039,6 +3041,20 @@ set_param_spec (GObject     *object,
 
       if (blurb)
         gimp_help_set_help_data (widget, gettext (blurb), NULL);
+    }
+}
+
+static void
+set_radio_spec (GObject    *object,
+                GParamSpec *param_spec)
+{
+  GSList *list;
+
+  for (list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (object));
+       list;
+       list = g_slist_next (list))
+    {
+      set_param_spec (list->data, NULL, param_spec);
     }
 }
 

@@ -1,3 +1,8 @@
+2004-10-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppropwidgets.c: remember the param_spec with each
+	radio button instead of with the box/frame around them.
+
 2004-10-21 Kevin Cozens <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/script-fu.c: Removed _() tag from two strings
