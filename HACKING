@@ -14,7 +14,7 @@ fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 		
 Available from http://www.freedesktop.org/software/pkgconfig/.
 
-	- intltoolize 0.11.1 (or newer version)
+	- intltoolize 0.15 (or newer version)
 
 Available from ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/.
 

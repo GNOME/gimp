@@ -1,3 +1,14 @@
+2002-02-24  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* autogen.sh: fixed intltool version number, we need intltool 0.15.
+
+	* tips/Makefile.am
+	* tips/POTFILES.in
+	* tips/de.po
+	* tips/gimp-tips.xml.in: translation framework for new XML-ized tips
+	file. Thanks to Carol for converting the tips to XML.
+
 2002-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo.[ch]

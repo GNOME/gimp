@@ -2,7 +2,18 @@
 
 tipsdatadir = $(gimpdatadir)/tips
 
-tipsdata_DATA = \
+tips_in_files = gimp-tips.xml.in
+
+tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
+
+%.xml: %.xml.in $(INTLTOOL_MERGE) $(wildcard $(srcdir)/*.po)
+	$(INTLTOOL_MERGE) $(srcdir) $< $(@) -x -u -c .intltool-merge-cache
+
+$(GETTEXT_PACKAGE)-tips.pot: gimp-tips.xml.in
+	$(INTLTOOL_EXTRACT) --type=gettext/xml gimp-tips.xml.in
+	$(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --pot
+
+oldtips = \
 	gimp_tips.txt		\
 	gimp_tips.cs.txt	\
 	gimp_tips.de.txt	\
@@ -20,5 +31,8 @@ tipsdata_DATA = \
 	gimp_tips.zh_TW.txt
 
 EXTRA_DIST = \
+	POTFILES.in		\
+	$(tips_in_files)	\
 	$(tipsdata_DATA)	\
+	$(oldtips)		\
 	makefile.mingw

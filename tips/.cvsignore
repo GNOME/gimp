@@ -1,2 +1,10 @@
+*.gmo
+*.mo
 Makefile
 Makefile.in
+POTFILES
+gimp14-tips.pot
+gimp-tips.xml
+gimp-tips.xml.in.h
+messages
+.intltool-merge-cachemake
