@@ -272,6 +272,10 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
 {
   gdouble amount;
 
+  if (tr_tool->trans_info[XSHEAR] == 0.0 &&
+      tr_tool->trans_info[YSHEAR] == 0.0)
+    tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_UNKNOWN;
+
   if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_HORIZONTAL)
     amount = tr_tool->trans_info[XSHEAR];
   else
@@ -314,6 +318,9 @@ shear_x_mag_changed (GtkWidget         *widget,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
+      if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_UNKNOWN)
+        tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_HORIZONTAL;
+
       tr_tool->trans_info[XSHEAR] = value;
 
       gimp_shear_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
@@ -333,6 +340,9 @@ shear_y_mag_changed (GtkWidget         *widget,
   if (value != tr_tool->trans_info[YSHEAR])
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+      if (tr_tool->trans_info[HORZ_OR_VERT] == GIMP_ORIENTATION_UNKNOWN)
+        tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_VERTICAL;
 
       tr_tool->trans_info[YSHEAR] = value;
 
