@@ -3,6 +3,8 @@
 	* app/core/gimpmarshal.list: reduced to the set of marshallers we
 	actually use.
 
+	* libgimpwidgets/gimpwidgetsmarshal.list: documented.
+
 2003-02-20  Michael Natterer  <mitch@gimp.org>
 
 	Reimplemented the undo history:
