@@ -6,3 +6,8 @@ EXTRA_DIST = \
 	AUTHORS		\
 	ChangeLog	\
 	README
+
+fontdir = $(gimpdatadir)/fonts
+
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(fontdir)

@@ -17,7 +17,11 @@
  */
 
 /*
- * CPU acceleration detection was taken from DirectFB but seems to be
+ * x86 bits Copyright (C) Manish Singh <yosh@gimp.org>
+ */
+
+/*
+ * PPC CPU acceleration detection was taken from DirectFB but seems to be
  * originating from mpeg2dec with the following copyright:
  *
  * Copyright (C) 1999-2001 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
@@ -25,7 +29,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
+#include <string.h>
 #include <signal.h>
 #include <setjmp.h>
 
@@ -35,75 +39,272 @@
 
 
 #ifdef ARCH_X86
-static guint32
-arch_accel (void)
+
+#if GLIB_SIZEOF_LONG == 8
+#define ARCH_X86_64 1
+#endif
+
+
+typedef enum
+{
+  ARCH_X86_VENDOR_NONE,
+  ARCH_X86_VENDOR_INTEL,
+  ARCH_X86_VENDOR_AMD,
+  ARCH_X86_VENDOR_CENTAUR,
+  ARCH_X86_VENDOR_CYRIX,
+  ARCH_X86_VENDOR_NSC,
+  ARCH_X86_VENDOR_TRANSMETA,
+  ARCH_X86_VENDOR_NEXGEN,
+  ARCH_X86_VENDOR_RISE,
+  ARCH_X86_VENDOR_UMC,
+  ARCH_X86_VENDOR_SIS,
+  ARCH_X86_VENDOR_UNKNOWN    = 0xff
+} X86Vendor;
+
+enum
+{
+  ARCH_X86_INTEL_FEATURE_MMX      = 1 << 23,
+  ARCH_X86_INTEL_FEATURE_XMM      = 1 << 25,
+  ARCH_X86_INTEL_FEATURE_XMM2     = 1 << 26,
+
+  ARCH_X86_AMD_FEATURE_MMXEXT     = 1 << 22,
+  ARCH_X86_AMD_FEATURE_3DNOW      = 1 << 31,
+
+  ARCH_X86_CENTAUR_FEATURE_MMX    = 1 << 23,
+  ARCH_X86_CENTAUR_FEATURE_MMXEXT = 1 << 24,
+  ARCH_X86_CENTAUR_FEATURE_3DNOW  = 1 << 31,
+
+  ARCH_X86_CYRIX_FEATURE_MMX      = 1 << 23,
+  ARCH_X86_CYRIX_FEATURE_MMXEXT   = 1 << 24
+};
+
+/* FIXME: This should save off ebx/rbx if compiled for PIC */
+#define cpuid(op,eax,ebx,ecx,edx) \
+  asm ("cpuid\n\t"                \
+       : "=a" (eax),             \
+         "=b" (ebx),             \
+         "=c" (ecx),             \
+         "=d" (edx)              \
+       : "0" (op))
+
+
+static X86Vendor
+arch_get_vendor (void)
 {
   guint32 eax, ebx, ecx, edx;
-  gint    AMD;
-  guint32 caps = 0;
+  gchar   id[16];
 
-#define cpuid(op,eax,ebx,ecx,edx)  \
-     asm ("pushl %%ebx\n\t"        \
-          "cpuid\n\t"              \
-          "movl %%ebx,%1\n\t"      \
-          "popl %%ebx"             \
-          : "=a" (eax),            \
-            "=r" (ebx),            \
-            "=c" (ecx),            \
-            "=d" (edx)             \
-          : "a" (op)               \
-          : "cc")
-
+#ifndef ARCH_X86_64
+  /* Only need to check this on ia32 */
   asm ("pushfl\n\t"
        "pushfl\n\t"
        "popl %0\n\t"
        "movl %0,%1\n\t"
        "xorl $0x200000,%0\n\t"
-       "pushl %0\n\t"
+       "push %0\n\t"
        "popfl\n\t"
        "pushfl\n\t"
        "popl %0\n\t"
-       "popfl"
-       : "=r" (eax),
-       "=r" (ebx)
+       "popfl\n\t"
+       : "=a" (eax),
+         "=b" (ebx)
        :
        : "cc");
 
-  if (eax == ebx)             /* no cpuid */
-    return 0;
+  if (eax == ebx)
+    return ARCH_X86_VENDOR_NONE;
+#endif
 
-  cpuid (0x00000000, eax, ebx, ecx, edx);
-  if (!eax)                   /* vendor string only */
-    return 0;
+  cpuid (0, eax, ebx, ecx, edx);
 
-  AMD = (ebx == 0x68747541) && (ecx == 0x444d4163) && (edx == 0x69746e65);
+  if (eax == 0)
+    return ARCH_X86_VENDOR_NONE;
 
-  cpuid (0x00000001, eax, ebx, ecx, edx);
-  if (! (edx & 0x00800000))   /* no MMX */
-    return 0;
+  *(int *)&id[0] = ebx;
+  *(int *)&id[4] = edx;
+  *(int *)&id[8] = ecx;
+
+#ifdef ARCH_X86_64
+  if (strcmp (id, "AuthenticAMD") == 0)
+    return ARCH_X86_VENDOR_AMD;
+#else
+  if (strcmp (id, "GenuineIntel") == 0)
+    return ARCH_X86_VENDOR_INTEL;
+  else if (strcmp (id, "AuthenticAMD") == 0)
+    return ARCH_X86_VENDOR_AMD;
+  else if (strcmp (id, "CentaurHauls") == 0)
+    return ARCH_X86_VENDOR_CENTAUR;
+  else if (strcmp (id, "CyrixInstead") == 0)
+    return ARCH_X86_VENDOR_CYRIX;
+  else if (strcmp (id, "Geode by NSC") == 0)
+    return ARCH_X86_VENDOR_NSC;
+  else if (strcmp (id, "GenuineTMx86") == 0 ||
+           strcmp (id, "TransmetaCPU") == 0)
+    return ARCH_X86_VENDOR_TRANSMETA;
+  else if (strcmp (id, "NexGenDriven") == 0)
+    return ARCH_X86_VENDOR_NEXGEN;
+  else if (strcmp (id, "RiseRiseRise") == 0)
+    return ARCH_X86_VENDOR_RISE;
+  else if (strcmp (id, "UMC UMC UMC ") == 0)
+    return ARCH_X86_VENDOR_UMC;
+  else if (strcmp (id, "SiS SiS SiS ") == 0)
+    return ARCH_X86_VENDOR_SIS;
+#endif
+
+  return ARCH_X86_VENDOR_UNKNOWN;
+}
+
+static guint32
+arch_accel_intel (void)
+{
+  guint32 caps = 0;
 
 #ifdef USE_MMX
-  caps = CPU_ACCEL_X86_MMX;
+  {
+    guint32 eax, ebx, ecx, edx;
+
+    cpuid (1, eax, ebx, ecx, edx);
+
+    if ((edx & ARCH_X86_INTEL_FEATURE_MMX) == 0)
+      return 0;
+
+    caps = CPU_ACCEL_X86_MMX;
+
 #ifdef USE_SSE
-  if (edx & 0x02000000)       /* SSE - identical to AMD MMX extensions */
-    caps |= CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_MMXEXT;
+    if (edx & ARCH_X86_INTEL_FEATURE_XMM)
+      caps |= CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_MMXEXT;
 
-  if (edx & 0x04000000)       /* SSE2 */
-    caps |= CPU_ACCEL_X86_SSE2;
-
-  cpuid (0x80000000, eax, ebx, ecx, edx);
-  if (eax < 0x80000001)       /* no extended capabilities */
-    return caps;
-
-  cpuid (0x80000001, eax, ebx, ecx, edx);
-
-  if (edx & 0x80000000)
-    caps |= CPU_ACCEL_X86_3DNOW;
-
-  if (AMD && (edx & 0x00400000))      /* AMD MMX extensions */
-    caps |= CPU_ACCEL_X86_MMXEXT;
+    if (edx & ARCH_X86_INTEL_FEATURE_XMM2)
+      caps |= CPU_ACCEL_X86_SSE2;
 #endif /* USE_SSE */
+  }
 #endif /* USE_MMX */
+
+  return caps;
+}
+
+static guint32
+arch_accel_amd (void)
+{
+  guint32 caps = 0;
+
+#ifdef USE_MMX
+  {
+    guint32 eax, ebx, ecx, edx;
+
+    cpuid (0x80000000, eax, ebx, ecx, edx);
+
+    if (eax < 0x80000001)
+      return arch_accel_intel ();
+
+#ifdef USE_SSE
+    cpuid (0x80000001, eax, ebx, ecx, edx);
+
+    if (edx & ARCH_X86_AMD_FEATURE_3DNOW)
+      caps |= CPU_ACCEL_X86_3DNOW;
+
+    if (edx & ARCH_X86_AMD_FEATURE_MMXEXT)
+      caps |= CPU_ACCEL_X86_MMXEXT;
+#endif /* USE_SSE */
+  }
+#endif /* USE_MMX */
+
+  return caps;
+}
+
+static guint32
+arch_accel_centaur (void)
+{
+  guint32 caps = 0;
+
+#ifdef USE_MMX
+  {
+    guint32 eax, ebx, ecx, edx;
+
+    cpuid (0x80000000, eax, ebx, ecx, edx);
+
+    if (eax < 0x80000001)
+      return arch_accel_intel ();
+
+    cpuid (0x80000001, eax, ebx, ecx, edx);
+
+    if (edx & ARCH_X86_CENTAUR_FEATURE_MMX)
+      caps |= CPU_ACCEL_X86_MMX;
+
+#ifdef USE_SSE
+    if (edx & ARCH_X86_CENTAUR_FEATURE_3DNOW)
+      caps |= CPU_ACCEL_X86_3DNOW;
+
+    if (edx & ARCH_X86_CENTAUR_FEATURE_MMXEXT)
+      caps |= CPU_ACCEL_X86_MMXEXT;
+#endif /* USE_SSE */
+  }
+#endif /* USE_MMX */
+
+  return caps;
+}
+
+static guint32
+arch_accel_cyrix (void)
+{
+  guint32 caps = 0;
+
+#ifdef USE_MMX
+  {
+    guint32 eax, ebx, ecx, edx;
+
+    cpuid (0, eax, ebx, ecx, edx);
+
+    if (eax != 2)
+      return arch_accel_intel ();
+
+    cpuid (0x80000001, eax, ebx, ecx, edx);
+
+    if (edx & ARCH_X86_CYRIX_FEATURE_MMX)
+      caps |= CPU_ACCEL_X86_MMX;
+
+#ifdef USE_SSE
+    if (edx & ARCH_X86_CYRIX_FEATURE_MMXEXT)
+      caps |= CPU_ACCEL_X86_MMXEXT;
+#endif /* USE_SSE */
+  }
+#endif /* USE_MMX */
+
+  return caps;
+}
+
+static guint32
+arch_accel (void)
+{
+  guint32 caps;
+  X86Vendor vendor;
+
+  vendor = arch_get_vendor ();
+
+  switch (vendor)
+    {
+    case ARCH_X86_VENDOR_NONE:
+      caps = 0;
+      break;
+
+    case ARCH_X86_VENDOR_AMD:
+      caps = arch_accel_amd ();
+      break;
+
+    case ARCH_X86_VENDOR_CENTAUR:
+      caps = arch_accel_centaur ();
+      break;
+
+    case ARCH_X86_VENDOR_CYRIX:
+    case ARCH_X86_VENDOR_NSC:
+      caps = arch_accel_cyrix ();
+      break;
+
+    /* check for what Intel speced, even if UNKNOWN */
+    default:
+      caps = arch_accel_intel ();
+      break;
+    }
 
   return caps;
 }
@@ -114,7 +315,7 @@ static void
 sigill_handler (gint n)
 {
   g_printerr ("OS lacks support for SSE instructions.\n");
-  longjmp(sigill_return, 1);
+  longjmp (sigill_return, 1);
 }
 
 #endif /* ARCH_X86 */
@@ -142,6 +343,7 @@ static guint32
 arch_accel (void)
 {
   signal (SIGILL, sigill_handler);
+  
   if (sigsetjmp (jmpbuf, 1))
     {
       signal (SIGILL, SIG_DFL);
@@ -197,4 +399,28 @@ cpu_accel (void)
 #else /* !ARCH_X86 && !ARCH_PPC/USE_ALTIVEC */
   return 0;
 #endif
+}
+
+void
+cpu_accel_print_results (void)
+{
+  g_printerr ("Testing CPU features...\n");
+
+#ifdef ARCH_X86
+  g_printerr ("  mmx     : %s\n",
+              (cpu_accel() & CPU_ACCEL_X86_MMX)     ? "yes" : "no");
+  g_printerr ("  3dnow   : %s\n",
+              (cpu_accel() & CPU_ACCEL_X86_3DNOW)   ? "yes" : "no");
+  g_printerr ("  mmxext  : %s\n",
+              (cpu_accel() & CPU_ACCEL_X86_MMXEXT)  ? "yes" : "no");
+  g_printerr ("  sse     : %s\n",
+              (cpu_accel() & CPU_ACCEL_X86_SSE)     ? "yes" : "no");
+  g_printerr ("  sse2    : %s\n",
+              (cpu_accel() & CPU_ACCEL_X86_SSE2)    ? "yes" : "no");
+#endif
+#ifdef ARCH_PPC
+  g_printerr ("  altivec : %s\n",
+              (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");
+#endif
+  g_printerr ("\n");
 }

@@ -1,3 +1,16 @@
+2003-09-04  Manish Singh  <yosh@gimp.org>
+
+	* app/base/cpu-accel.[ch]: rewrote the x86 tests, moved debug printout
+	from base.c to here.
+
+	* test-cpu-accel.c: simple test program to test the above.
+
+	* app/base/base.c: use cpu_accel_print_results ()
+
+	* app/base/Makefile.am: added test-cpu-accel to TESTS.
+
+	* data/Makefile.am: make site local font directory on install.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/font-map.scm (script-fu-font-map):

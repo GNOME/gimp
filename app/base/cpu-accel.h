@@ -38,7 +38,9 @@
 #define CPU_ACCEL_PPC_ALTIVEC    0x04000000
 
 
-guint32  cpu_accel (void) G_GNUC_CONST;
+guint32  cpu_accel               (void) G_GNUC_CONST;
+
+void     cpu_accel_print_results (void);
 
 
 #endif  /* __CPU_ACCEL_H__ */

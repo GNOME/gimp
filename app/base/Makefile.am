@@ -69,14 +69,24 @@ INCLUDES = \
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
+TESTS = test-cpu-accel
+
+test_cpu_accel_SOURCES = test-cpu-accel.c
+
+test_cpu_accel_LDADD = \
+	libappbase.a	\
+	$(GLIB_LIBS)
+
 EXTRA_DIST = makefile.msc
+
+EXTRA_PROGRAMS = test-cpu-accel
 
 #
 # rules to generate built sources
 #
 # setup autogeneration dependencies
 gen_sources = xgen-bec
-CLEANFILES = $(gen_sources)
+CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 $(srcdir)/base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
