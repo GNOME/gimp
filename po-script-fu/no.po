@@ -1,11 +1,11 @@
 # Norwegian translation of gimp-po-script-fu.
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 2000.
+# Copyright © 2000-2002 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 2000-2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2001-12-02 20:12+0100\n"
+"Project-Id-Version: gimp 1.2.3\n"
+"POT-Creation-Date: 2002-02-01 00:07+0100\n"
 "PO-Revision-Date: 2001-12-02 20:15+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
