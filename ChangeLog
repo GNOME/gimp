@@ -1,3 +1,12 @@
+Wed Nov 11 02:27:46 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* libgimp/gimp.c (gimp_run_procedure2): fixed a memory leak,
+	(gimp_destroy_paramdefs) new function.
+	* libgimp/gimp.h (gimp_destroy_paramdefs): added header. 
+	* libgimp/gimpfeatures.h.in (GIMP_HAVE_DESTROY_PARAMDEFS): new macro.
+	* plug-ins/script-fu/script-fu.c (init_procedures): fixed a
+	big memory leak (this also applied to perl!)
+
 Tue Nov 10 23:44:07 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpmatrix.[ch]

@@ -343,8 +343,8 @@ init_procedures ()
 	  g_free (proc_author);
 	  g_free (proc_copyright);
 	  g_free (proc_date);
-	  g_free (params);
-	  g_free (return_vals);
+	  gimp_destroy_paramdefs (params, nparams);
+	  gimp_destroy_paramdefs (return_vals, nreturn_vals);
 	}
     }
 

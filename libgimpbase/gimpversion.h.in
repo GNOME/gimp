@@ -33,6 +33,7 @@ extern "C" {
 #define GIMP_HAVE_GET_DATA_SIZE				1-1-0
 #define GIMP_HAVE_PARASITES				1-1-0
 #define GIMP_HAVE_RESOLUTION_INFO			1-1-0
+#define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
 
 #ifdef __cplusplus
 }

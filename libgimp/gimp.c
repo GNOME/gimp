@@ -819,6 +819,7 @@ gimp_run_procedure2 (char   *name,
       break;
     }
 
+  g_free (proc_return->name);
   g_free (proc_return);
 
   return return_vals;
@@ -831,6 +832,19 @@ gimp_destroy_params (GParam *params,
   extern void _gp_params_destroy (GPParam *params, int nparams);
 
   _gp_params_destroy ((GPParam*) params, nparams);
+}
+
+void
+gimp_destroy_paramdefs (GParamDef *paramdefs,
+			int        nparams)
+{
+  while (nparams--)
+    {
+      g_free (paramdefs[nparams].name);
+      g_free (paramdefs[nparams].description);
+    }
+  
+  g_free (paramdefs);
 }
 
 gdouble

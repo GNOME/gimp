@@ -341,6 +341,13 @@ GParam* gimp_run_procedure2 (char   *name,
 void gimp_destroy_params (GParam *params,
 			  int     nparams);
 
+/* Destroy the an array of GParamDef's. This is useful for
+ *  destroying the return values returned by a call to
+ *  'gimp_query_procedure'.
+ */
+void gimp_destroy_paramdefs (GParamDef *paramdefs,
+			     int        nparams);
+
 gdouble  gimp_gamma        (void);
 gint     gimp_install_cmap (void);
 gint     gimp_use_xshm     (void);
