@@ -9,19 +9,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-06 02:06+0200\n"
-"PO-Revision-Date: 2004-03-09 06:06+0100\n"
+"POT-Creation-Date: 2004-08-08 14:25+0200\n"
+"PO-Revision-Date: 2004-08-08 14:26+0200\n"
 "Last-Translator: Dejan Matijević <dejan@ns.sympatico.ca>\n"
-"Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
+"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:126
+#: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Odabiranje četke"
 
-#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
 msgstr "_Pretraži..."
 
@@ -194,11 +194,11 @@ msgstr "Izbor fonta"
 msgid "Gradient Selection"
 msgstr "Selekcija nagiba"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
-msgid "(Empty)"
-msgstr ""
+#: libgimp/gimpmenu.c:407
+msgid "None"
+msgstr "Nijedan"
 
-#: libgimp/gimppatternmenu.c:111
+#: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Selekcija obrasca"
 
@@ -206,124 +206,91 @@ msgstr "Selekcija obrasca"
 msgid "percent"
 msgstr "odsto"
 
-#: libgimpbase/gimpbaseenums.c:15
-msgid "RGB color"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
-#, fuzzy
-msgid "Grayscale"
-msgstr "Preokreni u sivo nijansirano"
-
-#: libgimpbase/gimpbaseenums.c:17
-msgid "Indexed color"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:37
-msgid "RGB"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:38
-msgid "RGB-alpha"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:40
-msgid "Grayscale-alpha"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:41
-msgid "Indexed"
-msgstr ""
-
-#: libgimpbase/gimpbaseenums.c:42
-msgid "Indexed-alpha"
-msgstr ""
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr "(neispravna UTF-8 niska)"
 
 # bug: plural-forms
-#: libgimpbase/gimpmemsize.c:177
+#: libgimpbase/gimputils.c:244
 #, c-format
 msgid "%d Bytes"
 msgstr "%d bajtova"
 
-#: libgimpbase/gimpmemsize.c:182
+#: libgimpbase/gimputils.c:249
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimpmemsize.c:186
+#: libgimpbase/gimputils.c:253
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimpmemsize.c:190
+#: libgimpbase/gimputils.c:257
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimpmemsize.c:197
+#: libgimpbase/gimputils.c:264
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimpmemsize.c:201
+#: libgimpbase/gimputils.c:268
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimpmemsize.c:205
+#: libgimpbase/gimputils.c:272
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimpmemsize.c:212
+#: libgimpbase/gimputils.c:279
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimpmemsize.c:216
+#: libgimpbase/gimputils.c:283
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimpmemsize.c:220
+#: libgimpbase/gimputils.c:287
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
-
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
-msgid "(invalid UTF-8 string)"
-msgstr "(neispravna UTF-8 niska)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Učitavam modul: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
-#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
-#: libgimpmodule/gimpmodule.c:478
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Greška pri učitavanju modula „%s“: %s"
 
-#: libgimpmodule/gimpmodule.c:282
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Preskačem modul: „%s“\n"
 
-#: libgimpmodule/gimpmodule.c:422
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Greška modula"
 
-#: libgimpmodule/gimpmodule.c:423
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr "Učitan"
 
-#: libgimpmodule/gimpmodule.c:424
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Neuspelo učitavanje"
 
-#: libgimpmodule/gimpmodule.c:425
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr "Nije učitano"
 
@@ -348,75 +315,74 @@ msgstr "/_Crna"
 msgid "/_White"
 msgstr "/B_ela"
 
-#: libgimpwidgets/gimpcolorscales.c:133
+#: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
 msgstr "Razmere"
 
-#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:161
+#: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
 msgstr "Nijansa"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
-#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
+#: modules/cdisplay_proof.c:323
 msgid "Saturation"
 msgstr "Zasićenost"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
 msgstr "Vrednost"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
 msgstr "Crvena"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
 msgstr "Zelena"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
 msgstr "Plava"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
-msgid "Hexadecimal color notation as used in HTML and CSS"
+#: libgimpwidgets/gimpcolorscales.c:254
+msgid "Hexadecimal color notation as used in HTML"
 msgstr "Heksadecimalna obeležavanje boje kako se koristi u HTML-u"
 
-#: libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr ""
+#: libgimpwidgets/gimpcolorscales.c:268
+msgid "He_x Triplet:"
+msgstr "Heksadekadna _trojka:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -426,37 +392,35 @@ msgstr "Tekuće:"
 msgid "Old:"
 msgstr "Staro:"
 
-#: libgimpwidgets/gimpfileentry.c:351
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Odaberite direktorijum"
 
-#: libgimpwidgets/gimpfileentry.c:353
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Odaberi datoteku"
 
-#: libgimpwidgets/gimpmemsizeentry.c:232
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "kilobajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "megabajta"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "gigabajta"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Trougao"
+msgstr "Upisivo"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Odaberite direktorijum"
+msgstr "Direktorijum"
 
-#: libgimpwidgets/gimppickbutton.c:138
+#: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -496,55 +460,55 @@ msgstr "_Ponovo postavi"
 msgid "Visible"
 msgstr "Vidljivo"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "Razmak između slova"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "Razmak redova"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "_Promeni veličinu"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:267
+#: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Iseci"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
 msgstr "_Transformiši"
 
-#: libgimpwidgets/gimpstock.c:287
+#: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
 msgstr "_Rotiraj"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr "_Deli"
 
-#: libgimpwidgets/gimpunitmenu.c:302
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Još..."
 
-#: libgimpwidgets/gimpunitmenu.c:612
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Izbor jedinice"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:657
 msgid "Unit"
 msgstr "Jedinica"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:811
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -552,101 +516,101 @@ msgstr ""
 "Upotrebita ovu vrednost za seme slučajno generisanog broja -- ovo će vam "
 "omogućiti da ponovite datu \"slučajno\" operaciju"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "_Novo seme"
 
-#: libgimpwidgets/gimpwidgets.c:828
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "Seme slučajno generisanog broja sa slučajno generisanim brojem"
 
-#: libgimpwidgets/gimpwidgets.c:832
+#: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
 msgstr "_Slučajno"
 
-#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
-msgid "Protanopia (insensitivity to red)"
-msgstr "Protanopia (neosetljivost na crveno)"
-
-#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
-msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranopija (neosetljivost na zeleno)"
-
-#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
-msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tiranopia (neosetljivost na plavo)"
-
-#: modules/cdisplay_colorblind.c:153
+#: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filter oponašanja oskudnosti boja (Brettel-Vienot-Mollon algoritam)"
 
-#: modules/cdisplay_colorblind.c:242
+#: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
 msgstr "Pogled oskudnih boja"
 
-#: modules/cdisplay_colorblind.c:540
+#: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
 msgstr "Vrsta _oštećenja boje:"
 
-#: modules/cdisplay_gamma.c:105
+#: modules/cdisplay_colorblind.c:473
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopia (neosetljivost na crveno)"
+
+#: modules/cdisplay_colorblind.c:476
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Deuteranopija (neosetljivost na zeleno)"
+
+#: modules/cdisplay_colorblind.c:479
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Tiranopia (neosetljivost na plavo)"
+
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Ekranski filter gama boja"
 
-#: modules/cdisplay_gamma.c:178
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr "Gama"
 
-#: modules/cdisplay_gamma.c:352
+#: modules/cdisplay_gamma.c:311
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: modules/cdisplay_highcontrast.c:105
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Ekranski filter boja visokog kontrasta"
 
-#: modules/cdisplay_highcontrast.c:178
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:352
+#: modules/cdisplay_highcontrast.c:308
 msgid "Contrast C_ycles:"
 msgstr "_Ciklusi kontrasta:"
 
-#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
+#: modules/cdisplay_proof.c:102
+msgid "Color proof filter using ICC color profile"
+msgstr "Filter probe u boji koji koristi ICC profil boja"
+
+#: modules/cdisplay_proof.c:166
+msgid "Color Proof"
+msgstr "Proba u boji"
+
+#: modules/cdisplay_proof.c:319
 msgid "Perceptual"
 msgstr "Čulno"
 
 # loše
-#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
+#: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
 msgstr "Relativno kolorimetrijski"
 
 # gadno
-#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
+#: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
 msgstr "Apsolutno kolorimetrijski"
 
-#: modules/cdisplay_proof.c:138
-msgid "Color proof filter using ICC color profile"
-msgstr "Filter probe u boji koji koristi ICC profil boja"
-
-#: modules/cdisplay_proof.c:238
-msgid "Color Proof"
-msgstr "Proba u boji"
-
-#: modules/cdisplay_proof.c:457
+#: modules/cdisplay_proof.c:331
 msgid "_Intent:"
 msgstr "_Namera:"
 
-#: modules/cdisplay_proof.c:460
+#: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
 msgstr "Izaberite ICC profil boja"
 
-#: modules/cdisplay_proof.c:463
+#: modules/cdisplay_proof.c:337
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: modules/cdisplay_proof.c:471
+#: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
 msgstr "Zamena za _crnu tačku"
 
@@ -713,12 +677,6 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "Heksadekadna _trojka:"
-
-#~ msgid "None"
-#~ msgstr "Nijedan"
 
 #~ msgid ""
 #~ "No %s in gimprc:\n"

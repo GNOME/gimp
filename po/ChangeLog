@@ -1,3 +1,7 @@
+2004-08-09  Danilo Šegan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Merged from gimp-2-0 branch.
+
 2004-08-05  Roman Joost	<romanofski@gimp.org>
 
 	* de.po: updated and removed fuzzy strings

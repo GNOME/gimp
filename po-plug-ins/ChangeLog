@@ -1,3 +1,7 @@
+2004-08-09  Danilo Šegan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Merged from gimp-2-0 branch.
+
 2004-08-08  Pablo Saratxaga  <pablo@mandrakesoft.com>
 
 	* ca.po: Fixed Catalan file ("<Image>/" and "<Toolbox>/" MUST NOT 
