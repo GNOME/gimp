@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.14\n"
-"POT-Creation-Date: 1999-12-10 13:12+0900\n"
+"POT-Creation-Date: 1999-12-16 11:07-0800\n"
 "PO-Revision-Date: 1999-12-08 14:29+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -133,7 +133,8 @@ msgid "FG to Transparent"
 msgstr "前景から透明に"
 
 #: app/blend.c:265
-msgid "Custom from editor"
+#, fuzzy
+msgid "Custom from Editor"
 msgstr "エディタから独自に"
 
 #: app/blend.c:271 app/gradient.c:619 app/preferences_dialog.c:1483
@@ -185,11 +186,13 @@ msgid "None"
 msgstr "なし"
 
 #: app/blend.c:299
-msgid "Sawtooth wave"
+#, fuzzy
+msgid "Sawtooth Wave"
 msgstr "鋸歯"
 
 #: app/blend.c:301
-msgid "Triangular wave"
+#, fuzzy
+msgid "Triangular Wave"
 msgstr "三角波"
 
 #: app/blend.c:335
@@ -209,7 +212,8 @@ msgid "Repeat:"
 msgstr "反復:"
 
 #: app/blend.c:381
-msgid "Adaptive supersampling"
+#, fuzzy
+msgid "Adaptive Supersampling"
 msgstr "適応型スーパーサンプリング"
 
 #: app/blend.c:409
@@ -283,7 +287,7 @@ msgstr "コントラスト"
 
 #. The preview toggle
 #: app/brightness_contrast.c:299 app/color_balance.c:439 app/curves.c:671
-#: app/fileops.c:417 app/hue_saturation.c:563 app/levels.c:589
+#: app/fileops.c:418 app/hue_saturation.c:563 app/levels.c:589
 #: app/palette.c:3222 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
 msgstr "プレビュー"
@@ -469,7 +473,8 @@ msgstr "Y:"
 
 #. The wrap around option
 #: app/channel_ops.c:165
-msgid "Wrap-Around"
+#, fuzzy
+msgid "Wrap Around"
 msgstr "回り込み"
 
 #. The fill options
@@ -875,7 +880,8 @@ msgid "Crop & Resize Options"
 msgstr "切り抜き & サイズ変更オプション"
 
 #: app/crop.c:188
-msgid "Current layer only"
+#, fuzzy
+msgid "Current Layer Only"
 msgstr "現在のレイヤーのみ"
 
 #. enlarge toggle
@@ -1079,12 +1085,13 @@ msgstr "平均化処理はインデックス描画対象にはできません."
 
 #. the hard toggle
 #: app/eraser.c:107
-msgid "Hard edge"
+#, fuzzy
+msgid "Hard Edge"
 msgstr "ハードエッジ"
 
 #. the anti_erase toggle
-#: app/eraser.c:117
-msgid "Anti erase"
+#: app/eraser.c:117 app/paint_funcs.c:100
+msgid "Anti Erase"
 msgstr "あぶり出し"
 
 #: app/errorconsole.c:170
@@ -1173,20 +1180,20 @@ msgstr "ピクセル/%a"
 msgid "Image Type"
 msgstr "画像の種類"
 
-#: app/fileops.c:238 app/fileops.c:275
+#: app/fileops.c:239 app/fileops.c:276
 msgid "Load Image"
 msgstr "画像読み込み"
 
 #. format-chooser frame
-#: app/fileops.c:285
+#: app/fileops.c:286
 msgid "Open Options"
 msgstr "読み込みオプション"
 
-#: app/fileops.c:300 app/fileops.c:515
+#: app/fileops.c:301 app/fileops.c:516
 msgid "Determine file type:"
 msgstr "ファイル形式の決定:"
 
-#: app/fileops.c:383
+#: app/fileops.c:384
 msgid ""
 "generate\n"
 "preview"
@@ -1194,81 +1201,81 @@ msgstr ""
 "プレビュー\n"
 "作成"
 
-#: app/fileops.c:418
+#: app/fileops.c:419
 msgid "No selection."
 msgstr "選択なし."
 
-#: app/fileops.c:469 app/fileops.c:501
+#: app/fileops.c:470 app/fileops.c:502
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: app/fileops.c:506
+#: app/fileops.c:507
 msgid "Save Options"
 msgstr "保存オプション"
 
-#: app/fileops.c:568
+#: app/fileops.c:569
 msgid "Can't revert. No filename associated with this image"
 msgstr "復帰できません. この画像に対するファイル名がありません"
 
-#: app/fileops.c:582
+#: app/fileops.c:583
 msgid "Revert failed."
 msgstr "復帰失敗."
 
-#: app/fileops.c:1252
+#: app/fileops.c:1253
 msgid "(this thumbnail may be out of date)"
 msgstr "(この簡易表示はもう古い)"
 
-#: app/fileops.c:1253
+#: app/fileops.c:1254
 msgid "(no information)"
 msgstr "(情報なし)"
 
-#: app/fileops.c:1263
+#: app/fileops.c:1264
 msgid "(thumbnail saving is disabled)"
 msgstr "(簡易表示保存無効)"
 
-#: app/fileops.c:1267
+#: app/fileops.c:1268
 msgid "(could not write thumbnail file)"
 msgstr "(簡易表示ファイル書き出し失敗)"
 
-#: app/fileops.c:1271
+#: app/fileops.c:1272
 msgid "(thumbnail file not written)"
 msgstr "(簡易表示ファイルは書かれていない)"
 
-#: app/fileops.c:1288
+#: app/fileops.c:1289
 msgid "no preview available"
 msgstr "プレビュー無し"
 
-#: app/fileops.c:1402
+#: app/fileops.c:1403
 msgid "(could not make preview)"
 msgstr "(プレビュー作成失敗)"
 
-#: app/fileops.c:1474 app/fileops.c:1555
+#: app/fileops.c:1475 app/fileops.c:1556
 msgid "Open failed: "
 msgstr "読み込み失敗: "
 
-#: app/fileops.c:1615
+#: app/fileops.c:1616
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s は壊れています (%s)"
 
-#: app/fileops.c:1629 app/fileops.c:1731
+#: app/fileops.c:1630 app/fileops.c:1732
 msgid "Save failed: "
 msgstr "保存失敗: "
 
-#: app/fileops.c:1676
+#: app/fileops.c:1677
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s は存在します、上書きしますか?"
 
-#: app/fileops.c:1680
+#: app/fileops.c:1681
 msgid "File Exists!"
 msgstr "ファイルは存在します!"
 
-#: app/fileops.c:1686
+#: app/fileops.c:1687
 msgid "Yes"
 msgstr "はい"
 
-#: app/fileops.c:1688
+#: app/fileops.c:1689
 msgid "No"
 msgstr "いいえ"
 
@@ -1652,7 +1659,8 @@ msgid "Paste Into"
 msgstr "選択領域内にペースト"
 
 #: app/global_edit.c:698
-msgid "Paste As New"
+#, fuzzy
+msgid "Paste as New"
 msgstr "新規にペースト"
 
 #: app/global_edit.c:712
@@ -2315,8 +2323,8 @@ msgstr "グレーの階調:"
 
 #. create the info dialog
 #: app/info_window.c:377
-#, c-format
-msgid "Window Info:%s-%d.%d"
+#, fuzzy, c-format
+msgid "Info: %s-%d.%d"
 msgstr "ウィンドウ情報:%s-%d.%d"
 
 #: app/info_window.c:575
@@ -3398,7 +3406,8 @@ msgid "/Xtns/Script-Fu/Patterns"
 msgstr "/拡張/Script-Fu/パターン"
 
 #: app/menus.c:93
-msgid "/Xtns/Script-Fu/Web page themes"
+#, fuzzy
+msgid "/Xtns/Script-Fu/Web Page Themes"
 msgstr "/拡張/Script-Fu/Web ページテーマ"
 
 #: app/menus.c:94
@@ -3594,7 +3603,8 @@ msgid "/Help/Context Help..."
 msgstr "/ヘルプ/状況適応ヘルプ..."
 
 #: app/menus.c:218
-msgid "/Help/Tip of the day..."
+#, fuzzy
+msgid "/Help/Tip of the Day..."
 msgstr "/ヘルプ/今日の技..."
 
 #: app/menus.c:220
@@ -3610,7 +3620,8 @@ msgid "/File/Save"
 msgstr "/ファイル/保存"
 
 #: app/menus.c:246
-msgid "/File/Save as..."
+#, fuzzy
+msgid "/File/Save As..."
 msgstr "/ファイル/別名で保存..."
 
 #: app/menus.c:248
@@ -3651,7 +3662,8 @@ msgid "/Edit/Paste Into"
 msgstr "/編集/選択領域内にペースト"
 
 #: app/menus.c:280
-msgid "/Edit/Paste As New"
+#, fuzzy
+msgid "/Edit/Paste as New"
 msgstr "/編集/新規にペースト"
 
 #. <Image>/Edit/Buffer
@@ -3725,7 +3737,8 @@ msgid "/Select/Border..."
 msgstr "/選択/縁取り..."
 
 #: app/menus.c:334
-msgid "/Select/Save To Channel"
+#, fuzzy
+msgid "/Select/Save to Channel"
 msgstr "/選択/新規チャンネルに保存"
 
 #. <Image>/View
@@ -3783,7 +3796,8 @@ msgid "/View/Zoom/1:16"
 msgstr "/表示/拡大率/1:16"
 
 #: app/menus.c:369
-msgid "/View/Dot for dot"
+#, fuzzy
+msgid "/View/Dot for Dot"
 msgstr "/表示/点に点を対応させる"
 
 #: app/menus.c:374
@@ -3795,7 +3809,8 @@ msgid "/View/Nav. Window..."
 msgstr "/表示/なびウィンドウ..."
 
 #: app/menus.c:378
-msgid "/View/Undo history..."
+#, fuzzy
+msgid "/View/Undo History..."
 msgstr "/表示/アンドゥ履歴..."
 
 #: app/menus.c:383
@@ -3815,7 +3830,8 @@ msgid "/View/Toggle Guides"
 msgstr "/表示/ガイド表示"
 
 #: app/menus.c:391
-msgid "/View/Snap To Guides"
+#, fuzzy
+msgid "/View/Snap to Guides"
 msgstr "/表示/ガイドにスナップ"
 
 #: app/menus.c:396
@@ -3948,7 +3964,8 @@ msgid "/Layers/Rotate"
 msgstr "/レイヤー/回転"
 
 #: app/menus.c:509
-msgid "/Layers/Resize to Image"
+#, fuzzy
+msgid "/Layers/Layer to Imagesize"
 msgstr "/レイヤー/画像サイズに合わせる"
 
 #: app/menus.c:514
@@ -3964,7 +3981,8 @@ msgid "/Layers/Flatten Image"
 msgstr "/レイヤー/画像の統合"
 
 #: app/menus.c:523
-msgid "/Layers/Mask To Selection"
+#, fuzzy
+msgid "/Layers/Mask to Selection"
 msgstr "/レイヤー/レイヤーマスクを選択領域に"
 
 #: app/menus.c:528
@@ -3972,7 +3990,8 @@ msgid "/Layers/Add Alpha Channel"
 msgstr "/レイヤー/アルファチャンネルを追加"
 
 #: app/menus.c:530
-msgid "/Layers/Alpha To Selection"
+#, fuzzy
+msgid "/Layers/Alpha to Selection"
 msgstr "/レイヤー/不透明部分を選択領域に"
 
 #. <Image>/Tools
@@ -3998,11 +4017,13 @@ msgid "/Filters"
 msgstr "/フィルタ"
 
 #: app/menus.c:554
-msgid "/Filters/Repeat last"
+#, fuzzy
+msgid "/Filters/Repeat Last"
 msgstr "/フィルタ/再適用"
 
 #: app/menus.c:556
-msgid "/Filters/Re-show last"
+#, fuzzy
+msgid "/Filters/Re-Show Last"
 msgstr "/フィルタ/再実行"
 
 #: app/menus.c:562
@@ -4185,8 +4206,9 @@ msgid "/Layer Boundary Size..."
 msgstr "/レイヤー境界の大きさ..."
 
 #: app/menus.c:718
-msgid "/Resize to Image"
-msgstr "/画像サイズに合わせる"
+#, fuzzy
+msgid "/Layer to Imagesize"
+msgstr "/レイヤー/画像サイズに合わせる"
 
 #: app/menus.c:720
 msgid "/Scale Layer..."
@@ -4249,11 +4271,13 @@ msgid "/Add to Selection"
 msgstr "/選択領域に加える"
 
 #: app/menus.c:771
-msgid "/Subtract From Selection"
+#, fuzzy
+msgid "/Subtract from Selection"
 msgstr "/選択領域から引く"
 
 #: app/menus.c:773
-msgid "/Intersect With Selection"
+#, fuzzy
+msgid "/Intersect with Selection"
 msgstr "/選択領域との交わり"
 
 #: app/menus.c:778
@@ -4402,13 +4426,13 @@ msgstr "移動ツールオプション"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, c-format
-msgid "Window Navigation:%s-%d.%d"
+#, fuzzy, c-format
+msgid "Navigation: %s-%d.%d"
 msgstr "ウィンドウなび:%s-%d.%d"
 
 #: app/nav_window.c:1552
-msgid "No image: Window Navigation"
-msgstr "画像無し: ウィンドウなび"
+msgid "Navigation: No Image"
+msgstr ""
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4425,10 +4449,6 @@ msgstr "減算"
 #: app/paint_funcs.c:98
 msgid "Erase"
 msgstr "消しゴム"
-
-#: app/paint_funcs.c:100
-msgid "Anti Erase"
-msgstr "あぶり出し"
 
 #: app/paintbrush.c:192
 msgid "Once Forward"
@@ -5181,7 +5201,8 @@ msgid "Save Window Positions on Exit"
 msgstr "終了時にウィンドウの位置を保存する"
 
 #: app/preferences_dialog.c:1989
-msgid "Clear Saved Window Positions"
+#, fuzzy
+msgid "Clear Saved Window Positions Now"
 msgstr "保存されているウィンドウ位置を消去"
 
 #: app/preferences_dialog.c:1996
@@ -5508,37 +5529,37 @@ msgstr "\"%s\" に書き込めません"
 msgid "Error in temp buf caching: information swapped to disk was lost!"
 msgstr "temp buf キャッシュエラー: ディスクにスワップした情報が失われました!"
 
-#: app/text_tool.c:155
+#: app/text_tool.c:154
 msgid "Text Tool Options"
 msgstr "文字ツールオプション"
 
-#: app/text_tool.c:166 app/tool_options.c:322
+#: app/text_tool.c:165 app/tool_options.c:322
 msgid "Antialiasing"
 msgstr "アンチエイリアシング"
 
-#: app/text_tool.c:180
+#: app/text_tool.c:179
 msgid "Border:"
 msgstr "縁:"
 
-#: app/text_tool.c:206
+#: app/text_tool.c:205
 msgid "Use Dynamic Text"
 msgstr "ダイナミックテキストを使う"
 
-#: app/text_tool.c:276
+#: app/text_tool.c:275
 msgid "text_call_gdyntext: gDynText procedure lookup failed"
 msgstr "text_call_gdyntext: gDynText プロシージャ探索失敗"
 
 #. Create the shell
-#: app/text_tool.c:397 app/text_tool.c:399
+#: app/text_tool.c:396 app/text_tool.c:398
 msgid "Text Tool"
 msgstr "文字ツール"
 
-#: app/text_tool.c:617
+#: app/text_tool.c:606
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "フォント '%s' が見付からない.%s"
 
-#: app/text_tool.c:619
+#: app/text_tool.c:608
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5548,11 +5569,11 @@ msgstr ""
 "スケラーブルフォントを持っていない場合には, "
 "ツールオプション中のアンチエイリアシングをオフにしてみてください."
 
-#: app/text_tool.c:730
+#: app/text_tool.c:719
 msgid "Text Layer"
 msgstr "文字レイヤー"
 
-#: app/text_tool.c:773
+#: app/text_tool.c:762
 msgid "text_render: could not allocate image"
 msgstr "text_render: 画像が割り当てられません"
 
@@ -5572,22 +5593,22 @@ msgstr "閾値"
 msgid "Threshold Range:"
 msgstr "閾値範囲:"
 
-#: app/tile_swap.c:387
+#: app/tile_swap.c:394
 msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
 msgstr "スワップファイルが開けません...すぐさま不幸な事態になるでしょう"
 
-#: app/tile_swap.c:507 app/tile_swap.c:570
+#: app/tile_swap.c:514 app/tile_swap.c:577
 #, c-format
 msgid "unable to seek to tile location on disk: %d"
 msgstr "ディスク上のタイル位置に移動できません: %d"
 
-#: app/tile_swap.c:526
+#: app/tile_swap.c:533
 #, c-format
 msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
 msgstr ""
 "ディスクからタイルデータが読み出せません: %d/%d ( %d ) bytes 読み込みました"
 
-#: app/tile_swap.c:584
+#: app/tile_swap.c:591
 #, c-format
 msgid "unable to write tile data to disk: %d ( %d ) bytes written"
 msgstr "ディスクにタイルデータを書き込めません: %d ( %d ) bytes 書き込みました"
@@ -5597,7 +5618,8 @@ msgid "gimp_tips.txt"
 msgstr "gimp_tips.ja.txt"
 
 #: app/tips_dialog.c:70
-msgid "GIMP Tip of the day"
+#, fuzzy
+msgid "GIMP Tip of the Day"
 msgstr "GIMP 今日の技"
 
 #: app/tips_dialog.c:131
@@ -5660,7 +5682,8 @@ msgid "Feather"
 msgstr "ぼかす"
 
 #: app/tool_options.c:386
-msgid "Fixed size / aspect ratio"
+#, fuzzy
+msgid "Fixed Size / Aspect Ratio"
 msgstr "固定サイズ / 縦横比"
 
 #: app/tool_options.c:538
@@ -5716,7 +5739,8 @@ msgid "Incremental"
 msgstr "重ね塗り"
 
 #: app/tool_options.c:783
-msgid "Pressure sensitivity"
+#, fuzzy
+msgid "Pressure Sensitivity"
 msgstr "圧力感度"
 
 #: app/tool_options.c:801
@@ -6173,37 +6197,43 @@ msgstr "逆変換"
 msgid "Transform Tool Options"
 msgstr "変換ツールオプション"
 
-#. the smoothing toggle button
-#: app/transform_tool.c:251
-msgid "Smoothing"
-msgstr "スムージング"
-
-#: app/transform_tool.c:258
-msgid "Show path"
-msgstr "パス表示"
-
 #. the second radio frame and box, for transform direction
-#: app/transform_tool.c:272
-msgid "Tool paradigm"
+#: app/transform_tool.c:257
+#, fuzzy
+msgid "Tool Paradigm"
 msgstr "変換方法"
 
 #. the show grid toggle button
-#: app/transform_tool.c:299
-msgid "Show grid"
+#: app/transform_tool.c:292
+#, fuzzy
+msgid "Show Grid"
 msgstr "グリッド表示"
 
-#: app/transform_tool.c:310
-msgid "Grid density:"
-msgstr "グリッド密度:"
+#: app/transform_tool.c:303
+#, fuzzy
+msgid "Density:"
+msgstr "強度:"
+
+#. the smoothing toggle button
+#: app/transform_tool.c:333
+msgid "Smoothing"
+msgstr "スムージング"
 
 #. the clip resulting image toggle button
-#: app/transform_tool.c:331
-msgid "Clip result"
+#: app/transform_tool.c:341
+#, fuzzy
+msgid "Clip Result"
 msgstr "クリップ結果"
 
+#. the show_path toggle button
+#: app/transform_tool.c:355
+#, fuzzy
+msgid "Show Path"
+msgstr "パス表示"
+
 #: app/undo_history.c:432 app/undo_history.c:753
-#, c-format
-msgid "%s: undo history"
+#, fuzzy, c-format
+msgid "Undo History: %s"
 msgstr "%s: アンドゥ履歴"
 
 #: app/undo_history.c:488
@@ -6471,6 +6501,18 @@ msgstr "十分なタイルが見つかりませんでした. レベルは"
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
 "xcf file からタイルデータが読み出せません: %d ( %d ) bytes 読み込みました"
+
+#~ msgid "Anti erase"
+#~ msgstr "あぶり出し"
+
+#~ msgid "/Resize to Image"
+#~ msgstr "/画像サイズに合わせる"
+
+#~ msgid "No image: Window Navigation"
+#~ msgstr "画像無し: ウィンドウなび"
+
+#~ msgid "Grid density:"
+#~ msgstr "グリッド密度:"
 
 #~ msgid "starting tile preswapper\n"
 #~ msgstr "タイル preswapper 起動中\n"
@@ -7426,7 +7468,8 @@ msgstr ""
 
 #~ msgid "control_do_hint: oops, in_handle is true yet we got handle type %d"
 #~ msgstr ""
-#~ "control_do_hint: うへぇ, ハンドルタイプ %d を得ても in_handle が true のままだ"
+#~ "control_do_hint: うへぇ, ハンドルタイプ %d を得ても in_handle が true "
+#~ "のままだ"
 
 #~ msgid ""
 #~ "control_button_press(): oops, in_handle is true yet we got handle type %d"
@@ -7731,7 +7774,8 @@ msgstr ""
 #~ msgstr "gimprc と gimprc.old に改名できません; パーミッションの問題です"
 
 #~ msgid "Can't rename gimprc to gimprc.old; gimprc.old is a directory"
-#~ msgstr "gimprc を gimprc.old に改名できません; gimprc.old はディレクトリです"
+#~ msgstr ""
+#~ "gimprc を gimprc.old に改名できません; gimprc.old はディレクトリです"
 
 #~ msgid "Can't rename gimprc to gimprc.old, reason unknown"
 #~ msgstr "gimprc を gimprc.old に改名できません; 理由は不明です"
