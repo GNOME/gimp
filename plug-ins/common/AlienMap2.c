@@ -1492,7 +1492,7 @@ alienmap2_dialog (void)
   /*  Mode toggle box  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Mode"),
-			   alienmap2_radio_update,
+			   G_CALLBACK (alienmap2_radio_update),
 			   &wvals.colormodel, (gpointer) wvals.colormodel,
 
 			   _("RGB Color Model"), (gpointer) RGB_MODEL, NULL,

@@ -1,5 +1,49 @@
 2001-07-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/film.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/xbm.c: got rid of lots of compiler warnings by 
+	adding G_CALLBACK() casts and some const declarations.
+
+2001-07-29  Sven Neumann  <sven@gimp.org>
+
 	* app/docindex.c
 	* app/ops_buttons.[ch]: more GObject porting.
 
@@ -24,7 +68,7 @@
 	and include <gtk/gtktext.h> to make them compile/work again
 
 	* plug-ins/common/spheredesigner.c : gtk_color_selction_set_opacity
-	renamed to gtk_color_selction_set_current_alpha
+	renamed to gtk_color_selection_set_current_alpha
 
 	* plug-ins/gflare/gtkmultioptionmenu.c : ported ny removing the
 	virtual draw function and style->xthickness and ythickness via
@@ -32,8 +76,8 @@
 
 	* plug-ins/common/nlfilt.c :
 	* plug-ims/gap/gap_movdialog.c :
-	* plug-ims/gimpressionist/gimpressionist.c : gtk_widget_set_default_visible is
-	neither available nor needed anymore
+	* plug-ims/gimpressionist/gimpressionist.c : 
+	gtk_widget_set_default_visible is neither available nor needed anymore
 
 	* plug-ins/common/plugindetails.c : ported to GtkTextBuffer
 	and reflect gtk_paned api changes 

@@ -369,26 +369,26 @@ static void    CML_explorer_ok_callback            (GtkWidget *widget,
 						    gpointer   data);
 
 
-static void    CML_save_to_file_callback (GtkWidget *widget,
-					  gpointer   data);
-static void    CML_execute_save_to_file  (GtkWidget *widget,
-					  gpointer   data);
-static gint    force_overwrite           (gchar     *filename);
-static void    CML_overwrite_ok_callback (GtkWidget *widget,
-					  gpointer   data);
+static void    CML_save_to_file_callback   (GtkWidget   *widget,
+                                            gpointer     data);
+static void    CML_execute_save_to_file    (GtkWidget   *widget,
+                                            gpointer     data);
+static gint    force_overwrite             (const gchar *filename);
+static void    CML_overwrite_ok_callback   (GtkWidget   *widget,
+                                            gpointer     data);
 
-static void    CML_preview_update_callback (GtkWidget *widget,
-					    gpointer   data);
-static void    CML_load_from_file_callback (GtkWidget *widget,
-					    gpointer   data);
-static gint    CML_load_parameter_file     (gchar     *filename,
-					    gint       interactive_mode);
-static void    CML_execute_load_from_file  (GtkWidget *widget,
-					    gpointer   data);
-static gint    parse_line_to_gint          (FILE      *file,
-					    gint      *flag);
-static gdouble parse_line_to_gdouble       (FILE      *file,
-					    gint      *flag);
+static void    CML_preview_update_callback (GtkWidget   *widget,
+					    gpointer     data);
+static void    CML_load_from_file_callback (GtkWidget   *widget,
+					    gpointer     data);
+static gint    CML_load_parameter_file     (const gchar *filename,
+					    gint         interactive_mode);
+static void    CML_execute_load_from_file  (GtkWidget   *widget,
+					    gpointer     data);
+static gint    parse_line_to_gint          (FILE        *file,
+					    gint        *flag);
+static gdouble parse_line_to_gdouble       (FILE        *file,
+					    gint        *flag);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1325,7 +1325,7 @@ CML_explorer_dialog (void)
 
       optionmenu =
 	gimp_option_menu_new2
-	(FALSE, CML_initial_value_menu_update,
+	(FALSE, G_CALLBACK (CML_initial_value_menu_update),
 	 &VALS.initial_value,
 	 (gpointer) VALS.initial_value,
 
@@ -1455,7 +1455,8 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (subframe), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+      optionmenu = gimp_option_menu_new2 (FALSE, 
+                                          G_CALLBACK (gimp_menu_item_update),
 					  &copy_source, (gpointer) copy_source,
 
 					  gettext (channel_names[0]),
@@ -1470,7 +1471,8 @@ CML_explorer_dialog (void)
 				 _("Source Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+      optionmenu = gimp_option_menu_new2 (FALSE, 
+                                          G_CALLBACK (gimp_menu_item_update),
 					  &copy_destination,
 					  (gpointer) copy_destination,
 
@@ -1505,7 +1507,8 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (subframe), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+      optionmenu = gimp_option_menu_new2 (FALSE, 
+                                          G_CALLBACK (gimp_menu_item_update),
 					  &selective_load_source,
 					  (gpointer) selective_load_source,
 
@@ -1523,7 +1526,8 @@ CML_explorer_dialog (void)
 				 _("Source Channel in File:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+      optionmenu = gimp_option_menu_new2 (FALSE, 
+                                          G_CALLBACK (gimp_menu_item_update),
 					  &selective_load_destination,
 					  (gpointer) selective_load_destination,
 
@@ -1590,7 +1594,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
 			   &param->function, (gpointer) param->function,
 
 			   gettext (function_names[CML_KEEP_VALUES]),
@@ -1641,7 +1645,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   index++;
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
 			   &param->composition, (gpointer) param->composition,
 
 			   gettext (composition_names[COMP_NONE]),
@@ -1698,7 +1702,7 @@ CML_dialog_channel_panel_new (gchar     *name,
   index++;
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (CML_explorer_menu_update),
 			   &param->arrange, (gpointer) param->arrange,
 
 			   gettext (arrange_names[STANDARD]),
@@ -2141,7 +2145,7 @@ static void
 CML_execute_save_to_file (GtkWidget *widget,
 			  gpointer   data)
 {
-  gchar       *filename;
+  const gchar *filename;
   struct stat  buf;
   FILE        *file = NULL;
   gint         channel_id;
@@ -2229,16 +2233,15 @@ CML_execute_save_to_file (GtkWidget *widget,
 
       g_message (_("Parameters were Saved to\n\"%s\""), filename);
 
-      if (sizeof (VALS.last_file_name) <= strlen (filename))
-	filename[sizeof (VALS.last_file_name) - 1] = '\0';
-      strcpy (VALS.last_file_name, filename);
+      strncpy (VALS.last_file_name, filename,
+               sizeof (VALS.last_file_name) - 1);
     }
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static gint
-force_overwrite (gchar *filename)
+force_overwrite (const gchar *filename)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -2332,9 +2335,9 @@ static void
 CML_execute_load_from_file (GtkWidget *widget,
 			    gpointer   data)
 {
-  gchar *filename;
-  gint   channel_id;
-  gint   flag = TRUE;
+  const gchar *filename;
+  gint         channel_id;
+  gint         flag = TRUE;
 
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
 
@@ -2371,8 +2374,8 @@ CML_execute_load_from_file (GtkWidget *widget,
 }
 
 static gint
-CML_load_parameter_file (gchar *filename,
-			 gint   interactive_mode)
+CML_load_parameter_file (const gchar *filename,
+			 gint         interactive_mode)
 {
   FILE      *file;
   gint       channel_id;
@@ -2500,9 +2503,8 @@ CML_load_parameter_file (gchar *filename,
 		  sizeof (CML_PARAM));
 	}
 
-      if ( sizeof (VALS.last_file_name) <= strlen (filename))
-	filename[sizeof (VALS.last_file_name) - 1] = '\0';
-      strcpy (VALS.last_file_name, filename);
+      strncpy (VALS.last_file_name, filename,
+               sizeof (VALS.last_file_name) - 1);
     }
   return flag;
 }

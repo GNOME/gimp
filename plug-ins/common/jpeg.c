@@ -1765,7 +1765,7 @@ save_dialog (void)
   /* Subsampling */
   menu = 
     gimp_option_menu_new2 (FALSE, 
-			   menu_callback, 
+			   G_CALLBACK (menu_callback), 
 			   &jsvals.subsmp, GINT_TO_POINTER (jsvals.subsmp),
 			   "2x2,1x1,1x1",  GINT_TO_POINTER (0), NULL, 
 			   "2x1,1x1,1x1 (4:2:2)", GINT_TO_POINTER (1), NULL,
@@ -1780,7 +1780,7 @@ save_dialog (void)
   /* DCT method */
   menu = 
     gimp_option_menu_new2 (FALSE, 
-			   menu_callback, 
+			   G_CALLBACK (menu_callback), 
 			   &jsvals.dct, GINT_TO_POINTER (jsvals.dct),
 			   _("Fast Integer"),   GINT_TO_POINTER (1), NULL, 
 			   _("Integer"),        GINT_TO_POINTER (0), NULL,

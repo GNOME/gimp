@@ -615,7 +615,7 @@ pluginCoreIA (struct piArgs *argp)
   gtk_widget_show (toggle);
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &argp->mode, (gpointer) argp->mode,
 
 				 "NTSC", (gpointer) mode_ntsc, NULL,
@@ -628,7 +628,7 @@ pluginCoreIA (struct piArgs *argp)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Action"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &argp->action, (gpointer) argp->action,
 
 			   _("Reduce Luminance"),  (gpointer) act_lredux, NULL,

@@ -1075,7 +1075,8 @@ new_channel (const chan_tmpl *ct)
       gtk_object_set_user_data (GTK_OBJECT (chst->menuitem[i]),
 				GINT_TO_POINTER (i));
       gtk_widget_show (chst->menuitem[i]);
-      gtk_menu_append (GTK_MENU (menu), GTK_WIDGET (chst->menuitem[i]));
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), 
+                             GTK_WIDGET (chst->menuitem[i]));
       sf++;
       i++;
     }

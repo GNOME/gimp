@@ -521,7 +521,7 @@ sparkle_dialog (void)
   /*  colortype  */
   vbox =
     gimp_radio_group_new2 (FALSE, NULL,
-			   gimp_radio_button_update,
+                           G_CALLBACK (gimp_radio_button_update),
 			   &svals.colortype, (gpointer) svals.colortype,
 
 			   _("Natural Color"),    (gpointer) NATURAL, &r1,

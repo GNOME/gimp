@@ -286,7 +286,7 @@ deinterlace_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Mode"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &DeinterlaceValue, (gpointer) DeinterlaceValue,
 
 			   _("Keep Odd Fields"), (gpointer) ODD_FIELDS, NULL,

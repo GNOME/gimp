@@ -810,7 +810,7 @@ static void
 cb_callback (GtkWidget *widget,
 	     gpointer   data)
 {
-  *((gchar **) data) = gtk_entry_get_text (GTK_ENTRY (widget));
+  *((const gchar **) data) = gtk_entry_get_text (GTK_ENTRY (widget));
 }
 
 static void

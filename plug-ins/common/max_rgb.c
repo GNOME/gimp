@@ -379,7 +379,7 @@ dialog (GimpDrawable *drawable)
   gtk_widget_show (preview);
   
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
-				 radio_callback,
+				 G_CALLBACK (radio_callback),
 				 &pvals.max_p, (gpointer) pvals.max_p,
 
 				 _("Hold the Maximal Channels"),

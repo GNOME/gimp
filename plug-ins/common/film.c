@@ -1492,11 +1492,11 @@ static void
 film_ok_callback (GtkWidget *widget,
                   gpointer   data)
 {
-  gint       num_images;
-  gchar     *s;
-  GtkWidget *label;
-  GList     *tmp_list;
-  gint32     image_ID;
+  gint         num_images;
+  const gchar *s;
+  GtkWidget   *label;
+  GList       *tmp_list;
+  gint32       image_ID;
 
   /* Read font family */
   s = gtk_entry_get_text (GTK_ENTRY (filmint.font_entry));

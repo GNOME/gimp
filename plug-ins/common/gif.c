@@ -1367,7 +1367,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (label);
 
   disposal_option_menu =
-    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &gsvals.default_dispose,
 			   (gpointer) gsvals.default_dispose,
 

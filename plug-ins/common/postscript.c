@@ -2694,7 +2694,7 @@ load_dialog (void)
 
   /* Colouring */
   frame = gimp_radio_group_new2 (TRUE, _("Coloring"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &plvals.pnm_type, (gpointer) plvals.pnm_type,
 
 				 _("B/W"),       (gpointer) 4, NULL,
@@ -2711,8 +2711,9 @@ load_dialog (void)
   gtk_widget_show (hbox);
 
   frame = gimp_radio_group_new2 (TRUE, _("Text Antialiasing"),
-				 gimp_radio_button_update,
-				 &plvals.textalpha, (gpointer) plvals.textalpha,
+				 G_CALLBACK (gimp_radio_button_update),
+				 &plvals.textalpha, 
+                                 (gpointer) plvals.textalpha,
 
 				 _("None"),   (gpointer) 1, NULL,
 				 _("Weak"),   (gpointer) 2, NULL,
@@ -2723,7 +2724,7 @@ load_dialog (void)
   gtk_widget_show (frame);
 
   frame = gimp_radio_group_new2 (TRUE, _("Graphic Antialiasing"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &plvals.graphicsalpha,
 				 (gpointer) plvals.graphicsalpha,
 
@@ -2878,7 +2879,7 @@ save_dialog (void)
 
   /* Unit */
   uframe = gimp_radio_group_new2 (TRUE, _("Unit"),
-				  save_unit_toggle_update,
+				  G_CALLBACK (save_unit_toggle_update),
 				  vals, (gpointer) psvals.unit_mm,
 
 				  _("Inch"),       (gpointer) FALSE, NULL,
@@ -2893,7 +2894,7 @@ save_dialog (void)
 
   /* Rotation */
   frame = gimp_radio_group_new2 (TRUE, _("Rotation"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &psvals.rotate, (gpointer) psvals.rotate,
 
 				 "0",   (gpointer) 0, NULL,

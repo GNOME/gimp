@@ -372,7 +372,7 @@ pluginCoreIA (struct piArgs *argp,
   waves_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-				 waves_radio_button_update,
+				 G_CALLBACK (waves_radio_button_update),
 				 &argp->type, (gpointer) argp->type,
 
 				 _("Smear"),   (gpointer) MODE_SMEAR, NULL,

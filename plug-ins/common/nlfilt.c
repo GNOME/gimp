@@ -391,7 +391,7 @@ pluginCoreIA (struct piArgs *argp)
   nlfilt_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Filter"),
-				 nlfilt_radio_button_update,
+				 G_CALLBACK (nlfilt_radio_button_update),
 				 &argp->filter, (gpointer) argp->filter,
 
 				 _("Alpha Trimmed Mean"),

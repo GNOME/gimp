@@ -311,17 +311,17 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam  **return_vals)
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *dst_drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gchar       *l_env;
+  static GimpParam   values[1];
+  GimpDrawable      *dst_drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  const gchar       *l_env;
 
   l_env = g_getenv ("SAMPLE_COLORIZE_DEBUG");
   if (l_env != NULL)

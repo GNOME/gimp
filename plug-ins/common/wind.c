@@ -1069,7 +1069,7 @@ dialog_box (GimpDrawable *drawable)
     ******************************************************/
 
   frame = gimp_radio_group_new2 (TRUE, _("Style"),
-				 radio_callback,
+                                 G_CALLBACK (radio_callback),
 				 &config.alg, (gpointer) config.alg,
 				 _("Wind"),  (gpointer) RENDER_WIND,  &style1,
 				 _("Blast"), (gpointer) RENDER_BLAST, &style2,
@@ -1087,7 +1087,7 @@ dialog_box (GimpDrawable *drawable)
     **************************************************/
 
   frame = gimp_radio_group_new2 (TRUE, _("Direction"),
-				 radio_callback,
+                                 G_CALLBACK (radio_callback),
 				 &config.direction, (gpointer) config.direction,
 				 _("Left"),  (gpointer) LEFT,  &dir1,
 				 _("Right"), (gpointer) RIGHT, &dir2,
@@ -1104,7 +1104,7 @@ dialog_box (GimpDrawable *drawable)
     ***************************************************/
 
   frame = gimp_radio_group_new2 (TRUE, _("Edge Affected"),
-				 radio_callback,
+                                 G_CALLBACK (radio_callback),
 				 &config.edge, (gpointer) config.edge,
 
 				 _("Leading"),  (gpointer) LEADING,  &edge1,

@@ -375,9 +375,9 @@ shoot_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -397,9 +397,9 @@ shoot_dialog (void)
   button = gtk_radio_button_new_with_label (radio_group, _("Single Window"));
   radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));  
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &shootvals.root);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &shootvals.root);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FALSE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), ! shootvals.root);
   gtk_widget_show (button);
@@ -409,9 +409,9 @@ shoot_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   decor_button =
     gtk_check_button_new_with_label (_("With Decorations"));
-  gtk_signal_connect (GTK_OBJECT (decor_button), "toggled",
-                      (GtkSignalFunc) gimp_toggle_button_update,
-                      &shootvals.decor);
+  g_signal_connect (G_OBJECT (decor_button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &shootvals.decor);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (decor_button), 
 				shootvals.decor);
   gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", decor_button);
@@ -427,9 +427,9 @@ shoot_dialog (void)
   button = gtk_radio_button_new_with_label (radio_group, _("Whole Screen"));
   radio_group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));  
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &shootvals.root);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &shootvals.root);
   gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.root);
   gtk_widget_show (button);
@@ -445,9 +445,9 @@ shoot_dialog (void)
   gtk_widget_show (label);
  
   adj = gtk_adjustment_new (shootvals.delay, 0.0, 100.0, 1.0, 5.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      gimp_int_adjustment_update, 
-		      &shootvals.delay);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update), 
+                    &shootvals.delay);
   spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);

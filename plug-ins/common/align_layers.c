@@ -446,7 +446,7 @@ align_layers_dialog (void)
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &VALS.h_style, (gpointer) VALS.h_style,
 
 			   _("None"),
@@ -466,7 +466,7 @@ align_layers_dialog (void)
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &VALS.h_base, (gpointer) VALS.h_base,
 
 			   _("Left Edge"),  (gpointer) H_BASE_LEFT, NULL,
@@ -479,7 +479,7 @@ align_layers_dialog (void)
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &VALS.v_style, (gpointer) VALS.v_style,
 
 			   _("None"),
@@ -499,7 +499,7 @@ align_layers_dialog (void)
 			     optionmenu, 1, FALSE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 			   &VALS.v_base, (gpointer) VALS.v_base,
 
 			   _("Top Edge"),    (gpointer) V_BASE_TOP, NULL,

@@ -583,7 +583,7 @@ save_dialog (void)
 
   /* Encapsulation radiobuttons */
   vbox = gimp_radio_group_new2 (FALSE, NULL,
-				gimp_radio_button_update,
+				G_CALLBACK (gimp_radio_button_update),
 				&mail_info.encapsulation,
 				(gpointer) mail_info.encapsulation,
 

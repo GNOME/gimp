@@ -777,7 +777,7 @@ mblur_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Blur Type"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &mbvals.mblur_type, (gpointer) mbvals.mblur_type,
 
 			   _("Linear"), (gpointer) MBLUR_LINEAR, NULL,

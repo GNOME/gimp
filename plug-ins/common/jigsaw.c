@@ -2617,7 +2617,7 @@ dialog_box (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   frame = gimp_radio_group_new2 (TRUE, _("Jigsaw Style"),
-				 jigsaw_radio_button_update,
+				 G_CALLBACK (jigsaw_radio_button_update),
 				 &config.style, (gpointer) config.style,
 
 				 _("Square"), (gpointer) BEZIER_1, &rbutton1,

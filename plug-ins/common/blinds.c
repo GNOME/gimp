@@ -367,7 +367,7 @@ blinds_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Orientation"),
-			   blinds_radio_update,
+			   G_CALLBACK (blinds_radio_update),
 			   &bvals.orientation, (gpointer) bvals.orientation,
 
 			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,

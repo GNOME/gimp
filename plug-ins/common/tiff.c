@@ -1577,7 +1577,7 @@ save_dialog (void)
   /*  compression  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Compression"),
-			   gimp_radio_button_update,
+                           G_CALLBACK (gimp_radio_button_update),
 			   &tsvals.compression, (gpointer) tsvals.compression,
 
 			   _("None"),      (gpointer) COMPRESSION_NONE, NULL,
@@ -1630,8 +1630,8 @@ static void
 comment_entry_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gint len;
-  gchar *text;
+  const gchar *text;
+  gint         len;
 
   text = gtk_entry_get_text (GTK_ENTRY (widget));
   len = strlen (text);

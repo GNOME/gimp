@@ -1822,7 +1822,7 @@ sinus_dialog (void)
 
   vbox2 =
     gimp_radio_group_new2 (FALSE, NULL,
-			   sinus_radio_button_update,
+			   G_CALLBACK (sinus_radio_button_update),
 			   &svals.perturbation, (gpointer) svals.perturbation,
 
 			   _("Ideal"),     (gpointer) IDEAL, NULL,
@@ -1865,7 +1865,7 @@ sinus_dialog (void)
   else
     {
       frame = gimp_radio_group_new2 (TRUE, _("Colors"),
-				     sinus_radio_button_update,
+				     G_CALLBACK (sinus_radio_button_update),
 				     &svals.colors, (gpointer) svals.colors,
 
 				     _("Black & White"),
@@ -1972,7 +1972,7 @@ sinus_dialog (void)
 
   frame =
     gimp_radio_group_new2 (TRUE, _("Gradient"),
-			   sinus_radio_button_update,
+                           G_CALLBACK (sinus_radio_button_update),
 			   &svals.colorization, (gpointer) svals.colorization,
 
 			   _("Linear"),     (gpointer) LINEAR, NULL,

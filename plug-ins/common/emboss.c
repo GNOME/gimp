@@ -545,7 +545,7 @@ pluginCoreIA (struct piArgs *argp)
   emboss_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Function"),
-				 emboss_radio_button_callback,
+				 G_CALLBACK (emboss_radio_button_callback),
 				 &argp->embossp, (gpointer) argp->embossp,
 
 				 _("Bumpmap"), (gpointer) FUNCTION_BUMPMAP, NULL,

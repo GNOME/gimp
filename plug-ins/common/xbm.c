@@ -206,22 +206,27 @@ query (void)
 }
 
 static gchar *
-init_prefix (gchar *filename)
+init_prefix (const gchar *filename)
 {
   gchar *p, *prefix;
   gint len;
 
-  prefix = g_basename (filename);
-
-  /* Strip any extension. */
-  p = strrchr (prefix, '.');
-  if (p && p != prefix)
-    len = MIN (MAX_PREFIX, p - prefix);
-  else
-    len = MAX_PREFIX;
+  prefix = g_path_get_basename (filename);
 
   memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
-  strncpy (xsvals.prefix, prefix, len);
+
+  /* Strip any extension. */
+  if (prefix)
+    {
+      p = strrchr (prefix, '.');
+      if (p && p != prefix)
+        len = MIN (MAX_PREFIX, p - prefix);
+      else
+        len = MAX_PREFIX;
+
+      strncpy (xsvals.prefix, prefix, len);
+      g_free (prefix);
+    }
 
   return xsvals.prefix;
 }

@@ -763,7 +763,7 @@ dialog_show (void)
 
   /*  Settings  */
   frame = gimp_radio_group_new2 (TRUE, _("Outside Type"),
-				 dialog_outside_type_callback,
+				 G_CALLBACK (dialog_outside_type_callback),
 				 &parameters.outside_type,
 				 (gpointer) parameters.outside_type,
 

@@ -1051,7 +1051,7 @@ create_main_dialog (void)
   gtk_widget_show (button);
 
   frame = gimp_radio_group_new2 (TRUE, _("Effect Channel"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &licvals.effect_channel,
 				 (gpointer) licvals.effect_channel,
 
@@ -1064,7 +1064,7 @@ create_main_dialog (void)
   gtk_widget_show (frame);
 
   frame = gimp_radio_group_new2 (TRUE, _("Effect Operator"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &licvals.effect_operator,
 				 (gpointer) licvals.effect_operator,
 
@@ -1076,7 +1076,7 @@ create_main_dialog (void)
   gtk_widget_show (frame);
 
   frame = gimp_radio_group_new2 (TRUE, _("Convolve"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &licvals.effect_convolve,
 				 (gpointer) licvals.effect_convolve,
 

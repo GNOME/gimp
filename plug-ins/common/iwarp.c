@@ -1034,7 +1034,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (hbox);
 
   vbox2 = gimp_radio_group_new2 (FALSE, NULL,
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &iwarp_vals.deform_mode,
 				 (gpointer) iwarp_vals.deform_mode,
 

@@ -632,7 +632,7 @@ ripple_dialog (void)
   /*  Orientation toggle box  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Orientation"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &rvals.orientation, (gpointer) rvals.orientation,
 
 			   _("Horizontal"), (gpointer) HORIZONTAL, NULL,
@@ -645,7 +645,7 @@ ripple_dialog (void)
 
   /*  Edges toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Edges"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &rvals.edges, (gpointer) rvals.edges,
 
 				 _("Wrap"),  (gpointer) WRAP, NULL,
@@ -659,7 +659,7 @@ ripple_dialog (void)
 
   /*  Wave toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Wave Type"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &rvals.waveform, (gpointer) rvals.waveform,
 
 				 _("Sawtooth"), (gpointer) SAWTOOTH, NULL,

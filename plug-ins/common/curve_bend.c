@@ -326,7 +326,7 @@ static void            p_copy_points                  (BenderDialog *cd, int out
 						       int argc, gdouble *floatarray);
 static void            p_copy_yval                    (BenderDialog *cd, int outline,  
 						       int argc, gint8 *int8array);
-static int             p_save_pointfile               (BenderDialog *cd, char *filename);
+static int             p_save_pointfile               (BenderDialog *cd, const gchar *filename);
 
 
 /* Global Variables */
@@ -705,7 +705,7 @@ run (char    *name,           /* name of plugin */
      int     *nreturn_vals,   /* number of out-parameters */
      GimpParam **return_vals)    /* out-parameters */
 {
-  char       *l_env;
+  const gchar  *l_env;
   BenderDialog *cd;
   
   GimpDrawable *l_active_drawable = NULL;
@@ -938,7 +938,7 @@ run (char    *name,           /* name of plugin */
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 int
 p_save_pointfile (BenderDialog *cd, 
-		  char         *filename)
+		  const gchar  *filename)
 {
   int j;
   FILE *l_fp;
@@ -988,7 +988,7 @@ p_save_pointfile (BenderDialog *cd,
 
 int
 p_load_pointfile (BenderDialog *cd, 
-		  char         *filename)
+		  const gchar  *filename)
 {
   int   l_pi, l_ci, l_n, l_len;
   FILE *l_fp;
@@ -2118,14 +2118,14 @@ p_points_save_to_file (GtkWidget *widget,
 		       gpointer	 data)
 {
   BenderDialog *cd;
-  char	    *filename;
+  const char   *filename;
  
   if(gb_debug) printf("p_points_save_to_file\n");
   cd = (BenderDialog *) data;  
   
   if(cd->filesel == NULL) return;
   
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (cd->filesel));
+  filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION (cd->filesel));
   p_save_pointfile(cd, filename);
   gtk_widget_destroy(GTK_WIDGET(cd->filesel));
   cd->filesel = NULL;
@@ -2136,14 +2136,14 @@ p_points_load_from_file (GtkWidget *widget,
 			 gpointer   data)
 {
   BenderDialog *cd;
-  char	    *filename;
+  const char   *filename;
  
   if(gb_debug) printf("p_points_load_from_file\n");
   cd = (BenderDialog *) data;  
   
   if(cd->filesel == NULL) return;
   
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (cd->filesel));
+  filename = gtk_file_selection_get_filename(GTK_FILE_SELECTION (cd->filesel));
   p_load_pointfile(cd, filename);
   gtk_widget_destroy(GTK_WIDGET(cd->filesel));
   cd->filesel = NULL;

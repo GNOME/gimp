@@ -387,7 +387,7 @@ shift_dialog (void)
   /*  parameter settings  */
   frame = 
     gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
-			   gimp_radio_button_update,
+			   G_CALLBACK (gimp_radio_button_update),
 			   &shvals.orientation, (gpointer) shvals.orientation,
 
 			   _("Shift Horizontally"), (gpointer) HORIZONTAL, NULL,

@@ -423,7 +423,7 @@ borderaverage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+  menu = gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_menu_item_update),
 				&borderaverage_bucket_exponent,
 				(gpointer) borderaverage_bucket_exponent,
 

@@ -309,7 +309,7 @@ open_dialog (void)
 		      NULL);
 
   frame = gimp_radio_group_new2 (TRUE, _("Fractional Pixels"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &p.params.fractional_type,
 				 (gpointer) p.params.fractional_type,
 
@@ -373,7 +373,7 @@ open_dialog (void)
   gtk_widget_show (button);
 
   frame = gimp_radio_group_new2 (TRUE, _("Background Type"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &p.params.background_type,
 				 (gpointer) p.params.background_type,
 

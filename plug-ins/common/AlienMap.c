@@ -1465,7 +1465,7 @@ alienmap_dialog (void)
 
   /*  Redmode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Red"),
-				 alienmap_toggle_update,
+				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.redmode, (gpointer) wvals.redmode,
 
 				 _("Sine"),   (gpointer) SINUS, &toggle1,
@@ -1488,7 +1488,7 @@ alienmap_dialog (void)
 
   /*  Greenmode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Green"),
-				 alienmap_toggle_update,
+				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.greenmode, (gpointer) wvals.greenmode,
 
 				 _("Sine"),   (gpointer) SINUS, &toggle1,
@@ -1511,7 +1511,7 @@ alienmap_dialog (void)
 
   /*  Bluemode toggle box  */
   frame = gimp_radio_group_new2 (TRUE, _("Blue"),
-				 alienmap_toggle_update,
+				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.bluemode, (gpointer) wvals.bluemode,
 
 				 _("Sine"),   (gpointer) SINUS, &toggle1,

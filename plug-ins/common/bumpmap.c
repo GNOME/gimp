@@ -941,7 +941,7 @@ bumpmap_dialog (void)
   /* Type of map */
   frame =
     gimp_radio_group_new2 (TRUE, _("Map Type"),
-			   dialog_map_type_callback,
+			   G_CALLBACK (dialog_map_type_callback),
 			   &bmvals.type, (gpointer) bmvals.type,
 
 			   _("Linear Map"),     (gpointer) LINEAR, NULL,
