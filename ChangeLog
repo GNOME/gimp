@@ -1,3 +1,9 @@
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): resurrected
+	a mnemonic that was lost lately (1.88 -> 1.89) but still exists in
+	most translations.
+
 2004-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcurvestool.c: #include "widgets/gimppropwidgets.h"

@@ -1,3 +1,7 @@
+2004-03-05  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation.
+
 2004-02-28  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from
@@ -10,7 +14,7 @@
 
 2004-02-25  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2004-02-23  Adam Weinberger  <adamw@FreeBSD.org>
 
@@ -89,7 +93,7 @@
 
 2004-01-07  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2004-01-06  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -151,7 +155,7 @@
 
 2003-11-24  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-11-24  Danilo Šegan  <dsegan@gmx.net>
 
@@ -204,18 +208,18 @@
 	* sr.po, sr@Latn.po: Updated Serbian translation.
 
 2003-11-06  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Updated  Malay translation by
-                MIMOS Open Source Development Group <syed@mimos.my>
+
+	* ms.po: Updated Malay translation by MIMOS Open Source
+	Development Group <syed@mimos.my>
 
 2003-11-03 Marco Ciampa <ciampix@libero.it>
 
 	* it.po: Updated italian translation
 	
 2003-10-31  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Updated  Malay translation by
-                MIMOS Open Source Development Group <syed@mimos.my>
+
+	* ms.po: Updated Malay translation by MIMOS Open Source
+	Development Group <syed@mimos.my>
 
 2003-10-29  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
@@ -281,7 +285,8 @@
 
 2003-09-08  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>. 
+	* sk.po: Updated Slovak translation by Zdenko Podobny
+	<zdpo@mailbox.sk>.
 
 2003-09-06  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -289,15 +294,16 @@
 
 2003-09-04  Vincent van Adrighem  <V.vanAdrighem@dirck.mine.nu>
 
-        * nl.po: Dutch translation updated by Branko Collin.
+	* nl.po: Dutch translation updated by Branko Collin.
 
 2003-09-03  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-09-03  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: Updated Slovak translation by Zdenko Podobny
+	<zdpo@mailbox.sk>.
 
 2003-09-02  Danilo Šegan  <dsegan@gmx.net>
 
@@ -312,9 +318,9 @@
 	* da.po: Updated Danish translation.
 
 2003-08-21  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Added initial Malay Translation by
-                MIMOS Open Source Development Group <syed@mimos.my>
+
+	* ms.po: Added initial Malay Translation by MIMOS Open Source
+	Development Group <syed@mimos.my>
 
 2003-08-19  Abel Cheung  <maddog@linux.org.hk>
 
@@ -343,7 +349,7 @@
 
 2003-07-30  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-07-26  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -351,7 +357,7 @@
 
 2003-07-25  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-07-24  Vincent van Adrighem  <V.vanAdrighem@dirck.mine.nu>
 
