@@ -378,7 +378,9 @@ tile_swap_open (SwapFile *swap_file)
       nopen_swap_files -= 1;
     }
 
-  swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR|_O_BINARY|_O_TEMPORARY, _S_IREAD|_S_IWRITE);
+  swap_file->fd = open (swap_file->filename,
+      			O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
+			S_IREAD | S_IWRITE);
 
   if (swap_file->fd == -1)
     {

@@ -1,3 +1,7 @@
+Tue Aug 31 23:13:51 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/tile_swap.c: no leading underscore for S_IFOO constants
+
 Wed Sep  1 00:56:37 EDT 1999 Adrian Likins <adrian@gimp.org>
 
 	* app/gimpbrushpip.[ch]
