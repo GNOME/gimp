@@ -163,8 +163,8 @@ HELP
    *   -and shamelessly stolen by Adrian Likins for use here...
    */
 
-  palette_free_palettes ();
-  palette_init_palettes (FALSE);
+  palettes_free ();
+  palettes_init (FALSE);
 }
 CODE
     );

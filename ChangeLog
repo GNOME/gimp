@@ -1,3 +1,14 @@
+2000-08-08  Daniel Egger  <egger@suse.de>
+
+	* tools/pdbgen/pdb/convert.pdb:
+	* tools/pdbgen/pdb/palette.pdb:
+	* convert.c:
+	* convert_cmds.c:
+	* palette.c:
+	* palette_cmds.c: Removed superflous 
+	palette_init_palettes and palette_free_palettes functions
+	and changed their callers accordingly.
+
 2000-08-08  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
