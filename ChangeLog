@@ -1,3 +1,7 @@
+Mon Aug 23 02:19:12 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/paint_funcs.c: fixed a couple of bugs in the scale_region code.
+
 Mon Aug 23 00:56:59 EDT 1999 Adrian Likins <alikins@redhat.com>
 	
 	* app/gimpbrushhose.c

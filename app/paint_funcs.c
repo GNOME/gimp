@@ -3825,8 +3825,7 @@ scale_region_no_resample (PixelRegion *srcPR,
 
 static void
 get_premultiplied_double_row(PixelRegion *srcPR, int x, int y,
-			     int w, double *row, guchar *tmp_src, int n,
-			     int extra)
+			     int w, double *row, guchar *tmp_src, int n)
 {
   int b;
   int bytes = srcPR->bytes;
@@ -3853,9 +3852,9 @@ get_premultiplied_double_row(PixelRegion *srcPR, int x, int y,
   }
 
   /* set the off edge pixels to their nearest neighbor */
-  for (b = 0; b < extra * bytes; b++)
-    row[-extra*bytes + b] = row[(b%bytes)];
-  for (b = 0; b < bytes * extra; b++)
+  for (b = 0; b < 2 * bytes; b++)
+    row[-2*bytes + b] = row[(b%bytes)];
+  for (b = 0; b < bytes * 2; b++)
     row[w*bytes + b] = row[(w - 1) * bytes + (b%bytes)];
 }
 
@@ -3956,7 +3955,7 @@ static void shrink_line(double *dest, double *src, int bytes,
 
 static void
 get_scaled_row(void **src, int y, int new_width, PixelRegion *srcPR, double *row,
-	       guchar *src_tmp, int extra_pixels)
+	       guchar *src_tmp)
 {
 /* get the necesary lines from the source image, scale them,
    and put them into src[] */
@@ -3965,19 +3964,19 @@ get_scaled_row(void **src, int y, int new_width, PixelRegion *srcPR, double *row
     y = 0;
   if (y < srcPR->h)
   {
-    if (new_width == srcPR->w) /* no scailing so load it straight to it's */
-      row = src[3];		       /* destination */
     get_premultiplied_double_row(srcPR, 0, y, srcPR->w,
-				 row, src_tmp, 1, extra_pixels);
+				 row, src_tmp, 1);
     if (new_width > srcPR->w)
       expand_line(src[3], row, srcPR->bytes, 
 		  srcPR->w, new_width, interpolation_type);
     else if (srcPR->w > new_width)
       shrink_line(src[3], row, srcPR->bytes, 
 		  srcPR->w, new_width, interpolation_type);
+    else /* no scailing needed */
+      memcpy(src[3], row, sizeof (double) * new_width * srcPR->bytes);
   }
   else
-    memcpy(src[3], src[2], sizeof (double) * new_width);
+    memcpy(src[3], src[2], sizeof (double) * new_width * srcPR->bytes);
 }
 void
 scale_region (PixelRegion *srcPR,
@@ -4039,7 +4038,7 @@ scale_region (PixelRegion *srcPR,
       const double inv_ratio = 1.0 / y_rat;
       if (y == 0) /* load the first row if this it the first time through  */
 	get_scaled_row((void **)&src[0], 0, width, srcPR, row,
-		       src_tmp, 2);
+		       src_tmp);
       new_y = (int)((y) * y_rat);
       frac = 1.0 - (y*y_rat - new_y);
       for (x  = 0; x < width*bytes; x++)
@@ -4049,14 +4048,14 @@ scale_region (PixelRegion *srcPR,
       max--;
 
       get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
-		     src_tmp, 2);
+		     src_tmp);
       
       while (max > 0)
       {
 	for (x  = 0; x < width*bytes; x++)
 	  accum[x] += src[3][x];
 	get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
-		       src_tmp, 2);
+		       src_tmp);
 	max--;
       }
       frac = (y + 1)*y_rat - ((int)((y + 1)*y_rat));
@@ -4068,13 +4067,13 @@ scale_region (PixelRegion *srcPR,
     }      
     else if (height > orig_height)
     {
-      new_y = ((int)((y - 0.5) * y_rat + 2.0)) - 2;
+      new_y = floor((y - 0.5) * y_rat);
     
       while (old_y <= new_y)
       { /* get the necesary lines from the source image, scale them,
 	   and put them into src[] */
 	get_scaled_row((void **)&src[0], old_y + 2, width, srcPR, row,
-		       src_tmp, 2);
+		       src_tmp);
 	old_y++;
       }
       switch(interpolation_type)
@@ -4107,7 +4106,7 @@ scale_region (PixelRegion *srcPR,
     else /* height == orig_height */
     {
       get_scaled_row((void **)&src[0], y, width, srcPR, row,
-		     src_tmp, 2);
+		     src_tmp);
       memcpy(accum, src[3], sizeof(double) * width * bytes);
     }
     if (pixel_region_has_alpha(srcPR))
