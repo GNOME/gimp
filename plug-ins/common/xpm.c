@@ -16,7 +16,18 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* XPM plugin version 1.2.1 */
+/* XPM plugin version 1.2.2 */
+
+/* 1.2.2 fixes bug that generated bad digits on images with more than 20000 colors. (thanks, yanele)
+parses gtkrc (thanks, yosh)
+doesn't load parameter screen on images that don't have alpha
+
+1.2.1 fixes some minor bugs -- spaces in #XXXXXX strings, small typos in code.
+
+1.2 compute color indexes so that we don't have to use XpmSaveXImage*
+
+Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
+*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -224,8 +235,9 @@ run (char    *name,
 	  gimp_get_data ("file_xpm_save", &xpmvals);
 
 	  /*  First acquire information with a dialog  */
-	  if (! save_dialog ())
-	    return;
+	  if (gimp_drawable_has_alpha(param[2].data.d_int32))
+		  if (! save_dialog ())
+		    return;
 	  break;
 
 	case RUN_NONINTERACTIVE:
@@ -460,13 +472,13 @@ void set_XpmImage(XpmColor *array, guint index, char *colorstring)
 	array[index].string = p = g_new(char, cpp+1);
 	
 	/*convert the index number to base sizeof(linenoise)-1 */
-	for(i=cpp-1; i>0; i--)
+	for(i=0; i<cpp; ++i)
 	{
-		charnum = indtemp/((sizeof(linenoise)-1) * i);
-		indtemp -= charnum * ((sizeof(linenoise)-1) * i);
+		charnum = indtemp%(sizeof(linenoise)-1);
+		indtemp = indtemp / (sizeof (linenoise)-1);
 		*p++=linenoise[charnum];
 	}
-	*p++=linenoise[indtemp];
+	/* *p++=linenoise[indtemp]; */
 	
 	*p='\0'; /* C and its stupid null-terminated strings...*/
 		
