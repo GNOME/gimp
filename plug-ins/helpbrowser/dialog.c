@@ -215,7 +215,7 @@ browser_dialog_open (void)
                        GDK_BUTTON1_MASK,
                        help_dnd_target_table,
                        G_N_ELEMENTS (help_dnd_target_table),
-                       GDK_ACTION_MOVE | GDK_ACTION_COPY);
+                       GDK_ACTION_COPY);
 
   g_signal_connect (drag_source, "drag_begin",
                     G_CALLBACK (drag_begin),
