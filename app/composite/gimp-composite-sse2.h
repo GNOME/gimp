@@ -9,12 +9,12 @@ extern gboolean gimp_composite_sse2_init (void);
  */
 extern gboolean gimp_composite_sse2_install (void);
 
-extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
-extern void gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *);
+extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
+extern void gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 #endif

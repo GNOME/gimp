@@ -1,4 +1,4 @@
-/* -*- mode: c; tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
+/* -*- mode: c; c-default-style: "gnu"; tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
 	* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -29,21 +29,27 @@ typedef enum
   GIMP_PIXELFORMAT_VA8,
   GIMP_PIXELFORMAT_RGB8,
   GIMP_PIXELFORMAT_RGBA8,
-#if GIMP_COMPOSITE_16BIT
+  GIMP_PIXELFORMAT_ANY,
+  GIMP_PIXELFORMAT_N
+} GimpPixelFormat;
+
+/*
+ * gtk-doc is unhappy with these #ifdef's inside the enumeration.
+ *
+#ifdef GIMP_COMPOSITE_16BIT
   GIMP_PIXELFORMAT_V16,
   GIMP_PIXELFORMAT_VA16,
   GIMP_PIXELFORMAT_RGB16,
   GIMP_PIXELFORMAT_RGBA16,
 #endif
-#if GIMP_COMPOSITE_32BIT
+#ifdef GIMP_COMPOSITE_32BIT
   GIMP_PIXELFORMAT_V32,
   GIMP_PIXELFORMAT_VA32,
   GIMP_PIXELFORMAT_RGB32,
   GIMP_PIXELFORMAT_RGBA32,
 #endif
-  GIMP_PIXELFORMAT_ANY,
-  GIMP_PIXELFORMAT_N
-} GimpPixelFormat;
+  *
+  */
 
 /* bytes per-pixel for each of the pixel formats */
 extern const guchar gimp_composite_pixel_bpp[];
@@ -149,12 +155,12 @@ struct GimpCompositeOptions {
 
 extern struct GimpCompositeOptions gimp_composite_options;
 
-void          gimp_composite_init               (void);
-void          gimp_composite_dispatch           (GimpCompositeContext *);
+extern void          gimp_composite_init               (void);
+extern void          gimp_composite_dispatch           (GimpCompositeContext *ctx);
 
-void          gimp_composite_context_print      (GimpCompositeContext *);
-const gchar * gimp_composite_mode_astext        (GimpCompositeOperation);
-const gchar * gimp_composite_pixelformat_astext (GimpPixelFormat);
+extern void          gimp_composite_context_print      (GimpCompositeContext *ctx);
+extern const gchar * gimp_composite_mode_astext        (GimpCompositeOperation op);
+extern const gchar * gimp_composite_pixelformat_astext (GimpPixelFormat format);
 
 extern gchar *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);

@@ -1,3 +1,33 @@
+2003-10-11  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite.h
+	* app/composite/gimp-composite-generic.h
+	* app/composite/gimp-composite-regression.h: Reformatted to include
+	  argument names in function prototypes.
+
+	* app/composite/gimp-composite.c
+	* app/composite/gimp-composite-generic.c
+	* app/composite/gimp-composite-regression.c: Added gtk-doc templates for functions.
+
+	* app/composite/make-install.py: migrated to new (trimmer) code and
+	  removed dead code.  Some beautification for generated code.
+
+	* app/composite/gimp-composite-{mmx,sse,sse2,3dnow,altivec,vis,generic}.{c,h}:
+	  All init() functions are also a run-time check and now expected to
+	  return TRUE/FALSE if the particular set of compositing functions can
+	  be used.
+
+	* app/composite/gimp-composite.c: No longer has to determine if 
+	  the particular set of compositing functions can be used.
+
+	* app/composite/gimp-composite-{mmx,sse,sse2,3dnow,altivec,vis}-{install,test}.c:
+	  Regenerated
+
+	* app/composite/test-composite.c: Deprecated, removed.  All tests are automatically
+	  generated and the code is in app/composite/gimp-composite-{mmx,sse,sse2,3dnow,altivec,vis}-test.c:
+
+	* app/composite/Makefile.am: removed unused references to test-composite.c
+
 2003-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo.[ch]: added utility function
@@ -2091,7 +2121,7 @@
 	target drawable.
 
 	* app/tools/gimpvectortool.c: Removed status message in
-	VECTORS_FINISHED mode as requested by Ville Pätsi.
+	VECTORS_FINISHED mode as requested by Ville Pä´³i.
 
 	* app/vectors/gimpvectors.c: Determine the stroke parameters
 	from the current context (opacity/color/paint_mode).
@@ -2451,7 +2481,7 @@
 	* app/Makefile.am: special case windows for leading underscores in
 	symbol names.
 
-2003-09-17  Ville PÃtsi  <drc@gimp.org>
+2003-09-17  Ville PÃ´si  <drc@gimp.org>
 
 	* configure.in: Added AC_SUBST to required version numbers.
 	* gimp.spec.in: Changed the requires to use the version numbers from

@@ -181,13 +181,21 @@ struct
 } gimp_composite_debug;
 
 struct GimpCompositeOptions gimp_composite_options =
-{
-  GIMP_COMPOSITE_OPTION_USE
-};
+  {
+    GIMP_COMPOSITE_OPTION_USE
+  };
 
 gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
+/**
+ * gimp_composite_dispatch:
+ * @ctx: The compositing context
+ * 
+ * Given a compositing context, perform the compositing function
+ * dictated by the compositing context operation.  There is no return
+ * value, all results are in the compositing context.
+ **/
 void
 gimp_composite_dispatch (GimpCompositeContext *ctx)
 {
@@ -219,6 +227,14 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
     }
 }
 
+/**
+ * gimp_composite_context_print:
+ * @ctx: The context to print
+ * 
+ * Print a human readable form of a GimpCompositeContext on stdout.
+ * 
+ * Return value: void
+ **/
 void
 gimp_composite_context_print (GimpCompositeContext *ctx)
 {
@@ -232,6 +248,15 @@ gimp_composite_context_print (GimpCompositeContext *ctx)
           ctx->n_pixels);
 }
 
+/**
+ * gimp_composite_mode_astext:
+ * @op: 
+ * 
+ * Given a GimpCompositeOperatin, return a string representation of the name
+ * of that operation.
+ * 
+ * Return value:  const gchar *
+ **/
 const gchar *
 gimp_composite_mode_astext (GimpCompositeOperation op)
 {
@@ -276,10 +301,19 @@ gimp_composite_mode_astext (GimpCompositeOperation op)
   return ("bad mode");
 }
 
+/**
+ * gimp_composite_pixelformat_astext:
+ * @format:  The format.
+ * 
+ * Given a GimpPixelFormat, return a string representation of the name
+ * of that format.
+ * 
+ * Return value:  const gchar *
+ **/
 const gchar *
-gimp_composite_pixelformat_astext (GimpPixelFormat f)
+gimp_composite_pixelformat_astext (GimpPixelFormat format)
 {
-  switch (f) {
+  switch (format) {
   case GIMP_PIXELFORMAT_V8: return ("V8");
   case GIMP_PIXELFORMAT_VA8: return ("VA8");
   case GIMP_PIXELFORMAT_RGB8: return ("RGB8");
@@ -305,6 +339,17 @@ gimp_composite_pixelformat_astext (GimpPixelFormat f)
 }
 
 
+/**
+ * gimp_composite_init:
+ * @void: 
+ * 
+ * Initialise the Gimp Compositing subsystem.  This includes checking
+ * for user options and environment, installing the generic set of
+ * compositing operation handlers, followed by overloading those which
+ * are supported by the current cpu/hardware.
+ *
+ * Return value: void
+ **/
 void
 gimp_composite_init (void)
 {

@@ -15,13 +15,25 @@
 #include "gimp-composite-util.h"
 #include "gimp-composite-generic.h"
 
+/**
+ * gimp_composite_regression_print_rgba8:
+ * @rgba8: 
+ * 
+ * 
+ **/
 void
-gimp_composite_regression_print_rgba8 (gimp_rgba8_t *p)
+gimp_composite_regression_print_rgba8 (gimp_rgba8_t *rgba8)
 {
-  printf ("#%02x%02x%02x,%02X", p->r, p->g, p->b, p->a);
+  printf ("#%02x%02x%02x,%02X", rgba8->r, rgba8->g, rgba8->b, rgba8->a);
   fflush (stdout);
 }
 
+/**
+ * gimp_composite_regression_print_va8:
+ * @va8: 
+ * 
+ * 
+ **/
 void
 gimp_composite_regression_print_va8 (gimp_va8_t *va8)
 {
@@ -29,6 +41,16 @@ gimp_composite_regression_print_va8 (gimp_va8_t *va8)
   fflush (stdout);
 }
 
+/**
+ * gimp_composite_regression_compare_contexts:
+ * @operation: 
+ * @ctx1: 
+ * @ctx2: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 int
 gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContext *ctx1, GimpCompositeContext *ctx2)
 {
@@ -131,8 +153,21 @@ gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContex
 }
 
 
+/**
+ * gimp_composite_regression_comp_rgba8:
+ * @str: 
+ * @rgba8A: 
+ * @rgba8B: 
+ * @expected: 
+ * @actual: 
+ * @length: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 int
-gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *got, u_long length)
+gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *actual, u_long length)
 {
   u_long i;
   int failed;
@@ -143,20 +178,20 @@ gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba
   for (i = 0; i < length; i++) {
     failed = 0;
 
-    if (expected[i].r != got[i].r) { failed = 1; }
-    if (expected[i].g != got[i].g) { failed = 1; }
-    if (expected[i].b != got[i].b) { failed = 1; }
-    if (expected[i].a != got[i].a) { failed = 1; }
+    if (expected[i].r != actual[i].r) { failed = 1; }
+    if (expected[i].g != actual[i].g) { failed = 1; }
+    if (expected[i].b != actual[i].b) { failed = 1; }
+    if (expected[i].a != actual[i].a) { failed = 1; }
     if (failed) {
       fail_count++;
       printf("%s %8lu A=", str, i); gimp_composite_regression_print_rgba8(&rgba8A[i]);
       if (rgba8B != (gimp_rgba8_t *) 0) {
         printf(" B="); gimp_composite_regression_print_rgba8(&rgba8B[i]);
       }
-      printf("   exp=");
+      printf("   expected=");
       gimp_composite_regression_print_rgba8(&expected[i]);
-      printf(" got=");
-      gimp_composite_regression_print_rgba8(&got[i]);
+      printf(" actual=");
+      gimp_composite_regression_print_rgba8(&actual[i]);
       printf("\n");
     }
     if (fail_count > 5)
@@ -166,8 +201,21 @@ gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba
   return (fail_count);
 }
 
+/**
+ * gimp_composite_regression_comp_va8:
+ * @str: 
+ * @va8A: 
+ * @va8B: 
+ * @expected: 
+ * @actual: 
+ * @length: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 int
-gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *got, u_long length)
+gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *actual, u_long length)
 {
   int i;
   int failed;
@@ -178,17 +226,17 @@ gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8
   for (i = 0; i < length; i++) {
     failed = 0;
 
-    if (expected[i].v != got[i].v) { failed = 1; }
-    if (expected[i].a != got[i].a) { failed = 1; }
+    if (expected[i].v != actual[i].v) { failed = 1; }
+    if (expected[i].a != actual[i].a) { failed = 1; }
     if (failed) {
       fail_count++;
       printf("%s %8d A=", str, i); gimp_composite_regression_print_va8(&va8A[i]);
       if (va8B != (gimp_va8_t *) 0) { printf(" B="); gimp_composite_regression_print_va8(&va8B[i]); }
       printf("   ");
-      printf("exp=");
+      printf("expected=");
       gimp_composite_regression_print_va8(&expected[i]);
-      printf(" got=");
-      gimp_composite_regression_print_va8(&got[i]);
+      printf(" actual=");
+      gimp_composite_regression_print_va8(&actual[i]);
       printf("\n");
     }
     if (fail_count > 5)
@@ -198,6 +246,14 @@ gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8
   return (fail_count);
 }
 
+/**
+ * gimp_composite_regression_dump_rgba8:
+ * @str: 
+ * @rgba: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
 void
 gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pixels)
 {
@@ -216,12 +272,29 @@ gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pi
 
 #define timer_report(name,t1,t2) printf("%-17s %17.7f %17.7f %17.7f%c\n", name, tv_to_secs(t1), tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2), tv_to_secs(t1)/tv_to_secs(t2) > 1.0 ? ' ' : '*');
 
+/**
+ * gimp_composite_regression_timer_report:
+ * @name: 
+ * @t1: 
+ * @t2: 
+ * 
+ * 
+ **/
 void
 gimp_composite_regression_timer_report (char *name, double t1, double t2)
 {
   printf ("%-17s %17.7f %17.7f %17.7f%c\n", name, t1, t2, t1/t2, t1/t2 > 1.0 ? ' ' : '*');
 }
 
+/**
+ * gimp_composite_regression_time_function:
+ * @iterations: 
+ * @func: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 double
 gimp_composite_regression_time_function (u_long iterations, void (*func)(), GimpCompositeContext *ctx)
 {
@@ -238,6 +311,14 @@ gimp_composite_regression_time_function (u_long iterations, void (*func)(), Gimp
   return (tv_to_secs(tv_elapsed));
 }
 
+/**
+ * gimp_composite_regression_random_rgba8:
+ * @n_pixels: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 gimp_rgba8_t *
 gimp_composite_regression_random_rgba8 (u_long n_pixels)
 {
@@ -256,6 +337,14 @@ gimp_composite_regression_random_rgba8 (u_long n_pixels)
   return (rgba8);
 }
 
+/**
+ * gimp_composite_regression_fixed_rgba8:
+ * @n_pixels: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 gimp_rgba8_t *
 gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
 {
@@ -276,6 +365,24 @@ gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
   return (rgba8);
 }
 
+/**
+ * gimp_composite_context_init:
+ * @ctx: 
+ * @op: 
+ * @a_format: 
+ * @b_format: 
+ * @d_format: 
+ * @m_format: 
+ * @n_pixels: 
+ * @A: 
+ * @B: 
+ * @M: 
+ * @D: 
+ * 
+ * 
+ * 
+ * Return value: 
+ **/
 GimpCompositeContext *
 gimp_composite_context_init (GimpCompositeContext *ctx,
 																													GimpCompositeOperation op,
