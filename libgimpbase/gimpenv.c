@@ -137,6 +137,7 @@ gimp_directory (void)
       else
 	{
 	  gchar *user_name = g_strdup (g_get_user_name ());
+	  gchar *subdir_name;
 
 #ifdef G_OS_WIN32
 	  gchar *p = user_name;
@@ -158,11 +159,12 @@ gimp_directory (void)
 #ifndef G_OS_WIN32
 	  g_message ("warning: no home directory.");
 #endif
+	  subdir_name = g_strconcat (GIMPDIR ".", user_name, NULL);
 	  gimp_dir = g_build_filename (gimp_data_directory (),
-                                       GIMPDIR ".",
-                                       user_name,
+				       subdir_name,
                                        NULL);
 	  g_free (user_name);
+	  g_free (subdir_name);
 	}
     }
 
