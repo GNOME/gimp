@@ -74,8 +74,6 @@ struct _ToolInfo
 
   gchar    *tool_name;
 
-  gint      toolbar_position;  
-
   gchar    *menu_path;  
   gchar    *menu_accel; 
 

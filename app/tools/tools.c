@@ -83,7 +83,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Rect Select"),
-    0,
     N_("/Tools/Rect Select"),
     "R",
     (char **) rect_bits,
@@ -100,7 +99,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Ellipse Select"),
-    1,
     N_("/Tools/Ellipse Select"),
     "E",
     (char **) circ_bits,
@@ -117,7 +115,6 @@ ToolInfo tool_info[] =
   {
     NULL, 
     N_("Free Select"), 
-    2, 
     N_("/Tools/Free Select"),
     "F",
     (char **) free_bits,
@@ -134,7 +131,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Fuzzy Select"),
-    3,
     N_("/Tools/Fuzzy Select"),
     "Z",
     (char **) fuzzy_bits,
@@ -151,7 +147,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Bezier Select"),
-    4,
     N_("/Tools/Bezier Select"),
     "B",
     (char **) bezier_bits,
@@ -168,7 +163,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Intelligent Scissors"),
-    5,
     N_("/Tools/Intelligent Scissors"),
     "I",
     (char **) iscissors_bits,
@@ -185,7 +179,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Move"),
-    6,
     N_("/Tools/Move"),
     "M",
     (char **) move_bits,
@@ -202,7 +195,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Magnify"),
-    7,
     N_("/Tools/Magnify"),
     "<shift>M",
     (char **) magnify_bits,
@@ -219,7 +211,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Crop & Resize"),
-    8,
     N_("/Tools/Crop & Resize"),
     "<shift>C",
     (char **) crop_bits,
@@ -236,7 +227,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Transform"),
-    9,
     N_("/Tools/Transform"),
     "<shift>T",
     (char **) scale_bits,
@@ -253,7 +243,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Transform"),
-    9,
     NULL,
     NULL,
     NULL,
@@ -270,7 +259,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Transform"),
-    9,
     NULL,
     NULL,
     NULL,
@@ -287,7 +275,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Transform"),
-    9,
     NULL,
     NULL,
     NULL,
@@ -304,7 +291,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Flip"),
-    10,
     N_("/Tools/Flip"),
     "<shift>F",
     (char **) flip_bits,
@@ -321,7 +307,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Text"),
-    11,
     N_("/Tools/Text"),
     "T",
     (char **) text_bits,
@@ -338,7 +323,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Color Picker"),
-    12,
     N_("/Tools/Color Picker"),
     "O",
     (char **) colorpicker_bits,
@@ -355,7 +339,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Bucket Fill"),
-    13,
     N_("/Tools/Bucket Fill"),
     "<shift>B",
     (char **) fill_bits,
@@ -372,7 +355,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Blend"),
-    14,
     N_("/Tools/Blend"),
     "L",
     (char **) gradient_bits,
@@ -389,7 +371,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Pencil"),
-    15,
     N_("/Tools/Pencil"),
     "<shift>P",
     (char **) pencil_bits,
@@ -406,7 +387,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Paintbrush"),
-    16,
     N_("/Tools/Paintbrush"),
     "P",
     (char **) paint_bits,
@@ -423,7 +403,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Eraser"),
-    17,
     N_("/Tools/Eraser"),
     "<shift>E",
     (char **) erase_bits,
@@ -440,7 +419,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Airbrush"),
-    18,
     N_("/Tools/Airbrush"),
     "A",
     (char **) airbrush_bits,
@@ -457,7 +435,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Clone"),
-    19,
     N_("/Tools/Clone"),
     "C",
     (char **) clone_bits,
@@ -474,7 +451,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Convolve"),
-    20,
     N_("/Tools/Convolve"),
     "V",
     (char **) blur_bits,
@@ -491,7 +467,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Ink"),
-    21,
     N_("/Tools/Ink"),
     "K",
     (char **) ink_bits,
@@ -508,7 +483,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Dodge or Burn"),
-    22,
     N_("/Tools/DodgeBurn"),
     "<shift>D",
     (char **) dodge_bits,
@@ -525,7 +499,6 @@ ToolInfo tool_info[] =
   {
     NULL,
     N_("Smudge"),
-    23,
     N_("/Tools/Smudge"),
     "<shift>S",
     (char **) smudge_bits,
@@ -541,25 +514,7 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Measure"),
-    24,
-    N_("/Tools/Measure"),
-    "",
-     (char **) measure_bits,
-    N_("Measure distances and angles"),
-    "tools/measure.html",
-    MEASURE,
-    tools_new_measure_tool,
-    tools_free_measure_tool, 
-    NULL,
-    NULL,
-    NULL
-  },
-
-  {
-    NULL,
     N_("Xinput Airbrush"),
-    25,
     N_("/Tools/XinputAirbrush"),
     "<shift>A",
     (char **) xinput_airbrush_bits,
@@ -575,8 +530,23 @@ ToolInfo tool_info[] =
 
   {
     NULL,
+    N_("Measure"),
+    N_("/Tools/Measure"),
+    "",
+     (char **) measure_bits,
+    N_("Measure distances and angles"),
+    "tools/measure.html",
+    MEASURE,
+    tools_new_measure_tool,
+    tools_free_measure_tool, 
+    NULL,
+    NULL,
+    NULL
+  },
+
+  {
+    NULL,
     N_("Path"),
-    26,
     N_("/Tools/Path"),
     "",
     (char **) path_tool_bits,
@@ -595,7 +565,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("By Color Select"),
-    27,
     N_("/Select/By Color..."),
     NULL,
     NULL,
@@ -612,7 +581,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Color Balance"),
-    28,
     N_("/Image/Colors/Color Balance..."),
     NULL,
     NULL,
@@ -629,7 +597,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Brightness-Contrast"),
-    29,
     N_("/Image/Colors/Brightness-Contrast..."),
     NULL,
     NULL,
@@ -646,7 +613,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Hue-Saturation"),
-    30,
     N_("/Image/Colors/Hue-Saturation..."),
     NULL,
     NULL,
@@ -663,7 +629,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Posterize"),
-    31,
     N_("/Image/Colors/Posterize..."),
     NULL,
     NULL,
@@ -680,7 +645,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Threshold"), 
-    32,
     N_("/Image/Colors/Threshold..."),
     NULL,
     NULL,
@@ -697,7 +661,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Curves"),
-    33,
     N_("/Image/Colors/Curves..."),
     NULL,
     NULL,
@@ -714,7 +677,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Levels"),
-    34,
     N_("/Image/Colors/Levels..."),
     NULL,
     NULL,
@@ -731,7 +693,6 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Histogram"),
-    35,
     N_("/Image/Histogram..."),
     NULL,
     NULL,

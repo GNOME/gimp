@@ -1,3 +1,13 @@
+Wed Dec 22 23:20:42 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c
+	* app/tools.c
+	* app/tools.h
+	* app/toolsF.h: moved the xinput_airbrush before the measure tool,
+	so it groups nicely with the paint tools. Removed the toolbox_position
+	from the ToolInfo structure, since it was never used and added some
+	separators into the Tools menu.
+
 Wed Dec 22 22:11:35 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* MAINTAINERS: updated my entry and added Mitch
