@@ -1,3 +1,8 @@
+2001-01-15  Sven Neumann  <sven@gimp.org>
+
+	* app/color_notebook.c: make use of GimpColorAreas. Added two
+	buttons to set the color to black or white.
+
 2001-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* modules/colorsel_water.c: the bottom position of the scale
