@@ -1,3 +1,19 @@
+2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/actions/documents-commands.c
+	* app/actions/file-commands.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c: replace % with space
+	in file name before showing error message, 
+	fixes bug #162147.
+
+	* app/core/gimp-gui.c
+	* app/widgets/gimpmessagebox.c: be a bit more paranoid
+	about validating utf8 for messages.
+
 2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* gimp/app/widgets/gimpsizebox.c: fix incorrect Update

@@ -177,6 +177,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
   GimpImage         *gimage;
   GimpPDBStatusType  status;
   GError            *error = NULL;
+  gchar             *p;
 
   gimage = file_open_with_proc_and_display (gimp,
                                             gimp_get_user_context (gimp),
@@ -194,6 +195,8 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
   else if (status != GIMP_PDB_CANCEL)
     {
       gchar *filename = file_utils_uri_to_utf8_filename (uri);
+      while ( (p = strchr (filename, '%')) )
+        *p = ' ';
 
       g_message (_("Opening '%s' failed:\n\n%s"),
                  filename, error->message);
@@ -245,6 +248,10 @@ file_open_dialog_open_layer (GtkWidget     *open_dialog,
   else if (status != GIMP_PDB_CANCEL)
     {
       gchar *filename = file_utils_uri_to_utf8_filename (uri);
+      gchar *p;
+
+      while ( (p = strchr (filename, '%')) )
+        *p = ' ';
 
       g_message (_("Opening '%s' failed:\n\n%s"),
                  filename, error->message);

@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpbase/gimputils.h"
 
 #include "widgets-types.h"
 
@@ -355,7 +356,8 @@ gimp_message_box_set_label_text (GimpMessageBox *box,
 
   if (format)
     {
-      gchar *text = g_strdup_vprintf (format, args);
+      gchar *text = gimp_any_to_utf8 (g_strdup_vprintf (format, args), -1,
+                                      "Cannot convert text to utf8.");
 
       gtk_label_set_text (GTK_LABEL (label), text);
       gtk_widget_show (label);
