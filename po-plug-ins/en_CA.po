@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:41+0100\n"
-"PO-Revision-Date: 2004-12-12 14:31-0400\n"
+"POT-Creation-Date: 2004-12-29 03:08-0500\n"
+"PO-Revision-Date: 2004-12-29 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:283
+#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:277
 #: plug-ins/gflare/gflare.c:891
 #, c-format
 msgid ""
@@ -227,8 +227,8 @@ msgstr "Colour Density"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:928 plug-ins/common/compose.c:128
-#: plug-ins/common/compose.c:138 plug-ins/common/fp.c:217
+#: plug-ins/FractalExplorer/Dialogs.c:928 plug-ins/common/compose.c:139
+#: plug-ins/common/compose.c:149 plug-ins/common/fp.c:217
 msgid "Red:"
 msgstr "Red:"
 
@@ -236,8 +236,8 @@ msgstr "Red:"
 msgid "Change the intensity of the red channel"
 msgstr "Change the intensity of the red channel"
 
-#: plug-ins/FractalExplorer/Dialogs.c:938 plug-ins/common/compose.c:129
-#: plug-ins/common/compose.c:139 plug-ins/common/fp.c:218
+#: plug-ins/FractalExplorer/Dialogs.c:938 plug-ins/common/compose.c:140
+#: plug-ins/common/compose.c:150 plug-ins/common/fp.c:218
 msgid "Green:"
 msgstr "Green:"
 
@@ -245,8 +245,8 @@ msgstr "Green:"
 msgid "Change the intensity of the green channel"
 msgstr "Change the intensity of the green channel"
 
-#: plug-ins/FractalExplorer/Dialogs.c:948 plug-ins/common/compose.c:130
-#: plug-ins/common/compose.c:140 plug-ins/common/fp.c:219
+#: plug-ins/FractalExplorer/Dialogs.c:948 plug-ins/common/compose.c:141
+#: plug-ins/common/compose.c:151 plug-ins/common/fp.c:219
 msgid "Blue:"
 msgstr "Blue:"
 
@@ -261,7 +261,7 @@ msgstr "Colour Function"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:966 plug-ins/common/channel_mixer.c:523
-#: plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:135
 msgid "Red"
 msgstr "Red"
 
@@ -327,13 +327,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:1007 plug-ins/common/channel_mixer.c:528
-#: plug-ins/common/decompose.c:134
+#: plug-ins/common/decompose.c:136
 msgid "Green"
 msgstr "Green"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:1048 plug-ins/common/channel_mixer.c:533
-#: plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:141
 msgid "Blue"
 msgstr "Blue"
 
@@ -387,7 +387,7 @@ msgstr "_Fractals"
 #: plug-ins/common/sunras.c:513 plug-ins/common/tga.c:1030
 #: plug-ins/common/tiff.c:1810 plug-ins/common/xbm.c:996
 #: plug-ins/common/xwd.c:577 plug-ins/fits/fits.c:450
-#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:783
+#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:781
 #: plug-ins/gfli/gfli.c:715 plug-ins/ifscompose/ifscompose.c:2395
 #: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
@@ -428,7 +428,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/tiff.c:510 plug-ins/common/xbm.c:719
 #: plug-ins/common/xwd.c:422 plug-ins/faxg3/faxg3.c:220
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:412
-#: plug-ins/gfig/gfig.c:431 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
+#: plug-ins/gfig/gfig.c:429 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
 #: plug-ins/help/domain.c:421 plug-ins/winicon/icoload.c:126
 #: plug-ins/xjt/xjt.c:2526 plug-ins/xjt/xjt.c:2534
 #, c-format
@@ -1211,7 +1211,7 @@ msgstr "Unrecognized or invalid BMP compression format."
 #.
 #: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
-#: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:594
+#: plug-ins/common/compose.c:764 plug-ins/common/decompose.c:622
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
 #: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
 #: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
@@ -1222,7 +1222,7 @@ msgstr "Unrecognized or invalid BMP compression format."
 #: plug-ins/common/tga.c:929 plug-ins/common/tiff.c:833
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
-#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1286
+#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1268
 #: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
@@ -1581,18 +1581,18 @@ msgid "Randoms from seed (shared)"
 msgstr "Randoms from seed (shared)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/CML_explorer.c:310
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:162
+#: plug-ins/common/decompose.c:145 plug-ins/gimpressionist/orientation.c:162
 #: plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Hue"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/CML_explorer.c:311
-#: plug-ins/common/decompose.c:144 plug-ins/rcm/rcm_dialog.c:541
+#: plug-ins/common/decompose.c:146 plug-ins/rcm/rcm_dialog.c:541
 msgid "Saturation"
 msgstr "Saturation"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:312
-#: plug-ins/common/decompose.c:145 plug-ins/gimpressionist/orientation.c:138
+#: plug-ins/common/decompose.c:147 plug-ins/gimpressionist/orientation.c:138
 #: plug-ins/gimpressionist/size.c:141
 msgid "Value"
 msgstr "Value"
@@ -1873,7 +1873,7 @@ msgstr "Fill (right to left)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/common/align_layers.c:420 plug-ins/common/align_layers.c:451
-#: plug-ins/gfig/gfig-dialog.c:495
+#: plug-ins/gfig/gfig-dialog.c:491
 msgid "Snap to grid"
 msgstr "Snap to grid"
 
@@ -2409,154 +2409,179 @@ msgstr "Colour to Alpha Colour Picker"
 msgid "to alpha"
 msgstr "to alpha"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/decompose.c:130
+#: plug-ins/common/compose.c:138 plug-ins/common/decompose.c:132
 #: plug-ins/common/raw.c:953
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:135
+#: plug-ins/common/compose.c:148 plug-ins/common/decompose.c:137
 #: plug-ins/common/raw.c:954
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:141
+#: plug-ins/common/compose.c:152
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: plug-ins/common/compose.c:147 plug-ins/common/decompose.c:140
+#: plug-ins/common/compose.c:158 plug-ins/common/decompose.c:142
 msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:148 plug-ins/rcm/rcm_dialog.c:452
+#: plug-ins/common/compose.c:159 plug-ins/rcm/rcm_dialog.c:452
 msgid "Hue:"
 msgstr "Hue:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:149 plug-ins/print/gimp_color_window.c:364
+#: plug-ins/common/compose.c:160 plug-ins/print/gimp_color_window.c:364
 #: plug-ins/rcm/rcm_dialog.c:479
 msgid "Saturation:"
 msgstr "Saturation:"
 
-#: plug-ins/common/compose.c:150
+#: plug-ins/common/compose.c:161
 msgid "Value:"
 msgstr "Value:"
 
-#: plug-ins/common/compose.c:154 plug-ins/common/decompose.c:146
+#: plug-ins/common/compose.c:165 plug-ins/common/decompose.c:148
 msgid "CMY"
 msgstr "CMY"
 
-#: plug-ins/common/compose.c:155 plug-ins/common/compose.c:162
+#: plug-ins/common/compose.c:166 plug-ins/common/compose.c:173
 #: plug-ins/common/fp.c:220 plug-ins/print/gimp_color_window.c:307
 msgid "Cyan:"
 msgstr "Cyan:"
 
-#: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
+#: plug-ins/common/compose.c:167 plug-ins/common/compose.c:174
 #: plug-ins/common/fp.c:222 plug-ins/print/gimp_color_window.c:326
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
+#: plug-ins/common/compose.c:168 plug-ins/common/compose.c:175
 #: plug-ins/common/fp.c:221 plug-ins/print/gimp_color_window.c:345
 msgid "Yellow:"
 msgstr "Yellow:"
 
-#: plug-ins/common/compose.c:161 plug-ins/common/decompose.c:152
+#: plug-ins/common/compose.c:172 plug-ins/common/decompose.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:165
+#: plug-ins/common/compose.c:176
 msgid "Black:"
 msgstr "Black:"
 
-#: plug-ins/common/compose.c:168 plug-ins/common/decompose.c:161
+#: plug-ins/common/compose.c:179 plug-ins/common/decompose.c:163
 msgid "LAB"
 msgstr "LAB"
 
-#: plug-ins/common/compose.c:176
+#: plug-ins/common/compose.c:187
 msgid "Luma_y470:"
 msgstr "Luma_y470:"
 
-#: plug-ins/common/compose.c:177
+#: plug-ins/common/compose.c:188
 msgid "Blueness_cb470:"
 msgstr "Blueness_cb470:"
 
-#: plug-ins/common/compose.c:178
+#: plug-ins/common/compose.c:189
 msgid "Redness_cr470:"
 msgstr "Redness_cr470:"
 
-#: plug-ins/common/compose.c:183
+#: plug-ins/common/compose.c:194
 msgid "Luma_y709:"
 msgstr "Luma_y709:"
 
-#: plug-ins/common/compose.c:184
+#: plug-ins/common/compose.c:195
 msgid "Blueness_cb709:"
 msgstr "Blueness_cb709:"
 
-#: plug-ins/common/compose.c:185
+#: plug-ins/common/compose.c:196
 msgid "Redness_cr709:"
 msgstr "Redness_cr709:"
 
-#: plug-ins/common/compose.c:190
+#: plug-ins/common/compose.c:201
 msgid "Luma_y470f:"
 msgstr "Luma_y470f:"
 
-#: plug-ins/common/compose.c:191
+#: plug-ins/common/compose.c:202
 msgid "Blueness_cb470f:"
 msgstr "Blueness_cb470f:"
 
-#: plug-ins/common/compose.c:192
+#: plug-ins/common/compose.c:203
 msgid "Redness_cr470f:"
 msgstr "Redness_cr470f:"
 
-#: plug-ins/common/compose.c:197
+#: plug-ins/common/compose.c:208
 msgid "Luma_y709f:"
 msgstr "Luma_y709f:"
 
-#: plug-ins/common/compose.c:198
+#: plug-ins/common/compose.c:209
 msgid "Blueness_cb709f:"
 msgstr "Blueness_cb709f:"
 
-#: plug-ins/common/compose.c:199
+#: plug-ins/common/compose.c:210
 msgid "Redness_cr709f:"
 msgstr "Redness_cr709f:"
 
-#: plug-ins/common/compose.c:294
+#: plug-ins/common/compose.c:318
 msgid "C_ompose..."
 msgstr "C_ompose..."
 
-#: plug-ins/common/compose.c:360
+#: plug-ins/common/compose.c:351
+msgid "Recompose"
+msgstr "Recompose"
+
+#: plug-ins/common/compose.c:396
+msgid ""
+"You can only run 'Recompose' if the active image was originally produced by "
+"'Decompose'."
+msgstr ""
+"You can only run 'Recompose' if the active image was originally produced by "
+"'Decompose'."
+
+#: plug-ins/common/compose.c:411
+msgid "Error scanning 'decompose-data' parasite: too few layers found"
+msgstr "Error scanning 'decompose-data' parasite: too few layers found"
+
+#: plug-ins/common/compose.c:441
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Could not get layers for image %d"
 
-#: plug-ins/common/compose.c:411
+#: plug-ins/common/compose.c:493
 msgid "Composing..."
 msgstr "Composing..."
 
-#: plug-ins/common/compose.c:480
+#: plug-ins/common/compose.c:566 plug-ins/common/compose.c:577
+#, c-format
+msgid "Specified layer %d not found"
+msgstr "Specified layer %d not found"
+
+#: plug-ins/common/compose.c:584
 msgid "Drawables have different size"
 msgstr "Drawables have different size"
 
-#: plug-ins/common/compose.c:497
+#: plug-ins/common/compose.c:601
 msgid "Images have different size"
 msgstr "Images have different size"
 
-#: plug-ins/common/compose.c:511
+#: plug-ins/common/compose.c:615
 msgid "Error in getting layer IDs"
 msgstr "Error in getting layer IDs"
 
-#: plug-ins/common/compose.c:528
+#: plug-ins/common/compose.c:632
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Image is not a gray image (bpp=%d)"
 
-#: plug-ins/common/compose.c:1103
+#: plug-ins/common/compose.c:652
+msgid "Unable to recompose, source layer not found"
+msgstr "Unable to recompose: source layer not found"
+
+#: plug-ins/common/compose.c:1277
 msgid "Compose"
 msgstr "Compose"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1119
+#: plug-ins/common/compose.c:1293
 msgid "Compose Channels"
 msgstr "Compose Channels"
 
@@ -2564,7 +2589,7 @@ msgstr "Compose Channels"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1130
+#: plug-ins/common/compose.c:1304
 msgid "Channel Representations"
 msgstr "Channel Representations"
 
@@ -2778,7 +2803,7 @@ msgstr "Automatic pre_view"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
-#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1191
 msgid "Options"
 msgstr "Options"
 
@@ -2883,159 +2908,159 @@ msgstr "Save Curve Points to file"
 msgid "Curve Bend..."
 msgstr "Curve Bend..."
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
-#: plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:137
 msgid "red"
 msgstr "red"
 
-#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:134
-#: plug-ins/common/decompose.c:136
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:136
+#: plug-ins/common/decompose.c:138
 msgid "green"
 msgstr "green"
 
-#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:137
-#: plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:134 plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:141
 msgid "blue"
 msgstr "blue"
 
-#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:159
+#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:161
 msgid "alpha"
 msgstr "alpha"
 
-#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:143
+#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:145
 msgid "hue"
 msgstr "hue"
 
-#: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:144
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:146
 msgid "saturation"
 msgstr "saturation"
 
-#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:145
+#: plug-ins/common/decompose.c:144 plug-ins/common/decompose.c:147
 msgid "value"
 msgstr "value"
 
-#: plug-ins/common/decompose.c:146 plug-ins/common/decompose.c:149
+#: plug-ins/common/decompose.c:148 plug-ins/common/decompose.c:151
 msgid "cyan"
 msgstr "cyan"
 
-#: plug-ins/common/decompose.c:147 plug-ins/common/decompose.c:150
+#: plug-ins/common/decompose.c:149 plug-ins/common/decompose.c:152
 msgid "magenta"
 msgstr "magenta"
 
-#: plug-ins/common/decompose.c:148 plug-ins/common/decompose.c:151
+#: plug-ins/common/decompose.c:150 plug-ins/common/decompose.c:153
 msgid "yellow"
 msgstr "yellow"
 
-#: plug-ins/common/decompose.c:149
+#: plug-ins/common/decompose.c:151
 msgid "Cyan"
 msgstr "Cyan"
 
-#: plug-ins/common/decompose.c:150
+#: plug-ins/common/decompose.c:152
 msgid "Magenta"
 msgstr "Magenta"
 
-#: plug-ins/common/decompose.c:151
+#: plug-ins/common/decompose.c:153
 msgid "Yellow"
 msgstr "Yellow"
 
-#: plug-ins/common/decompose.c:152 plug-ins/common/decompose.c:156
+#: plug-ins/common/decompose.c:154 plug-ins/common/decompose.c:158
 msgid "cyan_k"
 msgstr "cyan_k"
 
-#: plug-ins/common/decompose.c:153 plug-ins/common/decompose.c:157
+#: plug-ins/common/decompose.c:155 plug-ins/common/decompose.c:159
 msgid "magenta_k"
 msgstr "magenta_k"
 
-#: plug-ins/common/decompose.c:154 plug-ins/common/decompose.c:158
+#: plug-ins/common/decompose.c:156 plug-ins/common/decompose.c:160
 msgid "yellow_k"
 msgstr "yellow_k"
 
-#: plug-ins/common/decompose.c:155
+#: plug-ins/common/decompose.c:157
 msgid "black"
 msgstr "black"
 
-#: plug-ins/common/decompose.c:156
+#: plug-ins/common/decompose.c:158
 msgid "Cyan_K"
 msgstr "Cyan_K"
 
-#: plug-ins/common/decompose.c:157
+#: plug-ins/common/decompose.c:159
 msgid "Magenta_K"
 msgstr "Magenta_K"
 
-#: plug-ins/common/decompose.c:158
+#: plug-ins/common/decompose.c:160
 msgid "Yellow_K"
 msgstr "Yellow_K"
 
-#: plug-ins/common/decompose.c:159
+#: plug-ins/common/decompose.c:161
 msgid "Alpha"
 msgstr "Alpha"
 
-#: plug-ins/common/decompose.c:166
+#: plug-ins/common/decompose.c:168
 msgid "luma_y470"
 msgstr "luma_y470"
 
-#: plug-ins/common/decompose.c:167
+#: plug-ins/common/decompose.c:169
 msgid "blueness_cb470"
 msgstr "blueness_cb470"
 
-#: plug-ins/common/decompose.c:168
+#: plug-ins/common/decompose.c:170
 msgid "redness_cr470"
 msgstr "redness_cr470"
 
-#: plug-ins/common/decompose.c:170
+#: plug-ins/common/decompose.c:172
 msgid "luma_y709"
 msgstr "luma_y709"
 
-#: plug-ins/common/decompose.c:171
+#: plug-ins/common/decompose.c:173
 msgid "blueness_cb709"
 msgstr "blueness_cb709"
 
-#: plug-ins/common/decompose.c:172
+#: plug-ins/common/decompose.c:174
 msgid "redness_cr709"
 msgstr "redness_cr709"
 
-#: plug-ins/common/decompose.c:174
+#: plug-ins/common/decompose.c:176
 msgid "luma_y470f"
 msgstr "luma_y470f"
 
-#: plug-ins/common/decompose.c:175
+#: plug-ins/common/decompose.c:177
 msgid "blueness_cb470f"
 msgstr "blueness_cb470f"
 
-#: plug-ins/common/decompose.c:176
+#: plug-ins/common/decompose.c:178
 msgid "redness_cr470f"
 msgstr "redness_cr470f"
 
-#: plug-ins/common/decompose.c:178
+#: plug-ins/common/decompose.c:180
 msgid "luma_y709f"
 msgstr "luma_y709f"
 
-#: plug-ins/common/decompose.c:179
+#: plug-ins/common/decompose.c:181
 msgid "blueness_cb709f"
 msgstr "blueness_cb709f"
 
-#: plug-ins/common/decompose.c:180
+#: plug-ins/common/decompose.c:182
 msgid "redness_cr709f"
 msgstr "redness_cr709f"
 
-#: plug-ins/common/decompose.c:245
+#: plug-ins/common/decompose.c:247
 msgid "_Decompose..."
 msgstr "_Decompose..."
 
-#: plug-ins/common/decompose.c:330
+#: plug-ins/common/decompose.c:336
 msgid "Decomposing..."
 msgstr "Decomposing..."
 
-#: plug-ins/common/decompose.c:1198
+#: plug-ins/common/decompose.c:1226
 msgid "Decompose"
 msgstr "Decompose"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1214
+#: plug-ins/common/decompose.c:1242
 msgid "Extract Channels"
 msgstr "Extract Channels"
 
-#: plug-ins/common/decompose.c:1242
+#: plug-ins/common/decompose.c:1270
 msgid "Decompose to _layers"
 msgstr "Decompose to _layers"
 
@@ -4143,7 +4168,7 @@ msgstr "_Grid..."
 msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
-#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1355
+#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1337
 #: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
@@ -5208,7 +5233,7 @@ msgid "_Factory defaults"
 msgstr "_Factory defaults"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1258
+#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1240
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -7578,7 +7603,7 @@ msgid "Smear"
 msgstr "Smear"
 
 #: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:988
-#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1421
+#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1403
 msgid "Black"
 msgstr "Black"
 
@@ -8271,8 +8296,8 @@ msgstr "Load FITS File"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "BLANK/NaN Pixel Replacement"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1288
-#: plug-ins/gfig/gfig-dialog.c:1422
+#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1270
+#: plug-ins/gfig/gfig-dialog.c:1404
 msgid "White"
 msgstr "White"
 
@@ -8342,7 +8367,7 @@ msgstr "Swirl"
 msgid "Horseshoe"
 msgstr "Horseshoe"
 
-#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1403
+#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1385
 msgid "Polar"
 msgstr "Polar"
 
@@ -8423,187 +8448,199 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Draws lines between the control points. Only during curve creation"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:295
+#: plug-ins/gfig/gfig-dialog.c:289
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:341
+#: plug-ins/gfig/gfig-dialog.c:335
 msgid "Tool options"
 msgstr "Tool options"
 
-#: plug-ins/gfig/gfig-dialog.c:358
+#: plug-ins/gfig/gfig-dialog.c:352
 msgid "_Stroke"
 msgstr "_Stroke"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:405
+#: plug-ins/gfig/gfig-dialog.c:399
 msgid "Fill"
 msgstr "Fill"
 
-#: plug-ins/gfig/gfig-dialog.c:419
+#: plug-ins/gfig/gfig-dialog.c:413
 msgid "No fill"
 msgstr "No fill"
 
-#: plug-ins/gfig/gfig-dialog.c:420
+#: plug-ins/gfig/gfig-dialog.c:414
 msgid "Color fill"
 msgstr "Colour fill"
 
-#: plug-ins/gfig/gfig-dialog.c:421
+#: plug-ins/gfig/gfig-dialog.c:415
 msgid "Pattern fill"
 msgstr "Pattern fill"
 
-#: plug-ins/gfig/gfig-dialog.c:422
-msgid "Gradient fill"
-msgstr "Gradient fill"
+#: plug-ins/gfig/gfig-dialog.c:416
+msgid "Shape Gradient"
+msgstr "Shape Gradient"
+
+#: plug-ins/gfig/gfig-dialog.c:417
+msgid "Vertical Gradient"
+msgstr "Vertical Gradient"
+
+#: plug-ins/gfig/gfig-dialog.c:418
+msgid "Horizontal Gradient"
+msgstr "Horizontal Gradient"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:482
+#: plug-ins/gfig/gfig-dialog.c:478
 msgid "Show image"
 msgstr "Show image"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:504
+#: plug-ins/gfig/gfig-dialog.c:500
 msgid "Show grid"
 msgstr "Show grid"
 
-#: plug-ins/gfig/gfig-dialog.c:639
+#: plug-ins/gfig/gfig-dialog.c:635
 msgid "Load Gfig object collection"
 msgstr "Load Gfig object collection"
 
-#: plug-ins/gfig/gfig-dialog.c:683
+#: plug-ins/gfig/gfig-dialog.c:679
 msgid "Save Gfig Drawing"
 msgstr "Save Gfig Drawing"
 
-#: plug-ins/gfig/gfig-dialog.c:820
+#: plug-ins/gfig/gfig-dialog.c:815
 msgid "First Gfig"
 msgstr "First Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:859
+#: plug-ins/gfig/gfig-dialog.c:854
 msgid "_Undo"
 msgstr "_Undo"
 
-#: plug-ins/gfig/gfig-dialog.c:863
+#: plug-ins/gfig/gfig-dialog.c:858
 msgid "_Clear"
 msgstr "_Clear"
 
-#: plug-ins/gfig/gfig-dialog.c:867
+#: plug-ins/gfig/gfig-dialog.c:862
 msgid "_Grid"
 msgstr "_Grid"
 
-#: plug-ins/gfig/gfig-dialog.c:875
+#: plug-ins/gfig/gfig-dialog.c:870
 msgid "Raise selected object"
 msgstr "Raise selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:879
+#: plug-ins/gfig/gfig-dialog.c:874
 msgid "Lower selected object"
 msgstr "Lower selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:883
+#: plug-ins/gfig/gfig-dialog.c:878
 msgid "Raise selected object to top"
 msgstr "Raise selected object to top"
 
-#: plug-ins/gfig/gfig-dialog.c:887
+#: plug-ins/gfig/gfig-dialog.c:882
 msgid "Lower selected object to bottom"
 msgstr "Lower selected object to bottom"
 
-#: plug-ins/gfig/gfig-dialog.c:891
+#: plug-ins/gfig/gfig-dialog.c:886
 msgid "Show previous object"
 msgstr "Show previous object"
 
-#: plug-ins/gfig/gfig-dialog.c:895
+#: plug-ins/gfig/gfig-dialog.c:890
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig-dialog.c:899
+#: plug-ins/gfig/gfig-dialog.c:894
 msgid "Show all objects"
 msgstr "Show all objects"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:900
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig-dialog.c:908
+#: plug-ins/gfig/gfig-dialog.c:903
+msgid "Create rectangle"
+msgstr "Create rectangle"
+
+#: plug-ins/gfig/gfig-dialog.c:906
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig-dialog.c:911
+#: plug-ins/gfig/gfig-dialog.c:909
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:914
+#: plug-ins/gfig/gfig-dialog.c:912
 msgid "Create arc"
 msgstr "Create arc"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:915
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:920
+#: plug-ins/gfig/gfig-dialog.c:918
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig-dialog.c:923
+#: plug-ins/gfig/gfig-dialog.c:921
 msgid "Create spiral"
 msgstr "Create spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:926
+#: plug-ins/gfig/gfig-dialog.c:924
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig-dialog.c:930
+#: plug-ins/gfig/gfig-dialog.c:928
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:931
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig-dialog.c:936
+#: plug-ins/gfig/gfig-dialog.c:934
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:937
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:940
 msgid "Select an object"
 msgstr "Select an object"
 
-#: plug-ins/gfig/gfig-dialog.c:1023
+#: plug-ins/gfig/gfig-dialog.c:1022
 msgid "This tool has no options"
 msgstr "This tool has no options"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1230
+#: plug-ins/gfig/gfig-dialog.c:1212
 msgid "Show position"
 msgstr "Show position"
 
-#: plug-ins/gfig/gfig-dialog.c:1242
+#: plug-ins/gfig/gfig-dialog.c:1224
 msgid "Show control points"
 msgstr "Show control points"
 
-#: plug-ins/gfig/gfig-dialog.c:1276
+#: plug-ins/gfig/gfig-dialog.c:1258
 msgid "Max undo:"
 msgstr "Max undo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1267 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Transparent"
 
-#: plug-ins/gfig/gfig-dialog.c:1287
+#: plug-ins/gfig/gfig-dialog.c:1269
 msgid "Foreground"
 msgstr "Foreground"
 
-#: plug-ins/gfig/gfig-dialog.c:1289 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1271 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr "Copy"
 
-#: plug-ins/gfig/gfig-dialog.c:1298
+#: plug-ins/gfig/gfig-dialog.c:1280
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8611,85 +8648,85 @@ msgstr ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 
-#: plug-ins/gfig/gfig-dialog.c:1304
+#: plug-ins/gfig/gfig-dialog.c:1286
 msgid "Background:"
 msgstr "Background:"
 
-#: plug-ins/gfig/gfig-dialog.c:1307
+#: plug-ins/gfig/gfig-dialog.c:1289
 msgid "Feather"
 msgstr "Feather"
 
-#: plug-ins/gfig/gfig-dialog.c:1331
+#: plug-ins/gfig/gfig-dialog.c:1313
 msgid "Radius:"
 msgstr "Radius:"
 
-#: plug-ins/gfig/gfig-dialog.c:1386
+#: plug-ins/gfig/gfig-dialog.c:1368
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig-dialog.c:1402 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gfig/gfig-dialog.c:1384 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:156
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig-dialog.c:1404
+#: plug-ins/gfig/gfig-dialog.c:1386
 msgid "Isometric"
 msgstr "Isometric"
 
-#: plug-ins/gfig/gfig-dialog.c:1413
+#: plug-ins/gfig/gfig-dialog.c:1395
 msgid "Grid type:"
 msgstr "Grid type:"
 
-#: plug-ins/gfig/gfig-dialog.c:1420 plug-ins/gflare/gflare.c:559
+#: plug-ins/gfig/gfig-dialog.c:1402 plug-ins/gflare/gflare.c:559
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig-dialog.c:1423
+#: plug-ins/gfig/gfig-dialog.c:1405
 msgid "Grey"
 msgstr "Grey"
 
-#: plug-ins/gfig/gfig-dialog.c:1424
+#: plug-ins/gfig/gfig-dialog.c:1406
 msgid "Darker"
 msgstr "Darker"
 
-#: plug-ins/gfig/gfig-dialog.c:1425
+#: plug-ins/gfig/gfig-dialog.c:1407
 msgid "Lighter"
 msgstr "Lighter"
 
-#: plug-ins/gfig/gfig-dialog.c:1426
+#: plug-ins/gfig/gfig-dialog.c:1408
 msgid "Very dark"
 msgstr "Very dark"
 
-#: plug-ins/gfig/gfig-dialog.c:1435
+#: plug-ins/gfig/gfig-dialog.c:1417
 msgid "Grid color:"
 msgstr "Grid colour:"
 
-#: plug-ins/gfig/gfig-dialog.c:1638
+#: plug-ins/gfig/gfig-dialog.c:1620
 msgid "Sides:"
 msgstr "Sides:"
 
-#: plug-ins/gfig/gfig-dialog.c:1648
+#: plug-ins/gfig/gfig-dialog.c:1630
 msgid "Right"
 msgstr "Right"
 
-#: plug-ins/gfig/gfig-dialog.c:1649
+#: plug-ins/gfig/gfig-dialog.c:1631
 msgid "Left"
 msgstr "Left"
 
-#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1641 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: plug-ins/gfig/gfig-dobject.c:585
+#: plug-ins/gfig/gfig-dobject.c:589
 msgid "Hey where has the object gone ?"
 msgstr "Hey where has the object gone ?"
 
-#: plug-ins/gfig/gfig-dobject.c:941
+#: plug-ins/gfig/gfig-dobject.c:953
 msgid "Error reading file"
 msgstr "Error reading file"
 
-#: plug-ins/gfig/gfig-dobject.c:1030
+#: plug-ins/gfig/gfig-dobject.c:1042
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editing read-only object - you will not be able to save it"
 
@@ -8714,11 +8751,11 @@ msgstr "Spiral Number of Turns"
 msgid "Star Number of Points"
 msgstr "Star Number of Points"
 
-#: plug-ins/gfig/gfig.c:132
+#: plug-ins/gfig/gfig.c:130
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:726
+#: plug-ins/gfig/gfig.c:724
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
@@ -8726,7 +8763,7 @@ msgstr ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
 
-#: plug-ins/gfig/gfig.c:747
+#: plug-ins/gfig/gfig.c:745
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr "Error trying to open temp file '%s'for parasite loading.\n"
@@ -11627,6 +11664,3 @@ msgstr "Error: Could not read XJT property file '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
-
-#~ msgid "Gfig layer %d"
-#~ msgstr "Gfig layer %d"
