@@ -281,7 +281,7 @@ run (const gchar      *name,
       image_id = param[1].data.d_image;
 
       new_image_id = do_optimizations(run_mode);
-      
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
     }
@@ -470,6 +470,7 @@ do_optimizations(GimpRunMode run_mode)
   total_alpha (last_frame, width*height, pixelstep);
 
   new_image_id = gimp_image_new(width, height, imagetype);
+  gimp_image_undo_disable (new_image_id);
 
   if (imagetype == GIMP_INDEXED)
     {
@@ -1017,6 +1018,8 @@ g_warning("stat fun");
 	}
     }
   
+  gimp_image_undo_enable (new_image_id);
+      
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_display_new (new_image_id);
 

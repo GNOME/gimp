@@ -359,6 +359,7 @@ tile (gint32  image_id,
 
   if (tvals.new_image)
     {
+      gimp_image_undo_enable (new_image_id);
       gimp_drawable_flush (new_layer);
       gimp_drawable_detach (new_layer);
     }

@@ -402,6 +402,7 @@ create_image (const GdkPixbuf *pixbuf)
       g_free (comment);
     }
 
+  gimp_image_undo_enable (image);
   return image;
 }
 

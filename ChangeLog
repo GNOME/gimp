@@ -1,4 +1,19 @@
 2003-09-28  Simon Budig  <simon@gimp.org>
+            Fabian Franz  <debian@fabian-franz.de>
+
+	Ok, this time for real - I did not expect to be still awake
+	at 7:30 am...   :-)
+
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/tile.c: Fixed Undo issues. Plugins creating
+	new images should create an empty undo history. Sprinkeling
+	gimp_image_enable_undo() at the end of the plugins operations
+	does the trick. It makes sense to do this *before* you add
+	a display to the image, otherwise the UI gets out of sync.
+
+2003-09-28  Simon Budig  <simon@gimp.org>
 
 	"The last of the Oldenburg commits"
 

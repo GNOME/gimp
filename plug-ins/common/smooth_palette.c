@@ -376,7 +376,7 @@ doit (GimpDrawable *drawable,
   /* store smooth palette */
   gimp_pixel_rgn_init (&pr, new_layer, 0, 0,
 		       config.width, config.height,
-		       TRUE, TRUE);
+		       TRUE, FALSE);
   for (j = 0; j < config.height; j++)
     for (i = 0; i < config.width; i++)
       gimp_pixel_rgn_set_pixel (&pr, pal + bpp * i, i, j);
@@ -384,9 +384,9 @@ doit (GimpDrawable *drawable,
 
   g_rand_free (gr);
   gimp_drawable_flush (new_layer);
-  gimp_drawable_merge_shadow (new_layer->drawable_id, TRUE);
   gimp_drawable_update(new_layer->drawable_id, 0, 0,
 		       config.width, config.height);
+  gimp_image_undo_enable (new_image_id);
 
   return new_image_id;
 }
