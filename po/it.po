@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 20:47+0200\n"
-"PO-Revision-Date: 2004-06-01 11:44+0200\n"
+"POT-Creation-Date: 2004-06-03 08:42+0200\n"
+"PO-Revision-Date: 2004-06-03 08:43+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4756,7 +4756,6 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -9310,12 +9309,12 @@ msgstr "Clic: selezione"
 msgid "Click: select    Drag: move"
 msgstr "Clic: selezione   Trascina: sposta"
 
-#: app/widgets/gimpgradienteditor.c:1401 app/widgets/gimpgradienteditor.c:1409
+#: app/widgets/gimpgradienteditor.c:1399 app/widgets/gimpgradienteditor.c:1408
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Posizione attiva: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1427
+#: app/widgets/gimpgradienteditor.c:1426
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distanza: %0.6f"
@@ -9610,13 +9609,12 @@ msgid "Change Background Color"
 msgstr "Cambia colore dello sfondo"
 
 #: app/widgets/gimptoolbox-image-area.c:90
-#, fuzzy
 msgid ""
 "The active image.\n"
 "Click to open the Image Dialog."
 msgstr ""
-"Motivo attivo.\n"
-"Fare clic per la finestra motivo."
+"L'immagine attiva.\n"
+"Fare clic per la finestra immagine."
 
 #: app/widgets/gimptoolbox-indicator-area.c:143
 msgid ""

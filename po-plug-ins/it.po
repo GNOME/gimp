@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 13:55+0200\n"
-"PO-Revision-Date: 2004-06-01 13:20+0200\n"
+"POT-Creation-Date: 2004-06-03 08:46+0200\n"
+"PO-Revision-Date: 2004-06-03 08:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2049,18 +2049,16 @@ msgid "_Lens refraction index:"
 msgstr "Indice di rifrazione _lente:"
 
 #: plug-ins/common/autocrop.c:85
-#, fuzzy
 msgid "_Autocrop Image"
-msgstr "_Autoritaglio"
+msgstr "_Autoritaglio immagine"
 
 #: plug-ins/common/autocrop.c:92
 msgid "<Image>/Image/Crop"
 msgstr "<Image>/Immagine/Ritaglio"
 
 #: plug-ins/common/autocrop.c:100
-#, fuzzy
 msgid "_Autocrop Layer"
-msgstr "_Autoritaglio"
+msgstr "_Autoritaglio livello"
 
 #: plug-ins/common/autocrop.c:107 plug-ins/common/zealouscrop.c:76
 msgid "<Image>/Layer/Crop"
@@ -5612,8 +5610,6 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1546
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -7878,7 +7874,6 @@ msgstr ""
 "'%s':\n"
 "Nessun tipo di dati immagini specificato"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:964
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9429,7 +9424,6 @@ msgstr "_GIMPressionista..."
 msgid "Painting..."
 msgstr "Pittura..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
