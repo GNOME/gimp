@@ -2,14 +2,15 @@
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>
 # Felix Natter <fnatter@gmx.net>
+# Roman Joost <roman@bromeco.de>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-24 01:36+0200\n"
-"PO-Revision-Date: 2003-06-24 13:07+0200\n"
-"Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
+"POT-Creation-Date: 2004-07-01 19:25+0200\n"
+"PO-Revision-Date: 2004-07-01 22:01+0200\n"
+"Last-Translator: Roman Joost <roman@bromeco.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,7 +124,7 @@ msgid "Image Types:"
 msgstr "Bildtypen:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1982
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
@@ -146,9 +147,8 @@ msgid "Server Logfile:"
 msgstr "Server Logdatei:"
 
 #: plug-ins/script-fu/script-fu.c:123
-#, fuzzy
 msgid "Script-Fu _Console"
-msgstr "Skript-Fu Konsole"
+msgstr "Skript-Fu _Konsole"
 
 #: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
 #, fuzzy
@@ -164,9 +164,8 @@ msgid "Re-read all available scripts"
 msgstr "Alle Skripte neu einlesen"
 
 #: plug-ins/script-fu/script-fu.c:286
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
+msgstr "<Toolbox>/Xtns/Skript-Fu/_Auffrischen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -224,23 +223,19 @@ msgid "No matches"
 msgstr "Keine Treffer"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/3-D Umriß..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/3-D _Umriß..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/3D-Umriß..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/3D-_Umriß..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#, fuzzy
 msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Bumpmap (Alpha-Ebene) Weichzeichner-Radius"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:7
-#, fuzzy
 msgid "Default bumpmap settings"
 msgstr "Standard Bumpmap Einstellungen"
 
@@ -321,12 +316,10 @@ msgstr "Schrift"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
-#, fuzzy
 msgid "Font size (pixels)"
 msgstr "Schriftgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
-#, fuzzy
 msgid "Outline blur radius"
 msgstr "Umriß weichzeichnen (Radius)"
 
@@ -344,19 +337,16 @@ msgstr "Muster"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
-#, fuzzy
 msgid "Shadow X offset"
 msgstr "Schatten Versatz X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
-#, fuzzy
 msgid "Shadow Y offset"
 msgstr "Schatten Versatz Y"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#, fuzzy
 msgid "Shadow blur radius"
 msgstr "Schatten weichzeichnen (Radius)"
 
@@ -401,9 +391,8 @@ msgid "Text"
 msgstr "Text"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3D-Truchet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3_D-Truchet..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -434,37 +423,31 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/3D-Truchet..."
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
-#, fuzzy
 msgid "Background color"
 msgstr "Hintergrundfarbe"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
-#, fuzzy
 msgid "Block size"
 msgstr "Blockgröße"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
-#, fuzzy
 msgid "End blend"
 msgstr "Ende Farbübergang"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
-#, fuzzy
 msgid "Number of X tiles"
 msgstr "Anzahl der Kacheln in X-Richtung"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
-#, fuzzy
 msgid "Number of Y tiles"
 msgstr "Anzahl der Kacheln in Y-Richtung"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#, fuzzy
 msgid "Start blend"
 msgstr "Start Farbübergang"
 
@@ -479,13 +462,11 @@ msgid "Thickness"
 msgstr "Dicke"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-msgstr "<Image>/Skript-Fu/Dekoration/Rand abschrägen..."
+msgstr "<Image>/Skript-Fu/Dekoration/_Rand abschrägen..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
-#, fuzzy
 msgid "Keep bump layer"
 msgstr "Bump-Ebene erhalten"
 
@@ -495,39 +476,32 @@ msgstr "Bump-Ebene erhalten"
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-#, fuzzy
 msgid "Work on copy"
 msgstr "Mit Kopie arbeiten"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr "<Image>/Skript-Fu/Dekoration/Rand hinzufügen..."
+msgstr "<Image>/Skript-Fu/Dekoration/Rand _hinzufügen..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
-#, fuzzy
 msgid "Border X size"
 msgstr "Randgröße X"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
 msgid "Border Y size"
 msgstr "Randgröße Y"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
-#, fuzzy
 msgid "Border color"
 msgstr "Randfarbe"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
-#, fuzzy
 msgid "Delta value on color"
 msgstr "Farbänderung"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Pfeil..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/_Pfeil..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -540,7 +514,6 @@ msgstr "Runter"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
-#, fuzzy
 msgid "Flatten image"
 msgstr "Bild zusammenfügen"
 
@@ -553,9 +526,8 @@ msgstr "Bild zusammenfügen"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#, fuzzy
 msgid "Glow color"
-msgstr "Farbe des Glühens"
+msgstr "Leuchtfarbe"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
@@ -584,24 +556,20 @@ msgid "Up"
 msgstr "Rauf"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Horiz. Linie..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/_Horiz. Linie..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-#, fuzzy
 msgid "Bar height"
 msgstr "Linienhöhe"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-#, fuzzy
 msgid "Bar length"
 msgstr "Linienlänge"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Kugel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/_Kugel..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -617,14 +585,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/Schaltfläche..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Alien Glow/_Schaltfläche..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#, fuzzy
 msgid "Glow radius"
-msgstr "Radius des Glühens"
+msgstr "Leuchtradius"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
@@ -644,7 +610,6 @@ msgstr "Füllung"
 #: plug-ins/script-fu/scripts/news-text.scm.h:10
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
-#, fuzzy
 msgid "Text color"
 msgstr "Textfarbe"
 
@@ -656,59 +621,48 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Alien Glow..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Alien Glo_w..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien Glo_w..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
-#, fuzzy
 msgid "Glow size (pixels * 4)"
-msgstr "Größe des Glühens (Pixel * 4)"
+msgstr "Leuchtgröße (Pixel * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Alien Neon..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Alien _Neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Alien _Neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#, fuzzy
 msgid "Fade away"
 msgstr "Ausblenden"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#, fuzzy
 msgid "Number of bands"
 msgstr "Anzahl der Streifen"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
-#, fuzzy
 msgid "Width of bands"
-msgstr "Breite der Bänder"
+msgstr "Breite der Streifen"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
-#, fuzzy
 msgid "Width of gaps"
 msgstr "Breite der Zwischenräume"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
-msgstr "<Image>/Skript-Fu/Hilfsmittel/ASCII zu Bildebene..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/_ASCII zu Bildebene..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/ASCII zu Bild..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/_ASCII zu Bild..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
@@ -719,11 +673,10 @@ msgstr "Hintergrundfarbe"
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
-msgstr "Buffer-Grösse (in % der Höhe d. Textes)"
+msgstr "Puffer-Grösse (in % der Höhe d. Textes)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
-#, fuzzy
 msgid "File name"
 msgstr "Dateiname"
 
@@ -745,39 +698,32 @@ msgid "Transparent Background"
 msgstr "Transparenter Hintergrund"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Einfach I..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Einfach I..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Einfach I..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Einfach I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Einfach II..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/E_infach II..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Einfach II..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/E_infach II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/Einfach, abgeschrägt..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/_Einfach, abgeschrägt..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
-#, fuzzy
 msgid "Bevel width"
 msgstr "Breite der Schräge"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
-#, fuzzy
 msgid "Lower-right color"
 msgstr "Farbe rechts-unten"
 
@@ -788,19 +734,16 @@ msgid "Pressed"
 msgstr "Gedrückt"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
-#, fuzzy
 msgid "Upper-left color"
 msgstr "Farbe oben links"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Pfeil..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Pfeil..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Kugel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Kugel..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -809,27 +752,23 @@ msgstr "Durchmesser"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
 msgid "Transparent background"
 msgstr "Transparenter Hintergrund"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Schaltfläche..."
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Schaltfläche..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Überschrift..."
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Überschrift..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/Horz. Linie..."
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/Abgeschrägt, gemustert/_Horz. Linie..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -847,13 +786,11 @@ msgid "Width"
 msgstr "Breite"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Blend..."
-msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
+msgstr "<Image>/Skript-Fu/Animationen/_Überblenden..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-#, fuzzy
-msgid "Intermediate rrames"
+msgid "Intermediate frames"
 msgstr "Zwischenbilder"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
@@ -861,22 +798,18 @@ msgid "Looped"
 msgstr "Geloopt"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
-#, fuzzy
 msgid "Max. blur radius"
 msgstr "Max. Weichzeichner-Radius"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
 msgstr "<Image>/Skript-Fu/Alpha als Logo/Farbverlauf..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Farbverlauf..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Farbverlauf..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
-#, fuzzy
 msgid "Blend mode"
 msgstr "Art des Farbverlaufs"
 
@@ -912,7 +845,6 @@ msgstr "Farbverlauf"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient reverse"
 msgstr "Farbverlauf"
 
@@ -921,14 +853,12 @@ msgid "Offset (pixels)"
 msgstr "Versatz (Pixel)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
-msgstr "<Image>/Script-Fu/Alpha als Logo/Kuhflecken..."
+msgstr "<Image>/Script-Fu/Alpha als Logo/Ku_hflecken..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kuhflecken..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Ku_hflecken..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density X"
@@ -939,17 +869,14 @@ msgid "Spots density Y"
 msgstr "Fleckendichte Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
+msgstr "<Image>/Skript-Fu/Animationen/_Überblenden..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
-#, fuzzy
 msgid "Add glowing"
 msgstr "Glühen hinzufügen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-#, fuzzy
 msgid "After glow"
 msgstr "Nach dem Glühen"
 
@@ -962,7 +889,6 @@ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-#, fuzzy
 msgid "Corona width"
 msgstr "Korona Breite"
 
@@ -971,7 +897,6 @@ msgid "Fadeout"
 msgstr "Ausblenden"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#, fuzzy
 msgid "Fadeout width"
 msgstr "Ausblenden Breite"
 
@@ -984,9 +909,8 @@ msgid "Speed (pixels/frame)"
 msgstr "Geschwindigkeit (Pixel/Frame)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Tarnung..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/_Tarnung..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -1007,7 +931,6 @@ msgstr "Körnigkeit"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
-#, fuzzy
 msgid "Image size"
 msgstr "Bildgröße"
 
@@ -1017,80 +940,66 @@ msgid "Smooth"
 msgstr "Glätten"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
-msgstr "<Image>/Skript-Fu/Schablone/Schnitzen..."
+msgstr "<Image>/Skript-Fu/Schablone/_Schnitzen..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
-#, fuzzy
 msgid "Carve white areas"
 msgstr "Weiße Flächen herausarbeiten"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
-#, fuzzy
 msgid "Image to carve"
 msgstr "Zu schnitzendes Bild"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Geschnitzt..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Geschnitzt..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Background Image"
 msgstr "Hintergrund Bild"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
 msgid "Carve raised text"
 msgstr "Text herausarbeiten"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
-#, fuzzy
 msgid "Padding around text"
 msgstr "Abstand um Text"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Kreide..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/K_reide..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kreide..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/K_reide..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
-#, fuzzy
 msgid "Chalk color"
 msgstr "Farbe der Kreide"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Zerfressen..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Zerfressen..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Zerfressen..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Zerfressen..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
-#, fuzzy
 msgid "Blur amount"
 msgstr "Stärke des Weichzeichners"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
-#, fuzzy
 msgid "Chip amount"
 msgstr "Stärke des Zerfressens"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
-#, fuzzy
 msgid "Drop shadow"
 msgstr "Schlagschatten"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
-#, fuzzy
 msgid "Fill BG with pattern"
 msgstr "HG mit Muster füllen"
 
@@ -1099,79 +1008,66 @@ msgid "Invert"
 msgstr "Invertieren"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
-#, fuzzy
 msgid "Keep background"
 msgstr "Hintergrund erhalten"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr "<Image>/Skript-Fu/Schablone/Chrom..."
+msgstr "<Image>/Skript-Fu/Schablone/_Chrom..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-#, fuzzy
 msgid "Chrome balance"
-msgstr "Chrom-Farbe"
+msgstr "Chrom Farbe"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-#, fuzzy
 msgid "Chrome factor"
-msgstr "Chrom-Faktor"
+msgstr "Chrom Faktor"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-#, fuzzy
 msgid "Chrome lightness"
-msgstr "Chrom-Helligkeit"
+msgstr "Chrom Helligkeit"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-#, fuzzy
 msgid "Chrome saturation"
-msgstr "Chrom-Sättigung"
+msgstr "Chrom Sättigung"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#, fuzzy
 msgid "Chrome white areas"
 msgstr "Weiße Flächen verchromen"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#, fuzzy
 msgid "Environment map"
 msgstr "Environment Map"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
 msgstr "Glanzlicht Balance"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Chrom..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Chrom..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Chrom..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Chrom..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
 msgid "Offsets (pixels * 2)"
 msgstr "Versatz (Pixel * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Circuit..."
-msgstr "<Image>/Skript-Fu/Render/Platine..."
+msgstr "<Image>/Skript-Fu/Render/_Platine..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
 msgid "Circuit seed"
 msgstr "Circuit Init-Zahl"
 
@@ -1179,31 +1075,26 @@ msgstr "Circuit Init-Zahl"
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
-#, fuzzy
 msgid "Keep selection"
 msgstr "Auswahl erhalten"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
-#, fuzzy
 msgid "No background (only for separate layer)"
 msgstr "Kein Hintergrund (nur für separate Ebene)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
-#, fuzzy
 msgid "Oilify mask size"
 msgstr "Ölgemälde Masken-Größe"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
-#, fuzzy
 msgid "Separate layer"
 msgstr "Auf eigener Ebene"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<Image>/Skript-Fu/Alchimie/Stoffmalerei..."
+msgstr "<Image>/Skript-Fu/Alchimie/_Stoffmalerei..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1229,91 +1120,76 @@ msgid "Elevation"
 msgstr "Erhöhung"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-msgstr "<Image>/Skript-Fu/Dekoration/Kaffeeflecken..."
+msgstr "<Image>/Skript-Fu/Dekoration/_Kaffeeflecken..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
-#, fuzzy
 msgid ""
 "Darken only\n"
 "(Better, but only for images with alot of white)"
 msgstr ""
-"Dunkle Farbe\n"
-"(Besser, aber nur für Bilder mit viel Weiß)"
+"nur Abdunkeln\n"
+"(Besser, aber nur für Bilder hohem Weißanteil)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr "Flecken"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Comic-Heft..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Comic-_Heft..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Comic-Heft..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Comic-_Heft..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#, fuzzy
 msgid "Outline color"
 msgstr "Umriß Farbe"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
-#, fuzzy
 msgid "Outline size"
 msgstr "Umriß Größe"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Kaltes Metal..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Kaltes Metall..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kaltes Metal..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Kaltes Metall..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels)"
 msgstr "Effektgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "<Image>/Edit/Copy/Copy _Visible"
-msgstr "<Image>/Bearbeiten/Kopiere Sichtbares"
+msgstr "<Image>/Bearbeiten/_Kopiere Sichtbares"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Kristall..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Krista_ll..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
-#, fuzzy
 msgid "Background image"
 msgstr "Hintergrund Bild"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr "<Image>/Skript-Fu/Auswahl/Unruhige Auswahl..."
+msgstr "<Image>/Skript-Fu/Auswahl/U_nruhige Auswahl..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
-#, fuzzy
 msgid "Granularity (1 is low)"
 msgstr "Körnigkeit (1 ist wenig)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
-#, fuzzy
 msgid "Smooth horizontally"
 msgstr "Horizontal glätten"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
-#, fuzzy
 msgid "Smooth vertically"
 msgstr "Vertikal glätten"
 
@@ -1322,18 +1198,15 @@ msgid "Spread"
 msgstr "Verteilen"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
-#, fuzzy
 msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Schwellwert (Größer 1<-->255 Kleiner)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<Image>/Skript-Fu/Schatten/Schlagschatten..."
+msgstr "<Image>/Skript-Fu/Schatten/_Schlagschatten..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
-#, fuzzy
 msgid "Allow resizing"
 msgstr "Größenänderung zulassen"
 
@@ -1342,7 +1215,6 @@ msgstr "Größenänderung zulassen"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
-#, fuzzy
 msgid "Blur radius"
 msgstr "Radius des Weichzeichners"
 
@@ -1369,9 +1241,8 @@ msgid "Opacity"
 msgstr "Deckkraft"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<Image>/Skript-Fu/Alchimie/Jede zweite Zeile löschen..."
+msgstr "<Image>/Skript-Fu/Alchimie/_Jede zweite Zeile löschen..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1382,7 +1253,6 @@ msgid "Erase"
 msgstr "Löschen"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
-#, fuzzy
 msgid "Erase/fill"
 msgstr "Löschen/Füllen"
 
@@ -1391,7 +1261,6 @@ msgid "Even"
 msgstr "Gerade"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:6
-#, fuzzy
 msgid "Even/odd"
 msgstr "Gerade/Ungerade"
 
@@ -1408,29 +1277,24 @@ msgid "Rows"
 msgstr "Zeilen"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
-#, fuzzy
 msgid "Rows/cols"
 msgstr "Zeilen/Spalten"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Skript-Fu/Auswahl/Umriß ausblenden..."
+msgstr "<Image>/Skript-Fu/Auswahl/_Umriß ausblenden..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#, fuzzy
 msgid "Apply generated layermask"
 msgstr "Erstellte Ebenenmaske anwenden"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
-#, fuzzy
 msgid "Border size"
 msgstr "Randgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
-#, fuzzy
 msgid "Clear unselected maskarea"
 msgstr "Nicht ausgewählten Maskenbereich löschen"
 
@@ -1445,36 +1309,30 @@ msgid "Fade to   %"
 msgstr "Überblenden nach %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
-#, fuzzy
 msgid "Use growing selection"
 msgstr "Auswahl vergrößern"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Flaches Land..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/_Flaches Land..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
-#, fuzzy
 msgid "Detail level"
 msgstr "Detailreichtum"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
-#, fuzzy
 msgid "Image height"
 msgstr "Bildhöhe"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
-#, fuzzy
 msgid "Image width"
 msgstr "Bildbreite"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
-#, fuzzy
 msgid "Random seed"
 msgstr "Init-Zahl für Zufallsgenerator"
 
@@ -1489,12 +1347,10 @@ msgid "Scale Y"
 msgstr "Skalierung Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Schriften-Liste..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/_Schriften-Liste..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active colors"
 msgstr "Umriß Farbe"
 
@@ -1503,23 +1359,20 @@ msgid "Black on white"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _size (pixels)"
-msgstr "Schriftgröße (Pixel)"
+msgstr "_Schriftgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use font _name as text"
-msgstr ""
+msgstr "Schriftname als Text _benutzen"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
-#, fuzzy
 msgid "_Border (pixels)"
-msgstr "Zellengröße (Pixel)"
+msgstr "_Zellengröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color scheme"
-msgstr "Farbe 3"
+msgstr "_Farbe 3"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
@@ -1527,35 +1380,29 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
-msgstr ""
+msgstr "_Schriftnamen anzeigen"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
-#, fuzzy
 msgid "_Text"
-msgstr "Text"
+msgstr "_Text"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Frostig..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Frosti_g..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Frostig..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Frosti_g..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-msgstr "<Image>/Skript-Fu/Dekoration/Rand ausblenden..."
+msgstr "<Image>/Skript-Fu/Dekoration/Ra_nd ausblenden..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
-#, fuzzy
 msgid "Add shadow"
 msgstr "Schatten hinzufügen"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-#, fuzzy
 msgid "Blur border"
 msgstr "Rand weichzeichnen"
 
@@ -1569,137 +1416,114 @@ msgid "Shadow weight (%)"
 msgstr "Schatten Breite (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Große Überschrift..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/_Große Überschrift..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Kleine Überschrift..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/_Kleine Überschrift..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-#, fuzzy
 msgid "Autocrop"
 msgstr "Automatisch Zuschneiden"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-#, fuzzy
 msgid "Dark color"
 msgstr "Dunkle Farbe"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
-#, fuzzy
 msgid "Highlight color"
 msgstr "Glanzlicht Farbe"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-#, fuzzy
 msgid "Index image"
 msgstr "Bild indizieren"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-#, fuzzy
 msgid "Number of colors"
 msgstr "Anzahl der Farben"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#, fuzzy
 msgid "Remove background"
 msgstr "Hintergrund entfernen"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-#, fuzzy
 msgid "Select-by-color threshold"
 msgstr "»Nach Farbe auswählen«-Schwellenwert"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-#, fuzzy
 msgid "Shadow color"
 msgstr "Schattenfarbe"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube _Sub-Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button "
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-_Button "
 "Beschriftung..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
 msgstr ""
-"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
+"<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/_Allgemeine Tube Beschriftung..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Button Beschriftung"
+msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/_Tube Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Glatt..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/G_latt..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Glatt..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/G_latt..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
-#, fuzzy
+msgid "Blend gradient (Text)"
+msgstr "Farbverlauf (Text)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend gradient (outline)"
 msgstr "Farbverlauf (Umriß)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:5
-#, fuzzy
-msgid "Blend gradient (sext)"
-msgstr "Farbverlauf (Text)"
-
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
-#, fuzzy
 msgid "Blend gradient (text)"
 msgstr "Farbverlauf (Text)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
-#, fuzzy
 msgid "Outline gradient reverse"
 msgstr "Umriß weichzeichnen (Radius)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
-#, fuzzy
 msgid "Pattern (outline)"
 msgstr "Muster (Umriß)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
-#, fuzzy
 msgid "Pattern (overlay)"
 msgstr "Muster (Überlagerung)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
-#, fuzzy
 msgid "Pattern (text)"
 msgstr "Muster (Text)"
 
@@ -1709,94 +1533,76 @@ msgid "Shadow"
 msgstr "Schatten"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
-#, fuzzy
 msgid "Text gradient reverse"
 msgstr "Farbverlauf"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
-#, fuzzy
 msgid "Use pattern for outline instead of gradient"
-msgstr "Muster anstelle Farbverlauf für Umriß verwenden"
+msgstr "Muster anstatt Farbverlauf für Umriß verwenden"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
-#, fuzzy
 msgid "Use pattern for text instead of gradient"
-msgstr "Muster anstelle Farbverlauf für Text verwenden"
+msgstr "Muster anstatt Farbverlauf für Text verwenden"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:22
-#, fuzzy
 msgid "Use pattern overlay"
 msgstr "Muster überlagern"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:23
-#, fuzzy
 msgid "Use tattern for outline instead of gradient"
 msgstr "Muster anstelle Farbverlauf für Umriß verwenden"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Glühend Heiß..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Gl_ühend Heiß..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Glühend Heiß..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Gl_ühend Heiß..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels * 3)"
 msgstr "Effektgröße (Pixel * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Schräge..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Schräge..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Farbverlauf..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Farbverlauf..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-#, fuzzy
-msgid "Bevel height (Sharpness)"
+msgid "Bevel height (sharpness)"
 msgstr "Höhe der Schräge (Schärfe)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
-#, fuzzy
 msgid "Border size (pixels)"
 msgstr "Zellengröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Farbverlauf Vorschau..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/_Farbverlauf Vorschau..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr "<Image>/Skript-Fu/Render/Gitter..."
+msgstr "<Image>/Skript-Fu/Render/_Gitter..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-#, fuzzy
 msgid "X divisions"
 msgstr "X Teiler"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-#, fuzzy
 msgid "Y divisions"
 msgstr "Y Teiler"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr "<Image>/Skript-Fu/Hilfsmittel/HSV Analyse-Grafik..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/_HSV Analyse-Grafik..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-#, fuzzy
 msgid "BG opacity"
 msgstr "HG Deckkraft"
 
@@ -1809,12 +1615,10 @@ msgid "End Y"
 msgstr "Ende Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-#, fuzzy
 msgid "From top-left to bottom-right"
 msgstr "Von Links-Oben nach Rechts-Unten"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-#, fuzzy
 msgid "Graph scale"
 msgstr "Graphenskalierung"
 
@@ -1827,98 +1631,80 @@ msgid "Start Y"
 msgstr "Start Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-#, fuzzy
 msgid "Use selection bounds instead of belows"
-msgstr "Auswahl anstelle dem unten Angegebenen verwenden"
+msgstr "Auswahl anstatt dem unten Angegebenen verwenden"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-#, fuzzy
 msgid "Frame color"
 msgstr "Rahmenfarbe"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-#, fuzzy
 msgid "Frame size"
 msgstr "Rahmengröße"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
-msgstr "<Image>/Skript-Fu/Hilfsmittel/Bildaufbau darstellen..."
+msgstr "<Image>/Skript-Fu/Hilfsmittel/_Bildaufbau darstellen..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
-#, fuzzy
 msgid "Apply layer mask (or discard)"
 msgstr "Erstellte Ebenenmaske anwenden (oder verwerfen)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
-#, fuzzy
 msgid "Create new image"
 msgstr "Neues Bild erzeugen"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
-#, fuzzy
 msgid "Insert layer names"
 msgstr "Ebenennamen einfügen"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
-#, fuzzy
 msgid "Make new background"
 msgstr "Neuen Hintergrund erzeugen"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
-#, fuzzy
 msgid "Outer border"
 msgstr "Äußerer Rand"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-#, fuzzy
 msgid "Pad color"
 msgstr "Auffüll-Farbe"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
-#, fuzzy
 msgid "Pad opacity"
 msgstr "Deckkraft Füllung"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
-#, fuzzy
 msgid "Padding for transparent regions"
 msgstr "Füllung für transparente Regionen"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
-#, fuzzy
 msgid "Shear length"
 msgstr "Scherlänge"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
-#, fuzzy
 msgid "Space between layers"
 msgstr "Abstand zwischen Ebenen"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Land..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/_Land..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
-#, fuzzy
 msgid "Land height"
 msgstr "Land Höhe"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
-#, fuzzy
 msgid "Sea depth"
 msgstr "Wassertiefe"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Lava..."
-msgstr "<Image>/Skript-Fu/Render/Lava..."
+msgstr "<Image>/Skript-Fu/Render/_Lava..."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1930,22 +1716,18 @@ msgid "Seed"
 msgstr "Init-Zahl"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
-#, fuzzy
 msgid "Use current gradient"
 msgstr "Aktuellen Farbverlauf benutzen"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr "<Image>/Skript-Fu/Render/Linienexplosion..."
+msgstr "<Image>/Skript-Fu/Render/Linien_explosion..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
-#, fuzzy
 msgid "Number of lines"
 msgstr "Anzahl der Linien"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
-#, fuzzy
 msgid "Offset radius"
 msgstr "Versatz Radius"
 
@@ -1979,24 +1761,20 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rund, weich..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rund, _weich..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rechteckig, weich..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/R_echteckig, weich..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rund..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/_Rund..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/Rechteckig..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Pinsel erstellen/_Rechteckig..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
@@ -2012,31 +1790,26 @@ msgid "Spacing"
 msgstr "Abstand"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Neon..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Neon..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Neon..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
-#, fuzzy
 msgid "Create shadow"
 msgstr "Schatten erzeugen"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 5)"
 msgstr "Effektgröße (Pixel * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Zeitungsdruck..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Zeitungsdruck..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
-#, fuzzy
 msgid "Cell size (pixels)"
 msgstr "Zellengröße (Pixel)"
 
@@ -2047,9 +1820,8 @@ msgid "Density (%)"
 msgstr "Dichte (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Old Photo..."
-msgstr "<Image>/Skript-Fu/Dekoration/Altes Foto..."
+msgstr "<Image>/Skript-Fu/Dekoration/_Altes Foto..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
@@ -2065,9 +1837,8 @@ msgid "Sepia"
 msgstr "Sepia"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-msgstr "<Image>/Skript-Fu/Schatten/Perspektivisch..."
+msgstr "<Image>/Skript-Fu/Schatten/_Perspektivisch..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2078,27 +1849,22 @@ msgid "Interpolate"
 msgstr "Interpolieren"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-#, fuzzy
 msgid "Relative distance of horizon"
 msgstr "Relativer Abstand zum Horizont"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-#, fuzzy
 msgid "Relative length of shadow"
 msgstr "Relative Länge des Schattens"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-msgstr "<Image>/Skript-Fu/Alchimie/Predator..."
+msgstr "<Image>/Skript-Fu/Alchimie/_Predator..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
-#, fuzzy
 msgid "Edge amount"
 msgstr "Einfluß der Kanten"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
-#, fuzzy
 msgid "Pixel amount"
 msgstr "Stärke des Pixeleffekts"
 
@@ -2107,27 +1873,22 @@ msgid "Pixelize"
 msgstr "Pixeln"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/Rund..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Schaltflächen/_Rund..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower color"
 msgstr "Farbe unten"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
-#, fuzzy
 msgid "Lower color (active)"
 msgstr "Farbe unten (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
-#, fuzzy
 msgid "Not pressed"
 msgstr "Nicht gedrückt"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
-#, fuzzy
 msgid "Not pressed (active)"
 msgstr "Nicht gedrückt (aktiv)"
 
@@ -2140,29 +1901,24 @@ msgid "Padding Y"
 msgstr "Abstand Y"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#, fuzzy
 msgid "Round ratio"
 msgstr "Rundungs-Rate"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-#, fuzzy
 msgid "Text color (active)"
 msgstr "Textfarbe (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-#, fuzzy
 msgid "Upper color"
 msgstr "Farbe oben"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-#, fuzzy
 msgid "Upper color (active)"
 msgstr "Farbe oben (aktiv)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Landkarte..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/L_andkarte..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -2177,27 +1933,23 @@ msgid "Tile"
 msgstr "Kacheln"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
-msgstr "<Image>/Skript-Fu/Animation/Flattern..."
+msgstr "<Image>/Skript-Fu/Animation/_Flattern..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
 msgstr "Schwarz"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge behaviour"
 msgstr "Verhalten am Rand"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
-#, fuzzy
 msgid "Number of frames"
 msgstr "Anzahl der Frames"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-#, fuzzy
 msgid "Rippling strength"
 msgstr "Flatter-Intensität"
 
@@ -2210,22 +1962,18 @@ msgid "Wrap"
 msgstr "Umfalten"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-msgstr "<Image>/Skript-Fu/Dekoration/Runde Ecken..."
+msgstr "<Image>/Skript-Fu/Dekoration/Runde _Ecken..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
-#, fuzzy
 msgid "Add background"
 msgstr "Hintergrund hinzufügen"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
-#, fuzzy
 msgid "Add drop-shadow"
 msgstr "Schlagschatten hinzufügen"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
-#, fuzzy
 msgid "Edge radius"
 msgstr "Eckenradius"
 
@@ -2237,19 +1985,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr "<Image>/Skript-Fu/Auswahl/Zu Pinsel..."
+msgstr "<Image>/Skript-Fu/Auswahl/Zu _Pinsel..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-#, fuzzy
 msgid "Brush name"
 msgstr "Pinselname"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr "<Image>/Skript-Fu/Auswahl/Zu Bild"
+msgstr "<Image>/Skript-Fu/Auswahl/_Zu Bild"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid ""
@@ -2259,32 +2004,26 @@ msgid ""
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Skript-Fu/Auswahl/Zu Pinsel..."
+msgstr "<Image>/Skript-Fu/Auswahl/Zu _Pinsel..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-#, fuzzy
 msgid "Pattern name"
 msgstr "Muster"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Skript-Fu/Auswahl/Abrunden..."
+msgstr "<Image>/Skript-Fu/Auswahl/_Abrunden..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
-#, fuzzy
 msgid "Relative radius"
 msgstr "Relativer Radius"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr "<Image>/Skript-Fu/Dekoration/Dia..."
+msgstr "<Image>/Skript-Fu/Dekoration/_Dia..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font color"
 msgstr "Schriftfarbe"
 
@@ -2294,16 +2033,15 @@ msgstr "Nummer"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/SOTA Chrom..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/S_OTA Chrom..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Schneller Text..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Schneller Text..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Verschiedenes/Kugel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Verschiedenes/_Kugel..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2314,33 +2052,28 @@ msgid "Radius (pixels)"
 msgstr "Radius (Pixel)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
-#, fuzzy
 msgid "Sphere color"
 msgstr "Kugelfarbe"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-msgstr "<Image>/Skript-Fu/Animation/Drehender Globus..."
+msgstr "<Image>/Skript-Fu/Animation/_Drehender Globus..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "Frames"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
-#, fuzzy
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Auf n Farben indizieren (0 = RGB belassen)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
-#, fuzzy
 msgid "Turn from left to right"
 msgstr "Von links nach rechts drehen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Skript-Fu/Render/Gitter..."
+msgstr "<Image>/Skript-Fu/Render/_Gitter..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2355,7 +2088,6 @@ msgid "Circle"
 msgstr "Kreis"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-#, fuzzy
 msgid "Color method"
 msgstr "Färbung"
 
@@ -2386,7 +2118,6 @@ msgid "Hexagon"
 msgstr "Hexagon"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-#, fuzzy
 msgid "Hole ratio"
 msgstr "Erhöhung"
 
@@ -2403,7 +2134,6 @@ msgid "Margin (pixels)"
 msgstr "Rand (Pixel)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Outer teeth"
 msgstr "Äußerer Rand"
 
@@ -2449,7 +2179,6 @@ msgstr "Quadrat"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
-#, fuzzy
 msgid "Start angle"
 msgstr "Startwinkel"
 
@@ -2466,125 +2195,102 @@ msgid "Type"
 msgstr "Sorte"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Sternexplosion..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Sterne_xplosion..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Sternexplosion..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Sterne_xplosion..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-#, fuzzy
 msgid "Burst color"
 msgstr "Explosionsfarbe"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 30)"
 msgstr "Effektgröße (Pixel * 3)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Starscape..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Starscap_e..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Starscap_e..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid "Effect size (pixels * 4)"
 msgstr "Effektgröße (Pixel * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-Kachel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-_Kachel..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
-#, fuzzy
 msgid "Whirl amount"
 msgstr "Stärke des Verdrehens"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-Kachel..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/_Strudel-Kachel..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-#, fuzzy
 msgid "Number of times to whirl"
 msgstr "Umdrehungen"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-#, fuzzy
 msgid "Quarter size"
 msgstr "Viertelgröße"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-#, fuzzy
 msgid "Whirl angle"
 msgstr "Drehwinkel"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Partikelspur..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/_Partikelspur..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Partikelspur..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Partikelspur..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#, fuzzy
 msgid "Base color"
 msgstr "Grundfarbe"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-#, fuzzy
 msgid "Edge only"
 msgstr "Nur Kanten"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-#, fuzzy
 msgid "Edge width"
 msgstr "Eckenbreite"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-#, fuzzy
 msgid "Hit rate"
 msgstr "Treffer-Rate"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Text im Kreis..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Text i_m Kreis..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
 msgstr "Antialias"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
-#, fuzzy
 msgid "Fill angle"
 msgstr "Füllwinkel"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-msgstr "<Image>/Skript-Fu/Alpha als Logo/Texturiert..."
+msgstr "<Image>/Skript-Fu/Alpha als Logo/Text_uriert..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Texturiert..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/_Texturiert..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
-#, fuzzy
 msgid "Ending blend"
 msgstr "Ende Farbübergang"
 
@@ -2593,7 +2299,6 @@ msgid "Hexagons"
 msgstr "Hexagone"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
-#, fuzzy
 msgid "Mosaic tile type"
 msgstr "Art der Mosaiksteine"
 
@@ -2606,32 +2311,26 @@ msgid "Squares"
 msgstr "Quadrate"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
-#, fuzzy
 msgid "Starting blend"
 msgstr "Start Farbübergang"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
-#, fuzzy
 msgid "Text pattern"
 msgstr "Textmuster"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
-msgstr "<Image>/Filters/Weichzeichnen/Kachelbarer Weichzeichner..."
+msgstr "<Image>/Filters/Weichzeichnen/_Kachelbarer Weichzeichner..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
-#, fuzzy
 msgid "Blur horizontally"
 msgstr "Horizontal weichzeichnen"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
-#, fuzzy
 msgid "Blur type"
 msgstr "Art des Weichzeichners"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
-#, fuzzy
 msgid "Blur vertically"
 msgstr "Vertikal weichzeichnen"
 
@@ -2645,37 +2344,31 @@ msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Web-Seiten Überschrift..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Logos/Web-Seiten Ü_berschrift..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Truchet..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/T_ruchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
 msgstr "Vordergrundfarbe"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-msgstr "<Image>/Skript-Fu/Alchimie/Unscharf maskieren..."
+msgstr "<Image>/Skript-Fu/Alchimie/_Unscharf maskieren..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-#, fuzzy
 msgid "Mask opacity"
-msgstr "Masken-Deckkraft"
+msgstr "Masken Deckkraft"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-#, fuzzy
 msgid "Mask size"
-msgstr "Masken-Größe"
+msgstr "Masken Größe"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Waves..."
-msgstr "<Image>/Skript-Fu/Animation/Wellen..."
+msgstr "<Image>/Skript-Fu/Animation/_Wellen..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
@@ -2690,49 +2383,40 @@ msgid "Wavelength"
 msgstr "Wellenlänge"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
-msgstr "<Image>/Skript-Fu/Alchimie/Weben..."
+msgstr "<Image>/Skript-Fu/Alchimie/_Weben..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
-#, fuzzy
 msgid "Ribbon spacing"
 msgstr "Abstand der Bänder"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
-#, fuzzy
 msgid "Ribbon width"
 msgstr "Breite der Bänder"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
-#, fuzzy
 msgid "Shadow darkness"
 msgstr "Schatten Dunkelheit"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
-#, fuzzy
 msgid "Shadow depth"
 msgstr "Schatten Tiefe"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
-#, fuzzy
 msgid "Thread density"
 msgstr "Fadendichte"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
-#, fuzzy
 msgid "Thread intensity"
 msgstr "Fadenintensität"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
-#, fuzzy
 msgid "Thread length"
 msgstr "Fadenlänge"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
+msgstr "<Toolbox>/Xtns/Web-Browser/_Plugin Registrierung"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
@@ -2743,49 +2427,43 @@ msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-msgstr "<Image>/Skript-Fu/Schatten/Xach-Effekt..."
+msgstr "<Image>/Skript-Fu/Schatten/_Xach-Effekt..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
-#, fuzzy
 msgid "Drop shadow X offset"
 msgstr "Schatten X Versatz"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
-#, fuzzy
 msgid "Drop shadow Y offset"
 msgstr "Schatten Y Versatz"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
-#, fuzzy
 msgid "Drop shadow blur radius"
 msgstr "Schatten weichzeichnen (Radius)"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
-#, fuzzy
 msgid "Drop shadow color"
 msgstr "Schatten Farbe"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
-#, fuzzy
 msgid "Drop shadow opacity"
 msgstr "Schatten Deckkraft"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight X offset"
 msgstr "Glanzlicht X-Versatz"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
-#, fuzzy
 msgid "Highlight Y offset"
 msgstr "Glanzlicht Y-Versatz"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
-#, fuzzy
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Farbverlauf (Text)"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"

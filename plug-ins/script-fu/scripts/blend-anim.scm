@@ -226,6 +226,6 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-ADJUSTMENT _"Intermediate rrames" '(3 1 1024 1 10 0 1)
+		    SF-ADJUSTMENT _"Intermediate frames" '(3 1 1024 1 10 0 1)
 		    SF-ADJUSTMENT _"Max. blur radius" '(0 0 1024 1 10 0 1)
 		    SF-TOGGLE     _"Looped" TRUE)
