@@ -1,5 +1,11 @@
 2003-07-03  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: remove gimp.spec stuff (leave gimp.spec.in in CVS
+	for now as reference, maybe update it with the freshrpms spec at
+	some point)
+
+2003-07-03  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/jpeg.c: fix spelling of "quality" in comment
 
 	* tools/pdbgen/*.pl: update copyright strings to 2003
