@@ -1,5 +1,9 @@
 2003-11-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c: fixed/added API docs.
+
+2003-11-06  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpdialog.[ch]: removed our own action_area API
 	and use GtkDialog's one. Create all dialogs without separator.
 	Changed almost everything else too. Fixes bug #125143.

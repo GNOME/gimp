@@ -180,7 +180,7 @@ gimp_dialog_new (const gchar    *title,
  * @flags:        The @flags (see the #GtkDialog documentation).
  * @help_func:    The function which will be called if the user presses "F1".
  * @help_id:      The help_id which will be passed to @help_func.
- * @va_list:      A @va_list destribing the action_area buttons.
+ * @args:         A @va_list destribing the action_area buttons.
  *
  * Creates a new @GimpDialog widget.
  *
@@ -237,6 +237,14 @@ gimp_dialog_new_valist (const gchar    *title,
   return dialog;
 }
 
+/**
+ * gimp_dialog_add_buttons_valist:
+ * @dialog: The @dialog to add buttons to.
+ * @args:   The buttons as va_list.
+ *
+ * This function is essentially the same as gtk_dialog_add_buttons()
+ * except it takes a va_list instead of '...'
+ **/
 void
 gimp_dialog_add_buttons_valist (GimpDialog *dialog,
                                 va_list     args)
