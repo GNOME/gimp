@@ -2,6 +2,7 @@
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 # Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2003
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
@@ -1033,7 +1034,7 @@ msgstr "Cromar las áreas blancas"
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment Map"
-msgstr "Aplicación de entorno"
+msgstr "Mapa de entorno"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9

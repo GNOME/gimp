@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
 "POT-Creation-Date: 2003-02-06 18:53+0100\n"
-"PO-Revision-Date: 2003-02-06 18:06-0300\n"
+"PO-Revision-Date: 2003-02-07 17:45-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -300,7 +300,7 @@ msgstr "Nueva capa"
 
 #: app/undo.c:3642
 msgid "Delete Layer"
-msgstr "Borrar capa"
+msgstr "Borrar la capa"
 
 #: app/undo.c:3643
 msgid "Layer Mod"
@@ -1348,12 +1348,12 @@ msgid ""
 "Not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"No hay suficientes capas visibles para mezclar.\n"
+"No hay suficientes capas visibles para hacer una combinación.\n"
 "Al menos debe haber dos."
 
 #: app/core/gimpimage-merge.c:194
 msgid "There are not enough visible layers for a merge down."
-msgstr "No hay suficientes capas visibles para mezclar hasta el fondo."
+msgstr "No hay suficientes capas visibles para combinar hacia abajo."
 
 #: app/core/gimpimage-new.c:114
 #, c-format
@@ -1460,7 +1460,7 @@ msgstr "No hay vista previa disponible"
 
 #: app/core/gimpimagefile.c:695
 msgid "Loading preview ..."
-msgstr "Cargando vista previa..."
+msgstr "Cargando la vista previa..."
 
 #: app/core/gimpimagefile.c:699
 msgid "Preview is out of date"
@@ -1887,7 +1887,7 @@ msgstr "Escala 1:1"
 
 #: app/display/gimpnavigationview.c:404
 msgid "Zoom to fit window"
-msgstr "Escalar para que quepa en la ventana"
+msgstr "Ajustar a la ventana"
 
 # //R Creo que hace esto
 #: app/display/gimpnavigationview.c:412
@@ -2724,8 +2724,7 @@ msgid ""
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
 "Haga clic para actualizar la vista previa\n"
-"%s  Haga clic para forzar la actualización aún si la vista previa esta "
-"actualizada"
+"Pulse %s clic para forzar la actualización aún si la vista previa esta actualizada"
 
 #. The preview toggle
 #: app/gui/file-open-dialog.c:249 app/tools/gimpimagemaptool.c:229
@@ -3088,11 +3087,11 @@ msgstr "No se puede recortar porque la selección actual esta vacía."
 
 #: app/gui/image-commands.c:312
 msgid "Layers Merge Options"
-msgstr "Opciones de mezcla de capas"
+msgstr "Opciones de combinación de capas"
 
 #: app/gui/image-commands.c:337
 msgid "Final, Merged Layer should be:"
-msgstr "La capa final mezclada debería ser:"
+msgstr "La capa final combinada debería ser:"
 
 #: app/gui/image-commands.c:338
 msgid "Final, Anchored Layer should be:"
@@ -3226,11 +3225,11 @@ msgstr "/Editar/Limpiar"
 
 #: app/gui/image-menu.c:198
 msgid "/Edit/Fill with FG Color"
-msgstr "/Editar/Rellenar con color Frente"
+msgstr "/Editar/Rellenar con el color de frente"
 
 #: app/gui/image-menu.c:203
 msgid "/Edit/Fill with BG Color"
-msgstr "/Editar/Rellenar con color Fondo"
+msgstr "/Editar/Rellenar con el color de fondo"
 
 #: app/gui/image-menu.c:208
 msgid "/Edit/Stroke"
@@ -3277,7 +3276,7 @@ msgstr "/Seleccionar/Borde..."
 
 #: app/gui/image-menu.c:265
 msgid "/Select/Toggle QuickMask"
-msgstr "/Seleccionar/Activar mascara rápida"
+msgstr "/Seleccionar/Activar máscara rápida"
 
 #: app/gui/image-menu.c:270
 msgid "/Select/Save to Channel"
@@ -3410,11 +3409,11 @@ msgstr "/Imagen/Tamaño del lienzo..."
 
 #: app/gui/image-menu.c:443
 msgid "/Image/Scale Image..."
-msgstr "/Imagen/Redimensionar imagen..."
+msgstr "/Imagen/Redimensionar la imagen..."
 
 #: app/gui/image-menu.c:448
 msgid "/Image/Crop Image"
-msgstr "/Imagen/Recortar imagen"
+msgstr "/Imagen/Recortar la imagen"
 
 #: app/gui/image-menu.c:453
 msgid "/Image/Duplicate"
@@ -3422,11 +3421,11 @@ msgstr "/Imagen/Duplicar"
 
 #: app/gui/image-menu.c:461
 msgid "/Image/Merge Visible Layers..."
-msgstr "/Imagen/Mezclar capas visibles..."
+msgstr "/Imagen/Combinar las capas visibles..."
 
 #: app/gui/image-menu.c:465
 msgid "/Image/Flatten Image"
-msgstr "/Imagen/Aplanar imagen"
+msgstr "/Imagen/Aplanar la imagen"
 
 #: app/gui/image-menu.c:472
 msgid "/Image/Undo History..."
@@ -3444,19 +3443,19 @@ msgstr "/Capa/Pila/Capa posterior"
 
 #: app/gui/image-menu.c:489
 msgid "/Layer/Stack/Raise Layer"
-msgstr "/Capa/Pila/Elevar capa"
+msgstr "/Capa/Pila/Elevar la capa"
 
 #: app/gui/image-menu.c:494
 msgid "/Layer/Stack/Lower Layer"
-msgstr "/Capa/Pila/Hundir capa"
+msgstr "/Capa/Pila/Hundir la capa"
 
 #: app/gui/image-menu.c:499
 msgid "/Layer/Stack/Layer to Top"
-msgstr "/Capa/Pila/Capa al principio"
+msgstr "/Capa/Pila/Enviar la capa al inicio"
 
 #: app/gui/image-menu.c:504
 msgid "/Layer/Stack/Layer to Bottom"
-msgstr "/Capa/Pila/Capa al final"
+msgstr "/Capa/Pila/Enviar la capa al final"
 
 #: app/gui/image-menu.c:512
 msgid "/Layer/New Layer..."
@@ -3464,23 +3463,23 @@ msgstr "/Capa/Nueva capa..."
 
 #: app/gui/image-menu.c:517
 msgid "/Layer/Duplicate Layer"
-msgstr "/Capa/Duplicar capa"
+msgstr "/Capa/Duplicar la capa"
 
 #: app/gui/image-menu.c:522
 msgid "/Layer/Anchor Layer"
-msgstr "/Capa/Fijar capa"
+msgstr "/Capa/Fijar la capa"
 
 #: app/gui/image-menu.c:527
 msgid "/Layer/Merge Down"
-msgstr "/Capa/Mezclar hacia abajo"
+msgstr "/Capa/Combinar hacia abajo"
 
 #: app/gui/image-menu.c:532
 msgid "/Layer/Delete Layer"
-msgstr "/Capa/Borrar capa"
+msgstr "/Capa/Borrar la capa"
 
 #: app/gui/image-menu.c:540
 msgid "/Layer/Layer Boundary Size..."
-msgstr "/Capa/Tamaño de borde de capa..."
+msgstr "/Capa/Tamaño del borde de capa..."
 
 #: app/gui/image-menu.c:545
 msgid "/Layer/Layer to Imagesize"
@@ -3488,11 +3487,11 @@ msgstr "/Capa/Capa a tamaño de imagen"
 
 #: app/gui/image-menu.c:550
 msgid "/Layer/Scale Layer..."
-msgstr "/Capa/Escalar capa..."
+msgstr "/Capa/Escalar la capa..."
 
 #: app/gui/image-menu.c:555
 msgid "/Layer/Crop Layer"
-msgstr "/Capa/Recortar capa"
+msgstr "/Capa/Recortar la capa"
 
 #: app/gui/image-menu.c:565
 msgid "/Layer/Transform/Offset..."
@@ -3515,19 +3514,19 @@ msgstr "/Capa/Colores/Auto/Ecualizar"
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:600
 msgid "/Layer/Mask/Add Layer Mask..."
-msgstr "/Capa/Mascara/Añadir máscara de capa..."
+msgstr "/Capa/Máscara/Añadir máscara de capa..."
 
 #: app/gui/image-menu.c:604
 msgid "/Layer/Mask/Apply Layer Mask"
-msgstr "/Capa/Mascara/Aplicar Máscara de capa"
+msgstr "/Capa/Máscara/Aplicar Máscara de capa"
 
 #: app/gui/image-menu.c:608
 msgid "/Layer/Mask/Delete Layer Mask"
-msgstr "/Capa/Mascara/Borrar Máscara de capa"
+msgstr "/Capa/Máscara/Borrar máscara de capa"
 
 #: app/gui/image-menu.c:613
 msgid "/Layer/Mask/Mask to Selection"
-msgstr "/Capa/Mascara/Máscara a selección"
+msgstr "/Capa/Máscara/Máscara a selección"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:621
@@ -3549,11 +3548,11 @@ msgstr "/Herramientas/Colores predefinidos"
 
 #: app/gui/image-menu.c:646
 msgid "/Tools/Swap Colors"
-msgstr "/Herramientas/Intercambiar colores"
+msgstr "/Herramientas/Intercambiar los colores"
 
 #: app/gui/image-menu.c:651
 msgid "/Tools/Swap Contexts"
-msgstr "/Herramientas/Intercambiar contextos"
+msgstr "/Herramientas/Intercambiar los contextos"
 
 #: app/gui/image-menu.c:658
 msgid "/Tools/Selection Tools"
@@ -3695,7 +3694,7 @@ msgstr "/Filtros/Artísticos"
 
 #: app/gui/image-menu.c:792
 msgid "/Filters/Map"
-msgstr "/Filtros/Aplicación"
+msgstr "/Filtros/Mapa"
 
 #: app/gui/image-menu.c:793
 msgid "/Filters/Render"
@@ -3826,7 +3825,7 @@ msgstr "Alfa (A):"
 
 #: app/gui/info-window.c:306
 msgid "Extended"
-msgstr "Extendido"
+msgstr "Extendida"
 
 #: app/gui/info-window.c:329
 msgid "Info Window"
@@ -3857,7 +3856,7 @@ msgstr "Tipo de imagen:"
 # //R NO ESTOY SEGURO
 #: app/gui/info-window.c:357
 msgid "Visual Class:"
-msgstr "Clase de pantalla"
+msgstr "Tipo de visual:"
 
 #: app/gui/info-window.c:359
 msgid "Visual Depth:"
@@ -3976,19 +3975,19 @@ msgstr "/Capa al final"
 
 #: app/gui/layers-menu.c:70
 msgid "/Duplicate Layer"
-msgstr "/Duplicar capa"
+msgstr "/Duplicar la capa"
 
 #: app/gui/layers-menu.c:75
 msgid "/Anchor Layer"
-msgstr "/Fijar capa"
+msgstr "/Fijar la capa"
 
 #: app/gui/layers-menu.c:80
 msgid "/Merge Down"
-msgstr "/Mezclar hasta la base"
+msgstr "/Combinar hacia abajo"
 
 #: app/gui/layers-menu.c:85
 msgid "/Delete Layer"
-msgstr "/Borrar capa"
+msgstr "/Borrar la capa"
 
 #: app/gui/layers-menu.c:93
 msgid "/Layer Boundary Size..."
@@ -4012,7 +4011,7 @@ msgstr "/Aplicar Máscara de capa"
 
 #: app/gui/layers-menu.c:119
 msgid "/Delete Layer Mask"
-msgstr "/Borrar Máscara de capa"
+msgstr "/Borrar máscara de capa"
 
 #: app/gui/layers-menu.c:124
 msgid "/Mask to Selection"
@@ -4116,7 +4115,7 @@ msgstr "Capa deslizada"
 
 #: app/gui/offset-dialog.c:94
 msgid "Offset Layer Mask"
-msgstr "Mascara de la capa deslizada"
+msgstr "Máscara de la capa deslizada"
 
 #: app/gui/offset-dialog.c:96
 msgid "Offset Channel"
@@ -4233,11 +4232,11 @@ msgstr ""
 
 #: app/gui/palettes-commands.c:88
 msgid "Merge Palette"
-msgstr "Mezclar paleta"
+msgstr "Combinar la paleta"
 
 #: app/gui/palettes-commands.c:91
 msgid "Enter a name for merged palette"
-msgstr "Ponga un nombre para la paleta mezclada"
+msgstr "Ponga un nombre para la paleta combinada"
 
 #: app/gui/palettes-menu.c:45
 msgid "/New Palette"
@@ -4265,7 +4264,7 @@ msgstr "/Importar paleta..."
 
 #: app/gui/palettes-menu.c:81
 msgid "/Merge Palettes..."
-msgstr "/Mezclar paletas..."
+msgstr "/Combinar paletas..."
 
 #: app/gui/paths-dialog.c:164
 msgid "/New Path"
@@ -4633,15 +4632,15 @@ msgstr "Usar «p_unto a punto» predeterminadamente"
 
 #: app/gui/preferences-dialog.c:1306
 msgid "Show Menubar"
-msgstr "Mostrar barra de menú"
+msgstr "Mostrar la barra de menú"
 
 #: app/gui/preferences-dialog.c:1309
 msgid "Show _Rulers"
-msgstr "Mostrar _reglas"
+msgstr "Mostrar las _reglas"
 
 #: app/gui/preferences-dialog.c:1312
 msgid "Show S_tatusbar"
-msgstr "Mostrar barra de es_tado"
+msgstr "Mostrar la barra de es_tado"
 
 #: app/gui/preferences-dialog.c:1318
 msgid "Marching _Ants Speed:"
@@ -4774,7 +4773,7 @@ msgstr "Monitor"
 
 #: app/gui/preferences-dialog.c:1553
 msgid "Get Monitor Resolution"
-msgstr "Obtener resolución de monitor"
+msgstr "Obtener la resolución de monitor"
 
 #: app/gui/preferences-dialog.c:1562
 #, c-format
@@ -4966,7 +4965,7 @@ msgstr "Opacidad de máscara:"
 
 #: app/gui/qmask-menu.c:43
 msgid "/QMask Active"
-msgstr "/Mascara rápida activa"
+msgstr "/Máscara rápida activa"
 
 #: app/gui/qmask-menu.c:49
 msgid "/Mask Selected Areas"
@@ -5116,7 +5115,7 @@ msgstr "Consejo del día de El GIMP"
 
 #: app/gui/tips-dialog.c:175
 msgid "Show tip next time GIMP starts"
-msgstr "Mostrar consejo la próxima vez que inicie El GIMP"
+msgstr "Mostrar un consejo la próxima vez que inicie El GIMP"
 
 #: app/gui/tips-dialog.c:199
 msgid "_Previous Tip"
@@ -5259,7 +5258,7 @@ msgstr "/Exts/Explorador de módulos..."
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:220
 msgid "/_Help"
-msgstr "/_Ayuda"
+msgstr "/A_yuda"
 
 #: app/gui/toolbox-menu.c:222
 msgid "/Help/Help..."
@@ -5275,7 +5274,7 @@ msgstr "/Ayuda/Consejo diario..."
 
 #: app/gui/toolbox-menu.c:237
 msgid "/Help/About..."
-msgstr "/Ayuda/Acerca..."
+msgstr "/Ayuda/Acerca de..."
 
 #: app/gui/user-install-dialog.c:138
 msgid ""
@@ -5564,11 +5563,11 @@ msgid ""
 "The GIMP User Installation"
 msgstr ""
 "Bienvenido a\n"
-"la Instalación de usuario de El GIMP"
+"La instalación de usuario de El GIMP"
 
 #: app/gui/user-install-dialog.c:734
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Pulse «Continuar» para entrar en la instalación de usuario de El GIMP."
+msgstr "Pulse «Continuar» para iniciar la instalación de el GIMP."
 
 #: app/gui/user-install-dialog.c:738
 msgid ""
@@ -5578,7 +5577,7 @@ msgid ""
 msgstr ""
 "El GIMP - Programa de Manipulación de Imágenes de GNU\n"
 "Copyright © 1995-2003\n"
-"Spencer Kimball, Peter Mattis y el Equipo de Desarrollo de El GIMP."
+"Spencer Kimball, Peter Mattis y el equipo de desarrollo de El GIMP."
 
 #: app/gui/user-install-dialog.c:748
 msgid ""
@@ -5588,9 +5587,9 @@ msgid ""
 "(at your option) any later version."
 msgstr ""
 "Este programa es software LIBRE; puede redistribuirlo y/o modificarlo\n"
-"bajo los términos de la Licencia Pública General GNU según se publica\n"
-"por la Fundación para el Software Libre; tanto de la versión 2 de la\n"
-"Licencia, o (según su elección) de cualquier versión posterior."
+"bajo los términos de la Licencia Pública General GNU como es publicada\n"
+"por la Free Software Foundation; tanto de la versión 2 de la licencia,\n"
+"o (según su elección) de cualquier versión posterior."
 
 #: app/gui/user-install-dialog.c:754
 msgid ""
@@ -5599,9 +5598,10 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
-"Este programa se distribuye con la esperanza de que sea útil, pero\n"
-"SIN NINGUNA GARANTÍA, incluso sin la garantía MERCANTIL implícita o \n"
-"sin garantizar la CONVENIENCIA PARA UN PROPÓSITO PARTICULAR.\n"
+"Este programa se distribuye con la esperanza de que sea útil,\n"
+"pero SIN NINGUNA GARANTÍA, incluso sin la garantía MERCANTIL\n"
+"implícita o sin garantizar la CONVENIENCIA PARA UN PROPÓSITO\n"
+"PARTICULAR.\n"
 "Véase la Licencia Pública General de GNU para más detalles."
 
 #: app/gui/user-install-dialog.c:760
@@ -5611,9 +5611,9 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 msgstr ""
-"Debería haber recibido una copia de la Licencia Pública General GNU \n"
+"Debería haber recibido una copia de la Licencia Pública General GNU\n"
 "junto con este programa. Si no ha sido así, escriba a la Free\n"
-"Software Foundation,  Inc., 59 Temple Place - Suite 330, Boston, \n"
+"Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA"
 
 #: app/gui/user-install-dialog.c:784
@@ -5777,7 +5777,7 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1247
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Obtener resolución del sistema de ventanas (Actualmente %d x %d ppp)"
+msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1265
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -6101,7 +6101,7 @@ msgstr "Inicializando la extensión: «%s»\n"
 #. run the available extensions
 #: app/plug-in/plug-ins.c:284
 msgid "Starting Extensions"
-msgstr "Inicializando extensiones"
+msgstr "Inicializando las extensiones"
 
 #: app/plug-in/plug-ins.c:296
 #, c-format
@@ -6155,7 +6155,7 @@ msgstr "Presión:"
 
 #: app/tools/gimpbezierselecttool.c:284
 msgid "Bezier Select"
-msgstr "Selección Bezier"
+msgstr "Selección tipo Bezier"
 
 #: app/tools/gimpbezierselecttool.c:285
 msgid "Select regions using Bezier curves"
@@ -6163,7 +6163,7 @@ msgstr "Seleccionar regiones utilizando curvas de Bezier"
 
 #: app/tools/gimpbezierselecttool.c:286
 msgid "/Tools/Selection Tools/Bezier Select"
-msgstr "/Herramientas/Herramientas de selección/Selección Bezier"
+msgstr "/Herramientas/Herramientas de selección/Selección tipo Bezier"
 
 #: app/tools/gimpbezierselecttool.c:1212
 msgid "Bezier path already closed."
@@ -6216,7 +6216,7 @@ msgstr "Brillo-Contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
 msgid "Adjust brightness and contrast"
-msgstr "Ajusta brillo y contraste"
+msgstr "Ajusta el brillo y el contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:85
 msgid "/Layer/Colors/Brightness-Contrast..."
@@ -6552,7 +6552,7 @@ msgstr "Goma"
 
 #: app/tools/gimperasertool.c:70
 msgid "Erase to background or transparency"
-msgstr "Borrar al color de Fondo o Transparente"
+msgstr "Borrar el color de fondo o la transparencia"
 
 #: app/tools/gimperasertool.c:71
 msgid "/Tools/Paint Tools/Eraser"
@@ -6667,7 +6667,7 @@ msgstr "Tono-Saturación"
 
 #: app/tools/gimphuesaturationtool.c:109
 msgid "Adjust hue and saturation"
-msgstr "Ajusta tono y saturación"
+msgstr "Ajusta el tono y la saturación"
 
 #: app/tools/gimphuesaturationtool.c:110
 msgid "/Layer/Colors/Hue-Saturation..."
@@ -6983,7 +6983,7 @@ msgstr "Seleccionar regiones rectangulares"
 
 #: app/tools/gimprectselecttool.c:95
 msgid "/Tools/Selection Tools/Rect Select"
-msgstr "/Herramientas/Herramientas de selección/Selección Rectangular"
+msgstr "/Herramientas/Herramientas de selección/Selección rectangular"
 
 #: app/tools/gimprectselecttool.c:235
 msgid "Selection: ADD"
@@ -7245,7 +7245,7 @@ msgstr "Permitir que las regiones completamente transparentes sean seleccionadas
 
 #: app/tools/selection_options.c:324 app/tools/selection_options.c:392
 msgid "Sample Merged"
-msgstr "Muestra mezclada"
+msgstr "Muestra combinada"
 
 #: app/tools/selection_options.c:332
 msgid "Base selection on all visible layers"
