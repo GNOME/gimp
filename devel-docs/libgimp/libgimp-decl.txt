@@ -2409,6 +2409,11 @@ GIOChannel      *channel
 <RETURNS>gboolean  </RETURNS>
 GIOChannel      *channel
 </FUNCTION>
+<FUNCTION>
+<NAME>gimp_ui_init</NAME>
+<RETURNS>void  </RETURNS>
+gchar    *prog_name,gboolean  preview
+</FUNCTION>
 <STRUCT>
 <NAME>WireMessage</NAME>
 </STRUCT>
@@ -3161,6 +3166,14 @@ GimpSizeEntry *gse
 <NAME>gimp_rad_to_deg</NAME>
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 </MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) _finite(x)
+</MACRO>
+<MACRO>
+<NAME>FINITE</NAME>
+#define FINITE(x) finite(x) 
+</MACRO>
 <FUNCTION>
 <NAME>gimp_directory</NAME>
 <RETURNS>gchar  *</RETURNS>
@@ -3296,11 +3309,11 @@ const char              *name
 </MACRO>
 <MACRO>
 <NAME>GIMP_MAX_IMAGE_SIZE</NAME>
-#define GIMP_MAX_IMAGE_SIZE  16777216
+#define GIMP_MAX_IMAGE_SIZE  16777216  /*  2^24  */
 </MACRO>
 <MACRO>
 <NAME>GIMP_MIN_RESOLUTION</NAME>
-#define GIMP_MIN_RESOLUTION  (1.0 / 65536.0)
+#define GIMP_MIN_RESOLUTION  5e-3      /*  shouldn't display as 0.000  */
 </MACRO>
 <MACRO>
 <NAME>GIMP_MAX_RESOLUTION</NAME>
@@ -3316,11 +3329,11 @@ const char              *name
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_DARK</NAME>
-#define GIMP_CHECK_DARK  (1.0 / 3.0)
+#define GIMP_CHECK_DARK   0.4          /*  corresponds to GRAY_CHECKS as  */
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_LIGHT</NAME>
-#define GIMP_CHECK_LIGHT (2.0 / 3.0)
+#define GIMP_CHECK_LIGHT  0.6          /*  defined in app/image_render.c  */
 </MACRO>
 <MACRO>
 <NAME>GIMP_TYPE_FILE_SELECTION</NAME>
@@ -3352,18 +3365,22 @@ const char              *name
 <NAME>GimpFileSelection</NAME>
 struct GimpFileSelection
 {
-  GtkHBox     hbox;
+  GtkHBox    hbox;
 
-  GtkWidget  *yes_pixmap;
-  GtkWidget  *no_pixmap;
-  GtkWidget  *entry;
-  GtkWidget  *browse_button;
+  GtkWidget *file_exists;
+  GtkWidget *entry;
+  GtkWidget *browse_button;
 
-  GtkWidget  *file_selection;
+  GtkWidget *file_selection;
 
-  gchar      *title;
-  gboolean    dir_only;
-  gboolean    check_valid;
+  GdkPixmap *yes_pixmap;
+  GdkBitmap *yes_mask;
+  GdkPixmap *no_pixmap;
+  GdkBitmap *no_mask;
+
+  gchar     *title;
+  gboolean   dir_only;
+  gboolean   check_valid;
 };
 </STRUCT>
 <STRUCT>
@@ -3538,11 +3555,11 @@ gint32                 *image_ID,gint32                 *drawable_ID,gchar      
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(18)
+#define GIMP_MICRO_VERSION				(20)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.18"
+#define GIMP_VERSION					"1.1.20"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>
@@ -4363,3 +4380,17 @@ GimpPixmap  *pixmap,gchar      **xpm_data
 <RETURNS>gchar *</RETURNS>
 const gchar *source,const gchar *exceptions
 </FUNCTION>
+<USER_FUNCTION>
+<NAME>GimpRetSigType</NAME>
+<RETURNS>void </RETURNS>
+gint
+</USER_FUNCTION>
+<FUNCTION>
+<NAME>gimp_signal_private</NAME>
+<RETURNS>GimpRetSigType  </RETURNS>
+gint signum, void (*gimp_sighandler)(int), gint sa_flags
+</FUNCTION>
+<MACRO>
+<NAME>gimp_signal_syscallrestart</NAME>
+# define gimp_signal_syscallrestart(x, y) gimp_signal_private ((x), (y), SA_RESTART)
+</MACRO>
