@@ -1,3 +1,10 @@
+Mon Feb  2 19:19:16 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/channels_dialog.c: 
+	* app/layers_dialog.c:  Added gtk_widget_ref and gtk_widget_unref
+	calls to keep channel & layer widgets from dying when reordering
+	the channel/layer stacks.
+	
 Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* plug-ins/edge.c: added a check so it wouldnt segfault when
