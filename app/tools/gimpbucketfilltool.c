@@ -41,7 +41,6 @@
 
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
 
 #include "gimprc.h"
 #include "undo.h"
@@ -69,9 +68,7 @@ struct _BucketOptions
 };
 
 
-static BucketOptions *bucket_options = NULL;
-
-static GimpToolClass *parent_class   = NULL;
+static GimpToolClass *parent_class = NULL;
 
 
 /*  local function prototypes  */
@@ -99,24 +96,26 @@ static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
 						     GdkModifierType  state,
 						     GimpDisplay     *gdisp);
 
-static BucketOptions * bucket_options_new           (void);
-static void            bucket_options_reset         (GimpToolOptions *tool_options);
+static GimpToolOptions * bucket_options_new         (GimpToolInfo    *tool_info);
+static void              bucket_options_reset       (GimpToolOptions *tool_options);
 
 
 /*  public functions  */
 
 void
-gimp_bucket_fill_tool_register (Gimp *gimp)
+gimp_bucket_fill_tool_register (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_BUCKET_FILL_TOOL,
-                              TRUE,
-			      "gimp:bucket_fill_tool",
-			      _("Bucket Fill"),
-			      _("Fill with a color or pattern"),
-			      N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
-			      NULL, "tools/bucket_fill.html",
-			      GIMP_STOCK_TOOL_BUCKET_FILL);
+  (* callback) (gimp,
+                GIMP_TYPE_BUCKET_FILL_TOOL,
+                bucket_options_new,
+                TRUE,
+                "gimp:bucket_fill_tool",
+                _("Bucket Fill"),
+                _("Fill with a color or pattern"),
+                N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
+                NULL, "tools/bucket_fill.html",
+                GIMP_STOCK_TOOL_BUCKET_FILL);
 }
 
 GType
@@ -171,14 +170,6 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (bucket_fill_tool);
-
-  if (! bucket_options)
-    {
-      bucket_options = bucket_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_BUCKET_FILL_TOOL,
-					  (GimpToolOptions *) bucket_options);
-    }
 
   tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
@@ -362,8 +353,8 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
                                           cmodifier);
 }
 
-static BucketOptions *
-bucket_options_new (void)
+static GimpToolOptions *
+bucket_options_new (GimpToolInfo *tool_info)
 {
   BucketOptions *options;
 
@@ -375,9 +366,9 @@ bucket_options_new (void)
 
   options = g_new0 (BucketOptions, 1);
 
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_BUCKET_FILL_TOOL,
-		      bucket_options_reset);
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = bucket_options_reset;
 
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold                                = gimprc.default_threshold;
@@ -441,7 +432,7 @@ bucket_options_new (void)
 
   bucket_options_reset ((GimpToolOptions *) options);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

@@ -51,7 +51,8 @@ struct _GimpByColorSelectToolClass
 };
 
 
-void    gimp_by_color_select_tool_register (Gimp *gimp);
+void    gimp_by_color_select_tool_register (Gimp                     *gimp,
+                                            GimpToolRegisterCallback  callback);
 
 GType   gimp_by_color_select_tool_get_type (void);
 

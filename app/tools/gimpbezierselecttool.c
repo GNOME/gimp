@@ -268,25 +268,25 @@ static GimpDisplay          *curGdisp = NULL;
 static GimpDrawTool         *curCore  = NULL;
 static gint                  ModeEdit = EXTEND_NEW;
 
-static SelectionOptions *bezier_options = NULL;
-
 static GimpSelectionToolClass *parent_class = NULL;
 
 
 /* Public functions */
 
 void       
-gimp_bezier_select_tool_register (Gimp *gimp)
+gimp_bezier_select_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_BEZIER_SELECT_TOOL,
-			      FALSE,
-                              "gimp:bezier_select_tool",
-                              _("Bezier Select"),
-                              _("Select regions using Bezier curves"),
-                              _("/Tools/Selection Tools/Bezier Select"), "B",
-                              NULL, "tools/bezier_select.html",
-                              GIMP_STOCK_TOOL_BEZIER_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_BEZIER_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:bezier_select_tool",
+                _("Bezier Select"),
+                _("Select regions using Bezier curves"),
+                _("/Tools/Selection Tools/Bezier Select"), "B",
+                NULL, "tools/bezier_select.html",
+                GIMP_STOCK_TOOL_BEZIER_SELECT);
 }
 
 GType
@@ -352,15 +352,6 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   tool        = GIMP_TOOL (bezier_select);
   draw_tool   = GIMP_DRAW_TOOL (bezier_select);
   select_tool = GIMP_SELECTION_TOOL (bezier_select);
-
-  if (! bezier_options)
-    {
-      bezier_options = selection_options_new (GIMP_TYPE_BEZIER_SELECT_TOOL,
-					      selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_BEZIER_SELECT_TOOL,
-                                          (GimpToolOptions *) bezier_options);
-    }
 
   bezier_select->num_points = 0;
   bezier_select->mask       = NULL;

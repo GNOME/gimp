@@ -73,9 +73,10 @@ struct _ColorBalanceDialog
 };
 
 
-void   gimp_color_balance_tool_register   (Gimp *gimp);
+void    gimp_color_balance_tool_register (Gimp                     *gimp,
+                                          GimpToolRegisterCallback  callback);
 
-GType  gimp_color_balance_tool_get_type   (void);
+GType   gimp_color_balance_tool_get_type (void);
 
 
 void   color_balance                      (PixelRegion       *srcPR,

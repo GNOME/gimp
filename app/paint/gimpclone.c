@@ -46,8 +46,6 @@
 
 #include "gimpclonetool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
-#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -125,15 +123,9 @@ static void       gimp_clone_tool_line_pattern (GimpImage       *dest,
 						gint             bytes,
 						gint             width);
 
-static CloneOptions * clone_options_new        (void);
-static void           clone_options_reset      (GimpToolOptions *options);
+static GimpToolOptions * clone_options_new     (GimpToolInfo    *tool_info);
+static void              clone_options_reset   (GimpToolOptions *options);
 
-
-/* The parent class */
-static GimpPaintToolClass *parent_class;
- 
-/*  the clone tool options  */
-static CloneOptions *clone_options = NULL;
 
 /*  local variables  */
 static gint          src_x         = 0;        /*                         */
@@ -153,21 +145,25 @@ static gint          non_gui_offset_x;
 static gint          non_gui_offset_y;
 static CloneType     non_gui_type;
 
+static GimpPaintToolClass *parent_class;
 
-/* global functions  */
+
+/* public functions  */
 
 void
-gimp_clone_tool_register (Gimp *gimp)
+gimp_clone_tool_register (Gimp                     *gimp,
+                          GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_CLONE_TOOL,
-			      TRUE,
-  			      "gimp:clone_tool",
-  			      _("Clone"),
-  			      _("Paint using Patterns or Image Regions"),
-      			      N_("/Tools/Paint Tools/Clone"), "C",
-  			      NULL, "tools/clone.html",
-			      GIMP_STOCK_TOOL_CLONE);
+  (* callback) (gimp,
+                GIMP_TYPE_CLONE_TOOL,
+                clone_options_new,
+                TRUE,
+                "gimp:clone_tool",
+                _("Clone"),
+                _("Paint using Patterns or Image Regions"),
+                N_("/Tools/Paint Tools/Clone"), "C",
+                NULL, "tools/clone.html",
+                GIMP_STOCK_TOOL_CLONE);
 }
 
 GType
@@ -228,14 +224,6 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
-
-  if (! clone_options)
-    {
-      clone_options = clone_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_CLONE_TOOL,
-                                          (GimpToolOptions *) clone_options);
-    }
 
   tool->tool_cursor = GIMP_CLONE_TOOL_CURSOR;
 
@@ -818,18 +806,19 @@ gimp_clone_tool_non_gui (GimpDrawable *drawable,
 
 #endif /* 0 - non-gui functions */
 
-static CloneOptions *
-clone_options_new (void)
+static GimpToolOptions *
+clone_options_new (GimpToolInfo *tool_info)
 {
   CloneOptions *options;
   GtkWidget    *vbox;
   GtkWidget    *frame;
 
-  /*  the new clone tool options structure  */
-  options = g_new (CloneOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_CLONE_TOOL,
-		      clone_options_reset);
+  options = g_new0 (CloneOptions, 1);
+
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = clone_options_reset;
+
   options->type    = options->type_d    = CLONE_DEFAULT_TYPE;
   options->aligned = options->aligned_d = CLONE_DEFAULT_ALIGNED;
 
@@ -866,7 +855,7 @@ clone_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
   
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

@@ -45,7 +45,8 @@ struct _GimpPosterizeToolClass
 };
 
 
-void    gimp_posterize_tool_register (Gimp *gimp);
+void    gimp_posterize_tool_register (Gimp                     *gimp,
+                                      GimpToolRegisterCallback  callback);
 
 GType   gimp_posterize_tool_get_type (void);
 

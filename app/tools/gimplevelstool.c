@@ -46,7 +46,6 @@
 
 #include "gimplevelstool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -183,35 +182,33 @@ static gboolean  levels_read_from_file             (FILE          *f);
 static void      levels_write_to_file              (FILE          *f);
 
 
-/*  the levels tool options  */
-static GimpToolOptions *levels_options = NULL;
-
-/*  the levels tool dialog  */
-static LevelsDialog *levels_dialog = NULL;
-
-static GimpImageMapToolClass *parent_class = NULL;
-
 /*  the levels file dialog  */
 static GtkWidget *file_dlg = NULL;
 static gboolean   load_save;
 
 static GtkWidget *color_option_items[5];
 
+static LevelsDialog *levels_dialog = NULL;
+
+static GimpImageMapToolClass *parent_class = NULL;
+
 
 /*  functions  */
 
 void
-gimp_levels_tool_register (Gimp *gimp)
+gimp_levels_tool_register (Gimp                     *gimp,
+                           GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_LEVELS_TOOL,
-                              FALSE,
-			      "gimp:levels_tool",
-			      _("Levels"),
-			      _("Adjust color levels"),
-			      N_("/Image/Colors/Levels..."), NULL,
-			      NULL, "tools/levels.html",
-			      GIMP_STOCK_TOOL_LEVELS);
+  (* callback) (gimp,
+                GIMP_TYPE_LEVELS_TOOL,
+                NULL,
+                FALSE,
+                "gimp:levels_tool",
+                _("Levels"),
+                _("Adjust color levels"),
+                N_("/Image/Colors/Levels..."), NULL,
+                NULL, "tools/levels.html",
+                GIMP_STOCK_TOOL_LEVELS);
 }
 
 GType
@@ -258,17 +255,6 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! levels_options)
-    {
-      levels_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_LEVELS_TOOL,
-					  (GimpToolOptions *) levels_options);
-    }
 }
 
 static void

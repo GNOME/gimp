@@ -45,7 +45,8 @@ struct _GimpFlipToolClass
 };
 
 
-void    gimp_flip_tool_register (Gimp *gimp);
+void    gimp_flip_tool_register (Gimp                     *gimp,
+                                 GimpToolRegisterCallback  callback);
 
 GType   gimp_flip_tool_get_type (void);
 

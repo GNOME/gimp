@@ -35,12 +35,10 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimppenciltool.h"
-#include "gimppainttool.h"
 #include "paint_options.h"
-#include "tool_options.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -63,25 +61,25 @@ static void   gimp_pencil_tool_motion     (GimpPaintTool        *paint_tool,
 /*  private variables  */
 static gboolean  non_gui_incremental = PENCIL_INCREMENTAL_DEFAULT;
 
-static PaintOptions *pencil_options = NULL; 
-
 static GimpPaintToolClass *parent_class = NULL;
 
 
 /*  functions  */
 
 void
-gimp_pencil_tool_register (Gimp *gimp)
+gimp_pencil_tool_register (Gimp                     *gimp,
+                           GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_PENCIL_TOOL,
-                              TRUE,
-                              "gimp:pencil_tool",
-                              _("Pencil"),
-                              _("Paint hard edged pixels"),
-                              N_("/Tools/Paint Tools/Pencil"), "P",
-                              NULL, "tools/pencil.html",
-                              GIMP_STOCK_TOOL_PENCIL);
+  (* callback) (gimp,
+                GIMP_TYPE_PENCIL_TOOL,
+                paint_options_new,
+                TRUE,
+                "gimp:pencil_tool",
+                _("Pencil"),
+                _("Paint hard edged pixels"),
+                N_("/Tools/Paint Tools/Pencil"), "P",
+                NULL, "tools/pencil.html",
+                GIMP_STOCK_TOOL_PENCIL);
 }
 
 GType
@@ -133,19 +131,10 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   tool       = GIMP_TOOL (pencil);
   paint_tool = GIMP_PAINT_TOOL (pencil);
 
-  if (! pencil_options)
-    {
-      pencil_options = paint_options_new (GIMP_TYPE_PENCIL_TOOL,
-					  paint_options_reset);
+  tool->tool_cursor = GIMP_PENCIL_TOOL_CURSOR;
 
-      tool_manager_register_tool_options (GIMP_TYPE_PENCIL_TOOL,
-                                          (GimpToolOptions *) pencil_options);
-     }
-
-   tool->tool_cursor = GIMP_PENCIL_TOOL_CURSOR;
-
-   paint_tool->pick_colors  = TRUE;
-   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_tool->pick_colors  = TRUE;
+  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
              
 static void
@@ -153,13 +142,16 @@ gimp_pencil_tool_paint (GimpPaintTool *paint_tool,
                         GimpDrawable  *drawable,
                         PaintState     state)
 {
+  PaintOptions         *paint_options;
   PaintPressureOptions *pressure_options;
   gboolean              incremental;
 
-  if (pencil_options)
+  paint_options = (PaintOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
+
+  if (paint_options)
     {
-      pressure_options = pencil_options->pressure_options;
-      incremental      = pencil_options->incremental;
+      pressure_options = paint_options->pressure_options;
+      incremental      = paint_options->incremental;
     }
   else
     {

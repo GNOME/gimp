@@ -1,3 +1,35 @@
+2001-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-types.h: added GimpToolRegisterFunc,
+	GimpToolRegisterCallback and GimpToolOptionsNewFunc typedefs
+	which are used to register tools.
+
+	* app/tools/tools.c: put the register funcs in an array of
+	GimpToolRegisterFuncs. Pass a Gimp pointer *plus* a
+	GimpToolRegisterCallback (which is tool_manager_register_tool())
+	to the tools' register functions.
+
+	* app/tools/tool_manager.[ch]: added a GimpToolOptionsNewFunc to
+	the parameters of tool_manager_register_tool(). Create the tool
+	options here, not in each tool.
+
+	* app/tools/paint_options.[ch]
+	* app/tools/selection_options.[ch]
+	* app/tools/tool_options.[ch]
+	* app/tools/transform_options.[ch]: all _init() and _new()
+	functions take a GimpToolInfo pointer now. The _reset() func needs
+	to be set manually now.
+
+	* app/tools/[all_tools].[ch]: changed accordingly:
+
+	- pass GimpToolOptionsNewFuncs to the register callback.
+	- don't create the tool options in the tools' _init() function.
+	- removed all static tool options variables.
+	- get the options from the tool system in the cases i missed
+	  in my last commit.
+	- added minor hacks to get rid of the static options pointer
+	  in some pathological cases :) (i.e. the ink tool).
+
 2001-11-20  David Neary <dneary@eircom.net>
 
         * app/core/gimppalette.c: Included errno,h
@@ -10,8 +42,6 @@
 	* app/core/gimpmodules.c
 	* app/core/gimppalette.c
 	* app/core/gimppattern.c: More of the extensive proofing. Fun fun fun!
-
-
 
 2001-11-20  Sven Neumann  <sven@gimp.org>
 

@@ -45,7 +45,25 @@ typedef struct _SelectionOptions    SelectionOptions;
 
 /*  functions  */
 
-typedef void   (* ToolOptionsResetFunc) (GimpToolOptions *tool_options);
+typedef GimpToolOptions * (* GimpToolOptionsNewFunc) (GimpToolInfo  *tool_info);
+
+typedef void (* GimpToolOptionsResetFunc) (GimpToolOptions          *tool_options);
+
+typedef void (* GimpToolRegisterCallback) (Gimp                     *gimp,
+                                           GType                     tool_type,
+                                           GimpToolOptionsNewFunc    options_new_func,
+                                           gboolean                  tool_context,
+                                           const gchar              *identifier,
+                                           const gchar              *blurb,
+                                           const gchar              *help,
+                                           const gchar              *menu_path,
+                                           const gchar              *menu_accel,
+                                           const gchar              *help_domain,
+                                           const gchar              *help_data,
+                                           const gchar              *stock_id);
+
+typedef void (* GimpToolRegisterFunc)     (Gimp                     *gimp,
+                                           GimpToolRegisterCallback  callback);
 
 
 /*  enums  */

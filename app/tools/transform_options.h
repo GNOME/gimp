@@ -55,13 +55,11 @@ struct _TransformOptions
 };
 
 
-TransformOptions * transform_options_new   (GType                 tool_type,
-					    ToolOptionsResetFunc  reset_func);
+GimpToolOptions * transform_options_new   (GimpToolInfo     *tool_info);
 
-void               transform_options_init  (TransformOptions     *options,
-					    GType                 tool_type,
-					    ToolOptionsResetFunc  reset_func);
-void               transform_options_reset (GimpToolOptions      *tool_options);
+void              transform_options_init  (TransformOptions *options,
+                                           GimpToolInfo     *tool_info);
+void              transform_options_reset (GimpToolOptions  *tool_options);
 
 
 #endif /* __TRANSFORM_OPTIONS_H__ */

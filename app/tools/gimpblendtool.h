@@ -52,7 +52,8 @@ struct _GimpBlendToolClass
 };
 
 
-void    gimp_blend_tool_register (Gimp *gimp);
+void    gimp_blend_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback);
 
 GType   gimp_blend_tool_get_type (void);
 

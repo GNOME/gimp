@@ -48,7 +48,8 @@ struct _GimpBucketFillToolClass
 };
 
 
-void    gimp_bucket_fill_tool_register (Gimp *gimp);
+void    gimp_bucket_fill_tool_register (Gimp                     *gimp,
+                                        GimpToolRegisterCallback  callback);
 
 GType   gimp_bucket_fill_tool_get_type (void);
 

@@ -49,7 +49,8 @@ struct _GimpHistogramToolClass
 };
 
 
-void    gimp_histogram_tool_register (Gimp *gimp);
+void    gimp_histogram_tool_register (Gimp                     *gimp,
+                                      GimpToolRegisterCallback  callback);
 
 GType   gimp_histogram_tool_get_type (void);
 

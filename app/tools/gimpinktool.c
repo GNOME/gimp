@@ -48,10 +48,10 @@
 
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
-#include "gimptool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 
+#include "app_procs.h"
 #include "gimprc.h"
 #include "undo.h"
 
@@ -59,8 +59,6 @@
 
 
 #define SUBSAMPLE 8
-
-/*  the Ink structures  */
 
 typedef Blob * (* BlobFunc) (gdouble,
 			     gdouble,
@@ -71,14 +69,16 @@ typedef Blob * (* BlobFunc) (gdouble,
 
 
 typedef struct _BrushWidget BrushWidget;
+typedef struct _InkOptions  InkOptions;
 
 struct _BrushWidget
 {
-  GtkWidget *widget;
-  gboolean   state;
-};
+  GtkWidget  *widget;
+  gboolean    state;
 
-typedef struct _InkOptions InkOptions;
+  /* EEK */
+  InkOptions *ink_options;
+};
 
 struct _InkOptions
 {
@@ -146,7 +146,8 @@ static void        gimp_ink_tool_cursor_update   (GimpTool         *tool,
                                                   GdkModifierType   state,
                                                   GimpDisplay      *gdisp);
 
-static Blob *      ink_pen_ellipse      (gdouble          x_center,
+static Blob *      ink_pen_ellipse      (InkOptions      *options,
+                                         gdouble          x_center,
                                          gdouble          y_center,
                                          gdouble          pressure,
                                          gdouble          xtilt,
@@ -221,16 +222,13 @@ static void   brush_widget_motion_notify  (GtkWidget      *widget,
 					   GdkEventMotion *event,
 					   BrushWidget    *brush_widget);
 
-static InkOptions * ink_options_new     (void);
-static void         ink_options_reset   (GimpToolOptions *tool_options);
-static void         ink_type_update     (GtkWidget       *radio_button,
-                                         BlobFunc         function);
+static GimpToolOptions * ink_options_new   (GimpToolInfo    *tool_info);
+static void              ink_options_reset (GimpToolOptions *tool_options);
+static void              ink_type_update   (GtkWidget       *radio_button,
+                                            BlobFunc         function);
 
 
 /* local variables */
-
-/* the ink tool options  */
-static InkOptions *ink_options = NULL;
 
 /*  undo blocks variables  */
 static TileManager *undo_tiles = NULL;
@@ -243,23 +241,25 @@ static TileManager *canvas_tiles = NULL;
  */
 static TempBuf *canvas_buf = NULL;
 
-static GimpToolClass *parent_class      = NULL;
+static GimpToolClass *parent_class = NULL;
 
 
 /*  public functions  */
 
 void
-gimp_ink_tool_register (Gimp *gimp)
+gimp_ink_tool_register (Gimp                     *gimp,
+                        GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_INK_TOOL,
-			      TRUE,
-			      "gimp:ink_tool",
-			      _("Ink Tool"),
-			      _("Draw in ink"),
-			      N_("/Tools/Paint Tools/Ink"), "K",
-			      NULL, "tools/ink.html",
-			      GIMP_STOCK_TOOL_INK);
+  (* callback) (gimp,
+                GIMP_TYPE_INK_TOOL,
+                ink_options_new,
+                TRUE,
+                "gimp:ink_tool",
+                _("Ink Tool"),
+                _("Draw in ink"),
+                N_("/Tools/Paint Tools/Ink"), "K",
+                NULL, "tools/ink.html",
+                GIMP_STOCK_TOOL_INK);
 }
 
 GType
@@ -319,17 +319,6 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (ink_tool);
- 
-  /*  The tool options  */
-  if (! ink_options)
-    {
-      ink_options = ink_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_INK_TOOL,
-					  (GimpToolOptions *) ink_options);
-
-      ink_options_reset ((GimpToolOptions *) ink_options);
-    }
 
   tool->tool_cursor = GIMP_INK_TOOL_CURSOR;
 }
@@ -386,11 +375,14 @@ gimp_ink_tool_button_press (GimpTool        *tool,
                             GimpDisplay     *gdisp)
 {
   GimpInkTool      *ink_tool;
+  InkOptions       *options;
   GimpDisplayShell *shell;
   GimpDrawable     *drawable;
   Blob             *b;
 
   ink_tool = GIMP_INK_TOOL (tool);
+
+  options = (InkOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -422,7 +414,8 @@ gimp_ink_tool_button_press (GimpTool        *tool,
                         NULL, NULL, time);
     }
   
-  b = ink_pen_ellipse (coords->x,
+  b = ink_pen_ellipse (options,
+                       coords->x,
                        coords->y,
 		       coords->pressure,
                        coords->xtilt,
@@ -481,14 +474,17 @@ gimp_ink_tool_motion (GimpTool        *tool,
                       GimpDisplay     *gdisp)
 {
   GimpInkTool  *ink_tool;
+  InkOptions   *options;
   GimpDrawable *drawable;
   Blob         *b, *blob_union;
 
   gdouble velocity;
   gdouble dist;
   gdouble lasttime, thistime;
-  
+
   ink_tool = GIMP_INK_TOOL (tool);
+
+  options = (InkOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -532,7 +528,8 @@ gimp_ink_tool_motion (GimpTool        *tool,
 
   velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
-  b = ink_pen_ellipse (coords->x,
+  b = ink_pen_ellipse (options,
+                       coords->x,
                        coords->y,
                        coords->pressure,
                        coords->xtilt,
@@ -596,15 +593,15 @@ brush_widget_active_rect (BrushWidget  *brush_widget,
 			  GtkWidget    *widget,
 			  GdkRectangle *rect)
 {
-  int x,y;
-  int r;
+  gint x,y;
+  gint r;
 
   r = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
-  x = widget->allocation.width / 2 + 0.85 * r * ink_options->aspect / 10.0 *
-    cos (ink_options->angle);
-  y = widget->allocation.height / 2 + 0.85 * r * ink_options->aspect / 10.0 *
-    sin (ink_options->angle);
+  x = widget->allocation.width / 2 + 0.85 * r * brush_widget->ink_options->aspect / 10.0 *
+    cos (brush_widget->ink_options->angle);
+  y = widget->allocation.height / 2 + 0.85 * r * brush_widget->ink_options->aspect / 10.0 *
+    sin (brush_widget->ink_options->angle);
 
   rect->x = x - 5;
   rect->y = y - 5;
@@ -627,13 +624,13 @@ brush_widget_draw_brush (BrushWidget *brush_widget,
 {
   Blob *blob;
 
-  blob = ink_options->function (xc, yc,
-				radius * cos (ink_options->angle),
-				radius * sin (ink_options->angle),
-				(- (radius / ink_options->aspect) *
-				 sin (ink_options->angle)),
-				((radius / ink_options->aspect) *
-				 cos (ink_options->angle)));
+  blob = brush_widget->ink_options->function (xc, yc,
+                                              radius * cos (brush_widget->ink_options->angle),
+                                              radius * sin (brush_widget->ink_options->angle),
+                                              (- (radius / brush_widget->ink_options->aspect) *
+                                               sin (brush_widget->ink_options->angle)),
+                                              ((radius / brush_widget->ink_options->aspect) *
+                                               cos (brush_widget->ink_options->angle)));
 
   paint_blob (widget->window, widget->style->fg_gc[widget->state], blob);
   g_free (blob);
@@ -716,16 +713,16 @@ brush_widget_motion_notify (GtkWidget      *widget,
 
       if (rsquare != 0)
 	{
-	  ink_options->angle = atan2 (y, x);
+	  brush_widget->ink_options->angle = atan2 (y, x);
 
 	  r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
-	  ink_options->aspect =
-	    10.0 * sqrt ((double) rsquare / (r0 * r0)) / 0.85;
+	  brush_widget->ink_options->aspect =
+	    10.0 * sqrt ((gdouble) rsquare / (r0 * r0)) / 0.85;
 
-	  if (ink_options->aspect < 1.0)
-	    ink_options->aspect = 1.0;
-	  if (ink_options->aspect > 10.0)
-	    ink_options->aspect = 10.0;
+	  if (brush_widget->ink_options->aspect < 1.0)
+	    brush_widget->ink_options->aspect = 1.0;
+	  if (brush_widget->ink_options->aspect > 10.0)
+	    brush_widget->ink_options->aspect = 10.0;
 
 	  gtk_widget_draw (widget, NULL);
 	}
@@ -798,25 +795,26 @@ paint_blob (GdkDrawable *drawable,
 
 
 static Blob *
-ink_pen_ellipse (gdouble x_center,
-		 gdouble y_center,
-		 gdouble pressure,
-		 gdouble xtilt,
-		 gdouble ytilt,
-		 gdouble velocity)
+ink_pen_ellipse (InkOptions *options,
+                 gdouble     x_center,
+		 gdouble     y_center,
+		 gdouble     pressure,
+		 gdouble     xtilt,
+		 gdouble     ytilt,
+		 gdouble     velocity)
 {
-  double size;
-  double tsin, tcos;
-  double aspect, radmin;
-  double x,y;
-  double tscale;
-  double tscale_c;
-  double tscale_s;
-  
+  gdouble size;
+  gdouble tsin, tcos;
+  gdouble aspect, radmin;
+  gdouble x,y;
+  gdouble tscale;
+  gdouble tscale_c;
+  gdouble tscale_s;
+
   /* Adjust the size depending on pressure. */
 
-  size = ink_options->size * (1.0 + ink_options->sensitivity *
-			      (2.0 * pressure - 1.0) );
+  size = options->size * (1.0 + options->sensitivity *
+                          (2.0 * pressure - 1.0) );
 
   /* Adjust the size further depending on pointer velocity
      and velocity-sensitivity.  These 'magic constants' are
@@ -829,9 +827,9 @@ ink_pen_ellipse (gdouble x_center,
   g_print("%f (%f) -> ", (float)size, (float)velocity);
 #endif  
 
-  size = ink_options->vel_sensitivity *
-    ((4.5 * size) / (1.0 + ink_options->vel_sensitivity * (2.0*(velocity))))
-    + (1.0 - ink_options->vel_sensitivity) * size;
+  size = options->vel_sensitivity *
+    ((4.5 * size) / (1.0 + options->vel_sensitivity * (2.0*(velocity))))
+    + (1.0 - options->vel_sensitivity) * size;
 
 #ifdef VERBOSE
   g_print("%f\n", (float)size);
@@ -839,8 +837,8 @@ ink_pen_ellipse (gdouble x_center,
 
   /* Clamp resulting size to sane limits */
 
-  if (size > ink_options->size * (1.0 + ink_options->sensitivity))
-    size = ink_options->size * (1.0 + ink_options->sensitivity);
+  if (size > options->size * (1.0 + options->sensitivity))
+    size = options->size * (1.0 + options->sensitivity);
 
   if (size*SUBSAMPLE < 1.0) size = 1.0/SUBSAMPLE;
 
@@ -850,16 +848,18 @@ ink_pen_ellipse (gdouble x_center,
      tilt info from the brush. My personal feeling is that representing
      both as affine transforms would make the most sense. -RLL */
 
-  tscale = ink_options->tilt_sensitivity * 10.0;
-  tscale_c = tscale * cos (gimp_deg_to_rad (ink_options->tilt_angle));
-  tscale_s = tscale * sin (gimp_deg_to_rad (ink_options->tilt_angle));
-  x = ink_options->aspect*cos(ink_options->angle) +
-    xtilt * tscale_c - ytilt * tscale_s;
-  y = ink_options->aspect*sin(ink_options->angle) +
-    ytilt * tscale_c + xtilt * tscale_s;
+  tscale = options->tilt_sensitivity * 10.0;
+  tscale_c = tscale * cos (gimp_deg_to_rad (options->tilt_angle));
+  tscale_s = tscale * sin (gimp_deg_to_rad (options->tilt_angle));
+
+  x = (options->aspect * cos (options->angle) +
+       xtilt * tscale_c - ytilt * tscale_s);
+  y = (options->aspect * sin (options->angle) +
+       ytilt * tscale_c + xtilt * tscale_s);
+
 #ifdef VERBOSE
   g_print ("angle %g aspect %g; %g %g; %g %g\n",
-	   ink_options->angle, ink_options->aspect, tscale_c, tscale_s, x, y);
+	   options->angle, options->aspect, tscale_c, tscale_s, x, y);
 #endif
   aspect = sqrt(x*x+y*y);
 
@@ -870,8 +870,8 @@ ink_pen_ellipse (gdouble x_center,
     }
   else
     {
-      tsin = sin(ink_options->angle);
-      tcos = cos(ink_options->angle);
+      tsin = sin (options->angle);
+      tcos = cos (options->angle);
     }
 
   if (aspect < 1.0) 
@@ -882,9 +882,12 @@ ink_pen_ellipse (gdouble x_center,
   radmin = SUBSAMPLE * size/aspect;
   if (radmin < 1.0) radmin = 1.0;
   
-  return ink_options->function (x_center * SUBSAMPLE, y_center * SUBSAMPLE,
-				radmin*aspect*tcos, radmin*aspect*tsin,  
-				-radmin*tsin, radmin*tcos);
+  return options->function (x_center * SUBSAMPLE,
+                            y_center * SUBSAMPLE,
+                            radmin * aspect * tcos,
+                            radmin * aspect * tsin,  
+                            -radmin * tsin,
+                            radmin * tcos);
 }
 
 static void
@@ -1422,8 +1425,8 @@ ink_set_canvas_tiles (gint x,
 
 /*  tool options stuff  */
 
-static InkOptions *
-ink_options_new (void)
+static GimpToolOptions *
+ink_options_new (GimpToolInfo *tool_info)
 {
   InkOptions *options;
   GtkWidget  *table;
@@ -1438,9 +1441,10 @@ ink_options_new (void)
   GdkPixmap  *pixmap;
 
   options = g_new0 (InkOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_INK_TOOL,
-		      ink_options_reset);
+
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = ink_options_reset;
 
   options->size             = options->size_d             = 4.4;
   options->sensitivity      = options->sensitivity_d      = 1.0;
@@ -1643,7 +1647,8 @@ ink_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   options->brush_w = g_new (BrushWidget, 1);
-  options->brush_w->state = FALSE;
+  options->brush_w->state       = FALSE;
+  options->brush_w->ink_options = options;
 
   darea = gtk_drawing_area_new();
   options->brush_w->widget = darea;
@@ -1673,7 +1678,9 @@ ink_options_new (void)
 
   gtk_widget_show_all (hbox);
 
-  return options;
+  ink_options_reset ((GimpToolOptions *) options);
+
+  return (GimpToolOptions *) options;
 }
 
 static void
@@ -1710,7 +1717,12 @@ static void
 ink_type_update (GtkWidget *radio_button,
 		 BlobFunc   function)
 {
-  InkOptions *options = ink_options;
+  GimpToolInfo *tool_info;
+  InkOptions   *options;
+
+  tool_info = tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_INK_TOOL);
+
+  options = (InkOptions *) tool_info->tool_options;
 
   if (GTK_TOGGLE_BUTTON (radio_button)->active)
     options->function = function;

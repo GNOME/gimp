@@ -43,7 +43,6 @@
 
 #include "gimpcurvestool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -177,13 +176,7 @@ static gboolean  curves_read_from_file    (FILE           *f);
 static void      curves_write_to_file     (FILE           *f);
 
 
-/*  the curves tool options  */
-static GimpToolOptions  * curves_options = NULL;
-
-/*  the curves dialog  */
 static CurvesDialog * curves_dialog = NULL;
-
-static GimpImageMapToolClass *parent_class = NULL;
 
 /*  the curves file dialog  */
 static GtkWidget *file_dlg = NULL;
@@ -199,21 +192,25 @@ static CRMatrix CR_basis =
   {  0.0,  1.0,  0.0,  0.0 },
 };
 
+static GimpImageMapToolClass *parent_class = NULL;
 
-/*  functions  */
+
+/*  public functions  */
 
 void
-gimp_curves_tool_register (Gimp *gimp)
+gimp_curves_tool_register (Gimp                     *gimp,
+                           GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_CURVES_TOOL,
-                              FALSE,
-			      "gimp:curves_tool",
-			      _("Curves"),
-			      _("Adjust color curves"),
-			      N_("/Image/Colors/Curves..."), NULL,
-			      NULL, "tools/curves.html",
-			      GIMP_STOCK_TOOL_CURVES);
+  (* callback) (gimp,
+                GIMP_TYPE_CURVES_TOOL,
+                NULL,
+                FALSE,
+                "gimp:curves_tool",
+                _("Curves"),
+                _("Adjust color curves"),
+                N_("/Image/Colors/Curves..."), NULL,
+                NULL, "tools/curves.html",
+                GIMP_STOCK_TOOL_CURVES);
 }
 
 GType
@@ -263,17 +260,6 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 static void
 gimp_curves_tool_init (GimpCurvesTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! curves_options)
-    {
-      curves_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_CURVES_TOOL,
-					  (GimpToolOptions *) curves_options);
-    }
 }
 
 static void

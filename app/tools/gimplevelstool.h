@@ -45,7 +45,8 @@ struct _GimpLevelsToolClass
 };
 
 
-void    gimp_levels_tool_register (Gimp *gimp);
+void    gimp_levels_tool_register (Gimp                     *gimp,
+                                   GimpToolRegisterCallback  callback);
 
 GType   gimp_levels_tool_get_type (void);
 

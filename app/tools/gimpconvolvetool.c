@@ -28,18 +28,17 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-
-#include "paint-funcs/paint-funcs.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpconvolvetool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
-#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -120,15 +119,9 @@ static void   copy_matrix                      (gfloat               *src,
 static gint   sum_matrix                       (gint                 *matrix,
 						gint                  size);
 
-static ConvolveOptions * convolve_options_new   (void);
+static GimpToolOptions * convolve_options_new   (GimpToolInfo        *tool_info);
 static void              convolve_options_reset (GimpToolOptions     *options);
 
-
-/* The parent class */
-static GimpPaintToolClass *parent_class;
- 
-/*  the convolve tool options  */
-static ConvolveOptions * convolve_options = NULL;
 
 /*  local variables  */
 static gint         matrix [25];
@@ -165,21 +158,25 @@ static gfloat sharpen_matrix [25] =
   0, 0, 0, 0, 0,
 };
 
+static GimpPaintToolClass *parent_class;
 
-/* global functions  */
+
+/*  public functions  */
 
 void
-gimp_convolve_tool_register (Gimp *gimp)
+gimp_convolve_tool_register (Gimp                     *gimp,
+                             GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_CONVOLVE_TOOL,
-			      TRUE,
-  			      "gimp:convolve_tool",
-  			      _("Convolve"),
-  			      _("Blur or Sharpen"),
-      			      N_("/Tools/Paint Tools/Convolve"), "B",
-  			      NULL, "tools/convolve.html",
-			      GIMP_STOCK_TOOL_BLUR);
+  (* callback) (gimp,
+                GIMP_TYPE_CONVOLVE_TOOL,
+                convolve_options_new,
+                TRUE,
+                "gimp:convolve_tool",
+                _("Convolve"),
+                _("Blur or Sharpen"),
+                N_("/Tools/Paint Tools/Convolve"), "B",
+                NULL, "tools/convolve.html",
+                GIMP_STOCK_TOOL_BLUR);
 }
 
 GType
@@ -232,19 +229,9 @@ gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 static void
 gimp_convolve_tool_init (GimpConvolveTool *convolve)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
+  GimpTool *tool;
 
-  tool       = GIMP_TOOL (convolve);
-  paint_tool = GIMP_PAINT_TOOL (convolve);
-
-  if (! convolve_options)
-    {
-      convolve_options = convolve_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_CONVOLVE_TOOL,
-                                          (GimpToolOptions *) convolve_options);
-    }
+  tool = GIMP_TOOL (convolve);
 
   tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
 }
@@ -254,13 +241,18 @@ gimp_convolve_tool_paint (GimpPaintTool    *paint_tool,
 			  GimpDrawable     *drawable,
 			  PaintState        state)
 {
+  ConvolveOptions *options;
+
+  options = (ConvolveOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
+
   switch (state)
     {
     case MOTION_PAINT:
-      gimp_convolve_tool_motion (paint_tool, drawable, 
-				 convolve_options->paint_options.pressure_options,
-				 convolve_options->type, 
-				 convolve_options->rate);
+      gimp_convolve_tool_motion (paint_tool,
+                                 drawable, 
+				 options->paint_options.pressure_options,
+				 options->type, 
+				 options->rate);
       break;
 
     default:
@@ -276,27 +268,29 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
+  ConvolveOptions *options;
+
+  options = (ConvolveOptions *) tool->tool_info->tool_options;
+
   if ((key == GDK_CONTROL_MASK) &&
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
-      switch (convolve_options->type)
+      switch (options->type)
         {
         case BLUR_CONVOLVE:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (convolve_options->type_w[SHARPEN_CONVOLVE]),
-             TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[SHARPEN_CONVOLVE]), TRUE);
           break;
         case SHARPEN_CONVOLVE:
           gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (convolve_options->type_w[BLUR_CONVOLVE]),
-             TRUE);
+            (GTK_TOGGLE_BUTTON (options->type_w[BLUR_CONVOLVE]), TRUE);
           break;
         default:
           break;
         }
     }
 
-  tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
+  tool->toggled = (options->type == SHARPEN_CONVOLVE);
 }
 
 static void
@@ -305,7 +299,11 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 				  GdkModifierType  state,
 				  GimpDisplay     *gdisp)
 {
-  tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
+  ConvolveOptions *options;
+
+  options = (ConvolveOptions *) tool->tool_info->tool_options;
+
+  tool->toggled = (options->type == SHARPEN_CONVOLVE);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -680,8 +678,8 @@ convolve_non_gui (GimpDrawable *drawable,
 
 #endif /* 0 - non-gui functions */
 
-static ConvolveOptions *
-convolve_options_new (void)
+static GimpToolOptions *
+convolve_options_new (GimpToolInfo *tool_info)
 {
   ConvolveOptions *options;
   GtkWidget       *vbox;
@@ -692,9 +690,9 @@ convolve_options_new (void)
 
   options = g_new0 (ConvolveOptions, 1);
 
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_CONVOLVE_TOOL,
-		      convolve_options_reset);
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = convolve_options_reset;
 
   options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
   options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
@@ -737,7 +735,7 @@ convolve_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

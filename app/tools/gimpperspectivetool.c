@@ -36,7 +36,6 @@
 #include "gui/info-dialog.h"
 
 #include "gimpperspectivetool.h"
-#include "tool_manager.h"
 #include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
@@ -63,23 +62,23 @@ static gchar  matrix_row_buf [3][MAX_INFO_BUF];
 
 static GimpTransformToolClass *parent_class = NULL;
 
-static TransformOptions *perspective_options = NULL;
-
 
 /*  public functions  */
 
 void 
-gimp_perspective_tool_register (Gimp *gimp)
+gimp_perspective_tool_register (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_PERSPECTIVE_TOOL,
-                              FALSE,
-			      "gimp:perspective_tool",
-			      _("Perspective Tool"),
-			      _("Change perspective of the layer or selection"),
-			      N_("/Tools/Transform Tools/Perspective"), "<shift>P",
-			      NULL, "tools/perspective.html",
-			      GIMP_STOCK_TOOL_PERSPECTIVE);
+  (* callback) (gimp,
+                GIMP_TYPE_PERSPECTIVE_TOOL,
+                transform_options_new,
+                FALSE,
+                "gimp:perspective_tool",
+                _("Perspective Tool"),
+                _("Change perspective of the layer or selection"),
+                N_("/Tools/Transform Tools/Perspective"), "<shift>P",
+                NULL, "tools/perspective.html",
+                GIMP_STOCK_TOOL_PERSPECTIVE);
 }
 
 GType
@@ -125,20 +124,9 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 static void
 gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
+  GimpTool *tool;
 
-  tool           = GIMP_TOOL (perspective_tool);
-  transform_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
-
-  if (! perspective_options)
-    {
-      perspective_options = transform_options_new (GIMP_TYPE_PERSPECTIVE_TOOL,
-						   transform_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_PERSPECTIVE_TOOL,
-                                          (GimpToolOptions *) perspective_options);
-    }
+  tool = GIMP_TOOL (perspective_tool);
 
   tool->tool_cursor = GIMP_PERSPECTIVE_TOOL_CURSOR;
 }

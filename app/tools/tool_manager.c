@@ -533,17 +533,18 @@ tool_manager_cursor_update_active (Gimp            *gimp,
 }
 
 void
-tool_manager_register_tool (Gimp         *gimp,
-			    GType         tool_type,
-			    gboolean      tool_context,
-			    const gchar  *identifier,
-			    const gchar  *blurb,
-			    const gchar  *help,
-			    const gchar  *menu_path,
-			    const gchar  *menu_accel,
-			    const gchar  *help_domain,
-			    const gchar  *help_data,
-			    const gchar  *stock_id)
+tool_manager_register_tool (Gimp                   *gimp,
+			    GType                   tool_type,
+                            GimpToolOptionsNewFunc  options_new_func,
+			    gboolean                tool_context,
+			    const gchar            *identifier,
+			    const gchar            *blurb,
+			    const gchar            *help,
+			    const gchar            *menu_path,
+			    const gchar            *menu_accel,
+			    const gchar            *help_domain,
+			    const gchar            *help_data,
+			    const gchar            *stock_id)
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
@@ -623,28 +624,16 @@ tool_manager_register_tool (Gimp         *gimp,
 
   g_object_unref (G_OBJECT (pixbuf));
 
-  gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
-}
-
-void
-tool_manager_register_tool_options (GType            tool_type,
-				    GimpToolOptions *tool_options)
-{
-  GimpToolInfo *tool_info;
-
-  g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
-  g_return_if_fail (tool_options != NULL);
-
-  tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
-
-  if (! tool_info)
+  if (options_new_func)
     {
-      g_warning ("%s(): no tool info registered for %s",
-		 G_GNUC_FUNCTION, g_type_name (tool_type));
-      return;
+      tool_info->tool_options = options_new_func (tool_info);
+    }
+  else
+    {
+      tool_info->tool_options = tool_options_new (tool_info);
     }
 
-  tool_info->tool_options = tool_options;
+  gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
 }
 
 GimpToolInfo *
@@ -679,10 +668,12 @@ tool_manager_active_get_help_data (Gimp *gimp)
 
   tool_manager = tool_manager_get (gimp);
 
-  if (! tool_manager->active_tool)
-    return NULL;
+  if (tool_manager->active_tool)
+    {
+      return tool_manager->active_tool->tool_info->help_data;
+    }
 
-  return tool_manager->active_tool->tool_info->help_data;
+  return NULL;
 }
 
 void

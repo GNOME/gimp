@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <pango/pangoft2.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -38,6 +39,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpfontselection.h"
 
@@ -47,13 +49,9 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
-#include "gimptool.h"
-#include "tool_manager.h"
 #include "tool_options.h"
 
-#include "libgimp_glue.h"
 #include "floating_sel.h"
-#include "undo_types.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -88,6 +86,8 @@ struct _TextOptions
 };
 
 
+/*  local function prototypes  */
+
 static void   gimp_text_tool_class_init      (GimpTextToolClass *klass);
 static void   gimp_text_tool_init            (GimpTextTool      *tool);
 
@@ -113,30 +113,31 @@ static void   text_tool_cursor_update        (GimpTool        *tool,
 
 static void   text_tool_render               (GimpTextTool    *text_tool);
 
-static TextOptions * text_tool_options_new   (GimpTextTool    *text_tool);
-static void          text_tool_options_reset (GimpToolOptions *tool_options);
+static GimpToolOptions * text_tool_options_new   (GimpToolInfo    *tool_info);
+static void              text_tool_options_reset (GimpToolOptions *tool_options);
 
 
 /*  local variables  */
 
-static TextOptions   *text_tool_options = NULL;
-static GimpToolClass *parent_class      = NULL;
+static GimpToolClass *parent_class = NULL;
 
 
-/*  functions  */
+/*  public functions  */
 
 void
-gimp_text_tool_register (Gimp *gimp)
+gimp_text_tool_register (Gimp                     *gimp,
+                         GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_TEXT_TOOL,
-			      FALSE,
-			      "gimp:text_tool",
-			      _("Text Tool"),
-			      _("Add text to the image"),
-			      N_("/Tools/Text"), "T",
-			      NULL, "tools/text.html",
-			      GIMP_STOCK_TOOL_TEXT);
+  (* callback) (gimp,
+                GIMP_TYPE_TEXT_TOOL,
+                text_tool_options_new,
+                FALSE,
+                "gimp:text_tool",
+                _("Text Tool"),
+                _("Add text to the image"),
+                N_("/Tools/Text"), "T",
+                NULL, "tools/text.html",
+                GIMP_STOCK_TOOL_TEXT);
 }
 
 GType
@@ -167,6 +168,9 @@ gimp_text_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_text_tool_class_init (GimpTextToolClass *klass)
 {
@@ -195,15 +199,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
  
   text_tool->pango_context = pango_ft2_get_context ();
 
-  /*  The tool options  */
-  if (! text_tool_options)
-    {
-      text_tool_options = text_tool_options_new (text_tool);
-
-      tool_manager_register_tool_options (GIMP_TYPE_TEXT_TOOL,
-					  (GimpToolOptions *) text_tool_options);
-    }
-
   tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
   tool->scroll_lock = TRUE;  /* Disallow scrolling */
 }
@@ -221,111 +216,7 @@ gimp_text_tool_finalize (GObject *object)
       text_tool->pango_context = NULL;
     }
 
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-text_tool_options_reset (GimpToolOptions *tool_options)
-{
-  TextOptions *options;
-  GtkWidget   *spinbutton;
-
-  options = (TextOptions *) tool_options;
-
-  gimp_font_selection_set_fontname 
-    (GIMP_FONT_SELECTION (options->font_selection), options->fontname_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
-			    options->size_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
-			    options->border_d);
-  
-  /* resetting the unit menu is a bit tricky ... */
-  options->unit = options->unit_d;
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->unit_w),
-                           options->unit_d);
-  spinbutton =
-    g_object_get_data (G_OBJECT (options->unit_w), "set_digits");
-  while (spinbutton)
-    {
-      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), 0);
-      spinbutton =
-        g_object_get_data (G_OBJECT (spinbutton), "set_digits");
-    }
-}
-
-static TextOptions *
-text_tool_options_new (GimpTextTool *text_tool)
-{
-  TextOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *table;
-  GtkWidget   *size_spinbutton;
-  GtkWidget   *border_spinbutton;
-
-  options = g_new0 (TextOptions, 1);
-  tool_options_init ((GimpToolOptions *) options, text_tool_options_reset);
-
-  options->fontname_d                   = DEFAULT_FONT;
-  options->border  = options->border_d  = 0;
-  options->size    = options->size_d    = DEFAULT_FONT_SIZE;
-  options->unit    = options->unit_d    = GIMP_UNIT_PIXEL;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  options->font_selection = gimp_font_selection_new (text_tool->pango_context);
-  gimp_font_selection_set_fontname 
-    (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (options->font_selection),
-                      FALSE, FALSE, 0);
-  gtk_widget_show (options->font_selection);
-  
-  /*  the size entries */
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
-
-  options->size_w = gtk_adjustment_new (options->size_d, 1e-5, 32767.0,
-                                        1.0, 50.0, 0.0);
-  size_spinbutton = 
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->size_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (size_spinbutton), TRUE);
-  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->size);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Size:"), 1.0, 0.5,
-                             size_spinbutton, 1, FALSE);
-
-  options->border_w = gtk_adjustment_new (options->border_d, 1e-5, 32767.0,
-                                          1.0, 50.0, 0.0);
-  border_spinbutton =
-    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (border_spinbutton), TRUE);
-  g_signal_connect (G_OBJECT (options->border_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->border);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Border:"), 1.0, 0.5,
-                             border_spinbutton, 1, FALSE);
-
-  options->unit_w =
-    gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
-  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
-                    G_CALLBACK (gimp_unit_menu_update),
-                    &options->unit);
-  g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
-                     size_spinbutton);
-  g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
-                     border_spinbutton);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Unit:"), 1.0, 0.5,
-                             options->unit_w, 1, FALSE);
-
-  gtk_widget_show (table);
-
-  return options;
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -347,6 +238,8 @@ text_tool_control (GimpTool    *tool,
     default:
       break;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -426,6 +319,7 @@ text_tool_cursor_update (GimpTool        *tool,
 static void
 text_tool_render (GimpTextTool *text_tool)
 {
+  TextOptions          *options;
   GimpDisplay          *gdisp;
   PangoFontDescription *font_desc;
   gchar                *fontname;
@@ -434,10 +328,12 @@ text_tool_render (GimpTextTool *text_tool)
   gdouble               size;
   gdouble               factor;
 
+  options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
+
   gdisp = text_tool->gdisp;
   
   font_desc = gimp_font_selection_get_font_desc 
-    (GIMP_FONT_SELECTION (text_tool_options->font_selection));
+    (GIMP_FONT_SELECTION (options->font_selection));
 
   if (!font_desc)
     {
@@ -445,16 +341,16 @@ text_tool_render (GimpTextTool *text_tool)
       return;
     }
   
-  size   = text_tool_options->size;
-  border = text_tool_options->border;
+  size   = options->size;
+  border = options->border;
 
-  switch (text_tool_options->unit)
+  switch (options->unit)
     {
     case GIMP_UNIT_PIXEL:
       break;
     default:
-      factor = (gdisp->gimage->xresolution / 
-                gimp_unit_get_factor (text_tool_options->unit));
+      factor = (gdisp->gimage->xresolution /
+                gimp_unit_get_factor (options->unit));
       size   *= factor;
       border *= factor;
       break;
@@ -667,4 +563,120 @@ text_get_extents (const gchar *fontname,
   g_object_unref (context);  
 
   return TRUE;
+}
+
+
+/*  tool options stuff  */
+
+static GimpToolOptions *
+text_tool_options_new (GimpToolInfo *tool_info)
+{
+  TextOptions  *options;
+  PangoContext *pango_context;
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkWidget    *size_spinbutton;
+  GtkWidget    *border_spinbutton;
+
+  options = g_new0 (TextOptions, 1);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = text_tool_options_reset;
+
+  options->fontname_d                   = DEFAULT_FONT;
+  options->border  = options->border_d  = 0;
+  options->size    = options->size_d    = DEFAULT_FONT_SIZE;
+  options->unit    = options->unit_d    = GIMP_UNIT_PIXEL;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  pango_context = pango_ft2_get_context (gimprc.monitor_xres,
+                                         gimprc.monitor_yres);
+
+  options->font_selection = gimp_font_selection_new (pango_context);
+
+  g_object_unref (G_OBJECT (pango_context));
+
+  gimp_font_selection_set_fontname 
+    (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (options->font_selection),
+                      FALSE, FALSE, 0);
+  gtk_widget_show (options->font_selection);
+  
+  /*  the size entries */
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
+
+  options->size_w = gtk_adjustment_new (options->size_d, 1e-5, 32767.0,
+                                        1.0, 50.0, 0.0);
+  size_spinbutton = 
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->size_w), 1.0, 0.0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (size_spinbutton), TRUE);
+  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->size);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Size:"), 1.0, 0.5,
+                             size_spinbutton, 1, FALSE);
+
+  options->border_w = gtk_adjustment_new (options->border_d, 1e-5, 32767.0,
+                                          1.0, 50.0, 0.0);
+  border_spinbutton =
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (border_spinbutton), TRUE);
+  g_signal_connect (G_OBJECT (options->border_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->border);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Border:"), 1.0, 0.5,
+                             border_spinbutton, 1, FALSE);
+
+  options->unit_w =
+    gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
+  g_signal_connect (G_OBJECT (options->unit_w), "unit_changed",
+                    G_CALLBACK (gimp_unit_menu_update),
+                    &options->unit);
+  g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
+                     size_spinbutton);
+  g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
+                     border_spinbutton);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Unit:"), 1.0, 0.5,
+                             options->unit_w, 1, FALSE);
+
+  gtk_widget_show (table);
+
+  return (GimpToolOptions *) options;
+}
+
+static void
+text_tool_options_reset (GimpToolOptions *tool_options)
+{
+  TextOptions *options;
+  GtkWidget   *spinbutton;
+
+  options = (TextOptions *) tool_options;
+
+  gimp_font_selection_set_fontname 
+    (GIMP_FONT_SELECTION (options->font_selection), options->fontname_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
+			    options->size_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
+			    options->border_d);
+  
+  /* resetting the unit menu is a bit tricky ... */
+  options->unit = options->unit_d;
+  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->unit_w),
+                           options->unit_d);
+  spinbutton =
+    g_object_get_data (G_OBJECT (options->unit_w), "set_digits");
+  while (spinbutton)
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), 0);
+      spinbutton =
+        g_object_get_data (G_OBJECT (spinbutton), "set_digits");
+    }
 }

@@ -49,7 +49,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"
 #include "selection_options.h"
-#include "tool_manager.h"
 
 #include "gimprc.h"
 
@@ -84,30 +83,29 @@ static GdkSegment * fuzzy_select_calculate     (GimpFuzzySelectTool *fuzzy_sel,
                                                 gint                *nsegs);
 
 
-static GimpSelectionToolClass *parent_class = NULL;
-
-/*  the fuzzy selection tool options  */
-static SelectionOptions  *fuzzy_options = NULL;
-
 /*  XSegments which make up the fuzzy selection boundary  */
 static GdkSegment *segs     = NULL;
 static gint        num_segs = 0;
+
+static GimpSelectionToolClass *parent_class = NULL;
 
 
 /*  public functions  */
 
 void
-gimp_fuzzy_select_tool_register (Gimp *gimp)
+gimp_fuzzy_select_tool_register (Gimp                     *gimp,
+                                 GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_FUZZY_SELECT_TOOL,
-			      FALSE,
-                              "gimp:fuzzy_select_tool",
-                              _("Fuzzy Select"),
-                              _("Select contiguous regions"),
-                              _("/Tools/Selection Tools/Fuzzy Select"), "Z",
-                              NULL, "tools/fuzzy_select.html",
-                              GIMP_STOCK_TOOL_FUZZY_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_FUZZY_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:fuzzy_select_tool",
+                _("Fuzzy Select"),
+                _("Select contiguous regions"),
+                _("/Tools/Selection Tools/Fuzzy Select"), "Z",
+                NULL, "tools/fuzzy_select.html",
+                GIMP_STOCK_TOOL_FUZZY_SELECT);
 }
 
 GType
@@ -171,15 +169,6 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 
   tool        = GIMP_TOOL (fuzzy_select);
   select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
-
-  if (! fuzzy_options)
-    {
-      fuzzy_options = selection_options_new (GIMP_TYPE_FUZZY_SELECT_TOOL,
-					     selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_FUZZY_SELECT_TOOL,
-                                          (GimpToolOptions *) fuzzy_options);
-    }
 
   tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
   tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */

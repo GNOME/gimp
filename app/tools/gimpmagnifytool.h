@@ -50,7 +50,8 @@ struct _GimpMagnifyToolClass
 };
 
 
-void    gimp_magnify_tool_register (Gimp *gimp);
+void    gimp_magnify_tool_register (Gimp                     *gimp,
+                                    GimpToolRegisterCallback  callback);
 
 GType   gimp_magnify_tool_get_type (void);
 

@@ -42,9 +42,8 @@
 
 
 void
-selection_options_init (SelectionOptions     *options,
-			GType                 tool_type,
-			ToolOptionsResetFunc  reset_func)
+selection_options_init (SelectionOptions *options,
+                        GimpToolInfo     *tool_info)
 {
   GtkWidget *vbox;
   GtkWidget *abox;
@@ -53,8 +52,9 @@ selection_options_init (SelectionOptions     *options,
   GtkWidget *scale;
 
   /*  initialize the tool options structure  */
-  tool_options_init ((GimpToolOptions *) options,
-		     reset_func);
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = selection_options_reset;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -135,7 +135,7 @@ selection_options_init (SelectionOptions     *options,
   gtk_widget_show (table);
 
   /*  the antialias toggle button  */
-  if (tool_type != GIMP_TYPE_RECT_SELECT_TOOL)
+  if (tool_info->tool_type != GIMP_TYPE_RECT_SELECT_TOOL)
     {
       options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
@@ -150,11 +150,11 @@ selection_options_init (SelectionOptions     *options,
 
 #if 0
   /*  a separator between the common and tool-specific selection options  */
-  if (tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
-      tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
-      tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
-      tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
-      tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
+      tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
+      tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
       GtkWidget *separator;
 
@@ -165,7 +165,7 @@ selection_options_init (SelectionOptions     *options,
 #endif
 
   /* selection tool with an interactive boundary that can be toggled */
-  if (tool_type == GIMP_TYPE_ISCISSORS_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
       options->interactive_w =
 	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
@@ -181,8 +181,8 @@ selection_options_init (SelectionOptions     *options,
     }
 
   /*  selection tools which operate on colors or contiguous regions  */
-  if (tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
-      tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
       GtkWidget *hbox;
 
@@ -223,8 +223,8 @@ selection_options_init (SelectionOptions     *options,
     }
 
   /*  widgets for fixed size select  */
-  if (tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
-      tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
@@ -346,16 +346,16 @@ selection_options_init (SelectionOptions     *options,
     }
 }
 
-SelectionOptions *
-selection_options_new (GType                 tool_type,
-		       ToolOptionsResetFunc  reset_func)
+GimpToolOptions *
+selection_options_new (GimpToolInfo *tool_info)
 {
   SelectionOptions *options;
 
-  options = g_new (SelectionOptions, 1);
-  selection_options_init (options, tool_type, reset_func);
+  options = g_new0 (SelectionOptions, 1);
 
-  return options;
+  selection_options_init (options, tool_info);
+
+  return (GimpToolOptions *) options;
 }
 
 void

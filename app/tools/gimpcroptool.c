@@ -41,10 +41,8 @@
 #include "gui/info-dialog.h"
 
 #include "gimpcroptool.h"
-#include "gimpdrawtool.h"
-#include "gimptool.h"
-#include "tool_options.h"
 #include "tool_manager.h"
+#include "tool_options.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
@@ -86,16 +84,6 @@ struct _CropOptions
   CropType     type_d;
   GtkWidget   *type_w[2];
 };
-
-
-static CropOptions *crop_options = NULL;
-static InfoDialog  *crop_info    = NULL;
-
-static gdouble      orig_vals[2];
-static gdouble      size_vals[2];
-
-static GtkWidget   *origin_sizeentry;
-static GtkWidget   *size_sizeentry;
 
 
 static void   gimp_crop_tool_class_init     (GimpCropToolClass *klass);
@@ -170,27 +158,37 @@ static void   crop_origin_changed           (GtkWidget       *widget,
 static void   crop_size_changed             (GtkWidget       *widget,
 					     gpointer         data);
 
-static CropOptions * crop_options_new       (void);
-static void          crop_options_reset     (GimpToolOptions *tool_options);
+static GimpToolOptions * crop_options_new   (GimpToolInfo    *tool_info);
+static void              crop_options_reset (GimpToolOptions *tool_options);
 
+
+static InfoDialog  *crop_info = NULL;
+
+static gdouble      orig_vals[2];
+static gdouble      size_vals[2];
+
+static GtkWidget   *origin_sizeentry;
+static GtkWidget   *size_sizeentry;
 
 static GimpDrawToolClass *parent_class = NULL;
 
 
-/*  Functions  */
+/*  public functions  */
 
 void
-gimp_crop_tool_register (Gimp *gimp)
+gimp_crop_tool_register (Gimp                     *gimp,
+                         GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_CROP_TOOL,
-                              FALSE,
-                              "gimp:crop_tool",
-                              _("Crop Tool"),
-                              _("Crop or Resize an image"),
-                              N_("/Tools/Transform Tools/Crop Tool"), "<shift>C",
-                              NULL, "tools/crop_tool.html",
-                              GIMP_STOCK_TOOL_CROP);
+  (* callback) (gimp,
+                GIMP_TYPE_CROP_TOOL,
+                crop_options_new,
+                FALSE,
+                "gimp:crop_tool",
+                _("Crop Tool"),
+                _("Crop or Resize an image"),
+                N_("/Tools/Transform Tools/Crop Tool"), "<shift>C",
+                NULL, "tools/crop_tool.html",
+                GIMP_STOCK_TOOL_CROP);
 }
 
 GType
@@ -253,14 +251,6 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (crop_tool);
-
-  if (! crop_options)
-    {
-      crop_options = crop_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_CROP_TOOL,
-                                          (GimpToolOptions *) crop_options);
-    }
 
   tool->tool_cursor = GIMP_CROP_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
@@ -1380,16 +1370,18 @@ crop_size_changed (GtkWidget *widget,
 
 /*  tool options stuff  */
 
-static CropOptions *
-crop_options_new (void)
+static GimpToolOptions *
+crop_options_new (GimpToolInfo *tool_info)
 {
   CropOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *frame;
 
   options = g_new0 (CropOptions, 1);
-  tool_options_init ((GimpToolOptions *) options,
-		     crop_options_reset);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = crop_options_reset;
 
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = FALSE;
@@ -1436,7 +1428,7 @@ crop_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

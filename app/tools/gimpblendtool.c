@@ -43,7 +43,6 @@
 
 #include "gimpblendtool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
 
 #include "app_procs.h"
 #include "gimpprogress.h"
@@ -120,9 +119,8 @@ static void    gimp_blend_tool_cursor_update     (GimpTool        *tool,
 
 static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
 
-static BlendOptions * blend_options_new          (void);
-
-static void    blend_options_reset               (GimpToolOptions *tool_options);
+static GimpToolOptions * blend_options_new       (GimpToolInfo    *tool_info);
+static void              blend_options_reset     (GimpToolOptions *tool_options);
 
 static void    gradient_type_callback            (GtkWidget       *widget,
                                                   gpointer         data);
@@ -138,8 +136,6 @@ static void    blend_options_drop_tool           (GtkWidget       *widget,
 
 static GimpDrawToolClass *parent_class = NULL;
 
-static BlendOptions *blend_options = NULL;
-
 static GtkTargetEntry blend_target_table[] =
 {
   GIMP_TARGET_GRADIENT,  
@@ -150,17 +146,19 @@ static GtkTargetEntry blend_target_table[] =
 /*  public functions  */
 
 void
-gimp_blend_tool_register (Gimp *gimp)
+gimp_blend_tool_register (Gimp                     *gimp,
+                          GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_BLEND_TOOL,
-                              TRUE,
-			      "gimp:blend_tool",
-			      _("Blend"),
-			      _("Fill with a color gradient"),
-			      N_("/Tools/Paint Tools/Blend"), "L",
-			      NULL, "tools/blend.html",
-			      GIMP_STOCK_TOOL_BLEND);
+  (* callback) (gimp,
+                GIMP_TYPE_BLEND_TOOL,
+                blend_options_new,
+                TRUE,
+                "gimp:blend_tool",
+                _("Blend"),
+                _("Fill with a color gradient"),
+                N_("/Tools/Paint Tools/Blend"), "L",
+                NULL, "tools/blend.html",
+                GIMP_STOCK_TOOL_BLEND);
 }
 
 GType
@@ -222,14 +220,6 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 
   tool = GIMP_TOOL (blend_tool);
  
-  if (! blend_options)
-    {
-      blend_options = blend_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_BLEND_TOOL,
-					  (GimpToolOptions *) blend_options);
-    }
-
   tool->tool_cursor = GIMP_BLEND_TOOL_CURSOR;
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 }
@@ -529,8 +519,8 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                             TRUE);
 }
 
-static BlendOptions *
-blend_options_new (void)
+static GimpToolOptions *
+blend_options_new (GimpToolInfo *tool_info)
 {
   BlendOptions *options;
 
@@ -542,9 +532,9 @@ blend_options_new (void)
   /*  the new blend tool options structure  */
   options = g_new0 (BlendOptions, 1);
 
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_BLEND_TOOL,
-		      blend_options_reset);
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = blend_options_reset;
 
   options->offset  	 = options->offset_d  	    = 0.0;
   options->blend_mode 	 = options->blend_mode_d    = FG_BG_RGB_MODE;
@@ -615,7 +605,7 @@ blend_options_new (void)
   options->gradient_type_w = gimp_option_menu_new2
     (FALSE,
      G_CALLBACK (gradient_type_callback),
-     &options->gradient_type,
+     options,
      GINT_TO_POINTER (options->gradient_type_d),
 
      _("Linear"),                 GINT_TO_POINTER (LINEAR), NULL,
@@ -722,7 +712,7 @@ blend_options_new (void)
   /*  show the table  */
   gtk_widget_show (table);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void
@@ -759,10 +749,14 @@ static void
 gradient_type_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  BlendOptions *options;
 
-  gtk_widget_set_sensitive (blend_options->repeat_w, 
-			    (blend_options->gradient_type < 6));
+  options = (BlendOptions *) data;
+
+  gimp_menu_item_update (widget, &options->gradient_type);
+
+  gtk_widget_set_sensitive (options->repeat_w, 
+			    (options->gradient_type < 6));
 }
 
 static void

@@ -31,10 +31,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gimpdrawtool.h"
 #include "gimppathtool.h"
-#include "tool_manager.h"
-#include "tool_options.h"
 #include "path_tool.h"
 
 #include "gimprc.h"
@@ -107,21 +104,21 @@ static void   gimp_path_tool_draw                (GimpDrawTool    *draw_tool);
 
 static GimpDrawToolClass *parent_class = NULL;
 
-static GimpToolOptions *path_options = NULL;
-
 
 void
-gimp_path_tool_register (Gimp *gimp)
+gimp_path_tool_register (Gimp                     *gimp,
+                         GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_PATH_TOOL,
-                              FALSE,
-			      "gimp:path_tool",
-			      _("Path Tool"),
-			      _("Path tool prototype"),
-			      N_("/Tools/Path"), NULL,
-			      NULL, "tools/path.html",
-			      GIMP_STOCK_TOOL_PATH);
+  (* callback) (gimp,
+                GIMP_TYPE_PATH_TOOL,
+                NULL,
+                FALSE,
+                "gimp:path_tool",
+                _("Path Tool"),
+                _("Path tool prototype"),
+                N_("/Tools/Path"), NULL,
+                NULL, "tools/path.html",
+                GIMP_STOCK_TOOL_PATH);
 }
 
 GType
@@ -182,18 +179,6 @@ gimp_path_tool_init (GimpPathTool *path_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (path_tool);
- 
-  /*  The tool options  */
-  if (! path_options)
-    {
-      path_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_PATH_TOOL,
-                                          (GimpToolOptions *) path_options);
-    }
-
-
-  tool->preserve = TRUE;  /*  Preserve on drawable change  */
 
   path_tool->click_type       = ON_CANVAS;
   path_tool->click_x         = 0;
@@ -210,17 +195,18 @@ gimp_path_tool_init (GimpPathTool *path_tool)
 
   path_tool->state           = 0;
   path_tool->draw            = PATH_TOOL_REDRAW_ALL;
-  path_tool->cur_path        = g_new0(NPath, 1);
+  path_tool->cur_path        = g_new0 (NPath, 1);
   path_tool->scanlines       = NULL;
 
 
   /* Initial Path */
   path_tool->cur_path->curves    = NULL;
   path_tool->cur_path->cur_curve = NULL;
-  path_tool->cur_path->name      = g_string_new("Path 0");
+  path_tool->cur_path->name      = g_string_new ("Path 0");
   path_tool->cur_path->state     = 0;
   /* path_tool->cur_path->path_tool = path_tool; */
 
+  tool->preserve = TRUE;  /*  Preserve on drawable change  */
 }
 
 static void

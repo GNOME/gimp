@@ -68,7 +68,8 @@ struct _ThresholdDialog
 };
 
 
-void    gimp_threshold_tool_register (Gimp *gimp);
+void    gimp_threshold_tool_register (Gimp                     *gimp,
+                                      GimpToolRegisterCallback  callback);
 
 GType   gimp_threshold_tool_get_type (void);
 

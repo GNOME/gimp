@@ -45,7 +45,8 @@ struct _GimpBrightnessContrastToolClass
 };
 
 
-void    gimp_brightness_contrast_tool_register (Gimp *gimp);
+void    gimp_brightness_contrast_tool_register (Gimp                     *gimp,
+                                                GimpToolRegisterCallback  callback);
 
 GType   gimp_brightness_contrast_tool_get_type (void);
 

@@ -37,7 +37,6 @@
 
 #include "gimphistogramtool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 
@@ -104,29 +103,27 @@ static void   histogram_tool_histogram_range  (GimpHistogramView   *view,
                                                gpointer             data);
 
 
-/*  the histogram tool options  */
-static GimpToolOptions * histogram_options = NULL;
-
-/*  the histogram tool dialog  */
 static HistogramToolDialog * histogram_dialog = NULL;
 
 static GimpToolClass *parent_class = NULL;
 
 
-/*  functions  */
+/*  public functions  */
 
 void
-gimp_histogram_tool_register (Gimp *gimp)
+gimp_histogram_tool_register (Gimp                     *gimp,
+                              GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_HISTOGRAM_TOOL,
-                              FALSE,
-			      "gimp:histogram_tool",
-			      _("Histogram"),
-			      _("View image histogram"),
-			      N_("/Image/Histogram..."), NULL,
-			      NULL, "tools/histogram.html",
-			      GIMP_STOCK_TOOL_HISTOGRAM);
+  (* callback) (gimp,
+                GIMP_TYPE_HISTOGRAM_TOOL,
+                NULL,
+                FALSE,
+                "gimp:histogram_tool",
+                _("Histogram"),
+                _("View image histogram"),
+                N_("/Image/Histogram..."), NULL,
+                NULL, "tools/histogram.html",
+                GIMP_STOCK_TOOL_HISTOGRAM);
 }
 
 GType
@@ -176,14 +173,6 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (bc_tool);
-
-  if (! histogram_options)
-    {
-      histogram_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_HISTOGRAM_TOOL,
-					  (GimpToolOptions *) histogram_options);
-    }
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

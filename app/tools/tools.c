@@ -68,59 +68,69 @@
 void
 tools_init (Gimp *gimp)
 {
-  /*  register tools in reverse order  */
+  GimpToolRegisterFunc register_funcs[] =
+  {
+    /*  register tools in reverse order  */
 
-  /*  color tools  */
-  gimp_posterize_tool_register (gimp);
-  gimp_curves_tool_register (gimp);
-  gimp_levels_tool_register (gimp);
-  gimp_threshold_tool_register (gimp);
-  gimp_brightness_contrast_tool_register (gimp);
-  gimp_hue_saturation_tool_register (gimp);
-  gimp_color_balance_tool_register (gimp);
+    /*  color tools  */
+    gimp_posterize_tool_register,
+    gimp_curves_tool_register,
+    gimp_levels_tool_register,
+    gimp_threshold_tool_register,
+    gimp_brightness_contrast_tool_register,
+    gimp_hue_saturation_tool_register,
+    gimp_color_balance_tool_register,
 
-  /*  paint tools  */
+    /*  paint tools  */
 
-  gimp_smudge_tool_register (gimp);
-  gimp_dodgeburn_tool_register (gimp); 
-  gimp_convolve_tool_register (gimp);
-  gimp_clone_tool_register (gimp);
-  gimp_ink_tool_register (gimp);
-  gimp_airbrush_tool_register (gimp);
-  gimp_eraser_tool_register (gimp);
-  gimp_paintbrush_tool_register (gimp);
-  gimp_pencil_tool_register (gimp);
-  gimp_blend_tool_register (gimp);
-  gimp_bucket_fill_tool_register (gimp);
-  gimp_text_tool_register (gimp);
+    gimp_smudge_tool_register,
+    gimp_dodgeburn_tool_register,
+    gimp_convolve_tool_register,
+    gimp_clone_tool_register,
+    gimp_ink_tool_register,
+    gimp_airbrush_tool_register,
+    gimp_eraser_tool_register,
+    gimp_paintbrush_tool_register,
+    gimp_pencil_tool_register,
+    gimp_blend_tool_register,
+    gimp_bucket_fill_tool_register,
+    gimp_text_tool_register,
 
-  /*  transform tools  */
+    /*  transform tools  */
 
-  gimp_flip_tool_register (gimp);
-  gimp_perspective_tool_register (gimp);
-  gimp_shear_tool_register (gimp);
-  gimp_scale_tool_register (gimp);
-  gimp_rotate_tool_register (gimp);
-  gimp_crop_tool_register (gimp);
-  gimp_move_tool_register (gimp);
+    gimp_flip_tool_register,
+    gimp_perspective_tool_register,
+    gimp_shear_tool_register,
+    gimp_scale_tool_register,
+    gimp_rotate_tool_register,
+    gimp_crop_tool_register,
+    gimp_move_tool_register,
 
-  /*  non-modifying tools  */
+    /*  non-modifying tools  */
 
-  gimp_path_tool_register (gimp);
-  gimp_measure_tool_register (gimp);
-  gimp_magnify_tool_register (gimp);
-  gimp_histogram_tool_register (gimp);
-  gimp_color_picker_tool_register (gimp);
+    gimp_path_tool_register,
+    gimp_measure_tool_register,
+    gimp_magnify_tool_register,
+    gimp_histogram_tool_register,
+    gimp_color_picker_tool_register,
 
-  /*  selection tools */
+    /*  selection tools */
 
-  gimp_bezier_select_tool_register (gimp);
-  gimp_iscissors_tool_register (gimp);
-  gimp_by_color_select_tool_register (gimp);
-  gimp_fuzzy_select_tool_register (gimp);
-  gimp_free_select_tool_register (gimp);
-  gimp_ellipse_select_tool_register (gimp);
-  gimp_rect_select_tool_register (gimp);
+    gimp_bezier_select_tool_register,
+    gimp_iscissors_tool_register,
+    gimp_by_color_select_tool_register,
+    gimp_fuzzy_select_tool_register,
+    gimp_free_select_tool_register,
+    gimp_ellipse_select_tool_register,
+    gimp_rect_select_tool_register
+  };
+
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
+    {
+      register_funcs[i] (gimp, tool_manager_register_tool);
+    }
 }
 
 void

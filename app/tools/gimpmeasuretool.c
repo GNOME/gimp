@@ -41,7 +41,6 @@
 
 #include "gui/info-dialog.h"
 
-#include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -108,14 +107,14 @@ static gdouble measure_get_angle                      (gint         dx,
                                                        gint         dy,
                                                        gdouble      xres,
                                                        gdouble      yres);
-static MeasureOptions * measure_tool_options_new      (void);
-static void   measure_tool_options_reset              (GimpToolOptions *tool_options);
+
 static void   measure_tool_info_window_close_callback (GtkWidget   *widget,
 						       gpointer     data);
 static void   measure_tool_info_update                (void);
 
+static GimpToolOptions * measure_tool_options_new     (GimpToolInfo    *tool_info);
+static void              measure_tool_options_reset   (GimpToolOptions *tool_options);
 
-static MeasureOptions *measure_tool_options = NULL;
 
 /*  the measure tool info window  */
 static InfoDialog *measure_tool_info = NULL;
@@ -126,17 +125,19 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_measure_tool_register (Gimp *gimp)
+gimp_measure_tool_register (Gimp                     *gimp,
+                            GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_MEASURE_TOOL,
-                              FALSE,
-			      "gimp:measure_tool",
-			      _("Measure Tool"),
-			      _("Measure angles and lengths"),
-			      N_("/Tools/Measure"), NULL,
-			      NULL, "tools/measure.html",
-			      GIMP_STOCK_TOOL_MEASURE);
+  (* callback) (gimp,
+                GIMP_TYPE_MEASURE_TOOL,
+                measure_tool_options_new,
+                FALSE,
+                "gimp:measure_tool",
+                _("Measure Tool"),
+                _("Measure angles and lengths"),
+                N_("/Tools/Measure"), NULL,
+                NULL, "tools/measure.html",
+                GIMP_STOCK_TOOL_MEASURE);
 }
 
 GType
@@ -193,15 +194,6 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (measure_tool);
- 
-  /*  The tool options  */
-  if (! measure_tool_options)
-    {
-      measure_tool_options = measure_tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_MEASURE_TOOL,
-					  (GimpToolOptions *) measure_tool_options);
-    }
 
   tool->tool_cursor = GIMP_MEASURE_TOOL_CURSOR;
 
@@ -846,48 +838,6 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-static void
-measure_tool_options_reset (GimpToolOptions *tool_options)
-{
-  MeasureOptions *options;
-
-  options = (MeasureOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-}
-
-static MeasureOptions *
-measure_tool_options_new (void)
-{
-  MeasureOptions *options;
-  GtkWidget      *vbox;
-
-  options = g_new0 (MeasureOptions, 1);
-  tool_options_init ((GimpToolOptions *) options,
-		     measure_tool_options_reset);
-
-  options->use_info_window = options->use_info_window_d  = FALSE;
-
-    /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the use_info_window toggle button  */
-  options->use_info_window_w =
-    gtk_check_button_new_with_label (_("Use Info Window"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->use_info_window_w);
-
-  g_signal_connect (G_OBJECT (options->use_info_window_w), "toggled",
-		    G_CALLBACK (gimp_toggle_button_update),
-		    &options->use_info_window);
-
-  return options;
-}
-
 static gdouble
 measure_get_angle (gint    dx,
 		   gint    dy,
@@ -932,4 +882,48 @@ measure_tool_info_window_close_callback (GtkWidget *widget,
 {
   info_dialog_free (measure_tool_info);
   measure_tool_info = NULL;
+}
+
+static GimpToolOptions *
+measure_tool_options_new (GimpToolInfo *tool_info)
+{
+  MeasureOptions *options;
+  GtkWidget      *vbox;
+
+  options = g_new0 (MeasureOptions, 1);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = measure_tool_options_reset;
+
+  options->use_info_window = options->use_info_window_d  = FALSE;
+
+    /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  the use_info_window toggle button  */
+  options->use_info_window_w =
+    gtk_check_button_new_with_label (_("Use Info Window"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
+				options->use_info_window_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (options->use_info_window_w);
+
+  g_signal_connect (G_OBJECT (options->use_info_window_w), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &options->use_info_window);
+
+  return (GimpToolOptions *) options;
+}
+
+static void
+measure_tool_options_reset (GimpToolOptions *tool_options)
+{
+  MeasureOptions *options;
+
+  options = (MeasureOptions *) tool_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
+				options->use_info_window_d);
 }

@@ -45,7 +45,8 @@ struct _GimpAirbrushToolClass
 };
 
 
-void       gimp_airbrush_tool_register (Gimp         *gimp);
+void       gimp_airbrush_tool_register (Gimp                     *gimp,
+                                        GimpToolRegisterCallback  callback);
 
 GType      gimp_airbrush_tool_get_type (void);
 

@@ -43,7 +43,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "selection_options.h"
-#include "tool_manager.h"
 
 #include "floating_sel.h"
 
@@ -83,23 +82,23 @@ static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_t
 
 static GimpSelectionToolClass *parent_class = NULL;
 
-static SelectionOptions *rect_options = NULL;
-
 
 /*  public functions  */
 
 void
-gimp_rect_select_tool_register (Gimp *gimp)
+gimp_rect_select_tool_register (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_RECT_SELECT_TOOL,
-			      FALSE,
-                              "gimp:rect_select_tool",
-                              _("Rect Select"),
-                              _("Select rectangular regions"),
-                              _("/Tools/Selection Tools/Rect Select"), "R",
-                              NULL, "tools/rect_select.html",
-                              GIMP_STOCK_TOOL_RECT_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_RECT_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:rect_select_tool",
+                _("Rect Select"),
+                _("Select rectangular regions"),
+                _("/Tools/Selection Tools/Rect Select"), "R",
+                NULL, "tools/rect_select.html",
+                GIMP_STOCK_TOOL_RECT_SELECT);
 }
 
 GType
@@ -156,20 +155,9 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
 static void
 gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *select_tool;
+  GimpTool *tool;
 
-  tool        = GIMP_TOOL (rect_select);
-  select_tool = GIMP_SELECTION_TOOL (rect_select);
-
-  if (! rect_options)
-    {
-      rect_options = selection_options_new (GIMP_TYPE_RECT_SELECT_TOOL,
-                                            selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_RECT_SELECT_TOOL,
-                                          (GimpToolOptions *) rect_options);
-    }
+  tool = GIMP_TOOL (rect_select);
 
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
 

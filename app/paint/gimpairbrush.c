@@ -35,6 +35,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -101,7 +102,7 @@ static void   gimp_airbrush_tool_motion     (GimpPaintTool         *paint_tool,
 					     gboolean               incremental);
 static gint   airbrush_time_out             (gpointer               data);
 
-static AirbrushOptions * airbrush_options_new   (void);
+static GimpToolOptions * airbrush_options_new   (GimpToolInfo    *tool_info);
 static void              airbrush_options_reset (GimpToolOptions *tool_options);
 
 
@@ -114,25 +115,25 @@ static gdouble          non_gui_rate;
 static gdouble          non_gui_pressure;
 static gboolean         non_gui_incremental;
 
-static AirbrushOptions *airbrush_options = NULL; 
-
 static GimpPaintToolClass *parent_class = NULL;
 
 
 /*  functions  */
 
 void
-gimp_airbrush_tool_register (Gimp *gimp)
+gimp_airbrush_tool_register (Gimp                     *gimp,
+                             GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_AIRBRUSH_TOOL,
-                              TRUE,
-                              "gimp:airbrush_tool",
-                              _("Airbrush"),
-                              _("Airbrush with variable pressure"),
-                              N_("/Tools/Paint Tools/Airbrush"), "A",
-                              NULL, "tools/airbrush.html",
-                              GIMP_STOCK_TOOL_AIRBRUSH);
+  (* callback) (gimp,
+                GIMP_TYPE_AIRBRUSH_TOOL,
+                airbrush_options_new,
+                TRUE,
+                "gimp:airbrush_tool",
+                _("Airbrush"),
+                _("Airbrush with variable pressure"),
+                N_("/Tools/Paint Tools/Airbrush"), "A",
+                NULL, "tools/airbrush.html",
+                GIMP_STOCK_TOOL_AIRBRUSH);
 }
 
 GType
@@ -188,18 +189,10 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   tool       = GIMP_TOOL (airbrush);
   paint_tool = GIMP_PAINT_TOOL (airbrush);
 
-  if (! airbrush_options)
-    {
-      airbrush_options = airbrush_options_new ();
+  tool->tool_cursor = GIMP_AIRBRUSH_TOOL_CURSOR;
 
-      tool_manager_register_tool_options (GIMP_TYPE_AIRBRUSH_TOOL,
-                                          (GimpToolOptions *) airbrush_options);
-     }
-
-   tool->tool_cursor = GIMP_AIRBRUSH_TOOL_CURSOR;
-
-   paint_tool->pick_colors  = TRUE;
-   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_tool->pick_colors  = TRUE;
+  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
              
 static void
@@ -219,21 +212,24 @@ gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
 			  GimpDrawable  *drawable,
 			  PaintState     state)
 {
+  AirbrushOptions      *options;
   PaintPressureOptions *pressure_options;
   gdouble               pressure;
   gdouble               rate;
   gboolean              incremental;
   GimpBrush            *brush;
 
-  if (!drawable) 
+  if (! drawable)
     return;
 
-  if (airbrush_options)
+  options = (AirbrushOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
+
+  if (options)
     {
-      pressure_options = airbrush_options->paint_options.pressure_options;
-      pressure         = airbrush_options->pressure;
-      rate             = airbrush_options->rate;
-      incremental      = airbrush_options->paint_options.incremental;
+      pressure_options = options->paint_options.pressure_options;
+      pressure         = options->pressure;
+      rate             = options->rate;
+      incremental      = options->paint_options.incremental;
     }
   else
     {
@@ -281,7 +277,7 @@ gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
 		     (10000 / (rate * 2.0 * paint_tool->cur_coords.pressure)) : 
 		     (10000 / rate));
 
-	  timer = gtk_timeout_add (timeout, airbrush_time_out, NULL);
+	  timer = gtk_timeout_add (timeout, airbrush_time_out, paint_tool);
 	  timer_state = ON;
 	}
       break;
@@ -302,17 +298,23 @@ gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
 static gint
 airbrush_time_out (gpointer client_data)
 {
+  GimpTool             *tool;
+  AirbrushOptions      *options;
   PaintPressureOptions *pressure_options;
   gdouble               pressure;
   gdouble               rate;
   gboolean              incremental;
 
-  if (airbrush_options)
+  tool = GIMP_TOOL (client_data);
+
+  options = (AirbrushOptions *) tool->tool_info->tool_options;
+
+  if (options)
     {
-      pressure_options = airbrush_options->paint_options.pressure_options;
-      pressure         = airbrush_options->pressure;
-      rate             = airbrush_options->rate;
-      incremental      = airbrush_options->paint_options.incremental;
+      pressure_options = options->paint_options.pressure_options;
+      pressure         = options->pressure;
+      rate             = options->rate;
+      incremental      = options->paint_options.incremental;
     }
   else
     {
@@ -427,9 +429,15 @@ airbrush_non_gui_default (GimpDrawable *drawable,
 			  gint          num_strokes,
 			  gdouble      *stroke_array)
 {
-  AirbrushOptions *options = airbrush_options;
+  GimpToolInfo    *tool_info;
+  AirbrushOptions *options;
 
   gdouble pressure = AIRBRUSH_DEFAULT_PRESSURE;
+
+  tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
+                                             GIMP_TYPE_AIRBRUSH_TOOL);
+
+  options = (AirbrushOptions *) tool_info->tool_options;
 
   if (options)
     pressure = options->pressure;
@@ -487,8 +495,8 @@ airbrush_non_gui (GimpDrawable *drawable,
   return FALSE;
 }
 
-static AirbrushOptions *
-airbrush_options_new (void)
+static GimpToolOptions *
+airbrush_options_new (GimpToolInfo *tool_info)
 {
   AirbrushOptions *options;
   GtkWidget       *vbox;
@@ -496,9 +504,10 @@ airbrush_options_new (void)
   GtkWidget       *scale;
 
   options = g_new0 (AirbrushOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_AIRBRUSH_TOOL,
-		      airbrush_options_reset);
+
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = airbrush_options_reset;
 
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
@@ -539,7 +548,7 @@ airbrush_options_new (void)
 
   gtk_widget_show (table);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

@@ -37,7 +37,6 @@
 #include "gimpcolorbalancetool.h"
 #include "gimpcolorbalancetool-transfer.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -88,10 +87,6 @@ static void   color_balance_yb_adjustment_update (GtkAdjustment      *adj,
 						  gpointer            data);
 
 
-/*  the color balance tool options  */
-static GimpToolOptions *color_balance_options = NULL;
-
-/*  the color balance dialog  */
 static ColorBalanceDialog *color_balance_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -100,17 +95,19 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_color_balance_tool_register (Gimp *gimp)
+gimp_color_balance_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_COLOR_BALANCE_TOOL,
-                              FALSE,
-			      "gimp:color_balance_tool",
-			      _("Color Balance"),
-			      _("Adjust color balance"),
-			      N_("/Image/Colors/Color Balance..."), NULL,
-			      NULL, "tools/color_balance.html",
-			      GIMP_STOCK_TOOL_COLOR_BALANCE);
+  (* callback) (gimp,
+                GIMP_TYPE_COLOR_BALANCE_TOOL,
+                NULL,
+                FALSE,
+                "gimp:color_balance_tool",
+                _("Color Balance"),
+                _("Adjust color balance"),
+                N_("/Image/Colors/Color Balance..."), NULL,
+                NULL, "tools/color_balance.html",
+                GIMP_STOCK_TOOL_COLOR_BALANCE);
 }
 
 GType
@@ -159,17 +156,6 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! color_balance_options)
-    {
-      color_balance_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_COLOR_BALANCE_TOOL,
-					  (GimpToolOptions *) color_balance_options);
-    }
 }
 
 static void

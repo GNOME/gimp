@@ -45,7 +45,8 @@ struct _GimpShearToolClass
 };
 
 
-void    gimp_shear_tool_register (Gimp *gimp);
+void    gimp_shear_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback);
 
 GType   gimp_shear_tool_get_type (void);
 

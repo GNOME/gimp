@@ -40,7 +40,6 @@
 
 #include "gimpthresholdtool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -96,10 +95,6 @@ static void   threshold_histogram_range       (GimpHistogramView *,
 					       gpointer           );
 
 
-/*  the threshold tool options  */
-static GimpToolOptions *threshold_options = NULL;
-
-/*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -108,17 +103,19 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_threshold_tool_register (Gimp *gimp)
+gimp_threshold_tool_register (Gimp                     *gimp,
+                              GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_THRESHOLD_TOOL,
-                              FALSE,
-			      "gimp:threshold_tool",
-			      _("Threshold"),
-			      _("Reduce image to two colors using a threshold"),
-			      N_("/Image/Colors/Threshold..."), NULL,
-			      NULL, "tools/threshold.html",
-			      GIMP_STOCK_TOOL_THRESHOLD);
+  (* callback) (gimp,
+                GIMP_TYPE_THRESHOLD_TOOL,
+                NULL,
+                FALSE,
+                "gimp:threshold_tool",
+                _("Threshold"),
+                _("Reduce image to two colors using a threshold"),
+                N_("/Image/Colors/Threshold..."), NULL,
+                NULL, "tools/threshold.html",
+                GIMP_STOCK_TOOL_THRESHOLD);
 }
 
 GType
@@ -165,17 +162,6 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 static void
 gimp_threshold_tool_init (GimpThresholdTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! threshold_options)
-    {
-      threshold_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_THRESHOLD_TOOL,
-					  (GimpToolOptions *) threshold_options);
-    }
 }
 
 static void

@@ -36,7 +36,6 @@
 
 #include "gimpbrightnesscontrasttool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -106,10 +105,6 @@ static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *a
 								gpointer      data);
 
 
-/*  the brightness-contrast tool options  */
-static GimpToolOptions *brightness_contrast_options = NULL;
-
-/*  the brightness-contrast dialog  */
 static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -118,17 +113,19 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_brightness_contrast_tool_register (Gimp *gimp)
+gimp_brightness_contrast_tool_register (Gimp                     *gimp,
+                                        GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-                              FALSE,
-			      "gimp:brightness_contrast_tool",
-			      _("Brightness-Contrast"),
-			      _("Adjust brightness and contrast"),
-			      N_("/Image/Colors/Brightness-Contrast..."), NULL,
-			      NULL, "tools/brightness_contrast.html",
-			      GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST);
+  (* callback) (gimp,
+                GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+                NULL,
+                FALSE,
+                "gimp:brightness_contrast_tool",
+                _("Brightness-Contrast"),
+                _("Adjust brightness and contrast"),
+                N_("/Image/Colors/Brightness-Contrast..."), NULL,
+                NULL, "tools/brightness_contrast.html",
+                GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST);
 }
 
 GType
@@ -175,17 +172,6 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
 static void
 gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! brightness_contrast_options)
-    {
-      brightness_contrast_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-					  (GimpToolOptions *) brightness_contrast_options);
-    }
 }
 
 static void

@@ -68,7 +68,6 @@
 #include "gimpiscissorstool.h"
 #include "gimpeditselectiontool.h"
 #include "selection_options.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -112,14 +111,6 @@ struct _ICurve
 };
 
 
-typedef struct _IScissorsOptions IScissorsOptions;
-
-struct _IScissorsOptions
-{
-  SelectionOptions  selection_options;
-};
-
-
 /*  local function prototypes  */
 
 static void   gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass);
@@ -157,8 +148,6 @@ static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
 static void   gimp_iscissors_tool_reset          (GimpIscissorsTool *iscissors);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
 
-
-static IScissorsOptions * iscissors_options_new  (void);
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
                                                 GimpDisplay       *gdisp);
@@ -263,24 +252,24 @@ static gint      direction_value[256][4];
 static gboolean  initialized = FALSE;
 static Tile     *cur_tile = NULL;
 
-static IScissorsOptions *iscissors_options = NULL;
-
 static GimpDrawTool *parent_class = NULL;
 
 
 void
-gimp_iscissors_tool_register (Gimp *gimp)
+gimp_iscissors_tool_register (Gimp                     *gimp,
+                              GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_ISCISSORS_TOOL,
-                              FALSE,
-			      "gimp:iscissors_tool",
-			      _("Intelligent Scissors"),
-                              _("Select shapes from image"),
-			      N_("/Tools/Selection Tools/Intelligent Scissors"),
-                              "I",
-			      NULL, "tools/iscissors.html",
-			      GIMP_STOCK_TOOL_ISCISSORS);
+  (* callback) (gimp,
+                GIMP_TYPE_ISCISSORS_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:iscissors_tool",
+                _("Intelligent Scissors"),
+                _("Select shapes from image"),
+                N_("/Tools/Selection Tools/Intelligent Scissors"),
+                "I",
+                NULL, "tools/iscissors.html",
+                GIMP_STOCK_TOOL_ISCISSORS);
 }
 
 GType
@@ -342,14 +331,6 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   GimpTool *tool;
 
   tool = GIMP_TOOL (iscissors);
- 
-  if (! iscissors_options)
-    {
-      iscissors_options = iscissors_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_ISCISSORS_TOOL,
-                                          (GimpToolOptions *) iscissors_options);
-    }
 
   iscissors->op           = -1;
   iscissors->curves       = NULL;
@@ -376,21 +357,6 @@ gimp_iscissors_tool_finalize (GObject *object)
   gimp_iscissors_tool_reset (iscissors);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static IScissorsOptions *
-iscissors_options_new (void)
-{
-  IScissorsOptions *options;
-
-  /*  the new intelligent scissors tool options structure  */
-  options = g_new0 (IScissorsOptions, 1);
-
-  selection_options_init ((SelectionOptions *) options,
-			  GIMP_TYPE_ISCISSORS_TOOL,
-			  selection_options_reset);
-
-  return options;
 }
 
 static void

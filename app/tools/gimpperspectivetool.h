@@ -45,7 +45,8 @@ struct _GimpPerspectiveToolClass
 };
 
 
-void    gimp_perspective_tool_register (Gimp *gimp);
+void    gimp_perspective_tool_register (Gimp                     *gimp,
+                                        GimpToolRegisterCallback  callback);
 
 GType   gimp_perspective_tool_get_type (void);
 

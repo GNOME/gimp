@@ -42,9 +42,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "selection_options.h"
-#include "tool_manager.h"
 
-#include "errors.h"
 #include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"
@@ -82,23 +80,23 @@ static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel
 
 static GimpSelectionToolClass *parent_class = NULL;
 
-static SelectionOptions * free_options = NULL;
-
 
 /*  public functions  */
 
 void
-gimp_free_select_tool_register (Gimp *gimp)
+gimp_free_select_tool_register (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_FREE_SELECT_TOOL,
-			      FALSE,
-                              "gimp:free_select_tool",
-                              _("Free Select"),
-                              _("Select hand-drawn regions"),
-                              _("/Tools/Selection Tools/Free Select"), "F",
-                              NULL, "tools/free_select.html",
-                              GIMP_STOCK_TOOL_FREE_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_FREE_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:free_select_tool",
+                _("Free Select"),
+                _("Select hand-drawn regions"),
+                _("/Tools/Selection Tools/Free Select"), "F",
+                NULL, "tools/free_select.html",
+                GIMP_STOCK_TOOL_FREE_SELECT);
 }
 
 GType
@@ -161,15 +159,6 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
 
   tool        = GIMP_TOOL (free_select);
   select_tool = GIMP_SELECTION_TOOL (free_select);
-
-  if (! free_options)
-    {
-      free_options = selection_options_new (GIMP_TYPE_FREE_SELECT_TOOL,
-                                            selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_FREE_SELECT_TOOL,
-                                          (GimpToolOptions *) free_options);
-    }
 
   tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;
   tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */

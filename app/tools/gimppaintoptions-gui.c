@@ -118,26 +118,17 @@ static GSList *paint_options_list = NULL;
 
 
 void
-paint_options_init (PaintOptions         *options,
-		    GType                 tool_type,
-		    ToolOptionsResetFunc  reset_func)
+paint_options_init (PaintOptions *options,
+                    GimpToolInfo *tool_info)
 {
-  GimpToolInfo *tool_info;
-  GtkWidget    *vbox;
-  GtkWidget    *table;
-  GtkWidget    *scale;
-
-  tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
-
-  if (! tool_info)
-    {
-      g_warning ("%s(): no tool info registered for %s",
-                 G_GNUC_FUNCTION, g_type_name (tool_type));
-    }
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *scale;
 
   /*  initialize the tool options structure  */
-  tool_options_init ((GimpToolOptions *) options,
-		     reset_func);
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = paint_options_reset;
 
   /*  initialize the paint options structure  */
   options->global           = NULL;
@@ -180,13 +171,13 @@ paint_options_init (PaintOptions         *options,
                     options->opacity_w);
 
   /*  the paint mode menu  */
-  if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
-      tool_type == GIMP_TYPE_BLEND_TOOL       ||
-      tool_type == GIMP_TYPE_PENCIL_TOOL      ||
-      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL  ||
-      tool_type == GIMP_TYPE_AIRBRUSH_TOOL    ||
-      tool_type == GIMP_TYPE_CLONE_TOOL       ||
-      tool_type == GIMP_TYPE_INK_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_BLEND_TOOL       ||
+      tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL      ||
+      tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL  ||
+      tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL    ||
+      tool_info->tool_type == GIMP_TYPE_CLONE_TOOL       ||
+      tool_info->tool_type == GIMP_TYPE_INK_TOOL)
     {
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
@@ -208,8 +199,8 @@ paint_options_init (PaintOptions         *options,
   gtk_widget_show (table);
 
   /*  a separator after the common paint options which can be global  */
-  if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
-      tool_type == GIMP_TYPE_BLEND_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       GtkWidget *separator;
 
@@ -222,10 +213,10 @@ paint_options_init (PaintOptions         *options,
     gtk_widget_show (vbox);
 
   /*  the "incremental" toggle  */
-  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
-      tool_type == GIMP_TYPE_ERASER_TOOL     ||
-      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
-      tool_type == GIMP_TYPE_PENCIL_TOOL)
+  if (tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_info->tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       options->incremental_w =
 	gtk_check_button_new_with_label (_("Incremental"));
@@ -239,7 +230,8 @@ paint_options_init (PaintOptions         *options,
       gtk_widget_show (options->incremental_w);
     }
 
-  options->pressure_options = paint_pressure_options_new (tool_type, options);
+  options->pressure_options = paint_pressure_options_new (tool_info->tool_type,
+                                                          options);
 
   if (options->pressure_options->frame)
     {
@@ -248,7 +240,8 @@ paint_options_init (PaintOptions         *options,
       gtk_widget_show (options->pressure_options->frame);
     }
 
-  options->gradient_options = paint_gradient_options_new (tool_type, options);
+  options->gradient_options = paint_gradient_options_new (tool_info->tool_type,
+                                                          options);
 
   if (options->gradient_options->frame)
     {
@@ -261,19 +254,19 @@ paint_options_init (PaintOptions         *options,
   paint_options_list = g_slist_prepend (paint_options_list, options);
 }
 
-PaintOptions *
-paint_options_new (GType                 tool_type,
-		   ToolOptionsResetFunc  reset_func)
+GimpToolOptions *
+paint_options_new (GimpToolInfo *tool_info)
 {
   PaintOptions *options;
 
-  options = g_new (PaintOptions, 1);
-  paint_options_init (options, tool_type, reset_func);
+  options = g_new0 (PaintOptions, 1);
+
+  paint_options_init (options, tool_info);
 
   if (gimprc.global_paint_options && options->global)
     gtk_widget_show (options->global);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 void

@@ -35,7 +35,6 @@
 
 #include "gimpposterizetool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -89,10 +88,6 @@ static void   posterize_levels_adjustment_update (GtkAdjustment   *adjustment,
 						  gpointer         data);
 
 
-/*  the posterize tool options  */
-static GimpToolOptions *posterize_options = NULL;
-
-/* the posterize tool dialog  */
 static PosterizeDialog *posterize_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -101,17 +96,19 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_posterize_tool_register (Gimp *gimp)
+gimp_posterize_tool_register (Gimp                     *gimp,
+                              GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_POSTERIZE_TOOL,
-                              FALSE,
-			      "gimp:posterize_tool",
-			      _("Posterize"),
-			      _("Reduce image to a fixed numer of colors"),
-			      N_("/Image/Colors/Posterize..."), NULL,
-			      NULL, "tools/posterize.html",
-			      GIMP_STOCK_TOOL_POSTERIZE);
+  (* callback) (gimp,
+                GIMP_TYPE_POSTERIZE_TOOL,
+                NULL,
+                FALSE,
+                "gimp:posterize_tool",
+                _("Posterize"),
+                _("Reduce image to a fixed numer of colors"),
+                N_("/Image/Colors/Posterize..."), NULL,
+                NULL, "tools/posterize.html",
+                GIMP_STOCK_TOOL_POSTERIZE);
 }
 
 GType
@@ -158,17 +155,6 @@ gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 static void
 gimp_posterize_tool_init (GimpPosterizeTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! posterize_options)
-    {
-      posterize_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_POSTERIZE_TOOL,
-					  (GimpToolOptions *) posterize_options);
-    }
 }
 
 static void

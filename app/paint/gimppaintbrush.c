@@ -37,10 +37,10 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimppaintbrushtool.h"
 #include "paint_options.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -69,25 +69,25 @@ static void   gimp_paintbrush_tool_motion     (GimpPaintTool        *paint_tool,
 /*  local variables  */
 static gboolean non_gui_incremental = PAINTBRUSH_DEFAULT_INCREMENTAL;
 
-static PaintOptions  *paintbrush_options = NULL;
-
 static GimpPaintToolClass *parent_class = NULL;
 
 
-/*  functions  */
+/*  public functions  */
 
 void
-gimp_paintbrush_tool_register (Gimp *gimp)
+gimp_paintbrush_tool_register (Gimp                     *gimp,
+                               GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_PAINTBRUSH_TOOL,
-			      TRUE,
-  			      "gimp:paintbrush_tool",
-  			      _("Paintbrush"),
-  			      _("Paint fuzzy brush strokes"),
-      			      N_("/Tools/Paint Tools/Paintbrush"), "P",
-  			      NULL, "tools/paintbrush.html",
-			      GIMP_STOCK_TOOL_PAINTBRUSH);
+  (* callback) (gimp,
+                GIMP_TYPE_PAINTBRUSH_TOOL,
+                paint_options_new,
+                TRUE,
+                "gimp:paintbrush_tool",
+                _("Paintbrush"),
+                _("Paint fuzzy brush strokes"),
+                N_("/Tools/Paint Tools/Paintbrush"), "P",
+                NULL, "tools/paintbrush.html",
+                GIMP_STOCK_TOOL_PAINTBRUSH);
 }
 
 GType
@@ -118,6 +118,9 @@ gimp_paintbrush_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
@@ -139,15 +142,6 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
   tool       = GIMP_TOOL (paintbrush);
   paint_tool = GIMP_PAINT_TOOL (paintbrush);
 
-  if (! paintbrush_options)
-    {
-      paintbrush_options = paint_options_new (GIMP_TYPE_PAINTBRUSH_TOOL,
-					      paint_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
-                                          (GimpToolOptions *) paintbrush_options);
-    }
-
   tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;
 
   paint_tool->pick_colors  = TRUE;
@@ -159,6 +153,7 @@ gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
 			    GimpDrawable  *drawable,
 			    PaintState     state)
 {
+  PaintOptions         *paint_options;
   PaintPressureOptions *pressure_options;
   PaintGradientOptions *gradient_options;
   gboolean              incremental;
@@ -174,11 +169,13 @@ gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
   if (! gimage)
     return;
 
-  if (paintbrush_options)
+  paint_options = (PaintOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
+
+  if (paint_options)
     {
-      pressure_options = paintbrush_options->pressure_options;
-      gradient_options = paintbrush_options->gradient_options;
-      incremental      = paintbrush_options->incremental;
+      pressure_options = paint_options->pressure_options;
+      gradient_options = paint_options->gradient_options;
+      incremental      = paint_options->incremental;
     }
   else
     {

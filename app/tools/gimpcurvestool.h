@@ -85,7 +85,8 @@ struct _CurvesDialog
 };
 
 
-void    gimp_curves_tool_register (Gimp *gimp);
+void    gimp_curves_tool_register (Gimp                     *gimp,
+                                   GimpToolRegisterCallback  callback);
 
 GType   gimp_curves_tool_get_type (void);
 

@@ -35,7 +35,6 @@
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
-#include "tool_manager.h"
 
 #include "gimprc.h"
 
@@ -96,11 +95,9 @@ static void   zoom_out                          (gint            *src,
                                                  gint            *dest,
                                                  gint             scale);
 
-static MagnifyOptions * magnify_options_new     (void);
-static void             magnify_options_reset   (GimpToolOptions *tool_options);
+static GimpToolOptions * magnify_options_new    (GimpToolInfo    *tool_info);
+static void              magnify_options_reset  (GimpToolOptions *tool_options);
 
-
-static MagnifyOptions *magnify_options = NULL;
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -108,17 +105,19 @@ static GimpDrawToolClass *parent_class = NULL;
 /*  public functions  */
 
 void
-gimp_magnify_tool_register (Gimp *gimp)
+gimp_magnify_tool_register (Gimp                     *gimp,
+                            GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_MAGNIFY_TOOL,
-                              FALSE,
-			      "gimp:magnify_tool",
-			      _("Magnify"),
-			      _("Zoom in & out"),
-			      N_("/Tools/Magnify"), NULL,
-			      NULL, "tools/magnify.html",
-			      GIMP_STOCK_TOOL_ZOOM);
+  (* callback) (gimp,
+                GIMP_TYPE_MAGNIFY_TOOL,
+                magnify_options_new,
+                FALSE,
+                "gimp:magnify_tool",
+                _("Magnify"),
+                _("Zoom in & out"),
+                N_("/Tools/Magnify"), NULL,
+                NULL, "tools/magnify.html",
+                GIMP_STOCK_TOOL_ZOOM);
 }
 
 GType
@@ -178,14 +177,6 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (magnify_tool);
-
-  if (! magnify_options)
-    {
-      magnify_options = magnify_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_MAGNIFY_TOOL,
-					  (GimpToolOptions *) magnify_options);
-    }
 
   magnify_tool->x = 0;
   magnify_tool->y = 0;
@@ -442,19 +433,18 @@ zoom_out (gint *src,
 
 /*  magnify tool options functions  */
 
-static MagnifyOptions *
-magnify_options_new (void)
+static GimpToolOptions *
+magnify_options_new (GimpToolInfo *tool_info)
 {
   MagnifyOptions *options;
+  GtkWidget      *vbox;
+  GtkWidget      *frame;
 
-  GtkWidget *vbox;
-  GtkWidget *frame;
-
-  /*  the new magnify tool options structure  */
   options = g_new0 (MagnifyOptions, 1);
 
-  tool_options_init ((GimpToolOptions *) options,
-		     magnify_options_reset);
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = magnify_options_reset;
 
   options->allow_resize_d = gimprc.resize_windows_on_zoom;
   options->type_d         = options->type = GIMP_ZOOM_IN;
@@ -491,7 +481,7 @@ magnify_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

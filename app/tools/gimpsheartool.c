@@ -38,7 +38,6 @@
 #include "gui/info-dialog.h"
 
 #include "gimpsheartool.h"
-#include "tool_manager.h"
 #include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
@@ -80,23 +79,23 @@ static gdouble  yshear_val;
 
 static GimpTransformToolClass *parent_class = NULL;
 
-static TransformOptions *shear_options = NULL;
-
 
 /* Public functions */
 
 void 
-gimp_shear_tool_register (Gimp *gimp)
+gimp_shear_tool_register (Gimp                     *gimp,
+                          GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_SHEAR_TOOL,
-                              FALSE,
-			      "gimp:shear_tool",
-			      _("Shear Tool"),
-			      _("Shear the layer or selection"),
-			      N_("/Tools/Transform Tools/Shear"), "<shift>F",
-			      NULL, "tools/shear.html",
-			      GIMP_STOCK_TOOL_SHEAR);
+  (* callback) (gimp,
+                GIMP_TYPE_SHEAR_TOOL,
+                transform_options_new,
+                FALSE,
+                "gimp:shear_tool",
+                _("Shear Tool"),
+                _("Shear the layer or selection"),
+                N_("/Tools/Transform Tools/Shear"), "<shift>F",
+                NULL, "tools/shear.html",
+                GIMP_STOCK_TOOL_SHEAR);
 }
 
 GType
@@ -142,20 +141,9 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
 static void
 gimp_shear_tool_init (GimpShearTool *shear_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
+  GimpTool *tool;
 
-  tool           = GIMP_TOOL (shear_tool);
-  transform_tool = GIMP_TRANSFORM_TOOL (shear_tool);
-
-  if (! shear_options)
-    {
-      shear_options = transform_options_new (GIMP_TYPE_SHEAR_TOOL,
-                                             transform_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_SHEAR_TOOL,
-                                          (GimpToolOptions *) shear_options);
-    }
+  tool = GIMP_TOOL (shear_tool);
 
   tool->tool_cursor = GIMP_SHEAR_TOOL_CURSOR;
 }

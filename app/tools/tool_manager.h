@@ -79,6 +79,7 @@ const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
 void           tool_manager_register_tool         (Gimp             *gimp,
 						   GType             tool_type,
+                                                   GimpToolOptionsNewFunc  options_new_func,
 						   gboolean          tool_context,
 						   const gchar      *identifier,
 						   const gchar      *blurb,
@@ -88,9 +89,6 @@ void           tool_manager_register_tool         (Gimp             *gimp,
 						   const gchar      *help_domain,
 						   const gchar      *help_data,
 						   const gchar      *stock_id);
-
-void           tool_manager_register_tool_options (GType             tool_type,
-						   GimpToolOptions  *tool_options);
 
 GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
 						   GType             tool_type);

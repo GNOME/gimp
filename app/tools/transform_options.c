@@ -49,22 +49,21 @@ static void   gimp_transform_tool_show_path_update    (GtkWidget *widget,
 
 /*  public functions  */
 
-TransformOptions *
-transform_options_new (GType                 tool_type,
-		       ToolOptionsResetFunc  reset_func)
+GimpToolOptions *
+transform_options_new (GimpToolInfo *tool_info)
 {
   TransformOptions *options;
 
   options = g_new (TransformOptions, 1);
-  transform_options_init (options, tool_type, reset_func);
 
-  return options;
+  transform_options_init (options, tool_info);
+
+  return (GimpToolOptions *) options;
 }
 
 void
-transform_options_init (TransformOptions     *options,
-			GType                 tool_type,
-			ToolOptionsResetFunc  reset_func)
+transform_options_init (TransformOptions *options,
+                        GimpToolInfo     *tool_info)
 {
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -73,8 +72,9 @@ transform_options_init (TransformOptions     *options,
   GtkWidget *fbox;
   GtkWidget *grid_density;
 
-  tool_options_init ((GimpToolOptions *) options,
-		     reset_func);
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = transform_options_reset;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;

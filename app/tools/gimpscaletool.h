@@ -44,7 +44,8 @@ struct _GimpScaleToolClass
 };
 
 
-void    gimp_scale_tool_register (Gimp *gimp);
+void    gimp_scale_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback);
 
 GType   gimp_scale_tool_get_type (void);
 

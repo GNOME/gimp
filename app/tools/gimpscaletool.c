@@ -37,7 +37,6 @@
 #include "gui/info-dialog.h"
 
 #include "gimpscaletool.h"
-#include "tool_manager.h"
 #include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
@@ -77,23 +76,23 @@ static GtkWidget *sizeentry = NULL;
 
 static GimpTransformToolClass *parent_class = NULL;
 
-static TransformOptions *scale_options = NULL;
-
 
 /*  public functions  */
 
 void
-gimp_scale_tool_register (Gimp *gimp)
+gimp_scale_tool_register (Gimp                     *gimp,
+                          GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_SCALE_TOOL,
-                              FALSE,
-                              "gimp:scale_tool",
-                              _("Scale Tool"),
-                              _("Scale the layer or selection"),
-                              N_("/Tools/Transform Tools/Scale"), "<shift>T",
-                              NULL, "tools/transform.html",
-                              GIMP_STOCK_TOOL_SCALE);
+  (* callback) (gimp,
+                GIMP_TYPE_SCALE_TOOL,
+                transform_options_new,
+                FALSE,
+                "gimp:scale_tool",
+                _("Scale Tool"),
+                _("Scale the layer or selection"),
+                N_("/Tools/Transform Tools/Scale"), "<shift>T",
+                NULL, "tools/transform.html",
+                GIMP_STOCK_TOOL_SCALE);
 }
 
 GType
@@ -146,20 +145,9 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 static void
 gimp_scale_tool_init (GimpScaleTool *scale_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
+  GimpTool *tool;
 
-  tool           = GIMP_TOOL (scale_tool);
-  transform_tool = GIMP_TRANSFORM_TOOL (scale_tool); 
-
-  if (! scale_options)
-    {
-      scale_options = transform_options_new (GIMP_TYPE_SCALE_TOOL,
-                                            transform_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_SCALE_TOOL,
-                                          (GimpToolOptions *) scale_options);
-    }
+  tool = GIMP_TOOL (scale_tool);
 
   tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;
 }

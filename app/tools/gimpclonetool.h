@@ -52,7 +52,8 @@ struct _GimpCloneToolClass
 };
 
 
-void    gimp_clone_tool_register (Gimp *gimp);
+void    gimp_clone_tool_register (Gimp                     *gimp,
+                                  GimpToolRegisterCallback  callback);
 
 GType   gimp_clone_tool_get_type (void);
 

@@ -48,14 +48,15 @@ struct _GimpPencilToolClass
 };
 
 
-void       gimp_pencil_tool_register (Gimp *gimp);
+void    gimp_pencil_tool_register (Gimp                     *gimp,
+                                   GimpToolRegisterCallback  callback);
 
-GType      gimp_pencil_tool_get_type (void);
+GType   gimp_pencil_tool_get_type (void);
+
 
 /* FIXME: Get rid of this non_gui stuff someday.  Preferably make
  *        everything use it interally for ease of macro recording.
  */
-
 gboolean   pencil_non_gui    (GimpDrawable *drawable,
 			      gint          num_strokes,
 			      gdouble      *stroke_array);

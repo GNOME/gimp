@@ -108,11 +108,9 @@ static void       gimp_color_picker_tool_cursor_update  (GimpTool        *tool,
 
 static void       gimp_color_picker_tool_draw           (GimpDrawTool    *draw_tool);
 
+static GimpToolOptions * gimp_color_picker_tool_options_new   (GimpToolInfo    *tool_info);
+static void              gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options);
 
-
-static GimpColorPickerToolOptions * gimp_color_picker_tool_options_new  (void);
-
-static void       gimp_color_picker_tool_options_reset   	(GimpToolOptions *tool_options);
 static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
                                                                  gpointer   data);
 static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
@@ -130,9 +128,6 @@ static gboolean   pick_color_do               (GimpImage      *gimage,
 					       gboolean        update_active,
 					       gint            final);
 
-
-/*  the color picker tool options  */
-static GimpColorPickerToolOptions * gimp_color_picker_tool_options = NULL;
 
 /*  the color value  */
 gint col_value[5] = { 0, 0, 0, 0, 0 };
@@ -154,17 +149,19 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_color_picker_tool_register (Gimp *gimp)
+gimp_color_picker_tool_register (Gimp                     *gimp,
+                                 GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_COLOR_PICKER_TOOL,
-                              FALSE,
-			      "gimp:color_picker_tool",
-			      _("Color Picker"),
-			      _("Pick colors from the image"),
-			      N_("/Tools/Color Picker"), "<shift>O",
-			      NULL, "tools/color_picker.html",
-			      GIMP_STOCK_TOOL_COLOR_PICKER);
+  (* callback) (gimp,
+                GIMP_TYPE_COLOR_PICKER_TOOL,
+                gimp_color_picker_tool_options_new,
+                FALSE,
+                "gimp:color_picker_tool",
+                _("Color Picker"),
+                _("Pick colors from the image"),
+                N_("/Tools/Color Picker"), "<shift>O",
+                NULL, "tools/color_picker.html",
+                GIMP_STOCK_TOOL_COLOR_PICKER);
 }
 
 GtkType
@@ -225,14 +222,6 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (color_picker_tool);
-
-  if (! gimp_color_picker_tool_options)
-    {
-      gimp_color_picker_tool_options = gimp_color_picker_tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_COLOR_PICKER_TOOL,
-					  (GimpToolOptions *) gimp_color_picker_tool_options);
-    }
 
   tool->tool_cursor = GIMP_COLOR_PICKER_TOOL_CURSOR;
 
@@ -788,8 +777,8 @@ gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
 
 /*  tool options stuff  */
 
-static GimpColorPickerToolOptions *
-gimp_color_picker_tool_options_new (void)
+static GimpToolOptions *
+gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
 {
   GimpColorPickerToolOptions *options;
 
@@ -800,8 +789,10 @@ gimp_color_picker_tool_options_new (void)
   GtkWidget *scale;
 
   options = g_new0 (GimpColorPickerToolOptions, 1);
-  tool_options_init ((GimpToolOptions *) options,
-		     gimp_color_picker_tool_options_reset);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = gimp_color_picker_tool_options_reset;
 
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;
@@ -880,7 +871,7 @@ gimp_color_picker_tool_options_new (void)
                     &options->update_active);
   gtk_widget_show (options->update_active_w);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void

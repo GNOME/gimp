@@ -51,9 +51,11 @@ struct _GimpDodgeBurnToolClass
 };
 
 
-void       gimp_dodgeburn_tool_register     (Gimp          *gimp);
+void    gimp_dodgeburn_tool_register (Gimp                     *gimp,
+                                      GimpToolRegisterCallback  callback);
 
-GType      gimp_dodgeburn_tool_get_type     (void);
+GType   gimp_dodgeburn_tool_get_type (void);
+
 
 gboolean   gimp_dodgeburn_tool_non_gui      (GimpDrawable     *drawable,
                                              gdouble           exposure,

@@ -24,21 +24,22 @@
 
 struct _GimpToolOptions
 {
-  GtkWidget            *main_vbox;
+  GtkWidget                *main_vbox;
 
-  ToolOptionsResetFunc  reset_func;
+  GimpToolInfo             *tool_info;
+  GimpToolOptionsResetFunc  reset_func;
 };
 
 /*  create a dummy tool options structure
  *  (to be used by tools without options)
  */
-GimpToolOptions * tool_options_new  (void);
+GimpToolOptions * tool_options_new  (GimpToolInfo    *tool_info);
 
 /*  initialize an already allocated ToolOptions structure
  *  (to be used by derived tool options only)
  */
-void              tool_options_init (GimpToolOptions      *options,
-				     ToolOptionsResetFunc  reset_func);
+void              tool_options_init (GimpToolOptions *options,
+                                     GimpToolInfo    *tool_info);
 
 
 #endif  /*  __TOOL_OPTIONS_H__  */

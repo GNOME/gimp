@@ -37,7 +37,6 @@
 #include "display/gimpdisplayshell.h"
 
 #include "gimpfliptool.h"
-#include "tool_manager.h"
 #include "tool_options.h"
 
 #include "path_transform.h"
@@ -80,11 +79,9 @@ static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
 						   GimpDisplay       *gdisp,
 						   TransformState     state);
 
-static FlipOptions * flip_options_new             (void);
-static void          flip_options_reset           (GimpToolOptions   *tool_options);
+static GimpToolOptions * flip_options_new         (GimpToolInfo      *tool_info);
+static void              flip_options_reset       (GimpToolOptions   *tool_options);
 
-
-static FlipOptions *flip_options = NULL;
 
 static GimpTransformToolClass *parent_class = NULL;
 
@@ -92,17 +89,19 @@ static GimpTransformToolClass *parent_class = NULL;
 /*  public functions  */
 
 void 
-gimp_flip_tool_register (Gimp *gimp)
+gimp_flip_tool_register (Gimp                     *gimp,
+                         GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_FLIP_TOOL,
-                              FALSE,
-			      "gimp:flip_tool",
-			      _("Flip Tool"),
-			      _("Flip the layer or selection"),
-			      N_("/Tools/Transform Tools/Flip"), "<shift>F",
-			      NULL, "tools/flip.html",
-			      GIMP_STOCK_TOOL_FLIP);
+  (* callback) (gimp,
+                GIMP_TYPE_FLIP_TOOL,
+                flip_options_new,
+                FALSE,
+                "gimp:flip_tool",
+                _("Flip Tool"),
+                _("Flip the layer or selection"),
+                N_("/Tools/Transform Tools/Flip"), "<shift>F",
+                NULL, "tools/flip.html",
+                GIMP_STOCK_TOOL_FLIP);
 }
 
 GType
@@ -165,15 +164,6 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
 
   tool           = GIMP_TOOL (flip_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
-
-  /*  The tool options  */
-  if (! flip_options)
-    {
-      flip_options = flip_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_FLIP_TOOL,
-					  (GimpToolOptions *) flip_options);
-    }
 
   tool->tool_cursor   = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
   tool->toggle_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
@@ -295,16 +285,21 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   return NULL;
 }
 
-static FlipOptions *
-flip_options_new (void)
+
+/*  tool options stuff  */
+
+static GimpToolOptions *
+flip_options_new (GimpToolInfo *tool_info)
 {
   FlipOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *frame;
  
   options = g_new0 (FlipOptions, 1);
-  tool_options_init ((GimpToolOptions *) options,
-		     flip_options_reset);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = flip_options_reset;
 
   options->type = options->type_d = ORIENTATION_HORIZONTAL;
 
@@ -330,7 +325,7 @@ flip_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void
@@ -340,5 +335,6 @@ flip_options_reset (GimpToolOptions *tool_options)
 
   options = (FlipOptions *) tool_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
+  gtk_toggle_button_set_active
+    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
 }

@@ -68,7 +68,8 @@ struct _GimpInkToolClass
 };
 
 
-void    gimp_ink_tool_register (Gimp *gimp);
+void    gimp_ink_tool_register (Gimp                     *gimp,
+                                GimpToolRegisterCallback  callback);
 
 GType   gimp_ink_tool_get_type (void);
 

@@ -36,8 +36,6 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimpmovetool.h"
-#include "tool_manager.h"
-#include "tool_options.h"
 
 #include "colormaps.h"
 #include "floating_sel.h"
@@ -75,23 +73,23 @@ static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
 static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
 
 
-static GimpToolOptions *move_options = NULL;
-
 static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_move_tool_register (Gimp *gimp)
+gimp_move_tool_register (Gimp                     *gimp,
+                         GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_MOVE_TOOL,
-                              FALSE,
-			      "gimp:move_tool",
-			      _("Move Tool"),
-			      _("Move layers & selections"),
-			      N_("/Tools/Transform Tools/Move"), "M",
-			      NULL, "tools/move.html",
-			      GIMP_STOCK_TOOL_MOVE);
+  (* callback) (gimp,
+                GIMP_TYPE_MOVE_TOOL,
+                NULL,
+                FALSE,
+                "gimp:move_tool",
+                _("Move Tool"),
+                _("Move layers & selections"),
+                N_("/Tools/Transform Tools/Move"), "M",
+                NULL, "tools/move.html",
+                GIMP_STOCK_TOOL_MOVE);
 }
 
 GType
@@ -149,15 +147,6 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (move_tool);
-
-  /*  The tool options  */
-  if (! move_options)
-    {
-      move_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_MOVE_TOOL,
-					  (GimpToolOptions *) move_options);
-    }
 
   move_tool->layer = NULL;
   move_tool->guide = NULL;

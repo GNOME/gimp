@@ -37,7 +37,6 @@
 
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "app_procs.h"
 #include "image_map.h"
@@ -97,15 +96,6 @@ static gint   hue_saturation_hue_partition_events    (GtkWidget *,
 						      HueSaturationDialog *hsd);
 
 
-/*  the hue-saturation tool options  */
-static GimpToolOptions *hue_saturation_options = NULL;
-
-/*  the hue-saturation tool dialog  */
-static HueSaturationDialog *hue_saturation_dialog = NULL;
-
-static GimpImageMapToolClass *parent_class = NULL;
-
-
 /*  Local variables  */
 static gint hue_transfer[6][256];
 static gint lightness_transfer[6][256];
@@ -120,21 +110,27 @@ static gint default_colors[6][3] =
   { 255,   0, 255 }
 };
 
+static HueSaturationDialog *hue_saturation_dialog = NULL;
 
-/*  functions  */
+static GimpImageMapToolClass *parent_class = NULL;
+
+
+/*  public functions  */
 
 void
-gimp_hue_saturation_tool_register (Gimp *gimp)
+gimp_hue_saturation_tool_register (Gimp                     *gimp,
+                                   GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_HUE_SATURATION_TOOL,
-                              FALSE,
-			      "gimp:hue_saturation_tool",
-			      _("Hue-Saturation"),
-			      _("Adjust hue and saturation"),
-			      N_("/Image/Colors/Hue-Saturation..."), NULL,
-			      NULL, "tools/hue_saturation.html",
-			      GIMP_STOCK_TOOL_HUE_SATURATION);
+  (* callback) (gimp,
+                GIMP_TYPE_HUE_SATURATION_TOOL,
+                NULL,
+                FALSE,
+                "gimp:hue_saturation_tool",
+                _("Hue-Saturation"),
+                _("Adjust hue and saturation"),
+                N_("/Image/Colors/Hue-Saturation..."), NULL,
+                NULL, "tools/hue_saturation.html",
+                GIMP_STOCK_TOOL_HUE_SATURATION);
 }
 
 GType
@@ -181,17 +177,6 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 static void
 gimp_hue_saturation_tool_init (GimpHueSaturationTool *bc_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (bc_tool);
-
-  if (! hue_saturation_options)
-    {
-      hue_saturation_options = tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_HUE_SATURATION_TOOL,
-					  (GimpToolOptions *) hue_saturation_options);
-    }
 }
 
 static void

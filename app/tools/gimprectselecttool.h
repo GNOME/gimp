@@ -64,15 +64,16 @@ struct _GimpRectSelectToolClass
 };
 
 
-void    gimp_rect_select_tool_register    (Gimp               *gimp);
+void    gimp_rect_select_tool_register    (Gimp                     *gimp,
+                                           GimpToolRegisterCallback  callback);
 
 GType   gimp_rect_select_tool_get_type    (void);
 
-void    gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
-					   gint                x,
-					   gint                y,
-					   gint                w,
-					   gint                h);
+void    gimp_rect_select_tool_rect_select (GimpRectSelectTool       *rect_tool,
+					   gint                      x,
+					   gint                      y,
+					   gint                      w,
+					   gint                      h);
 
 
 #endif  /*  __GIMP_RECT_SELECT_TOOL_H__  */

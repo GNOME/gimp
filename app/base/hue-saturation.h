@@ -81,7 +81,8 @@ struct _HueSaturationDialog
 };
 
 
-void    gimp_hue_saturation_tool_register (Gimp *gimp);
+void    gimp_hue_saturation_tool_register (Gimp                     *gimp,
+                                           GimpToolRegisterCallback  callback);
 
 GType   gimp_hue_saturation_tool_get_type (void);
 

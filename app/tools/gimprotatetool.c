@@ -36,7 +36,6 @@
 #include "gui/info-dialog.h"
 
 #include "gimprotatetool.h"
-#include "tool_manager.h"
 #include "transform_options.h"
 
 #include "libgimp/gimpintl.h"
@@ -82,23 +81,23 @@ static GtkWidget *sizeentry = NULL;
 
 static GimpTransformToolClass *parent_class = NULL;
 
-static TransformOptions *rotate_options = NULL;
-
 
 /*  public functions  */
 
 void 
-gimp_rotate_tool_register (Gimp *gimp)
+gimp_rotate_tool_register (Gimp                     *gimp,
+                           GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_ROTATE_TOOL,
-                              FALSE,
-			      "gimp:rotate_tool",
-			      _("Rotate Tool"),
-			      _("Rotate the layer or selection"),
-			      N_("/Tools/Transform Tools/Rotate"), "<shift>R",
-			      NULL, "tools/rotate.html",
-			      GIMP_STOCK_TOOL_ROTATE);
+  (* callback) (gimp,
+                GIMP_TYPE_ROTATE_TOOL,
+                transform_options_new,
+                FALSE,
+                "gimp:rotate_tool",
+                _("Rotate Tool"),
+                _("Rotate the layer or selection"),
+                N_("/Tools/Transform Tools/Rotate"), "<shift>R",
+                NULL, "tools/rotate.html",
+                GIMP_STOCK_TOOL_ROTATE);
 }
 
 GType
@@ -147,20 +146,9 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
 static void
 gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *transform_tool;
+  GimpTool *tool;
 
-  tool           = GIMP_TOOL (rotate_tool);
-  transform_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
-
-  if (! rotate_options)
-    {
-      rotate_options = transform_options_new (GIMP_TYPE_ROTATE_TOOL,
-					      transform_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
-                                          (GimpToolOptions *) rotate_options);
-    }
+  tool = GIMP_TOOL (rotate_tool);
 
   tool->tool_cursor = GIMP_ROTATE_TOOL_CURSOR;
 }

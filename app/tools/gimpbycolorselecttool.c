@@ -145,10 +145,6 @@ static void   by_color_select_preview_button_press (ByColorDialog  *,
 
 static GimpSelectionToolClass *parent_class = NULL;
 
-/*  the by color selection tool options  */
-static SelectionOptions *by_color_options = NULL;
-
-/*  the by color selection dialog  */
 static ByColorDialog *by_color_dialog = NULL;
 
 /*  dnd stuff  */
@@ -161,17 +157,19 @@ static GtkTargetEntry by_color_select_targets[] =
 /* public functions */
 
 void
-gimp_by_color_select_tool_register (Gimp *gimp)
+gimp_by_color_select_tool_register (Gimp                     *gimp,
+                                    GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-			      FALSE,
-                              "gimp:by_color_select_tool",
-                              _("Select By Color"),
-                              _("Select regions by color"),
-                              _("/Tools/Selection Tools/By Color Select"), "C",
-                              NULL, "tools/by_color_select.html",
-                              GIMP_STOCK_TOOL_BY_COLOR_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_BY_COLOR_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:by_color_select_tool",
+                _("Select By Color"),
+                _("Select regions by color"),
+                _("/Tools/Selection Tools/By Color Select"), "C",
+                NULL, "tools/by_color_select.html",
+                GIMP_STOCK_TOOL_BY_COLOR_SELECT);
 }
 
 GType
@@ -241,15 +239,6 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 
   tool        = GIMP_TOOL (by_color_select);
   select_tool = GIMP_SELECTION_TOOL (by_color_select);
-
-  if (! by_color_options)
-    {
-      by_color_options = selection_options_new (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-						selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-                                          (GimpToolOptions *) by_color_options);
-    }
 
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */
@@ -994,15 +983,22 @@ static void
 by_color_select_preview_button_press (ByColorDialog  *bcd,
 				      GdkEventButton *bevent)
 {
-  gint          x, y;
-  gboolean      replace;
-  SelectOps     operation;
-  GimpDrawable *drawable;
-  guchar       *col;
-  GimpRGB       color;
+  GimpToolInfo     *tool_info;
+  SelectionOptions *sel_options;
+  gint              x, y;
+  gboolean          replace;
+  SelectOps         operation;
+  GimpDrawable     *drawable;
+  guchar           *col;
+  GimpRGB           color;
 
   if (! bcd->gimage)
     return;
+
+  tool_info = tool_manager_get_info_by_type (bcd->gimage->gimp,
+                                             GIMP_TYPE_BY_COLOR_SELECT_TOOL);
+
+  sel_options = (SelectionOptions *) tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (bcd->gimage);
 
@@ -1030,7 +1026,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   /*  Find x, y and modify selection  */
 
   /*  Get the start color  */
-  if (by_color_options->sample_merged)
+  if (sel_options->sample_merged)
     {
       x = bcd->gimage->width * bevent->x  / bcd->preview->requisition.width;
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
@@ -1063,15 +1059,15 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   g_free (col);
 
   gimp_image_mask_select_by_color (bcd->gimage, drawable,
-                                   by_color_options->sample_merged,
+                                   sel_options->sample_merged,
                                    &color,
                                    bcd->threshold,
                                    operation,
-                                   by_color_options->antialias,
-                                   by_color_options->feather,
-                                   by_color_options->feather_radius,
-                                   by_color_options->feather_radius);
-  
+                                   sel_options->antialias,
+                                   sel_options->feather,
+                                   sel_options->feather_radius,
+                                   sel_options->feather_radius);
+
   /*  show selection on all views  */
   gdisplays_flush ();
 
@@ -1086,22 +1082,29 @@ by_color_select_color_drop (GtkWidget     *widget,
                             gpointer       data)
 
 {
-  GimpDrawable  *drawable;
-  ByColorDialog *bcd;
+  GimpToolInfo     *tool_info;
+  SelectionOptions *sel_options;
+  GimpDrawable     *drawable;
+  ByColorDialog    *bcd;
 
   bcd = (ByColorDialog*) data;
+
+  tool_info = tool_manager_get_info_by_type (bcd->gimage->gimp,
+                                             GIMP_TYPE_BY_COLOR_SELECT_TOOL);
+
+  sel_options = (SelectionOptions *) tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (bcd->gimage);
 
   gimp_image_mask_select_by_color (bcd->gimage, drawable,
-                                   by_color_options->sample_merged,
+                                   sel_options->sample_merged,
                                    color,
                                    bcd->threshold,
                                    bcd->operation,
-                                   by_color_options->antialias,
-                                   by_color_options->feather,
-                                   by_color_options->feather_radius,
-                                   by_color_options->feather_radius);
+                                   sel_options->antialias,
+                                   sel_options->feather,
+                                   sel_options->feather_radius,
+                                   sel_options->feather_radius);
 
   /*  show selection on all views  */
   gdisplays_flush ();

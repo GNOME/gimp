@@ -36,7 +36,6 @@
 
 #include "gimpellipseselecttool.h"
 #include "selection_options.h"
-#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -55,23 +54,23 @@ static void   gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_too
 
 static GimpRectSelectToolClass *parent_class = NULL;
 
-static SelectionOptions *ellipse_options = NULL;
-
 
 /*  public functions  */
 
 void
-gimp_ellipse_select_tool_register (Gimp *gimp)
+gimp_ellipse_select_tool_register (Gimp                     *gimp,
+                                   GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-			      FALSE,
-                              "gimp:ellipse_select_tool",
-                              _("Ellipse Select"),
-                              _("Select elliptical regions"),
-                              _("/Tools/Selection Tools/Ellipse Select"), "E",
-                              NULL, "tools/ellipse_select.html",
-                              GIMP_STOCK_TOOL_ELLIPSE_SELECT);
+  (* callback) (gimp,
+                GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+                selection_options_new,
+                FALSE,
+                "gimp:ellipse_select_tool",
+                _("Ellipse Select"),
+                _("Select elliptical regions"),
+                _("/Tools/Selection Tools/Ellipse Select"), "E",
+                NULL, "tools/ellipse_select.html",
+                GIMP_STOCK_TOOL_ELLIPSE_SELECT);
 }
 
 GType
@@ -129,15 +128,6 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 
   tool        = GIMP_TOOL (ellipse_select);
   select_tool = GIMP_SELECTION_TOOL (ellipse_select);
-
-  if (! ellipse_options)
-    {
-      ellipse_options = selection_options_new (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-					       selection_options_reset);
-
-      tool_manager_register_tool_options (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-                                          (GimpToolOptions *) ellipse_options);
-    }
 
   tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
   tool->preserve    = FALSE;  /*  Don't preserve on drawable change  */

@@ -41,7 +41,6 @@
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -74,7 +73,7 @@ static void   gimp_smudge_tool_paint      (GimpPaintTool *paint_tool,
 static void   gimp_smudge_tool_motion        (GimpPaintTool *paint_tool,
 					      PaintPressureOptions *pressure_options,
 					      gdouble       smudge_rate,
-						  GimpDrawable *drawable);
+                                              GimpDrawable *drawable);
 static gboolean   gimp_smudge_tool_start          (GimpPaintTool *paint_tool,
 						   GimpDrawable  *drawable);
 static void       gimp_smudge_tool_finish        (GimpPaintTool *paint_tool,
@@ -90,36 +89,35 @@ static void       gimp_smudge_tool_allocate_accum_buffer (gint       w,
 							  gint       bytes,
 							  guchar    *do_fill);
 
-static SmudgeOptions * smudge_options_new   (void);
-static void            smudge_options_reset (GimpToolOptions *tool_options);
+static GimpToolOptions * smudge_options_new   (GimpToolInfo    *tool_info);
+static void              smudge_options_reset (GimpToolOptions *tool_options);
 
 
 /*  local variables */
 static PixelRegion  accumPR;
 static guchar      *accum_data = NULL;
 
-static GimpPaintToolClass *parent_class = NULL;
-
-/*  the smudge tool options  */
-static SmudgeOptions * smudge_options = NULL;
-
 static gdouble  non_gui_rate;
+
+static GimpPaintToolClass *parent_class = NULL;
 
 
 /* global functions  */
 
 void
-gimp_smudge_tool_register (Gimp *gimp)
+gimp_smudge_tool_register (Gimp                     *gimp,
+                           GimpToolRegisterCallback  callback)
 {
-  tool_manager_register_tool (gimp,
-			      GIMP_TYPE_SMUDGE_TOOL,
-			      TRUE,
-  			      "gimp:smudge_tool",
-  			      _("Smudge"),
-  			      _("Smudge image"),
-      			      N_("/Tools/Paint Tools/Smudge"), "S",
-  			      NULL, "tools/smudge.html",
-			      GIMP_STOCK_TOOL_SMUDGE);
+  (* callback) (gimp,
+                GIMP_TYPE_SMUDGE_TOOL,
+                smudge_options_new,
+                TRUE,
+                "gimp:smudge_tool",
+                _("Smudge"),
+                _("Smudge image"),
+                N_("/Tools/Paint Tools/Smudge"), "S",
+                NULL, "tools/smudge.html",
+                GIMP_STOCK_TOOL_SMUDGE);
 }
 
 GType
@@ -170,14 +168,6 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 
   tool       = GIMP_TOOL (smudge);
   paint_tool = GIMP_PAINT_TOOL (smudge);
-
-  if (! smudge_options)
-    {
-      smudge_options = smudge_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_SMUDGE_TOOL,
-                                          (GimpToolOptions *) smudge_options);
-    }
 
   tool->tool_cursor = GIMP_SMUDGE_TOOL_CURSOR;
 
@@ -459,8 +449,14 @@ gimp_smudge_tool_non_gui_default (GimpDrawable *drawable,
 				  gint          num_strokes,
 				  gdouble      *stroke_array)
 {
-  gdouble           rate = SMUDGE_DEFAULT_RATE;
-  SmudgeOptions *options = smudge_options;
+  GimpToolInfo  *tool_info;
+  SmudgeOptions *options;
+  gdouble        rate = SMUDGE_DEFAULT_RATE;
+
+  tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
+                                             GIMP_TYPE_SMUDGE_TOOL);
+
+  options = (SmudgeOptions *) tool_info->tool_options;
 
   if (options)
     rate = options->rate;
@@ -521,8 +517,8 @@ gimp_smudge_tool_non_gui (GimpDrawable *drawable,
   return FALSE;
 }
 
-static SmudgeOptions *
-smudge_options_new (void)
+static GimpToolOptions *
+smudge_options_new (GimpToolInfo *tool_info)
 {
   SmudgeOptions *options;
   GtkWidget     *vbox;
@@ -532,9 +528,9 @@ smudge_options_new (void)
 
   options = g_new0 (SmudgeOptions, 1);
 
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_SMUDGE_TOOL,
-		      smudge_options_reset);
+  paint_options_init ((PaintOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = smudge_options_reset;
 
   options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
 
@@ -562,7 +558,7 @@ smudge_options_new (void)
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  return options;
+  return (GimpToolOptions *) options;
 }
 
 static void
