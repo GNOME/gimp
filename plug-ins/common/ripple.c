@@ -299,6 +299,7 @@ ripple (GimpDrawable *drawable)
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -327,7 +328,7 @@ ripple (GimpDrawable *drawable)
 		  /* Smear out the edges of the image by repeating pixels. */
                   else if (rvals.edges == SMEAR)
 		    {
-		      yi = CLAMP(yi, 0, height - 1);
+		      yi = CLAMP (yi, 0, height - 1);
 		    }
 
                   if (rvals.antialias)
@@ -362,8 +363,8 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, 
 							pixel[3]);
 
-                          average_four_pixels(otherdest, pixel,
-                                              needy, bytes, has_alpha);
+                          average_four_pixels (otherdest, pixel,
+                                               needy, bytes, has_alpha);
                           otherdest += bytes;
                       }
 		    } /* antialias */
@@ -378,7 +379,7 @@ ripple (GimpDrawable *drawable)
 	    } /* for */
 
           progress += dest_rgn.w * dest_rgn.h;
-          gimp_progress_update ((double) progress / (double) max_progress);
+          gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
 	}
       else /* HORIZONTAL */
 	{
@@ -438,8 +439,8 @@ ripple (GimpDrawable *drawable)
 			  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, 
 							pixel[3]);
 
-                          average_four_pixels(dest, pixel,
-                                              needx, bytes, has_alpha);
+                          average_four_pixels (dest, pixel,
+                                               needx, bytes, has_alpha);
                           dest += bytes;
 			}
 		    } /* antialias */
@@ -650,22 +651,25 @@ average_two_pixels (guchar   *dest,
   gint b;
 
   x = fmod (x, 1.0);
+
   if (has_alpha)
     {
-      double xa0 = pixels[0][bpp-1] * (1.0 - x);
-      double xa1 = pixels[1][bpp-1] * x;
-      double alpha;
+      gdouble xa0 = pixels[0][bpp-1] * (1.0 - x);
+      gdouble xa1 = pixels[1][bpp-1] * x;
+      gdouble alpha;
 
       alpha = xa0 + xa1;
+
+      if (alpha)
+        for (b = 0; b < bpp-1; b++)
+          dest[b] = (xa0 * pixels[0][b] + xa1 * pixels[1][b]) / alpha;
+
       dest[bpp-1] = alpha;
-      if (dest[bpp-1])
-          for (b = 0; b < bpp-1; b++)
-              dest[b] = (xa0 * pixels[0][b] + xa1 * pixels[1][b])/alpha;
     }
   else
     {
       for (b = 0; b < bpp; b++)
-          dest[b] = (1.0 - x) * pixels[0][b] + x * pixels[1][b];
+        dest[b] = (1.0 - x) * pixels[0][b] + x * pixels[1][b];
     }
 }
 
@@ -679,26 +683,31 @@ average_four_pixels (guchar   *dest,
   gint b;
 
   x = fmod (x, 1.0);
+
   if (has_alpha)
     {
-      double xa0 = pixels[0][bpp-1] * (1.0 - x)/2;
-      double xa1 = pixels[1][bpp-1] * x/2;
-      double xa2 = pixels[2][bpp-1] * (1.0 - x)/2;
-      double xa3 = pixels[3][bpp-1] * x/2;
-      double alpha;
+      gdouble xa0 = pixels[0][bpp-1] * (1.0 - x) / 2;
+      gdouble xa1 = pixels[1][bpp-1] * x / 2;
+      gdouble xa2 = pixels[2][bpp-1] * (1.0 - x) / 2;
+      gdouble xa3 = pixels[3][bpp-1] * x / 2;
+      gdouble alpha;
 
       alpha = xa0 + xa1 + xa2 + xa3;
+
+      if (alpha)
+        for (b = 0; b < bpp-1; b++)
+          dest[b] = (xa0 * pixels[0][b] +
+                     xa1 * pixels[1][b] +
+                     xa2 * pixels[2][b] +
+                     xa3 * pixels[3][b]) / alpha;
+
       dest[bpp-1] = alpha;
-      if (dest[bpp-1])
-          for (b = 0; b < bpp-1; b++)
-              dest[b] = (xa0 * pixels[0][b] + xa1 * pixels[1][b]
-                         + xa2 * pixels[2][b] + xa3 * pixels[3][b])/alpha;
     }
   else
     {
       for (b = 0; b < bpp; b++)
-          dest[b] = (1.0 - x) * (pixels[0][b] + pixels[2][b])
-                    + x * (pixels[1][b] + pixels[3][b]);
+        dest[b] = ((1.0 - x) * (pixels[0][b] + pixels[2][b]) / 2 +
+                   x         * (pixels[1][b] + pixels[3][b]) / 2);
     }
 }
 
