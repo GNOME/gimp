@@ -1,5 +1,11 @@
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/image-menu.c (image_menu_set_zoom)
+	* app/gui/view-commands.c (view_zoom_other_cmd_callback): fixed
+	an issue with the new Zoom Ratio dialog.
+
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-transform.c: include stdlib.h for abs().
 
 2003-04-04  Sven Neumann  <sven@gimp.org>

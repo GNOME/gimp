@@ -1459,4 +1459,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
   label = g_strdup_printf (_("Zoom (%d:%d)"), scaledest, scalesrc);
   gimp_item_factory_set_label (item_factory, "/View/Zoom", label);
   g_free (label);
+
+  /*  flag as dirty  */
+  shell->other_scale |= (1 << 30);
 }

@@ -125,9 +125,6 @@ view_zoom_other_cmd_callback (GtkWidget *widget,
   /*  check if we are activated by the user or from image_menu_set_zoom()  */
   if (shell->scale != shell->other_scale)
     gimp_display_shell_scale_dialog (shell);
-
-  /*  flag as dirty  */
-  shell->other_scale |= (1 << 30);
 }
 
 void
