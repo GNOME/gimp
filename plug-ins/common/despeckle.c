@@ -31,17 +31,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-typedef enum
-{
-  MEDIAN
-} FilterMethod;
-
-typedef struct
-{
-  gint          diameter;
-  FilterMethod  method;
-} FilterValues;
-
 /*
  * Constants...
  */
@@ -117,9 +106,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run   */
 };
 
-static GtkWidget      *preview;                 /* Preview widget */
-
-static GimpDrawable   *drawable = NULL;         /* Current image */
+static GtkWidget    *preview;                 /* Preview widget   */
+static GimpDrawable *drawable = NULL;         /* Current drawable */
 
 
 static gint despeckle_vals[7] =
@@ -129,12 +117,6 @@ static gint despeckle_vals[7] =
   7,                  /* Default value for the black level */
   248,                /* Default value for the white level */
   TRUE                /* Default value for the update toggle */
-};
-
-static FilterValues fvals =
-{
-  3.0,  /*  y diameter  */
-  MEDIAN
 };
 
 
@@ -446,11 +428,10 @@ despeckle_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-
-   hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  fvals.method = MEDIAN;
+
   /*  parameter settings  */
   frame = gimp_frame_new (_("Median"));
 
@@ -461,7 +442,7 @@ despeckle_dialog (void)
   button = gtk_check_button_new_with_mnemonic (_("_Adaptive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
+                                filter_type & FILTER_ADAPTIVE);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
@@ -471,7 +452,7 @@ despeckle_dialog (void)
   button = gtk_check_button_new_with_mnemonic (_("R_ecursive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+                                filter_type & FILTER_RECURSIVE);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
