@@ -2840,41 +2840,42 @@ preferences_dialog_create (Gimp *gimp)
     {
       gchar  *tree_label;
       gchar  *label;
+      gchar  *icon;
       gchar  *help_data;
       gchar  *fs_label;
       gchar **mpath;
     }
     paths[] =
     {
-      { N_("Brushes"), N_("Brush Folders"),
+      { N_("Brushes"), N_("Brush Folders"), "folders-brushes.png",
 	"dialogs/preferences/folders.html#brushes",
 	N_("Select Brush Folders"),
 	&edit_brush_path },
-      { N_("Patterns"), N_("Pattern Folders"),
+      { N_("Patterns"), N_("Pattern Folders"), "folders-patterns.png",
 	"dialogs/preferences/folders.html#patterns",
 	N_("Select Pattern Folders"),
 	&edit_pattern_path },
-      { N_("Palettes"), N_("Palette Folders"),
+      { N_("Palettes"), N_("Palette Folders"), "folders-palettes.png",
 	"dialogs/preferences/folders.html#palettes",
 	N_("Select Palette Folders"),
 	&edit_palette_path },
-      { N_("Gradients"), N_("Gradient Folders"),
+      { N_("Gradients"), N_("Gradient Folders"), "folders-gradients.png",
 	"dialogs/preferences/folders.html#gradients",
 	N_("Select Gradient Folders"),
 	&edit_gradient_path },
-      { N_("Plug-Ins"), N_("Plug-In Folders"),
+      { N_("Plug-Ins"), N_("Plug-In Folders"), "folders-plug-ins.png",
 	"dialogs/preferences/folders.html#plug_ins",
 	N_("Select Plug-In Folders"),
 	&edit_plug_in_path },
-      { N_("Tool Plug-Ins"), N_("Tool Plug-In Folders"),
+      { N_("Tool Plug-Ins"), N_("Tool Plug-In Folders"), "folders.png",
 	"dialogs/preferences/folders.html#tool_plug_ins",
 	N_("Select Tool Plug-In Folders"),
 	&edit_tool_plug_in_path },
-      { N_("Modules"), N_("Module Folders"),
+      { N_("Modules"), N_("Module Folders"), "folders.png",
 	"dialogs/preferences/folders.html#modules",
 	N_("Select Module Folders"),
 	&edit_module_path },
-      { N_("Themes"), N_("Theme Folders"),
+      { N_("Themes"), N_("Theme Folders"), "folders.png",
 	"dialogs/preferences/folders.html#themes",
 	N_("Select Theme Folders"),
 	&edit_theme_path }
@@ -2885,7 +2886,7 @@ preferences_dialog_create (Gimp *gimp)
 	vbox = prefs_notebook_append_page (gimp,
                                            GTK_NOTEBOOK (notebook),
 					   gettext (paths[i].label),
-                                           "folders.png",
+                                           paths[i].icon,
 				           GTK_TREE_STORE (tree),
 					   gettext (paths[i].tree_label),
 					   paths[i].help_data,

@@ -7,6 +7,11 @@ PREFS_IMAGES = @STRIP_BEGIN@ \
 	display.png		\
 	environment.png		\
 	folders.png		\
+	folders-brushes.png	\
+	folders-gradients.png	\
+	folders-palettes.png	\
+	folders-patterns.png	\
+	folders-plug-ins.png	\
 	help-system.png		\
 	image-windows.png	\
 	input-devices.png	\
@@ -18,4 +23,6 @@ PREFS_IMAGES = @STRIP_BEGIN@ \
 
 themedata_DATA = $(PREFS_IMAGES)
 
-EXTRA_DIST = $(themedata_DATA)
+EXTRA_DIST = \
+	$(themedata_DATA)	\
+	folders.xcf.gz

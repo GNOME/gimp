@@ -1,3 +1,20 @@
+2002-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folders-brushes.png
+	* themes/Default/images/preferences/folders-gradients.png
+	* themes/Default/images/preferences/folders-palettes.png
+	* themes/Default/images/preferences/folders-patterns.png
+
+	* themes/Default/images/preferences/folders-plug-ins.png: some new
+	icons made from Jimmac's new tool icons and Tigert's abstract
+	palette icon.
+
+	* themes/Default/images/preferences/folders.xcf.gz: all folders
+	icons as layered image.
+
+	* app/gui/preferences-dialog.c: use them.
+
 2002-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/preferences-dialog.c: put the title label & icon outside
