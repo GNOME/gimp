@@ -1,7 +1,12 @@
+Sun May  3 22:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/fileops.c: make fileselectors insensitive during
+	loading and saving
+
 Sun May  3 00:24:31 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c: minimalistic change to the interface,
-	make it's possible to set the channel opacity to 100.0% 
+	make it's possible to set the channel opacity to 100.0%
 	(was 99.0% before)
 
 Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -16,7 +21,7 @@ Sat May  2 16:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/channels_dialog.c: removed my broken fix, put in a fix
 	that works
-	
+
 Sat May  2 15:20:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/channels_dialog.c: check to be sure that the gimage still
@@ -87,7 +92,7 @@ Thu Apr 30 02:08:23 EDT 1998 Matthew Wilson <msw@gimp.org>
 	* app/channels_dialog.c
 	* app/layers_dialog.c: Modified event handlers to bring up the
 	popup menu anywhere on layer/channel widget
-	
+
 Wed Apr 29 22:29:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/app_procs.c: make splash screen honor gtkrc
@@ -108,7 +113,7 @@ Wed Apr 29 15:38:55 PDT 1998 Manish Singh <yosh@gimp.org>
 Wed Apr 29 07:50:26 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* gimp.1: updated man page to reflect new --debug-handlers
-	argument 
+	argument
 
 Wed Apr 29 04:05:34 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -155,7 +160,7 @@ Mon Apr 27 20:57:26 1998 EDT Matthew Wilson <msw@gimp.org>
 	* app/curves: Initialize data that is referenced in event handlers
 	in the curves_new_dialog function.  Be on the look out for this
 	kind of stuff in other dialogs.
-	
+
 Tue Apr 28 00:16:31 1998  Tim Janik  <timj@gtk.org>
 
 	* app/channels_dialog.c (channels_dialog_create): adjust the scrolled
@@ -196,7 +201,7 @@ Sun Apr 26 17:50:36 MEST 1998 Sven Neumann <sven@gimp.org>
 	* updated engrave plug-in
 
 	* updated oilify plug-in
-	* changed the call to plug-in-oilify in circuit.scm and lava.scm 
+	* changed the call to plug-in-oilify in circuit.scm and lava.scm
 
 Sun Apr 26 03:06:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -297,7 +302,7 @@ Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Thu Apr 16 19:46:46 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* plug-ins/script-fu/interp_slib.c: changed the link to 
+	* plug-ins/script-fu/interp_slib.c: changed the link to
 	the script-fu resources to point to www.gimp.org
 
 Wed Apr 15 13:18:47 EDT 1998 Matthew Wilson <msw@gimp.org>
@@ -351,7 +356,7 @@ Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
 	* gimp_tips.txt: applied gimp-quinet-980414-0; adds new tips
 	* plug-ins/pagecurl/pagecurl.c: applied gimp-quinet-980414-1;
 	defines M_PI
-	* app/app_procs.c: applied gimp-quinet-980414-2; adds more 
+	* app/app_procs.c: applied gimp-quinet-980414-2; adds more
 	information to the startup screen
 	* app/regex.c
 	* plugins/script-fu/regex.c: partially applied
@@ -359,9 +364,9 @@ Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
 
 Tue Apr 14 10:11:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* app/global_edit.c: Named cut and copy are now performed after 
-	the user is asked for a name, so cancelling the dialog works 
-	correctly. 
+	* app/global_edit.c: Named cut and copy are now performed after
+	the user is asked for a name, so cancelling the dialog works
+	correctly.
 
 Mon Apr 13 15:17:51 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -383,7 +388,7 @@ Mon Apr 13 16:22:38 MEST 1998 Sven Neumann <sven@gimp.org>
 	indexed used to crash the gimp
 
 Mon Apr 13 15:37:42 MEST 1998 Sven Neumann <sven@gimp.org>
-	
+
 	* app/gdisplay.c: correctly update the menu-sensitivity; you can't
 	paste into an empty image
 	* global_edit.c: flush the displays when pasting from a named buffer
@@ -419,7 +424,7 @@ Mon Apr 13 00:41:50 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/command.c: Duh. We have a message_box.  Why not use it for
 	the prefs code.
-	
+
 Mon Apr 13 00:27:45 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gdisplay.c: Set the current tool's gdisplay pointer to NULL
@@ -437,7 +442,7 @@ Sun Apr 12 22:51:31 MEST 1998 Sven Neumann <sven@gimp.org>
 Sun Apr 12 15:49:25 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/palette.c: fixed a typo in the menu
-	* gimprc.in: removed the systemwide palettes directory from the 
+	* gimprc.in: removed the systemwide palettes directory from the
 	palettes searchpath
 
 Sun Apr 12 02:23:05 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -475,7 +480,7 @@ Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@gimp.org>
 	* portability patch for polar
 
 	* minor bugfix to vpropagate
-	
+
 	* fix for memory problem in xwd
 
 Sat Apr 11 00:03:33 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -509,8 +514,8 @@ Fri Apr 10 00:17:23 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 Fri Apr 10 01:55:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* added three new logo-scripts from keebler@wco.com: 
-	bovinated-logo.scm, comic-logo.scm and gradient-bevel-logo.scm  
+	* added three new logo-scripts from keebler@wco.com:
+	bovinated-logo.scm, comic-logo.scm and gradient-bevel-logo.scm
 
 Thu Apr  9 09:28:04 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -659,7 +664,7 @@ Thu Apr  2 04:06:50 EST 1998 Matthew Wilson <msw@gimp.org>
 	* app/disp_callbacks.c: Always ungrab the pointer on button release.
 	This is a quick and dirty hack to try to nuke the pointer grab
 	bug.
-	
+
 Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/transform_core.c: added a change to make a note of the
@@ -678,7 +683,7 @@ Thu Apr  2 23:52:54 EST 1998 Matthew Wilson <msw@gimp.org
 Thu Apr  2 20:09:06 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c: the impossibility of duplicating a
-	non-auxillary channel is now reflected by the menu-sensitivity 
+	non-auxillary channel is now reflected by the menu-sensitivity
 
 Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
 
@@ -686,7 +691,7 @@ Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
 	(hopefully) all portability-patches that were applied in between
 
 Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org>
-	
+
 	* app/brightness_contrast.c
 	* app/by_color_select.c
 	* app/color_balance.c
@@ -726,16 +731,16 @@ Wed Apr 01 04:07:29 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c: Only destroy the current tool if you change
 	gdisplays and the tool caches image data.
-	
+
 Wed Apr 01 03:40:15 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c:  If the current gdisp->ID does not match
 	the ID of the gdisp_ptr in the active_tool, restart it.
-	
+
 Tue Mar 31 03:10:12 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/iscissors.c: Set tool->preserve to TRUE in tools_new_iscissors.
-	
+
 Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gimage.c
@@ -770,7 +775,7 @@ Tue Mar 31 02:21:15 EST 1998 Matthew Wilson <msw@gimp.org>
 	* app/disp_callbacks.c
 	* app/menus.c: Removed Nether's tool patch.
 
-	
+
 Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
 
         * app/brush_select.c
@@ -783,7 +788,7 @@ Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
 
 Mon Mar 30 13:52:50 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	*plug-ins/png/png.c: changed nparams it expected 
+	*plug-ins/png/png.c: changed nparams it expected
 	so it would work non-ineractively
 
 Mon Mar 30 14:04:26 MEST 1998 Sven Neumann <sven@gimp.org>
@@ -844,11 +849,11 @@ Thu Mar 26 16:32:05 MST 1998 Nathan Summers <rock@gimp.org>
 
 Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
 	* app/iscissors.c: This version works much better.
-	outstanding bugs <VERY IMPORTANT>: 
+	outstanding bugs <VERY IMPORTANT>:
 
 	1. the edgemap does not seem to be constructed quite right
-	(construct_edge_map) -- uncomment #define 
-	ISCISSORS_STILL_DOES_NOT_WORK and take a look at the edgemap -- it 
+	(construct_edge_map) -- uncomment #define
+	ISCISSORS_STILL_DOES_NOT_WORK and take a look at the edgemap -- it
 	will be saved to the file "dump"
 
 	2. sigsegvs if the layer offset isn't 0,0.  dunno why.
@@ -860,7 +865,7 @@ Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
 Thu Mar 26 12:15:38 MST 1998 Nathan Summers <rock@gimp.org>
 
 	* app/iscissors.c: fixes the display artifact where the preview
-	outline of the selected area would not appear or would appear in the 
+	outline of the selected area would not appear or would appear in the
 	wrong place or have the wrong shape
 
 Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@gimp.org>
@@ -871,18 +876,18 @@ Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@gimp.org>
 
 Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	* app/app_procs.c app/brush_select.c app/brushes.c 
+	* app/app_procs.c app/brush_select.c app/brushes.c
 	app/brushes.h app/convert.c app/gradient.c app/gradient.h
 	app/palette.c app/palette.h app/pattern_select.c app/patterns.c
-	app/patterns.h:   Fixed up --no-data so that the various *_init() 
+	app/patterns.h:   Fixed up --no-data so that the various *_init()
 	routines always get called, and so that when in interactive mode
 	the data can be loaded by the user even when started with --no-data.
-	Fixes the blend bug too... 
+	Fixes the blend bug too...
 
 Thu Mar 26 18:38:54 MET 1998 Sven Neumann <sven@gimp.org>
 
-	app/gradient.c: fixed another --no-data problem; also the 
-	editor now behaves better when it is resized  
+	app/gradient.c: fixed another --no-data problem; also the
+	editor now behaves better when it is resized
 
 Wed Mar 25 22:46:36 MST 1998 Nathan Summers <rock@gimp.org>
 
@@ -911,12 +916,12 @@ Wed Mar 25 18:06:39 PST 1998 Manish Singh <yosh@gimp.org>
 Wed Mar 25 16:22:00 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/app_procs.c: now prints messages when starting up --no-splash
-	
+
 	* app/gimprc.c: now prints messages when starting up --no-splash
 
 	* app/plug-in.c: does not print messages when starting up with
 	splash screen
-	
+
 Tue Mar 24 20:32:53 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/fileops.c: refresh the open/save as dialogs upon open
@@ -977,7 +982,7 @@ Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
 	 pdbs in dbbrowser.
 
 	* app/fileops.c: another patch from matt, this one to
-	fix the bug with saving images with no layers. 
+	fix the bug with saving images with no layers.
 
 Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
 
@@ -999,12 +1004,12 @@ Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
 	plug-ins/CML_explorer, plug-ins/autocrop,
         plug-ins/align_layers, plug-ins/blinds,
         plug-ins/bmp, plug-ins/megawidget: gimp-joke-980322
-	
-	Applied gimp-joke-980322-0.patch and gimp-joke-980321-0.patch 
+
+	Applied gimp-joke-980322-0.patch and gimp-joke-980321-0.patch
 	from Yasuhiro SHIRASAKI <joke@awa.tohoku.ac.jp>. Mostly
- 	portability for DEC osf1's cc. Lots of MAIN();'s, trailing 
+ 	portability for DEC osf1's cc. Lots of MAIN();'s, trailing
 	commas in enums, and guchar/gchar madness.
-	
+
 
 Sun Mar 22 01:59:31 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1039,7 +1044,7 @@ Sat Mar 21 15:43:34 MET 1998 Sven Neumann <sven@gimp.org>
 
 Sat Mar 21 14:43:06 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* docs/gimp_quick_reference.[ps|tar.gz]: 
+	* docs/gimp_quick_reference.[ps|tar.gz]:
 	Changes to the reference sheet.
 
 Fri Mar 20 18:15:06 PST 1998 Manish Singh <yosh@gimp.org>
@@ -1056,7 +1061,7 @@ Mar 19 21:36:41 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.22 release
 	* app/undo.c: handle exposure correctly
-	
+
 Thu Mar 19 22:05:56 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/palette.c: fixed out of bounds reference in pallete_create.
@@ -1070,16 +1075,16 @@ Thu Mar 19 18:36:09 PST 1998 Manish Singh <yosh@gimp.org>
 
 Thu Mar 19 14:13:33 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	* applied patch from Andy Thomas to brushes.c to 
+	* applied patch from Andy Thomas to brushes.c to
 	improve brush loading via pdb. Fixes problems with
-	 bruses of the same name. 
-	
+	 bruses of the same name.
+
 	*plugins/script-fu/scripts/ripply-anim.scm: removed
 	until someone fixes it.
 
 Thu Mar 19 13:21:28 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* docs/gimp_quick_reference.[tex|ps]: added a 
+	* docs/gimp_quick_reference.[tex|ps]: added a
 	single-paged reference sheet with most of the hotkeys
 
 Thu Mar 19 03:28:29 PST 1998 Manish Singh <yosh@gimp.org>
@@ -1105,9 +1110,9 @@ Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@gimp.org>
         print/print-pcl.c print/print.c scatter_hsv/scatter_hsv.c
         script-fu/script-fu-scripts.c script-fu/script-fu.c
         sinus/sinus.c tga/tga.c tileit/tileit.c
-        vpropagate/vpropagate.c xpm/xpm.c: 
+        vpropagate/vpropagate.c xpm/xpm.c:
 		 More picky picky ansi type
-        	stuff from gimp-hpux-980316.patch.        
+        	stuff from gimp-hpux-980316.patch.
 
 Wed Mar 18 15:06:13 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1132,18 +1137,18 @@ Wed Mar 18 16:57:52 EST 1998 Adrian Likins <adrian@gimp.org>
 
 Wed Mar 18 21:16:14 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* app/crop.c: fixed an indented #define 
+	* app/crop.c: fixed an indented #define
 
 Wed Mar 18 19:11:01 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* app/app_procs.c: split the "Brought to you by S&P" line in 
-	two to avoid problems with 100dpi fonts 
+	* app/app_procs.c: split the "Brought to you by S&P" line in
+	two to avoid problems with 100dpi fonts
 
 Wed Mar 18 00:06:50 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* gradient.c: fixed a problem in the gradient editor 
+	* gradient.c: fixed a problem in the gradient editor
         when gimp is started with the no-data option and no
-        gradients are load.	   
+        gradients are load.
 
 Tue Mar 17 01:38:18 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1169,7 +1174,7 @@ Mon Mar 16 17:05:54 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/commands.c: changed select_feather_cmd_callback to pass the
 	gimage->ID rather than the gimage to prevent a fatal error.  If
-	you have objections to this speak now.	
+	you have objections to this speak now.
 
 Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
 
@@ -1189,7 +1194,7 @@ Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
 
 Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@gimp.org>
 
-	* app/move.c: 
+	* app/move.c:
 	* app/gdisplay.c:
 	* app/gimage.c: Reworked the guide drawing and picking code to
 	remove all known guide artifacts.
@@ -1221,13 +1226,13 @@ Sun Mar 15 20:39:12 CST 1998  Larry Ewing  <lewing@gimp.org>
 Sun Mar 15 14:50:21 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/fileops.c (file_save_as_callback): fixed file Save As
-	cancel callback to use gtk_signal_connect_object. 
+	cancel callback to use gtk_signal_connect_object.
 
 Sun Mar 15 13:37:22 MET 1998 Sven Neumann <sven@gimp.org>
-	
+
 	* libgimp/gimpwire.c: applied Raphael Quinet's patch that
-	  changes the wire_read error message to something slightly more 
-	  useful. 
+	  changes the wire_read error message to something slightly more
+	  useful.
 
 Sun Mar 15 01:12:06 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1285,7 +1290,7 @@ Sat Mar 14 20:52:06 EST 1998 Adrian Likins <adrian@gimp.org>
 	* doc/gimp.1
 	* app/main.c: some updates to reflect that none of
 	  "valid debugging options" do anything anymore
-     
+
 Sat Mar 14 15:14:16 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* updated to use libtool 1.1
@@ -1305,7 +1310,7 @@ Sat Mar 14 17:17:31 MET 1998 Sven Neumann <sven@gimp.org>
 	* app/internal_procs.c
 	* app/text_tool.c
 	* app/text_tool.h: applied gimp-edas-980305-0.patch (after a small
-          fix). Now registry and encoding can be choosen in the text tool 
+          fix). Now registry and encoding can be choosen in the text tool
           and two new pdb-functions are available to access this
 	  functionality.
 	* plugins/script-fu/scripts/i26-gunya2.scm: changed to make it
@@ -1430,7 +1435,7 @@ Wed Mar 11 21:42:15 PST 1998 Manish Singh <yosh@gimp.org>
 Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*docs/gimp.1: added gimp man page
-		
+
 	*app/gdisplay.c: disables by-color-select for indexed images
 
 	*plugins/webbrowse/web-browser.scm: updated some urls
@@ -1441,7 +1446,7 @@ Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@gimp.org>
 
 	* app/disp_callbacks.c: added checks to recreate the active tool
 	if need be.
- 
+
 Wed Mar 11 02:49:14 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/fileops.c: no need to hide the help button for fileops,
@@ -1462,7 +1467,7 @@ Wed Mar 11 00:27:35 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/disp_callbacks.c
 	* app/transform_core.c: plugged some harmless build warnings
-	
+
 1998-03-11  Larry Ewing  <lewing@discord.isc.tamu.edu>
 
 	* app/undo.c
@@ -1519,10 +1524,10 @@ Sun Mar  1 20:28:54 MET 1998 Sven Neumann <sven@gimp.org>
  	* app/commands.c
  	* app/commands.h
  	* app/menus.c
- 	* libgimp/gimppalette.c: 
+ 	* libgimp/gimppalette.c:
 	implemented gimp_palette_set_default_colors and
 	gimp_palette_swap_colors as pdb-calls and bound menu-entries and
-	keybindings to them (gimp-sven-980216-0.patch)	
+	keybindings to them (gimp-sven-980216-0.patch)
 
 Sat Feb 28 22:05:15 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1561,7 +1566,7 @@ Sat Feb 28 00:09:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Fri Feb 27 23:02:10 MET 1998 Sven Neumann (sven@gimp.org)
 
-	* app/about_dialog.c: (about_dialog_load_logo) 
+	* app/about_dialog.c: (about_dialog_load_logo)
 	use a correct gc
 
 1998-02-26  Federico Mena Quintero  <federico@nuclecu.unam.mx>
@@ -1598,7 +1603,7 @@ Sat Feb 21 16:40:47 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*plugins/gtm/*:
 	 plugins/semiflatten/*:  added these plugins
-	
+
 
 Fri Feb 20 02:38:24 PST 1998 Manish Singh <yosh@gimp.org>
 
@@ -1614,26 +1619,26 @@ Wed Feb 18 17:56:40 MET 1998 Sven Neumann <sven@gimp.org>
 
 Tue Feb 17 21:23:20 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* app/fileops.c: hide the help buttons since we have no 
+	* app/fileops.c: hide the help buttons since we have no
 	help (yet)
 
 Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* gimp_splash.ppm: added the splash-screen image drawn 
-	by Jens Lauterbacher to the distribution 
+	* gimp_splash.ppm: added the splash-screen image drawn
+	by Jens Lauterbacher to the distribution
 
 	* app/appenv.h
 	* app/app_procs.c
 	* app/main.c: added the splash-image to the startup-window;
 	new command-line options: --no-splash, --no-splash-image
-	
-	* ps_menurc: changed to reflect changes to the 
+
+	* ps_menurc: changed to reflect changes to the
 	menu-structure
-	
+
 Tue Feb 17 09:24:44 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	* updated all of Sven Neumanns scripts. Including 
-	blend-anim.scm, waves-anim.scm, drop-shadows.scm, 
+	* updated all of Sven Neumanns scripts. Including
+	blend-anim.scm, waves-anim.scm, drop-shadows.scm,
 	perspective-shadow.scm, round-corners.scm, slide.scm,
 	and selection-round.scm.
 
@@ -1662,7 +1667,7 @@ Thu Feb 12 13:10:50 EST 1998 Adrian Likins <adrian@gimp.org>
 
 Wed Feb  4 19:04:35 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
-	* channel.c 
+	* channel.c
 	* channel.h
  	* disp_callbacks.c
  	* gimage.c
@@ -1679,24 +1684,24 @@ Tue Feb  3 17:52:34 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Mon Feb  2 19:19:16 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
-	* app/channels_dialog.c: 
+	* app/channels_dialog.c:
 	* app/layers_dialog.c:  Added gtk_widget_ref and gtk_widget_unref
 	calls to keep channel & layer widgets from dying when reordering
 	the channel/layer stacks.
-	
+
 Sat Jan 31 20:49:11 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* plug-ins/edge.c: added a check so it wouldnt segfault when
 	passed a non-existent drawable
-	
+
 	* plug-ins/threshold_alpha.c:  added a non-interactive mode
 
 	* app/brightness_contrast.c
-	* app/color_balance.c 
+	* app/color_balance.c
 	* app/colormaps.c
-	* app/curves.c 
+	* app/curves.c
 	* app/hue_saturation.c
-	* app/posterize.c 
+	* app/posterize.c
 	* app/threshold.c : added a check so it wouldnt except
 	 a indexed drawable. This was previosly possible via the pdb.
 
@@ -1766,7 +1771,7 @@ Tue Jan 27 10:21:00 PST 1998 Raph Levien <raph@acm.org>
 
 	* app/gimage.c: fixed bug in image display with all channels
 	turned off
-	
+
 Tue Jan 27 00:18:28 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/xcf.c: fixes an off by one error in xcf_tile_save_rle()
@@ -1801,7 +1806,7 @@ Sun Jan 25 16:56:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Sun Jan 25 16:51:56 EST 1998 Adrian Likins <adrian@gimp.org>
 
-	* added the gtk_window_set_wmclass to most of the gimp 
+	* added the gtk_window_set_wmclass to most of the gimp
 	dialogs so they set the XA_WM_CLASS properties.
 
 Sun Jan 25 13:28:28 PST 1998 Manish Singh <yosh@gimp.org>
@@ -1874,7 +1879,7 @@ Sun Jan 18 18:07:23 EST 1998 Adrian Likins <adrian@gimp.org>
 
         * added plugins/gflare/gflares and edited the makefiles
 	  so that the gfalres and gfig-examples would get installed
-	  into share/gimp/gflares and share/gimp/gfig 
+	  into share/gimp/gflares and share/gimp/gfig
 
 
 Tue Jan 13 21:36:07 PST 1998 Manish Singh <yosh@gimp.org>
@@ -1982,18 +1987,18 @@ Thu Dec 25 23:04:00 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Updates from the plugin registry: Compose, Film, FITS, ps,
 	refract, sunras, twist
-	
+
 Thu Dec 18 11:15:17 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/main.c (main): Freeing arguments to putenv afterwards is
 	naughty.  Fixed.  Plug-ins work now.
 
 Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
-	
+
 	* All these changes are from Owen Taylor to make GIMP work
           with reference changes make in GTK.  This mainly affects
-          functions gtk_pixmap_destroy, gdk_colormap_destroy, 
-          gdk_font(set)_free; they have disappeared and where 
+          functions gtk_pixmap_destroy, gdk_colormap_destroy,
+          gdk_font(set)_free; they have disappeared and where
           changed to *_unref. These simple changes affected:
           app/about_dialog.c, app/channels_dialog.c,
           app/curves.c, app/gradient.c, app/layer_select.c,
@@ -2005,7 +2010,7 @@ Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
         * app/color_area.c: check for initial expose before drawing
         * app/disp_callbacks.c: gc for scrolling
         * app/gdisplay.c: destroy gc, event now pointer
-        * app/scroll.c: use scroll_gc, make sure graphics expose events 
+        * app/scroll.c: use scroll_gc, make sure graphics expose events
           are processed before scrolling again
         * gimp/app/gdisplay.h: add scroll_gc to struct
 
@@ -2037,9 +2042,9 @@ Tue Dec 16 16:55:04 PST 1997 Manish Singh <yosh@gimp.org>
 	palettes
 
 Tue Dec 16 15:24:36 EST 1997 Adrian Likins <adrian@gimp.org>
- 
+
         * modified user-isntall to make a scripts and gflares dir
- 
+
         * added path to gflares in the gimprc
 
 
@@ -2091,15 +2096,15 @@ Sat Dec 13 23:37:59 PST 1997 Manish Singh <yosh@gimp.org>
 
 Sun Dec 14 00:06:00 CST 1997 Shawn T. Amundson <amundson@gimp.org>
 
-	* configure.in: Changed gimp lib dir to lib/gimp/MAJOR.MINOR 
+	* configure.in: Changed gimp lib dir to lib/gimp/MAJOR.MINOR
           instead of lib/gimp/MAJOR.MINOR.MICRO
-	* script-fu/scripts: removed piechart, kanji-circle, kanji-neon 
-	* configure.in: change check for EMACS to allow emacs to not 
+	* script-fu/scripts: removed piechart, kanji-circle, kanji-neon
+	* configure.in: change check for EMACS to allow emacs to not
           exist (in which case, no error results, but pdb docs don't
           get made)
 
 Sat Dec 13 19:41:35 CST 1997 Shawn T. Amundson <amundson@gimp.org>
-	
+
 	* plug-ins/fuse/Makefile.am: fuse.c couldn't find gck/gck.h
 
 Fri Dec 12 02:07:26 PST 1997 Manish Singh <yosh@gimp.org>
@@ -2131,7 +2136,7 @@ Tue Dec  9 15:21:16 PST 1997 Raph Levien <raph@acm.org>
  	 posted to gimp-developer on 4 Nov 1997. This patch fixes some
  	 stability problems, as well as makes the preferences saving
  	 functionality more complete.
-	
+
 Tue Dec  9 00:52:15 EST 1997 Adrian Likins <adrian@gimp.org>
 
 	* added illusion, papertile, colorify, and glasstile
@@ -2180,14 +2185,14 @@ Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@gimp.org>
 Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
 
 	* fixed refract.c to look for megawidget.h in the proper place
-	
+
 	* fixed the makefile.am in plugins/script-fu/script to install
 	the texture files too
 
-	* added a check in channels_dialog.c to make the aspect ratio 
+	* added a check in channels_dialog.c to make the aspect ratio
 	really go away
 
-	* fixed a minor error in the alien-glow-* scripts with an 
+	* fixed a minor error in the alien-glow-* scripts with an
 	extra parenthesis
 
 	* added the new wilber.h
@@ -2196,7 +2201,7 @@ Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
 	not needed
 
 	* patched gif.c with Adam D. Moss's patch to fix some weirdness with
-	transparncy in anim gifs	
+	transparncy in anim gifs
 
 Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@gimp.org>
 
@@ -2205,20 +2210,20 @@ Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@gimp.org>
 
 	* Removed all the old stale *.[ch] files fom plug-ins/ dir
 
-	* Added a work around for the weirdness resulting from 
+	* Added a work around for the weirdness resulting from
 	rezing the palette dialog
 
 Wed Nov 26 14:38:30 1997  Larry Ewing  <lewing@isc.tamu.edu>
-	
+
 	* Added a bounds check to undo_push_image* to fix drawing
 	outside the image undo bug
-	
+
 	* Desensitized Add Layer Mask when layer has no alpha channel
 
 	* Wrapped the calls to gtk_list_clear_items with
 	suspend_gimage_notify in app/channels_dialog.c to prevent
 	erroneously deactivating channels.  Fixes "out of paint" bug
-	
+
 	* replaced calls to info_window_update in app/magnify.c and
 	app/scale.c with a single call in gdisplay_flush () so that
 	the info window reflects the current status
@@ -2233,7 +2238,7 @@ Tue Nov 18 16:40:22 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	Windows to appear and took GIMP with them on close
 
 	* plug-ins/iwarp added
-	
+
 
 Mon Nov 17 14:29:00 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 
@@ -2242,18 +2247,18 @@ Mon Nov 17 14:29:00 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	* plug-ins/fuse/fuse.c updated from registry
 
 	* plug-ins/fp/fp.c fixed buggy feature list
-	(now handles also layered images, patch resubmitted by 
+	(now handles also layered images, patch resubmitted by
 	Daniel R Risacher <risacher@worldnet.att.net>)
 
 Mon Nov 17 15:14:14 EST 1997 Adrian Likins <adrian@gimp.org>
 
-	* Finally fixed the scripts that broke with the last 
+	* Finally fixed the scripts that broke with the last
 	  release. This includes crystal-logo.scm, sota-chrome-logo.scm,
-	  and chome-it.scm. 
+	  and chome-it.scm.
 
 Sun Nov 16 20:39:26 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 
-	* applied all patches of these Mails (or improved ones) 
+	* applied all patches of these Mails (or improved ones)
 
 	<0000094A.1892@dril-quip.com>
 	(special thanks to Art_Haas@dril-quip.com (Art HAAS)
@@ -2263,12 +2268,12 @@ Sun Nov 16 20:39:26 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	<199710312031.MAA05318@callisto.hip.berkeley.edu>
 	(thanks to Raph Levien <raph@acm.org>)
 
-	* fixes a PI to M_PI in twist.c 
+	* fixes a PI to M_PI in twist.c
 	(not sure if this is what we want))
 	<Pine.LNX.3.96.971103021445.10834A-200000@s9412a.steinan.ntnu.no>
 	(thanks to  Trond Eivind Glomsrxd <teg@pvv.ntnu.no>)
 
-        * fixes preview for megawidgetbased plug-ins / speed up 
+        * fixes preview for megawidgetbased plug-ins / speed up
 	<19971105154336.33004@dca.fee.unicamp.br>
         <19971105155848.26367@dca.fee.unicamp.br>
         <19971105160238.05244@dca.fee.unicamp.br>
@@ -2278,10 +2283,10 @@ Sun Nov 16 20:39:26 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	<00000A37.1892@dril-quip.com>
 	(special thanks to Art_Haas@dril-quip.com (Art HAAS)
 	and  Nathan Carl Summers <summersn@cs.byu.edu>)
-	        
+
 	* moved all plug-ins to dirs of their own (finally)
 	and reconfigured
-	
+
 
 Fri Nov 14 23:27:01 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -2303,7 +2308,7 @@ Tue Nov 11 14:57:16 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Fri Nov  7 00:27:44 CST 1997 Adrian Likins <adrian@gimp.org>
 
-	* added docs/cheat_sheet.txt and docs/keybindings.txt 
+	* added docs/cheat_sheet.txt and docs/keybindings.txt
 
 Thu Nov  6 14:08:35 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
@@ -2348,11 +2353,11 @@ Wed Oct 29 17:52:57 1997  Christoph Hoegl  <darkwing@bsddmail.franken.de>
 	(Keep in mind that these are new, alpha plug-ins (esp. warp which
 	is not yet ready for general consumption according to author
 	John Beale <beale@best.com>)
-	
+
 	* added plug-ins/{flame,mathmap,rcm,user_filter}
-	
+
 	* plug-ins/gqbist.c: updated to v1.7
-	
+
 
 Tue Oct 28 22:30:32 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
@@ -2361,7 +2366,7 @@ Tue Oct 28 22:30:32 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Mon Oct 27 07:45:23 EST 1997 Adrian Likins ,adrian@gimp.org
 
-	* updated title-header.scm to not add a layer twice 
+	* updated title-header.scm to not add a layer twice
 
 	* remove t-o-p.scm, it was a duplicate of t-o-p-logo.scm
 	 jsut registered under a different name
@@ -2484,7 +2489,7 @@ Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
           prevents installing bogus accelerator handlers for the
           menu separators.
 
-        * All the rest of these are from Eiichi Takamori 
+        * All the rest of these are from Eiichi Takamori
           <taka@ma1.seikyou.ne.jp>
 
         * plug-ins/gicon.c: fixed the number of return values on save
@@ -2497,8 +2502,8 @@ Thu Oct 23 01:46:28 CDT 1997 Shawn T. Amundson <amundson@gimp.org>
         * libgimp/gimp.c: gimp_run_procedure() now frees proc_run.params,
           since it is allocated in that function and no longer used
 
-        * app/plug_in.c: fixed memory overrun in plug_in.c when 
-          nargs < current_return_nvals, in case the plug-in returns bad 
+        * app/plug_in.c: fixed memory overrun in plug_in.c when
+          nargs < current_return_nvals, in case the plug-in returns bad
           number of return values.
 
         * app/plug_in.c: destroy arguments when PDB lookup failed.
@@ -2511,31 +2516,31 @@ Wed Oct 22 20:38:46 EDT 1997  Adrian Likins <adrian@gimp.org>
 	* Added the www.gimp.org web page look scripts (gimp-labels.scm
 	  and gimp-headers.scm)to the dist
 
-	* also added a handful of scripts (predator.scm, circuit.scm, 
-	  xach-effect.scm, copy-visible.scm, select_to_brush.scm, 
-	  select_to_image.scm, and glow.scm). 
+	* also added a handful of scripts (predator.scm, circuit.scm,
+	  xach-effect.scm, copy-visible.scm, select_to_brush.scm,
+	  select_to_image.scm, and glow.scm).
 	  see www.gimp.org/~adrian/scripts.html
 
 	* patched maze.c to work better interactively
 
-        * patched noisify.c to show more informative labels and to 
+        * patched noisify.c to show more informative labels and to
           correct a bug with values of 0 for a channel still allowing
           some noise to be added.
 
         * changed some of the alien-glow-* scripts to have better defaults
 
         * moving script-fu wasnt entirely my idea :-)
-  
+
 Wed Oct 22 18:48:28 1997  Shawn T. Amundson <amundson@gimp.org>
 
 	* this was actually all Adrian's idea -- moved all the
-          scripts from <Image>/Filters/Script-Fu to just 
+          scripts from <Image>/Filters/Script-Fu to just
           <Image>/Script-Fu
 
 Fri Oct 17 15:59:58 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 
 	* changed and autoconfigured gimptcl (needs further integration,
-	  works only with -ldl), gfig (click 2 buttons bug) 
+	  works only with -ldl), gfig (click 2 buttons bug)
 
 	* plug-ins/gimptcl/gtclenums.h: fixed a typo
 
@@ -2548,7 +2553,7 @@ Thu Oct 16 17:05:32 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 	* plug-ins/{CentralReflection,Anamorphose}: update to 1.02
 
 	* plug-ins/rotate.c: Sven Neumanns update to 0.4 (selection support)
-	
+
 Wed Oct 22 11:42:50 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* plug-ins/polar.c: Updates by Sven Neumann.
@@ -2706,7 +2711,7 @@ Wed Oct  8 21:33:50 1997  Christoph Hoegl  <darkwing@bsdd.regensburg.com>
 	applied inline patch by Tim Mooney <mooney@dogbert.cc.ndsu.NoDak.edu>
 	       (reduces gcc-ism a bit and makes use of autoconf features)
 	reflecting plugin changes within managementfiles (configure.in)
-	
+
 Mon Oct  6 13:22:01 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* plug-ins/pat.c, plug-ins/gbr.c: Applied Lauri Alanko's patch to
@@ -2990,4 +2995,3 @@ Mon Sep 22 17:34:09 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* Made 0.99.11 release.  See the files NOTES and TODO-DIST for
 	more info.
-	

@@ -483,6 +483,7 @@ file_open_callback (GtkWidget *w,
     }
   else
     {
+      gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
@@ -571,6 +572,7 @@ file_save_as_callback (GtkWidget *w,
     }
   else
     {
+      gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
@@ -832,11 +834,16 @@ file_open_ok_callback (GtkWidget *w,
       return;
     }
 
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+
   if (file_open (filename, raw_filename))
     {
       file_dialog_hide (client_data);
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
       return;
     }
+
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 
   s = g_string_new ("Open failed: ");
 
@@ -863,6 +870,7 @@ file_save_ok_callback (GtkWidget *w,
   err = stat (filename, &buf);
 
   g_assert (filename && raw_filename);
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
   if (err == 0)
     {
@@ -884,20 +892,22 @@ file_save_ok_callback (GtkWidget *w,
 	  s = g_string_new (NULL);
 	  g_string_sprintf (s, "%s is an irregular file (%s)", raw_filename, g_strerror(errno));
 	}
+    } else {
+      if (file_save (image_ID, filename, raw_filename))
+	{
+	  file_dialog_hide (client_data);
+	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+	  return;
+	}
+      else
+	{
+	  s = g_string_new ("Save failed: ");
+	  g_string_append (s, raw_filename);
+	  g_string_append (s, "\nYou might have tried to save an RGB image with");
+	  g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
+	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+	}
     }
-  else if (file_save (image_ID, filename, raw_filename))
-    {
-      file_dialog_hide (client_data);
-      return;
-    }
-  else
-    {
-      s = g_string_new ("Save failed: ");
-      g_string_append (s, raw_filename);
-      g_string_append (s, "\nYou might have tried to save an RGB image with");
-      g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
-    }
-
   message_box (s->str, NULL, NULL);
 
   g_string_free (s, TRUE);
@@ -1256,7 +1266,7 @@ file_check_single_magic (char *offset,
         num_testval = strtol(value+2, NULL, 16);
       else                      /* octal */
         num_testval = strtol(value+1, NULL, 8);
-    
+
       fileval = 0;
       if (numbytes == 5)    /* Check for file size ? */
         {struct stat buf;
@@ -1326,11 +1336,11 @@ static int file_check_magic_list (GSList *magics_list,
   while (magics_list)
     {
       if ((offset = (char *)magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break; 
+      if ((magics_list = magics_list->next) == NULL) break;
       if ((type = (char *)magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break; 
+      if ((magics_list = magics_list->next) == NULL) break;
       if ((value = (char *)magics_list->data) == NULL) break;
-      magics_list = magics_list->next; 
+      magics_list = magics_list->next;
 
       match_val = file_check_single_magic (offset, type, value,
                                            headsize, head, ifp);
@@ -1402,7 +1412,7 @@ file_save_invoker (Argument *args)
   return_vals = procedural_db_execute (proc->name, new_args);
   g_free (new_args);
 
-  return return_vals; 
+  return return_vals;
 }
 
 static Argument*
