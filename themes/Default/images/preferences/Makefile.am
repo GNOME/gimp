@@ -14,6 +14,7 @@ PREFS_IMAGES = \
 	folders-palettes.png		\
 	folders-patterns.png		\
 	folders-plug-ins.png		\
+	folders-scripts.png		\
 	folders-themes.png		\
 	folders-tool-plug-ins.png	\
 	help-system.png			\

@@ -1,5 +1,14 @@
 2003-07-08  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folders-scripts.png: new icon
+	(just a copy of folders.png for now).
+
+	* app/gui/preferences-dialog.c: added a GUI for the Script-Fu
+	path.  Fixes bug #96282.
+
+2003-07-08  Michael Natterer  <mitch@gimp.org>
+
 	Added configurable styles for dockable tabs (fixes bug #87376):
 
 	* app/widgets/widgets-enums.[ch]: added new enum GimpTabStyle
