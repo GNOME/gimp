@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-23 19:48+0200\n"
-"PO-Revision-Date: 2004-05-28 20:21+0200\n"
+"POT-Creation-Date: 2004-05-29 19:10+0200\n"
+"PO-Revision-Date: 2004-05-29 19:20+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -48,7 +48,8 @@ msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
+msgstr ""
+"A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -581,7 +582,7 @@ msgstr "Sugár"
 msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
-msgstr ""
+msgstr "\n\t\t    SF-ADJUSTMENT _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
@@ -617,7 +618,7 @@ msgstr "Szövegszín"
 msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
-msgstr ""
+msgstr "\n\t\t    SF-COLOR      _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
@@ -864,8 +865,8 @@ msgstr "Beégetés: összesen két rétegre van szükség."
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
 msgstr ""
-"Beégetésszerű effektus egy előtér-rétegre (szöveg) és egy háttér-rétegre; 2.1-es "
-"verzió"
+"Beégetésszerű effektus egy előtér-rétegre (szöveg) és egy háttér-rétegre; "
+"2.1-es verzió"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1389,12 +1390,16 @@ msgid "Shadow Weight (%)"
 msgstr "Árnyék szélessége (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Nagy fejléc..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Nagy fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Kis fejléc..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Kis fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1438,25 +1443,29 @@ msgstr "Árnyék színe"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Algomb-címke..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Algomb-címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/A_l-algomb-címke..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/A_l-algomb-címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/Ál_talános címke..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/Ál_talános címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Gombcímke..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Gombcímke..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1543,7 +1552,8 @@ msgstr "Keret mérete (képpont)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Kiterj./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
+msgstr ""
+"<Toolbox>/Kiterj./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
@@ -1704,6 +1714,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1711,6 +1724,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1718,6 +1734,9 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"    (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
@@ -1941,6 +1960,9 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
@@ -1960,6 +1982,9 @@ msgid ""
 "  (set! filename2 (string-append data-dir\n"
 "\t\t\t\t "
 msgstr ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
