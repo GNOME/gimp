@@ -343,7 +343,7 @@ menus_set_sensitive (char *path,
       gtk_widget_set_sensitive (widget, sensitive);
     }
   if (!ifactory || !widget)
-    printf (_("Unable to set sensitivity for menu which doesn't exist:\n%s"), path);
+    g_message (_("Unable to set sensitivity for menu which doesn't exist:\n%s"), path);
 }  
 
 void
@@ -368,7 +368,7 @@ menus_set_state (char *path,
 	widget = NULL;
     }
   if (!ifactory || !widget)
-    printf (_("Unable to set state for menu which doesn't exist:\n%s"), path);
+    g_message (_("Unable to set state for menu which doesn't exist:\n%s\n"), path);
 }
 
 void

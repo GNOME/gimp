@@ -1,3 +1,37 @@
+Thu Nov  5 16:42:21 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: added MAINTAINERS to EXTRA_DIST
+
+	* configure.in: nicer -Wall, -ansi, etc. adding for CFLAGS with gcc
+
+	* libgimp/parasite*.h
+	* libgimp/gimpintl.h
+	* app/Makefile.am
+	* po/Makefile.in.in
+	* configure.in: portablity, locale patch (gimp-joke-981028-0)
+
+	* configure.in
+	* plug-ins/Makefile.am: added lic, mapcolor, and xbm plug-ins
+
+	* app/app_procs.c
+	* app/menus.c: cosmetic message fixes
+
+	* libgimp/parasite.c: use %p to print pointers
+
+	* plug-ins/dbbrowser/dbbrowser_utils.[ch]: changes for new clist
+	stuff
+
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm: applied
+	gimp-ruth-981103-0, adds a filesel to script-fu and SF-FILENAME
+	param type. Make some scripts use this.
+
 Thu Nov  5 21:55:46 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/gradient.c 
@@ -509,6 +543,7 @@ Mon Oct  5 01:08:11 CST 1998 Seth Burgess <sjburges@gimp.org>
 	Many thanks to Marc Lehman for reporting these.  More to come.
 	
 Mon Oct  5 23:56:09 EEST 1998 Lauri Alanko <nether@gimp.org>
+
 	* po/fr.po: fixed a compile-halting typo
 	
 Mon Oct  5 16:18:08 EDT 1998  Matthew Wilson  <msw@gimp.org>

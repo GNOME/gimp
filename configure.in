@@ -66,39 +66,40 @@ ALL_LINGUAS="fr sv ja it fi ko de"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.1.2,,
+AM_PATH_GTK(1.1.3,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+
+changequote(,)dnl
 
 dnl Evil stuff to extract GLIB stuff from gtk-config output
 dnl (we want to make sure it matches with the gtk we're using)
-GLIB_CFLAGS=`echo $GTK_CFLAGS | sed 's/^.*\(-I[[^ ]]*glib[[^ ]]*  *-I[[^ ]]*\).*$/\1/'`
-GLIB_LDFLAGS=`echo $gtk_libs | sed -e 's/^.*-lgdk[[^ ]]* *\(-L[[^ ]]*\).*$/\1/' -e 's/^.* -lgdk[[^ ]]* .*$//'`
+GLIB_CFLAGS=`echo $GTK_CFLAGS | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'`
+GLIB_LDFLAGS=`echo $gtk_libs | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
 if test -z "$glib_ldflags" ; then
-  GLIB_LDFLAGS=`echo $GTK_LIBS | sed 's/^ *\(-L[[^ ]]*\) .*$/\1/'`
+  GLIB_LDFLAGS=`echo $GTK_LIBS | sed 's/^ *\(-L[^ ]*\) .*$/\1/'`
 fi 
-GLIB_LIBS="$GLIB_LDFLAGS `echo $GTK_LIBS | sed 's/^.*\(-lglib[[^ ]]*\).*$/\1/'`"
+GLIB_LIBS="$GLIB_LDFLAGS `echo $GTK_LIBS | sed 's/^.*\(-lglib[^ ]*\).*$/\1/'`"
 
 if eval "test x$GCC = xyes"; then
-  if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
-    CFLAGS="$CFLAGS"
-  else
-    CFLAGS="$CFLAGS -Wall"
-  fi
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
 
-  if eval "test x$enable_ansi = xyes"; then
-    if echo "$CFLAGS" | grep "\-ansi" > /dev/null 2> /dev/null; then
-      CFLAGS="$CFLAGS"
-    else
-      CFLAGS="$CFLAGS -ansi"
-    fi
+  if test "x$enable_ansi" = "xyes"; then
+    case " $CFLAGS " in
+    *[\ \	]-ansi[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -ansi" ;;
+    esac
 
-    if echo "$CFLAGS" | grep "\-pedantic" > /dev/null 2> /dev/null; then
-      CFLAGS="$CFLAGS"
-    else
-      CFLAGS="$CFLAGS -pedantic"
-    fi
+    case " $CFLAGS " in
+    *[\ \	]-pedantic[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -pedantic" ;;
+    esac
   fi
 fi
+
+changequote([,])dnl
 
 dnl DU4 native cc currently needs -std1 for ANSI mode (instead of K&R)
 AC_MSG_CHECKING([for extra flags to get ANSI library prototypes])
@@ -384,6 +385,7 @@ LIBS="$gimp_save_LIBS"
 
 gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+localedir=$datadir/locale
 
 brushdata=`ls -1 $srcdir/data/brushes | grep -v Makefile`
 gradientdata=`ls -1 $srcdir/data/gradients | grep -v Makefile`
@@ -547,6 +549,7 @@ AC_SUBST(GLIB_LIBS)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
+AC_SUBST(localedir)
 AC_SUBST(brushdata)
 AC_SUBST(gradientdata)
 AC_SUBST(palettedata)
@@ -669,7 +672,9 @@ plug-ins/illusion/Makefile
 plug-ins/iwarp/Makefile
 plug-ins/jigsaw/Makefile
 plug-ins/laplace/Makefile
+plug-ins/lic/Makefile
 plug-ins/mail/Makefile
+plug-ins/mapcolor/Makefile
 plug-ins/max_rgb/Makefile
 plug-ins/maze/Makefile
 plug-ins/mblur/Makefile
@@ -725,6 +730,7 @@ plug-ins/waterselect/Makefile
 plug-ins/waves/Makefile
 plug-ins/whirlpinch/Makefile
 plug-ins/wind/Makefile
+plug-ins/xbm/Makefile
 plug-ins/xwd/Makefile
 plug-ins/zealouscrop/Makefile
 app/Makefile

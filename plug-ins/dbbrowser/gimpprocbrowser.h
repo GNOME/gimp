@@ -52,6 +52,7 @@ typedef struct {
   GtkWidget* descr_table;
 
   GtkWidget* clist;
+  GtkWidget* scrolled_win;
 
   /* the currently selected procedure */
   gchar *selected_proc_name;

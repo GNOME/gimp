@@ -46,4 +46,4 @@ int       parasite_is_persistant (const Parasite *p);
 }
 #endif /* __cplusplus */
 
-#endif _PARASITE_H_
+#endif /* _PARASITE_H_ */

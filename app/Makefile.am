@@ -336,7 +336,8 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"
+	-DGIMPDIR=\""$(gimpdir)"\" \
+	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
 	-I$(top_srcdir)			\

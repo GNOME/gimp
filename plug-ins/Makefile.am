@@ -79,7 +79,9 @@ SUBDIRS = 			\
 	iwarp			\
 	jigsaw			\
 	laplace			\
+	lic			\
 	mail			\
+	mapcolor		\
 	max_rgb			\
 	maze			\
 	mblur			\
@@ -135,6 +137,7 @@ SUBDIRS = 			\
 	waves			\
 	whirlpinch		\
 	wind			\
+	xbm			\
 	xwd			\
 	zealouscrop
 

@@ -82,8 +82,9 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   /* list : list in a scrolled_win */
   
   dbbrowser->clist = gtk_clist_new(1);
-  gtk_clist_set_policy (GTK_CLIST (dbbrowser->clist), GTK_POLICY_AUTOMATIC,
-			GTK_POLICY_AUTOMATIC);
+  dbbrowser->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (dbbrowser->scrolled_win),
+				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_clist_set_selection_mode (GTK_CLIST (dbbrowser->clist),
 			        GTK_SELECTION_BROWSE);
 
@@ -91,9 +92,10 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   gtk_signal_connect (GTK_OBJECT (dbbrowser->clist), "select_row",
 		      (GtkSignalFunc) procedure_select_callback,
 		      dbbrowser);
-  gtk_box_pack_start (GTK_BOX (vbox), 
-		      dbbrowser->clist, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), dbbrowser->scrolled_win, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (dbbrowser->scrolled_win), dbbrowser->clist);
   gtk_widget_show(dbbrowser->clist);
+  gtk_widget_show(dbbrowser->scrolled_win);
 
   /* search entry */
 

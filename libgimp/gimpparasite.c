@@ -19,6 +19,8 @@
 
 #include "parasiteP.h"
 #include "parasite.h"
+#include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <glib.h>
 
@@ -29,7 +31,7 @@ static void parasite_print(Parasite *p)
     printf("(pid %d)attempt to print a null parasite\n", getpid());
     return;
   }
-  printf("(pid %d), parasite: %X\n", getpid(), p);
+  printf("(pid %d), parasite: %p\n", getpid(), p);
   if (p->name)
     printf("\tname: %s\n", p->name);
   else
@@ -37,7 +39,7 @@ static void parasite_print(Parasite *p)
   printf("\tflags: %d\n", p->flags);
   printf("\tsize: %d\n", p->size);
   if (p->size > 0)
-    printf("\tdata: %X\n", p->data);
+    printf("\tdata: %p\n", p->data);
 }
 
 Parasite *

@@ -199,6 +199,7 @@
 		    SF-ADJUSTMENT "Font size (in pixels)" '(150 1 1000 1 10 0 1)
 ;		    SF-STRING "Font" "RoostHeavy"
 		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
-		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+;		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR "Highlight Balance" '(211 95 0)
 		    SF-COLOR "Chrome Balance" '(0 0 0))

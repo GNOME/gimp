@@ -197,5 +197,7 @@
 		    SF-STRING "Text String" "Crystal"
 		    SF-VALUE "Font Size (in pixels)" "150"
 		    SF-STRING "Font" "Engraver"
-		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
-		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
+;		    SF-STRING "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
+		    SF-FILENAME "Background Img" (string-append "" gimp-data-dir "/scripts/texture1.jpg")
+;		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
+		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))

@@ -22,4 +22,4 @@
 
 typedef struct _Parasite Parasite;
 
-#endif _PARASITEF_H_
+#endif /* _PARASITEF_H_ */

@@ -35,7 +35,8 @@ typedef enum
   SF_FONT,
   SF_PATTERN,
   SF_BRUSH,
-  SF_GRADIENT
+  SF_GRADIENT,
+  SF_FILENAME
 } SFArgType;
 
 typedef enum

@@ -31,4 +31,4 @@ struct _Parasite
 			 * responsible for tracking byte order            */
 };
 
-#endif _PARASITEP_H_
+#endif /* _PARASITEP_H_ */

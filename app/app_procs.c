@@ -458,7 +458,7 @@ app_init (void)
       sprintf (filename, "%s/gtkrc", gimp_dir);
 
       if ((be_verbose == TRUE) || (no_splash == TRUE))
-	g_print (_("parsing %s\n"), filename);
+	g_print (_("parsing \"%s\"\n"), filename);
 
       gtk_rc_parse (filename);
     }

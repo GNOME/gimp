@@ -68,6 +68,13 @@ typedef struct
   gchar     *fontname;
 } SFFont;
 
+typedef struct
+{
+  GtkWidget *preview;
+  GtkWidget *dialog;
+  gchar     *filename;
+} SFFilename;
+
 typedef struct 
 {
   gchar    *name;
@@ -88,6 +95,7 @@ typedef union
   gchar *       sfa_value;
   SFAdjustment  sfa_adjustment;
   SFFont        sfa_font;
+  SFFilename    sfa_file;
   gchar *       sfa_pattern;
   gchar *       sfa_gradient;
   SFBrush       sfa_brush;
@@ -140,7 +148,9 @@ static void       script_fu_disable_cc       (gint    err_msg);
 static void       script_fu_interface        (SFScript *script);
 static void       script_fu_color_preview    (GtkWidget *preview,
 					      gdouble   *color);
-static void       script_fu_font_preview    (GtkWidget *preview,
+static void       script_fu_file_preview     (GtkWidget *preview,
+					      gchar    *fontname);
+static void       script_fu_font_preview     (GtkWidget *preview,
 					      gchar    *fontname);
 static void       script_fu_cleanup_widgets  (SFScript *script);
 static void       script_fu_ok_callback      (GtkWidget *widget,
@@ -162,6 +172,15 @@ static void       script_fu_color_preview_changed  (GtkWidget *widget,
 static void       script_fu_color_preview_cancel   (GtkWidget *widget,
 						    gpointer   data);
 static gint       script_fu_color_preview_delete   (GtkWidget *widget,
+						    GdkEvent  *event,
+						    gpointer   data);
+static void       script_fu_file_preview_callback  (GtkWidget *widget,
+						    gpointer   data);
+static void       script_fu_file_dialog_ok         (GtkWidget *widget,
+						    gpointer   data);
+static void       script_fu_file_dialog_cancel     (GtkWidget *widget,
+						    gpointer   data);
+static gint       script_fu_file_dialog_delete     (GtkWidget *widget,
 						    GdkEvent  *event,
 						    gpointer   data);
 static void       script_fu_font_preview_callback  (GtkWidget *widget,
@@ -575,6 +594,19 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_FILENAME:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
+		  script->arg_defaults[i].sfa_file.filename = g_strdup (get_c_string (car (a)));
+		 script->arg_values[i].sfa_file.filename =  g_strdup (script->arg_defaults[i].sfa_file.filename);
+		 script->arg_values[i].sfa_file.preview = NULL;
+		 script->arg_values[i].sfa_file.dialog = NULL;
+
+		 args[i + 1].type = PARAM_STRING;
+		 args[i + 1].name = "filename";
+		 args[i + 1].description = script->arg_labels[i];
+		 break;
+
 		case SF_FONT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: font defaults must be string values", NIL);
@@ -776,6 +808,9 @@ script_fu_script_proc (char     *name,
 		  case SF_STRING:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
+		  case SF_FILENAME:
+		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;
 		  case SF_ADJUSTMENT:
 		    length += strlen (params[i + 1].data.d_string) + 1;
 		    break;
@@ -827,6 +862,7 @@ script_fu_script_proc (char     *name,
 		      text = params[i + 1].data.d_string;
 		      break;
 		    case SF_STRING:
+		    case SF_FILENAME:
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
 		      break;
@@ -937,6 +973,10 @@ script_fu_free_script (SFScript *script)
 	      g_free (script->arg_values[i].sfa_value);
 	      break;
 	    case SF_ADJUSTMENT:
+	      break;
+	    case SF_FILENAME:
+	      g_free (script->arg_defaults[i].sfa_file.filename);
+	      g_free (script->arg_values[i].sfa_file.filename);
 	      break;
 	    case SF_FONT:
 	      g_free (script->arg_defaults[i].sfa_font.fontname);
@@ -1180,6 +1220,7 @@ script_fu_interface (SFScript *script)
 	      gtk_range_set_update_policy (GTK_RANGE (script->args_widgets[i]), 
 					   GTK_UPDATE_DELAYED);
 	      break;
+
 	    case SF_SPINNER:
 	      script->args_widgets[i] = gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj, 0, 0);
 	      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (script->args_widgets[i]), TRUE);
@@ -1193,6 +1234,23 @@ script_fu_interface (SFScript *script)
 	      break;
 	    }
 	  break;
+
+	case SF_FILENAME:
+	  script->args_widgets[i] = gtk_button_new();
+	  script->arg_values[i].sfa_file.preview = gtk_label_new ("");
+	  gtk_widget_set_usize (script->args_widgets[i], TEXT_WIDTH, 0);
+	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
+			     script->arg_values[i].sfa_file.preview);
+	  gtk_widget_show (script->arg_values[i].sfa_file.preview);
+ 
+	  script_fu_file_preview (script->arg_values[i].sfa_file.preview,
+				  script->arg_values[i].sfa_file.filename);
+
+	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "clicked",
+			      (GtkSignalFunc) script_fu_file_preview_callback,
+			      &script->arg_values[i].sfa_file);
+	  break;
+
 	case SF_FONT:
 	  script->args_widgets[i] = gtk_button_new();
 	  script->arg_values[i].sfa_font.preview = gtk_label_new ("");
@@ -1208,6 +1266,7 @@ script_fu_interface (SFScript *script)
 			      (GtkSignalFunc) script_fu_font_preview_callback,
 			      &script->arg_values[i].sfa_font);	  
 	  break;
+
 	case SF_PATTERN:
 	  script->args_widgets[i] = gimp_pattern_select_widget("Script-fu Pattern Selection",
 							       script->arg_values[i].sfa_pattern, 
@@ -1220,6 +1279,7 @@ script_fu_interface (SFScript *script)
 								script_fu_gradient_preview,
 								&script->arg_values[i].sfa_gradient);
 	  break;
+
 	case SF_BRUSH:
 	  script->args_widgets[i] = 
 	    gimp_brush_select_widget("Script-fu brush Selection",
@@ -1234,15 +1294,16 @@ script_fu_interface (SFScript *script)
 	default:
 	  break;
 	}
+
       hbox = gtk_hbox_new (FALSE, 0);
       gtk_box_pack_start (GTK_BOX (hbox), script->args_widgets[i],
-                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FONT)),
-                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FONT)), 0);
+                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) ||  (script->arg_types[i] == SF_FILENAME) ||(script->arg_types[i] == SF_FONT)),
+                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FILENAME) || (script->arg_types[i] == SF_FONT)), 0);
       gtk_widget_show (hbox);
 
       gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
 			1, 2, i, i + 1,
-                        GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FONT))
+                        GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FILENAME) || (script->arg_types[i] == SF_FONT))
 				    ? GTK_EXPAND : 0),
                         GTK_FILL, 4, 2);
       gtk_widget_show (script->args_widgets[i]);
@@ -1383,6 +1444,18 @@ script_fu_brush_preview(char * name, /* Name */
 
 
 static void
+script_fu_file_preview (GtkWidget *preview,
+			gchar     *data)
+{
+  if (data == NULL) 
+    return;
+
+  gtk_label_set (GTK_LABEL (preview), g_basename((gchar *) data));
+}
+
+
+
+static void
 script_fu_font_preview (GtkWidget *preview,
 			gchar     *data)
 {
@@ -1441,6 +1514,13 @@ script_fu_cleanup_widgets (SFScript *script)
 	    script->arg_values[i].sfa_color.dialog = NULL;
 	  }
 	break;
+      case SF_FILENAME:
+	if (script->arg_values[i].sfa_file.dialog != NULL)
+	  {
+	    gtk_widget_destroy (script->arg_values[i].sfa_file.dialog);
+	    script->arg_values[i].sfa_file.dialog = NULL;
+	  }
+	break;
       case SF_FONT:
 	if (script->arg_values[i].sfa_font.dialog != NULL)
 	  {
@@ -1485,7 +1565,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	font = gdk_font_load (script->arg_values[i].sfa_font.fontname);
 	if (font == NULL)
 	  {
-	    g_message (" At least one font you've choosen is invalid. \n Please check your settings.\n");
+	    g_message ("At least one font you've choosen is invalid.\nPlease check your settings.\n");
 	    return;
 	  }
 	g_free (font);
@@ -1516,6 +1596,9 @@ script_fu_ok_callback (GtkWidget *widget,
 	break;
       case SF_ADJUSTMENT:
 	length += 24;  /*  Maximum size of float value should not exceed this many characters  */
+	break;
+      case SF_FILENAME:
+	length += strlen (script->arg_values[i].sfa_file.filename) + 3;
 	break;
       case SF_FONT:
 	length += strlen (script->arg_values[i].sfa_font.fontname) + 3;
@@ -1587,6 +1670,10 @@ script_fu_ok_callback (GtkWidget *widget,
 	    default:
 	      break;
 	    }
+	  break;
+	case SF_FILENAME:
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", script->arg_values[i].sfa_file.filename);
+	  text = buffer;
 	  break;
 	case SF_FONT:
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", script->arg_values[i].sfa_font.fontname);
@@ -1833,6 +1920,16 @@ script_fu_reset_callback (GtkWidget *widget,
 	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj, 
 				  script->arg_values[i].sfa_adjustment.value);
 	break;
+      case SF_FILENAME:
+	g_free (script->arg_values[i].sfa_file.filename);
+	script->arg_values[i].sfa_file.filename = g_strdup (script->arg_defaults[i].sfa_file.filename);
+	if (script->arg_values[i].sfa_file.dialog)
+	  {
+	    gtk_file_selection_set_filename (GTK_FILE_SELECTION (script->arg_values[i].sfa_file.dialog), script->arg_values[i].sfa_file.filename);
+	  }	
+	script_fu_file_preview (script->arg_values[i].sfa_file.preview,
+				script->arg_values[i].sfa_file.filename);
+	break;
       case SF_FONT:
 	g_free (script->arg_values[i].sfa_font.fontname);
 	script->arg_values[i].sfa_font.fontname = g_strdup (script->arg_defaults[i].sfa_font.fontname);
@@ -1968,6 +2065,77 @@ script_fu_color_preview_delete (GtkWidget *widget,
 }
 
 static void
+script_fu_file_preview_callback (GtkWidget *widget,
+				 gpointer   data)
+{
+  GtkFileSelection *fs;
+  SFFilename *file;
+
+  file = (SFFilename *) data;
+
+  if (!file->dialog)
+    {
+      file->dialog = gtk_file_selection_new ("Script-Fu File Selector");
+      fs = GTK_FILE_SELECTION (file->dialog);
+
+      gtk_signal_connect (GTK_OBJECT (fs->ok_button), "clicked",
+			  (GtkSignalFunc) script_fu_file_dialog_ok,
+			  file);
+      gtk_signal_connect (GTK_OBJECT (fs), "delete_event",
+			  (GtkSignalFunc) script_fu_file_dialog_delete,
+			  file);
+      gtk_signal_connect (GTK_OBJECT (fs->cancel_button), "clicked",
+			  (GtkSignalFunc) script_fu_file_dialog_cancel,
+			  file);
+    }
+  else
+    fs = GTK_FILE_SELECTION (file->dialog);
+
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (fs), file->filename);
+  gtk_window_position (GTK_WINDOW (file->dialog), GTK_WIN_POS_MOUSE);
+  gtk_widget_show (file->dialog);
+}
+
+static void
+script_fu_file_dialog_ok (GtkWidget *widget,
+			  gpointer data)
+{
+  SFFilename *file;
+  gchar  *filename;
+
+  file = (SFFilename *) data;
+
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file->dialog));
+  if (filename != NULL)
+    {
+      g_free (file->filename);
+      file->filename = g_strdup(filename);
+    }
+  gtk_widget_hide (file->dialog);
+
+  script_fu_file_preview (file->preview, file->filename);
+}
+
+static void
+script_fu_file_dialog_cancel (GtkWidget *widget,
+			      gpointer data)
+{
+  SFFilename *file;
+  file = (SFFilename *) data;
+
+  gtk_widget_hide (file->dialog);
+}
+
+static gint
+script_fu_file_dialog_delete (GtkWidget *widget,
+			      GdkEvent *event,
+			      gpointer data)
+{
+   script_fu_file_dialog_cancel (widget, data);
+   return TRUE;
+ }
+
+static void
 script_fu_font_preview_callback (GtkWidget *widget,
 				 gpointer   data)
 {
@@ -1990,7 +2158,6 @@ script_fu_font_preview_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (fsd->cancel_button), "clicked",
 			  (GtkSignalFunc) script_fu_font_dialog_cancel,
 			  font);
-
     }
   else
     fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
