@@ -111,7 +111,7 @@
 		     (begin
                        ;--- add some brightness to whole text
 		       (if (= fadeout TRUE)
-			   (gimp-brightness-contrast bl-layer 100 0)))
+			   (gimp-brightness-contrast bl-layer 100 0))
 
                      ;--- blend glow color inside the letters
 		     (gimp-palette-set-foreground glow-color)
@@ -133,6 +133,7 @@
 				      FALSE 0 0 TRUE
 				      (- (+ bl-x-off bl-width) corona-width) 0
 				      (- (+ bl-x-off bl-width) after-glow) 0))
+         )
 
 		 ;--- merge with bg layer
 		 (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))

@@ -1,3 +1,8 @@
+2004-09-16  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/script-fu/scripts/burn-in-anim.scm: patch from Kevin 
+	Cozens which reinstates corona. Fixes bug #142282.
+
 2004-09-16  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: depend on GLib >= 2.4.5 and GTK+ >= 2.4.4.
