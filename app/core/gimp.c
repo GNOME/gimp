@@ -570,9 +570,10 @@ gimp_create_context (Gimp        *gimp,
 
   gimp->context_list = g_list_prepend (gimp->context_list, context);
 
-  gtk_signal_connect (GTK_OBJECT (context), "destroy",
-		      GTK_SIGNAL_FUNC (gimp_context_destroy_callback),
-		      gimp);
+  g_signal_connect_object (G_OBJECT (context), "destroy",
+			   G_CALLBACK (gimp_context_destroy_callback),
+			   G_OBJECT (gimp),
+			   0);
 
   return context;
 }

@@ -26,18 +26,20 @@
 #endif
 #include <glib.h>
 
+
 static void script_fu_text_console_interface (void);
 
+
 void
-script_fu_text_console_run (char     *name,
-			    int       nparams,
-			    GimpParam   *params,
-			    int      *nreturn_vals,
-			    GimpParam  **return_vals)
+script_fu_text_console_run (gchar      *name,
+			    gint        nparams,
+			    GimpParam  *params,
+			    gint       *nreturn_vals,
+			    GimpParam **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType run_mode;
+  GimpRunModeType   run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -57,7 +59,7 @@ script_fu_text_console_run (char     *name,
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
       status = GIMP_PDB_CALLING_ERROR;
-      gimp_message (_("Script-Fu console mode allows only interactive invocation"));
+      g_message (_("Script-Fu console mode allows only interactive invocation"));
       break;
 
     default:
@@ -65,24 +67,25 @@ script_fu_text_console_run (char     *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 static gboolean
 read_command (GString *command)
 {
-  unsigned char c;
-  int next;
-  int left = 0, right = 0;
+  guchar c;
+  gint   next;
+  gint   left  = 0;
+  gint   right = 0;
 
   g_string_assign (command, "");
 
   while ((next = fgetc (stdin)) != EOF)
     {
-      c = (unsigned char) next;
+      c = (guchar) next;
 
       if ((c == '\n') && (left == right))
         break;
@@ -101,8 +104,8 @@ read_command (GString *command)
 static void 
 script_fu_text_console_interface (void)
 {
-  gboolean quit = FALSE;
-  GString *command;
+  gboolean  quit = FALSE;
+  GString  *command;
 
   command = g_string_new ("");
 
@@ -115,6 +118,3 @@ script_fu_text_console_interface (void)
 
   g_string_free (command, TRUE);
 }
-
-
-

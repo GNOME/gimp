@@ -22,9 +22,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#if HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #if HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -43,69 +40,60 @@
 
 #include <plug-ins/dbbrowser/dbbrowser_utils.h>
 
-/* FIXME: To get the 'broken' GtkText */
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 #ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>
 #endif
 
+
 #define TEXT_WIDTH  400
 #define TEXT_HEIGHT 400
 #define ENTRY_WIDTH 400
 
-#define BUFSIZE 256
+#define BUFSIZE     256
+
+
+#define message(string) printf("(%s): %d ::: %s\n", __PRETTY_FUNCTION__, __LINE__, string)
+
 
 typedef struct
 {
-  GtkWidget     *console;
+  GtkTextBuffer *console;
   GtkWidget     *cc;
-  GtkAdjustment *vadj;
-
-  GdkFont       *font_strong;
-  GdkFont       *font_emphasis;
-  GdkFont       *font_weak;
-  GdkFont       *font;
+  GtkWidget     *text_view;
 
   gint32         input_id;
 } ConsoleInterface;
 
+
 /*
  *  Local Functions
  */
+static void       script_fu_console_interface  (void);
+static void       script_fu_close_callback     (GtkWidget    *widget,
+						gpointer      data);
+static void       script_fu_browse_callback    (GtkWidget    *widget,
+						gpointer      data);
+static gboolean   script_fu_siod_read          (GIOChannel   *channel,
+						GIOCondition  cond,
+						gpointer      data);
+static gboolean   script_fu_cc_is_empty        (void);
+static gboolean   script_fu_cc_key_function    (GtkWidget    *widget,
+						GdkEventKey  *event,
+						gpointer      data);
 
-static void     script_fu_console_interface  (void);
-static void     script_fu_close_callback     (GtkWidget    *widget,
-					      gpointer      data);
-static void     script_fu_browse_callback    (GtkWidget    *widget,
-					      gpointer      data);
-static gboolean script_fu_siod_read          (GIOChannel   *channel,
-					      GIOCondition  cond,
-					      gpointer      data);
-static gboolean script_fu_cc_is_empty        (void);
-static gboolean script_fu_cc_key_function    (GtkWidget    *widget,
-					      GdkEventKey  *event,
-					      gpointer      data);
+static void       script_fu_open_siod_console  (void);
+static void       script_fu_close_siod_console (void);
 
-static void  script_fu_open_siod_console (void);
-static void  script_fu_close_siod_console(void);
 
 /*
  *  Local variables
  */
-
 static ConsoleInterface cint =
 {
   NULL,  /*  console  */
   NULL,  /*  current command  */
-  NULL,  /*  vertical adjustment  */
-
-  NULL,  /*  strong font  */
-  NULL,  /*  emphasis font  */
-  NULL,  /*  weak font  */
-  NULL,  /*  normal font  */
+  NULL,  /*  text view  */
 
   -1     /*  input id  */
 };
@@ -116,10 +104,8 @@ static gint   history_len = 0;
 static gint   history_cur = 0;
 static gint   history_max = 50;
 
-static gint  siod_output_pipe[2];
+static gint   siod_output_pipe[2];
 
-
-#define message(string) printf("(%s): %d ::: %s\n", __PRETTY_FUNCTION__, __LINE__, string)
 
 /*
  *  Function definitions
@@ -154,7 +140,7 @@ script_fu_console_run (gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
       status = GIMP_PDB_CALLING_ERROR;
-      gimp_message (_("Script-Fu console mode allows only interactive invocation"));
+      g_message (_("Script-Fu console mode allows only interactive invocation"));
       break;
 
     default:
@@ -171,11 +157,11 @@ script_fu_console_run (gchar      *name,
 static void
 script_fu_console_interface (void)
 {
-  GtkWidget  *dlg;
+  GtkWidget  *dialog;
+  GtkWidget  *main_vbox;
   GtkWidget  *button;
   GtkWidget  *label;
-  GtkWidget  *vsb;
-  GtkWidget  *table;
+  GtkWidget  *scrolled_window;
   GtkWidget  *hbox;
   GIOChannel *input_channel;
 
@@ -183,138 +169,129 @@ script_fu_console_interface (void)
 
   gimp_ui_init ("script-fu", FALSE);
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));
-  gimp_help_connect_help_accel (dlg, gimp_standard_help_func, 
-				"filters/script-fu.html");
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) script_fu_close_callback,
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &dlg);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 0);
+  dialog = gimp_dialog_new (_("Script-Fu Console"), "script-fu-console",
+			    gimp_standard_help_func, "filters/script-fu.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  /*  Action area  */
-  button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     (gpointer)dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+			    _("Close"), gtk_widget_destroy, NULL,
+			    1, NULL, FALSE, TRUE,
 
-  /*  The info vbox  */
+			    NULL);
+
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+		    G_CALLBACK (script_fu_close_callback),
+		    NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+		    G_CALLBACK (gtk_widget_destroyed),
+		    &dialog);
+
+  /*  The main vbox  */
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   label = gtk_label_new (_("SIOD Output"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /*  The output text widget  */
-  cint.vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
-  vsb = gtk_vscrollbar_new (cint.vadj);
-  cint.console = gtk_text_new (NULL, cint.vadj);
-  gtk_text_set_editable (GTK_TEXT (cint.console), FALSE);
-  gtk_widget_set_usize (cint.console, TEXT_WIDTH, TEXT_HEIGHT);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_ALWAYS);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_window);
 
-  table  = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  cint.console = gtk_text_buffer_new (NULL);
+  cint.text_view = gtk_text_view_new_with_buffer (cint.console);
+  g_object_unref (G_OBJECT (cint.console));
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (cint.text_view), FALSE);
+  gtk_widget_set_usize (cint.text_view, TEXT_WIDTH, TEXT_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), cint.text_view);
+  gtk_widget_show (cint.text_view);
 
-  gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
-		    0, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), cint.console, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_text_buffer_create_tag (cint.console, "strong",
+			      "weight", PANGO_WEIGHT_BOLD,
+			      "size",   12 * PANGO_SCALE,
+			      NULL);
+  gtk_text_buffer_create_tag (cint.console, "emphasis",
+			      "style",  PANGO_STYLE_OBLIQUE,
+			      "size",   10 * PANGO_SCALE,
+			      NULL);
+  gtk_text_buffer_create_tag (cint.console, "weak",
+			      "size",   10 * PANGO_SCALE,
+			      NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  {
+    const gchar *greeting_texts[] =
+    {
+      "strong",   "The GIMP - GNU Image Manipulation Program\n\n",
+      "emphasis", "Copyright (C) 1995-2001\n",
+      "emphasis", "Spencer Kimball, Peter Mattis and the GIMP Development Team\n",
+      "weak",     "\nThis program is free software; you can redistribute it and/or modify\n",
+      "weak",     "it under the terms of the GNU General Public License as published by\n",
+      "weak",     "the Free Software Foundation; either version 2 of the License, or\n",
+      "weak",     "(at your option) any later version.\n\n",
+      "weak",     "This program is distributed in the hope that it will be useful,\n",
+      "weak",     "but WITHOUT ANY WARRANTY; without even the implied warranty of\n",
+      "weak",     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n",
+      "weak",     "See the GNU General Public License for more details.\n\n",
+      "weak",     "You should have received a copy of the GNU General Public License\n",
+      "weak",     "along with this program; if not, write to the Free Software\n",
+      "weak",     "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n\n",
+      "strong",   "Script-Fu Console - FIXME(\\n)\n",
+      "emphasis", "Interactive Scheme Development\n\n",
+      NULL
+    };
 
-  cint.font_strong = 
-    gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
-  cint.font_emphasis = 
-    gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
-  cint.font_weak = 
-    gdk_font_load ("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*");
-  cint.font = 
-    gdk_fontset_load ("-*-*-medium-r-normal-*-*-100-*-*-c-*-iso8859-1,*");
+    GtkTextIter cursor;
+    gint        i;
 
-  /*  Realize the widget before allowing new text to be inserted  */
-  gtk_widget_realize (cint.console);
+    gtk_text_buffer_get_end_iter (cint.console, &cursor);
 
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
-		   "The GIMP - GNU Image Manipulation Program\n\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
-		   "Copyright (C) 1995-2001\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
-		   "Spencer Kimball, Peter Mattis and the GIMP Development Team\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "This program is free software; you can redistribute it and/or modify\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "it under the terms of the GNU General Public License as published by\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "the Free Software Foundation; either version 2 of the License, or\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "(at your option) any later version.\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "This program is distributed in the hope that it will be useful,\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "but WITHOUT ANY WARRANTY; without even the implied warranty of\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "See the GNU General Public License for more details.\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "You should have received a copy of the GNU General Public License\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "along with this program; if not, write to the Free Software\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "\n\n", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
-		   "Script-Fu Console - ", -1);
-  gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
-		   "Interactive Scheme Development\n\n", -1);
-
-  gtk_widget_show (vsb);
-  gtk_widget_show (cint.console);
-  gtk_widget_show (table);
+    for (i = 0; greeting_texts[i]; i += 2)
+      {
+	gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+						  greeting_texts[i + 1], -1,
+						  greeting_texts[i],
+						  NULL);
+      }
+  }
 
   /*  The current command  */
   label = gtk_label_new (_("Current Command"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new ( FALSE, 0 );
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_widget_set_usize (hbox, ENTRY_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-    
+
   cint.cc = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), cint.cc, 
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), cint.cc, TRUE, TRUE, 0);
   GTK_WIDGET_SET_FLAGS (cint.cc, GTK_CAN_DEFAULT);
   gtk_widget_grab_default (cint.cc);
-  gtk_signal_connect (GTK_OBJECT (cint.cc), "key_press_event",
-		      (GtkSignalFunc) script_fu_cc_key_function,
-		      NULL);
+  gtk_widget_show (cint.cc);
+
+  g_signal_connect (G_OBJECT (cint.cc), "key_press_event",
+		    G_CALLBACK (script_fu_cc_key_function),
+		    NULL);
 
   button = gtk_button_new_with_label (_("Browse..."));
-  gtk_box_pack_start (GTK_BOX (hbox), button, 
-		      FALSE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) script_fu_browse_callback,
-		      NULL);
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
-  gtk_widget_show (cint.cc);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (script_fu_browse_callback),
+		    NULL);
 
   input_channel = g_io_channel_unix_new (siod_output_pipe[0]);
   cint.input_id = g_io_add_watch (input_channel,
@@ -323,19 +300,17 @@ script_fu_console_interface (void)
 				  NULL);
 
   /*  Initialize the history  */
-  history = g_list_append (history, NULL);
+  history     = g_list_append (history, NULL);
   history_len = 1;
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
   gtk_main ();
 
   g_source_remove (cint.input_id);
 
-  if (dlg)
-    gtk_widget_destroy (dlg);
-
-  gdk_flush ();
+  if (dialog)
+    gtk_widget_destroy (dialog);
 }
 
 static void
@@ -382,25 +357,31 @@ static void
 script_fu_browse_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (apply_callback));
+  gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (apply_callback));
 }
 
 static gboolean
-script_fu_console_scroll_end (gpointer data)
+script_fu_console_idle_scroll_end (gpointer data)
 {
-  /* The Text widget in 1.0.1 doesn't like being scrolled before
-   * it is size-allocated, so we wait for it
-   */
-  if ((cint.console->allocation.width > 1) && 
-      (cint.console->allocation.height > 1))
-    {
-      cint.vadj->value = cint.vadj->upper - cint.vadj->page_size;
-      gtk_signal_emit_by_name (GTK_OBJECT (cint.vadj), "changed");
-    }
-  else
-    gtk_idle_add (script_fu_console_scroll_end, NULL);
-  
+  GtkAdjustment *adj;
+
+  adj = GTK_ADJUSTMENT (data);
+
+  gtk_adjustment_set_value (adj, adj->upper - adj->page_size);
+
   return FALSE;
+}
+
+static void
+script_fu_console_scroll_end (void)
+{
+  GtkTextView *view;
+
+  view = GTK_TEXT_VIEW (cint.text_view);
+
+  /*  the text view idle updates so we need to idle scroll too
+   */
+  g_idle_add (script_fu_console_idle_scroll_end, view->vadjustment);
 }
 
 static gboolean
@@ -408,37 +389,24 @@ script_fu_siod_read (GIOChannel  *channel,
 		     GIOCondition cond,
 		     gpointer     data)
 {
-  static gboolean hack = FALSE;
-  gint            count;
-  GIOError        error;
+  gint        count;
+  GIOError    error;
+  GtkTextIter cursor;
 
   count = 0;
   error = g_io_channel_read (channel, read_buffer, BUFSIZE - 1, &count);
 
   if (error == G_IO_ERROR_NONE)
     {
-#ifndef G_OS_WIN32
-      /* Is this needed any longer on Unix? */
-      if (!hack) /* this is a stupid hack, but as of 10/27/98
-		 * the script-fu-console will hang on my system without it.
-		 * the real cause of this needs to be tracked down.
-		 * posibly a problem with the text widget, or the
-		 * signal handlers not getting fully initialized or...
-		 * no reports of hangs on other platforms, could just be a
-		 * problem with my system.
-		 */
-      {
-	hack = TRUE;
-	return TRUE;
-      }
-#endif
       read_buffer[count] = '\0';
-      gtk_text_freeze (GTK_TEXT (cint.console));
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		       read_buffer, -1);
-      gtk_text_thaw (GTK_TEXT (cint.console));
 
-      script_fu_console_scroll_end (NULL);
+      gtk_text_buffer_get_end_iter (cint.console, &cursor);
+      gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+						read_buffer, -1,
+						"weak",
+						NULL);
+
+      script_fu_console_scroll_end ();
     }
 
   return TRUE;
@@ -447,7 +415,7 @@ script_fu_siod_read (GIOChannel  *channel,
 static gboolean
 script_fu_cc_is_empty (void)
 {
-  gchar *str;
+  const gchar *str;
 
   if ((str = gtk_entry_get_text (GTK_ENTRY (cint.cc))) == NULL)
     return TRUE;
@@ -468,8 +436,9 @@ script_fu_cc_key_function (GtkWidget   *widget,
 			   GdkEventKey *event,
 			   gpointer     data)
 {
-  GList *list;
-  gint   direction = 0;
+  GList       *list;
+  gint         direction = 0;
+  GtkTextIter  cursor;
 
   switch (event->keyval)
     {
@@ -484,20 +453,36 @@ script_fu_cc_key_function (GtkWidget   *widget,
 	g_free (list->data);
       list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (cint.cc)));
 
-      gtk_text_freeze (GTK_TEXT (cint.console));
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL, 
-		       "=> ", -1);
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font, NULL, NULL,
-		       gtk_entry_get_text (GTK_ENTRY (cint.cc)), -1);
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font, NULL, NULL, 
-		       "\n\n", -1);
-      gtk_text_thaw (GTK_TEXT (cint.console));
+      gtk_text_buffer_get_end_iter (cint.console, &cursor);
 
-      cint.vadj->value = cint.vadj->upper - cint.vadj->page_size;
-      gtk_signal_emit_by_name (GTK_OBJECT (cint.vadj), "changed");
+      gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+						"=> FIXME(\\n)\n", -1,
+						"strong",
+						NULL);
+      {
+	gchar *eek;
+
+	eek = g_strdup_printf ("%s\n\n",
+			       gtk_entry_get_text (GTK_ENTRY (cint.cc)));
+
+	gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+						  eek, -1,
+						  "weak",
+						  NULL);
+
+	g_free (eek);
+      }
+
+      /*
+      gtk_text_buffer_insert_with_tags_by_name (cint.console, &cursor,
+						"\n\n", -1,
+						"weak",
+						NULL);
+      */
+
+      script_fu_console_scroll_end ();
 
       gtk_entry_set_text (GTK_ENTRY (cint.cc), "");
-      gdk_flush ();
 
       siod_interpret_string ((char *) list->data);
       gimp_displays_flush ();
@@ -595,13 +580,13 @@ script_fu_open_siod_console (void)
             }
           else 
             {
-              gimp_message (_("Unable to open a stream on the SIOD output pipe"));
+              g_message (_("Unable to open a stream on the SIOD output pipe"));
               siod_output = stdout;
             }
         } 
       else
         {
-          gimp_message (_("Unable to open the SIOD output pipe"));
+          g_message (_("Unable to open the SIOD output pipe"));
           siod_output = stdout;
         }
     }
@@ -646,7 +631,7 @@ script_fu_eval_run (gchar      *name,
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      gimp_message (_("Script-Fu evaluate mode allows only noninteractive invocation"));
+      g_message (_("Script-Fu evaluate mode allows only noninteractive invocation"));
       break;
 
     default:
@@ -659,4 +644,3 @@ script_fu_eval_run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
-

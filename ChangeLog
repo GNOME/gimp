@@ -1,3 +1,22 @@
+2001-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimphelp.c: code formating paranoia.
+
+	* app/core/gimp.c: one more g_signal_connect().
+
+	* app/tools/gimpmeasuretool.c: a gtk_widget_show() was optimized
+	away :)
+
+	* plug-ins/Makefile.am: re-enabled script-fu and dbbrowser.
+
+	* plug-ins/dbbrowser/dbbrowser_utils.[ch]
+	* plug-ins/script-fu/script-fu-console.[ch]
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-text-console.[ch]
+	* plug-ins/script-fu/script-fu.c: use GtkTextBuffer/GtkTextView
+	all over the place. GUI code cleanup in the dbbrowser and
+	the script-fu console.
+
 2001-07-29  Sven Neumann  <sven@gimp.org>
 
 	* app/devices.c

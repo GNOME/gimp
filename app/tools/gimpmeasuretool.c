@@ -814,6 +814,7 @@ measure_tool_options_new (void)
 				options->use_info_window_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w,
 		      FALSE, FALSE, 0);
+  gtk_widget_show (options->use_info_window_w);
 
   g_signal_connect (G_OBJECT (options->use_info_window_w), "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),

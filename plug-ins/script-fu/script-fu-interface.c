@@ -35,10 +35,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-/* FIXME: To get the 'broken' GtkText */
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 #include "siod.h"
 #include "script-fu-scripts.h"
 
@@ -257,16 +253,16 @@ extern gchar        siod_err_msg[];
 void
 script_fu_find_scripts (void)
 {
-  gchar *path_str;
-  gchar *home;
-  gchar *local_path;
-  gchar *path;
-  gchar *filename;
-  gchar *token;
-  gchar *next_token;
-  gchar *command;
-  gint   my_err;
-  DIR   *dir;
+  const gchar   *home;
+  gchar         *path_str;
+  gchar         *local_path;
+  gchar         *path;
+  gchar         *filename;
+  gchar         *token;
+  gchar         *next_token;
+  gchar         *command;
+  gint           my_err;
+  DIR           *dir;
   struct dirent *dir_ent;
 
   /*  Make sure to clear any existing scripts  */
@@ -1226,9 +1222,10 @@ script_fu_interface (SFScript *script)
   gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
   gtk_window_set_title (GTK_WINDOW (dlg), sf_interface->window_title);
   gtk_window_set_wmclass (GTK_WINDOW (dlg), "script_fu", "Gimp");
-  gtk_signal_connect_object (GTK_OBJECT (dlg), "delete_event",
-			     GTK_SIGNAL_FUNC (script_fu_interface_quit),
-			     (GtkObject *) script);
+
+  g_signal_connect_swapped (G_OBJECT (dlg), "delete_event",
+			    G_CALLBACK (script_fu_interface_quit),
+			    script);
 			     
   gimp_help_connect_help_accel (dlg, gimp_standard_help_func,
 				"filters/script-fu.html");
@@ -1312,10 +1309,11 @@ script_fu_interface (SFScript *script)
 				   COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT,
 				   &script->arg_values[i].sfa_color,
 				   GIMP_COLOR_AREA_FLAT);
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]),
-			      "color_changed",
-			      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
-			      &script->arg_values[i].sfa_color);
+
+	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]),
+			    "color_changed",
+			    G_CALLBACK (gimp_color_button_get_color),
+			    &script->arg_values[i].sfa_color);
 	  break;
 
 	case SF_TOGGLE:
@@ -1325,10 +1323,11 @@ script_fu_interface (SFScript *script)
 	    gtk_check_button_new_with_label (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), 
-			      "toggled",
-			      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-			      &script->arg_values[i].sfa_toggle);
+
+	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]), 
+			    "toggled",
+			    G_CALLBACK (gimp_toggle_button_update),
+			    &script->arg_values[i].sfa_toggle);
 	  break;
 
 	case SF_VALUE:
@@ -1391,10 +1390,10 @@ script_fu_interface (SFScript *script)
 	  script->arg_values[i].sfa_file.fileselection = 
 	    sf_interface->args_widgets[i];
 
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]),
-			      "filename_changed",
-			      (GtkSignalFunc) script_fu_file_selection_callback,
-			      &script->arg_values[i].sfa_file);
+	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]),
+			    "filename_changed",
+			    G_CALLBACK (script_fu_file_selection_callback),
+			    &script->arg_values[i].sfa_file);
 	  break;
 
 	case SF_FONT:
@@ -1412,10 +1411,9 @@ script_fu_interface (SFScript *script)
 	  script_fu_font_preview (script->arg_values[i].sfa_font.preview,
 				  script->arg_values[i].sfa_font.fontname);
 
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), 
-			      "clicked",
-			      (GtkSignalFunc) script_fu_font_preview_callback,
-			      &script->arg_values[i].sfa_font);	  
+	  g_signal_connect (G_OBJECT (sf_interface->args_widgets[i]), "clicked",
+			    G_CALLBACK (script_fu_font_preview_callback),
+			    &script->arg_values[i].sfa_font);	  
 	  break;
 
 	case SF_PATTERN:
@@ -1454,7 +1452,7 @@ script_fu_interface (SFScript *script)
 	      menu_item = gtk_menu_item_new_with_label (gettext ((gchar *)list->data));
 	      gtk_object_set_user_data (GTK_OBJECT (menu_item), 
 					GUINT_TO_POINTER (j));
-	      gtk_menu_append (GTK_MENU (menu), menu_item);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 	      gtk_widget_show (menu_item);
 	    }
 
@@ -1481,15 +1479,16 @@ script_fu_interface (SFScript *script)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_widget_show (hbox);
 
   button = gtk_button_new_with_label (_("Reset to Defaults"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) script_fu_reset_callback,
-		      script);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  gtk_widget_show (hbox);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (script_fu_reset_callback),
+		    script);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -1503,44 +1502,45 @@ script_fu_interface (SFScript *script)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_box_pack_start (GTK_BOX (main_box), hbox, FALSE, TRUE, 0);
+  gtk_widget_show (hbox);
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
 
   button = gtk_button_new_with_label (_("About"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (script_fu_about_callback),
-                      script);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_show (button);
 
-  gtk_widget_show (bbox);
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (script_fu_about_callback),
+		    script);
 
   bbox = gtk_hbutton_box_new ();
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (script_fu_ok_callback),
-		      script);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (script_fu_ok_callback),
+		    script);
+
   button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (script_fu_interface_quit),
-			     (GtkObject *) script);
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_show (button);
 
-  gtk_widget_show (bbox);
-  gtk_widget_show (hbox);
+  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+			    G_CALLBACK (script_fu_interface_quit),
+			    script);
 
   /* The statusbar (well it's a faked statusbar...) */
   hbox = gtk_hbox_new (FALSE, 0);
@@ -1833,13 +1833,13 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 
 	case SF_VALUE:
-	  text = gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
+	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
 	  script->arg_values[i].sfa_value = g_strdup (text); 
 	  break;
 
 	case SF_STRING:
-	  text = gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
+	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
 	  script->arg_values[i].sfa_value = g_strdup (text); 
 	  escaped = ESCAPE (text);
@@ -1940,30 +1940,37 @@ static void
 script_fu_about_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *table;
-  GtkWidget *text;
-  GtkWidget *vscrollbar;
+  GtkWidget     *dialog;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkWidget     *scrolled_window;
+  GtkWidget     *table;
+  GtkWidget     *text_view;
+  GtkTextBuffer *text_buffer;
 
   SFScript  *script = (SFScript *) data;
 
   if (sf_interface->about_dialog == NULL)
     {
-      dialog = gtk_dialog_new ();
-      gtk_window_set_title (GTK_WINDOW (dialog), sf_interface->window_title);
-      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-      gtk_signal_connect_object (GTK_OBJECT (dialog), "delete_event",
-				 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-				 GTK_OBJECT (dialog));
+      dialog = gimp_dialog_new (sf_interface->window_title, "script-fu-about",
+				gimp_standard_help_func,
+				"filters/script-fu.html",
+				GTK_WIN_POS_MOUSE,
+				FALSE, TRUE, FALSE,
 
-      gimp_help_connect_help_accel (dialog, gimp_standard_help_func,
-				    "filters/script-fu.html");
-  
+				_("Close"), gtk_widget_destroy, NULL,
+				1, NULL, TRUE, TRUE,
+
+				NULL);
+
+      sf_interface->about_dialog = dialog;
+
+      g_signal_connect (G_OBJECT (dialog), "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&sf_interface->about_dialog);
+
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
@@ -1987,30 +1994,24 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_widget_show (label);
  
       /* the help display */
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-      gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-      gtk_widget_show (table);
+      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				      GTK_POLICY_AUTOMATIC,
+				      GTK_POLICY_AUTOMATIC);
+      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+      gtk_widget_show (scrolled_window);
 
-      text = gtk_text_new (NULL, NULL);
-      gtk_text_set_editable (GTK_TEXT (text), FALSE);
-      gtk_text_set_word_wrap (GTK_TEXT (text), TRUE);      
-      gtk_table_attach (GTK_TABLE (table), text, 0, 1, 0, 1,
-			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-			GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_set_usize (text, 200, 60);
-      gtk_widget_show (text);
+      text_buffer = gtk_text_buffer_new (NULL);
+      text_view = gtk_text_view_new_with_buffer (text_buffer);
+      g_object_unref (G_OBJECT (text_buffer));
 
-      vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-      gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
-			GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (vscrollbar);
+      gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+      gtk_widget_set_usize (text_view, 200, 60);
+      gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+      gtk_widget_show (text_view);
 
-      gtk_widget_realize (text);
-      gtk_text_freeze (GTK_TEXT (text));
-      gtk_text_insert (GTK_TEXT (text), NULL, &text->style->black, NULL,
-		       script->help, -1);
+      gtk_text_buffer_set_text (text_buffer, script->help, -1);
    
       /* author, copyright, etc. */
       table = gtk_table_new (2, 4, FALSE);
@@ -2046,25 +2047,6 @@ script_fu_about_callback (GtkWidget *widget,
 	}
 
       gtk_widget_show (frame);
-      gtk_text_thaw (GTK_TEXT (text));
-
-      /*  action area  */
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-      button = gtk_button_new_with_label (_("Close"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				 GTK_SIGNAL_FUNC (gtk_widget_destroy),
-				 GTK_OBJECT (dialog));
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), 
-			  button, TRUE, TRUE, 0);
-      gtk_widget_grab_default (button);
-      gtk_widget_show (button);
-
-      sf_interface->about_dialog = dialog;
-
-      gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &sf_interface->about_dialog);
     }
 
   gtk_window_set_position (GTK_WINDOW (sf_interface->about_dialog),
@@ -2201,27 +2183,29 @@ script_fu_font_preview_callback (GtkWidget *widget,
 
   font = (SFFont *) data;
 
-  if (!font->dialog)
+  if (! font->dialog)
     {
-      font->dialog = 
+      font->dialog =
 	gtk_font_selection_dialog_new (_("Script-Fu Font Selection"));
       fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
 
-      gtk_signal_connect (GTK_OBJECT (fsd->ok_button), "clicked",
-			  GTK_SIGNAL_FUNC (script_fu_font_dialog_ok),
-			  font);
-      gtk_signal_connect (GTK_OBJECT (fsd), "delete_event",
-			  GTK_SIGNAL_FUNC (script_fu_font_dialog_delete),
-			  font);
-      gtk_signal_connect (GTK_OBJECT (fsd), "destroy",
-			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			  &font->dialog);
-      gtk_signal_connect (GTK_OBJECT (fsd->cancel_button), "clicked",
-			  GTK_SIGNAL_FUNC (script_fu_font_dialog_cancel),
-			  font);
+      g_signal_connect (G_OBJECT (fsd->ok_button), "clicked",
+			G_CALLBACK (script_fu_font_dialog_ok),
+			font);
+      g_signal_connect (G_OBJECT (fsd), "delete_event",
+			G_CALLBACK (script_fu_font_dialog_delete),
+			font);
+      g_signal_connect (G_OBJECT (fsd), "destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&font->dialog);
+      g_signal_connect (G_OBJECT (fsd->cancel_button), "clicked",
+			G_CALLBACK (script_fu_font_dialog_cancel),
+			font);
     }
   else
-    fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
+    {
+      fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
+    }
 
   gtk_font_selection_dialog_set_font_name (fsd, font->fontname);
   gtk_window_set_position (GTK_WINDOW (font->dialog), GTK_WIN_POS_MOUSE);

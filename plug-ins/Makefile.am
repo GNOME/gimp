@@ -30,8 +30,8 @@ EXTRA_DIST = \
 
 SUBDIRS = 			\
 	libgck			\
-##	dbbrowser		\
-##	script-fu		\
+	dbbrowser		\
+	script-fu		\
 ##	$(GIMP_PERL)		\
 	FractalExplorer		\
 	Lighting		\

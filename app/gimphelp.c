@@ -208,13 +208,13 @@ gimp_help_internal (const gchar *help_path,
 	}
 
       args = g_new (Argument, 4);
-      args[0].arg_type = GIMP_PDB_INT32;
-      args[0].value.pdb_int = RUN_INTERACTIVE;
-      args[1].arg_type = GIMP_PDB_STRING;
+      args[0].arg_type          = GIMP_PDB_INT32;
+      args[0].value.pdb_int     = RUN_INTERACTIVE;
+      args[1].arg_type          = GIMP_PDB_STRING;
       args[1].value.pdb_pointer = (gpointer) help_path;
-      args[2].arg_type = GIMP_PDB_STRING;
+      args[2].arg_type          = GIMP_PDB_STRING;
       args[2].value.pdb_pointer = (gpointer) current_locale;
-      args[3].arg_type = GIMP_PDB_STRING;
+      args[3].arg_type          = GIMP_PDB_STRING;
       args[3].value.pdb_pointer = (gpointer) help_data;
 
       plug_in_run (proc_rec, args, 4, FALSE, TRUE, 0);

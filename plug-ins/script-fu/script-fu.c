@@ -199,16 +199,17 @@ script_fu_run (gchar      *name,
       siod_init (FALSE);
     }
 
-
   /*  Load all of the available scripts  */
   script_fu_find_scripts ();
 
-  /*
-   *  The main, automatically installed script fu extension.
-   *  For things like logos and effects that are runnable from GIMP menus.
-   */
   if (strcmp (name, "extension_script_fu") == 0)
     {
+      /*
+       *  The main, automatically installed script fu extension.  For
+       *  things like logos and effects that are runnable from GIMP
+       *  menus.
+       */
+
       static GimpParam  values[1];
       GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
@@ -224,32 +225,43 @@ script_fu_run (gchar      *name,
       values[0].type          = GIMP_PDB_STATUS;
       values[0].data.d_status = status;
     }
-  /*
-   *  The script-fu consoles for interactive SIOD development
-   */
   else if (strcmp (name, "extension_script_fu_text_console") == 0)
     {
-      script_fu_text_console_run (name, nparams, param, nreturn_vals, return_vals);
+      /*
+       *  The script-fu text console for interactive SIOD development
+       */
+
+      script_fu_text_console_run (name, nparams, param,
+				  nreturn_vals, return_vals);
     }
   else if (strcmp (name, "extension_script_fu_console") == 0)
     {
-      script_fu_console_run (name, nparams, param, nreturn_vals, return_vals);
+      /*
+       *  The script-fu console for interactive SIOD development
+       */
+
+      script_fu_console_run (name, nparams, param,
+			     nreturn_vals, return_vals);
     }
 #ifndef G_OS_WIN32
-  /*
-   *  The script-fu server for remote operation
-   */
   else if (strcmp (name, "extension_script_fu_server") == 0)
     {
-      script_fu_server_run (name, nparams, param, nreturn_vals, return_vals);
+      /*
+       *  The script-fu server for remote operation
+       */
+
+      script_fu_server_run (name, nparams, param,
+			    nreturn_vals, return_vals);
     }
 #endif
-  /*
-   *  A non-interactive "console" (for batch mode)
-   */
   else if (strcmp (name, "extension_script_fu_eval") == 0)
     {
-      script_fu_eval_run (name, nparams, param, nreturn_vals, return_vals);
+      /*
+       *  A non-interactive "console" (for batch mode)
+       */
+
+      script_fu_eval_run (name, nparams, param,
+			  nreturn_vals, return_vals);
     }
 }
 
