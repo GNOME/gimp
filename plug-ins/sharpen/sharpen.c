@@ -44,23 +44,17 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.6  1998/04/28 03:50:19  yosh
- *   * plug-ins/animationplay/animationplay.c
- *   * plug-ins/CEL/CEL.c
- *   * plug-ins/psd/psd.c
- *   * plug-ins/xd/xd.c: applied gimp-joke-980427-0, warning cleanups
+ *   Revision 1.7  1998/06/06 23:22:22  yosh
+ *   * adding Lighting plugin
  *
- *   * app/temp_buf.c: applied gimp-entity-980427-0, temp_buf swap speedups and
- *   more robust tempfile handling
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
  *
- *   Revision 1.5  1998/04/27 22:01:01  neo
- *   Updated sharpen and despeckle. Wow, sharpen is balzingly fast now, while
- *   despeckle is still sort of lame...
- *
- *
- *   --Sven
+ *   Revision 1.14  1998/05/17 16:01:33  mike
+ *   Removed signal handler stuff used for debugging.
+ *   Added gtk_rc_parse().
+ *   Removed extra variables.
  *
  *   Revision 1.13  1998/04/27  15:55:38  mike
  *   Sharpen would shift the image down one pixel; was using the wrong "source"
@@ -133,7 +127,7 @@
  */
 
 #define PLUG_IN_NAME		"plug_in_sharpen"
-#define PLUG_IN_VERSION		"1.3 - 27 April 1998"
+#define PLUG_IN_VERSION		"1.4.2 - 3 June 1998"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
@@ -342,8 +336,8 @@ run(char   *name,		/* I - Name of filter program. */
 
     default :
         status = STATUS_CALLING_ERROR;
-        break;
-  }
+        break;;
+  };
 
  /*
   * Sharpen the image...
@@ -383,7 +377,7 @@ run(char   *name,		/* I - Name of filter program. */
     }
     else
       status = STATUS_EXECUTION_ERROR;
-  }
+  };
 
  /*
   * Reset the current run status...
@@ -414,7 +408,7 @@ compute_luts(void)
   {
     pos_lut[i] = 100 * i / fact;
     neg_lut[i] = sharpen_percent * i / 8 / fact;
-  }
+  };
 }
 
 
@@ -463,7 +457,7 @@ sharpen(void)
   {
     src_rows[row] = g_malloc(width * sizeof(guchar));
     neg_rows[row] = g_malloc(width * sizeof(guchar));
-  }
+  };
 
   dst_row = g_malloc(width * sizeof(guchar));
 
@@ -498,7 +492,7 @@ sharpen(void)
     case 4 :
         filter = rgba_filter;
         break;
-  }
+  };
 
  /*
   * Sharpen...
@@ -539,7 +533,7 @@ sharpen(void)
       */
    
       count --;
-    }
+    };
 
    /*
     * Now sharpen pixels and save the results...
@@ -558,10 +552,17 @@ sharpen(void)
 
       gimp_pixel_rgn_set_row(&dst_rgn, dst_row, sel_x1, y, sel_width);
     }
+    else if (count == 2)
+    {
+      if (y == sel_y1)
+        gimp_pixel_rgn_set_row(&dst_rgn, src_rows[0], sel_x1, y, sel_width);
+      else
+        gimp_pixel_rgn_set_row(&dst_rgn, src_rows[2], sel_x1, y, sel_width);
+    };
 
     if ((y & 15) == 0)
       gimp_progress_update((double)(y - sel_y1) / (double)sel_height);
-  }
+  };
 
  /*
   * OK, we're done.  Free all memory used...
@@ -571,7 +572,7 @@ sharpen(void)
   {
     g_free(src_rows[row]);
     g_free(neg_rows[row]);
-  }
+  };
 
   g_free(dst_row);
 
@@ -621,9 +622,6 @@ sharpen_dialog(void)
 
   gtk_widget_set_default_visual(gtk_preview_get_visual());
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
-
-  signal(SIGBUS, SIG_DFL);
-  signal(SIGSEGV, SIG_DFL);
 
  /*
   * Dialog window...
@@ -852,7 +850,7 @@ preview_update(void)
     case 4 :
         filter = rgba_filter;
         break;
-  }
+  };
 
  /*
   * Sharpen...
@@ -907,7 +905,7 @@ preview_update(void)
               else
                 image_ptr[0] = image_ptr[1] = image_ptr[2] =
                     check + ((dst_ptr[0] - check) * dst_ptr[1]) / 255;
-	    }
+	    };
         break;
 
     case 3 :
@@ -942,10 +940,10 @@ preview_update(void)
                 image_ptr[0] = check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
                 image_ptr[1] = check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
                 image_ptr[2] = check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
-              }
-	    }
+              };
+	    };
         break;
-  }
+  };
 
  /*
   * Draw the preview image on the screen...
@@ -1065,7 +1063,7 @@ dialog_iscale_update(GtkAdjustment *adjustment,	/* I - New value */
     compute_luts();
 
     preview_update();
-  }
+  };
 }
 
 
@@ -1098,8 +1096,8 @@ dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
       compute_luts();
 
       preview_update();
-    }
-  }
+    };
+  };
 }
 
 
@@ -1174,7 +1172,7 @@ gray_filter(int    width,	/* I - Width of line in pixels */
     neg1 ++;
     neg2 ++;
     width --;
-  }
+  };
 
   *dst++ = *src++;
 }
@@ -1216,7 +1214,7 @@ graya_filter(int    width,	/* I - Width of line in pixels */
     neg1 += 2;
     neg2 += 2;
     width --;
-  }
+  };
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -1279,7 +1277,7 @@ rgb_filter(int    width,	/* I - Width of line in pixels */
     neg1 += 3;
     neg2 += 3;
     width --;
-  }
+  };
 
   *dst++ = *src++;
   *dst++ = *src++;
@@ -1346,7 +1344,7 @@ rgba_filter(int    width,	/* I - Width of line in pixels */
     neg1 += 4;
     neg2 += 4;
     width --;
-  }
+  };
 
   *dst++ = *src++;
   *dst++ = *src++;

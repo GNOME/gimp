@@ -562,6 +562,7 @@ plug-ins/screenshot/Makefile
 plug-ins/sharpen/Makefile
 plug-ins/psd/Makefile
 plug-ins/gpc/Makefile
+plug-ins/Lighting/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

@@ -5,6 +5,7 @@ SUBDIRS = 			\
 	megawidget		\
 	gpc			\
 	MapObject		\
+	Lighting		\
 	AlienMap		\
 	dbbrowser		\
 	script-fu		\

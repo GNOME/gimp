@@ -38,20 +38,10 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.6  1998/04/24 02:18:46  yosh
- *   * Added sharpen to stable dist
+ *   Revision 1.7  1998/06/06 23:22:21  yosh
+ *   * adding Lighting plugin
  *
- *   * updated sgi and despeckle plugins
- *
- *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
- *   to this is not-supported.
- *
- *   * plug-in/gfig/gfig.c: spelling corrections :)
- *
- *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
- *   file dialog
- *
- *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
+ *   * updated despeckle, png, sgi, and sharpen
  *
  *   -Yosh
  *
@@ -125,19 +115,19 @@ sgiClose(sgi_t *sgip)	/* I - SGI image */
          i --, offset ++)
       if (putlong(offset[0], sgip->file) < 0)
         return (-1);
-  }
+  };
 
   if (sgip->table != NULL)
   {
     free(sgip->table[0]);
     free(sgip->table);
-  }
+  };
 
   if (sgip->length != NULL)
   {
     free(sgip->length[0]);
     free(sgip->length);
-  }
+  };
 
   if (sgip->comp == SGI_COMP_ARLE)
     free(sgip->arle_row);
@@ -190,7 +180,7 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
         {
           for (x = sgip->xsize; x > 0; x --, row ++)
             *row = getshort(sgip->file);
-        }
+        };
         break;
 
     case SGI_COMP_RLE :
@@ -203,7 +193,7 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
         else
           return (read_rle16(sgip->file, row, sgip->xsize));
         break;
-  }
+  };
 
   return (0);
 }
@@ -275,7 +265,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         {
           free(sgip);
           return (NULL);
-        }
+        };
 
         sgip->comp  = getc(sgip->file);
         sgip->bpp   = getc(sgip->file);
@@ -302,7 +292,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
           for (i = 0; i < sgip->zsize; i ++)
             for (j = 0; j < sgip->ysize; j ++)
               sgip->table[i][j] = getlong(sgip->file);
-        }
+        };
         break;
 
     case SGI_WRITE :
@@ -314,7 +304,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         {
           free(sgip);
           return (NULL);
-        }
+        };
 
         sgip->mode = SGI_WRITE;
 
@@ -334,7 +324,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
         {
           putlong(-32768, sgip->file);	/* Minimum pixel */
           putlong(32767, sgip->file);	/* Maximum pixel */
-        }
+        };
         putlong(0, sgip->file);		/* Reserved */
 
         memset(name, 0, sizeof(name));
@@ -360,7 +350,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
               {
         	for (i = xsize * ysize * zsize; i > 0; i --)
         	  putshort(0, sgip->file);
-              }
+              };
               break;
 
           case SGI_COMP_ARLE : /* Aggressive RLE */
@@ -386,13 +376,13 @@ sgiOpenFile(FILE *file,	/* I - File to open */
               for (i = 1; i < sgip->zsize; i ++)
         	sgip->length[i] = sgip->length[0] + i * sgip->ysize;
               break;
-        }
+        };
         break;
 
     default :
         free(sgip);
         return (NULL);
-  }
+  };
 
   return (sgip);
 }
@@ -439,7 +429,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
         {
           for (x = sgip->xsize; x > 0; x --, row ++)
             putshort(*row, sgip->file);
-        }
+        };
         break;
 
     case SGI_COMP_ARLE :
@@ -461,8 +451,8 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
             sgip->table[z][y]  = sgip->arle_offset;
             sgip->length[z][y] = sgip->arle_length;
             return (0);
-          }
-        }
+          };
+        };
 
        /*
         * If that didn't match, search all the previous rows...
@@ -479,7 +469,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
             {
               x = 0;
               break;
-            }
+            };
 
             for (x = 0; x < sgip->xsize; x ++)
               if (row[x] != sgip->arle_row[x])
@@ -496,14 +486,14 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
             {
               x = 0;
               break;
-            }
+            };
 
             for (x = 0; x < sgip->xsize; x ++)
               if (row[x] != sgip->arle_row[x])
         	break;
           }
           while (x < sgip->xsize);
-        }
+        };
 
 	if (x == sgip->xsize)
 	{
@@ -533,13 +523,13 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
           sgip->arle_offset = offset;
           sgip->arle_length = x;
           memcpy(sgip->arle_row, row, sgip->xsize * sizeof(short));
-        }
+        };
 
         sgip->nextrow      = ftell(sgip->file);
         sgip->length[z][y] = x;
 
         return (x);
-  }
+  };
 
   return (0);
 }
@@ -651,8 +641,8 @@ read_rle8(FILE           *fp,	/* I - File to read from */
       length ++;
       for (i = 0; i < count; i ++, row ++, xsize --)
         *row = ch;
-    }
-  }
+    };
+  };
 
   return (xsize > 0 ? -1 : length);
 }
@@ -696,8 +686,8 @@ read_rle16(FILE           *fp,	/* I - File to read from */
       length ++;
       for (i = 0; i < count; i ++, row ++, xsize --)
         *row = ch;
-    }
-  }
+    };
+  };
 
   return (xsize > 0 ? -1 : length * 2);
 }
@@ -730,7 +720,7 @@ write_rle8(FILE           *fp,	/* I - File to write to */
     {
       row ++;
       x --;
-    }
+    };
 
     row -= 2;
     x   += 2;
@@ -752,8 +742,8 @@ write_rle8(FILE           *fp,	/* I - File to write to */
         start ++;
         i --;
         length ++;
-      }
-    }
+      };
+    };
 
     if (x <= 0)
       break;
@@ -768,7 +758,7 @@ write_rle8(FILE           *fp,	/* I - File to write to */
     {
       row ++;
       x --;
-    }
+    };
 
     count = row - start;
     while (count > 0)
@@ -783,8 +773,8 @@ write_rle8(FILE           *fp,	/* I - File to write to */
       if (putc(repeat, fp) == EOF)
         return (-1);
       length ++;
-    }
-  }
+    };
+  };
 
   length ++;
 
@@ -822,7 +812,7 @@ write_rle16(FILE           *fp,	/* I - File to write to */
     {
       row ++;
       x --;
-    }
+    };
 
     row -= 2;
     x   += 2;
@@ -844,8 +834,8 @@ write_rle16(FILE           *fp,	/* I - File to write to */
         start ++;
         i --;
         length ++;
-      }
-    }
+      };
+    };
 
     if (x <= 0)
       break;
@@ -860,7 +850,7 @@ write_rle16(FILE           *fp,	/* I - File to write to */
     {
       row ++;
       x --;
-    }
+    };
 
     count = row - start;
     while (count > 0)
@@ -875,8 +865,8 @@ write_rle16(FILE           *fp,	/* I - File to write to */
       if (putshort(repeat, fp) == EOF)
         return (-1);
       length ++;
-    }
-  }
+    };
+  };
 
   length ++;
 

@@ -1,3 +1,9 @@
+Sat Jun  6 16:12:20 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* adding Lighting plugin
+
+	* updated despeckle, png, sgi, and sharpen
+
 Sat Jun  6 14:22:19 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: changed it back, things work now
