@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.15\n"
 "POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 1999-11-05 15:37+0100\n"
-"Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
+"PO-Revision-Date: 2000-03-01 11:43+0100\n"
+"Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -7785,7 +7785,7 @@ msgstr "<Image>/Vidéo/Rogner trames..."
 
 #: plug-ins/gap/gap_main.c:535
 msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/Vidéo/Mettre trammes à l'échelle"
+msgstr "<Image>/Vidéo/Mettre trames à l'échelle"
 
 #: plug-ins/gap/gap_main.c:547
 msgid "<Image>/Video/Split Img to Frames..."
@@ -8131,11 +8131,13 @@ msgid ""
 "Show PreviewFame with Selected       \n"
 "SrcLayer at current Controlpoint"
 msgstr ""
+"Montre l'aperçu avec le calque source\n"
+"sélectionné placé au point de contrôle courant."
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:490
 msgid "Copy moving source-layer(s) into frames"
-msgstr ""
+msgstr "Copier le(s) calque(s) sources dans les trames"
 
 #. Point Buttons
 #: plug-ins/gap/gap_mov_dialog.c:513
@@ -8406,27 +8408,28 @@ msgstr "    vous pouvez obtenir mpeg_encode sur"
 
 #: plug-ins/gap/gap_mpege.c:135
 msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr ""
+msgstr "    vous pouvez obtenir mpeg2encode sur http://www.mpeg.org/MSSG"
 
 #: plug-ins/gap/gap_mpege.c:140
 msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr ""
+msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
 
 #: plug-ins/gap/gap_mpege.c:143
 msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr ""
+msgstr "   ou sur ftp://ftp.mpeg.org/pub/mpeg/mssg"
 
+# This is simply broken. You should not make conditional tests on half of sentences.
 #: plug-ins/gap/gap_mpege.c:148
 msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr ""
+msgstr "2.) Vous devez avoir sur disque une séquence de trames (chacune une image"
 
 #: plug-ins/gap/gap_mpege.c:152
 msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr ""
+msgstr "    simple), toutes au format JPEG (ou YUV ou PNM ou PPM)."
 
 #: plug-ins/gap/gap_mpege.c:155
 msgid "   all with fileformat PPM (or YUV)"
-msgstr ""
+msgstr "    simple), toutes au format PPM (ou YUV)."
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
@@ -8438,15 +8441,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
-msgstr ""
+msgstr "3.) Toutes les images doivent être de la même taille,"
 
 #: plug-ins/gap/gap_mpege.c:175
 msgid "    width and height must be a multiple of 16"
-msgstr ""
+msgstr "    et leurs largeur et hauteur doivent être multiples de 16"
 
 #: plug-ins/gap/gap_mpege.c:179
 msgid "    (use Scale or Crop from the Video Menu)"
-msgstr ""
+msgstr "    (au besoin, utilisez « Mettre trames à l'échelle » ou « Rogner trames »)."
 
 #: plug-ins/gap/gap_mpege.c:194
 msgid "MPEG_ENCODE Information"
@@ -8536,9 +8539,10 @@ msgstr ""
 msgid "Constant Bitrate :"
 msgstr "Taux Constant :"
 
+# faute de frappe en anglais
 #: plug-ins/gap/gap_mpege.c:324
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr ""
+msgstr "Ignorer les valeurs de I/P/QSCALE et utiliser un taux de bits constant"
 
 #: plug-ins/gap/gap_mpege.c:329
 msgid "Pattern:"
