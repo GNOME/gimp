@@ -1624,7 +1624,7 @@ save_dialog (void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -1633,7 +1633,7 @@ save_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
