@@ -1,14 +1,14 @@
 # traditional Chinese translation for gimp-script-fu.
-# Copyright (C) 2001,2003 Free Software Foundation, Inc.
+# Copyright (C) 2001, 03 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001,2003.
+# Abel Cheung <maddog@linux.org.hk>, 2001, 03.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.3.12\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
-"PO-Revision-Date: 2003-01-29 12:55+0200\n"
+"Project-Id-Version: gimp14-script-fu 1.3.15\n"
+"POT-Creation-Date: 2003-04-24 21:32+0800\n"
+"PO-Revision-Date: 2003-04-27 21:58+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -101,18 +101,18 @@ msgstr "Script-Fu 漸層選擇"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 筆刷選擇"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 msgid "Copyright:"
 msgstr "版權："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 msgid "Date:"
 msgstr "日期："
 
@@ -510,7 +510,7 @@ msgstr "下"
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten Image"
-msgstr "平面化圖像"
+msgstr "將圖像平面化"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -835,7 +835,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr ""
+msgstr "淡出"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
@@ -1070,6 +1070,8 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"只會變黑\n"
+"(比較適用於淺色圖像)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1226,6 +1228,7 @@ msgstr "套用所產生的圖層遮罩"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "邊框大小"
 
@@ -1286,7 +1289,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/擴展/Script-Fu/工具/字型圖..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "邊框"
 
@@ -1388,25 +1390,23 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr ""
+msgstr "<Image>/Script-Fu/透明度轉為標誌/光面..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Script-Fu/標誌/光面..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
-#, fuzzy
 msgid "Blend Gradient (Outline)"
 msgstr "混色漸層(輪廓)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
-#, fuzzy
 msgid "Blend Gradient (Text)"
 msgstr "混色漸層(文字)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (Outline)"
-msgstr "輪廓圖樣"
+msgstr "圖樣(輪廓)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Overlay)"
@@ -1414,7 +1414,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Text)"
-msgstr "文字圖樣"
+msgstr "圖樣(文字)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
@@ -1464,7 +1464,6 @@ msgid "Border Size (pixels)"
 msgstr "邊框大小(像素)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
 msgstr "<Toolbox>/擴展/Script-Fu/工具/自製漸層範例..."
 
@@ -1775,17 +1774,16 @@ msgid "Upper Color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-#, fuzzy
 msgid "Upper Color (Active)"
-msgstr "文字顏色(使用中)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Script-Fu/圖樣/描繪地圖..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
-msgstr "表現"
+msgstr "描繪方式"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -1793,11 +1791,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Tile"
-msgstr ""
+msgstr "可鋪排"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
+msgstr "<Image>/Script-Fu/動畫/漣渏..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
@@ -1810,7 +1808,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
-msgstr ""
+msgstr "畫格數目"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
@@ -1966,11 +1964,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr ""
+msgstr "<Image>/Script-Fu/透明度轉為標誌/粒子軌迹..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Script-Fu/標誌/粒子軌迹..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
@@ -2070,7 +2068,7 @@ msgstr "<Toolbox>/擴展/Script-Fu/標誌/網頁標題..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Script-Fu/圖樣/旋輪線..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:2
 msgid "Base Radius (pixels)"
@@ -2082,11 +2080,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:4
 msgid "Hue Rate"
-msgstr ""
+msgstr "色相改變速率"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:5
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "畫筆位置相對於滾動圓半徑的距離 [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:6
 msgid "Use Brush"
@@ -2094,66 +2092,59 @@ msgstr "使用筆刷"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:7
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
+msgstr "滾動圓半徑"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Script-Fu/圖樣/Truchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
 msgstr "前景顏色"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Script-Fu/透明度轉為標誌/粉筆..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-#, fuzzy
 msgid "Mask Opacity"
-msgstr "背景不透明度"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask Size"
 msgstr "遮罩尺寸"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Script-Fu/動畫/旋轉球..."
+msgstr "<Image>/Script-Fu/動畫/波浪..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
-msgstr ""
+msgstr "波幅"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
-msgstr ""
+msgstr "相反方向"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
 msgstr "波長"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Image>/Script-Fu/描繪/熔岩..."
+msgstr "<Image>/Script-Fu/變化/交織..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
-#, fuzzy
 msgid "Ribbon Spacing"
-msgstr "間隔"
+msgstr "絲帶間隔"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
-#, fuzzy
 msgid "Ribbon Width"
-msgstr "圖像寬度"
+msgstr "絲帶寬度"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
-#, fuzzy
 msgid "Shadow Darkness"
-msgstr "陰影深度"
+msgstr "陰影黑暗度"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow Depth"
@@ -2168,9 +2159,8 @@ msgid "Thread Intensity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
-#, fuzzy
 msgid "Thread Length"
-msgstr "推移長度"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
@@ -2209,13 +2199,12 @@ msgid "Highlight Y Offset"
 msgstr "高亮度區垂直偏移量"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/擴展/網頁瀏覽器/使用者常問集"
+msgstr "<Toolbox>/擴展/網頁瀏覽器/開發者常問集"
 
 #: plug-ins/webbrowser/web-browser.scm.h:2
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/擴展/網頁瀏覽器/GIMP 錯誤回報"
+msgstr "<Toolbox>/擴展/網頁瀏覽器/GIMP 錯誤匯報"
 
 #: plug-ins/webbrowser/web-browser.scm.h:3
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
@@ -2277,31 +2266,11 @@ msgstr "<Toolbox>/擴展/網頁瀏覽器/增效模組註冊紀錄"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/擴展/網頁瀏覽器/使用者常問集"
 
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "閣下選取的字型中至少有一款無效。\n"
-#~ "請檢查設定。\n"
-
 #~ msgid "Fill with BG Color"
 #~ msgstr "填上背景顏色"
 
-#~ msgid "DB Browser (init...)"
-#~ msgstr "資料庫瀏覽器(初始化...)"
-
-#~ msgid "DB Browser (please wait)"
-#~ msgstr "資料庫瀏覽器(請稍等)"
-
 #~ msgid "Reset to Defaults"
 #~ msgstr "重設為預設值"
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu 檔案選擇"
-
-#~ msgid "NOT SET"
-#~ msgstr "未設定"
 
 #~ msgid "Close"
 #~ msgstr "關閉"

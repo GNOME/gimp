@@ -1,14 +1,14 @@
 # traditional chinese translation for gimp-libgimp.
-# Copyright (C) 2001,2003 Free Software Foundation, Inc.
+# Copyright (C) 2001, 03 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
 # Abel Cheung <maddog@linux.org.hk>, 2001,2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.12\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2003-01-29 17:59+0800\n"
+"Project-Id-Version: gimp-libgimp 1.3.15\n"
+"POT-Creation-Date: 2003-04-24 21:32+0800\n"
+"PO-Revision-Date: 2003-04-24 21:38+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -96,11 +96,11 @@ msgstr "%s 只能處理灰階或索引色圖像"
 #: libgimp/gimpexport.c:282
 #, c-format
 msgid "%s needs an alpha channel"
-msgstr "%s 需要 alpha 色版"
+msgstr "%s 需要透明色版"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "新增 Alpha 色版"
+msgstr "新增透明色版"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -177,32 +177,32 @@ msgstr "百分比"
 #: libgimpbase/gimputils.c:118
 #, c-format
 msgid "%d Bytes"
-msgstr ""
+msgstr "%d 位元組"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
