@@ -52,9 +52,10 @@ static void  gimp_image_combo_box_model_add (GtkListStore            *store,
  * each image and only if the function returns %TRUE, the image is
  * added to the combobox.
  *
- * Use gimp_int_combo_box_set_active() to get the active image ID and
- * gimp_int_combo_box_get_active() to retrieve the ID of the selected
- * image.
+ * You should use gimp_int_combo_connect() to initialize and connect
+ * the combo. Use gimp_int_combo_box_set_active() to get the active
+ * image ID and gimp_int_combo_box_get_active() to retrieve the ID of
+ * the selected image.
  *
  * Return value: a new #GimpIntComboBox.
  *
