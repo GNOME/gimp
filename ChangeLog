@@ -1,3 +1,8 @@
+Sat Feb 14 15:01:46 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Fixed up docs and autoconf interaction (part of
+	gimp-rrh-980125-0)
+
 Fri Feb 13 02:00:01 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.c
