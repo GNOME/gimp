@@ -56,35 +56,35 @@ extern void  fput_st      (FILE  *f,
 
 /* Declare local functions.
  */
-static void  sfquit (void);
-static void  query  (void);
-static void  run    (gchar        *name,
-		     gint          nparams,
-		     GimpParam    *param,
-		     gint         *nreturn_vals,
-		     GimpParam   **return_vals);
+static void      sfquit (void);
+static void      query  (void);
+static void      run    (gchar        *name,
+			 gint          nparams,
+			 GimpParam    *param,
+			 gint         *nreturn_vals,
+			 GimpParam   **return_vals);
 
-static gint  init_interp              (void);
-static void  init_gimp                (void);
-static void  init_procedures          (void);
-static void  init_constants           (void);
-static void  convert_string           (gchar *str);
+static gint      init_interp              (void);
+static void      init_gimp                (void);
+static void      init_procedures          (void);
+static void      init_constants           (void);
+static void      convert_string           (gchar      *str);
 
-static gint  sputs_fcn                (gchar *st,
-				       void  *dest);
-static LISP  lprin1s                  (LISP   exp,
-				       gchar *dest);
+static gboolean  sputs_fcn                (gchar      *st,
+					   gpointer    dest);
+static LISP      lprin1s                  (LISP        exp,
+					   gchar      *dest);
 
-static LISP  marshall_proc_db_call    (LISP a);
-static LISP  script_fu_register_call  (LISP a);
-static LISP  script_fu_quit_call      (LISP a);
+static LISP      marshall_proc_db_call    (LISP        a);
+static LISP      script_fu_register_call  (LISP        a);
+static LISP      script_fu_quit_call      (LISP        a);
 
-static void  script_fu_auxillary_init (void);
-static void  script_fu_refresh_proc   (gchar      *name,
-				       gint        nparams,
-				       GimpParam  *params,
-				       gint       *nreturn_vals,
-				       GimpParam **return_vals);
+static void      script_fu_auxillary_init (void);
+static void      script_fu_refresh_proc   (gchar      *name,
+					   gint        nparams,
+					   GimpParam  *params,
+					   gint       *nreturn_vals,
+					   GimpParam **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -109,7 +109,8 @@ static gchar *siod_argv[] =
 static gint script_fu_base = TRUE;
 extern gint server_mode;
 
-gint script_fu_done = FALSE;  /*  declared extern in script-fu-server.c  */
+/*  declared extern in script-fu-server.c  */
+gboolean    script_fu_done = FALSE;  
 
 
 MAIN ()
@@ -272,7 +273,7 @@ run (gchar      *name,
 static gint
 init_interp (void)
 {
-  process_cla (sizeof (siod_argv) / sizeof (char *), siod_argv, 1);
+  process_cla (sizeof (siod_argv) / sizeof (gchar *), siod_argv, 1);
 
   init_storage ();
 
@@ -462,14 +463,14 @@ convert_string (gchar *str)
     }
 }
 
-static gint
-sputs_fcn (gchar *st,
-	   void  *dest)
+static gboolean
+sputs_fcn (gchar    *st,
+	   gpointer  dest)
 {
   strcpy (*((gchar**)dest), st);
   *((gchar**)dest) += strlen (st);
 
-  return (1);
+  return TRUE;
 }
 
 static LISP
@@ -656,7 +657,8 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_FLOATARRAY;
-	      args[i].data.d_floatarray = (car (a))->storage_as.double_array.data;
+	      args[i].data.d_floatarray = 
+		(car (a))->storage_as.double_array.data;
 	    }
 	  break;
 
@@ -881,7 +883,7 @@ marshall_proc_db_call (LISP a)
 	    case GIMP_PDB_INT32ARRAY:
 	      {
 		LISP array;
-		int j;
+		gint j;
 
 		array = arcons (tc_long_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
@@ -900,7 +902,7 @@ marshall_proc_db_call (LISP a)
 	    case GIMP_PDB_INT8ARRAY:
 	      {
 		LISP array;
-		int j;
+		gint j;
 
 		array = arcons (tc_byte_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
@@ -915,7 +917,7 @@ marshall_proc_db_call (LISP a)
 	    case GIMP_PDB_FLOATARRAY:
 	      {
 		LISP array;
-		int j;
+		gint j;
 
 		array = arcons (tc_double_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
@@ -932,10 +934,10 @@ marshall_proc_db_call (LISP a)
 	       *  return value contains the number of strings in the array
 	       */
 	      {
-		int j;
-		int num_strings = values[i].data.d_int32;
-		LISP string_array = NIL;
-		char **array = (char **) values[i + 1].data.d_stringarray;
+		gint    j;
+		gint    num_strings  = values[i].data.d_int32;
+		LISP    string_array = NIL;
+		gchar **array  = (gchar **) values[i + 1].data.d_stringarray;
 
 		for (j = 0; j < num_strings; j++)
 		  {

@@ -145,7 +145,7 @@ typedef struct
   gchar        **arg_labels;
   SFArgValue    *arg_defaults;
   SFArgValue    *arg_values;
-  gint32         image_based;
+  gboolean       image_based;
   GimpParamDef  *args;     /*  used only temporary until installed  */
 } SFScript;
 
@@ -169,10 +169,10 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
-static gint       script_fu_install_script   (gpointer    foo,
+static gboolean   script_fu_install_script   (gpointer    foo,
 					      SFScript   *script,
 					      gpointer    bar);
-static gint       script_fu_remove_script    (gpointer    foo,
+static gboolean   script_fu_remove_script    (gpointer    foo,
 					      SFScript   *script,
 					      gpointer    bar);
 static void       script_fu_script_proc      (gchar      *name,
@@ -206,7 +206,7 @@ static void       script_fu_font_dialog_ok          (GtkWidget *widget,
 						     gpointer   data);
 static void       script_fu_font_dialog_cancel      (GtkWidget *widget,
 						     gpointer   data);
-static gint       script_fu_font_dialog_delete      (GtkWidget *widget,
+static gboolean   script_fu_font_dialog_delete      (GtkWidget *widget,
 						     GdkEvent  *event,
 						     gpointer   data);
 
@@ -217,12 +217,12 @@ static void       script_fu_pattern_preview         (gchar     *name,
 						     gint       height,
 						     gint       bytes,
 						     gchar     *mask_data,
-						     gint       closing,
+						     gboolean   closing,
 						     gpointer   data);
 static void       script_fu_gradient_preview        (gchar     *name,
 						     gint       width,
 						     gdouble   *mask_data,
-						     gint       closing,
+						     gboolean   closing,
 						     gpointer   data);
 static void       script_fu_brush_preview           (gchar     *name,
 						     gdouble    opacity,
@@ -231,7 +231,7 @@ static void       script_fu_brush_preview           (gchar     *name,
 						     gint       width,
 						     gint       height,
 						     gchar     *mask_data,
-						     gint       closing,
+						     gboolean   closing,
 						     gpointer   data);
 
 
@@ -453,8 +453,8 @@ script_fu_add_script (LISP a)
   script->num_args = nlength (a) / 3;
 
   args = g_new (GimpParamDef, script->num_args + 1);
-  args[0].type = GIMP_PDB_INT32;
-  args[0].name = "run_mode";
+  args[0].type        = GIMP_PDB_INT32;
+  args[0].name        = "run_mode";
   args[0].description = "Interactive, non-interactive";
 
   script->arg_types    = g_new (SFArgType, script->num_args);
@@ -789,7 +789,7 @@ script_fu_report_cc (gchar *command)
  *  The following function is a GTraverseFunction, Please 
  *  note that it frees the script->args structure.  --Sven 
  */
-static gint
+static gboolean
 script_fu_install_script (gpointer  foo,
 			  SFScript *script,
 			  gpointer  bar)
@@ -822,7 +822,7 @@ script_fu_install_script (gpointer  foo,
 /* 
  *  The following function is a GTraverseFunction.
  */
-static gint
+static gboolean
 script_fu_remove_script (gpointer  foo,
 			 SFScript *script,
 			 gpointer  bar)
@@ -831,8 +831,6 @@ script_fu_remove_script (gpointer  foo,
 
   return FALSE;
 }
-
-
 
 static void
 script_fu_script_proc (gchar       *name,
@@ -851,7 +849,9 @@ script_fu_script_proc (gchar       *name,
   run_mode = params[0].data.d_int32;
 
   if (! (script = script_fu_find_script (name)))
-    status = GIMP_PDB_CALLING_ERROR;
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
   else
     {
       if (script->num_args == 0)
@@ -1045,7 +1045,7 @@ script_fu_script_proc (gchar       *name,
 }
 
 /* this is a GTraverseFunction */
-static gint
+static gboolean
 script_fu_lookup_script (gpointer  *foo,
 			 SFScript  *script,
 			 gchar    **name)
@@ -1067,7 +1067,10 @@ script_fu_find_script (gchar *pdb_name)
   
   script = pdb_name;
   g_tree_traverse (script_list, 
-		   (GTraverseFunc)script_fu_lookup_script, G_IN_ORDER, &script);
+		   (GTraverseFunc) script_fu_lookup_script, 
+		   G_IN_ORDER, 
+		   &script);
+
   if (script == pdb_name)
     return NULL;
   else
@@ -1252,9 +1255,9 @@ script_fu_interface (SFScript *script)
     {
       /*  we add a colon after the label; 
 	  some languages want an extra space here */
-      gchar     *label_text = 
+      gchar     *label_text       = 
 	g_strdup_printf (_("%s:"), gettext (script->arg_labels[i]));
-      gfloat     label_yalign = 0.5;
+      gfloat     label_yalign     = 0.5;
       gboolean   widget_leftalign = TRUE;
 
       switch (script->arg_types[i])
@@ -1317,7 +1320,8 @@ script_fu_interface (SFScript *script)
 	    gtk_check_button_new_with_label (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), "toggled",
+	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), 
+			      "toggled",
 			      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			      &script->arg_values[i].sfa_toggle);
 	  break;
@@ -1365,6 +1369,7 @@ script_fu_interface (SFScript *script)
 					  script->arg_defaults[i].sfa_adjustment.digits);
 	      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]), TRUE);
 	      break;
+
 	    default: /* this shouldn't happen */
 	      sf_interface->args_widgets[i] = NULL;
 	      break;
@@ -1378,7 +1383,8 @@ script_fu_interface (SFScript *script)
 	    gimp_file_selection_new (_("Script-Fu File Selection"),
 				     script->arg_values[i].sfa_file.filename,
 				     FALSE, TRUE);
-	  script->arg_values[i].sfa_file.fileselection = sf_interface->args_widgets[i];
+	  script->arg_values[i].sfa_file.fileselection = 
+	    sf_interface->args_widgets[i];
 
 	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]),
 			      "filename_changed",
@@ -1392,7 +1398,8 @@ script_fu_interface (SFScript *script)
 	  sf_interface->args_widgets[i] = gtk_button_new ();
 	  script->arg_values[i].sfa_font.preview = gtk_label_new ("");
 	  script->arg_values[i].sfa_font.dialog = NULL;
-	  gtk_widget_set_usize (sf_interface->args_widgets[i], FONT_PREVIEW_WIDTH, 0);
+	  gtk_widget_set_usize (sf_interface->args_widgets[i], 
+				FONT_PREVIEW_WIDTH, 0);
 	  gtk_container_add (GTK_CONTAINER (sf_interface->args_widgets[i]),
 			     script->arg_values[i].sfa_font.preview);
 	  gtk_widget_show (script->arg_values[i].sfa_font.preview);
@@ -1400,35 +1407,36 @@ script_fu_interface (SFScript *script)
 	  script_fu_font_preview (script->arg_values[i].sfa_font.preview,
 				  script->arg_values[i].sfa_font.fontname);
 
-	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), "clicked",
+	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]), 
+			      "clicked",
 			      (GtkSignalFunc) script_fu_font_preview_callback,
 			      &script->arg_values[i].sfa_font);	  
 	  break;
 
 	case SF_PATTERN:
 	  sf_interface->args_widgets[i] =
-	    gimp_pattern_select_widget(_("Script-fu Pattern Selection"),
-				       script->arg_values[i].sfa_pattern, 
-				       script_fu_pattern_preview,
-				       &script->arg_values[i].sfa_pattern);
+	    gimp_pattern_select_widget (_("Script-fu Pattern Selection"),
+					script->arg_values[i].sfa_pattern, 
+					script_fu_pattern_preview,
+					&script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
 	  sf_interface->args_widgets[i] =
-	    gimp_gradient_select_widget(_("Script-Fu Gradient Selection"),
-					script->arg_values[i].sfa_gradient, 
-					script_fu_gradient_preview,
-					&script->arg_values[i].sfa_gradient);
+	    gimp_gradient_select_widget (_("Script-Fu Gradient Selection"),
+					 script->arg_values[i].sfa_gradient, 
+					 script_fu_gradient_preview,
+					 &script->arg_values[i].sfa_gradient);
 	  break;
 
 	case SF_BRUSH:
 	  sf_interface->args_widgets[i] = 
-	    gimp_brush_select_widget(_("Script-Fu Brush Selection"),
-				     script->arg_values[i].sfa_brush.name, 
-				     script->arg_values[i].sfa_brush.opacity, 
-				     script->arg_values[i].sfa_brush.spacing, 
-				     script->arg_values[i].sfa_brush.paint_mode, 
-				     script_fu_brush_preview,
-				     &script->arg_values[i].sfa_brush);
+	    gimp_brush_select_widget (_("Script-Fu Brush Selection"),
+				      script->arg_values[i].sfa_brush.name, 
+				      script->arg_values[i].sfa_brush.opacity, 
+				      script->arg_values[i].sfa_brush.spacing, 
+				      script->arg_values[i].sfa_brush.paint_mode, 
+				      script_fu_brush_preview,
+				      &script->arg_values[i].sfa_brush);
 	  break;
 
 	case SF_OPTION:
@@ -1444,6 +1452,7 @@ script_fu_interface (SFScript *script)
 	      gtk_menu_append (GTK_MENU (menu), menu_item);
 	      gtk_widget_show (menu_item);
 	    }
+
 	  gtk_option_menu_set_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
 				    menu);
 	  gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]), 
@@ -1607,7 +1616,7 @@ script_fu_pattern_preview (gchar    *name,
 			   gint      height,
 			   gint      bytes,
 			   gchar    *mask_data,
-			   gint      closing,
+			   gboolean  closing,
 			   gpointer  data)
 {
   gchar **pname;
@@ -1622,7 +1631,7 @@ static void
 script_fu_gradient_preview (gchar    *name,
 			    gint      width,
 			    gdouble  *mask_data,
-			    gint      closing,
+			    gboolean  closing,
 			    gpointer  data)
 {
   gchar **gname;
@@ -1641,7 +1650,7 @@ script_fu_brush_preview (gchar    *name,
 			 gint      width,
 			 gint      height,
 			 gchar    *mask_data,
-			 gint      closing,
+			 gboolean  closing,
 			 gpointer  data)
 {
   SFBrush *brush;
@@ -1649,6 +1658,7 @@ script_fu_brush_preview (gchar    *name,
   brush = (SFBrush *) data;
 
   g_free (brush->name);
+
   brush->name       = g_strdup (name);
   brush->opacity    = opacity;
   brush->spacing    = spacing;
@@ -1660,8 +1670,8 @@ script_fu_font_preview (GtkWidget *preview,
 			gchar     *data)
 {
   GdkFont *font;
-  gchar *fontname;
-  gchar *family;
+  gchar   *fontname;
+  gchar   *family;
 
   if (data == NULL) 
     return;
@@ -1730,7 +1740,7 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_DRAWABLE:
       case SF_LAYER:
       case SF_CHANNEL:
-	length += 12;  /*  Maximum size of integer value will not exceed this many characters  */
+	length += 12;  /*  Maximum size of integer value  */
 	break;
 
       case SF_COLOR:
@@ -1752,7 +1762,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	break;
 
       case SF_ADJUSTMENT:
-	length += 24;  /*  Maximum size of float value should not exceed this many characters  */
+	length += 24;  /*  Maximum size of float value  */
 	break;
 
       case SF_FILENAME:
@@ -1775,11 +1785,12 @@ script_fu_ok_callback (GtkWidget *widget,
 
       case SF_BRUSH:
 	length += strlen (script->arg_values[i].sfa_brush.name) + 3;
-	length += 36; /* Maximum size of three ints for opacity, spacing,mode*/
+	length += 36;  /*  Maximum size of three ints  */
+	               /*  for opacity, spacing, mode  */
 	break;
 
       case SF_OPTION:
-	length += 12;  /*  Maximum size of integer value will not exceed this many characters  */
+	length += 12;  /*  Maximum size of integer value  */
 	break;
 
       default:
@@ -1805,7 +1816,8 @@ script_fu_ok_callback (GtkWidget *widget,
 
  	case SF_COLOR:
 	  gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b); 
-	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)", (gint) r, (gint) g, (gint) b);
+	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)", 
+		      (gint) r, (gint) g, (gint) b);
 	  text = buffer;
 	  break;
 
@@ -2180,13 +2192,14 @@ script_fu_font_preview_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   GtkFontSelectionDialog *fsd;
-  SFFont *font;
+  SFFont                 *font;
 
   font = (SFFont *) data;
 
   if (!font->dialog)
     {
-      font->dialog = gtk_font_selection_dialog_new (_("Script-Fu Font Selection"));
+      font->dialog = 
+	gtk_font_selection_dialog_new (_("Script-Fu Font Selection"));
       fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
 
       gtk_signal_connect (GTK_OBJECT (fsd->ok_button), "clicked",
@@ -2219,7 +2232,8 @@ script_fu_font_dialog_ok (GtkWidget *widget,
 
   font = (SFFont *) data;
 
-  fontname = gtk_font_selection_dialog_get_font_name (GTK_FONT_SELECTION_DIALOG (font->dialog));
+  fontname = 
+    gtk_font_selection_dialog_get_font_name (GTK_FONT_SELECTION_DIALOG (font->dialog));
   if (fontname != NULL)
     {
       g_free (font->fontname);
@@ -2241,7 +2255,7 @@ script_fu_font_dialog_cancel (GtkWidget *widget,
   gtk_widget_hide (font->dialog);
 }
 
-static gint
+static gboolean
 script_fu_font_dialog_delete (GtkWidget *widget,
 			      GdkEvent  *event,
 			      gpointer   data)

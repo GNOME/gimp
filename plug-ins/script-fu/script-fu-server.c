@@ -45,12 +45,13 @@
 #include "siod.h"
 #include "script-fu-server.h"
 
+
 #define COMMAND_HEADER  3
 #define RESPONSE_HEADER 4
-#define MAGIC   'G'
+#define MAGIC           'G'
 
 #ifdef NO_DIFFTIME
-#define difftime(a,b) (((double)(a)) - ((double)(b)))
+#define difftime(a,b) (((gdouble)(a)) - ((gdouble)(b)))
 #endif
 
 #ifndef NO_FD_SET
@@ -107,25 +108,26 @@ typedef struct
   gint       port;
   gchar     *logfile;
 
-  gint       run;
+  gboolean   run;
 } ServerInterface;
 
 /*
  *  Local Functions
  */
 
-static void   server_start       (gint       port,
-				  gchar     *logfile);
-static gint   execute_command    (SFCommand *cmd);
-static gint   read_from_client   (gint       filedes);
-static gint   make_socket        (guint      port);
-static void   server_log         (gchar     *format,
+static void      server_start       (gint       port,
+				     gchar     *logfile);
+static gboolean  execute_command    (SFCommand *cmd);
+static gint      read_from_client   (gint       filedes);
+static gint      make_socket        (guint      port);
+static void      server_log         (gchar     *format,
 				     ...);
-static void   server_quit        (void);
+static void      server_quit        (void);
 
-static gint   server_interface   (void);
-static void   ok_callback        (GtkWidget *widget,
-				  gpointer   data);
+static gboolean  server_interface   (void);
+static void      ok_callback        (GtkWidget *widget,
+				     gpointer   data);
+
 
 /*
  *  Global variables
@@ -135,13 +137,14 @@ gint server_mode = FALSE;
 /*
  *  Local variables
  */
-static gint   server_sock;
-static GList *command_queue = NULL;
-static gint   queue_length = 0;
-static gint   request_no = 0;
-static FILE  *server_log_file = NULL;
-static GHashTable *clientname_ht = NULL;
-static SELECT_MASK server_active, server_read;
+static gint         server_sock;
+static GList       *command_queue   = NULL;
+static gint         queue_length    = 0;
+static gint         request_no      = 0;
+static FILE        *server_log_file = NULL;
+static GHashTable  *clientname_ht   = NULL;
+static SELECT_MASK  server_active;
+static SELECT_MASK  server_read;
 
 static ServerInterface sint =
 {
@@ -154,24 +157,24 @@ static ServerInterface sint =
   FALSE  /*  run  */
 };
 
-extern gint   script_fu_done;
-extern char   siod_err_msg[];
-extern LISP   repl_return_val;
+extern gboolean  script_fu_done;
+extern gchar     siod_err_msg[];
+extern LISP      repl_return_val;
 
 /*
  *  Server interface functions
  */
 
 void
-script_fu_server_run (char     *name,
-		      int       nparams,
+script_fu_server_run (gchar       *name,
+		      gint         nparams,
 		      GimpParam   *params,
-		      int      *nreturn_vals,
+		      gint        *nreturn_vals,
 		      GimpParam  **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType run_mode;
+  GimpRunModeType   run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -213,9 +216,9 @@ script_fu_server_run (char     *name,
 void
 script_fu_server_listen (gint timeout)
 {
-  struct sockaddr_in clientname;
-  struct timeval tv;
-  struct timeval *tvp;
+  struct sockaddr_in  clientname;
+  struct timeval      tv;
+  struct timeval     *tvp;
   gint i;
   gint size;
 
@@ -349,15 +352,16 @@ server_start (gint   port,
     fclose (server_log_file);
 }
 
-static gint
+static gboolean
 execute_command (SFCommand *cmd)
 {
-  guchar buffer[RESPONSE_HEADER];
-  gchar *response;
-  time_t clock1, clock2;
-  gint response_len;
-  gint error;
-  gint i;
+  guchar    buffer[RESPONSE_HEADER];
+  gchar    *response;
+  time_t    clock1;
+  time_t    clock2;
+  gint      response_len;
+  gboolean  error;
+  gint      i;
 
   /*  Get the client address from the address/socket table  */
   server_log ("Processing request #%d\n", cmd->request_no);
@@ -388,8 +392,8 @@ execute_command (SFCommand *cmd)
 		  cmd->request_no, difftime (clock2, clock1), ctime (&clock2));
     }
 
-  buffer[MAGIC_BYTE] = MAGIC;
-  buffer[ERROR] = (error) ? 1 : 0;
+  buffer[MAGIC_BYTE]     = MAGIC;
+  buffer[ERROR]          = error ? TRUE : FALSE;
   buffer[RSP_LEN_H_BYTE] = (guchar) (response_len >> 8);
   buffer[RSP_LEN_L_BYTE] = (guchar) (response_len & 0xFF);
 
@@ -399,7 +403,7 @@ execute_command (SFCommand *cmd)
       {
 	/*  Write error  */
 	perror ("write");
-	return 0;
+	return FALSE;
       }
 
   for (i = 0; i < response_len; i++)
@@ -407,23 +411,23 @@ execute_command (SFCommand *cmd)
       {
 	/*  Write error  */
 	perror ("write");
-	return 0;
+	return FALSE;
       }
 
-  return 0;
+  return FALSE;
 }
 
 static gint
 read_from_client (gint filedes)
 {
   SFCommand *cmd;
-  guchar buffer[COMMAND_HEADER];
-  gchar *command;
-  gchar *clientaddr;
-  time_t clock;
-  gint command_len;
-  gint nbytes;
-  gint i;
+  guchar     buffer[COMMAND_HEADER];
+  gchar     *command;
+  gchar     *clientaddr;
+  time_t     clock;
+  gint       command_len;
+  gint       nbytes;
+  gint       i;
 
   for (i = 0; i < COMMAND_HEADER; i++)
     {
@@ -443,20 +447,23 @@ read_from_client (gint filedes)
       server_log ("Error in script-fu command transmission.\n");
       return -1;
     }
+
   command_len = (buffer [CMD_LEN_H_BYTE] << 8) | buffer [CMD_LEN_L_BYTE];
   command = g_new (gchar, command_len + 1);
 
   for (i = 0; i < command_len; i++)
     if (read (filedes, command + i, 1) == 0)
       {
-	server_log ("Error reading command.  Read %d out of %d bytes.\n", i, command_len);
+	server_log ("Error reading command.  Read %d out of %d bytes.\n", 
+		    i, command_len);
 	return -1;
       }
 
   command[command_len] = '\0';
   cmd = g_new (SFCommand, 1);
-  cmd->filedes = filedes;
-  cmd->command = command;
+
+  cmd->filedes    = filedes;
+  cmd->command    = command;
   cmd->request_no = request_no ++;
 
   /*  Add the command to the queue  */
@@ -466,8 +473,10 @@ read_from_client (gint filedes)
   /*  Get the client address from the address/socket table  */
   clientaddr = g_hash_table_lookup (clientname_ht, (gpointer) cmd->filedes);
   time (&clock);
-  server_log ("Received request #%d from IP address %s: %s on %s, [Request queue length: %d]",
-	      cmd->request_no, clientaddr, cmd->command, ctime (&clock), queue_length);
+  server_log ("Received request #%d from IP address %s: %s on %s,"
+	      "[Request queue length: %d]",
+	      cmd->request_no, clientaddr, cmd->command, ctime (&clock), 
+	      queue_length);
 
   return 0;
 }
@@ -475,8 +484,8 @@ read_from_client (gint filedes)
 static gint
 make_socket (guint port)
 {
-  gint sock;
   struct sockaddr_in name;
+  gint sock;
   gint v = 1;
 
   /* Create the socket. */
@@ -489,9 +498,10 @@ make_socket (guint port)
   setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
 
   /* Give the socket a name. */
-  name.sin_family = AF_INET;
-  name.sin_port = htons (port);
+  name.sin_family      = AF_INET;
+  name.sin_port        = htons (port);
   name.sin_addr.s_addr = htonl (INADDR_ANY);
+
   if (bind (sock, (struct sockaddr *) &name, sizeof (name)) < 0)
     {
       perror ("bind");
@@ -504,8 +514,8 @@ make_socket (guint port)
 static void
 server_log (gchar *format, ...)
 {
-  va_list args;
-  char *buf;
+  va_list  args;
+  gchar   *buf;
 
   va_start (args, format);
   buf = g_strdup_vprintf (format, args);
@@ -519,14 +529,14 @@ server_log (gchar *format, ...)
 static void
 server_quit (void)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < FD_SETSIZE; ++i)
     if (FD_ISSET (i, &server_active))
       shutdown (i, 2);
 }
 
-static gint
+static gboolean
 server_interface (void)
 {
   GtkWidget *dlg;
@@ -585,9 +595,9 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
-  sint.port = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
+  sint.port    = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
   sint.logfile = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
-  sint.run = TRUE;
+  sint.run     = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }

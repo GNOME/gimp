@@ -13,8 +13,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
-	interp_md5.c		\
-	interp_md5.h		\
 	interp_regex.c		\
 	interp_slib.c		\
 	interp_sliba.c		\

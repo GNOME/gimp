@@ -1,3 +1,13 @@
+2001-01-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/Makefile.am: removed interp_md5.[ch] from
+	the build because it was not used at all.
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/script-fu/script-fu.c: even more pedantic indentation
+
 2001-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/palette_entries.h: removed.

@@ -56,37 +56,37 @@
 
 typedef struct
 {
-  GtkWidget *console;
-  GtkWidget *cc;
+  GtkWidget     *console;
+  GtkWidget     *cc;
   GtkAdjustment *vadj;
 
-  GdkFont   *font_strong;
-  GdkFont   *font_emphasis;
-  GdkFont   *font_weak;
-  GdkFont   *font;
+  GdkFont       *font_strong;
+  GdkFont       *font_emphasis;
+  GdkFont       *font_weak;
+  GdkFont       *font;
 
-  gint32     input_id;
+  gint32         input_id;
 } ConsoleInterface;
 
 /*
  *  Local Functions
  */
 
-static void  script_fu_console_interface (void);
-static void  script_fu_close_callback    (GtkWidget        *widget,
-					  gpointer          data);
-static void  script_fu_browse_callback    (GtkWidget        *widget,
-					  gpointer          data);
-static gboolean script_fu_siod_read      (GIOChannel  *channel,
-					  GIOCondition cond,
-					  gpointer     data);
-static gint  script_fu_cc_is_empty       (void);
-static gint  script_fu_cc_key_function   (GtkWidget         *widget,
-					  GdkEventKey       *event,
-					  gpointer           data);
+static void     script_fu_console_interface  (void);
+static void     script_fu_close_callback     (GtkWidget    *widget,
+					      gpointer      data);
+static void     script_fu_browse_callback    (GtkWidget    *widget,
+					      gpointer      data);
+static gboolean script_fu_siod_read          (GIOChannel   *channel,
+					      GIOCondition  cond,
+					      gpointer      data);
+static gboolean script_fu_cc_is_empty        (void);
+static gboolean script_fu_cc_key_function    (GtkWidget    *widget,
+					      GdkEventKey  *event,
+					      gpointer      data);
 
-static FILE *script_fu_open_siod_console (void);
-static void  script_fu_close_siod_console(void);
+static FILE   * script_fu_open_siod_console  (void);
+static void     script_fu_close_siod_console (void);
 
 /*
  *  Local variables
@@ -106,15 +106,15 @@ static ConsoleInterface cint =
   -1     /*  input id  */
 };
 
-static char   read_buffer[BUFSIZE];
-static GList *history = NULL;
-static int    history_len = 0;
-static int    history_cur = 0;
-static int    history_max = 50;
+static gchar  read_buffer[BUFSIZE];
+static GList *history     = NULL;
+static gint   history_len = 0;
+static gint   history_cur = 0;
+static gint   history_max = 50;
 
-static int   siod_output_pipe[2];
-extern int   siod_verbose_level;
-extern char  siod_err_msg[];
+static gint  siod_output_pipe[2];
+extern gint  siod_verbose_level;
+extern gchar siod_err_msg[];
 extern FILE *siod_output;
 
 
@@ -125,15 +125,15 @@ extern FILE *siod_output;
  */
 
 void
-script_fu_console_run (char     *name,
-		       int       nparams,
-		       GimpParam   *params,
-		       int      *nreturn_vals,
-		       GimpParam  **return_vals)
+script_fu_console_run (gchar      *name,
+		       gint        nparams,
+		       GimpParam  *params,
+		       gint       *nreturn_vals,
+		       GimpParam **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType run_mode;
+  GimpRunModeType   run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -163,19 +163,19 @@ script_fu_console_run (char     *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 static void
 script_fu_console_interface (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *vsb;
-  GtkWidget *table;
-  GtkWidget *hbox;
+  GtkWidget  *dlg;
+  GtkWidget  *button;
+  GtkWidget  *label;
+  GtkWidget  *vsb;
+  GtkWidget  *table;
+  GtkWidget  *hbox;
   GIOChannel *input_channel;
 
   INIT_I18N_UI();
@@ -229,10 +229,14 @@ script_fu_console_interface (void)
 
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
-  cint.font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
-  cint.font_emphasis = gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
-  cint.font_weak = gdk_font_load ("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*");
-  cint.font = gdk_font_load ("-*-*-medium-r-normal-*-*-100-*-*-c-*-*-*");
+  cint.font_strong = 
+    gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
+  cint.font_emphasis = 
+    gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
+  cint.font_weak = 
+    gdk_font_load ("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*");
+  cint.font = 
+    gdk_font_load ("-*-*-medium-r-normal-*-*-100-*-*-c-*-*-*");
 
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (cint.console);
@@ -294,10 +298,8 @@ script_fu_console_interface (void)
   gtk_widget_show (hbox);
     
   cint.cc = gtk_entry_new ();
-  
   gtk_box_pack_start (GTK_BOX (hbox), cint.cc, 
 		      TRUE, TRUE, 0);
-/*    gtk_widget_set_usize (cint.cc, (ENTRY_WIDTH*5)/6, 0);  */
   GTK_WIDGET_SET_FLAGS (cint.cc, GTK_CAN_DEFAULT);
   gtk_widget_grab_default (cint.cc);
   gtk_signal_connect (GTK_OBJECT (cint.cc), "key_press_event",
@@ -305,7 +307,6 @@ script_fu_console_interface (void)
 		      NULL);
 
   button = gtk_button_new_with_label (_("Browse..."));
-/*    gtk_widget_set_usize (button, (ENTRY_WIDTH)/6, 0); */
   gtk_box_pack_start (GTK_BOX (hbox), button, 
 		      FALSE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -329,8 +330,10 @@ script_fu_console_interface (void)
   gtk_main ();
 
   g_source_remove (cint.input_id);
+
   if (dlg)
     gtk_widget_destroy (dlg);
+
   gdk_flush ();
 }
 
@@ -355,7 +358,7 @@ apply_callback (gchar           *proc_name,
 		GimpParamDef    *params,
 		GimpParamDef    *return_vals)
 {
-  gint i;
+  gint     i;
   GString *text;
 
   if (proc_name == NULL) 
@@ -381,7 +384,7 @@ script_fu_browse_callback (GtkWidget *widget,
   gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (apply_callback));
 }
 
-static gint
+static gboolean
 script_fu_console_scroll_end (gpointer data)
 {
   /* The Text widget in 1.0.1 doesn't like being scrolled before
@@ -404,9 +407,9 @@ script_fu_siod_read (GIOChannel  *channel,
 		     GIOCondition cond,
 		     gpointer     data)
 {
-  int count;
-  static int hack = 0;
-  GIOError error;
+  static gboolean hack = FALSE;
+  gint            count;
+  GIOError        error;
 
   count = 0;
   error = g_io_channel_read (channel, read_buffer, BUFSIZE - 1, &count);
@@ -424,7 +427,7 @@ script_fu_siod_read (GIOChannel  *channel,
 		 * problem with my system.
 		 */
       {
-	hack = 1;
+	hack = TRUE;
 	return TRUE;
       }
 #endif
@@ -436,13 +439,14 @@ script_fu_siod_read (GIOChannel  *channel,
 
       script_fu_console_scroll_end (NULL);
     }
+
   return TRUE;
 }
 
-static gint
+static gboolean
 script_fu_cc_is_empty (void)
 {
-  char *str;
+  gchar *str;
 
   if ((str = gtk_entry_get_text (GTK_ENTRY (cint.cc))) == NULL)
     return TRUE;
@@ -458,13 +462,13 @@ script_fu_cc_is_empty (void)
   return TRUE;
 }
 
-static gint
+static gboolean
 script_fu_cc_key_function (GtkWidget   *widget,
 			   GdkEventKey *event,
 			   gpointer     data)
 {
   GList *list;
-  int direction = 0;
+  gint   direction = 0;
 
   switch (event->keyval)
     {
@@ -480,10 +484,12 @@ script_fu_cc_key_function (GtkWidget   *widget,
       list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (cint.cc)));
 
       gtk_text_freeze (GTK_TEXT (cint.console));
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL, "=> ", -1);
+      gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL, 
+		       "=> ", -1);
       gtk_text_insert (GTK_TEXT (cint.console), cint.font, NULL, NULL,
 		       gtk_entry_get_text (GTK_ENTRY (cint.cc)), -1);
-      gtk_text_insert (GTK_TEXT (cint.console), cint.font, NULL, NULL, "\n\n", -1);
+      gtk_text_insert (GTK_TEXT (cint.console), cint.font, NULL, NULL, 
+		       "\n\n", -1);
       gtk_text_thaw (GTK_TEXT (cint.console));
 
       cint.vadj->value = cint.vadj->upper - cint.vadj->page_size;
@@ -560,7 +566,8 @@ script_fu_cc_key_function (GtkWidget   *widget,
       if (history_cur >= history_len)
 	history_cur = history_len - 1;
 
-      gtk_entry_set_text (GTK_ENTRY (cint.cc), (char *) (g_list_nth (history, history_cur))->data);
+      gtk_entry_set_text (GTK_ENTRY (cint.cc), 
+			  (gchar *) (g_list_nth (history, history_cur))->data);
 
       return TRUE;
     }
@@ -603,15 +610,15 @@ script_fu_close_siod_console (void)
 }
 
 void
-script_fu_eval_run (char     *name,
-		    int       nparams,
-		    GimpParam   *params,
-		    int      *nreturn_vals,
-		    GimpParam  **return_vals)
+script_fu_eval_run (gchar      *name,
+		    gint        nparams,
+		    GimpParam  *params,
+		    gint       *nreturn_vals,
+		    GimpParam **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunModeType run_mode;
+  GimpRunModeType   run_mode;
 
   run_mode = params[0].data.d_int32;
 
@@ -635,6 +642,6 @@ script_fu_eval_run (char     *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
