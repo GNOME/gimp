@@ -58,6 +58,7 @@
 #include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "dialogs.h"
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
 
@@ -177,6 +178,8 @@ file_open_dialog_create (Gimp            *gimp,
   GtkTreeSelection *tree_sel;
 
   open_dialog = file_dialog_new (gimp,
+                                 global_dialog_factory,
+                                 "gimp-file-open-dialog",
                                  menu_factory, "<Load>",
                                  _("Open Image"), "open_image",
                                  "open/dialogs/file_open.html",

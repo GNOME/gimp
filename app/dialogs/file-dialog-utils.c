@@ -31,6 +31,7 @@
 
 #include "plug-in/plug-in-proc.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
@@ -40,18 +41,22 @@
 
 
 GtkWidget *
-file_dialog_new (Gimp            *gimp,
-                 GimpMenuFactory *menu_factory,
-                 const gchar     *menu_identifier,
-                 const gchar     *title,
-                 const gchar     *wmclass_name,
-                 const gchar     *help_data,
-                 GCallback        ok_callback)
+file_dialog_new (Gimp              *gimp,
+                 GimpDialogFactory *dialog_factory,
+                 const gchar       *dialog_identifier,
+                 GimpMenuFactory   *menu_factory,
+                 const gchar       *menu_identifier,
+                 const gchar       *title,
+                 const gchar       *wmclass_name,
+                 const gchar       *help_data,
+                 GCallback          ok_callback)
 {
   GtkWidget        *filesel;
   GtkFileSelection *fs;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (dialog_identifier != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -119,6 +124,8 @@ file_dialog_new (Gimp            *gimp,
     gtk_widget_show (label);
   }
 
+  gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier, filesel);
+
   return filesel;
 }
 
@@ -133,7 +140,7 @@ file_dialog_show (GtkWidget *filesel)
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
-  gtk_widget_show (filesel);
+  gtk_window_present (GTK_WINDOW (filesel));
 }
 
 gboolean

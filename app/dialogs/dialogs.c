@@ -41,6 +41,11 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   /*  foreign toplevels without constructor  */
+  { "gimp-file-open-dialog",
+    NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
+  { "gimp-file-save-dialog",
+    NULL, 0, TRUE,  TRUE,  TRUE,  FALSE },
+
   { "gimp-brightness-contrast-tool-dialog",
     NULL, 0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-color-picker-tool-dialog",
@@ -75,6 +80,8 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   /*  ordinary toplevels  */
   { "gimp-file-new-dialog",        dialogs_file_new_new,
     0, FALSE, TRUE,  FALSE, FALSE },
+  { "gimp-display-filters-dialog", dialogs_display_filters_get,
+    0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  singleton toplevels  */
   { "gimp-device-status-dialog",   dialogs_device_status_get,
@@ -82,9 +89,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp-preferences-dialog",     dialogs_preferences_get,
     0, TRUE,  TRUE,  FALSE, FALSE },
   { "gimp-module-browser-dialog",  dialogs_module_browser_get,
-    0, TRUE,  TRUE,  FALSE, FALSE },
-  { "gimp-display-filters-dialog", dialogs_display_filters_get,
-    0, FALSE, TRUE,  FALSE, FALSE },
+    0, TRUE,  TRUE,  TRUE,  FALSE },
   { "gimp-tips-dialog",            dialogs_tips_get,
     0, TRUE,  FALSE, FALSE, FALSE },
   { "gimp-about-dialog",           dialogs_about_get,

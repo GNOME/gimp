@@ -47,6 +47,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
+#include "dialogs.h"
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 
@@ -199,6 +200,8 @@ file_save_dialog_create (Gimp            *gimp,
                          GimpMenuFactory *menu_factory)
 {
   return file_dialog_new (gimp,
+                          global_dialog_factory,
+                          "gimp-file-save-dialog",
                           menu_factory, "<Save>",
                           _("Save Image"), "save_image",
                           "save/dialogs/file_save.html",

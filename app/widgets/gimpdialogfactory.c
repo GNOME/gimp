@@ -75,6 +75,9 @@ static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 static void   gimp_dialog_factory_dispose             (GObject           *object);
 static void   gimp_dialog_factory_finalize            (GObject           *object);
 
+static gboolean gimp_dialog_factory_set_user_pos      (GtkWidget         *dialog,
+                                                       GdkEventConfigure *cevent,
+                                                       gpointer           data);
 static gboolean gimp_dialog_factory_dialog_configure  (GtkWidget         *dialog,
                                                        GdkEventConfigure *cevent,
                                                        GimpDialogFactory *factory);
@@ -765,9 +768,23 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                        entry->identifier));
 
 	  if (toplevel)
-	    info->toplevel_entry = entry;
+            {
+              info->toplevel_entry = entry;
+
+              /*  if we create a new session info, we never call
+               *  gimp_dialog_factory_set_window_geometry(), but still
+               *  the dialog needs GDK_HINT_USER_POS so it keeps its
+               *  position when hidden/shown within this(!) session.
+               */
+              if (entry->session_managed)
+                g_signal_connect (dialog, "configure_event",
+                                  G_CALLBACK (gimp_dialog_factory_set_user_pos),
+                                  NULL);
+            }
 	  else
-	    info->dockable_entry = entry;
+            {
+              info->dockable_entry = entry;
+            }
 
 	  factory->session_infos = g_list_append (factory->session_infos, info);
 	}
@@ -1056,6 +1073,21 @@ gimp_dialog_factories_unidle (void)
 
 
 /*  private functions  */
+
+static gboolean
+gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
+                                  GdkEventConfigure *cevent,
+                                  gpointer           data)
+{
+  g_signal_handlers_disconnect_by_func (dialog,
+                                        gimp_dialog_factory_set_user_pos,
+                                        data);
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (dialog), NULL, NULL,
+                                 GDK_HINT_USER_POS);
+
+  return FALSE;
+}
 
 static gboolean
 gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
