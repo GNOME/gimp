@@ -202,6 +202,16 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_get_color_uchar ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@color: 
+@color_uchar: 
+
+
 <!-- ##### FUNCTION gimp_drawable_merge_shadow ##### -->
 <para>
 

@@ -186,6 +186,7 @@ gimp_drawable_set_pixel
 gimp_drawable_get_tile
 gimp_drawable_get_tile2
 gimp_drawable_get_thumbnail_data
+gimp_drawable_get_color_uchar
 gimp_drawable_merge_shadow
 gimp_drawable_fill
 gimp_drawable_update
@@ -497,12 +498,9 @@ GimpPixelFetcher
 gimp_pixel_fetcher_new
 gimp_pixel_fetcher_set_edge_mode
 gimp_pixel_fetcher_set_bg_color
-gimp_pixel_fetcher_set_shadow
 gimp_pixel_fetcher_get_pixel
 gimp_pixel_fetcher_put_pixel
 gimp_pixel_fetcher_destroy
-gimp_get_bg_guchar
-gimp_get_fg_guchar
 </SECTION>
 
 <SECTION>

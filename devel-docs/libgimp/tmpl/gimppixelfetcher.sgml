@@ -23,6 +23,7 @@ gimppixelfetcher
 @GIMP_PIXEL_FETCHER_EDGE_WRAP: 
 @GIMP_PIXEL_FETCHER_EDGE_SMEAR: 
 @GIMP_PIXEL_FETCHER_EDGE_BLACK: 
+@GIMP_PIXEL_FETCHER_EDGE_BACKGROUND: 
 
 <!-- ##### STRUCT GimpPixelFetcher ##### -->
 <para>
@@ -36,6 +37,7 @@ gimppixelfetcher
 </para>
 
 @drawable: 
+@shadow: 
 @Returns: 
 
 
@@ -54,15 +56,7 @@ gimppixelfetcher
 </para>
 
 @pf: 
-
-
-<!-- ##### FUNCTION gimp_pixel_fetcher_set_shadow ##### -->
-<para>
-
-</para>
-
-@pf: 
-@shadow: 
+@color: 
 
 
 <!-- ##### FUNCTION gimp_pixel_fetcher_get_pixel ##### -->
@@ -93,25 +87,5 @@ gimppixelfetcher
 </para>
 
 @pf: 
-
-
-<!-- ##### FUNCTION gimp_get_bg_guchar ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@transparent: 
-@bg: 
-
-
-<!-- ##### FUNCTION gimp_get_fg_guchar ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@transparent: 
-@fg: 
 
 

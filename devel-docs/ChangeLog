@@ -1,3 +1,10 @@
+2004-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimppixelfetcher.sgml: updated after
+	GimpPixelFetcher changes.
+
 2004-03-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
