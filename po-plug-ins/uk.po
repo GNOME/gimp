@@ -4393,9 +4393,8 @@ msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr "<Image>/Ф╕льтри/Кольори/Мапа/Adjust FG-BG"
 
 #: plug-ins/common/mapcolor.c:363
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr "<Image>/Ф╕льтри/Кольори/Мапа/В╕дображення кольор╕в..."
+msgstr ""
 
 #: plug-ins/common/mapcolor.c:408 plug-ins/common/mapcolor.c:763
 msgid ""
@@ -4412,9 +4411,8 @@ msgid "Mapping colors"
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:573
-#, fuzzy
 msgid "Map Color Range"
-msgstr "Зам╕на кольору..."
+msgstr ""
 
 #: plug-ins/common/mapcolor.c:622
 msgid "Source color range"
@@ -5396,32 +5394,32 @@ msgstr "<Toolbox>/Файл/Захопити/Зн╕мок екрану..."
 #. Main Dialog
 #: plug-ins/common/screenshot.c:393
 msgid "Screen Shot"
-msgstr ""
+msgstr "Зм╕нок екрану"
 
 #. Action area
 #: plug-ins/common/screenshot.c:398 plug-ins/winsnap/winsnap.c:910
 msgid "Grab"
-msgstr ""
+msgstr "Зняти"
 
 #: plug-ins/common/screenshot.c:425
 msgid "Grab a Single Window"
-msgstr ""
+msgstr "Зняти лише в╕кно"
 
 #: plug-ins/common/screenshot.c:439
 msgid "Include Decorations"
-msgstr ""
+msgstr "Включаючи облям╕вку"
 
 #: plug-ins/common/screenshot.c:460
 msgid "Grab the Whole Screen"
-msgstr ""
+msgstr "Зняти весь екран"
 
 #: plug-ins/common/screenshot.c:474 plug-ins/winsnap/winsnap.c:1018
 msgid "after"
-msgstr ""
+msgstr "Затримка:"
 
 #: plug-ins/common/screenshot.c:483 plug-ins/winsnap/winsnap.c:1027
 msgid "Seconds Delay"
-msgstr ""
+msgstr "секунд"
 
 #: plug-ins/common/sel_gauss.c:122
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
@@ -7272,7 +7270,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:243
 msgid "Framenames:"
-msgstr ""
+msgstr "Назви кадр╕в:"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673
 msgid ""
@@ -7283,7 +7281,7 @@ msgstr ""
 #: plug-ins/gap/gap_decode_mpeg_main.c:680 plug-ins/gap/gap_decode_xanim.c:282
 #: plug-ins/imagemap/imap_toolbar.c:110
 msgid "Open"
-msgstr ""
+msgstr "В╕дкрити"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
 msgid "Open the 1st one of the extracted frames"
@@ -7344,7 +7342,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:213
 msgid "Video:"
-msgstr ""
+msgstr "В╕део:"
 
 #: plug-ins/gap/gap_decode_xanim.c:214
 msgid ""
@@ -7362,7 +7360,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:251
 msgid "Format"
-msgstr ""
+msgstr "Формат"
 
 #: plug-ins/gap/gap_decode_xanim.c:252
 msgid ""
@@ -7390,7 +7388,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:270
 msgid "Jpeg Quality:"
-msgstr ""
+msgstr "Як╕сть JPEG:"
 
 #: plug-ins/gap/gap_decode_xanim.c:271
 msgid ""
@@ -8892,9 +8890,8 @@ msgid "Convert Frames to Indexed"
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:364
-#, fuzzy
 msgid "Palette and Dither Settings"
-msgstr "Установки параметр╕в"
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:429
 msgid "Keep Type"
@@ -9096,14 +9093,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1329
-#, fuzzy
 msgid "Cropping all Animation Frames..."
-msgstr "Оптим╕зац╕я ан╕мац╕╖..."
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1332
-#, fuzzy
 msgid "Resizing all Animation Frames..."
-msgstr "Оптим╕зац╕я ан╕мац╕╖..."
+msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:1335
 msgid "Scaling all Animation Frames..."
@@ -9556,7 +9551,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3105 plug-ins/ifscompose/ifscompose.c:799
 #: plug-ins/webbrowser/webbrowser.c:310
 msgid "New"
-msgstr ""
+msgstr "Нове"
 
 #: plug-ins/gfig/gfig.c:2788
 msgid "Multiple"
@@ -12379,7 +12374,7 @@ msgstr "В╕кно:"
 
 #: plug-ins/webbrowser/webbrowser.c:320
 msgid "Current"
-msgstr ""
+msgstr "Поточне"
 
 #: plug-ins/winsnap/winsnap.c:953
 msgid "Grab a single window"
