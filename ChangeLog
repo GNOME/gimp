@@ -1,3 +1,10 @@
+2003-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpvectortool.c: cleaned up GimpTool, GimpDrawTool
+	and vectors_tool->vectors state handling a lot. Still does weird
+	things when switching between images and/or displays but it's
+	better than before...
+
 2003-08-18  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c
