@@ -35,6 +35,11 @@
 #include "dbbrowser.h"
 
 typedef struct {
+  gchar *label;
+  gchar *func;
+} ListEntry_t;
+
+typedef struct {
 
   GtkWidget* dlg;
 
@@ -103,9 +108,6 @@ dialog_close_callback(GtkWidget *,
 
 static void      
 convert_string (gchar *str);
-
-static void
-unconvert_string (char *str);
 
 static gchar* 
 GParamType2char(GParamType t);

@@ -1,3 +1,9 @@
+Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* plugins/dbbrowser/dbbrowser_utils.c:
+	* plugins/dbbrowser/dbbrowser_utils.h: Fix from
+ 	Matt Wilson (msw) to fix the crash with script-fu
+	 pdbs in dbbrowser.
 
 Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
 

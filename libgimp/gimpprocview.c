@@ -24,6 +24,8 @@
 
 #include "dbbrowser_utils.h"
 
+GList *proc_table;
+
 GtkWidget*
 gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 					  gchar     *selected_scheme_proc_name,
@@ -47,7 +49,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   GtkWidget *button;
   GtkWidget *hbox,*searchhbox,*vbox;
   GtkWidget *label;
-  
+
   dbbrowser = (gpointer)malloc(sizeof(dbbrowser_t));
   
   dbbrowser->apply_callback = apply_callback;
@@ -80,8 +82,11 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   /* list : list in a scrolled_win */
   
   dbbrowser->clist = gtk_clist_new(1);
+  gtk_clist_set_policy (GTK_CLIST (dbbrowser->clist), GTK_POLICY_AUTOMATIC,
+			GTK_POLICY_AUTOMATIC);
   gtk_clist_set_selection_mode (GTK_CLIST (dbbrowser->clist),
 			        GTK_SELECTION_BROWSE);
+
   gtk_widget_set_usize(dbbrowser->clist, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->clist), "select_row",
 		      (GtkSignalFunc) procedure_select_callback,
@@ -194,21 +199,15 @@ procedure_select_callback (GtkWidget *widget,
 			   GdkEventButton * bevent,
 			   gpointer data)
 {
-  gchar *text, *temp;
   dbbrowser_t *dbbrowser = data;
+  gchar *func;
 
   g_return_val_if_fail (widget != NULL, FALSE);
-  /*  g_return_val_if_fail (bevent != NULL, FALSE); */
+  //  g_return_val_if_fail (bevent != NULL, FALSE);
   g_return_val_if_fail (dbbrowser != NULL, FALSE);
 
-  if (gtk_clist_get_text (GTK_CLIST (widget), row, column, &temp)) {
-    text = g_strdup(temp);
-    
-    unconvert_string(text);
-    
-    dialog_select (dbbrowser, text);
-    g_free(text);
-  }
+  if ((func = (gchar *) (gtk_clist_get_row_data (GTK_CLIST (widget), row))))
+      dialog_select (dbbrowser, func);
   return FALSE;
 }
 
@@ -493,7 +492,6 @@ dialog_apply_callback (GtkWidget *widget,
 			       dbbrowser->selected_return_vals );
 }
 
-
 static void 
 dialog_search_callback (GtkWidget *widget, 
 			gpointer   data)
@@ -501,7 +499,9 @@ dialog_search_callback (GtkWidget *widget,
 {
   char **proc_list;
   int num_procs;
+  int i, j;
   dbbrowser_t* dbbrowser = data;
+  gchar *func_name, *label;
 
   gtk_clist_freeze(GTK_CLIST(dbbrowser->clist));
   gtk_clist_clear(GTK_CLIST(dbbrowser->clist));
@@ -532,13 +532,35 @@ dialog_search_callback (GtkWidget *widget,
 			   &num_procs, &proc_list);
   }
 
+  for (i = 0; i < num_procs; i++) {
+    j = 0;
+    while((j < i) &&
+	  (strcmp(gtk_clist_get_row_data(GTK_CLIST(dbbrowser->clist), j),
+		  proc_list[i]) < 0))
+      j++;
+
+    label = g_strdup(proc_list[i]);
+    convert_string(label);
+    gtk_clist_insert (GTK_CLIST (GTK_CLIST(dbbrowser->clist)), j,
+                      &label);
+    func_name = g_strdup (proc_list[i]);
+    
+    gtk_clist_set_row_data_full(GTK_CLIST(dbbrowser->clist), j,
+                                func_name, g_free);
+  }
+
+  if (num_procs > 0) {
+    dialog_select( dbbrowser,gtk_clist_get_row_data(GTK_CLIST(dbbrowser->clist), 0));
+    gtk_clist_select_row(GTK_CLIST(dbbrowser->clist), 0, 0);
+  }
+
+  /*
   if (num_procs != 0) {
     gchar *insert_name, *label_name;
     int i,j,savej;
     
     for (i = 0; i < num_procs ; i++) {
 
-      /* sort the list step by step */
       insert_name=g_strdup(proc_list[0]); savej=0;
       for (j = 0; j < num_procs ; j++) {
 	if (strcmp(proc_list[j],insert_name)<0) {
@@ -547,7 +569,7 @@ dialog_search_callback (GtkWidget *widget,
 	  savej=j;
 	}
       }
-      
+  
       proc_list[savej][0]='\255';
 
       label_name = g_strdup( insert_name );
@@ -559,6 +581,7 @@ dialog_search_callback (GtkWidget *widget,
       g_free(label_name);
     }
   }
+  */
   
   if ( dbbrowser->clist ) {
     ;
@@ -580,16 +603,6 @@ convert_string (char *str)
   while (*str)
     {
       if (*str == '_') *str = '-';
-      str++;
-    }
-}
-
-static void 
-unconvert_string (char *str)
-{
-  while (*str)
-    {
-      if (*str == '-') *str = '_';
       str++;
     }
 }
