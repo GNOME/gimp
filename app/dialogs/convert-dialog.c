@@ -301,8 +301,8 @@ convert_to_indexed (GimpImage *gimage,
       gtk_widget_show (remove_toggle);
     }
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                               GINT_TO_POINTER (dialog->palette_type));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
+                                   dialog->palette_type);
 
   /*  the dither type  */
   frame = gtk_frame_new (_("Dithering Options"));
@@ -313,8 +313,8 @@ convert_to_indexed (GimpImage *gimage,
                                   G_CALLBACK (gimp_radio_button_update),
                                   &dialog->dither_type,
                                   &toggle);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                               GINT_TO_POINTER (dialog->dither_type));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
+                                   dialog->dither_type);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show(vbox);

@@ -634,8 +634,8 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
       if (editor->template->width == editor->template->height)
         {
           editor->block_aspect = TRUE;
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
-                                       GINT_TO_POINTER (GIMP_ASPECT_SQUARE));
+          gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
+                                           GIMP_ASPECT_SQUARE);
           editor->block_aspect = FALSE;
           return;
        }
@@ -696,8 +696,8 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     aspect = GIMP_ASPECT_SQUARE;
 
   editor->block_aspect = TRUE;
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
-                               GINT_TO_POINTER (aspect));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->aspect_button),
+                                   aspect);
   editor->block_aspect = FALSE;
 
   if (editor->stock_id_container)

@@ -515,8 +515,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup,
   button = gimp_editor_add_stock_box (editor, GIMP_TYPE_VIEW_TYPE, "gimp",
                                       G_CALLBACK (gimp_container_popup_view_type_toggled),
                                       popup);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (view_type));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), view_type);
 
   if (popup->dialog_factory)
     gimp_editor_add_button (editor, popup->dialog_stock_id,

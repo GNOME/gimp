@@ -1,3 +1,20 @@
+2003-11-14  Manish Singh  <yosh@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]: add
+	gimp_int_option_menu_set_sensitive and gimp_int_radio_group_set_active,
+	tweak docs.
+
+	* app/gui/convert-dialog.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptexteditor.c: use them.
+
 2003-11-15  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectoroptions.[ch]: Since GimpVectorTool is no

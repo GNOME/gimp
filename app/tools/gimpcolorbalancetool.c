@@ -344,8 +344,8 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                     cb_tool);
 
   /*  set range after everything is in place  */
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                               GINT_TO_POINTER (cb_tool->transfer_mode));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
+                                   cb_tool->transfer_mode);
 }
 
 static void

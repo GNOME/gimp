@@ -779,8 +779,8 @@ layers_new_layer_query (GimpImage *gimage,
                                                 G_CALLBACK (gimp_radio_button_update),
                                                 &options->fill_type,
                                                 &button);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (options->fill_type));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                                   options->fill_type);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -989,8 +989,8 @@ layers_add_mask_query (GimpLayer *layer,
                                G_CALLBACK (gimp_radio_button_update),
                                &options->add_mask_type,
                                &button);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (options->add_mask_type));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                                   options->add_mask_type);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),

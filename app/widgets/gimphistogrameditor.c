@@ -372,11 +372,9 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_item_sensitive (gpointer      item_data,
-                                      GimpDrawable *drawable)
+gimp_histogram_editor_item_sensitive (GimpHistogramChannel  channel,
+                                      GimpDrawable         *drawable)
 {
-  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-
   if (!drawable)
     return FALSE;
 
@@ -403,15 +401,14 @@ gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
   GimpHistogramView    *view    = GIMP_HISTOGRAM_BOX (editor->box)->view;
   GimpHistogramChannel  channel = gimp_histogram_view_get_channel (view);
 
-  if (! gimp_histogram_editor_item_sensitive (GINT_TO_POINTER (channel),
-                                              editor->drawable))
+  if (! gimp_histogram_editor_item_sensitive (channel, editor->drawable))
     {
       gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
     }
 
-  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (editor->menu),
-                                  (GimpOptionMenuSensitivityCallback) gimp_histogram_editor_item_sensitive,
-                                  editor->drawable);
+  gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (editor->menu),
+                                      (GimpIntOptionMenuSensitivityCallback) gimp_histogram_editor_item_sensitive,
+                                      editor->drawable);
 }
 
 static void

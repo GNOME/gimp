@@ -109,7 +109,7 @@ static void   levels_channel_callback              (GtkWidget      *widget,
 						    GimpLevelsTool *l_tool);
 static void   levels_channel_reset_callback        (GtkWidget      *widget,
 						    GimpLevelsTool *l_tool);
-static gboolean levels_set_sensitive_callback      (gpointer        item_data,
+static gboolean levels_set_sensitive_callback      (GimpHistogramChannel channel,
                                                     GimpLevelsTool *l_tool);
 static void   levels_auto_callback                 (GtkWidget      *widget,
 						    GimpLevelsTool *l_tool);
@@ -303,9 +303,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   /* set the sensitivity of the channel menu based on the drawable type */
-  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (l_tool->channel_menu),
-                                  (GimpOptionMenuSensitivityCallback) levels_set_sensitive_callback,
-                                  l_tool);
+  gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (l_tool->channel_menu),
+                                      (GimpIntOptionMenuSensitivityCallback) levels_set_sensitive_callback,
+                                      l_tool);
 
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (l_tool->channel_menu),
@@ -979,11 +979,9 @@ levels_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-levels_set_sensitive_callback (gpointer        item_data,
-                               GimpLevelsTool *l_tool)
+levels_set_sensitive_callback (GimpHistogramChannel  channel,
+                               GimpLevelsTool       *l_tool)
 {
-  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:

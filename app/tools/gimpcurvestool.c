@@ -119,7 +119,7 @@ static void   curves_channel_callback         (GtkWidget        *widget,
 static void   curves_channel_reset_callback   (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
 
-static gboolean curves_set_sensitive_callback (gpointer          item_data,
+static gboolean curves_set_sensitive_callback (GimpHistogramChannel channel,
                                                GimpCurvesTool   *c_tool);
 static void   curves_curve_type_callback      (GtkWidget        *widget,
                                                GimpCurvesTool   *c_tool);
@@ -306,9 +306,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
                           GIMP_COLOR_OPTIONS (tool->tool_info->tool_options));
 
   /* set the sensitivity of the channel menu based on the drawable type */
-  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
-                                  (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
-                                  c_tool);
+  gimp_int_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
+                                      (GimpIntOptionMenuSensitivityCallback) curves_set_sensitive_callback,
+                                      c_tool);
 
   /* set the current selection */
   gimp_int_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
@@ -762,8 +762,8 @@ curves_channel_callback (GtkWidget      *widget,
         c_tool->channel = 1;
     }
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
-			       GINT_TO_POINTER (c_tool->curves->curve_type[c_tool->channel]));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
+			           c_tool->curves->curve_type[c_tool->channel]);
 
   curves_update (c_tool, XRANGE_TOP | YRANGE);
   gtk_widget_queue_draw (c_tool->graph);
@@ -784,11 +784,9 @@ curves_channel_reset_callback (GtkWidget      *widget,
 }
 
 static gboolean
-curves_set_sensitive_callback (gpointer        item_data,
-                               GimpCurvesTool *c_tool)
+curves_set_sensitive_callback (GimpHistogramChannel  channel,
+                               GimpCurvesTool       *c_tool)
 {
-  GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -1342,8 +1340,8 @@ curves_read_from_file (GimpCurvesTool *c_tool,
   curves_update (c_tool, ALL);
   gtk_widget_queue_draw (c_tool->graph);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
-			       GINT_TO_POINTER (GIMP_CURVE_SMOOTH));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (c_tool->curve_type),
+			           GIMP_CURVE_SMOOTH);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 

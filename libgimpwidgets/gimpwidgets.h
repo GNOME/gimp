@@ -76,6 +76,13 @@ GtkWidget * gimp_int_option_menu_new        (gboolean        menu_only,
 void        gimp_int_option_menu_set_history (GtkOptionMenu *option_menu,
                                               gint           item_data);
 
+typedef gboolean (*GimpIntOptionMenuSensitivityCallback) (gint     item_data,
+                                                          gpointer callback_data);
+void  gimp_int_option_menu_set_sensitive (GtkOptionMenu    *option_menu,
+                                          GimpIntOptionMenuSensitivityCallback callback,
+                                          gpointer          callback_data);
+
+
 #ifndef GIMP_DISABLE_DEPRECATED
 GtkWidget * gimp_option_menu_new     (gboolean         menu_only,
 
@@ -125,6 +132,9 @@ GtkWidget * gimp_int_radio_group_new (gboolean          in_frame,
 				       */
 
 				      ...);
+
+void   gimp_int_radio_group_set_active (GtkRadioButton     *radio_button,
+                                        gint                item_data);
 
 #ifndef GIMP_DISABLE_DEPRECATED
 GtkWidget * gimp_radio_group_new   (gboolean            in_frame,

@@ -503,8 +503,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
                                          &button);
     }
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (value));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
   set_param_spec (G_OBJECT (GTK_BIN (frame)->child), NULL, param_spec);
 
@@ -600,8 +599,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
                                      &button);
     }
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (value));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 
   set_param_spec (G_OBJECT (box), NULL, param_spec);
 
@@ -645,8 +643,7 @@ gimp_prop_radio_button_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                               GINT_TO_POINTER (value));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 }
 
 

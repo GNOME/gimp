@@ -206,8 +206,8 @@ gimp_text_editor_new (const gchar   *title,
                                  editor,
                                  &editor->group);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->group),
-                               GINT_TO_POINTER (editor->base_dir));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->group),
+                                   editor->base_dir);
 
   children = gtk_container_get_children (GTK_CONTAINER (box));
 
@@ -271,8 +271,7 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
                                    G_CALLBACK (gimp_text_editor_dir_changed),
                                    editor);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (editor->group),
-                               GINT_TO_POINTER (base_dir));
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->group), base_dir);
 
   g_signal_handlers_unblock_by_func (editor->group,
                                      G_CALLBACK (gimp_text_editor_dir_changed),
