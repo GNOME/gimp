@@ -1,5 +1,11 @@
 2004-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/vectors-commands.c (vectors_linked_cmd_callback):
+	call gimp_item_set_linked(), not gimp_item_set_visible().
+	Fixes bug #155578
+
+2004-10-16  Michael Natterer  <mitch@gimp.org>
+
 	Ported the layers, channels and paths dialogs from
 	gimp_editor_add_button() to gimp_editor_add_action_button(),
 	removing a massive amount of duplicated code, sensitivity logic

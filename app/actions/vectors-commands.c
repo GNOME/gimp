@@ -461,7 +461,7 @@ vectors_linked_cmd_callback (GtkAction *action,
       if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (vectors))
         push_undo = FALSE;
 
-      gimp_item_set_visible (GIMP_ITEM (vectors), linked, push_undo);
+      gimp_item_set_linked (GIMP_ITEM (vectors), linked, push_undo);
       gimp_image_flush (gimage);
     }
 }
