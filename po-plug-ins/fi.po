@@ -6,13 +6,13 @@
 #	Pahasti kesken. Kuka jaksaisi jatkaa...
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1\n"
+"Project-Id-Version: gimp-plug-ins 1.1.26\n"
 "POT-Creation-Date: 2000-09-22 11:39-0700\n"
 "PO-Revision-Date: 2000-02-12 05:50+0200\n"
 "Last-Translator: Tor Lillqvist tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
@@ -716,7 +716,7 @@ msgid "New Fractal"
 msgstr "Uusi fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -9933,7 +9933,7 @@ msgid "<Image>/Filters/Render/Gfig..."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:818
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -10484,7 +10484,7 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:992
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "No gflare-path in gimprc:\n"
 "You need to add an entry like\n"

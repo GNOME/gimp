@@ -6,8 +6,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.15\n"
-"POT-Creation-Date: 2000-09-22 11:39-0700\n"
+"Project-Id-Version: gimp-plug-ins 1.1.26\n"
+"POT-Creation-Date: 2000-09-30 19:59+0200\n"
 "PO-Revision-Date: 2000-03-01 11:43+0100\n"
 "Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -7065,7 +7065,7 @@ msgstr "<Image>/Fichier/"
 #: plug-ins/common/winprint.c:303
 #, c-format
 msgid "PrintDlg failed: %d"
-msgstr "La boîte d'impression a échoué"
+msgstr "La boîte d'impression a échoué: %d"
 
 #: plug-ins/common/winprint.c:339
 msgid "Printer doesn't support bitmaps"
@@ -11033,7 +11033,7 @@ msgstr "Ne peut ouvrir \"%s\""
 #: plug-ins/gflare/gflare.c:1753
 #, c-format
 msgid "error reading GFlare directory \"%s\""
-msgstr "erreur lors de la lecture du répertoire Gflare"
+msgstr "erreur lors de la lecture du répertoire Gflare \"%s\""
 
 #: plug-ins/gflare/gflare.c:2453
 msgid "GFlare"
@@ -13360,8 +13360,8 @@ msgstr "Le fichier XJT contient le type d'unité inconnu %d."
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
-"Avertissement : type d'unité non supporté lors de l'enregistrement au format "
-"XJT."
+"Avertissement : type d'unité %d non supporté lors de l'enregistrement au "
+"format XJT."
 
 #: plug-ins/xjt/xjt.c:788
 msgid "Save as XJT"

@@ -1731,7 +1731,7 @@ msgid "Can't open %s; %s"
 msgstr "Imposible abrir %s; %s"
 
 #: app/gimprc.c:2936
-#, c-format
+#, fuzzy, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Imposible renomear %s.old; %s"
 
@@ -6350,7 +6350,7 @@ msgstr ""
 "que lle deixa determina-la resolución do seu monitor interactivamente."
 
 #: app/xcf.c:382
-#, c-format
+#, fuzzy, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Erro de XCF: version de ficheiro XCF non soportado, atopado"
 
