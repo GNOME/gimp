@@ -1,5 +1,12 @@
 2004-01-08  Henrik Brix Andersen  <brix@gimp.org>
 
+	* plug-ins/common/png.c (query): only expose
+	file_png_save_defaults() in the GUI.
+
+	Fixes bug #130866.
+
+2004-01-08  Henrik Brix Andersen  <brix@gimp.org>
+
 	* app/gui/preferences-dialog.c (prefs_dialog_new): moved Default
 	Image Grid to top level since it also applies to newly loaded
 	images without a grid.
