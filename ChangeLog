@@ -1,3 +1,10 @@
+2003-01-12  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/plugin-def.pl
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/.cvsignore: Commented out the psd_save.c bit for
+	now, looks like bolsh forgot to cvs add the file.
+
 2003-01-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemlistview.c: pass the GimpItemListView as

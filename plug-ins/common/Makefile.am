@@ -103,7 +103,6 @@ libexec_PROGRAMS = \
 	polar \
 	ps \
 	psd \
-	psd_save \
 	$(PSP) \
 	randomize \
 	ripple \
@@ -1195,16 +1194,6 @@ psd_SOURCES = \
 	psd.c
 
 psd_LDADD = \
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)							\
-	$(INTLLIBS)
-
-psd_save_SOURCES = \
-	psd_save.c
-
-psd_save_LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
