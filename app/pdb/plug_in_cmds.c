@@ -162,12 +162,21 @@ plugins_query_invoker (Gimp         *gimp,
           if (search_str && match_strings (&sregex, name))
             continue;
 
-          menu_strs[i]     = gimp_strip_uline (proc_def->menu_paths->data);
+          if (proc_def->menu_label)
+            name = g_strdup_printf ("%s/%s",
+                                    (gchar *) proc_def->menu_paths->data,
+                                    proc_def->menu_label);
+          else
+            name = g_strdup (proc_def->menu_paths->data);
+
+          menu_strs[i]     = gimp_strip_uline (name);
           accel_strs[i]    = NULL;
           prog_strs[i]     = g_strdup (proc_def->prog);
           types_strs[i]    = g_strdup (proc_def->image_types);
           realname_strs[i] = g_strdup (pr->name);
           time_ints[i]     = proc_def->mtime;
+
+          g_free (name);
 
           i++;
         }

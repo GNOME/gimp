@@ -14,12 +14,21 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = dbbrowser
+noinst_LIBRARIES = libgimpprocbrowser.a
+libexec_PROGRAMS = plugin-browser procedure-browser
 
-dbbrowser_SOURCES = \
-	dbbrowser.c		\
-	dbbrowser_utils.c	\
-	dbbrowser_utils.h
+libgimpprocbrowser_a_SOURCES = \
+	gimpprocbrowser.c	\
+	gimpprocbrowser.h	\
+	gimpprocview.c		\
+	gimpprocview.h
+
+plugin_browser_SOURCES = \
+	plugin-browser.c
+
+procedure_browser_SOURCES = \
+	procedure-browser.c
+
 
 EXTRA_DIST = README
 
@@ -34,6 +43,7 @@ LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	libgimpprocbrowser.a	\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

@@ -5,6 +5,7 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.a
 
 if OS_WIN32
 mwindows = -mwindows
@@ -51,16 +52,16 @@ REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
 LDADD = \
-	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
-	$(libgimpui)						\
-	$(libgimpwidgets)					\
-	$(libgimp)						\
-	$(libgimpcolor)						\
-	$(libgimpbase)						\
-	siod/libsiod.a						\
-	$(REGEXREPL)						\
-	$(GTK_LIBS)						\
-	$(SOCKET_LIBS)						\
-	$(WINSOCK_LIBS)						\
-	$(RT_LIBS)						\
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(libgimpprocbrowser)	\
+	siod/libsiod.a		\
+	$(REGEXREPL)		\
+	$(GTK_LIBS)		\
+	$(SOCKET_LIBS)		\
+	$(WINSOCK_LIBS)		\
+	$(RT_LIBS)		\
 	$(INTLLIBS)

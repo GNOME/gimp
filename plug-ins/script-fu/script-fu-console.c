@@ -38,7 +38,7 @@
 #include "siod-wrapper.h"
 #include "script-fu-console.h"
 
-#include <plug-ins/dbbrowser/dbbrowser_utils.h>
+#include <plug-ins/dbbrowser/gimpprocbrowser.h>
 
 
 #define TEXT_WIDTH  480
@@ -264,7 +264,7 @@ script_fu_console_interface (void)
 		    G_CALLBACK (script_fu_cc_key_function),
 		    NULL);
 
-  button = gtk_button_new_with_label (_("Browse..."));
+  button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
   gtk_widget_show (button);
@@ -304,10 +304,10 @@ apply_callback (const gchar        *proc_name,
 		const gchar        *proc_copyright,
 		const gchar        *proc_date,
 		GimpPDBProcType     proc_type,
-		gint                nparams,
-		gint                nreturn_vals,
+		gint                n_params,
+		gint                n_return_vals,
 		const GimpParamDef *params,
-		GimpParamDef       *return_vals)
+		const GimpParamDef *return_vals)
 {
   gint     i;
   GString *text;
@@ -317,11 +317,13 @@ apply_callback (const gchar        *proc_name,
 
   text = g_string_new ("(");
   text = g_string_append (text, scheme_proc_name);
-  for (i=0; i<nparams; i++)
+
+  for (i = 0; i < n_params; i++)
     {
       text = g_string_append_c (text, ' ');
       text = g_string_append (text, params[i].name);
     }
+
   text = g_string_append_c (text, ')');
 
   gtk_entry_set_text (GTK_ENTRY (cint.cc), text->str);
@@ -332,15 +334,14 @@ static void
 script_fu_browse_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (apply_callback));
+  gtk_quit_add_destroy (1, (GtkObject *)
+                        gimp_proc_browser_dialog_new (apply_callback));
 }
 
 static gboolean
 script_fu_console_idle_scroll_end (gpointer data)
 {
-  GtkAdjustment *adj;
-
-  adj = GTK_ADJUSTMENT (data);
+  GtkAdjustment *adj = GTK_ADJUSTMENT (data);
 
   gtk_adjustment_set_value (adj, adj->upper - adj->page_size);
 
@@ -350,13 +351,10 @@ script_fu_console_idle_scroll_end (gpointer data)
 static void
 script_fu_console_scroll_end (void)
 {
-  GtkTextView *view;
-
-  view = GTK_TEXT_VIEW (cint.text_view);
-
   /*  the text view idle updates so we need to idle scroll too
    */
-  g_idle_add (script_fu_console_idle_scroll_end, view->vadjustment);
+  g_idle_add (script_fu_console_idle_scroll_end,
+              GTK_TEXT_VIEW (cint.text_view)->vadjustment);
 }
 
 void

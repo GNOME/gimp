@@ -114,7 +114,6 @@ libexec_PROGRAMS = \
 	pix \
 	pixelize \
 	plasma \
-	plugindetails \
 	$(PNG) \
 	pnm \
 	polar \
@@ -1303,19 +1302,6 @@ plasma_SOURCES = \
 	plasma.c
 
 plasma_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-plugindetails_SOURCES = \
-	plugindetails.c
-
-plugindetails_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\

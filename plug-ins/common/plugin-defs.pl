@@ -86,7 +86,6 @@
     'pix' => { libdep => 'gtk', ui => 1 },
     'pixelize' => { libdep => 'gtk', ui => 1 },
     'plasma' => { libdep => 'gtk', ui => 1 },
-    'plugindetails' => { libdep => 'gtk', ui => 1 },
     'png' => { libdep => 'gtk', ui => 1, optional => 1 },
     'pnm' => { libdep => 'gtk', ui => 1 },
     'polar' => { libdep => 'gtk', ui => 1 },

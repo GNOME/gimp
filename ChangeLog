@@ -1,3 +1,37 @@
+2004-09-30  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up the DB Browser and Plugin Details code and GUI.  It's
+	not perfect yet but at least they don't look like crap any more.
+	Fixes bug #131490.
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/plugindetails.c: removed this plugin.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/dbbrowser/dbbrowser_utils.[ch]: removed these files.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.[ch]
+	* plug-ins/dbbrowser/gimpprocview.[ch]: new cleaned up files.
+
+	* plug-ins/dbbrowser/plugin-browser.c: the former plugindetails.
+	* plug-ins/dbbrowser/procedure-browser.c: the former dbbrowser.
+
+	* plug-ins/script-fu/Makefile.am: link against the new library
+	libgimpprocbrowser.a
+
+	* plug-ins/script-fu/script-fu-console.c: changed #includes
+	accordingly. Monir cleanup.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): fixed menu_path
+	return value. Was broken since the plug-in menu registering
+	changes.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2004-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphelp.c (gimp_help_get_locales): fixed brokeness

@@ -21,24 +21,25 @@
  * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
  */
 
-#ifndef __DBBROWSER_UTILS_H__
-#define __DBBROWSER_UTILS_H__
+#ifndef __GIMP_PROC_BROWSER_H__
+#define __GIMP_PROC_BROWSER_H__
 
 
-typedef void (* GimpDBBrowserApplyCallback) (const gchar        *proc_name,
-					     const gchar        *scheme_proc_name,
-					     const gchar        *proc_blurb,
-					     const gchar        *proc_help,
-					     const gchar        *proc_author,
-					     const gchar        *proc_copyright,
-					     const gchar        *proc_date,
-					     GimpPDBProcType     proc_type,
-					     gint                nparams,
-					     gint                nreturn_vals,
-					     const GimpParamDef *params,
-					     GimpParamDef        *return_vals);
-
-GtkWidget * gimp_db_browser (GimpDBBrowserApplyCallback  apply_callback);
+typedef void (* GimpProcBrowserApplyCallback) (const gchar        *proc_name,
+                                               const gchar        *scheme_proc_name,
+                                               const gchar        *proc_blurb,
+                                               const gchar        *proc_help,
+                                               const gchar        *proc_author,
+                                               const gchar        *proc_copyright,
+                                               const gchar        *proc_date,
+                                               GimpPDBProcType     proc_type,
+                                               gint                n_params,
+                                               gint                n_return_vals,
+                                               const GimpParamDef *params,
+                                               const GimpParamDef *return_vals);
 
 
-#endif  /* __DBBROWSER_UTILS_H__ */
+GtkWidget * gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback);
+
+
+#endif  /* __GIMP_PROC_BROWSER_H__ */

@@ -33,35 +33,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "gimpprocview.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-
-#define DBL_LIST_WIDTH  250
-#define DBL_WIDTH       (DBL_LIST_WIDTH + 300)
-#define DBL_HEIGHT      200
-
-typedef struct
-{
-  GtkTreeView *list_view;
-  GtkTreeView *tree_view;
-  GtkWidget   *dlg;
-  GtkWidget   *search_entry;
-  GtkWidget   *descr_scroll;
-  GtkWidget   *info_table;
-  GtkWidget   *paned;
-  gint         num_plugins;
-  gboolean     details_showing;
-} PDesc;
-
-typedef struct
-{
-  gchar *menu;
-  gchar *accel;
-  gchar *prog;
-  gchar *types;
-  gchar *realname;
-  gint  instime;
-} PInfo;
 
 enum
 {
@@ -83,6 +58,35 @@ enum
   TREE_N_COLUMNS
 };
 
+#define DBL_LIST_WIDTH  250
+#define DBL_WIDTH       (DBL_LIST_WIDTH + 400)
+#define DBL_HEIGHT      250
+
+typedef struct
+{
+  GtkWidget   *dialog;
+
+  GtkTreeView *list_view;
+  GtkTreeView *tree_view;
+
+  GtkWidget   *count_label;
+  GtkWidget   *search_entry;
+  GtkWidget   *descr_scroll;
+  GtkWidget   *info_table;
+  gint         num_plugins;
+} PDesc;
+
+typedef struct
+{
+  gchar *menu;
+  gchar *accel;
+  gchar *prog;
+  gchar *types;
+  gchar *realname;
+  gint  instime;
+} PInfo;
+
+
 /* Declare some local functions.
  */
 static void   query      (void);
@@ -100,23 +104,14 @@ static gboolean    find_existing_mpath        (GtkTreeModel     *model,
                                                GtkTreeIter      *return_iter);
 
 static void        list_store_select_callback (GtkTreeSelection *selection,
-                                               PDesc            *pdesc);
+                                               PDesc            *browser);
 static void        tree_store_select_callback (GtkTreeSelection *selection,
-                                               PDesc            *pdesc);
+                                               PDesc            *browser);
+static void        browser_show_plugin        (PDesc            *browser,
+                                               PInfo            *pinfo);
 
-static void        procedure_general_select_callback (PDesc *pdesc,
-                                                      PInfo *pinfo);
 
-
-static gchar *proc_type_str[] =
-{
-  N_("Internal GIMP procedure"),
-  N_("GIMP Plug-In"),
-  N_("GIMP Extension"),
-  N_("Temporary Procedure")
-};
-
-static PDesc *plugindesc = NULL;
+static PDesc *browser = NULL;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -149,7 +144,7 @@ query (void)
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-                          N_("_Plugin Details"),
+                          N_("_Plugin Browser"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -195,75 +190,9 @@ run (const gchar      *name,
     }
 }
 
-/* Bit of a fiddle but sorta has the effect I want... */
-
 static void
-details_callback (GtkWidget *widget,
-                  PDesc     *pdesc)
-{
-  GtkLabel         *lab = GTK_LABEL (GTK_BIN (widget)->child);
-  GtkTreeSelection *list_selection;
-  GtkTreeIter       iter;
-
-  /* This is a lame hack:
-     We add the description on the right on the first details_callback.
-     Otherwise the window reacts quite weird on resizes */
-  if (pdesc->descr_scroll == NULL)
-    {
-      pdesc->descr_scroll = gtk_scrolled_window_new (NULL, NULL);
-      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (pdesc->descr_scroll),
-                                      GTK_POLICY_ALWAYS,
-                                      GTK_POLICY_ALWAYS);
-      gtk_widget_set_size_request (pdesc->descr_scroll,
-                                   DBL_WIDTH - DBL_LIST_WIDTH, -1);
-      gtk_paned_pack2 (GTK_PANED (pdesc->paned), pdesc->descr_scroll,
-                       FALSE, TRUE);
-      list_selection = gtk_tree_view_get_selection (pdesc->list_view);
-      if (gtk_tree_selection_get_selected (list_selection, NULL, &iter))
-        list_store_select_callback (list_selection, pdesc);
-    }
-
-  if (pdesc->details_showing == FALSE)
-    {
-      GTK_PANED (pdesc->paned)->child1_resize = FALSE;
-      gtk_label_set_text (lab, _("Details <<"));
-      gtk_widget_show (pdesc->descr_scroll);
-      pdesc->details_showing = TRUE;
-    }
-  else
-    {
-      GTK_PANED (pdesc->paned)->child1_resize = TRUE;
-      GTK_PANED (pdesc->paned)->child2_resize = TRUE;
-
-      gtk_label_set_text (lab, _("Details >>"));
-      gtk_widget_hide (pdesc->descr_scroll);
-      gtk_paned_set_position (GTK_PANED (pdesc->paned),
-                              GTK_PANED (pdesc->paned)->child1->allocation.width);
-      pdesc->details_showing = FALSE;
-    }
-}
-
-static gchar *
-format_menu_path (gchar *s)
-{
-  gchar **str_array;
-  gchar  *newstr = NULL;
-
-  if (!s)
-    return s;
-
-  str_array = g_strsplit (s, "/", 0);
-
-  newstr = g_strjoinv ("->", str_array);
-
-  g_strfreev (str_array);
-
-  return newstr;
-}
-
-static void
-procedure_general_select_callback (PDesc *pdesc,
-                                   PInfo *pinfo)
+browser_show_plugin (PDesc *browser,
+                     PInfo *pinfo)
 {
   gchar           *selected_proc_blurb;
   gchar           *selected_proc_help;
@@ -275,30 +204,12 @@ procedure_general_select_callback (PDesc *pdesc,
   gint             selected_nreturn_vals;
   GimpParamDef    *selected_params;
   GimpParamDef    *selected_return_vals;
-  GtkWidget       *label;
-  GtkWidget       *help;
-  GtkWidget       *text_view;
-  GtkTextBuffer   *text_buffer;
   GtkWidget       *old_table;
-  gint             table_row = 0;
-  gchar           *str;
-  GtkWidget       *separator;
 
-#define ADD_SEPARATOR                                                         \
-G_STMT_START                                                                  \
-{                                                                             \
-  separator = gtk_hseparator_new ();                                          \
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), separator,                 \
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);  \
-  gtk_widget_show (separator);                                                \
-  table_row++;                                                                \
-}                                                                             \
-G_STMT_END
-
-  g_return_if_fail (pdesc != NULL);
+  g_return_if_fail (browser != NULL);
   g_return_if_fail (pinfo != NULL);
 
-  if (pdesc->descr_scroll == NULL)
+  if (browser->descr_scroll == NULL)
     return;
 
   selected_proc_blurb     = NULL;
@@ -322,137 +233,50 @@ G_STMT_END
                                 &selected_nparams, &selected_nreturn_vals,
                                 &selected_params,  &selected_return_vals);
 
-  old_table = pdesc->info_table;
+  old_table = browser->info_table;
 
-  pdesc->info_table = gtk_table_new (9, 5, FALSE);
+  browser->info_table = gimp_proc_view_new (pinfo->realname,
+                                            pinfo->menu,
+                                            selected_proc_blurb,
+                                            selected_proc_help,
+                                            selected_proc_author,
+                                            selected_proc_copyright,
+                                            selected_proc_date,
+                                            selected_proc_type,
+                                            selected_nparams,
+                                            selected_nreturn_vals,
+                                            selected_params,
+                                            selected_return_vals);
 
-  gtk_container_set_border_width (GTK_CONTAINER (pdesc->info_table), 12);
-  gtk_table_set_col_spacings (GTK_TABLE (pdesc->info_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (pdesc->info_table), 6);
-
-
-  /* Number of plugins */
-
-  str = g_strdup_printf (_("Number of Plugin Interfaces: %d"),
-                         pdesc->num_plugins);
-  label = gtk_label_new (str);
-  g_free (str);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
-                    0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-  table_row++;
-
-  ADD_SEPARATOR;
-
-  /* menu path */
-
-  label = gtk_label_new (format_menu_path (pinfo->menu));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Menu Path:"), 0.0, 0.0,
-                             label, 3, FALSE);
-  table_row++;
-
-  ADD_SEPARATOR;
-
-  /* show the name */
-
-  label = gtk_label_new (pinfo->realname);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Name:"), 0.0, 0.0,
-                             label, 3, FALSE);
-  table_row++;
-
-  ADD_SEPARATOR;
-
-  /* show the description */
-
-  label = gtk_label_new (selected_proc_blurb);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Blurb:"), 0.0, 0.0,
-                             label, 3, FALSE);
-  table_row++;
-
-  ADD_SEPARATOR;
-
-  /* show the help */
-  if (selected_proc_help && (strlen (selected_proc_help) > 1))
-    {
-      help = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
-      gtk_table_set_col_spacing (GTK_TABLE (help), 0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                                 _("Help:"), 0.0, 0.0,
-                                 help, 3, FALSE);
-      table_row++;
-
-      text_buffer = gtk_text_buffer_new  (NULL);
-      gtk_text_buffer_set_text (text_buffer, selected_proc_help, -1);
-
-      text_view = gtk_text_view_new_with_buffer (text_buffer);
-      g_object_unref (text_buffer);
-
-      gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
-      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-
-      gtk_widget_set_size_request (text_view, -1, 60);
-      gtk_table_attach (GTK_TABLE (help), text_view, 0, 1, 0, 1,
-                        GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                        GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (text_view);
-
-      ADD_SEPARATOR;
-    }
-
-  /* show the type */
-
-  label = gtk_label_new (gettext (proc_type_str[selected_proc_type]));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (pdesc->info_table), 0, table_row,
-                             _("Type:"), 0.0, 0.0,
-                             label, 3, FALSE);
-  table_row++;
-
-  /* Remove old and replace with new */
+  gtk_container_set_border_width (GTK_CONTAINER (browser->info_table), 12);
 
   if (old_table)
     gtk_widget_destroy (old_table);
 
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (pdesc->descr_scroll),
-                                         pdesc->info_table);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (browser->descr_scroll),
+                                         browser->info_table);
 
-  gtk_widget_show (pdesc->info_table);
+  gtk_widget_show (browser->info_table);
 
-  if (selected_proc_blurb)
-    g_free (selected_proc_blurb);
-  if (selected_proc_help)
-    g_free (selected_proc_help);
-  if (selected_proc_author)
-    g_free (selected_proc_author);
-  if (selected_proc_copyright)
-    g_free (selected_proc_copyright);
-  if (selected_proc_date)
-    g_free (selected_proc_date);
-  if (selected_params)
-    g_free (selected_params);
-  if (selected_return_vals)
-    g_free (selected_return_vals);
+  g_free (selected_proc_blurb);
+  g_free (selected_proc_help);
+  g_free (selected_proc_author);
+  g_free (selected_proc_copyright);
+  g_free (selected_proc_date);
+  g_free (selected_params);
+  g_free (selected_return_vals);
 }
 
 static void
 list_store_select_callback (GtkTreeSelection *selection,
-                            PDesc            *pdesc)
+                            PDesc            *browser)
 {
   PInfo        *pinfo = NULL;
   GtkTreeIter   iter;
   GtkTreeModel *model;
   gchar        *mpath = NULL;
 
-  g_return_if_fail (pdesc != NULL);
+  g_return_if_fail (browser != NULL);
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -465,23 +289,24 @@ list_store_select_callback (GtkTreeSelection *selection,
   if (!pinfo || !mpath)
     return;
 
-  model = gtk_tree_view_get_model (pdesc->tree_view);
+  model = gtk_tree_view_get_model (browser->tree_view);
+
   if (find_existing_mpath (model, mpath, &iter))
     {
       GtkTreeSelection *tree_selection;
-      GtkTreePath *tree_path;
+      GtkTreePath      *tree_path;
 
       tree_path = gtk_tree_model_get_path (model, &iter);
-      gtk_tree_view_expand_to_path (pdesc->tree_view, tree_path);
-      tree_selection = gtk_tree_view_get_selection (pdesc->tree_view);
+      gtk_tree_view_expand_to_path (browser->tree_view, tree_path);
+      tree_selection = gtk_tree_view_get_selection (browser->tree_view);
       g_signal_handlers_block_by_func (tree_selection,
                                        G_CALLBACK (tree_store_select_callback),
-                                       pdesc);
+                                       browser);
       gtk_tree_selection_select_iter (tree_selection, &iter);
       g_signal_handlers_unblock_by_func (tree_selection,
                                          G_CALLBACK (tree_store_select_callback),
-                                         pdesc);
-      gtk_tree_view_scroll_to_cell (pdesc->tree_view,
+                                         browser);
+      gtk_tree_view_scroll_to_cell (browser->tree_view,
                                     tree_path, NULL,
                                     TRUE, 0.5, 0.0);
     }
@@ -489,13 +314,15 @@ list_store_select_callback (GtkTreeSelection *selection,
     {
       g_warning ("Failed to find node in tree");
     }
+
   g_free (mpath);
-  procedure_general_select_callback (pdesc, pinfo);
+
+  browser_show_plugin (browser, pinfo);
 }
 
 static void
 tree_store_select_callback (GtkTreeSelection *selection,
-                            PDesc            *pdesc)
+                            PDesc            *browser)
 {
   PInfo        *pinfo = NULL;
   GtkTreeIter   iter;
@@ -503,7 +330,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
   gchar        *mpath = NULL;
   gboolean      valid, found;
 
-  g_return_if_fail (pdesc != NULL);
+  g_return_if_fail (browser != NULL);
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
@@ -517,7 +344,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
     return;
 
   /* Get the first iter in the list */
-  model = gtk_tree_view_get_model (pdesc->list_view);
+  model = gtk_tree_view_get_model (browser->list_view);
   valid = gtk_tree_model_get_iter_first (model, &iter);
   found = FALSE;
 
@@ -545,15 +372,15 @@ tree_store_select_callback (GtkTreeSelection *selection,
       GtkTreePath      *tree_path;
 
       tree_path = gtk_tree_model_get_path (model, &iter);
-      list_selection = gtk_tree_view_get_selection (pdesc->list_view);
+      list_selection = gtk_tree_view_get_selection (browser->list_view);
       g_signal_handlers_block_by_func (list_selection,
                                        G_CALLBACK (list_store_select_callback),
-                                       pdesc);
+                                       browser);
       gtk_tree_selection_select_iter (list_selection, &iter);
       g_signal_handlers_unblock_by_func (list_selection,
                                          G_CALLBACK (list_store_select_callback),
-                                         pdesc);
-      gtk_tree_view_scroll_to_cell (pdesc->list_view,
+                                         browser);
+      gtk_tree_view_scroll_to_cell (browser->list_view,
                                     tree_path, NULL,
                                     TRUE, 0.5, 0.0);
     }
@@ -562,7 +389,7 @@ tree_store_select_callback (GtkTreeSelection *selection,
       g_warning ("Failed to find node in list");
     }
 
-  procedure_general_select_callback (pdesc, pinfo);
+  browser_show_plugin (browser, pinfo);
 }
 
 #if 0
@@ -595,22 +422,25 @@ find_existing_mpath_helper (GtkTreeModel *model,
       gtk_tree_model_get (model, iter,
                           TREE_MPATH_COLUMN, &picked_mpath,
                           -1);
-      if (!strcmp(mpath, picked_mpath))
-      {
-        *return_iter = *iter;
-        g_free (picked_mpath);
-        return TRUE;
-      }
+
+      if (! strcmp (mpath, picked_mpath))
+        {
+          *return_iter = *iter;
+          g_free (picked_mpath);
+          return TRUE;
+        }
 
       if (gtk_tree_model_iter_children (model, &child, iter))
         {
           gtk_tree_path_down (path);
+
           if (find_existing_mpath_helper (model, &child, path,
-                                          mpath, return_iter)  )
-          {
-            g_free (picked_mpath);
-            return TRUE;
-          }
+                                          mpath, return_iter))
+            {
+              g_free (picked_mpath);
+              return TRUE;
+            }
+
           gtk_tree_path_up (path);
         }
 
@@ -645,7 +475,7 @@ find_existing_mpath (GtkTreeModel *model,
 
 
 static void
-get_parent (PDesc       *pdesc,
+get_parent (PDesc       *browser,
             gchar       *mpath,
             GtkTreeIter *parent)
 {
@@ -653,14 +483,12 @@ get_parent (PDesc       *pdesc,
   gchar        *tmp_ptr;
   gchar        *str_ptr;
   gchar        *leaf_ptr;
-  GtkTreeView  *tree_view;
   GtkTreeStore *tree_store;
 
   if (mpath == NULL)
     return;
 
-  tree_view  = pdesc->tree_view;
-  tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+  tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
 
   /* Lookup for existing mpath */
   if (find_existing_mpath (GTK_TREE_MODEL (tree_store), mpath, parent))
@@ -686,7 +514,7 @@ get_parent (PDesc       *pdesc,
 
       *str_ptr = '\000';
 
-      get_parent (pdesc, tmp_ptr, &last_parent);
+      get_parent (browser, tmp_ptr, &last_parent);
       gtk_tree_store_append (tree_store, parent, &last_parent);
       gtk_tree_store_set (tree_store, parent,
                           TREE_MPATH_COLUMN, mpath,
@@ -696,7 +524,7 @@ get_parent (PDesc       *pdesc,
 }
 
 static void
-insert_into_tree_view (PDesc *pdesc,
+insert_into_tree_view (PDesc *browser,
                        gchar *name,
                        gchar *xtimestr,
                        gchar *menu_str,
@@ -708,7 +536,6 @@ insert_into_tree_view (PDesc *pdesc,
   gchar        *tmp_ptr;
   gchar        *leaf_ptr;
   GtkTreeIter   parent, iter;
-  GtkTreeView  *tree_view;
   GtkTreeStore *tree_store;
 
   /* Find all nodes */
@@ -727,7 +554,7 @@ insert_into_tree_view (PDesc *pdesc,
 
   /*   printf("inserting %s...\n",menu_str); */
 
-  get_parent (pdesc, tmp_ptr, &parent);
+  get_parent (browser, tmp_ptr, &parent);
 
   /* Last was a leaf */
   /*   printf("found leaf %s parent = %p\n",leaf_ptr,parent); */
@@ -735,8 +562,7 @@ insert_into_tree_view (PDesc *pdesc,
   labels[1] = g_strdup (xtimestr);
   labels[2] = g_strdup (types_str);
 
-  tree_view  = pdesc->tree_view;
-  tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+  tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
   gtk_tree_store_append (tree_store, &iter, &parent);
   gtk_tree_store_set (tree_store, &iter,
                       TREE_MPATH_COLUMN, menu_str,
@@ -748,7 +574,7 @@ insert_into_tree_view (PDesc *pdesc,
 }
 
 static void
-get_plugin_info (PDesc       *pdesc,
+get_plugin_info (PDesc       *browser,
                  const gchar *search_text)
 {
   GimpParam    *return_vals;
@@ -759,9 +585,7 @@ get_plugin_info (PDesc       *pdesc,
   gchar       **types_strs;
   gchar       **realname_strs;
   gint         *time_ints;
-  GtkTreeView  *list_view;
   GtkListStore *list_store;
-  GtkTreeView  *tree_view;
   GtkTreeStore *tree_store;
   GtkTreeIter   iter;
 
@@ -775,21 +599,25 @@ get_plugin_info (PDesc       *pdesc,
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
-      int loop;
-      pdesc->num_plugins = return_vals[1].data.d_int32;
-      menu_strs          = return_vals[2].data.d_stringarray;
-      accel_strs         = return_vals[4].data.d_stringarray;
-      prog_strs          = return_vals[6].data.d_stringarray;
-      types_strs         = return_vals[8].data.d_stringarray;
-      time_ints          = return_vals[10].data.d_int32array;
-      realname_strs      = return_vals[12].data.d_stringarray;
+      gchar *str;
+      gint   loop;
 
-      list_view  = pdesc->list_view;
-      list_store = GTK_LIST_STORE (gtk_tree_view_get_model (list_view));
+      browser->num_plugins = return_vals[1].data.d_int32;
+      menu_strs            = return_vals[2].data.d_stringarray;
+      accel_strs           = return_vals[4].data.d_stringarray;
+      prog_strs            = return_vals[6].data.d_stringarray;
+      types_strs           = return_vals[8].data.d_stringarray;
+      time_ints            = return_vals[10].data.d_int32array;
+      realname_strs        = return_vals[12].data.d_stringarray;
+
+      str = g_strdup_printf (_("%d Plugin Interfaces"), browser->num_plugins);
+      gtk_label_set_text (GTK_LABEL (browser->count_label), str);
+      g_free (str);
+
+      list_store = GTK_LIST_STORE (gtk_tree_view_get_model (browser->list_view));
       gtk_list_store_clear (list_store);
 
-      tree_view  = pdesc->tree_view;
-      tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+      tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
       gtk_tree_store_clear (tree_store);
 
       for (loop = 0; loop < return_vals[1].data.d_int32; loop++)
@@ -814,7 +642,7 @@ get_plugin_info (PDesc       *pdesc,
           if (tx)
             {
               const gchar *format = "%c";  /* gcc workaround to avoid warning */
-              gchar *utf8;
+              gchar       *utf8;
 
               x = localtime (&tx);
               ret = strftime (xtimestr, sizeof (xtimestr), format, x);
@@ -847,7 +675,7 @@ get_plugin_info (PDesc       *pdesc,
                               -1);
 
           /* Now do the tree view.... */
-          insert_into_tree_view (pdesc,
+          insert_into_tree_view (browser,
                                  name,
                                  xtimestr,
                                  menu_strs[loop],
@@ -922,9 +750,10 @@ clist_click_column (GtkCList *clist,
 static void
 dialog_response (GtkWidget *widget,
                  gint       response_id,
-                 PDesc     *pdesc)
+                 PDesc     *browser)
 {
   const gchar *search_text = NULL;
+
   switch (response_id)
     {
     case GTK_RESPONSE_OK:
@@ -932,14 +761,14 @@ dialog_response (GtkWidget *widget,
         {
           /* The result of a button press... read entry data */
           search_text =
-            gtk_entry_get_text (GTK_ENTRY (plugindesc->search_entry));
+            gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
         }
 
-        get_plugin_info (pdesc, search_text);
+      get_plugin_info (browser, search_text);
       break;
 
     default:
-      gtk_widget_destroy (pdesc->dlg);
+      gtk_widget_destroy (browser->dialog);
       gtk_main_quit ();
       break;
     }
@@ -948,8 +777,8 @@ dialog_response (GtkWidget *widget,
 static GtkWidget *
 gimp_plugin_desc (void)
 {
-  GtkWidget         *button;
-  GtkWidget         *hbox, *searchhbox, *vbox;
+  GtkWidget         *paned;
+  GtkWidget         *hbox, *vbox;
   GtkWidget         *label, *notebook, *swindow;
   GtkListStore      *list_store;
   GtkTreeStore      *tree_store;
@@ -962,38 +791,41 @@ gimp_plugin_desc (void)
 
   gimp_ui_init ("plugindetails", FALSE);
 
-  plugindesc = g_new0 (PDesc, 1);
+  browser = g_new0 (PDesc, 1);
 
   /* the dialog box */
-  plugindesc->dlg =
-    gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
+  browser->dialog =
+    gimp_dialog_new (_("Plugin Browser"), "plugindetails",
                      NULL, 0,
                      gimp_standard_help_func, "plug-in-plug-in-details",
 
-                     GTK_STOCK_CLOSE,     GTK_RESPONSE_CLOSE,
-                     _("Search by Name"), GTK_RESPONSE_OK,
+                     _("Search by _Name"), GTK_RESPONSE_OK,
+                     GTK_STOCK_CLOSE,      GTK_RESPONSE_CLOSE,
 
                      NULL);
 
-  plugindesc->details_showing = FALSE;
-
-  g_signal_connect (plugindesc->dlg, "response",
+  g_signal_connect (browser->dialog, "response",
                     G_CALLBACK (dialog_response),
-                    plugindesc);
+                    browser);
 
-  /* hbox : left=notebook ; right=description */
+  /* paned : left=notebook ; right=description */
 
-  plugindesc->paned = hbox = gtk_hpaned_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (plugindesc->paned), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->vbox),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  paned = gtk_hpaned_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (paned), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (browser->dialog)->vbox),
+                     paned);
+  gtk_widget_show (paned);
 
   /* left = vbox : the list and the search entry */
 
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_paned_pack1 (GTK_PANED (hbox), vbox, FALSE, FALSE);
+  gtk_paned_pack1 (GTK_PANED (paned), vbox, FALSE, TRUE);
   gtk_widget_show (vbox);
+
+  browser->count_label = gtk_label_new ("0 Plugin Interfaces");
+  gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), browser->count_label, FALSE, FALSE, 0);
+  gtk_widget_show (browser->count_label);
 
   /* left = notebook */
 
@@ -1011,7 +843,7 @@ gimp_plugin_desc (void)
   list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
-  plugindesc->list_view = GTK_TREE_VIEW (list_view);
+  browser->list_view = GTK_TREE_VIEW (list_view);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Name"),
@@ -1022,7 +854,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Ins date"),
+  column = gtk_tree_view_column_new_with_attributes (_("Insertion Date"),
                                                      renderer,
                                                      "text",
                                                      LIST_DATE_COLUMN,
@@ -1030,7 +862,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu path"),
+  column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
                                                      renderer,
                                                      "text",
                                                      LIST_PATH_COLUMN,
@@ -1038,7 +870,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Image types"),
+  column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
                                                      renderer,
                                                      "text",
                                                      LIST_IMAGE_TYPES_COLUMN,
@@ -1056,9 +888,10 @@ gimp_plugin_desc (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+
   g_signal_connect (selection, "changed",
                     G_CALLBACK (list_store_select_callback),
-                    plugindesc);
+                    browser);
 
   label = gtk_label_new (_("List View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
@@ -1077,10 +910,10 @@ gimp_plugin_desc (void)
   tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree_store));
   g_object_unref (tree_store);
 
-  plugindesc->tree_view = GTK_TREE_VIEW (tree_view);
+  browser->tree_view = GTK_TREE_VIEW (tree_view);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu path/name"),
+  column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"),
                                                      renderer,
                                                      "text",
                                                      TREE_PATH_NAME_COLUMN,
@@ -1088,7 +921,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Ins date"),
+  column = gtk_tree_view_column_new_with_attributes (_("Insertion Date"),
                                                      renderer,
                                                      "text",
                                                      TREE_DATE_COLUMN,
@@ -1096,7 +929,7 @@ gimp_plugin_desc (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Image types"),
+  column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
                                                      renderer,
                                                      "text",
                                                      TREE_IMAGE_TYPES_COLUMN,
@@ -1113,9 +946,10 @@ gimp_plugin_desc (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+
   g_signal_connect (selection, "changed",
                     G_CALLBACK (tree_store_select_callback),
-                    plugindesc);
+                    browser);
 
   label = gtk_label_new (_("Tree view"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
@@ -1127,43 +961,42 @@ gimp_plugin_desc (void)
 
   /* search entry & details button */
 
-  searchhbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), searchhbox, FALSE, FALSE, 0);
-  gtk_widget_show (searchhbox);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Search:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (searchhbox),
-                      label, FALSE, FALSE, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new_with_mnemonic (_("_Search:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  plugindesc->search_entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (searchhbox),
-                      plugindesc->search_entry, TRUE, TRUE, 0);
-  gtk_widget_show (plugindesc->search_entry);
+  browser->search_entry = gtk_entry_new ();
+  gtk_entry_set_activates_default (GTK_ENTRY (browser->search_entry), TRUE);
+  gtk_box_pack_start (GTK_BOX (hbox), browser->search_entry, TRUE, TRUE, 0);
+  gtk_widget_show (browser->search_entry);
 
-  button = gtk_button_new_with_label (_("Details >>"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (details_callback),
-                    plugindesc);
-  gtk_box_pack_start (GTK_BOX (searchhbox), button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), browser->search_entry);
 
   /* right = description */
-  /* the right description is build on first click of the Details button */
+
+  browser->descr_scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (browser->descr_scroll,
+                               DBL_WIDTH - DBL_LIST_WIDTH, -1);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (browser->descr_scroll),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_ALWAYS);
+  gtk_paned_pack2 (GTK_PANED (paned), browser->descr_scroll, TRUE, TRUE);
+  gtk_widget_show (browser->descr_scroll);
 
   /* now build the list */
-  dialog_response (NULL, GTK_RESPONSE_OK, plugindesc);
+  dialog_response (NULL, GTK_RESPONSE_OK, browser);
 
-  gtk_widget_show (plugindesc->dlg);
+  gtk_widget_show (browser->dialog);
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
-   gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (list_view)),
-                                   &iter);
+    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (list_view)),
+                                    &iter);
 
-  GTK_PANED (plugindesc->paned)->child1_resize = TRUE;
+  gtk_widget_grab_focus (browser->search_entry);
 
-  return plugindesc->dlg;
+  return browser->dialog;
 }

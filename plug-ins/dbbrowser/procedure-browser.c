@@ -49,7 +49,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "dbbrowser_utils.h"
+#include "gimpprocbrowser.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -86,7 +86,7 @@ query (void)
                           "Thomas Noel",
                           "Thomas Noel",
                           "23th june 1997",
-                          N_("_DB Browser"),
+                          N_("Procedure _Browser"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -121,7 +121,8 @@ run (const gchar      *name,
       {
         gimp_ui_init ("dbbrowser", FALSE);
 
-        gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));
+        gtk_quit_add_destroy (1, (GtkObject *)
+                              gimp_proc_browser_dialog_new (NULL));
 
         gtk_main ();
         gdk_flush ();

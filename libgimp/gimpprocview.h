@@ -16,29 +16,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * dbbrowser_utils.h
- * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
- */
-
-#ifndef __DBBROWSER_UTILS_H__
-#define __DBBROWSER_UTILS_H__
+#ifndef __GIMP_PROC_VIEW_H__
+#define __GIMP_PROC_VIEW_H__
 
 
-typedef void (* GimpDBBrowserApplyCallback) (const gchar        *proc_name,
-					     const gchar        *scheme_proc_name,
-					     const gchar        *proc_blurb,
-					     const gchar        *proc_help,
-					     const gchar        *proc_author,
-					     const gchar        *proc_copyright,
-					     const gchar        *proc_date,
-					     GimpPDBProcType     proc_type,
-					     gint                nparams,
-					     gint                nreturn_vals,
-					     const GimpParamDef *params,
-					     GimpParamDef        *return_vals);
-
-GtkWidget * gimp_db_browser (GimpDBBrowserApplyCallback  apply_callback);
+GtkWidget * gimp_proc_view_new (const gchar     *name,
+                                const gchar     *menu_path,
+                                const gchar     *blurb,
+                                const gchar     *help,
+                                const gchar     *author,
+                                const gchar     *copyright,
+                                const gchar     *date,
+                                GimpPDBProcType  type,
+                                gint             n_params,
+                                gint             n_return_vals,
+                                GimpParamDef    *params,
+                                GimpParamDef    *return_vals);
 
 
-#endif  /* __DBBROWSER_UTILS_H__ */
+#endif  /* __GIMP_PROC_VIEW_H__ */

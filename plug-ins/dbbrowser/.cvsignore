@@ -3,4 +3,5 @@ Makefile
 .deps
 _libs
 .libs
-dbbrowser
+plugin-browser
+procedure-browser
