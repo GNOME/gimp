@@ -138,5 +138,12 @@ tutti i livelli presenti.
 Si può aggiustare e riposizionare la selezione premendo il
 tasto Alt e trascinando la selezione con il mouse.
 
+Ogni volta che si dimensiona o distorce una immagine, i pixel
+vengono aggiunti con i metodi di interpolazione. Troppe distorsioni
+ripetute possono alterare notevolmente la qualità dell'immagine.
+
+Lo strumento Sfumino può essere usato per i ritocchi sui piccoli
+dettagli, ma elimina la texture dell'immagine. Per mantenere la
+grana dell'immagine, usare lo strumento Timbro.
 # (end of tips)
 
