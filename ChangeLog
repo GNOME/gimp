@@ -1,7 +1,13 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c: allocate histogram slots in one large
+	block instead of multiple smaller chunks. Hide pointer arithmetic
+	in macros.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/resolution-calibrate-dialog.c: fix for setups with
-	multiple monitors on the same screen.
+	multiple monitors on the same screen (bug #167339).
 
 2005-02-14  Sven Neumann  <sven@gimp.org>
 

@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -45,7 +47,7 @@ struct _GimpHistogram
   GStaticMutex   mutex;
   gchar          slots[NUM_SLOTS];
 #endif
-  gdouble      **values[NUM_SLOTS];
+  gdouble       *values[NUM_SLOTS];
 };
 
 
@@ -101,13 +103,8 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
   for (i = 0; i < NUM_SLOTS; i++)
     if (histogram->values[i])
-      {
-        gint j, k;
-
-        for (j = 0; j < histogram->n_channels; j++)
-          for (k = 0; k < 256; k++)
-            histogram->values[i][j][k] = 0.0;
-      }
+      memset (histogram->values[i],
+              0, histogram->n_channels * 256 * sizeof (gdouble));
 
   pixel_regions_process_parallel ((PixelProcessorFunc)
                                   gimp_histogram_calculate_sub_region,
@@ -118,14 +115,17 @@ gimp_histogram_calculate (GimpHistogram *histogram,
   for (i = 1; i < NUM_SLOTS; i++)
     if (histogram->values[i])
       {
-        gint j, k;
+        gint j;
 
-        for (j = 0; j < histogram->n_channels; j++)
-          for (k = 0; k < 256; k++)
-            histogram->values[0][j][k] += histogram->values[i][j][k];
+        for (j = 0; j < histogram->n_channels * 256; j++)
+          histogram->values[0][j] += histogram->values[i][j];
       }
 #endif
 }
+
+
+#define HISTOGRAM_VALUE(c,i) (histogram->values[0][(c) * 256 + (i)])
+
 
 gdouble
 gimp_histogram_get_maximum (GimpHistogram        *histogram,
@@ -147,14 +147,15 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     for (x = 0; x < 256; x++)
       {
-	max = MAX (max, histogram->values[0][GIMP_HISTOGRAM_RED][x]);
-	max = MAX (max, histogram->values[0][GIMP_HISTOGRAM_GREEN][x]);
-	max = MAX (max, histogram->values[0][GIMP_HISTOGRAM_BLUE][x]);
+	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   x));
+	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, x));
+	max = MAX (max, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  x));
       }
   else
     for (x = 0; x < 256; x++)
-      if (histogram->values[0][channel][x] > max)
-	max = histogram->values[0][channel][x];
+      {
+        max = MAX (max, HISTOGRAM_VALUE (channel, x));
+      }
 
   return max;
 }
@@ -178,15 +179,15 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
 
   if (channel == GIMP_HISTOGRAM_RGB)
     {
-      gdouble min = histogram->values[0][GIMP_HISTOGRAM_RED][bin];
+      gdouble min = HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED, bin);
 
-      min = MIN (min, histogram->values[0][GIMP_HISTOGRAM_GREEN][bin]);
+      min = MIN (min, HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, bin));
 
-      return MIN (min, histogram->values[0][GIMP_HISTOGRAM_BLUE][bin]);
+      return MIN (min, HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE, bin));
     }
   else
     {
-      return histogram->values[0][channel][bin];
+      return HISTOGRAM_VALUE (channel, bin);
     }
 }
 
@@ -198,9 +199,9 @@ gimp_histogram_get_channel (GimpHistogram        *histogram,
   g_return_val_if_fail (histogram != NULL, 0.0);
 
   if (histogram->n_channels > 3)
-    return gimp_histogram_get_value (histogram, channel + 1, bin);
-  else
-    return gimp_histogram_get_value (histogram, channel,     bin);
+    channel++;
+
+  return gimp_histogram_get_value (histogram, channel, bin);
 }
 
 gint
@@ -243,7 +244,7 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
   end   = CLAMP (end, 0, 255);
 
   for (i = start; i <= end; i++)
-    count += histogram->values[0][channel][i];
+    count += HISTOGRAM_VALUE (channel, i);
 
   return count;
 }
@@ -276,14 +277,14 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     {
       for (i = start; i <= end; i++)
-	mean += (i * histogram->values[0][GIMP_HISTOGRAM_RED][i]   +
-		 i * histogram->values[0][GIMP_HISTOGRAM_GREEN][i] +
-		 i * histogram->values[0][GIMP_HISTOGRAM_BLUE][i]);
+	mean += (i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+		 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+		 i * HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
     }
   else
     {
       for (i = start; i <= end; i++)
-	mean += i * histogram->values[0][channel][i];
+	mean += i * HISTOGRAM_VALUE (channel, i);
     }
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
@@ -324,9 +325,9 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   if (channel == GIMP_HISTOGRAM_RGB)
     for (i = start; i <= end; i++)
       {
-	sum += (histogram->values[0][GIMP_HISTOGRAM_RED][i]   +
-		histogram->values[0][GIMP_HISTOGRAM_GREEN][i] +
-		histogram->values[0][GIMP_HISTOGRAM_BLUE][i]);
+	sum += (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+		HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+		HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
 
 	if (sum * 2 > count)
 	  return i;
@@ -334,7 +335,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   else
     for (i = start; i <= end; i++)
       {
-	sum += histogram->values[0][channel][i];
+	sum += HISTOGRAM_VALUE (channel, i);
 
 	if (sum * 2 > count)
 	  return i;
@@ -373,8 +374,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
     count = 1.0;
 
   for (i = start; i <= end; i++)
-    dev += gimp_histogram_get_value (histogram, channel, i) *
-      (i - mean) * (i - mean);
+    dev += gimp_histogram_get_value (histogram, channel, i) * SQR (i - mean);
 
   return sqrt (dev / count);
 }
@@ -386,32 +386,24 @@ static void
 gimp_histogram_alloc_values (GimpHistogram *histogram,
                              gint           bytes)
 {
-  gint i;
-
   if (bytes + 1 != histogram->n_channels)
     {
       gimp_histogram_free_values (histogram);
 
       histogram->n_channels = bytes + 1;
 
-      histogram->values[0] = g_new0 (gdouble *, histogram->n_channels);
-
-      for (i = 0; i < histogram->n_channels; i++)
-	histogram->values[0][i] = g_new (gdouble, 256);
+      histogram->values[0] = g_new (gdouble, histogram->n_channels * 256);
     }
 }
 
 static void
 gimp_histogram_free_values (GimpHistogram *histogram)
 {
-  gint i, j;
+  gint i;
 
   for (i = 0; i < NUM_SLOTS; i++)
     if (histogram->values[i])
       {
-        for (j = 0; j < histogram->n_channels; j++)
-          g_free (histogram->values[i][j]);
-
         g_free (histogram->values[i]);
         histogram->values[i] = NULL;
       }
@@ -426,8 +418,8 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 {
   const guchar *src, *msrc;
   const guchar *m, *s;
-  gdouble **values;
-  gint h, w, max;
+  gdouble      *values;
+  gint          h, w, max;
 
 #ifdef ENABLE_MP
   gint slot = 0;
@@ -445,19 +437,15 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
   if (! values)
     {
-      gint j;
-
-      histogram->values[slot] = g_new0 (gdouble *, histogram->n_channels);
-
-      for (j = 0; j < histogram->n_channels; j++)
-        histogram->values[slot][j] = g_new0 (gdouble, 256);
-
+      histogram->values[slot] = g_new0 (gdouble, histogram->n_channels * 256);
       values = histogram->values[slot];
     }
 
 #else
   values = histogram->values[0];
 #endif
+
+#define VALUE(c,i) (values[(c) * 256 + (i)])
 
   h = region->h;
   w = region->w;
@@ -481,7 +469,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
-		  values[0][s[0]] += masked;
+		  VALUE (0, s[0]) += masked;
 		  s += 1;
 		  m += 1;
 		}
@@ -491,8 +479,8 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
-		  values[0][s[0]] += masked;
-		  values[1][s[1]] += masked;
+		  VALUE (0, s[0]) += masked;
+		  VALUE (1, s[1]) += masked;
 		  s += 2;
 		  m += 1;
 		}
@@ -502,15 +490,15 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
-		  values[1][s[0]] += masked;
-		  values[2][s[1]] += masked;
-		  values[3][s[2]] += masked;
+		  VALUE (1, s[0]) += masked;
+		  VALUE (2, s[1]) += masked;
+		  VALUE (3, s[2]) += masked;
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
-		    values[0][s[2]] += masked;
+		    VALUE (0, s[2]) += masked;
 		  else
-		    values[0][max] += masked;
+		    VALUE (0, max) += masked;
 
 		  s += 3;
 		  m += 1;
@@ -521,16 +509,16 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
-		  values[1][s[0]] += masked;
-		  values[2][s[1]] += masked;
-		  values[3][s[2]] += masked;
-		  values[4][s[3]] += masked;
+		  VALUE (1, s[0]) += masked;
+		  VALUE (2, s[1]) += masked;
+		  VALUE (3, s[2]) += masked;
+		  VALUE (4, s[3]) += masked;
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
-		    values[0][s[2]] += masked;
+		   VALUE (0, s[2]) += masked;
 		  else
-		    values[0][max] += masked;
+		    VALUE (0, max) += masked;
 
 		  s += 4;
 		  m += 1;
@@ -556,7 +544,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	    case 1:
 	      while (w--)
 		{
-		  values[0][s[0]] += 1.0;
+                  VALUE (0, s[0]) += 1.0;
 		  s += 1;
 		}
 	      break;
@@ -564,8 +552,8 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	    case 2:
 	      while (w--)
 		{
-		  values[0][s[0]] += 1.0;
-		  values[1][s[1]] += 1.0;
+                  VALUE (0, s[0]) += 1.0;
+                  VALUE (1, s[1]) += 1.0;
 		  s += 2;
 		}
 	      break;
@@ -573,15 +561,15 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	    case 3: /* calculate separate value values */
 	      while (w--)
 		{
-		  values[1][s[0]] += 1.0;
-		  values[2][s[1]] += 1.0;
-		  values[3][s[2]] += 1.0;
+                  VALUE (1, s[0]) += 1.0;
+                  VALUE (2, s[1]) += 1.0;
+                  VALUE (3, s[2]) += 1.0;
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
-		    values[0][s[2]] += 1.0;
+		    VALUE (0, s[2]) += 1.0;
 		  else
-		    values[0][max] += 1.0;
+		    VALUE (0, max) += 1.0;
 
 		  s += 3;
 		}
@@ -590,16 +578,16 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	    case 4: /* calculate separate value values */
 	      while (w--)
 		{
-		  values[1][s[0]] += 1.0;
-		  values[2][s[1]] += 1.0;
-		  values[3][s[2]] += 1.0;
-		  values[4][s[3]] += 1.0;
+                  VALUE (1, s[0]) += 1.0;
+                  VALUE (2, s[1]) += 1.0;
+                  VALUE (3, s[2]) += 1.0;
+                  VALUE (4, s[3]) += 1.0;
 		  max = (s[0] > s[1]) ? s[0] : s[1];
 
 		  if (s[2] > max)
-		    values[0][s[2]] += 1.0;
+		    VALUE (0, s[2]) += 1.0;
 		  else
-		    values[0][max] += 1.0;
+		    VALUE (0, max) += 1.0;
 
 		  s += 4;
 		}
