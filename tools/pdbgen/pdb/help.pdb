@@ -53,7 +53,7 @@ HELP
 @headers = qw("gimphelp.h");
 
 @procs = qw(help);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Help procedures';
 

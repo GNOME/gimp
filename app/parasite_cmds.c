@@ -27,7 +27,6 @@
 
 #include "libgimp/gimpparasite.h"
 
-static ProcRecord parasite_new_proc;
 static ProcRecord parasite_find_proc;
 static ProcRecord parasite_attach_proc;
 static ProcRecord parasite_detach_proc;
@@ -44,7 +43,6 @@ static ProcRecord image_parasite_list_proc;
 void
 register_parasite_procs (void)
 {
-  procedural_db_register (&parasite_new_proc);
   procedural_db_register (&parasite_find_proc);
   procedural_db_register (&parasite_attach_proc);
   procedural_db_register (&parasite_detach_proc);
@@ -58,94 +56,6 @@ register_parasite_procs (void)
   procedural_db_register (&image_parasite_detach_proc);
   procedural_db_register (&image_parasite_list_proc);
 }
-
-static Argument *
-parasite_new_invoker (Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  gchar *name;
-  gint32 flags;
-  gint32 size;
-  gchar *data;
-  GimpParasite *parasite = NULL;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
-    success = FALSE;
-
-  flags = args[1].value.pdb_int;
-
-  size = args[2].value.pdb_int;
-  if (size < 0)
-    success = FALSE;
-
-  data = (gchar *) args[3].value.pdb_pointer;
-
-  if (success)
-    {
-      if (size > 0 && data == NULL)
-	success = FALSE;
-      else
-	success = (parasite = gimp_parasite_new (name, flags, size, data)) != NULL;
-    }
-
-  return_args = procedural_db_return_args (&parasite_new_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = parasite;
-
-  return return_args;
-}
-
-static ProcArg parasite_new_inargs[] =
-{
-  {
-    PDB_STRING,
-    "name",
-    "The name of the parasite to create"
-  },
-  {
-    PDB_INT32,
-    "flags",
-    "The flags (1 == persistance)"
-  },
-  {
-    PDB_INT32,
-    "size",
-    "The size of the data in bytes"
-  },
-  {
-    PDB_STRING,
-    "data",
-    "The data"
-  }
-};
-
-static ProcArg parasite_new_outargs[] =
-{
-  {
-    PDB_PARASITE,
-    "parasite",
-    "The new parasite"
-  }
-};
-
-static ProcRecord parasite_new_proc =
-{
-  "gimp_parasite_new",
-  "Creates a new parasite.",
-  "Creates a new parasite unatached to to any image or drawable.",
-  "Jay Cox",
-  "Jay Cox",
-  "1998",
-  PDB_INTERNAL,
-  4,
-  parasite_new_inargs,
-  1,
-  parasite_new_outargs,
-  { { parasite_new_invoker } }
-};
 
 static Argument *
 parasite_find_invoker (Argument *args)

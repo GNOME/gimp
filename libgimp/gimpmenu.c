@@ -967,7 +967,7 @@ gen_temp_plugin_name (void)
 /* Can only be used in conjuction with gdk since we need to tie into the input 
  * selection mech.
  */
-gpointer
+gchar *
 gimp_interactive_selection_brush (gchar             *dialogname, 
 				  gchar             *brush_name,
 				  gdouble            opacity,
@@ -1048,92 +1048,7 @@ gimp_interactive_selection_brush (gchar             *dialogname,
   return pdbname;
 }
 
-
 gchar *
-gimp_brushes_get_brush_data (gchar    *bname,
-			     gdouble  *opacity,
-			     gint     *spacing,
-			     gint     *paint_mode,
-			     gint     *width,
-			     gint     *height,
-			     gchar   **mask_data)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *ret_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_get_brush_data",
-				    &nreturn_vals,
-				    PARAM_STRING, bname,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      ret_name     = g_strdup (return_vals[1].data.d_string);
-      *opacity     = return_vals[2].data.d_float;
-      *spacing     = return_vals[3].data.d_int32;
-      *paint_mode  = return_vals[4].data.d_int32;
-      *width       = return_vals[5].data.d_int32;
-      *height      = return_vals[6].data.d_int32;
-      *mask_data   = g_new (gchar, return_vals[7].data.d_int32);
-      g_memmove (*mask_data, 
-		 return_vals[8].data.d_int32array, return_vals[7].data.d_int32);
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return ret_name;
-}
-
-gint 
-gimp_brush_close_popup (gpointer popup_pnt)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_close_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
-}
-
-gint 
-gimp_brush_set_popup (gpointer  popup_pnt, 
-		      gchar    *pname,
-		      gdouble   opacity,
-		      gint      spacing,
-		      gint      paint_mode)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_set_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_STRING, pname,
-				    PARAM_FLOAT,  opacity,
-				    PARAM_INT32,  spacing,
-				    PARAM_INT32,  paint_mode,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
-}
-
-
-
-gpointer
 gimp_interactive_selection_pattern (gchar                  *dialogname, 
 				    gchar                  *pattern_name,
 				    GimpRunPatternCallback  callback,
@@ -1197,80 +1112,7 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
   return pdbname;
 }
 
-
 gchar *
-gimp_pattern_get_pattern_data (gchar   *pname,
-			       gint    *width,
-			       gint    *height,
-			       gint    *bytes,
-			       gchar  **mask_data)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *ret_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
-				    &nreturn_vals,
-				    PARAM_STRING, pname,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      ret_name   = g_strdup(return_vals[1].data.d_string);
-      *width     = return_vals[2].data.d_int32;
-      *height    = return_vals[3].data.d_int32;
-      *bytes     = return_vals[4].data.d_int32;
-      *mask_data = g_new (gchar,return_vals[5].data.d_int32);
-      g_memmove (*mask_data, 
-		 return_vals[6].data.d_int32array, return_vals[5].data.d_int32);
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return ret_name;
-}
-
-gint 
-gimp_pattern_close_popup (gpointer popup_pnt)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_patterns_close_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
-}
-
-gint 
-gimp_pattern_set_popup (gpointer  popup_pnt, 
-		        gchar    *pname)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_patterns_set_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_STRING, pname,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
-}
-
-gpointer
 gimp_interactive_selection_gradient (gchar                   *dialogname, 
 				     gchar                   *gradient_name,
 				     gint                     sample_sz,
@@ -1331,78 +1173,4 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
   g_hash_table_insert (ggradient_ht, pdbname,gdata);
 
   return pdbname;
-}
-
-gchar *
-gimp_gradient_get_gradient_data (gchar     *gname,
-				 gint      *width,
-				 gint       sample_sz,
-				 gdouble  **grad_data)
-{
-  GimpParam *return_vals;
-  gint    nreturn_vals;
-  gchar  *ret_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
-				    &nreturn_vals,
-				    PARAM_STRING, gname,
-				    PARAM_INT32,  sample_sz,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      gint i;
-
-      ret_name = g_strdup (return_vals[1].data.d_string);
-      *width = return_vals[2].data.d_int32;
-      *grad_data = g_new (gdouble, *width);
-
-      for (i = 0; i < *width; i++)
-	(*grad_data)[i] = return_vals[3].data.d_floatarray[i];
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return ret_name;
-}
-
-
-gint 
-gimp_gradient_close_popup (gpointer popup_pnt)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_gradients_close_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
-}
-
-gint 
-gimp_gradient_set_popup (gpointer  popup_pnt, 
-			 gchar    *gname)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint retval;
-
-  return_vals = gimp_run_procedure ("gimp_gradients_set_popup",
-				    &nreturn_vals,
-				    PARAM_STRING, popup_pnt,
-				    PARAM_STRING, gname,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
-
-  return retval;
 }

@@ -81,10 +81,16 @@ libgimp_la_SOURCES = \
 	gimp.c			\
 	gimp.h			\
 	gimp_pdb.h		\
-	gimpchannel_pdb.h	\
+	gimpbrushes_pdb.c	\
+	gimpbrushes_pdb.h	\
+	gimpbrushselect_pdb.c	\
+	gimpbrushselect_pdb.h	\
 	gimpchannel_pdb.c	\
+	gimpchannel_pdb.h	\
 	gimpcolorspace.c	\
 	gimpcolorspace.h	\
+	gimpconvert_pdb.c	\
+	gimpconvert_pdb.h	\
 	gimpdisplay_pdb.c	\
 	gimpdisplay_pdb.h	\
 	gimpdrawable.c		\
@@ -96,7 +102,11 @@ libgimp_la_SOURCES = \
 	gimpfileops_pdb.c	\
 	gimpfileops_pdb.h	\
 	gimpgradient_pdb.c	\
+	gimpgradient_pdb.h	\
+	gimpgradientselect_pdb.c	\
+	gimpgradientselect_pdb.h	\
 	gimpguides_pdb.c	\
+	gimpguides_pdb.h	\
 	gimphelp.c		\
 	gimphelp_pdb.c		\
 	gimphelp_pdb.h		\
@@ -115,6 +125,10 @@ libgimp_la_SOURCES = \
 	gimpparasiteio.h	\
 	gimpparasite_pdb.c	\
 	gimpparasite_pdb.h	\
+	gimppatterns_pdb.c	\
+	gimppatterns_pdb.h	\
+	gimppatternselect_pdb.c	\
+	gimppatternselect_pdb.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
 	gimpplugin_pdb.c	\
@@ -165,11 +179,16 @@ libgimpui_la_SOURCES = \
 gimpinclude_HEADERS = \
 	gimp.h			\
 	gimp_pdb.h		\
+	gimpbrushes_pdb.h	\
+	gimpbrushselect_pdb.h	\
 	gimpchannel_pdb.h	\
+	gimpconvert_pdb.h	\
 	gimpdisplay_pdb.h	\
 	gimpdrawable_pdb.h	\
 	gimpfileops_pdb.h	\
 	gimpgradient_pdb.h	\
+	gimpgradientselect_pdb.h	\
+	gimpguides_pdb.h	\
 	gimphelp_pdb.h		\
 	gimpimage_pdb.h		\
 	gimplayer_pdb.h		\
@@ -201,6 +220,8 @@ gimpinclude_HEADERS = \
 	gimpparasite.h		\
 	gimpparasiteio.h	\
 	gimppatheditor.h	\
+	gimppatterns_pdb.h	\
+	gimppatternselect_pdb.h	\
 	gimppixelrgn.h		\
 	gimppixmap.h		\
 	gimpquerybox.h		\

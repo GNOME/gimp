@@ -110,17 +110,6 @@ void           gimp_image_set_component_visible (gint32         image_ID,
 						 gboolean       visible);
 void           gimp_image_set_filename          (gint32         image_ID,
 						 gchar         *name);
-GimpParasite * gimp_image_parasite_find         (gint32         image_ID,
-						 const gchar   *name);
-void           gimp_image_parasite_attach       (gint32         image_ID,
-						 const GimpParasite *parasite);
-void           gimp_image_attach_new_parasite   (gint32         image_ID,
-						 const gchar   *name, 
-						 gint           flags,
-						 gint           size, 
-						 const gpointer data);
-void           gimp_image_parasite_detach       (gint32         image_ID,
-						 const gchar   *name);
 void           gimp_image_set_resolution        (gint32         image_ID,
 						 gdouble        xresolution,
 						 gdouble        yresolution);
@@ -139,34 +128,7 @@ guchar       * gimp_image_get_thumbnail_data    (gint32         image_ID,
 						 gint          *width,
 						 gint          *height,
 						 gint          *bytes);
-void           gimp_image_convert_rgb           (gint32         image_ID);
-void           gimp_image_convert_grayscale     (gint32         image_ID);
-void           gimp_image_convert_indexed       (gint32         image_ID,
-						 GimpConvertDitherType  dither_type,
-						 GimpConvertPaletteType palette_type,
-						 gint           num_colors,
-						 gint           alpha_dither,
-						 gint           remove_unused,
-						 gchar         *palette);
-gint32      * gimp_image_list                   (gint          *nimages);
-
-
-/****************************************
- *              Guides                  *
- ****************************************/
-
-gint32        gimp_image_add_hguide            (gint32     image_ID,
-						gint32     yposition);
-gint32        gimp_image_add_vguide            (gint32     image_ID,
-						gint32     xposition);
-void          gimp_image_delete_guide          (gint32     image_ID,
-						gint32     guide_ID);
-gint32        gimp_image_find_next_guide       (gint32     image_ID,
-						gint32     guide_ID);
-GOrientation  gimp_image_get_guide_orientation (gint32     image_ID,
-						gint32     guide_ID);
-gint32        gimp_image_get_guide_position    (gint32     image_ID,
-						gint32     guide_ID);
+gint32       * gimp_image_list                  (gint          *nimages);
 
 
 #ifdef __cplusplus

@@ -60,17 +60,6 @@ void            gimp_drawable_fill                (gint32        drawable_ID,
 						   GimpFillType  fill_type);
 void            gimp_drawable_set_visible         (gint32        drawable_ID,
 						   gint          visible);
-GimpParasite  * gimp_drawable_parasite_find       (gint32        drawable_ID,
-						   const gchar  *name);
-void            gimp_drawable_parasite_attach     (gint32        drawable_ID,
-						   const GimpParasite *parasite);
-void            gimp_drawable_attach_new_parasite (gint32        drawable_ID,
-						   const gchar  *name, 
-						   gint          flags,
-						   gint          size, 
-						   const gpointer data);
-void            gimp_drawable_parasite_detach     (gint32        drawable_ID,
-						   const gchar  *name);
 guchar        * gimp_drawable_get_thumbnail_data  (gint32        drawable_ID,
 						   gint         *width,
 						   gint         *height,

@@ -59,11 +59,18 @@
 extern "C" {
 #endif /* __cplusplus */
 
+
 /* more convenient names for some pdb functions */  
-#define gimp_get_data         gimp_procedural_db_get_data
-#define gimp_get_data_size    gimp_procedural_db_get_data_size
-#define gimp_set_data         gimp_procedural_db_set_data
-#define gimp_query_procedure  gimp_procedural_db_proc_info
+
+#define gimp_get_data                 gimp_procedural_db_get_data
+#define gimp_get_data_size            gimp_procedural_db_get_data_size
+#define gimp_set_data                 gimp_procedural_db_set_data
+#define gimp_query_procedure          gimp_procedural_db_proc_info
+
+#define gimp_image_convert_rgb        gimp_convert_rgb
+#define gimp_image_convert_grayscale  gimp_convert_grayscale
+#define gimp_image_convert_indexed    gimp_convert_indexed
+
 
 GIMPVAR guint gimp_major_version;
 GIMPVAR guint gimp_minor_version;
@@ -140,12 +147,14 @@ union _GimpParamData
   gint32            d_display;
   gint32            d_image;
   gint32            d_layer;
+  gint32            d_layer_mask;
   gint32            d_channel;
   gint32            d_drawable;
   gint32            d_selection;
   gint32            d_boundary;
   gint32            d_path;
   GimpParasite      d_parasite;
+  gint32            d_tattoo;
   gint32            d_status;
 };
 

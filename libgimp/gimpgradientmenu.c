@@ -49,7 +49,7 @@ struct __gradients_sel
   GimpRunGradientCallback  cback;
   GtkWidget               *gradient_preview;
   GtkWidget               *button;
-  GtkWidget               *gradient_popup_pnt;
+  gchar                   *gradient_popup_pnt;
   gint                     width;
   gchar                   *gradient_name;      /* Local copy */
   gdouble                 *grad_data;          /* local copy */
@@ -219,7 +219,7 @@ gimp_gradient_select_widget (gchar                   *dname,
 
   /* Do initial gradient setup */
   gradient_name = 
-    gimp_gradient_get_gradient_data (igradient, &width, CELL_SIZE_WIDTH, &grad_data);
+    gimp_gradients_get_gradient_data (igradient, CELL_SIZE_WIDTH, &width, &grad_data);
 
   if (gradient_name)
     {
@@ -241,28 +241,24 @@ gimp_gradient_select_widget (gchar                   *dname,
 }
 
 
-gboolean
+void
 gimp_gradient_select_widget_close_popup (GtkWidget *widget)
 {
-  gboolean  ret_val = FALSE;
   GSelect  *gsel;
   
   gsel = (GSelect*) gtk_object_get_data (GTK_OBJECT (widget), GSEL_DATA_KEY);
 
   if (gsel && gsel->gradient_popup_pnt)
     {
-      ret_val = gimp_gradient_close_popup (gsel->gradient_popup_pnt);
+      gimp_gradients_close_popup (gsel->gradient_popup_pnt);
       gsel->gradient_popup_pnt = NULL;
     }
-
-  return ret_val;
 }
 
-gboolean
+void
 gimp_gradient_select_widget_set_popup (GtkWidget *widget,
 				       gchar     *gname)
 {
-  gboolean  ret_val = FALSE;
   gint      width;
   gdouble  *grad_data;
   gchar    *gradient_name;
@@ -273,17 +269,14 @@ gimp_gradient_select_widget_set_popup (GtkWidget *widget,
   if (gsel)
     {
       gradient_name = 
-	gimp_gradient_get_gradient_data (gname, &width, gsel->sample_size, &grad_data);
+	gimp_gradients_get_gradient_data (gname, gsel->sample_size, &width, &grad_data);
   
       if (gradient_name)
 	{
 	  gradient_select_invoker (gname, width, grad_data, 0, gsel);
 
-	  if (gsel->gradient_popup_pnt &&
-	      gimp_gradient_set_popup (gsel->gradient_popup_pnt, gname))
-	    ret_val = TRUE;
+	  if (gsel->gradient_popup_pnt)
+	    gimp_gradients_set_popup (gsel->gradient_popup_pnt, gname);
 	}
     }
-
-  return ret_val;
 }

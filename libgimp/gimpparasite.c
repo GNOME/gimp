@@ -33,6 +33,7 @@
 #endif
 
 #include "gimpparasite.h"
+#include "gimpparasite_pdb.h"
 
 
 #ifdef DEBUG
@@ -181,7 +182,7 @@ gimp_parasite_name (const GimpParasite *parasite)
   return NULL;
 }
 
-void *
+gpointer
 gimp_parasite_data (const GimpParasite *parasite)
 {
   if (parasite)
@@ -197,4 +198,45 @@ gimp_parasite_data_size (const GimpParasite *parasite)
     return parasite->size;
 
   return 0;
+}
+
+void
+gimp_attach_new_parasite (const gchar    *name, 
+			  gint            flags,
+			  gint            size, 
+			  const gpointer  data)
+{
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_parasite_attach (parasite);
+
+  gimp_parasite_free (parasite);
+}
+
+void
+gimp_drawable_attach_new_parasite (gint32          drawable, 
+				   const gchar    *name, 
+				   gint            flags,
+				   gint            size, 
+				   const gpointer  data)
+{
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_drawable_parasite_attach (drawable, parasite);
+
+  gimp_parasite_free (parasite);
+}
+
+void
+gimp_image_attach_new_parasite (gint32          image_ID, 
+				const gchar    *name, 
+				gint            flags,
+				gint            size, 
+				const gpointer  data)
+{
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_image_parasite_attach (image_ID, parasite);
+
+  gimp_parasite_free (parasite);
 }

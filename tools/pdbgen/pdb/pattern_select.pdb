@@ -157,7 +157,7 @@ pattern_get_patternselect (gchar *name)
 CODE
 
 @procs = qw(patterns_popup patterns_close_popup patterns_set_popup);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern UI';
 

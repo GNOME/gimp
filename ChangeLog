@@ -1,6 +1,47 @@
 2000-05-31  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 
+	Coming closer to our goal of autogenerating the 
+	libgimp PDB wrappers... 
+
+	* app/internal_procs.c
+	* app/parasite_cmds.c
+	* tools/pdbgen/pdb/parasite.pdb: removed parasite_new PDB call.
+
+	* libgimp/gimp.h
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpcompat.h
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpexport.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpmenu.[ch]
+	* libgimp/gimpparasite.[ch]
+	* libgimp/gimpparasite_pdb.[ch]
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimpproceduraldb_pdb.[ch]: changes to incorporate the new
+	files listed below
+
+	* libgimp/Makefile.am
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpbrushselect_pdb.[ch]
+	* libgimp/gimpconvert_pdb.[ch]
+	* libgimp/gimpgradientselect_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch] 
+	* libgimp/gimppatternselect_pdb.[ch]: new files partly generated
+	using pdbgen
+
+	* tools/pdbgen/lib.pl: some adjustments and fixes to the libgimp
+	pdbgen code
+
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: make them generate PDB 
+	wrappers for libgimp too.
+
+2000-05-31  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
 	Episode IV...
 
 	* app/Makefile.am

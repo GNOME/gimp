@@ -29,13 +29,22 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-GimpParasite * gimp_parasite_find       (const gchar        *name);
-void           gimp_parasite_attach     (const GimpParasite *parasite);
-void           gimp_attach_new_parasite (const gchar        *name, 
-					 gint                flags,
-					 gint                size, 
-					 const gpointer      data);
-void           gimp_parasite_detach     (const gchar        *name);
+GimpParasite * gimp_parasite_find                (const gchar        *name);
+void           gimp_parasite_attach              (const GimpParasite *parasite);
+void           gimp_parasite_detach              (const gchar        *name);
+
+GimpParasite * gimp_drawable_parasite_find       (gint32              drawable_ID,
+						  const gchar        *name);
+void           gimp_drawable_parasite_attach     (gint32              drawable_ID,
+						  const GimpParasite *parasite);
+void           gimp_drawable_parasite_detach     (gint32              drawable_ID,
+						  const gchar        *name);
+GimpParasite * gimp_image_parasite_find          (gint32              image_ID,
+						  const gchar        *name);
+void           gimp_image_parasite_attach        (gint32              image_ID,
+						  const GimpParasite *parasite);
+void           gimp_image_parasite_detach        (gint32              image_ID,
+						  const gchar        *name);
 
 
 #ifdef __cplusplus

@@ -63,37 +63,6 @@ sub convert_proc {
 
 # The defs
 
-sub parasite_new {
-    $blurb = 'Creates a new parasite.';
-
-    $help = 'Creates a new parasite unatached to to any image or drawable.';
-
-    &pdb_misc;
-
-    @inargs = (
-	&name_arg('create'),
-	{ name => 'flags', type => 'int32',
-	  desc => 'The flags (1 == persistance)' },
-	{ name => 'size', type => '0 <= int32',
-	  desc => 'The size of the data in bytes' },
-	{ name => 'data', type => 'string',
-	  desc => 'The data', no_success => 1 }
-    );
-
-    @outargs = ( &parasite_outarg('new') );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (size > 0 && data == NULL)
-    success = FALSE;
-  else
-    success = (parasite = gimp_parasite_new (name, flags, size, data)) != NULL;
-}
-CODE
-    );
-}
-
 sub parasite_find {
     $blurb = 'Finds the named parasite.';
 
@@ -185,15 +154,15 @@ gimp_parasite_attach_new (gchar    *name,
 			  gint      size,
 			  gpointer  data)
 {
-  GimpParasite *p = gimp_parasite_new (name, flags, size, data);
-  gimp_parasite_attach (p);
-  gimp_parasite_free (p);
+  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
+
+  gimp_parasite_attach (parasite);
+  gimp_parasite_free (parasite);
 }
 
 CODE
 
-@procs = qw(parasite_new parasite_find parasite_attach parasite_detach
-	    parasite_list);
+@procs = qw(parasite_find parasite_attach parasite_detach parasite_list);
 
 @types = (
     ['drawable', '&drawable_arg' , 'drawable'],
@@ -203,7 +172,7 @@ CODE
 my %code;
 
 foreach $type (@types) {
-    foreach (@procs[1..4]) {
+    foreach (@procs[0..3]) {
         my $desc = ($type->[0] =~ /^[aeiou]/ ? 'an ' : 'a ') . $type->[0];
         my $args = join(', ', map { /^&/ ? $_ : "'$_'" } @$type);
 	my $pre = ""; my $post = "";

@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <string.h>
+
 #include "gimp.h"
 
 void
@@ -127,6 +129,62 @@ gimp_procedural_db_query (gchar   *name_regexp,
 }
 
 gboolean
+gimp_procedural_db_proc_arg (gchar        *proc_name,
+			     gint          nth_arg,
+			     GimpParamDef *param)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success;
+
+  return_vals = gimp_run_procedure ("gimp_procedural_db_proc_arg",
+				    &nreturn_vals,
+				    PARAM_STRING, proc_name,
+				    PARAM_INT32, nth_arg,
+				    PARAM_END);  
+
+  success = (return_vals[0].data.d_status == STATUS_SUCCESS);
+  if (success)
+    {
+      param->type        = return_vals[1].data.d_int32;
+      param->name        = g_strdup (return_vals[2].data.d_string);
+      param->description = g_strdup (return_vals[3].data.d_string);
+    }
+  
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+gboolean
+gimp_procedural_db_proc_val (gchar        *proc_name,
+			     gint          nth_val,
+			     GimpParamDef *param)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success;
+
+  return_vals = gimp_run_procedure ("gimp_procedural_db_proc_val",
+				    &nreturn_vals,
+				    PARAM_STRING, proc_name,
+				    PARAM_INT32, nth_val,
+				    PARAM_END);  
+
+  success = (return_vals[0].data.d_status == STATUS_SUCCESS);
+  if (success)
+    {
+      param->type        = return_vals[1].data.d_int32;
+      param->name        = g_strdup (return_vals[2].data.d_string);
+      param->description = g_strdup (return_vals[3].data.d_string);
+    }
+  
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+gboolean
 gimp_procedural_db_proc_info (gchar         *proc_name,
 			      gchar        **proc_blurb,
 			      gchar        **proc_help,
@@ -164,58 +222,26 @@ gimp_procedural_db_proc_info (gchar         *proc_name,
 
       for (i = 0; i < *nparams; i++)
 	{
-	  GimpParam *rvals;
-	  gint nrvals;
-
-	  rvals = gimp_run_procedure ("gimp_procedural_db_proc_arg",
-				      &nrvals,
-				      PARAM_STRING, proc_name,
-				      PARAM_INT32, i,
-				      PARAM_END);
-
-	  if (rvals[0].data.d_status == STATUS_SUCCESS)
-	    {
-	      (* params) [i].type        = rvals[1].data.d_int32;
-	      (* params) [i].name        = g_strdup (rvals[2].data.d_string);
-	      (* params) [i].description = g_strdup (rvals[3].data.d_string);
-	    }
-	  else
+	  if (! gimp_procedural_db_proc_arg (proc_name, i, &(*params)[i]))
 	    {
 	      g_free (*params);
 	      g_free (*return_vals);
-	      gimp_destroy_params (rvals, nrvals);
+	      gimp_destroy_params (ret_vals, nret_vals);
+
 	      return FALSE;
 	    }
-
-	  gimp_destroy_params (rvals, nrvals);
 	}
 
       for (i = 0; i < *nreturn_vals; i++)
 	{
-	  GimpParam *rvals;
-	  gint nrvals;
-
-	  rvals = gimp_run_procedure ("gimp_procedural_db_proc_val",
-				      &nrvals,
-				      PARAM_STRING, proc_name,
-				      PARAM_INT32, i,
-				      PARAM_END);
-
-	  if (rvals[0].data.d_status == STATUS_SUCCESS)
-	    {
-	      (* return_vals)[i].type        = rvals[1].data.d_int32;
-	      (* return_vals)[i].name        = g_strdup (rvals[2].data.d_string);
-	      (* return_vals)[i].description = g_strdup (rvals[3].data.d_string);
-	    }
-	  else
+	  if (! gimp_procedural_db_proc_val (proc_name, i, &(*return_vals)[i]))
 	    {
 	      g_free (*params);
 	      g_free (*return_vals);
-	      gimp_destroy_params (rvals, nrvals);
+	      gimp_destroy_params (ret_vals, nret_vals);
+
 	      return FALSE;
 	    }
-
-	  gimp_destroy_params (rvals, nrvals);
 	}
     }
   else

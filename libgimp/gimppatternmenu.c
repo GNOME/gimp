@@ -58,7 +58,7 @@ struct __patterns_sel
   gint                    height;
   gint                    bytes;
   gchar                  *mask_data;         /* local copy */
-  void                   *pattern_popup_pnt; /* Pointer use to control the popup */
+  gchar                  *pattern_popup_pnt; /* Pointer use to control the popup */
   gpointer                data;
 };
 
@@ -291,10 +291,11 @@ gimp_pattern_select_widget (gchar                  *dname,
   GtkWidget *hbox;
   GtkWidget *pattern;
   GtkWidget *button;
+  gint       length;
   gint       width;
   gint       height;
   gint       bytes;
-  gchar     *mask_data;
+  guint8    *mask_data;
   gchar     *pattern_name;
   PSelect   *psel;
   
@@ -329,7 +330,7 @@ gimp_pattern_select_widget (gchar                  *dname,
 
   /* Do initial pattern setup */
   pattern_name = 
-    gimp_pattern_get_pattern_data (ipattern, &width, &height, &bytes, &mask_data);
+    gimp_patterns_get_pattern_data (ipattern, &length, &width, &height, &bytes, &mask_data);
 
   if(pattern_name)
     {
@@ -357,33 +358,29 @@ gimp_pattern_select_widget (gchar                  *dname,
   return hbox;
 }
 
-
-gboolean
+void
 gimp_pattern_select_widget_close_popup (GtkWidget *widget)
 {
-  gboolean  ret_val = FALSE;
   PSelect  *psel;
 
   psel = (PSelect *) gtk_object_get_data (GTK_OBJECT (widget), PSEL_DATA_KEY);
 
   if (psel && psel->pattern_popup_pnt)
     {
-      ret_val = gimp_pattern_close_popup (psel->pattern_popup_pnt);
+      gimp_patterns_close_popup (psel->pattern_popup_pnt);
       psel->pattern_popup_pnt = NULL;
     }
-  
-  return ret_val;
 }
 
-gboolean
+void
 gimp_pattern_select_widget_set_popup (GtkWidget *widget,
 				      gchar     *pname)
 {
-  gboolean  ret_val = FALSE;
+  gint      length;
   gint      width;
   gint      height;
   gint      bytes;
-  gchar    *mask_data;
+  guint8   *mask_data;
   gchar    *pattern_name;
   PSelect  *psel;
   
@@ -392,15 +389,13 @@ gimp_pattern_select_widget_set_popup (GtkWidget *widget,
   if (psel)
     {
       pattern_name = 
-	gimp_pattern_get_pattern_data (pname,
-				       &width, &height, &bytes, &mask_data);
+	gimp_patterns_get_pattern_data (pname,
+					&length, &width, &height, &bytes, &mask_data);
   
       pattern_select_invoker (pname, width, height, bytes, mask_data, 0, psel);
-
-      if (psel->pattern_popup_pnt && 
-	  gimp_pattern_set_popup (psel->pattern_popup_pnt, pname))
-	ret_val = TRUE;
+      
+      if (psel->pattern_popup_pnt)
+	gimp_patterns_set_popup (psel->pattern_popup_pnt, pname);
     }
-
-  return ret_val;
 }
+

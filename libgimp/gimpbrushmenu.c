@@ -192,10 +192,10 @@ brush_preview_events (GtkWidget    *widget,
 }
 
 static void
-brush_pre_update(GtkWidget *brush_preview,
-		 gint       brush_width,
-		 gint       brush_height,
-		 gchar     *mask_data)
+brush_pre_update (GtkWidget *brush_preview,
+		  gint       brush_width,
+		  gint       brush_height,
+		  gchar     *mask_data)
 {
   gint    y;
   gint    i;
@@ -324,9 +324,9 @@ gimp_brush_select_widget (gchar                *dname,
   gint       width;
   gint       height;
   gint       init_spacing;
-  gint       init_paint_mode;
+  GimpLayerModeEffects init_paint_mode;
   gdouble    init_opacity;
-  gchar     *mask_data;
+  guint8    *mask_data;
   gchar     *brush_name;
   BSelect   *bsel;
 
@@ -405,37 +405,33 @@ gimp_brush_select_widget (gchar                *dname,
 }
 
 
-gboolean
+void
 gimp_brush_select_widget_close_popup (GtkWidget *widget)
 {
-  gboolean  ret_val = FALSE;
   BSelect  *bsel;
 
   bsel = (BSelect *) gtk_object_get_data (GTK_OBJECT (widget), BSEL_DATA_KEY);
 
   if (bsel && bsel->brush_popup_pnt)
     {
-      ret_val = gimp_brush_close_popup (bsel->brush_popup_pnt);
+      gimp_brushes_close_popup (bsel->brush_popup_pnt);
       bsel->brush_popup_pnt = NULL;
     }
-
-  return ret_val;
 }
 
-gboolean
+void
 gimp_brush_select_widget_set_popup (GtkWidget *widget,
 				    gchar     *bname,
 				    gdouble    opacity,
 				    gint       spacing,
 				    gint       paint_mode)
 {
-  gboolean ret_val = FALSE;
   gint     width;
   gint     height;
   gint     init_spacing;
-  gint     init_paint_mode;
+  GimpLayerModeEffects init_paint_mode;
   gdouble  init_opacity;
-  gchar   *mask_data;
+  guint8  *mask_data;
   gchar   *brush_name;
   BSelect *bsel;
   
@@ -451,23 +447,20 @@ gimp_brush_select_widget_set_popup (GtkWidget *widget,
 						&height,
 						&mask_data);
 
-      if(opacity == -1.0)
+      if (opacity == -1.0)
 	opacity = init_opacity;
 
-      if(spacing == -1)
+      if (spacing == -1)
 	spacing = init_spacing;
 
-      if(paint_mode == -1)
+      if (paint_mode == -1)
 	paint_mode = init_paint_mode;
   
       brush_select_invoker (bname, opacity, spacing, paint_mode,
 			    width, height, mask_data, 0, bsel);
 
-      if (bsel->brush_popup_pnt &&
-	  gimp_brush_set_popup (bsel->brush_popup_pnt, 
-				bname, opacity, spacing, paint_mode))
-	ret_val = TRUE;
+      if (bsel->brush_popup_pnt)
+	gimp_brushes_set_popup (bsel->brush_popup_pnt, 
+				bname, opacity, spacing, paint_mode);
     }
-
-  return ret_val;
 }

@@ -19,16 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */                             
+
 #include "config.h"
 
 #include <gtk/gtk.h>
 
 #include "gimp.h"
-#include "gimpdialog.h"
-#include "gimpenums.h"
-#include "gimpexport.h"
+#include "gimpui.h"
 
 #include "libgimp-intl.h"
+
 
 typedef void (* ExportFunc) (gint32 imageID, gint32 *drawable_ID);
 

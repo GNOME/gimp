@@ -22,11 +22,15 @@
 #ifndef __GIMP_PDB_H__
 #define __GIMP_PDB_H__
 
+#include <libgimp/gimpbrushes_pdb.h>
+#include <libgimp/gimpbrushselect_pdb.h>
 #include <libgimp/gimpchannel_pdb.h>
+#include <libgimp/gimpconvert_pdb.h>
 #include <libgimp/gimpdisplay_pdb.h>
 #include <libgimp/gimpdrawable_pdb.h>
 #include <libgimp/gimpfileops_pdb.h>
 #include <libgimp/gimpgradient_pdb.h>
+#include <libgimp/gimpgradientselect_pdb.h>
 #include <libgimp/gimpguides_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
@@ -34,6 +38,8 @@
 #include <libgimp/gimpmessage_pdb.h>
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimpparasite_pdb.h>
+#include <libgimp/gimppatterns_pdb.h>
+#include <libgimp/gimppatternselect_pdb.h>
 #include <libgimp/gimpproceduraldb_pdb.h>
 #include <libgimp/gimpplugin_pdb.h>
 #include <libgimp/gimpselection_pdb.h>

@@ -65,22 +65,28 @@ void      gimp_procedural_db_query (gchar    *name_regexp,
 				    gint     *nprocs,
 				    gchar  ***proc_names);
 
+
+gboolean  gimp_procedural_db_proc_arg   (gchar        *proc_name,
+					 gint          nth_arg,
+					 GimpParamDef *param);
+gboolean  gimp_procedural_db_proc_val   (gchar        *proc_name,
+					 gint          nth_val,
+					 GimpParamDef *param);
+
 /* Query the gimp application's procedural database
  *  regarding a particular procedure.
  */
-gboolean    gimp_procedural_db_query_proc (gchar          *proc_name,
-					   gchar         **proc_blurb,
-					   gchar         **proc_help,
-					   gchar         **proc_author,
-					   gchar         **proc_copyright,
-					   gchar         **proc_date,
-					   gint           *proc_type,
-					   gint           *nparams,
-					   gint           *nreturn_vals,
-					   GimpParamDef  **params,
-					   GimpParamDef  **return_vals);
-
-
+gboolean gimp_procedural_db_proc_info   (gchar         *proc_name,
+					 gchar        **proc_blurb,
+					 gchar        **proc_help,
+					 gchar        **proc_author,
+					 gchar        **proc_copyright,
+					 gchar        **proc_date,
+					 gint          *proc_type,
+					 gint          *nparams,
+					 gint          *nreturn_vals,
+					 GimpParamDef **params,
+					 GimpParamDef **return_vals);
 
 #ifdef __cplusplus
 }

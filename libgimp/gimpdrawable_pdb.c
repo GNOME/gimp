@@ -19,6 +19,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <string.h>
+
 #include "gimp.h"
 
 
@@ -377,87 +379,6 @@ gimp_drawable_fill (gint32       drawable_ID,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_INT32, fill_type,
 				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-GimpParasite *
-gimp_drawable_parasite_find (gint32       drawable_ID,
-			     const gchar *name)
-
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  GimpParasite *parasite;
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_find",
-				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_STRING, name,
-				    PARAM_END);
-
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
-    }
-  else
-    parasite = NULL;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-  
-  return parasite;
-}
-
-void
-gimp_drawable_parasite_attach (gint32              drawable_ID,
-			       const GimpParasite *parasite)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
-				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_PARASITE, parasite,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-
-void
-gimp_drawable_attach_new_parasite (gint32          drawable, 
-				   const gchar    *name, 
-				   gint            flags,
-				   gint            size, 
-				   const gpointer  data)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-  GimpParasite *p = gimp_parasite_new (name, flags, size, data);
-
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
-				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable,
-				    PARAM_PARASITE, p,
-				    PARAM_END);
-
-  gimp_parasite_free(p);
-  gimp_destroy_params (return_vals, nreturn_vals);
-}
-
-void
-gimp_drawable_parasite_detach (gint32       drawable_ID,
-			       const gchar *name)
-{
-  GParam *return_vals;
-  gint nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_drawable_parasite_detach",
-				    &nreturn_vals,
-				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_STRING, name,
-				    PARAM_END);
-
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }

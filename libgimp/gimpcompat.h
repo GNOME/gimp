@@ -60,6 +60,9 @@ extern "C" {
 #define gimp_layer_bpp                  gimp_drawable_bpp
 #define gimp_layer_type                 gimp_drawable_type
 
+#define gimp_gradient_get_gradient_data(a,b,c,d) \
+                                        gimp_gradients_get_gradient_data (a,c,b,d)
+
 #define gimp_plugin_help_func           gimp_standard_help_func
 
 #define gimp_query_database             gimp_procedural_db_query
