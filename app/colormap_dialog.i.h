@@ -1,0 +1,13 @@
+#ifndef _g_gimp_colormap_dialog_import
+#define _g_gimp_colormap_dialog_import
+#include <colormap_dialog.h>
+#define TYPE_COLORMAP_DIALOG GIMP_TYPE_COLORMAP_DIALOG
+#define ColormapDialog GimpColormapDialog
+#define IS_COLORMAP_DIALOG GIMP_IS_COLORMAP_DIALOG
+#define COLORMAP_DIALOG GIMP_COLORMAP_DIALOG
+#define colormap_dialog_create gimp_colormap_dialog_create
+#define colormap_dialog_image gimp_colormap_dialog_image
+#define colormap_dialog_col_index gimp_colormap_dialog_col_index
+#define colormap_dialog_connect_selected gimp_colormap_dialog_connect_selected
+#define colormap_dialog_selected gimp_colormap_dialog_selected
+#endif /* _g_gimp_colormap_dialog_import */

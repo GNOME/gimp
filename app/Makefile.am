@@ -450,40 +450,40 @@ files:
 	done
 
 # GCG stuff
-
-SUFFIXES = .gc .gh
-
-if WITH_GCG
-GCG = ../tools/gcg/gcg -I$(srcdir) -I$(top_srcdir)/tools/gcg/gh
-GEN_CODE = colormap_dialog.c 
-if WITH_GNU_MAKE
-GEN_HEADER =$(subst .gc,.t.h,$(GCG_DEFS)) \
-	    $(subst .gc,.p.h,$(GCG_DEFS)) \
-	    $(subst .gc,.i.h,$(GCG_DEFS)) \
-	    $(subst .gc,.h,$(GCG_DEFS)) 
-
-$(GEN_CODE): %.c: %.gc
-	$(GCG) -o $@ $<
-else # WITH_GNU_MAKE
-GEN_HEADER = # fill in here manually, if you bother
-.gc.c:
-	$(GCG) -o $@ $<
-endif # WITH_GNU_MAKE
-
-BUILT_SOURCES = $(GEN_CODE) $(GEN_HEADER)
-
-if ENABLE_GCG_DEPS
-if WITH_GNU_MAKE
- # dependency magic
-GCGMAKEDEPEND = $(top_srcdir)/tools/gcg/gcgmakedepend
-$(DEF_DEPS): .deps/%.d: %.gc
-	$(GCGMAKEDEPEND) $(DEF_INC) $< >$@
+# 
+# SUFFIXES = .gc .gh
+# 
+# if WITH_GCG
+# GCG = ../tools/gcg/gcg -I$(srcdir) -I$(top_srcdir)/tools/gcg/gh
+# GEN_CODE = colormap_dialog.c 
+# if WITH_GNU_MAKE
+# GEN_HEADER =$(subst .gc,.t.h,$(GCG_DEFS)) \
+# 	    $(subst .gc,.p.h,$(GCG_DEFS)) \
+# 	    $(subst .gc,.i.h,$(GCG_DEFS)) \
+# 	    $(subst .gc,.h,$(GCG_DEFS)) 
+# 
+# $(GEN_CODE): %.c: %.gc
+# 	$(GCG) -o $@ $<
+# else # WITH_GNU_MAKE
+# GEN_HEADER = # fill in here manually, if you bother
+# .gc.c:
+# 	$(GCG) -o $@ $<
+# endif # WITH_GNU_MAKE
+# 
+# BUILT_SOURCES = $(GEN_CODE) $(GEN_HEADER)
+# 
+# if ENABLE_GCG_DEPS
+# if WITH_GNU_MAKE
+#  # dependency magic
+# GCGMAKEDEPEND = $(top_srcdir)/tools/gcg/gcgmakedepend
+# $(DEF_DEPS): .deps/%.d: %.gc
+# 	$(GCGMAKEDEPEND) $(DEF_INC) $< >$@
 # automake uses .P for .c files, we use .d for .gc files, should
 # be no conflict..
-GCG_DEFS = $(subst .c,.gc,$(GEN_CODE))
-DEF_DEPS = $(patsubst %.gc,.deps/%.d,$(GCG_DEFS))
--include $(DEF_DEPS)
-endif # WITH_GNU_MAKE
-endif # ENABLE_GCG_DEPS
-endif # WITH_GCG
+# GCG_DEFS = $(subst .c,.gc,$(GEN_CODE))
+# DEF_DEPS = $(patsubst %.gc,.deps/%.d,$(GCG_DEFS))
+# -include $(DEF_DEPS)
+# endif # WITH_GNU_MAKE
+# endif # ENABLE_GCG_DEPS
+# endif # WITH_GCG
 # end GCG stuff

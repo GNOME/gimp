@@ -1,3 +1,13 @@
+Sat Aug 21 17:34:53 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: version number bump
+
+	* autogen.sh
+	* configure.in
+	* app/Makefile.am: comment out gcg stuff, nobody seems to be using it
+
+	* app/colormap_dialog.*: added generated files
+
 Sat Aug 21 22:32:25 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.c

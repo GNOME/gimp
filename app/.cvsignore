@@ -3,8 +3,3 @@ Makefile.in
 .deps
 .libs
 gimp
-colormap_dialog.c
-colormap_dialog.t.h
-colormap_dialog.h
-colormap_dialog.p.h
-colormap_dialog.i.h

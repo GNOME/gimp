@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=8
+GIMP_MICRO_VERSION=9
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -49,29 +49,29 @@ ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 dnl Why the heck isn't there already a macro for this?
 
-AC_ARG_WITH(gnu-make, [  --with-gnu-make         assume 'make' understands gnu extensions],
-,
-if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
-  with_gnu_make=yes
-fi)
-
-AC_ARG_WITH(gcg, [  --with-gcg              build 'gcg' code generation tool],
-,
-with_gcg=$enable_maintainer_mode)
-
-if test "x$with_gcg" = xyes; then
-  AC_CONFIG_SUBDIRS(tools/gcg)
-fi
-
-AC_ARG_ENABLE(gcg-deps, [  --enable-gcg-deps       turn on dynamic gcg dependency tracking (need gcc and gnu make)],
-,
-if eval "test x$GCC$with_gnu_make$with_gcg = xyesyesyes"; then
-  enable_gcg_deps=yes
-fi)
-
-AM_CONDITIONAL(WITH_GCG, test x$with_gcg = xyes)
-AM_CONDITIONAL(WITH_GNU_MAKE, test x$with_gnu_make = xyes)
-AM_CONDITIONAL(ENABLE_GCG_DEPS, test x$enable_gcg_deps = xyes)
+dnl AC_ARG_WITH(gnu-make, [  --with-gnu-make         assume 'make' understands gnu extensions],
+dnl,
+dnl if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
+dnl   with_gnu_make=yes
+dnl fi)
+dnl
+dnl AC_ARG_WITH(gcg, [  --with-gcg              build 'gcg' code generation tool],
+dnl,
+dnl with_gcg=$enable_maintainer_mode)
+dnl
+dnl if test "x$with_gcg" = xyes; then
+dnl   AC_CONFIG_SUBDIRS(tools/gcg)
+dnl fi
+dnl
+dnl AC_ARG_ENABLE(gcg-deps, [  --enable-gcg-deps       turn on dynamic gcg dependency tracking (need gcc and gnu make)],
+dnl ,
+dnl if eval "test x$GCC$with_gnu_make$with_gcg = xyesyesyes"; then
+dnl   enable_gcg_deps=yes
+dnl fi)
+dnl
+dnl AM_CONDITIONAL(WITH_GCG, test x$with_gcg = xyes)
+dnl AM_CONDITIONAL(WITH_GNU_MAKE, test x$with_gnu_make = xyes)
+dnl AM_CONDITIONAL(ENABLE_GCG_DEPS, test x$enable_gcg_deps = xyes)
 
 AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
 		    , enable_ansi=no)
@@ -95,7 +95,7 @@ ALL_LINGUAS="fr sv ja it fi ko de hu nl pl ru no cs"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
-AM_PATH_GTK(1.2.0,,
+AM_PATH_GTK(1.2.3,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl

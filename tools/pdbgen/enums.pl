@@ -148,6 +148,15 @@ package Gimp::CodeGen::enums;
 		       LOOP_TRIANGLE => '3',
 		       ONCE_END_COLOR => '4' }
 	},
+    InterpolationType =>
+	{ contig => 1,
+	  header => 'apptypes.h',
+	  symbols => [ qw(LINEAR_INTERPOLATION CUBIC_INTERPOLATION
+			  NEAREST_NEIGHBOR_INTERPOLATION) ],
+	  mapping => { LINEAR_INTERPOLATION => '0',
+		       CUBIC_INTERPOLATION => '1',
+		       NEAREST_NEIGHBOR_INTERPOLATION => '2' }
+	},
     GradientType =>
 	{ contig => 1,
 	  header => 'blend.h',
