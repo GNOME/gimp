@@ -546,8 +546,12 @@ fuzzy_select_calculate (Tool *tool,
 				fuzzy_options->sample_merged);
 
   if (fuzzy_mask)
-    channel_delete (fuzzy_mask);
-  fuzzy_mask = channel_ref (new);
+    gtk_object_unref (GTK_OBJECT (fuzzy_mask));
+
+  fuzzy_mask = new;
+
+  gtk_object_ref (GTK_OBJECT (fuzzy_mask));
+  gtk_object_sink (GTK_OBJECT (fuzzy_mask));
 
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region

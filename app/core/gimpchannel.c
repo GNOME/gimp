@@ -49,14 +49,15 @@
 #include "libgimp/gimpintl.h"
 
 
-enum {
+enum
+{
   REMOVED,
   LAST_SIGNAL
 };
 
-static void gimp_channel_class_init (GimpChannelClass *klass);
-static void gimp_channel_init       (GimpChannel      *channel);
-static void gimp_channel_destroy    (GtkObject        *object);
+static void      gimp_channel_class_init (GimpChannelClass *klass);
+static void      gimp_channel_init       (GimpChannel      *channel);
+static void      gimp_channel_destroy    (GtkObject        *object);
 
 static TempBuf * channel_preview_private (Channel *channel,
 					  gint     width,
@@ -67,7 +68,7 @@ static guint channel_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawableClass *parent_class = NULL;
 
 GtkType
-gimp_channel_get_type ()
+gimp_channel_get_type (void)
 {
   static GtkType channel_type = 0;
 
@@ -85,7 +86,7 @@ gimp_channel_get_type ()
 	(GtkClassInitFunc) NULL,
       };
 
-      channel_type = gtk_type_unique (gimp_drawable_get_type (), &channel_info);
+      channel_type = gtk_type_unique (GIMP_TYPE_DRAWABLE, &channel_info);
     }
 
   return channel_type;
@@ -127,12 +128,12 @@ channel_validate (TileManager *tm,
 }
 
 Channel *
-channel_new (GimpImage *gimage,
-	     gint       width,
-	     gint       height,
-	     gchar     *name,
-	     gint       opacity,
-	     guchar    *col)
+channel_new (GimpImage    *gimage,
+	     gint          width,
+	     gint          height,
+	     const gchar  *name,
+	     gint          opacity,
+	     const guchar *col)
 {
   Channel * channel;
   gint i;
@@ -166,33 +167,18 @@ channel_new (GimpImage *gimage,
 }
 
 Channel *
-channel_ref (Channel *channel)
+channel_copy (const Channel *channel)
 {
-  gtk_object_ref  (GTK_OBJECT (channel));
-  gtk_object_sink (GTK_OBJECT (channel));
-
-  return channel;
-}
-
-void
-channel_unref (Channel *channel)
-{
-  gtk_object_unref (GTK_OBJECT (channel));
-}
-
-Channel *
-channel_copy (Channel *channel)
-{
-  gchar *channel_name;
-  Channel *new_channel;
-  PixelRegion srcPR, destPR;
-  gchar *ext;
-  gint number;
-  gchar *name;
-  gint len;
+  gchar       *channel_name;
+  Channel     *new_channel;
+  PixelRegion  srcPR, destPR;
+  gchar       *ext;
+  gint         number;
+  const gchar *name;
+  gint         len;
 
   /*  formulate the new channel name  */
-  name = channel_get_name (channel);
+  name = drawable_get_name (GIMP_DRAWABLE (channel));
   ext = strrchr (name, '#');
   len = strlen (_("copy"));
   if ((strlen (name) >= len &&
@@ -223,8 +209,8 @@ channel_copy (Channel *channel)
   copy_region (&srcPR, &destPR);
 
   /* copy the parasites */
-  GIMP_DRAWABLE (new_channel)->parasites 
-    = parasite_list_copy (GIMP_DRAWABLE (channel)->parasites);
+  GIMP_DRAWABLE (new_channel)->parasites =
+    parasite_list_copy (GIMP_DRAWABLE (channel)->parasites);
 
   /*  free up the channel_name memory  */
   g_free (channel_name);
@@ -233,39 +219,39 @@ channel_copy (Channel *channel)
 }
 
 void
-channel_set_name (Channel *channel,
-		  gchar   *name)
+channel_set_name (Channel     *channel,
+                  const gchar *name)
 {
   gimp_drawable_set_name (GIMP_DRAWABLE (channel), name);
 }
 
-gchar *
-channel_get_name (Channel *channel)
+const gchar *
+channel_get_name (const Channel *channel)
 {
   return gimp_drawable_get_name (GIMP_DRAWABLE (channel));
 }
 
 void 
-channel_set_color (Channel *channel,
-		   guchar  *color)
+channel_set_color (Channel      *channel,
+		   const guchar *color)
 {
   gint i;
 
   if (color)
-    {  
+    {
       for (i = 0; i < 3; i++)
 	channel->col[i] = color[i];
     }
 }
 
-guchar *
-channel_get_color (Channel *channel)
+const guchar *
+channel_get_color (const Channel *channel)
 {
-  return (GIMP_CHANNEL (channel)->col); 
+  return GIMP_CHANNEL (channel)->col;
 }
  
-int
-channel_get_opacity (Channel *channel)
+gint
+channel_get_opacity (const Channel *channel)
 { 
   return channel->opacity;
 }
@@ -284,6 +270,7 @@ channel_get_ID (gint ID)
   GimpDrawable *drawable;
 
   drawable = drawable_get_ID (ID);
+
   if (drawable && GIMP_IS_CHANNEL (drawable)) 
     return GIMP_CHANNEL (drawable);
   else
@@ -313,8 +300,7 @@ gimp_channel_destroy (GtkObject *object)
     g_free (channel->segs_out);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
-  
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 /* The removed signal is sent out when the channel is no longer
@@ -323,8 +309,7 @@ gimp_channel_destroy (GtkObject *object)
  * to the removed signal to update bits of UI that are tied to a
  * particular layer. */
 void
-channel_removed (Channel  *channel,
-		 gpointer  data)
+channel_removed (Channel *channel)
 {
   g_return_if_fail (channel != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -332,13 +317,12 @@ channel_removed (Channel  *channel,
   gtk_signal_emit (GTK_OBJECT (channel), channel_signals[REMOVED]);
 }
 
-
 void
 channel_scale (Channel *channel,
 	       gint     new_width,
 	       gint     new_height)
 {
-  PixelRegion srcPR, destPR;
+  PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
 
   if (new_width == 0 || new_height == 0)
@@ -388,12 +372,12 @@ channel_resize (Channel *channel,
 		gint     offx,
 		gint     offy)
 {
-  PixelRegion srcPR, destPR;
+  PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
-  guchar bg = 0;
-  gint clear;
-  gint w, h;
-  gint x1, y1, x2, y2;
+  guchar       bg = 0;
+  gint         clear;
+  gint         w, h;
+  gint         x1, y1, x2, y2;
 
   if (!new_width || !new_height)
     return;
@@ -507,8 +491,8 @@ channel_preview (Channel *channel,
 {
   /* Ok prime the cache with a large preview if the cache is invalid */
   if (! GIMP_DRAWABLE (channel)->preview_valid &&
-      width  <= PREVIEW_CACHE_PRIME_WIDTH    &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT   &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH      &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT     &&
       GIMP_DRAWABLE (channel)->gimage          &&
       GIMP_DRAWABLE (channel)->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH   &&
       GIMP_DRAWABLE (channel)->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
@@ -523,7 +507,7 @@ channel_preview (Channel *channel,
 	return tb;
     }
 
-  /* Second call - should NOT visit the tile cache...*/
+  /* Second call - should NOT visit the tile cache... */
   return channel_preview_private (channel, width, height);
 }
 
@@ -546,7 +530,9 @@ channel_preview_private (Channel *channel,
       (ret_buf =
        gimp_preview_cache_get (& (GIMP_DRAWABLE (channel)->preview_cache),
 			       width, height)))
-    return ret_buf;
+    {
+      return ret_buf;
+    }
   /*  The hard way  */
   else
     {
@@ -585,10 +571,10 @@ channel_preview_private (Channel *channel,
 }
 
 void
-channel_invalidate_previews (GimpImage* gimage)
+channel_invalidate_previews (GimpImage *gimage)
 {
-  GSList * tmp;
-  Channel * channel;
+  GSList  *tmp;
+  Channel *channel;
 
   g_return_if_fail (gimage != NULL);
 
@@ -605,12 +591,12 @@ channel_invalidate_previews (GimpImage* gimage)
 Tattoo
 channel_get_tattoo (const Channel *channel)
 {
-  return (gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel)));
+  return gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
 }
 
 void
-channel_set_tattoo (const Channel *channel, 
-		    Tattoo         value)
+channel_set_tattoo (Channel *channel, 
+		    Tattoo   value)
 {
   gimp_drawable_set_tattoo (GIMP_DRAWABLE (channel), value);
 }
@@ -624,7 +610,7 @@ channel_new_mask (GimpImage *gimage,
 		  gint       width,
 		  gint       height)
 {
-  guchar black[3] = {0, 0, 0};
+  guchar   black[3] = { 0, 0, 0 };
   Channel *new_channel;
 
   /*  Create the new channel  */
@@ -649,7 +635,7 @@ channel_boundary (Channel   *mask,
 		  gint       x2,
 		  gint       y2)
 {
-  gint x3, y3, x4, y4;
+  gint        x3, y3, x4, y4;
   PixelRegion bPR;
 
   if (! mask->boundary_known)
@@ -714,7 +700,7 @@ channel_value (Channel *mask,
 	       gint     y)
 {
   Tile *tile;
-  gint val;
+  gint  val;
 
   /*  Some checks to cut back on unnecessary work  */
   if (mask->bounds_known)
@@ -745,13 +731,13 @@ channel_bounds (Channel *mask,
 		gint    *x2,
 		gint    *y2)
 {
-  PixelRegion maskPR;
-  guchar *data, *data1;
-  gint x, y;
-  gint ex, ey;
-  gint tx1, tx2, ty1, ty2;
-  gint minx, maxx;
-  gpointer pr;
+  PixelRegion  maskPR;
+  guchar      *data, *data1;
+  gint         x, y;
+  gint         ex, ey;
+  gint         tx1, tx2, ty1, ty2;
+  gint         minx, maxx;
+  gpointer     pr;
 
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
@@ -855,10 +841,10 @@ channel_bounds (Channel *mask,
 gboolean
 channel_is_empty (Channel *mask)
 {
-  PixelRegion maskPR;
-  guchar * data;
-  gint x, y;
-  gpointer pr;
+  PixelRegion  maskPR;
+  guchar      *data;
+  gint         x, y;
+  gpointer     pr;
 
   if (mask->bounds_known)
     return mask->empty;
@@ -910,11 +896,11 @@ channel_add_segment (Channel *mask,
 		     gint     width,
 		     gint     value)
 {
-  PixelRegion maskPR;
-  guchar *data;
-  gint val;
-  gint x2;
-  gpointer pr;
+  PixelRegion  maskPR;
+  guchar      *data;
+  gint         val;
+  gint         x2;
+  gpointer     pr;
 
   /*  check horizontal extents...  */
   x2 = x + width;
@@ -953,11 +939,11 @@ channel_sub_segment (Channel *mask,
 		     gint     width,
 		     gint     value)
 {
-  PixelRegion maskPR;
-  guchar *data;
-  gint val;
-  gint x2;
-  gpointer pr;
+  PixelRegion  maskPR;
+  guchar      *data;
+  gint         val;
+  gint         x2;
+  gpointer     pr;
 
   /*  check horizontal extents...  */
   x2 = x + width;
@@ -996,9 +982,9 @@ channel_combine_rect (Channel    *mask,
 		      gint        w,
 		      gint        h)
 {
-  gint x2, y2;
+  gint        x2, y2;
   PixelRegion maskPR;
-  guchar color;
+  guchar      color;
 
   y2 = y + h;
   x2 = x + w;
@@ -1057,9 +1043,9 @@ channel_combine_ellipse (Channel    *mask,
 			 gint        h,
 			 gboolean    antialias)
 {
-  gint i, j;
-  gint x0, x1, x2;
-  gint val, last;
+  gint   i, j;
+  gint   x0, x1, x2;
+  gint   val, last;
   gfloat a_sqr, b_sqr, aob_sqr;
   gfloat w_sqr, h_sqr;
   gfloat y_sqr;
@@ -1208,7 +1194,7 @@ channel_combine_sub_region_add (void        *unused,
 				PixelRegion *destPR)
 {
   guchar *src, *dest;
-  gint x, y, val;
+  gint    x, y, val;
 
   src  = srcPR->data;
   dest = destPR->data;
@@ -1234,7 +1220,7 @@ channel_combine_sub_region_sub (void        *unused,
 				PixelRegion *destPR)
 {
   guchar *src, *dest;
-  gint x, y;
+  gint    x, y;
 
   src  = srcPR->data;
   dest = destPR->data;
@@ -1259,7 +1245,7 @@ channel_combine_sub_region_intersect (void        *unused,
 				      PixelRegion *destPR)
 {
   guchar *src, *dest;
-  gint x, y;
+  gint    x, y;
 
   src  = srcPR->data;
   dest = destPR->data;
@@ -1283,8 +1269,8 @@ channel_combine_mask (Channel    *mask,
 		      gint        off_y)
 {
   PixelRegion srcPR, destPR;
-  gint x1, y1, x2, y2;
-  gint w, h;
+  gint        x1, y1, x2, y2;
+  gint        w, h;
 
   x1 = CLAMP (off_x, 0, GIMP_DRAWABLE (mask)->width);
   y1 = CLAMP (off_y, 0, GIMP_DRAWABLE (mask)->height);
@@ -1493,7 +1479,7 @@ channel_border (Channel *mask,
 		gint     radius_y)
 {
   PixelRegion bPR;
-  gint x1, y1, x2, y2;
+  gint        x1, y1, x2, y2;
 
   if (radius_x < 0 || radius_y < 0)
     return;
@@ -1537,7 +1523,7 @@ channel_grow (Channel *mask,
 	      gint     radius_y)
 {
   PixelRegion bPR;
-  gint x1, y1, x2, y2;
+  gint        x1, y1, x2, y2;
 
   if (radius_x == 0 && radius_y == 0)
     return;
@@ -1592,7 +1578,7 @@ channel_shrink (Channel  *mask,
 		gboolean  edge_lock)
 {
   PixelRegion bPR;
-  gint x1, y1, x2, y2;
+  gint        x1, y1, x2, y2;
 
   if (radius_x == 0 && radius_y == 0)
     return;
@@ -1636,11 +1622,11 @@ channel_translate (Channel *mask,
 		   gint     off_x,
 		   gint     off_y)
 {
-  gint width, height;
-  Channel *tmp_mask;
-  PixelRegion srcPR, destPR;
-  guchar empty = 0;
-  gint   x1, y1, x2, y2;
+  gint         width, height;
+  Channel     *tmp_mask;
+  PixelRegion  srcPR, destPR;
+  guchar       empty = 0;
+  gint         x1, y1, x2, y2;
 
   tmp_mask = NULL;
 
@@ -1713,8 +1699,8 @@ channel_layer_alpha (Channel *mask,
 		     Layer   *layer)
 {
   PixelRegion srcPR, destPR;
-  guchar empty = 0;
-  gint   x1, y1, x2, y2;
+  guchar      empty = 0;
+  gint        x1, y1, x2, y2;
 
   /*  push the current mask onto the undo stack  */
   channel_push_undo (mask);
@@ -1772,4 +1758,3 @@ channel_invalidate_bounds (Channel *channel)
 {
   channel->bounds_known = FALSE;
 }
-

@@ -71,19 +71,17 @@ struct _fs_to_layer_undo
 
 /*  function declarations  */
 
-Layer *         layer_new   (GimpImage        *gimage,
-			     gint              width,
-			     gint              height,
-			     GimpImageType     type,
-			     gchar            *name,
-			     gint              opacity,
-			     LayerModeEffects  mode);
-Layer *         layer_copy  (Layer            *layer,
-			     gboolean          add_alpha);
-Layer *		layer_ref   (Layer            *layer);
-void   		layer_unref (Layer            *layer);
+Layer         * layer_new                   (GimpImage        *gimage,
+					     gint              width,
+					     gint              height,
+					     GimpImageType     type,
+					     const gchar      *name,
+					     gint              opacity,
+					     LayerModeEffects  mode);
+Layer         * layer_copy                  (Layer            *layer,
+					     gboolean          add_alpha);
 
-Layer *         layer_new_from_tiles        (GimpImage        *gimage,
+Layer         * layer_new_from_tiles        (GimpImage        *gimage,
 					     GimpImageType     layer_type,
 					     TileManager      *tiles,
 					     gchar            *name,
@@ -92,11 +90,11 @@ Layer *         layer_new_from_tiles        (GimpImage        *gimage,
 gboolean        layer_check_scaling         (Layer            *layer,
 					     gint              new_width,
 					     gint              new_height);
-LayerMask *     layer_create_mask           (Layer            *layer,
+LayerMask     * layer_create_mask           (Layer            *layer,
 					     AddMaskType       add_mask_type);
-LayerMask *     layer_add_mask              (Layer            *layer,
+LayerMask     * layer_add_mask              (Layer            *layer,
 					     LayerMask        *mask);
-Layer *         layer_get_ID                (gint              ID);
+Layer         * layer_get_ID                (gint              ID);
 void            layer_delete                (Layer            *layer);
 void            layer_removed               (Layer            *layer, 
 					     gpointer          data);
@@ -119,49 +117,49 @@ void            layer_resize                (Layer            *layer,
 					     gint              offx,
 					     gint              offy);
 void            layer_resize_to_image       (Layer            *layer);
-BoundSeg *      layer_boundary              (Layer            *layer, 
+BoundSeg      * layer_boundary              (Layer            *layer, 
 					     gint             *num_segs);
 void            layer_invalidate_boundary   (Layer           *layer);
 gint            layer_pick_correlate        (Layer           *layer, 
 					     gint             x, 
 					     gint             y);
 
-LayerMask *     layer_mask_new	     (GimpImage *gimage,
-				      gint       width,
-				      gint       height,
-				      gchar     *name,
-				      gint       opacity,
-				      guchar    *col);
-LayerMask *	layer_mask_copy	     (LayerMask *layer_mask);
-void		layer_mask_delete    (LayerMask *layer_mask);
-LayerMask *	layer_mask_get_ID    (gint       ID);
-LayerMask *	layer_mask_ref       (LayerMask *layer_mask);
-void   		layer_mask_unref     (LayerMask *layer_mask);
-void            layer_mask_set_layer (LayerMask *layer_mask, 
-				      Layer     *layer);
-Layer *         layer_mask_get_layer (LayerMask *layer_mask);
+LayerMask     * layer_mask_new	            (GimpImage       *gimage,
+					     gint             width,
+					     gint             height,
+					     gchar           *name,
+					     gint             opacity,
+					     guchar          *col);
+LayerMask     * layer_mask_copy	            (LayerMask       *layer_mask);
+void            layer_mask_delete           (LayerMask       *layer_mask);
+LayerMask     * layer_mask_get_ID           (gint             ID);
+LayerMask     * layer_mask_ref              (LayerMask       *layer_mask);
+void            layer_mask_unref            (LayerMask       *layer_mask);
+void            layer_mask_set_layer        (LayerMask       *layer_mask, 
+				             Layer           *layer);
+Layer         * layer_mask_get_layer        (LayerMask       *layer_mask);
 
 /*  access functions  */
 
-void            layer_set_name        (Layer *layer, 
-				       gchar *name);
-gchar *         layer_get_name        (Layer *layer);
-guchar *        layer_data            (Layer *layer);
-LayerMask *     layer_get_mask        (Layer *layer);
-gboolean        layer_has_alpha       (Layer *layer);
-gboolean        layer_is_floating_sel (Layer *layer);
-gboolean        layer_linked          (Layer *layer);
-TempBuf *       layer_preview         (Layer *layer, 
-				       gint   width, 
-				       gint   height);
-TempBuf *       layer_mask_preview    (Layer *layer, 
-				       gint   width, 
-				       gint   height);
+void            layer_set_name              (Layer           *layer, 
+					     const gchar     *name);
+const gchar   * layer_get_name              (const Layer     *layer);
+guchar        * layer_data                  (Layer           *layer);
+LayerMask     * layer_get_mask              (Layer           *layer);
+gboolean        layer_has_alpha             (Layer           *layer);
+gboolean        layer_is_floating_sel       (Layer           *layer);
+gboolean        layer_linked                (Layer           *layer);
+TempBuf       * layer_preview               (Layer           *layer, 
+				             gint             width, 
+				             gint             height);
+TempBuf       * layer_mask_preview          (Layer           *layer, 
+				             gint             width, 
+				             gint             height);
 
-void            layer_invalidate_previews (GimpImage   *gimage);
-Tattoo          layer_get_tattoo          (const Layer *layer);
-void            layer_set_tattoo          (const Layer *layer, 
-					   Tattoo       value);
+void            layer_invalidate_previews   (GimpImage       *gimage);
+Tattoo          layer_get_tattoo            (const Layer     *layer);
+void            layer_set_tattoo            (Layer           *layer, 
+					     Tattoo           value);
 
 #define drawable_layer      GIMP_IS_LAYER
 #define drawable_layer_mask GIMP_IS_LAYER_MASK

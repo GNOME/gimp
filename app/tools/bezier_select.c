@@ -467,7 +467,7 @@ bezier_select_reset (BezierSelect *bezier_sel)
     }
 
   if (bezier_sel->mask)
-    channel_delete (bezier_sel->mask);
+    gtk_object_unref (GTK_OBJECT (bezier_sel->mask));
 
   bezier_sel->state       = BEZIER_START;     /* we are starting the curve */
   bezier_sel->draw        = BEZIER_DRAW_ALL;  /* draw everything by default */
@@ -2481,9 +2481,12 @@ bezier_convert (BezierSelect *bezier_sel,
     }
 
   /* create a new mask */
-  bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage, 
-						    gdisp->gimage->width,
-						    gdisp->gimage->height));
+  bezier_sel->mask = channel_new_mask (gdisp->gimage, 
+				       gdisp->gimage->width,
+				       gdisp->gimage->height);
+
+  gtk_object_ref (GTK_OBJECT (bezier_sel->mask));
+  gtk_object_sink (GTK_OBJECT (bezier_sel->mask));
 
   /* allocate room for the scanlines */
   bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);

@@ -1457,7 +1457,8 @@ channel_widget_create (GimpImage   *gimage,
       break;
 
     case AUXILLARY_CHANNEL:
-      channel_widget->label = gtk_label_new (channel_get_name (channel));
+      channel_widget->label =
+	gtk_label_new (drawable_get_name (GIMP_DRAWABLE (channel)));
       break;
     }
 
@@ -2640,10 +2641,10 @@ edit_channel_query_ok_callback (GtkWidget *widget,
   if (options->gimage)
     {
       /*  Set the new channel name  */
-      channel_set_name (channel,
-			gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      drawable_set_name (GIMP_DRAWABLE (channel),
+			 gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
       gtk_label_set_text (GTK_LABEL (options->channel_widget->label),
-			  channel_get_name (channel));
+			  drawable_get_name (GIMP_DRAWABLE (channel)));
 
       if (channel->opacity != opacity)
 	{
@@ -2736,8 +2737,9 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_widget_set_usize (options->name_entry, 150, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
 			     1, 2, 0, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      channel_get_name (channel_widget->channel));
+  gtk_entry_set_text
+    (GTK_ENTRY (options->name_entry),
+     drawable_get_name (GIMP_DRAWABLE (channel_widget->channel)));
   gtk_widget_show (options->name_entry);
 
   /*  The opacity scale  */

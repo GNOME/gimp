@@ -54,21 +54,21 @@ enum
   LAST_SIGNAL
 };
 
-static void gimp_layer_class_init    (GimpLayerClass *klass);
-static void gimp_layer_init          (GimpLayer      *layer);
-static void gimp_layer_destroy       (GtkObject      *object);
-static void layer_invalidate_preview (GtkObject      *object);
+static void      gimp_layer_class_init      (GimpLayerClass     *klass);
+static void      gimp_layer_init            (GimpLayer          *layer);
+static void      gimp_layer_destroy         (GtkObject          *object);
+static void      layer_invalidate_preview   (GimpDrawable       *object);
 
-static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
-static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
-static void gimp_layer_mask_destroy    (GtkObject          *object);
+static void      gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
+static void      gimp_layer_mask_init       (GimpLayerMask      *layermask);
+static void      gimp_layer_mask_destroy    (GtkObject          *object);
 
-static TempBuf * layer_preview_private      (Layer *layer,
-					     gint   width,
-					     gint   height);
-static TempBuf * layer_mask_preview_private (Layer *layer,
-					     gint   width,
-					     gint   height);
+static TempBuf * layer_preview_private      (Layer              *layer,
+					     gint                width,
+					     gint                height);
+static TempBuf * layer_mask_preview_private (Layer              *layer,
+					     gint                width,
+					     gint                height);
 
 
 static guint layer_signals[LAST_SIGNAL] = { 0 };
@@ -77,7 +77,7 @@ static guint layer_signals[LAST_SIGNAL] = { 0 };
   static guint layer_mask_signals[LAST_SIGNAL] = { 0 };
  */
 
-static GimpDrawableClass *layer_parent_class = NULL;
+static GimpDrawableClass *layer_parent_class      = NULL;
 static GimpChannelClass  *layer_mask_parent_class = NULL;
 
 GtkType
@@ -99,22 +99,22 @@ gimp_layer_get_type (void)
 	(GtkClassInitFunc) NULL,
       };
 
-      layer_type = gtk_type_unique (gimp_drawable_get_type (), &layer_info);
+      layer_type = gtk_type_unique (GIMP_TYPE_DRAWABLE, &layer_info);
     }
 
   return layer_type;
 }
 
 static void
-gimp_layer_class_init (GimpLayerClass *class)
+gimp_layer_class_init (GimpLayerClass *klass)
 {
   GtkObjectClass    *object_class;
   GimpDrawableClass *drawable_class;
 
-  object_class = (GtkObjectClass*) class;
-  drawable_class = (GimpDrawableClass*) class;
+  object_class = (GtkObjectClass *) klass;
+  drawable_class = (GimpDrawableClass *) klass;
 
-  layer_parent_class = gtk_type_class (gimp_drawable_get_type ());
+  layer_parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
 
   layer_signals[REMOVED] =
 	  gimp_signal_new ("removed",
@@ -123,7 +123,10 @@ gimp_layer_class_init (GimpLayerClass *class)
   gtk_object_class_add_signals (object_class, layer_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_layer_destroy;
+
   drawable_class->invalidate_preview = layer_invalidate_preview;
+
+  klass->removed = NULL;
 }
 
 static void
@@ -201,14 +204,14 @@ gint layer_get_count = 0;
 /********************************/
 
 static void
-layer_invalidate_preview (GtkObject *object)
+layer_invalidate_preview (GimpDrawable *drawable)
 {
   GimpLayer *layer;
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_LAYER (object));
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (drawable));
   
-  layer = GIMP_LAYER (object);
+  layer = GIMP_LAYER (drawable);
 
   if (layer_is_floating_sel (layer)) 
     floating_sel_invalidate (layer);
@@ -261,7 +264,7 @@ layer_new (GimpImage        *gimage,
 	   gint              width,
 	   gint              height,
 	   GimpImageType     type,
-	   gchar            *name,
+	   const gchar      *name,
 	   gint              opacity,
 	   LayerModeEffects  mode)
 {
@@ -302,21 +305,6 @@ layer_new (GimpImage        *gimage,
 }
 
 Layer *
-layer_ref (Layer *layer)
-{
-  gtk_object_ref  (GTK_OBJECT (layer));
-  gtk_object_sink (GTK_OBJECT (layer));
-
-  return layer;
-}
-
-void
-layer_unref (Layer *layer)
-{
-  gtk_object_unref (GTK_OBJECT (layer));
-}
-
-Layer *
 layer_copy (Layer    *layer,
 	    gboolean  add_alpha)
 {
@@ -325,7 +313,7 @@ layer_copy (Layer    *layer,
   GimpImageType  new_type;
   gchar         *ext;
   gint           number;
-  gchar         *name;
+  const gchar   *name;
   gint           len;
   PixelRegion    srcPR;
   PixelRegion    destPR;
@@ -1281,14 +1269,14 @@ layer_pick_correlate (Layer *layer,
 /**********************/
 
 void
-layer_set_name (Layer *layer,
-		gchar *name)
+layer_set_name (Layer       *layer,
+		const gchar *name)
 {
   gimp_drawable_set_name (GIMP_DRAWABLE (layer), name);
 }
 
-gchar *
-layer_get_name (Layer *layer)
+const gchar *
+layer_get_name (const Layer *layer)
 {
   return gimp_drawable_get_name (GIMP_DRAWABLE (layer));
 }
@@ -1531,12 +1519,12 @@ layer_mask_preview_private (Layer *layer,
 Tattoo
 layer_get_tattoo (const Layer *layer)
 {
-  return (gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
+  return gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer));
 }
 
 void
-layer_set_tattoo (const Layer *layer, 
-		  Tattoo       value)
+layer_set_tattoo (Layer  *layer, 
+		  Tattoo  value)
 {
   gimp_drawable_set_tattoo (GIMP_DRAWABLE (layer), value);
 }

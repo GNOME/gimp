@@ -906,12 +906,16 @@ gdisplay_find_guide (GDisplay *gdisp,
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
+
 	    case ORIENTATION_VERTICAL:
 	      pos = scalex * guide->position - offset_x;
 	      if ((guide->position != -1) &&
 		  (pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
 		return guide;
+	      break;
+
+	    default:
 	      break;
 	    }
 	}
@@ -976,6 +980,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 		    }
 		}
 	      break;
+
 	    case ORIENTATION_VERTICAL:
 	      pos = scalex * guide->position - offset_x;
 
@@ -992,6 +997,9 @@ gdisplay_snap_point (GDisplay *gdisp,
 		      snapped = TRUE;
 		    }
 		}
+	      break;
+
+	    default:
 	      break;
 	    }
 	}
@@ -1888,8 +1896,12 @@ gdisplay_expose_guide (GDisplay *gdisp,
     case ORIENTATION_HORIZONTAL:
       gdisplay_expose_area (gdisp, 0, y, gdisp->disp_width, 1);
       break;
+
     case ORIENTATION_VERTICAL:
       gdisplay_expose_area (gdisp, x, 0, 1, gdisp->disp_height);
+      break;
+
+    default:
       break;
     }
 }

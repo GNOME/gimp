@@ -446,9 +446,12 @@ map_to_color                              (int                  src_type,
  *  Hash table lookup speeds up the standard
  *  least squares method
  */
-int    map_rgb_to_indexed                 (const unsigned char *cmap,
-					   int num_cols, GimpImage* gimage,
-					   int r, int g, int b);
+gint   map_rgb_to_indexed                 (const guchar        *cmap,
+					   gint                 num_cols,
+					   const GimpImage     *gimage,
+					   gint                 r,
+					   gint                 g,
+					   gint                 b);
 
 
 /*  Region functions  */

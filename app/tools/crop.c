@@ -349,9 +349,9 @@ crop_adjust_guides (GImage *gimage,
                     int x2, int y2)
 
 {
-  GList * glist;
-  Guide * guide;
-  gint remove_guide;
+  GList *  glist;
+  Guide *  guide;
+  gboolean remove_guide;
 
   for (glist = gimage->guides; glist; glist = g_list_next (glist))
     {
@@ -361,13 +361,16 @@ crop_adjust_guides (GImage *gimage,
       switch (guide->orientation)
 	{
 	case ORIENTATION_HORIZONTAL:
-	  if ((guide->position < y1) ||(guide->position > y2))
+	  if ((guide->position < y1) || (guide->position > y2))
 	    remove_guide = TRUE;
 	  break;
 
 	case ORIENTATION_VERTICAL:
-	  if ((guide->position < x1) ||(guide->position > x2))
+	  if ((guide->position < x1) || (guide->position > x2))
 	    remove_guide = TRUE;
+	  break;
+
+	default:
 	  break;
 	}
 	
@@ -393,7 +396,6 @@ crop_adjust_guides (GImage *gimage,
 	}
     }
 }
-		 
 
 static void
 crop_motion (Tool           *tool,

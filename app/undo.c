@@ -1430,7 +1430,7 @@ undo_push_layer (GImage   *gimage,
     {
       /*  if this is a remove layer, delete the layer  */
       if (type == LAYER_REMOVE_UNDO)
-	layer_unref (lu->layer);
+	gtk_object_unref (GTK_OBJECT (lu->layer));
       g_free (lu);
       return FALSE;
     }
@@ -1516,7 +1516,7 @@ undo_free_layer (UndoState  state,
    */
   if ((state == REDO && type == LAYER_ADD_UNDO) ||
       (state == UNDO && type == LAYER_REMOVE_UNDO))
-    layer_unref (lu->layer);
+    gtk_object_unref (GTK_OBJECT (lu->layer));
 
   g_free (lu);
 }

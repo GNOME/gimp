@@ -26,6 +26,10 @@
 #include "plug_in.h"
 
 
+extern GSList *load_procs;
+extern GSList *save_procs;
+
+
 void file_ops_pre_init               (void);
 void file_ops_post_init              (void);
 
@@ -49,9 +53,6 @@ gint file_open                       (gchar       *filename,
 				      gchar       *raw_filename);
 
 PlugInProcDef * file_proc_find       (GSList      *procs,
-				      gchar       *filename);
-
-extern GSList *load_procs;
-extern GSList *save_procs;
+				      const gchar *filename);
 
 #endif /* __FILEOPS_H__ */

@@ -15,12 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __DRAWABLE_H__
 #define __DRAWABLE_H__
 
 #include "gimpdrawable.h"
 
-int drawable_ID           (GimpDrawable *);
+gint drawable_ID          (GimpDrawable *);
 void drawable_fill        (GimpDrawable *drawable, GimpFillType fill_type);
 void drawable_update      (GimpDrawable *drawable,
 			   gint x, gint y, gint w, gint h);
@@ -31,8 +32,6 @@ void drawable_apply_image (GimpDrawable *, gint, gint, gint, gint,
 #define drawable_merge_shadow gimp_drawable_merge_shadow
 #define drawable_mask_bounds gimp_drawable_mask_bounds
 #define drawable_invalidate_preview gimp_drawable_invalidate_preview
-#define drawable_dirty gimp_drawable_dirty
-#define drawable_clean gimp_drawable_clean
 #define drawable_type gimp_drawable_type
 #define drawable_has_alpha gimp_drawable_has_alpha
 #define drawable_type_with_alpha gimp_drawable_type_with_alpha

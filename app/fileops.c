@@ -107,9 +107,9 @@ static void    file_revert_confirm_callback (GtkWidget     *widget,
 					     gboolean       revert,
 					     gpointer       data);
 
-static GimpImage * file_open_image          (gchar         *filename,
-					     gchar         *raw_filename,
-					     gchar         *open_mode,
+static GimpImage * file_open_image          (const gchar   *filename,
+					     const gchar   *raw_filename,
+					     const gchar   *open_mode,
 					     RunModeType    run_mode,
 					     gint          *status);
 
@@ -710,9 +710,9 @@ file_save_type_callback (GtkWidget *widget,
 }
 
 static GimpImage *
-file_open_image (gchar       *filename,
-		 gchar       *raw_filename,
-		 gchar       *open_mode,
+file_open_image (const gchar *filename,
+		 const gchar *raw_filename,
+		 const gchar *open_mode,
 		 RunModeType  run_mode,
 		 gint        *status)
 {
@@ -789,8 +789,8 @@ file_open_image (gchar       *filename,
     args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int     = run_mode;
-  args[1].value.pdb_pointer = filename;
-  args[2].value.pdb_pointer = raw_filename;
+  args[1].value.pdb_pointer = (gchar *) filename;
+  args[2].value.pdb_pointer = (gchar *) raw_filename;
 
   return_vals = procedural_db_execute (proc->name, args);
 
@@ -1947,9 +1947,9 @@ file_revert_confirm_callback (GtkWidget *widget,
 
   if (revert)
     {
-      GimpImage *new_gimage;
-      gchar     *filename;
-      gint       status;
+      GimpImage   *new_gimage;
+      const gchar *filename;
+      gint         status;
 
       filename = gimage_filename (old_gimage);
 
@@ -1970,9 +1970,9 @@ file_revert_confirm_callback (GtkWidget *widget,
 }
 
 static PlugInProcDef *
-file_proc_find_by_name (GSList   *procs,
-		        gchar    *filename,
-		        gboolean  skip_magic)
+file_proc_find_by_name (GSList      *procs,
+		        const gchar *filename,
+		        gboolean     skip_magic)
 {
   GSList *p;
   gchar  *ext = strrchr (filename, '.');
@@ -2030,8 +2030,8 @@ file_proc_find_by_name (GSList   *procs,
 }
 
 PlugInProcDef *
-file_proc_find (GSList *procs,
-		gchar  *filename)
+file_proc_find (GSList      *procs,
+		const gchar *filename)
 {
   PlugInProcDef *file_proc;
   PlugInProcDef *size_matched_proc;

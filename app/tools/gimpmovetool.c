@@ -190,6 +190,7 @@ move_draw_guide (GDisplay *gdisp,
 
     default:
       g_warning ("mdg / BAD FALLTHROUGH");
+      break;
     }
 }
 
@@ -232,9 +233,13 @@ move_tool_button_release (Tool           *tool,
 	  if ((move->guide->position < y1) || (move->guide->position > y2))
 	    delete_guide = TRUE;
 	  break;
+
 	case ORIENTATION_VERTICAL:
 	  if ((move->guide->position < x1) || (move->guide->position > x2))
 	    delete_guide = TRUE;
+	  break;
+
+	default:
 	  break;
 	}
 

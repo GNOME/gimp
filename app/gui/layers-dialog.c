@@ -3338,7 +3338,7 @@ layer_widget_layer_flush (GtkWidget *widget,
 {
   LayerWidget *layer_widget;
   Layer       *layer;
-  gchar       *name;
+  const gchar *name;
   gchar       *label_name;
   gboolean     update_layer_preview = FALSE;
   gboolean     update_mask_preview  = FALSE;

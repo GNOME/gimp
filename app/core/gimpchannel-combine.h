@@ -65,145 +65,142 @@ typedef struct _MaskUndo MaskUndo;
 
 struct _MaskUndo
 {
-  TileManager *tiles;       /*  the actual mask            */
-  gint         x, y;        /*  offsets                    */
+  TileManager *tiles;       /*  the actual mask  */
+  gint         x, y;        /*  offsets          */
 };
 
 
 /*  function declarations  */
 
-Channel *       channel_new         (GimpImage *gimage,
-				     gint       width,
-				     gint       height,
-				     gchar     *name,
-				     gint       opacity,
-				     guchar    *col);
-Channel *       channel_copy        (Channel   *channel);
-Channel *	channel_ref         (Channel   *channel);
-void   		channel_unref       (Channel   *channel);
+Channel       * channel_new                 (GimpImage     *gimage,
+					     gint           width,
+					     gint           height,
+					     const gchar   *name,
+					     gint           opacity,
+					     const guchar  *col);
+Channel       * channel_copy                (const Channel *channel);
 
-gchar *         channel_get_name    (Channel   *channel);
-void            channel_set_name    (Channel   *channel, 
-				     gchar     *name);
+const gchar   * channel_get_name            (const Channel *channel);
+void            channel_set_name            (Channel       *channel, 
+					     const gchar   *name);
 
-gint	        channel_get_opacity (Channel   *channel);
-void		channel_set_opacity (Channel   *channel, 
-				     gint       opacity);
+gint	        channel_get_opacity         (const Channel *channel);
+void            channel_set_opacity         (Channel       *channel, 
+					     gint           opacity);
 
-guchar *        channel_get_color   (Channel   *channel);
-void 		channel_set_color   (Channel   *channel, 
-				     guchar    *color);
+const guchar  * channel_get_color           (const Channel *channel);
+void 		channel_set_color           (Channel       *channel, 
+					     const guchar  *color);
 
-Channel *       channel_get_ID      (gint       ID);
-void            channel_delete      (Channel   *channel);
-void            channel_removed     (Channel   *channel, 
-				     gpointer   data);
-void            channel_scale       (Channel   *channel, 
-				     gint       new_width, 
-				     gint       new_height);
-void            channel_resize      (Channel   *channel, 
-				     gint       new_width,
-				     gint       new_height,
-				     gint       offx,
-				     gint       offy);
-void            channel_update      (Channel   *channel);
+Channel       * channel_get_ID              (gint           ID);
+void            channel_delete              (Channel       *channel);
+void            channel_removed             (Channel       *channel);
+void            channel_scale               (Channel       *channel, 
+					     gint           new_width, 
+					     gint           new_height);
+void            channel_resize              (Channel       *channel, 
+					     gint           new_width,
+					     gint           new_height,
+					     gint           offx,
+					     gint           offy);
+void            channel_update              (Channel       *channel);
 
 /*  access functions  */
 
-gboolean        channel_toggle_visibility   (Channel *channel);
-TempBuf *       channel_preview             (Channel *channel, 
-					     gint     width,
-					     gint     height);
+gboolean        channel_toggle_visibility   (Channel       *channel);
+TempBuf       * channel_preview             (Channel       *channel, 
+					     gint           width,
+					     gint           height);
 
-void            channel_invalidate_previews (GimpImage *gimage);
+void            channel_invalidate_previews (GimpImage     *gimage);
 
 Tattoo          channel_get_tattoo          (const Channel *channel);
-void            channel_set_tattoo          (const Channel *channel,
+void            channel_set_tattoo          (Channel       *channel,
 					     Tattoo         value);
 
 /* selection mask functions  */
 
-Channel *       channel_new_mask        (GimpImage  *gimage,
-					 gint        width,
-					 gint        height);
-gboolean        channel_boundary        (Channel    *mask,
-					 BoundSeg  **segs_in,
-					 BoundSeg  **segs_out,
-					 gint       *num_segs_in,
-					 gint       *num_segs_out,
-					 gint        x1,
-					 gint        y1,
-					 gint        x2,
-					 gint        y2);
-gboolean        channel_bounds          (Channel    *mask,
-					 gint       *x1,
-					 gint       *y1,
-					 gint       *x2,
-					 gint       *y2);
-gint            channel_value           (Channel    *mask, 
-					 gint        x, 
-					 gint        y);
-gboolean        channel_is_empty        (Channel    *mask);
-void            channel_add_segment     (Channel    *mask,
-					 gint        x,
-					 gint        y,
-					 gint        width,
-					 gint        value);
-void            channel_sub_segment     (Channel    *mask,
-					 gint        x,
-					 gint        y,
-					 gint        width,
-					 gint        value);
-void            channel_combine_rect    (Channel    *mask,
-					 ChannelOps  op,
-					 gint        x,
-					 gint        y,
-					 gint        w,
-					 gint        h);
-void            channel_combine_ellipse (Channel    *mask,
-					 ChannelOps  op,
-					 gint        x,
-					 gint        y,
-					 gint        w,
-					 gint        h,
-					 gboolean    antialias);
-void            channel_combine_mask    (Channel    *mask,
-					 Channel    *add_on,
-					 ChannelOps  op,
-					 gint        off_x,
-					 gint        off_y);
-void            channel_feather         (Channel    *input,
-					 Channel    *output,
-					 gdouble     radius_x,
-					 gdouble     radius_y,
-					 ChannelOps  op,
-					 gint        off_x,
-					 gint        off_y);
+Channel       * channel_new_mask            (GimpImage     *gimage,
+					     gint           width,
+					     gint           height);
+gboolean        channel_boundary            (Channel       *mask,
+					     BoundSeg     **segs_in,
+					     BoundSeg     **segs_out,
+					     gint          *num_segs_in,
+					     gint          *num_segs_out,
+					     gint           x1,
+					     gint           y1,
+					     gint           x2,
+					     gint           y2);
+gboolean        channel_bounds              (Channel       *mask,
+					     gint          *x1,
+					     gint          *y1,
+					     gint          *x2,
+					     gint          *y2);
+gint            channel_value               (Channel       *mask, 
+					     gint           x, 
+					     gint           y);
+gboolean        channel_is_empty            (Channel       *mask);
+void            channel_add_segment         (Channel       *mask,
+					     gint           x,
+					     gint           y,
+					     gint           width,
+					     gint           value);
+void            channel_sub_segment         (Channel       *mask,
+					     gint           x,
+					     gint           y,
+					     gint           width,
+					     gint           value);
+void            channel_combine_rect        (Channel       *mask,
+					     ChannelOps     op,
+					     gint           x,
+					     gint           y,
+					     gint           w,
+					     gint           h);
+void            channel_combine_ellipse     (Channel       *mask,
+					     ChannelOps     op,
+					     gint           x,
+					     gint           y,
+					     gint           w,
+					     gint           h,
+					     gboolean       antialias);
+void            channel_combine_mask        (Channel       *mask,
+					     Channel       *add_on,
+					     ChannelOps     op,
+					     gint           off_x,
+					     gint           off_y);
+void            channel_feather             (Channel       *input,
+					     Channel       *output,
+					     gdouble        radius_x,
+					     gdouble        radius_y,
+					     ChannelOps     op,
+					     gint           off_x,
+					     gint           off_y);
 
-void            channel_push_undo       (Channel    *mask);
-void            channel_clear           (Channel    *mask);
-void            channel_invert          (Channel    *mask);
-void            channel_sharpen         (Channel    *mask);
-void            channel_all             (Channel    *mask);
+void            channel_push_undo           (Channel       *mask);
+void            channel_clear               (Channel       *mask);
+void            channel_invert              (Channel       *mask);
+void            channel_sharpen             (Channel       *mask);
+void            channel_all                 (Channel       *mask);
 
-void            channel_border          (Channel   *mask,
-					 gint       radius_x,
-					 gint       radius_y);
-void            channel_grow            (Channel   *mask,
-					 gint       radius_x,
-					 gint       radius_y);
-void            channel_shrink          (Channel   *mask,
-					 gint       radius_x,
-					 gint       radius_y,
-					 gboolean   edge_lock);
+void            channel_border              (Channel      *mask,
+					     gint          radius_x,
+					     gint          radius_y);
+void            channel_grow                (Channel      *mask,
+					     gint          radius_x,
+					     gint          radius_y);
+void            channel_shrink              (Channel      *mask,
+					     gint          radius_x,
+					     gint          radius_y,
+					     gboolean      edge_lock);
 
-void            channel_translate       (Channel   *mask,
-					 gint       off_x,
-					 gint       off_y);
-void            channel_load            (Channel   *mask,
-					 Channel   *channel);
+void            channel_translate           (Channel      *mask,
+					     gint          off_x,
+					     gint          off_y);
+void            channel_load                (Channel      *mask,
+					     Channel      *channel);
 
-void		channel_invalidate_bounds (Channel *channel);
+void		channel_invalidate_bounds   (Channel      *channel);
 
 #define drawable_channel GIMP_IS_CHANNEL
 

@@ -111,45 +111,46 @@ typedef struct _ColorHash ColorHash;
 
 struct _ColorHash
 {
-  int pixel;           /*  R << 16 | G << 8 | B  */
-  int index;           /*  colormap index        */
-  GimpImage* gimage;     
+  gint       pixel;           /*  R << 16 | G << 8 | B  */
+  gint       index;           /*  colormap index        */
+  GimpImage *gimage;     
 };
 
-static ColorHash color_hash_table [HASH_TABLE_SIZE];
-static int random_table [RANDOM_TABLE_SIZE];
-static int color_hash_misses;
-static int color_hash_hits;
-static unsigned char * tmp_buffer;  /* temporary buffer available upon request */
-static int tmp_buffer_size;
-static unsigned char no_mask = OPAQUE_OPACITY;
-static int add_lut[256][256];
+static ColorHash  color_hash_table[HASH_TABLE_SIZE];
+static gint       random_table[RANDOM_TABLE_SIZE];
+static gint       color_hash_misses;
+static gint       color_hash_hits;
+static guchar    *tmp_buffer;  /* temporary buffer available upon request */
+static gint       tmp_buffer_size;
+static guchar     no_mask = OPAQUE_OPACITY;
+static gint       add_lut[256][256];
 
-/*******************************/
+
 /*  Local function prototypes  */
-static int *  make_curve         (double, int *);
-static void   run_length_encode  (unsigned char *, int *, int, int);
-static double cubic              (double, int, int, int, int);
-static void   apply_layer_mode_replace (unsigned char *, unsigned char *,
-					unsigned char *, unsigned char *,
-					int, int, int,
-					int, int, int, int *);
-static void   rotate_pointers    (void **p, guint32 n);
+
+static gint   * make_curve               (gdouble, gint *);
+static void     run_length_encode        (guchar *, gint *, gint, gint);
+static double   cubic                    (gdouble, gint, gint, gint, gint);
+static void     apply_layer_mode_replace (guchar *, guchar *,
+					  guchar *, guchar *,
+					  gint, gint, gint,
+					  gint, gint, gint, gint *);
+static void     rotate_pointers          (void **p, guint32 n);
 
 
 void
-update_tile_rowhints (Tile *tile, 
-		      int   ymin, 
-		      int   ymax)
+update_tile_rowhints (Tile *tile,
+		      gint  ymin,
+		      gint  ymax)
 {
-  int bpp, ewidth;
-  int x,y;
-  guchar* ptr;
-  guchar alpha;
-  TileRowHint thishint;
+  gint         bpp, ewidth;
+  gint         x, y;
+  guchar      *ptr;
+  guchar       alpha;
+  TileRowHint  thishint;
 
 #ifdef HINTS_SANITY
-  g_assert(tile!=NULL);
+  g_assert (tile != NULL);
 #endif
 
   tile_sanitize_rowhints (tile);
@@ -159,7 +160,7 @@ update_tile_rowhints (Tile *tile,
 
   if (bpp == 1 || bpp == 3)
     {
-      for (y=ymin; y<=ymax; y++)
+      for (y = ymin; y <= ymax; y++)
 	tile_set_rowhint (tile, y, TILEROWHINT_OPAQUE);
 
       return;
@@ -168,13 +169,13 @@ update_tile_rowhints (Tile *tile,
   if (bpp == 4)
     {
 #ifdef HINTS_SANITY
-      g_assert(tile!=NULL);
+      g_assert (tile != NULL);
 #endif
 
       ptr = tile_data_pointer (tile, 0, ymin);
 
 #ifdef HINTS_SANITY
-      g_assert(ptr!=NULL);
+      g_assert (ptr != NULL);
 #endif
 
       for (y = ymin; y <= ymax; y++)
@@ -182,13 +183,13 @@ update_tile_rowhints (Tile *tile,
 	  thishint = tile_get_rowhint (tile, y);
 
 #ifdef HINTS_SANITY
-	  if (thishint==TILEROWHINT_BROKEN)
-	    g_error("BROKEN y=%d",y);
-	  if (thishint==TILEROWHINT_OUTOFRANGE)
-	    g_error("OOR y=%d",y);
-	  if (thishint==TILEROWHINT_UNDEFINED)
-	    g_error("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
-		    y,bpp,ewidth,eheight);
+	  if (thishint == TILEROWHINT_BROKEN)
+	    g_error ("BROKEN y=%d",y);
+	  if (thishint == TILEROWHINT_OUTOFRANGE)
+	    g_error ("OOR y=%d",y);
+	  if (thishint == TILEROWHINT_UNDEFINED)
+	    g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
+		     y, bpp, ewidth, eheight);
 #endif
 
 #ifdef HINTS_SANITY
@@ -201,8 +202,8 @@ update_tile_rowhints (Tile *tile,
 
 	  if (thishint != TILEROWHINT_UNKNOWN)
 	    {
-	      g_error("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
-		      y,bpp,ewidth,eheight);
+	      g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
+		       y, bpp, ewidth, eheight);
 	    }
 #endif
 
@@ -217,7 +218,7 @@ update_tile_rowhints (Tile *tile,
 		    {
 		      for (x = 1; x < ewidth; x++)
 			{
-			  if (ptr[x*4 + 3] != alpha)
+			  if (ptr[x * 4 + 3] != alpha)
 			    {
 			      tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
 			      goto next_row4;
@@ -259,13 +260,13 @@ update_tile_rowhints (Tile *tile,
 	  thishint = tile_get_rowhint (tile, y);
 
 #ifdef HINTS_SANITY
-	  if (thishint==TILEROWHINT_BROKEN)
-	    g_error("BROKEN y=%d",y);
-	  if (thishint==TILEROWHINT_OUTOFRANGE)
-	    g_error("OOR y=%d",y);
-	  if (thishint==TILEROWHINT_UNDEFINED)
-	    g_error("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
-		    y,bpp,ewidth,eheight);
+	  if (thishint == TILEROWHINT_BROKEN)
+	    g_error ("BROKEN y=%d",y);
+	  if (thishint == TILEROWHINT_OUTOFRANGE)
+	    g_error ("OOR y=%d",y);
+	  if (thishint == TILEROWHINT_UNDEFINED)
+	    g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
+		     y, bpp, ewidth, eheight);
 #endif
 
 #ifdef HINTS_SANITY
@@ -278,8 +279,8 @@ update_tile_rowhints (Tile *tile,
 
 	  if (thishint != TILEROWHINT_UNKNOWN)
 	    {
-	      g_error("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
-		      y,bpp,ewidth,eheight);
+	      g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
+		       y, bpp, ewidth, eheight);
 	    }
 #endif
 
@@ -323,13 +324,13 @@ update_tile_rowhints (Tile *tile,
 }
 
 
-static unsigned char *
-paint_funcs_get_buffer (int size)
+static guchar *
+paint_funcs_get_buffer (gint size)
 {
   if (size > tmp_buffer_size)
     {
       tmp_buffer_size = size;
-      tmp_buffer = (unsigned char *) g_realloc (tmp_buffer, size);
+      tmp_buffer = (guchar *) g_realloc (tmp_buffer, size);
     }
 
   return tmp_buffer;
@@ -341,15 +342,15 @@ paint_funcs_get_buffer (int size)
  *                   r = sqrt (x^2 + y ^2)
  */
 
-static int *
-make_curve (double  sigma,
-	    int    *length)
+static gint *
+make_curve (gdouble  sigma,
+	    gint    *length)
 {
-  int *curve;
-  double sigma2;
-  double l;
-  int temp;
-  int i, n;
+  gint    *curve;
+  gdouble  sigma2;
+  gdouble  l;
+  gint     temp;
+  gint     i, n;
 
   sigma2 = 2 * sigma * sigma;
   l = sqrt (-sigma2 * log (1.0 / 255.0));
@@ -358,7 +359,7 @@ make_curve (double  sigma,
   if ((n % 2) == 0)
     n += 1;
 
-  curve = g_malloc (sizeof (int) * n);
+  curve = g_new (gint, n);
 
   *length = n / 2;
   curve += *length;
@@ -366,7 +367,7 @@ make_curve (double  sigma,
 
   for (i = 1; i <= *length; i++)
     {
-      temp = (int) (exp (- (i * i) / sigma2) * 255);
+      temp = (gint) (exp (- (i * i) / sigma2) * 255);
       curve[-i] = temp;
       curve[i] = temp;
     }
@@ -376,15 +377,15 @@ make_curve (double  sigma,
 
 
 static void
-run_length_encode (unsigned char *src,
-		   int           *dest,
-		   int            w,
-		   int            bytes)
+run_length_encode (guchar *src,
+		   gint   *dest,
+		   gint    w,
+		   gint    bytes)
 {
-  int start;
-  int i;
-  int j;
-  unsigned char last;
+  gint   start;
+  gint   i;
+  gint   j;
+  guchar last;
 
   last = *src;
   src += bytes;
@@ -413,18 +414,18 @@ run_length_encode (unsigned char *src,
 }
 
 /* Note: cubic function no longer clips result */
-static inline double
-cubic (double dx,
-       int    jm1,
-       int    j,
-       int    jp1,
-       int    jp2)
+static inline gdouble
+cubic (gdouble dx,
+       gint    jm1,
+       gint    j,
+       gint    jp1,
+       gint    jp2)
 {
 
   /* Catmull-Rom - not bad */
-  return (double) ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
-		  ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
-		  ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
+  return (gdouble) ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
+		       ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
+		     ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
 }
 
 /*********************/
@@ -432,14 +433,14 @@ cubic (double dx,
 /*********************/
 
 void
-paint_funcs_setup ()
+paint_funcs_setup (void)
 {
-  int i;
-  int j,k;
-  int tmp_sum;
+  gint i;
+  gint j, k;
+  gint tmp_sum;
 
   /*  allocate the temporary buffer  */
-  tmp_buffer = (unsigned char *) g_malloc (STD_BUF_SIZE);
+  tmp_buffer      = g_new (guchar, STD_BUF_SIZE);
   tmp_buffer_size = STD_BUF_SIZE;
 
   /*  initialize the color hash table--invalidate all entries  */
@@ -454,14 +455,15 @@ paint_funcs_setup ()
   /* FIXME: Why creating an array of random values and shuffle it randomly
    * afterwards??? 
    */
-  
+
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     random_table[i] = rand ();
 
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     {
-      int tmp;
-      int swap = i + rand () % (RANDOM_TABLE_SIZE - i);
+      gint tmp;
+      gint swap = i + rand () % (RANDOM_TABLE_SIZE - i);
+
       tmp = random_table[i];
       random_table[i] = random_table[swap];
       random_table[swap] = tmp;
@@ -472,16 +474,17 @@ paint_funcs_setup ()
       for (k = 0; k < 256; k++)
 	{   /* column */
 	  tmp_sum = j + k;
-	  if(tmp_sum > 255)
+
+	  if (tmp_sum > 255)
 	    tmp_sum = 255;
+
 	  add_lut[j][k] = tmp_sum; 
 	}
     }
 }
 
-
 void
-paint_funcs_free ()
+paint_funcs_free (void)
 {
   /*  free the temporary buffer  */
   g_free (tmp_buffer);
@@ -520,10 +523,10 @@ paint_funcs_invalidate_color_hash_table (GimpImage* gimage,
 
 
 void
-color_pixels (unsigned char *dest,
-	      const unsigned char *color,
-	      int            w,
-	      int            bytes)
+color_pixels (guchar       *dest,
+	      const guchar *color,
+	      gint          w,
+	      gint          bytes)
 {
   /* dest % bytes and color % bytes must be 0 or we will crash 
      when bytes = 2 or 4.
@@ -532,96 +535,96 @@ color_pixels (unsigned char *dest,
      */
 
 #if defined(sparc) || defined(__sparc__)
-  register unsigned char c0, c1, c2, c3;
+  register guchar   c0, c1, c2, c3;
 #else
-  register unsigned char c0, c1, c2;
+  register guchar   c0, c1, c2;
   register guint32 *longd, longc;
   register guint16 *shortd, shortc;
 #endif
 
   switch (bytes)
-  {
-   case 1:
-     memset(dest, *color, w);
-     break;
+    {
+    case 1:
+      memset (dest, *color, w);
+      break;
 
-   case 2:
+    case 2:
 #if defined(sparc) || defined(__sparc__)
-     c0 = color[0];
-     c1 = color[1];
-     while (w--)
-       {
-	 dest[0] = c0;
-	 dest[1] = c1;
-	 dest += 2;
-       }
+      c0 = color[0];
+      c1 = color[1];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = c1;
+	  dest += 2;
+	}
 #else
-     shortc = ((guint16 *)color)[0];
-     shortd = (guint16 *)dest;
-     while (w--)
-       {
-	 *shortd = shortc;
-	 shortd++;
-       }
+      shortc = ((guint16 *) color)[0];
+      shortd = (guint16 *) dest;
+      while (w--)
+	{
+	  *shortd = shortc;
+	  shortd++;
+	}
 #endif /* sparc || __sparc__ */
-     break;
-   case 3:
-     c0 = color[0];
-     c1 = color[1];
-     c2 = color[2];
-     while (w--)
-       {
-	 dest[0] = c0;
-	 dest[1] = c1;
-	 dest[2] = c2;
-	 dest += 3;
-       }
-     break;
-   case 4:
+      break;
+    case 3:
+      c0 = color[0];
+      c1 = color[1];
+      c2 = color[2];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = c1;
+	  dest[2] = c2;
+	  dest += 3;
+	}
+      break;
+    case 4:
 #if defined(sparc) || defined(__sparc__)
-     c0 = color[0];
-     c1 = color[1];
-     c2 = color[2];
-     c3 = color[3];
-     while (w--)
-       {
-	 dest[0] = c0;
-	 dest[1] = c1;
-	 dest[2] = c2;
-	 dest[3] = c3;
-	 dest += 4;
-       }
+      c0 = color[0];
+      c1 = color[1];
+      c2 = color[2];
+      c3 = color[3];
+      while (w--)
+	{
+	  dest[0] = c0;
+	  dest[1] = c1;
+	  dest[2] = c2;
+	  dest[3] = c3;
+	  dest += 4;
+	}
 #else
-     longc = ((guint32 *)color)[0];
-     longd = (guint32 *)dest;
-     while (w--)
-       {
-	 *longd = longc;
-	 longd++;
-       }
+      longc = ((guint32 *) color)[0];
+      longd = (guint32 *) dest;
+      while (w--)
+	{
+	  *longd = longc;
+	  longd++;
+	}
 #endif /* sparc || __sparc__ */
-     break;
-   default:
-     while (w--)
-       {
-         memcpy (dest, color, bytes);
-         dest += bytes;
-       }
-  }
+      break;
+    default:
+      while (w--)
+	{
+	  memcpy (dest, color, bytes);
+	  dest += bytes;
+	}
+    }
 }
 
 
 void
-blend_pixels (const unsigned char *src1,
-	      const unsigned char *src2,
-	      unsigned char *dest,
-	      int            blend,
-	      int            w,
-	      int            bytes,
-	      int            has_alpha)
+blend_pixels (const guchar *src1,
+	      const guchar *src2,
+	      guchar       *dest,
+	      gint          blend,
+	      gint          w,
+	      gint          bytes,
+	      gint          has_alpha)
 {
-  int b;
-  unsigned char blend2 = (255 - blend);
+  gint   b;
+  guchar blend2 = (255 - blend);
 
   while (w --)
     {
@@ -636,16 +639,16 @@ blend_pixels (const unsigned char *src1,
 
 
 void
-shade_pixels (const unsigned char *src,
-	      unsigned char *dest,
-	      const unsigned char *col,
-	      int            blend,
-	      int            w,
-	      int            bytes,
-	      int            has_alpha)
+shade_pixels (const guchar *src,
+	      guchar       *dest,
+	      const guchar *col,
+	      gint          blend,
+	      gint          w,
+	      gint          bytes,
+	      gint          has_alpha)
 {
-  int alpha, b;
-  unsigned char blend2 = (255 - blend);
+  gint   alpha, b;
+  guchar blend2 = (255 - blend);
 
   alpha = (has_alpha) ? bytes - 1 : bytes;
   while (w --)
@@ -663,16 +666,16 @@ shade_pixels (const unsigned char *src,
 
 
 void
-extract_alpha_pixels (const unsigned char *src,
-		      const unsigned char *mask,
-		      unsigned char *dest,
-		      int            w,
-		      int            bytes)
+extract_alpha_pixels (const guchar *src,
+		      const guchar *mask,
+		      guchar       *dest,
+		      gint          w,
+		      gint          bytes)
 {
-  const unsigned char * m;
-  int tmp;
+  const guchar *m;
+  gint          tmp;
 
-  const int alpha = bytes - 1;
+  const gint alpha = bytes - 1;
   
   if (mask)
     {
@@ -683,29 +686,30 @@ extract_alpha_pixels (const unsigned char *src,
           m++;
           src += bytes;
         }
-     }  else
-     { 
-       m = &no_mask;
-       while (w --)
+    }
+  else
+    { 
+      m = &no_mask;
+      while (w --)
         { 
           *dest++ = INT_MULT(src[alpha], *m, tmp);
           src += bytes;
         }
-     }
+    }
 }
 
 void
-darken_pixels (const unsigned char *src1,
-	       const unsigned char *src2,
-	       unsigned char *dest,
-	       int            length,
-	       int            bytes1,
-	       int            bytes2,
-	       int            has_alpha1,
-	       int            has_alpha2)
+darken_pixels (const guchar *src1,
+	       const guchar *src2,
+	       guchar       *dest,
+	       gint          length,
+	       gint          bytes1,
+	       gint          bytes2,
+	       gint          has_alpha1,
+	       gint          has_alpha2)
 {
-  int b, alpha;
-  unsigned char s1, s2;
+  gint   b, alpha;
+  guchar s1, s2;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -731,17 +735,17 @@ darken_pixels (const unsigned char *src1,
 
 
 void
-lighten_pixels (const unsigned char *src1,
-		const unsigned char *src2,
-		unsigned char *dest,
-		int            length,
-		int            bytes1,
-		int            bytes2,
-		int            has_alpha1,
-		int            has_alpha2)
+lighten_pixels (const guchar *src1,
+		const guchar *src2,
+		guchar       *dest,
+		gint          length,
+		gint          bytes1,
+		gint          bytes2,
+		gint          has_alpha1,
+		gint          has_alpha2)
 {
-  int b, alpha;
-  unsigned char s1, s2;
+  gint   b, alpha;
+  guchar s1, s2;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -767,18 +771,18 @@ lighten_pixels (const unsigned char *src1,
 
 
 void
-hsv_only_pixels (const unsigned char *src1,
-		 const unsigned char *src2,
-		 unsigned char *dest,
-		 int            mode,
-		 int            length,
-		 int            bytes1,
-		 int            bytes2,
-		 int            has_alpha1,
-		 int            has_alpha2)
+hsv_only_pixels (const guchar *src1,
+		 const guchar *src2,
+		 guchar       *dest,
+		 gint          mode,
+		 gint          length,
+		 gint          bytes1,
+		 gint          bytes2,
+		 gint          has_alpha1,
+		 gint          has_alpha2)
 {
-  int r1, g1, b1;
-  int r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (length--)
@@ -819,18 +823,18 @@ hsv_only_pixels (const unsigned char *src1,
 
 
 void
-color_only_pixels (const unsigned char *src1,
-		   const unsigned char *src2,
-		   unsigned char *dest,
-		   int            mode,
-		   int            length,
-		   int            bytes1,
-		   int            bytes2,
-		   int            has_alpha1,
-		   int            has_alpha2)
+color_only_pixels (const guchar *src1,
+		   const guchar *src2,
+		   guchar       *dest,
+		   gint          mode,
+		   gint          length,
+		   gint          bytes1,
+		   gint          bytes2,
+		   gint          has_alpha1,
+		   gint          has_alpha2)
 {
-  int r1, g1, b1;
-  int r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   /*  assumes inputs are only 4 byte RGBA pixels  */
   while (length--)
@@ -861,67 +865,74 @@ color_only_pixels (const unsigned char *src1,
 }
 
 void
-multiply_pixels (const unsigned char *src1,
-		 const unsigned char *src2,
-		 unsigned char *dest,
-		 int            length,
-		 int            bytes1,
-		 int            bytes2,
-		 int            has_alpha1,
-		 int            has_alpha2)
+multiply_pixels (const guchar *src1,
+		 const guchar *src2,
+		 guchar       *dest,
+		 gint          length,
+		 gint          bytes1,
+		 gint          bytes2,
+		 gint          has_alpha1,
+		 gint          has_alpha2)
 {
-  int alpha, b;
-  int tmp;
+  gint alpha, b;
+  gint tmp;
+
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   if (has_alpha1 && has_alpha2)
-    while (length --)
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = INT_MULT(src1[b], src2[b], tmp);
+      while (length --)
+	{
+	  for (b = 0; b < alpha; b++)
+	    dest[b] = INT_MULT(src1[b], src2[b], tmp);
 
-      dest[alpha] = MIN (src1[alpha], src2[alpha]);
+	  dest[alpha] = MIN (src1[alpha], src2[alpha]);
 
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes2;
+	  src1 += bytes1;
+	  src2 += bytes2;
+	  dest += bytes2;
+	}
     }
   else if (has_alpha2)
-    while (length --)
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = INT_MULT(src1[b], src2[b], tmp);
+      while (length --)
+	{
+	  for (b = 0; b < alpha; b++)
+	    dest[b] = INT_MULT(src1[b], src2[b], tmp);
 
-      dest[alpha] = src2[alpha];
+	  dest[alpha] = src2[alpha];
 
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes2;
+	  src1 += bytes1;
+	  src2 += bytes2;
+	  dest += bytes2;
+	}
     }
   else
-    while (length --)
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = INT_MULT(src1[b], src2[b], tmp);
+      while (length --)
+	{
+	  for (b = 0; b < alpha; b++)
+	    dest[b] = INT_MULT(src1[b], src2[b], tmp);
 
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes2;
+	  src1 += bytes1;
+	  src2 += bytes2;
+	  dest += bytes2;
+	}
     }
 }
 
 
 void
-divide_pixels (const unsigned char *src1,
-		 const unsigned char *src2,
-		 unsigned char *dest,
-		 int            length,
-		 int            bytes1,
-		 int            bytes2,
-		 int            has_alpha1,
-		 int            has_alpha2)
+divide_pixels (const guchar *src1,
+	       const guchar *src2,
+	       guchar       *dest,
+	       gint          length,
+	       gint          bytes1,
+	       gint          bytes2,
+	       gint          has_alpha1,
+	       gint          has_alpha2)
 {
-  int alpha, b, result;
+  gint alpha, b, result;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -946,17 +957,17 @@ divide_pixels (const unsigned char *src1,
 
 
 void
-screen_pixels (const unsigned char *src1,
-	       const unsigned char *src2,
-	       unsigned char *dest,
-	       int            length,
-	       int            bytes1,
-	       int            bytes2,
-	       int            has_alpha1,
-	       int            has_alpha2)
+screen_pixels (const guchar *src1,
+	       const guchar *src2,
+	       guchar       *dest,
+	       gint          length,
+	       gint          bytes1,
+	       gint          bytes2,
+	       gint          has_alpha1,
+	       gint          has_alpha2)
 {
-  int alpha, b;
-  int tmp;
+  gint alpha, b;
+  gint tmp;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -978,17 +989,17 @@ screen_pixels (const unsigned char *src1,
 
 
 void
-overlay_pixels (const unsigned char *src1,
-		const unsigned char *src2,
-		unsigned char *dest,
-		int            length,
-		int            bytes1,
-		int            bytes2,
-		int            has_alpha1,
-		int            has_alpha2)
+overlay_pixels (const guchar *src1,
+		const guchar *src2,
+		guchar       *dest,
+		gint          length,
+		gint          bytes1,
+		gint          bytes2,
+		gint          has_alpha1,
+		gint          has_alpha2)
 {
-  int alpha, b;
-  int tmp;
+  gint alpha, b;
+  gint tmp;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1014,16 +1025,16 @@ overlay_pixels (const unsigned char *src1,
 
 
 void
-add_pixels (const unsigned char *src1,
-	    const unsigned char *src2,
-	    unsigned char *dest,
-	    int            length,
-	    int            bytes1,
-	    int            bytes2,
-	    int            has_alpha1,
-	    int            has_alpha2)
+add_pixels (const guchar *src1,
+	    const guchar *src2,
+	    guchar       *dest,
+	    gint          length,
+	    gint          bytes1,
+	    gint          bytes2,
+	    gint          has_alpha1,
+	    gint          has_alpha2)
 {
-  int alpha, b;
+  gint alpha, b;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1048,17 +1059,17 @@ add_pixels (const unsigned char *src1,
 
 
 void
-subtract_pixels (const unsigned char *src1,
-		 const unsigned char *src2,
-		 unsigned char *dest,
-		 int            length,
-		 int            bytes1,
-		 int            bytes2,
-		 int            has_alpha1,
-		 int            has_alpha2)
+subtract_pixels (const guchar *src1,
+		 const guchar *src2,
+		 guchar       *dest,
+		 gint          length,
+		 gint          bytes1,
+		 gint          bytes2,
+		 gint          has_alpha1,
+		 gint          has_alpha2)
 {
-  int alpha, b;
-  int diff;
+  gint alpha, b;
+  gint diff;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1083,17 +1094,17 @@ subtract_pixels (const unsigned char *src1,
 
 
 void
-difference_pixels (const unsigned char *src1,
-		   const unsigned char *src2,
-		   unsigned char *dest,
-		   int            length,
-		   int            bytes1,
-		   int            bytes2,
-		   int            has_alpha1,
-		   int            has_alpha2)
+difference_pixels (const guchar *src1,
+		   const guchar *src2,
+		   guchar       *dest,
+		   gint          length,
+		   gint          bytes1,
+		   gint          bytes2,
+		   gint          has_alpha1,
+		   gint          has_alpha2)
 {
-  int alpha, b;
-  int diff;
+  gint alpha, b;
+  gint diff;
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1118,25 +1129,25 @@ difference_pixels (const unsigned char *src1,
 
 
 void
-dissolve_pixels (const unsigned char *src,
-		 unsigned char *dest,
-		 int            x,
-		 int            y,
-		 int            opacity,
-		 int            length,
-		 int            sb,
-		 int            db,
-		 int            has_alpha)
+dissolve_pixels (const guchar *src,
+		 guchar       *dest,
+		 gint          x,
+		 gint          y,
+		 gint          opacity,
+		 gint          length,
+		 gint          sb,
+		 gint          db,
+		 gint          has_alpha)
 {
-  int alpha, b;
-  int rand_val;
+  gint alpha, b;
+  gint rand_val;
   
 #if defined(ENABLE_MP) && defined(__GLIBC__)
   /* The glibc 2.1 documentation recommends using the SVID random functions
    * instead of rand_r
    */
   struct drand48_data seed;
-  long temp_val;
+  glong               temp_val;
 
   srand48_r (random_table[y % RANDOM_TABLE_SIZE], &seed);
   for (b = 0; b < x; b++)
@@ -1145,7 +1156,7 @@ dissolve_pixels (const unsigned char *src,
   /* If we are running with multiple threads rand_r give _much_ better
    * performance than rand
    */
-  unsigned int seed;
+  guint seed;
   seed = random_table[y % RANDOM_TABLE_SIZE];
   for (b = 0; b < x; b++)
     rand_r (&seed);
@@ -1184,22 +1195,22 @@ dissolve_pixels (const unsigned char *src,
 }
 
 void
-replace_pixels (unsigned char *src1,
-		unsigned char *src2,
-		unsigned char *dest,
-		unsigned char *mask,
-		int            length,
-		int            opacity,
-		int           *affect,
-		int            bytes1,
-		int            bytes2)
+replace_pixels (guchar *src1,
+		guchar *src2,
+		guchar *dest,
+		guchar *mask,
+		gint    length,
+		gint    opacity,
+		gint   *affect,
+		gint    bytes1,
+		gint    bytes2)
 {
-  int alpha;
-  int b;
-  double a_val, a_recip, mask_val;
-  double norm_opacity;
-  int s1_a, s2_a;
-  int new_val;
+  gint    alpha;
+  gint    b;
+  gdouble a_val, a_recip, mask_val;
+  gdouble norm_opacity;
+  gint    s1_a, s2_a;
+  gint    new_val;
 
   if (bytes1 != bytes2)
     {
@@ -1272,9 +1283,9 @@ replace_pixels (unsigned char *src1,
 
 
 void
-swap_pixels (unsigned char *src,
-	     unsigned char *dest,
-	     int            length)
+swap_pixels (guchar *src,
+	     guchar *dest,
+	     gint    length)
 {
   while (length--)
     {
@@ -1288,27 +1299,28 @@ swap_pixels (unsigned char *src,
 
 
 void
-scale_pixels (const unsigned char *src,
-	      unsigned char *dest,
-	      int            length,
-	      int            scale)
+scale_pixels (const guchar *src,
+	      guchar       *dest,
+	      gint          length,
+	      gint          scale)
 {
-  int tmp;
+  gint tmp;
+
   while (length --)
-  {
-    *dest++ = (unsigned char) INT_MULT(*src,scale,tmp);
-    src++;
-  }
+    {
+      *dest++ = (guchar) INT_MULT (*src, scale, tmp);
+      src++;
+    }
 }
 
 
 void
-add_alpha_pixels (const unsigned char *src,
-		  unsigned char *dest,
-		  int            length,
-		  int            bytes)
+add_alpha_pixels (const guchar *src,
+		  guchar       *dest,
+		  gint          length,
+		  gint          bytes)
 {
-  int alpha, b;
+  gint alpha, b;
 
   alpha = bytes + 1;
   while (length --)
@@ -1325,14 +1337,14 @@ add_alpha_pixels (const unsigned char *src,
 
 
 void
-flatten_pixels (const unsigned char *src,
-		unsigned char *dest,
-		const unsigned char *bg,
-		int            length,
-		int            bytes)
+flatten_pixels (const guchar *src,
+		guchar       *dest,
+		const guchar *bg,
+		gint          length,
+		gint          bytes)
 {
-  int alpha, b;
-  int t1, t2;
+  gint alpha, b;
+  gint t1, t2;
 
   alpha = bytes - 1;
   while (length --)
@@ -1347,14 +1359,14 @@ flatten_pixels (const unsigned char *src,
 
 
 void
-gray_to_rgb_pixels (const unsigned char *src,
-		    unsigned char *dest,
-		    int            length,
-		    int            bytes)
+gray_to_rgb_pixels (const guchar *src,
+		    guchar       *dest,
+		    gint          length,
+		    gint          bytes)
 {
-  int b;
-  int dest_bytes;
-  int has_alpha;
+  gint b;
+  gint dest_bytes;
+  gint has_alpha;
 
   has_alpha = (bytes == 2) ? 1 : 0;
   dest_bytes = (has_alpha) ? 4 : 3;
@@ -1374,41 +1386,47 @@ gray_to_rgb_pixels (const unsigned char *src,
 
 
 void
-apply_mask_to_alpha_channel (unsigned char *src,
-			     const unsigned char *mask,
-			     int            opacity,
-			     int            length,
-			     int            bytes)
+apply_mask_to_alpha_channel (guchar       *src,
+			     const guchar *mask,
+			     gint          opacity,
+			     gint          length,
+			     gint          bytes)
 {
-  long tmp;
+  glong tmp;
+
   src += bytes - 1;
   if (opacity == 255)
-    while (length --)
     {
-      *src = INT_MULT(*src, *mask, tmp);
-      mask++;
-      src += bytes;
+      while (length --)
+	{
+	  *src = INT_MULT(*src, *mask, tmp);
+	  mask++;
+	  src += bytes;
+	}
     }
   else
-    while (length --)
     {
-      *src = INT_MULT3(*src, *mask, opacity, tmp);
-      mask++;
-      src += bytes;
+      while (length --)
+	{
+	  *src = INT_MULT3(*src, *mask, opacity, tmp);
+	  mask++;
+	  src += bytes;
+	}
     }
 }
 
 
 void
-combine_mask_and_alpha_channel (unsigned char *src,
-				const unsigned char *mask,
-				int            opacity,
-				int            length,
-				int            bytes)
+combine_mask_and_alpha_channel (guchar       *src,
+				const guchar *mask,
+				gint          opacity,
+				gint          length,
+				gint          bytes)
 {
-  int mask_val;
-  int alpha;
-  int tmp;
+  gint mask_val;
+  gint alpha;
+  gint tmp;
+
   alpha = bytes - 1;
   src += alpha;
 
@@ -1431,13 +1449,13 @@ combine_mask_and_alpha_channel (unsigned char *src,
 
 
 void
-copy_gray_to_inten_a_pixels (const unsigned char *src,
-			     unsigned char *dest,
-			     int            length,
-			     int            bytes)
+copy_gray_to_inten_a_pixels (const guchar *src,
+			     guchar       *dest,
+			     gint          length,
+			     gint          bytes)
 {
-  int b;
-  int alpha;
+  gint b;
+  gint alpha;
 
   alpha = bytes - 1;
   while (length --)
@@ -3143,17 +3161,17 @@ map_to_color (int                  src_type,
 }
 
 
-int
-map_rgb_to_indexed (const unsigned char *cmap,
-		    int            num_cols,
-		    GimpImage*     gimage,
-		    int            r,
-		    int            g,
-		    int            b)
+gint
+map_rgb_to_indexed (const guchar    *cmap,
+		    gint             num_cols,
+		    const GimpImage *gimage,
+		    gint             r,
+		    gint             g,
+		    gint             b)
 {
-  unsigned int pixel;
-  int hash_index;
-  int cmap_index;
+  guint pixel;
+  gint  hash_index;
+  gint  cmap_index;
 
   pixel = (r << 16) | (g << 8) | b;
   hash_index = pixel % HASH_TABLE_SIZE;
@@ -3168,9 +3186,9 @@ map_rgb_to_indexed (const unsigned char *cmap,
   /*  Hash table lookup miss  */
   else
     {
-      const unsigned char *col;
-      int diff, sum, max;
-      int i;
+      const guchar *col;
+      gint          diff, sum, max;
+      gint          i;
 
       max = MAXDIFF;
       cmap_index = 0;
@@ -3193,9 +3211,9 @@ map_rgb_to_indexed (const unsigned char *cmap,
 	}
 
       /*  update the hash table  */
-      color_hash_table[hash_index].pixel = pixel;
-      color_hash_table[hash_index].index = cmap_index;
-      color_hash_table[hash_index].gimage = gimage;
+      color_hash_table[hash_index].pixel  = pixel;
+      color_hash_table[hash_index].index  = cmap_index;
+      color_hash_table[hash_index].gimage = (GimpImage *) gimage;
       color_hash_misses++;
     }
 
@@ -3209,33 +3227,35 @@ map_rgb_to_indexed (const unsigned char *cmap,
 /**************************************************/
 
 void
-color_region (PixelRegion   *dest,
-	      const unsigned char *col)
+color_region (PixelRegion  *dest,
+	      const guchar *col)
 {
-  int h;
-  unsigned char * s;
-  void * pr;
+  gint    h;
+  guchar *s;
+  void   *pr;
 
-  for (pr = pixel_regions_register (1, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (1, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       h = dest->h;
       s = dest->data;
 
       if (dest->w*dest->bytes == dest->rowstride)
-      {
-	/* do it all in one function call if we can */
-	/* this hasn't been tested to see if it is a
-	   signifigant speed gain yet */
-	color_pixels (s, col, dest->w*h, dest->bytes);
-      }
-      else
-      {
-	while (h--)
 	{
-	  color_pixels (s, col, dest->w, dest->bytes);
-	  s += dest->rowstride;
+	  /* do it all in one function call if we can */
+	  /* this hasn't been tested to see if it is a
+	     signifigant speed gain yet */
+	  color_pixels (s, col, dest->w*h, dest->bytes);
 	}
-      }
+      else
+	{
+	  while (h--)
+	    {
+	      color_pixels (s, col, dest->w, dest->bytes);
+	      s += dest->rowstride;
+	    }
+	}
     }
 }
 
@@ -3244,13 +3264,15 @@ void
 blend_region (PixelRegion *src1,
 	      PixelRegion *src2,
 	      PixelRegion *dest,
-	      int          blend)
+	      gint         blend)
 {
-  int h;
-  unsigned char *s1, *s2, * d;
-  void * pr;
+  gint    h;
+  guchar *s1, *s2, * d;
+  void   *pr;
 
-  for (pr = pixel_regions_register (3, src1, src2, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (3, src1, src2, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s1 = src1->data;
       s2 = src2->data;
@@ -3269,13 +3291,13 @@ blend_region (PixelRegion *src1,
 
 
 void
-shade_region (PixelRegion   *src,
-	      PixelRegion   *dest,
-	      unsigned char *col,
-	      int            blend)
+shade_region (PixelRegion *src,
+	      PixelRegion *dest,
+	      guchar      *col,
+	      gint         blend)
 {
-  int h;
-  unsigned char * s, * d;
+  gint    h;
+  guchar *s, * d;
 
   s = src->data;
   d = dest->data;
@@ -3290,18 +3312,17 @@ shade_region (PixelRegion   *src,
 }
 
 
-
 void
 copy_region (PixelRegion *src,
 	     PixelRegion *dest)
 {
-  int h;
-  int pixelwidth;
-  unsigned char * s, * d;
-  void * pr;
+  gint    h;
+  gint    pixelwidth;
+  guchar *s, *d;
+  void   *pr;
 
 #ifdef COWSHOW
-  fputc('[',stderr);
+  fputc ('[',stderr);
 #endif
   for (pr = pixel_regions_register (2, src, dest);
        pr != NULL;
@@ -3324,7 +3345,7 @@ copy_region (PixelRegion *src,
       else 
 	{
 #ifdef COWSHOW
-	  fputc('.',stderr);
+	  fputc ('.',stderr);
 #endif
 	  pixelwidth = src->w * src->bytes;
 	  s = src->data;
@@ -3339,9 +3360,10 @@ copy_region (PixelRegion *src,
 	    }
 	}
     }
+
 #ifdef COWSHOW
-  fputc(']',stderr);
-  fputc('\n',stderr);
+  fputc (']',stderr);
+  fputc ('\n',stderr);
 #endif
 }
 
@@ -3350,11 +3372,13 @@ void
 add_alpha_region (PixelRegion *src,
 		  PixelRegion *dest)
 {
-  int h;
-  unsigned char * s, * d;
-  void * pr;
+  gint    h;
+  guchar *s, *d;
+  void   *pr;
 
-  for (pr = pixel_regions_register (2, src, dest); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       s = src->data;
       d = dest->data;
@@ -3371,12 +3395,12 @@ add_alpha_region (PixelRegion *src,
 
 
 void
-flatten_region (PixelRegion   *src,
-		PixelRegion   *dest,
-		unsigned char *bg)
+flatten_region (PixelRegion *src,
+		PixelRegion *dest,
+		guchar      *bg)
 {
-  int h;
-  unsigned char * s, * d;
+  gint    h;
+  guchar *s, *d;
 
   s = src->data;
   d = dest->data;

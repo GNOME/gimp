@@ -1,3 +1,30 @@
+2000-12-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/channel.[ch]
+	* app/drawable.h
+	* app/gimpdrawable.[ch]
+	* app/gimpdrawableP.h
+	* app/gimpimage.[ch]
+	* app/gimpimageP.h
+	* app/layer.[ch]
+	* app/layer_pvt.h: started a major cleanup of all image/drawable
+	files. Added tons of "const GimpImage *" declarations and properly
+	formated the headers.
+
+	* app/bezier_select.c
+	* app/channels_dialog.c
+	* app/crop.c
+	* app/fileops.[ch]
+	* app/fuzzy_select.c
+	* app/gdisplay.c
+	* app/layers_dialog.c
+	* app/move.c
+	* app/paint_funcs.[ch]
+	* app/qmask.c
+	* app/undo.c: changed accordingly plus the usual portion of coding
+	style paranoia. This is not finished but Sven promised to buy me
+	a beer if I commit now ;)
+
 2000-12-28  Sven Neumann  <sven@gimp.org>
 
 	* app/boundaryF.h

@@ -31,59 +31,67 @@
 #define GIMP_DRAWABLE(obj)     (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
 #define GIMP_IS_DRAWABLE(obj)  (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))
 
-GtkType gimp_drawable_get_type (void);
 
 /*  drawable access functions  */
 
-void             gimp_drawable_merge_shadow       (GimpDrawable *, gint);
-void             gimp_drawable_fill               (GimpDrawable *drawable,
-						   guchar r, guchar g,
-						   guchar b, guchar a);
+GtkType         gimp_drawable_get_type           (void);
 
-gboolean         gimp_drawable_mask_bounds        (GimpDrawable *,
-						   gint *, gint *,
-						   gint *, gint *);
+void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
+						  gint                undo);
+void            gimp_drawable_fill               (GimpDrawable       *drawable,
+						  guchar              r,
+						  guchar              g,
+						  guchar              b,
+						  guchar              a);
 
-void             gimp_drawable_invalidate_preview (GimpDrawable *drawable, 
-						   gboolean      emit_signal);
-gint             gimp_drawable_dirty              (GimpDrawable *);
-gint             gimp_drawable_clean              (GimpDrawable *);
-gboolean         gimp_drawable_has_alpha          (GimpDrawable *);
-GimpImageType    gimp_drawable_type               (GimpDrawable *);
-GimpImageType    gimp_drawable_type_with_alpha    (GimpDrawable *);
-gboolean         gimp_drawable_is_rgb             (GimpDrawable *);
-gboolean         gimp_drawable_is_gray            (GimpDrawable *);
-gboolean         gimp_drawable_is_indexed         (GimpDrawable *);
-TileManager *    gimp_drawable_data               (GimpDrawable *);
-TileManager *    gimp_drawable_shadow             (GimpDrawable *);
-gint             gimp_drawable_bytes              (GimpDrawable *);
-gint             gimp_drawable_width              (GimpDrawable *);
-gint             gimp_drawable_height             (GimpDrawable *);
-gboolean	 gimp_drawable_visible	          (GimpDrawable *);
-void             gimp_drawable_offsets            (GimpDrawable *, 
-						   gint *, gint *);
+gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
+						  gint               *x1,
+						  gint               *y1,
+						  gint               *x2,
+						  gint               *y2);
 
-guchar *         gimp_drawable_cmap               (GimpDrawable *);
-gchar *		 gimp_drawable_get_name	          (GimpDrawable *);
-void 		 gimp_drawable_set_name	          (GimpDrawable *, gchar *);
+void            gimp_drawable_invalidate_preview (GimpDrawable       *drawable, 
+						  gboolean            emit_signal);
+gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
+GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);
+GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);
+gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
+gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
+gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
+TileManager *   gimp_drawable_data               (const GimpDrawable *drawable);
+TileManager *   gimp_drawable_shadow             (GimpDrawable *);
+gint            gimp_drawable_bytes              (GimpDrawable *);
+gint            gimp_drawable_width              (GimpDrawable *);
+gint            gimp_drawable_height             (GimpDrawable *);
+gboolean	gimp_drawable_visible	         (const GimpDrawable *drawable);
+void            gimp_drawable_offsets            (GimpDrawable *, 
+						  gint *, gint *);
 
-guchar *         gimp_drawable_get_color_at       (GimpDrawable *,
-						   gint x, gint y);
+guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
+const gchar   *	gimp_drawable_get_name	         (const GimpDrawable *drawable);
+void 		gimp_drawable_set_name	         (GimpDrawable       *drawable,
+						  const gchar        *name);
 
-void             gimp_drawable_parasite_attach    (GimpDrawable *,
-						   GimpParasite *);
-void             gimp_drawable_parasite_detach    (GimpDrawable *,
-						   const gchar *);
-GimpParasite *   gimp_drawable_parasite_find      (const GimpDrawable *,
-						   const gchar *);
-gchar **         gimp_drawable_parasite_list      (GimpDrawable *drawable,
-                                                   gint *count);
-Tattoo           gimp_drawable_get_tattoo         (const GimpDrawable *);
-void             gimp_drawable_set_tattoo         (GimpDrawable *, Tattoo);
+guchar        * gimp_drawable_get_color_at       (GimpDrawable       *drawable,
+						  gint                x,
+						  gint                y);
 
-GimpDrawable *   gimp_drawable_get_ID             (gint);
-void		 gimp_drawable_deallocate         (GimpDrawable *);
-GimpImage *      gimp_drawable_gimage             (GimpDrawable*);
-void             gimp_drawable_set_gimage         (GimpDrawable*, GimpImage *);
+void            gimp_drawable_parasite_attach    (GimpDrawable       *drawable,
+						  GimpParasite       *parasite);
+void            gimp_drawable_parasite_detach    (GimpDrawable       *drawable,
+						  const gchar        *parasite);
+GimpParasite  * gimp_drawable_parasite_find      (const GimpDrawable *drawable,
+						  const gchar        *name);
+gchar        ** gimp_drawable_parasite_list      (const GimpDrawable *drawable,
+						  gint               *count);
+Tattoo          gimp_drawable_get_tattoo         (const GimpDrawable *drawable);
+void            gimp_drawable_set_tattoo         (GimpDrawable       *drawable,
+						  Tattoo              tattoo);
+
+GimpDrawable *  gimp_drawable_get_ID             (gint);
+void		gimp_drawable_deallocate         (GimpDrawable *);
+GimpImage *     gimp_drawable_gimage             (const GimpDrawable *drawable);
+void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
+						  GimpImage          *gimage);
 
 #endif /* __GIMP_DRAWABLE_H__ */

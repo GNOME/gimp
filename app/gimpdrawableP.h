@@ -16,12 +16,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPDRAWABLEP_H__
-#define __GIMPDRAWABLEP_H__
+#ifndef __GIMP_DRAWABLE_P_H__
+#define __GIMP_DRAWABLE_P_H__
 
 #include "gimpobject.h"
 #include "gimpdrawable.h"
 
+
+#define GIMP_DRAWABLE_CLASS(klass)     (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+
+#define GIMP_IS_DRAWABLE_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
+
+
+typedef struct _GimpDrawableClass GimpDrawableClass;
 
 struct _GimpDrawable
 {
@@ -51,17 +58,15 @@ struct _GimpDrawableClass
 {
   GimpObjectClass parent_class;
 
-  void (* invalidate_preview) (GtkObject *);
+  void (* invalidate_preview) (GimpDrawable *drawable);
 };
 
-typedef struct _GimpDrawableClass GimpDrawableClass;
 
-#define GIMP_DRAWABLE_CLASS(klass)     (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+void gimp_drawable_configure (GimpDrawable  *drawable,
+			      GimpImage     *gimage,
+			      gint           width,
+			      gint           height,
+			      GimpImageType  type,
+			      const gchar   *name);
 
-#define GIMP_IS_DRAWABLE_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
-
-void gimp_drawable_configure (GimpDrawable *, GimpImage *,
-			      gint, gint, GimpImageType, gchar *);
-
-#endif /* __GIMPDRAWABLEP_H__ */
-
+#endif /* __GIMP_DRAWABLE_P_H__ */
