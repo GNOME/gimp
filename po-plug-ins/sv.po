@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:58+0200\n"
-"PO-Revision-Date: 2004-03-19 20:50+0100\n"
+"POT-Creation-Date: 2004-07-08 12:10+0900\n"
+"PO-Revision-Date: 2004-07-08 12:16+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Om"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
+#: plug-ins/common/channel_mixer.c:548 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
@@ -310,7 +310,7 @@ msgstr "Färgfunktion"
 #. Redmode radio frame
 #. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
+#: plug-ins/common/channel_mixer.c:597 plug-ins/common/decompose.c:130
 msgid "Red"
 msgstr "Röd"
 
@@ -377,14 +377,14 @@ msgstr ""
 #. Greenmode radio frame
 #. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
-#: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
+#: plug-ins/common/channel_mixer.c:598 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Grön"
 
 #. Bluemode radio frame
 #. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
-#: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
+#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:136
 msgid "Blue"
 msgstr "Blå"
 
@@ -426,7 +426,7 @@ msgstr "_Fraktaler"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
+#: plug-ins/common/channel_mixer.c:1216 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
@@ -472,7 +472,7 @@ msgstr "Spara fraktalparametrar"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
+#: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
@@ -922,24 +922,20 @@ msgid "Preview Options"
 msgstr "Alternativ för förhandsgranskning"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "Mappa till plan..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
-#, fuzzy
 msgid "Map to Sphere..."
-msgstr "Mer..."
+msgstr "Mappa till sfär..."
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Max RGB..."
+msgstr "Mappa till låda..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Cylinder"
+msgstr "Mappa till cylinder..."
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -1311,7 +1307,7 @@ msgstr "Rymdkarta: Transformerar..."
 msgid "AlienMap"
 msgstr "Rymdkarta"
 
-#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:624
+#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:622
 #: plug-ins/common/diffraction.c:505 plug-ins/common/diffraction.c:543
 #: plug-ins/common/diffraction.c:581 plug-ins/common/exchange.c:409
 #: plug-ins/common/noisify.c:366 plug-ins/common/noisify.c:373
@@ -1322,7 +1318,7 @@ msgstr "_Röd:"
 msgid "Change intensity of the red channel"
 msgstr "Ändra intensiteten på den röda kanalen"
 
-#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:636
+#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:634
 #: plug-ins/common/diffraction.c:514 plug-ins/common/diffraction.c:552
 #: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
@@ -1333,7 +1329,7 @@ msgstr "_Grön:"
 msgid "Change intensity of the green channel"
 msgstr "Ändra intensiteten på den gröna kanalen"
 
-#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:649
+#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:647
 #: plug-ins/common/diffraction.c:523 plug-ins/common/diffraction.c:561
 #: plug-ins/common/diffraction.c:599 plug-ins/common/exchange.c:497
 #: plug-ins/common/noisify.c:368 plug-ins/common/noisify.c:375
@@ -1923,7 +1919,7 @@ msgstr "Varning: källan och målet är samma kanal."
 msgid "Save Parameters to"
 msgstr "Spara parametrar till"
 
-#: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
+#: plug-ins/common/CML_explorer.c:2191
 #, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr "Parametrar sparades till \"%s\""
@@ -1932,7 +1928,7 @@ msgstr "Parametrar sparades till \"%s\""
 msgid "CML File Operation Warning"
 msgstr "CML filoperationsvarning"
 
-#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
+#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2373,7 +2369,6 @@ msgid "_Spherical Map"
 msgstr "_Sfärisk karta"
 
 #: plug-ins/common/bumpmap.c:966
-#, fuzzy
 msgid "S_inusoidal Map"
 msgstr "S_inusformad karta"
 
@@ -2494,41 +2489,46 @@ msgstr "Komprimerad storlek: %s"
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Kompressionsförhållande (ung.): %d till 1"
 
-#: plug-ins/common/channel_mixer.c:226
+#: plug-ins/common/channel_mixer.c:224
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
 msgstr "<Image>/Filter/Färger/_Kanalblandare..."
 
-#: plug-ins/common/channel_mixer.c:530
+#: plug-ins/common/channel_mixer.c:528
 msgid "Channel Mixer"
 msgstr "Kanalblandare"
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:566 plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:564 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "_Förhandsgranska"
 
-#: plug-ins/common/channel_mixer.c:591
+#: plug-ins/common/channel_mixer.c:589
 msgid "O_utput Channel:"
 msgstr "_Ut-kanal::"
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:660
+#: plug-ins/common/channel_mixer.c:658
 msgid "_Monochrome"
 msgstr "_Enfärgad"
 
-#: plug-ins/common/channel_mixer.c:672
+#: plug-ins/common/channel_mixer.c:670
 msgid "Preserve _Luminosity"
 msgstr "Bevara _luminans"
 
-#: plug-ins/common/channel_mixer.c:1035
+#: plug-ins/common/channel_mixer.c:1014
 msgid "Load Channel Mixer Settings"
 msgstr "Läs in kanalblandarinställningar"
 
-#: plug-ins/common/channel_mixer.c:1171
+#: plug-ins/common/channel_mixer.c:1152
 msgid "Save Channel Mixer Settings"
 msgstr "Spara kanalblandarinställningar"
 
-#: plug-ins/common/channel_mixer.c:1264
+#: plug-ins/common/channel_mixer.c:1223
+#, c-format
+msgid "Parameters were saved to '%s'"
+msgstr "Parametrar sparades till \"%s\""
+
+#: plug-ins/common/channel_mixer.c:1242
 msgid "Channel Mixer File Operation Warning"
 msgstr "Filoperationsvarning för kanalblandare"
 
@@ -2929,9 +2929,8 @@ msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Kan arbeta endast med lager (men aktiverades på en kanal eller mask)"
 
 #: plug-ins/common/curve_bend.c:727
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "Kan inte arbeta med indexerade färgbilder."
+msgstr "Kan inte arbeta med lager med masker."
 
 #: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
@@ -3410,7 +3409,6 @@ msgid "Sc_attering:"
 msgstr "S_pridning:"
 
 #: plug-ins/common/diffraction.c:637
-#, fuzzy
 msgid "Po_larization:"
 msgstr "Po_larisation:"
 
@@ -3690,7 +3688,6 @@ msgid "Image Selection"
 msgstr "Bildval"
 
 #: plug-ins/common/film.c:1352
-#, fuzzy
 msgid "All Values are Fractions of the Film Height"
 msgstr "Alla värden är i delar av filmhöjden"
 
@@ -4626,9 +4623,8 @@ msgid "Image Preview"
 msgstr "Förhandsgranska bild"
 
 #: plug-ins/common/jpeg.c:1702
-#, fuzzy
 msgid "Preview in image window"
-msgstr "Förhandsgranska (i bildfönstret)"
+msgstr "Förhandsgranska i bildfönstret"
 
 #: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -5792,7 +5788,6 @@ msgstr "Fel vid uppstart av ghostrscript (%s)"
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-#, fuzzy
 msgid "Write error occurred"
 msgstr "Skrivfel har inträffat"
 
@@ -6506,7 +6501,6 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Ta_ggvinkel (-1: slumpmässig):"
 
 #: plug-ins/common/sparkle.c:411
-#, fuzzy
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr "Justera taggvinkeln (-1 betyder att slumpmässig vinkel blir vald)"
 
@@ -7223,7 +7217,6 @@ msgid "Create a new unit from scratch."
 msgstr "Skapa en ny enhet från början."
 
 #: plug-ins/common/uniteditor.c:563
-#, fuzzy
 msgid "Create a new unit with the currently selected unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
 
@@ -8876,9 +8869,8 @@ msgid "XY Position:"
 msgstr "XY-position:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-#, fuzzy
 msgid "Spiral Number of Turns"
-msgstr "Spiral antal punkter"
+msgstr "Spiral antal varv"
 
 #: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
@@ -9401,18 +9393,16 @@ msgid "Start angle:"
 msgstr "Startvinkel:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "Vinkeln på den första skapade penseln"
+msgstr "Startvinkeln på den först skapade penseln"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Vinkelomfång:"
 
 #: plug-ins/gimpressionist/orientation.c:90
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "Vinkeln på den första skapade penseln"
+msgstr "Vinkelspridningen på den först skapade penseln"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -10861,9 +10851,8 @@ msgstr "Ritar labyrint..."
 
 #. $Id$
 #: plug-ins/maze/maze.h:2
-#, fuzzy
 msgid "Maze"
-msgstr "Marmorering"
+msgstr "Labyrint"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
@@ -11420,9 +11409,8 @@ msgid "Set the scale (size) of the image"
 msgstr "Sätt skalan (storleken) på bilden"
 
 #: plug-ins/print/gimp_main_window.c:1170
-#, fuzzy
 msgid "Scale by:"
-msgstr "Skala Z:"
+msgstr "Skala med:"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid ""

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-08 12:01+0900\n"
-"PO-Revision-Date: 2004-07-08 12:07+0900\n"
+"POT-Creation-Date: 2004-07-08 13:09+0900\n"
+"PO-Revision-Date: 2004-07-08 13:10+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -575,9 +575,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Sätter bildskärmens horisontella upplösning, i bildpunkter per tum "
-"(2,54 cm). Om den är satt till 0 så tillfrågas X-servern för både "
-"horisontell och vertikal upplösning."
+"Sätter bildskärmens horisontella upplösning, i bildpunkter per tum (2,54 "
+"cm). Om den är satt till 0 så tillfrågas X-servern för både horisontell och "
+"vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -585,9 +585,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Sätter bildskärmens vertikala upplösning, i bildpunkter per tum "
-"(2,54 cm). Om den är satt till 0 så tillfrågas X-servern för både "
-"horisontell och vertikal upplösning."
+"Sätter bildskärmens vertikala upplösning, i bildpunkter per tum (2,54 cm). "
+"Om den är satt till 0 så tillfrågas X-servern för både horisontell och "
+"vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -8313,7 +8313,7 @@ msgstr "Öppna gradientvalsdialogen"
 
 #: app/tools/gimppaintoptions-gui.c:196
 msgid "Reverse"
-msgstr "Återgå"
+msgstr "Baklänges"
 
 #: app/tools/gimppaintoptions-gui.c:201
 msgid "Gradient:"
@@ -8608,7 +8608,7 @@ msgstr ""
 
 #: app/tools/gimptextoptions.c:491
 msgid "Create Path from Text"
-msgstr "Skapa väg från text"
+msgstr "Skapa väg från slinga"
 
 #: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
