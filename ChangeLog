@@ -1,3 +1,9 @@
+2004-11-08  Øyvind Kolås  <pippin@gimp.org>
+
+	* plug-ins/common/gqbist.c: fixed typo in construction of file
+	chooser, use gtk_dialog_run instead of seperate callbacks for
+	file chooser dialogs.
+
 2004-11-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds)
