@@ -55,6 +55,8 @@ static void              threshold_alpha_ok_callback (GtkWidget *widget,
 						      gpointer   data);
 
 
+static GimpRunMode        run_mode;
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -118,7 +120,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
   gint               drawable_id;
   
   run_mode    = param[0].data.d_int32;
@@ -189,71 +190,39 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
+static void 
+threshold_alpha_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  gint gap;
+
+  for (gap = GPOINTER_TO_INT(data); gap; gap--)
+    *dest++ = *src++;
+  *dest = (VALS.threshold < *src) ? 255 : 0;
+}
+
 static GimpPDBStatusType
 threshold_alpha (gint32 drawable_id)
 {
   GimpDrawable *drawable;
-  GimpPixelRgn  src_rgn, dest_rgn;
-  guchar       *src, *dest;
-  gpointer      pr;
-  gint          x, y, x1, x2, y1, y2;
-  gint          gap, total, processed = 0;
-  
+  gint gap;
+
   drawable = gimp_drawable_get (drawable_id);
   if (! gimp_drawable_has_alpha (drawable_id))
     return GIMP_PDB_EXECUTION_ERROR;
 
-  if (gimp_drawable_is_rgb (drawable_id))
-    gap = 3;
-  else
-    gap = 1;
-
-  gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-  total = (x2 - x1) * (y2 - y1);
-  if (total < 1)
-    return GIMP_PDB_EXECUTION_ERROR;
-
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   gimp_progress_init (_("Threshold Alpha: Coloring Transparency..."));
 
-  for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-    {
-      gint offset, index;
+  gap = (gimp_drawable_is_rgb (drawable_id)) ? 3 : 1;
 
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  src = src_rgn.data + y * src_rgn.rowstride;
-	  dest = dest_rgn.data + y * dest_rgn.rowstride;
-	  offset = 0;
+  gimp_rgn_iterate2 (drawable, run_mode, threshold_alpha_func, 
+		     GINT_TO_POINTER(gap));
 
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      for (index = 0; index < gap; index++)
-		*dest++ = *src++;
-	      *dest++ = (VALS.threshold < *src++) ? 255 : 0;
-
-	      if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-		gimp_progress_update ((gdouble) processed /(gdouble) total); 
-	    }
-	}
-  }
-
-  gimp_progress_update (1.0);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
 
   return GIMP_PDB_SUCCESS;
 }
 
-/* dialog stuff */
 static gint
 threshold_alpha_dialog (void)
 {

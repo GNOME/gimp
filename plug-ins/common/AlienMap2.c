@@ -875,11 +875,6 @@ static void      run    (char         *name,
         		 GimpParam   **return_vals);
 
 static void      alienmap2 	       (GimpDrawable  *drawable);
-static void      alienmap2_render_row  (const guchar *src_row,
-					guchar *dest_row,
-					gint row,
-					gint row_width,
-					gint bytes);
 static void    	 transform             (guchar*, guchar*, guchar*);
 
 
@@ -897,6 +892,8 @@ static void      alienmap2_radio_update  (GtkWidget *widget,
 static void      alienmap2_logo_dialog   (void);
 
 /***** Variables *****/
+
+static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1025,7 +1022,6 @@ run (char       *name,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
-  GimpRunMode run_mode;
   double          xhsiz, yhsiz;
   int   	  pwidth, pheight;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
@@ -1158,86 +1154,29 @@ run (char       *name,
   gimp_drawable_detach (drawable);
 }
 
-static void
-alienmap2_render_row (const guchar *src_row,
-		      guchar       *dest_row,
-		      gint          row,
-		      gint          row_width,
-		      gint          bytes)
+static void 
+alienmap2_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 {
-  gint col, bytenum;
+  guchar v1, v2, v3;
 
-  for (col = 0; col < row_width ; col++)
-    {
-      guchar v1, v2, v3;
+  v1 = src[0];
+  v2 = src[1];
+  v3 = src[2];
 
-      v1 = src_row[0];
-      v2 = src_row[1];
-      v3 = src_row[2];
+  transform(&v1, &v2, &v3);
 
-      transform(&v1, &v2, &v3);
+  dest[0] = v1;
+  dest[1] = v2;
+  dest[2] = v3;
 
-      dest_row[0] = v1;
-      dest_row[1] = v2;
-      dest_row[2] = v3;
-
-      for (bytenum = 3; bytenum < bytes; bytenum++)
-	{
-	  dest_row[bytenum] = src_row[bytenum];
-	}
-      src_row += bytes;
-      dest_row += bytes;
-    }
+  if (bpp == 4)
+    dest[3] = src[3];
 }
 
 static void
 alienmap2 (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *src_row;
-  guchar *dest_row;
-  gint row;
-  gint x1, y1, x2, y2;
-
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = x2 - x1;
-  height = y2 - y1;
-  bytes = drawable->bpp;
-
-  /*  allocate row buffers  */
-  src_row = g_new (guchar, width * bytes);
-  dest_row = g_new (guchar, width * bytes);
-
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
-
-  for (row = y1; row < y2; row++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, width);
-
-      alienmap2_render_row (src_row, dest_row, row, width, bytes);
-
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, width);
-
-      if ((row % 10) == 0)
-        gimp_progress_update ((double) row / (double) height);
-    }
-
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
-
-  g_free (src_row);
-  g_free (dest_row);
+  gimp_rgn_iterate2 (drawable, run_mode, alienmap2_func, NULL);
 }
 
 static void

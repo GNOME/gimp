@@ -1,3 +1,12 @@
+2002-11-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/threshold_alpha.c: use gimpmisc region iterator 
+	funcs.
+
 2002-11-27  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.[ch]: added (yet unused) autosave feature.

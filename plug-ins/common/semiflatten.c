@@ -20,11 +20,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * TODO:
- *     Use tile iteration instead of dumb row-walking
- */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -45,14 +40,10 @@ static void      run    (gchar   *name,
 			 GimpParam **return_vals);
 
 static void      semiflatten            (GimpDrawable    *drawable);
-static void      semiflatten_render_row (const guchar *src,
-					 guchar       *dest,
-					 gint          row_width,
-					 gint          bytes);
-
 
 static guchar bgred, bggreen, bgblue;
 
+static GimpRunMode run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -107,6 +98,8 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  run_mode = param[0].data.d_int32;
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -138,79 +131,23 @@ run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-static void
-semiflatten_render_row (const guchar *src,
-			guchar       *dest,
-			gint          row_width,
-			gint          bytes)
+static void 
+semiflatten_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 {
-  gint col;
-
-  for (col = 0; col < row_width ; col++)
-    {
-      dest[0] = (src[0] * src[3]) / 255 + (bgred * (255 - src[3])) / 255;
-      dest[1] = (src[1] * src[3]) / 255 + (bggreen * (255 - src[3])) / 255;
-      dest[2] = (src[2] * src[3]) / 255 + (bgblue * (255 - src[3])) / 255;
-      dest[3] = (src[3] == 0) ? 0 : 255;
-
-      src += bytes;
-      dest += bytes;
-    }
+  dest[0] = (src[0] * src[3]) / 255 + (bgred * (255 - src[3])) / 255;
+  dest[1] = (src[1] * src[3]) / 255 + (bggreen * (255 - src[3])) / 255;
+  dest[2] = (src[2] * src[3]) / 255 + (bgblue * (255 - src[3])) / 255;
+  dest[3] = (src[3] == 0) ? 0 : 255;
 }
 
 static void
 semiflatten (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
   GimpRGB      background;
-  gint         width, height;
-  gint         bytes;
-  guchar      *src_row;
-  guchar      *dest_row;
-  gint         row;
-  gint         x1, y1, x2, y2;
 
-  /* Fetch the GIMP current background colour, to semi-flatten against */
   gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = drawable->width;
-  height = drawable->height;
-  bytes = drawable->bpp;
-
-  /*  allocate row buffers  */
-  src_row  = g_new (guchar, (x2 - x1) * bytes);
-  dest_row = g_new (guchar, (x2 - x1) * bytes);
-
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-  for (row = y1; row < y2; row++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, x2 - x1);
-
-      semiflatten_render_row (src_row,
-			      dest_row,
-			      (x2 - x1),
-			      bytes);
-
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, x2 - x1);
-
-      if ((row % 10) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
-    }
-
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-
-  g_free (src_row);
-  g_free (dest_row);
+  gimp_rgn_iterate2 (drawable, run_mode, semiflatten_func, NULL);
 }
+

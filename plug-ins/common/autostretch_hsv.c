@@ -51,6 +51,7 @@ static void   run                     (gchar         *name,
 static void   autostretch_hsv         (GimpDrawable  *drawable);
 static void   indexed_autostretch_hsv (gint32         image_ID);
 
+static GimpRunMode    run_mode;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -104,7 +105,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
@@ -150,14 +150,48 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  double shi;
+  double slo;
+  double vhi;
+  double vlo;
+} AutostretchData;
+
+static void 
+find_max (guchar *src, gint bpp, AutostretchData *data)
+{
+  double h, s, v;
+
+  gimp_rgb_to_hsv4(src, &h, &s, &v);
+  if (s > data->shi) data->shi = s;
+  if (s < data->slo) data->slo = s;
+  if (v > data->vhi) data->vhi = v;
+  if (v < data->vlo) data->vlo = v;
+}
+
+static void 
+autostretch_hsv_func (guchar *src, guchar *dest, gint bpp, 
+		      AutostretchData *data)
+{
+  double h, s, v;
+
+  gimp_rgb_to_hsv4(src, &h, &s, &v);
+  if (data->shi != data->slo)
+    s = (s - data->slo) / (data->shi - data->slo);
+  if (data->vhi != data->vlo)
+    v = (v - data->vlo) / (data->vhi - data->vlo);
+  gimp_hsv_to_rgb4(dest, h, s, v);
+  
+  if (bpp == 4)
+    dest[3] = src[3];
+}
 
 static void
 indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
 {
   guchar *cmap;
+  AutostretchData data = {0.0, 1.0, 0.0, 1.0};
   gint ncols,i;
-
-  double shi = 0.0, vhi = 0.0, slo = 1.0, vlo = 1.0;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
@@ -167,137 +201,27 @@ indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
       gimp_quit();
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      double h, s, v;
-      gimp_rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
-      if (s > shi) shi = s;
-      if (s < slo) slo = s;
-      if (v > vhi) vhi = v;
-      if (v < vlo) vlo = v;
+      find_max (&cmap[i * 3], 3, &data);
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      double h, s, v;
-      gimp_rgb_to_hsv4(&cmap[i*3], &h, &s, &v);
-      if (shi!=slo)
-	s = (s-slo) / (shi-slo);
-      if (vhi!=vlo)
-	v = (v-vlo) / (vhi-vlo);
-      gimp_hsv_to_rgb4(&cmap[i*3], h, s, v);
+      autostretch_hsv_func (&cmap[i * 3], &cmap[i * 3], 3, &data);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
-
 static void
 autostretch_hsv (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src, *s;
-  guchar *dest, *d;
-  double  shi = 0.0, slo = 1.0, vhi = 0.0, vlo = 1.0;
-  gint    progress, max_progress;
-  gint    has_alpha, alpha;
-  gint    x1, y1, x2, y2;
-  gint    x, y;
-  gpointer pr;
+  AutostretchData data = {0.0, 1.0, 0.0, 1.0};
 
-  /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
-
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1) * 2;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      if (!has_alpha || (has_alpha && s[alpha])) 
-		{
-		  double h, z, v;
-		  gimp_rgb_to_hsv4(s, &h, &z, &v);
-		  if (z > shi) shi = z;
-		  if (z < slo) slo = z;
-		  if (v > vhi) vhi = v;
-		  if (v < vlo) vlo = v;
-		}
-
-	      s += src_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-      dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      double h, z, v;
-	      gimp_rgb_to_hsv4(s, &h, &z, &v);
-	      if (shi!=slo)
-		z = (z-slo) / (shi-slo);
-	      if (vhi!=vlo)
-		v = (v-vlo) / (vhi-vlo);
-	      gimp_hsv_to_rgb4(d, h, z, v);
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      s += src_rgn.bpp;
-	      d += dest_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	  dest += dest_rgn.rowstride;
-
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate1 (drawable, run_mode, (GimpRgnFunc1) find_max, &data);
+  gimp_rgn_iterate2 (drawable, run_mode, (GimpRgnFunc2) autostretch_hsv_func, 
+		     &data);
 }
+
+
