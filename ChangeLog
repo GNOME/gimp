@@ -1,3 +1,10 @@
+2002-02-25  Sven Neumann  <sven@gimp.org>
+
+	* po-libgimp/Makefile.in.in
+	* po-plug-ins/Makefile.in.in
+	* po-script-fu/Makefile.in.in: updated, they used to refer to
+	po/po2tbl.sed which is no longer existant.
+
 2002-02-25  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.c
