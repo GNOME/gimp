@@ -96,9 +96,6 @@ GType           gimp_vectors_get_type           (void) G_GNUC_CONST;
 GimpVectors   * gimp_vectors_new                (GimpImage         *gimage,
                                                  const gchar       *name);
 
-GimpVectors   * gimp_vectors_copy               (const GimpVectors *vectors,
-                                                 GType              new_type,
-                                                 gboolean           add_alpha /* unused */);
 void            gimp_vectors_copy_strokes       (const GimpVectors *src_vectors,
                                                  GimpVectors       *dest_vectors);
 

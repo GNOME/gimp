@@ -33,12 +33,16 @@
 #include "gimpvectors-preview.h"
 
 
-static void    gimp_vectors_class_init  (GimpVectorsClass *klass);
-static void    gimp_vectors_init        (GimpVectors      *vectors);
+static void       gimp_vectors_class_init  (GimpVectorsClass *klass);
+static void       gimp_vectors_init        (GimpVectors      *vectors);
 
-static void    gimp_vectors_finalize    (GObject          *object);
+static void       gimp_vectors_finalize    (GObject          *object);
 
-static gsize   gimp_vectors_get_memsize (GimpObject       *object);
+static gsize      gimp_vectors_get_memsize (GimpObject       *object);
+
+static GimpItem * gimp_vectors_duplicate   (GimpItem         *item,
+                                            GType             new_type,
+                                            gboolean          add_alpha);
 
 
 /*  private variables  */
@@ -80,10 +84,12 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
   viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -92,6 +98,8 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   gimp_object_class->get_memsize  = gimp_vectors_get_memsize;
 
   viewable_class->get_new_preview = gimp_vectors_get_new_preview;
+
+  item_class->duplicate           = gimp_vectors_duplicate;
 
   klass->changed                  = NULL;
 
@@ -140,6 +148,31 @@ gimp_vectors_get_memsize (GimpObject *object)
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
+static GimpItem *
+gimp_vectors_duplicate (GimpItem *item,
+                        GType     new_type,
+                        gboolean  add_alpha)
+{
+  GimpVectors *vectors;
+  GimpItem    *new_item;
+  GimpVectors *new_vectors;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_VECTORS (new_item))
+    return new_item;
+
+  vectors     = GIMP_VECTORS (item);
+  new_vectors = GIMP_VECTORS (new_item);
+
+  gimp_vectors_copy_strokes (vectors, new_vectors);
+
+  return new_item;;
+}
+
 
 /*  public functions  */
 
@@ -156,27 +189,6 @@ gimp_vectors_new (GimpImage   *gimage,
   gimp_item_configure (GIMP_ITEM (vectors), gimage, name);
 
   return vectors;
-}
-
-GimpVectors *
-gimp_vectors_copy (const GimpVectors *vectors,
-                   GType              new_type,
-                   gboolean           add_alpha /* unused */)
-{
-  GimpVectors *new_vectors;
-
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
-
-  new_vectors = GIMP_VECTORS (gimp_item_copy (GIMP_ITEM (vectors),
-                                              new_type,
-                                              add_alpha));
-
-#ifdef __GNUC__
-#warning FIXME: implement gimp_vectors_copy()
-#endif
-
-  return new_vectors;
 }
 
 void

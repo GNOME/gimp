@@ -93,9 +93,9 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                 }
               else /* if selection */
                 {
-                  mask = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                            G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                            TRUE);
+                  mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                                                            G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                                            FALSE));
                   gimp_image_mask_clear (gimage);  /* Clear the selection */
 
                   gimp_image_add_channel (gimage, mask, 0);

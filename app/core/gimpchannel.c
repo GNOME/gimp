@@ -48,16 +48,20 @@
 #include "libgimp/gimpintl.h"
 
 
-static void    gimp_channel_class_init  (GimpChannelClass *klass);
-static void    gimp_channel_init        (GimpChannel      *channel);
+static void       gimp_channel_class_init  (GimpChannelClass *klass);
+static void       gimp_channel_init        (GimpChannel      *channel);
 
-static void    gimp_channel_finalize    (GObject          *object);
+static void       gimp_channel_finalize    (GObject          *object);
 
-static gsize   gimp_channel_get_memsize (GimpObject       *object);
+static gsize      gimp_channel_get_memsize (GimpObject       *object);
 
-static void    gimp_channel_push_undo   (GimpChannel      *mask);
-static void    gimp_channel_validate    (TileManager      *tm,
-                                         Tile             *tile);
+static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
+                                            GType             new_type,
+                                            gboolean          add_alpha);
+
+static void       gimp_channel_push_undo   (GimpChannel      *mask);
+static void       gimp_channel_validate    (TileManager      *tm,
+                                            Tile             *tile);
 
 
 static GimpDrawableClass * parent_class = NULL;
@@ -96,15 +100,19 @@ gimp_channel_class_init (GimpChannelClass *klass)
 {
   GObjectClass    *object_class;
   GimpObjectClass *gimp_object_class;
+  GimpItemClass   *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize         = gimp_channel_finalize;
 
   gimp_object_class->get_memsize = gimp_channel_get_memsize;
+
+  item_class->duplicate          = gimp_channel_duplicate;
 }
 
 static void
@@ -162,6 +170,45 @@ gimp_channel_get_memsize (GimpObject *object)
   memsize += channel->num_segs_out * sizeof (BoundSeg);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static GimpItem *
+gimp_channel_duplicate (GimpItem *item,
+                        GType     new_type,
+                        gboolean  add_alpha)
+{
+  GimpChannel *channel;
+  GimpItem    *new_item;
+  GimpChannel *new_channel;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  if (g_type_is_a (new_type, GIMP_TYPE_CHANNEL))
+    add_alpha = FALSE;
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_CHANNEL (new_item))
+    return new_item;
+
+  channel     = GIMP_CHANNEL (item);
+  new_channel = GIMP_CHANNEL (new_item);
+
+  /*  set the channel color and opacity  */
+  new_channel->color        = channel->color;
+
+  new_channel->show_masked  = channel->show_masked;
+
+  /*  selection mask variables  */
+  new_channel->bounds_known = channel->bounds_known;
+  new_channel->empty        = channel->empty;
+  new_channel->x1           = channel->x1;
+  new_channel->y1           = channel->y1;
+  new_channel->x2           = channel->x2;
+  new_channel->y2           = channel->y2;
+
+  return new_item;
 }
 
 static void
@@ -222,41 +269,6 @@ gimp_channel_new (GimpImage     *gimage,
   channel->y2          = height;
 
   return channel;
-}
-
-GimpChannel *
-gimp_channel_copy (const GimpChannel *channel,
-                   GType              new_type,
-                   gboolean           dummy) /*  the dummy is for symmetry with
-                                              *  gimp_layer_copy() because
-                                              *  both functions are used as
-                                              *  function pointers in
-                                              *  GimpDrawableListView --Mitch
-                                              */
-{
-  GimpChannel *new_channel;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_CHANNEL), NULL);
-
-  new_channel = GIMP_CHANNEL (gimp_drawable_copy (GIMP_DRAWABLE (channel),
-                                                  new_type,
-                                                  FALSE));
-
-  /*  set the channel color and opacity  */
-  new_channel->color        = channel->color;
-
-  new_channel->show_masked  = channel->show_masked;
-
-  /*  selection mask variables  */
-  new_channel->bounds_known = channel->bounds_known;
-  new_channel->empty        = channel->empty;
-  new_channel->x1           = channel->x1;
-  new_channel->y1           = channel->y1;
-  new_channel->x2           = channel->x2;
-  new_channel->y2           = channel->y2;
-
-  return new_channel;
 }
 
 void 

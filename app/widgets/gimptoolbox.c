@@ -867,15 +867,15 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      new_layer = gimp_layer_copy (GIMP_LAYER (drawable),
-                                   G_TYPE_FROM_INSTANCE (drawable),
-                                   FALSE);
+      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
+                                                   G_TYPE_FROM_INSTANCE (drawable),
+                                                   FALSE));
     }
   else
     {
-      new_layer = GIMP_LAYER (gimp_drawable_copy (drawable,
-                                                  GIMP_TYPE_LAYER,
-                                                  TRUE));
+      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
+                                                   GIMP_TYPE_LAYER,
+                                                   TRUE));
     }
 
   gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);

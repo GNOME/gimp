@@ -251,7 +251,7 @@ layer_copy_invoker (Gimp     *gimp,
   add_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = (copy = gimp_layer_copy (layer, G_TYPE_FROM_INSTANCE (layer), add_alpha)) != NULL;
+    success = (copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer), G_TYPE_FROM_INSTANCE (layer), add_alpha))) != NULL;
 
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 

@@ -120,9 +120,9 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
   GimpChannel *new_channel;
   return_if_no_channel (gimage, active_channel, data);
 
-  new_channel = gimp_channel_copy (active_channel,
-                                   G_TYPE_FROM_INSTANCE (active_channel),
-                                   TRUE);
+  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (active_channel),
+                                                   G_TYPE_FROM_INSTANCE (active_channel),
+                                                   TRUE));
   gimp_image_add_channel (gimage, new_channel, -1);
   gimp_image_flush (gimage);
 }

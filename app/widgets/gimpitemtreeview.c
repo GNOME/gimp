@@ -285,7 +285,6 @@ gimp_item_list_view_new (gint                  preview_size,
                          GimpReorderItemFunc   reorder_item_func,
                          GimpAddItemFunc       add_item_func,
                          GimpRemoveItemFunc    remove_item_func,
-                         GimpCopyItemFunc      copy_item_func,
                          GimpConvertItemFunc   convert_item_func,
                          GimpNewItemFunc       new_item_func,
                          GimpEditItemFunc      edit_item_func,
@@ -306,7 +305,6 @@ gimp_item_list_view_new (gint                  preview_size,
   g_return_val_if_fail (reorder_item_func != NULL, NULL);
   g_return_val_if_fail (add_item_func != NULL, NULL);
   g_return_val_if_fail (remove_item_func != NULL, NULL);
-  g_return_val_if_fail (copy_item_func != NULL, NULL);
   /*  convert_item_func may be NULL  */
   g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);
@@ -348,7 +346,6 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->reorder_item_func  = reorder_item_func;
   list_view->add_item_func      = add_item_func;
   list_view->remove_item_func   = remove_item_func;
-  list_view->copy_item_func     = copy_item_func;
   list_view->convert_item_func  = convert_item_func;
   list_view->new_item_func      = new_item_func;
   list_view->edit_item_func     = edit_item_func;
@@ -581,9 +578,10 @@ gimp_item_list_view_duplicate_clicked (GtkWidget        *widget,
 
   viewable = view->get_item_func (view->gimage);
 
-  new_viewable = view->copy_item_func (viewable,
-                                       G_TYPE_FROM_INSTANCE (viewable),
-                                       TRUE);
+  new_viewable = (GimpViewable *)
+    gimp_item_duplicate (GIMP_ITEM (viewable),
+                         G_TYPE_FROM_INSTANCE (viewable),
+                         TRUE);
 
   if (GIMP_IS_VIEWABLE (new_viewable))
     {

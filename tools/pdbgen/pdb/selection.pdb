@@ -370,9 +370,9 @@ HELP
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
     {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
-	                               G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                       TRUE);
+      new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                                                       G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                                       FALSE));
       gimp_channel_combine_mask (new_channel,
 				 channel,
 				 operation, 

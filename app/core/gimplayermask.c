@@ -45,8 +45,12 @@ enum
 };
 
 
-static void   gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
-static void   gimp_layer_mask_init       (GimpLayerMask      *layer_mask);
+static void       gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
+static void       gimp_layer_mask_init       (GimpLayerMask      *layer_mask);
+
+static GimpItem * gimp_layer_mask_duplicate  (GimpItem           *item,
+                                              GType               new_type,
+                                              gboolean            add_alpha);
 
 
 static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
@@ -85,6 +89,10 @@ gimp_layer_mask_get_type (void)
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 {
+  GimpItemClass *item_class;
+
+  item_class = GIMP_ITEM_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
@@ -113,6 +121,8 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
+
+  item_class->duplicate = gimp_layer_mask_duplicate;
 }
 
 static void
@@ -122,6 +132,33 @@ gimp_layer_mask_init (GimpLayerMask *layer_mask)
   layer_mask->apply_mask = TRUE;
   layer_mask->edit_mask  = TRUE;
   layer_mask->show_mask  = FALSE;
+}
+
+static GimpItem *
+gimp_layer_mask_duplicate (GimpItem *item,
+                           GType     new_type,
+                           gboolean  add_alpha)
+{
+  GimpLayerMask *layer_mask;
+  GimpItem      *new_item;
+  GimpLayerMask *new_layer_mask;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_LAYER_MASK (new_item))
+    return new_item;
+
+  layer_mask     = GIMP_LAYER_MASK (item);
+  new_layer_mask = GIMP_LAYER_MASK (new_item);
+
+  new_layer_mask->apply_mask = layer_mask->apply_mask;
+  new_layer_mask->edit_mask  = layer_mask->edit_mask;
+  new_layer_mask->show_mask  = layer_mask->show_mask;
+
+  return item;
 }
 
 GimpLayerMask *
@@ -150,25 +187,6 @@ gimp_layer_mask_new (GimpImage     *gimage,
   GIMP_CHANNEL (layer_mask)->y2          = height;
 
   return layer_mask;
-}
-
-GimpLayerMask *
-gimp_layer_mask_copy (const GimpLayerMask *layer_mask)
-{
-  GimpLayerMask *new_layer_mask;
-
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
-
-  new_layer_mask =
-    GIMP_LAYER_MASK (gimp_channel_copy (GIMP_CHANNEL (layer_mask),
-                                        GIMP_TYPE_LAYER_MASK,
-                                        FALSE));
-
-  new_layer_mask->apply_mask = layer_mask->apply_mask;
-  new_layer_mask->edit_mask  = layer_mask->edit_mask;
-  new_layer_mask->show_mask  = layer_mask->show_mask;
-
-  return new_layer_mask;
 }
 
 void

@@ -1,3 +1,37 @@
+2003-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added new virtual function duplicate()
+	as replacement for all gimp_*_copy() functions.
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimplayer.[ch]
+	* app/core/gimplayermask.[ch]
+	* app/vectors/gimpvectors.[ch]: replaced public copy() functions
+	by duplicate() implementations.
+
+	* app/text/gimptextlayer.c: added a duplicate() implementation.
+
+	* app/widgets/gimpitemlistview.[ch]: removed the "copy_item_func"
+	and simply call gimp_item_duplicate().
+
+	* app/undo.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-qmask.c
+	* app/gui/channels-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
 2003-02-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/uniteditor.c: argh, the "cell-background-gdk"

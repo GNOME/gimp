@@ -39,9 +39,6 @@ typedef void            (* GimpAddItemFunc)      (GimpImage          *gimage,
                                                   gint                index);
 typedef void            (* GimpRemoveItemFunc)   (GimpImage          *gimage,
                                                   GimpViewable       *viewable);
-typedef GimpViewable  * (* GimpCopyItemFunc)     (GimpViewable       *viewable,
-                                                  GType               new_type,
-                                                  gboolean            add_alpha);
 typedef GimpViewable  * (* GimpConvertItemFunc)  (GimpViewable       *viewable,
                                                   GimpImage          *dest_gimage);
 
@@ -77,7 +74,6 @@ struct _GimpItemListView
   GimpReorderItemFunc    reorder_item_func;
   GimpAddItemFunc        add_item_func;
   GimpRemoveItemFunc     remove_item_func;
-  GimpCopyItemFunc       copy_item_func;
   GimpConvertItemFunc    convert_item_func;
 
   GimpNewItemFunc        new_item_func;
@@ -115,7 +111,6 @@ GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
                                           GimpReorderItemFunc   reorder_item_func,
                                           GimpAddItemFunc       add_item_func,
                                           GimpRemoveItemFunc    remove_item_func,
-                                          GimpCopyItemFunc      copy_item_func,
                                           GimpConvertItemFunc   convert_item_func,
                                           GimpNewItemFunc       new_item_func,
                                           GimpEditItemFunc      edit_item_func,

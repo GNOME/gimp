@@ -63,14 +63,18 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_drawable_class_init         (GimpDrawableClass *klass);
-static void    gimp_drawable_init               (GimpDrawable      *drawable);
+static void       gimp_drawable_class_init         (GimpDrawableClass *klass);
+static void       gimp_drawable_init               (GimpDrawable      *drawable);
 
-static void    gimp_drawable_finalize           (GObject           *object);
+static void       gimp_drawable_finalize           (GObject           *object);
 
-static gsize   gimp_drawable_get_memsize        (GimpObject        *object);
+static gsize      gimp_drawable_get_memsize        (GimpObject        *object);
 
-static void    gimp_drawable_invalidate_preview (GimpViewable      *viewable);
+static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
+
+static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
+                                                    GType              new_type,
+                                                    gboolean           add_alpha);
 
 
 /*  private variables  */
@@ -114,10 +118,12 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
   viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -136,6 +142,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
   viewable_class->get_preview        = gimp_drawable_get_preview;
+
+  item_class->duplicate              = gimp_drawable_duplicate;
 
   klass->visibility_changed          = NULL;
 }
@@ -213,6 +221,64 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
+static GimpItem *
+gimp_drawable_duplicate (GimpItem *item,
+                         GType     new_type,
+                         gboolean  add_alpha)
+{
+  GimpDrawable  *drawable;
+  GimpItem      *new_item;
+  GimpDrawable  *new_drawable;
+  GimpImageType  new_image_type;
+  PixelRegion    srcPR;
+  PixelRegion    destPR;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_DRAWABLE (new_item))
+    return new_item;
+
+  drawable     = GIMP_DRAWABLE (item);
+  new_drawable = GIMP_DRAWABLE (new_item);
+
+  if (add_alpha)
+    new_image_type = gimp_drawable_type_with_alpha (drawable);
+  else
+    new_image_type = gimp_drawable_type (drawable);
+
+  gimp_drawable_configure (new_drawable,
+                           gimp_item_get_image (GIMP_ITEM (drawable)),
+                           drawable->offset_x,
+                           drawable->offset_y,
+                           gimp_drawable_width (drawable),
+                           gimp_drawable_height (drawable),
+                           new_image_type,
+                           GIMP_OBJECT (new_drawable)->name);
+
+  new_drawable->visible = drawable->visible;
+
+  pixel_region_init (&srcPR, drawable->tiles, 
+                     0, 0, 
+                     gimp_drawable_width (drawable),
+                     gimp_drawable_height (drawable),
+                     FALSE);
+  pixel_region_init (&destPR, new_drawable->tiles,
+                     0, 0, 
+                     gimp_drawable_width (new_drawable),
+                     gimp_drawable_height (new_drawable),
+                     TRUE);
+
+  if (new_image_type == drawable->type)
+    copy_region (&srcPR, &destPR);
+  else
+    add_alpha_region (&srcPR, &destPR);
+
+  return new_item;
+}
+
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImage     *gimage,
@@ -249,58 +315,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
-}
-
-GimpDrawable *
-gimp_drawable_copy (GimpDrawable *drawable,
-                    GType         new_type,
-                    gboolean      add_alpha)
-{
-  GimpDrawable  *new_drawable;
-  GimpImageType  new_image_type;
-  PixelRegion    srcPR;
-  PixelRegion    destPR;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
-
-  new_drawable = GIMP_DRAWABLE (gimp_item_copy (GIMP_ITEM (drawable),
-                                                new_type,
-                                                add_alpha));
-
-  if (add_alpha)
-    new_image_type = gimp_drawable_type_with_alpha (drawable);
-  else
-    new_image_type = gimp_drawable_type (drawable);
-
-  gimp_drawable_configure (new_drawable,
-                           gimp_item_get_image (GIMP_ITEM (drawable)),
-                           drawable->offset_x,
-                           drawable->offset_y,
-                           gimp_drawable_width (drawable),
-                           gimp_drawable_height (drawable),
-                           new_image_type,
-                           GIMP_OBJECT (new_drawable)->name);
-
-  new_drawable->visible = drawable->visible;
-
-  pixel_region_init (&srcPR, drawable->tiles, 
-                     0, 0, 
-                     gimp_drawable_width (drawable),
-                     gimp_drawable_height (drawable),
-                     FALSE);
-  pixel_region_init (&destPR, new_drawable->tiles,
-                     0, 0, 
-                     gimp_drawable_width (new_drawable),
-                     gimp_drawable_height (new_drawable),
-                     TRUE);
-
-  if (new_image_type == drawable->type)
-    copy_region (&srcPR, &destPR);
-  else
-    add_alpha_region (&srcPR, &destPR);
-
-  return new_drawable;
 }
 
 void

@@ -202,7 +202,7 @@ HELP
 	  desc => 'The newly copied channel', alias => 'copy' }
     );
 
-    %invoke = ( code => 'success = (copy = gimp_channel_copy (channel, G_TYPE_FROM_INSTANCE (channel), TRUE)) != NULL;' );
+    %invoke = ( code => 'success = (copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel), G_TYPE_FROM_INSTANCE (channel), FALSE))) != NULL;' );
 }
 
 sub channel_delete {

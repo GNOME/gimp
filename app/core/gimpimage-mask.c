@@ -632,7 +632,9 @@ gimp_image_mask_save (GimpImage *gimage)
 
   mask = gimp_image_get_mask (gimage);
 
-  new_channel = gimp_channel_copy (mask, G_TYPE_FROM_INSTANCE (mask), FALSE);
+  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (mask),
+                                                   G_TYPE_FROM_INSTANCE (mask),
+                                                   FALSE));
 
   /*  saved selections are not visible by default  */
   gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE);

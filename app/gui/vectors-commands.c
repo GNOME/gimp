@@ -122,9 +122,9 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
   GimpVectors *new_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  new_vectors = gimp_vectors_copy (active_vectors,
-                                   G_TYPE_FROM_INSTANCE (active_vectors),
-                                   TRUE);
+  new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (active_vectors),
+                                                   G_TYPE_FROM_INSTANCE (active_vectors),
+                                                   TRUE));
   gimp_image_add_vectors (gimage, new_vectors, -1);
   gimp_image_flush (gimage);
 }

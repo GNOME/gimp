@@ -32,6 +32,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "config/gimpconfig.h"
+
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
@@ -39,20 +41,23 @@
 #include "gimptextlayout.h"
 
 
-static void      gimp_text_layer_class_init    (GimpTextLayerClass *klass);
-static void      gimp_text_layer_init          (GimpTextLayer      *layer);
-static void      gimp_text_layer_dispose       (GObject            *object);
+static void       gimp_text_layer_class_init    (GimpTextLayerClass *klass);
+static void       gimp_text_layer_init          (GimpTextLayer      *layer);
+static void       gimp_text_layer_dispose       (GObject            *object);
 
-static gsize     gimp_text_layer_get_memsize   (GimpObject         *object);
-static TempBuf * gimp_text_layer_get_preview   (GimpViewable       *viewable,
-						gint                width,
-						gint                height);
+static gsize      gimp_text_layer_get_memsize   (GimpObject         *object);
+static TempBuf  * gimp_text_layer_get_preview   (GimpViewable       *viewable,
+                                                 gint                width,
+                                                 gint                height);
+static GimpItem * gimp_text_layer_duplicate     (GimpItem           *item,
+                                                 GType               new_type,
+                                                 gboolean            add_alpha);
 
-static void      gimp_text_layer_notify_text   (GimpTextLayer      *layer);
-static gboolean  gimp_text_layer_idle_render   (GimpTextLayer      *layer);
-static gboolean  gimp_text_layer_render        (GimpTextLayer      *layer);
-static void      gimp_text_layer_render_layout (GimpTextLayer      *layer,
-                                                GimpTextLayout     *layout);
+static void       gimp_text_layer_notify_text   (GimpTextLayer      *layer);
+static gboolean   gimp_text_layer_idle_render   (GimpTextLayer      *layer);
+static gboolean   gimp_text_layer_render        (GimpTextLayer      *layer);
+static void       gimp_text_layer_render_layout (GimpTextLayer      *layer,
+                                                 GimpTextLayout     *layout);
 
 
 static GimpLayerClass *parent_class = NULL;
@@ -92,18 +97,22 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
   viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose  = gimp_text_layer_dispose;
+  object_class->dispose          = gimp_text_layer_dispose;
 
   gimp_object_class->get_memsize = gimp_text_layer_get_memsize;
 
-  viewable_class->get_preview = gimp_text_layer_get_preview;
+  viewable_class->get_preview    = gimp_text_layer_get_preview;
+
+  item_class->duplicate          = gimp_text_layer_duplicate;
 }
 
 static void
@@ -131,6 +140,64 @@ gimp_text_layer_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static gsize
+gimp_text_layer_get_memsize (GimpObject *object)
+{
+  GimpTextLayer *text_layer;
+  gsize          memsize = 0;
+
+  text_layer = GIMP_TEXT_LAYER (object);
+
+  if (text_layer->text)
+    {
+      memsize += sizeof (GimpText);
+
+      if (text_layer->text->text)
+	memsize += strlen (text_layer->text->text);
+    }
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static TempBuf *
+gimp_text_layer_get_preview (GimpViewable *viewable,
+			     gint          width,
+			     gint          height)
+{
+  return GIMP_VIEWABLE_CLASS (parent_class)->get_preview (viewable,
+							  width, height);
+}
+
+static GimpItem *
+gimp_text_layer_duplicate (GimpItem *item,
+                           GType     new_type,
+                           gboolean  add_alpha)
+{
+  GimpTextLayer *text_layer;
+  GimpItem      *new_item;
+  GimpTextLayer *new_text_layer;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_TEXT_LAYER (new_item))
+    return new_item;
+
+  text_layer     = GIMP_TEXT_LAYER (item);
+  new_text_layer = GIMP_TEXT_LAYER (new_item);
+
+  new_text_layer->text =
+    GIMP_TEXT (gimp_config_duplicate (G_OBJECT (text_layer->text)));
+
+  g_signal_connect_object (new_text_layer->text, "notify",
+                           G_CALLBACK (gimp_text_layer_notify_text),
+                           new_text_layer, G_CONNECT_SWAPPED);
+
+  return new_item;
 }
 
 GimpLayer *
@@ -174,34 +241,6 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
   
   return layer->text;
-}
-
-static gsize
-gimp_text_layer_get_memsize (GimpObject *object)
-{
-  GimpTextLayer *text_layer;
-  gsize          memsize = 0;
-
-  text_layer = GIMP_TEXT_LAYER (object);
-
-  if (text_layer->text)
-    {
-      memsize += sizeof (GimpText);
-
-      if (text_layer->text->text)
-	memsize += strlen (text_layer->text->text);
-    }
-
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
-}
-
-static TempBuf *
-gimp_text_layer_get_preview (GimpViewable *viewable,
-			     gint          width,
-			     gint          height)
-{
-  return GIMP_VIEWABLE_CLASS (parent_class)->get_preview (viewable,
-							  width, height);
 }
 
 static void

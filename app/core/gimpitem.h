@@ -49,7 +49,13 @@ struct _GimpItemClass
 {
   GimpViewableClass  parent_class;
 
-  void (* removed) (GimpItem *item);
+  /*  signals  */
+  void       (* removed)   (GimpItem *item);
+
+  /*  virtual functions  */
+  GimpItem * (* duplicate) (GimpItem *item,
+                            GType     new_type,
+                            gboolean  add_alpha);
 };
 
 
@@ -60,7 +66,7 @@ void            gimp_item_removed         (GimpItem       *item);
 void            gimp_item_configure       (GimpItem       *item,
                                            GimpImage      *gimage,
                                            const gchar    *name);
-GimpItem      * gimp_item_copy            (GimpItem       *item,
+GimpItem      * gimp_item_duplicate       (GimpItem       *item,
                                            GType           new_type,
                                            gboolean        add_alpha);
 

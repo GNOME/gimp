@@ -60,20 +60,24 @@ enum
 };
 
 
-static void    gimp_layer_class_init         (GimpLayerClass     *klass);
-static void    gimp_layer_init               (GimpLayer          *layer);
+static void       gimp_layer_class_init         (GimpLayerClass     *klass);
+static void       gimp_layer_init               (GimpLayer          *layer);
 
-static void    gimp_layer_finalize           (GObject            *object);
+static void       gimp_layer_finalize           (GObject            *object);
 
-static gsize   gimp_layer_get_memsize        (GimpObject         *object);
+static gsize      gimp_layer_get_memsize        (GimpObject         *object);
 
-static void    gimp_layer_invalidate_preview (GimpViewable       *viewable);
+static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 
-static void    gimp_layer_transform_color    (GimpImage          *gimage,
-                                              PixelRegion        *layerPR,
-                                              PixelRegion        *bufPR,
-                                              GimpDrawable       *drawable,
-                                              GimpImageBaseType   type);
+static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
+                                                 GType               new_type,
+                                                 gboolean            add_alpha);
+
+static void       gimp_layer_transform_color    (GimpImage          *gimage,
+                                                 PixelRegion        *layerPR,
+                                                 PixelRegion        *bufPR,
+                                                 GimpDrawable       *drawable,
+                                                 GimpImageBaseType   type);
 
 
 static guint  layer_signals[LAST_SIGNAL] = { 0 };
@@ -115,10 +119,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
   GObjectClass      *object_class;
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
+  GimpItemClass     *item_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
   viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  item_class        = GIMP_ITEM_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -172,6 +178,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
   gimp_object_class->get_memsize     = gimp_layer_get_memsize;
 
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
+
+  item_class->duplicate              = gimp_layer_duplicate;
 
   klass->opacity_changed             = NULL;
   klass->mode_changed                = NULL;
@@ -263,6 +271,46 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
     floating_sel_invalidate (layer);
 }
 
+static GimpItem *
+gimp_layer_duplicate (GimpItem *item,
+                      GType     new_type,
+                      gboolean  add_alpha)
+{
+  GimpLayer *layer;
+  GimpItem  *new_item;
+  GimpLayer *new_layer;
+
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
+                                                        add_alpha);
+
+  if (! GIMP_IS_LAYER (new_item))
+    return new_item;
+
+  layer     = GIMP_LAYER (item);
+  new_layer = GIMP_LAYER (new_item);
+
+  new_layer->linked         = layer->linked;
+  new_layer->preserve_trans = layer->preserve_trans;
+
+  new_layer->mode           = layer->mode;
+  new_layer->opacity        = layer->opacity;
+
+  /*  duplicate the layer mask if necessary  */
+  if (layer->mask)
+    {
+      new_layer->mask =
+        GIMP_LAYER_MASK (gimp_item_duplicate (GIMP_ITEM (layer->mask),
+                                              G_TYPE_FROM_INSTANCE (layer->mask),
+                                              FALSE));
+
+      gimp_layer_mask_set_layer (new_layer->mask, new_layer);
+    }
+
+  return new_item;
+}
+
 static void
 gimp_layer_transform_color (GimpImage         *gimage,
 			    PixelRegion       *layerPR,
@@ -334,37 +382,6 @@ gimp_layer_new (GimpImage            *gimage,
   layer->mode    = mode;
 
   return layer;
-}
-
-GimpLayer *
-gimp_layer_copy (const GimpLayer *layer,
-                 GType            new_type,
-		 gboolean         add_alpha)
-{
-  GimpLayer *new_layer;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_LAYER), NULL);
-
-  new_layer = GIMP_LAYER (gimp_drawable_copy (GIMP_DRAWABLE (layer),
-                                              new_type,
-                                              add_alpha));
-
-  new_layer->linked         = layer->linked;
-  new_layer->preserve_trans = layer->preserve_trans;
-
-  new_layer->mode           = layer->mode;
-  new_layer->opacity        = layer->opacity;
-
-  /*  duplicate the layer mask if necessary  */
-  if (layer->mask)
-    {
-      new_layer->mask = gimp_layer_mask_copy (layer->mask);
-
-      gimp_layer_mask_set_layer (new_layer->mask, new_layer);
-    }
-
-  return new_layer;
 }
 
 /**
@@ -460,18 +477,9 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   src_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
   new_base_type = gimp_image_base_type (dest_image);
 
-  if (GIMP_IS_LAYER (drawable))
-    {
-      new_drawable = GIMP_DRAWABLE (gimp_layer_copy (GIMP_LAYER (drawable),
-                                                     G_TYPE_FROM_INSTANCE (drawable),
+  new_drawable = GIMP_DRAWABLE (gimp_item_duplicate (GIMP_ITEM (drawable),
+                                                     GIMP_TYPE_LAYER,
                                                      TRUE));
-    }
-  else
-    {
-      new_drawable = gimp_drawable_copy (drawable,
-                                         GIMP_TYPE_LAYER,
-                                         TRUE);
-    }
 
   if (src_base_type != new_base_type)
     {

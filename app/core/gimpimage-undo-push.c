@@ -2706,9 +2706,9 @@ undo_push_vectors_mod (GimpImage   *gimage,
       new->free_func = undo_free_vectors_mod;
 
       vmu->vectors      = vectors;
-      vmu->undo_vectors = gimp_vectors_copy (vectors,
-                                             G_TYPE_FROM_INSTANCE (vectors),
-                                             FALSE);
+      vmu->undo_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                                             G_TYPE_FROM_INSTANCE (vectors),
+                                                             FALSE));
 
       return TRUE;
     }
@@ -2729,9 +2729,9 @@ undo_pop_vectors_mod (GimpImage *gimage,
 
   temp = vmu->undo_vectors;
 
-  vmu->undo_vectors = gimp_vectors_copy (vmu->vectors,
-                                         G_TYPE_FROM_INSTANCE (vmu->vectors),
-                                         FALSE);
+  vmu->undo_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vmu->vectors),
+                                                         G_TYPE_FROM_INSTANCE (vmu->vectors),
+                                                         FALSE));
 
   gimp_vectors_copy_strokes (temp, vmu->vectors);
 

@@ -71,9 +71,6 @@ void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  gint                height,
 						  GimpImageType       type,
 						  const gchar        *name);
-GimpDrawable  * gimp_drawable_copy               (GimpDrawable       *drawable,
-                                                  GType               new_type,
-                                                  gboolean            add_alpha);
 
 void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                x,

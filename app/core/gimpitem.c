@@ -54,13 +54,17 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_item_class_init   (GimpItemClass *klass);
-static void    gimp_item_init         (GimpItem      *item);
+static void       gimp_item_class_init     (GimpItemClass *klass);
+static void       gimp_item_init           (GimpItem      *item);
 
-static void    gimp_item_finalize     (GObject       *object);
+static void       gimp_item_finalize       (GObject       *object);
 
-static void    gimp_item_name_changed (GimpObject    *object);
-static gsize   gimp_item_get_memsize  (GimpObject    *object);
+static void       gimp_item_name_changed   (GimpObject    *object);
+static gsize      gimp_item_get_memsize    (GimpObject    *object);
+
+static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
+                                            GType          new_type,
+                                            gboolean       add_alpha);
 
 
 /*  private variables  */
@@ -124,6 +128,7 @@ gimp_item_class_init (GimpItemClass *klass)
   gimp_object_class->get_memsize  = gimp_item_get_memsize;
 
   klass->removed                  = NULL;
+  klass->duplicate                = gimp_item_real_duplicate;
 }
 
 static void
@@ -271,39 +276,10 @@ gimp_item_get_memsize (GimpObject *object)
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
-void
-gimp_item_removed (GimpItem *item)
-{
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  g_signal_emit (item, gimp_item_signals[REMOVED], 0);
-}
-
-void
-gimp_item_configure (GimpItem    *item,
-                     GimpImage   *gimage,
-                     const gchar *name)
-{
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (item->ID == 0);
-  g_return_if_fail (item->gimage == 0);
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  item->ID = gimage->gimp->next_item_ID++;
-
-  g_hash_table_insert (gimage->gimp->item_table,
-		       GINT_TO_POINTER (item->ID),
-		       item);
-
-  gimp_item_set_image (item, gimage);
-
-  gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
-}
-
-GimpItem *
-gimp_item_copy (GimpItem *item,
-                GType     new_type,
-                gboolean  add_alpha)
+static GimpItem *
+gimp_item_real_duplicate (GimpItem *item,
+                          GType     new_type,
+                          gboolean  add_alpha)
 {
   GimpItem *new_item;
   gchar    *new_name;
@@ -350,6 +326,47 @@ gimp_item_copy (GimpItem *item,
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
   return new_item;
+}
+
+void
+gimp_item_removed (GimpItem *item)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  g_signal_emit (item, gimp_item_signals[REMOVED], 0);
+}
+
+void
+gimp_item_configure (GimpItem    *item,
+                     GimpImage   *gimage,
+                     const gchar *name)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (item->ID == 0);
+  g_return_if_fail (item->gimage == 0);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  item->ID = gimage->gimp->next_item_ID++;
+
+  g_hash_table_insert (gimage->gimp->item_table,
+		       GINT_TO_POINTER (item->ID),
+		       item);
+
+  gimp_item_set_image (item, gimage);
+
+  gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
+}
+
+GimpItem *
+gimp_item_duplicate (GimpItem *item,
+                     GType     new_type,
+                     gboolean  add_alpha)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (item->gimage), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
+
+  return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type, add_alpha);
 }
 
 gint

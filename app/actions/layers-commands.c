@@ -200,9 +200,9 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
   GimpLayer *new_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  new_layer = gimp_layer_copy (active_layer,
-                               G_TYPE_FROM_INSTANCE (active_layer),
-                               TRUE);
+  new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (active_layer),
+                                               G_TYPE_FROM_INSTANCE (active_layer),
+                                               TRUE));
   gimp_image_add_layer (gimage, new_layer, -1);
 
   gimp_image_flush (gimage);

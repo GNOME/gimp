@@ -100,7 +100,9 @@ gimp_image_duplicate (GimpImage *gimage)
     {
       layer = (GimpLayer *) list->data;
 
-      new_layer = gimp_layer_copy (layer, G_TYPE_FROM_INSTANCE (layer), FALSE);
+      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                                   G_TYPE_FROM_INSTANCE (layer),
+                                                   FALSE));
 
       gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
 
@@ -135,8 +137,10 @@ gimp_image_duplicate (GimpImage *gimage)
     {
       channel = (GimpChannel *) list->data;
  
-      new_channel = gimp_channel_copy (channel, G_TYPE_FROM_INSTANCE (channel),
-                                       TRUE);
+      new_channel =
+        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
+                                           G_TYPE_FROM_INSTANCE (channel),
+                                           FALSE));
 
       gimp_item_set_image (GIMP_ITEM (new_channel), new_gimage);
 
