@@ -1,0 +1,2265 @@
+# Gimp-script-fu.HEAD.pot in Vietnamese.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# T.M.Thanh <tmthanh@yahoo.com>, 2002.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gimp-scriptfu for Gnome 2.x\n"
+"POT-Creation-Date: 2002-07-06 01:52+0200\n"
+"PO-Revision-Date: 2002-07-20 15:36+0700\n"
+"Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
+"Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plug-ins/script-fu/script-fu-console.c:143
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:170
+msgid "Script-Fu Console"
+msgstr "Script-Fu Console"
+
+#: plug-ins/script-fu/script-fu-console.c:194
+msgid "SIOD Output"
+msgstr "SIOD Output"
+
+#. The current command
+#: plug-ins/script-fu/script-fu-console.c:265
+msgid "Current Command"
+msgstr "Lệnh Hiện Thời"
+
+#: plug-ins/script-fu/script-fu-console.c:285
+msgid "Browse..."
+msgstr "Duyệt..."
+
+#: plug-ins/script-fu/script-fu-console.c:581
+msgid "Unable to open a stream on the SIOD output pipe"
+msgstr "Không thể mở một stream trên SIOD output pipe"
+
+#: plug-ins/script-fu/script-fu-console.c:587
+msgid "Unable to open the SIOD output pipe"
+msgstr "Không thể mở SIOD output pipe"
+
+#: plug-ins/script-fu/script-fu-console.c:632
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr ""
+
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1195
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1235
+msgid "About"
+msgstr "Nói về"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-scripts.c:1245
+msgid "Script Arguments"
+msgstr "Đối số của Script"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1268
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1315
+msgid "Script-Fu Color Selection"
+msgstr "Chọn Màu của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1398
+msgid "Script-Fu File Selection"
+msgstr "Chọn Tập Tin của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1403
+msgid "Script-Fu Folder Selection"
+msgstr "Chọn Thư Mục của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1438
+msgid "Script-fu Pattern Selection"
+msgstr "Chọn Mẫu của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1445
+msgid "Script-Fu Gradient Selection"
+msgstr "Chọn Độ Dốc của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1453
+msgid "Script-Fu Brush Selection"
+msgstr "Chọn Bút Vẽ của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1661
+msgid ""
+"At least one font you've choosen is invalid.\n"
+"Please check your settings.\n"
+msgstr ""
+"Có ít nhất một phông được chọn không hợp lệ.\n"
+"Hãy kiểm tra các thiết lập của bạn.\n"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/script-fu/script-fu-scripts.c:1961
+msgid "Author:"
+msgstr "Tác giả:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/script-fu/script-fu-scripts.c:1967
+msgid "Copyright:"
+msgstr "Bản quyền:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/script-fu/script-fu-scripts.c:1973
+msgid "Date:"
+msgstr "Ngày:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1981
+msgid "Image Types:"
+msgstr "Kiểu Ảnh:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2122
+msgid "Script-Fu Font Selection"
+msgstr "Chọn Phông của Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2192
+#, c-format
+msgid ""
+"Script-Fu Error while executing\n"
+" %s\n"
+"%s"
+msgstr ""
+"Lỗi Script-Fu khi thực thi\n"
+" %s\n"
+"%s"
+
+#: plug-ins/script-fu/script-fu-server.c:568
+msgid "Script-Fu Server Options"
+msgstr "Tùy Chọn Máy Chủ Script-Fu"
+
+#: plug-ins/script-fu/script-fu-server.c:595
+msgid "Server Port:"
+msgstr "Cổng Máy Chủ:"
+
+#: plug-ins/script-fu/script-fu-server.c:601
+msgid "Server Logfile:"
+msgstr "Logfile của Máy Chủ:"
+
+#: plug-ins/script-fu/script-fu.c:127
+msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Console..."
+
+#: plug-ins/script-fu/script-fu.c:152
+msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Máy chủ..."
+
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
+msgid "Re-read all available scripts"
+msgstr "Đọc lại toàn bộ các script đang có"
+
+#: plug-ins/script-fu/script-fu.c:281
+msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Làm tươi lại"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+msgid "DB Browser"
+msgstr "Trình Duyệt DB"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+msgid "Search by _Name"
+msgstr "Tìm kiếm theo Tên"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+msgid "Search by _Blurb"
+msgstr "Tìm kiếm theo Lời _giới thiệu"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+msgid "_Search:"
+msgstr "Tìm _Kiếm:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+msgid "Name:"
+msgstr "Tên:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+msgid "Blurb:"
+msgstr "Lời giới thiệu:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+msgid "In:"
+msgstr "Trong:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+msgid "Out:"
+msgstr "Ngoài:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+msgid "Help:"
+msgstr "Trợ giúp:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
+msgstr "Đang tìm theo Tên - Hãy đợi"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
+msgstr "Đang tìm theo Lời giới thiệu - hãy đợi"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+msgid "Searching - please wait"
+msgstr "Đang tìm kiếm - hãy đợi"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr "Không có kết quả"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Ảnh>/Script-Fu/Trình hoạt họa/Phàn chọn làm Ảnh hoạt hoạ..."
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:2
+msgid "Anim-Filter for all Copies"
+msgstr "Trình lọc hoạt cảnh cho mọi Bản Sao"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:3
+msgid "Fill with BG Color"
+msgstr "Tô bằng Màu BG"
+
+#: plug-ins/gap/sel-to-anim-img.scm.h:4
+msgid "Number of Copies"
+msgstr "Số Bản Sao"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Hình 3D..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Hình 3D..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Bumpmap (Alpha Layer) Blur Radius"
+msgstr "Bumpmap (Lớp Alpha) Blur Radius"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default Bumpmap Settings"
+msgstr "Thiết lập Bumpmap Mặc định"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Phông"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font Size (pixels)"
+msgstr "Cỡ Phông (theo pixel)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+msgid "Outline Blur Radius"
+msgstr "Outline Blur Radius"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Mẫu"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+msgid "Shadow Blur Radius"
+msgstr "Shadow Blur Radius"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X Offset"
+msgstr "Shadow X Offset"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y Offset"
+msgstr "Shadow Y Offset"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Text"
+msgstr "Văn bản"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Mẫu/3D Truchet..."
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Background Color"
+msgstr "Màu Nền"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Block Size"
+msgstr "Kích Cỡ Khối"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "End Blend"
+msgstr "Kết thúc Blend"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X Tiles"
+msgstr "Số lượng Tile X"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y Tiles"
+msgstr "Số lượng Tile Y"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+msgid "Start Blend"
+msgstr "Chạy Blend"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+msgid "Supersample"
+msgstr "Siêu mẫu"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "Thickness"
+msgstr "Độ Dày"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Ảnh>/Script-Fu/Trang trí/Thêm Góc xiên..."
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep Bump Layer"
+msgstr "Giữ lớp Bật lên"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+msgid "Work on Copy"
+msgstr "Làm việc trên Bản Sao"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Ảnh>/Script-Fu/Trang trí/Thêm Đường Viền..."
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Border Color"
+msgstr "Màu Viền"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X Size"
+msgstr "Kích cỡ X của đường viền"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y Size"
+msgstr "Kích cỡ Y của đường viền"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Delta Value on Color"
+msgstr "Giá trị Delta trên Màu"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Mũi tên..."
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Xuống"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten Image"
+msgstr "Làm phẳng Ảnh"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow Color"
+msgstr "Màu Sáng"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Trái"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Định Hướng"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Phải"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Kích cỡ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Lên"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Hrule..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar Height"
+msgstr "Chiều cao của Thanh"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar Length"
+msgstr "Chiều dài của Thanh"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Bullet..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "Tia"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+msgid "Glow Radius"
+msgstr "Tia rực rỡ"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Padding"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+msgid "Text Color"
+msgstr "Màu Văn Bản"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Ánh sáng Lạ..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Ánh sáng Lạ..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+msgid "Glow Size (pixels * 4)"
+msgstr "Kích cỡ Ánh sáng (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Neon Lạ..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Neon Lạ..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Fade Away"
+msgstr "Mờ dần đi"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+msgid "Number of Bands"
+msgstr "Số lượng Băng"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+msgid "Width of Bands"
+msgstr "Độ rộng của Băng"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of Gaps"
+msgstr "Độ rộng của Khe"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:1
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Ảnh>/Script-Fu/Tiện ích/ASCII cho Lớp Ảnh..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Tiện ích/ASCII cho Ảnh..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:5
+#, no-c-format
+msgid "Buffer Amount (% Height of Text)"
+msgstr "Số lượng Buffer (% Chiều cao của Văn bản)"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:6
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+msgid "Filename"
+msgstr "Tên Tập Tin"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+msgid "Transparent Background"
+msgstr "Nền Trong Suốt"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Basic I..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Basic I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Basic II..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Basic II..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Nút/Nút xiên góc đơn giản..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Bevel Width"
+msgstr "Độ rộng Góc xiên"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-Right color"
+msgstr "Màu dưới phải"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Được nhấn"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+msgid "Upper-Left color"
+msgstr "Màu trên trái"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Mẫu xiên góc/Mũi tên..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Mẫu góc xiên/Bullet..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Đường kính"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Trang Web Themes/Mẫu Góc Xiên/Nút..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Trang Web Themes/Mẫu Góc Xiên/Heading..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Trang Web Themes/Mẫu Góc Xiên/Hrule..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Cao"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Width"
+msgstr "Rộng"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Ảnh>/Script-Fu/Hoạt Cảnh/Blend..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Intermediate Frames"
+msgstr "Khung Trung Gian"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr "Được Loop"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Max. Blur Radius"
+msgstr "Tia Sáng Rực Rỡ Tối Đa"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Blended..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Blended..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend Mode"
+msgstr "Phương Thức Blend"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Custom Gradient"
+msgstr "Tùy Biến Độ Dốc"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "FG-BG-HSV"
+msgstr "FG-BG-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-RGB"
+msgstr "FG-BG-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-Transparent"
+msgstr "Độ Trong Suốt FG"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+msgid "Gradient"
+msgstr "Độ dốc"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+msgid "Offset (pixels)"
+msgstr "Offset (pixels)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Bovination..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Bovination..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+msgid "Spots density X"
+msgstr "Mật Độ Điểm X"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+msgid "Spots density Y"
+msgstr "Mật Độ Điểm Y"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add Glowing"
+msgstr "Thêm Rực Rỡ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After Glow"
+msgstr "Sau Rực Rỡ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid ""
+"Burn-In: Need two layers in total!\n"
+"        A foreground text layer with transparency\n"
+"        and a background layer."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Corona Width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout"
+msgstr "Giảm dần"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+msgid "Fadeout Width"
+msgstr "Giảm dần Chiều rộng"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr "Chuẩn bị cho GIF"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr "Tốc độ (pixels/khung)"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Mẫu/Camouflage..."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "Màu 1"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "Màu 2"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "Màu 3"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+msgid "Granularity"
+msgstr "Tính hạt"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Image Size"
+msgstr "Cỡ Ảnh"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+msgid "Smooth"
+msgstr "Mịn"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Carve White Areas"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Image to Carve"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+msgid "Background Image"
+msgstr "Ảnh Nền"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carve Raised Text"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+msgid "Padding Around Text"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Phấn..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Phấn..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Chalk Color"
+msgstr "Màu Phấn"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Blur Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Drop Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Fill BG with Pattern"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+msgid "Invert"
+msgstr "Xoay Ngược"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Keep Background"
+msgstr "Giữ Nền"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome Balance"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome Factor"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome Lightness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Chrome Saturation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+msgid "Chrome White Areas"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment Map"
+msgstr "Bản Đồ Môi Trường"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight Balance"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+msgid "Offsets (pixels * 2)"
+msgstr "Offsets (pixels * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Circuit Seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep Selection"
+msgstr "Giữ Phần Chọn"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No Background (only for separate layer)"
+msgstr "Không có Nền (chỉ cho lớp tách biệt)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify Mask Size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate Layer"
+msgstr "Lớp Tách Biệt"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "Góc Phương Vị"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid ""
+"Darken Only\n"
+"(Better, but only for Images with alot of White)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "Vết Bẩn"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+msgid "Outline Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Outline Size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+msgid "Effect Size (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
+msgid "<Image>/Edit/Copy Visible"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+msgid "Smooth Horizontally"
+msgstr "Mịn Ngang"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+msgid "Smooth Vertically"
+msgstr "Mịn Dọc"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+msgid "Spread"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+msgid "Threshold (Bigger 1<-->255 Smaller)"
+msgstr "Ngưỡng (Lớn hơn 1 <--> 255 Nhỏ hơn)"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow Resizing"
+msgstr "Cho Phép Đổi Kích Cỡ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Blur Radius"
+msgstr "Tia Mờ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+msgid "Color"
+msgstr "Màu"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "Offset X"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "Offset Y"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "Độ Mờ Đục"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Ảnh>/Script-Fu/Thuật giả kim/Xoá mọi hàng khác..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "Cột"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr "Xoá"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/Fill"
+msgstr "Xoá/Tô"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Chẵn"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/Odd"
+msgstr "Chẵn/Lẻ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "Tô bằng BG"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Lẻ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Hàng"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/Cols"
+msgstr "Hàng/Cột"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+msgid "Apply Generated Layermask"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+msgid "Border Size"
+msgstr "Kích cỡ Đường Viền"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+msgid "Clear Unselected Maskarea"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, no-c-format
+msgid "Fade From %"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, no-c-format
+msgid "Fade To   %"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+msgid "Use Growing Selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail Level"
+msgstr "Mức Độ Chi Tiết"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image Height"
+msgstr "Chiều Cao Ảnh"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image Width"
+msgstr "Bề Rộng Ảnh"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random Seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "Cân chỉnh X"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Cân chỉnh Y"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Tiện ích/Bản đồ Phông..."
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+msgid "Border"
+msgstr "Đường Viền"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Fonts"
+msgstr "Phông chữ"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Băng giá..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Băng giá..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Ảnh>/Script-Fu/Trang trí/Đường Viền Mờ Ảo..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add Shadow"
+msgstr "Thêm Bóng"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur Border"
+msgstr "Mờ Đường Viền"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow Weight (%)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "AutoCrop"
+msgstr "Tự động Xén"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark Color"
+msgstr "Màu Tối"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight Color"
+msgstr "Màu Nổi Bật"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index Image"
+msgstr "Màu Chỉ Mục"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of Colors"
+msgstr "Số Lượng Màu"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove Background"
+msgstr "Bỏ Nền"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-By-Color Threshold"
+msgstr "Ngưỡng chọn bằng màu"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow Color"
+msgstr "Màu bóng"
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Ảnh>/Script-Fu/Alpha cho Logo/Bóng nhoáng..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Logos/Bóng nhoáng..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend Gradient (Outline)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Blend Gradient (Text)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Pattern (Outline)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Pattern (Overlay)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (Text)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+msgid "Shadow"
+msgstr "Bóng"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
+msgid "Use Pattern Overlay"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+msgid "Use Pattern for Outline instead of Gradient"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+msgid "Use Pattern for Text instead of Gradient"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+msgid "Effect Size (pixels * 3)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+msgid "Bevel Height (Sharpness)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Border Size (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "Grids X"
+msgstr "Ô Kẻ X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Grids Y"
+msgstr "Ô Kẻ Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "BG Opacity"
+msgstr "Độ Đục BG"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+msgid "End X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "From Top-Left to Bottom-Right"
+msgstr "Từ Trái-Trên đến Phải-Dưới"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+msgid "Graph Scale"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+msgid "Start X"
+msgstr "Chạy X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start Y"
+msgstr "Chạy Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+msgid "Use Selection Bounds Instead of Belows"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame Color"
+msgstr "Màu Khung"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame Size"
+msgstr "Cỡ Khung"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Ảnh>/Script-Fu/Tiện ích/Hiển thị cấu trúc ảnh..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+msgid "Apply Layer Mask (or discard)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+msgid "Create New Image"
+msgstr "Tạo Ảnh Mới"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+msgid "Insert Layer Names"
+msgstr "Chèn Tên Lớp"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+msgid "Make New Background"
+msgstr "Tạo Nền Mới"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+msgid "Outer Border"
+msgstr "Khung Viền Bên Ngoài"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+msgid "Pad Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+msgid "Padding for Transparent Regions"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+msgid "Shear Length"
+msgstr "Độ dài Kéo Cắt"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+msgid "Space Between Layers"
+msgstr "Khoảng Trống Giữa Các Lớp"
+
+#: plug-ins/script-fu/scripts/land.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land Height"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea Depth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use Current Gradient"
+msgstr "Dùng Độ Dốc Hiện Thời"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Number of Lines"
+msgstr "Số Đường Kẻ"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Offset Radius"
+msgstr "Tia Offset"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Randomness"
+msgstr "Sự Ngẫu Nhiên"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Sharpness (degrees)"
+msgstr "Độ Sắc Nét (độ)"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
+msgid "Description"
+msgstr "Mô Tả"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+msgid "Spacing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create Shadow"
+msgstr "Tạo Bóng"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect Size (pixels * 5)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Cell Size (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Mật Độ (%)"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Ảnh>/Script-Fu/Trang trí/Ảnh chụp cũ..."
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+msgid "Defocus"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+msgid "Mottle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+msgid "Sepia"
+msgstr "Màu Nâu Đen"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Ảnh>/Script-Fu/Bóng/Phối cảnh..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Góc"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolate"
+msgstr "Nội Suy"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative Distance of Horizon"
+msgstr "Khoảng Cách Liên Quan của Đường Ngang"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative Length of Shadow"
+msgstr "Độ dài Liên quan của Bóng"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Ảnh>/Script-Fu/Thuật giả kim/Predator..."
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel Amount"
+msgstr "Số Pixel"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "Pixel hoá"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Hộp công cụ>/Xtns/Script-Fu/Nút/Nút Tròn..."
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower Color (Active)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not Pressed"
+msgstr "Không Nhấn"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not Pressed (Active)"
+msgstr "Không Nhấn (hoạt động)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round Ratio"
+msgstr "Tỷ lệ tròn"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text Color (Active)"
+msgstr "Màu văn bản (Hoạt động)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper Color (Active)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "Ứng Xử"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Tile"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of Frames"
+msgstr "Số lượng Khung"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Rippling Strength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add Background"
+msgstr "Thêm Nền"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+msgid "Add Drop-Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Edge Radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Ảnh>/Script-Fu/Chọn/Bút Vẽ..."
+
+#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Ảnh>/Script-Fu/Chọn/Ảnh"
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Ảnh>/Script-Fu/Chọn/Tròn..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:2
+msgid "Relative Radius"
+msgstr "Tia Liên quan"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font Color"
+msgstr "Màu Phông"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Số Lượng"
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+msgid "Sphere Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+msgid "Frames"
+msgstr "Khung"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+msgid "Index to n Colors (0 = Remain RGB)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+msgid "Turn from Left to Right"
+msgstr "Quay từ Trái sang Phải"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+msgid "Burst Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Effect Size (pixels * 30)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid "Effect Size (pixels * 4)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Whirl Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of Times to Whirl"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter Size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "Whirl Angle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Base Color"
+msgstr "Màu Cơ Bản"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge Only"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge Width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit Rate"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "Antialias"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill Angle"
+msgstr "Tô Góc"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Chạy Góc"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Ending Blend"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "Lục giác"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic Tile Type"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "Bát giác"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Vuông"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting Blend"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text Pattern"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur Horizontally"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur Type"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur Vertically"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:2
+msgid "Base Radius (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:3
+msgid "Erase before Draw"
+msgstr "Xoá sạch trước khi Vẽ"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:4
+msgid "Hue Rate"
+msgstr "Mức Màu Sắc"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:5
+msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:6
+msgid "Use Brush"
+msgstr "Dùng Bút Vẽ"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:7
+msgid "Wheel Radius (hypo < 0 < epi)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground Color"
+msgstr "Màu Tiền Cảnh"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "Mask Size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "Biên độ"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "Đổi Hướng"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "Bước sóng"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+msgid "Ribbon Spacing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Ribbon Width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow Darkness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow Depth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread Density"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread Intensity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread Length"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop Shadow Blur Radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop Shadow Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop Shadow Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop Shadow X Offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop Shadow Y Offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight X Offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight Y Offset"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:1
+msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:2
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:3
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:4
+msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:5
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:6
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:7
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:8
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:9
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:10
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:11
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:12
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:13
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:14
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:15
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:16
+msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+msgstr ""
+
+#: plug-ins/webbrowser/web-browser.scm.h:17
+msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+msgstr ""
+
