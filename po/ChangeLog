@@ -1,3 +1,9 @@
+2000-04-04  Sven Neumann  <sven@gimp.org>
+
+	* pl.po: corrected the polish translation file by running 
+	msgmerge on it. Zbigniew, it seems your version of msgmerge 
+	is broken. I have send you a mail about this a while ago...
+
 2000-04-04  Kjartan Maraas  <kmaraas@online.no>
 
 	* no.po: Updated Norwegian translation.
