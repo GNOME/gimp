@@ -34,7 +34,8 @@
 #include "gimpdockbook.h"
 
 
-#define GIMP_DOCK_MINIMAL_WIDTH 280
+#define GIMP_DOCK_MINIMAL_WIDTH    280
+#define GIMP_DOCK_SEPARATOR_HEIGHT 8
 
 
 static void        gimp_dock_class_init               (GimpDockClass  *klass);
@@ -122,7 +123,11 @@ gimp_dock_init (GimpDock *dock)
 
   dock->context = NULL;
 
+  gtk_window_set_title (GTK_WINDOW (dock), "Gimp");
+  gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
+  gimp_dialog_set_icon (GTK_WINDOW (dock));
+
   gtk_widget_set_usize (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  
   dock->main_vbox = gtk_vbox_new (FALSE, 0);
@@ -161,7 +166,7 @@ gimp_dock_separator_new (GimpDock *dock)
   GtkWidget *frame;
 
   event_box = gtk_event_box_new ();
-  gtk_widget_set_usize (event_box, -1, 8);
+  gtk_widget_set_usize (event_box, -1, GIMP_DOCK_SEPARATOR_HEIGHT);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);

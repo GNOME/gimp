@@ -1,3 +1,10 @@
+2001-05-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/menus.c: use the correct callback for opening L&C.
+
+	* app/widgets/gimpdock.c: set the window title, the WM name/class
+	and the icon.
+
 2001-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/general.[ch]: removed search_in_path() and the unused

@@ -470,7 +470,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/Layers  */
 
-  { { N_("/Layers/Layers, Channels & Paths..."), "<control>L", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:lc-dialog") },
+  { { N_("/Layers/Layers, Channels & Paths..."), "<control>L", dialogs_create_lc_cmd_callback, 0 },
     "dialogs/layers_and_channels.html", NULL },
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
@@ -538,7 +538,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/Dialogs  */
 
-  { { N_("/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:lc-dialog") },
+  { { N_("/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_create_lc_cmd_callback, 0 },
     "dialogs/layers_and_channels.html", NULL },
   { { N_("/Dialogs/Tool Options..."), NULL,
       dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:tool-options-dialog") },
