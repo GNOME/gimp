@@ -1,3 +1,8 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am (unused_symbols): added
+	file_open_location_dialog_show to make the scanner link again.
+
 2004-07-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
