@@ -261,10 +261,10 @@ color_picker_button_press (Tool           *tool,
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  info_dialog_add_label (color_picker_info, _("Index:"), index_buf);
-	  info_dialog_add_label (color_picker_info, _("Alpha:"), alpha_buf);
 	  info_dialog_add_label (color_picker_info, _("Red:"), red_buf);
 	  info_dialog_add_label (color_picker_info, _("Green:"), green_buf);
 	  info_dialog_add_label (color_picker_info, _("Blue:"), blue_buf);
+	  info_dialog_add_label (color_picker_info, _("Alpha:"), alpha_buf);
 	  info_dialog_add_label (color_picker_info, _("Hex Triplet"), hex_buf);
 	  break;
 
@@ -641,6 +641,7 @@ color_picker_info_update (Tool     *tool,
       switch (sample_type)
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
+	  g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
 	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
 	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
 	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
@@ -659,13 +660,13 @@ color_picker_info_update (Tool     *tool,
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
 	  g_snprintf (index_buf, MAX_INFO_BUF, "%d", col_value [4]);
+	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
+	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
+	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
 	  if (sample_type == INDEXEDA_GIMAGE)
 	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
 	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
-	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
-	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
 	  g_snprintf (hex_buf,   MAX_INFO_BUF, "#%.2x%.2x%.2x",
 		      col_value [RED_PIX],
 		      col_value [GREEN_PIX],

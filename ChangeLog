@@ -1,3 +1,8 @@
+Thu Mar  9 14:00:55 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/color_picker.c: for indexed images set Index in the info_window
+	to N/A if sample_merged or sample_average is active.
+
 Thu Mar  9 12:44:55 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpdrawable.c: gimp_drawable_get_color_at() now silently
