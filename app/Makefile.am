@@ -397,7 +397,7 @@ files:
 SUFFIXES = .gc .gh
 
 if WITH_GCG
-GCG = ../tools/gcg/gcg -I ../tools/gcg/gh
+GCG = ../tools/gcg/gcg -I$(srcdir) -I$(top_srcdir)/tools/gcg/gh
 GEN_CODE = colormap_dialog.c 
 if WITH_GNU_MAKE
 GEN_HEADER =$(subst .gc,.t.h,$(GCG_DEFS)) \
@@ -418,7 +418,7 @@ BUILT_SOURCES = $(GEN_CODE) $(GEN_HEADER)
 if ENABLE_GCG_DEPS
 if WITH_GNU_MAKE
  # dependency magic
-GCGMAKEDEPEND = ../tools/gcg/gcgmakedepend
+GCGMAKEDEPEND = $(top_srcdir)/tools/gcg/gcgmakedepend
 $(DEF_DEPS): .deps/%.d: %.gc
 	$(GCGMAKEDEPEND) $(DEF_INC) $< >$@
 # automake uses .P for .c files, we use .d for .gc files, should
