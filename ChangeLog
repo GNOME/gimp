@@ -1,3 +1,8 @@
+2002-10-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: applied a patch from Peter Kirchgessner
+	that fixes bug #78310 (wrong bounding box when exporting to EPS).
+
 2002-09-26  Jacob Berkman  <jacob@ximian.com>
 
 	* modules/Makefile.am (CPPFLAGS): rename to AM_CPPFLAGS
