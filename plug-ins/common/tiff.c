@@ -47,7 +47,6 @@ typedef struct
 
 /* Make sure this is used with a, b, t 32bit unsigned ints */
 #define INT_MULT_16(a,b,t) ((t) = (a) * (b) + 0x8000, ((((t) >> 16) + (t)) >> 16))
-
 /* Declare some local functions.
  */
 static void   query      (void);
@@ -91,7 +90,10 @@ static TiffSaveInterface tsint =
 };
 
 
-MAIN ()
+int main (int argc, char *argv[]) 
+{ 
+  return gimp_main (argc, argv); 
+}
 
 static void
 query ()
@@ -549,7 +551,11 @@ load_image (char *filename)
 			  NEXTSAMPLE;
 			  alpha_val = sample;
 			  if (alpha_val)
-			    *d++ = (gray_val * 255) / alpha_val;
+			    {
+			      if (gray_val > alpha_val)    /*superluminous*/ 
+				gray_val = alpha_val;
+			      *d++ = (gray_val * 255)/(gfloat)alpha_val + .5;
+			    }
 			  else
 			    *d++ = 0;
 			  *d++ = alpha_val;
@@ -575,8 +581,10 @@ load_image (char *filename)
 		      if (alpha)
 			{
 			  alpha16_val = *s16++;
+                          if (gray16_val > alpha16_val) 
+			     gray16_val = alpha16_val;
 			  if (alpha16_val)
-			    *d16++ = (gray16_val * 65535) / alpha16_val;
+			    *d16++ = (gray16_val * 65535) /(gfloat)alpha16_val + .5;
 			  else
 			    *d16++ = 0;
 			  *d16++ = alpha16_val;
@@ -603,7 +611,12 @@ load_image (char *filename)
 		      NEXTSAMPLE;
 		      alpha_val = sample;
 		      if (alpha_val)
-			*d++ = ((maxval - gray_val) * 255) / alpha_val;
+		        {
+			  if((maxval - gray_val) > alpha_val)
+				gray_val = maxval - alpha_val; 
+			  *d++ = ((maxval - gray_val) * 255) /(gfloat)alpha_val + .5;
+			}
+ 
 		      else
 			*d++ = 0;
 		      *d++ = alpha_val;
@@ -632,9 +645,15 @@ load_image (char *filename)
 			alpha_val = sample;
 			if (alpha_val)
 			  {
-			    *d++ = (red_val * 255) / alpha_val;
-			    *d++ = (green_val * 255) / alpha_val;
-			    *d++ = (blue_val * 255) / alpha_val;
+			     if (red_val > alpha_val) 
+				red_val = alpha_val;
+			     if (green_val > alpha_val) 
+				green_val = alpha_val;
+			     if (blue_val > alpha_val) 
+				blue_val = alpha_val;
+			    *d++ = (red_val * 255) /(gfloat)alpha_val + .5;
+			    *d++ = (green_val * 255) /(gfloat)alpha_val + .5;
+			    *d++ = (blue_val * 255) /(gfloat)alpha_val + .5;
 			  }
 			else
 			  {
@@ -695,9 +714,15 @@ load_image (char *filename)
 		    alpha_val = sample;
 		    if (alpha_val)
 		    {
-		      *d++ = (red_val * 255) / alpha_val;
-		      *d++ = (green_val * 255) / alpha_val;
-		      *d++ = (blue_val * 255) / alpha_val;
+		       if (red_val > alpha_val) 
+			  red_val = alpha_val;
+		       if (green_val > alpha_val) 
+			  green_val = alpha_val;
+		       if (blue_val > alpha_val) 
+			  blue_val = alpha_val;
+		      *d++ = (red_val * 255) /(gfloat)alpha_val + .5;
+		      *d++ = (green_val * 255) /(gfloat)alpha_val + .5;
+		      *d++ = (blue_val * 255) /(gfloat)alpha_val + .5;
 		    }
 		    else
 		    {
@@ -735,9 +760,15 @@ load_image (char *filename)
 		    alpha16_val = *s_16++;
 		    if (alpha16_val)
 		    {
-		      *d_16++ = (red16_val * 65535) / alpha16_val;
-		      *d_16++ = (green16_val * 65535) / alpha16_val;
-		      *d_16++ = (blue16_val * 65535) / alpha16_val;
+		       if (red16_val > alpha16_val) 
+			  red16_val = alpha16_val;
+		       if (green16_val > alpha16_val) 
+			  green16_val = alpha16_val;
+		       if (blue16_val > alpha16_val) 
+			  blue16_val = alpha16_val;
+		      *d_16++ = ((int)red16_val * 65535) / (gfloat)alpha16_val + .5;
+		      *d_16++ = ((int)green16_val * 65535) / (gfloat)alpha16_val + .5;
+		      *d_16++ = ((int)blue16_val * 65535) / (gfloat)alpha16_val + .5;
 		    }
 		    else
 		    {
@@ -837,7 +868,7 @@ save_image (char   *filename,
   int tile_height;
   int y, yend;
   char *name;
-
+  getchar();
   compression = tsvals.compression;
   fillorder = tsvals.fillorder;
 
@@ -963,7 +994,7 @@ save_image (char   *filename,
     case U16_INDEXEDA_IMAGE:
       g_print ("tiff save_image: can't save U16_INDEXEDA_IMAGE\n");
       return 0;
-#if 0
+#if 0      /* Finish once float images are working. */
     case FLOAT_RGB_IMAGE:
       samplesperpixel = 3;
       bitspersample = 32;
@@ -1057,7 +1088,7 @@ save_image (char   *filename,
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
 		  /* pre-multiply gray by alpha */
-		  data[col + 0] = (t[col + 0] * t[col + 1]) / 255;
+		  data[col + 0] = (t[col + 0] * t[col + 1]) / 255.0 + .5;
 		  data[col + 1] = t[col + 1];  /* alpha channel */
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
@@ -1069,9 +1100,9 @@ save_image (char   *filename,
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
 		  /* pre-multiply rgb by alpha */
-		  data[col+0] = t[col + 0] * t[col + 3] / 255;
-		  data[col+1] = t[col + 1] * t[col + 3] / 255;
-		  data[col+2] = t[col + 2] * t[col + 3] / 255;
+		  data[col+0] = t[col + 0] * t[col + 3] / 255.0 + .5;
+		  data[col+1] = t[col + 1] * t[col + 3] / 255.0 + .5;
+		  data[col+2] = t[col + 2] * t[col + 3] / 255.0 + .5;
 		  data[col+3] = t[col + 3];  /* alpha channel */
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
@@ -1089,7 +1120,6 @@ save_image (char   *filename,
 		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		    {
 		      /* pre-multiply gray by alpha */
-		      /*d[col + 0] = (s[col + 0] * s[col + 1]) / 65535;*/
 		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 0], s[col + 1], temp);
 		      d[col + 1] = s[col + 1];  /* alpha channel */
 		    }
@@ -1103,16 +1133,13 @@ save_image (char   *filename,
 		{
 		  guint16 * s = (guint16*)t;
 		  guint16 * d = (guint16*)data;
-		  gint32 temp;
+		  guint32 temp;
 		  for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		    {
 		      /* pre-multiply rgb by alpha */
-		     /*d[col+0] = s[col + 0] * s[col + 3] / 65535;
-		      d[col+1] = s[col + 1] * s[col + 3] / 65535;
-		      d[col+2] = s[col + 2] * s[col + 3] / 65535;*/
-		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 0], s[col + 3], temp);
-		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 1], s[col + 3], temp);
-		      d[col + 0] = INT_MULT_16 ((gint32)s[col + 2], s[col + 3], temp);
+		      d[col + 0] = INT_MULT_16 ((guint32)s[col + 0], s[col + 3], temp);
+		      d[col + 1] = INT_MULT_16 ((guint32)s[col + 1], s[col + 3], temp);
+		      d[col + 2] = INT_MULT_16 ((guint32)s[col + 2], s[col + 3], temp);
 		      d[col+3] = s[col + 3];  /* alpha channel */
 		    }
 		}
