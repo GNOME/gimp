@@ -48,6 +48,7 @@
 #include "curves.h"
 #include "devices.h"
 #include "gdisplay.h"
+#include "gdisplay_color.h"
 #include "gdisplay_ops.h"
 #include "colormaps.h"
 #include "context_manager.h"
@@ -491,6 +492,8 @@ app_init (void)
   RESET_BAR();
   internal_procs_init ();
 
+  gdisplay_color_init ();
+
   RESET_BAR();
   parse_buffers_init ();
   parse_unitrc ();         /*  this needs to be done before gimprc loading */
@@ -669,7 +672,7 @@ app_exit_finish (void)
       save_sessionrc ();
     }
 
-  /*  gtk_exit (0); */
+  /* gtk_exit (0); */
   gtk_main_quit();
 }
 

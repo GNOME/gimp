@@ -449,9 +449,7 @@ HELP
     $date = '1999';
 
     @inargs = (
-    	{ name => 'drawable',
-    	  type => 'drawable',
-    	  desc => 'The drawable' },
+	&drawable_arg,
 	{ name => 'width', type => '0 < int32',
 	  desc => 'The thumbnail width',
 	  alias => 'req_width' },
@@ -459,6 +457,7 @@ HELP
 	  desc => 'The thumbnail height',
 	  alias => 'req_height' }
     );
+    delete $inargs[0]->{no_success};
 
     @outargs = (
 	&dim_args,
@@ -470,46 +469,39 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<glib.h> <string.h>) ],
+	headers => [ qw(<string.h>) ],
 	code => <<'CODE'
 {
-	TempBuf * buf;
-        gint dwidth,dheight;
+  TempBuf * buf;
+  gint dwidth, dheight;
 
-	if(req_width <= 128 && req_height <= 128)
-        {	
+  if (req_width <= 128 && req_height <= 128)
+    {	
+      /* Adjust the width/height ratio */
+      dwidth = drawable_width (GIMP_DRAWABLE (drawable));
+      dheight = drawable_height (GIMP_DRAWABLE (drawable));
 
-	  /* Adjust the width/height ratio */
-	    
-	  dwidth = drawable_width(GIMP_DRAWABLE(drawable));
-	  dheight = drawable_height(GIMP_DRAWABLE(drawable));
+      if (dwidth > dheight)
+	req_height = (req_width * dheight) / dwidth;
+      else
+	req_width = (req_height * dwidth) / dheight;
 
-  	  if(dwidth > dheight)
-	  {
-	      req_height = (req_width*dheight)/dwidth;
-	  }
-	  else
-	  {
-	      req_width = (req_height*dwidth)/dheight;
-	  }
+      if (GIMP_IS_LAYER (drawable))
+	buf = layer_preview (GIMP_LAYER (drawable), req_width, req_height);
+      else
+	buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
 
-	  if(GIMP_IS_LAYER(drawable))
-	      buf = layer_preview(GIMP_LAYER(drawable),req_width,req_height);
-	  else
-	      buf = channel_preview(GIMP_CHANNEL(drawable),req_width,req_height);
-
-	  num_pixels = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
-          g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-	  width = buf->width;	
-	  height = buf->height;
-	  bpp = buf->bytes;
-	}
+      num_pixels = buf->height * buf->width * buf->bytes;
+      thumbnail_data = g_new (gint8, num_pixels);
+      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+      width = buf->width;	
+      height = buf->height;
+      bpp = buf->bytes;
+    }
 }
 CODE
     );
 }
-
 
 @headers = qw("drawable.h");
 

@@ -255,9 +255,6 @@ render_image (GDisplay *gdisp,
 static void
 render_image_indexed (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   guchar *cmap;
@@ -269,9 +266,6 @@ render_image_indexed (RenderInfo *info)
   float error;
   float step;
 
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
   cmap = gimage_cmap (info->gdisp->gimage);
 
   y = info->y;
@@ -329,9 +323,6 @@ render_image_indexed (RenderInfo *info)
 static void
 render_image_indexed_a (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   guint *alpha;
@@ -347,9 +338,6 @@ render_image_indexed_a (RenderInfo *info)
   float error;
   float step;
 
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
   cmap = gimage_cmap (info->gdisp->gimage);
   alpha = info->alpha;
 
@@ -427,9 +415,6 @@ render_image_indexed_a (RenderInfo *info)
 static void
 render_image_gray (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   gulong val;
@@ -439,10 +424,6 @@ render_image_gray (RenderInfo *info)
   int initial;
   float error;
   float step;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
 
   y = info->y;
   ye = info->y + info->h;
@@ -499,9 +480,6 @@ render_image_gray (RenderInfo *info)
 static void
 render_image_gray_a (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   guint *alpha;
@@ -515,9 +493,6 @@ render_image_gray_a (RenderInfo *info)
   float error;
   float step;
 
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
   alpha = info->alpha;
 
   y = info->y;
@@ -584,9 +559,6 @@ render_image_gray_a (RenderInfo *info)
 static void
 render_image_rgb (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   int byte_order;
@@ -595,10 +567,6 @@ render_image_rgb (RenderInfo *info)
   int initial;
   float error;
   float step;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
 
   y = info->y;
   ye = info->y + info->h;
@@ -631,6 +599,9 @@ render_image_rgb (RenderInfo *info)
 	      dest[1] = src[1];
 	      dest[2] = src[2];
 
+	      /* info->gdisp->cd_convert (info->gdisp->cd_ID, x, y,
+				       src[0], src[1], src[2], dest); */
+
 	      src += 3;
 	      dest += 3;
 	    }
@@ -657,9 +628,6 @@ render_image_rgb (RenderInfo *info)
 static void
 render_image_rgb_a (RenderInfo *info)
 {
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
   guchar *src;
   guchar *dest;
   guint *alpha;
@@ -673,9 +641,6 @@ render_image_rgb_a (RenderInfo *info)
   float error;
   float step;
 
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
   alpha = info->alpha;
 
   y = info->y;
@@ -704,60 +669,32 @@ render_image_rgb_a (RenderInfo *info)
 
 	  g_return_if_fail (src != NULL);
 
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
+	  for (x = info->x; x < xe; x++)
+	    {
+	      a = alpha[src[ALPHA_PIX]];
+	      if (dark_light & 0x1)
+		{
+		  r = blend_dark_check[(a | src[RED_PIX])];
+		  g = blend_dark_check[(a | src[GREEN_PIX])];
+		  b = blend_dark_check[(a | src[BLUE_PIX])];
+		}
+	      else
+		{
+		  r = blend_light_check[(a | src[RED_PIX])];
+		  g = blend_light_check[(a | src[GREEN_PIX])];
+		  b = blend_light_check[(a | src[BLUE_PIX])];
+		}
 
-		src += 4;
+	      src += 4;
 
-		dest[0] = r;
-		dest[1] = g;
-		dest[2] = b;
-		dest += 3;
+	      dest[0] = r;
+	      dest[1] = g;
+	      dest[2] = b;
+	      dest += 3;
 
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
-
-		src += 4;
-
-		dest[0] = r;
-		dest[1] = g;
-		dest[2] = b;
-		dest += 3;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
+	      if (((x + 1) & check_mod) == 0)
+		dark_light += 1;
+	    }
 	}
 
       info->dest += info->dest_bpl;

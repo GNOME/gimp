@@ -155,14 +155,14 @@ move_draw_guide (GDisplay *gdisp, Guide *guide)
   gdk_window_get_size (gdisp->canvas->window, &w, &h);
 
   switch (guide->orientation) {
-  case HORIZONTAL_GUIDE:
+  case ORIENTATION_HORIZONTAL:
     gdisplay_transform_coords (gdisp, 0, guide->position, &x1, &y, FALSE);
     if (x1 < 0) x1 = 0;
     if (x2 > w) x2 = w;
 
     gdk_draw_line (gdisp->canvas->window, move_gc, x1, y, x2, y); 
     break;
-  case VERTICAL_GUIDE:
+  case ORIENTATION_VERTICAL:
     gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y1, FALSE);
     if (y1 < 0) y1 = 0;
     if (y2 > h) y2 = h;
@@ -208,11 +208,11 @@ move_tool_button_release (Tool           *tool,
 
       switch (move->guide->orientation)
 	{
-	case HORIZONTAL_GUIDE:
+	case ORIENTATION_HORIZONTAL:
 	  if ((move->guide->position < y1) || (move->guide->position > y2))
 	    remove_guide = TRUE;
 	  break;
-	case VERTICAL_GUIDE:
+	case ORIENTATION_VERTICAL:
 	  if ((move->guide->position < x1) || (move->guide->position > x2))
 	    remove_guide = TRUE;
 	  break;
@@ -280,7 +280,7 @@ move_tool_motion (Tool           *tool,
 	  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, 
 				       &x, &y, TRUE, FALSE);
 	  
-	  if (private->guide->orientation == HORIZONTAL_GUIDE)
+	  if (private->guide->orientation == ORIENTATION_HORIZONTAL)
 	    private->guide->position = y;
 	  else
 	    private->guide->position = x;

@@ -47,10 +47,3 @@ int           gimp_matrix_is_simple       (GimpMatrix m);
 #endif /* __cplusplus */
 
 #endif  /*  __GIMPMATRIX_H__  */
-
-
-
-
-
-
-

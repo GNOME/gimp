@@ -44,7 +44,7 @@ sub spacing_arg () {{
 }}
 
 sub paint_mode_arg () {{
-    name => 'paint_mode', type => &std_layer_mode_enum,
+    name => 'paint_mode', type => 'enum LayerModeEffects',
     desc => 'The paint mode: { %%desc%% }'
 }}
 

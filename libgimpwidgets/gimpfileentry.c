@@ -142,7 +142,7 @@ gimp_file_selection_init (GimpFileSelection *gfs)
 }
 
 GtkType
-gimp_file_selection_get_type ()
+gimp_file_selection_get_type (void)
 {
   static GtkType gfs_type = 0;
 

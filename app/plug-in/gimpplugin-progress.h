@@ -36,7 +36,7 @@
 
 
 
-typedef enum  /*< chop=RUN_ >*/
+typedef enum
 {
   RUN_INTERACTIVE    = 0,
   RUN_NONINTERACTIVE = 1,

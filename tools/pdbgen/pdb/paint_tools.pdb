@@ -147,7 +147,7 @@ HELP
 	&drawable_arg,
         { name => 'blend_mode', type => 'enum BlendMode',
 	  desc => 'The type of blend: { %%desc%% }' },
-	{ name => 'paint_mode', type => &std_layer_mode_enum,
+	{ name => 'paint_mode', type => 'enum LayerModeEffects',
 	  desc => 'The paint application mode: { %%desc%% }' },
 	{ name => 'gradient_type',  type => 'enum GradientType',
 	  desc => 'The type of gradient: { %%desc%% }' },
@@ -219,7 +219,7 @@ HELP
 	&drawable_arg,
 	{ name => 'fill_mode', type => 'enum BucketFillMode',
 	  desc => 'The type of fill: { %%desc%% }' },
-	{ name => paint_mode, type => &std_layer_mode_enum,
+	{ name => paint_mode, type => 'enum LayerModeEffects',
 	  desc => 'The paint application mode: { %%desc%% }' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final bucket fill (%%desc%%)' },
@@ -649,8 +649,8 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'flip_type', type => '0 <= int32 <= 1',
-	  desc => 'Type of flip: HORIZONTAL (0) or VERTICAL (1)' } # ick
+	{ name => 'flip_type', type => &std_orientation_enum,
+	  desc => 'Type of flip: %%desc%%' }
     );
 
     @outargs = ( &drawable_out_arg('flipped') );
@@ -672,8 +672,8 @@ HELP
   /* flip the buffer */
   switch (flip_type)
     {
-    case FLIP_HORZ:
-    case FLIP_VERT:
+    case ORIENTATION_HORIZONTAL:
+    case ORIENTATION_VERTICAL:
       new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
       break;
     default:
@@ -1233,7 +1233,7 @@ HELP
 	&drawable_arg,
 	{ name => 'interpolation', type => 'boolean',
 	  desc => 'Whether to use interpolation' },
-	{ name => 'shear_type', type => 'enum ShearType',
+	{ name => 'shear_type', type => &std_orientation_enum,
 	  desc => 'Type of shear: %%desc%%' },
 	{ name => 'magnitude', type => 'float',
 	  desc => 'The magnitude of the shear' }
@@ -1263,9 +1263,9 @@ HELP
   gimp_matrix_identity  (matrix);
   gimp_matrix_translate (matrix, -cx, -cy);
   /* Shear matrix */
-  if (shear_type == HORZ_SHEAR)
+  if (shear_type == ORIENTATION_HORIZONTAL)
     gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
-  else if (shear_type == VERT_SHEAR)
+  else if (shear_type == ORIENTATION_VERTICAL)
     gimp_matrix_yshear (matrix, magnitude / float_tiles->width);
   gimp_matrix_translate (matrix, +cx, +cy);
 

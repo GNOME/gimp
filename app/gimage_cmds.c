@@ -20,7 +20,6 @@
 
 #include "procedural_db.h"
 
-#include <glib.h>
 #include <string.h>
 
 #include "channel.h"
@@ -2209,34 +2208,30 @@ image_thumbnail_invoker (Argument *args)
 
   if (success)
     {
-	    TempBuf * buf;
-	    gint dwidth,dheight;
+      TempBuf * buf;
+      gint dwidth, dheight;
     
-	    if(req_width <= 128 && req_height <= 128)
-	    {        
+      if (req_width <= 128 && req_height <= 128)
+	{        
+	  /* Adjust the width/height ratio */
+	  dwidth = gimage->width;
+	  dheight = gimage->height;
     
-	      /* Adjust the width/height ratio */
-		
-	      dwidth = gimage->width;
-	      dheight = gimage->height;
+	  if (dwidth > dheight)
+	    req_height = (req_width * dheight) / dwidth;
+	  else
+	    req_width = (req_height * dwidth) / dheight;
     
-		if(dwidth > dheight)
-	      {
-		  req_height = (req_width*dheight)/dwidth;
-	      }
-	      else
-	      {
-		  req_width = (req_height*dwidth)/dheight;
-	      }
-    
-	      buf = gimp_image_construct_composite_preview(gimage,req_width,req_height);
-	      num_pixels = buf->height * buf->width * buf->bytes;
-	      thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
-	      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-	      width = buf->width;        
-	      height = buf->height;
-	      bpp = buf->bytes;
-	    }
+	  buf = gimp_image_construct_composite_preview (gimage,
+							req_width,
+							req_height);
+	  num_pixels = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = g_new (gint8, num_pixels);
+	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	  width = buf->width;        
+	  height = buf->height;
+	  bpp = buf->bytes;
+	}
     }
 
   return_args = procedural_db_return_args (&image_thumbnail_proc, success);

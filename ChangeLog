@@ -1,3 +1,78 @@
+Wed Jul 28 15:03:28 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl: add sample_colorize and
+	curve_bend defs
+
+	* libgimp/color_selector.h: minor consistency cleanup
+
+	* libgimp/gimpchainbutton.[ch]: use new style gtk object helper macros
+
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpmatrix.h: minor cleanup
+
+	* libgimp/gimpintl.h: resync with gnome-i18n.h
+
+	
+	* libgimp/color_display.h
+	* app/gimp.sym
+	* app/gdisplay_color.[ch]
+	* app/app_procs.c
+	* app/gdisplay.h
+	* app/image_render.c: color display transformation code. Still
+	unfinished, so it's not activated yet.
+
+	* app/buildmenu.h: remove unused defines (PULLDOWN, POPUP, OPTION)
+
+	* app/colormaps.[ch]
+	* app/image_render.c: remove vestigal dithering stuff
+
+	* app/convolve.h
+	* app/gimpdrawable.h
+	* app/gimpimage.h
+	* app/lut_funcs.h
+	* app/paint_funcs.h
+	* app/plug_in.h: enum nick changes from Marc
+	
+	* app/channel_ops.c
+	* app/crop.c
+	* app/gdisplay.c
+	* app/gimpimage.[ch]
+	* app/move.c: s/([A-Z]+)_GUIDE/ORIENTATION_$1/
+
+	* app/flip_tool.[ch]
+	* app/shear_tool.[ch]: use ORIENTATION_* constants instead of our own
+
+	* app/disp_callbacks.c: remove HORIZONTAL and VERTICAL #defines
+
+	* app/general.h: enumified TOKEN_* symbols
+
+	* app/lc_dialog.c
+	* app/paint_funcs.c: remove unused variables
+
+	* tools/pdbgen/lib.pl: autogen gimpenums.h (unfinished)
+
+	* tools/pdbgen/stddefs.pdb: new std_orientation_enum, remove
+	layer_mode shortcut since we've skipped it in app/
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/gimage.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/tools.pdb: reflect above enum changes, whitespace
+	cleanups
+
+	* tools/pdbgen/enums.pl
+	* app/brush_select_cmds.c
+	* app/brushes_cmds.c
+	* app/color_cmds.c
+	* app/drawable_cmds.c 
+	* app/gimage_cmds.c
+	* app/layer_cmds.c
+	* app/procedural_db_cmds.c
+	* app/tools_cmds.c: reflect pdb and enum nick changes above
+
 Wed Jul 28 21:32:52 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* libgimp/gimpenv.c (gimp_data_directory): Add __XOS2RedirRoot() for

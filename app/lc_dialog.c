@@ -416,7 +416,6 @@ lc_dialog_fill_preview_with_thumb(GtkWidget *w,
   gint       bpp;
   gint       dwidth;
   gint       dheight;
-  gint       has_alpha;
   gint       x,y;
   guchar    *src;
   gdouble    r, g, b, a;

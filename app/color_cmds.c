@@ -262,7 +262,7 @@ static ProcArg levels_inargs[] =
   {
     PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE/GRAY (0), RED (1), GREEN (2), BLUE (3) }"
+    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3) }"
   },
   {
     PDB_INT32,
@@ -621,7 +621,7 @@ static ProcArg curves_spline_inargs[] =
   {
     PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE/GRAY (0), RED (1), GREEN (2), BLUE (3), ALPHA (4) }"
+    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
     PDB_INT32,
@@ -729,7 +729,7 @@ static ProcArg curves_explicit_inargs[] =
   {
     PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE/GRAY (0), RED (1), GREEN (2), BLUE (3), ALPHA (4) }"
+    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
     PDB_INT32,
@@ -988,7 +988,7 @@ static ProcArg histogram_inargs[] =
   {
     PDB_INT32,
     "channel",
-    "The channel to modify: { VALUE/GRAY (0), RED (1), GREEN (2), BLUE (3), ALPHA (4) }"
+    "The channel to modify: { VALUE_LUT (0), RED_LUT (1), GREEN_LUT (2), BLUE_LUT (3), ALPHA_LUT (4) }"
   },
   {
     PDB_INT32,

@@ -20,12 +20,6 @@
 
 #include "tools.h"
 
-typedef enum
-{
-  HORZ_SHEAR,  /*< nick=HORIZONTAL >*/
-  VERT_SHEAR   /*< nick=VERTICAL >*/
-} ShearType;
-
 void *        shear_tool_transform (Tool *, gpointer, int);
 void *        shear_tool_shear     (GimpImage *, GimpDrawable *, GDisplay *,
 				    TileManager *, int, GimpMatrix);

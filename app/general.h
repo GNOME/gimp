@@ -22,12 +22,15 @@
 #include <stdio.h>
 
 
-#define TOKEN_EOF         0
-#define TOKEN_LEFT_PAREN  1
-#define TOKEN_RIGHT_PAREN 2
-#define TOKEN_SYMBOL      3
-#define TOKEN_STRING      4
-#define TOKEN_NUMBER      5
+typedef enum
+{
+  TOKEN_EOF,
+  TOKEN_LEFT_PAREN,
+  TOKEN_RIGHT_PAREN,
+  TOKEN_SYMBOL,
+  TOKEN_STRING,
+  TOKEN_NUMBER
+} TokenDataType;
 
 
 typedef struct _ParseInfo  ParseInfo;

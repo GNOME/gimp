@@ -23,6 +23,8 @@ $destdir = "$main::destdir/libgimp";
 *arg_types = \%Gimp::CodeGen::pdb::arg_types;
 *arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
 
+*enums = \%Gimp::CodeGen::enums::enums;
+
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
@@ -433,4 +435,37 @@ HEADER
 	close CFILE;
 	&write_file($cfile);
     }
+
+    my $hfile = "$destdir/gimpenums.h$FILE_EXT";
+    open HFILE, "> $hfile" or die "Can't open $cfile: $!\n";
+    print HFILE $lgpl;
+    my $guard = "__GIMP_ENUMS_H__";
+    print HFILE <<HEADER;
+#ifndef $guard
+#define $guard
+
+
+HEADER
+
+    foreach (sort keys %enums) {
+	print HFILE "typedef enum\n(\n";
+
+	my $enum = $enums{$_}; my $body = "";
+	foreach $symbol (@{$enum->{symbols}}) {
+	    $body .= "  $symbol";
+	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
+	    $body .= ",\n";
+	}
+
+	$body =~ s/,\n$//s;
+	$body .= "\n} Gimp$_;\n\n";
+	print HFILE $body
+    }
+
+    print HFILE <<HEADER;
+
+#endif /* $guard */
+HEADER
+    close HFILE;
+    &write_file($hfile);
 }

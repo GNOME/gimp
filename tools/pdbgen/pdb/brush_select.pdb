@@ -28,7 +28,7 @@ sub brush_args {(
     { name => 'spacing', type => 'int32',
       desc => 'The initial spacing of the brush (if < 0 then use brush default
 	       spacing)' },
-    { name => 'paint_mode', type => &std_layer_mode_enum,
+    { name => 'paint_mode', type => 'enum LayerModeEffects',
       desc => 'The initial paint mode: { %%desc%% }'  }
 )}
 

@@ -20,10 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#define PULLDOWN   0
-#define POPUP      1
-#define OPTION     2
-
 /* Structures */
 
 typedef struct _MenuItem   MenuItem;

@@ -125,10 +125,23 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
 	  mapping => { BLUR_CONVOLVE => '0',
 		       SHARPEN_CONVOLVE => '1',
-		       CUSTOM_CONVOLVE => '2' },
-	  nicks   => { BLUR_CONVOLVE => 'BLUR',
-		       SHARPEN_CONVOLVE => 'SHARPEN',
-		       CUSTOM_CONVOLVE => 'CUSTOM' }
+		       CUSTOM_CONVOLVE => '2' }
+	},
+    DodgeBurnType =>
+	{ contig => 1,
+	  header => 'dodgeburn.h',
+	  symbols => [ qw(DODGE BURN) ],
+	  mapping => { DODGE => '0',
+		       BURN => '1' }
+	},
+    DodgeBurnMode =>
+	{ contig => 1,
+	  header => 'dodgeburn.h',
+	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES
+			  DODGEBURN_SHADOWS) ],
+	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
+		       DODGEBURN_MIDTONES => '1',
+		       DODGEBURN_SHADOWS => '2' }
 	},
     GimpFillType =>
 	{ contig => 1,
@@ -139,7 +152,12 @@ package Gimp::CodeGen::enums;
 		       BACKGROUND_FILL => '1',
 		       WHITE_FILL => '2',
 		       TRANSPARENT_FILL => '3',
-		       NO_FILL => '4' }
+		       NO_FILL => '4' },
+	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
+		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
+		       WHITE_FILL => 'WHITE_IMAGE_FILL',
+		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
+		       NO_FILL => 'NO_IMAGE_FILL' }
 	},
     GimpImageType =>
 	{ contig => 1,
@@ -152,12 +170,12 @@ package Gimp::CodeGen::enums;
 		       GRAYA_GIMAGE => '3',
 		       INDEXED_GIMAGE => '4',
 		       INDEXEDA_GIMAGE => '5' },
-	  nicks   => { RGB_GIMAGE => 'RGB',
-		       RGBA_GIMAGE => 'RGBA',
-		       GRAY_GIMAGE => 'GRAY',
-		       GRAYA_GIMAGE => 'GRAYA',
-		       INDEXED_GIMAGE => 'INDEXED',
-		       INDEXEDA_GIMAGE => 'INDEXEDA' }
+	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
+		       RGBA_GIMAGE => 'RGBA_IMAGE',
+		       GRAY_GIMAGE => 'GRAY_IMAGE',
+		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
+		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
+		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
 	},
     GimpImageBaseType =>
 	{ contig => 1,
@@ -167,14 +185,17 @@ package Gimp::CodeGen::enums;
 		       GRAY => '1',
 		       INDEXED => '2' }
 	},
-    GuideOrientation =>
-	{ contig => 0,
+    OrientationType =>
+	{ contig => 1,
 	  header => 'gimpimage.h',
-	  symbols => [ qw(HORIZONTAL_GUIDE VERTICAL_GUIDE) ],
-	  mapping => { HORIZONTAL_GUIDE => '1',
-		       VERTICAL_GUIDE => '2' },
-	  nicks   => { HORIZONTAL_GUIDE => 'HORIZONTAL',
-		       VERTICAL_GUIDE => 'VERTICAL' }
+	  symbols => [ qw(ORIENTATION_UNKNOWN ORIENTATION_HORIZONTAL
+			  ORIENTATION_VERTICAL) ],
+	  mapping => { ORIENTATION_UNKNOWN => '0',
+		       ORIENTATION_HORIZONTAL => '1',
+		       ORIENTATION_VERTICAL => '2' },
+	  nicks   => { ORIENTATION_UNKNOWN => 'UNKNOWN',
+		       ORIENTATION_HORIZONTAL => 'HORIZONTAL',
+		       ORIENTATION_VERTICAL => 'VERTICAL' }
 	},
     ChannelType =>
 	{ contig => 1,
@@ -237,12 +258,7 @@ package Gimp::CodeGen::enums;
 		       RED_LUT => '1',
 		       GREEN_LUT => '2',
 		       BLUE_LUT => '3',
-		       ALPHA_LUT => '4' },
-	  nicks   => { VALUE_LUT => 'VALUE/GRAY',
-		       RED_LUT => 'RED',
-		       GREEN_LUT => 'GREEN',
-		       BLUE_LUT => 'BLUE',
-		       ALPHA_LUT => 'ALPHA' }
+		       ALPHA_LUT => '4' }
 	},
     BrushApplicationMode =>
 	{ contig => 1,
@@ -278,8 +294,7 @@ package Gimp::CodeGen::enums;
 			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
 			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
 			  DARKEN_ONLY_MODE LIGHTEN_ONLY_MODE HUE_MODE
-			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE
-			  ERASE_MODE REPLACE_MODE) ],
+			  SATURATION_MODE COLOR_MODE VALUE_MODE DIVIDE_MODE) ],
 	  mapping => { NORMAL_MODE => '0',
 		       DISSOLVE_MODE => '1',
 		       BEHIND_MODE => '2',
@@ -295,27 +310,7 @@ package Gimp::CodeGen::enums;
 		       SATURATION_MODE => '12',
 		       COLOR_MODE => '13',
 		       VALUE_MODE => '14',
-		       DIVIDE_MODE => '15',
-		       ERASE_MODE => '16',
-		       REPLACE_MODE => '17' },
-	  nicks   => { NORMAL_MODE => 'NORMAL',
-		       DISSOLVE_MODE => 'DISSOLVE',
-		       BEHIND_MODE => 'BEHIND',
-		       MULTIPLY_MODE => 'MULTIPLY/BURN',
-		       SCREEN_MODE => 'SCREEN',
-		       OVERLAY_MODE => 'OVERLAY',
-		       DIFFERENCE_MODE => 'DIFFERENCE',
-		       ADDITION_MODE => 'ADDITION',
-		       SUBTRACT_MODE => 'SUBTRACT',
-		       DARKEN_ONLY_MODE => 'DARKEN_ONLY',
-		       LIGHTEN_ONLY_MODE => 'LIGHTEN_ONLY',
-		       HUE_MODE => 'HUE',
-		       SATURATION_MODE => 'SATURATION',
-		       COLOR_MODE => 'COLOR',
-		       VALUE_MODE => 'VALUE',
-		       DIVIDE_MODE => 'DIVIDE/DODGE',
-		       ERASE_MODE => 'ERASE',
-		       REPLACE_MODE => 'REPLACE' }
+		       DIVIDE_MODE => '15' }
 	},
     RunModeType =>
 	{ contig => 1,
@@ -324,10 +319,7 @@ package Gimp::CodeGen::enums;
 			  RUN_WITH_LAST_VALS) ],
 	  mapping => { RUN_INTERACTIVE => '0',
 		       RUN_NONINTERACTIVE => '1',
-		       RUN_WITH_LAST_VALS => '2' },
-	  nicks   => { RUN_INTERACTIVE => 'INTERACTIVE',
-		       RUN_NONINTERACTIVE => 'NONINTERACTIVE',
-		       RUN_WITH_LAST_VALS => 'WITH_LAST_VALS' }
+		       RUN_WITH_LAST_VALS => '2' }
 	},
     PDBArgType =>
 	{ contig => 1,
@@ -381,30 +373,6 @@ package Gimp::CodeGen::enums;
 	  nicks   => { PDB_INTERNAL => 'INTERNAL',
 		       PDB_PLUGIN => 'PLUGIN',
 		       PDB_EXTENSION => 'EXTENSION' }
-	},
-    ShearType =>
-	{ contig => 1,
-	  header => 'shear_tool.h',
-	  symbols => [ qw(HORZ_SHEAR VERT_SHEAR) ],
-	  mapping => { HORZ_SHEAR => '0',
-		       VERT_SHEAR => '1' },
-	  nicks   => { HORZ_SHEAR => 'HORIZONTAL',
-		       VERT_SHEAR => 'VERTICAL' }
-	},
-    DodgeBurnType =>
-	{ contig => 1,
-	  header => 'dodgeburn.h',
-	  symbols => [ qw(DODGE BURN) ],
-	  mapping => { DODGE => '0',
-		       BURN => '1' }
-	},
-    DodgeBurnMode =>
-	{ contig => 1,
-	  header => 'dodgeburn.h',
-	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES DODGEBURN_SHADOWS) ],
-	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
-		       DODGEBURN_MIDTONES => '1',
-		       DODGEBURN_SHADOWS => '2' }
 	},
     SizeType =>
 	{ contig => 1,

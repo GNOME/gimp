@@ -35,8 +35,8 @@ sub std_antialias_arg () {{
     desc => 'Antialiasing (%%desc%%)'
 }}
 
-sub std_layer_mode_enum () {
-    'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)'
+sub std_orientation_enum () {
+    'enum OrientationType (no ORIENTATION_UNKNOWN)'
 }
 
 1;

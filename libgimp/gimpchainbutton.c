@@ -78,8 +78,8 @@ gimp_chain_button_init (GimpChainButton *gcb)
 		      GTK_SIGNAL_FUNC(gimp_chain_button_draw_lines), gcb);
 }
 
-guint
-gimp_chain_button_get_type ()
+GtkType
+gimp_chain_button_get_type (void)
 {
   static guint gcb_type = 0;
 

@@ -69,14 +69,14 @@ flip_options_new (void)
   GtkWidget *vbox;
   GtkWidget *frame;
   gchar* type_label[2] = { N_("Horizontal"), N_("Vertical") };
-  gint   type_value[2] = { FLIP_HORZ, FLIP_VERT };
+  gint   type_value[2] = { ORIENTATION_HORIZONTAL, ORIENTATION_VERTICAL };
  
   /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
   tool_options_init ((ToolOptions *) options,
 		     N_("Flip Tool Options"),
 		     flip_options_reset);
-  options->type = options->type_d = FLIP_HORZ;
+  options->type = options->type_d = ORIENTATION_HORIZONTAL;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -107,10 +107,10 @@ flip_modifier_key_func (Tool        *tool,
     case GDK_Shift_L: case GDK_Shift_R:
       break;
     case GDK_Control_L: case GDK_Control_R:
-      if (flip_options->type == FLIP_HORZ)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_VERT]), TRUE);
+      if (flip_options->type == ORIENTATION_HORIZONTAL)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL]), TRUE);
       else
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_HORZ]), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL]), TRUE);
       break;
     }
 }
@@ -177,7 +177,7 @@ flip_cursor_update (Tool           *tool,
 	  /*  Is there a selected region? If so, is cursor inside? */
 	  if (gimage_mask_is_empty (gdisp->gimage) || gimage_mask_value (gdisp->gimage, x, y))
 	    {
-	      if (flip_options->type == FLIP_HORZ)
+	      if (flip_options->type == ORIENTATION_HORIZONTAL)
 	    ctype = GDK_SB_H_DOUBLE_ARROW;
 	      else
 		ctype = GDK_SB_V_DOUBLE_ARROW;
@@ -219,11 +219,11 @@ tools_free_flip_tool (Tool *tool)
 }
 
 TileManager *
-flip_tool_flip (GImage      *gimage,
-		GimpDrawable *drawable,
-		TileManager *orig,
-		int          flip,
-		FlipType     type)
+flip_tool_flip (GimpImage       *gimage,
+		GimpDrawable    *drawable,
+		TileManager     *orig,
+		int              flip,
+		OrientationType  type)
 {
   TileManager *new;
   PixelRegion srcPR, destPR;
@@ -248,7 +248,7 @@ flip_tool_flip (GImage      *gimage,
       new->x = orig->x;
       new->y = orig->y;
 
-      if (type == FLIP_HORZ)
+      if (type == ORIENTATION_HORIZONTAL)
 	for (i = 0; i < orig->width; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, i, 0, 1, orig->height, FALSE);

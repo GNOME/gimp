@@ -669,7 +669,7 @@ blend_pixels (const unsigned char *src1,
 	      int            bytes,
 	      int            has_alpha)
 {
-  int alpha, b;
+  int b;
   unsigned char blend2 = (255 - blend);
 
   while (w --)

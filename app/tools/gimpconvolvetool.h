@@ -21,7 +21,7 @@
 #include "paint_core.h"
 #include "tools.h"
 
-typedef enum  /*< chop=_CONVOLVE >*/
+typedef enum
 {
   BLUR_CONVOLVE,
   SHARPEN_CONVOLVE,

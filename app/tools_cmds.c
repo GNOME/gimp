@@ -36,6 +36,7 @@
 #include "flip_tool.h"
 #include "free_select.h"
 #include "fuzzy_select.h"
+#include "gimpimage.h"
 #include "paint_core.h"
 #include "paint_funcs.h"
 #include "paintbrush.h"
@@ -338,7 +339,7 @@ static ProcArg blend_inargs[] =
   {
     PDB_INT32,
     "paint_mode",
-    "The paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15) }"
   },
   {
     PDB_INT32,
@@ -478,7 +479,7 @@ static ProcArg bucket_fill_inargs[] =
   {
     PDB_INT32,
     "paint_mode",
-    "The paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5), DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN_ONLY (9), LIGHTEN_ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
+    "The paint application mode: { NORMAL_MODE (0), DISSOLVE_MODE (1), BEHIND_MODE (2), MULTIPLY_MODE (3), SCREEN_MODE (4), OVERLAY_MODE (5), DIFFERENCE_MODE (6), ADDITION_MODE (7), SUBTRACT_MODE (8), DARKEN_ONLY_MODE (9), LIGHTEN_ONLY_MODE (10), HUE_MODE (11), SATURATION_MODE (12), COLOR_MODE (13), VALUE_MODE (14), DIVIDE_MODE (15) }"
   },
   {
     PDB_FLOAT,
@@ -970,7 +971,7 @@ static ProcArg convolve_inargs[] =
   {
     PDB_INT32,
     "convolve_type",
-    "Convolve type: { BLUR (0), SHARPEN (1) }"
+    "Convolve type: { BLUR_CONVOLVE (0), SHARPEN_CONVOLVE (1) }"
   },
   {
     PDB_INT32,
@@ -1573,7 +1574,7 @@ flip_invoker (Argument *args)
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
-  if (flip_type < 0 || flip_type > 1)
+  if (flip_type < ORIENTATION_HORIZONTAL || flip_type > ORIENTATION_VERTICAL)
     success = FALSE;
 
   if (success)
@@ -1589,8 +1590,8 @@ flip_invoker (Argument *args)
       /* flip the buffer */
       switch (flip_type)
 	{
-	case FLIP_HORZ:
-	case FLIP_VERT:
+	case ORIENTATION_HORIZONTAL:
+	case ORIENTATION_VERTICAL:
 	  new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
 	  break;
 	default:
@@ -1631,7 +1632,7 @@ static ProcArg flip_inargs[] =
   {
     PDB_INT32,
     "flip_type",
-    "Type of flip: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of flip: HORIZONTAL (1) or VERTICAL (2)"
   }
 };
 
@@ -2655,7 +2656,7 @@ shear_invoker (Argument *args)
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
 
   shear_type = args[2].value.pdb_int;
-  if (shear_type < HORZ_SHEAR || shear_type > VERT_SHEAR)
+  if (shear_type < ORIENTATION_HORIZONTAL || shear_type > ORIENTATION_VERTICAL)
     success = FALSE;
 
   magnitude = args[3].value.pdb_float;
@@ -2676,9 +2677,9 @@ shear_invoker (Argument *args)
       gimp_matrix_identity  (matrix);
       gimp_matrix_translate (matrix, -cx, -cy);
       /* Shear matrix */
-      if (shear_type == HORZ_SHEAR)
+      if (shear_type == ORIENTATION_HORIZONTAL)
 	gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
-      else if (shear_type == VERT_SHEAR)
+      else if (shear_type == ORIENTATION_VERTICAL)
 	gimp_matrix_yshear (matrix, magnitude / float_tiles->width);
       gimp_matrix_translate (matrix, +cx, +cy);
     
@@ -2724,7 +2725,7 @@ static ProcArg shear_inargs[] =
   {
     PDB_INT32,
     "shear_type",
-    "Type of shear: HORIZONTAL (0) or VERTICAL (1)"
+    "Type of shear: HORIZONTAL (1) or VERTICAL (2)"
   },
   {
     PDB_FLOAT,

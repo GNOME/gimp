@@ -20,7 +20,6 @@
 
 #include "procedural_db.h"
 
-#include <glib.h>
 #include <string.h>
 
 #include "drawable.h"
@@ -155,7 +154,7 @@ static ProcArg drawable_fill_inargs[] =
   {
     PDB_INT32,
     "fill_type",
-    "The type of fill: FOREGROUND_FILL (0), BACKGROUND_FILL (1), WHITE_FILL (2), TRANSPARENT_FILL (3), NO_FILL (4)"
+    "The type of fill: FG_IMAGE_FILL (0), BG_IMAGE_FILL (1), WHITE_IMAGE_FILL (2), TRANS_IMAGE_FILL (3), NO_IMAGE_FILL (4)"
   }
 };
 
@@ -411,7 +410,7 @@ static ProcArg drawable_type_outargs[] =
   {
     PDB_INT32,
     "type",
-    "The drawable's type: { RGB (0), RGBA (1), GRAY (2), GRAYA (3), INDEXED (4), INDEXEDA (5) }"
+    "The drawable's type: { RGB_IMAGE (0), RGBA_IMAGE (1), GRAY_IMAGE (2), GRAYA_IMAGE (3), INDEXED_IMAGE (4), INDEXEDA_IMAGE (5) }"
   }
 };
 
@@ -507,7 +506,7 @@ static ProcArg drawable_type_with_alpha_outargs[] =
   {
     PDB_INT32,
     "type_with_alpha",
-    "The drawable's type with alpha: { RGBA (1), GRAYA (3), INDEXEDA (5) }"
+    "The drawable's type with alpha: { RGBA_IMAGE (1), GRAYA_IMAGE (3), INDEXEDA_IMAGE (5) }"
   }
 };
 
@@ -1304,38 +1303,32 @@ drawable_thumbnail_invoker (Argument *args)
 
   if (success)
     {
-	    TempBuf * buf;
-	    gint dwidth,dheight;
+      TempBuf * buf;
+      gint dwidth, dheight;
     
-	    if(req_width <= 128 && req_height <= 128)
-	    {        
+      if (req_width <= 128 && req_height <= 128)
+	{        
+	  /* Adjust the width/height ratio */
+	  dwidth = drawable_width (GIMP_DRAWABLE (drawable));
+	  dheight = drawable_height (GIMP_DRAWABLE (drawable));
     
-	      /* Adjust the width/height ratio */
-		
-	      dwidth = drawable_width(GIMP_DRAWABLE(drawable));
-	      dheight = drawable_height(GIMP_DRAWABLE(drawable));
+	  if (dwidth > dheight)
+	    req_height = (req_width * dheight) / dwidth;
+	  else
+	    req_width = (req_height * dwidth) / dheight;
     
-		if(dwidth > dheight)
-	      {
-		  req_height = (req_width*dheight)/dwidth;
-	      }
-	      else
-	      {
-		  req_width = (req_height*dwidth)/dheight;
-	      }
+	  if (GIMP_IS_LAYER (drawable))
+	    buf = layer_preview (GIMP_LAYER (drawable), req_width, req_height);
+	  else
+	    buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
     
-	      if(GIMP_IS_LAYER(drawable))
-		  buf = layer_preview(GIMP_LAYER(drawable),req_width,req_height);
-	      else
-		  buf = channel_preview(GIMP_CHANNEL(drawable),req_width,req_height);
-    
-	      num_pixels = buf->height * buf->width * buf->bytes;
-	      thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
-	      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-	      width = buf->width;        
-	      height = buf->height;
-	      bpp = buf->bytes;
-	    }
+	  num_pixels = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = g_new (gint8, num_pixels);
+	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	  width = buf->width;        
+	  height = buf->height;
+	  bpp = buf->bytes;
+	}
     }
 
   return_args = procedural_db_return_args (&drawable_thumbnail_proc, success);

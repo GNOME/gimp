@@ -72,7 +72,7 @@ static ProcArg file_load_inargs[] =
   {
     PDB_INT32,
     "run_mode",
-    "The run mode: INTERACTIVE (0) or NONINTERACTIVE (1)"
+    "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
   },
   {
     PDB_STRING,
@@ -140,7 +140,7 @@ static ProcArg file_save_inargs[] =
   {
     PDB_INT32,
     "run_mode",
-    "The run mode: INTERACTIVE (0) or NONINTERACTIVE (1)"
+    "The run mode: RUN_INTERACTIVE (0) or RUN_NONINTERACTIVE (1)"
   },
   {
     PDB_IMAGE,

@@ -50,21 +50,6 @@ gulong new_color_pixel;
 
 gulong marching_ants_pixels[8];
 
-GtkDitherInfo *red_ordered_dither;
-GtkDitherInfo *green_ordered_dither;
-GtkDitherInfo *blue_ordered_dither;
-GtkDitherInfo *gray_ordered_dither;
-
-guchar ***ordered_dither_matrix;
-
-/*  These arrays are calculated for quick 24 bit to 16 color conversions  */
-gulong *g_lookup_red;
-gulong *g_lookup_green;
-gulong *g_lookup_blue;
-
-gulong *color_pixel_vals;
-gulong *gray_pixel_vals;
-
 static void make_color (gulong *pixel_ptr,
 			int     red,
 			int     green,
@@ -154,22 +139,6 @@ get_standard_colormaps ()
   g_visual = info->visual;
 
   g_cmap = info->cmap;
-#if 0
-  color_pixel_vals = info->color_pixels;
-  gray_pixel_vals = info->gray_pixels;
-  reserved_pixels = info->reserved_pixels;
-
-  red_ordered_dither = info->dither_red;
-  green_ordered_dither = info->dither_green;
-  blue_ordered_dither = info->dither_blue;
-  gray_ordered_dither = info->dither_gray;
-
-  ordered_dither_matrix = info->dither_matrix;
-
-  g_lookup_red = info->lookup_red;
-  g_lookup_green = info->lookup_green;
-  g_lookup_blue = info->lookup_blue;
-#endif
 
   set_app_colors ();
 }

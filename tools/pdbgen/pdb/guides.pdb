@@ -217,8 +217,9 @@ HELP
     );
 
     @outargs = (
-	{ name => 'orientation', type => 'enum GuideOrientation', init => 1,
-	  desc => "The guide's orientation: { %%desc%% }" }
+	{ name => 'orientation',
+	  type => &std_orientation_enum,
+	  desc => "The guide's orientation: { %%desc%% }", init => 1 }
     );
 
     %invoke = (

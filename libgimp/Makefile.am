@@ -100,6 +100,7 @@ libgimpui_la_SOURCES = \
 	gimpunitmenu.c
 
 gimpinclude_HEADERS = \
+	color_display.h		\
 	color_selector.h	\
 	gimp.h			\
 	gimpchainbutton.h	\

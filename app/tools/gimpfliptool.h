@@ -20,18 +20,14 @@
 
 #include "tools.h"
 
-typedef enum
-{
-  FLIP_HORZ,
-  FLIP_VERT
-} FlipType;
-
 /*  Flip tool functions  */
+
+#include "gimpimage.h"
 
 void *        flip_tool_transform (Tool *, gpointer, int);
 
 TileManager * flip_tool_flip (GimpImage *, GimpDrawable *,
-			      TileManager *, int, FlipType);
+			      TileManager *, int, OrientationType);
 Tool *        tools_new_flip         (void);
 void          tools_free_flip_tool   (Tool *);
 

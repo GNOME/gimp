@@ -22,9 +22,9 @@
 #include "gimplutF.h"
 #include "gimphistogramF.h"
 
-typedef enum /*< chop=_LUT >*/
+typedef enum
 {
-  VALUE_LUT,    /*< nick=VALUE/GRAY >*/
+  VALUE_LUT,
   RED_LUT,
   GREEN_LUT,
   BLUE_LUT,

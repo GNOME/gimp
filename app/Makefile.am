@@ -168,6 +168,8 @@ gimp_SOURCES = \
 	gdisplay.h		\
 	gdisplayP.h		\
 	gdisplayF.h		\
+	gdisplay_color.c	\
+	gdisplay_color.h	\
 	gdisplay_cmds.c		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\
@@ -317,6 +319,7 @@ gimp_SOURCES = \
 	pixel_processor.h	\
 	pixel_region.c		\
 	pixel_region.h		\
+	pixel_regionP.h		\
 	pixmaps.h		\
 	pixmaps2.h		\
 	plug_in.c		\

@@ -24,24 +24,29 @@
    provides. 
  */
 
-
 #ifndef __GIMP_CHAIN_BUTTON_H__
 #define __GIMP_CHAIN_BUTTON_H__
 
+
 #include <gtk/gtk.h>
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#define GIMP_CHAIN_BUTTON(obj)            GTK_CHECK_CAST (obj, gimp_chain_button_get_type (), GimpChainButton)
-#define GIMP_CHAIN_BUTTON_CLASS(klass)    GTK_CHECK_CLASS_CAST (klass, gimp_chain_button_get_type (), GimpChainButtonClass)
-#define GIMP_IS_CHAIN_BUTTON(obj)         GTK_CHECK_TYPE (obj, gimp_chain_button_get_type ())
+
+#define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
+#define GIMP_CHAIN_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
+#define GIMP_CHAIN_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
+#define GIMP_IS_CHAIN_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
+#define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
 
 typedef struct _GimpChainButton       GimpChainButton;
 typedef struct _GimpChainButtonClass  GimpChainButtonClass;
 
-typedef enum {
+typedef enum
+{
   GIMP_CHAIN_TOP,
   GIMP_CHAIN_LEFT,
   GIMP_CHAIN_BOTTOM,
@@ -79,10 +84,10 @@ void       gimp_chain_button_set_active (GimpChainButton   *gcb,
 					 gboolean           is_active);
 gboolean   gimp_chain_button_get_active (GimpChainButton   *gcb);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
+
 #endif /* __CHAIN_BUTTON_H__ */
-
-

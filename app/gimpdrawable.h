@@ -33,11 +33,11 @@ GtkType gimp_drawable_get_type (void);
 
 typedef enum
 {
-	FOREGROUND_FILL,
-	BACKGROUND_FILL,
-	WHITE_FILL,
-	TRANSPARENT_FILL,
-	NO_FILL
+	FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
+	BACKGROUND_FILL,	/*< nick=BG_IMAGE_FILL >*/
+	WHITE_FILL,		/*< nick=WHITE_IMAGE_FILL >*/
+	TRANSPARENT_FILL,	/*< nick=TRANS_IMAGE_FILL >*/
+	NO_FILL			/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
 
 

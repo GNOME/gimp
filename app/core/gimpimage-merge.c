@@ -428,12 +428,12 @@ gimp_image_resize (GimpImage *gimage,
 
       switch (guide->orientation)
 	{
-	case HORIZONTAL_GUIDE:
+	case ORIENTATION_HORIZONTAL:
 	  guide->position += offset_y;
 	  if (guide->position < 0 || guide->position > new_height)
 	    gimp_image_delete_guide (gimage, guide);
 	  break;
-	case VERTICAL_GUIDE:
+	case ORIENTATION_VERTICAL:
 	  guide->position += offset_x;
 	  if (guide->position < 0 || guide->position > new_width)
 	    gimp_image_delete_guide (gimage, guide);
@@ -537,10 +537,10 @@ gimp_image_scale (GimpImage *gimage,
 
       switch (guide->orientation)
 	{
-	case HORIZONTAL_GUIDE:
+	case ORIENTATION_HORIZONTAL:
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
-	case VERTICAL_GUIDE:
+	case ORIENTATION_VERTICAL:
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
 	default:
@@ -987,7 +987,7 @@ gimp_image_add_hguide (GimpImage *gimage)
   guide->ref_count = 0;
   guide->position = -1;
   guide->guide_ID = next_guide_id++;
-  guide->orientation = HORIZONTAL_GUIDE;
+  guide->orientation = ORIENTATION_HORIZONTAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
 
@@ -1003,7 +1003,7 @@ gimp_image_add_vguide (GimpImage *gimage)
   guide->ref_count = 0;
   guide->position = -1;
   guide->guide_ID = next_guide_id++;
-  guide->orientation = VERTICAL_GUIDE;
+  guide->orientation = ORIENTATION_VERTICAL;
 
   gimage->guides = g_list_prepend (gimage->guides, guide);
 

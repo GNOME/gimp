@@ -223,7 +223,7 @@ HELP
 	  desc => 'The layer name' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity: (%%desc%%)', alias => 'opacity_arg' },
-	{ name => 'mode', type => &std_layer_mode_enum,
+	{ name => 'mode', type => 'enum LayerModeEffects',
 	  desc => 'The layer combination mode: { %%desc%% }' }
     );
     $inargs[0]->{desc} .= ' to which to add the layer';
@@ -516,7 +516,7 @@ CODE2
 		   '$invoke{code} =~
 			s%(opacity);$%(int) (($1 * 255) / 100);%' ]);
 
-&layer_accessors('mode', &std_layer_mode_enum, 'combination mode', 0, 0);
+&layer_accessors('mode', 'enum LayerModeEffects', 'combination mode', 0, 0);
 
 &layer_accessors('linked', 'int32', 'linked state', 0, 0,
 		 <<'CODE');

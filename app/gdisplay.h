@@ -22,6 +22,8 @@
 #include "info_dialog.h"
 #include "selection.h"
 
+#include "libgimp/color_display.h"
+
 #include "gdisplayF.h"
 
 /*
@@ -150,6 +152,10 @@ struct _GDisplay
   short have_cursor;		  /* is cursor currently drawn ?              */
   
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
+  
+  char *cd_name;                  /* color display conversion stuff           */
+  gpointer cd_ID;
+  GimpColorDisplayConvert cd_convert;
 };
 
 

@@ -343,11 +343,11 @@ while (glist  != NULL)  {
 	remove_guide = FALSE;
 
 	switch (guide->orientation) {
-		case HORIZONTAL_GUIDE:
+		case ORIENTATION_HORIZONTAL:
 			if ((guide->position < y1) ||(guide->position > y2))
 				remove_guide = TRUE;
 		break;
-		case VERTICAL_GUIDE:
+		case ORIENTATION_VERTICAL:
 			if ((guide->position < x1) ||(guide->position > x2))
 				remove_guide = TRUE;
 		break;
@@ -362,7 +362,7 @@ while (glist  != NULL)  {
           guide = NULL;
 	}
 	else {
-		if (guide->orientation == HORIZONTAL_GUIDE) {
+		if (guide->orientation == ORIENTATION_HORIZONTAL) {
 			guide->position -= y1 ;
 			}
 		else {

@@ -68,11 +68,13 @@ typedef void (*GimpColorSelector_SetColorFunc)(void *selector_data,
 					       int r, int g, int b,
 					       int set_current);
 
-typedef struct {
+typedef struct _GimpColorSelectorMethods GimpColorSelectorMethods;
+
+struct _GimpColorSelectorMethods {
   GimpColorSelector_NewFunc      new;
   GimpColorSelector_FreeFunc     free;
   GimpColorSelector_SetColorFunc setcolor;
-} GimpColorSelectorMethods;
+};
 
 typedef void *GimpColorSelectorID;
 

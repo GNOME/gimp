@@ -87,7 +87,7 @@ shear_tool_transform (Tool     *tool,
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
       direction_unknown = 1;
-      transform_core->trans_info[HORZ_OR_VERT] = HORZ_SHEAR;
+      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
       transform_core->trans_info[XSHEAR] = 0.0;
       transform_core->trans_info[YSHEAR] = 0.0;
 
@@ -121,7 +121,7 @@ shear_tool_transform (Tool     *tool,
 
 
 Tool *
-tools_new_shear_tool ()
+tools_new_shear_tool (void)
 {
   Tool * tool;
   TransformCore * private;
@@ -239,13 +239,13 @@ shear_tool_motion (Tool *tool,
 	{
 	  if (abs(diffx) > abs(diffy))
 	    {
-	      transform_core->trans_info[HORZ_OR_VERT] = HORZ_SHEAR;
-	      transform_core->trans_info[VERT_SHEAR] = 0.0;
+	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_HORIZONTAL;
+	      transform_core->trans_info[ORIENTATION_VERTICAL] = 0.0;
 	    }
 	  else
 	    {
-	      transform_core->trans_info[HORZ_OR_VERT] = VERT_SHEAR;
-	      transform_core->trans_info[HORZ_SHEAR] = 0.0;
+	      transform_core->trans_info[HORZ_OR_VERT] = ORIENTATION_VERTICAL;
+	      transform_core->trans_info[ORIENTATION_HORIZONTAL] = 0.0;
 	    }
 
 	  direction_unknown = 0;
@@ -265,25 +265,25 @@ shear_tool_motion (Tool *tool,
       switch (transform_core->function)
 	{
 	case HANDLE_1 :
-	  if (dir == HORZ_SHEAR)
+	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
 	case HANDLE_2 :
-	  if (dir == HORZ_SHEAR)
+	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] -= diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] += diffy;
 	  break;
 	case HANDLE_3 :
-	  if (dir == HORZ_SHEAR)
+	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] -= diffy;
 	  break;
 	case HANDLE_4 :
-	  if (dir == HORZ_SHEAR)
+	  if (dir == ORIENTATION_HORIZONTAL)
 	    transform_core->trans_info[XSHEAR] += diffx;
 	  else
 	    transform_core->trans_info[YSHEAR] += diffy;
@@ -323,7 +323,7 @@ shear_tool_recalc (Tool *tool,
   gimp_matrix_translate (transform_core->transform, -cx, -cy);
 
   /*  shear matrix  */
-  if (transform_core->trans_info[HORZ_OR_VERT] == HORZ_SHEAR)
+  if (transform_core->trans_info[HORZ_OR_VERT] == ORIENTATION_HORIZONTAL)
     gimp_matrix_xshear (transform_core->transform,
 		   (float) transform_core->trans_info [XSHEAR] / height);
   else
@@ -343,7 +343,7 @@ shear_tool_recalc (Tool *tool,
 
 
 void *
-shear_tool_shear (GImage       *gimage,
+shear_tool_shear (GimpImage    *gimage,
 		  GimpDrawable *drawable,
 		  GDisplay     *gdisp,
 		  TileManager  *float_tiles,

@@ -786,7 +786,7 @@ gdisplay_draw_guide (GDisplay *gdisp,
   if (x2 > w) x2 = w;
   if (y2 > h) y2 = h;
 
-  if (guide->orientation == HORIZONTAL_GUIDE)
+  if (guide->orientation == ORIENTATION_HORIZONTAL)
     {
       gdisplay_transform_coords (gdisp, 0, guide->position, &x, &y, FALSE);
 
@@ -795,7 +795,7 @@ gdisplay_draw_guide (GDisplay *gdisp,
       else
 	gdk_draw_line (gdisp->canvas->window, normal_hgc, x1, y, x2, y);
     }
-  else if (guide->orientation == VERTICAL_GUIDE)
+  else if (guide->orientation == ORIENTATION_VERTICAL)
     {
       gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y, FALSE);
 
@@ -832,14 +832,14 @@ gdisplay_find_guide (GDisplay *gdisp,
 
 	  switch (guide->orientation)
 	    {
-	    case HORIZONTAL_GUIDE:
+	    case ORIENTATION_HORIZONTAL:
 	      pos = (int) (scaley * guide->position - offset_y);
 	      if ((guide->position != -1) &&
 		  (pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
-	    case VERTICAL_GUIDE:
+	    case ORIENTATION_VERTICAL:
 	      pos = (int) (scalex * guide->position - offset_x);
 	      if ((guide->position != -1) &&
 		  (pos > (x - EPSILON)) &&
@@ -890,7 +890,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 
 	  switch (guide->orientation)
 	    {
-	    case HORIZONTAL_GUIDE:
+	    case ORIENTATION_HORIZONTAL:
 	      pos = (int) (scaley * guide->position - offset_y);
 	      if ((pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
@@ -905,7 +905,7 @@ gdisplay_snap_point (GDisplay *gdisp,
 		    }
 		}
 	      break;
-	    case VERTICAL_GUIDE:
+	    case ORIENTATION_VERTICAL:
 	      pos = (int) (scalex * guide->position - offset_x);
 	      if ((pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
@@ -1709,10 +1709,10 @@ gdisplay_expose_guide (GDisplay *gdisp,
 
   switch (guide->orientation)
     {
-    case HORIZONTAL_GUIDE:
+    case ORIENTATION_HORIZONTAL:
       gdisplay_expose_area (gdisp, 0, y, gdisp->disp_width, 1);
       break;
-    case VERTICAL_GUIDE:
+    case ORIENTATION_VERTICAL:
       gdisplay_expose_area (gdisp, x, 0, 1, gdisp->disp_height);
       break;
     }

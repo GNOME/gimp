@@ -24,14 +24,14 @@
      
 
 /* the image types */
-typedef enum  /*< chop=_GIMAGE >*/
+typedef enum
 {
-  RGB_GIMAGE,
-  RGBA_GIMAGE,
-  GRAY_GIMAGE,
-  GRAYA_GIMAGE,
-  INDEXED_GIMAGE,
-  INDEXEDA_GIMAGE
+  RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
+  RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
+  GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/
+  GRAYA_GIMAGE,		/*< nick=GRAYA_IMAGE >*/
+  INDEXED_GIMAGE,	/*< nick=INDEXED_IMAGE >*/
+  INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
 } GimpImageType;
 
 
@@ -57,10 +57,11 @@ typedef enum
 
 #define COLORMAP_SIZE    768
 
-typedef enum {  /*< chop=_GUIDE >*/
-  HORIZONTAL_GUIDE = 1,
-  VERTICAL_GUIDE
-} GuideOrientation;
+typedef enum { /*< chop=ORIENTATION_ >*/
+  ORIENTATION_UNKNOWN,
+  ORIENTATION_HORIZONTAL,
+  ORIENTATION_VERTICAL
+} OrientationType;
 
 typedef enum
 {

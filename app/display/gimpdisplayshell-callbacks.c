@@ -35,9 +35,6 @@
 #include "gimage.h"
 #include "dialog_handler.h"
 
-#define HORIZONTAL  1
-#define VERTICAL    2
-
 /* Function declarations */
 
 static void gdisplay_check_device_cursor (GDisplay *gdisp);

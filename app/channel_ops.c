@@ -709,11 +709,11 @@ duplicate (GimpImage *gimage)
 
       switch (guide->orientation)
 	{
-	case HORIZONTAL_GUIDE:
+	case ORIENTATION_HORIZONTAL:
 	  new_guide = gimp_image_add_hguide(new_gimage);
 	  new_guide->position = guide->position;
 	  break;
-	case VERTICAL_GUIDE:
+	case ORIENTATION_VERTICAL:
 	  new_guide = gimp_image_add_vguide(new_gimage);
 	  new_guide->position = guide->position;
 	  break;
