@@ -1,3 +1,8 @@
+2005-01-21  Manish Singh  <yosh@gimp.org>
+
+	* app/display/gimpdisplayshell.c: #include gimpbase.h for declaration
+	of gimp_param_spec_unit().
+
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpenumwidgets.c: added more gtk-doc comments.
