@@ -293,6 +293,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererToggle *toggle;
   GdkRectangle            toggle_rect;
+  GdkRectangle            draw_rect;
   GtkStateType            state;
   gboolean                active;
 
@@ -339,26 +340,24 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
         state = GTK_STATE_INSENSITIVE;
     }
 
-  gtk_paint_shadow (widget->style,
-                    window,
-                    state,
-                    active ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
-                    cell_area,
-                    widget, NULL,
-                    toggle_rect.x,     toggle_rect.y,
-                    toggle_rect.width, toggle_rect.height);
+  if (gdk_rectangle_intersect (expose_area, cell_area, &draw_rect))
+    gtk_paint_shadow (widget->style,
+                      window,
+                      state,
+                      active ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
+                      &draw_rect,
+                      widget, NULL,
+                      toggle_rect.x,     toggle_rect.y,
+                      toggle_rect.width, toggle_rect.height);
 
   if (active)
     {
-      GdkRectangle  draw_rect;
-
       toggle_rect.x      += widget->style->xthickness;
       toggle_rect.y      += widget->style->ythickness;
       toggle_rect.width  -= widget->style->xthickness * 2;
       toggle_rect.height -= widget->style->ythickness * 2;  
       
-      if (gdk_rectangle_intersect (cell_area, &toggle_rect, &draw_rect) &&
-          gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))
+      if (gdk_rectangle_intersect (&draw_rect, &toggle_rect, &draw_rect))
         gdk_draw_pixbuf (window,
                          widget->style->black_gc,
                          toggle->pixbuf,

@@ -137,8 +137,8 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
       enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
       enum_value = g_enum_get_value (enum_class, component);
       g_type_class_unref (enum_class);
-
-      name = g_strdup_printf (_("%s Component Copy"),
+      
+      name = g_strdup_printf (_("%s Channel Copy"),
                               gettext (enum_value->value_name));
 
       new_channel = gimp_channel_new_from_component (gimage, component,
@@ -201,7 +201,7 @@ channels_channel_to_sel (GtkWidget      *widget,
     }
 
   gimp_image_mask_select_channel (gimage,
-                                  _("Component to Selection"),
+                                  _("Channel to Selection"),
                                   channel,
                                   0, 0,
                                   op,

@@ -236,7 +236,6 @@ app/widgets/gimpbufferview.c
 app/widgets/gimpchannellistview.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolormapeditor.c
-app/widgets/gimpcomponentlistitem.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdatafactoryview.c

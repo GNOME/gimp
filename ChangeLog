@@ -1,5 +1,10 @@
 2003-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/channels-commands.c: don't expose the internal term
+	"component", use "channel" instead.
+
+2003-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcellrenderertoggle.c
 	* app/widgets/gimpcellrendererviewable.c: handle RTL layout.
 

@@ -520,8 +520,7 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
                            render_rect.width,
                            render_rect.height,
                            GDK_RGB_DITHER_NORMAL,
-                           expose_area->x - draw_area->x,
-                           expose_area->y - draw_area->y);
+                           0, 0);
         }
     }
   else if (renderer->buffer)
