@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-06-21 21:21+0200\n"
-"PO-Revision-Date: 2002-06-14 23:25+0200\n"
+"PO-Revision-Date: 2002-07-07 12:30+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1593,7 +1593,7 @@ msgstr "Informacje o programie GIMP"
 #: app/gui/about-dialog.c:1
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "Wersja %s stworzona przez"
+msgstr "Autorami programu w wersji %s są"
 
 #: app/gui/about-dialog.c:1
 msgid "Visit http://www.gimp.org/ for more information"
@@ -5322,7 +5322,7 @@ msgid ""
 "using the default resolution instead."
 msgstr ""
 "Rozdzielczość obrazu przekracza dopuszczalny zakres.\n"
-"Wykorzystanie domyślnej rozdzielczości."
+"Użyto rozdzielczości domyślnej."
 
 #: app/pdb/internal_procs.c:1
 msgid "Internal Procedures"
