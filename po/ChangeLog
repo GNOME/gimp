@@ -1,3 +1,10 @@
+2002-04-12  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* pl.po: Updated Polish translation by
+	GNOME PL Team <translators@gnome.pl>.
+
+	* POTFILES.in: Added app/gradient.c.
+
 2002-04-06  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.

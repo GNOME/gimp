@@ -4,6 +4,7 @@
 app/app_procs.c
 app/gimphelp.c
 app/gimprc.c
+app/gradient.c
 app/main.c
 app/nav_window.c
 app/undo.c
