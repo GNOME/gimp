@@ -95,6 +95,10 @@ while (<>) {
         defined $options{'proxy-skip'}    and $in_skip = 1;
         defined $options{'proxy-resume'}  and $in_skip = 0;
         defined $options{'proxy-include'} and $include = 1;
+        if ($options{'proxy-subst'}) {
+            $_ = $options{'proxy-subst'} . "\n";
+            $include = 1;
+        }
     }
         
 
