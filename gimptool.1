@@ -12,6 +12,8 @@ gimptool - script to perform various Gimpy functions
 [\-\-install\-admin\-strip \fIplug-in.c\fP] [\-\-install\-bin\-strip \fIplug\-in\fP]
 [\-\-\install\-admin\-bin \fIplug\-in\fP] [\-\-install\-script \fIscript.scm\fP] 
 [\-\-\install\-admin\-script \fIscript.scm\fP]
+[\-\-uninstall\-bin \fIplug\-in\fP] [\-\-uninstall\-admin\-bin \fIplug\-in\fP]
+[\-\-uninstall\-script \fIscript.scm\fP] [\-\-uninstall\-admin\-script \fIscript.scm\fP]
 
 
 .SH DESCRIPTION
@@ -94,6 +96,22 @@ script directory (\fB$HOME\fP/.gimp/scripts)
 Install \fIscript.scm\fP into the system-wide \fIGimp\fP
 script directory (\fB$PREFIX\fP/share/gimp/scripts)
 .TP 8
+.B  \-\-uninstall\-bin \fIplug-in\fP
+Uninstall \fIplug-in\fP from the user's personal \fIGimp\fP
+plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+.TP 8
+.B  \-\-uninstall\-admin\-bin \fIplug-in\fP
+Uninstall \fIplug-in\fP from the system-wide \fIGimp\fP
+plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+.TP 8
+.B  \-\-uninstall\-script \fIscript.scm\fP
+Uninstall \fIscript.scm\fP from the user's personal \fIGimp\fP
+script directory (\fB$HOME\fP/.gimp/scripts)
+.TP 8
+.B  \-\-uninstall\-admin\-script \fIscript.scm\fP
+Uninstall \fIscript.scm\fP from the system-wide \fIGimp\fP
+script directory (\fB$PREFIX\fP/share/gimp/scripts)
+.TP 8
 .B  \-\-libs
 Print the linker flags that are necessary to link a \fIGimp\fP plug-in.
 .TP 8
@@ -150,8 +168,9 @@ process of many gtk apps.
 gimptool was written by Manish Singh (yosh@gimp.org) and based on
 gtk-config by Owen Taylor (owen@gtk.org).
 
-This man page was written by Ben Gertzfield (che@debian.org), and
-tweaked by Manish Singh (yosh@gimp.org) and Adrian Likins (adrian@gimp.org).
+This man page was written by Ben Gertzfield (che@debian.org), and tweaked
+by Manish Singh (yosh@gimp.org), Adrian Likins (adrian@gimp.org) and Marc
+Lehmann (pcg@goof.com>).
 
 
 .SH COPYRIGHT

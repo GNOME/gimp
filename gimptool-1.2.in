@@ -39,8 +39,13 @@ User options:
   --install-bin plug-in           install a compiled plug-in
   --install-script script.scm     install a script-fu script
 
-The --install options can be prefixed with --install-admin instead to install
-a plug-in or script in the site directory instead of a user directory.
+  --uninstall-bin plug-in         remove a plug-in again
+  --uninstall-script plug-in      remove a script-fu script
+
+The --install and --uninstall options have "admin" counterparts (with
+prefix --install-admin instead of --installl) that can be used instead to
+install/uninstall a plug-in or script in the site directory instead of a
+user directory.
 
 For plug-ins which do not use GTK+, the --build and --install options can be
 appended with -noui for appropriate settings. For plug-ins that use GTK+ but
@@ -57,7 +62,7 @@ noarg="\
 Error: Need a plug-in source file to build"
 
 notfound="\
-Error: Couldn't find source file to build"
+Error: Couldn't find file to build/install/uninstall"
 
 quiet=no
 donothing=no
@@ -195,9 +200,11 @@ while test $# -gt 0; do
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \
-    | --install-script | --install-admin-script)
+    | --install-script | --install-admin-script \
+    | --uninstall-bin | --uninstall-admin-bin \
+    | --uninstall-script | --uninstall-admin-script )
       case $1 in
-        --install-bin)
+        --*install-bin)
           install_cmd="@INSTALL_PROGRAM@"
           install_dir="$HOME/@gimpdir@/plug-ins"
           ;;
@@ -205,7 +212,7 @@ while test $# -gt 0; do
           install_cmd="@INSTALL_PROGRAM@ -s"
           install_dir="$HOME/@gimpdir@/plug-ins"
           ;;
-        --install-admin-bin)
+        --*install-admin-bin)
           install_cmd="@INSTALL_PROGRAM@"
           install_dir="$plug_in_dir/plug-ins"
           ;;
@@ -213,29 +220,49 @@ while test $# -gt 0; do
           install_cmd="@INSTALL_PROGRAM@ -s"
           install_dir="$plug_in_dir/plug-ins"
           ;;
-        --install-script)
+        --*install-script)
           install_cmd="@INSTALL_DATA@"
           install_dir="$HOME/@gimpdir@/scripts"
           ;;
-        --install-admin-script)
+        --*install-admin-script)
           install_cmd="@INSTALL_DATA@"
           install_dir="$data_dir/scripts"
           ;;
       esac
-      shift
-      if test "x$1" != "x"; then
-        if test -r "$1"; then
-          cmd="$install_cmd $1 $install_dir/$1"
-          test $quiet = "yes" || echo $cmd
-          test $donothing = "yes" || exec $cmd
-        else
-          echo "${notfound}" 1>&2
-          exit 1
-        fi  
-      else
-        echo "${noarg}" 1>&2
-        exit 1
-      fi
+      case $1 in
+        --uninstall-* )
+          shift
+          if test "x$1" != "x"; then
+            if test -f "$install_dir/$1"; then
+              cmd="rm -f $install_dir/$1"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || exec $cmd
+            else
+              echo "${notfound}" 1>&2
+              exit 1
+            fi  
+          else
+            echo "${noarg}" 1>&2
+            exit 1
+          fi
+          ;;
+        *)
+          shift
+          if test "x$1" != "x"; then
+            if test -r "$1"; then
+              cmd="$install_cmd $1 $install_dir/$1"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || exec $cmd
+            else
+              echo "${notfound}" 1>&2
+              exit 1
+            fi  
+          else
+            echo "${noarg}" 1>&2
+            exit 1
+          fi
+        ;;
+      esac
       ;;
     --build | --install | --install-admin | --build-strip | --install-strip \
     | --install-admin-strip | --build-nogimpui | --install-nogimpui \
