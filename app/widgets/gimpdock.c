@@ -426,7 +426,8 @@ gimp_dock_separator_new (GimpDock *dock)
   gtk_widget_show (frame);
 
   gimp_help_set_help_data (event_box,
-                           _("You can drop dockable dialogs here."), NULL);
+                           _("You can drop dockable dialogs here."),
+                             "gimp-dock-separator");
 
   gtk_drag_dest_set (GTK_WIDGET (event_box),
                      GTK_DEST_DEFAULT_ALL,

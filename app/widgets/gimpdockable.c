@@ -209,7 +209,8 @@ gimp_dockable_init (GimpDockable *dockable)
   gtk_button_set_relief (GTK_BUTTON (dockable->close_button), GTK_RELIEF_NONE);
   gtk_widget_show (dockable->close_button);
 
-  gimp_help_set_help_data (dockable->close_button, _("Close this Tab"), NULL);
+  gimp_help_set_help_data (dockable->close_button, _("Close this Tab"),
+                           "gimp-dockable-close-tab");
 
   image = gtk_image_new_from_stock (GIMP_STOCK_CLOSE, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockable->close_button), image);
