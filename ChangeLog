@@ -1,3 +1,8 @@
+2004-04-29  Manish Singh  <yosh@gimp.org>
+
+        * plug-ins/pygimp/plug-ins/py-slice.py: Quick fix to make uppercase
+        tags work properly.
+
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail): removed

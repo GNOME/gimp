@@ -150,6 +150,7 @@ class TableWriter:
     def write(self, s, vals=None):
         if self.capitalize:
             s = s.upper()
+            s = s.replace('%S', '%s')
         else:
             s = s.lower()
 
