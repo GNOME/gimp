@@ -27,7 +27,7 @@
 #include <libgimp/color_display.h>
 #include <libgimp/gimpmodule.h>
 #include <math.h>
-#include "modregister.h"
+#include "gimpmodregister.h"
 
 struct main_funcs_struc *gimp_main_funcs = NULL;
 
