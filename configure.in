@@ -236,6 +236,8 @@ dnl Test for libjpeg
       AC_MSG_CHECKING([for jpeglib.h])
       AC_TRY_CPP(
 [#include <stdio.h>
+#undef HAVE_STDDEF_H
+#undef HAVE_STDLIB_H
 #undef PACKAGE
 #undef VERSION
 #include <jpeglib.h>],
