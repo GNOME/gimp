@@ -1,3 +1,9 @@
+2004-12-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base-enums.[ch]: added translatable strings to the
+	GimpLayerModeEffects enum because they will soon disappear from
+	widgets/gimpwidgets-constructors.c
+
 2004-12-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/compose.c: add "Recompose" (plug_in_recompose) 
