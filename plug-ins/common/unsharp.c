@@ -230,14 +230,11 @@ run (const gchar      *name,
       /* here we go */
       unsharp_mask (drawable, unsharp_params.radius, unsharp_params.amount);
 
-      /* values[0].data.d_status = status; */
       gimp_displays_flush ();
 
       /* set data for next use of filter */
       gimp_set_data ("plug_in_unsharp_mask", &unsharp_params,
                      sizeof (UnsharpMaskParams));
-
-      /*fprintf(stderr, "%f %f\n", unsharp_params.radius, unsharp_params.amount);*/
 
       gimp_drawable_detach(drawable);
       values[0].data.d_status = status;
@@ -354,7 +351,7 @@ blur_line (const gdouble *ctable,
             }
         }
 
-      /* for the edge condition, we only use available info, and scale to one */
+      /* for the edge condition, we only use available info and scale to one */
       for (; row < y; row++)
         {
           /* find scale factor */
@@ -382,24 +379,23 @@ unsharp_mask (GimpDrawable *drawable,
               gdouble       amount)
 {
   GimpPixelRgn srcPR, destPR;
-  glong        width, height;
-  glong        bytes;
   gint         x1, y1, x2, y2;
 
   /* Get the input */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
   gimp_progress_init (_("Blurring..."));
 
-  width = drawable->width;
-  height = drawable->height;
-  bytes = drawable->bpp;
-
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR,  drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable,
+                       0, 0, drawable->width, drawable->height, TRUE, TRUE);
 
-  unsharp_region (&srcPR, &destPR,
-                  bytes, radius, amount, x1, x2, y1, y2, TRUE);
+  unsharp_region (&srcPR, &destPR, drawable->bpp,
+                  radius, amount,
+                  x1, x2, y1, y2,
+                  TRUE);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -461,7 +457,7 @@ unsharp_region (GimpPixelRgn *srcPR,
   /* blur the cols */
   for (col = 0; col < width; col++)
     {
-      gimp_pixel_rgn_get_col (srcPR, src, x1 + col, y1, height);
+      gimp_pixel_rgn_get_col (destPR, src, x1 + col, y1, height);
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
@@ -573,6 +569,7 @@ gen_convolve_matrix (gdouble   radius,
           if (base_x + 0.02 * j <= radius)
             sum += exp (- SQR (base_x + 0.02 * j) / (2 * SQR (std_dev)));
         }
+
       cmatrix[i] = sum / 50;
     }
 
@@ -584,9 +581,7 @@ gen_convolve_matrix (gdouble   radius,
    * even if the center point is weighted slightly higher than others. */
   sum = 0;
   for (j = 0; j <= 50; j++)
-    {
-      sum += exp (- SQR (0.5 + 0.02 * j) / (2 * SQR (std_dev)));
-    }
+    sum += exp (- SQR (0.5 + 0.02 * j) / (2 * SQR (std_dev)));
 
   cmatrix[matrix_length / 2] = sum / 51;
 
@@ -695,7 +690,8 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
+                              unsharp_params.threshold,
+                              0.0, 255.0, 1.0, 10.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
 
@@ -723,29 +719,31 @@ preview_update (GimpPreview *preview)
   gint          y1, y2;
   gint          x, y;
   gint          width, height;
+  gint          border;
   GimpPixelRgn  srcPR;
   GimpPixelRgn  destPR;
 
   drawable =
     gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable,
+                       0, 0, drawable->width, drawable->height, TRUE, TRUE);
+
   gimp_preview_get_position (preview, &x, &y);
   gimp_preview_get_size (preview, &width, &height);
 
   /* enlarge the region to avoid artefacts at the edges of the preview */
-  x1 = MAX (0, x - unsharp_params.radius);
-  y1 = MAX (0, y - unsharp_params.radius);
-  x2 = MIN (x + width  + unsharp_params.radius, drawable->width);
-  y2 = MIN (y + height + unsharp_params.radius, drawable->height);
-
-  gimp_pixel_rgn_init (&srcPR,
-                       drawable, x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR,
-                       drawable, x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
+  border = 2.0 * unsharp_params.radius + 0.5;
+  x1 = MAX (0, x - border);
+  y1 = MAX (0, y - border);
+  x2 = MIN (x + width  + border, drawable->width);
+  y2 = MIN (y + height + border, drawable->height);
 
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
-                  x, x + width, y, y + height,
+                  x1, x2, y1, y2,
                   FALSE);
 
   gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, FALSE, TRUE);
