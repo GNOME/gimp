@@ -960,6 +960,9 @@ dialog (gint32        image_ID,
   g_signal_connect (button, "color_changed", 
                     G_CALLBACK (gimp_color_button_get_color), 
                     &grid_cfg.icolor);
+  g_signal_connect (button, "color_changed", 
+                    G_CALLBACK (update_preview), 
+                    NULL);
 
   gtk_widget_show (table);
 
