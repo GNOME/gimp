@@ -20,19 +20,19 @@
 #ifndef __GIMPMATRIX_H__
 #define __GIMPMATRIX_H__
 
-typedef double  GimpMatrix[3][3];
+typedef double GimpMatrix[3][3];
 
-void          gimp_matrix_transform_point (const GimpMatrix, double, double,
+void          gimp_matrix_transform_point (GimpMatrix, double, double,
 					   double *, double *);
-void          gimp_matrix_mult            (const GimpMatrix, GimpMatrix);
+void          gimp_matrix_mult            (GimpMatrix, GimpMatrix);
 void          gimp_matrix_identity        (GimpMatrix);
 void          gimp_matrix_translate       (GimpMatrix, double, double);
 void          gimp_matrix_scale           (GimpMatrix, double, double);
 void          gimp_matrix_rotate          (GimpMatrix, double);
 void          gimp_matrix_xshear          (GimpMatrix, double);
 void          gimp_matrix_yshear          (GimpMatrix, double);
-double        gimp_matrix_determinant     (const GimpMatrix);
-void          gimp_matrix_invert          (const GimpMatrix m, GimpMatrix m_inv);
+double        gimp_matrix_determinant     (GimpMatrix);
+void          gimp_matrix_invert          (GimpMatrix m, GimpMatrix m_inv);
 
 
 #endif  /*  __GIMPMATRIX_H__  */

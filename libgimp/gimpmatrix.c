@@ -21,7 +21,7 @@
 #include <math.h>
 
 void
-gimp_matrix_transform_point (const GimpMatrix m, double x, double y,
+gimp_matrix_transform_point (GimpMatrix m, double x, double y,
 			     double *newx, double *newy)
 {
   double w;
@@ -37,7 +37,7 @@ gimp_matrix_transform_point (const GimpMatrix m, double x, double y,
 }
 
 void
-gimp_matrix_mult (const GimpMatrix m1, GimpMatrix m2)
+gimp_matrix_mult (GimpMatrix m1, GimpMatrix m2)
 {
   int i, j;
   GimpMatrix tmp;
@@ -138,7 +138,7 @@ gimp_matrix_yshear (GimpMatrix m, double amnt)
 
 
 double
-gimp_matrix_determinant (const GimpMatrix m)
+gimp_matrix_determinant (GimpMatrix m)
 {
   double determinant;
 
@@ -150,7 +150,7 @@ gimp_matrix_determinant (const GimpMatrix m)
 }
 
 void
-gimp_matrix_invert (const GimpMatrix m, GimpMatrix m_inv)
+gimp_matrix_invert (GimpMatrix m, GimpMatrix m_inv)
 {
   double det_1;
 
