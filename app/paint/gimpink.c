@@ -54,7 +54,8 @@ static void      gimp_ink_finalize       (GObject            *object);
 static void      gimp_ink_paint          (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  paint_state);
+                                          GimpPaintCoreState  paint_state,
+                                          guint32             time);
 static TempBuf * gimp_ink_get_paint_area (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options);
@@ -165,14 +166,11 @@ static void
 gimp_ink_paint (GimpPaintCore      *paint_core,
                 GimpDrawable       *drawable,
                 GimpPaintOptions   *paint_options,
-                GimpPaintCoreState  paint_state)
+                GimpPaintCoreState  paint_state,
+                guint32             time)
 {
   GimpInk        *ink     = GIMP_INK (paint_core);
   GimpInkOptions *options = GIMP_INK_OPTIONS (paint_options);
-
-  static guint32  time    = 23;
-
-  time += 42;
 
   switch (paint_state)
     {

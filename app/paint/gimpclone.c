@@ -47,7 +47,8 @@ static void   gimp_clone_init             (GimpClone          *clone);
 static void   gimp_clone_paint            (GimpPaintCore      *paint_core,
                                            GimpDrawable       *drawable,
                                            GimpPaintOptions   *paint_options,
-                                           GimpPaintCoreState  paint_state);
+                                           GimpPaintCoreState  paint_state,
+                                           guint32             time);
 static void   gimp_clone_motion           (GimpPaintCore      *paint_core,
                                            GimpDrawable       *drawable,
                                            GimpPaintOptions   *paint_options);
@@ -155,7 +156,8 @@ static void
 gimp_clone_paint (GimpPaintCore      *paint_core,
                   GimpDrawable       *drawable,
                   GimpPaintOptions   *paint_options,
-                  GimpPaintCoreState  paint_state)
+                  GimpPaintCoreState  paint_state,
+                  guint32             time)
 {
   static gint   orig_src_x = 0;
   static gint   orig_src_y = 0;

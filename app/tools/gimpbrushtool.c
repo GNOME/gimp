@@ -268,7 +268,7 @@ gimp_paint_tool_control (GimpTool       *tool,
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
                              GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
-                             FINISH_PAINT);
+                             FINISH_PAINT, 0);
       gimp_paint_core_cleanup (paint_tool->core);
 
 #if 0
@@ -425,29 +425,29 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   /*  Let the specific painting function initialize itself  */
-  gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
+  gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT, time);
 
   /*  store the current brush pointer  */
   if (GIMP_IS_BRUSH_CORE (core))
     current_brush = GIMP_BRUSH_CORE (core)->brush;
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
-    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT);
+    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
   /*  Paint to the image  */
   if (paint_tool->draw_line)
     {
-      gimp_paint_core_interpolate (core, drawable, paint_options);
+      gimp_paint_core_interpolate (core, drawable, paint_options, time);
     }
   else
     {
-      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT, time);
     }
 
   gimp_display_flush_now (gdisp);
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
-    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT);
+    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
 
   /*  restore the current brush pointer  */
   if (GIMP_IS_BRUSH_CORE (core))
@@ -474,7 +474,7 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  Let the specific painting function finish up  */
-  gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
+  gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT, time);
 
   /*  resume the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
@@ -523,14 +523,14 @@ gimp_paint_tool_motion (GimpTool        *tool,
     return;
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
-    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT);
+    gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
-  gimp_paint_core_interpolate (core, drawable, paint_options);
+  gimp_paint_core_interpolate (core, drawable, paint_options, time);
 
   gimp_display_flush_now (gdisp);
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
-    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT);
+    gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
 }
 
 static void

@@ -48,7 +48,8 @@ static void       gimp_smudge_finalize   (GObject             *object);
 static void       gimp_smudge_paint      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options,
-                                          GimpPaintCoreState   paint_state);
+                                          GimpPaintCoreState   paint_state,
+                                          guint32              time);
 static gboolean   gimp_smudge_start      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options);
@@ -145,7 +146,8 @@ static void
 gimp_smudge_paint (GimpPaintCore      *paint_core,
                    GimpDrawable       *drawable,
                    GimpPaintOptions   *paint_options,
-                   GimpPaintCoreState  paint_state)
+                   GimpPaintCoreState  paint_state,
+                   guint32             time)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 

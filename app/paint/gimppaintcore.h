@@ -111,15 +111,18 @@ struct _GimpPaintCoreClass
   gboolean  (* pre_paint)      (GimpPaintCore      *core,
                                 GimpDrawable       *drawable,
                                 GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state);
+                                GimpPaintCoreState  paint_state,
+                                guint32             time);
   void      (* paint)          (GimpPaintCore      *core,
                                 GimpDrawable       *drawable,
                                 GimpPaintOptions   *paint_options,
-                                GimpPaintCoreState  paint_state);
+                                GimpPaintCoreState  paint_state,
+                                guint32             time);
 
   void      (* interpolate)    (GimpPaintCore      *core,
                                 GimpDrawable       *drawable,
-                                GimpPaintOptions   *paint_options);
+                                GimpPaintOptions   *paint_options,
+                                guint32             time);
 
   TempBuf * (* get_paint_area) (GimpPaintCore      *core,
                                 GimpDrawable       *drawable,
@@ -132,7 +135,8 @@ GType     gimp_paint_core_get_type       (void) G_GNUC_CONST;
 void      gimp_paint_core_paint          (GimpPaintCore      *core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  state);
+                                          GimpPaintCoreState  state,
+                                          guint32             time);
 
 gboolean  gimp_paint_core_start          (GimpPaintCore      *core,
                                           GimpDrawable       *drawable,
@@ -148,7 +152,8 @@ void      gimp_paint_core_constrain      (GimpPaintCore      *core);
 
 void      gimp_paint_core_interpolate    (GimpPaintCore      *core,
                                           GimpDrawable       *drawable,
-                                          GimpPaintOptions   *paint_options);
+                                          GimpPaintOptions   *paint_options,
+                                          guint32             time);
 
 
 /*  protected functions  */

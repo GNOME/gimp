@@ -48,7 +48,8 @@ static void   gimp_dodge_burn_finalize   (GObject            *object);
 static void   gimp_dodge_burn_paint      (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
-                                          GimpPaintCoreState  paint_state);
+                                          GimpPaintCoreState  paint_state,
+                                          guint32             time);
 static void   gimp_dodge_burn_motion     (GimpPaintCore      *paint_core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options);
@@ -153,7 +154,8 @@ static void
 gimp_dodge_burn_paint (GimpPaintCore      *paint_core,
                        GimpDrawable       *drawable,
                        GimpPaintOptions   *paint_options,
-                       GimpPaintCoreState  paint_state)
+                       GimpPaintCoreState  paint_state,
+                       guint32             time)
 {
   GimpDodgeBurn        *dodgeburn = GIMP_DODGE_BURN (paint_core);
   GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_OPTIONS (paint_options);

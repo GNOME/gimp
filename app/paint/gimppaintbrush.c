@@ -48,7 +48,8 @@ static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
 static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options,
-                                          GimpPaintCoreState   paint_state);
+                                          GimpPaintCoreState   paint_state,
+                                          guint32              time);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -114,7 +115,8 @@ static void
 gimp_paintbrush_paint (GimpPaintCore      *paint_core,
                        GimpDrawable       *drawable,
                        GimpPaintOptions   *paint_options,
-                       GimpPaintCoreState  paint_state)
+                       GimpPaintCoreState  paint_state,
+                       guint32             time)
 {
   switch (paint_state)
     {

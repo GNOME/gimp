@@ -61,7 +61,8 @@ static void   gimp_convolve_init             (GimpConvolve        *convolve);
 static void   gimp_convolve_paint            (GimpPaintCore       *paint_core,
                                               GimpDrawable        *drawable,
                                               GimpPaintOptions    *paint_options,
-                                              GimpPaintCoreState   paint_state);
+                                              GimpPaintCoreState   paint_state,
+                                              guint32              time);
 static void   gimp_convolve_motion           (GimpPaintCore       *paint_core,
                                               GimpDrawable        *drawable,
                                               GimpPaintOptions    *paint_options);
@@ -170,7 +171,8 @@ static void
 gimp_convolve_paint (GimpPaintCore      *paint_core,
                      GimpDrawable       *drawable,
                      GimpPaintOptions   *paint_options,
-                     GimpPaintCoreState  paint_state)
+                     GimpPaintCoreState  paint_state,
+                     guint32             time)
 {
   switch (paint_state)
     {

@@ -1,5 +1,26 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.[ch]: added "guint32 time" parameters
+	to GimpPaintCore::paint() and ::interpolate().
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c: changed accordingly.
+
+	* app/paint/gimpink.c: ditto and use the passed time instead of
+	hardcoded dummy values.
+
+	* app/paint/gimppaintcore-stroke.c: pass '0' as time.
+
+	* app/tools/gimppainttool.c: pass the GdkEvent time.
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/Makefile.am
 	* app/paint/gimpink-blob.[ch]
 	* app/paint/gimpink.[ch]

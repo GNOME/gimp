@@ -58,10 +58,12 @@ static gboolean gimp_brush_core_start             (GimpPaintCore      *core,
 static gboolean gimp_brush_core_pre_paint         (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
                                                    GimpPaintOptions   *paint_options,
-                                                   GimpPaintCoreState  paint_state);
+                                                   GimpPaintCoreState  paint_state,
+                                                   guint32             time);
 static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
-                                                   GimpPaintOptions   *paint_options);
+                                                   GimpPaintOptions   *paint_options,
+                                                   guint32             time);
 
 static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore      *paint_core,
                                                    GimpDrawable       *drawable,
@@ -268,7 +270,8 @@ static gboolean
 gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
                            GimpDrawable       *drawable,
                            GimpPaintOptions   *paint_options,
-                           GimpPaintCoreState  paint_state)
+                           GimpPaintCoreState  paint_state,
+                           guint32             time)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
 
@@ -378,7 +381,8 @@ gimp_avoid_exact_integer (gdouble *x)
 static void
 gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 			     GimpDrawable     *drawable,
-                             GimpPaintOptions *paint_options)
+                             GimpPaintOptions *paint_options,
+                             guint32           time)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   GimpVector2    delta_vec;
@@ -607,7 +611,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       /*  save the current brush  */
       current_brush = core->brush;
 
-      gimp_paint_core_paint (paint_core, drawable, paint_options, MOTION_PAINT);
+      gimp_paint_core_paint (paint_core, drawable, paint_options,
+                             MOTION_PAINT, time);
 
       /*  restore the current brush pointer  */
       core->brush = current_brush;
