@@ -1,3 +1,57 @@
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/apptypes.h: removed the "Layer" typedef.
+
+	* app/layer.[ch]: removed the defines of the old function names.
+
+	Don't implement methods of the parent class (get_name, get_tattoo, ...)
+	but define them as macros. They will go to a separate "pdb_glue.h"
+	header because they are used only by the PDB to simplify code
+	generation (no application file should say gimp_layer_get_tattoo()
+	but always gimp_drawable_get_tatoo()).
+
+	* app/channel.h
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/convert.c
+	* app/disp_callbacks.c
+	* app/floating_sel.[ch]
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimage_mask.h
+	* app/gimpdnd.c
+	* app/gimpdrawable.h
+	* app/gimpimage.[ch]
+	* app/gimplayermask.h
+	* app/global_edit.c
+	* app/image_new.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/resize.c
+	* app/undo.c
+	* app/xcf.[ch]
+	* app/pdb/drawable_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/tools/bucket_fill.c
+	* app/tools/by_color_select.c
+	* app/tools/clone.c
+	* app/tools/crop.c
+	* app/tools/edit_selection.c
+	* app/tools/ink.c
+	* app/tools/move.c
+	* app/tools/paint_core.c
+	* app/tools/rect_select.c
+	* app/tools/text_tool.c
+	* app/tools/transform_core.c
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly, cleanup.
+
 2001-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

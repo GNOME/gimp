@@ -42,7 +42,7 @@ sub layer_change_invoke {
 
     %invoke = (
 	headers => [ qw("undo.h" "floating_sel.h") ],
-	vars => [ 'GimpImage *gimage', 'Layer *floating_layer' ],
+	vars => [ 'GimpImage *gimage', 'GimpLayer *floating_layer' ],
 	code => <<CODE
 {
   if ((gimage = GIMP_DRAWABLE(layer)->gimage))
@@ -98,7 +98,7 @@ HELP
     }
 
     &layer_change_invoke("LAYER_\U$op\E",
-			 "layer_$op (layer, new_width, new_height, $args);");
+			 "gimp_layer_$op (layer, new_width, new_height, $args);");
 }
 
 sub layer_get_prop_proc {
@@ -117,7 +117,7 @@ sub layer_get_prop_proc {
 	  desc => "The layer $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "layer_get_$prop (layer)" : "layer->$prop";
+    my $alias = $func ? "gimp_layer_get_$prop (layer)" : "layer->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -154,7 +154,7 @@ sub layer_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "layer_set_$prop (layer, $prop);"
+    $invoke{code} = $func ? "gimp_layer_set_$prop (layer, $prop);"
 			  : "layer->$prop = $prop;";
 
     if ($type eq 'color') {
@@ -238,7 +238,9 @@ HELP
 	code => <<'CODE'
 {
   opacity = (int) ((opacity_arg * 255) / 100);
-  layer = layer_new (gimage, width, height, (GimpImageType) type, name, opacity, (LayerModeEffects) mode);
+  layer = gimp_layer_new (gimage, width, height,
+			  (GimpImageType) type, name,
+			  opacity, (LayerModeEffects) mode);
   success = layer != NULL;
 }
 CODE
@@ -271,7 +273,7 @@ HELP
     );
 
     %invoke = (
-	code => 'success = (copy = layer_copy (layer, add_alpha)) != NULL;'
+	code => 'success = (copy = gimp_layer_copy (layer, add_alpha)) != NULL;'
     );
 }
 
@@ -305,7 +307,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = (mask = layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
+success = (mask = gimp_layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
 CODE
     );
 }
@@ -350,7 +352,7 @@ HELP
     @inargs = ( &layer_arg );
     $inargs[0]->{desc} .= ' to delete';
 
-    %invoke = ( code => 'layer_delete (layer);' );
+    %invoke = ( code => 'gimp_layer_delete (layer);' );
 }
 
 sub layer_translate {
@@ -377,14 +379,14 @@ HELP
   layer_list = gimage->layers;
   while (layer_list)
     {
-      tmp_layer = (Layer *) layer_list->data;
+      tmp_layer = (GimpLayer *) layer_list->data;
       if ((tmp_layer == layer) || tmp_layer->linked)
-	layer_translate (tmp_layer, offx, offy);
+	gimp_layer_translate (tmp_layer, offx, offy);
       layer_list = layer_list->next;
     }
 }
 CODE
-    push @{$invoke{vars}}, 'Layer *tmp_layer', 'GSList *layer_list';
+    push @{$invoke{vars}}, 'GimpLayer *tmp_layer', 'GSList *layer_list';
 }
 
 sub layer_add_alpha {
@@ -404,7 +406,7 @@ HELP
 
     @inargs = ( &layer_arg );
 
-    %invoke = ( code => 'layer_add_alpha (layer);' );
+    %invoke = ( code => 'gimp_layer_add_alpha (layer);' );
 }
 
 sub layer_set_offsets {
@@ -459,7 +461,7 @@ HELP
     @outargs = (
 	{ name => 'is_floating_sel', type => 'boolean',
 	  desc => 'Non-zero if the layer is a floating selection',
-	  alias => 'layer_is_floating_sel (layer)', no_declare => 1 }
+	  alias => 'gimp_layer_is_floating_sel (layer)', no_declare => 1 }
     );
 }
 

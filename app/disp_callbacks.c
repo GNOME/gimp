@@ -790,9 +790,9 @@ gdisplay_drag_drop (GtkWidget      *widget,
        */
       if (drawable)
 	{
-          GImage           *src_gimage;
-	  Layer            *new_layer;
-	  GImage           *dest_gimage;
+          GimpImage        *src_gimage;
+	  GimpLayer        *new_layer;
+	  GimpImage        *dest_gimage;
 	  gint              src_width, src_height;
 	  gint              dest_width, dest_height;
 	  gint              off_x, off_y;
@@ -851,11 +851,11 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	  undo_push_group_start (dest_gimage, EDIT_PASTE_UNDO);
 
 	  new_layer =
-	    layer_new_from_tiles (dest_gimage,
-				  gimp_image_base_type_with_alpha (dest_gimage),
-				  tiles, 
-				  _("Pasted Layer"),
-				  OPAQUE_OPACITY, NORMAL_MODE);
+	    gimp_layer_new_from_tiles (dest_gimage,
+				       gimp_image_base_type_with_alpha (dest_gimage),
+				       tiles, 
+				       _("Pasted Layer"),
+				       OPAQUE_OPACITY, NORMAL_MODE);
 
 	  tile_manager_destroy (tiles);
 
@@ -866,7 +866,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	      off_x = (dest_gimage->width - src_width) / 2;
 	      off_y = (dest_gimage->height - src_height) / 2;
 
-	      layer_translate (new_layer, off_x, off_y);
+	      gimp_layer_translate (new_layer, off_x, off_y);
 
 	      gimp_image_add_layer (dest_gimage, new_layer, -1);
 

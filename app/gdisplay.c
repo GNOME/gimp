@@ -1439,9 +1439,9 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 		      gint     *x2,
 		      gint     *y2)
 {
-  Layer *layer;
-  gint off_x;
-  gint off_y;
+  GimpLayer *layer;
+  gint       off_x;
+  gint       off_y;
 
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_floating_sel (gdisp->gimage)))
@@ -1734,14 +1734,14 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   GimpImageBaseType  base_type = 0;
   GimpImageType      type      = -1;
   GimpDrawable      *drawable  = NULL;
-  Layer             *layer     = NULL;
-  gboolean fs    = FALSE;
-  gboolean aux   = FALSE;
-  gboolean lm    = FALSE;
-  gboolean lp    = FALSE;
-  gboolean alpha = FALSE;
-  gint     lind  = -1;
-  gint     lnum  = -1;
+  GimpLayer         *layer     = NULL;
+  gboolean           fs        = FALSE;
+  gboolean           aux       = FALSE;
+  gboolean           lm        = FALSE;
+  gboolean           lp        = FALSE;
+  gboolean           alpha     = FALSE;
+  gint               lind      = -1;
+  gint               lnum      = -1;
 
   if (gdisp)
     {
@@ -1760,8 +1760,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 	  layer = gimp_image_get_active_layer (gdisp->gimage);
 	  if (layer)
 	    {
-	      lm    = layer_get_mask (layer) ? TRUE : FALSE;
-	      alpha = layer_has_alpha (layer);
+	      lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
+	      alpha = gimp_layer_has_alpha (layer);
 	    }
 
 	  lind = gimp_image_get_layer_index (gdisp->gimage,
@@ -2243,11 +2243,11 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 				SelectionControl  function)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
-  gint count = 0;
+  GSList   *list;
+  gint      count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
-  while (list)
+  for (list  = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage && gdisp->select)
@@ -2272,8 +2272,6 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 	    }
 	  count++;
 	}
-
-      list = g_slist_next (list);
     }
 }
 
@@ -2281,8 +2279,8 @@ gdisplays_selection_visibility (GimpImage        *gimage,
 gboolean
 gdisplays_dirty (void)
 {
-  gboolean dirty = FALSE;
-  GSList *list = display_list;
+  gboolean  dirty = FALSE;
+  GSList   *list  = display_list;
 
   /*  traverse the linked list of displays  */
   while (list)

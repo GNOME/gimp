@@ -44,13 +44,13 @@ void            gimage_mask_translate     (GImage       *gimage,
 					   gint          off_x,
 					   gint          off_y);
 
-TileManager *   gimage_mask_extract       (GImage       *gimage,
+TileManager   * gimage_mask_extract       (GImage       *gimage,
 					   GimpDrawable *drawable,
 					   gboolean      cut_gimage,
 					   gboolean      keep_indexed,
 					   gboolean      add_alpha);
 
-Layer *         gimage_mask_float         (GImage       *gimage,
+GimpLayer     * gimage_mask_float         (GImage       *gimage,
 					   GimpDrawable *drawable,
 					   gint          off_x,
 					   gint          off_y);
@@ -80,15 +80,15 @@ void            gimage_mask_shrink        (GImage       *gimage,
 					   gboolean      edge_lock);
 
 void            gimage_mask_layer_alpha   (GImage       *gimage,
-					   Layer        *layer);
+					   GimpLayer    *layer);
 
 void            gimage_mask_layer_mask    (GImage       *gimage,
-					   Layer        *layer);
+					   GimpLayer    *layer);
 
 void            gimage_mask_load          (GImage       *gimage,
 					   Channel      *channel);
 
-Channel *       gimage_mask_save          (GImage       *gimage);
+Channel       * gimage_mask_save          (GImage       *gimage);
 
 gboolean        gimage_mask_stroke        (GImage       *gimage,
 					   GimpDrawable *drawable);

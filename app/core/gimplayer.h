@@ -23,38 +23,11 @@
 #include "gimpdrawable.h"
 
 
-/* EEK */
-
-#define layer_new                 gimp_layer_new
-#define layer_copy                gimp_layer_copy
-#define layer_create_mask         gimp_layer_create_mask
-#define layer_scale               gimp_layer_scale
-#define layer_resize              gimp_layer_resize
-#define layer_delete              gimp_layer_delete
-#define layer_translate           gimp_layer_translate
-#define layer_get_name            gimp_layer_get_name
-#define layer_set_name            gimp_layer_set_name
-#define layer_get_tattoo          gimp_layer_get_tattoo
-#define layer_set_tattoo          gimp_layer_set_tattoo
-#define layer_add_alpha           gimp_layer_add_alpha
-#define layer_has_alpha           gimp_layer_has_alpha
-#define layer_preview             gimp_layer_preview
-#define layer_is_floating_sel     gimp_layer_is_floating_sel
-#define layer_invalidate_previews gimp_layer_invalidate_previews
-#define layer_linked              gimp_layer_linked
-#define layer_get_mask            gimp_layer_get_mask
-#define layer_new_from_tiles      gimp_layer_new_from_tiles
-#define layer_resize_to_image     gimp_layer_resize_to_image
-#define layer_invalidate_boundary gimp_layer_invalidate_boundary
-#define layer_scale_by_factors    gimp_layer_scale_by_factors
-#define layer_boundary            gimp_layer_boundary
-#define layer_pick_correlate      gimp_layer_pick_correlate
-#define layer_apply_mask          gimp_layer_apply_mask
-#define layer_add_mask            gimp_layer_add_mask
-#define layer_check_scaling       gimp_layer_check_scaling
-
-
-#define gimp_drawable_layer      GIMP_IS_LAYER
+/*  PDB stuff  */
+#define gimp_layer_set_name(l,n)   gimp_object_set_name(GIMP_OBJECT(l),(n))
+#define gimp_layer_get_name(l)     gimp_object_get_name(GIMP_OBJECT(l))
+#define gimp_layer_set_tattoo(l,t) gimp_drawable_set_tattoo(GIMP_DRAWABLE(l),(t))
+#define gimp_layer_get_tattoo(l)   gimp_drawable_get_tattoo(GIMP_DRAWABLE(l))
 
 
 #define GIMP_TYPE_LAYER            (gimp_layer_get_type ())
@@ -64,7 +37,7 @@
 #define GIMP_IS_LAYER_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
 
 
-typedef struct _GimpLayerClass      GimpLayerClass;
+typedef struct _GimpLayerClass GimpLayerClass;
 
 struct _GimpLayer
 {
@@ -104,9 +77,9 @@ struct _GimpLayerClass
 
 struct _LayerUndo
 {
-  GimpLayer *layer;              /*  the actual layer          */
-  gint       prev_position;      /*  former position in list   */
-  GimpLayer *prev_layer;         /*  previous active layer     */
+  GimpLayer *layer;           /*  the actual layer         */
+  gint       prev_position;   /*  former position in list  */
+  GimpLayer *prev_layer;      /*  previous active layer    */
 };
 
 struct _FStoLayerUndo
@@ -170,16 +143,10 @@ gint            gimp_layer_pick_correlate      (GimpLayer        *layer,
 						gint              x, 
 						gint              y);
 
-void            gimp_layer_set_name            (GimpLayer        *layer, 
-						const gchar      *name);
-const gchar   * gimp_layer_get_name            (const GimpLayer  *layer);
 GimpLayerMask * gimp_layer_get_mask            (GimpLayer        *layer);
 gboolean        gimp_layer_has_alpha           (GimpLayer        *layer);
 gboolean        gimp_layer_is_floating_sel     (GimpLayer        *layer);
 gboolean        gimp_layer_linked              (GimpLayer        *layer);
-Tattoo          gimp_layer_get_tattoo          (const GimpLayer  *layer);
-void            gimp_layer_set_tattoo          (GimpLayer        *layer, 
-						Tattoo            value);
 
 TempBuf       * gimp_layer_preview             (GimpLayer        *layer, 
 						gint              width, 

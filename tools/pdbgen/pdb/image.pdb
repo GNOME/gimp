@@ -1015,7 +1015,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'Layer *floating_sel' ],
+	vars => [ 'GimpLayer *floating_sel' ],
 	code => <<'CODE'
 {
   floating_sel = gimp_image_floating_sel (gimage);

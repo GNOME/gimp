@@ -378,7 +378,7 @@ transform_core_button_press (Tool           *tool,
 	gimage_mask_value (gdisp->gimage, x, y))
       {
 	if (GIMP_IS_LAYER (drawable) &&
-	    layer_get_mask (GIMP_LAYER (drawable)))
+	    gimp_layer_get_mask (GIMP_LAYER (drawable)))
 	  {
 	    g_message (_("Transformations do not work on\n"
 			 "layers that contain layer masks."));
@@ -680,7 +680,7 @@ transform_core_cursor_update (Tool           *tool,
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
       if (GIMP_IS_LAYER (drawable) &&
-	  layer_get_mask (GIMP_LAYER (drawable)))
+	  gimp_layer_get_mask (GIMP_LAYER (drawable)))
 	{
 	  ctype = GIMP_BAD_CURSOR;
 	}
@@ -1578,7 +1578,7 @@ transform_core_cut (GImage       *gimage,
   if (! gimage_mask_is_empty (gimage))
     {
       /* set the keep_indexed flag to FALSE here, since we use 
-	 layer_new_from_tiles() later which assumes that the tiles
+	 gimp_layer_new_from_tiles() later which assumes that the tiles
 	 are either RGB or GRAY.  Eeek!!!              (Sven)
        */
       tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
@@ -1605,20 +1605,21 @@ transform_core_paste (GImage       *gimage,
 		      TileManager  *tiles,
 		      gboolean      new_layer)
 {
-  Layer   *layer   = NULL;
-  Channel *channel = NULL;
-  Layer   *floating_layer;
+  GimpLayer *layer   = NULL;
+  Channel   *channel = NULL;
+  GimpLayer *floating_layer;
 
   if (new_layer)
     {
-      layer = layer_new_from_tiles (gimage,
-				    gimp_drawable_type_with_alpha (drawable),
-				    tiles,
-				    _("Transformation"),
-				    OPAQUE_OPACITY, NORMAL_MODE);
-      if (!layer)
+      layer =
+	gimp_layer_new_from_tiles (gimage,
+				   gimp_drawable_type_with_alpha (drawable),
+				   tiles,
+				   _("Transformation"),
+				   OPAQUE_OPACITY, NORMAL_MODE);
+      if (! layer)
         {
-          g_warning ("transform_core_paste: layer_new_frome_tiles() failed");
+          g_warning ("transform_core_paste: gimp_layer_new_frome_tiles() failed");
           return FALSE;
         }
 
@@ -1649,7 +1650,8 @@ transform_core_paste (GImage       *gimage,
 	return FALSE;
 
       if (layer)
-	layer_add_alpha (layer);
+	gimp_layer_add_alpha (layer);
+
       floating_layer = gimp_image_floating_sel (gimage);
 
       if (floating_layer)

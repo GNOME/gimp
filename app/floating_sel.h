@@ -20,40 +20,40 @@
 #define __FLOATING_SEL_H__
 
 
-void       floating_sel_attach       (Layer        *,
-				      GimpDrawable *);
-void       floating_sel_remove       (Layer        *);
-void       floating_sel_anchor       (Layer        *);
-void       floating_sel_reset        (Layer        *);
-void       floating_sel_to_layer     (Layer        *);
-void       floating_sel_store        (Layer        *,
+void       floating_sel_attach       (GimpLayer    *layer,
+				      GimpDrawable *drawable);
+void       floating_sel_remove       (GimpLayer    *layer);
+void       floating_sel_anchor       (GimpLayer    *layer);
+void       floating_sel_reset        (GimpLayer    *layer);
+void       floating_sel_to_layer     (GimpLayer    *layer);
+void       floating_sel_store        (GimpLayer    *layer,
 				      gint          ,
 				      gint          ,
 				      gint          ,
 				      gint          );
-void       floating_sel_restore      (Layer        *,
+void       floating_sel_restore      (GimpLayer    *layer,
 				      gint          ,
 				      gint          ,
 				      gint          ,
 				      gint          );
-void       floating_sel_rigor        (Layer        *,
+void       floating_sel_rigor        (GimpLayer    *layer,
 				      gint          );
-void       floating_sel_relax        (Layer        *,
+void       floating_sel_relax        (GimpLayer    *layer,
 				      gint          );
-void       floating_sel_composite    (Layer        *,
+void       floating_sel_composite    (GimpLayer    *layer,
 				      gint          ,
 				      gint          ,
 				      gint          ,
 				      gint          ,
 				      gint          );
-BoundSeg * floating_sel_boundary     (Layer        *,
+BoundSeg * floating_sel_boundary     (GimpLayer    *layer,
 				      gint         *);
-void       floating_sel_bounds       (Layer        *,
+void       floating_sel_bounds       (GimpLayer    *layer,
 				      gint         *,
 				      gint         *,
 				      gint         *,
 				      gint         *);
-void       floating_sel_invalidate   (Layer        *);
+void       floating_sel_invalidate   (GimpLayer    *layer);
 
 
 #endif /* __FLOATING_SEL_H__ */

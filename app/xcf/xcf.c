@@ -114,7 +114,7 @@ static void xcf_save_image_props   (XcfInfo     *info,
 				    GImage      *gimage);
 static void xcf_save_layer_props   (XcfInfo     *info,
 				    GImage      *gimage,
-				    Layer       *layer);
+				    GimpLayer   *layer);
 static void xcf_save_channel_props (XcfInfo     *info,
 				    GImage      *gimage,
 				    Channel     *channel);
@@ -123,7 +123,7 @@ static void xcf_save_prop          (XcfInfo     *info,
 				    ...);
 static void xcf_save_layer         (XcfInfo     *info,
 				    GImage      *gimage,
-				    Layer       *layer);
+				    GimpLayer   *layer);
 static void xcf_save_channel       (XcfInfo     *info,
 				    GImage      *gimage,
 				    Channel     *channel);
@@ -142,7 +142,7 @@ static gboolean        xcf_load_image_props   (XcfInfo     *info,
 					       GImage      *gimage);
 static gboolean        xcf_load_layer_props   (XcfInfo     *info,
 					       GImage      *gimage,
-					       Layer       *layer);
+					       GimpLayer   *layer);
 static gboolean        xcf_load_channel_props (XcfInfo     *info,
 					       GImage      *gimage,
 					       Channel     *channel);
@@ -461,17 +461,17 @@ static gint
 xcf_save_image (XcfInfo *info,
 		GImage  *gimage)
 {
-  Layer *layer;
-  Layer *floating_layer;
-  Channel *channel;
-  guint32 saved_pos;
-  guint32 offset;
-  guint nlayers;
-  guint nchannels;
-  GSList *list;
-  gboolean have_selection;
-  gint t1, t2, t3, t4;
-  gchar version_tag[14];
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  Channel   *channel;
+  guint32    saved_pos;
+  guint32    offset;
+  guint      nlayers;
+  guint      nchannels;
+  GSList    *list;
+  gboolean   have_selection;
+  gint       t1, t2, t3, t4;
+  gchar      version_tag[14];
 
   floating_layer = gimp_image_floating_sel (gimage);
   if (floating_layer)
@@ -642,9 +642,9 @@ xcf_save_image_props (XcfInfo *info,
 }
 
 static void
-xcf_save_layer_props (XcfInfo *info,
-		      GImage  *gimage,
-		      Layer   *layer)
+xcf_save_layer_props (XcfInfo   *info,
+		      GImage    *gimage,
+		      GimpLayer *layer)
 {
   if (layer == gimage->active_layer)
     xcf_save_prop (info, PROP_ACTIVE_LAYER);
@@ -1289,9 +1289,9 @@ xcf_save_prop (XcfInfo  *info,
 }
 
 static void
-xcf_save_layer (XcfInfo *info,
-		GImage  *gimage,
-		Layer   *layer)
+xcf_save_layer (XcfInfo   *info,
+		GImage    *gimage,
+		GimpLayer *layer)
 {
   guint32 saved_pos;
   guint32 offset;
@@ -1686,23 +1686,23 @@ xcf_save_tile_rle (XcfInfo *info,
 }
 
 
-static GImage*
+static GimpImage *
 xcf_load_image (XcfInfo *info)
 {
-  GImage *gimage;
-  Layer *layer;
-  Channel *channel;
-  guint32 saved_pos;
-  guint32 offset;
-  gint width;
-  gint height;
-  gint image_type;
-  gint num_successful_elements = 0;
+  GImage    *gimage;
+  GimpLayer *layer;
+  Channel   *channel;
+  guint32    saved_pos;
+  guint32    offset;
+  gint       width;
+  gint       height;
+  gint       image_type;
+  gint       num_successful_elements = 0;
 
   /* read in the image width, height and type */
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &image_type, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
   /* create a new gimage */
   gimage = gimage_new (width, height, image_type);
@@ -2036,12 +2036,12 @@ xcf_load_image_props (XcfInfo *info,
 }
 
 static gboolean
-xcf_load_layer_props (XcfInfo *info,
-		      GImage  *gimage,
-		      Layer   *layer)
+xcf_load_layer_props (XcfInfo   *info,
+		      GImage    *gimage,
+		      GimpLayer *layer)
 {
   PropType prop_type;
-  guint32 prop_size;
+  guint32  prop_size;
 
   while (TRUE)
     {
@@ -2256,7 +2256,7 @@ xcf_load_layer (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
-  layer = layer_new (gimage, width, height, type, name, 255, NORMAL_MODE);
+  layer = gimp_layer_new (gimage, width, height, type, name, 255, NORMAL_MODE);
   g_free (name);
   if (!layer)
     return NULL;
@@ -2301,7 +2301,7 @@ xcf_load_layer (XcfInfo *info,
   /* attach the floating selection... */
   if (add_floating_sel)
     {
-      Layer *floating_sel;
+      GimpLayer *floating_sel;
 
       floating_sel = info->floating_sel;
       floating_sel_attach (floating_sel, GIMP_DRAWABLE (layer));
@@ -2310,7 +2310,7 @@ xcf_load_layer (XcfInfo *info,
   return layer;
 
 error:
-  layer_delete (layer);
+  gtk_object_unref (GTK_OBJECT (layer));
   return NULL;
 }
 
@@ -2358,7 +2358,7 @@ xcf_load_channel (XcfInfo *info,
   /* attach the floating selection... */
   if (add_floating_sel)
     {
-      Layer *floating_sel;
+      GimpLayer *floating_sel;
 
       floating_sel = info->floating_sel;
       floating_sel_attach (floating_sel, GIMP_DRAWABLE(channel));
@@ -2401,7 +2401,7 @@ xcf_load_layer_mask (XcfInfo *info,
     return NULL;
 
   /* read in the layer_mask properties */
-  if (!xcf_load_channel_props (info, gimage, GIMP_CHANNEL(layer_mask)))
+  if (!xcf_load_channel_props (info, gimage, GIMP_CHANNEL (layer_mask)))
     goto error;
 
   /* read the hierarchy and layer mask offsets */
@@ -2409,16 +2409,16 @@ xcf_load_layer_mask (XcfInfo *info,
 
   /* read in the hierarchy */
   xcf_seek_pos (info, hierarchy_offset);
-  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(layer_mask)->tiles))
+  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (layer_mask)->tiles))
     goto error;
 
   /* attach the floating selection... */
   if (add_floating_sel)
     {
-      Layer *floating_sel;
+      GimpLayer *floating_sel;
 
       floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE(layer_mask));
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE (layer_mask));
     }
 
   return layer_mask;
@@ -2435,13 +2435,13 @@ xcf_load_hierarchy (XcfInfo     *info,
   guint32 saved_pos;
   guint32 offset;
   guint32 junk;
-  gint width;
-  gint height;
-  gint bpp;
+  gint    width;
+  gint    height;
+  gint    bpp;
 
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32*) &bpp, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &bpp, 1);
 
   /* make sure the values in the file correspond to the values
    *  calculated when the TileManager was created.

@@ -60,7 +60,7 @@ floating_sel_remove_invoker (Argument *args)
 
   if (success)
     {
-      if (layer_is_floating_sel (floating_sel))
+      if (gimp_layer_is_floating_sel (floating_sel))
 	floating_sel_remove (floating_sel);
       else
 	success = FALSE;
@@ -106,7 +106,7 @@ floating_sel_anchor_invoker (Argument *args)
 
   if (success)
     {
-      if (layer_is_floating_sel (floating_sel))
+      if (gimp_layer_is_floating_sel (floating_sel))
 	floating_sel_anchor (floating_sel);
       else
 	success = FALSE;
@@ -152,7 +152,7 @@ floating_sel_to_layer_invoker (Argument *args)
 
   if (success)
     {
-      if (layer_is_floating_sel (floating_sel))
+      if (gimp_layer_is_floating_sel (floating_sel))
 	floating_sel_to_layer (floating_sel);
       else
 	success = FALSE;
@@ -252,7 +252,7 @@ floating_sel_rigor_invoker (Argument *args)
 
   if (success)
     {
-      if (layer_is_floating_sel (floating_sel))
+      if (gimp_layer_is_floating_sel (floating_sel))
 	floating_sel_rigor (floating_sel, undo);
       else
 	success = FALSE;
@@ -306,7 +306,7 @@ floating_sel_relax_invoker (Argument *args)
 
   if (success)
     {
-      if (layer_is_floating_sel (floating_sel))
+      if (gimp_layer_is_floating_sel (floating_sel))
 	floating_sel_relax (floating_sel, undo);
       else
 	success = FALSE;

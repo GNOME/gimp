@@ -49,8 +49,6 @@ typedef         GimpChannel         Channel;            /* convenience */
 typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;
 
-typedef         GimpLayer           Layer;              /* convenience */
-
 typedef struct _GimpImage           GimpImage;
 typedef         GimpImage           GImage;
 

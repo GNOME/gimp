@@ -48,9 +48,9 @@ typedef struct _MoveTool MoveTool;
 
 struct _MoveTool
 {
-  Layer    *layer;
-  Guide    *guide;
-  GDisplay *disp;
+  GimpLayer *layer;
+  Guide     *guide;
+  GDisplay  *disp;
 };
 
 
@@ -88,10 +88,10 @@ move_tool_button_press (Tool           *tool,
 			GdkEventButton *bevent,
 			GDisplay       *gdisp)
 {
-  MoveTool *move;
-  Layer    *layer;
-  Guide    *guide;
-  gint      x, y;
+  MoveTool  *move;
+  GimpLayer *layer;
+  Guide     *guide;
+  gint       x, y;
 
   move = (MoveTool *) tool->private;
 
@@ -140,7 +140,7 @@ move_tool_button_press (Tool           *tool,
 	   *  use the move tool
 	   */
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
-	      !layer_is_floating_sel (layer))
+	      ! gimp_layer_is_floating_sel (layer))
 	    {
 	      move->layer = gimp_image_floating_sel (gdisp->gimage);
 	    }
@@ -331,10 +331,10 @@ move_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
 			 GDisplay       *gdisp)
 {
-  MoveTool *move;
-  Guide    *guide;
-  Layer    *layer;
-  gint      x, y;
+  MoveTool  *move;
+  Guide     *guide;
+  GimpLayer *layer;
+  gint       x, y;
 
   move = (MoveTool *) tool->private;
 
@@ -386,7 +386,7 @@ move_tool_cursor_update (Tool           *tool,
 	{
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
-	      !layer_is_floating_sel (layer))
+	      ! gimp_layer_is_floating_sel (layer))
 	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
 					  RECT_SELECT,
 					  CURSOR_MODIFIER_ANCHOR,

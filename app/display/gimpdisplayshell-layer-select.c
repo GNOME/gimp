@@ -38,6 +38,7 @@
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
+
 typedef struct _LayerSelect LayerSelect;
 
 struct _LayerSelect
@@ -49,7 +50,7 @@ struct _LayerSelect
   GtkWidget *preview;
 
   GImage    *gimage;
-  Layer     *current_layer;
+  GimpLayer *current_layer;
   gboolean   dirty;
   gint       image_width;
   gint       image_height;
@@ -203,10 +204,11 @@ static void
 layer_select_advance (LayerSelect *layer_select,
 		      gint         move)
 {
-  gint    index;  gint    count;
-  GSList *list;
-  GSList *nth;
-  Layer  *layer;
+  gint       index;
+  gint       count;
+  GSList    *list;
+  GSList    *nth;
+  GimpLayer *layer;
 
   index = 0;
 
@@ -221,7 +223,7 @@ layer_select_advance (LayerSelect *layer_select,
        list; 
        list = g_slist_next (list), count++)
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
 
       if (layer == layer_select->current_layer)
 	index = count;
@@ -234,7 +236,7 @@ layer_select_advance (LayerSelect *layer_select,
 
   if (nth)
     {
-      layer = (Layer *) nth->data;
+      layer = (GimpLayer *) nth->data;
       layer_select->current_layer = layer;
     }
 }
@@ -317,9 +319,9 @@ layer_select_set_gimage (LayerSelect *layer_select,
 static void
 layer_select_set_layer (LayerSelect *layer_select)
 {
-  Layer *layer;
+  GimpLayer *layer;
 
-  if (! (layer =  (layer_select->current_layer)))
+  if (! (layer = (layer_select->current_layer)))
     return;
 
   /*  Set the layer label  */
@@ -420,10 +422,10 @@ preview_events (GtkWidget *widget,
 static void
 preview_redraw (LayerSelect *layer_select)
 {
-  Layer   *layer;
-  TempBuf *preview_buf;
-  gint     w, h;
-  gint     offx, offy;
+  GimpLayer *layer;
+  TempBuf   *preview_buf;
+  gint       w, h;
+  gint       offx, offy;
 
   if (! (layer =  (layer_select->current_layer)))
     return;
@@ -435,25 +437,27 @@ preview_redraw (LayerSelect *layer_select)
 		      layer_select->image_height,
 		      -1);
 
-  if (layer_is_floating_sel (layer))
-    render_fs_preview (layer_select->layer_preview, 
-		       layer_select->layer_pixmap);
+  if (gimp_layer_is_floating_sel (layer))
+    {
+      render_fs_preview (layer_select->layer_preview, 
+			 layer_select->layer_pixmap);
+    }
   else
     {
       gint off_x;
       gint off_y;
 
-      gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       /*  determine width and height  */
       w = (gint) (layer_select->ratio * 
-		  gimp_drawable_width (GIMP_DRAWABLE(layer)));
+		  gimp_drawable_width (GIMP_DRAWABLE (layer)));
       h = (gint) (layer_select->ratio * 
-		  gimp_drawable_height (GIMP_DRAWABLE(layer)));
+		  gimp_drawable_height (GIMP_DRAWABLE (layer)));
       offx = (gint) (layer_select->ratio * off_x);
       offy = (gint) (layer_select->ratio * off_y);
 
-      preview_buf = layer_preview (layer, w, h);
+      preview_buf = gimp_layer_preview (layer, w, h);
       preview_buf->x = offx;
       preview_buf->y = offy;
 

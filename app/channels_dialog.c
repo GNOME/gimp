@@ -82,7 +82,7 @@ struct _ChannelsDialog
   ChannelType  components[3];
 
   Channel     *active_channel;
-  Layer       *floating_sel;
+  GimpLayer   *floating_sel;
   GSList      *channel_widgets;
 };
 

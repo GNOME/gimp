@@ -239,7 +239,7 @@ void
 gimage_set_layer_mask_apply (GimpImage *gimage, 
 			     GimpLayer *layer)
 {
-  int off_x, off_y;
+  gint off_x, off_y;
 
   g_return_if_fail (gimage);
   g_return_if_fail (layer);
@@ -256,7 +256,7 @@ gimage_set_layer_mask_apply (GimpImage *gimage,
 
 void
 gimage_set_layer_mask_edit (GimpImage *gimage, 
-			    Layer     *layer, 
+			    GimpLayer *layer, 
 			    gboolean   edit)
 {
   /*  find the layer  */

@@ -917,9 +917,9 @@ void
 layers_previous_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
-  GDisplay *gdisp;
-  Layer    *new_layer;
-  gint      current_layer;
+  GDisplay  *gdisp;
+  GimpLayer *new_layer;
+  gint       current_layer;
 
   return_if_no_display (gdisp);
 
@@ -940,9 +940,9 @@ void
 layers_next_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
-  GDisplay *gdisp;
-  Layer    *new_layer;
-  gint      current_layer;
+  GDisplay  *gdisp;
+  GimpLayer *new_layer;
+  gint       current_layer;
 
   return_if_no_display (gdisp);
 
@@ -1053,7 +1053,7 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  layer_add_alpha ( gdisp->gimage->active_layer);
+  gimp_layer_add_alpha ( gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 
@@ -1075,7 +1075,7 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  layer_resize_to_image (gdisp->gimage->active_layer);
+  gimp_layer_resize_to_image (gdisp->gimage->active_layer);
   gdisplays_flush ();
 }
 

@@ -347,7 +347,7 @@ clone_cursor_update (Tool           *tool,
 		     GdkEventMotion *mevent,
 		     GDisplay       *gdisp)
 {
-  Layer         *layer;
+  GimpLayer     *layer;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
   gint           x, y;
 

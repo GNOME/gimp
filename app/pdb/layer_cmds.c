@@ -145,7 +145,9 @@ layer_new_invoker (Argument *args)
   if (success)
     {
       opacity = (int) ((opacity_arg * 255) / 100);
-      layer = layer_new (gimage, width, height, (GimpImageType) type, name, opacity, (LayerModeEffects) mode);
+      layer = gimp_layer_new (gimage, width, height,
+			      (GimpImageType) type, name,
+			      opacity, (LayerModeEffects) mode);
       success = layer != NULL;
     }
 
@@ -237,7 +239,7 @@ layer_copy_invoker (Argument *args)
   add_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    success = (copy = layer_copy (layer, add_alpha)) != NULL;
+    success = (copy = gimp_layer_copy (layer, add_alpha)) != NULL;
 
   return_args = procedural_db_return_args (&layer_copy_proc, success);
 
@@ -304,7 +306,7 @@ layer_create_mask_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = (mask = layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
+    success = (mask = gimp_layer_create_mask (layer, (AddMaskType) mask_type)) != NULL;
 
   return_args = procedural_db_return_args (&layer_create_mask_proc, success);
 
@@ -362,7 +364,7 @@ layer_scale_invoker (Argument *args)
   gint32 new_height;
   gboolean local_origin;
   GimpImage *gimage;
-  Layer *floating_layer;
+  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (layer == NULL)
@@ -389,7 +391,7 @@ layer_scale_invoker (Argument *args)
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  layer_scale (layer, new_width, new_height, local_origin);
+	  gimp_layer_scale (layer, new_width, new_height, local_origin);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
@@ -453,7 +455,7 @@ layer_resize_invoker (Argument *args)
   gint32 offx;
   gint32 offy;
   GimpImage *gimage;
-  Layer *floating_layer;
+  GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (layer == NULL)
@@ -482,7 +484,7 @@ layer_resize_invoker (Argument *args)
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  layer_resize (layer, new_width, new_height, offx, offy);
+	  gimp_layer_resize (layer, new_width, new_height, offx, offy);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
@@ -552,7 +554,7 @@ layer_delete_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer_delete (layer);
+    gimp_layer_delete (layer);
 
   return procedural_db_return_args (&layer_delete_proc, success);
 }
@@ -590,8 +592,8 @@ layer_translate_invoker (Argument *args)
   gint32 offx;
   gint32 offy;
   GimpImage *gimage;
-  Layer *floating_layer;
-  Layer *tmp_layer;
+  GimpLayer *floating_layer;
+  GimpLayer *tmp_layer;
   GSList *layer_list;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -616,9 +618,9 @@ layer_translate_invoker (Argument *args)
 	  layer_list = gimage->layers;
 	  while (layer_list)
 	    {
-	      tmp_layer = (Layer *) layer_list->data;
+	      tmp_layer = (GimpLayer *) layer_list->data;
 	      if ((tmp_layer == layer) || tmp_layer->linked)
-		layer_translate (tmp_layer, offx, offy);
+		gimp_layer_translate (tmp_layer, offx, offy);
 	      layer_list = layer_list->next;
 	    }
     
@@ -680,7 +682,7 @@ layer_add_alpha_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer_add_alpha (layer);
+    gimp_layer_add_alpha (layer);
 
   return procedural_db_return_args (&layer_add_alpha_proc, success);
 }
@@ -718,8 +720,8 @@ layer_set_offsets_invoker (Argument *args)
   gint32 offx;
   gint32 offy;
   GimpImage *gimage;
-  Layer *floating_layer;
-  Layer *tmp_layer;
+  GimpLayer *floating_layer;
+  GimpLayer *tmp_layer;
   GSList *layer_list;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -744,9 +746,9 @@ layer_set_offsets_invoker (Argument *args)
 	  layer_list = gimage->layers;
 	  while (layer_list)
 	    {
-	      tmp_layer = (Layer *) layer_list->data;
+	      tmp_layer = (GimpLayer *) layer_list->data;
 	      if ((tmp_layer == layer) || tmp_layer->linked)
-		layer_translate (tmp_layer,
+		gimp_layer_translate (tmp_layer,
 				(offx - GIMP_DRAWABLE (layer)->offset_x),
 				(offy - GIMP_DRAWABLE (layer)->offset_y));
 	      layer_list = layer_list->next;
@@ -866,7 +868,7 @@ layer_is_floating_sel_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_is_floating_sel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer_is_floating_sel (layer);
+    return_args[1].value.pdb_int = gimp_layer_is_floating_sel (layer);
 
   return return_args;
 }
@@ -919,7 +921,7 @@ layer_get_name_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_name_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (layer_get_name (layer));
+    return_args[1].value.pdb_pointer = g_strdup (gimp_layer_get_name (layer));
 
   return return_args;
 }
@@ -974,7 +976,7 @@ layer_set_name_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer_set_name (layer, name);
+    gimp_layer_set_name (layer, name);
 
   return procedural_db_return_args (&layer_set_name_proc, success);
 }
@@ -1843,7 +1845,7 @@ layer_get_tattoo_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer_get_tattoo (layer);
+    return_args[1].value.pdb_int = gimp_layer_get_tattoo (layer);
 
   return return_args;
 }
@@ -1898,7 +1900,7 @@ layer_set_tattoo_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer_set_tattoo (layer, tattoo);
+    gimp_layer_set_tattoo (layer, tattoo);
 
   return procedural_db_return_args (&layer_set_tattoo_proc, success);
 }

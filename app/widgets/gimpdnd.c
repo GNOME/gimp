@@ -1086,7 +1086,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      tmpbuf = layer_preview (GIMP_LAYER (drawable), width, height);
+      tmpbuf = gimp_layer_preview (GIMP_LAYER (drawable), width, height);
     }
   else if (GIMP_IS_LAYER_MASK (drawable))
     {

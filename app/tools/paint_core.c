@@ -471,7 +471,7 @@ paint_core_cursor_update (Tool           *tool,
 			  GdkEventMotion *mevent,
 			  GDisplay       *gdisp)
 {
-  Layer         *layer;
+  GimpLayer     *layer;
   PaintCore     *paint_core;
   gint           x, y;
   gchar          status_str[STATUSBAR_SIZE];

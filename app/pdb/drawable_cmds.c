@@ -1406,7 +1406,7 @@ drawable_thumbnail_invoker (Argument *args)
 	    req_width = (req_height * dwidth) / dheight;
     
 	  if (GIMP_IS_LAYER (drawable))
-	    buf = layer_preview (GIMP_LAYER (drawable), req_width, req_height);
+	    buf = gimp_layer_preview (GIMP_LAYER (drawable), req_width, req_height);
 	  else
 	    buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
     

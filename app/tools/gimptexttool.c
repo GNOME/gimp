@@ -321,8 +321,8 @@ text_button_press (Tool           *tool,
 		   GdkEventButton *bevent,
 		   GDisplay       *gdisp)
 {
-  Layer    *layer;
-  TextTool *text_tool;
+  GimpLayer *layer;
+  TextTool  *text_tool;
 
   text_tool        = tool->private;
   text_tool->gdisp = gdisp;
@@ -338,7 +338,7 @@ text_button_press (Tool           *tool,
 						text_tool->click_x,
 						text_tool->click_y)))
     /*  If there is a floating selection, and this aint it, use the move tool  */
-    if (layer_is_floating_sel (layer))
+    if (gimp_layer_is_floating_sel (layer))
       {
 	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
 	return;
@@ -370,15 +370,15 @@ text_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
 		    GDisplay       *gdisp)
 {
-  Layer *layer;
-  gint   x, y;
+  GimpLayer *layer;
+  gint       x, y;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
 
   if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
     /*  if there is a floating selection, and this aint it...  */
-    if (layer_is_floating_sel (layer))
+    if (gimp_layer_is_floating_sel (layer))
       {
 	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
 				      MOVE,
@@ -581,25 +581,25 @@ text_render (GimpImage    *gimage,
 	     gint          border,
 	     gint          antialias)
 {
-  GdkFont *font;
-  GdkPixmap *pixmap;
-  GdkImage *image;
-  GdkGC *gc;
-  GdkColor black, white;
-  Layer *layer;
+  GdkFont     *font;
+  GdkPixmap   *pixmap;
+  GdkImage    *image;
+  GdkGC       *gc;
+  GdkColor     black, white;
+  GimpLayer   *layer;
   TileManager *mask, *newmask;
-  PixelRegion textPR, maskPR;
-  gint layer_type;
-  guchar color[MAX_CHANNELS];
-  gchar *str;
-  gint nstrs;
-  gboolean crop;
-  gint line_width, line_height;
-  gint pixmap_width, pixmap_height;
-  gint text_width, text_height;
-  gint width, height;
-  gint x, y, k;
-  void *pr;
+  PixelRegion  textPR, maskPR;
+  gint         layer_type;
+  guchar       color[MAX_CHANNELS];
+  gchar       *str;
+  gint         nstrs;
+  gboolean     crop;
+  gint         line_width, line_height;
+  gint         pixmap_width, pixmap_height;
+  gint         text_width, text_height;
+  gint         width, height;
+  gint         x, y, k;
+  void        *pr;
 #ifndef GDK_WINDOWING_WIN32
   XFontStruct *xfs;
 #endif
@@ -764,11 +764,11 @@ text_render (GimpImage    *gimage,
     tile_manager_destroy (mask);
 
   if (newmask && 
-      (layer = layer_new (gimage, 
-			  tile_manager_width (newmask),
-			  tile_manager_height (newmask), 
-			  layer_type,
-			 _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE)))
+      (layer = gimp_layer_new (gimage, 
+			       tile_manager_width (newmask),
+			       tile_manager_height (newmask), 
+			       layer_type,
+			       _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE)))
     {
       /*  color the layer buffer  */
       gimp_image_get_foreground (gimage, drawable, color);

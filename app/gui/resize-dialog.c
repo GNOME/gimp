@@ -1365,7 +1365,7 @@ resize_check_layer_scaling (ImageResize *image_scale)
   gboolean   success = FALSE;
   GImage    *gimage  = NULL;
   GSList    *list    = NULL;
-  Layer     *layer   = NULL;
+  GimpLayer *layer   = NULL;
   GtkWidget *dialog  = NULL;
 
   g_assert (image_scale != NULL);
@@ -1378,10 +1378,10 @@ resize_check_layer_scaling (ImageResize *image_scale)
       list    = gimage->layers;
       while (list && success == TRUE)
 	{
-	  layer   = (Layer *)list->data;
-	  success = layer_check_scaling (layer, 
-					 image_scale->resize->width,
-					 image_scale->resize->height);
+	  layer   = (GimpLayer *)list->data;
+	  success = gimp_layer_check_scaling (layer, 
+					      image_scale->resize->width,
+					      image_scale->resize->height);
 	  list   = g_slist_next (list);
 	  
 	}

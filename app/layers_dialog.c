@@ -136,14 +136,14 @@ struct _LayerWidget
 static void layers_dialog_preview_extents       (void);
 static void layers_dialog_set_menu_sensitivity  (void);
 static void layers_dialog_scroll_index          (gint            index);
-static void layers_dialog_set_active_layer      (Layer          *layer);
-static void layers_dialog_unset_layer           (Layer          *layer);
-static void layers_dialog_position_layer        (Layer          *layer,
+static void layers_dialog_set_active_layer      (GimpLayer      *layer);
+static void layers_dialog_unset_layer           (GimpLayer      *layer);
+static void layers_dialog_position_layer        (GimpLayer      *layer,
 						 gint            new_index);
-static void layers_dialog_add_layer             (Layer          *layer);
-static void layers_dialog_remove_layer          (Layer          *layer);
-static void layers_dialog_add_layer_mask        (Layer          *layer);
-static void layers_dialog_remove_layer_mask     (Layer          *layer);
+static void layers_dialog_add_layer             (GimpLayer      *layer);
+static void layers_dialog_remove_layer          (GimpLayer      *layer);
+static void layers_dialog_add_layer_mask        (GimpLayer      *layer);
+static void layers_dialog_remove_layer_mask     (GimpLayer      *layer);
 
 static void paint_mode_menu_callback            (GtkWidget      *widget,
 						 gpointer        data);
@@ -182,9 +182,9 @@ static gboolean layers_dialog_drag_trashcan_callback
 						 guint           time);
 
 /*  layer widget function prototypes  */
-static LayerWidget * layer_widget_get_ID        (Layer          *layer);
+static LayerWidget * layer_widget_get_ID        (GimpLayer      *layer);
 static LayerWidget * layer_widget_create        (GimpImage      *gimage,
-					         Layer          *layer);
+					         GimpLayer      *layer);
 
 static gboolean layer_widget_drag_motion_callback
                                                 (GtkWidget      *widget,
@@ -234,11 +234,11 @@ static void layer_widget_layer_flush            (GtkWidget      *widget,
 /*  assorted query dialogs  */
 static void layers_dialog_new_layer_query       (GimpImage      *gimage);
 static void layers_dialog_edit_layer_query      (LayerWidget    *layer_widget);
-static void layers_dialog_add_mask_query        (Layer          *layer);
+static void layers_dialog_add_mask_query        (GimpLayer      *layer);
 static void layers_dialog_scale_layer_query     (GimpImage      *gimage,
-						 Layer          *layer);
+						 GimpLayer      *layer);
 static void layers_dialog_resize_layer_query    (GimpImage      *gimage,
-						 Layer          *layer);
+						 GimpLayer      *layer);
 void        layers_dialog_layer_merge_query     (GimpImage      *gimage,
 						 gboolean        merge_visible);
 
@@ -550,24 +550,24 @@ layers_dialog_free (void)
 void 
 layers_dialog_invalidate_previews (GimpImage *gimage)
 {
-  GSList *list = gimage->layers;
-  Layer  *layer;
+  GSList    *list;
+  GimpLayer *layer;
 
   /*  Invalidate all previews ...
    *  This is called during loading the image
    */
-  while (list)
+  for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
+
       GIMP_DRAWABLE (layer)->preview_valid = FALSE;
-      list = g_slist_next (list);
     }
 }
 
 void
 layers_dialog_update (GimpImage* gimage)
 {
-  Layer       *layer;
+  GimpLayer   *layer;
   LayerWidget *lw;
   GSList      *list;
   GList       *item_list;
@@ -607,7 +607,7 @@ layers_dialog_update (GimpImage* gimage)
        list = g_slist_next (list))
     {
       /*  create a layer list item  */
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
       lw = layer_widget_create (gimage, layer);
       layersD->layer_widgets = g_slist_append (layersD->layer_widgets, lw);
       item_list = g_list_append (item_list, lw->list_item);
@@ -624,7 +624,7 @@ void
 layers_dialog_flush (void)
 {
   GimpImage   *gimage;
-  Layer       *layer;
+  GimpLayer   *layer;
   LayerWidget *lw;
   GSList      *list;
   gint         pos;
@@ -654,7 +654,7 @@ layers_dialog_flush (void)
       /*  Add any missing layers  */
       for (list = gimage->layers; list; list = g_slist_next (list))
         {
-          layer = (Layer *) list->data;
+          layer = (GimpLayer *) list->data;
           lw = layer_widget_get_ID (layer);
 
           /*  If the layer isn't in the layer widget list, add it  */
@@ -682,7 +682,7 @@ layers_dialog_flush (void)
 	   list; 
 	   list = g_slist_next (list))
         {
-          layer = (Layer *) list->data;
+          layer = (GimpLayer *) list->data;
           layers_dialog_position_layer (layer, pos++);
         }
 
@@ -1019,34 +1019,34 @@ layers_dialog_preview_extents (void)
 static void
 layers_dialog_set_menu_sensitivity (void)
 {
-  gboolean  fs;         /*  no floating sel        */
-  gboolean  ac;         /*  no active channel      */
-  gboolean  lm;         /*  layer mask             */
-  gboolean  gimage;     /*  is there a gimage      */
-  gboolean  lp;         /*  layers present         */
-  gboolean  alpha;      /*  alpha channel present  */
-  gboolean  indexed;    /*  is indexed             */
-  gboolean  next_alpha;
-  GSList   *list; 
-  GSList   *next;
-  GSList   *prev;
-  Layer    *layer;
+  gboolean   fs;         /*  no floating sel        */
+  gboolean   ac;         /*  no active channel      */
+  gboolean   lm;         /*  layer mask             */
+  gboolean   gimage;     /*  is there a gimage      */
+  gboolean   lp;         /*  layers present         */
+  gboolean   alpha;      /*  alpha channel present  */
+  gboolean   indexed;    /*  is indexed             */
+  gboolean   next_alpha;
+  GSList    *list; 
+  GSList    *next;
+  GSList    *prev;
+  GimpLayer *layer;
 
-  lp = FALSE;
+  lp      = FALSE;
   indexed = FALSE;
   
   if (! layersD)
     return;
 
   if ((layer = (layersD->active_layer)) != NULL)
-    lm = (layer_get_mask (layer)) ? TRUE : FALSE;
+    lm = (gimp_layer_get_mask (layer)) ? TRUE : FALSE;
   else
     lm = FALSE;
 
   fs = (layersD->floating_sel == NULL);
   ac = (layersD->active_channel == NULL);
   gimage = (layersD->gimage != NULL);
-  alpha = layer && layer_has_alpha (layer);
+  alpha = layer && gimp_layer_has_alpha (layer);
 
   if (gimage)
     {
@@ -1059,7 +1059,7 @@ layers_dialog_set_menu_sensitivity (void)
   next = NULL;
   while (list)
     {
-      layer = (Layer *)list->data;
+      layer = (GimpLayer *)list->data;
       if (layer == (layersD->active_layer))
 	{
 	  next = g_slist_next (list);
@@ -1071,8 +1071,8 @@ layers_dialog_set_menu_sensitivity (void)
 
   if (next)
     {
-      layer = (Layer *) next->data;
-      next_alpha = layer_has_alpha (layer);
+      layer = (GimpLayer *) next->data;
+      next_alpha = gimp_layer_has_alpha (layer);
     }
   else
     next_alpha = FALSE;
@@ -1178,7 +1178,7 @@ layer_dialog_idle_set_active_layer_focus (gpointer data)
 */
 
 static void
-layers_dialog_set_active_layer (Layer *layer)
+layers_dialog_set_active_layer (GimpLayer *layer)
 {
   LayerWidget  *layer_widget;
   GtkStateType  state;
@@ -1212,7 +1212,7 @@ layers_dialog_set_active_layer (Layer *layer)
 }
 
 static void
-layers_dialog_unset_layer (Layer *layer)
+layers_dialog_unset_layer (GimpLayer *layer)
 {
   LayerWidget  *layer_widget;
   GtkStateType  state;
@@ -1239,8 +1239,8 @@ layers_dialog_unset_layer (Layer *layer)
 }
 
 static void
-layers_dialog_position_layer (Layer *layer,
-			      gint   new_index)
+layers_dialog_position_layer (GimpLayer *layer,
+			      gint       new_index)
 {
   LayerWidget *layer_widget;
   GList       *list = NULL;
@@ -1284,7 +1284,7 @@ invalidate_preview_callback (GtkWidget   *widget,
 
 
 static void
-layers_dialog_add_layer (Layer *layer)
+layers_dialog_add_layer (GimpLayer *layer)
 {
   LayerWidget *layer_widget;
   GimpImage   *gimage;
@@ -1306,7 +1306,7 @@ layers_dialog_add_layer (Layer *layer)
 }
 
 static void
-layers_dialog_remove_layer (Layer *layer)
+layers_dialog_remove_layer (GimpLayer *layer)
 {
   LayerWidget *layer_widget;
   GList       *list = NULL;
@@ -1329,7 +1329,7 @@ layers_dialog_remove_layer (Layer *layer)
 }
 
 static void
-layers_dialog_add_layer_mask (Layer *layer)
+layers_dialog_add_layer_mask (GimpLayer *layer)
 {
   LayerWidget *layer_widget;
 
@@ -1350,7 +1350,7 @@ layers_dialog_add_layer_mask (Layer *layer)
 }
 
 static void
-layers_dialog_remove_layer_mask (Layer *layer)
+layers_dialog_remove_layer_mask (GimpLayer *layer)
 {
   LayerWidget *layer_widget;
 
@@ -1380,14 +1380,14 @@ paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   GimpImage        *gimage;
-  Layer            *layer;
+  GimpLayer        *layer;
   LayerModeEffects  mode;
 
   if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
 
   /*  If the layer has an alpha channel, set the transparency and redraw  */
-  if (layer_has_alpha (layer))
+  if (gimp_layer_has_alpha (layer))
     {
       mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
 
@@ -1408,7 +1408,7 @@ opacity_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
   gint       opacity;
 
   if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
@@ -1433,7 +1433,7 @@ preserve_trans_update (GtkWidget *widget,
 		       gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
@@ -1525,7 +1525,7 @@ layers_dialog_previous_layer_callback (GtkWidget *widget,
 				       gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *new_layer;
+  GimpLayer *new_layer;
   gint       current_layer;
 
   if (!layersD || !(gimage = layersD->gimage))
@@ -1548,7 +1548,7 @@ layers_dialog_next_layer_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *new_layer;
+  GimpLayer *new_layer;
   gint       current_layer;
 
   if (!layersD || !(gimage = layersD->gimage))
@@ -1623,7 +1623,7 @@ layers_dialog_new_layer_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!layersD || !(gimage = layersD->gimage))
     return;
@@ -1646,8 +1646,8 @@ layers_dialog_duplicate_layer_callback (GtkWidget *widget,
 					gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *active_layer;
-  Layer     *new_layer;
+  GimpLayer *active_layer;
+  GimpLayer *new_layer;
 
   if (!layersD || !(gimage = layersD->gimage))
     return;
@@ -1656,7 +1656,7 @@ layers_dialog_duplicate_layer_callback (GtkWidget *widget,
   undo_push_group_start (gimage, LAYER_ADD_UNDO);
 
   active_layer = gimp_image_get_active_layer (gimage);
-  new_layer = layer_copy (active_layer, TRUE);
+  new_layer = gimp_layer_copy (active_layer, TRUE);
   gimp_image_add_layer (gimage, new_layer, -1);
 
   /*  End the group undo  */
@@ -1670,7 +1670,7 @@ layers_dialog_delete_layer_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!layersD ||
       !(gimage = layersD->gimage) ||
@@ -1678,7 +1678,7 @@ layers_dialog_delete_layer_callback (GtkWidget *widget,
     return;
 
   /*  if the layer is a floating selection, take special care  */
-  if (layer_is_floating_sel (layer))
+  if (gimp_layer_is_floating_sel (layer))
     floating_sel_remove (layer);
   else
     gimp_image_remove_layer (gimage, gimage->active_layer);
@@ -1719,7 +1719,7 @@ layers_dialog_resize_to_image_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
   
-  layer_resize_to_image (gimage->active_layer);
+  gimp_layer_resize_to_image (gimage->active_layer);
 
   gdisplays_flush ();
 }
@@ -1741,14 +1741,14 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
 					 gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  Make sure there is a layer mask to apply  */
   if ((layer = gimage->active_layer) != NULL &&
-      layer_get_mask (layer))
+      gimp_layer_get_mask (layer))
     {
       gboolean flush = !layer->apply_mask || layer->show_mask;
 
@@ -1774,14 +1774,14 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
 					  gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  Make sure there is a layer mask to apply  */
   if ((layer = gimage->active_layer) != NULL &&
-      layer_get_mask (layer))
+      gimp_layer_get_mask (layer))
     {
       gboolean flush = layer->apply_mask || layer->show_mask;
 
@@ -1884,14 +1884,14 @@ layers_dialog_add_alpha_channel_callback (GtkWidget *widget,
 					  gpointer   data)
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
 
   if (!layersD ||
       !(gimage = layersD->gimage) ||
       !(layer = gimp_image_get_active_layer (gimage)))
     return;
 
-  layer_add_alpha (layer);
+  gimp_layer_add_alpha (layer);
   gdisplays_flush ();
 }
 
@@ -1925,15 +1925,15 @@ layers_dialog_drag_new_layer_callback (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      Layer *layer = NULL;
+      GimpLayer *layer;
 
-      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-					     "gimp_layer");
+      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_layer");
 
       if (layer &&
 	  layer == layersD->active_layer)
 	{
-	  Layer     *new_layer;
+	  GimpLayer *new_layer;
 	  GimpImage *gimage;
 	  gint       width, height;
 	  gint       off_x, off_y;
@@ -1947,15 +1947,15 @@ layers_dialog_drag_new_layer_callback (GtkWidget      *widget,
 	  /*  Start a group undo  */
 	  undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
-	  new_layer = layer_new (gimage, width, height,
-				 gimp_image_base_type_with_alpha (gimage),
-				 _("Empty Layer Copy"),
-				 layer->opacity,
-				 layer->mode);
+	  new_layer = gimp_layer_new (gimage, width, height,
+				      gimp_image_base_type_with_alpha (gimage),
+				      _("Empty Layer Copy"),
+				      layer->opacity,
+				      layer->mode);
 	  if (new_layer)
 	    {
 	      drawable_fill (GIMP_DRAWABLE (new_layer), TRANSPARENT_FILL);
-	      layer_translate (new_layer, off_x, off_y);
+	      gimp_layer_translate (new_layer, off_x, off_y);
 	      gimp_image_add_layer (gimage, new_layer, -1);
 
 	      /*  End the group undo  */
@@ -1990,14 +1990,14 @@ layers_dialog_drag_duplicate_layer_callback (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      Layer *layer;
+      GimpLayer *layer;
 
-      layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
-					     "gimp_layer");
+      layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						 "gimp_layer");
 
       if (layer &&
 	  layer == layersD->active_layer &&
-	  ! layer_is_floating_sel (layer))
+	  ! gimp_layer_is_floating_sel (layer))
 	{
 	  layers_dialog_duplicate_layer_callback (widget, NULL);
 
@@ -2059,7 +2059,7 @@ layers_dialog_drag_trashcan_callback (GtkWidget      *widget,
 /****************************/
 
 static LayerWidget *
-layer_widget_get_ID (Layer *ID)
+layer_widget_get_ID (GimpLayer *ID)
 {
   LayerWidget *lw;
   GSList      *list;
@@ -2080,7 +2080,7 @@ layer_widget_get_ID (Layer *ID)
 
 static LayerWidget *
 layer_widget_create (GimpImage *gimage,
-		     Layer     *layer)
+		     GimpLayer *layer)
 {
   LayerWidget *layer_widget;
   GtkWidget   *list_item;
@@ -2109,7 +2109,7 @@ layer_widget_create (GimpImage *gimage,
   layer_widget->drop_type          = GIMP_DROP_NONE;
   layer_widget->layer_pixmap_valid = FALSE;
 
-  if (layer_get_mask (layer))
+  if (gimp_layer_get_mask (layer))
     layer_widget->active_preview =
       (layer->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
   else
@@ -2197,7 +2197,7 @@ layer_widget_create (GimpImage *gimage,
   gtk_object_set_user_data (GTK_OBJECT (layer_widget->mask_preview),
 			    layer_widget);
   gtk_container_add (GTK_CONTAINER (alignment), layer_widget->mask_preview);
-  if (layer_get_mask (layer) != NULL)
+  if (gimp_layer_get_mask (layer) != NULL)
     {
       gtk_object_set_data (GTK_OBJECT (layer_widget->mask_preview),
 			   "gimp_layer_mask", gimp_layer_get_mask (layer));
@@ -2215,10 +2215,11 @@ layer_widget_create (GimpImage *gimage,
 		      NULL);
 
   /*  the layer name label */
-  if (layer_is_floating_sel (layer))
+  if (gimp_layer_is_floating_sel (layer))
     layer_widget->label = gtk_label_new (_("Floating Selection"));
   else
-    layer_widget->label = gtk_label_new (layer_get_name (layer));
+    layer_widget->label =
+      gtk_label_new (gimp_object_get_name (GIMP_OBJECT (layer)));
 
   gtk_box_pack_start (GTK_BOX (hbox), layer_widget->label, FALSE, FALSE, 2);
   gtk_widget_show (layer_widget->label);
@@ -2274,7 +2275,7 @@ layer_widget_create (GimpImage *gimage,
 
   gtk_signal_connect_while_alive (GTK_OBJECT (layer), "invalidate_preview",
 				  GTK_SIGNAL_FUNC (invalidate_preview_callback),
-				  (gpointer)layer_widget,
+				  layer_widget,
 				  GTK_OBJECT (layer_widget->list_item));
 
   return layer_widget;
@@ -2300,15 +2301,15 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
   dest = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   if (dest &&
-      layer_has_alpha (dest->layer) &&
+      gimp_layer_has_alpha (dest->layer) &&
       (src_widget = gtk_drag_get_source_widget (context)))
     {
       src
 	= (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
       if (src &&
-	  layer_has_alpha (src->layer) &&
-	  ! layer_is_floating_sel (src->layer) &&
+	  gimp_layer_has_alpha (src->layer) &&
+	  ! gimp_layer_is_floating_sel (src->layer) &&
 	  src->layer == layersD->active_layer)
 	{
 	  src_index  = gimp_image_get_layer_index (layersD->gimage, 
@@ -2380,13 +2381,13 @@ layer_mask_drag_begin_callback (GtkWidget      *widget,
 
   gimp_dnd_set_drawable_preview_icon
     (widget, context,
-     GIMP_DRAWABLE (layer_get_mask (layer_widget->layer)));
+     GIMP_DRAWABLE (gimp_layer_get_mask (layer_widget->layer)));
 }
 
 typedef struct
 {
   GimpImage *gimage;
-  Layer     *layer;
+  GimpLayer *layer;
   gint       dest_index;
 } LayerDrop;
 
@@ -2424,15 +2425,15 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
   dest = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   if (dest &&
-      layer_has_alpha (dest->layer) &&
+      gimp_layer_has_alpha (dest->layer) &&
       (src_widget = gtk_drag_get_source_widget (context)))
     {
       src = 
 	(LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
       if (src &&
-	  layer_has_alpha (src->layer) &&
-	  ! layer_is_floating_sel (src->layer) &&
+	  gimp_layer_has_alpha (src->layer) &&
+	  ! gimp_layer_is_floating_sel (src->layer) &&
 	  src->layer == layersD->active_layer)
 	{
 	  src_index  = 
@@ -2511,8 +2512,8 @@ layer_widget_drag_indicator_callback (GtkWidget *widget,
 }
 
 static void
-layer_widget_draw_drop_indicator (LayerWidget   *layer_widget,
-				  GimpDropType   drop_type)
+layer_widget_draw_drop_indicator (LayerWidget  *layer_widget,
+				  GimpDropType  drop_type)
 {
   static GdkGC *gc = NULL;
   gint          y  = 0;
@@ -2765,11 +2766,11 @@ layer_widget_preview_events (GtkWidget *widget,
     case MASK_PREVIEW:
       pixmap = &layer_widget->mask_pixmap;
       valid  = 
-	GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
+	GIMP_DRAWABLE (gimp_layer_get_mask (layer_widget->layer))->preview_valid;
       break;
     }
 
-  if (layer_is_floating_sel (layer_widget->layer))
+  if (gimp_layer_is_floating_sel (layer_widget->layer))
     preview_type = FS_PREVIEW;
 
   switch (event->type)
@@ -3345,7 +3346,7 @@ layer_widget_layer_flush (GtkWidget *widget,
 			  gpointer   data)
 {
   LayerWidget *layer_widget;
-  Layer       *layer;
+  GimpLayer   *layer;
   const gchar *name;
   gchar       *label_name;
   gboolean     update_layer_preview = FALSE;
@@ -3357,14 +3358,14 @@ layer_widget_layer_flush (GtkWidget *widget,
   /*  Set sensitivity  */
 
   /*  to false if there is a floating selection, and this aint it  */
-  if (! layer_is_floating_sel (layer_widget->layer) &&
+  if (! gimp_layer_is_floating_sel (layer_widget->layer) &&
       layersD->floating_sel != NULL)
     {
       if (GTK_WIDGET_IS_SENSITIVE (layer_widget->list_item))
 	gtk_widget_set_sensitive (layer_widget->list_item, FALSE);
     }
   /*  to true if there is a floating selection, and this is it  */
-  if (layer_is_floating_sel (layer_widget->layer) &&
+  if (gimp_layer_is_floating_sel (layer_widget->layer) &&
       layersD->floating_sel != NULL)
     {
       if (! GTK_WIDGET_IS_SENSITIVE (layer_widget->list_item))
@@ -3398,10 +3399,10 @@ layer_widget_layer_flush (GtkWidget *widget,
 				    GTK_STATE_ACTIVE : GTK_STATE_NORMAL);
     }
 
-  if (layer_is_floating_sel (layer_widget->layer))
+  if (gimp_layer_is_floating_sel (layer_widget->layer))
     name = _("Floating Selection");
   else
-    name = layer_get_name (layer_widget->layer);
+    name = gimp_object_get_name (GIMP_OBJECT (layer_widget->layer));
 
   /*  we need to set the name label if necessary  */
   gtk_label_get (GTK_LABEL (layer_widget->label), &label_name);
@@ -3409,13 +3410,13 @@ layer_widget_layer_flush (GtkWidget *widget,
     gtk_label_set_text (GTK_LABEL (layer_widget->label), name);
 
   /*  show the layer mask preview if necessary  */
-  if (layer_get_mask (layer_widget->layer) == NULL &&
+  if (gimp_layer_get_mask (layer_widget->layer) == NULL &&
       layer_widget->layer_mask)
     {
       layer_widget->layer_mask = FALSE;
       layers_dialog_remove_layer_mask (layer_widget->layer);
     }
-  else if (layer_get_mask (layer_widget->layer) != NULL &&
+  else if (gimp_layer_get_mask (layer_widget->layer) != NULL &&
 	   !layer_widget->layer_mask)
     {
       layer_widget->layer_mask = TRUE;
@@ -3425,10 +3426,10 @@ layer_widget_layer_flush (GtkWidget *widget,
   /*  Update the previews  */
   update_layer_preview = (! GIMP_DRAWABLE (layer)->preview_valid);
 
-  if (layer_get_mask (layer))
+  if (gimp_layer_get_mask (layer))
     {
       update_mask_preview = 
-	(! GIMP_DRAWABLE (layer_get_mask (layer))->preview_valid);
+	(! GIMP_DRAWABLE (gimp_layer_get_mask (layer))->preview_valid);
 
       if (layer->apply_mask != layer_widget->apply_mask)
 	{
@@ -3488,7 +3489,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   NewLayerOptions *options;
-  Layer           *layer;
+  GimpLayer       *layer;
   GimpImage       *gimage;
 
   options = (NewLayerOptions *) data;
@@ -3509,9 +3510,9 @@ new_layer_query_ok_callback (GtkWidget *widget,
       /*  Start a group undo  */
       undo_push_group_start (gimage, LAYER_ADD_UNDO);
 
-      layer = layer_new (gimage, options->xsize, options->ysize,
-			 gimp_image_base_type_with_alpha (gimage),
-			 layer_name, OPAQUE_OPACITY, NORMAL_MODE);
+      layer = gimp_layer_new (gimage, options->xsize, options->ysize,
+			      gimp_image_base_type_with_alpha (gimage),
+			      layer_name, OPAQUE_OPACITY, NORMAL_MODE);
       if (layer) 
 	{
 	  drawable_fill (GIMP_DRAWABLE (layer), fill_type);
@@ -3692,14 +3693,14 @@ edit_layer_query_ok_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   EditLayerOptions *options;
-  Layer            *layer;
+  GimpLayer        *layer;
 
   options = (EditLayerOptions *) data;
 
   if ((layer = options->layer))
     {
       /*  Set the new layer name  */
-      if (GIMP_OBJECT (layer)->name && layer_is_floating_sel (layer))
+      if (GIMP_OBJECT (layer)->name && gimp_layer_is_floating_sel (layer))
 	{
 	  /*  If the layer is a floating selection, make it a layer  */
 	  floating_sel_to_layer (layer);
@@ -3710,8 +3711,8 @@ edit_layer_query_ok_callback (GtkWidget *widget,
           undo_push_layer_rename (options->gimage, layer);
         }
 
-      layer_set_name (layer,
-		      gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      gimp_object_set_name (GIMP_OBJECT (layer),
+			    gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
     }
 
   gdisplays_flush ();
@@ -3768,9 +3769,9 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      ((layer_is_floating_sel (layer_widget->layer) ?
+		      ((gimp_layer_is_floating_sel (layer_widget->layer) ?
 			_("Floating Selection") :
-			layer_get_name (layer_widget->layer))));
+			gimp_object_get_name (GIMP_OBJECT (layer_widget->layer)))));
   gtk_signal_connect (GTK_OBJECT (options->name_entry), "activate",
 		      edit_layer_query_ok_callback,
 		      options);
@@ -3791,7 +3792,7 @@ typedef struct _AddMaskOptions AddMaskOptions;
 struct _AddMaskOptions
 {
   GtkWidget   *query_box;
-  Layer       *layer;
+  GimpLayer   *layer;
   AddMaskType  add_mask_type;
 };
 
@@ -3808,7 +3809,7 @@ add_mask_query_ok_callback (GtkWidget *widget,
   if ((layer = (options->layer)) &&
       (gimage = GIMP_DRAWABLE (layer)->gimage))
     {
-      mask = layer_create_mask (layer, options->add_mask_type);
+      mask = gimp_layer_create_mask (layer, options->add_mask_type);
       gimp_image_add_layer_mask (gimage, layer, mask);
       gdisplays_flush ();
     }
@@ -3817,7 +3818,7 @@ add_mask_query_ok_callback (GtkWidget *widget,
 }
 
 static void
-layers_dialog_add_mask_query (Layer *layer)
+layers_dialog_add_mask_query (GimpLayer *layer)
 {
   AddMaskOptions *options;
   GtkWidget      *frame;
@@ -3877,8 +3878,8 @@ typedef struct _ScaleLayerOptions ScaleLayerOptions;
 
 struct _ScaleLayerOptions
 {
-  Layer  *layer;
-  Resize *resize;
+  GimpLayer *layer;
+  Resize    *resize;
 };
 
 static void
@@ -3887,7 +3888,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 {
   ScaleLayerOptions *options;
   GimpImage         *gimage;
-  Layer             *layer;
+  GimpLayer         *layer;
 
   options = (ScaleLayerOptions *) data;
 
@@ -3900,13 +3901,14 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 	{
 	  undo_push_group_start (gimage, LAYER_SCALE_UNDO);
 
-	  if (layer_is_floating_sel (layer))
+	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
 
-	  layer_scale (layer, 
-		       options->resize->width, options->resize->height, TRUE);
+	  gimp_layer_scale (layer, 
+			    options->resize->width, options->resize->height,
+			    TRUE);
 
-	  if (layer_is_floating_sel (layer))
+	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
 
 	  undo_push_group_end (gimage);
@@ -3925,7 +3927,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_dialog_scale_layer_query (GimpImage *gimage,
-				 Layer     *layer)
+				 GimpLayer *layer)
 {
   ScaleLayerOptions *options;
 
@@ -3963,8 +3965,8 @@ typedef struct _ResizeLayerOptions ResizeLayerOptions;
 
 struct _ResizeLayerOptions
 {
-  Layer  *layer;
-  Resize *resize;
+  GimpLayer *layer;
+  Resize    *resize;
 };
 
 static void
@@ -3973,7 +3975,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 {
   ResizeLayerOptions *options;
   GimpImage          *gimage;
-  Layer              *layer;
+  GimpLayer          *layer;
 
   options = (ResizeLayerOptions *) data;
 
@@ -3986,14 +3988,16 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 	{
 	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
-	  if (layer_is_floating_sel (layer))
+	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
 
-	  layer_resize (layer,
-			options->resize->width, options->resize->height,
-			options->resize->offset_x, options->resize->offset_y);
+	  gimp_layer_resize (layer,
+			     options->resize->width,
+			     options->resize->height,
+			     options->resize->offset_x,
+			     options->resize->offset_y);
 
-	  if (layer_is_floating_sel (layer))
+	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
 
 	  undo_push_group_end (gimage);
@@ -4012,7 +4016,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_dialog_resize_layer_query (GimpImage *gimage,
-				  Layer     *layer)
+				  GimpLayer *layer)
 {
   ResizeLayerOptions *options;
 
@@ -4061,7 +4065,7 @@ layer_merge_query_ok_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   LayerMergeOptions *options;
-  GimpImage *gimage;
+  GimpImage         *gimage;
 
   options = (LayerMergeOptions *) data;
   if (! (gimage = options->gimage))

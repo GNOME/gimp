@@ -59,7 +59,7 @@ gimage_mask_boundary (GImage    *gimage,
 		      gint      *num_segs_out)
 {
   GimpDrawable *d;
-  Layer        *layer;
+  GimpLayer    *layer;
   gint          x1, y1;
   gint          x2, y2;
 
@@ -137,8 +137,8 @@ gimage_mask_bounds (GImage *gimage,
 void
 gimage_mask_invalidate (GImage *gimage)
 {
-  Layer *layer;
-  Channel *mask;
+  GimpLayer *layer;
+  Channel   *mask;
 
   /*  Turn the current selection off  */
   gdisplays_selection_visibility (gimage, SelectionOff);
@@ -151,7 +151,7 @@ gimage_mask_invalidate (GImage *gimage)
    *  mask in the composition of the floating selection
    */
   layer = gimp_image_get_active_layer (gimage);
-  if (layer && layer_is_floating_sel (layer))
+  if (layer && gimp_layer_is_floating_sel (layer))
     drawable_update (GIMP_DRAWABLE(layer), 0, 0,
 		     GIMP_DRAWABLE(layer)->width,
 		     GIMP_DRAWABLE(layer)->height);
@@ -325,7 +325,7 @@ gimage_mask_extract (GImage       *gimage,
        */
       if (cut_gimage && GIMP_IS_LAYER (drawable))
 	{
-	  if (layer_is_floating_sel (GIMP_LAYER (drawable)))
+	  if (gimp_layer_is_floating_sel (GIMP_LAYER (drawable)))
 	    floating_sel_remove (GIMP_LAYER (drawable));
 	  else
 	    gimp_image_remove_layer (gimage, GIMP_LAYER (drawable));
@@ -343,14 +343,13 @@ gimage_mask_extract (GImage       *gimage,
   return tiles;
 }
 
-
-Layer *
+GimpLayer *
 gimage_mask_float (GImage       *gimage,
 		   GimpDrawable *drawable,
 		   gint          off_x,    /* optional offset */
 		   gint          off_y)
 {
-  Layer       *layer;
+  GimpLayer   *layer;
   Channel     *mask = gimp_image_get_mask (gimage);
   TileManager *tiles;
   gboolean     non_empty;
@@ -372,11 +371,11 @@ gimage_mask_float (GImage       *gimage,
   tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_new_from_tiles (gimage,
-				gimp_drawable_type_with_alpha (drawable),
-				tiles, 
-				_("Floated Layer"),
-				OPAQUE_OPACITY, NORMAL_MODE);
+  layer = gimp_layer_new_from_tiles (gimage,
+				     gimp_drawable_type_with_alpha (drawable),
+				     tiles, 
+				     _("Floated Layer"),
+				     OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  Set the offsets  */
   tile_manager_get_offsets (tiles, &x1, &y1);
@@ -502,8 +501,8 @@ gimage_mask_shrink (GImage   *gimage,
 
 
 void
-gimage_mask_layer_alpha (GImage *gimage,
-			 Layer  *layer)
+gimage_mask_layer_alpha (GimpImage *gimage,
+			 GimpLayer *layer)
 {
   /*  extract the layer's alpha channel  */
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
@@ -521,11 +520,11 @@ gimage_mask_layer_alpha (GImage *gimage,
 
 
 void
-gimage_mask_layer_mask (GImage *gimage,
-			Layer  *layer)
+gimage_mask_layer_mask (GimpImage *gimage,
+			GimpLayer *layer)
 {
   /*  extract the layer's alpha channel  */
-  if (layer_get_mask (layer))
+  if (gimp_layer_get_mask (layer))
     {
       /*  load the mask with the given layer's alpha channel  */
       channel_layer_mask (gimp_image_get_mask (gimage), layer);

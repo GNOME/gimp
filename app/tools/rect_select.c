@@ -495,9 +495,9 @@ selection_tool_update_op_state (RectSelect *rect_sel,
 				gint        state,  
 				GDisplay   *gdisp)
 {
-  Layer *layer;
-  Layer *floating_sel;
-  gint   tx, ty;
+  GimpLayer *layer;
+  GimpLayer *floating_sel;
+  gint       tx, ty;
 
   if (active_tool->state == ACTIVE)
     return;

@@ -250,12 +250,12 @@ image_new_rotate_the_shield_harmonics (GtkWidget    *widget,
 void 
 image_new_create_image (const GimpImageNewValues *values)
 {
-  GimpImage *image;
-  GDisplay *display;
-  Layer *layer;
-  GimpImageType type;
-  GimpParasite *comment_parasite;
-  gint width, height;
+  GimpImage     *image;
+  GDisplay      *display;
+  GimpLayer     *layer;
+  GimpImageType  type;
+  GimpParasite  *comment_parasite;
+  gint           width, height;
 
   g_return_if_fail (values != NULL);
 
@@ -294,9 +294,9 @@ image_new_create_image (const GimpImageNewValues *values)
   /*  Make the background (or first) layer  */
   width = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
-  layer = layer_new (image, width, height,
-                     type, _("Background"),
-		     OPAQUE_OPACITY, NORMAL_MODE);
+  layer = gimp_layer_new (image, width, height,
+			  type, _("Background"),
+			  OPAQUE_OPACITY, NORMAL_MODE);
  
   if (layer)
     {

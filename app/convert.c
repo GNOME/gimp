@@ -329,7 +329,7 @@ typedef struct _Color Color;
 typedef struct _QuantizeObj QuantizeObj;
 typedef void (* Pass1_Func) (QuantizeObj *);
 typedef void (* Pass2i_Func) (QuantizeObj *);
-typedef void (* Pass2_Func) (QuantizeObj *, Layer *, TileManager *);
+typedef void (* Pass2_Func) (QuantizeObj *, GimpLayer *, TileManager *);
 typedef void (* Cleanup_Func) (QuantizeObj *);
 typedef unsigned long ColorFreq;
 typedef ColorFreq *CFHistogram;
@@ -416,13 +416,13 @@ static void indexed_cancel_callback    (GtkWidget *, gpointer);
 static void indexed_custom_palette_button_callback  (GtkWidget *widget, gpointer data);
 static void indexed_palette_select_destroy_callback (GtkWidget *widget, gpointer data);
 
-static void rgb_converter       (Layer *, TileManager *, int);
-static void grayscale_converter (Layer *, TileManager *, int);
+static void rgb_converter       (GimpLayer *, TileManager *, int);
+static void grayscale_converter (GimpLayer *, TileManager *, int);
 
 static void zero_histogram_gray     (CFHistogram);
 static void zero_histogram_rgb      (CFHistogram);
-static void generate_histogram_gray (CFHistogram, Layer *, int alpha_dither);
-static void generate_histogram_rgb  (CFHistogram, Layer *, int col_limit, int alpha_dither);
+static void generate_histogram_gray (CFHistogram, GimpLayer *, int alpha_dither);
+static void generate_histogram_rgb  (CFHistogram, GimpLayer *, int col_limit, int alpha_dither);
 
 static QuantizeObj* initialize_median_cut (int, int, ConvertDitherType,
 					   ConvertPaletteType, int);
@@ -552,14 +552,9 @@ convert_to_indexed (GimpImage *gimage)
 
   if (dialog->num_cols == 256)
     {
-      if ((!gimp_image_is_empty (gimage))
-	  &&
-	  (
-	   gimage->layers->next
-	   ||
-	   layer_has_alpha ((Layer *) gimage->layers->data)
-	   )
-	  )
+      if ((! gimp_image_is_empty (gimage)) &&
+	  (gimage->layers->next ||
+	   gimp_layer_has_alpha ((GimpLayer *) gimage->layers->data)))
 	{
 	  dialog->num_cols = 255;
 	}      
@@ -756,14 +751,9 @@ convert_to_indexed (GimpImage *gimage)
   /* if the image isn't non-alpha/layered, set the default number of
      colours to one less than max, to leave room for a transparent index
      for transparent/animated GIFs */
-  if ((!gimp_image_is_empty (gimage))
-      &&
-      (
-       gimage->layers->next
-       ||
-       layer_has_alpha ((Layer *) gimage->layers->data)
-       )
-      )
+  if ((! gimp_image_is_empty (gimage)) &&
+      (gimage->layers->next ||
+       gimp_layer_has_alpha ((GimpLayer *) gimage->layers->data)))
     {
       frame = gtk_frame_new (_("[ Warning ]"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -1146,7 +1136,7 @@ make_remap_table (const unsigned char  old_palette[],
 }
 
 static void
-remap_indexed_layer (Layer         *layer,
+remap_indexed_layer (GimpLayer     *layer,
 		     unsigned char *remap_table,
 		     int            num_entries)
 {
@@ -1157,7 +1147,7 @@ remap_indexed_layer (Layer         *layer,
   unsigned char* src;
   unsigned char* dest;
 
-  has_alpha = layer_has_alpha (layer) ? 1 : 0;
+  has_alpha = gimp_layer_has_alpha (layer) ? 1 : 0;
   pixel_region_init (&srcPR,
 		     GIMP_DRAWABLE(layer)->tiles, 0, 0,
 		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
@@ -1201,8 +1191,8 @@ convert_image (GImage		 *gimage,
 	       ConvertPaletteType palette_type)
 {
   QuantizeObj *quantobj;
-  Layer *layer;
-  Layer *floating_layer;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
   GimpImageBaseType old_type;
   GSList *list;
   GimpImageType new_layer_type;
@@ -1262,7 +1252,7 @@ convert_image (GImage		 *gimage,
 	  list = gimage->layers;
 	  while (list)
 	    {
-	      layer = (Layer *) list->data;
+	      layer = (GimpLayer *) list->data;
 	      list = g_slist_next (list);
 	      if (old_type == GRAY)
 		generate_histogram_gray (quantobj->histogram, layer, alpha_dither);
@@ -1328,10 +1318,10 @@ convert_image (GImage		 *gimage,
   list = gimage->layers;
   while (list)
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
       list = g_slist_next (list);
 
-      has_alpha = layer_has_alpha (layer);
+      has_alpha = gimp_layer_has_alpha (layer);
       switch (new_type)
 	{
 	case RGB:
@@ -1412,7 +1402,7 @@ convert_image (GImage		 *gimage,
 	  list = gimage->layers;
 	  while (list)
 	    {
-	      layer = (Layer *) list->data;
+	      layer = (GimpLayer *) list->data;
 	      list = g_slist_next (list);
 	  
 	      remap_indexed_layer (layer, remap_table, num_entries);
@@ -1468,7 +1458,7 @@ convert_image (GImage		 *gimage,
 }
 
 static void
-rgb_converter (Layer       *layer,
+rgb_converter (GimpLayer   *layer,
 	       TileManager *new_tiles,
 	       int          old_type)
 {
@@ -1481,7 +1471,7 @@ rgb_converter (Layer       *layer,
   unsigned char *cmap;
   void *pr;
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
 
@@ -1542,7 +1532,7 @@ rgb_converter (Layer       *layer,
 }
 
 static void
-grayscale_converter (Layer       *layer,
+grayscale_converter (GimpLayer   *layer,
 		     TileManager *new_tiles,
 		     int          old_type)
 {
@@ -1555,7 +1545,7 @@ grayscale_converter (Layer       *layer,
   unsigned char *cmap;
   void *pr;
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
 
@@ -1638,7 +1628,7 @@ zero_histogram_rgb (CFHistogram histogram)
 
 static void
 generate_histogram_gray (CFHistogram  histogram,
-			 Layer       *layer,
+			 GimpLayer   *layer,
 			 int          alpha_dither)
 {
   PixelRegion srcPR;
@@ -1647,7 +1637,7 @@ generate_histogram_gray (CFHistogram  histogram,
   void *pr;
   gboolean has_alpha;
 
-  has_alpha = (gboolean) layer_has_alpha(layer);
+  has_alpha = gimp_layer_has_alpha (layer);
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
@@ -1667,7 +1657,7 @@ generate_histogram_gray (CFHistogram  histogram,
 
 static void
 generate_histogram_rgb (CFHistogram  histogram,
-			Layer       *layer,
+			GimpLayer   *layer,
 			int          col_limit,
 			int          alpha_dither)
 {
@@ -1681,7 +1671,7 @@ generate_histogram_rgb (CFHistogram  histogram,
   int row, col, coledge;
   int offsetx, offsety;
 
-  has_alpha = (gboolean) layer_has_alpha(layer);
+  has_alpha = gimp_layer_has_alpha (layer);
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
@@ -2991,7 +2981,7 @@ custompal_pass1 (QuantizeObj *quantobj)
 
 static void
 median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
-				 Layer       *layer,
+				 GimpLayer   *layer,
 				 TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3008,7 +2998,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3052,7 +3042,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
-				    Layer       *layer,
+				    GimpLayer   *layer,
 				    TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3071,7 +3061,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3129,7 +3119,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
-				Layer       *layer,
+				GimpLayer   *layer,
 				TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3156,7 +3146,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3204,7 +3194,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
-				   Layer       *layer,
+				   GimpLayer   *layer,
 				   TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3233,7 +3223,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3310,7 +3300,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
 static void
 median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
-					Layer       *layer,
+					GimpLayer   *layer,
 					TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3332,7 +3322,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3485,7 +3475,7 @@ init_error_limit (const int error_freedom)
 
 static void
 median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
-				 Layer       *layer,
+				 GimpLayer   *layer,
 				 TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3516,7 +3506,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
@@ -3681,7 +3671,7 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
 
 static void
 median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
-				Layer       *layer,
+				GimpLayer   *layer,
 				TileManager *new_tiles)
 {
   PixelRegion srcPR, destPR;
@@ -3726,7 +3716,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = layer_has_alpha (layer);
+  has_alpha = gimp_layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;

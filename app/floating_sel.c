@@ -42,11 +42,11 @@
 
 
 void
-floating_sel_attach (Layer        *layer,
+floating_sel_attach (GimpLayer    *layer,
 		     GimpDrawable *drawable)
 {
-  GImage *gimage;
-  Layer *floating_sel;
+  GImage    *gimage;
+  GimpLayer *floating_sel;
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
@@ -84,7 +84,7 @@ floating_sel_attach (Layer        *layer,
 }
 
 void
-floating_sel_remove (Layer *layer)
+floating_sel_remove (GimpLayer *layer)
 {
   GImage *gimage;
 
@@ -105,13 +105,13 @@ floating_sel_remove (Layer *layer)
 }
 
 void
-floating_sel_anchor (Layer *layer)
+floating_sel_anchor (GimpLayer *layer)
 {
   GImage *gimage;
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
-  if (! layer_is_floating_sel (layer))
+  if (! gimp_layer_is_floating_sel (layer))
     {
       g_message (_("Cannot anchor this layer because\nit is not a floating selection."));
       return;
@@ -145,7 +145,7 @@ floating_sel_anchor (Layer *layer)
 }
 
 void
-floating_sel_reset (Layer *layer)
+floating_sel_reset (GimpLayer *layer)
 {
   GImage *gimage;
 
@@ -162,18 +162,18 @@ floating_sel_reset (Layer *layer)
     {
       gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
       if (gimage->layers)
-	gimage->active_layer = (((Layer *) gimage->layer_stack->data));
+	gimage->active_layer = (((GimpLayer *) gimage->layer_stack->data));
       else
 	gimage->active_layer = NULL;
     }
 }
 
 void
-floating_sel_to_layer (Layer *layer)
+floating_sel_to_layer (GimpLayer *layer)
 {
   FStoLayerUndo *fsu;
-  int off_x, off_y;
-  int width, height;
+  gint           off_x, off_y;
+  gint           width, height;
 
   GImage *gimage;
 
@@ -214,7 +214,7 @@ floating_sel_to_layer (Layer *layer)
   undo_push_fs_to_layer (gimage, fsu);
 
   /*  clear the selection  */
-  layer_invalidate_boundary (layer);
+  gimp_layer_invalidate_boundary (layer);
 
   /*  Set pointers  */
   layer->fs.drawable = NULL;
@@ -239,15 +239,15 @@ floating_sel_to_layer (Layer *layer)
 }
 
 void
-floating_sel_store (Layer *layer,
-		    int    x,
-		    int    y,
-		    int    w,
-		    int    h)
+floating_sel_store (GimpLayer *layer,
+		    gint       x,
+		    gint       y,
+		    gint       w,
+		    gint       h)
 {
   PixelRegion srcPR, destPR;
-  int offx, offy;
-  int x1, y1, x2, y2;
+  gint        offx, offy;
+  gint        x1, y1, x2, y2;
 
   /*  Check the backing store & make sure it has the correct dimensions  */
   if ((tile_manager_width (layer->fs.backing_store)  != gimp_drawable_width (GIMP_DRAWABLE(layer)))  ||
@@ -297,15 +297,15 @@ floating_sel_store (Layer *layer,
 }
 
 void
-floating_sel_restore (Layer *layer,
-		      int    x,
-		      int    y,
-		      int    w,
-		      int    h)
+floating_sel_restore (GimpLayer *layer,
+		      gint       x,
+		      gint       y,
+		      gint       w,
+		      gint       h)
 {
   PixelRegion srcPR, destPR;
-  int offx, offy;
-  int x1, y1, x2, y2;
+  gint        offx, offy;
+  gint        x1, y1, x2, y2;
 
   /*  What this function does is "uncover" the specified area in the
    *  drawable that this floating selection obscures.  We do this so
@@ -342,8 +342,8 @@ floating_sel_restore (Layer *layer,
 }
 
 void
-floating_sel_rigor (Layer *layer,
-		    int    undo)
+floating_sel_rigor (GimpLayer *layer,
+		    gint       undo)
 {
   GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
@@ -360,8 +360,8 @@ floating_sel_rigor (Layer *layer,
 }
 
 void
-floating_sel_relax (Layer *layer,
-		    int    undo)
+floating_sel_relax (GimpLayer *layer,
+		    gint       undo)
 {
   GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
@@ -379,21 +379,21 @@ floating_sel_relax (Layer *layer,
 }
 
 void
-floating_sel_composite (Layer *layer,
-			int    x,
-			int    y,
-			int    w,
-			int    h,
-			int    undo)
+floating_sel_composite (GimpLayer *layer,
+			gint       x,
+			gint       y,
+			gint       w,
+			gint       h,
+			gint       undo)
 {
-  PixelRegion fsPR;
-  GImage *gimage;
-  Layer *d_layer;
-  int preserve_trans;
-  int active[MAX_CHANNELS];
-  int offx, offy;
-  int x1, y1, x2, y2;
-  int i;
+  PixelRegion  fsPR;
+  GImage      *gimage;
+  GimpLayer   *d_layer;
+  gint         preserve_trans;
+  gint         active[MAX_CHANNELS];
+  gint         offx, offy;
+  gint         x1, y1, x2, y2;
+  gint         i;
 
   d_layer = NULL;
 
@@ -482,8 +482,8 @@ floating_sel_composite (Layer *layer,
 }
 
 BoundSeg *
-floating_sel_boundary (Layer *layer,
-		       int   *num_segs)
+floating_sel_boundary (GimpLayer *layer,
+		       gint      *num_segs)
 {
   PixelRegion bPR;
   int i;
@@ -520,7 +520,7 @@ floating_sel_boundary (Layer *layer,
 }
 
 void
-floating_sel_invalidate (Layer *layer)
+floating_sel_invalidate (GimpLayer *layer)
 {
   /*  Invalidate the attached-to drawable's preview  */
   gimp_drawable_invalidate_preview (layer->fs.drawable, TRUE);

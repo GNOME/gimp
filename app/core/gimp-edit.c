@@ -196,7 +196,7 @@ crop_buffer (TileManager *tiles,
 }
 
 TileManager *
-edit_cut (GImage       *gimage,
+edit_cut (GimpImage    *gimage,
 	  GimpDrawable *drawable)
 {
   TileManager *cut;
@@ -250,7 +250,7 @@ edit_cut (GImage       *gimage,
 }
 
 TileManager *
-edit_copy (GImage       *gimage,
+edit_copy (GimpImage    *gimage,
 	   GimpDrawable *drawable)
 {
   TileManager *copy;
@@ -298,31 +298,31 @@ edit_copy (GImage       *gimage,
 }
 
 GimpLayer *
-edit_paste (GImage       *gimage,
+edit_paste (GimpImage    *gimage,
 	    GimpDrawable *drawable,
 	    TileManager  *paste,
 	    gboolean      paste_into)
 {
-  Layer *layer;
-  gint   x1, y1, x2, y2;
-  gint   cx, cy;
+  GimpLayer *layer;
+  gint       x1, y1, x2, y2;
+  gint       cx, cy;
 
   /*  Make a new layer: iff drawable == NULL,
    *  user is pasting into an empty display.
    */
 
   if (drawable != NULL)
-    layer = layer_new_from_tiles (gimage,
-				  gimp_drawable_type_with_alpha (drawable),
-				  paste, 
-				  _("Pasted Layer"),
-				  OPAQUE_OPACITY, NORMAL_MODE);
+    layer = gimp_layer_new_from_tiles (gimage,
+				       gimp_drawable_type_with_alpha (drawable),
+				       paste, 
+				       _("Pasted Layer"),
+				       OPAQUE_OPACITY, NORMAL_MODE);
   else
-    layer = layer_new_from_tiles (gimage,
-				  gimp_image_base_type_with_alpha (gimage),
-				  paste, 
-				  _("Pasted Layer"),
-				  OPAQUE_OPACITY, NORMAL_MODE);
+    layer = gimp_layer_new_from_tiles (gimage,
+				       gimp_image_base_type_with_alpha (gimage),
+				       paste, 
+				       _("Pasted Layer"),
+				       OPAQUE_OPACITY, NORMAL_MODE);
  
   if (layer)
     {
@@ -374,12 +374,12 @@ edit_paste (GImage       *gimage,
 }
 
 gboolean
-edit_paste_as_new (GImage      *invoke,
+edit_paste_as_new (GimpImage   *invoke,
 		   TileManager *paste)
 {
-  GImage   *gimage;
-  Layer    *layer;
-  GDisplay *gdisp;
+  GimpImage *gimage;
+  GimpLayer *layer;
+  GDisplay  *gdisp;
 
   if (!global_buf)
     return FALSE;
@@ -392,11 +392,11 @@ edit_paste_as_new (GImage      *invoke,
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
   
-  layer = layer_new_from_tiles (gimage,
-				gimp_image_base_type_with_alpha (gimage),
-				paste, 
-				_("Pasted Layer"),
-				OPAQUE_OPACITY, NORMAL_MODE);
+  layer = gimp_layer_new_from_tiles (gimage,
+				     gimp_image_base_type_with_alpha (gimage),
+				     paste, 
+				     _("Pasted Layer"),
+				     OPAQUE_OPACITY, NORMAL_MODE);
 
   if (layer)
     {
@@ -416,7 +416,7 @@ edit_paste_as_new (GImage      *invoke,
 }
 
 gboolean
-edit_clear (GImage       *gimage,
+edit_clear (GimpImage    *gimage,
 	    GimpDrawable *drawable)
 {
   TileManager *buf_tiles;
@@ -455,7 +455,7 @@ edit_clear (GImage       *gimage,
 }
 
 gboolean
-edit_fill (GImage       *gimage,
+edit_fill (GimpImage    *gimage,
 	   GimpDrawable *drawable,
 	   GimpFillType  fill_type)
 {

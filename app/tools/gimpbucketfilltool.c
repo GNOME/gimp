@@ -284,7 +284,7 @@ bucket_fill_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   GDisplay       *gdisp)
 {
-  Layer          *layer;
+  GimpLayer      *layer;
   GdkCursorType   ctype     = GDK_TOP_LEFT_ARROW;
   CursorModifier  cmodifier = CURSOR_MODIFIER_NONE;
   gint            x, y;

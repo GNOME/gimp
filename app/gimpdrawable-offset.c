@@ -567,13 +567,13 @@ duplicate (GimpImage *gimage)
 {
   PixelRegion   srcPR, destPR;
   GimpImage    *new_gimage;
-  Layer        *layer, *new_layer;
-  Layer        *floating_layer;
+  GimpLayer    *layer, *new_layer;
+  GimpLayer    *floating_layer;
   Channel      *channel, *new_channel;
   GSList       *list;
   GList        *glist;
   Guide        *guide = NULL;
-  Layer        *active_layer = NULL;
+  GimpLayer    *active_layer = NULL;
   Channel      *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
@@ -608,16 +608,16 @@ duplicate (GimpImage *gimage)
   layer = NULL;
   while (list)
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
       list = g_slist_next (list);
 
-      new_layer = layer_copy (layer, FALSE);
+      new_layer = gimp_layer_copy (layer, FALSE);
 
-      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_layer), new_gimage);
+      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
-      layer_set_name(GIMP_LAYER(new_layer),
-		     layer_get_name(GIMP_LAYER(layer)));
+      gimp_object_set_name (GIMP_OBJECT (new_layer),
+			    gimp_object_get_name (GIMP_OBJECT (layer)));
 
       /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
       if (new_layer->mask)

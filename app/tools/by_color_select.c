@@ -488,7 +488,7 @@ by_color_select_cursor_update (Tool           *tool,
 			       GDisplay       *gdisp)
 {
   ByColorSelect *by_col_sel;
-  Layer         *layer;
+  GimpLayer     *layer;
   gint           x, y;
 
   by_col_sel = (ByColorSelect *) tool->private;

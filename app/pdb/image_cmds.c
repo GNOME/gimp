@@ -2310,7 +2310,7 @@ image_floating_sel_attached_to_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   GimpDrawable *drawable = NULL;
-  Layer *floating_sel;
+  GimpLayer *floating_sel;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)

@@ -27,10 +27,10 @@ struct _XcfInfo
   FILE         *fp;
   guint         cp;
   gchar        *filename;
-  Layer        *active_layer;
+  GimpLayer    *active_layer;
   Channel      *active_channel;
   GimpDrawable *floating_sel_drawable;
-  Layer        *floating_sel;
+  GimpLayer    *floating_sel;
   guint         floating_sel_offset;
   gint          swap_num;
   gint         *ref_count;

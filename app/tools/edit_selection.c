@@ -131,8 +131,8 @@ init_edit_selection (Tool           *tool,
 		     GdkEventButton *bevent,
 		     EditType        edit_type)
 {
-  Layer *layer;
-  gint   x, y;
+  GimpLayer *layer;
+  gint       x, y;
 
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 
@@ -159,7 +159,7 @@ init_edit_selection (Tool           *tool,
   if (edit_type == EDIT_LAYER_TRANSLATE)
     {
       layer = gimp_image_get_active_layer (gdisp->gimage);
-      if (layer_is_floating_sel (layer))
+      if (gimp_layer_is_floating_sel (layer))
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
     }
 
@@ -217,9 +217,9 @@ edit_selection_button_release (Tool           *tool,
 			       GdkEventButton *bevent,
 			       GDisplay       *gdisp)
 {
-  gint      x;
-  gint      y;
-  Layer    *layer;
+  gint       x;
+  gint       y;
+  GimpLayer *layer;
 
   /*  resume the current selection and ungrab the pointer  */
   selection_resume (gdisp->select);
@@ -279,7 +279,7 @@ edit_selection_button_release (Tool           *tool,
       if (edit_select.edit_type == EDIT_FLOATING_SEL_TRANSLATE)
 	{
 	  layer = gimp_image_get_active_layer (gdisp->gimage);
-	  if (layer_is_floating_sel (layer))
+	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_anchor (layer);
 	}
     }
@@ -338,10 +338,10 @@ edit_selection_motion (Tool           *tool,
   /******************************************* adam's live move *******/
   /********************************************************************/
   {
-    gint    x, y;
-    Layer  *layer;
-    Layer  *floating_layer;
-    GSList *layer_list;
+    gint       x, y;
+    GimpLayer *layer;
+    GimpLayer *floating_layer;
+    GSList    *layer_list;
 
     x = edit_select.x;
     y = edit_select.y;
@@ -374,11 +374,11 @@ edit_selection_motion (Tool           *tool,
 		 layer_list;
 		 layer_list = g_slist_next (layer_list))
 	      {
-		layer = (Layer *) layer_list->data;
+		layer = (GimpLayer *) layer_list->data;
 		if (layer == gdisp->gimage->active_layer || 
-		    layer_linked (layer))
+		    gimp_layer_linked (layer))
 		  {
-		    layer_translate (layer, xoffset, yoffset);
+		    gimp_layer_translate (layer, xoffset, yoffset);
 		  }
 	      }
       
@@ -421,7 +421,7 @@ edit_selection_motion (Tool           *tool,
 	    layer = gimp_image_get_active_layer (gdisp->gimage);
       
 	    floating_sel_relax (layer, TRUE);
-	    layer_translate (layer, xoffset, yoffset);
+	    gimp_layer_translate (layer, xoffset, yoffset);
 	    floating_sel_rigor (layer, TRUE);
 
 	    if (edit_select.first_move)
@@ -504,7 +504,7 @@ edit_selection_draw (Tool *tool)
 {
   GDisplay   *gdisp;
   Selection  *select;
-  Layer      *layer;
+  GimpLayer  *layer;
   GSList     *layer_list;
   gint        floating_sel;
   gint        x1, y1, x2, y2;
@@ -519,7 +519,7 @@ edit_selection_draw (Tool *tool)
     {
     case EDIT_MASK_TRANSLATE:
       layer = gimp_image_get_active_layer (gdisp->gimage);
-      floating_sel = layer_is_floating_sel (layer);
+      floating_sel = gimp_layer_is_floating_sel (layer);
 
       if (!floating_sel)
 	{
@@ -577,8 +577,9 @@ edit_selection_draw (Tool *tool)
 	   layer_list;
 	   layer_list = g_slist_next (layer_list))
 	{
-	  layer = (Layer *) layer_list->data;
-	  if (((layer) != gdisp->gimage->active_layer) && layer_linked (layer))
+	  layer = (GimpLayer *) layer_list->data;
+	  if (((layer) != gdisp->gimage->active_layer) &&
+	      gimp_layer_linked (layer))
 	    {
 	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 	      gdisplay_transform_coords (gdisp, off_x, off_y, &x3, &y3, FALSE);
@@ -763,11 +764,11 @@ edit_sel_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  GDisplay    *gdisp)
 {
-  gint      inc_x, inc_y, mask_inc_x, mask_inc_y;
-  Layer    *layer;
-  Layer    *floating_layer;
-  GSList   *layer_list;
-  EditType  edit_type;
+  gint       inc_x, inc_y, mask_inc_x, mask_inc_y;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  GSList    *layer_list;
+  EditType   edit_type;
 
   layer = NULL;
 
@@ -813,7 +814,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
     {
       layer = gimp_image_get_active_layer (gdisp->gimage);
  
-      if (layer_is_floating_sel (layer))
+      if (gimp_layer_is_floating_sel (layer))
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
       else
 	edit_type = EDIT_LAYER_TRANSLATE;
@@ -835,11 +836,11 @@ edit_sel_arrow_keys_func (Tool        *tool,
 	       layer_list; 
 	       layer_list = g_slist_next (layer_list))
 	    {
-	      layer = (Layer *) layer_list->data;
+	      layer = (GimpLayer *) layer_list->data;
 	      if (((layer) == gdisp->gimage->active_layer) || 
-		  layer_linked (layer))
+		  gimp_layer_linked (layer))
 		{
-		  layer_translate (layer, inc_x, inc_y);
+		  gimp_layer_translate (layer, inc_x, inc_y);
 		}
 	    }
 	  
@@ -852,7 +853,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
 	  
 	  floating_sel_relax (layer, TRUE);
 	  
-	  layer_translate (layer, inc_x, inc_y);
+	  gimp_layer_translate (layer, inc_x, inc_y);
 	  
 	  floating_sel_rigor (layer, TRUE);
 	  

@@ -67,10 +67,10 @@ static void      gimp_layer_preview_scale        (GimpImageBaseType   type,
 						  PixelRegion        *destPR,
 						  gint                subsample);
 
-static TempBuf * gimp_layer_preview_private      (Layer              *layer,
+static TempBuf * gimp_layer_preview_private      (GimpLayer          *layer,
 						  gint                width,
 						  gint                height);
-static TempBuf * gimp_layer_mask_preview_private (Layer              *layer,
+static TempBuf * gimp_layer_mask_preview_private (GimpLayer          *layer,
 						  gint                width,
 						  gint                height);
 
@@ -152,7 +152,7 @@ gimp_layer_invalidate_preview (GimpDrawable *drawable)
   
   layer = GIMP_LAYER (drawable);
 
-  if (layer_is_floating_sel (layer)) 
+  if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
 }
 
@@ -1211,19 +1211,6 @@ gimp_layer_pick_correlate (GimpLayer *layer,
 /*  access functions  */
 /**********************/
 
-void
-gimp_layer_set_name (GimpLayer   *layer,
-		     const gchar *name)
-{
-  gimp_object_set_name (GIMP_OBJECT (layer), name);
-}
-
-const gchar *
-gimp_layer_get_name (const GimpLayer *layer)
-{
-  return gimp_object_get_name (GIMP_OBJECT (layer));
-}
-
 GimpLayerMask *
 gimp_layer_get_mask (GimpLayer *layer)
 {
@@ -1252,19 +1239,6 @@ gboolean
 gimp_layer_linked (GimpLayer *layer)
 {
   return layer->linked;
-}
-
-Tattoo
-gimp_layer_get_tattoo (const GimpLayer *layer)
-{
-  return gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer));
-}
-
-void
-gimp_layer_set_tattoo (GimpLayer *layer, 
-		       Tattoo     value)
-{
-  gimp_drawable_set_tattoo (GIMP_DRAWABLE (layer), value);
 }
 
 TempBuf *

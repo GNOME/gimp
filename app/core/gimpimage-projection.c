@@ -94,21 +94,21 @@ static void     gimp_image_get_active_channels   (GimpImage    *gimage,
 
 /*  projection functions  */
 static void     project_intensity                (GimpImage    *gimage,
-						  Layer        *layer,
+						  GimpLayer    *layer,
 						  PixelRegion  *src,
 						  PixelRegion  *dest,
 						  PixelRegion  *mask);
 static void     project_intensity_alpha          (GimpImage    *gimage,
-						  Layer        *layer,
+						  GimpLayer    *layer,
 						  PixelRegion  *src,
 						  PixelRegion  *dest,
 						  PixelRegion  *mask);
 static void     project_indexed                  (GimpImage    *gimage,
-						  Layer        *layer,
+						  GimpLayer    *layer,
 						  PixelRegion  *src,
 						  PixelRegion  *dest);
 static void     project_indexed_alpha            (GimpImage    *gimage, 
-						  Layer        *layer,
+						  GimpLayer    *layer,
 						  PixelRegion  *src, 
 						  PixelRegion  *dest,
 						  PixelRegion  *mask);
@@ -552,11 +552,11 @@ gimp_image_resize (GimpImage *gimage,
 		   gint       offset_x, 
 		   gint       offset_y)
 {
-  Channel *channel;
-  Layer   *layer;
-  Layer   *floating_layer;
-  GSList  *list;
-  GList   *guide_list;
+  Channel   *channel;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  GSList    *list;
+  GList     *guide_list;
 
   gimp_add_busy_cursors ();
 
@@ -624,9 +624,9 @@ gimp_image_resize (GimpImage *gimage,
   /*  Reposition all layers  */
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
 
-      layer_translate (layer, offset_x, offset_y);
+      gimp_layer_translate (layer, offset_x, offset_y);
     }
 
   /*  Make sure the projection matches the gimage size  */
@@ -646,17 +646,17 @@ gimp_image_scale (GimpImage *gimage,
 		  gint       new_width, 
 		  gint       new_height)
 {
-  Channel *channel;
-  Layer   *layer;
-  Layer   *floating_layer;
-  GSList  *list;
-  GSList  *remove = NULL;
-  GList   *glist;
-  Guide   *guide;
-  gint     old_width;
-  gint     old_height;
-  gdouble  img_scale_w = 1.0;
-  gdouble  img_scale_h = 1.0;
+  Channel   *channel;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  GSList    *list;
+  GSList    *remove = NULL;
+  GList     *glist;
+  Guide     *guide;
+  gint       old_width;
+  gint       old_height;
+  gdouble    img_scale_w = 1.0;
+  gdouble    img_scale_h = 1.0;
 
   if ((new_width == 0) || (new_height == 0))
     {
@@ -707,8 +707,9 @@ gimp_image_scale (GimpImage *gimage,
   list = gimage->layers;
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
-      if (layer_scale_by_factors (layer, img_scale_w, img_scale_h) == FALSE)
+      layer = (GimpLayer *) list->data;
+
+      if (gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h) == FALSE)
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented
@@ -1373,23 +1374,23 @@ gboolean
 gimp_image_set_tattoo_state (GimpImage *gimage, 
 			     Tattoo     val)
 {
-  Layer    *layer;
-  GSList   *layers;
-  gboolean  retval = TRUE;
-  Channel  *channel;
-  GSList   *channels;
-  Tattoo    maxval = 0;
-  Path     *pptr   = NULL;
-  PathList *plist;
+  GimpLayer *layer;
+  GSList    *layers;
+  gboolean   retval = TRUE;
+  Channel   *channel;
+  GSList    *channels;
+  Tattoo     maxval = 0;
+  Path      *pptr   = NULL;
+  PathList  *plist;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   for (layers = gimage->layers; layers; layers = g_slist_next (layers))
     {
       Tattoo ltattoo;
-      layer = (Layer *) layers->data;
+      layer = (GimpLayer *) layers->data;
       
-      ltattoo = layer_get_tattoo (layer);
+      ltattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer));
       if (ltattoo > maxval)
 	maxval = ltattoo;
       if (gimp_image_get_channel_by_tattoo (gimage, ltattoo) != NULL)
@@ -1485,7 +1486,7 @@ gimp_image_colormap_changed (const GimpImage *gimage,
 
 static void
 project_intensity (GimpImage   *gimage, 
-		   Layer       *layer,
+		   GimpLayer   *layer,
 		   PixelRegion *src, 
 		   PixelRegion *dest, 
 		   PixelRegion *mask)
@@ -1500,7 +1501,7 @@ project_intensity (GimpImage   *gimage,
 
 static void
 project_intensity_alpha (GimpImage   *gimage, 
-			 Layer       *layer,
+			 GimpLayer   *layer,
 			 PixelRegion *src, 
 			 PixelRegion *dest,
 			 PixelRegion *mask)
@@ -1515,7 +1516,7 @@ project_intensity_alpha (GimpImage   *gimage,
 
 static void
 project_indexed (GimpImage   *gimage, 
-		 Layer       *layer,
+		 GimpLayer   *layer,
 		 PixelRegion *src, 
 		 PixelRegion *dest)
 {
@@ -1528,7 +1529,7 @@ project_indexed (GimpImage   *gimage,
 
 static void
 project_indexed_alpha (GimpImage   *gimage, 
-		       Layer       *layer,
+		       GimpLayer   *layer,
 		       PixelRegion *src, 
 		       PixelRegion *dest,
 		       PixelRegion *mask)
@@ -1579,14 +1580,16 @@ project_channel (GimpImage   *gimage,
 static void
 gimp_image_free_layers (GimpImage *gimage)
 {
-  GSList *list;
-  Layer  *layer;
+  GSList    *list;
+  GimpLayer *layer;
 
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
-      layer_delete (layer);
+      layer = (GimpLayer *) list->data;
+
+      gtk_object_unref (GTK_OBJECT (layer));
     }
+
   g_slist_free (gimage->layers);
   g_slist_free (gimage->layer_stack);
 }
@@ -1616,7 +1619,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 			     gint       w, 
 			     gint       h)
 {
-  Layer       *layer;
+  GimpLayer   *layer;
   gint         x1, y1, x2, y2;
   PixelRegion  src1PR, src2PR, maskPR;
   PixelRegion * mask;
@@ -1662,18 +1665,18 @@ gimp_image_construct_layers (GimpImage *gimage,
 
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
 
       /*  only add layers that are visible and not floating selections 
 	  to the list  */
-      if (!layer_is_floating_sel (layer) && 
+      if (! gimp_layer_is_floating_sel (layer) && 
 	  gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	reverse_list = g_slist_prepend (reverse_list, layer);
     }
 
   while (reverse_list)
     {
-      layer = (Layer *) reverse_list->data;
+      layer = (GimpLayer *) reverse_list->data;
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
@@ -1802,7 +1805,7 @@ gimp_image_initialize_projection (GimpImage *gimage,
 				  gint       h)
 {
   GSList      *list;
-  Layer       *layer;
+  GimpLayer   *layer;
   gint         coverage = 0;
   PixelRegion  PR;
   guchar       clear[4] = { 0, 0, 0, 0 };
@@ -1816,11 +1819,11 @@ gimp_image_initialize_projection (GimpImage *gimage,
     {
       gint off_x, off_y;
 
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (gimp_drawable_visible (GIMP_DRAWABLE (layer)) &&
-	  ! layer_has_alpha (layer) &&
+	  ! gimp_layer_has_alpha (layer) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
 	  (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
@@ -1844,8 +1847,8 @@ gimp_image_get_active_channels (GimpImage    *gimage,
 				GimpDrawable *drawable, 
 				gint         *active)
 {
-  Layer *layer;
-  gint   i;
+  GimpLayer *layer;
+  gint       i;
 
   /*  first, blindly copy the gimage active channels  */
   for (i = 0; i < MAX_CHANNELS; i++)
@@ -1864,7 +1867,7 @@ gimp_image_get_active_channels (GimpImage    *gimage,
       if (GIMP_IS_LAYER (drawable))
 	{
 	  layer = GIMP_LAYER (drawable);
-	  if (layer_has_alpha (layer) && layer->preserve_trans)
+	  if (gimp_layer_has_alpha (layer) && layer->preserve_trans)
 	    active[gimp_drawable_bytes (drawable) - 1] = 0;
 	}
     }
@@ -1890,30 +1893,29 @@ gimp_image_construct (GimpImage *gimage,
 
   if (gimage->layers)
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE ((Layer*) gimage->layers->data),
+      gimp_drawable_offsets (GIMP_DRAWABLE ((GimpLayer*) gimage->layers->data),
 			     &xoff, &yoff);
     }
 
   if ((gimage->layers) &&                         /* There's a layer.      */
-      (!g_slist_next(gimage->layers)) &&          /* It's the only layer.  */
-      (layer_has_alpha((Layer*)(gimage->layers->data))) && /* It's !flat.  */
+      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */
+      (gimp_layer_has_alpha ((GimpLayer *) (gimage->layers->data))) && /* It's !flat.  */
                                                   /* It's visible.         */
-      (gimp_drawable_visible (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
-      (gimp_drawable_width (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
+      (gimp_drawable_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
+      (gimp_drawable_width (GIMP_DRAWABLE (gimage->layers->data)) ==
        gimage->width) &&
-      (gimp_drawable_height (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
+      (gimp_drawable_height (GIMP_DRAWABLE (gimage->layers->data)) ==
        gimage->height) &&                         /* Covers all.           */
                                                   /* Not indexed.          */
-      (!gimp_drawable_is_indexed (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
-      (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */
+      (!gimp_drawable_is_indexed (GIMP_DRAWABLE (gimage->layers->data))) &&
+      (((GimpLayer *)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */
       )
     {
       gint xoff;
       gint yoff;
       
-      gimp_drawable_offsets (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)),
+      gimp_drawable_offsets (GIMP_DRAWABLE (gimage->layers->data),
 			     &xoff, &yoff);
-
 
       if ((xoff==0) && (yoff==0)) /* Starts at 0,0         */
 	{
@@ -1923,8 +1925,7 @@ gimp_image_construct (GimpImage *gimage,
 	  g_warning("Can use cow-projection hack.  Yay!");
 
 	  pixel_region_init (&srcPR, gimp_drawable_data
-			     (GIMP_DRAWABLE
-			      ((Layer*)(gimage->layers->data))),
+			     (GIMP_DRAWABLE (gimage->layers->data)),
 			     x, y, w,h, FALSE);
 	  pixel_region_init (&destPR,
 			     gimp_image_projection (gimage),
@@ -2111,7 +2112,7 @@ gimp_image_invalidate_layer_previews (GimpImage *gimage)
 
   for (tmp = gimage->layers; tmp; tmp = g_slist_next (tmp))
     {
-      layer = (Layer *) tmp->data;
+      layer = (GimpLayer *) tmp->data;
 
       gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
     }
@@ -2136,11 +2137,11 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
 
 gint
 gimp_image_get_layer_index (const GimpImage *gimage, 
-			    const Layer     *layer_arg)
+			    const GimpLayer *layer_arg)
 {
-  Layer  *layer;
-  GSList *layers;
-  gint    index;
+  GimpLayer *layer;
+  GSList    *layers;
+  gint       index;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -2148,7 +2149,7 @@ gimp_image_get_layer_index (const GimpImage *gimage,
        layers;
        layers = g_slist_next (layers), index++)
     {
-      layer = (Layer *) layers->data;
+      layer = (GimpLayer *) layers->data;
 
       if (layer == layer_arg)
 	return index;
@@ -2157,16 +2158,16 @@ gimp_image_get_layer_index (const GimpImage *gimage,
   return -1;
 }
 
-Layer *
+GimpLayer *
 gimp_image_get_layer_by_index (const GimpImage *gimage, 
 			       gint             layer_index)
 {
-  Layer *layer;
+  GimpLayer *layer;
 
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  layer = (Layer *) g_slist_nth_data (gimage->layers, layer_index);
+  layer = (GimpLayer *) g_slist_nth_data (gimage->layers, layer_index);
 
   return layer;
 }
@@ -2195,7 +2196,7 @@ gimp_image_get_channel_index (const GimpImage *gimage,
   return -1;
 }
 
-Layer *
+GimpLayer *
 gimp_image_get_active_layer (const GimpImage *gimage)
 {
   g_return_val_if_fail (gimage != NULL, NULL);
@@ -2212,12 +2213,12 @@ gimp_image_get_active_channel (const GimpImage *gimage)
   return gimage->active_channel;
 }
 
-Layer *
+GimpLayer *
 gimp_image_get_layer_by_tattoo (const GimpImage *gimage, 
 				Tattoo           tattoo)
 {
-  Layer  *layer;
-  GSList *layers;
+  GimpLayer *layer;
+  GSList    *layers;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2225,9 +2226,9 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
        layers; 
        layers = g_slist_next (layers))
     {
-      layer = (Layer *) layers->data;
+      layer = (GimpLayer *) layers->data;
 
-      if (layer_get_tattoo (layer) == tattoo)
+      if (gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)) == tattoo)
 	return layer;
     }
 
@@ -2322,7 +2323,7 @@ gimp_image_layer_boundary (const GimpImage  *gimage,
 			   BoundSeg        **segs, 
 			   gint             *n_segs)
 {
-  Layer *layer;
+  GimpLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (segs != NULL, FALSE);
@@ -2333,7 +2334,7 @@ gimp_image_layer_boundary (const GimpImage  *gimage,
    */
   if ((layer = gimage->active_layer))
     {
-      *segs = layer_boundary (layer, n_segs);
+      *segs = gimp_layer_boundary (layer, n_segs);
       return TRUE;
     }
   else
@@ -2344,9 +2345,9 @@ gimp_image_layer_boundary (const GimpImage  *gimage,
     }
 }
 
-Layer *
+GimpLayer *
 gimp_image_set_active_layer (GimpImage *gimage, 
-			     Layer     *layer)
+			     GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
@@ -2358,18 +2359,18 @@ gimp_image_set_active_layer (GimpImage *gimage,
     {
       if (! gimage->layers)
 	return NULL;
-      layer = (Layer *) gimage->layers->data;
+      layer = (GimpLayer *) gimage->layers->data;
     }
 
   if (! layer)
     return NULL;
 
   /*  Configure the layer stack to reflect this change  */
-  gimage->layer_stack = g_slist_remove (gimage->layer_stack, (void *) layer);
-  gimage->layer_stack = g_slist_prepend (gimage->layer_stack, (void *) layer);
+  gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);
+  gimage->layer_stack = g_slist_prepend (gimage->layer_stack, layer);
 
   /*  invalidate the selection boundary because of a layer modification  */
-  layer_invalidate_boundary (layer);
+  gimp_layer_invalidate_boundary (layer);
 
   /*  Set the active layer  */
   gimage->active_layer   = layer;
@@ -2466,30 +2467,30 @@ gimp_image_set_component_visible (GimpImage   *gimage,
     }
 }
 
-Layer *
+GimpLayer *
 gimp_image_pick_correlate_layer (const GimpImage *gimage, 
 				 gint             x, 
 				 gint             y)
 {
-  Layer  *layer;
-  GSList *list;
+  GimpLayer *layer;
+  GSList    *list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
 
-      if (layer_pick_correlate (layer, x, y))
+      if (gimp_layer_pick_correlate (layer, x, y))
 	return layer;
     }
 
   return NULL;
 }
 
-Layer *
+GimpLayer *
 gimp_image_raise_layer (GimpImage *gimage, 
-			Layer     *layer_arg)
+			GimpLayer *layer_arg)
 {
   GSList *list;
   gint    curpos;
@@ -2513,9 +2514,9 @@ gimp_image_raise_layer (GimpImage *gimage,
 }
 
 
-Layer *
+GimpLayer *
 gimp_image_lower_layer (GimpImage *gimage, 
-			Layer     *layer_arg)
+			GimpLayer *layer_arg)
 {
   GSList *list;
   gint    curpos;
@@ -2540,11 +2541,9 @@ gimp_image_lower_layer (GimpImage *gimage,
   return gimp_image_position_layer (gimage, layer_arg, curpos+1, TRUE);
 }
 
-
-
-Layer *
+GimpLayer *
 gimp_image_raise_layer_to_top (GimpImage *gimage, 
-			       Layer     *layer_arg)
+			       GimpLayer *layer_arg)
 {
   GSList *list;
   gint    curpos;
@@ -2563,7 +2562,7 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
       return NULL;
     }
   
-  if (! layer_has_alpha (layer_arg))
+  if (! gimp_layer_has_alpha (layer_arg))
     {
       g_message (_("Can't raise Layer without alpha"));
       return NULL;
@@ -2572,10 +2571,9 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
   return gimp_image_position_layer (gimage, layer_arg, 0, TRUE);
 }
 
-
-Layer *
+GimpLayer *
 gimp_image_lower_layer_to_bottom (GimpImage *gimage, 
-				  Layer     *layer_arg)
+				  GimpLayer *layer_arg)
 {
   GSList *list;
   gint    curpos;
@@ -2588,9 +2586,9 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
   curpos = g_slist_index (list, layer_arg);
   if (curpos < 0)
     return NULL;
-  
+
   length = g_slist_length (list);
-  
+
   if (curpos == length-1)
     {
       g_message (_("Layer is already on bottom"));
@@ -2600,20 +2598,19 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
   return gimp_image_position_layer (gimage, layer_arg, length-1, TRUE);
 }
 
-
-Layer *
+GimpLayer *
 gimp_image_position_layer (GimpImage *gimage, 
-			   Layer     *layer_arg,
+			   GimpLayer *layer_arg,
 			   gint       new_index,
 			   gboolean   push_undo)
 {
-  Layer  *layer;
-  GSList *list;
-  GSList *next;
-  gint    x_min, y_min, x_max, y_max;
-  gint    off_x, off_y;
-  gint    index;
-  gint    list_length;
+  GimpLayer *layer;
+  GSList    *list;
+  GSList    *next;
+  gint       x_min, y_min, x_max, y_max;
+  gint       off_x, off_y;
+  gint       index;
+  gint       list_length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2644,9 +2641,10 @@ gimp_image_position_layer (GimpImage *gimage,
     return NULL;
 
   /* check if we want to move it below a bottom layer without alpha */
-  layer = (Layer *) g_slist_last (list)->data;
+  layer = (GimpLayer *) g_slist_last (list)->data;
+
   if (new_index == list_length - 1 &&
-      !layer_has_alpha (layer))
+      ! gimp_layer_has_alpha (layer))
     {
       g_message (_("BG has no alpha, layer was placed above"));
       new_index--;
@@ -2674,14 +2672,14 @@ gimp_image_position_layer (GimpImage *gimage,
   return layer_arg;
 }
 
-Layer *
+GimpLayer *
 gimp_image_merge_visible_layers (GimpImage *gimage, 
 				 MergeType  merge_type)
 {
-  GSList   *layer_list;
-  GSList   *merge_list       = NULL;
-  gboolean  had_floating_sel = FALSE;
-  Layer    *layer            = NULL;
+  GSList    *layer_list;
+  GSList    *merge_list       = NULL;
+  gboolean   had_floating_sel = FALSE;
+  GimpLayer *layer            = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2696,7 +2694,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
        layer_list;
        layer_list = g_slist_next (layer_list))
     {
-      layer = (Layer *) layer_list->data;
+      layer = (GimpLayer *) layer_list->data;
 
       if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
@@ -2728,12 +2726,12 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
     }
 }
 
-Layer *
+GimpLayer *
 gimp_image_flatten (GimpImage *gimage)
 {
-  GSList *layer_list;
-  GSList *merge_list = NULL;
-  Layer  *layer;
+  GSList    *layer_list;
+  GSList    *merge_list = NULL;
+  GimpLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2747,7 +2745,7 @@ gimp_image_flatten (GimpImage *gimage)
        layer_list;
        layer_list = g_slist_next (layer_list))
     {
-      layer = (Layer *) layer_list->data;
+      layer = (GimpLayer *) layer_list->data;
 
       if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
@@ -2761,27 +2759,27 @@ gimp_image_flatten (GimpImage *gimage)
   return layer;
 }
 
-Layer *
+GimpLayer *
 gimp_image_merge_down (GimpImage *gimage,
-		       Layer     *current_layer,
+		       GimpLayer *current_layer,
 		       MergeType  merge_type)
 {
-  GSList *layer_list;
-  GSList *merge_list = NULL;
-  Layer  *layer      = NULL;
+  GSList    *layer_list;
+  GSList    *merge_list = NULL;
+  GimpLayer *layer      = NULL;
   
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   layer_list = gimage->layers;
   while (layer_list)
     {
-      layer = (Layer *) layer_list->data;
+      layer = (GimpLayer *) layer_list->data;
       if (layer == current_layer)
 	{
 	  layer_list = g_slist_next (layer_list);
 	  while (layer_list)
 	    {
-	      layer = (Layer *) layer_list->data;
+	      layer = (GimpLayer *) layer_list->data;
 	      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 		{
 		  merge_list = g_slist_append (merge_list, layer);
@@ -2812,7 +2810,7 @@ gimp_image_merge_down (GimpImage *gimage,
     }
 }
 
-Layer *
+GimpLayer *
 gimp_image_merge_layers (GimpImage *gimage, 
 			 GSList    *merge_list, 
 			 MergeType  merge_type)
@@ -2820,9 +2818,9 @@ gimp_image_merge_layers (GimpImage *gimage,
   GSList           *reverse_list = NULL;
   PixelRegion       src1PR, src2PR, maskPR;
   PixelRegion      *mask;
-  Layer            *merge_layer;
-  Layer            *layer;
-  Layer            *bottom;
+  GimpLayer        *merge_layer;
+  GimpLayer        *layer;
+  GimpLayer        *bottom;
   LayerModeEffects  bottom_mode;
   guchar            bg[4] = {0, 0, 0, 0};
   GimpImageType     type;
@@ -2847,7 +2845,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   count = 0;
   while (merge_list)
     {
-      layer = (Layer *) merge_list->data;
+      layer = (GimpLayer *) merge_list->data;
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       switch (merge_type)
@@ -2925,9 +2923,10 @@ gimp_image_merge_layers (GimpImage *gimage,
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
 
-      merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
-			       type, gimp_object_get_name (GIMP_OBJECT (layer)),
-			       OPAQUE_OPACITY, NORMAL_MODE);
+      merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
+				    type,
+				    gimp_object_get_name (GIMP_OBJECT (layer)),
+				    OPAQUE_OPACITY, NORMAL_MODE);
       if (!merge_layer)
 	{
 	  g_message ("gimp_image_merge_layers: could not allocate merge layer");
@@ -2961,10 +2960,10 @@ gimp_image_merge_layers (GimpImage *gimage,
        */
 
       merge_layer =
-	layer_new (gimage, (x2 - x1), (y2 - y1),
-		   gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
-		   "merged layer",
-		   OPAQUE_OPACITY, NORMAL_MODE);
+	gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
+			gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
+			"merged layer",
+			OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer)
 	{
@@ -2988,7 +2987,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
-      layer = (Layer *) reverse_list->data;
+      layer = (GimpLayer *) reverse_list->data;
       position = 
 	g_slist_length (gimage->layers) - 
 	gimp_image_get_layer_index (gimage, layer);
@@ -3010,13 +3009,14 @@ gimp_image_merge_layers (GimpImage *gimage,
     }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
-  layer_set_tattoo(merge_layer, layer_get_tattoo(layer));
+  gimp_drawable_set_tattoo (GIMP_DRAWABLE (merge_layer),
+			    gimp_drawable_get_tattoo (GIMP_DRAWABLE (layer)));
   GIMP_DRAWABLE(merge_layer)->parasites =
     parasite_list_copy (GIMP_DRAWABLE(layer)->parasites);
 
   while (reverse_list)
     {
-      layer = (Layer *) reverse_list->data;
+      layer = (GimpLayer *) reverse_list->data;
 
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
@@ -3080,7 +3080,8 @@ gimp_image_merge_layers (GimpImage *gimage,
       merge_list = gimage->layers;
       while (merge_list)
 	{
-	  layer = (Layer *) merge_list->data;
+	  layer = (GimpLayer *) merge_list->data;
+
 	  merge_list = g_slist_next (merge_list);
 	  gimp_image_remove_layer (gimage, layer);
 	}
@@ -3118,9 +3119,9 @@ gimp_image_merge_layers (GimpImage *gimage,
   return merge_layer;
 }
 
-Layer *
+GimpLayer *
 gimp_image_add_layer (GimpImage *gimage, 
-		      Layer     *float_layer, 
+		      GimpLayer *float_layer, 
 		      gint       position)
 {
   LayerUndo *lu;
@@ -3148,7 +3149,7 @@ gimp_image_add_layer (GimpImage *gimage,
   undo_push_layer (gimage, LAYER_ADD_UNDO, lu);
 
   /*  If the layer is a floating selection, set the ID  */
-  if (layer_is_floating_sel (float_layer))
+  if (gimp_layer_is_floating_sel (float_layer))
     gimage->floating_sel = float_layer;
 
   /*  let the layer know about the gimage  */
@@ -3205,9 +3206,9 @@ gimp_image_add_layer (GimpImage *gimage,
   return float_layer;
 }
 
-Layer *
+GimpLayer *
 gimp_image_remove_layer (GimpImage *gimage, 
-			 Layer     *layer)
+			 GimpLayer *layer)
 {
   LayerUndo *lu;
 
@@ -3278,7 +3279,7 @@ gimp_image_add_layer_mask (GimpImage     *gimage,
       return (NULL);
     }
 
-  if (! layer_has_alpha (layer))
+  if (! gimp_layer_has_alpha (layer))
     {
       g_message (_("Cannot add layer mask to a layer\nwith no alpha channel."));
       return (NULL);
@@ -3333,7 +3334,7 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   lmu->edit_mask  = layer->edit_mask;
   lmu->show_mask  = layer->show_mask;
 
-  layer_apply_mask (layer, mode);
+  gimp_layer_apply_mask (layer, mode);
 
   /*  Push the undo--Important to do it here, AFTER the call
    *   to layer_apply_mask, in case the undo push fails and the
@@ -3619,7 +3620,7 @@ gimp_image_is_empty (const GimpImage *gimage)
 GimpDrawable *
 gimp_image_active_drawable (const GimpImage *gimage)
 {
-  Layer *layer;
+  GimpLayer *layer;
 
   g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -3805,7 +3806,7 @@ gimp_image_clean_all (GimpImage *gimage)
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[CLEAN]);
 }
 
-Layer *
+GimpLayer *
 gimp_image_floating_sel (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -3898,8 +3899,8 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 					gint       width, 
 					gint       height)
 {
-  Layer       *layer;
-  Layer       *floating_sel;
+  GimpLayer   *layer;
+  GimpLayer   *floating_sel;
   PixelRegion  src1PR, src2PR, maskPR;
   PixelRegion *mask;
   TempBuf     *comp;
@@ -3940,15 +3941,17 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
   floating_sel = NULL;
   for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer = (Layer *) list->data;
+      layer = (GimpLayer *) list->data;
 
       /*  only add layers that are visible to the list  */
       if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	{
 	  /*  floating selections are added right above the layer 
 	      they are attached to  */
-	  if (layer_is_floating_sel (layer))
-	    floating_sel = layer;
+	  if (gimp_layer_is_floating_sel (layer))
+	    {
+	      floating_sel = layer;
+	    }
 	  else
 	    {
 	      if (floating_sel && 
@@ -3964,7 +3967,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
   while (reverse_list)
     {
-      layer = (Layer *) reverse_list->data;
+      layer = (GimpLayer *) reverse_list->data;
 
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
@@ -3987,7 +3990,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
       src1PR.data      = 
 	temp_buf_data (comp) + y1 * src1PR.rowstride + x1 * src1PR.bytes;
 
-      layer_buf = layer_preview (layer, w, h);
+      layer_buf = gimp_layer_preview (layer, w, h);
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
@@ -4115,7 +4118,7 @@ gimp_image_preview_valid (const GimpImage *gimage,
 void
 gimp_image_invalidate_preview (GimpImage *gimage)
 {
-  Layer *layer;
+  GimpLayer *layer;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 

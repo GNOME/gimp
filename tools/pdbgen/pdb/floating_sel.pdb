@@ -31,7 +31,7 @@ sub invoke {
 	headers => [ qw("layer.h" "floating_sel.h") ],
 	code => <<CODE
 {
-  if (layer_is_floating_sel (floating_sel))
+  if (gimp_layer_is_floating_sel (floating_sel))
     $cmd (floating_sel);
   else
     success = FALSE;

@@ -23,9 +23,6 @@
 #include "channel.h"
 
 
-#define gimp_drawable_layer_mask GIMP_IS_LAYER_MASK
-
-
 #define GIMP_TYPE_LAYER_MASK            (gimp_layer_mask_get_type ())
 #define GIMP_LAYER_MASK(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMask))
 #define GIMP_LAYER_MASK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
@@ -74,7 +71,7 @@ GimpLayerMask * gimp_layer_mask_copy	    (GimpLayerMask       *layer_mask);
 
 void            gimp_layer_mask_set_layer   (GimpLayerMask       *layer_mask, 
 				             GimpLayer           *layer);
-Layer         * gimp_layer_mask_get_layer   (GimpLayerMask       *layer_mask);
+GimpLayer     * gimp_layer_mask_get_layer   (GimpLayerMask       *layer_mask);
 
 
 #endif /* __GIMP_LAYER_MASK_H__ */

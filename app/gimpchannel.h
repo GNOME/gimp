@@ -23,8 +23,6 @@
 #include "gimpdrawable.h"
 
 
-/* OPERATIONS */
-
 /*  Half way point where a region is no longer visible in a selection  */
 #define HALF_WAY 127
 
@@ -71,18 +69,19 @@ typedef struct _ChannelUndo ChannelUndo;
 
 struct _ChannelUndo
 {
-  Channel          *channel;         /*  the actual channel          */
-  gint              prev_position;   /*  former position in list     */
-  Channel          *prev_channel;    /*  previous active channel     */
+  Channel *channel;         /*  the actual channel          */
+  gint     prev_position;   /*  former position in list     */
+  Channel *prev_channel;    /*  previous active channel     */
 };
+
 
 /*  Special undo type  */
 typedef struct _MaskUndo MaskUndo;
 
 struct _MaskUndo
 {
-  TileManager *tiles;       /*  the actual mask  */
-  gint         x, y;        /*  offsets          */
+  TileManager *tiles;    /*  the actual mask  */
+  gint         x, y;     /*  offsets          */
 };
 
 
@@ -219,9 +218,6 @@ void            channel_layer_mask          (Channel      *mask,
 					     GimpLayer    *layer);
 
 void		channel_invalidate_bounds   (Channel      *channel);
-
-
-#define gimp_drawable_channel GIMP_IS_CHANNEL
 
 
 #endif /* __CHANNEL_H__ */

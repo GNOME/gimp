@@ -162,32 +162,32 @@ static void     undo_free_cantundo        (UndoState, UndoType, gpointer);
 
 
 /*  Sizing functions  */
-static gint          layer_size         (Layer    *layer);
-static gint          channel_size       (Channel  *channel);
+static gint          layer_size         (GimpLayer *layer);
+static gint          channel_size       (Channel   *channel);
 
-static const gchar * undo_type_to_name  (UndoType  undo_type);
+static const gchar * undo_type_to_name  (UndoType   undo_type);
 
-static Undo        * undo_new           (UndoType  undo_type, 
-					 glong     size, 
-					 gboolean  dirties_image);
+static Undo        * undo_new           (UndoType   undo_type, 
+					 glong      size, 
+					 gboolean   dirties_image);
 
 
 static gboolean shrink_wrap = FALSE;
 
 
 static gint
-layer_size (Layer *layer)
+layer_size (GimpLayer *layer)
 {
   gint size;
 
   size =
-    sizeof (Layer) + 
+    sizeof (GimpLayer) + 
     GIMP_DRAWABLE (layer)->width * GIMP_DRAWABLE (layer)->height *
     GIMP_DRAWABLE (layer)->bytes + 
     strlen (GIMP_OBJECT (layer)->name);
 
-  if (layer_get_mask (layer))
-    size += channel_size (GIMP_CHANNEL (layer_get_mask (layer)));
+  if (gimp_layer_get_mask (layer))
+    size += channel_size (GIMP_CHANNEL (gimp_layer_get_mask (layer)));
 
   return size;
 }
@@ -1198,7 +1198,7 @@ undo_pop_layer_displace (GimpImage *gimage,
 
 
       /*  invalidate the selection boundary because of a layer modification  */
-      layer_invalidate_boundary (layer);
+      gimp_layer_invalidate_boundary (layer);
 
       ldu->info[1] = old_offsets[0];
       ldu->info[2] = old_offsets[1];
@@ -1469,7 +1469,7 @@ undo_pop_layer (GimpImage *gimage,
       gimage->layer_stack = g_slist_remove (gimage->layer_stack, lu->layer);
 
       /*  reset the gimage values  */
-      if (layer_is_floating_sel (lu->layer))
+      if (gimp_layer_is_floating_sel (lu->layer))
 	{
 	  gimage->floating_sel = NULL;
 	  /*  reset the old drawable  */
@@ -1488,10 +1488,10 @@ undo_pop_layer (GimpImage *gimage,
 
       /*  hide the current selection--for all views  */
       if (gimage->active_layer != NULL)
-	layer_invalidate_boundary ((gimage->active_layer));
+	gimp_layer_invalidate_boundary ((gimage->active_layer));
 
       /*  if this is a floating selection, set the fs pointer  */
-      if (layer_is_floating_sel (lu->layer))
+      if (gimp_layer_is_floating_sel (lu->layer))
 	gimage->floating_sel = lu->layer;
 
       /*  add the new layer  */
@@ -1543,7 +1543,7 @@ undo_push_layer_mod (GimpImage *gimage,
   gpointer    *data;
   gint         size;
 
-  layer = (Layer *) layer_ptr;
+  layer = (GimpLayer *) layer_ptr;
 
   tiles = GIMP_DRAWABLE (layer)->tiles;
   tile_manager_set_offsets (tiles,
@@ -2029,7 +2029,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       fsu->layer->fs.initial = TRUE;
 
       /*  clear the selection  */
-      layer_invalidate_boundary (fsu->layer);
+      gimp_layer_invalidate_boundary (fsu->layer);
 
       /*  Update the preview for the gimage and underlying drawable  */
       gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
@@ -2047,7 +2047,7 @@ undo_pop_fs_to_layer (GimpImage *gimage,
       gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
 
       /*  clear the selection  */
-      layer_invalidate_boundary (fsu->layer);
+      gimp_layer_invalidate_boundary (fsu->layer);
 
       /*  update the pointers  */
       fsu->layer->fs.drawable = NULL;
@@ -2108,15 +2108,15 @@ undo_pop_fs_rigor (GimpImage *gimage,
 		   UndoType   type,
 		   gpointer   layer_ptr)
 {
-  gint32  layer_ID;
-  Layer  *floating_layer;
+  gint32     layer_ID;
+  GimpLayer *floating_layer;
 
   layer_ID = *((gint32 *) layer_ptr);
 
   if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
     return FALSE;
 
-  if (! layer_is_floating_sel (floating_layer))
+  if (! gimp_layer_is_floating_sel (floating_layer))
     return FALSE;
 
   switch (state)
@@ -2187,15 +2187,15 @@ undo_pop_fs_relax (GimpImage *gimage,
 		   UndoType   type,
 		   gpointer   layer_ptr)
 {
-  gint32  layer_ID;
-  Layer  *floating_layer;
+  gint32    layer_ID;
+  GimpLayer *floating_layer;
 
   layer_ID = *((gint32 *) layer_ptr);
 
   if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
     return FALSE;
 
-  if (! layer_is_floating_sel (floating_layer))
+  if (! gimp_layer_is_floating_sel (floating_layer))
     return FALSE;
 
   switch (state)
@@ -2812,7 +2812,7 @@ undo_push_layer_rename (GimpImage *gimage,
       new->free_func = undo_free_layer_rename;
 
       data->layer    = layer;
-      data->old_name = g_strdup (layer_get_name (layer));
+      data->old_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
       return TRUE;
     }
@@ -2829,8 +2829,8 @@ undo_pop_layer_rename (GimpImage *gimage,
   LayerRenameUndo *data = data_ptr;
   gchar           *tmp;
 
-  tmp = g_strdup (layer_get_name (data->layer));
-  layer_set_name (data->layer, data->old_name);
+  tmp = g_strdup (gimp_object_get_name (GIMP_OBJECT (data->layer)));
+  gimp_object_set_name (GIMP_OBJECT (data->layer), data->old_name);
   g_free (data->old_name);
   data->old_name = tmp;
 
