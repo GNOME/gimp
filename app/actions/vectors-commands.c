@@ -40,6 +40,10 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-in-run.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "widgets/gimpitemtreeview.h"
@@ -326,6 +330,50 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
       gimp_image_flush (gimage);
     }
+}
+
+void
+vectors_selection_to_vectors (GimpImage *gimage,
+                              gboolean   advanced)
+{
+  ProcRecord   *proc_rec;
+  Argument     *args;
+  GimpDrawable *drawable;
+  GimpDisplay  *gdisp;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  drawable = gimp_image_active_drawable (gimage);
+  gdisp    = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
+
+  if (advanced)
+    proc_rec = procedural_db_lookup (gimage->gimp,
+                                     "plug_in_sel2path_advanced");
+  else
+    proc_rec = procedural_db_lookup (gimage->gimp,
+                                     "plug_in_sel2path");
+
+  if (! proc_rec)
+    {
+      g_message (_("Selection to path procedure lookup failed."));
+      return;
+    }
+
+  /*  plug-in arguments as if called by <Image>/Filters/...  */
+  args = g_new (Argument, 3);
+
+  args[0].arg_type      = GIMP_PDB_INT32;
+  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
+  args[1].arg_type      = GIMP_PDB_IMAGE;
+  args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
+  args[2].arg_type      = GIMP_PDB_DRAWABLE;
+  args[2].value.pdb_int = (gint32) gimp_item_get_ID (GIMP_ITEM (drawable));
+
+  plug_in_run (gimage->gimp,
+               proc_rec, args, 3, FALSE, TRUE,
+	       gdisp ? gdisp->ID : 0);
+
+  g_free (args);
 }
 
 void

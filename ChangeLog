@@ -1,5 +1,16 @@
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/vectors-commands.[ch]: added new function
+	vectors_selection_to_vectors() which invokes the sel2path Plug-In.
+
+	* app/gui/dialogs-constructors.c: make the new function known to
+	GimpVectorTreeView.
+
+	* app/widgets/gimpvectorstreeview.[ch]: Added a "Selection to Path"
+	button anc call the new function.
+
+2003-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/sel2path/sel2path.c: don't clear the selection after
 	creating the path. Minor cleanups.
 

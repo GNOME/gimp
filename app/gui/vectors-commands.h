@@ -56,6 +56,8 @@ void   vectors_edit_vectors_attributes_cmd_callback    (GtkWidget   *widget,
                                                         gpointer     data);
 
 void   vectors_stroke_vectors                          (GimpVectors *vectors);
+void   vectors_selection_to_vectors                    (GimpImage   *gimage,
+                                                        gboolean     advanced);
 void   vectors_vectors_tool                            (GimpVectors *vectors);
 void   vectors_new_vectors_query                       (GimpImage   *gimage,
                                                         GimpVectors *template,

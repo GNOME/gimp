@@ -56,6 +56,14 @@ static void   gimp_vectors_tree_view_toselection_extended_clicked
 						     guint                state,
 						     GimpVectorsTreeView *view);
 
+static void   gimp_vectors_tree_view_tovectors_clicked
+                                                    (GtkWidget           *widget,
+                                                     GimpVectorsTreeView *view);
+static void   gimp_vectors_tree_view_tovectors_extended_clicked
+                                                    (GtkWidget           *widget,
+                                                     guint                state,
+                                                     GimpVectorsTreeView *view);
+
 static void   gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
 						     GimpVectorsTreeView *view);
 
@@ -149,6 +157,19 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
   g_free (str);
 
+  str = g_strdup_printf (_("Selection to Path\n"
+                           "%s  Advanced Options"),
+                         gimp_get_mod_name_shift ());
+
+  view->tovectors_button =
+    gimp_editor_add_button (editor,
+                            GIMP_STOCK_SELECTION_TO_PATH, str, NULL,
+                            G_CALLBACK (gimp_vectors_tree_view_tovectors_clicked),
+                            G_CALLBACK (gimp_vectors_tree_view_tovectors_extended_clicked),
+                            view);
+
+  g_free (str);
+
   view->stroke_button =
     gimp_editor_add_button (editor,
                             GIMP_STOCK_PATH_STROKE, _("Stroke Path"), NULL,
@@ -159,7 +180,9 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
 			 view->toselection_button, 5);
   gtk_box_reorder_child (GTK_BOX (editor->button_box),
-			 view->stroke_button, 6);
+			 view->tovectors_button, 6);
+  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+			 view->stroke_button, 7);
 
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
 				  GTK_BUTTON (view->toselection_button),
@@ -235,6 +258,23 @@ gimp_vectors_tree_view_toselection_extended_clicked (GtkWidget           *widget
 }
 
 static void
+gimp_vectors_tree_view_tovectors_clicked (GtkWidget           *widget,
+                                          GimpVectorsTreeView *view)
+{
+  gimp_vectors_tree_view_tovectors_extended_clicked (widget, 0, view);
+}
+
+static void
+gimp_vectors_tree_view_tovectors_extended_clicked (GtkWidget           *widget,
+                                                   guint                state,
+                                                   GimpVectorsTreeView *view)
+{
+  if (view->selection_to_vectors_func)
+    view->selection_to_vectors_func (GIMP_ITEM_TREE_VIEW (view)->gimage,
+                                     (state & GDK_SHIFT_MASK) != 0);
+}
+
+static void
 gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
                                        GimpVectorsTreeView *view)
 {
@@ -246,7 +286,5 @@ gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
   if (item && view->stroke_item_func)
-    {
-      view->stroke_item_func (GIMP_VECTORS (item));
-    }
+    view->stroke_item_func (GIMP_VECTORS (item));
 }
