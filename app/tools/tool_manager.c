@@ -761,7 +761,8 @@ tool_manager_image_undo_start (GimpImage       *gimage,
       tool_manager->active_tool->gdisp &&
       tool_manager->active_tool->gdisp->gimage == gimage)
     {
-      tool_manager_control_active (gimage->gimp, HALT,
-                                   tool_manager->active_tool->gdisp);
+      if (! gimp_tool_control_preserve (tool_manager->active_tool->control))
+        tool_manager_control_active (gimage->gimp, HALT,
+                                     tool_manager->active_tool->gdisp);
     }
 }

@@ -1,5 +1,13 @@
 2003-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.c (tool_manager_image_undo_start): don't
+	HALT the active tool if it is in "preserve" mode. Fixes crashes
+	when e.g. the transform tool was pushing an undo group and
+	implicitly HALTing itself in the middle of the transform
+	operation.
+
+2003-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c
 	* app/widgets/gimptoolbox.c: convince more window managers to
 	actually use the specified window positions/sizes by adding
