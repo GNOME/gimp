@@ -1,3 +1,8 @@
+2003-01-02  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewabledialog.c (gimp_viewable_dialog_close):
+	just a small cleanup.
+
 2003-01-02  Michael Natterer  <mitch@gimp.org>
 
 	Replaced Garry's fix for bug #98843 by a more general solution

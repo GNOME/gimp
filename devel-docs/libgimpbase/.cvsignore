@@ -1,5 +1,6 @@
 Makefile
 Makefile.in
+deprecated
 libgimpbase.args
 libgimpbase.hierarchy
 libgimpbase.signals

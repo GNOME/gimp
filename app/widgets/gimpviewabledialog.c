@@ -335,17 +335,14 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
 static void
 gimp_viewable_dialog_close (GimpViewableDialog *dialog)
 {
-  GtkWidget   *widget;
-  GdkEventAny  event;
+  GtkWidget *widget = GTK_WIDGET (dialog);
 
-  widget = GTK_WIDGET (dialog);
+  /* Synthesize delete_event to close dialog. */
 
-  /* Paranoia: Widget realized in a window? */
-
-  if(G_IS_OBJECT (widget->window) == TRUE)
+  if (widget->window)
     {
-      /* Synthesize delete_event to close dialog. */
-  
+      GdkEventAny  event;
+
       event.type       = GDK_DELETE;
       event.window     = widget->window;
       event.send_event = TRUE;
@@ -353,7 +350,7 @@ gimp_viewable_dialog_close (GimpViewableDialog *dialog)
       g_object_ref (G_OBJECT (event.window));
   
       gtk_main_do_event ((GdkEvent *) &event);
-  
+      
       g_object_unref (G_OBJECT (event.window));
     }
 }
