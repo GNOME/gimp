@@ -2,7 +2,8 @@
  *  -Peter Mattis
  * The TIFF loading code has been completely revamped by Nick Lamb
  * njl195@zepler.org.uk -- 18 May 1998
- *
+ * And it now gains support for tiles (and doubtless a zillion bugs)
+ * njl195@zepler.org.uk -- 12 June 1999
  * The code for this filter is based on "tifftopnm" and "pnmtotiff",
  *  2 programs that are a part of the netpbm package.
  */
@@ -67,18 +68,32 @@ static void   run        (char    *name,
                           int     *nreturn_vals,
                           GParam **return_vals);
 static gint32 load_image (char   *filename);
-static void   load_separate (TIFF *tif, GDrawable *drawable,
-                             channel_data *channel,
-                             unsigned short bps, unsigned short photomet,
-                             int rows, int cols, int alpha, int extra);
-static void   load_8bit (TIFF *tif, GDrawable *drawable,
-                         channel_data *channel,
+
+static void   load_rgba  (TIFF *tif, channel_data *channel);
+static void   load_lines (TIFF *tif, channel_data *channel,
                          unsigned short bps, unsigned short photomet,
-                         int rows, int cols, int alpha, int extra);
-static void   load_default (TIFF *tif, GDrawable *drawable,
-                            channel_data *channel,
+                         int alpha, int extra);
+static void   load_tiles (TIFF *tif, channel_data *channel,
+                         unsigned short bps, unsigned short photomet,
+                         int alpha, int extra);
+
+static void   read_separate (guchar *source, channel_data *channel,
+                             unsigned short bps, unsigned short photomet,
+                             int startcol, int startrow, int rows, int cols,
+                             int alpha, int extra, int sample);
+static void   read_16bit (guchar *source, channel_data *channel,
+                          unsigned short photomet,
+                          int startcol, int startrow, int rows, int cols,
+                          int alpha, int extra);
+static void   read_8bit (guchar *source, channel_data *channel,
+                         unsigned short photomet,
+                         int startcol, int startrow, int rows, int cols,
+                         int alpha, int extra);
+static void   read_default (guchar *source, channel_data *channel,
                             unsigned short bps, unsigned short photomet,
-                            int rows, int cols, int alpha, int extra);
+                            int startcol, int startrow, int rows, int cols,
+                            int alpha, int extra);
+
 static gint   save_image (char   *filename,
 			  gint32  image,
 			  gint32  drawable);
@@ -142,8 +157,8 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2) }" },
-    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1) }" }
+    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
+    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -152,7 +167,7 @@ query ()
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
-                          "1995-1996,1998",
+                          "1995-1996,1998-1999",
                           "<Load>/Tiff",
 			  NULL,
                           PROC_PLUG_IN,
@@ -311,22 +326,19 @@ run (char    *name,
 
 static gint32 load_image (char *filename) {
   TIFF *tif;
-  unsigned short bps, spp, photomet, planar;
+  unsigned short bps, spp, photomet;
   int cols, rows, alpha;
-  int image, layer, tile_height;
-  unsigned short *redmap, *greenmap, *bluemap;
-  guchar cmap[768];
-  int image_type= 0, layer_type= 0;
+  int image, image_type = RGB;
+  int layer, layer_type = RGB_IMAGE;
   unsigned short extra, *extra_types;
-
-  int i, j;
-
-  GDrawable *drawable;
-  char *name;
-
-  guchar colors[3]= {0, 0, 0};
-
   channel_data *channel= NULL;
+
+  unsigned short *redmap, *greenmap, *bluemap;
+  guchar colors[3]= {0, 0, 0};
+  guchar cmap[768];
+
+  int i, j, worst_case = 0;
+  char *name;
 
   TiffSaveVals save_vals;
 #ifdef GIMP_HAVE_PARASITES
@@ -344,33 +356,29 @@ static gint32 load_image (char *filename) {
   gimp_progress_init (name);
   g_free (name);
 
-  if (!TIFFGetField (tif, TIFFTAG_BITSPERSAMPLE, &bps))
-    bps = 1;
+  TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
-  if (bps > 8) {
-    g_message("TIFF Can't handle samples wider than 8-bit\n");
-    gimp_quit();
+  if (bps > 8 && bps != 16) {
+    worst_case = 1; /* Wrong sample width => RGBA */
   }
 
-  if (!TIFFGetField (tif, TIFFTAG_PLANARCONFIG, &planar))
-    planar = PLANARCONFIG_SEPARATE;
-  if (!TIFFGetField (tif, TIFFTAG_SAMPLESPERPIXEL, &spp))
-    spp = 1;
+  TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
+
   if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
     extra = 0;
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols)) {
-    g_message("TIFF Can't get image width");
+    g_message("TIFF Can't get image width\n");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows)) {
-    g_message("TIFF Can't get image length");
+    g_message("TIFF Can't get image length\n");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet)) {
-    g_message("TIFF Can't get photometric\nassuming min-is-black");
+    g_message("TIFF Can't get photometric\nAssuming min-is-black\n");
     /* old AppleScan software misses out the photometric tag (and
      * incidentally assumes min-is-white, but xv assumes min-is-black,
      * so we follow xv's lead.  It's not much hardship to invert the
@@ -411,13 +419,13 @@ static gint32 load_image (char *filename) {
       layer_type = (alpha) ? INDEXEDA_IMAGE : INDEXED_IMAGE;
       break;
 
-    case PHOTOMETRIC_MASK:
-      g_message ("TIFF Can't handle PHOTOMETRIC_MASK");
-      gimp_quit ();
-      break;
     default:
-      g_message ("TIFF Unknown photometric\n Number %d", photomet);
-      gimp_quit ();
+      worst_case = 1;
+  }
+
+  if (worst_case) {
+    image_type = RGB;
+    layer_type = RGBA_IMAGE;
   }
 
   if ((image = gimp_image_new (cols, rows, image_type)) == -1) {
@@ -476,7 +484,7 @@ static gint32 load_image (char *filename) {
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
       if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
 
-	if (TIFFGetField (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit)) {
+	if (TIFFGetFieldDefaulted (tif, TIFFTAG_RESOLUTIONUNIT, &read_unit)) {
 	  switch(read_unit) {
 	  case RESUNIT_NONE:
 	    /* ImageMagick writes files with this silly resunit */
@@ -536,7 +544,7 @@ static gint32 load_image (char *filename) {
   /* Install colormap for INDEXED images only */
   if (image_type == INDEXED) {
     if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) {
-      g_message("TIFF Can't get colormaps");
+      g_message("TIFF Can't get colormaps\n");
       gimp_quit ();
     }
 
@@ -548,41 +556,32 @@ static gint32 load_image (char *filename) {
     gimp_image_set_cmap (image, cmap, (1 << bps));
   }
 
+  /* Allocate channel_data for all channels, even the background layer */
+  channel = g_new (channel_data, extra + 1);
   layer = gimp_layer_new (image, "Background", cols, rows, layer_type,
 			     100, NORMAL_MODE);
+  channel[0].ID= layer;
   gimp_image_add_layer (image, layer, 0);
-  drawable = gimp_drawable_get (layer);
+  channel[0].drawable= gimp_drawable_get(layer);
 
-  tile_height = gimp_tile_height ();
-
-  if (extra > 0) {
-    channel = g_new (channel_data, extra);
-
+  if (extra > 0 && !worst_case) {
     /* Add alpha channels as appropriate */
-    for (i= 0; i < extra; ++i) {
+    for (i= 1; i <= extra; ++i) {
       channel[i].ID= gimp_channel_new(image, "TIFF Channel", cols, rows,
                                                             100.0, colors);
       gimp_image_add_channel(image, channel[i].ID, 0);
       channel[i].drawable= gimp_drawable_get (channel[i].ID);
-      channel[i].pixels= g_new(guchar, tile_height * cols);
-
-      gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable, 0, 0,
-  			   cols, rows, TRUE, FALSE);
     }
   }
 
-  if (planar == PLANARCONFIG_SEPARATE) {
-    load_separate(tif, drawable, channel, bps, photomet,
-                  rows, cols, alpha, extra);
-  } else if (bps == 8) {
-    load_8bit(tif, drawable, channel, bps, photomet, rows, cols, alpha, extra);
-  } else {
-    load_default(tif, drawable, channel, bps, photomet,
-                 rows, cols, alpha, extra);
+  if (worst_case) {
+    g_message("TIFF Fell back to RGBA, image may be inverted\n");
+    load_rgba (tif, channel);
+  } else if (TIFFIsTiled(tif)) {
+    load_tiles (tif, channel, bps, photomet, alpha, extra);
+  } else { /* Load scanlines in tile_height chunks */
+    load_lines (tif, channel, bps, photomet, alpha, extra);
   }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
 
   for (i= 0; i < extra; ++i) {
     gimp_drawable_flush (channel[i].drawable);
@@ -593,90 +592,210 @@ static gint32 load_image (char *filename) {
 }
 
 static void
-load_8bit(TIFF *tif, GDrawable *drawable,
-             channel_data *channel,
-             unsigned short bps, unsigned short photomet,
-             int rows, int cols, int alpha, int extra)
+load_rgba (TIFF *tif, channel_data *channel)
 {
-  guchar *source, *dest, *s, *d;
-  GPixelRgn pixel_rgn;
+  uint32 imageWidth, imageLength;
+  u_long *buffer;
+
+  TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
+  TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imageLength);
+  gimp_pixel_rgn_init (&(channel[0].pixel_rgn), channel[0].drawable,
+                          0, 0, imageWidth, imageLength, TRUE, FALSE);
+  buffer = g_new(u_long, imageWidth * imageLength);
+  channel[0].pixels = (guchar*) buffer;
+  if (buffer == NULL) {
+    g_message("TIFF Unable to allocate temporary buffer\n");
+  }
+  if (!TIFFReadRGBAImage(tif, imageWidth, imageLength, buffer, 0))
+    g_message("TIFF Unsupported layout, no RGBA loader\n");
+
+  gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn), channel[0].pixels,
+                              0, 0, imageWidth, imageLength);
+  g_message("TIFF Fell back to RGBA, image may be inverted\n");
+}
+
+static void
+load_tiles (TIFF *tif, channel_data *channel,
+	   unsigned short bps, unsigned short photomet,
+	   int alpha, int extra)
+{
+  uint16 planar= PLANARCONFIG_CONTIG;
+  uint32 imageWidth, imageLength;
+  uint32 tileWidth, tileLength;
+  uint32 x, y, rows, cols;
+  guchar *buffer;
+  double progress= 0.0, one_row;
+  int i;
+
+  TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planar);
+  TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &imageWidth);
+  TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imageLength);
+  TIFFGetField(tif, TIFFTAG_TILEWIDTH, &tileWidth);
+  TIFFGetField(tif, TIFFTAG_TILELENGTH, &tileLength);
+  one_row = (double) tileLength / (double) imageLength;
+  buffer = g_malloc(TIFFTileSize(tif));
+
+  for (i= 0; i <= extra; ++i) {
+    channel[i].pixels= g_new(guchar, tileWidth * tileLength *
+                                      channel[i].drawable->bpp);
+  }
+
+  for (y = 0; y < imageLength; y += tileLength) {
+    for (x = 0; x < imageWidth; x += tileWidth) {
+      gimp_progress_update (progress + one_row *
+                            ( (double) x / (double) imageWidth));
+      TIFFReadTile(tif, buffer, x, y, 0, 0);
+      cols= MIN(imageWidth - x, tileWidth);
+      rows= MIN(imageLength - y, tileLength);
+      if (bps == 16) {
+        read_16bit(buffer, channel, photomet, y, x, rows, cols, alpha, extra);
+      } else if (bps == 8) {
+        read_8bit(buffer, channel, photomet, y, x, rows, cols, alpha, extra);
+      } else {
+        read_default(buffer, channel, bps, photomet,
+                          y, x, rows, cols, alpha, extra);
+      }
+    }
+    progress+= one_row;
+  }
+  for (i= 0; i <= extra; ++i) {
+    g_free(channel[i].pixels);
+  }
+  g_free(buffer);
+}
+
+static void
+load_lines (TIFF *tif, channel_data *channel,
+	   unsigned short bps, unsigned short photomet,
+	   int alpha, int extra)
+{
+  uint16 planar= PLANARCONFIG_CONTIG;
+  uint32 imageLength, lineSize, cols, rows;
+  guchar *buffer;
+  int i, y, tile_height = gimp_tile_height ();
+
+  TIFFGetField(tif, TIFFTAG_PLANARCONFIG, &planar);
+  TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imageLength);
+  TIFFGetField(tif, TIFFTAG_IMAGEWIDTH, &cols);
+  lineSize= TIFFScanlineSize(tif);
+
+  for (i= 0; i <= extra; ++i) {
+    channel[i].pixels= g_new(guchar, tile_height * cols
+                                          * channel[i].drawable->bpp);
+  }
+
+  buffer = g_malloc(lineSize * tile_height);
+  if (planar == PLANARCONFIG_CONTIG) {
+    for (y = 0; y < imageLength; y+= tile_height ) {
+      gimp_progress_update ( (double) y / (double) imageLength);
+      rows = MIN(tile_height, imageLength - y);
+      for (i = 0; i < rows; ++i)
+	TIFFReadScanline(tif, buffer + i * lineSize, y + i, 0);
+      if (bps == 16) {
+	read_16bit(buffer, channel, photomet, y, 0, rows, cols, alpha, extra);
+      } else if (bps == 8) {
+	read_8bit(buffer, channel, photomet, y, 0, rows, cols, alpha, extra);
+      } else {
+	read_default(buffer, channel, bps, photomet,
+                             y, 0, rows, cols, alpha, extra);
+      }
+    }
+  } else { /* PLANARCONFIG_SEPARATE  -- Just say "No" */
+    uint16 s, samples;
+    TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
+    for (s = 0; s < samples; ++s) {
+      for (y = 0; y < imageLength; y+= tile_height ) {
+	gimp_progress_update ( (double) y / (double) imageLength);
+	rows = MIN(tile_height, imageLength - y);
+	for (i = 0; i < rows; ++i)
+	  TIFFReadScanline(tif, buffer + i * lineSize, y + i, s);
+	read_separate (buffer, channel, bps, photomet,
+		         y, 0, rows, cols, alpha, extra, s);
+      }
+    }
+  }
+  for (i= 0; i <= extra; ++i) {
+    g_free(channel[i].pixels);
+  }
+  g_free(buffer);
+}
+
+static void
+read_16bit(guchar *source, channel_data *channel, unsigned short photomet,
+             int startrow, int startcol, int rows, int cols,
+             int alpha, int extra)
+{
+  guchar *dest;
   int gray_val, red_val, green_val, blue_val, alpha_val;
-  int col, row, start, i;
-  int tile_height = gimp_tile_height ();
+  int col, row, i;
 
-  source= g_new (guchar, TIFFScanlineSize (tif));
-  dest = g_new (guchar, tile_height * cols * drawable->bpp);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
+                          startcol, startrow, cols, rows, TRUE, FALSE);
+  }
 
-  for (start= 0, row = 0; row < rows; ++row) {
-    d= dest + cols * (row % tile_height) * drawable->bpp;
+  for (row = 0; row < rows; ++row) {
+    dest= channel[0].pixels + row * cols * channel[0].drawable->bpp;
 
-    if (TIFFReadScanline (tif, source, row, 0) < 0) {
-      g_message("TIFF Bad data read on line %d\n", row);
-      gimp_quit ();
+    for (i= 1; i <= extra; ++i) {
+      channel[i].pixel= channel[i].pixels + row * cols;
     }
-
-    for (i= 0; i < extra; ++i) {
-      channel[i].pixel= channel[i].pixels + cols * (row % tile_height);
-    }
-
-    s= source;
 
     for (col = 0; col < cols; col++) {
       switch (photomet) {
         case PHOTOMETRIC_MINISBLACK:
           if (alpha) {
-            gray_val= *s++;
-            alpha_val= *s++;
+            gray_val= *source; source+= 2;
+            alpha_val= *source; source+= 2;
             if (alpha_val)
-              *d++ = gray_val * 255 / alpha_val;
+              *dest++ = gray_val * 255 / alpha_val;
             else
-              *d++ = 0;
-            *d++ = alpha_val;
+              *dest++ = 0;
+            *dest++ = alpha_val;
           } else {
-            *d++ = *s++;
+            *dest++ = *source; source+= 2;
           }
           break;
 
         case PHOTOMETRIC_MINISWHITE:
           if (alpha) {
-            gray_val= *s++;
-            alpha_val= *s++;
+            gray_val= *source; source+= 2;
+            alpha_val= *source; source+= 2;
             if (alpha_val)
-              *d++ = ((255 - gray_val) * 255) / alpha_val;
+              *dest++ = ((255 - gray_val) * 255) / alpha_val;
             else
-              *d++ = 0;
-            *d++ = alpha_val;
+              *dest++ = 0;
+            *dest++ = alpha_val;
           } else {
-            *d++ = ~(*s++);
+            *dest++ = ~(*source); source+= 2;
           }
           break;
 
         case PHOTOMETRIC_PALETTE:
-          *d++= *s++;
-          if (alpha) *d++= *s++;
+          *dest++= *source; source+= 2;
+          if (alpha) *dest++= *source; source+= 2;
           break;
   
         case PHOTOMETRIC_RGB:
           if (alpha) {
-            red_val= *s++;
-            green_val= *s++;
-            blue_val= *s++;
-            alpha_val= *s++;
+            red_val= *source; source+= 2;
+            green_val= *source; source+= 2;
+            blue_val= *source; source+= 2;
+            alpha_val= *source; source+= 2;
             if (alpha_val) {
-              *d++ = (red_val * 255) / alpha_val;
-              *d++ = (green_val * 255) / alpha_val;
-              *d++ = (blue_val * 255) / alpha_val;
+              *dest++ = (red_val * 255) / alpha_val;
+              *dest++ = (green_val * 255) / alpha_val;
+              *dest++ = (blue_val * 255) / alpha_val;
             } else {
-              *d++ = 0;
-              *d++ = 0;
-              *d++ = 0;
+              *dest++ = 0;
+              *dest++ = 0;
+              *dest++ = 0;
 	    }
-	    *d++ = alpha_val;
+	    *dest++ = alpha_val;
 	  } else {
-	    *d++ = *s++;
-	    *d++ = *s++;
-	    *d++ = *s++;
+	    *dest++ = *source; source+= 2;
+	    *dest++ = *source; source+= 2;
+	    *dest++ = *source; source+= 2;
 	  }
           break;
 
@@ -684,20 +803,108 @@ load_8bit(TIFF *tif, GDrawable *drawable,
           /* This case was handled earlier */
           g_assert_not_reached();
       }
-      for (i= 0; i < extra; ++i) {
-        *channel[i].pixel++ = *s++;
+      for (i= 1; i <= extra; ++i) {
+        *channel[i].pixel++ = *source; source+= 2;
       }
     }
-    
-    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-      for (i= 0; alpha + i < extra; ++i) {
-	gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
-                                0, start, cols, 1+row-start);
-      }
-      gimp_progress_update ((double) row / (double) rows);
-      start= row + 1;
+  }
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
+                              startcol, startrow, cols, rows);
+  }
+}
+
+static void
+read_8bit(guchar *source, channel_data *channel, unsigned short photomet,
+             int startrow, int startcol, int rows, int cols,
+             int alpha, int extra)
+{
+  guchar *dest;
+  int gray_val, red_val, green_val, blue_val, alpha_val;
+  int col, row, i;
+
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
+                          startcol, startrow, cols, rows, TRUE, FALSE);
+  }
+
+  for (row = 0; row < rows; ++row) {
+    dest= channel[0].pixels + row * cols * channel[0].drawable->bpp;
+
+    for (i= 1; i <= extra; ++i) {
+      channel[i].pixel= channel[i].pixels + row * cols;
     }
+
+    for (col = 0; col < cols; col++) {
+      switch (photomet) {
+        case PHOTOMETRIC_MINISBLACK:
+          if (alpha) {
+            gray_val= *source++;
+            alpha_val= *source++;
+            if (alpha_val)
+              *dest++ = gray_val * 255 / alpha_val;
+            else
+              *dest++ = 0;
+            *dest++ = alpha_val;
+          } else {
+            *dest++ = *source++;
+          }
+          break;
+
+        case PHOTOMETRIC_MINISWHITE:
+          if (alpha) {
+            gray_val= *source++;
+            alpha_val= *source++;
+            if (alpha_val)
+              *dest++ = ((255 - gray_val) * 255) / alpha_val;
+            else
+              *dest++ = 0;
+            *dest++ = alpha_val;
+          } else {
+            *dest++ = ~(*source++);
+          }
+          break;
+
+        case PHOTOMETRIC_PALETTE:
+          *dest++= *source++;
+          if (alpha) *dest++= *source++;
+          break;
+  
+        case PHOTOMETRIC_RGB:
+          if (alpha) {
+            red_val= *source++;
+            green_val= *source++;
+            blue_val= *source++;
+            alpha_val= *source++;
+            if (alpha_val) {
+              *dest++ = (red_val * 255) / alpha_val;
+              *dest++ = (green_val * 255) / alpha_val;
+              *dest++ = (blue_val * 255) / alpha_val;
+            } else {
+              *dest++ = 0;
+              *dest++ = 0;
+              *dest++ = 0;
+	    }
+	    *dest++ = alpha_val;
+	  } else {
+	    *dest++ = *source++;
+	    *dest++ = *source++;
+	    *dest++ = *source++;
+	  }
+          break;
+
+        default:
+          /* This case was handled earlier */
+          g_assert_not_reached();
+      }
+      for (i= 1; i <= extra; ++i) {
+        *channel[i].pixel++ = *source++;
+      }
+    }
+  }
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
+                              startcol, startrow, cols, rows);
   }
 }
 
@@ -707,46 +914,35 @@ load_8bit(TIFF *tif, GDrawable *drawable,
   {                                           \
       if (bitsleft == 0)                      \
       {                                       \
-	  s++;                                \
+	  source++;                           \
 	  bitsleft = 8;                       \
       }                                       \
       bitsleft -= bps;                        \
-      var = ( *s >> bitsleft ) & maxval;      \
+      var = ( *source >> bitsleft ) & maxval; \
   }
 
 static void
-load_default(TIFF *tif, GDrawable *drawable,
-             channel_data *channel,
+read_default(guchar *source, channel_data *channel,
              unsigned short bps, unsigned short photomet,
-             int rows, int cols, int alpha, int extra)
+             int startrow, int startcol, int rows, int cols,
+             int alpha, int extra)
 {
-  guchar *source, *dest, *s, *d;
-  GPixelRgn pixel_rgn;
+  guchar *dest;
   int gray_val, red_val, green_val, blue_val, alpha_val;
-  int col, row, start, i;
-  int bitsleft, maxval = (1 << bps) - 1;
-  int tile_height = gimp_tile_height ();
+  int col, row, i;
+  int bitsleft = 8, maxval = (1 << bps) - 1;
 
-  source= g_new (guchar, TIFFScanlineSize (tif));
-  dest = g_new (guchar, tile_height * cols * drawable->bpp);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_init (&(channel[i].pixel_rgn), channel[i].drawable,
+		startcol, startrow, cols, rows, TRUE, FALSE);
+  }
 
-  for (start= 0, row = 0; row < rows; ++row) {
-    d= dest + cols * (row % tile_height) * drawable->bpp;
+  for (row = 0; row < rows; ++row) {
+    dest= channel[0].pixels + row * cols * channel[0].drawable->bpp;
 
-    if (TIFFReadScanline (tif, source, row, 0) < 0) {
-      g_message("TIFF Bad data read on line %d\n", row);
-      gimp_quit ();
+    for (i= 1; i <= extra; ++i) {
+      channel[i].pixel= channel[i].pixels + row * cols;
     }
-
-    for (i= 0; i < extra; ++i) {
-      channel[i].pixel= channel[i].pixels + cols * (row % tile_height);
-    }
-
-    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
-
-    s= source;
-    bitsleft= 8;
 
     for (col = 0; col < cols; col++) {
       switch (photomet) {
@@ -755,12 +951,12 @@ load_default(TIFF *tif, GDrawable *drawable,
           if (alpha) {
             NEXTSAMPLE(alpha_val);
             if (alpha_val)
-              *d++ = (gray_val * 65025) / (alpha_val * maxval);
+              *dest++ = (gray_val * 65025) / (alpha_val * maxval);
             else
-              *d++ = 0;
-            *d++ = alpha_val;
+              *dest++ = 0;
+            *dest++ = alpha_val;
           } else {
-            *d++ = (gray_val * 255) / maxval;
+            *dest++ = (gray_val * 255) / maxval;
           }
           break;
 
@@ -769,19 +965,19 @@ load_default(TIFF *tif, GDrawable *drawable,
           if (alpha) {
             NEXTSAMPLE(alpha_val);
             if (alpha_val)
-              *d++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
+              *dest++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
             else
-              *d++ = 0;
-            *d++ = alpha_val;
+              *dest++ = 0;
+            *dest++ = alpha_val;
           } else {
-            *d++ = ((maxval - gray_val) * 255) / maxval;
+            *dest++ = ((maxval - gray_val) * 255) / maxval;
           }
           break;
 
         case PHOTOMETRIC_PALETTE:
-          NEXTSAMPLE(*d++);
+          NEXTSAMPLE(*dest++);
           if (alpha) {
-            NEXTSAMPLE(*d++);
+            NEXTSAMPLE(*dest++);
           }
           break;
   
@@ -792,19 +988,19 @@ load_default(TIFF *tif, GDrawable *drawable,
           if (alpha) {
             NEXTSAMPLE(alpha_val)
             if (alpha_val) {
-              *d++ = (red_val * 255) / alpha_val;
-              *d++ = (green_val * 255) / alpha_val;
-              *d++ = (blue_val * 255) / alpha_val;
+              *dest++ = (red_val * 255) / alpha_val;
+              *dest++ = (green_val * 255) / alpha_val;
+              *dest++ = (blue_val * 255) / alpha_val;
             } else {
-              *d++ = 0;
-              *d++ = 0;
-              *d++ = 0;
+              *dest++ = 0;
+              *dest++ = 0;
+              *dest++ = 0;
 	    }
-	    *d++ = alpha_val;
+	    *dest++ = alpha_val;
 	  } else {
-	    *d++ = red_val;
-	    *d++ = green_val;
-	    *d++ = blue_val;
+	    *dest++ = red_val;
+	    *dest++ = green_val;
+	    *dest++ = blue_val;
 	  }
           break;
 
@@ -812,171 +1008,59 @@ load_default(TIFF *tif, GDrawable *drawable,
           /* This case was handled earlier */
           g_assert_not_reached();
       }
-      for (i= 0; i < extra; ++i) {
+      for (i= 1; i <= extra; ++i) {
         NEXTSAMPLE(alpha_val);
         *channel[i].pixel++ = alpha_val;
       }
     }
-    
-    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-      for (i= 0; alpha + i < extra; ++i) {
-	gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
-                                0, start, cols, 1+row-start);
-      }
-      gimp_progress_update ((double) row / (double) rows);
-      start= row + 1;
-    }
+    bitsleft= 0;
+  }
+  for (i= 0; i <= extra; ++i) {
+    gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
+                              startcol, startrow, cols, rows);
   }
 }
 
 static void
-load_separate(TIFF *tif, GDrawable *drawable,
-              channel_data *channel,
-              unsigned short bps, unsigned short photomet,
-              int rows, int cols, int alpha, int extra)
+read_separate (guchar *source, channel_data *channel,
+               unsigned short bps, unsigned short photomet,
+               int startrow, int startcol, int rows, int cols,
+               int alpha, int extra, int sample)
 {
-  guchar *source, *dest, *s, *d;
-  GPixelRgn pixel_rgn;
-  int col, row, start;
-  int bitsleft, maxval = (1 << bps) - 1;
-  int tile_height = gimp_tile_height ();
+  guchar *dest;
+  int col, row, c;
+  int bitsleft = 8, maxval = (1 << bps) - 1;
 
-  TIFFPrintDirectory(tif, stdout, 0);
-  if (photomet != PHOTOMETRIC_RGB) {
-    g_message("So far PLANARCONFIG_SEPARATE only supports RGB images");
+  if (bps > 8) {
+    g_message("TIFF Unsupported layout\n");
     gimp_quit();
   }
 
-  source= g_new (guchar, TIFFScanlineSize (tif));
-  dest = g_new (guchar, tile_height * cols * drawable->bpp);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, cols, rows, TRUE, FALSE);
-
-  /* RED channel */
-  for (start= 0, row = 0; row < rows; ++row) {
-    d= dest + cols * (row % tile_height) * drawable->bpp;
-
-    if (TIFFReadScanline (tif, source, row, 0) < 0) {
-      g_message("TIFF Bad data read on line %d\n", row);
-      gimp_quit ();
-    }
-
-    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
-
-    s= source;
-    bitsleft= 8;
-
-    for (col = 0; col < cols; col++) {
-      NEXTSAMPLE(d[col * (3 + alpha)])
-    }
-    
-    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-      gimp_progress_update ((double) row / (double) rows);
-      start= row + 1;
-    }
+  if (sample < channel[0].drawable->bpp) {
+    c = 0;
+  } else {
+    c = (sample - channel[0].drawable->bpp) + 4;
+    photomet = PHOTOMETRIC_MINISBLACK;
   }
 
-  /* GREEN channel */
-  for (start= 0, row = 0; row < rows; ++row) {
-    d= dest + cols * (row % tile_height) * drawable->bpp;
+  gimp_pixel_rgn_init (&(channel[c].pixel_rgn), channel[c].drawable,
+                         startcol, startrow, cols, rows, TRUE, FALSE);
 
-    if ((row % tile_height) == 0) {
-      if (rows - row < tile_height)
-        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
-      else
-        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
-      gimp_progress_update ((double) row / (double) rows);
-    }
-
-    if (TIFFReadScanline (tif, source, row, 1) < 0) {
-      g_message("TIFF Bad data read on line %d\n", row);
-      gimp_quit ();
-    }
-
-    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
-
-    s= source;
-    bitsleft= 8;
-
-    for (col = 0; col < cols; col++) {
-      NEXTSAMPLE(d[col * (3 + alpha) + 1])
-    }
-    
-    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-      gimp_progress_update ((double) row / (double) rows);
-      start= row + 1;
+  gimp_pixel_rgn_get_rect(&(channel[c].pixel_rgn), channel[c].pixels,
+                            startcol, startrow, cols, rows);
+  for (row = 0; row < rows; ++row) {
+    dest = channel[c].pixels + row * cols * channel[c].drawable->bpp;
+    if (c == 0) {
+      for (col = 0; col < cols; ++col) {
+        NEXTSAMPLE(dest[col * channel[0].drawable->bpp + sample]);
+      }
+    } else {
+      for (col = 0; col < cols; ++col)
+        NEXTSAMPLE(dest[col]);
     }
   }
-
-  /* BLUE channel */
-  for (start= 0, row = 0; row < rows; ++row) {
-    d= dest + cols * (row % tile_height) * drawable->bpp;
-
-    if ((row % tile_height) == 0) {
-      if (rows - row < tile_height)
-        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
-      else
-        gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
-      gimp_progress_update ((double) row / (double) rows);
-    }
-
-    if (TIFFReadScanline (tif, source, row, 2) < 0) {
-      g_message("TIFF Bad data read on line %d\n", row);
-      gimp_quit ();
-    }
-
-    /* Set s/bitsleft ready to use NEXTSAMPLE macro */
-
-    s= source;
-    bitsleft= 8;
-
-    for (col = 0; col < cols; col++) {
-      NEXTSAMPLE(d[col * (3 + alpha) + 2])
-    }
-    
-    if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-      gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-      gimp_progress_update ((double) row / (double) rows);
-      start= row + 1;
-    }
-  }
-
-  /* ALPHA channel */
-  if (alpha) {
-    for (start= 0, row = 0; row < rows; ++row) {
-      d= dest + cols * (row % tile_height) * drawable->bpp;
-
-      if ((row % tile_height) == 0) {
-        if (rows - row < tile_height)
-          gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, rows - row);
-        else
-          gimp_pixel_rgn_get_rect(&pixel_rgn, dest, 0, start, cols, tile_height);
-        gimp_progress_update ((double) row / (double) rows);
-      }
-
-      if (TIFFReadScanline (tif, source, row, 3) < 0) {
-        g_message("TIFF Bad data read on line %d\n", row);
-        gimp_quit ();
-      }
-
-      /* Set s/bitsleft ready to use NEXTSAMPLE macro */
-  
-      s= source;
-      bitsleft= 8;
-
-      for (col = 0; col < cols; col++) {
-        NEXTSAMPLE(d[col * 4 + 3])
-      }
-    
-      if (((row + 1) % tile_height) == 0 || row + 1 == rows) {
-        gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, start, cols, 1+row-start);
-        gimp_progress_update ((double) row / (double) rows);
-        start= row + 1;
-      }
-    }
-  }
+  gimp_pixel_rgn_set_rect(&(channel[c].pixel_rgn), channel[c].pixels,
+                            startcol, startrow, cols, rows);
 }
 
 /*
@@ -1106,7 +1190,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
     case INDEXEDA_IMAGE:
       return 0;
      default:
-       return 0;
+      return 0;
     }
 
   if (rowsperstrip == 0)

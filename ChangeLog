@@ -1,3 +1,8 @@
+Fri Sep 17 23:26:40 BST 1999 Nick Lamb <njl195@zepler.org>
+
+        * plug-ins/common/tiff.c: Update to version supporting 16-bit
+        (truncated of course) and Tiled TIFF familes.
+
 Wed Sep 15 11:11:08 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/path_tool.c: use a temp var for xoring the pointers
