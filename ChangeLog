@@ -1,3 +1,11 @@
+2005-04-03  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-cursor-16.png
+	* themes/Default/images/stock-cursor-24.png
+	* themes/Default/images/stock-sample-point-16.png
+	* themes/Default/images/stock-sample-point-24.png: touch up a
+	  little.
+
 2005-04-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursorview.[ch]: fixed spacings and update them
