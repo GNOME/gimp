@@ -75,6 +75,8 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
     {
       gimp_channel_combine_rect (gimp_image_get_mask (gimage), op, x, y, w, h);
     }
+
+  gimp_image_mask_changed (gimage);
 }
 
 void
@@ -122,6 +124,8 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
       gimp_channel_combine_ellipse (gimp_image_get_mask (gimage), op,
 				    x, y, w, h, antialias);
     }
+
+  gimp_image_mask_changed (gimage);
 }
 
 void
@@ -171,6 +175,8 @@ gimp_image_mask_select_polygon (GimpImage       *gimage,
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
       g_object_unref (G_OBJECT (mask));
     }
+
+  gimp_image_mask_changed (gimage);
 }
 
 void
@@ -257,6 +263,8 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
 
   gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,
                              op, offset_x, offset_y);
+
+  gimp_image_mask_changed (gimage);
 }
 
 void
