@@ -294,6 +294,7 @@ ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
 
   new_vals = *vals;
   new_vals.num_elements = 0;
+  i = 0;
 
   expected_token = G_TOKEN_NONE;
   while (expected_token == G_TOKEN_NONE)
@@ -346,7 +347,7 @@ ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
 	  break;
 	  
 	case TOKEN_ELEMENT:
-	  el = aff_element_new(0.0,0.0,color,vals->num_elements);
+	  el = aff_element_new(0.0,0.0,color,++i);
 	  expected_token = ifsvals_parse_element (scanner, &el->v);
 
 	  if (expected_token == G_TOKEN_NONE)
