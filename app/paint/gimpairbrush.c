@@ -388,7 +388,6 @@ airbrush_invoker (Argument *args)
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
-      num_strokes /= 2;
       if (num_strokes == 1)
 	airbrush_non_gui_paint_func (&non_gui_paint_core, drawable_id, 0);
 
