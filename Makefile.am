@@ -2,16 +2,16 @@
 
 SUBDIRS = \
 	tools		\
-	po		\
-	po-libgimp	\
-	po-plug-ins	\
-	$(GIMP_PERL_PO)	\
-	po-script-fu	\
 	intl		\
 	libgimp		\
 	app		\
 	$(GIMP_PLUGINS)	\
 	$(GIMP_MODULES)	\
+	po		\
+	po-libgimp	\
+	po-plug-ins	\
+	$(GIMP_PERL_PO)	\
+	po-script-fu	\
 	data		\
 	tips		\
 	help		\
