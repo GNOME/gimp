@@ -1,5 +1,9 @@
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimphelp.c (gimp_idle_help): s/welcome.html/introduction.html/.
+
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.[ch]
 	* app/menus.[ch]
 	* app/preferences_dialog.c: added a preferences option to disable

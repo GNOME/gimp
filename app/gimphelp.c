@@ -111,7 +111,7 @@ gimp_idle_help (gpointer data)
   idle_help = (GimpIdleHelp *) data;
 
   if (idle_help->help_data == NULL && help_browser != HELP_BROWSER_GIMP)
-    idle_help->help_data = g_strdup ("welcome.html");
+    idle_help->help_data = g_strdup ("introduction.html");
 
 #ifdef DEBUG_HELP
   if (idle_help->help_path)
