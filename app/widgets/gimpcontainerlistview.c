@@ -413,8 +413,16 @@ gimp_container_list_view_item_activated (GtkWidget      *widget,
     {
     case 1:
       if (bevent->type == GDK_2BUTTON_PRESS)
-	gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data),
-					    viewable);
+        {
+          gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data),
+                                              viewable);
+
+          return TRUE;
+        }
+      else if (widget->state == GTK_STATE_SELECTED)
+        {
+          return TRUE;
+        }
       break;
 
     case 3:
@@ -422,7 +430,7 @@ gimp_container_list_view_item_activated (GtkWidget      *widget,
 					 viewable);
       gimp_container_view_item_context (GIMP_CONTAINER_VIEW (data),
 					viewable);
-      break;
+      return TRUE;
     }
 
   return FALSE;

@@ -1,5 +1,17 @@
 2001-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/devices.c: made device_status_update() static as declared.
+
+	* app/core/gimpobject.h: don't include <gobject/gobject.h> as this
+	is forbidden now (doesn't hurt as we need to include glib or gtk+
+	before gimp headers in .c files anyway).
+
+	* app/widgets/gimpcontainerlistview.c: better handling of
+	"button_press" of list items: don't let a selected item being
+	deselected, fixed context menu popup.
+
+2001-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c
 	* app/tools/gimpconvolvetool.c
 	* app/tools/gimpcroptool.c

@@ -1008,7 +1008,7 @@ device_status_update_current (void)
     }
 }
 
-void 
+static void 
 device_status_update (GdkDevice *device)
 {
   DeviceInfo    *device_info;
