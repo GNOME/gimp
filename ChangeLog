@@ -1,3 +1,10 @@
+2000-05-06  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/bmp/*: Fixed #9802, added 32-bit and 16-bit support
+	and improved OS/2 support so that it Works For Me (TM).
+	Incidentally merged the separate os/2 support code, making
+	the code smaller, and I think easier to understand.
+
 2000-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/docindex.c: the "delete_event" callback should always do

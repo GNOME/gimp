@@ -7,8 +7,6 @@ libexec_PROGRAMS = bmp
 bmp_SOURCES = \
 	bmp.c		\
 	bmp.h		\
-	bmpos2.c	\
-	bmpos2.h	\
 	bmpread.c	\
 	bmpwrite.c   
 

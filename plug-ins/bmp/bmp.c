@@ -24,6 +24,9 @@
 /*            28.11.1998 Bug in RLE-read-padding  */
 /*                       fixed.                   */
 /*            19.12.1999 Resolution support added */
+/*            06.05.2000 Overhaul for 16&24-bit   */
+/*                       plus better OS/2 code    */
+/*                       by njl195@zepler.org.uk  */
 
 /* 
  * The GIMP -- an image manipulation program
@@ -67,7 +70,6 @@ gint   interactive_bmp;
 
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
 struct Bitmap_Head_Struct Bitmap_Head;
-struct Bitmap_OS2_Head_Struct Bitmap_OS2_Head;
 
 /* Declare some local functions.
  */

@@ -200,7 +200,8 @@ WriteBMP (gchar  *filename,
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
   Bitmap_File_Head.bfSize    = 0x36 + MapSize + (rows * SpZeile);
-  Bitmap_File_Head.reserverd = 0;
+  Bitmap_File_Head.zzHotX    = 0;
+  Bitmap_File_Head.zzHotY    = 0;
   Bitmap_File_Head.bfOffs    = 0x36 + MapSize;
   Bitmap_File_Head.biSize    = 40;		
 
@@ -264,7 +265,8 @@ WriteBMP (gchar  *filename,
   Write (outfile, "BM", 2);
 
   FromL (Bitmap_File_Head.bfSize, &puffer[0x00]);
-  FromL (Bitmap_File_Head.reserverd, &puffer[0x04]);
+  FromS (Bitmap_File_Head.zzHotX, &puffer[0x04]);
+  FromS (Bitmap_File_Head.zzHotY, &puffer[0x06]);
   FromL (Bitmap_File_Head.bfOffs, &puffer[0x08]);
   FromL (Bitmap_File_Head.biSize, &puffer[0x0C]);
 

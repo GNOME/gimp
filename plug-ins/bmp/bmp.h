@@ -55,8 +55,10 @@ extern FILE  *errorfile;
 
 extern struct Bitmap_File_Head_Struct
 {
+  gchar    zzMagic[2];	/* 00 "BM" */
   gulong   bfSize;      /* 02 */
-  gulong   reserverd;   /* 06 */
+  gushort  zzHotX;	/* 06 */
+  gushort  zzHotY;	/* 08 */
   gulong   bfOffs;      /* 0A */
   gulong   biSize;      /* 0E */
 } Bitmap_File_Head;
@@ -75,12 +77,3 @@ extern struct Bitmap_Head_Struct
   gulong   biClrImp;    /* 32 */
                         /* 36 */
 } Bitmap_Head;
-  
-extern struct Bitmap_OS2_Head_Struct
-{   
-  gushort  bcWidth;     /* 12 */
-  gushort  bcHeight;    /* 14 */
-  gushort  bcPlanes;    /* 16 */
-  gushort  bcBitCnt;    /* 18 */
-} Bitmap_OS2_Head;                
-

@@ -33,7 +33,6 @@
 #include <libgimp/gimp.h>
 
 #include "bmp.h"
-#include "bmpos2.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -43,10 +42,9 @@ ReadBMP (gchar *name)
 {
   FILE *fd;
   gchar *temp_buf;
-  gchar buf[5];
-  gint ColormapSize, SpeicherZeile, Maps, Grey;
+  guchar buffer[64];
+  gint ColormapSize, rowbytes, Maps, Grey;
   guchar ColorMap[256][3];
-  guchar puffer[50];
   gint32 image_ID;
   
   if (interactive_bmp)
@@ -59,7 +57,7 @@ ReadBMP (gchar *name)
   filename = name;
   fd = fopen (filename, "rb");
   
-  /* Is this a valid File? Should never be used because gimp tests it. */
+  /* Is this a valid File? Should never be used because Gimp tests it. */
   
   if (!fd)
     {
@@ -67,115 +65,109 @@ ReadBMP (gchar *name)
       return -1;
     }
 
-  /* It is a File. Now is it a Bitmap? */
+  /* It is a File. Now is it a Bitmap? Read the shortest possible header */
   
-  if (!ReadOK(fd,buf,2) || (strncmp(buf,"BM",2)))
+  if (!ReadOK(fd, buffer, 18) || (strncmp(buffer,"BM",2)))
     {
-      g_message (_("%s: not a valid BMP file %s\n"), prog_name,buf);
-      return -1;
-    }
-
-  /* How long is the Header? */
-
-  if (!ReadOK (fd, puffer, 0x10))
-    {
-      g_message (_("%s: error reading BMP file header\n"), prog_name);
+      g_message (_("%s: %s is not a valid BMP file\n"), prog_name, filename);
       return -1;
     }
 
   /* bring them to the right byteorder. Not too nice, but it should work */
 
-  Bitmap_File_Head.bfSize    = ToL (&puffer[0]);
-  Bitmap_File_Head.reserverd = ToL (&puffer[4]);
-  Bitmap_File_Head.bfOffs    = ToL (&puffer[8]);
-  Bitmap_File_Head.biSize    = ToL (&puffer[12]);
+  Bitmap_File_Head.bfSize    = ToL (&buffer[0x02]);
+  Bitmap_File_Head.zzHotX    = ToS (&buffer[0x06]);
+  Bitmap_File_Head.zzHotY    = ToS (&buffer[0x08]);
+  Bitmap_File_Head.bfOffs    = ToL (&buffer[0x0a]);
+  Bitmap_File_Head.biSize    = ToL (&buffer[0x0e]);
   
-  /* Is it a Windows (R) Bitmap or not */  
+  /* What kind of bitmap is it? */  
   
-  if (Bitmap_File_Head.biSize == 12) /* OS/2 */
+  if (Bitmap_File_Head.biSize == 12) /* OS/2 1.x ? */
     {
-      if (!read_os2_head1 (fd, Bitmap_File_Head.biSize - 4, &Bitmap_Head))
+      if (!ReadOK (fd, buffer, 8))
         {
           g_message (_("%s: error reading BMP file header\n"), prog_name);
           return -1;
         }
+
+      Bitmap_Head.biWidth   =ToS (&buffer[0x00]);       /* 12 */
+      Bitmap_Head.biHeight  =ToS (&buffer[0x02]);       /* 14 */
+      Bitmap_Head.biPlanes  =ToS (&buffer[0x04]);       /* 16 */
+      Bitmap_Head.biBitCnt  =ToS (&buffer[0x06]);       /* 18 */
       Maps = 3;
     }
-  else if (Bitmap_File_Head.biSize != 40) 
+  else if (Bitmap_File_Head.biSize == 40) /* Windows 3.x */
     {
-      g_warning ("OS/2 unsupported!\n");
-      if (!ReadOK (fd, puffer, Bitmap_File_Head.biSize))
+      if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
           g_message (_("%s: error reading BMP file header\n"), prog_name);
           return -1;
         }
-
-      Bitmap_OS2_Head.bcWidth  = ToS (&puffer[0]);
-      Bitmap_OS2_Head.bcHeight = ToS (&puffer[2]);
-      Bitmap_OS2_Head.bcPlanes = ToS (&puffer[4]);
-      Bitmap_OS2_Head.bcBitCnt = ToS (&puffer[6]);
-
-      Bitmap_Head.biPlanes    = Bitmap_OS2_Head.bcPlanes;
-      Bitmap_Head.biBitCnt    = Bitmap_OS2_Head.bcBitCnt;
-      Bitmap_File_Head.bfSize = ((Bitmap_File_Head.bfSize * 4) -
-				 (Bitmap_File_Head.bfOffs * 3));
-      Bitmap_Head.biHeight    = Bitmap_OS2_Head.bcHeight;
-      Bitmap_Head.biWidth     = Bitmap_OS2_Head.bcWidth;
-      Bitmap_Head.biClrUsed   = 0;
-      Bitmap_Head.biCompr     = 0;
+      Bitmap_Head.biWidth   =ToL (&buffer[0x00]);	/* 12 */
+      Bitmap_Head.biHeight  =ToL (&buffer[0x04]);	/* 16 */
+      Bitmap_Head.biPlanes  =ToS (&buffer[0x08]);       /* 1A */
+      Bitmap_Head.biBitCnt  =ToS (&buffer[0x0A]);	/* 1C */
+      Bitmap_Head.biCompr   =ToL (&buffer[0x0C]);	/* 1E */
+      Bitmap_Head.biSizeIm  =ToL (&buffer[0x10]);	/* 22 */
+      Bitmap_Head.biXPels   =ToL (&buffer[0x14]);	/* 26 */
+      Bitmap_Head.biYPels   =ToL (&buffer[0x18]);	/* 2A */
+      Bitmap_Head.biClrUsed =ToL (&buffer[0x1C]);	/* 2E */
+      Bitmap_Head.biClrImp  =ToL (&buffer[0x20]);	/* 32 */
+    					                /* 36 */
+      Maps = 4;
+    }
+  else if (Bitmap_File_Head.biSize <= 64) /* Probably OS/2 2.x */
+    {
+      if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
+        {
+          g_message (_("%s: error reading BMP file header\n"), prog_name);
+          return -1;
+        }
+      Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
+      Bitmap_Head.biHeight  =ToL (&buffer[0x04]);       /* 16 */
+      Bitmap_Head.biPlanes  =ToS (&buffer[0x08]);       /* 1A */
+      Bitmap_Head.biBitCnt  =ToS (&buffer[0x0A]);       /* 1C */
+      Bitmap_Head.biCompr   =ToL (&buffer[0x0C]);       /* 1E */
+      Bitmap_Head.biSizeIm  =ToL (&buffer[0x10]);       /* 22 */
+      Bitmap_Head.biXPels   =ToL (&buffer[0x14]);       /* 26 */
+      Bitmap_Head.biYPels   =ToL (&buffer[0x18]);       /* 2A */
+      Bitmap_Head.biClrUsed =ToL (&buffer[0x1C]);       /* 2E */
+      Bitmap_Head.biClrImp  =ToL (&buffer[0x20]);       /* 32 */
+                                                        /* 36 */
       Maps = 3;
     }
   else
     {
-      if (!ReadOK (fd, puffer, 36))
-        {
-          g_message (_("%s: error reading BMP file header\n"), prog_name);
-          return -1;
-        }
-      Bitmap_Head.biWidth   =ToL (&puffer[0x00]);	/* 12 */
-      Bitmap_Head.biHeight  =ToL (&puffer[0x04]);	/* 16 */
-      Bitmap_Head.biPlanes  =ToS (&puffer[0x08]);       /* 1A */
-      Bitmap_Head.biBitCnt  =ToS (&puffer[0x0A]);	/* 1C */
-      Bitmap_Head.biCompr   =ToL (&puffer[0x0C]);	/* 1E */
-      Bitmap_Head.biSizeIm  =ToL (&puffer[0x10]);	/* 22 */
-      Bitmap_Head.biXPels   =ToL (&puffer[0x14]);	/* 26 */
-      Bitmap_Head.biYPels   =ToL (&puffer[0x18]);	/* 2A */
-      Bitmap_Head.biClrUsed =ToL (&puffer[0x1C]);	/* 2E */
-      Bitmap_Head.biClrImp  =ToL (&puffer[0x20]);	/* 32 */
-    					                /* 36 */
-      Maps = 4;
-    }
-  
-  /* This means wrong file Format. I test this because it could crash the
-   * entire gimp.
-   */
-  
-  if (Bitmap_Head.biBitCnt > 24) 
-    {
-      g_message (_("%s: too many colors: %u\n"), prog_name,
-		 (guint) Bitmap_Head.biBitCnt);
+      g_message (_("%s: error reading BMP file header\n"), prog_name);
       return -1;
     }
 
+  /* Valid options 1, 4, 8, 16, 24, 32 */
+  /* 16 is awful, we should probably shoot whoever invented it */
+  
   /* There should be some colors used! */
   
   ColormapSize = (Bitmap_File_Head.bfOffs - Bitmap_File_Head.biSize - 14) / Maps;
 
-  if ((Bitmap_Head.biClrUsed == 0) &&
-      (Bitmap_Head.biBitCnt < 24))
+  if ((Bitmap_Head.biClrUsed == 0) && (Bitmap_Head.biBitCnt <= 8))
     Bitmap_Head.biClrUsed = ColormapSize;
 
-  if (Bitmap_Head.biBitCnt == 24)
-    SpeicherZeile = ((Bitmap_File_Head.bfSize - Bitmap_File_Head.bfOffs) /
+  /* Windows and OS/2 declare some filler, so we'll always read "enough"
+   * bytes whatever filler the saving application used
+   */
+
+  if (Bitmap_Head.biBitCnt >= 16)
+    rowbytes = ((Bitmap_File_Head.bfSize - Bitmap_File_Head.bfOffs) /
 		     Bitmap_Head.biHeight);
   else
-    SpeicherZeile = ((Bitmap_File_Head.bfSize - Bitmap_File_Head.bfOffs) /
+    rowbytes = ((Bitmap_File_Head.bfSize - Bitmap_File_Head.bfOffs) /
 		     Bitmap_Head.biHeight) * (8 / Bitmap_Head.biBitCnt);
   
 #ifdef DEBUG
   printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
           Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
-          Bitmap_Head.biHeight, Bitmap_Head.biCompr, SpeicherZeile);
+          Bitmap_Head.biHeight, Bitmap_Head.biCompr, rowbytes);
 #endif
   
   /* Get the Colormap */
@@ -195,30 +187,23 @@ ReadBMP (gchar *name)
 			Bitmap_Head.biClrUsed, 
 			Bitmap_Head.biBitCnt, 
 			Bitmap_Head.biCompr, 
-			SpeicherZeile, 
+			rowbytes, 
 			Grey);
   
 #ifdef GIMP_HAVE_RESOLUTION_INFO
+  if (Bitmap_Head.biXPels > 0 && Bitmap_Head.biYPels > 0)
   {
-    /* quick hack by the muppet, scott@asofyet.org, 19 dec 1999 */
+    /* Fixed up from scott@asofyet's changes last year, njl195 */
     gdouble xresolution;
     gdouble yresolution;
 
-    /*
-     * xresolution and yresolution are in dots per inch.
-     * the BMP spec says that biXPels and biYPels are in
-     * pixels per meter as long ints (actually, "DWORDS").
-     * this means we've lost some accuracy in the numbers.
-     * typically, the dots per inch settings on BMPs will
-     * be integer numbers of dots per inch, which is freaky
-     * because they're stored in the BMP as metric.  *sigh*
-     * so, we'll round this off, even though the gimp wants
-     * a floating point number...
-     */
-    #define LROUND(x)   ((long int)((x)+0.5))
-    xresolution = LROUND((Bitmap_Head.biXPels * 2.54 / 100.0));
-    yresolution = LROUND((Bitmap_Head.biYPels * 2.54 / 100.0));
-    #undef LROUND
+    /* I don't agree with scott's feeling that Gimp should be
+     * trying to "fix" metric resolution translations, in the
+     * long term Gimp should be SI (metric) anyway, but we
+     * haven't told the Americans that yet  */
+
+    xresolution = Bitmap_Head.biXPels * 0.0254;
+    yresolution = Bitmap_Head.biYPels * 0.0254;
 
     gimp_image_set_resolution (image_ID, xresolution, yresolution);
   }
@@ -248,19 +233,9 @@ ReadColorMap (FILE   *fd,
       
       /* Bitmap save the colors in another order! But change only once! */
 
-      if (size == 4)
-	{
-	  buffer[i][0] = rgb[2];
-	  buffer[i][1] = rgb[1];
-	  buffer[i][2] = rgb[0];
-	}
-      else
-	{
-	  /* this one is for old os2 Bitmaps */
-	  buffer[i][0] = rgb[2];
-	  buffer[i][1] = rgb[1];
-	  buffer[i][2] = rgb[0];
-	}
+      buffer[i][0] = rgb[2];
+      buffer[i][1] = rgb[1];
+      buffer[i][2] = rgb[0];
       *grey = ((*grey) && (rgb[0]==rgb[1]) && (rgb[1]==rgb[2]));
     }
   return 0;
@@ -268,7 +243,7 @@ ReadColorMap (FILE   *fd,
 
 Image 
 ReadImage (FILE   *fd, 
-	   gint    len, 
+	   gint    width, 
 	   gint    height, 
 	   guchar  cmap[256][3], 
 	   gint    ncols, 
@@ -285,36 +260,34 @@ ReadImage (FILE   *fd,
   Image image;
   gint32 layer;
   GDrawable *drawable;
-  guchar *dest, *temp;
+  guchar *dest, *temp, *buffer;
   guchar gimp_cmap[768];
+  gushort rgb;
   long rowstride, channels;
   gint i, j, cur_progress, max_progress, egal;
   
   /* Make a new image in the gimp */
   
-  if (grey)
+  if (bpp >= 16)
     {
-      image = gimp_image_new (len, height, GRAY);
+      image = gimp_image_new (width, height, RGB);
       layer = gimp_layer_new (image, _("Background"),
-			      len, height, GRAY_IMAGE, 100, NORMAL_MODE);
+                              width, height, RGB_IMAGE, 100, NORMAL_MODE);
+      channels = 3;
+    }
+  else if (grey)
+    {
+      image = gimp_image_new (width, height, GRAY);
+      layer = gimp_layer_new (image, _("Background"),
+			      width, height, GRAY_IMAGE, 100, NORMAL_MODE);
       channels = 1;
     }
   else
     {
-      if (bpp<24) 
-	{
-	  image = gimp_image_new (len, height, INDEXED);
-	  layer = gimp_layer_new (image, _("Background"),
-				  len, height, INDEXED_IMAGE, 100, NORMAL_MODE);
-	  channels = 1;
-	}
-      else 
-	{
-	  image = gimp_image_new (len, height, RGB);
-	  layer = gimp_layer_new (image, _("Background"),
-				  len, height, RGB_IMAGE, 100, NORMAL_MODE);
-	  channels = 3;
-	}
+      image = gimp_image_new (width, height, INDEXED);
+      layer = gimp_layer_new (image, _("Background"),
+                              width, height, INDEXED_IMAGE, 100, NORMAL_MODE);
+      channels = 1;
     }
   
   name_buf = g_malloc (strlen (filename) + 10);
@@ -326,13 +299,28 @@ ReadImage (FILE   *fd,
   drawable = gimp_drawable_get(layer);
   
   dest = g_malloc(drawable->width*drawable->height*channels);
+  buffer= g_malloc(spzeile);
   rowstride = drawable->width * channels;
   
   ypos = height - 1;  /* Bitmaps begin in the lower left corner */
   cur_progress = 0;
   max_progress = height;
   
-  if (bpp == 24)
+  if (bpp == 32)
+    {
+      while (ReadOK (fd, buffer, spzeile))
+        {
+          temp = dest + (ypos * rowstride);
+          for (xpos= 0; xpos < width; ++xpos)
+            {
+               *(temp++)= buffer[xpos * 4 + 2];
+               *(temp++)= buffer[xpos * 4 + 1];
+               *(temp++)= buffer[xpos * 4];
+            }
+          --ypos; /* next line */
+        }
+    }
+  else if (bpp == 24)
     {
       while (ReadOK (fd, buf, 3))
         {
@@ -343,9 +331,9 @@ ReadImage (FILE   *fd,
           temp++;
           *temp=buf[0];
           xpos++;
-          if (xpos == len)
+          if (xpos == width)
             {
-              egal=ReadOK (fd, buf, spzeile - (len * 3));
+              egal=ReadOK (fd, buf, spzeile - (width * 3));
               ypos--;
               xpos = 0;
 
@@ -359,6 +347,21 @@ ReadImage (FILE   *fd,
 	    break;
         }
     }
+  if (bpp == 16)
+    {
+      while (ReadOK (fd, buffer, spzeile))
+        {
+          temp = dest + (ypos * rowstride);
+          for (xpos= 0; xpos < width; ++xpos)
+            {
+               rgb= ToS(&buffer[xpos * 2]);
+               *(temp++)= ((rgb >> 10) & 0x1f) * 8;
+               *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
+               *(temp++)= ((rgb)       & 0x1f) * 8;
+            }
+          --ypos; /* next line */
+        }
+    }
   else
     {
       switch(compression)
@@ -367,16 +370,16 @@ ReadImage (FILE   *fd,
 	  {
 	    while (ReadOK (fd, &v, 1))
 	      {
-		for (i = 1; (i <= (8 / bpp)) && (xpos < len); i++, xpos++)
+		for (i = 1; (i <= (8 / bpp)) && (xpos < width); i++, xpos++)
 		  {
 		    temp = dest + (ypos * rowstride) + (xpos * channels);
 		    *temp=( v & ( ((1<<bpp)-1) << (8-(i*bpp)) ) ) >> (8-(i*bpp));
 		    if (grey)
 		      *temp = cmap[*temp][0];
 		  }
-		if (xpos == len)
+		if (xpos == width)
 		  {
-		    egal = ReadOK (fd, buf, (spzeile - len) / (8 / bpp));
+		    egal = ReadOK (fd, buf, (spzeile - width) / (8 / bpp));
 		    ypos--;
 		    xpos = 0;
 
@@ -399,14 +402,14 @@ ReadImage (FILE   *fd,
 		if ((guchar) buf[0] != 0) 
 		  /* Count + Color - record */
 		  {
-		    for (j = 0; ((guchar) j < (guchar) buf[0]) && (xpos < len);)
+		    for (j = 0; ((guchar) j < (guchar) buf[0]) && (xpos < width);)
 		      {
 #ifdef DEBUG2
-			printf("%u %u | ",xpos,len);
+			printf("%u %u | ",xpos,width);
 #endif
 			for (i = 1;
 			     ((i <= (8 / bpp)) &&
-			      (xpos < len) &&
+			      (xpos < width) &&
 			      ((guchar) j < (unsigned char) buf[0]));
 			     i++, xpos++, j++)
 			  {
@@ -425,7 +428,7 @@ ReadImage (FILE   *fd,
 		      {
 			egal = ReadOK (fd, &v, 1);
 			i = 1;
-			while ((i <= (8 / bpp)) && (xpos < len))
+			while ((i <= (8 / bpp)) && (xpos < width))
 			  {
 			    temp = dest + (ypos * rowstride) + (xpos * channels);
 			    *temp = (v & (((1<<bpp)-1) << (8-(i*bpp)))) >> (8-(i*bpp));
@@ -473,7 +476,7 @@ ReadImage (FILE   *fd,
     }
 
   fclose (fd);
-  if (bpp < 24)
+  if (bpp <= 8)
     for (i = 0, j = 0; i < ncols; i++)
       {
 	gimp_cmap[j++] = cmap[i][0];
@@ -489,7 +492,7 @@ ReadImage (FILE   *fd,
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest,
 			   0, 0, drawable->width, drawable->height);
 
-  if ((!grey) && (bpp<24))
+  if ((!grey) && (bpp<= 8))
     gimp_image_set_cmap (image, gimp_cmap, ncols);
 
   gimp_drawable_flush (drawable);
