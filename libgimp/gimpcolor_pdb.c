@@ -397,9 +397,9 @@ gimp_color_balance (gint32           drawable_ID,
  * @channel: The channel to modify.
  * @start_range: Start of the intensity measurement range.
  * @end_range: End of the intensity measurement range.
- * @mean: Mean itensity value.
+ * @mean: Mean intensity value.
  * @std_dev: Standard deviation of intensity values.
- * @median: Median itensity value.
+ * @median: Median intensity value.
  * @pixels: Alpha-weighted pixel count for entire image.
  * @count: Alpha-weighted pixel count for range.
  * @percentile: Percentile that range falls under.

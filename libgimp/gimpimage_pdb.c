@@ -1627,7 +1627,7 @@ gimp_image_width (gint32 image_ID)
  *
  * Return the height of the image
  *
- * This procedure returns the image's width. This value is independent
+ * This procedure returns the image's height. This value is independent
  * of any of the layers in this image. This is the \"canvas\" height.
  *
  * Returns: The image's height.

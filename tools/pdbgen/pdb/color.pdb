@@ -570,7 +570,7 @@ HELP
 
     @outargs = (
 	{ name => 'mean', void_ret => 1, init => 1,
-	  desc => 'Mean itensity value' },
+	  desc => 'Mean intensity value' },
 	{ name => 'std_dev', init => 1,
 	  desc => 'Standard deviation of intensity values' },
 	{ name => 'median', init => 1,

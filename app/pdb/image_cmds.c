@@ -2906,7 +2906,7 @@ static ProcRecord image_height_proc =
 {
   "gimp_image_height",
   "Return the height of the image",
-  "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
+  "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -1037,7 +1037,7 @@ static ProcArg histogram_outargs[] =
   {
     GIMP_PDB_FLOAT,
     "mean",
-    "Mean itensity value"
+    "Mean intensity value"
   },
   {
     GIMP_PDB_FLOAT,
@@ -1047,7 +1047,7 @@ static ProcArg histogram_outargs[] =
   {
     GIMP_PDB_FLOAT,
     "median",
-    "Median itensity value"
+    "Median intensity value"
   },
   {
     GIMP_PDB_FLOAT,

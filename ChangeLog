@@ -1,10 +1,24 @@
 2001-11-24  Sven Neumann  <sven@gimp.org>
 
+	Clean up after Marc Lehmann who changed tools/pdbgen/pdb/color.pdb
+	and tools/pdbgen/pdb/image.pdb without writing a ChangeLog entry and
+	without regenerating the respective files :-(
+	
+	* tools/pdbgen/pdb/color.pdb: another typo fix similar to the one
+	Marc spotted.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpcolor_pdb.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+2001-11-24  Sven Neumann  <sven@gimp.org>
+
 	* app/gimprc.c
 	* app/plug_in.[ch]
 	* app/pdb/plug_in_cmds.c
-	* tools/pdbgen/pdb/plug_in.pdb: started to clean plug_in code a little.
-	Still a long way to go...
+	* tools/pdbgen/pdb/plug_in.pdb: started to clean up plug_in code a 
+	little. Still a long way to go...
 
 	* app/gui/splash.c: simplified
 
