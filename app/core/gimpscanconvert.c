@@ -51,14 +51,24 @@ struct _GimpScanConvert
 
   ArtSVP      *svp;         /* Sorted vector path
                                (extension no longer possible)          */
-};
 
+  /* stuff necessary for the rendering callback */
+  guchar      *buf;
+  gint         rowstride;
+  gint         x0, x1;
+  gboolean     antialias;
+};
 
 /* private functions */
 
 static void   gimp_scan_convert_finish           (GimpScanConvert *sc);
 static void   gimp_scan_convert_close_add_points (GimpScanConvert *sc);
 
+static void   gimp_scan_convert_render_callback (gpointer          user_data,
+                                                 gint              y,
+                                                 gint              start_value,
+                                                 ArtSVPRenderAAStep *steps,
+                                                 gint              n_steps);
 
 /*  public functions  */
 
@@ -362,7 +372,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
                 }
             }
         }
-      
+
       /* correct odd number of dash specifiers */
 
       if (dash.n_dash % 2 == 1)
@@ -429,8 +439,6 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 {
   PixelRegion  maskPR;
   gpointer     pr;
-  gint         i, j;
-  guchar      *dest, *d;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
@@ -447,35 +455,24 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 
   g_return_if_fail (maskPR.bytes == 1);
 
+  sc->antialias = antialias;
+
   for (pr = pixel_regions_register (1, &maskPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      art_gray_svp_aa (sc->svp,
-                       off_x + maskPR.x,
-                       off_y + maskPR.y,
-                       off_x + maskPR.x + maskPR.w,
-                       off_y + maskPR.y + maskPR.h,
-                       maskPR.data, maskPR.rowstride);
+      sc->buf = maskPR.data;
+      sc->rowstride = maskPR.rowstride;
+      sc->x0 = off_x + maskPR.x;
+      sc->x1 = off_x + maskPR.x + maskPR.w;
 
-      if (! antialias)
-        {
-          /* Ok, the user didn't want to have antialiasing, so just
-           * remove the results from lots of CPU-Power...
-           */
-          dest = maskPR.data;
+      art_svp_render_aa (sc->svp,
+                         sc->x0,
+                         off_y + maskPR.y,
+                         sc->x1,
+                         off_y + maskPR.y + maskPR.h,
+                         gimp_scan_convert_render_callback, sc);
 
-          for (j = 0; j < maskPR.h; j++)
-            {
-              d = dest;
-              for (i = 0; i < maskPR.w; i++)
-                {
-                  d[0] = (d[0] >= 127) ? 255 : 0;
-                  d += maskPR.bytes;
-                }
-              dest += maskPR.rowstride;
-            }
-        }
     }
 }
 
@@ -510,7 +507,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
    *     }
    * }
    */
-  
+
   if (sc->have_open)
     {
       gint i;
@@ -534,3 +531,69 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
 
   sc->svp = svp2;
 }
+
+
+/*
+ * private function to render libart SVPRenderAASteps into the pixel region
+ *
+ * A function pretty similiar to this could be used to implement a
+ * lookup table for the values (just change VALUE_TO_PIXEL).
+ *
+ * from the libart documentation:
+ *
+ * The value 0x8000 represents 0% coverage by the polygon, while
+ * 0xff8000 represents 100% coverage. This format is designed so that
+ * >> 16 results in a standard 0x00..0xff value range, with nice
+ * rounding.
+ */
+
+static void
+gimp_scan_convert_render_callback (gpointer            user_data,
+                                   gint                y,
+                                   gint                start_value,
+                                   ArtSVPRenderAAStep *steps,
+                                   gint                n_steps)
+{
+  gint  k, run_x0, run_x1;
+  gint  cur_value = start_value;
+  GimpScanConvert *sc = (GimpScanConvert *) user_data;
+
+#define VALUE_TO_PIXEL(x) (sc->antialias ? (x) >> 16 : ((x) >> 23 ? 255 : 0))
+
+  if (n_steps > 0)
+    {
+      run_x1 = steps[0].x;
+      if (run_x1 > sc->x0)
+        memset (sc->buf,
+                VALUE_TO_PIXEL (cur_value),
+                run_x1 - sc->x0);
+
+      for (k = 0; k < n_steps - 1; k++)
+        {
+          cur_value += steps[k].delta;
+          run_x0 = run_x1;
+          run_x1 = steps[k + 1].x;
+          if (run_x1 > run_x0)
+            memset (sc->buf + run_x0 - sc->x0,
+                    VALUE_TO_PIXEL (cur_value),
+                    run_x1 - run_x0);
+        }
+
+      cur_value += steps[k].delta;
+      if (sc->x1 > run_x1)
+        memset (sc->buf + run_x1 - sc->x0,
+                VALUE_TO_PIXEL (cur_value),
+                sc->x1 - run_x1);
+    }
+  else
+    {
+      memset (sc->buf,
+              VALUE_TO_PIXEL (cur_value),
+              sc->x1 - sc->x0);
+    }
+
+  sc->buf += sc->rowstride;
+
+#undef VALUE_TO_PIXEL
+}
+

@@ -1,3 +1,11 @@
+2004-09-16  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.c: Implemented an own rendering
+	callback for libart and use it instead of art_gray_svp_aa().
+	This now handles non-antialiased scan conversions itself. It
+	also basically shows the way to implement a LUT for the
+	scan conversion.
+
 2004-09-16  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/quit-dialog.c: removed code that isn't needed any
