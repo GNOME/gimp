@@ -3686,9 +3686,8 @@ msgid "Description:"
 msgstr ""
 
 #: plug-ins/common/gee.c:112
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr "<Image>/Suotimet/Värit/Kuvaus/Alien Map..."
+msgstr "<Image>/Suotimet/Lelut/Huihai-Limaa..."
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
@@ -3835,9 +3834,8 @@ msgid "Couldn't load one brush in the pipe, giving up."
 msgstr ""
 
 #: plug-ins/common/gih.c:849
-#, fuzzy
 msgid "Save as Brush Pipe"
-msgstr "Talletetaan BMP:nä"
+msgstr "Sivellinletkun tallennus"
 
 #: plug-ins/common/gih.c:879
 msgid "Spacing (Percent):"
@@ -6257,9 +6255,8 @@ msgid "RunLength Encoded"
 msgstr ""
 
 #: plug-ins/common/tga.c:425
-#, fuzzy, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr "%s: ei voi avata \"%s\""
+msgstr ""
 
 #: plug-ins/common/tga.c:435
 #, c-format
