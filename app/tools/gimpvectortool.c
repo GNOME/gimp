@@ -226,7 +226,6 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_BEZIER_SELECT_TOOL_CURSOR);
 
-  vector_tool->status_gdisp   = NULL;
   vector_tool->status_msg     = NULL;
 
   vector_tool->function       = VECTORS_CREATE_VECTOR;
@@ -1101,67 +1100,73 @@ static void
 gimp_vector_tool_status_update (GimpTool    *tool,
                                 GimpDisplay *gdisp)
 {
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-  gchar          *new_status  = NULL;
+  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDisplayShell *shell;
+  gchar            *new_status  = NULL;
 
-  switch (vector_tool->function)
-  {
-    case VECTORS_SELECT_VECTOR:
-      new_status = _("Click to pick Path to edit");
-      break;
-    case VECTORS_CREATE_VECTOR:
-      new_status = _("Click to create a new Path");
-      break;
-    case VECTORS_CREATE_STROKE:
-      new_status = _("Click to create a new component of the path");
-      break;
-    case VECTORS_ADD_ANCHOR:
-      new_status = _("Click to create a new anchor, "
-                      "use SHIFT to create a new component.");
-      break;
-    case VECTORS_MOVE_ANCHOR:
-      new_status = _("Click-Drag to move the anchor around");
-      break;
-    case VECTORS_MOVE_ANCHORSET:
-      new_status = _("Click-Drag to move the anchors around");
-      break;
-    case VECTORS_MOVE_HANDLE:
-      new_status = _("Click-Drag to move the handle around. "
-                      "SHIFT moves the opposite handle symmetrically.");
-      break;
-    case VECTORS_MOVE_CURVE:
-      new_status = _("Click-Drag to change the shape of the curve. "
-                      "SHIFT moves the opposite handles of the "
-                      "endpoints symmetrically.");
-      break;
-    case VECTORS_MOVE_STROKE:
-      new_status = _("Click-Drag to move the component around. "
-                      "SHIFT moves the complete path around.");
-      break;
-    case VECTORS_MOVE_VECTORS:
-      new_status = _("Click-Drag to move the component around. "
-                      "SHIFT moves the complete path around.");
-      break;
-    case VECTORS_INSERT_ANCHOR:
-      new_status = _("Click to insert an anchor on the path.");
-      break;
-    case VECTORS_DELETE_ANCHOR:
-      new_status = _("Click to delete this anchor.");
-      break;
-    case VECTORS_CONNECT_STROKES:
-      new_status = _("Click to connect this anchor "
-                      "with the selected endpoint.");
-      break;
-    case VECTORS_DELETE_SEGMENT:
-      new_status = _("Click to open up the path.");
-      break;
-    case VECTORS_CONVERT_EDGE:
-      new_status = _("Click to make this node angular.");
-      break;
-    case VECTORS_FINISHED:
-      new_status = " ";
-      break;
-  }
+  shell = tool->gdisp ? GIMP_DISPLAY_SHELL (tool->gdisp->shell) : NULL;
+
+  if (shell && shell->proximity)
+    {
+      switch (vector_tool->function)
+      {
+        case VECTORS_SELECT_VECTOR:
+          new_status = _("Click to pick Path to edit");
+          break;
+        case VECTORS_CREATE_VECTOR:
+          new_status = _("Click to create a new Path");
+          break;
+        case VECTORS_CREATE_STROKE:
+          new_status = _("Click to create a new component of the path");
+          break;
+        case VECTORS_ADD_ANCHOR:
+          new_status = _("Click to create a new anchor, "
+                          "use SHIFT to create a new component.");
+          break;
+        case VECTORS_MOVE_ANCHOR:
+          new_status = _("Click-Drag to move the anchor around");
+          break;
+        case VECTORS_MOVE_ANCHORSET:
+          new_status = _("Click-Drag to move the anchors around");
+          break;
+        case VECTORS_MOVE_HANDLE:
+          new_status = _("Click-Drag to move the handle around. "
+                          "SHIFT moves the opposite handle symmetrically.");
+          break;
+        case VECTORS_MOVE_CURVE:
+          new_status = _("Click-Drag to change the shape of the curve. "
+                          "SHIFT moves the opposite handles of the "
+                          "endpoints symmetrically.");
+          break;
+        case VECTORS_MOVE_STROKE:
+          new_status = _("Click-Drag to move the component around. "
+                          "SHIFT moves the complete path around.");
+          break;
+        case VECTORS_MOVE_VECTORS:
+          new_status = _("Click-Drag to move the component around. "
+                          "SHIFT moves the complete path around.");
+          break;
+        case VECTORS_INSERT_ANCHOR:
+          new_status = _("Click to insert an anchor on the path.");
+          break;
+        case VECTORS_DELETE_ANCHOR:
+          new_status = _("Click to delete this anchor.");
+          break;
+        case VECTORS_CONNECT_STROKES:
+          new_status = _("Click to connect this anchor "
+                          "with the selected endpoint.");
+          break;
+        case VECTORS_DELETE_SEGMENT:
+          new_status = _("Click to open up the path.");
+          break;
+        case VECTORS_CONVERT_EDGE:
+          new_status = _("Click to make this node angular.");
+          break;
+        case VECTORS_FINISHED:
+          new_status = " ";
+          break;
+      }
+    }
 
   gimp_vector_tool_status_set (tool, gdisp, new_status);
 }
@@ -1172,33 +1177,25 @@ gimp_vector_tool_status_set (GimpTool    *tool,
                              const gchar *message)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpDisplay    *orig_gdisp;
+  gboolean        msg_differs = TRUE;
 
-  if (vector_tool->status_gdisp != gdisp ||
-      (! vector_tool->status_msg && message) ||
-      strcmp (vector_tool->status_msg, message) != 0)
+  if (vector_tool->status_msg && message)
+    msg_differs = strcmp (vector_tool->status_msg, message);
+
+  if (tool->gdisp && msg_differs)
     {
-      orig_gdisp = tool->gdisp;
-
-      if (vector_tool->status_gdisp)
+      if (vector_tool->status_msg)
         {
-          tool->gdisp = vector_tool->status_gdisp;
           gimp_tool_pop_status (tool);
-          vector_tool->status_gdisp = NULL;
-          if (vector_tool->status_msg)
-            g_free (vector_tool->status_msg);
+          g_free (vector_tool->status_msg);
           vector_tool->status_msg = NULL;
         }
 
-      if (gdisp && message)
+      if (message)
         {
-          tool->gdisp = gdisp;
           gimp_tool_push_status (tool, message);
-          vector_tool->status_gdisp = gdisp;
           vector_tool->status_msg = g_strdup (message);
         }
-
-      tool->gdisp = orig_gdisp;
     }
 }
 
