@@ -1,3 +1,22 @@
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: make absolute paths out of relative ones
+	passed on the commandline so the GimpImagefiles can generate
+	previews.
+
+	* app/gui/Makefile.am
+	* app/gui/drawable-commands.[ch]: new files implementing menu
+	callbacks which work not just on layers.
+
+	* app/gui/layers-commands.[ch]: removed them here. Cleanup.
+
+	* app/gui/menus.c: changed accordingly.
+
+	* app/gui/brushes-commands.c
+	* app/gui/channels-commands.c
+	* app/gui/vectors-commands.c: cleanup. Added macros to get
+	rid of code duplication.
+
 2002-02-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/guillotine.c: code cleanup by Maurits Rijk 

@@ -27,6 +27,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
@@ -45,6 +46,28 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  local function prototypes  */
+
+static void   channels_opacity_update (GtkAdjustment   *adjustment,
+                                       gpointer         data);
+static void   channels_color_changed  (GimpColorButton *button,
+                                       gpointer         data);
+
+
+#define return_if_no_image(gimage) \
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
+  if (! GIMP_IS_IMAGE (gimage)) \
+    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! gimage) \
+    return
+
+#define return_if_no_channel(gimage,channel) \
+  return_if_no_image (gimage); \
+  channel = gimp_image_get_active_channel (gimage); \
+  if (! channel) \
+    return
+
+
 /*  public functions  */
 
 void
@@ -52,11 +75,7 @@ channels_new_channel_cmd_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   GimpImage *gimage;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
+  return_if_no_image (gimage);
 
   channels_new_channel_query (gimage, NULL);
 }
@@ -65,36 +84,24 @@ void
 channels_raise_channel_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if (gimp_image_get_active_channel (gimage))
-    {
-      gimp_image_raise_channel (gimage, gimp_image_get_active_channel (gimage));
-      gdisplays_flush ();
-    }
+  gimp_image_raise_channel (gimage, active_channel);
+  gdisplays_flush ();
 }
 
 void
 channels_lower_channel_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if (gimp_image_get_active_channel (gimage))
-    {
-      gimp_image_lower_channel (gimage, gimp_image_get_active_channel (gimage));
-      gdisplays_flush ();
-    }
+  gimp_image_lower_channel (gimage, active_channel);
+  gdisplays_flush ();
 }
 
 void
@@ -104,20 +111,13 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
   GimpImage   *gimage;
   GimpChannel *active_channel;
   GimpChannel *new_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      new_channel = gimp_channel_copy (active_channel,
-                                       G_TYPE_FROM_INSTANCE (active_channel),
-                                       TRUE);
-      gimp_image_add_channel (gimage, new_channel, -1);
-      gdisplays_flush ();
-    }
+  new_channel = gimp_channel_copy (active_channel,
+                                   G_TYPE_FROM_INSTANCE (active_channel),
+                                   TRUE);
+  gimp_image_add_channel (gimage, new_channel, -1);
+  gdisplays_flush ();
 }
 
 void
@@ -126,69 +126,55 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      gimp_image_remove_channel (gimage, active_channel);
-      gdisplays_flush ();
-    }
+  gimp_image_remove_channel (gimage, active_channel);
+  gdisplays_flush ();
 }
 
 static void
 channels_channel_to_sel (GtkWidget  *widget,
+                         gpointer    data,
                          ChannelOps  op)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      gimp_image_mask_select_channel (gimage,
-                                      NULL, FALSE,
-                                      active_channel,
-                                      op,
-                                      FALSE, 0, 0);
-
-      gdisplays_flush ();
-    }
+  gimp_image_mask_select_channel (gimage,
+                                  NULL, FALSE,
+                                  active_channel,
+                                  op,
+                                  FALSE, 0, 0);
+  gdisplays_flush ();
 }
 
 void
 channels_channel_to_sel_cmd_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  channels_channel_to_sel (widget, CHANNEL_OP_REPLACE);
+  channels_channel_to_sel (widget, data, CHANNEL_OP_REPLACE);
 }
 
 void
 channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 					  gpointer   data)
 {
-  channels_channel_to_sel (widget, CHANNEL_OP_ADD);
+  channels_channel_to_sel (widget, data, CHANNEL_OP_ADD);
 }
 
 void
 channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 					    gpointer   data)
 {
-  channels_channel_to_sel (widget, CHANNEL_OP_SUB);
+  channels_channel_to_sel (widget, data, CHANNEL_OP_SUB);
 }
 
 void
 channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 						  gpointer   data)
 {
-  channels_channel_to_sel (widget, CHANNEL_OP_INTERSECT);
+  channels_channel_to_sel (widget, data, CHANNEL_OP_INTERSECT);
 }
 
 void
@@ -197,40 +183,11 @@ channels_edit_channel_attributes_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
+  return_if_no_channel (gimage, active_channel);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      channels_edit_channel_query (active_channel);
-    }
+  channels_edit_channel_query (active_channel);
 }
 
-
-static void
-channels_opacity_update (GtkAdjustment *adjustment,
-			 gpointer       data)
-{
-  GimpRGB  color;
-
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
-  gimp_rgb_set_alpha (&color, adjustment->value / 100.0);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (data), &color);
-}
-
-static void
-channels_color_changed (GimpColorButton *button,
-			gpointer         data)
-{
-  GtkAdjustment *adj = GTK_ADJUSTMENT (data);
-  GimpRGB        color;
-
-  gimp_color_button_get_color (button, &color);
-  gtk_adjustment_set_value (adj, color.a * 100.0);
-}
 
 /**********************************/
 /*  The new channel query dialog  */
@@ -631,3 +588,29 @@ channels_menu_update (GtkItemFactory *factory,
 
 #undef SET_SENSITIVE
 }
+
+
+/*  private functions  */
+
+static void
+channels_opacity_update (GtkAdjustment *adjustment,
+			 gpointer       data)
+{
+  GimpRGB  color;
+
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
+  gimp_rgb_set_alpha (&color, adjustment->value / 100.0);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (data), &color);
+}
+
+static void
+channels_color_changed (GimpColorButton *button,
+			gpointer         data)
+{
+  GtkAdjustment *adj = GTK_ADJUSTMENT (data);
+  GimpRGB        color;
+
+  gimp_color_button_get_color (button, &color);
+  gtk_adjustment_set_value (adj, color.a * 100.0);
+}
+

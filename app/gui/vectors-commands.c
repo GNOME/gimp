@@ -54,6 +54,20 @@
 #include "libgimp/gimpintl.h"
 
 
+#define return_if_no_image(gimage) \
+  gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
+  if (! GIMP_IS_IMAGE (gimage)) \
+    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! gimage) \
+    return
+
+#define return_if_no_vectors(gimage,vectors) \
+  return_if_no_image (gimage); \
+  vectors = gimp_image_get_active_vectors (gimage); \
+  if (! vectors) \
+    return
+
+
 /*  public functions  */
 
 void
@@ -61,11 +75,7 @@ vectors_new_vectors_cmd_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpImage *gimage;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
+  return_if_no_image (gimage);
 
   vectors_new_vectors_query (gimage, NULL);
 }
@@ -74,36 +84,24 @@ void
 vectors_raise_vectors_cmd_callback (GtkWidget *widget,
                                     gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if (gimp_image_get_active_vectors (gimage))
-    {
-      gimp_image_raise_vectors (gimage, gimp_image_get_active_vectors (gimage));
-      gdisplays_flush ();
-    }
+  gimp_image_raise_vectors (gimage, active_vectors);
+  gdisplays_flush ();
 }
 
 void
 vectors_lower_vectors_cmd_callback (GtkWidget *widget,
                                     gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if (gimp_image_get_active_vectors (gimage))
-    {
-      gimp_image_lower_vectors (gimage, gimp_image_get_active_vectors (gimage));
-      gdisplays_flush ();
-    }
+  gimp_image_lower_vectors (gimage, active_vectors);
+  gdisplays_flush ();
 }
 
 void
@@ -113,22 +111,16 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
   GimpImage   *gimage;
   GimpVectors *active_vectors;
   GimpVectors *new_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      new_vectors = NULL; /*gimp_vectors_copy (active_vectors,
-                            G_TYPE_FROM_INSTANCE (active_vectors),
-                            TRUE);*/
-      gimp_image_add_vectors (gimage, new_vectors, -1);
-      gdisplays_flush ();
-    }
+  new_vectors = NULL;
+#if 0
+  new_vectors = gimp_vectors_copy (active_vectors,
+                                   G_TYPE_FROM_INSTANCE (active_vectors),
+                                   TRUE);
+  gimp_image_add_vectors (gimage, new_vectors, -1);
+  gdisplays_flush ();
+#endif
 }
 
 void
@@ -137,92 +129,65 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      gimp_image_remove_vectors (gimage, active_vectors);
-      gdisplays_flush ();
-    }
+  gimp_image_remove_vectors (gimage, active_vectors);
+  gdisplays_flush ();
 }
 
 static void
 vectors_vectors_to_sel (GtkWidget  *widget,
+                        gpointer    data,
                         ChannelOps  op)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      gimp_image_mask_select_vectors (gimage,
-                                      active_vectors,
-                                      op,
-                                      TRUE,
-                                      FALSE, 0, 0);
-
-      gdisplays_flush ();
-    }
+  gimp_image_mask_select_vectors (gimage,
+                                  active_vectors,
+                                  op,
+                                  TRUE,
+                                  FALSE, 0, 0);
+  gdisplays_flush ();
 }
 
 void
 vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
-  vectors_vectors_to_sel (widget, CHANNEL_OP_REPLACE);
+  vectors_vectors_to_sel (widget, data, CHANNEL_OP_REPLACE);
 }
 
 void
 vectors_add_vectors_to_sel_cmd_callback (GtkWidget *widget,
                                          gpointer   data)
 {
-  vectors_vectors_to_sel (widget, CHANNEL_OP_ADD);
+  vectors_vectors_to_sel (widget, data, CHANNEL_OP_ADD);
 }
 
 void
 vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
                                            gpointer   data)
 {
-  vectors_vectors_to_sel (widget, CHANNEL_OP_SUB);
+  vectors_vectors_to_sel (widget, data, CHANNEL_OP_SUB);
 }
 
 void
 vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget *widget,
                                                  gpointer   data)
 {
-  vectors_vectors_to_sel (widget, CHANNEL_OP_INTERSECT);
+  vectors_vectors_to_sel (widget, data, CHANNEL_OP_INTERSECT);
 }
 
 void
 vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpImage *gimage;
+  return_if_no_image (gimage);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-    }
+  /* TODO */
 }
 
 void
@@ -231,18 +196,9 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      vectors_stroke_vectors (active_vectors);
-    }
+  vectors_stroke_vectors (active_vectors);
 }
 
 void
@@ -251,55 +207,29 @@ vectors_copy_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-    }
+  /* TODO */
 }
 
 void
 vectors_paste_vectors_cmd_callback (GtkWidget *widget,
                                     gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpImage *gimage;
+  return_if_no_image (gimage);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-    }
+  /* TODO */
 }
 
 void
 vectors_import_vectors_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpImage *gimage;
+  return_if_no_image (gimage);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-    }
+  /* TODO */
 }
 
 void
@@ -308,17 +238,9 @@ vectors_export_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-    }
+  /* TODO */
 }
 
 void
@@ -327,18 +249,9 @@ vectors_vectors_tool_cmd_callback (GtkWidget   *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      vectors_vectors_tool (active_vectors);
-    }
+  vectors_vectors_tool (active_vectors);
 }
 
 void
@@ -347,18 +260,9 @@ vectors_edit_vectors_attributes_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors);
 
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      vectors_edit_vectors_query (active_vectors);
-    }
+  vectors_edit_vectors_query (active_vectors);
 }
 
 void

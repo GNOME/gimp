@@ -40,6 +40,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	dialogs-constructors.h		\
 	documents-commands.c		\
 	documents-commands.h		\
+	drawable-commands.c		\
+	drawable-commands.h		\
 	edit-commands.c			\
 	edit-commands.h			\
 	error-console-dialog.c		\

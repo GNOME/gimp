@@ -174,15 +174,39 @@ app_init (gint    gimp_argc,
    */
   if (gimp_argc > 0)
     {
-      gint i;
+      gchar *current_dir;
+      gint   i;
+
+      current_dir = g_get_current_dir ();
 
       for (i = 0; i < gimp_argc; i++)
         {
           if (gimp_argv[i])
             {
-              file_open_with_display (the_gimp, gimp_argv[i]);
+              gchar *absolute_filename;
+
+              if (g_file_test (gimp_argv[i], G_FILE_TEST_IS_REGULAR) &&
+                  ! g_path_is_absolute (gimp_argv[i]))
+                {
+                  absolute_filename = g_build_filename (current_dir,
+                                                        gimp_argv[i],
+                                                        NULL);
+
+                  g_print ("completing relative path: \"%s\" -> \"%s\"\n",
+                           gimp_argv[i], absolute_filename);
+                }
+              else
+                {
+                  absolute_filename = g_strdup (gimp_argv[i]);
+                }
+
+              file_open_with_display (the_gimp, absolute_filename);
+
+              g_free (absolute_filename);
             }
         }
+
+      g_free (current_dir);
     }
 
   batch_init (the_gimp, batch_cmds);

@@ -34,6 +34,8 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  public functions  */
+
 void
 brushes_menu_update (GtkItemFactory *factory,
                      gpointer        data)

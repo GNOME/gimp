@@ -44,15 +44,6 @@ void   layers_merge_down_cmd_callback        (GtkWidget *widet,
 void   layers_delete_cmd_callback            (GtkWidget *widet,
 					      gpointer   data);
 
-void   layers_desaturate_cmd_callback        (GtkWidget *widget,
-                                              gpointer   data);
-void   layers_invert_cmd_callback            (GtkWidget *widget,
-                                              gpointer   data);
-void   layers_equalize_cmd_callback          (GtkWidget *widget,
-                                              gpointer   data);
-
-void   layers_offset_cmd_callback            (GtkWidget *widget,
-                                              gpointer   data);
 void   layers_scale_cmd_callback             (GtkWidget *widet,
 					      gpointer   data);
 void   layers_resize_cmd_callback            (GtkWidget *widet,
@@ -66,10 +57,10 @@ void   layers_apply_layer_mask_cmd_callback  (GtkWidget *widet,
 					      gpointer   data);
 void   layers_delete_layer_mask_cmd_callback (GtkWidget *widet,
 					      gpointer   data);
+void   layers_mask_select_cmd_callback       (GtkWidget *widet,
+					      gpointer   data);
 
 void   layers_alpha_select_cmd_callback      (GtkWidget *widet,
-					      gpointer   data);
-void   layers_mask_select_cmd_callback       (GtkWidget *widet,
 					      gpointer   data);
 void   layers_add_alpha_channel_cmd_callback (GtkWidget *widet,
 					      gpointer   data);

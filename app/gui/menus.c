@@ -54,6 +54,7 @@
 #include "data-commands.h"
 #include "dialogs-commands.h"
 #include "documents-commands.h"
+#include "drawable-commands.h"
 #include "edit-commands.h"
 #include "file-commands.h"
 #include "gradient-editor-commands.h"
@@ -755,7 +756,7 @@ static GimpItemFactoryEntry image_entries[] =
   SEPARATOR ("/Layer/Transform/---"),
 
   { { N_("/Layer/Transform/Offset..."), "<control><shift>O",
-      layers_offset_cmd_callback, 0 },
+      drawable_offset_cmd_callback, 0 },
     NULL,
     "layers/dialogs/offset.html", NULL },
 
@@ -764,11 +765,11 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/Layer/Colors  */
 
   { { N_("/Layer/Colors/Desaturate"), NULL,
-      layers_desaturate_cmd_callback, 0 },
+      drawable_desaturate_cmd_callback, 0 },
     NULL,
     "layers/colors/desaturate.html", NULL },
   { { N_("/Layer/Colors/Invert"), NULL,
-      layers_invert_cmd_callback, 0 },
+      drawable_invert_cmd_callback, 0 },
     NULL,
     "layers/colors/invert.html", NULL },
 
@@ -777,7 +778,7 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/Layer/Colors/Auto  */
 
   { { N_("/Layer/Colors/Auto/Equalize"), NULL,
-      layers_equalize_cmd_callback, 0 },
+      drawable_equalize_cmd_callback, 0 },
     NULL,
     "layers/colors/auto/equalize.html", NULL },
 

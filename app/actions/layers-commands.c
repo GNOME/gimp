@@ -30,8 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable-desaturate.h"
-#include "core/gimpdrawable-equalize.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
@@ -48,7 +46,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "layers-commands.h"
-#include "offset-dialog.h"
 #include "resize-dialog.h"
 
 #include "undo.h"
@@ -67,9 +64,15 @@ static void   layers_resize_layer_query   (GimpImage *gimage,
 
 #define return_if_no_image(gimage) \
   gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
-  if (GIMP_IS_IMAGE (gimage)) \
+  if (! GIMP_IS_IMAGE (gimage)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
   if (! gimage) \
+    return
+
+#define return_if_no_layer(gimage,layer) \
+  return_if_no_image (gimage); \
+  layer = gimp_image_get_active_layer (gimage); \
+  if (! layer) \
     return
 
 
@@ -128,9 +131,10 @@ layers_raise_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage,active_layer);
 
-  gimp_image_raise_layer (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_raise_layer (gimage, active_layer);
   gdisplays_flush ();
 }
 
@@ -139,9 +143,10 @@ layers_lower_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage,active_layer);
 
-  gimp_image_lower_layer (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_lower_layer (gimage, active_layer);
   gdisplays_flush ();
 }
 
@@ -150,9 +155,10 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage,active_layer);
 
-  gimp_image_raise_layer_to_top (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_raise_layer_to_top (gimage, active_layer);
   gdisplays_flush ();
 }
 
@@ -161,10 +167,10 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  gimp_image_lower_layer_to_bottom (gimage,
-				    gimp_image_get_active_layer (gimage));
+  gimp_image_lower_layer_to_bottom (gimage, active_layer);
   gdisplays_flush ();
 }
 
@@ -185,9 +191,8 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   GimpLayer *active_layer;
   GimpLayer *new_layer;
-  return_if_no_image (gimage);
+  return_if_no_layer (gimage, active_layer);
 
-  active_layer = gimp_image_get_active_layer (gimage);
   new_layer = gimp_layer_copy (active_layer,
                                G_TYPE_FROM_INSTANCE (active_layer),
                                TRUE);
@@ -201,10 +206,14 @@ layers_anchor_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  floating_sel_anchor (gimp_image_get_active_layer (gimage));
-  gdisplays_flush ();
+  if (gimp_layer_is_floating_sel (active_layer))
+    {
+      floating_sel_anchor (active_layer);
+      gdisplays_flush ();
+    }
 }
 
 void
@@ -212,10 +221,10 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  gimp_image_merge_down (gimage, gimp_image_get_active_layer (gimage),
-			 EXPAND_AS_NECESSARY);
+  gimp_image_merge_down (gimage, active_layer, EXPAND_AS_NECESSARY);
   gdisplays_flush ();
 }
 
@@ -224,105 +233,15 @@ layers_delete_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layer = gimp_image_get_active_layer (gimage);
-
-  if (! layer)
-    return;
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_remove (layer);
+  if (gimp_layer_is_floating_sel (active_layer))
+    floating_sel_remove (active_layer);
   else
-    gimp_image_remove_layer (gimage, layer);
+    gimp_image_remove_layer (gimage, active_layer);
 
   gdisplays_flush ();
-}
-
-void
-layers_desaturate_cmd_callback (GtkWidget *widget,
-                                gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  return_if_no_image (gimage);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (! gimp_drawable_is_rgb (drawable))
-    {
-      g_message (_("Desaturate operates only on RGB color drawables."));
-      return;
-    }
-
-  gimp_drawable_desaturate (drawable);
-
-  gdisplays_flush ();
-}
-
-void
-layers_invert_cmd_callback (GtkWidget *widget,
-                            gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  Argument     *return_vals;
-  gint          nreturn_vals;
-  return_if_no_image (gimage);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Invert does not operate on indexed drawables."));
-      return;
-    }
-
-  return_vals =
-    procedural_db_run_proc (gimage->gimp,
-			    "gimp_invert",
-			    &nreturn_vals,
-			    GIMP_PDB_DRAWABLE, gimp_item_get_ID (GIMP_ITEM (drawable)),
-			    GIMP_PDB_END);
-
-  if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-    g_message (_("Invert operation failed."));
-
-  procedural_db_destroy_args (return_vals, nreturn_vals);
-
-  gdisplays_flush ();
-}
-
-void
-layers_equalize_cmd_callback (GtkWidget *widget,
-                              gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  return_if_no_image (gimage);
-
-  drawable = gimp_image_active_drawable (gimage);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_message (_("Equalize does not operate on indexed drawables."));
-      return;
-    }
-
-  gimp_drawable_equalize (drawable, TRUE);
-
-  gdisplays_flush ();
-}
-
-void
-layers_offset_cmd_callback (GtkWidget *widget,
-                            gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage);
-
-  offset_dialog_create (gimp_image_active_drawable (gimage));
 }
 
 void
@@ -330,9 +249,10 @@ layers_scale_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layers_scale_layer_query (gimage, gimp_image_get_active_layer (gimage));
+  layers_scale_layer_query (gimage, active_layer);
 }
 
 void
@@ -340,9 +260,10 @@ layers_resize_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layers_resize_layer_query (gimage, gimp_image_get_active_layer (gimage));
+  layers_resize_layer_query (gimage, active_layer);
 }
 
 void
@@ -350,10 +271,10 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
   
-  gimp_layer_resize_to_image (gimp_image_get_active_layer (gimage));
-
+  gimp_layer_resize_to_image (active_layer);
   gdisplays_flush ();
 }
 
@@ -362,9 +283,10 @@ layers_add_layer_mask_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layers_add_mask_query (gimp_image_get_active_layer (gimage));
+  layers_add_mask_query (active_layer);
 }
 
 void
@@ -372,17 +294,16 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
 				      gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layer = gimp_image_get_active_layer (gimage);
-
-  /*  Make sure there is a layer mask to apply  */
-  if (layer && gimp_layer_get_mask (layer))
+  if (gimp_layer_get_mask (active_layer))
     {
-      gboolean flush = ! layer->mask->apply_mask || layer->mask->show_mask;
+      gboolean flush;
 
-      gimp_layer_apply_mask (layer, APPLY, TRUE);
+      flush = ! active_layer->mask->apply_mask || active_layer->mask->show_mask;
+
+      gimp_layer_apply_mask (active_layer, APPLY, TRUE);
 
       if (flush)
 	gdisplays_flush ();
@@ -394,20 +315,34 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
 				       gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layer = gimp_image_get_active_layer (gimage);
-
-  /*  Make sure there is a layer mask to apply  */
-  if (layer && gimp_layer_get_mask (layer))
+  if (gimp_layer_get_mask (active_layer))
     {
-      gboolean flush = layer->mask->apply_mask || layer->mask->show_mask;
+      gboolean flush;
 
-      gimp_layer_apply_mask (layer, DISCARD, TRUE);
+      flush = active_layer->mask->apply_mask || active_layer->mask->show_mask;
+
+      gimp_layer_apply_mask (active_layer, DISCARD, TRUE);
 
       if (flush)
 	gdisplays_flush ();
+    }
+}
+
+void
+layers_mask_select_cmd_callback (GtkWidget *widget,
+				 gpointer   data)
+{
+  GimpImage *gimage;
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
+
+  if (gimp_layer_get_mask (active_layer))
+    {
+      gimp_image_mask_layer_mask (gimage, active_layer);
+      gdisplays_flush ();
     }
 }
 
@@ -416,20 +351,10 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  gimp_image_mask_layer_alpha (gimage, gimp_image_get_active_layer (gimage));
-  gdisplays_flush ();
-}
-
-void
-layers_mask_select_cmd_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage);
-
-  gimp_image_mask_layer_mask (gimage, gimp_image_get_active_layer (gimage));
+  gimp_image_mask_layer_alpha (gimage, active_layer);
   gdisplays_flush ();
 }
 
@@ -438,16 +363,14 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
 				       gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layer = gimp_image_get_active_layer (gimage);
-
-  if (! layer)
-    return;
-
-  gimp_layer_add_alpha (layer);
-  gdisplays_flush ();
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
+    {
+      gimp_layer_add_alpha (active_layer);
+      gdisplays_flush ();
+    }
 }
 
 void
@@ -455,15 +378,10 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_image (gimage);
+  GimpLayer *active_layer;
+  return_if_no_layer (gimage, active_layer);
 
-  layer = gimp_image_get_active_layer (gimage);
-
-  if (! layer)
-    return;
-
-  layers_edit_layer_query (layer);
+  layers_edit_layer_query (active_layer);
 }
 
 
