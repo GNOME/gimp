@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -371,9 +372,10 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
   for (i = 0; i < n_components; i++)
     {
       GimpViewRenderer *renderer;
-      gboolean          visible;
-      GEnumValue       *enum_value;
       GtkTreeIter       iter;
+      GEnumValue       *enum_value;
+      const gchar      *desc;
+      gboolean          visible;
 
       visible = gimp_image_get_component_visible (gimage, components[i]);
 
@@ -389,6 +391,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
                         editor);
 
       enum_value = g_enum_get_value (enum_class, components[i]);
+      desc = gimp_enum_value_get_desc (enum_class, enum_value);
 
       gtk_list_store_append (GTK_LIST_STORE (editor->model), &iter);
 
@@ -396,7 +399,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
                           COLUMN_CHANNEL,  components[i],
                           COLUMN_VISIBLE,  visible,
                           COLUMN_RENDERER, renderer,
-                          COLUMN_NAME,     gettext (enum_value->value_name),
+                          COLUMN_NAME,     desc,
                           -1);
 
       g_object_unref (renderer);

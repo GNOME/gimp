@@ -1,3 +1,12 @@
+2004-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/channels-commands.c
+	* app/core/gimpchannel-select.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpundo.c
+	* app/widgets/gimpcomponenteditor.c: use the new enum utility
+	functions from libgimpbase instead of accessing enum_value->value_name.
+
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/quit-dialog.c (quit_dialog_container_changed): when

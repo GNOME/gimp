@@ -719,7 +719,7 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
 {
   GimpThumbnail *thumbnail = imagefile->thumbnail;
   GdkPixbuf     *pixbuf;
-  GEnumClass    *enum_class;
+  GimpEnumDesc  *enum_desc;
   GimpImageType  type;
   const gchar   *type_str;
   gint           num_layers;
@@ -761,15 +761,16 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (gimp_image_has_alpha (gimage))
     type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 
-  enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
-  type_str = g_enum_get_value (enum_class, type)->value_name;
+
+  enum_desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE),
+                                  type);
 
   num_layers = gimp_container_num_children (gimage->layers);
 
   g_object_set (thumbnail,
                 "image-width",      gimage->width,
                 "image-height",     gimage->height,
-                "image-type",       type_str,
+                "image-type",       enum_desc->value_desc,
                 "image-num-layers", num_layers,
                 NULL);
 

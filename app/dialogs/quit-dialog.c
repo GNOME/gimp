@@ -92,13 +92,13 @@ quit_dialog_new (Gimp *gimp)
   g_object_set_data_full (G_OBJECT (dialog), "dirty-images",
                           images, (GDestroyNotify) g_object_unref);
 
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog), "", GTK_RESPONSE_OK);
-
   g_signal_connect (dialog, "response",
                     G_CALLBACK (quit_dialog_response),
                     gimp);
 
   box = GIMP_MESSAGE_DIALOG (dialog)->box;
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog), "", GTK_RESPONSE_OK);
 
   g_object_set_data (G_OBJECT (box), "ok-button", button);
 

@@ -20,6 +20,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -383,8 +384,7 @@ gimp_channel_select_component (GimpChannel     *channel,
   GimpItem    *item;
   GimpChannel *add_on;
   GimpRGB      color;
-  GEnumClass  *enum_class;
-  GEnumValue  *enum_value;
+  const gchar *desc;
   gchar       *undo_desc;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -402,12 +402,10 @@ gimp_channel_select_component (GimpChannel     *channel,
                           feather_radius_y,
                           FALSE /* no undo */);
 
-  enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
-  enum_value = g_enum_get_value (enum_class, component);
-  g_type_class_unref (enum_class);
+  gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                       NULL, NULL, &desc, NULL);
 
-  undo_desc = g_strdup_printf (_("%s Channel to Selection"),
-                               gettext (enum_value->value_name));
+  undo_desc = g_strdup_printf (_("%s Channel to Selection"), desc);
 
   gimp_channel_select_channel (channel, undo_desc, add_on,
                                0, 0, op,

@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/temp-buf.h"
@@ -547,16 +549,10 @@ gimp_undo_refresh_preview (GimpUndo *undo)
 const gchar *
 gimp_undo_type_to_name (GimpUndoType type)
 {
-  static GEnumClass *enum_class = NULL;
-  GEnumValue        *value;
+  const gchar *desc;
 
-  if (! enum_class)
-    enum_class = g_type_class_ref (GIMP_TYPE_UNDO_TYPE);
-
-  value = g_enum_get_value (enum_class, type);
-
-  if (value && value->value_name)
-    return gettext (value->value_name);
+  if (gimp_enum_get_value (GIMP_TYPE_UNDO_TYPE, type, NULL, NULL, &desc, NULL))
+    return desc;
   else
     return "";
 }

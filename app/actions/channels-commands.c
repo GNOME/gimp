@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -231,8 +232,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
     {
       GimpRGB          color;
       GimpChannelType  component;
-      GEnumClass      *enum_class;
-      GEnumValue      *enum_value;
+      const gchar     *desc;
       gchar           *name;
       return_if_no_image (gimage, data);
 
@@ -240,12 +240,10 @@ channels_duplicate_cmd_callback (GtkAction *action,
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
-      enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
-      enum_value = g_enum_get_value (enum_class, component);
-      g_type_class_unref (enum_class);
+      gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                           NULL, NULL, &desc, NULL);
 
-      name = g_strdup_printf (_("%s Channel Copy"),
-                              gettext (enum_value->value_name));
+      name = g_strdup_printf (_("%s Channel Copy"), desc);
 
       new_channel = gimp_channel_new_from_component (gimage, component,
                                                      name, &color);
