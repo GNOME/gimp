@@ -1,3 +1,15 @@
+2004-04-05  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: Use
+	gimp-image-get-active-layer/channel instead of the passed
+	drawable for later restoring the initially active layer/channel.
+	Addresses bug #138662.
+
+	* plug-ins/script-fu/scripts/drop-shadow.scm: Add a call to
+	gimp-image-set-active-layer in order for it to fail early instead
+	of failing with the undo group open in case the drawable is not
+	suitable for applying the effect.
+
 2004-04-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_real_mode_changed): update the

@@ -54,6 +54,8 @@
 	 (active-selection 0)
 	 (shadow-layer 0))
 
+  (gimp-image-set-active-layer image drawable)
+
   (gimp-image-undo-group-start image)
   
   (gimp-layer-add-alpha drawable)

@@ -27,7 +27,11 @@
   (let* ((layers (gimp-image-get-layers image))
 	 (num-layers (car layers))
 	 (num-visi-layers 0)
+	 (curlayer (car (gimp-image-get-active-layer image)))
 	 (layer-array (cadr layers)))
+  
+  (if (= curlayer -1)
+      (set! curlayer (car (gimp-image-get-active-channel image))))
   
   (gimp-image-undo-group-start image)
 	
@@ -66,7 +70,9 @@
 	 (gimp-drawable-set-visible layer (aref visi-array layer-count))
 	 (set! layer-count (+ layer-count 1)))
   
-  (gimp-image-set-active-layer image drawable)
+  (if (= (car (gimp-drawable-is-layer curlayer)) 1)
+      (gimp-image-set-active-layer image curlayer)
+      (gimp-image-set-active-channel image curlayer))
 
   (gimp-image-undo-group-end image)
   (gimp-displays-flush)))
