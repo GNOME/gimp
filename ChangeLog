@@ -1,3 +1,8 @@
+2002-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c: "%lld" is not a portable format string,
+	cast to gint64 and use G_GINT64_FORMAT instead.
+
 2002-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.c: use "%lld" when printing or parsing

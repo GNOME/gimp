@@ -439,7 +439,7 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
 
   desc  = g_strdup_printf ("Thumbnail failure for %s", uri);
   t_str = g_strdup_printf ("%ld",  image_mtime);
-  s_str = g_strdup_printf ("%lld", image_size);
+  s_str = g_strdup_printf ("%" G_GINT64_FORMAT, (gint64) image_size);
 
   if (! gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
                          TAG_DESCRIPTION,        desc,
@@ -782,7 +782,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   gint                height;
   gint                bytes;
   time_t              thumb_image_mtime;
-  off_t               thumb_image_size;
+  gint64              thumb_image_size;
   guchar             *src;
   guchar             *dest;
   gint                y;
@@ -828,11 +828,11 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
     goto cleanup;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_SIZE);
-  if (!option || sscanf (option, "%lld", &thumb_image_size) != 1)
+  if (!option || sscanf (option, "%" G_GINT64_FORMAT, &thumb_image_size) != 1)
     goto cleanup;
 
   if (thumb_image_mtime == imagefile->image_mtime &&
-      thumb_image_size  == imagefile->image_size)
+      thumb_image_size  == (gint64) imagefile->image_size)
     {
       if (thumb_size == THUMB_SIZE_FAIL)
         imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_FAILED;
@@ -943,7 +943,7 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     t_str = g_strdup_printf ("%ld",  image_mtime);
     w_str = g_strdup_printf ("%d",   gimage->width);
     h_str = g_strdup_printf ("%d",   gimage->height);
-    s_str = g_strdup_printf ("%lld", image_size);
+    s_str = g_strdup_printf ("%" G_GINT64_FORMAT, (gint64) image_size);
     l_str = g_strdup_printf ("%d",   gimage->layers->num_children);
 
     success =  gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
