@@ -1,3 +1,31 @@
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo.[ch]: renamed undo_push_layer_rename() to
+	undo_push_item_rename(), so channel/vectors renaming is undoable.
+	Use "gsize" for all undo size variables. Cleanup.
+
+	* app/undo_types.h: s/LAYER_RENAME_UNDO/ITEM_RENAME_UNDO/.
+
+	* app/core/core-types.h: added LAYER_PROPERTIES_UNDO_GROUP.
+
+	* app/core/gimpimage.c: s/Vectors/Path/ in all user-visible strings.
+
+	* app/core/gimpitem.[ch]: cleanup.
+
+	* app/gui/menus.c: s/"New Path"/"New Path..."/, pass
+	"vectors_menu_update" to gimp_item_factory_new().
+
+	* app/gui/layers-commands.c: renaming the floating layer
+	transforms it into an ordinary layer. Push an undo group around
+	around both the "fs_to_layer" and the renaming.
+
+	* app/gui/channels-commands.c
+	* app/gui/vectors-commands.c: made renaming undoable, cleanup.
+
+	* app/widgets/gimpitemlistview.c: added an EEKY hack so "Delete"
+	is not broken any more for floating selections. Need a better
+	solution...
+
 2002-02-25  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb: changed dot to underscore in

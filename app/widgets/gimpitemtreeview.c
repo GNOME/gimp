@@ -682,7 +682,12 @@ gimp_item_list_view_delete_clicked (GtkWidget        *widget,
 
   viewable = view->get_item_func (view->gimage);
 
-  view->remove_item_func (view->gimage, viewable);
+  /* EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK */
+  if (GIMP_IS_LAYER (viewable) &&
+      gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
+    floating_sel_remove (GIMP_LAYER (viewable));
+  else
+    view->remove_item_func (view->gimage, viewable);
 
   gdisplays_flush ();
 }

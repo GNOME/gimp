@@ -458,7 +458,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name entry hbox, label and entry  */
-  label = gtk_label_new (_("Vectors name:"));
+  label = gtk_label_new (_("Path name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -469,7 +469,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
 			     1, 2, 0, 1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
-		      (vectors_name ? vectors_name : _("New Vectors")));
+		      (vectors_name ? vectors_name : _("New Path")));
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (table);
@@ -505,9 +505,16 @@ edit_vectors_query_ok_callback (GtkWidget *widget,
 
   if (options->gimage)
     {
-      /*  Set the new vectors name  */
-      gimp_object_set_name (GIMP_OBJECT (vectors),
-			    gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      const gchar *new_name;
+
+      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
+        {
+          undo_push_item_rename (options->gimage, GIMP_ITEM (vectors));
+
+          gimp_object_set_name (GIMP_OBJECT (vectors), new_name);
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -569,7 +576,7 @@ vectors_edit_vectors_query (GimpVectors *vectors)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name entry  */
-  label = gtk_label_new (_("Vectors name:"));
+  label = gtk_label_new (_("Path name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -591,11 +598,11 @@ vectors_edit_vectors_query (GimpVectors *vectors)
 
 void
 vectors_menu_update (GtkItemFactory *factory,
-                      gpointer        data)
+                     gpointer        data)
 {
   GimpImage   *gimage;
   GimpVectors *vectors;
-  gboolean     fs;
+  gboolean     mask_empty;
   GList       *list;
   GList       *next = NULL;
   GList       *prev = NULL;
@@ -604,7 +611,7 @@ vectors_menu_update (GtkItemFactory *factory,
 
   vectors = gimp_image_get_active_vectors (gimage);
 
-  fs = (gimp_image_floating_sel (gimage) != NULL);
+  mask_empty = gimp_image_mask_is_empty (gimage);
 
   for (list = GIMP_LIST (gimage->vectors)->list;
        list;
@@ -621,16 +628,18 @@ vectors_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Vectors...",             !fs);
-  SET_SENSITIVE ("/Raise Vectors",              !fs && vectors && prev);
-  SET_SENSITIVE ("/Lower Vectors",              !fs && vectors && next);
-  SET_SENSITIVE ("/Duplicate Vectors",          !fs && vectors);
-  SET_SENSITIVE ("/Vectors to Selection",       !fs && vectors);
-  SET_SENSITIVE ("/Add to Selection",           !fs && vectors);
-  SET_SENSITIVE ("/Subtract from Selection",    !fs && vectors);
-  SET_SENSITIVE ("/Intersect with Selection",   !fs && vectors);
-  SET_SENSITIVE ("/Delete Vectors",             !fs && vectors);
-  SET_SENSITIVE ("/Edit Vectors Attributes...", !fs && vectors);
+  SET_SENSITIVE ("/New Path...",              TRUE);
+  SET_SENSITIVE ("/Raise Path",               vectors && prev);
+  SET_SENSITIVE ("/Lower Path",               vectors && next);
+  SET_SENSITIVE ("/Duplicate Path",           vectors);
+  SET_SENSITIVE ("/Path to Selection",        vectors);
+  SET_SENSITIVE ("/Add to Selection",         vectors);
+  SET_SENSITIVE ("/Subtract from Selection",  vectors);
+  SET_SENSITIVE ("/Intersect with Selection", vectors);
+  SET_SENSITIVE ("/Selection to Path",        ! mask_empty);
+  SET_SENSITIVE ("/Stroke Path",              vectors);
+  SET_SENSITIVE ("/Delete Path",              vectors);
+  SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
 
-#undef SET_OPS_SENSITIVE
+#undef SET_SENSITIVE
 }

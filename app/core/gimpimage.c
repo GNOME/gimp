@@ -3169,7 +3169,7 @@ gimp_image_raise_vectors (GimpImage   *gimage,
 					  GIMP_OBJECT (vectors));
   if (index == 0)
     {
-      g_message (_("Vectors cannot be raised higher."));
+      g_message (_("Path cannot be raised higher."));
       return FALSE;
     }
 
@@ -3189,7 +3189,7 @@ gimp_image_lower_vectors (GimpImage   *gimage,
 					  GIMP_OBJECT (vectors));
   if (index == gimp_container_num_children (gimage->vectors) - 1)
     {
-      g_message (_("Vectors cannot be lowered more."));
+      g_message (_("Path cannot be lowered more."));
       return FALSE;
     }
 

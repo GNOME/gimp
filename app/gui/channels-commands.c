@@ -492,16 +492,23 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 {
   EditChannelOptions *options;
   GimpChannel        *channel;
-  GimpRGB             color;
 
   options = (EditChannelOptions *) data;
   channel = options->channel;
 
   if (options->gimage)
     {
-      /*  Set the new channel name  */
-      gimp_object_set_name (GIMP_OBJECT (channel),
-			    gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      const gchar *new_name;
+      GimpRGB      color;
+
+      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
+        {
+          undo_push_item_rename (options->gimage, GIMP_ITEM (channel));
+
+          gimp_object_set_name (GIMP_OBJECT (channel), new_name);
+        }
 
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
 				   &color);
@@ -672,5 +679,5 @@ channels_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Delete Channel",             !fs && channel);
   SET_SENSITIVE ("/Edit Channel Attributes...", !fs && channel);
 
-#undef SET_OPS_SENSITIVE
+#undef SET_SENSITIVE
 }

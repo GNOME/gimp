@@ -95,7 +95,7 @@ struct _Undo
 {
   UndoType      type;           /* undo type                                  */
   gpointer      data;           /* data to implement the undo, NULL for group */
-  glong         bytes;          /* size of undo item                          */
+  gsize         bytes;          /* size of undo item                          */
   gboolean      dirties_image;  /* TRUE if undo mutates image                 */
   gboolean      group_boundary; /* TRUE if this is the start/end of a group   */
 
@@ -107,7 +107,7 @@ struct _Undo
 static const gchar * undo_type_to_name  (UndoType     undo_type);
 
 static Undo        * undo_new           (UndoType     undo_type, 
-					 glong        size, 
+					 gsize        size, 
 					 gboolean     dirties_image);
 
 
@@ -194,12 +194,13 @@ remove_stack_bottom (GimpImage *gimage)
 }
 
 
-/* Allocate and initialise a new Undo.  Leaves data and function
- * pointers zeroed ready to be filled in by caller. */
+/*  Allocate and initialise a new Undo.  Leaves data and function
+ *  pointers zeroed ready to be filled in by caller.
+ */
 static Undo *
-undo_new (UndoType  type, 
-	  glong     size, 
-	  gboolean  dirties_image)
+undo_new (UndoType type, 
+	  gsize    size, 
+	  gboolean dirties_image)
 {
   Undo *new;
 
@@ -232,7 +233,7 @@ undo_free_up_space (GimpImage *gimage)
 
 static Undo *
 undo_push (GimpImage *gimage,
-	   glong      size,
+	   gsize      size,
 	   UndoType   type,
 	   gboolean   dirties_image)
 {
@@ -709,7 +710,7 @@ undo_push_image (GimpImage    *gimage,
 		 gint          y2)
 {
   Undo  *new;
-  glong  size;
+  gsize  size;
 
   x1 = CLAMP (x1, 0, gimp_drawable_width (drawable));
   y1 = CLAMP (y1, 0, gimp_drawable_height (drawable));
@@ -767,9 +768,9 @@ undo_push_image_mod (GimpImage    *gimage,
 		     TileManager  *tiles,
 		     gboolean      sparse)
 {
-  Undo        *new;
-  glong        size;
-  gint         dwidth, dheight;
+  Undo  *new;
+  gsize  size;
+  gint   dwidth, dheight;
 
   if (! tiles)
     return FALSE;
@@ -1162,15 +1163,13 @@ undo_push_image_mask (GimpImage   *gimage,
                       gint         x,
                       gint         y)
 {
-  Undo *new;
-  gint  size;
+  Undo  *new;
+  gsize  size;
+
+  size = sizeof (MaskUndo);
 
   if (tiles)
-    size = 
-      tile_manager_width (tiles) * 
-      tile_manager_height (tiles);
-  else
-    size = 0;
+    size += tile_manager_get_memsize (tiles);
 
   if ((new = undo_push (gimage, size, IMAGE_MASK_UNDO, FALSE)))
     {
@@ -1433,13 +1432,13 @@ undo_pop_image_guide (GimpImage *gimage,
 }
 
 static void
-undo_free_image_guide (UndoState  state,
-                       UndoType   type,
-                       gpointer   data_ptr)
+undo_free_image_guide (UndoState state,
+                       UndoType  type,
+                       gpointer  data_ptr)
 {
   GuideUndo *data;
 
-  data = data_ptr;
+  data = (GuideUndo *) data_ptr;
 
   data->guide->ref_count--;
   if (data->guide->position < 0 && data->guide->ref_count <= 0)
@@ -1448,6 +1447,80 @@ undo_free_image_guide (UndoState  state,
       g_free (data->guide);
     }
   g_free (data);
+}
+
+
+/**********************/
+/*  Item Rename Undo  */
+
+typedef struct _ItemRenameUndo ItemRenameUndo;
+
+struct _ItemRenameUndo
+{
+  GimpItem *item;
+  gchar    *old_name;
+};
+
+static gboolean undo_pop_item_rename  (GimpImage *,
+                                       UndoState, UndoType, gpointer);
+static void     undo_free_item_rename (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_item_rename (GimpImage *gimage, 
+                       GimpItem  *item)
+{
+  Undo *new;
+
+  if ((new = undo_push (gimage, sizeof (ItemRenameUndo),
+                        ITEM_RENAME_UNDO, TRUE)))
+    {
+      ItemRenameUndo *iru;
+
+      iru = g_new0 (ItemRenameUndo, 1);
+
+      new->data      = iru;
+      new->pop_func  = undo_pop_item_rename;
+      new->free_func = undo_free_item_rename;
+
+      iru->item     = item;
+      iru->old_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_item_rename (GimpImage *gimage,
+                      UndoState  state,
+                      UndoType   type,
+                      gpointer   iru_ptr)
+{
+  ItemRenameUndo *iru;
+  gchar          *tmp;
+
+  iru = (ItemRenameUndo *) iru_ptr;
+
+  tmp = g_strdup (gimp_object_get_name (GIMP_OBJECT (iru->item)));
+  gimp_object_set_name (GIMP_OBJECT (iru->item), iru->old_name);
+  g_free (iru->old_name);
+  iru->old_name = tmp;
+
+  return TRUE;
+}
+
+static void
+undo_free_item_rename (UndoState  state,
+                       UndoType   type,
+                       gpointer   iru_ptr)
+{
+  ItemRenameUndo *iru;
+
+  iru = (ItemRenameUndo *) iru_ptr;
+
+  g_free (iru->old_name);
+  g_free (iru);
 }
 
 
@@ -1499,8 +1572,8 @@ undo_push_layer (GimpImage *gimage,
                  gint       prev_position,
                  GimpLayer *prev_layer)
 {
-  Undo      *new;
-  gint       size;
+  Undo  *new;
+  gsize  size;
 
   g_return_val_if_fail (type == LAYER_ADD_UNDO ||
 			type == LAYER_REMOVE_UNDO,
@@ -1508,8 +1581,7 @@ undo_push_layer (GimpImage *gimage,
 
   size = sizeof (LayerUndo) + gimp_object_get_memsize (GIMP_OBJECT (layer));
 
-  if ((new = undo_push (gimage, size,
-                        type, TRUE)))
+  if ((new = undo_push (gimage, size, type, TRUE)))
     {
       LayerUndo *lu;
 
@@ -1541,12 +1613,14 @@ undo_pop_layer (GimpImage *gimage,
 
   lu = (LayerUndo *) lu_ptr;
 
-  /*  remove layer  */
   if ((state == UNDO && type == LAYER_ADD_UNDO) ||
       (state == REDO && type == LAYER_REMOVE_UNDO))
     {
+      /*  remove layer  */
+
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (gimage, lu->layer);
+
       /*  set the previous layer  */
       gimp_image_set_active_layer (gimage, lu->prev_layer);
 
@@ -1569,9 +1643,10 @@ undo_pop_layer (GimpImage *gimage,
 			    GIMP_DRAWABLE (lu->layer)->width,
 			    GIMP_DRAWABLE (lu->layer)->height);
     }
-  /*  restore layer  */
   else
     {
+      /*  restore layer  */
+
       /*  record the active layer  */
       lu->prev_layer = gimp_image_get_active_layer (gimage);
 
@@ -1638,14 +1713,13 @@ undo_push_layer_mod (GimpImage *gimage,
 {
   Undo         *new;
   TileManager  *tiles;
-  gint          size;
+  gsize         size;
 
   tiles = GIMP_DRAWABLE (layer)->tiles;
 
   size = sizeof (LayerModUndo) + tile_manager_get_memsize (tiles);
 
-  if ((new = undo_push (gimage, size,
-                        LAYER_MOD_UNDO, TRUE)))
+  if ((new = undo_push (gimage, size, LAYER_MOD_UNDO, TRUE)))
     {
       LayerModUndo *lmu;
 
@@ -1673,9 +1747,9 @@ static gboolean
 undo_pop_layer_mod (GimpImage *gimage,
 		    UndoState  state,
 		    UndoType   type,
-		    gpointer   data_ptr)
+		    gpointer   lmu_ptr)
 {
-  LayerModUndo *data;
+  LayerModUndo *lmu;
   gint          layer_type;
   gint          offset_x, offset_y;
   TileManager  *tiles;
@@ -1683,11 +1757,12 @@ undo_pop_layer_mod (GimpImage *gimage,
   GimpLayer    *layer;
   gboolean      old_has_alpha;
 
-  data = (LayerModUndo *) data_ptr;
-  layer = data->layer;
-  tiles = data->tiles;
-  offset_x = data->offset_x;
-  offset_y = data->offset_y;
+  lmu = (LayerModUndo *) lmu_ptr;
+
+  layer    = lmu->layer;
+  tiles    = lmu->tiles;
+  offset_x = lmu->offset_x;
+  offset_y = lmu->offset_y;
 
   /*  Issue the first update  */
   gimp_image_update (gimage,
@@ -1699,11 +1774,11 @@ undo_pop_layer_mod (GimpImage *gimage,
   /*  Create a tile manager to store the current layer contents  */
   temp       = GIMP_DRAWABLE (layer)->tiles;
   
-  data->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-  data->offset_y = GIMP_DRAWABLE (layer)->offset_y;
+  lmu->offset_x = GIMP_DRAWABLE (layer)->offset_x;
+  lmu->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
-  layer_type = data->type;
-  data->type = GIMP_DRAWABLE (layer)->type;
+  layer_type = lmu->type;
+  lmu->type = GIMP_DRAWABLE (layer)->type;
 
   old_has_alpha = GIMP_DRAWABLE (layer)->has_alpha;
 
@@ -1729,7 +1804,7 @@ undo_pop_layer_mod (GimpImage *gimage,
     }
 
   /*  Set the new tile manager  */
-  data->tiles = temp;
+  lmu->tiles = temp;
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1743,18 +1818,19 @@ undo_pop_layer_mod (GimpImage *gimage,
 static void
 undo_free_layer_mod (UndoState  state,
 		     UndoType   type,
-		     gpointer   data_ptr)
+		     gpointer   lmu_ptr)
 {
-  gpointer *data;
+  LayerModUndo *lmu;
 
-  data = (gpointer *) data_ptr;
-  tile_manager_destroy ((TileManager *) data[1]);
-  g_free (data);
+  lmu = (LayerModUndo *) lmu_ptr;
+
+  tile_manager_destroy (lmu->tiles);
+  g_free (lmu);
 }
 
 
-/*********************************/
-/*  Layer Mask Add/Remove  Undo  */
+/********************************/
+/*  Layer Mask Add/Remove Undo  */
 
 typedef struct _LayerMaskUndo LayerMaskUndo;
 
@@ -1796,8 +1872,8 @@ undo_push_layer_mask (GimpImage     *gimage,
                       GimpLayer     *layer,
                       GimpLayerMask *mask)
 {
-  Undo *new;
-  gint  size;
+  Undo  *new;
+  gsize  size;
 
   g_return_val_if_fail (type == LAYER_MASK_ADD_UNDO ||
 			type == LAYER_MASK_REMOVE_UNDO,
@@ -1805,8 +1881,7 @@ undo_push_layer_mask (GimpImage     *gimage,
 
   size = sizeof (LayerMaskUndo) + gimp_object_get_memsize (GIMP_OBJECT (mask));
 
-  if ((new = undo_push (gimage, size,
-                        type, TRUE)))
+  if ((new = undo_push (gimage, size, type, TRUE)))
     {
       LayerMaskUndo *lmu;
 
@@ -1865,76 +1940,6 @@ undo_free_layer_mask (UndoState  state,
 
   g_object_unref (G_OBJECT (lmu->mask));
   g_free (lmu);
-}
-
-
-/**********************/
-/* Layer Rename Undo  */
-
-typedef struct _LayerRenameUndo LayerRenameUndo;
-
-struct _LayerRenameUndo
-{
-  GimpLayer *layer;
-  gchar     *old_name;
-};
-
-static gboolean undo_pop_layer_rename  (GimpImage *,
-                                        UndoState, UndoType, gpointer);
-static void     undo_free_layer_rename (UndoState, UndoType, gpointer);
-
-gboolean
-undo_push_layer_rename (GimpImage *gimage, 
-			GimpLayer *layer)
-{
-  Undo *new;
-
-  if ((new = undo_push (gimage, sizeof (LayerRenameUndo),
-                        LAYER_RENAME_UNDO, TRUE)))
-    {
-      LayerRenameUndo *lru;
-
-      lru = g_new0 (LayerRenameUndo, 1);
-
-      new->data      = lru;
-      new->pop_func  = undo_pop_layer_rename;
-      new->free_func = undo_free_layer_rename;
-
-      lru->layer    = layer;
-      lru->old_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_layer_rename (GimpImage *gimage,
-		       UndoState  state,
-		       UndoType   type,
-		       void      *data_ptr)
-{
-  LayerRenameUndo *data = data_ptr;
-  gchar           *tmp;
-
-  tmp = g_strdup (gimp_object_get_name (GIMP_OBJECT (data->layer)));
-  gimp_object_set_name (GIMP_OBJECT (data->layer), data->old_name);
-  g_free (data->old_name);
-  data->old_name = tmp;
-
-  return TRUE;
-}
-
-static void
-undo_free_layer_rename (UndoState  state,
-			UndoType   type,
-			gpointer   data_ptr)
-{
-  LayerRenameUndo *data = data_ptr;
-
-  g_free (data->old_name);
-  g_free (data);
 }
 
 
@@ -2171,8 +2176,8 @@ undo_push_channel (GimpImage   *gimage,
                    gint         prev_position,
                    GimpChannel *prev_channel)
 {
-  Undo *new;
-  gint  size;
+  Undo  *new;
+  gsize  size;
 
   g_return_val_if_fail (type == CHANNEL_ADD_UNDO ||
 			type == CHANNEL_REMOVE_UNDO,
@@ -2212,10 +2217,11 @@ undo_pop_channel (GimpImage *gimage,
 
   cu = (ChannelUndo *) cu_ptr;
 
-  /*  remove channel  */
   if ((state == UNDO && type == CHANNEL_ADD_UNDO) ||
       (state == REDO && type == CHANNEL_REMOVE_UNDO))
     {
+      /*  remove channel  */
+
       /*  record the current position  */
       cu->prev_position = gimp_image_get_channel_index (gimage, cu->channel);
 
@@ -2234,9 +2240,10 @@ undo_pop_channel (GimpImage *gimage,
 			    GIMP_DRAWABLE (cu->channel)->width,
 			    GIMP_DRAWABLE (cu->channel)->height);
     }
-  /*  restore channel  */
   else
     {
+      /*  restore channel  */
+
       /*  record the active channel  */
       cu->prev_channel = gimp_image_get_active_channel (gimage);
 
@@ -2244,11 +2251,8 @@ undo_pop_channel (GimpImage *gimage,
       gimp_container_insert (gimage->channels, 
 			     GIMP_OBJECT (cu->channel),	cu->prev_position);
  
-      if (cu->channel)
-        {
-          /*  set the new channel  */
-          gimp_image_set_active_channel (gimage, cu->channel);
-        }
+      /*  set the new channel  */
+      gimp_image_set_active_channel (gimage, cu->channel);
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
@@ -2297,14 +2301,13 @@ undo_push_channel_mod (GimpImage   *gimage,
 {
   TileManager *tiles;
   Undo        *new;
-  gint         size;
+  gsize        size;
 
   tiles = GIMP_DRAWABLE (channel)->tiles;
 
   size  = sizeof (ChannelModUndo) + tile_manager_get_memsize (tiles);
 
-  if ((new = undo_push (gimage, size,
-                        CHANNEL_MOD_UNDO, TRUE)))
+  if ((new = undo_push (gimage, size, CHANNEL_MOD_UNDO, TRUE)))
     {
       ChannelModUndo *cmu;
 
@@ -2499,8 +2502,8 @@ undo_push_vectors (GimpImage   *gimage,
                    gint         prev_position,
                    GimpVectors *prev_vectors)
 {
-  Undo *new;
-  gint  size;
+  Undo  *new;
+  gsize  size;
 
   g_return_val_if_fail (type == VECTORS_ADD_UNDO ||
 			type == VECTORS_REMOVE_UNDO,
@@ -2568,11 +2571,8 @@ undo_pop_vectors (GimpImage *gimage,
       gimp_container_insert (gimage->vectors, 
 			     GIMP_OBJECT (vu->vectors),	vu->prev_position);
  
-      if (vu->vectors)
-        {
-          /*  set the new vectors  */
-          gimp_image_set_active_vectors (gimage, vu->vectors);
-        }
+      /*  set the new vectors  */
+      gimp_image_set_active_vectors (gimage, vu->vectors);
     }
 
   return TRUE;
@@ -2612,14 +2612,13 @@ gboolean
 undo_push_vectors_mod (GimpImage   *gimage,
 		       GimpVectors *vectors)
 {
-  Undo *new;
-  gint  size;
+  Undo  *new;
+  gsize  size;
 
   size = (sizeof (VectorsModUndo) +
           gimp_object_get_memsize (GIMP_OBJECT (vectors)));
 
-  if ((new = undo_push (gimage, size,
-                        VECTORS_MOD_UNDO, TRUE)))
+  if ((new = undo_push (gimage, size, VECTORS_MOD_UNDO, TRUE)))
     {
       VectorsModUndo *vmu;
 
@@ -3474,15 +3473,16 @@ undo_push_cantundo (GimpImage   *gimage,
    * any adequate undo facility.
    */
 
-  new = undo_push (gimage, 0, CANT_UNDO, TRUE);
-  if (!new)
-    return FALSE;
+  if ((new = undo_push (gimage, 0, CANT_UNDO, TRUE)))
+    {
+      new->data      = (gpointer) action;
+      new->pop_func  = undo_pop_cantundo;
+      new->free_func = undo_free_cantundo;
 
-  new->data      = (void*) action;
-  new->pop_func  = undo_pop_cantundo;
-  new->free_func = undo_free_cantundo;
+      return TRUE;
+    }
 
-  return TRUE;
+  return FALSE;
 }
 
 static gboolean
@@ -3530,6 +3530,7 @@ undo_name[] =
   { IMAGE_LAYERS_MERGE_UNDO_GROUP, N_("Merge Layers")              },
   { IMAGE_QMASK_UNDO_GROUP,        N_("QuickMask")                 },
   { IMAGE_GUIDE_UNDO_GROUP,        N_("Guide")                     },
+  { LAYER_PROPERTIES_UNDO_GROUP,   N_("Layer Properties")          },
   { LAYER_SCALE_UNDO_GROUP,        N_("Scale Layer")               },
   { LAYER_RESIZE_UNDO_GROUP,       N_("Resize Layer")              },
   { LAYER_DISPLACE_UNDO_GROUP,     N_("Move Layer")                },
@@ -3554,12 +3555,12 @@ undo_name[] =
   { IMAGE_MASK_UNDO,               N_("Selection Mask")            },
   { IMAGE_QMASK_UNDO,              N_("QuickMask")                 },
   { IMAGE_GUIDE_UNDO,              N_("Guide")                     },
+  { ITEM_RENAME_UNDO,              N_("Rename Item")               },
   { LAYER_ADD_UNDO,                N_("New Layer")                 },
   { LAYER_REMOVE_UNDO,             N_("Delete Layer")              },
   { LAYER_MOD_UNDO,                N_("Layer Mod")                 },
   { LAYER_MASK_ADD_UNDO,           N_("Add Layer Mask")            },
   { LAYER_MASK_REMOVE_UNDO,        N_("Delete Layer Mask")         },
-  { LAYER_RENAME_UNDO,             N_("Rename Layer")              },
   { LAYER_REPOSITION_UNDO,         N_("Layer Reposition")          },
   { LAYER_DISPLACE_UNDO,           N_("Layer Move")                },
   { CHANNEL_ADD_UNDO,              N_("New Channel")               },

@@ -93,6 +93,12 @@ gboolean      undo_push_image_guide           (GimpImage     *gimage,
                                                GimpGuide     *guide);
 
 
+/*  item undos  */
+
+gboolean      undo_push_item_rename           (GimpImage     *gimage, 
+                                               GimpItem      *item);
+
+
 /*  layer undos  */
 
 gboolean      undo_push_layer_add             (GimpImage     *gimage,
@@ -111,8 +117,6 @@ gboolean      undo_push_layer_mask_add        (GimpImage     *gimage,
 gboolean      undo_push_layer_mask_remove     (GimpImage     *gimage, 
                                                GimpLayer     *layer,
                                                GimpLayerMask *mask);
-gboolean      undo_push_layer_rename          (GimpImage     *gimage, 
-                                               GimpLayer     *layer);
 gboolean      undo_push_layer_reposition      (GimpImage     *gimage, 
                                                GimpLayer     *layer);
 gboolean      undo_push_layer_displace        (GimpImage     *gimage,

@@ -746,20 +746,27 @@ edit_layer_query_ok_callback (GtkWidget *widget,
 
   if ((layer = options->layer))
     {
-      /*  Set the new layer name  */
-      if (GIMP_OBJECT (layer)->name && gimp_layer_is_floating_sel (layer))
-	{
-	  /*  If the layer is a floating selection, make it a layer  */
-	  floating_sel_to_layer (layer);
-	}
-      else
-        {
-	  /* We're doing a plain rename */
-          undo_push_layer_rename (options->gimage, layer);
-        }
+      const gchar *new_name;
 
-      gimp_object_set_name (GIMP_OBJECT (layer),
-			    gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
+        {
+          undo_push_group_start (options->gimage, LAYER_PROPERTIES_UNDO_GROUP);
+
+          if (gimp_layer_is_floating_sel (layer))
+            {
+              /*  If the layer is a floating selection, make it a layer  */
+
+              floating_sel_to_layer (layer);
+            }
+
+          undo_push_item_rename (options->gimage, GIMP_ITEM (layer));
+
+          gimp_object_set_name (GIMP_OBJECT (layer), new_name);
+
+          undo_push_group_end (options->gimage);
+        }
     }
 
   gdisplays_flush ();

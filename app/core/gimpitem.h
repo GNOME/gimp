@@ -38,7 +38,7 @@ struct _GimpItem
   GimpViewable      parent_instance;
 
   gint              ID;        /*  provides a unique ID     */
-  guint32           tattoo;    /*  provides a perminant ID  */
+  guint32           tattoo;    /*  provides a permanent ID  */
 
   GimpImage        *gimage;    /*  gimage owner             */
 
@@ -72,7 +72,7 @@ void            gimp_item_set_image       (GimpItem       *item,
 void            gimp_item_parasite_attach (GimpItem       *item,
                                            GimpParasite   *parasite);
 void            gimp_item_parasite_detach (GimpItem       *item,
-                                           const gchar    *parasite);
+                                           const gchar    *name);
 GimpParasite  * gimp_item_parasite_find   (const GimpItem *item,
                                            const gchar    *name);
 gchar        ** gimp_item_parasite_list   (const GimpItem *item,

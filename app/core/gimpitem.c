@@ -262,7 +262,7 @@ static gsize
 gimp_item_get_memsize (GimpObject *object)
 {
   GimpItem *item;
-  gsize         memsize = 0;
+  gsize     memsize = 0;
 
   item = GIMP_ITEM (object);
 
@@ -333,9 +333,13 @@ gimp_item_set_image (GimpItem  *item,
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));;
 
   if (gimage == NULL)
-    item->tattoo = 0;
-  else if (item->tattoo == 0 || item->gimage != gimage )
-    item->tattoo = gimp_image_get_new_tattoo (gimage);
+    {
+      item->tattoo = 0;
+    }
+  else if (item->tattoo == 0 || item->gimage != gimage)
+    {
+      item->tattoo = gimp_image_get_new_tattoo (gimage);
+    }
 
   item->gimage = gimage;
 }
@@ -346,8 +350,9 @@ gimp_item_parasite_attach (GimpItem     *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  /* only set the dirty bit manually if we can be saved and the new
-     parasite differs from the current one and we arn't undoable */
+  /*  only set the dirty bit manually if we can be saved and the new
+   *  parasite differs from the current one and we arn't undoable
+   */
   if (gimp_parasite_is_undoable (parasite))
     {
       /* do a group in case we have attach_parent set */
@@ -385,22 +390,28 @@ gimp_item_parasite_attach (GimpItem     *item,
 
 void
 gimp_item_parasite_detach (GimpItem    *item,
-                           const gchar *parasite)
+                           const gchar *name)
 {
-  GimpParasite *p;
+  GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (! (p = gimp_parasite_list_find (item->parasites, parasite)))
+  parasite = gimp_parasite_list_find (item->parasites, name);
+
+  if (! parasite)
     return;
 
-  if (gimp_parasite_is_undoable (p))
-    undo_push_item_parasite_remove (item->gimage, item,
-					gimp_parasite_name (p));
-  else if (gimp_parasite_is_persistent (p))
-    undo_push_cantundo (item->gimage, _("parasite detached from item"));
+  if (gimp_parasite_is_undoable (parasite))
+    {
+      undo_push_item_parasite_remove (item->gimage, item,
+                                      gimp_parasite_name (parasite));
+    }
+  else if (gimp_parasite_is_persistent (parasite))
+    {
+      undo_push_cantundo (item->gimage, _("parasite detached from item"));
+    }
 
-  gimp_parasite_list_remove (item->parasites, parasite);
+  gimp_parasite_list_remove (item->parasites, name);
 }
 
 GimpParasite *
@@ -413,11 +424,11 @@ gimp_item_parasite_find (const GimpItem *item,
 }
 
 static void
-gimp_item_parasite_list_foreach_func (gchar          *key,
-                                      GimpParasite   *p,
+gimp_item_parasite_list_foreach_func (gchar          *name,
+                                      GimpParasite   *parasite,
                                       gchar        ***cur)
 {
-  *(*cur)++ = (gchar *) g_strdup (key);
+  *(*cur)++ = (gchar *) g_strdup (name);
 }
 
 gchar **
@@ -431,6 +442,7 @@ gimp_item_parasite_list (const GimpItem *item,
   g_return_val_if_fail (count != NULL, NULL);
 
   *count = gimp_parasite_list_length (item->parasites);
+
   cur = list = g_new (gchar *, *count);
 
   gimp_parasite_list_foreach (item->parasites,

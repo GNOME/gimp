@@ -1171,7 +1171,7 @@ static GimpItemFactoryEntry channels_entries[] =
 
 static GimpItemFactoryEntry vectors_entries[] =
 {
-  { { N_("/New Path"), "<control>N",
+  { { N_("/New Path..."), "<control>N",
       vectors_new_vectors_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
@@ -1995,7 +1995,7 @@ menus_init (Gimp *gimp)
 
   vectors_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                            "<Vectors>", "vectors",
-                                           NULL,
+                                           vectors_menu_update,
                                            G_N_ELEMENTS (vectors_entries),
                                            vectors_entries,
                                            gimp,
