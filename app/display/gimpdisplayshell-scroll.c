@@ -122,7 +122,9 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 	}
 
       if (x_offset || y_offset)
-	gdisplay_flush (shell->gdisp);
+        {
+          gimp_display_flush (shell->gdisp);
+        }
 
       nav_dialog_update_window_marker (shell->nav_dialog); 
 

@@ -418,7 +418,7 @@ image_map_do (gpointer data)
       gimp_drawable_update (image_map->drawable,
 			    x, y,
 			    w, h);
-      gdisplay_flush_now (image_map->gdisp);
+      gimp_display_flush_now (image_map->gdisp);
     }
 
   image_map->PRI = pixel_regions_process (image_map->PRI);

@@ -1,8 +1,8 @@
-#ifndef __MARCHING_ANTS_H__
-#define __MARCHING_ANTS_H__
+#ifndef __GIMP_DISPLAY_SHELL_MARCHING_ANTS_H__
+#define __GIMP_DISPLAY_SHELL_MARCHING_ANTS_H__
 
-/* static variable definitions */
-static unsigned char ant_data[8][8] =
+
+static guchar ant_data[8][8] =
 {
   {
     0xF0,    /*  ####----  */
@@ -87,4 +87,4 @@ static unsigned char ant_data[8][8] =
 };
 
 
-#endif  /*  __MARCHING_ANTS_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_MARCHING_ANTS_H__  */

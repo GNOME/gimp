@@ -48,13 +48,13 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-area.h"
-#include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-qmask.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-selection.h"
 #include "gximage.h"
 
 #include "colormaps.h"
@@ -184,6 +184,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->proximity             = FALSE;
 
+  shell->select                = NULL;
+
   shell->display_areas         = NULL;
 
   shell->hsbdata               = NULL;
@@ -247,6 +249,12 @@ gimp_display_shell_destroy (GtkObject *object)
   if (shell->gdisp)
     {
       gimp_display_shell_disconnect (shell);
+    }
+
+  if (shell->select)
+    {
+      gimp_display_shell_selection_free (shell->select);
+      shell->select = NULL;
     }
 
   shell->display_areas = gimp_display_area_list_free (shell->display_areas);
@@ -790,8 +798,21 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
-      gdisplay_delete (shell->gdisp);
+      gimp_display_delete (shell->gdisp);
     }
+}
+
+void
+gimp_display_shell_reconnect (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->gimage));
+
+  gimp_display_shell_connect (shell);
+
+  gimp_display_shell_resize_cursor_label (shell);
+  gimp_display_shell_shrink_wrap (shell);
 }
 
 void
@@ -936,7 +957,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("View/Zoom", gdisp);
   if (gdisp)
     {
-      SET_STATE ("View/Toggle Selection", ! gdisp->select->hidden);
+      SET_STATE ("View/Toggle Selection", ! shell->select->hidden);
       SET_STATE ("View/Toggle Rulers",
                  GTK_WIDGET_VISIBLE (shell->origin) ? 1 : 0);
       SET_STATE ("View/Toggle Guides", gdisp->draw_guides);
@@ -1296,7 +1317,7 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 	gimp_display_shell_draw_cursor (shell);
 
       /* restart (and recalculate) the selection boundaries */
-      selection_start (shell->gdisp->select, TRUE);
+      gimp_display_shell_selection_start (shell->select, TRUE);
 
       /* start the currently active tool */
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
@@ -1461,7 +1482,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   
   if (new_cursor || flush)
     {
-      gdisplay_flush (shell->gdisp);
+      gimp_display_shell_flush (shell);
     }
 
   if (x > 0 && y > 0)
@@ -1845,6 +1866,35 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
     {
       shell->offset_x += (disp_width  - shell->disp_width) / 2;
       shell->offset_y += (disp_height - shell->disp_height) / 2;
+    }
+}
+
+void
+gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
+                                         GimpSelectionControl  control)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->select)
+    {
+      switch (control)
+	{
+	case GIMP_SELECTION_OFF:
+	  gimp_display_shell_selection_invis (shell->select);
+	  break;
+	case GIMP_SELECTION_LAYER_OFF:
+	  gimp_display_shell_selection_layer_invis (shell->select);
+	  break;
+	case GIMP_SELECTION_ON:
+	  gimp_display_shell_selection_start (shell->select, TRUE);
+	  break;
+	case GIMP_SELECTION_PAUSE:
+	  gimp_display_shell_selection_pause (shell->select);
+	  break;
+	case GIMP_SELECTION_RESUME:
+	  gimp_display_shell_selection_resume (shell->select);
+	  break;
+	}
     }
 }
 
@@ -2427,6 +2477,6 @@ gimp_display_shell_close_warning_callback (GtkWidget *widget,
 
   if (close)
     {
-      gdisplay_delete (shell->gdisp);
+      gimp_display_delete (shell->gdisp);
     }
 }

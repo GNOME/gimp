@@ -36,9 +36,8 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-area.h"
 #include "gimpdisplay-handlers.h"
-#include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
-#include "gximage.h"
+#include "gimpdisplayshell-handlers.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -49,18 +48,23 @@
 
 /*  local function prototypes  */
 
-static void     gimp_display_class_init     (GimpDisplayClass *klass);
-static void     gimp_display_init           (GimpDisplay      *gdisp);
+static void       gimp_display_class_init            (GimpDisplayClass *klass);
+static void       gimp_display_init                  (GimpDisplay      *gdisp);
 
-static void     gimp_display_finalize       (GObject          *object);
+static void       gimp_display_finalize              (GObject          *object);
 
-static void     gimp_display_flush_whenever (GimpDisplay      *gdisp, 
-                                             gboolean          now);
-static void     gimp_display_paint_area     (GimpDisplay      *gdisp,
-					     gint              x,
-					     gint              y,
-					     gint              w,
-					     gint              h);
+static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
+                                                      gboolean          now);
+static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
+                                                      gboolean          now);
+static void       gimp_display_idlerender_init       (GimpDisplay      *gdisp);
+static gboolean   gimp_display_idlerender_callback   (gpointer          data);
+static gboolean   gimp_display_idle_render_next_area (GimpDisplay      *gdisp);
+static void       gimp_display_paint_area            (GimpDisplay      *gdisp,
+                                                      gint              x,
+                                                      gint              y,
+                                                      gint              w,
+                                                      gint              h);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -124,13 +128,10 @@ gimp_display_init (GimpDisplay *gdisp)
   gdisp->draw_guides              = TRUE;
   gdisp->snap_to_guides           = TRUE;
 
-  gdisp->select                   = NULL;
-
   gdisp->update_areas             = NULL;
 
-  gdisp->idle_render.idleid       = -1;
+  gdisp->idle_render.idle_id      = 0;
   gdisp->idle_render.update_areas = NULL;
-  gdisp->idle_render.active       = FALSE;
 }
 
 static void
@@ -146,8 +147,8 @@ gimp_display_finalize (GObject *object)
 }
 
 GimpDisplay *
-gdisplay_new (GimpImage *gimage,
-	      guint      scale)
+gimp_display_new (GimpImage *gimage,
+                  guint      scale)
 {
   GimpDisplay *gdisp;
 
@@ -178,7 +179,7 @@ gdisplay_new (GimpImage *gimage,
 }
 
 void
-gdisplay_delete (GimpDisplay *gdisp)
+gimp_display_delete (GimpDisplay *gdisp)
 {
   GimpTool *active_tool;
 
@@ -199,18 +200,13 @@ gdisplay_delete (GimpDisplay *gdisp)
       active_tool->gdisp    = NULL;
     }
 
-  if (gdisp->select)
-    {
-      selection_free (gdisp->select);
-      gdisp->select = NULL;
-    }
-
   /* If this gdisplay was idlerendering at the time when it was deleted,
-     deactivate the idlerendering thread before deletion! */
-  if (gdisp->idle_render.active)
+   * deactivate the idlerendering thread before deletion!
+   */
+  if (gdisp->idle_render.idle_id)
     {
-      g_source_remove (gdisp->idle_render.idleid);
-      gdisp->idle_render.active = FALSE;
+      g_source_remove (gdisp->idle_render.idle_id);
+      gdisp->idle_render.idle_id = 0;
     }
 
   /*  free the update area lists  */
@@ -229,9 +225,17 @@ gdisplay_delete (GimpDisplay *gdisp)
   g_object_unref (G_OBJECT (gdisp));
 }
 
+gint
+gimp_display_get_ID (GimpDisplay *gdisp)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), -1);
+
+  return gdisp->ID;
+}
+
 GimpDisplay *
-gdisplay_get_by_ID (Gimp *gimp,
-		    gint  ID)
+gimp_display_get_by_ID (Gimp *gimp,
+                        gint  ID)
 {
   GimpDisplay *gdisp;
   GSList      *list;
@@ -251,282 +255,38 @@ gdisplay_get_by_ID (Gimp *gimp,
 }
 
 void
-gdisplay_reconnect (GimpDisplay *gdisp, 
-		    GimpImage   *gimage)
+gimp_display_reconnect (GimpDisplay *gdisp, 
+                        GimpImage   *gimage)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (gdisp->idle_render.active)
+  if (gdisp->idle_render.idle_id)
     {
-      g_source_remove (gdisp->idle_render.idleid);
-      gdisp->idle_render.idleid = 0;
-      gdisp->idle_render.active = FALSE;
+      g_source_remove (gdisp->idle_render.idle_id);
+      gdisp->idle_render.idle_id = 0;
     }
+
+  gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
 
   gimp_display_disconnect (gdisp);
 
   gimp_display_connect (gdisp, gimage);
 
-  gdisplay_add_update_area (gdisp,
-                            0, 0,
-                            gdisp->gimage->width,
-                            gdisp->gimage->height);
+  gimp_display_add_update_area (gdisp,
+                                0, 0,
+                                gdisp->gimage->width,
+                                gdisp->gimage->height);
 
-  gimp_display_shell_resize_cursor_label (GIMP_DISPLAY_SHELL (gdisp->shell));
-  gimp_display_shell_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
-}
-
-static gint
-idle_render_next_area (GimpDisplay *gdisp)
-{
-  GimpArea *ga;
-  GSList   *list;
-  
-  list = gdisp->idle_render.update_areas;
-
-  if (list == NULL)
-    {
-      return -1;
-    }
-
-  ga = (GimpArea *) list->data;
-
-  gdisp->idle_render.update_areas =
-    g_slist_remove (gdisp->idle_render.update_areas, ga);
-
-  gdisp->idle_render.x = gdisp->idle_render.basex = ga->x1;
-  gdisp->idle_render.y = gdisp->idle_render.basey = ga->y1;
-  gdisp->idle_render.width = ga->x2 - ga->x1;
-  gdisp->idle_render.height = ga->y2 - ga->y1;
-
-  g_free (ga);
-
-  return 0;
-}
-
-
-/* Unless specified otherwise, display re-rendering is organised by
- * IdleRender, which amalgamates areas to be re-rendered and breaks
- * them into bite-sized chunks which are chewed on in a low- priority
- * idle thread.  This greatly improves responsiveness for many GIMP
- * operations.  -- Adam
- */
-static gint
-idlerender_callback (gpointer data)
-{
-  const gint   CHUNK_WIDTH  = 256;
-  const gint   CHUNK_HEIGHT = 128;
-  gint         workx, worky, workw, workh;
-  GimpDisplay *gdisp = data;
-
-  workw = CHUNK_WIDTH;
-  workh = CHUNK_HEIGHT;
-  workx = gdisp->idle_render.x;
-  worky = gdisp->idle_render.y;
-
-  if (workx + workw > gdisp->idle_render.basex + gdisp->idle_render.width)
-    {
-      workw = gdisp->idle_render.basex + gdisp->idle_render.width - workx;
-    }
-
-  if (worky+workh > gdisp->idle_render.basey+gdisp->idle_render.height)
-    {
-      workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
-    }  
-
-  gimp_display_paint_area (gdisp, workx, worky, workw, workh);
-
-  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
-
-  gdisp->idle_render.x += CHUNK_WIDTH;
-  if (gdisp->idle_render.x >=
-      gdisp->idle_render.basex + gdisp->idle_render.width)
-    {
-      gdisp->idle_render.x = gdisp->idle_render.basex;
-      gdisp->idle_render.y += CHUNK_HEIGHT;
-      if (gdisp->idle_render.y >=
-	  gdisp->idle_render.basey + gdisp->idle_render.height)
-	{
-	  if (idle_render_next_area(gdisp) != 0)
-	    {
-	      /* FINISHED */
-	      gdisp->idle_render.active = FALSE;
-
-	      return 0;
-	    }
-	}
-    }
-
-  /* Still work to do. */
-  return 1;
-}
-
-static void
-gimp_display_idlerender_init (GimpDisplay *gdisp)
-{
-  GSList    *list;
-  GimpArea  *ga, *new_ga;
-
-  /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
-   * to keep track of which of the updates have been flushed and hence need
-   * to be drawn. 
-   */
-  list = gdisp->update_areas;
-
-  while (list)
-    {
-      ga = (GimpArea *) list->data;
-      new_ga = g_malloc (sizeof(GimpArea));
-      memcpy (new_ga, ga, sizeof(GimpArea));
-
-      gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
-
-      list = g_slist_next (list);
-    }
-
-  /* If an idlerender was already running, merge the remainder of its
-     unrendered area with the update_areas list, and make it start work
-     on the next unrendered area in the list. */
-  if (gdisp->idle_render.active)
-    {
-      new_ga = g_malloc (sizeof (GimpArea));
-      new_ga->x1 = gdisp->idle_render.basex;
-      new_ga->y1 = gdisp->idle_render.y;
-      new_ga->x2 = gdisp->idle_render.basex + gdisp->idle_render.width;
-      new_ga->y2 = gdisp->idle_render.y +
-	(gdisp->idle_render.height -
-	 (gdisp->idle_render.y - gdisp->idle_render.basey)
-	 );
-      
-      gdisp->idle_render.update_areas =
-	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
-
-      idle_render_next_area (gdisp);
-    }
-  else
-    {
-      if (gdisp->idle_render.update_areas == NULL)
-	{
-	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
-	  return;
-	}
-      
-      idle_render_next_area (gdisp);
-
-      gdisp->idle_render.active = TRUE;
-      gdisp->idle_render.idleid = gtk_idle_add_priority (GTK_PRIORITY_LOW,
-                                                         idlerender_callback,
-                                                         gdisp);
-    }
-
-  /* Caller frees gdisp->update_areas */
-}
-
-
-static void
-gimp_display_flush_whenever (GimpDisplay *gdisp, 
-                             gboolean     now)
-{
-  GSList *list;
-  GimpArea  *ga;
-
-  /*  Flush the items in the displays and updates lists -
-   *  but only if gdisplay has been mapped and exposed
-   */
-  if (!gdisp->select)
-    return;
-
-  /*  First the updates...  */
-  if (now)
-    {
-      /* Synchronous */
-
-      list = gdisp->update_areas;
-      while (list)
-	{
-	  /*  Paint the area specified by the GimpArea  */
-	  ga = (GimpArea *) list->data;
-	  
-	  if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
-	    {
-	      gimp_display_paint_area (gdisp, ga->x1, ga->y1,
-                                       (ga->x2 - ga->x1), (ga->y2 - ga->y1));
-	    }
-	  
-	  list = g_slist_next (list);
-	}
-    }
-  else
-    {
-      /* Asynchronous */
-
-      if (gdisp->update_areas)
-	gimp_display_idlerender_init (gdisp);
-    }
-  /*  Free the update lists  */
-  gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
-
-  /*  Next the displays...  */
-  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
-
-  /*  update the gdisplay's info dialog  */
-  info_window_update (gdisp);
-
-  /*  ensure the consistency of the tear-off menus  */
-  if (! now && gimp_context_get_display (gimp_get_user_context
-                                         (gdisp->gimage->gimp)) == gdisp)
-    {
-      gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell));
-    }
+  gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
 }
 
 void
-gdisplay_flush (GimpDisplay *gdisp)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  /* Redraw on idle time */
-  gimp_display_flush_whenever (gdisp, FALSE);
-}
-
-void
-gdisplay_flush_now (GimpDisplay *gdisp)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-
-  /* Redraw NOW */
-  gimp_display_flush_whenever (gdisp, TRUE);
-}
-
-/* Force all gdisplays to finish their idlerender projection */
-void 
-gdisplays_finish_draw (void)
-{
-  GSList      *list;
-  GimpDisplay *gdisp;
-
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-      
-      if (gdisp->idle_render.active)
-	{
-	  g_source_remove (gdisp->idle_render.idleid);
-          gdisp->idle_render.idleid = 0;
-
-	  while (idlerender_callback (gdisp));
-	}
-    }
-}
-
-void
-gdisplay_add_update_area (GimpDisplay *gdisp,
-			  gint         x,
-			  gint         y,
-			  gint         w,
-			  gint         h)
+gimp_display_add_update_area (GimpDisplay *gdisp,
+                              gint         x,
+                              gint         y,
+                              gint         w,
+                              gint         h)
 {
   GimpArea *ga;
 
@@ -542,48 +302,41 @@ gdisplay_add_update_area (GimpDisplay *gdisp,
   gdisp->update_areas = gimp_display_area_list_process (gdisp->update_areas, ga);
 }
 
-
-static void
-gimp_display_paint_area (GimpDisplay *gdisp,
-                         gint         x,
-                         gint         y,
-                         gint         w,
-                         gint         h)
+void
+gimp_display_flush (GimpDisplay *gdisp)
 {
-  GimpDisplayShell *shell;
-  gint              x1, y1, x2, y2;
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  /*  Bounds check  */
-  x1 = CLAMP (x,     0, gdisp->gimage->width);
-  y1 = CLAMP (y,     0, gdisp->gimage->height);
-  x2 = CLAMP (x + w, 0, gdisp->gimage->width);
-  y2 = CLAMP (y + h, 0, gdisp->gimage->height);
-  x = x1;
-  y = y1;
-  w = (x2 - x1);
-  h = (y2 - y1);
-
-  /*  calculate the extents of the update as limited by what's visible  */
-  gdisplay_untransform_coords (gdisp,
-                               0, 0,
-                               &x1, &y1,
-                               FALSE, FALSE);
-  gdisplay_untransform_coords (gdisp,
-                               shell->disp_width, shell->disp_height,
-			       &x2, &y2,
-                               FALSE, FALSE);
-
-  gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
-
-  /*  display the area  */
-  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
-
-  gimp_display_shell_add_expose_area (shell,
-                                      x1, y1, (x2 - x1), (y2 - y1));
+  /* Redraw on idle time */
+  gimp_display_flush_whenever (gdisp, FALSE);
 }
+
+void
+gimp_display_flush_now (GimpDisplay *gdisp)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  /* Redraw NOW */
+  gimp_display_flush_whenever (gdisp, TRUE);
+}
+
+/* Force all gdisplays to finish their idlerender projection */
+void
+gimp_display_finish_draw (GimpDisplay *gdisp)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  if (gdisp->idle_render.idle_id)
+    {
+      g_source_remove (gdisp->idle_render.idle_id);
+      gdisp->idle_render.idle_id = 0;
+
+      while (gimp_display_idlerender_callback (gdisp));
+    }
+}
+
+
+/*  stuff that will go to GimpDisplayShell  */
 
 void
 gdisplay_transform_coords (GimpDisplay *gdisp,
@@ -758,31 +511,262 @@ gdisplay_untransform_coords_f (GimpDisplay *gdisp,
   *ny = (y + shell->offset_y) / scaley - offset_y;
 }
 
-void
-gdisplay_selection_visibility (GimpDisplay          *gdisp,
-			       GimpSelectionControl  control)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  if (gdisp->select)
+/*  private functions  */
+
+static void
+gimp_display_flush_whenever (GimpDisplay *gdisp, 
+                             gboolean     now)
+{
+  GSList   *list;
+  GimpArea *ga;
+
+  /*  Flush the items in the displays and updates lists -
+   *  but only if gdisplay has been mapped and exposed
+   */
+  if (! GIMP_DISPLAY_SHELL (gdisp->shell)->select)
     {
-      switch (control)
+      g_warning ("gimp_display_flush_whenever(): called unrealized");
+      return;
+    }
+
+  /*  First the updates...  */
+  if (now)
+    {
+      /* Synchronous */
+
+      list = gdisp->update_areas;
+      while (list)
 	{
-	case GIMP_SELECTION_OFF:
-	  selection_invis (gdisp->select);
-	  break;
-	case GIMP_SELECTION_LAYER_OFF:
-	  selection_layer_invis (gdisp->select);
-	  break;
-	case GIMP_SELECTION_ON:
-	  selection_start (gdisp->select, TRUE);
-	  break;
-	case GIMP_SELECTION_PAUSE:
-	  selection_pause (gdisp->select);
-	  break;
-	case GIMP_SELECTION_RESUME:
-	  selection_resume (gdisp->select);
-	  break;
+	  /*  Paint the area specified by the GimpArea  */
+	  ga = (GimpArea *) list->data;
+	  
+	  if ((ga->x1 != ga->x2) && (ga->y1 != ga->y2))
+	    {
+	      gimp_display_paint_area (gdisp,
+                                       ga->x1,
+                                       ga->y1,
+                                       (ga->x2 - ga->x1),
+                                       (ga->y2 - ga->y1));
+	    }
+	  
+	  list = g_slist_next (list);
 	}
     }
+  else
+    {
+      /* Asynchronous */
+
+      if (gdisp->update_areas)
+	gimp_display_idlerender_init (gdisp);
+    }
+
+  /*  Free the update lists  */
+  gdisp->update_areas = gimp_display_area_list_free (gdisp->update_areas);
+
+  /*  Next the displays...  */
+  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
+
+  /*  update the gdisplay's info dialog  */
+  info_window_update (gdisp);
+
+  /*  ensure the consistency of the tear-off menus  */
+  if (! now && gimp_context_get_display (gimp_get_user_context
+                                         (gdisp->gimage->gimp)) == gdisp)
+    {
+      gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell));
+    }
+}
+
+static void
+gimp_display_idlerender_init (GimpDisplay *gdisp)
+{
+  GSList    *list;
+  GimpArea  *ga, *new_ga;
+
+  /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
+   * to keep track of which of the updates have been flushed and hence need
+   * to be drawn. 
+   */
+  list = gdisp->update_areas;
+
+  while (list)
+    {
+      ga = (GimpArea *) list->data;
+
+      new_ga = g_new (GimpArea, 1);
+
+      memcpy (new_ga, ga, sizeof (GimpArea));
+
+      gdisp->idle_render.update_areas =
+	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
+
+      list = g_slist_next (list);
+    }
+
+  /* If an idlerender was already running, merge the remainder of its
+   * unrendered area with the update_areas list, and make it start work
+   * on the next unrendered area in the list.
+   */
+  if (gdisp->idle_render.idle_id)
+    {
+      new_ga = g_new (GimpArea, 1);
+
+      new_ga->x1 = gdisp->idle_render.basex;
+      new_ga->y1 = gdisp->idle_render.y;
+      new_ga->x2 = gdisp->idle_render.basex + gdisp->idle_render.width;
+      new_ga->y2 = gdisp->idle_render.y + (gdisp->idle_render.height -
+                                           (gdisp->idle_render.y -
+                                            gdisp->idle_render.basey));
+
+      gdisp->idle_render.update_areas =
+	gimp_display_area_list_process (gdisp->idle_render.update_areas, new_ga);
+
+      gimp_display_idle_render_next_area (gdisp);
+    }
+  else
+    {
+      if (gdisp->idle_render.update_areas == NULL)
+	{
+	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
+	  return;
+	}
+
+      gimp_display_idle_render_next_area (gdisp);
+
+      gdisp->idle_render.idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                                    gimp_display_idlerender_callback,
+                                                    gdisp,
+                                                    NULL);
+    }
+
+  /* Caller frees gdisp->update_areas */
+}
+
+/* Unless specified otherwise, display re-rendering is organised by
+ * IdleRender, which amalgamates areas to be re-rendered and breaks
+ * them into bite-sized chunks which are chewed on in a low- priority
+ * idle thread.  This greatly improves responsiveness for many GIMP
+ * operations.  -- Adam
+ */
+static gboolean
+gimp_display_idlerender_callback (gpointer data)
+{
+  const gint   CHUNK_WIDTH  = 256;
+  const gint   CHUNK_HEIGHT = 128;
+  gint         workx, worky, workw, workh;
+  GimpDisplay *gdisp = data;
+
+  workw = CHUNK_WIDTH;
+  workh = CHUNK_HEIGHT;
+  workx = gdisp->idle_render.x;
+  worky = gdisp->idle_render.y;
+
+  if (workx + workw > gdisp->idle_render.basex + gdisp->idle_render.width)
+    {
+      workw = gdisp->idle_render.basex + gdisp->idle_render.width - workx;
+    }
+
+  if (worky+workh > gdisp->idle_render.basey+gdisp->idle_render.height)
+    {
+      workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
+    }  
+
+  gimp_display_paint_area (gdisp, workx, worky, workw, workh);
+
+  gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
+
+  gdisp->idle_render.x += CHUNK_WIDTH;
+
+  if (gdisp->idle_render.x >=
+      gdisp->idle_render.basex + gdisp->idle_render.width)
+    {
+      gdisp->idle_render.x = gdisp->idle_render.basex;
+      gdisp->idle_render.y += CHUNK_HEIGHT;
+
+      if (gdisp->idle_render.y >=
+	  gdisp->idle_render.basey + gdisp->idle_render.height)
+	{
+	  if (! gimp_display_idle_render_next_area (gdisp))
+	    {
+	      /* FINISHED */
+              gdisp->idle_render.idle_id = 0;
+
+	      return FALSE;
+	    }
+	}
+    }
+
+  /* Still work to do. */
+  return TRUE;
+}
+
+static gboolean
+gimp_display_idle_render_next_area (GimpDisplay *gdisp)
+{
+  GimpArea *ga;
+  GSList   *list;
+  
+  list = gdisp->idle_render.update_areas;
+
+  if (list == NULL)
+    {
+      return FALSE;
+    }
+
+  ga = (GimpArea *) list->data;
+
+  gdisp->idle_render.update_areas =
+    g_slist_remove (gdisp->idle_render.update_areas, ga);
+
+  gdisp->idle_render.x = gdisp->idle_render.basex = ga->x1;
+  gdisp->idle_render.y = gdisp->idle_render.basey = ga->y1;
+  gdisp->idle_render.width = ga->x2 - ga->x1;
+  gdisp->idle_render.height = ga->y2 - ga->y1;
+
+  g_free (ga);
+
+  return TRUE;
+}
+
+static void
+gimp_display_paint_area (GimpDisplay *gdisp,
+                         gint         x,
+                         gint         y,
+                         gint         w,
+                         gint         h)
+{
+  GimpDisplayShell *shell;
+  gint              x1, y1, x2, y2;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  /*  Bounds check  */
+  x1 = CLAMP (x,     0, gdisp->gimage->width);
+  y1 = CLAMP (y,     0, gdisp->gimage->height);
+  x2 = CLAMP (x + w, 0, gdisp->gimage->width);
+  y2 = CLAMP (y + h, 0, gdisp->gimage->height);
+  x = x1;
+  y = y1;
+  w = (x2 - x1);
+  h = (y2 - y1);
+
+  /*  calculate the extents of the update as limited by what's visible  */
+  gdisplay_untransform_coords (gdisp,
+                               0, 0,
+                               &x1, &y1,
+                               FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp,
+                               shell->disp_width, shell->disp_height,
+			       &x2, &y2,
+                               FALSE, FALSE);
+
+  gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
+
+  /*  display the area  */
+  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
+  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
+
+  gimp_display_shell_add_expose_area (shell,
+                                      x1, y1, (x2 - x1), (y2 - y1));
 }

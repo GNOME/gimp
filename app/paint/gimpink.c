@@ -1021,7 +1021,7 @@ ink_button_press (GimpTool        *tool,
   ink_tool->lastx = coords->x;
   ink_tool->lasty = coords->y;
 
-  gdisplay_flush_now (gdisp);
+  gimp_display_flush_now (gdisp);
 }
 
 static void
@@ -1211,7 +1211,7 @@ ink_motion (GimpTool        *tool,
   ink_paste (ink_tool, drawable, blob_union);  
   g_free (blob_union);
 
-  gdisplay_flush_now (gdisp);
+  gimp_display_flush_now (gdisp);
 }
 
 static void

@@ -28,9 +28,9 @@
 #include "core/gimpimage-mask.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-marching-ants.h"
-#include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-marching-ants.h"
+#include "gimpdisplayshell-selection.h"
 
 #include "colormaps.h"
 #include "gimprc.h"
@@ -76,19 +76,21 @@ GdkPixmap * cycled_ants_pixmap = NULL;
 /*  public functions  */
 
 Selection *
-selection_create (GdkWindow   *win,
-		  GimpDisplay *gdisp,
-		  gint         size,
-		  gint         width,
-		  gint         speed)
+gimp_display_shell_selection_create (GdkWindow        *win,
+                                     GimpDisplayShell *shell,
+                                     gint              size,
+                                     gint              width,
+                                     gint              speed)
 {
   GdkColor   fg, bg;
   Selection *new;
   gint       base_type;
   gint       i;
 
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   new = g_new (Selection, 1);
-  base_type = gimp_image_base_type (gdisp->gimage);
+  base_type = gimp_image_base_type (shell->gdisp->gimage);
 
   if (gimprc.cycled_marching_ants)
     {
@@ -107,7 +109,7 @@ selection_create (GdkWindow   *win,
     }
 
   new->win            = win;
-  new->gdisp          = gdisp;
+  new->shell          = shell;
   new->segs_in        = NULL;
   new->segs_out       = NULL;
   new->segs_layer     = NULL;
@@ -182,7 +184,7 @@ selection_create (GdkWindow   *win,
 
 
 void
-selection_free (Selection *select)
+gimp_display_shell_selection_free (Selection *select)
 {
   if (select->state != INVISIBLE)
     g_source_remove (select->timeout_id);
@@ -206,7 +208,7 @@ selection_free (Selection *select)
 
 
 void
-selection_pause (Selection *select)
+gimp_display_shell_selection_pause (Selection *select)
 {
   if (select->state != INVISIBLE)
     {
@@ -221,7 +223,7 @@ selection_pause (Selection *select)
 
 
 void
-selection_resume (Selection *select)
+gimp_display_shell_selection_resume (Selection *select)
 {
   if (select->paused == 1)
     {
@@ -236,8 +238,8 @@ selection_resume (Selection *select)
 
 
 void
-selection_start (Selection *select,
-		 gboolean   recalc)
+gimp_display_shell_selection_start (Selection *select,
+                                    gboolean   recalc)
 {
   /*  A call to selection_start with recalc == TRUE means that
    *  we want to recalculate the selection boundary--usually
@@ -263,12 +265,9 @@ selection_start (Selection *select,
 
 
 void
-selection_invis (Selection *select)
+gimp_display_shell_selection_invis (Selection *select)
 {
-  GimpDisplayShell *shell;
-  gint              x1, y1, x2, y2;
-
-  shell = GIMP_DISPLAY_SHELL (select->gdisp->shell);
+  gint x1, y1, x2, y2;
 
   if (select->state != INVISIBLE)
     {
@@ -279,21 +278,21 @@ selection_invis (Selection *select)
     }
 
   /*  Find the bounds of the selection  */
-  if (gimp_display_shell_mask_bounds (shell, &x1, &y1, &x2, &y2))
+  if (gimp_display_shell_mask_bounds (select->shell, &x1, &y1, &x2, &y2))
     {
-      gimp_display_shell_add_expose_area (shell,
+      gimp_display_shell_add_expose_area (select->shell,
                                           x1, y1,
                                           (x2 - x1), (y2 - y1));
     }
   else
     {
-      selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select, TRUE);
     }
 }
 
 
 void
-selection_layer_invis (Selection *select)
+gimp_display_shell_selection_layer_invis (Selection *select)
 {
   gint x1, y1;
   gint x2, y2;
@@ -310,10 +309,6 @@ selection_layer_invis (Selection *select)
 
   if (select->segs_layer != NULL && select->num_segs_layer == 4)
     {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (select->gdisp->shell);
-
       x1 = select->segs_layer[0].x1 - 1;
       y1 = select->segs_layer[0].y1 - 1;
       x2 = select->segs_layer[3].x2 + 1;
@@ -325,16 +320,16 @@ selection_layer_invis (Selection *select)
       y4 = select->segs_layer[3].y2 - 1;
 
       /*  expose the region  */
-      gimp_display_shell_add_expose_area (shell,
+      gimp_display_shell_add_expose_area (select->shell,
                                           x1, y1,
                                           (x2 - x1) + 1, (y3 - y1) + 1);
-      gimp_display_shell_add_expose_area (shell,
+      gimp_display_shell_add_expose_area (select->shell,
                                           x1, y3,
                                           (x3 - x1) + 1, (y4 - y3) + 1);
-      gimp_display_shell_add_expose_area (shell,
+      gimp_display_shell_add_expose_area (select->shell,
                                           x1, y4,
                                           (x2 - x1) + 1, (y2 - y4) + 1);
-      gimp_display_shell_add_expose_area (shell,
+      gimp_display_shell_add_expose_area (select->shell,
                                           x4, y3,
                                           (x2 - x4) + 1, (y4 - y3) + 1);
     }
@@ -342,15 +337,15 @@ selection_layer_invis (Selection *select)
 
 
 void
-selection_toggle (Selection *select)
+gimp_display_shell_selection_toggle (Selection *select)
 {
-  selection_invis (select);
-  selection_layer_invis (select);
+  gimp_display_shell_selection_invis (select);
+  gimp_display_shell_selection_layer_invis (select);
 
   /*  toggle the visibility  */
   select->hidden = select->hidden ? FALSE : TRUE;
 
-  selection_start (select, TRUE);
+  gimp_display_shell_selection_start (select, TRUE);
 }
 
 
@@ -585,14 +580,18 @@ selection_transform_segs (Selection  *select,
 
   for (i = 0; i < num_segs; i++)
     {
-      gdisplay_transform_coords (select->gdisp, src_segs[i].x1, src_segs[i].y1,
-				 &x, &y, 0);
+      gdisplay_transform_coords (select->shell->gdisp,
+                                 src_segs[i].x1, src_segs[i].y1,
+				 &x, &y,
+                                 FALSE);
 
       dest_segs[i].x1 = x;
       dest_segs[i].y1 = y;
 
-      gdisplay_transform_coords (select->gdisp, src_segs[i].x2, src_segs[i].y2,
-				 &x, &y, 0);
+      gdisplay_transform_coords (select->shell->gdisp,
+                                 src_segs[i].x2, src_segs[i].y2,
+				 &x, &y,
+                                 FALSE);
 
       dest_segs[i].x2 = x;
       dest_segs[i].y2 = y;
@@ -630,8 +629,10 @@ selection_generate_segs (Selection *select)
   /*  Ask the gimage for the boundary of its selected region...
    *  Then transform that information into a new buffer of XSegments
    */
-  gimage_mask_boundary (select->gdisp->gimage, &segs_in, &segs_out,
+  gimage_mask_boundary (select->shell->gdisp->gimage,
+                        &segs_in, &segs_out,
 			&select->num_segs_in, &select->num_segs_out);
+
   if (select->num_segs_in)
     {
       select->segs_in = g_new (GdkSegment, select->num_segs_in);
@@ -659,7 +660,8 @@ selection_generate_segs (Selection *select)
     }
 
   /*  The active layer's boundary  */
-  gimp_image_layer_boundary (select->gdisp->gimage, &segs_layer,
+  gimp_image_layer_boundary (select->shell->gdisp->gimage,
+                             &segs_layer,
 			     &select->num_segs_layer);
 
   if (select->num_segs_layer)

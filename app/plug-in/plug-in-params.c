@@ -3612,7 +3612,7 @@ plug_in_progress_init (PlugIn *plug_in,
     message = plug_in->args[0];
 
   if (gdisp_ID > 0)
-    gdisp = gdisplay_get_by_ID (the_gimp, gdisp_ID);
+    gdisp = gimp_display_get_by_ID (the_gimp, gdisp_ID);
 
   if (plug_in->progress)
     plug_in->progress = progress_restart (plug_in->progress, message,

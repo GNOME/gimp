@@ -39,8 +39,8 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-selection.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-selection.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpdrawtool.h"
@@ -298,7 +298,8 @@ init_edit_selection (GimpTool    *tool,
 			  GIMP_TOOL (edit_select));
 
   /*  pause the current selection  */
-  gdisplay_selection_visibility (gdisp, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                           GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
   edit_select->context_id 
@@ -328,7 +329,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  resume the current selection and ungrab the pointer  */
-  gdisplay_selection_visibility (gdisp, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
 
   gdk_pointer_ungrab (time);
   gdk_flush ();
@@ -564,7 +565,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	  }
       }
 
-    gdisplay_flush (gdisp);
+    gimp_display_flush (gdisp);
   }
   /********************************************************************/
   /********************************************************************/
@@ -647,7 +648,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   tool        = GIMP_TOOL (draw_tool);
 
   gdisp  = tool->gdisp;
-  select = gdisp->select;
+  select = GIMP_DISPLAY_SHELL (gdisp->shell)->select;
 
   switch (edit_select->edit_type)
     {

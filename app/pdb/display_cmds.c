@@ -69,7 +69,7 @@ display_new_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&display_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gdisp->ID;
+    return_args[1].value.pdb_int = gimp_display_get_ID (gdisp);
 
   return return_args;
 }
@@ -115,7 +115,7 @@ display_delete_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpDisplay *gdisp;
 
-  gdisp = gdisplay_get_by_ID (gimp, args[0].value.pdb_int);
+  gdisp = gimp_display_get_by_ID (gimp, args[0].value.pdb_int);
   if (gdisp == NULL)
     success = FALSE;
 

@@ -64,6 +64,8 @@ struct _GimpDisplayShell
 
   gboolean          proximity;         /* is a device in proximity           */
 
+  Selection        *select;            /*  Selection object    */
+
   GSList           *display_areas;     /*  display areas list  */
 
   GtkAdjustment    *hsbdata;           /*  adjustments         */
@@ -131,6 +133,8 @@ GtkWidget * gimp_display_shell_new                  (GimpDisplay *gdisp);
 void        gimp_display_shell_close                (GimpDisplayShell *shell,
                                                      gboolean          kill_it);
 
+void        gimp_display_shell_reconnect            (GimpDisplayShell *shell);
+
 void        gimp_display_shell_transform_coords     (GimpDisplayShell *shell,
                                                      GimpCoords       *image_coords,
                                                      GimpCoords       *display_coords);
@@ -176,13 +180,13 @@ void        gimp_display_shell_expose_full          (GimpDisplayShell *shell);
 
 void        gimp_display_shell_flush                (GimpDisplayShell *shell);
 
-void    gimp_display_shell_real_install_tool_cursor (GimpDisplayShell   *shell,
-                                                     GdkCursorType       cursor_type,
+void    gimp_display_shell_real_install_tool_cursor (GimpDisplayShell *shell,
+                                                     GdkCursorType     cursor_type,
                                                      GimpToolCursorType  tool_cursor,
                                                      GimpCursorModifier  modifier,
-                                                     gboolean            always_install);
-void        gimp_display_shell_install_tool_cursor  (GimpDisplayShell   *shell,
-                                                     GdkCursorType       cursor_type,
+                                                     gboolean          always_install);
+void        gimp_display_shell_install_tool_cursor  (GimpDisplayShell *shell,
+                                                     GdkCursorType     cursor_type,
                                                      GimpToolCursorType  tool_cursor,
                                                      GimpCursorModifier  modifier);
 void        gimp_display_shell_remove_tool_cursor   (GimpDisplayShell *shell);
@@ -202,6 +206,9 @@ void        gimp_display_shell_draw_guide           (GimpDisplayShell *shell,
 void        gimp_display_shell_draw_guides          (GimpDisplayShell *shell);
 
 void        gimp_display_shell_shrink_wrap          (GimpDisplayShell *shell);
+
+void        gimp_display_shell_selection_visibility (GimpDisplayShell *shell,
+                                                     GimpSelectionControl  control);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

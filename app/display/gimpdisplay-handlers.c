@@ -30,22 +30,19 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_update_handler            (GimpImage            *gimage,
-                                                      gint                  x,
-                                                      gint                  y,
-                                                      gint                  w,
-                                                      gint                  h,
-                                                      GimpDisplay          *gdisp);
-static void   gimp_display_selection_control_handler (GimpImage            *gimage,
-                                                      GimpSelectionControl  control,
-                                                      GimpDisplay          *gdisp);
-static void   gimp_display_mode_changed_handler      (GimpImage            *gimage,
-                                                      GimpDisplay          *gdisp);
-static void   gimp_display_colormap_changed_handler  (GimpImage            *gimage,
-                                                      gint                  ncol,
-                                                      GimpDisplay          *gdisp);
-static void   gimp_display_size_changed_handler      (GimpImage            *gimage,
-                                                      GimpDisplay          *gdisp);
+static void   gimp_display_update_handler           (GimpImage   *gimage,
+                                                     gint         x,
+                                                     gint         y,
+                                                     gint         w,
+                                                     gint         h,
+                                                     GimpDisplay *gdisp);
+static void   gimp_display_mode_changed_handler     (GimpImage   *gimage,
+                                                     GimpDisplay *gdisp);
+static void   gimp_display_colormap_changed_handler (GimpImage   *gimage,
+                                                     gint         ncol,
+                                                     GimpDisplay *gdisp);
+static void   gimp_display_size_changed_handler     (GimpImage   *gimage,
+                                                     GimpDisplay *gdisp);
 
 
 /*  public functions  */
@@ -68,9 +65,6 @@ gimp_display_connect (GimpDisplay *gdisp,
 
   g_signal_connect (G_OBJECT (gimage), "update",
                     G_CALLBACK (gimp_display_update_handler),
-                    gdisp);
-  g_signal_connect (G_OBJECT (gimage), "selection_control",
-                    G_CALLBACK (gimp_display_selection_control_handler),
                     gdisp);
   g_signal_connect (G_OBJECT (gimage), "mode_changed",
                     G_CALLBACK (gimp_display_mode_changed_handler),
@@ -99,9 +93,6 @@ gimp_display_disconnect (GimpDisplay *gdisp)
                                         gimp_display_mode_changed_handler,
                                         gdisp);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
-                                        gimp_display_selection_control_handler,
-                                        gdisp);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
                                         gimp_display_update_handler,
                                         gdisp);
 
@@ -122,25 +113,17 @@ gimp_display_update_handler (GimpImage   *gimage,
                              gint         h,
                              GimpDisplay *gdisp)
 {
-  gdisplay_add_update_area (gdisp, x, y, w, h);
-}
-
-static void
-gimp_display_selection_control_handler (GimpImage            *gimage,
-                                        GimpSelectionControl  control,
-                                        GimpDisplay          *gdisp)
-{
-  gdisplay_selection_visibility (gdisp, control);
+  gimp_display_add_update_area (gdisp, x, y, w, h);
 }
 
 static void
 gimp_display_mode_changed_handler (GimpImage   *gimage,
                                    GimpDisplay *gdisp)
 {
-  gdisplay_add_update_area (gdisp,
-                            0, 0,
-                            gdisp->gimage->width,
-                            gdisp->gimage->height);
+  gimp_display_add_update_area (gdisp,
+                                0, 0,
+                                gdisp->gimage->width,
+                                gdisp->gimage->height);
 }
 
 static void
@@ -149,18 +132,18 @@ gimp_display_colormap_changed_handler (GimpImage   *gimage,
                                        GimpDisplay *gdisp)
 {
   if (gimp_image_base_type (gdisp->gimage) == INDEXED)
-    gdisplay_add_update_area (gdisp,
-                              0, 0,
-                              gdisp->gimage->width,
-                              gdisp->gimage->height);
+    gimp_display_add_update_area (gdisp,
+                                  0, 0,
+                                  gdisp->gimage->width,
+                                  gdisp->gimage->height);
 }
 
 static void
 gimp_display_size_changed_handler (GimpImage   *gimage,
                                    GimpDisplay *gdisp)
 {
-  gdisplay_add_update_area (gdisp,
-                            0, 0,
-                            gdisp->gimage->width,
-                            gdisp->gimage->height);
+  gimp_display_add_update_area (gdisp,
+                                0, 0,
+                                gdisp->gimage->width,
+                                gdisp->gimage->height);
 }

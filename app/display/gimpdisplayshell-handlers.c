@@ -37,6 +37,9 @@
 
 static void   gimp_display_shell_update_title_handler       (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_selection_control_handler  (GimpImage        *gimage,
+                                                             GimpSelectionControl control,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_size_changed_handler       (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
@@ -70,6 +73,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_update_title_handler),
                     shell);
 
+  g_signal_connect (G_OBJECT (gimage), "selection_control",
+                    G_CALLBACK (gimp_display_shell_selection_control_handler),
+                    shell);
   g_signal_connect (G_OBJECT (gimage), "size_changed",
                     G_CALLBACK (gimp_display_shell_size_changed_handler),
                     shell);
@@ -107,6 +113,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_size_changed_handler,
                                         shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_selection_control_handler,
+                                        shell);
 
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_update_title,
@@ -121,6 +130,14 @@ gimp_display_shell_update_title_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_update_title (shell);
+}
+
+static void
+gimp_display_shell_selection_control_handler (GimpImage            *gimage,
+                                              GimpSelectionControl  control,
+                                              GimpDisplayShell     *shell)
+{
+  gimp_display_shell_selection_visibility (shell, control);
 }
 
 static void

@@ -57,15 +57,14 @@ typedef struct _IdleRenderStruct IdleRenderStruct;
 
 struct _IdleRenderStruct
 {
-  gint      width;
-  gint      height;
-  gint      x;
-  gint      y;
-  gint      basex;
-  gint      basey;
-  guint     idleid;
-  gboolean  active;
-  GSList   *update_areas;   /*  flushed update areas */
+  gint    width;
+  gint    height;
+  gint    x;
+  gint    y;
+  gint    basex;
+  gint    basey;
+  guint   idle_id;
+  GSList *update_areas;   /*  flushed update areas */
 };
 
 
@@ -99,8 +98,6 @@ struct _GimpDisplay
   gboolean    draw_guides;      /*  should the guides be drawn?             */
   gboolean    snap_to_guides;   /*  should the guides be snapped to?        */
 
-  Selection  *select;           /*  Selection object                        */
-
   GSList     *update_areas;     /*  Update areas list                       */
 
   IdleRenderStruct idle_render; /*  state of this gdisplay's render thread  */
@@ -112,25 +109,32 @@ struct _GimpDisplayClass
 };
 
 
-/* member function declarations */
-
 GType         gimp_display_get_type             (void);
 
-GimpDisplay * gdisplay_new                      (GimpImage            *gimage,
-                                                 guint                 scale);
-void          gdisplay_delete                   (GimpDisplay          *gdisp);
+GimpDisplay * gimp_display_new                  (GimpImage   *gimage,
+                                                 guint        scale);
+void          gimp_display_delete               (GimpDisplay *gdisp);
 
-GimpDisplay * gdisplay_get_by_ID                (Gimp                 *gimp,
-                                                 gint                  ID);
+gint          gimp_display_get_ID               (GimpDisplay *gdisp);
+GimpDisplay * gimp_display_get_by_ID            (Gimp        *gimp,
+                                                 gint         ID);
 
-void          gdisplay_reconnect                (GimpDisplay          *gdisp,
-                                                 GimpImage            *gimage);
+void          gimp_display_reconnect            (GimpDisplay *gdisp,
+                                                 GimpImage   *gimage);
 
-void          gdisplay_add_update_area          (GimpDisplay          *gdisp,
-                                                 gint                  x,
-                                                 gint                  y,
-                                                 gint                  w,
-                                                 gint                  h);
+void          gimp_display_add_update_area      (GimpDisplay *gdisp,
+                                                 gint         x,
+                                                 gint         y,
+                                                 gint         w,
+                                                 gint         h);
+
+void          gimp_display_flush                (GimpDisplay *gdisp);
+void          gimp_display_flush_now            (GimpDisplay *gdisp);
+
+void          gimp_display_finish_draw          (GimpDisplay *gdisp);
+
+
+/*  stuff that will go to GimpDisplayShell  */
 
 void          gdisplay_transform_coords         (GimpDisplay          *gdisp,
                                                  gint                  x,
@@ -157,14 +161,6 @@ void          gdisplay_untransform_coords_f     (GimpDisplay          *gdisp,
                                                  gdouble              *nx,
                                                  gdouble              *ny,
                                                  gboolean              use_offsets);
-
-void          gdisplay_selection_visibility     (GimpDisplay          *gdisp,
-                                                 GimpSelectionControl  control);
-
-void          gdisplay_flush                    (GimpDisplay          *gdisp);
-void          gdisplay_flush_now                (GimpDisplay          *gdisp);
-
-void          gdisplays_finish_draw             (void);
 
 
 #endif /*  __GIMP_DISPLAY_H__  */

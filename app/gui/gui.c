@@ -366,7 +366,7 @@ gui_display_new (GimpImage *gimage,
 {
   GimpDisplay *gdisp;
 
-  gdisp = gdisplay_new (gimage, scale);
+  gdisp = gimp_display_new (gimage, scale);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 

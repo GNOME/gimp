@@ -30,9 +30,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay-selection.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
+#include "display/gimpdisplayshell-selection.h"
 
 #include "info-dialog.h"
 #include "info-window.h"
@@ -150,17 +150,19 @@ void
 view_toggle_selection_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
-  GimpDisplay *gdisp;
-  gint         new_val;
-
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gint              new_val;
   return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   new_val = GTK_CHECK_MENU_ITEM (widget)->active;
 
   /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
-  if (new_val == gdisp->select->hidden)
+  if (new_val == shell->select->hidden)
     {
-      selection_toggle (gdisp->select);
+      gimp_display_shell_selection_toggle (shell->select);
 
       gdisplays_flush ();
     }
@@ -236,7 +238,7 @@ view_toggle_guides_cmd_callback (GtkWidget *widget,
   if ((old_val != gdisp->draw_guides) && gdisp->gimage->guides)
     {
       gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
-      gdisplay_flush (gdisp);
+      gimp_display_flush (gdisp);
     }
 }
 

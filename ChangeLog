@@ -1,5 +1,39 @@
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplay-marching-ants.h
+	* app/display/gimpdisplay-selection.[ch]: removed...
+
+	* app/display/gimpdisplayshell-marching-ants.h
+	* app/display/gimpdisplayshell-selection.[ch]: ...new names.
+
+	* app/display/gimpdisplay.[ch]
+	* app/display/gimpdisplayshell.[ch]: moved the Selection stuff
+	from GimpDisplay to GimpDisplayShell.
+
+	Renamed all functions which will stay in GimpDisplay from
+	gdisplay_foo() to gimp_display_foo(). Added gimp_display_get_ID(),
+	cleaned up the idle renderer.
+
+	* app/image_map.c
+	* app/plug_in.c
+	* app/display/Makefile.am
+	* app/display/gimpdisplay-foreach.[ch]
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/gui/gui.c
+	* app/gui/view-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* tools/pdbgen/pdb.pl: changed accordingly, cleanup.
+
+	* app/pdb/display_cmds.c: regenerated.
+
+2001-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am
 	* user_install.[ch]: removed...
 

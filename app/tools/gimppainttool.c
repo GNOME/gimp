@@ -502,7 +502,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
     gimp_paint_tool_paint (paint_tool, drawable, PRETRACE_PAINT);
 
-  gdisplay_flush_now (gdisp);
+  gimp_display_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
     gimp_paint_tool_paint (paint_tool, drawable, POSTTRACE_PAINT);
@@ -587,7 +587,7 @@ gimp_paint_tool_motion (GimpTool        *tool,
                            gimp_image_active_drawable (gdisp->gimage),
                            PRETRACE_PAINT);
 
-  gdisplay_flush_now (gdisp);
+  gimp_display_flush_now (gdisp);
 
   if (paint_tool->flags & TOOL_TRACES_ON_WINDOW)
     gimp_paint_tool_paint (paint_tool,

@@ -120,7 +120,7 @@ gdisplays_delete (void)
     {
       gdisp = (GimpDisplay *) display_list->data;
 
-      gdisplay_delete (gdisp);
+      gimp_display_delete (gdisp);
     }
 }
 
@@ -172,10 +172,25 @@ gdisplays_flush (void)
     {
       gdisp = list->data;
 
-      gdisplay_flush (gdisp);
+      gimp_display_flush (gdisp);
     }
 
   flushing = FALSE;
+}
+
+/* Force all gdisplays to finish their idlerender projection */
+void
+gdisplays_finish_draw (void)
+{
+  GSList      *list;
+  GimpDisplay *gdisp;
+
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = (GimpDisplay *) list->data;
+      
+      gimp_display_finish_draw (gdisp);
+    }
 }
 
 void
@@ -193,7 +208,7 @@ gdisplays_reconnect (GimpImage *old,
       gdisp = list->data;
       
       if (gdisp->gimage == old)
-	gdisplay_reconnect (gdisp, new);
+	gimp_display_reconnect (gdisp, new);
     }
 }
 

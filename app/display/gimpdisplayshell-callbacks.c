@@ -42,12 +42,12 @@
 #include "gui/dialogs.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-selection.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-selection.h"
 
 #include "devices.h"
 #include "gimprc.h"
@@ -174,11 +174,11 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gimp_display_shell_update_title (shell);
 
   /*  create the selection object  */
-  gdisp->select = selection_create (canvas->window,
-                                    gdisp,
-                                    gdisp->gimage->height,
-                                    gdisp->gimage->width, 
-                                    gimprc.marching_speed);
+  shell->select = gimp_display_shell_selection_create (canvas->window,
+                                                       shell,
+                                                       gdisp->gimage->height,
+                                                       gdisp->gimage->width, 
+                                                       gimprc.marching_speed);
 
   shell->disp_width  = canvas->allocation.width;
   shell->disp_height = canvas->allocation.height;
