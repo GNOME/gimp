@@ -116,7 +116,7 @@ typedef struct {
 
 /* global set of module_info pointers */
 static GimpSet *modules;
-static GimpSetHandlerId modules_add_handler;
+static GimpSetHandlerId modules_handler;
 
 /* If the inhibit state of any modules changes, we might need to
  * re-write the modulerc. */
@@ -332,7 +332,7 @@ module_db_browser_new (void)
 
   /* hook the gimpset signals so we can refresh the display
    * appropriately. */
-  modules_add_handler =
+  modules_handler =
     gimp_set_add_handler (modules, "modified", browser_info_update, st);
 
   gtk_signal_connect (GTK_OBJECT (modules), "add", 
@@ -726,7 +726,7 @@ browser_destroy_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
   gtk_signal_disconnect_by_data (GTK_OBJECT (modules), client_data);
-  gimp_set_remove_handler (modules, modules_add_handler);
+  gimp_set_remove_handler (modules, modules_handler);
   g_free (client_data);
 }
 
