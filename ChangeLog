@@ -11,8 +11,6 @@
 	* plug-ins/imagemap/imap_tools.[ch]: removed need for 
 	GTK_DISABLE_DEPRECATED. Looking at #149157 next...
 
-2004-12-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
-
 2004-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcroptool.c: don't show the Crop tool window if
