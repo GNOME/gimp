@@ -80,7 +80,6 @@
 #include "gtk/gtk.h"
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
-#include <libgimp/gimpintl.h>
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 

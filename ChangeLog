@@ -1,3 +1,16 @@
+Mon Dec 27 17:16:14 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/grid.c
+	* plug-ins/fp/fp.c
+	* plug-ins/fp/fp.h
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_gdk.c
+	* po-plug-ins/POTFILES.in: dialog layout and i18n 
+
 Mon Dec 27 15:11:53 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/flame/flame.c: worked on the dialog layout

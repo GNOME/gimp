@@ -1,9 +1,9 @@
 #define MAX_PREVIEW_SIZE   125
 #define MAX_ROUGHNESS      128
 #define RANGE_HEIGHT       15
-#define PR_BX_BRDR         10
+#define PR_BX_BRDR         4
 #define ALL                255
-#define MARGIN             5
+#define MARGIN             4
 
 #define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \
                         GDK_ENTER_NOTIFY_MASK | \
@@ -212,7 +212,6 @@ gint     FP_Range_Change_Events    (GtkWidget *,
 void     As_You_Drag               (GtkWidget *button);
 void     preview_size_scale_update (GtkAdjustment *adjustment,
 				    float         *scale_val);
-void     ErrorMessage              (guchar *);
 
 
 void     fp_advanced_ok();

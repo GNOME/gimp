@@ -42,7 +42,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpintl.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
@@ -53,8 +53,8 @@
 /* Forward declarations */
 /*-----------------------------------------------------------------------------------*/
 
-void query(void);
-void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
+void query (void);
+void run   (char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
 
 /*-----------------------------------------------------------------------------------*/
 /* Global variables */
@@ -91,7 +91,8 @@ MAIN()
 /* Query plug-in */
 /*-----------------------------------------------------------------------------------*/
 
-void query(void)
+void 
+query (void)
 {
   GParamDef args[] =
   {
@@ -104,15 +105,16 @@ void query(void)
   int nargs = sizeof (args) / sizeof (args[0]);
   int nreturn_vals = 0;
 
+  INIT_I18N();
   gimp_install_procedure ("plug-in-rotate-colormap",
-			  "Colormap rotation as in xv",
-			  "Exchanges two color ranges. "\
-			  "Based on code from Pavel Grinfeld (pavel@ml.com). "\
-			  "This version written by Sven Anders (anderss@fmi.uni-passau.de).",
+			  _("Colormap rotation as in xv"),
+			  _("Exchanges two color ranges."
+			    "Based on code from Pavel Grinfeld (pavel@ml.com)."
+			    "This version written by Sven Anders (anderss@fmi.uni-passau.de)."),
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",
 			  "04th April 1999",
-			  "<Image>/Image/Colors/Colormap Rotation...",
+			  N_("<Image>/Image/Colors/Colormap Rotation..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -123,8 +125,12 @@ void query(void)
 /* Rotate colormap of a single row */
 /*-----------------------------------------------------------------------------------*/
 
-void rcm_row(const guchar *src_row, guchar *dest_row,
-	     gint row, gint row_width, gint bytes)
+void 
+rcm_row (const guchar *src_row, 
+	 guchar       *dest_row,
+	 gint          row, 
+	 gint          row_width, 
+	 gint          bytes)
 {
   gint col, bytenum, skip;
   hsv H,S,V,R,G,B;
@@ -188,7 +194,8 @@ void rcm_row(const guchar *src_row, guchar *dest_row,
 /* Rotate colormap row by row ... */
 /*-----------------------------------------------------------------------------------*/
 
-void rcm(GDrawable *drawable)
+void 
+rcm (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height;
@@ -235,7 +242,12 @@ void rcm(GDrawable *drawable)
 /* STANDARD RUN */
 /*-----------------------------------------------------------------------------------*/
 
-void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals)
+void 
+run (char    *name, 
+     int      nparams, 
+     GParam  *param, 
+     int     *nreturn_vals, 
+     GParam **return_vals)
 {
   GParam values[1];
   GStatusType status = STATUS_SUCCESS;
@@ -260,6 +272,8 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
   {
     /* call dialog and rotate the colormap */
 
+    INIT_I18N_UI(); 
+
     if (gimp_drawable_is_rgb(Current.drawable->id) && rcm_dialog())
     {
       gimp_progress_init(_("Rotating the colormap..."));
@@ -276,3 +290,6 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
   if (status == STATUS_SUCCESS)
     gimp_drawable_detach(Current.drawable);
 }
+
+
+

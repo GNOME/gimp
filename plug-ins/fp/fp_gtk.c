@@ -4,6 +4,7 @@
 #include <math.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #include "fp.h"
 #include "fp_hsv.h"
 
@@ -59,7 +60,7 @@ GtkWidget *fp_create_bna(void)
   
   frame = gtk_frame_new ("Before And After");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
 
   /* All the previews */
   alabel=gtk_label_new("Current:");
@@ -71,7 +72,7 @@ GtkWidget *fp_create_bna(void)
   gtk_misc_set_alignment(GTK_MISC(blabel), 0.0, 0.5);
 
   table=gtk_table_new(2,2,FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table),10);
+  gtk_container_border_width(GTK_CONTAINER(table), 4);
   gtk_table_set_row_spacings(GTK_TABLE(table),0);
   gtk_table_set_col_spacings(GTK_TABLE(table),20);
   
@@ -124,13 +125,13 @@ GtkWidget *fp_create_circle_palette(void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   table = gtk_table_new(11,11,FALSE);
   gtk_container_border_width(GTK_CONTAINER(table),0);
   gtk_table_set_row_spacings(GTK_TABLE(table),0);
-  gtk_table_set_col_spacings(GTK_TABLE(table),3);
+  gtk_table_set_col_spacings(GTK_TABLE(table),2);
   gtk_widget_show (table);
 
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -143,13 +144,13 @@ GtkWidget *fp_create_circle_palette(void)
   Create_A_Preview(&mPreview,&mFrame, reduced->width, reduced->height);
   Create_A_Preview(&centerPreview,&centerFrame, reduced->width, reduced->height);
 
-  Create_A_Table_Entry(&rVbox,rFrame,"Red:");
-  Create_A_Table_Entry(&gVbox,gFrame,"Green:");
-  Create_A_Table_Entry(&bVbox,bFrame,"Blue:");
-  Create_A_Table_Entry(&cVbox,cFrame,"Cyan:");
-  Create_A_Table_Entry(&yVbox,yFrame,"Yellow:");
-  Create_A_Table_Entry(&mVbox,mFrame,"Magenta:");
-  Create_A_Table_Entry(&centerVbox,centerFrame,"Current:");
+  Create_A_Table_Entry(&rVbox,rFrame, N_("Red:"));
+  Create_A_Table_Entry(&gVbox,gFrame, N_("Green:"));
+  Create_A_Table_Entry(&bVbox,bFrame, N_("Blue:"));
+  Create_A_Table_Entry(&cVbox,cFrame, N_("Cyan:"));
+  Create_A_Table_Entry(&yVbox,yFrame, N_("Yellow:"));
+  Create_A_Table_Entry(&mVbox,mFrame, N_("Magenta:"));
+  Create_A_Table_Entry(&centerVbox,centerFrame, N_("Current:"));
   
   gtk_table_attach( GTK_TABLE(table), rVbox,8,11,4,7, 
 		    GTK_EXPAND , GTK_EXPAND,0,0);
@@ -167,7 +168,7 @@ GtkWidget *fp_create_circle_palette(void)
 		    GTK_EXPAND, GTK_EXPAND,0,0);
 
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(win),"Hue Variations");
+  gtk_window_set_title(GTK_WINDOW(win), _("Hue Variations"));
   gtk_container_add(GTK_CONTAINER(win),frame);
   gtk_signal_connect(GTK_OBJECT(win), "delete_event",
     (GtkSignalFunc)sub_dialog_destroy, NULL);
@@ -180,9 +181,9 @@ GtkWidget *fp_create_rough(void)
   GtkWidget *frame, *scale, *vbox;
   GtkObject *data;
 
-  frame = gtk_frame_new ("Roughness");
+  frame = gtk_frame_new (_("Roughness"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   data = gtk_adjustment_new (Current.Rough, 
@@ -198,9 +199,9 @@ GtkWidget *fp_create_rough(void)
 		      &Current.Rough);      
   gtk_widget_show (scale);
 
-  vbox=gtk_vbox_new(FALSE,5);
+  vbox=gtk_vbox_new(FALSE,4);
   gtk_widget_show(vbox);
-  gtk_box_pack_start (GTK_BOX(vbox), scale,TRUE,TRUE,5);
+  gtk_box_pack_start (GTK_BOX(vbox), scale,TRUE,TRUE,4);
   gtk_container_add (GTK_CONTAINER(frame), vbox);
   
   return frame;
@@ -211,27 +212,27 @@ GtkWidget *fp_create_range(void)
   GtkWidget *frame, *vbox;
   GSList *group=NULL;
 
-  frame = gtk_frame_new ("Affected Range");
+  frame = gtk_frame_new (_("Affected Range"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
    
   gtk_widget_show (frame);
 
   /********THE THREE RANGES*************/
-  vbox=gtk_vbox_new(FALSE,5);
+  vbox=gtk_vbox_new(FALSE,4);
   gtk_container_add(GTK_CONTAINER(frame),vbox);
-  gtk_container_border_width(GTK_CONTAINER(vbox),5);  
+  gtk_container_border_width(GTK_CONTAINER(vbox),4);  
   gtk_widget_show(vbox);
 
-  group=Button_In_A_Box(vbox,group,"Shadows", 
+  group=Button_In_A_Box(vbox,group, _("Shadows"), 
 			 (GtkSignalFunc) fp_change_current_range,
 			 ShMidHi+SHADOWS,
 			 Current.Range==SHADOWS);
-  group=Button_In_A_Box(vbox,group,"Midtones", 
+  group=Button_In_A_Box(vbox,group, _("Midtones"), 
 			 (GtkSignalFunc) fp_change_current_range,
 			 ShMidHi+MIDTONES,
 			 Current.Range==MIDTONES);
-  group=Button_In_A_Box(vbox,group,"Highlights", 
+  group=Button_In_A_Box(vbox,group, _("Highlights"), 
 			 (GtkSignalFunc) fp_change_current_range,
 			 ShMidHi+HIGHLIGHTS,
 			 Current.Range==HIGHLIGHTS);
@@ -247,31 +248,31 @@ GtkWidget *fp_create_control(void)
 {
   GtkWidget *frame, *box;
 
-  frame = gtk_frame_new ("Windows");
+  frame = gtk_frame_new (_("Windows"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
    
   gtk_widget_show (frame);
 
   /********THE THREE RANGES*************/
-  box=gtk_vbox_new(FALSE,5);
+  box=gtk_vbox_new(FALSE,4);
   gtk_container_add(GTK_CONTAINER(frame),box);
-  gtk_container_border_width(GTK_CONTAINER(box),5);  
+  gtk_container_border_width(GTK_CONTAINER(box),4);  
   gtk_widget_show(box);
 
-  Frames_Check_Button_In_A_Box(box,"Hue",
+  Frames_Check_Button_In_A_Box(box, _("Hue"),
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.palette,
 			Current.VisibleFrames&HUE);
-  Frames_Check_Button_In_A_Box(box,"Saturation",
+  Frames_Check_Button_In_A_Box(box, _("Saturation"),
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.satur,
 			Current.VisibleFrames&SATURATION);
-  Frames_Check_Button_In_A_Box(box,"Value",
+  Frames_Check_Button_In_A_Box(box, _("Value"),
 			(GtkSignalFunc) fp_show_hide_frame,
 			fpFrames.lnd,
 			Current.VisibleFrames&VALUE);
-  Frames_Check_Button_In_A_Box(box,"Advanced",
+  Frames_Check_Button_In_A_Box(box, _("Advanced"),
 			(GtkSignalFunc) fp_show_hide_frame,
 			AW.window,
 			FALSE); 
@@ -289,19 +290,19 @@ GtkWidget *fp_create_lnd()
   Create_A_Preview(&middlePreview,&middleFrame, reduced->width, reduced->height);
   Create_A_Preview(&darkerPreview,&darkerFrame, reduced->width, reduced->height);
  
-  Create_A_Table_Entry(&lighterVbox,lighterFrame,"Lighter:");
-  Create_A_Table_Entry(&middleVbox,middleFrame,"Current:");
-  Create_A_Table_Entry(&darkerVbox,darkerFrame,"Darker:");
+  Create_A_Table_Entry(&lighterVbox,lighterFrame, N_("Lighter:"));
+  Create_A_Table_Entry(&middleVbox,middleFrame, N_("Current:"));
+  Create_A_Table_Entry(&darkerVbox,darkerFrame, N_("Darker:"));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   table = gtk_table_new(1,11,FALSE);
   gtk_container_border_width(GTK_CONTAINER(table),0);
   gtk_table_set_row_spacings(GTK_TABLE(table),0);
-  gtk_table_set_col_spacings(GTK_TABLE(table),3);
+  gtk_table_set_col_spacings(GTK_TABLE(table),2);
   gtk_widget_show (table);
 
     
@@ -314,7 +315,7 @@ GtkWidget *fp_create_lnd()
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(win),"Value Variations");
+  gtk_window_set_title(GTK_WINDOW(win), _("Value Variations"));
   gtk_container_add(GTK_CONTAINER(win),frame);
   gtk_signal_connect(GTK_OBJECT(win), "delete_event",
     (GtkSignalFunc)sub_dialog_destroy, NULL);
@@ -333,19 +334,19 @@ GtkWidget *fp_create_msnls()
   Create_A_Preview(&SatPreview,&middleFrame, reduced->width, reduced->height);
   Create_A_Preview(&plusSatPreview,&moreFrame, reduced->width, reduced->height);
  
-  Create_A_Table_Entry(&moreVbox,moreFrame,"More Sat:");
-  Create_A_Table_Entry(&middleVbox,middleFrame,"Current:");
-  Create_A_Table_Entry(&lessVbox,lessFrame,"Less Sat:");
+  Create_A_Table_Entry(&moreVbox,moreFrame, N_("More Sat:"));
+  Create_A_Table_Entry(&middleVbox,middleFrame, N_("Current:"));
+  Create_A_Table_Entry(&lessVbox,lessFrame, N_("Less Sat:"));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show(frame);
 
   table = gtk_table_new(1,11,FALSE);
   gtk_container_border_width(GTK_CONTAINER(table),0);
   gtk_table_set_row_spacings(GTK_TABLE(table),0);
-  gtk_table_set_col_spacings(GTK_TABLE(table),3);
+  gtk_table_set_col_spacings(GTK_TABLE(table),2);
   gtk_widget_show (table);
 
     
@@ -358,7 +359,7 @@ GtkWidget *fp_create_msnls()
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(win),"Saturation Variations");
+  gtk_window_set_title(GTK_WINDOW(win), _("Saturation Variations"));
   gtk_container_add(GTK_CONTAINER(win),frame);
   gtk_signal_connect(GTK_OBJECT(win), "delete_event",
     (GtkSignalFunc)sub_dialog_destroy, NULL);
@@ -372,26 +373,26 @@ GtkWidget *fp_create_pixels_select_by()
   GtkWidget *frame, *vbox;
   GSList *group=NULL;
 
-  frame = gtk_frame_new ("Select Pixels By");
+  frame = gtk_frame_new (_("Select Pixels By"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);  
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);  
   gtk_widget_show(frame);
 
-  vbox=gtk_vbox_new(FALSE,5);
+  vbox=gtk_vbox_new(FALSE,4);
   gtk_container_add(GTK_CONTAINER(frame),vbox);
-  gtk_container_border_width(GTK_CONTAINER(vbox),5);  
+  gtk_container_border_width(GTK_CONTAINER(vbox),4);  
   gtk_widget_show(vbox);
 
-  group=Button_In_A_Box(vbox,group,"Hue", 
+  group=Button_In_A_Box(vbox,group, _("Hue"), 
 			 (GtkSignalFunc) fp_change_current_pixels_by,
 			 HueSatVal+0,
 			 Current.ValueBy==BY_HUE);
-  group=Button_In_A_Box(vbox,group,"Saturation", 
+  group=Button_In_A_Box(vbox,group, _("Saturation"), 
 			 (GtkSignalFunc) fp_change_current_pixels_by,
 			 HueSatVal+1,
 			 Current.ValueBy==BY_SAT);
 
-  group=Button_In_A_Box(vbox,group,"Value", 
+  group=Button_In_A_Box(vbox,group, _("Value"), 
 			 (GtkSignalFunc) fp_change_current_pixels_by,
 			 HueSatVal+2,
 			 Current.ValueBy==BY_VAL);
@@ -403,27 +404,27 @@ GtkWidget *fp_create_show()
   GtkWidget *frame, *vbox;
   GSList *group=NULL;
 
-  frame=gtk_frame_new("Show");
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  frame=gtk_frame_new(_("Show"));
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show(frame);
 
-  vbox=gtk_vbox_new(FALSE,5);
+  vbox=gtk_vbox_new(FALSE,4);
   gtk_container_add(GTK_CONTAINER(frame),vbox);
-  gtk_container_border_width(GTK_CONTAINER(vbox),5);  
+  gtk_container_border_width(GTK_CONTAINER(vbox),4);  
   gtk_widget_show(vbox);
 
 
-  group=Button_In_A_Box(vbox,group,"Entire Image", 
+  group=Button_In_A_Box(vbox,group, _("Entire Image"), 
 			 (GtkSignalFunc) fp_entire_image,
 			 &Current.SlctnOnly,
 			 FALSE);
 
-  group=Button_In_A_Box(vbox,group,"Selection Only", 
+  group=Button_In_A_Box(vbox,group, _("Selection Only"), 
 			 (GtkSignalFunc) fp_selection_only,
 			 &Current.SlctnOnly,
 			 TRUE);
 
-  group=Button_In_A_Box(vbox,group,"Selection In Context", 
+  group=Button_In_A_Box(vbox,group, _("Selection In Context"), 
 			 (GtkSignalFunc) fp_selection_in_context,
 			 &Current.SlctnOnly,
 			 FALSE);
@@ -435,22 +436,22 @@ GtkWidget *fp_create_frame_select()
 {
   GtkWidget *frame, *box;
 
-  frame=gtk_frame_new("Display");
-  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  frame=gtk_frame_new (_("Display"));
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show(frame);
 
-  box=gtk_hbox_new(FALSE,15);
+  box=gtk_hbox_new(FALSE,8);
   gtk_container_add(GTK_CONTAINER(frame),box);
-  gtk_container_border_width(GTK_CONTAINER(box),5);  
+  gtk_container_border_width(GTK_CONTAINER(box),4);  
   gtk_widget_show(box);
 
-  Check_Button_In_A_Box (box,"CirclePalette",
+  Check_Button_In_A_Box (box, _("CirclePalette"),
 			  (GtkSignalFunc) fp_show_hide_frame,
 			  fpFrames.palette,TRUE);
-  Check_Button_In_A_Box (box,"Lighter And Darker",
+  Check_Button_In_A_Box (box, _("Lighter And Darker"),
 			  (GtkSignalFunc) fp_show_hide_frame,
 			  fpFrames.lnd,TRUE);
-  Check_Button_In_A_Box (box,"Saturation",
+  Check_Button_In_A_Box (box, _("Saturation"),
 			  (GtkSignalFunc) fp_show_hide_frame,
 			  fpFrames.satur,FALSE);
   return frame;
@@ -536,14 +537,14 @@ void Frames_Check_Button_In_A_Box (GtkWidget  *vbox,
 
 
 void Create_A_Table_Entry    (GtkWidget  **box,
-				     GtkWidget  *SmallerFrame,
-				     char       *description)
+			      GtkWidget  *SmallerFrame,
+			      char       *description)
 {
   GtkWidget *label, *button, *table;
   *box = gtk_vbox_new(FALSE,1);
   gtk_container_border_width (GTK_CONTAINER (*box),PR_BX_BRDR);
   gtk_widget_show (*box);
-  label = gtk_label_new(description);
+  label = gtk_label_new (gettext (description));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_widget_show (label);
  
@@ -555,7 +556,7 @@ void Create_A_Table_Entry    (GtkWidget  **box,
   gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,0,0,0,0);
 
   if (strcmp(description,"Current:")) {
-    button = gtk_button_new();
+    button = gtk_button_new ();
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) selectionMade,
                       description);
@@ -563,10 +564,10 @@ void Create_A_Table_Entry    (GtkWidget  **box,
     gtk_container_add(GTK_CONTAINER(button),SmallerFrame);
     gtk_container_border_width (GTK_CONTAINER (button),0);
     gtk_widget_show(button);
-    gtk_table_attach(GTK_TABLE(table), button, 0,1,1,2,0,0,0,5);
+    gtk_table_attach(GTK_TABLE(table), button, 0,1,1,2,0,0,0,4);
   }
   else
-    gtk_table_attach(GTK_TABLE(table), SmallerFrame, 0,1,1,2,0,0,0,5);
+    gtk_table_attach(GTK_TABLE(table), SmallerFrame, 0,1,1,2,0,0,0,4);
 }
 
 void
@@ -853,7 +854,7 @@ int fp_dialog()
   /********************************************************************/
   /************************* All the Standard Stuff *******************/
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Filter Pack Simulation");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Filter Pack Simulation"));
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) fp_close_callback,
 		      NULL);
@@ -866,7 +867,7 @@ int fp_dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) fp_ok_callback,
@@ -875,7 +876,7 @@ int fp_dialog()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Reset");
+  button = gtk_button_new_with_label (_("Reset"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) resetFilterPacks,
@@ -883,7 +884,7 @@ int fp_dialog()
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -1001,7 +1002,7 @@ preview_size_scale_update (GtkAdjustment *adjustment,
 
 gint fp_advanced_dialog()
 {
-  guchar *rangeNames[]={"Shadows:", "Midtones:", "Highlights:"};
+  guchar *rangeNames[] = { N_("Shadows:"), N_("Midtones:"), N_("Highlights:")};
   GtkWidget *frame, *mainvbox;
   GtkObject *smoothnessData;
   GtkWidget *graphFrame, *table, *scale;
@@ -1010,7 +1011,7 @@ gint fp_advanced_dialog()
   int i;
 
   AW.window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(AW.window),"Advanced Filter Pack Options");
+  gtk_window_set_title(GTK_WINDOW(AW.window), _("Advanced Filter Pack Options"));
   gtk_signal_connect(GTK_OBJECT(AW.window), "delete_event",
     (GtkSignalFunc)sub_dialog_destroy, NULL);
 
@@ -1018,8 +1019,8 @@ gint fp_advanced_dialog()
   gtk_container_add(GTK_CONTAINER(AW.window),mainvbox);
   gtk_widget_show(mainvbox);
   /************************************************************/
-  frame = gtk_frame_new("Smoothness of Aliasing");
-  gtk_container_border_width(GTK_CONTAINER(frame),10);
+  frame = gtk_frame_new (_("Smoothness of Aliasing"));
+  gtk_container_border_width(GTK_CONTAINER(frame),4);
   gtk_widget_show(frame);
 
   gtk_box_pack_start(GTK_BOX (mainvbox),frame, TRUE, TRUE,0);
@@ -1035,7 +1036,7 @@ gint fp_advanced_dialog()
   gtk_table_attach(GTK_TABLE(table),graphFrame,0,1,0,1,
 		   GTK_EXPAND,
 		   0,
-		   10,10);
+		   4,4);
   
   vbox=gtk_vbox_new(FALSE,0);
   gtk_widget_show(vbox);
@@ -1059,18 +1060,18 @@ gint fp_advanced_dialog()
   gtk_table_attach(GTK_TABLE(table),labelTable,0,1,1,2,
 		   GTK_EXPAND,
 		   0,
-		   0,15);
+		   0,8);
 
   for (i=0; i<12; i++)
     {
       label=Current.rangeLabels[i]=gtk_label_new("-");
       if (!(i%4)) {
-	gtk_label_set_text(GTK_LABEL(label),rangeNames[i/4]);
+	gtk_label_set_text(GTK_LABEL(label), gettext (rangeNames[i/4]));
 	gtk_misc_set_alignment(GTK_MISC(label),0.0,1.0);
       }
       gtk_widget_show(label);
       gtk_table_attach(GTK_TABLE(labelTable),label,i%4, i%4+1,i/4, i/4+1,
-		       GTK_EXPAND|GTK_FILL,0,5,0);
+		       GTK_EXPAND|GTK_FILL,0,4,0);
     }
   /************************************************************/
   /************************************************************/
@@ -1106,15 +1107,15 @@ gint fp_advanced_dialog()
 		      (GtkSignalFunc) fp_scale_update,
 		      &Current.Alias);      
   gtk_widget_show (scale);
-  gtk_table_attach(GTK_TABLE(table),scale,0,1,2,3,0,0,0,15);
+  gtk_table_attach(GTK_TABLE(table),scale,0,1,2,3,0,0,0,8);
 
   /************************************************************/
   /******************* MISC OPTIONS ***************************/
   /************************************************************/
 
 
-  optionsFrame=gtk_frame_new("Miscellaneous Options");
-  gtk_container_border_width(GTK_CONTAINER(optionsFrame),10);
+  optionsFrame=gtk_frame_new (_("Miscellaneous Options"));
+  gtk_container_border_width(GTK_CONTAINER(optionsFrame),4);
   gtk_widget_show(optionsFrame);
 
   gtk_box_pack_start(GTK_BOX(mainvbox),optionsFrame, TRUE, TRUE,0);
@@ -1124,17 +1125,17 @@ gint fp_advanced_dialog()
   gtk_container_add(GTK_CONTAINER(optionsFrame),table);
  
   vbox=gtk_vbox_new(FALSE,8);
-  gtk_container_border_width(GTK_CONTAINER(vbox),10);
+  gtk_container_border_width(GTK_CONTAINER(vbox),4);
   gtk_widget_show(vbox);
-  gtk_table_attach(GTK_TABLE(table),vbox,0,1,0,1,0,0,5,5);
+  gtk_table_attach(GTK_TABLE(table),vbox,0,1,0,1,0,0,4,4);
  
-  Check_Button_In_A_Box (vbox,"Preview As You Drag",
+  Check_Button_In_A_Box (vbox, _("Preview As You Drag"),
 			  (GtkSignalFunc) As_You_Drag,
 			  NULL,TRUE);			
 
-  frame=gtk_frame_new("Preview Size");
+  frame=gtk_frame_new (_("Preview Size"));
   gtk_widget_show(frame);
-  gtk_container_border_width(GTK_CONTAINER(frame),10);
+  gtk_container_border_width(GTK_CONTAINER(frame),4);
  
   smoothnessData = gtk_adjustment_new (Current.PreviewSize, 
 				       50, MAX_PREVIEW_SIZE, 
@@ -1151,7 +1152,7 @@ gint fp_advanced_dialog()
 		      (GtkSignalFunc) preview_size_scale_update,
 		      &Current.PreviewSize);        
   gtk_widget_show (scale);
-  gtk_table_attach(GTK_TABLE(table),frame,0,1,1,2,GTK_FILL,0,5,5);
+  gtk_table_attach(GTK_TABLE(table),frame,0,1,1,2,GTK_FILL,0,4,4);
 
   return 1;
 }

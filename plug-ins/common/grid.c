@@ -122,6 +122,8 @@ void query (void)
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_grid",
 			  _("Draws a grid."),
 			  _("no help available"),

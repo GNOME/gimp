@@ -42,7 +42,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpintl.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"

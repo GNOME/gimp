@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 #include "fp.h"
 #include "fp_hsv.h"
 
@@ -57,13 +58,14 @@ query ()
   int nargs = sizeof (args) / sizeof (args[0]);
   int nreturn_vals = 0;
   
+  INIT_I18N();
   gimp_install_procedure ("plug_in_filter_pack",
-			  "Allows the user to change H, S, or C with many previews",
-			  "Then something else here",
+			  _("Allows the user to change H, S, or C with many previews"),
+			  _("No help available"),
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
-			  "<Image>/Image/Colors/Filter Pack...",
+			  N_("<Image>/Image/Colors/Filter Pack..."),
 			  "RGB*,INDEXED*,GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -84,6 +86,8 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N_UI(); 
+
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 
@@ -93,13 +97,13 @@ run (char    *name,
   mask=gimp_drawable_get(gimp_image_get_selection(param[1].data.d_image));
 
   if (gimp_drawable_is_indexed (drawable->id) ||gimp_drawable_is_gray (drawable->id) ) {
-    ErrorMessage("Convert the image to RGB first!");
+    gimp_message (_("Convert the image to RGB first!"));
     status = STATUS_EXECUTION_ERROR;
   }
   
   else if (gimp_drawable_is_rgb (drawable->id) && fp_dialog())
     {
-      gimp_progress_init ("Applying the Filter Pack..."); 
+      gimp_progress_init (_("Applying the Filter Pack...")); 
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       fp (drawable);
       gimp_displays_flush ();
@@ -236,46 +240,4 @@ void fp (GDrawable *drawable)
   free (src_row);
   free (dest_row);
  
-}
-
-
-void 
-ErrorMessage(guchar *message)
-{
-  GtkWidget *window, *label, *button,*table;
-  gchar **argv=g_new (gchar *, 1);
-  gint argc=1;
-  argv[0] = g_strdup ("fp");
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
-  
-  window=gtk_dialog_new();
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-  gtk_window_set_title(GTK_WINDOW(window),"Filter Pack Simulation Message");
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      (GtkSignalFunc) fp_close_callback,
-		      NULL);
-  
-  button = gtk_button_new_with_label ("Got It!");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) fp_ok_callback,
-                      window);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button, TRUE, TRUE, 0);
- 
-  table=gtk_table_new(2,2,FALSE);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox),table,TRUE,TRUE,0);
-  gtk_widget_show(table);
-  
-  label=gtk_label_new("");
-  gtk_label_set_text(GTK_LABEL(label),message);
-  gtk_widget_show(label);
-  gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,
-		   GTK_FILL|GTK_EXPAND,GTK_FILL|GTK_EXPAND,15,15);
-  
-  gtk_widget_show(window);
-  gtk_main ();
-
 }

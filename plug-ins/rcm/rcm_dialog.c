@@ -42,7 +42,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpintl.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
@@ -72,8 +72,11 @@
 /* Previews: create one preview */
 /*-----------------------------------------------------------------------------------*/
 
-void rcm_create_one_preview(GtkWidget **preview, GtkWidget **frame,
-				int previewWidth, int previewHeight)
+void 
+rcm_create_one_preview (GtkWidget **preview, 
+			GtkWidget **frame,
+			int         previewWidth, 
+			int         previewHeight)
 {
   *frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(*frame), GTK_SHADOW_IN);
@@ -91,7 +94,8 @@ void rcm_create_one_preview(GtkWidget **preview, GtkWidget **frame,
 /* Previews */
 /*-----------------------------------------------------------------------------------*/
 
-GtkWidget *rcm_create_previews(void)
+GtkWidget* 
+rcm_create_previews (void)
 {
   GtkWidget *frame, *blabel, *alabel, *bframe, *aframe, *table;
 
@@ -107,7 +111,7 @@ GtkWidget *rcm_create_previews(void)
 
   frame = gtk_frame_new(_("Preview"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 5);
+  gtk_container_border_width(GTK_CONTAINER(frame), 4);
 
   alabel = gtk_label_new(_("Rotated"));
   gtk_widget_show(alabel);
@@ -116,10 +120,10 @@ GtkWidget *rcm_create_previews(void)
   gtk_widget_show(blabel);
 
   table = gtk_table_new(4, 1, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 10);
+  gtk_container_border_width(GTK_CONTAINER(table), 4);
   gtk_table_set_row_spacings(GTK_TABLE(table), 0);
-  gtk_table_set_col_spacings(GTK_TABLE(table), 20);
-  
+  gtk_table_set_col_spacings(GTK_TABLE(table), 4);
+ 
   gtk_container_add(GTK_CONTAINER(frame), table);
   
   gtk_table_attach(GTK_TABLE(table), blabel, 0, 1, 0, 1, 
@@ -144,9 +148,15 @@ GtkWidget *rcm_create_previews(void)
 /* Main: Create one pixmap button */
 /*-----------------------------------------------------------------------------------*/
 
-void rcm_create_pixmap_button(GtkWidget **label, GtkWidget **xpm_button,
-			      GtkWidget **label_box, GtkSignalFunc callback,
-			      gpointer data, gchar *text, GtkWidget *parent, gint pos)
+void 
+rcm_create_pixmap_button (GtkWidget     **label, 
+			  GtkWidget     **xpm_button,
+			  GtkWidget     **label_box, 
+			  GtkSignalFunc   callback,
+			  gpointer        data, 
+			  gchar          *text, 
+			  GtkWidget      *parent, 
+			  gint            pos)
 {
   /* create button */
 
@@ -155,7 +165,7 @@ void rcm_create_pixmap_button(GtkWidget **label, GtkWidget **xpm_button,
   gtk_widget_show(*xpm_button);
 
   gtk_table_attach(GTK_TABLE(parent), *xpm_button,
-		   0, 1, pos, pos+1, GTK_EXPAND|GTK_FILL, GTK_FILL, 5, 2);
+		   0, 1, pos, pos+1, GTK_EXPAND|GTK_FILL, GTK_FILL, 4, 2);
 
   /* create hbox */
 
@@ -180,7 +190,8 @@ void rcm_create_pixmap_button(GtkWidget **label, GtkWidget **xpm_button,
 /* Set buttons pixmaps */
 /*-----------------------------------------------------------------------------------*/
 
-void rcm_set_pixmaps(RcmCircle *circle)
+void 
+rcm_set_pixmaps (RcmCircle *circle)
 {
   rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent, circle->cw_ccw_box, rcm_cw);
   rcm_set_pixmap(&circle->a_b_pixmap, circle->a_b_button->parent, circle->a_b_box, rcm_a_b);
@@ -191,7 +202,9 @@ void rcm_set_pixmaps(RcmCircle *circle)
 /* Main: One circles with values and buttons */
 /*-----------------------------------------------------------------------------------*/
 
-RcmCircle *rcm_create_one_circle(gint height, gchar *label_content)
+RcmCircle*
+rcm_create_one_circle (gint   height, 
+		       gchar *label_content)
 {
   GtkWidget *frame, *button_table, *legend_table;
   GtkWidget *label, *label_box, *xpm_button, *entry;
@@ -292,22 +305,22 @@ RcmCircle *rcm_create_one_circle(gint height, gchar *label_content)
   gtk_widget_show(entry);
   gtk_signal_connect(GTK_OBJECT(entry), "changed", (GtkSignalFunc)rcm_set_alpha, st);
   gtk_table_attach(GTK_TABLE(legend_table), entry, 1,2, 0,1,
-		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2 ,5);
+		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
 
   /* label */
 
   st->alpha_units_label = gtk_label_new(rcm_units_string(Current.Units));
   gtk_widget_show(st->alpha_units_label);
 
-  gtk_table_attach(GTK_TABLE(legend_table), st->alpha_units_label, 2,3, 0,1,
-		   0, GTK_EXPAND, 5, 5);
+  gtk_table_attach(GTK_TABLE(legend_table), st->alpha_units_label, 2, 3, 0, 1,
+		   0, GTK_EXPAND, 4, 4);
 
   /* spinbutton 2 */
 
   label = gtk_label_new(_("to"));
   gtk_widget_show(label);
   gtk_table_attach(GTK_TABLE(legend_table), label, 3,4, 0,1,
-		   0, GTK_EXPAND, 5, 5);
+		   0, GTK_EXPAND, 4, 4);
 
   st->angle->beta = INITIAL_BETA;
   adj = (GtkAdjustment *) gtk_adjustment_new(st->angle->beta, 0.0, 2.0, 0.0001, 0.001, 0.0);
@@ -316,7 +329,7 @@ RcmCircle *rcm_create_one_circle(gint height, gchar *label_content)
   gtk_widget_show(entry);
   gtk_signal_connect(GTK_OBJECT(entry), "changed", (GtkSignalFunc)rcm_set_beta, st);
   gtk_table_attach(GTK_TABLE(legend_table), entry, 4,5, 0,1,
-		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2 ,5);
+		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 4);
 
   /* label */
 
@@ -324,7 +337,7 @@ RcmCircle *rcm_create_one_circle(gint height, gchar *label_content)
   gtk_widget_show(st->beta_units_label);
 
   gtk_table_attach(GTK_TABLE(legend_table), st->beta_units_label, 5,6, 0,1,
-		   0, GTK_EXPAND, 5, 5);
+		   0, GTK_EXPAND, 4, 4);
 
   /* Main: Circle: create table for Preview / Buttons / Legend */
   
@@ -351,15 +364,10 @@ RcmCircle *rcm_create_one_circle(gint height, gchar *label_content)
 /* Main */
 /*-----------------------------------------------------------------------------------*/
 
-GtkWidget *rcm_create_main(void)
+GtkWidget*
+rcm_create_main (void)
 {
-  GtkWidget *frame, *table;
-  
-  /* Main: create frame */
-   
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 5);
+  GtkWidget *table;
   
   /* Main: create previews */
 
@@ -369,8 +377,7 @@ GtkWidget *rcm_create_main(void)
   /* Main: create table */
 
   table = gtk_table_new(3, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 5);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  gtk_container_border_width(GTK_CONTAINER(table), 0);
 
   /* Main: insert previews in table */
  
@@ -381,16 +388,16 @@ GtkWidget *rcm_create_main(void)
 		   GTK_EXPAND|GTK_FILL, GTK_EXPAND, 0, 0);
 
   gtk_widget_show(table);
-  
-  gtk_widget_show(frame);
-  return frame;
+
+  return table;
 }
 
 /*-----------------------------------------------------------------------------------*/
 /* Misc: Gray */
 /*-----------------------------------------------------------------------------------*/
 
-RcmGray *rcm_create_gray(void)
+RcmGray*
+rcm_create_gray (void)
 {
   GtkWidget *frame, *preview, *as_or_to_frame;
   GtkWidget *table, *previewframe, *legend_table;
@@ -489,12 +496,12 @@ RcmGray *rcm_create_gray(void)
   /** Gray: Operation-Mode **/
 
   as_or_to_frame = gtk_frame_new(_("Mode"));
-  gtk_container_border_width (GTK_CONTAINER (as_or_to_frame), 5);
+  gtk_container_border_width (GTK_CONTAINER (as_or_to_frame), 4);
   gtk_widget_show(as_or_to_frame);
     
   radio_box = gtk_vbox_new(FALSE, 3);
   gtk_container_add(GTK_CONTAINER(as_or_to_frame), radio_box);
-  gtk_container_border_width(GTK_CONTAINER(radio_box), 5);
+  gtk_container_border_width(GTK_CONTAINER(radio_box), 4);
   gtk_widget_show(radio_box);
 
   /* Gray: Operation-Mode: two radio buttons */
@@ -521,7 +528,7 @@ RcmGray *rcm_create_gray(void)
   /** Gray: What is gray? **/ 
 
   gray_sat_frame = gtk_frame_new(_("What is Gray?"));
-  gtk_container_border_width(GTK_CONTAINER(gray_sat_frame), 5);
+  gtk_container_border_width(GTK_CONTAINER(gray_sat_frame), 4);
   gtk_widget_show(gray_sat_frame);
     
   table = gtk_table_new(1, 3, FALSE);
@@ -539,9 +546,10 @@ RcmGray *rcm_create_gray(void)
   adj = (GtkAdjustment *) gtk_adjustment_new(st->gray_sat, 0.0, 1.0, 0.0001, 0.001, 0.0);
 
   st->gray_sat_entry = entry = gtk_spin_button_new(adj, 0.01, 4);
+  gtk_widget_set_usize (entry, 75, 0);
   gtk_widget_show(entry);
   gtk_signal_connect(GTK_OBJECT(entry), "changed", (GtkSignalFunc)rcm_set_gray_sat, st);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_EXPAND|GTK_FILL, GTK_EXPAND, 3,0);
+  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_EXPAND|GTK_FILL, GTK_EXPAND, 2, 0);
 
   gtk_container_add(GTK_CONTAINER(gray_sat_frame), table);
 
@@ -585,9 +593,10 @@ RcmGray *rcm_create_gray(void)
 /* Misc */
 /*-----------------------------------------------------------------------------------*/
 
-GtkWidget *rcm_create_misc(void)
+GtkWidget* 
+rcm_create_misc (void)
 {
-  GtkWidget *frame, *label,*table;
+  GtkWidget *label, *table;
   GtkWidget *units_frame, *units_vbox;
   GtkWidget *preview_frame, *preview_vbox;
   GtkWidget *item, *menu, *root, *hbox;
@@ -595,13 +604,7 @@ GtkWidget *rcm_create_misc(void)
 
   GSList *units_group = NULL;
   GSList *preview_group = NULL;
-
-  /** Misc: Main frame **/
-
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 5);
-
+  
   /** Misc: Gray circle **/
 
   Current.Gray = rcm_create_gray();
@@ -613,7 +616,7 @@ GtkWidget *rcm_create_misc(void)
 
   units_vbox=gtk_vbox_new(FALSE, 3);
   gtk_container_add(GTK_CONTAINER(units_frame), units_vbox);
-  gtk_container_border_width(GTK_CONTAINER(units_vbox), 5);
+  gtk_container_border_width(GTK_CONTAINER(units_vbox), 4);
   gtk_widget_show(units_vbox);
 
   /* Misc: Used unit selection: 3 radio buttons */
@@ -646,8 +649,8 @@ GtkWidget *rcm_create_misc(void)
   /* Misc: Preview settings: Continuous update ?! */
   
   preview_frame = gtk_frame_new(_("Preview"));
-  preview_vbox = gtk_vbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(preview_vbox), 5);
+  preview_vbox = gtk_vbox_new(FALSE, 4);
+  gtk_container_border_width(GTK_CONTAINER(preview_vbox), 4);
   gtk_widget_show(preview_vbox);
 
   gtk_container_add(GTK_CONTAINER(preview_frame), preview_vbox);
@@ -665,13 +668,13 @@ GtkWidget *rcm_create_misc(void)
 
   /* Misc: Preview settings: Area */
 
-  hbox = gtk_hbox_new(FALSE,3);
+  hbox = gtk_hbox_new(FALSE,2);
   gtk_widget_show(hbox);
-  gtk_box_pack_start(GTK_BOX(preview_vbox), hbox, TRUE, FALSE, 5);
+  gtk_box_pack_start(GTK_BOX(preview_vbox), hbox, TRUE, FALSE, 4);
 
   label = gtk_label_new(_("Area"));
   gtk_widget_show(label);
-  gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 3);
+  gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 4);
 
   /* create menu entries */
 
@@ -711,29 +714,28 @@ GtkWidget *rcm_create_misc(void)
   gtk_widget_show(table);
   gtk_container_border_width(GTK_CONTAINER(table),0);
   
-  gtk_container_add(GTK_CONTAINER(frame), table);
-
   /** add frames (gray/preview/units) to table **/
 
   gtk_table_attach(GTK_TABLE(table), Current.Gray->frame,  0, 2, 0, 1,
-                   GTK_EXPAND|GTK_FILL, GTK_FILL, 5, 3);
+                   GTK_EXPAND|GTK_FILL, GTK_FILL, 4, 4);
   
   gtk_table_attach(GTK_TABLE(table), preview_frame, 0, 1, 1, 2,
-		   GTK_EXPAND|GTK_FILL, GTK_FILL, 5, 3);
+		   GTK_EXPAND|GTK_FILL, GTK_FILL, 4, 4);
   
   gtk_table_attach(GTK_TABLE(table), units_frame, 1, 2, 1, 2,
-		    GTK_EXPAND|GTK_FILL, GTK_FILL, 5, 3);
+		    GTK_EXPAND|GTK_FILL, GTK_FILL, 4, 4);
   
-  gtk_widget_show (frame);
+  gtk_widget_show (table);
 
-  return frame;
+  return table;
 }
 
 /*-----------------------------------------------------------------------------------*/
 /* create and call main dialog */
 /*-----------------------------------------------------------------------------------*/
 
-gint rcm_dialog(void)
+gint 
+rcm_dialog (void)
 {
   GtkWidget *table, *dlg, *hbox, *notebook;
   GtkWidget *previews, *mains, *miscs;
@@ -781,7 +783,7 @@ gint rcm_dialog(void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) rcm_ok_callback,
@@ -790,7 +792,7 @@ gint rcm_dialog(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -820,7 +822,7 @@ gint rcm_dialog(void)
   /* Notebook */
 
   notebook = gtk_notebook_new();
-  gtk_container_border_width(GTK_CONTAINER(notebook), 10);
+  gtk_container_border_width(GTK_CONTAINER(notebook), 4);
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
   gtk_box_pack_start(GTK_BOX(hbox), notebook, TRUE, TRUE, 0);
   gtk_widget_show(notebook);
@@ -829,7 +831,7 @@ gint rcm_dialog(void)
   gtk_widget_show(table);
   
   gtk_table_attach(GTK_TABLE(table), mains, 1, 2, 0, 1,
-		   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 5, 0);
+		   GTK_EXPAND|GTK_FILL, GTK_EXPAND|GTK_FILL, 4, 0);
     
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, gtk_label_new(_("Main")));
 
