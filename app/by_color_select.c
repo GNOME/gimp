@@ -601,7 +601,7 @@ by_color_select_new_dialog ()
   gtk_container_border_width (GTK_CONTAINER (options_box), 5);
   gtk_box_pack_start (GTK_BOX (hbox), options_box, TRUE, TRUE, 0);
 
-  /*  Create the active brush label  */
+  /*  Create the active image label  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
   bcd->gimage_name = gtk_label_new ("Inactive");
@@ -832,7 +832,12 @@ by_color_select_reset_callback (GtkWidget *widget,
   ByColorDialog *bcd;
 
   bcd = (ByColorDialog *) client_data;
+
   if (!bcd->gimage)
+    return;
+
+  /*  check if the image associated to the mask still exists  */
+  if (!drawable_gimage (GIMP_DRAWABLE(gimage_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -889,7 +894,12 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 
   if (!bcd->gimage)
     return;
+
   drawable = gimage_active_drawable (bcd->gimage);
+
+  /*  check if the gimage associated to the drawable still exists  */
+  if (!drawable_gimage (drawable))
+    return;
 
   /*  Defaults  */
   replace = FALSE;
