@@ -35,6 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -944,10 +945,12 @@ p_save_pointfile (BenderDialog *cd,
   if(gb_debug) printf("Saving curve to file:%s\n", filename);
 
   l_fp = fopen(filename, "w+");
-  if(l_fp == NULL)
-  {
-    return -1;
-  }
+  if (!l_fp)
+    {
+      g_message (_("Failed to write file '%s':\n%s"),
+		 filename, g_strerror (errno));
+      return -1;
+    }
 
   fprintf(l_fp, "%s\n", KEY_POINTFILE);
   fprintf(l_fp, "VERSION 1.0\n\n");
@@ -997,10 +1000,12 @@ p_load_pointfile (BenderDialog *cd,
   if(gb_debug) printf("Loading curve from file:%s\n", filename);
 
   l_fp = fopen(filename, "r");
-  if(l_fp == NULL)
-  {
-    return -1;
-  }
+  if (l_fp == NULL)
+    {
+      g_message (_("Failed to open file '%s':\n%s"),
+		 filename, g_strerror (errno));
+      return -1;
+    }
 
   l_pi= 0;
   l_ci= 0;
