@@ -1,3 +1,8 @@
+2004-10-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_desc_string): say
+	"Click to create preview" if no preview is available.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: added gimp_text_buffer_save()

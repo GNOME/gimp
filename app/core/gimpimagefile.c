@@ -581,7 +581,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
         switch (thumbnail->thumb_state)
           {
           case GIMP_THUMB_STATE_NOT_FOUND:
-            g_string_append (str, _("No preview available"));
+            g_string_append (str, _("Click to create preview"));
             break;
 
           case GIMP_THUMB_STATE_EXISTS:
