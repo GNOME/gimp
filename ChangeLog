@@ -1,3 +1,8 @@
+2004-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpcanvas.c (gimp_canvas_gc_new): use
+	GDK_CAP_NOT_LAST as the cap_style for all canvas drawing.
+
 2004-02-12  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/psd.c:
