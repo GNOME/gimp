@@ -1,13 +1,13 @@
 # GIMP libgimp message translation table
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# SHIRASAKI Yasuhiro <yasuhiro@awa.tohoku.ac.jp>, 2000.
+# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-03-16 16:24+09:00\n"
-"Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
+"Project-Id-Version: gimp 1.1.25\n"
+"POT-Creation-Date: 2000-07-09 00:19+0900\n"
+"PO-Revision-Date: 2000-07-09 00:24+09:00\n"
+"Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
@@ -21,8 +21,8 @@ msgstr "/前景色を使用"
 msgid "/Use Background Color"
 msgstr "/背景色を使用"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
 msgstr "レイヤーを取り扱えません"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -30,66 +30,66 @@ msgid "Merge Visible Layers"
 msgstr "可視レイヤーの結合"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "アニメーションフレームとしてしかレイヤーを取り扱えません"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "アニメーションとして保存"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "画像の統合"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+msgid "can't handle transparency"
 msgstr "透明情報を取り扱えません"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
 msgstr "RGB 画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "RGB に変換"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
 msgstr "グレースケール画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "グレースケールに変換"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
 msgstr "インデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"インデックス画像にデフォルト設定で自動変換する\n"
+"インデックス画像に標準設定で自動変換する\n"
 "(良い結果を得たい場合には手動で行って下さい)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+msgid "can only handle RGB or grayscale images"
 msgstr "RGB もしくはグレースケール画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
 msgstr "RGB もしくはインデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
 msgstr "グレースケールもしくはインデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr "アルファチャンネルが必要です"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
@@ -98,32 +98,32 @@ msgstr "アルファチャンネルを追加"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "エクスポートファイル"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "エクスポート"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "無視"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "取消"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "以下の理由のため画像のエクスポートを行う必要があります:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "エクスポート変換は元画像には影響を与えません."
 
