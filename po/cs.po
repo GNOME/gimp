@@ -5,29 +5,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-07-10 14:40+0200\n"
-"PO-Revision-Date: 2000-07-10 17:42+02:00\n"
+"POT-Creation-Date: 2000-07-20 20:30+0200\n"
+"PO-Revision-Date: 2000-07-20 20:57+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:256
+#: app/about_dialog.c:277
 msgid "About the GIMP"
 msgstr "O programu GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:307
+#: app/about_dialog.c:336
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:317
+#: app/about_dialog.c:346
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Verzi %s pro vás napsali"
 
-#: app/about_dialog.c:357
+#: app/about_dialog.c:387
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Více se dozvíte, nav¹tívíte-li http://www.gimp.org/"
 
@@ -480,7 +480,7 @@ msgid "copy"
 msgstr "kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1746
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -2857,62 +2857,62 @@ msgstr "Pøiblí¾it"
 msgid "Zoom out"
 msgstr "Vzdálit"
 
-#: app/main.c:280
+#: app/main.c:296
 msgid "GIMP version"
 msgstr "GIMP verze"
 
-#: app/main.c:284
+#: app/main.c:300
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "U¾ití: %s [volba ...] [soubory ...]\n"
 
-#: app/main.c:285
+#: app/main.c:301
 msgid "Valid options are:\n"
 msgstr "Platné pøepínaèe jsou:\n"
 
-#: app/main.c:286
+#: app/main.c:302
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vypí¹e tuto nápovìdu.\n"
 
-#: app/main.c:287
+#: app/main.c:303
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vypí¹e informace o verzi.\n"
 
-#: app/main.c:288
+#: app/main.c:304
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <pøíkazy>     Spustí se v dávkovém re¾imu.\n"
 
-#: app/main.c:289
+#: app/main.c:305
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Pou¾ije alternativní gimprc soubor.\n"
 
-#: app/main.c:290
+#: app/main.c:306
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Spustí se bez u¾ivatelského rozhraní.\n"
 
-#: app/main.c:291
+#: app/main.c:307
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Pokusí se obnovit zapsané sezení.\n"
 
-#: app/main.c:292
+#: app/main.c:308
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr "  --no-data                Neète vzorky, pøechody, palety, stopy.\n"
 
-#: app/main.c:293
+#: app/main.c:309
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zobrazí zprávy o spou¹tìní.\n"
 
-#: app/main.c:294
+#: app/main.c:310
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Neuká¾e okno spou¹tìní.\n"
 
-#: app/main.c:295
+#: app/main.c:311
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Neuká¾e obrázek v oknì spou¹tìní.\n"
 
-#: app/main.c:296
+#: app/main.c:312
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2920,11 +2920,11 @@ msgstr ""
 "  --no-shm                 Nepou¾ije sdílenou pamì» mezi programem GIMP a "
 "zásuvnými moduly.\n"
 
-#: app/main.c:297
+#: app/main.c:313
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Nepou¾ije X roz¹íøení sdílené pamìti.\n"
 
-#: app/main.c:298
+#: app/main.c:314
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2932,20 +2932,30 @@ msgstr ""
 "  --console-messages       Zobrazí varování na konzoli namísto dialogového "
 "okna.\n"
 
-#: app/main.c:299
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers         Povolí ladìní obsluhy signálù.\n"
+#: app/main.c:315
+msgid ""
+"  --debug-handlers         Enable debugging signal handlers for non-fatal "
+"signals.\n"
+msgstr "  --debug-handlers         Povolí ladicí obsluhu nefatálních signálù.\n"
 
-#: app/main.c:300
+#: app/main.c:316
+msgid "  --enable-stack-trace {never|query|always}\n"
+msgstr "  --enable-stack-trace {never|query|always} {nikdy|na dotaz|v¾dy}\n"
+
+#: app/main.c:317
+msgid "                           Debugging mode for fatal signals.\n"
+msgstr "                           Ladicí re¾im fatálních signálù.\n"
+
+#: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <displej>      Pou¾ije zvolený X displej.\n"
 
-#: app/main.c:301
+#: app/main.c:319
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Pou¾ije alternativní systémový gimprc soubor.\n"
 
-#: app/main.c:318
+#: app/main.c:336
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
@@ -4155,38 +4165,38 @@ msgstr "Matice:"
 msgid "Perspective..."
 msgstr "Perspektiva..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:329
 msgid "Resource configuration"
 msgstr "Konfigurace zdrojù"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:336
 msgid "Plug-ins"
 msgstr "Zásuvné moduly"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:348
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "dotaz na zásuvný modul: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:384
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "zapisuje se \"%s\"\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:399
 msgid "Starting extensions: "
 msgstr "Spou¹tí se roz¹íøení: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:400
 msgid "Extensions"
 msgstr "Roz¹íøení"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:831
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Nepodaøilo se nalézt zásuvný modul: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1491
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -6257,9 +6267,12 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"V¹echna data, která se nevejdou do vyrovnávací pamìti dla¾dic budou zapisována\n"
-"do odkládacího souboru. Tento soubor by se mìl nacházet na místním systému souborù\n"
-"s dostateèným volným prostorem (nìkolik set MB). Na systémech UNIX bývá bì¾né\n"
+"V¹echna data, která se nevejdou do vyrovnávací pamìti dla¾dic budou "
+"zapisována\n"
+"do odkládacího souboru. Tento soubor by se mìl nacházet na místním systému "
+"souborù\n"
+"s dostateèným volným prostorem (nìkolik set MB). Na systémech UNIX bývá "
+"bì¾né\n"
 "pou¾ívat systémový doèasný adresáø (\"/tmp\" nebo \"/var/tmp\")."
 
 #: app/user_install.c:1130
