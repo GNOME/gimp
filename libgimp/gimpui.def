@@ -23,6 +23,7 @@ EXPORTS
 	gimp_gradient_select_widget_set
 	gimp_image_menu_new
 	gimp_layer_menu_new
+	gimp_parameter_settings_new
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set
