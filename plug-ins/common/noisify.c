@@ -91,7 +91,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static NoisifyVals nvals =
 {
   TRUE,
-  { 0.20, 0.20, 0.20, 0.20 }
+  { 0.20, 0.20, 0.20, 0.0 }
 };
 
 static NoisifyInterface noise_int =
@@ -126,7 +126,7 @@ query (void)
                           "Torsten Martinsen",
                           "Torsten Martinsen",
                           "May 2000",
-                          N_("_Noisify..."),
+                          N_("_Scatter RGB..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -159,6 +159,9 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+  if (gimp_drawable_is_gray (drawable->drawable_id))
+    nvals.noise[1] = 0.;
 
   switch (run_mode)
     {
@@ -246,7 +249,7 @@ noisify_func (const guchar *src,
         {
           gint p;
 
-          if (nvals.independent)
+          if (nvals.independent || (b == 1 && bpp == 2) || (b == 3 && bpp == 4))
             noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
 
           p = src[b] + noise;
@@ -294,6 +297,27 @@ noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
   noise_int.channel_adj[channel] = adj;
 }
 
+static void
+noisify_add_alpha_channel (GtkWidget *table, gint channel, gchar *name,
+                     GimpDrawable *drawable)
+{
+  GtkObject *adj;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, channel + 1,
+                              name, SCALE_WIDTH, 0,
+                              nvals.noise[channel], 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
+
+  g_object_set_data (G_OBJECT (adj), "drawable", drawable);
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &nvals.noise[channel]);
+
+  noise_int.channel_adj[channel] = adj;
+}
+
 static gint
 noisify_dialog (GimpDrawable *drawable,
                 gint       channels)
@@ -307,7 +331,7 @@ noisify_dialog (GimpDrawable *drawable,
 
   gimp_ui_init ("noisify", FALSE);
 
-  dlg = gimp_dialog_new (_("Noisify"), "noisify",
+  dlg = gimp_dialog_new (_("Scatter RGB"), "noisify",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-noisify",
 
@@ -333,14 +357,17 @@ noisify_dialog (GimpDrawable *drawable,
 
   noisify (drawable, TRUE); /* preview noisify */
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Independent"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &nvals.independent);
+  if (gimp_drawable_is_rgb (drawable->drawable_id))
+    {
+      toggle = gtk_check_button_new_with_mnemonic (_("_Independent RGB"));
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
+      gtk_widget_show (toggle);
+      
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &nvals.independent);
+    }
 
   table = gtk_table_new (channels, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -357,7 +384,8 @@ noisify_dialog (GimpDrawable *drawable,
   else if (channels == 2)
     {
       noisify_add_channel (table, 0, _("_Gray:"), drawable);
-      noisify_add_channel (table, 1, _("_Alpha:"), drawable);
+      noisify_add_alpha_channel (table, 1, _("_Alpha:"), drawable);
+      gtk_table_set_row_spacing (GTK_TABLE (table), 1, 15);
     }
   else if (channels == 3)
     {
@@ -371,7 +399,8 @@ noisify_dialog (GimpDrawable *drawable,
       noisify_add_channel (table, 0, _("_Red:"), drawable);
       noisify_add_channel (table, 1, _("_Green:"), drawable);
       noisify_add_channel (table, 2, _("_Blue:"), drawable);
-      noisify_add_channel (table, 3, _("_Alpha:"), drawable);
+      noisify_add_alpha_channel (table, 3, _("_Alpha:"), drawable);
+      gtk_table_set_row_spacing (GTK_TABLE (table), 3, 15);
     }
   else
     {
@@ -425,6 +454,7 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
                                   gpointer       data)
 {
   GimpDrawable *drawable;
+  gint          n;
 
   gimp_double_adjustment_update (adjustment, data);
 
@@ -435,8 +465,23 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
   if (! nvals.independent)
     {
       gint i;
+      switch (noise_int.channels)
+       {
+       case 1:
+         n = 1;
+         break;
+       case 2:
+         n = 1;
+         break;
+       case 3:
+         n = 3;
+         break;
+       default:
+         n = 3;
+         break;
+       }
 
-      for (i = 0; i < noise_int.channels; i++)
+      for (i = 0; i < n; i++)
         if (adjustment != GTK_ADJUSTMENT (noise_int.channel_adj[i]))
           gtk_adjustment_set_value (GTK_ADJUSTMENT (noise_int.channel_adj[i]),
                                     adjustment->value);

@@ -1,5 +1,11 @@
 2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/noisify.c: changed handling of alpha
+	channel in an attempt to deal with bug #72853.
+	Changed menu entry from "Noisify" to "Scatter RGB".
+	
+2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/pdb/fileops_cmds.c: fixed incorrect documentation for
 	gimp_file_load, which was the root cause of bug #118811.
 	
