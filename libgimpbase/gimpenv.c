@@ -321,11 +321,11 @@ gimp_path_parse (gchar     *path,
 	}
 
       if (!err)
-	list = g_list_prepend (list, dir->str);
+	list = g_list_prepend (list, g_strdup (dir->str));
       else if (check_failed)
-	fail_list = g_list_prepend (fail_list, dir->str);
+	fail_list = g_list_prepend (fail_list, g_strdup (dir->str));
 
-      g_string_free (dir, FALSE);
+      g_string_free (dir, TRUE);
     }
 
   g_strfreev (patharray);
@@ -442,7 +442,7 @@ gimp_path_get_user_writable_dir (GList *path)
 	    (euid != filestat.st_uid) &&
 	    (egid != filestat.st_gid))))
 	{
-	  return (gchar *) list->data;
+	  return g_strdup ((gchar *) list->data);
 	}
     }
 

@@ -168,6 +168,7 @@ datafiles_read_directories (gchar                  *path_str,
     }
 
   gimp_path_free (path);
+  g_free (local_path);
 }
 
 time_t

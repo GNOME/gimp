@@ -1530,7 +1530,12 @@ gflare_save (GFlare *gflare)
 
       path = gimp_path_get_user_writable_dir (gflare_path_list);
 
+      if (!path)
+	path = g_strdup (gimp_directory ());
+
       gflare->filename = g_strdup_printf ("%s%s", path, gflare->name);
+
+      g_free (path);
     }
 
   fp = fopen (gflare->filename, "w");

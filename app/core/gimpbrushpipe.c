@@ -39,11 +39,11 @@
 #include "libgimp/gimpmath.h"
 #include "libgimp/parasiteio.h"
 
-static GimpBrushClass* gimp_brush_class;
-static GtkObjectClass* gimp_object_class;
+static GimpBrushClass       *gimp_brush_class;
+static GimpBrushPixmapClass *gimp_brush_pixmap_class;
 
-static GimpBrush *gimp_brush_pixmap_select_brush (PaintCore *paint_core);
-static gboolean gimp_brush_pixmap_want_null_motion (PaintCore *paint_core);
+static GimpBrush *gimp_brush_pixmap_select_brush     (PaintCore *paint_core);
+static gboolean   gimp_brush_pixmap_want_null_motion (PaintCore *paint_core);
 
 static void
 gimp_brush_pixmap_destroy (GtkObject *object)
@@ -53,10 +53,11 @@ gimp_brush_pixmap_destroy (GtkObject *object)
   g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (object));
 
   pixmap = GIMP_BRUSH_PIXMAP (object);
-  
+
   temp_buf_free (pixmap->pixmap_mask);
 
-  (* GTK_OBJECT_CLASS (gimp_object_class)->destroy) (object);
+  if (GTK_OBJECT_CLASS (gimp_brush_class)->destroy)
+    (* GTK_OBJECT_CLASS (gimp_brush_class)->destroy) (object);
 }
 
 static void
@@ -70,8 +71,8 @@ gimp_brush_pixmap_class_init (GimpBrushPixmapClass *klass)
 
   gimp_brush_class = gtk_type_class (gimp_brush_get_type ());
 
-  object_class->destroy =  gimp_brush_pixmap_destroy;
-  brush_class->select_brush = gimp_brush_pixmap_select_brush;
+  object_class->destroy         = gimp_brush_pixmap_destroy;
+  brush_class->select_brush     = gimp_brush_pixmap_select_brush;
   brush_class->want_null_motion = gimp_brush_pixmap_want_null_motion;
 }
 
@@ -193,10 +194,10 @@ gimp_brush_pixmap_want_null_motion (PaintCore *paint_core)
 }
 
 static void
-gimp_brush_pipe_destroy(GtkObject *object)
+gimp_brush_pipe_destroy (GtkObject *object)
 {
   GimpBrushPipe *pipe;
-  int i;
+  gint i;
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_PIPE (object));
@@ -207,68 +208,74 @@ gimp_brush_pipe_destroy(GtkObject *object)
   g_free (pipe->stride);
 
   for (i = 1; i < pipe->nbrushes; i++)
-    gimp_object_destroy (pipe->brushes[i]);
+    gtk_object_unref (GTK_OBJECT (pipe->brushes[i]));
 
   g_free (pipe->brushes);
   g_free (pipe->select);
   g_free (pipe->index);
 
-  if (GTK_OBJECT_CLASS (gimp_object_class)->destroy)
-    (* GTK_OBJECT_CLASS (gimp_object_class)->destroy) (object);
+  if (GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy)
+    (* GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy) (object);
 }
 
 static void
 gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 {
   GtkObjectClass *object_class;
-  
+
   object_class = GTK_OBJECT_CLASS (klass);
 
-  gimp_object_class = gtk_type_class (GIMP_TYPE_OBJECT);
-  object_class->destroy =  gimp_brush_pipe_destroy;
+  gimp_brush_pixmap_class = gtk_type_class (GIMP_TYPE_BRUSH_PIXMAP);
+  object_class->destroy = gimp_brush_pipe_destroy;
 }
 
 void
 gimp_brush_pipe_init (GimpBrushPipe *pipe)
 {
   pipe->dimension = 0;
-  pipe->rank = NULL;
-  pipe->nbrushes = 0;
-  pipe->select = NULL;
-  pipe->index = NULL;
+  pipe->rank      = NULL;
+  pipe->nbrushes  = 0;
+  pipe->select    = NULL;
+  pipe->index     = NULL;
 }
 
 GtkType
 gimp_brush_pipe_get_type (void)
 {
-  static GtkType type=0;
-  if (!type){
-    GtkTypeInfo info={
-      "GimpBrushPipe",
-      sizeof (GimpBrushPipe),
-      sizeof (GimpBrushPipeClass),
-      (GtkClassInitFunc) gimp_brush_pipe_class_init,
-      (GtkObjectInitFunc) gimp_brush_pipe_init,
-     /* reserved_1 */ NULL,
-     /* reserved_2 */ NULL,
-    (GtkClassInitFunc) NULL};
-    type = gtk_type_unique (GIMP_TYPE_BRUSH_PIXMAP, &info);
-  }
+  static GtkType type = 0;
+
+  if (!type)
+    {
+      GtkTypeInfo info =
+      {
+	"GimpBrushPipe",
+	sizeof (GimpBrushPipe),
+	sizeof (GimpBrushPipeClass),
+	(GtkClassInitFunc) gimp_brush_pipe_class_init,
+	(GtkObjectInitFunc) gimp_brush_pipe_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL
+      };
+
+      type = gtk_type_unique (GIMP_TYPE_BRUSH_PIXMAP, &info);
+    }
+
   return type;
 }
 
 GimpBrushPipe *
-gimp_brush_pipe_load (char *filename)
+gimp_brush_pipe_load (gchar *filename)
 {
   GimpBrushPipe *pipe;
-  GPattern *pattern;
-  PixPipeParams params;
-  FILE *fp;
-  gchar buf[1024];
+  GPattern      *pattern;
+  PixPipeParams  params;
+  FILE  *fp;
+  gchar  buf[1024];
   gchar *name;
-  int i;
-  int num_of_brushes;
-  int totalcells;
+  gint   i;
+  gint   num_of_brushes;
+  gint   totalcells;
   gchar *paramstring;
 
   if ((fp = fopen (filename, "rb")) == NULL)
@@ -294,7 +301,7 @@ gimp_brush_pipe_load (char *filename)
       gimp_object_destroy (pipe);
       return NULL;
     }
-  num_of_brushes = strtol(buf, &paramstring, 10);
+  num_of_brushes = strtol (buf, &paramstring, 10);
   if (num_of_brushes < 1)
     {
       g_message (_("Brush pipes should have at least one brush."));
@@ -303,7 +310,7 @@ gimp_brush_pipe_load (char *filename)
       return NULL;
     }
 
-  while (*paramstring && isspace(*paramstring))
+  while (*paramstring && isspace (*paramstring))
     paramstring++;
 
   if (*paramstring)
@@ -311,9 +318,9 @@ gimp_brush_pipe_load (char *filename)
       pixpipeparams_init (&params);
       pixpipeparams_parse (paramstring, &params);
       pipe->dimension = params.dim;
-      pipe->rank = g_new (int, pipe->dimension);
-      pipe->select = g_new (PipeSelectModes, pipe->dimension);
-      pipe->index = g_new (int, pipe->dimension);
+      pipe->rank      = g_new (gint, pipe->dimension);
+      pipe->select    = g_new (PipeSelectModes, pipe->dimension);
+      pipe->index     = g_new (gint, pipe->dimension);
       /* placement is not used at all ?? */
       if (params.free_placement_string)
 	g_free (params.placement);
@@ -344,18 +351,18 @@ gimp_brush_pipe_load (char *filename)
   else
     {
       pipe->dimension = 1;
-      pipe->rank = g_new (int, 1);
-      pipe->rank[0] = num_of_brushes;
-      pipe->select = g_new (PipeSelectModes, 1);
+      pipe->rank      = g_new (gint, 1);
+      pipe->rank[0]   = num_of_brushes;
+      pipe->select    = g_new (PipeSelectModes, 1);
       pipe->select[0] = PIPE_SELECT_INCREMENTAL;
-      pipe->index = g_new (int, 1);
-      pipe->index[0] = 0;
+      pipe->index     = g_new (gint, 1);
+      pipe->index[0]  = 0;
     }
 
   totalcells = 1;		/* Not all necessarily present, maybe */
   for (i = 0; i < pipe->dimension; i++)
     totalcells *= pipe->rank[i];
-  pipe->stride = g_new (int, pipe->dimension);
+  pipe->stride = g_new (gint, pipe->dimension);
   for (i = 0; i < pipe->dimension; i++)
     {
       if (i == 0)
@@ -365,10 +372,9 @@ gimp_brush_pipe_load (char *filename)
     }
   g_assert (pipe->stride[pipe->dimension-1] == 1);
 
-  pattern = (GPattern*) g_malloc0 (sizeof (GPattern));
+  pattern = g_new0 (GPattern, 1);
 
-  pipe->brushes =
-    (GimpBrushPixmap **) g_new0 (GimpBrushPixmap *, num_of_brushes);
+  pipe->brushes = g_new0 (GimpBrushPixmap *, num_of_brushes);
 
   /* First pixmap brush in the list is the pipe itself */
   pipe->brushes[0] = GIMP_BRUSH_PIXMAP (pipe);
@@ -385,7 +391,7 @@ gimp_brush_pipe_load (char *filename)
 	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
 	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
 	}
-      
+
       pipe->brushes[pipe->nbrushes]->pipe = pipe;
 
       /* load the brush */
@@ -416,11 +422,12 @@ gimp_brush_pipe_load (char *filename)
   fclose (fp);
 
   g_free (pattern);
+
   return pipe;
 }
 
 GimpBrushPipe *
-gimp_brush_pixmap_load (char *filename)
+gimp_brush_pixmap_load (gchar *filename)
 {
   GimpBrushPipe *pipe;
   GPattern *pattern;
@@ -433,19 +440,19 @@ gimp_brush_pixmap_load (char *filename)
 
   /* A (single) pixmap brush is a pixmap pipe brush with just one pixmap */
   pipe->dimension = 1;
-  pipe->rank = g_new (int, 1);
-  pipe->rank[0] = 1;
-  pipe->select = g_new (PipeSelectModes, 1);
+  pipe->rank      = g_new (gint, 1);
+  pipe->rank[0]   = 1;
+  pipe->select    = g_new (PipeSelectModes, 1);
   pipe->select[0] = PIPE_SELECT_INCREMENTAL;
-  pipe->index = g_new (int, 1);
-  pipe->index[0] = 0;
+  pipe->index     = g_new (gint, 1);
+  pipe->index[0]  = 0;
 
-  pattern = (GPattern *) g_malloc0 (sizeof (GPattern));
+  pattern = g_new0 (GPattern, 1);
 
-  pipe->brushes = (GimpBrushPixmap **) g_new (GimpBrushPixmap *, 1);
+  pipe->brushes = g_new (GimpBrushPixmap *, 1);
 
   pipe->brushes[0] = GIMP_BRUSH_PIXMAP (pipe);
-  pipe->current = pipe->brushes[0];
+  pipe->current    = pipe->brushes[0];
 
   pipe->brushes[0]->pipe = pipe;
 
@@ -460,7 +467,7 @@ gimp_brush_pixmap_load (char *filename)
       gimp_object_destroy (pipe);
       return NULL;
     }
-  
+
   pipe->brushes[0]->pixmap_mask = pattern->mask;
 
   pipe->nbrushes = 1;
@@ -469,6 +476,7 @@ gimp_brush_pixmap_load (char *filename)
 
   g_free (pattern->name);
   g_free (pattern);
+
   return pipe;
 }
 

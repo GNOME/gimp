@@ -177,7 +177,7 @@ gimp_list_remove (GimpList *list,
 				   GTK_SIGNAL_FUNC (gimp_list_destroy_cb),
 				   list);
   else
-    gtk_object_unref (GTK_OBJECT(val));
+    gtk_object_unref (GTK_OBJECT (val));
 
   return TRUE;
 }

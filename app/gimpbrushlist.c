@@ -44,13 +44,13 @@
 #include "gimpbrushlistP.h"
 #include "general.h"
 
+#include "libgimp/gimpenv.h"
+
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
 GimpBrushList    *brush_list     = NULL;
 
-/*  local variables  */
-static GimpBrush *standard_brush = NULL;
 
 /*  local function prototypes  */
 static void   brushes_brush_load (gchar         *filename);
@@ -73,7 +73,8 @@ static void
 gimp_brush_list_remove_func (GimpList *list,
 			     gpointer  val)
 {
-  list->list=g_slist_remove (list->list, val);
+  list->list = g_slist_remove (list->list, val);
+
   GIMP_BRUSH_LIST (list)->num_brushes--;
 }
 
@@ -83,8 +84,9 @@ gimp_brush_list_class_init (GimpBrushListClass *klass)
   GimpListClass *gimp_list_class;
   
   gimp_list_class = GIMP_LIST_CLASS(klass);
-  gimp_list_class->add = gimp_brush_list_add_func;
+  gimp_list_class->add    = gimp_brush_list_add_func;
   gimp_list_class->remove = gimp_brush_list_remove_func;
+
   parent_class = gtk_type_class (gimp_list_get_type ());
 }
 
@@ -145,12 +147,8 @@ brushes_init (gint no_data)
     {
       brush_select_freeze_all ();
 
-      datafiles_read_directories (brush_path,
-				  (GimpDataFileLoaderFunc) brushes_brush_load,
-				  0);
-      datafiles_read_directories (brush_vbr_path,
-				  (GimpDataFileLoaderFunc) brushes_brush_load,
-				  0);
+      datafiles_read_directories (brush_path, brushes_brush_load, 0);
+      datafiles_read_directories (brush_vbr_path, brushes_brush_load, 0);
 
       brush_select_thaw_all ();
     }
@@ -161,6 +159,8 @@ brushes_init (gint no_data)
 GimpBrush *
 brushes_get_standard_brush (void)
 {
+  static GimpBrush *standard_brush = NULL;
+
   if (! standard_brush)
     {
       standard_brush =
@@ -228,84 +228,71 @@ brush_compare_func (gconstpointer first,
 void
 brushes_free (void)
 {
-  if (brush_list)
+  GList *vbr_path;
+  gchar *vbr_dir;
+
+  if (!brush_list)
+    return;
+
+  vbr_path = gimp_path_parse (brush_vbr_path, 16, TRUE, NULL);
+  vbr_dir  = gimp_path_get_user_writable_dir (vbr_path);
+  gimp_path_free (vbr_path);
+
+  brush_select_freeze_all ();
+
+  while (GIMP_LIST (brush_list)->list)
     {
-      brush_select_freeze_all ();
+      GimpBrush *brush = GIMP_BRUSH (GIMP_LIST (brush_list)->list->data);
 
-      while (GIMP_LIST (brush_list)->list)
+      if (GIMP_IS_BRUSH_GENERATED (brush) && vbr_dir)
 	{
-	  GimpBrush * b = GIMP_BRUSH (GIMP_LIST (brush_list)->list->data);
-	  if (GIMP_IS_BRUSH_GENERATED (b))
+	  gchar *filename = g_strdup (brush->filename);
+
+	  if (!filename)
 	    {
-	      gchar *filename = g_strdup (b->filename);
-	      if (!filename)
-		{
-		  gchar *home;
-		  gchar *local_path;
-		  gchar *first_token;
-		  gchar *token;
-		  gchar *path;
-		  FILE *tmp_fp;
-		  gint  unum = 0;
+	      FILE *tmp_fp;
+	      gint  unum = 0;
 
-		  if (brush_vbr_path)
-		    {
-		      /* Get the first path specified in the
-		       * brush-vbr-path gimprc variable.
-		       */
-		      home = g_get_home_dir ();
-		      local_path = g_strdup (brush_vbr_path);
-		      first_token = local_path;
-		      token = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
+	      filename = g_strconcat (vbr_dir,
+				      brush->name, ".vbr",
+				      NULL);
 
-		      if (token)
-			{
-			  if (*token == '~')
-			    if (home != NULL)
-			      path = g_strconcat (home, token + 1, NULL);
-			    else
-			      path = g_strdup ("");	/* Better than nothing */
-			  else
-			    path = g_strdup (token);
-									 
-			  filename = g_strconcat (path, G_DIR_SEPARATOR_S,
-						  b->name, ".vbr", NULL);
-			  while ((tmp_fp = fopen (filename, "r")))
-			    { /* make sure we don't overwrite an existing brush */
-			      fclose (tmp_fp);
-			      g_free (filename);
-			      filename = g_strdup_printf ("%s%s%s_%d.vbr", path,
-							  G_DIR_SEPARATOR_S,
-							  b->name, unum);
-			      unum++;
-			    }
-			  g_free (path);
-			}
-		      g_free (local_path);
-		    }
-		}
-	      else
+	      /* make sure we don't overwrite an existing brush */
+	      while ((tmp_fp = fopen (filename, "r")))
 		{
-		  if (strcmp (&filename[strlen (filename) - 4], ".vbr"))
-		    {
-		      g_free (filename);
-		      filename = NULL;
-		    }
-		}
-
-	      /*  okay we are ready to try to save the generated file  */
-	      if (filename)
-		{
-		  gimp_brush_generated_save (GIMP_BRUSH_GENERATED (b), filename);
+		  fclose (tmp_fp);
 		  g_free (filename);
+		  filename = g_strdup_printf ("%s%s_%d.vbr",
+					      vbr_dir,
+					      brush->name,
+					      unum);
+		  unum++;
+		}
+	    }
+	  else
+	    {
+	      if (strcmp (&filename[strlen (filename) - 4], ".vbr"))
+		{
+		  g_free (filename);
+		  filename = NULL;
 		}
 	    }
 
-	  gimp_brush_list_remove (brush_list, b);
+	  /*  okay we are ready to try to save the generated file  */
+	  if (filename)
+	    {
+	      gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush),
+					 filename);
+	      g_free (filename);
+	    }
 	}
 
-      brush_select_thaw_all ();
+      gimp_brush_list_remove (brush_list, brush);
     }
+
+  g_free (vbr_dir);
+
+  brush_select_thaw_all ();
 }
 
 #if 0
@@ -421,7 +408,7 @@ gimp_brush_list_add (GimpBrushList *brush_list,
 {
   gimp_brush_list_uniquefy_brush_name (brush_list, brush);
   gimp_list_add (GIMP_LIST (brush_list), brush);
-  gtk_object_sink (GTK_OBJECT (brush));
+  gtk_object_unref (GTK_OBJECT (brush));
   gtk_signal_connect (GTK_OBJECT (brush), "rename",
 		      GTK_SIGNAL_FUNC (brush_renamed),
 		      brush_list);

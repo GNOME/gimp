@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
 #include "gimpsignal.h"
@@ -28,30 +28,32 @@
 #include "config.h"
 #include "libgimp/gimpintl.h"
 
-enum{
+enum
+{
   DIRTY,
   RENAME,
   LAST_SIGNAL
 };
 
-static GimpBrush *gimp_brush_select_brush (PaintCore *paint_core);
-static gboolean gimp_brush_want_null_motion (PaintCore *paint_core);
+static GimpBrush * gimp_brush_select_brush     (PaintCore *paint_core);
+static gboolean    gimp_brush_want_null_motion (PaintCore *paint_core);
 
 static guint gimp_brush_signals[LAST_SIGNAL];
 static GimpObjectClass* parent_class;
 
 static void
-gimp_brush_destroy(GtkObject *object)
+gimp_brush_destroy (GtkObject *object)
 {
-  GimpBrush* brush=GIMP_BRUSH(object);
-  if (brush->filename)
-    g_free(brush->filename);
-  if (brush->name)
-    g_free(brush->name);
-  if (brush->mask)
-     temp_buf_free(brush->mask);
-  GTK_OBJECT_CLASS(parent_class)->destroy (object);
+  GimpBrush *brush = GIMP_BRUSH (object);
 
+  if (brush->filename)
+    g_free (brush->filename);
+  if (brush->name)
+    g_free (brush->name);
+  if (brush->mask)
+    temp_buf_free (brush->mask);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -81,16 +83,16 @@ gimp_brush_class_init (GimpBrushClass *klass)
 }
 
 void
-gimp_brush_init(GimpBrush *brush)
+gimp_brush_init (GimpBrush *brush)
 {
   brush->filename  = NULL;
   brush->name      = NULL;
   brush->spacing   = 20;
   brush->mask      = NULL;
-  brush->x_axis.x    = 15.0;
-  brush->x_axis.y    =  0.0;
-  brush->y_axis.x    =  0.0;
-  brush->y_axis.y    = 15.0;
+  brush->x_axis.x  = 15.0;
+  brush->x_axis.y  =  0.0;
+  brush->y_axis.x  =  0.0;
+  brush->y_axis.y  = 15.0;
 }
 
 
@@ -98,9 +100,11 @@ GtkType
 gimp_brush_get_type (void)
 {
   static GtkType type = 0;
-  if(!type)
+
+  if (!type)
     {
-      static const GtkTypeInfo info = {
+      static const GtkTypeInfo info =
+      {
         "GimpBrush",
         sizeof (GimpBrush),
         sizeof (GimpBrushClass),
@@ -116,10 +120,12 @@ gimp_brush_get_type (void)
 }
 
 GimpBrush *
-gimp_brush_new (char *filename)
+gimp_brush_new (gchar *filename)
 {
-  GimpBrush *brush=GIMP_BRUSH(gtk_type_new(gimp_brush_get_type ()));
-  gimp_brush_load(brush, filename);
+  GimpBrush *brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+
+  gimp_brush_load (brush, filename);
+
   return brush;
 }
 
@@ -138,31 +144,35 @@ gimp_brush_want_null_motion (PaintCore *paint_core)
 TempBuf *
 gimp_brush_get_mask (GimpBrush *brush)
 {
-  g_return_val_if_fail(GIMP_IS_BRUSH(brush), NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+
   return brush->mask;
 }
 
 char *
 gimp_brush_get_name (GimpBrush *brush)
 {
-  g_return_val_if_fail(GIMP_IS_BRUSH(brush), NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+
   return brush->name;
 }
 
 void
 gimp_brush_set_name (GimpBrush *brush, 
-		     char      *name)
+		     gchar     *name)
 {
-  g_return_if_fail(GIMP_IS_BRUSH(brush));
-  if (strcmp(brush->name, name) == 0)
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  if (strcmp (brush->name, name) == 0)
     return;
   if (brush->name)
-    g_free(brush->name);
-  brush->name = g_strdup(name);
-  gtk_signal_emit(GTK_OBJECT(brush), gimp_brush_signals[RENAME]);
+    g_free (brush->name);
+  brush->name = g_strdup (name);
+
+  gtk_signal_emit (GTK_OBJECT (brush), gimp_brush_signals[RENAME]);
 }
 
-int
+gint
 gimp_brush_get_spacing (GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, 0);
@@ -173,7 +183,7 @@ gimp_brush_get_spacing (GimpBrush *brush)
 
 void
 gimp_brush_set_spacing (GimpBrush *brush,
-			int        spacing)
+			gint       spacing)
 {
   g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH (brush));
@@ -183,7 +193,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
 
 void
 gimp_brush_load (GimpBrush *brush, 
-		 char      *filename)
+		 gchar     *filename)
 {
   FILE * fp;
 
@@ -207,16 +217,16 @@ gimp_brush_load (GimpBrush *brush,
 }
 
 
-int
+gint
 gimp_brush_load_brush (GimpBrush *brush, 
 		       FILE      *fp, 
-		       char      *filename)
+		       gchar     *filename)
 {
-  int bn_size;
-  unsigned char buf [sz_BrushHeader];
+  gint   bn_size;
+  guchar buf [sz_BrushHeader];
   BrushHeader header;
-  unsigned int * hp;
-  int i;
+  guint *hp;
+  gint   i;
 
   /*  Read in the header size  */
   if ((fread (buf, 1, sz_BrushHeader, fp)) < sz_BrushHeader)
@@ -227,7 +237,7 @@ gimp_brush_load_brush (GimpBrush *brush,
     }
 
   /*  rearrange the bytes in each unsigned int  */
-  hp = (unsigned int *) &header;
+  hp = (guint *) &header;
   for (i = 0; i < (sz_BrushHeader / 4); i++)
     hp [i] = (buf [i * 4] << 24) + (buf [i * 4 + 1] << 16) +
              (buf [i * 4 + 2] << 8) + (buf [i * 4 + 3]);
@@ -242,7 +252,6 @@ gimp_brush_load_brush (GimpBrush *brush,
 	  return 0;
 	}
     }
- 
 
   if (header.version == 1)
     {
@@ -252,48 +261,47 @@ gimp_brush_load_brush (GimpBrush *brush,
       /*  spacing is not defined in version 1  */
       header.spacing = 25;
     }
-
   
    /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sz_BrushHeader)))
   {
-    brush->name = (char *) g_malloc (sizeof (char) * bn_size);
+    brush->name = g_new (gchar, bn_size);
     if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
-    {
-      g_message (_("Error in GIMP brush file...aborting."));
-      fclose (fp);
-      gimp_object_destroy (brush);
-      return 0;
-    }
+      {
+	g_message (_("Error in GIMP brush file...aborting."));
+	fclose (fp);
+	gimp_object_destroy (brush);
+	return 0;
+      }
   }
   else
     brush->name = g_strdup (_("Unnamed"));
 
-  switch(header.version)
-  {
-   case 1:
-   case 2:
-     /*  Get a new brush mask  */
-     brush->mask = temp_buf_new (header.width, header.height, header.bytes,
-				 0, 0, NULL);
-     brush->spacing = header.spacing;
-     /* set up spacing axis */
-     brush->x_axis.x = header.width  / 2.0;
-     brush->x_axis.y = 0.0;
-     brush->y_axis.x = 0.0;
-     brush->y_axis.y = header.height / 2.0;
-  /*  Read the brush mask data  */
-     if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height,
-		 fp)) <	 header.width * header.height)
-       g_message (_("GIMP brush file appears to be truncated."));
-     break;
-   default:
-     g_message (_("Unknown brush format version #%d in \"%s\"\n"),
-		header.version, filename);
-     fclose (fp);
-     gimp_object_destroy (brush);
-     return 0;
-  }
+  switch (header.version)
+    {
+    case 1:
+    case 2:
+      /*  Get a new brush mask  */
+      brush->mask = temp_buf_new (header.width, header.height, header.bytes,
+				  0, 0, NULL);
+      brush->spacing = header.spacing;
+      /* set up spacing axis */
+      brush->x_axis.x = header.width  / 2.0;
+      brush->x_axis.y = 0.0;
+      brush->y_axis.x = 0.0;
+      brush->y_axis.y = header.height / 2.0;
+      /*  Read the brush mask data  */
+      if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height,
+		  fp)) <	 header.width * header.height)
+	g_message (_("GIMP brush file appears to be truncated."));
+      break;
+    default:
+      g_message (_("Unknown brush format version #%d in \"%s\"\n"),
+		 header.version, filename);
+      fclose (fp);
+      gimp_object_destroy (brush);
+      return 0;
+    }
   return 1;
 }
 

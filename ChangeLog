@@ -1,3 +1,28 @@
+2000-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/datafiles.c: fixed a memleak.
+
+	* app/gimpbrushlist.c
+	* app/gradient.c
+	* app/palette.c: use the gimp_path_* functions, cleanups.
+
+	* app/gimpbrushpipe.c: call the "destroy" function of the parent
+	class, not of the object class. Fixes a huge memleak on each
+	"Refresh".
+
+	* app/gimpbrushpipeP.h
+	* app/gimplist.c
+	* app/gimpbrush.c: did some cleanups while searching the brush
+	memleak.
+
+	* libgimp/gimpenv.c: gimp_path_get_user_writable_dir(): return a
+	copy of the string.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c: g_free() the string returned by
+	gimp_path_get_user_writable_dir().
+
 Thu Feb 24 02:20:15 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimprc.c: gimp_parasite_attach() creates a copy of

@@ -39,24 +39,25 @@ typedef enum
 
 struct _GimpBrushPixmap
 {
-  GimpBrush gbrush;
-  TempBuf *pixmap_mask;
+  GimpBrush      gbrush;
+  TempBuf       *pixmap_mask;
   GimpBrushPipe *pipe;
 };
 
 struct _GimpBrushPipe
 {
-  GimpBrushPixmap pixmap;	/* Also itself a pixmap brush */
-  GimpBrushPixmap *current;	/* Currently selected brush */
-  int dimension;
-  int *rank;			/* Size in each dimension */
-  int *stride;			/* Aux for indexing */
-  int nbrushes;			/* Might be less than the product of the
+  GimpBrushPixmap  pixmap;      /* Also itself a pixmap brush */
+
+  GimpBrushPixmap *current;     /* Currently selected brush */
+  gint  dimension;
+  gint *rank;			/* Size in each dimension */
+  gint *stride;			/* Aux for indexing */
+  gint  nbrushes;		/* Might be less than the product of the
 				 * ranks in some odd special case
 				 */
   GimpBrushPixmap **brushes;
-  PipeSelectModes *select;	/* One mode per dimension */
-  int *index;			/* Current index for incremental dimensions */
+  PipeSelectModes  *select;	/* One mode per dimension */
+  gint *index;			/* Current index for incremental dimensions */
 };
 
 typedef struct _GimpBrushPixmapClass

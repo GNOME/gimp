@@ -33,7 +33,6 @@
 #include "color_area.h"
 #include "color_notebook.h"
 #include "datafiles.h"
-#include "general.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
@@ -46,6 +45,8 @@
 #include "session.h"
 #include "palette_select.h"
 #include "dialog_handler.h"
+
+#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -282,59 +283,37 @@ static PaletteEntries *
 palette_entries_new (gchar *palette_name)
 {
   PaletteEntries *entries = NULL;
-  gchar *home;
-  gchar *local_path;
-  gchar *first_token;
-  gchar *token;
-  gchar *path;
+  GList *pal_path;
+  gchar *pal_dir;
 
-  if (palette_name)
+  if (!palette_name || !palette_path)
+    return NULL;
+
+  pal_path = gimp_path_parse (palette_path, 16, TRUE, NULL);
+  pal_dir  = gimp_path_get_user_writable_dir (pal_path);
+  gimp_path_free (pal_path);
+
+  entries = g_new (PaletteEntries, 1);
+
+  if (pal_dir)
     {
-      entries = g_new (PaletteEntries, 1);
-      if (palette_path)
-	{
-	  /*  Get the first path specified in the palette path list  */
-	  home = g_get_home_dir ();
-	  local_path = g_strdup (palette_path);
-	  first_token = local_path;
-	  token = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
-
-	  if (token)
-	    {
-	      if (*token == '~')
-		{
-		  if (home)
-		    path = g_strdup_printf ("%s%s", home, token + 1);
-		  else
-		    /* Just ignore the ~ if no HOME ??? */
-		    path = g_strdup (token + 1);
-		}
-	      else
-		{
-		  path = g_strdup (token);
-		}
-
-	      entries->filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-						   path, palette_name);
-
-	      g_free (path);
-	    }
-
-	  g_free (local_path);
-	}
-      else
-	entries->filename = NULL;
-
-      entries->name = palette_name;  /*  don't need to copy because this memory is ours  */
-      entries->colors = NULL;
-      entries->n_colors = 0;
-      entries->changed = TRUE;
-      entries->pixmap = NULL;
-
-      palette_entries_list_insert (entries);
-
-      palette_save_palettes ();
+      entries->filename = g_strdup_printf ("%s%s", pal_dir, palette_name);
+      g_free (pal_dir);
     }
+  else
+    {
+      entries->filename = NULL;
+    }
+
+  entries->name     = palette_name;  /*  this memory is ours  */
+  entries->colors   = NULL;
+  entries->n_colors = 0;
+  entries->changed  = TRUE;
+  entries->pixmap   = NULL;
+
+  palette_entries_list_insert (entries);
+
+  palette_save_palettes ();
 
   return entries;
 }

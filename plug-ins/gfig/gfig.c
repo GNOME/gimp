@@ -1605,9 +1605,11 @@ create_file_selection (GFigObj *obj,
       dir = gimp_path_get_user_writable_dir (gfig_path_list);
 
       if (!dir)
-	dir = gimp_directory ();
+	dir = g_strdup (gimp_directory ());
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
+
+      g_free (dir);
     }
   else
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");

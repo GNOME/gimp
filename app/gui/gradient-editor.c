@@ -72,6 +72,7 @@
 #include "gradient_header.h"
 #include "gradient_select.h"
 
+#include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
@@ -116,10 +117,13 @@
 				 GDK_BUTTON_RELEASE_MASK | \
 				 GDK_BUTTON1_MOTION_MASK)
 
-#define GRAD_UPDATE_GRADIENT 1
-#define GRAD_UPDATE_PREVIEW  2
-#define GRAD_UPDATE_CONTROL  4
-#define GRAD_RESET_CONTROL   8
+enum
+{
+  GRAD_UPDATE_GRADIENT = 1 << 0,
+  GRAD_UPDATE_PREVIEW  = 1 << 1,
+  GRAD_UPDATE_CONTROL  = 1 << 2,
+  GRAD_RESET_CONTROL   = 1 << 3
+};
 
 /* Gradient editor type */
 
@@ -6166,11 +6170,8 @@ static gchar *
 build_user_filename (gchar *name,
 		     gchar *path_str)
 {
-  gchar *home;
-  gchar *local_path;
-  gchar *first_token;
-  gchar *token;
-  gchar *path;
+  GList *grad_path;
+  gchar *grad_dir;
   gchar *filename;
 
   g_assert (name != NULL);
@@ -6178,34 +6179,16 @@ build_user_filename (gchar *name,
   if (!path_str)
     return NULL; /* Perhaps this is not a good idea */
 
-  /* Get the first path specified in the list */
+  grad_path = gimp_path_parse (path_str, 16, TRUE, NULL);
+  grad_dir  = gimp_path_get_user_writable_dir (grad_path);
+  gimp_path_free (grad_path);
 
-  home        = g_get_home_dir ();
-  local_path  = g_strdup (path_str);
-  first_token = local_path;
-  token       = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
-  filename    = NULL;
+  if (!grad_dir)
+    return NULL; /* Perhaps this is not a good idea */
 
-  if (token)
-    {
-      if (*token == '~')
-	{
-	  if (!home)
-	    return NULL;
-	  path = g_strdup_printf ("%s%s", home, token + 1);
-	}
-      else
-	{
-	  path = g_strdup (token);
-	}
+  filename = g_strdup_printf ("%s%s", grad_dir, name);
 
-      filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-				  path, name);
-
-      g_free (path);
-    }
-
-  g_free (local_path);
+  g_free (grad_dir);
 
   return filename;
 }
