@@ -129,12 +129,13 @@ static TempBuf *gimp_image_get_new_preview       (GimpViewable   *viewable,
 						  gint            width, 
 						  gint            height);
 
+static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
+						  gint            ncol);
+
 static void     gimp_image_get_active_components (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
                                                   gboolean           *active);
-
-static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
-						  gint            ncol);
+static void     gimp_image_previews_resize       (GimpImage          *gimage);
 
 
 static gint valid_combinations[][MAX_CHANNELS + 1] =
@@ -714,6 +715,13 @@ gimp_image_get_preview_size (GimpViewable *viewable,
 
   gimage = GIMP_IMAGE (viewable);
 
+  if (! gimage->gimp->config->layer_previews && ! is_popup)
+    {
+      *width  = size;
+      *height = size;
+      return;
+    }
+
   gimp_viewable_calc_preview_size (viewable,
                                    gimage->width,
                                    gimage->height,
@@ -738,6 +746,9 @@ gimp_image_get_popup_size (GimpViewable *viewable,
   GimpImage *gimage;
 
   gimage = GIMP_IMAGE (viewable);
+
+  if (! gimage->gimp->config->layer_previews)
+    return FALSE;
 
   if (gimage->width > width || gimage->height > height)
     {
@@ -1000,6 +1011,19 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   return comp;
 }
 
+static void 
+gimp_image_real_colormap_changed (GimpImage *gimage,
+				  gint       ncol)
+{
+  if (gimp_image_base_type (gimage) == GIMP_INDEXED)
+    {
+      /* A colormap alteration affects the whole image */
+      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+
+      gimp_image_color_hash_invalidate (gimage, ncol);
+    }
+}
+
 static void
 gimp_image_get_active_components (const GimpImage    *gimage,
                                   const GimpDrawable *drawable,
@@ -1030,17 +1054,28 @@ gimp_image_get_active_components (const GimpImage    *gimage,
     }
 }
 
-static void 
-gimp_image_real_colormap_changed (GimpImage *gimage,
-				  gint       ncol)
+static void
+gimp_image_previews_resize (GimpImage *gimage)
 {
-  if (gimp_image_base_type (gimage) == GIMP_INDEXED)
-    {
-      /* A colormap alteration affects the whole image */
-      gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+  GList *list;
 
-      gimp_image_color_hash_invalidate (gimage, ncol);
+  gimp_container_foreach (gimage->layers, 
+			  (GFunc) gimp_viewable_size_changed,
+			  NULL);
+  gimp_container_foreach (gimage->channels, 
+			  (GFunc) gimp_viewable_size_changed,
+			  NULL);
+
+  for (list = GIMP_LIST (gimage->layers)->list; list; list = g_list_next (list))
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (list->data));
+
+      if (mask)
+        gimp_viewable_size_changed (GIMP_VIEWABLE (mask));
     }
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+  gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 }
 
 
@@ -1107,10 +1142,7 @@ gimp_image_new (Gimp              *gimp,
                            G_CALLBACK (gimp_image_invalidate_layer_previews),
                            gimage, G_CONNECT_SWAPPED);
   g_signal_connect_object (gimp->config, "notify::layer-previews",
-                           G_CALLBACK (gimp_image_invalidate_layer_previews),
-                           gimage, G_CONNECT_SWAPPED);
-  g_signal_connect_object (gimp->config, "notify::layer-previews",
-                           G_CALLBACK (gimp_image_invalidate_channel_previews),
+                           G_CALLBACK (gimp_image_previews_resize),
                            gimage, G_CONNECT_SWAPPED);
 
   return gimage;

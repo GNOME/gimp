@@ -135,7 +135,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
                                                          GIMP_TYPE_DRAWABLE,
                                                          GIMP_PREVIEW_SIZE_HUGE,
-                                                         0, FALSE);
+                                                         0, TRUE);
   gtk_widget_set_size_request (selection_editor->preview,
                                GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
   gimp_preview_set_expand (GIMP_PREVIEW (selection_editor->preview), TRUE);

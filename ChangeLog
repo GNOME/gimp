@@ -1,3 +1,22 @@
+2003-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpimage.c (get_preview_size): return square
+	dimensions in config->layer_previews is FALSE (except if the size
+	is requested for a popup).
+	(get_popup_size): don't crete popups if config->layer_previews
+	is FALSE.
+
+	* app/core/gimpimage.c: added utility function
+	gimp_image_previews_resize() and call it on "notify::layer-previews".
+	Calls gimp_viewable_size_changed() on all drawables of the image
+	and on the image itself. Ensures that drawable/image previews
+	toggle their size correctly when toggling layer_previews.
+
+	* app/widgets/gimpselectioneditor.c: create the selection preview
+	as a popup so it keeps the image's aspect ratio when
+	layer_previews is FALSE.
+
 2003-03-22  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am
