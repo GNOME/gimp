@@ -1,3 +1,8 @@
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/font-map.scm: ported from gimp-text
+	to gimp-text-fontname API.
+
 2003-09-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
