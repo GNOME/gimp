@@ -2287,7 +2287,7 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
 
   /*  Push the undo--Important to do it here, AFTER the call
    *   to layer_apply_mask, in case the undo push fails and the
-   *   mask is deleted
+   *   mask is delete : NULL)d
    */
   undo_push_layer_mask (gimage, lmu);
 
@@ -2305,7 +2305,7 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
     }
   gdisplays_flush ();
 
-  return GIMP_CHANNEL (layer->mask);
+  return NULL;
 }
 
 

@@ -1,3 +1,8 @@
+Fri Mar 13 21:11:59 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: use gtk-config now
+	* app/gimage.c: gtk is paranoid. Must appease the warning gods.
+
 Sat Mar 14 00:50:31 1998  Tim Janik  <timj@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: only destroy the dialog at

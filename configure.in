@@ -42,46 +42,12 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AC_PATH_X
-	AC_PATH_XTRA
-
-	saved_cflags="$CFLAGS"
-	saved_ldflags="$LDFLAGS"
-
-	CFLAGS="$X_CFLAGS $CFLAGS"
-	LDFLAGS="$X_LDFLAGS $X_LIBS $LDFLAGS"
-
-	dnl Checks for libraries.
-	AC_CHECK_LIB(X11, XOpenDisplay,
-		x_libs="-lX11 $X_EXTRA_LIBS",
-		[AC_MSG_ERROR(No X11 installed)],
-		$X_EXTRA_LIBS)
-
- 	LD_FLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS $x_libs"
-
-	AC_CHECK_LIB(Xext, XShmAttach,
-		x_libs="-lXext $x_libs", ,
-		$x_libs)
-
-	X_LIBS="$X_LIBS -lgtk -lgdk -lglib $x_libs -lm"
-
- 	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
-
-	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for gtk >= 0.99.5])
-        AC_TRY_LINK(
-[#include <gtk/gtk.h>],
-[gtk_preview_reset();],
-gtk_found=yes,
-gtk_found=no)
-	AC_MSG_RESULT($gtk_found)
-
-	if test $gtk_found = no; then
- 	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
-        fi
-
-        dnl CFLAGS="$saved_cflags"
-	dnl LDFLAGS="$saved_ldflags"
+	AM_PATH_GTK(0.99.5,,
+ 	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS))
+        X_LIBS=$GTK_LIBS
+        X_CFLAGS=$GTK_CFLAGS
+        AC_SUBST(X_LIBS)
+        AC_SUBST(X_CFLAGS)
 ])
 
 if test -n "$DEBUGFLAG"; then
@@ -95,6 +61,12 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_GIMP_CHECK
+
+gimp_save_CFLAGS="$CFLAGS"
+gimp_save_LIBS="$LIBS"
+
+CFLAGS="$GTK_CFLAGS $CFLAGS"
+LIBS="$LIBS $GTK_LIBS"
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
@@ -235,6 +207,9 @@ fi
 
 dnl TVM: check for compiler characteristics
 AC_C_INLINE
+
+CFLAGS="$gimp_save_CFLAGS"
+LIBS="$gimp_save_LIBS"
 
 gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER

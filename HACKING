@@ -2,7 +2,7 @@ If you want to hack on the GIMP project, it will make you life easier
 to have the following packages installed:
 
 	- GNU autoconf 2.12
-	- GNU automake 1.2d
+	- GNU automake 1.2f
 		Available in ftp://ftp.cygnus.com/pub/tromey
 	- GNU libtool 1.0f
 
@@ -10,12 +10,38 @@ These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 
 If you are accessing gimp via CVS, then you will need to take several
-steps to get it to compile.  These are:
+steps to get it to compile.  You can do all these steps at once
+by running:
 
-    cvsroot/gimp# aclocal; automake; autoconf
+        cvsroot/gimp# ./autogen.sh
 
-N.b., the "configure" script will not exist until you take these
-steps.  
+Basically this does the following for you:
 
-Before running configure, make sure you have libtool in your path.
+        cvsroot/gimp# aclocal; automake; autoconf
+
+        The above commands create the "configure" script.  Now you
+        can run the configure script in cvsroot/gtk+ to create all
+        the Makefiles.
+
+Before running autogen.sh or configure, make sure you have libtool
+in your path. Also make sure gtk.m4 is in the same --prefix relative
+to your automake installation.
+
+Note that autogen.sh runs configure for you.  If you wish to pass
+options like --prefix=/usr to configure you can give those options
+to autogen.sh and they will be passed on to configure.
+
+If at all possible, please use CVS to get the latest development version of
+gimp, as well as the CVS version of gtk+.  You can do the following to get
+gimp and gtk+ from cvs:
+
+   $ export CVSROOT=':pserver:anonymous@cvs.gimp.org:/debian/home/gnomecvs'
+   $ cvs login
+     (there is no password, just hit return)
+   $ cvs -z9 checkout gtk+ gimp
+
+Please submit patches to the gimp-developer@scam.xcf.berkeley.edu mailing
+list.  All kinds of contributions are accepted.  Patches that you wish to go
+into the distribution should also be uploaded to ftp://ftp.gimp.org/incoming.
+Follow the rules there for naming your patches.
 
