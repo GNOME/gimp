@@ -1950,7 +1950,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
   if (merge_type == FlattenImage ||
-      !layer_has_alpha (layer))
+      drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
       switch (gimage_base_type (gimage))
 	{
@@ -1958,13 +1958,16 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 	case GRAY: type = GRAY_GIMAGE; break;
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
-      merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
+      merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
 			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
 	warning("gimage_merge_layers: could not allocate merge layer");
 	return NULL;
       }
+
+      GIMP_DRAWABLE(merge_layer)->offset_x = x1;
+      GIMP_DRAWABLE(merge_layer)->offset_y = y1;
 
       /*  get the background for compositing  */
       gimage_get_background (gimage, GIMP_DRAWABLE(merge_layer), bg);

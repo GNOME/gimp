@@ -1,6 +1,7 @@
 Sun May 17 14:44:32 PDT 1998 Manish Singh <yosh@gimp.org>
 
-	* app/gimage.c: fix for merging indexed and indexed-alpha layers
+	* app/gimage.c: fix for merging indexed and indexed-alpha
+	layers (from Raph)
 
 Sun May 17 14:02:44 PDT 1998 Manish Singh <yosh@gimp.org>
 
