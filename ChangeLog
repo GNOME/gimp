@@ -1,3 +1,8 @@
+2004-06-14  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/plug-in/plug-in-run.c: let extensions run synchronously when
+	called via PDB. Fixes bug #140112.
+
 2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimptransformtool.c: Preview is now only used for
