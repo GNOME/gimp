@@ -1,40 +1,37 @@
-#include <libgimp/gimp.h>
+/*
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
-#define MAXCOLORS       256
-#define Image		gint32
+#define MAXCOLORS   256
 
-#define BitSet(byte, bit)  (((byte) & (bit)) == (bit))
+#define BitSet(byte, bit)        (((byte) & (bit)) == (bit))
 
 #define ReadOK(file,buffer,len)  (fread(buffer, len, 1, file) != 0)
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
-extern gint32       ReadBMP        (const gchar *filename);
-extern GimpPDBStatusType  WriteBMP (const gchar *filename,
-                                    gint32,
-                                    gint32);
-extern Image        ReadImage      (FILE *,
-                                    gint,
-                                    gint,
-                                    guchar[256][3],
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint);
-extern void         WriteImage     (FILE *,
-                                    guchar *,
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint,
-                                    gint);
+gint32             ReadBMP   (const gchar *filename);
+GimpPDBStatusType  WriteBMP  (const gchar *filename,
+                              gint32       image,
+                              gint32       drawable_ID);
 
-extern gboolean     interactive_bmp;
-extern const gchar *prog_name;
-extern const gchar *filename;
+extern       gboolean  interactive_bmp;
+extern const gchar    *filename;
 
 extern struct Bitmap_File_Head_Struct
 {

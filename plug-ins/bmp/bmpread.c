@@ -43,31 +43,43 @@
 #define BI_BITFIELDS  	3
 #endif
 
-static gboolean using565;
+static gboolean using565 = FALSE;
+
+static gint32 ReadImage (FILE     *fd,
+                         gint      width,
+                         gint      height,
+                         guchar    cmap[256][3],
+                         gint      ncols,
+                         gint      bpp,
+                         gint      compression,
+                         gint      rowbytes,
+                         gboolean  grey);
+
 
 static gint32
-ToL (guchar *puffer)
+ToL (const guchar *puffer)
 {
-  return (puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
+  return (puffer[0] | puffer[1] << 8 | puffer[2] << 16 | puffer[3] << 24);
 }
 
 static gint16
-ToS (guchar *puffer)
+ToS (const guchar *puffer)
 {
-  return (puffer[0] | puffer[1]<<8);
+  return (puffer[0] | puffer[1] << 8);
 }
 
 static gboolean
-ReadColorMap (FILE   *fd,
-	      guchar  buffer[256][3],
-	      gint    number,
-	      gint    size,
-	      gint   *grey)
+ReadColorMap (FILE     *fd,
+	      guchar    buffer[256][3],
+	      gint      number,
+	      gint      size,
+	      gboolean *grey)
 {
-  gint i;
+  gint   i;
   guchar rgb[4];
 
-  *grey=(number>2);
+  *grey = (number > 2);
+
   for (i = 0; i < number ; i++)
     {
       if (!ReadOK (fd, rgb, size))
@@ -89,13 +101,14 @@ ReadColorMap (FILE   *fd,
 gint32
 ReadBMP (const gchar *name)
 {
-  FILE *fd;
-  gchar *temp_buf;
-  guchar buffer[64];
-  gint ColormapSize, rowbytes, Maps, Grey;
-  guchar ColorMap[256][3];
-  gint32 image_ID;
-  guchar magick[2];
+  FILE     *fd;
+  gchar    *temp_buf;
+  guchar    buffer[64];
+  gint      ColormapSize, rowbytes, Maps;
+  gboolean  Grey;
+  guchar    ColorMap[256][3];
+  gint32    image_ID;
+  guchar    magick[2];
 
   filename = name;
   fd = fopen (filename, "rb");
@@ -113,10 +126,10 @@ ReadBMP (const gchar *name)
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 
-  if (!ReadOK(fd, magick, 2) || !(!strncmp(magick,"BA",2) ||
-     !strncmp(magick,"BM",2) || !strncmp(magick,"IC",2) ||
-     !strncmp(magick,"PI",2) || !strncmp(magick,"CI",2) ||
-     !strncmp(magick,"CP",2)))
+  if (!ReadOK (fd, magick, 2) || !(!strncmp (magick,"BA",2) ||
+     !strncmp (magick,"BM",2) || !strncmp (magick,"IC",2)   ||
+     !strncmp (magick,"PI",2) || !strncmp (magick,"CI",2)   ||
+     !strncmp (magick,"CP",2)))
     {
       g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
@@ -124,19 +137,19 @@ ReadBMP (const gchar *name)
 
   while (!strncmp(magick,"BA",2))
     {
-      if (!ReadOK(fd, buffer, 12))
+      if (!ReadOK (fd, buffer, 12))
 	{
           g_message (_("'%s' is not a valid BMP file"), filename);
           return -1;
         }
-      if (!ReadOK(fd, magick, 2))
+      if (!ReadOK (fd, magick, 2))
 	{
           g_message (_("'%s' is not a valid BMP file"), filename);
           return -1;
         }
     }
 
-  if (!ReadOK(fd, buffer, 12))
+  if (!ReadOK (fd, buffer, 12))
     {
       g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
@@ -149,7 +162,7 @@ ReadBMP (const gchar *name)
   Bitmap_File_Head.zzHotY    = ToS (&buffer[0x06]);
   Bitmap_File_Head.bfOffs    = ToL (&buffer[0x08]);
 
-  if (!ReadOK(fd, buffer, 4))
+  if (!ReadOK (fd, buffer, 4))
     {
       g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
@@ -167,13 +180,13 @@ ReadBMP (const gchar *name)
           return -1;
         }
 
-      Bitmap_Head.biWidth   =ToS (&buffer[0x00]);       /* 12 */
-      Bitmap_Head.biHeight  =ToS (&buffer[0x02]);       /* 14 */
-      Bitmap_Head.biPlanes  =ToS (&buffer[0x04]);       /* 16 */
-      Bitmap_Head.biBitCnt  =ToS (&buffer[0x06]);       /* 18 */
-      Bitmap_Head.biCompr = 0;
-      Bitmap_Head.biSizeIm = 0;
-      Bitmap_Head.biXPels = Bitmap_Head.biYPels = 0;
+      Bitmap_Head.biWidth   = ToS (&buffer[0x00]);       /* 12 */
+      Bitmap_Head.biHeight  = ToS (&buffer[0x02]);       /* 14 */
+      Bitmap_Head.biPlanes  = ToS (&buffer[0x04]);       /* 16 */
+      Bitmap_Head.biBitCnt  = ToS (&buffer[0x06]);       /* 18 */
+      Bitmap_Head.biCompr   = 0;
+      Bitmap_Head.biSizeIm  = 0;
+      Bitmap_Head.biXPels   = Bitmap_Head.biYPels = 0;
       Bitmap_Head.biClrUsed = 0;
       Maps = 3;
     }
@@ -184,16 +197,16 @@ ReadBMP (const gchar *name)
           g_message (_("Error reading BMP file header from '%s'"), filename);
           return -1;
         }
-      Bitmap_Head.biWidth   =ToL (&buffer[0x00]);	/* 12 */
-      Bitmap_Head.biHeight  =ToL (&buffer[0x04]);	/* 16 */
-      Bitmap_Head.biPlanes  =ToS (&buffer[0x08]);       /* 1A */
-      Bitmap_Head.biBitCnt  =ToS (&buffer[0x0A]);	/* 1C */
-      Bitmap_Head.biCompr   =ToL (&buffer[0x0C]);	/* 1E */
-      Bitmap_Head.biSizeIm  =ToL (&buffer[0x10]);	/* 22 */
-      Bitmap_Head.biXPels   =ToL (&buffer[0x14]);	/* 26 */
-      Bitmap_Head.biYPels   =ToL (&buffer[0x18]);	/* 2A */
-      Bitmap_Head.biClrUsed =ToL (&buffer[0x1C]);	/* 2E */
-      Bitmap_Head.biClrImp  =ToL (&buffer[0x20]);	/* 32 */
+      Bitmap_Head.biWidth   = ToL (&buffer[0x00]);	/* 12 */
+      Bitmap_Head.biHeight  = ToL (&buffer[0x04]);	/* 16 */
+      Bitmap_Head.biPlanes  = ToS (&buffer[0x08]);       /* 1A */
+      Bitmap_Head.biBitCnt  = ToS (&buffer[0x0A]);	/* 1C */
+      Bitmap_Head.biCompr   = ToL (&buffer[0x0C]);	/* 1E */
+      Bitmap_Head.biSizeIm  = ToL (&buffer[0x10]);	/* 22 */
+      Bitmap_Head.biXPels   = ToL (&buffer[0x14]);	/* 26 */
+      Bitmap_Head.biYPels   = ToL (&buffer[0x18]);	/* 2A */
+      Bitmap_Head.biClrUsed = ToL (&buffer[0x1C]);	/* 2E */
+      Bitmap_Head.biClrImp  = ToL (&buffer[0x20]);	/* 32 */
     					                /* 36 */
       Maps = 4;
     }
@@ -255,22 +268,28 @@ ReadBMP (const gchar *name)
    * word length (32 bits == 4 bytes)
    */
 
-  rowbytes= ( (Bitmap_Head.biWidth * Bitmap_Head.biBitCnt - 1) / 32) * 4 + 4;
+  rowbytes= ((Bitmap_Head.biWidth * Bitmap_Head.biBitCnt - 1) / 32) * 4 + 4;
 
 #ifdef DEBUG
-  printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
-          Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
-          Bitmap_Head.biHeight, Bitmap_Head.biCompr, rowbytes);
+  printf ("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, "
+          "Comp: %u, Zeile: %u\n",
+          Bitmap_File_Head.bfSize,
+          Bitmap_Head.biClrUsed,
+          Bitmap_Head.biBitCnt,
+          Bitmap_Head.biWidth,
+          Bitmap_Head.biHeight,
+          Bitmap_Head.biCompr,
+          rowbytes);
 #endif
-  
+
   if (Bitmap_Head.biCompr == BI_BITFIELDS &&
       (Bitmap_Head.biBitCnt == 16 || Bitmap_Head.biBitCnt == 16))
     {
       gint32 tmp[3];
       gint32 green_mask;
-      gint i, green;
+      gint   i, green;
 
-      if (!ReadOK(fd, tmp, 3 * sizeof(gint32)))
+      if (!ReadOK (fd, tmp, 3 * sizeof (gint32)))
 	{
           g_message (_("'%s' is not a valid BMP file"), filename);
           return -1;
@@ -286,7 +305,7 @@ ReadBMP (const gchar *name)
 	  green_mask = green_mask >> 1;
 	}
 
-      using565 = green == 6;
+      using565 = (green == 6);
     }
   else
     {
@@ -296,10 +315,10 @@ ReadBMP (const gchar *name)
     }
 
 #ifdef DEBUG
-  printf("Colormap read\n");
+  printf ("Colormap read\n");
 #endif
 
-  fseek(fd, Bitmap_File_Head.bfOffs, SEEK_SET);
+  fseek (fd, Bitmap_File_Head.bfOffs, SEEK_SET);
 
   /* Get the Image and return the ID or -1 on error*/
   image_ID = ReadImage (fd,
@@ -332,28 +351,29 @@ ReadBMP (const gchar *name)
   return image_ID;
 }
 
-Image
-ReadImage (FILE   *fd,
-	   gint    width,
-	   gint    height,
-	   guchar  cmap[256][3],
-	   gint    ncols,
-	   gint    bpp,
-	   gint    compression,
-	   gint    rowbytes,
-	   gint    grey)
+static gint32
+ReadImage (FILE     *fd,
+	   gint      width,
+	   gint      height,
+	   guchar    cmap[256][3],
+	   gint      ncols,
+	   gint      bpp,
+	   gint      compression,
+	   gint      rowbytes,
+	   gboolean  grey)
 {
-  guchar v,wieviel;
-  GimpPixelRgn pixel_rgn;
-  gint xpos = 0, ypos = 0;
-  Image image;
-  gint32 layer;
+  guchar        v, n;
+  GimpPixelRgn  pixel_rgn;
+  gint          xpos = 0;
+  gint          ypos = 0;
+  gint32        image;
+  gint32        layer;
   GimpDrawable *drawable;
-  guchar *dest, *temp, *buffer;
-  guchar gimp_cmap[768];
-  gushort rgb;
-  long rowstride, channels;
-  gint i, j, cur_progress, max_progress, unused;
+  guchar       *dest, *temp, *buffer;
+  guchar        gimp_cmap[768];
+  gushort       rgb;
+  glong         rowstride, channels;
+  gint          i, j, cur_progress, max_progress;
 
   /* Make a new image in the gimp */
 
@@ -382,95 +402,96 @@ ReadImage (FILE   *fd,
       channels = 1;
     }
 
-  gimp_image_set_filename(image, filename);
+  gimp_image_set_filename (image, filename);
 
-  gimp_image_add_layer(image,layer,0);
-  drawable = gimp_drawable_get(layer);
+  gimp_image_add_layer (image, layer, 0);
+  drawable = gimp_drawable_get (layer);
 
-  dest = g_malloc(drawable->width*drawable->height*channels);
-  buffer= g_malloc(rowbytes);
+  dest      = g_malloc (drawable->width * drawable->height * channels);
+  buffer    = g_malloc (rowbytes);
   rowstride = drawable->width * channels;
 
   ypos = height - 1;  /* Bitmaps begin in the lower left corner */
   cur_progress = 0;
   max_progress = height;
 
+  switch (bpp)
+    {
+    case 32:
+      {
+        while (ReadOK (fd, buffer, rowbytes))
+          {
+            temp = dest + (ypos * rowstride);
+            for (xpos= 0; xpos < width; ++xpos)
+              {
+                *(temp++)= buffer[xpos * 4 + 2];
+                *(temp++)= buffer[xpos * 4 + 1];
+                *(temp++)= buffer[xpos * 4];
+              }
+            --ypos; /* next line */
+            cur_progress++;
+            if ((cur_progress % 5) == 0)
+              gimp_progress_update ((gdouble) cur_progress /
+                                    (gdouble) max_progress);
+          }
+      }
+      break;
 
-  switch (bpp) {
-  case 32:
-    {
-      while (ReadOK (fd, buffer, rowbytes))
-        {
-          temp = dest + (ypos * rowstride);
-          for (xpos= 0; xpos < width; ++xpos)
-            {
-               *(temp++)= buffer[xpos * 4 + 2];
-               *(temp++)= buffer[xpos * 4 + 1];
-               *(temp++)= buffer[xpos * 4];
-            }
-          --ypos; /* next line */
-          cur_progress++;
-          if ((cur_progress % 5) == 0)
-            gimp_progress_update ((gdouble) cur_progress /
-                                  (gdouble) max_progress);
-        }
-    }
-    break;
+    case 24:
+      {
+        while (ReadOK (fd, buffer, rowbytes))
+          {
+            temp = dest + (ypos * rowstride);
+            for (xpos= 0; xpos < width; ++xpos)
+              {
+                *(temp++)= buffer[xpos * 3 + 2];
+                *(temp++)= buffer[xpos * 3 + 1];
+                *(temp++)= buffer[xpos * 3];
+              }
+            --ypos; /* next line */
+            cur_progress++;
+            if ((cur_progress % 5) == 0)
+              gimp_progress_update ((gdouble) cur_progress /
+                                    (gdouble) max_progress);
+          }
+      }
+      break;
 
-  case 24:
-    {
-      while (ReadOK (fd, buffer, rowbytes))
-        {
-          temp = dest + (ypos * rowstride);
-          for (xpos= 0; xpos < width; ++xpos)
-            {
-               *(temp++)= buffer[xpos * 3 + 2];
-               *(temp++)= buffer[xpos * 3 + 1];
-               *(temp++)= buffer[xpos * 3];
-            }
-          --ypos; /* next line */
-          cur_progress++;
-          if ((cur_progress % 5) == 0)
-            gimp_progress_update ((gdouble) cur_progress /
-                                  (gdouble) max_progress);
-        }
-    }
-    break;
+    case 16:
+      {
+        while (ReadOK (fd, buffer, rowbytes))
+          {
+            temp = dest + (ypos * rowstride);
+            for (xpos= 0; xpos < width; ++xpos)
+              {
+                rgb= ToS(&buffer[xpos * 2]);
+                if (using565) /* rgb 565 encoded */
+                  {
+                    *(temp++)= ((rgb >> 11) & 0x1f) * 8;
+                    *(temp++)= ((rgb >> 5)  & 0x3f) * 4;
+                    *(temp++)= ((rgb)       & 0x1f) * 8;
+                  }
+                else /* rgb555 */
+                  {
+                    *(temp++)= ((rgb >> 10) & 0x1f) * 8;
+                    *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
+                    *(temp++)= ((rgb)       & 0x1f) * 8;
+                  }
+              }
+            --ypos; /* next line */
+            cur_progress++;
+            if ((cur_progress % 5) == 0)
+              gimp_progress_update ((gdouble) cur_progress /
+                                    (gdouble) max_progress);
+          }
+      }
+      break;
 
-  case 16:
-    {
-      while (ReadOK (fd, buffer, rowbytes))
-        {
-          temp = dest + (ypos * rowstride);
-          for (xpos= 0; xpos < width; ++xpos)
-            {
-               rgb= ToS(&buffer[xpos * 2]);
-	       if (using565) /* rgb 565 encoded */
-		 {
-		   *(temp++)= ((rgb >> 11) & 0x1f) * 8;
-		   *(temp++)= ((rgb >> 5)  & 0x3f) * 4;
-		   *(temp++)= ((rgb)       & 0x1f) * 8;
-		 }
-	       else /* rgb555 */
-		 {
-		   *(temp++)= ((rgb >> 10) & 0x1f) * 8;
-		   *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
-		   *(temp++)= ((rgb)       & 0x1f) * 8;
-		 }
-            }
-          --ypos; /* next line */
-          cur_progress++;
-          if ((cur_progress % 5) == 0)
-            gimp_progress_update ((gdouble) cur_progress /
-                                  (gdouble) max_progress);
-        }
-    }
-    break;
-  case 8:
-  case 4:
-  case 1:
-    {
-      if (compression == 0)
+    case 8:
+    case 4:
+    case 1:
+      {
+        if (compression == 0)
 	  {
 	    while (ReadOK (fd, &v, 1))
 	      {
@@ -483,8 +504,7 @@ ReadImage (FILE   *fd,
 		  }
 		if (xpos == width)
 		  {
-		    unused = ReadOK (fd, buffer, rowbytes - 1 -
-                                                (width * bpp - 1) / 8);
+		    ReadOK (fd, buffer, rowbytes - 1 - (width * bpp - 1) / 8);
 		    ypos--;
 		    xpos = 0;
 
@@ -502,7 +522,7 @@ ReadImage (FILE   *fd,
 	  {
 	    while (ypos >= 0 && xpos <= width)
 	      {
-		unused = ReadOK (fd, buffer, 2);
+		ReadOK (fd, buffer, 2);
 		if ((guchar) buffer[0] != 0)
 		  /* Count + Color - record */
 		  {
@@ -527,10 +547,10 @@ ReadImage (FILE   *fd,
 		if (((guchar) buffer[0] == 0) && ((guchar) buffer[1] > 2))
 		  /* uncompressed record */
 		  {
-		    wieviel = buffer[1];
-		    for (j = 0; j < wieviel; j += (8 / bpp))
+		    n = buffer[1];
+		    for (j = 0; j < n; j += (8 / bpp))
 		      {
-			unused = ReadOK (fd, &v, 1);
+			ReadOK (fd, &v, 1);
 			i = 1;
 			while ((i <= (8 / bpp)) && (xpos < width))
 			  {
@@ -543,11 +563,12 @@ ReadImage (FILE   *fd,
 			  }
 		      }
 
-		    if ((wieviel % 2) && (bpp==4))
-		      wieviel++;
+		    if ((n % 2) && (bpp==4))
+		      n++;
 
-		    if ((wieviel / (8 / bpp)) % 2)
-		      unused = ReadOK (fd, &v, 1);
+		    if ((n / (8 / bpp)) % 2)
+		      ReadOK (fd, &v, 1);
+
 		    /*if odd(x div (8 div bpp )) then blockread(f,z^,1);*/
 		  }
 		if (((guchar) buffer[0] == 0) && ((guchar) buffer[1]==0))
@@ -569,19 +590,20 @@ ReadImage (FILE   *fd,
 		if (((guchar) buffer[0]==0) && ((guchar) buffer[1]==2))
 		  /* Deltarecord */
 		  {
-		    unused = ReadOK (fd, buffer, 2);
+		    ReadOK (fd, buffer, 2);
 		    xpos += (guchar) buffer[0];
 		    ypos -= (guchar) buffer[1];
 		  }
 	      }
 	    break;
 	  }
+      }
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
     }
-    break;
-  default:
-    /* This is very bad, we should not be here */
-    ;
-  }
 
   fclose (fd);
   if (bpp <= 8)

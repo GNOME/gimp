@@ -51,7 +51,16 @@ static gint max_progress = 0;
 static gint encoded      = 0;
 
 
-static gint  save_dialog (void);
+static  void      WriteImage  (FILE   *f,
+                               guchar *src,
+                               gint    width,
+                               gint    height,
+                               gint    encoded,
+                               gint    channels,
+                               gint    bpp,
+                               gint    spzeile,
+                               gint    MapSize);
+static  gboolean  save_dialog (void);
 
 
 static void
@@ -98,29 +107,31 @@ WriteBMP (const gchar *filename,
 	  gint32       image,
 	  gint32       drawable_ID)
 {
-  FILE *outfile;
-  gint Red[MAXCOLORS];
-  gint Green[MAXCOLORS];
-  gint Blue[MAXCOLORS];
-  guchar *cmap;
-  gint rows, cols, Spcols, channels, MapSize, SpZeile;
-  glong BitsPerPixel;
-  gint colors;
-  gchar *temp_buf;
-  guchar *pixels;
-  GimpPixelRgn pixel_rgn;
+  FILE         *outfile;
+  gint          Red[MAXCOLORS];
+  gint          Green[MAXCOLORS];
+  gint          Blue[MAXCOLORS];
+  guchar       *cmap;
+  gint          rows, cols, Spcols, channels, MapSize, SpZeile;
+  glong         BitsPerPixel;
+  gint          colors;
+  gchar        *temp_buf;
+  guchar       *pixels;
+  GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  guchar puffer[50];
-  gint i;
+  guchar        puffer[50];
+  gint          i;
 
   /* first: can we save this image? */
 
-  drawable = gimp_drawable_get(drawable_ID);
-  drawable_type = gimp_drawable_type(drawable_ID);
+  drawable = gimp_drawable_get (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable_ID);
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
 		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  if (gimp_drawable_has_alpha(drawable_ID))
+
+  if (gimp_drawable_has_alpha (drawable_ID))
     {
       g_message (_("Cannot save images with alpha channel."));
       return GIMP_PDB_EXECUTION_ERROR;
@@ -316,7 +327,7 @@ WriteBMP (const gchar *filename,
   return GIMP_PDB_SUCCESS;
 }
 
-void
+static void
 WriteImage (FILE   *f,
 	    guchar *src,
 	    gint    width,
@@ -530,7 +541,7 @@ WriteImage (FILE   *f,
   gimp_progress_update (1);
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;

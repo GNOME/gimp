@@ -1,3 +1,9 @@
+2003-11-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.[ch]
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: some code cleanup (what a mess...).
+
 2003-11-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.[ch]: removed gimp_g_object_get_memsize()...
@@ -12,11 +18,11 @@
 	* app/vectors/gimpstroke.c (GimpObject::get_memsize): use the new
 	functions.
 
-2003-11-22  Dave Neary  <bolsh@gimp.org>
+2003-11-25  Dave Neary  <bolsh@gimp.org>
 
-	* libgimp/Makefile.am: Applied patch from  deaddog@deaddog.org (Abel 
-	Cheung) to make sure dependencies are built before we build libgimp and 
-	libgimpui. Fixes bug #127863.
+	* libgimp/Makefile.am: Applied patch from deaddog@deaddog.org
+	(Abel Cheung) to make sure dependencies are built before we build
+	libgimp and libgimpui. Fixes bug #127863.
 
 2003-11-25  Maurits Rijk  <m.rijk@chello.nl>
 

@@ -63,7 +63,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-const gchar *prog_name = "bmp";
 const gchar *filename  = NULL;
 gboolean     interactive_bmp;
 
