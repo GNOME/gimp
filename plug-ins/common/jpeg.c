@@ -177,14 +177,14 @@
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
 #define DEFAULT_QUALITY     0.85
 #define DEFAULT_SMOOTHING   0.0
-#define DEFAULT_OPTIMIZE    1
-#define DEFAULT_PROGRESSIVE 0
-#define DEFAULT_BASELINE    1
+#define DEFAULT_OPTIMIZE    TRUE
+#define DEFAULT_PROGRESSIVE FALSE
+#define DEFAULT_BASELINE    TRUE
 #define DEFAULT_SUBSMP      0
 #define DEFAULT_RESTART     0
 #define DEFAULT_DCT         0
-#define DEFAULT_PREVIEW     0
-#define DEFAULT_EXIF        1
+#define DEFAULT_PREVIEW     FALSE
+#define DEFAULT_EXIF        TRUE
 
 /* sg - these should not be global... */
 static gint32 volatile  image_ID_global       = -1;
@@ -197,16 +197,16 @@ static gboolean         undo_touched          = FALSE;
 
 typedef struct
 {
-  gdouble quality;
-  gdouble smoothing;
-  gint    optimize;
-  gint    progressive;
-  gint    baseline;
-  gint    subsmp;
-  gint    restart;
-  gint    dct;
-  gint    preview;
-  gint    save_exif;
+  gdouble  quality;
+  gdouble  smoothing;
+  gboolean optimize;
+  gboolean progressive;
+  gboolean baseline;
+  gint     subsmp;
+  gint     restart;
+  gint     dct;
+  gboolean preview;
+  gboolean save_exif;
 } JpegSaveVals;
 
 typedef struct
@@ -731,6 +731,41 @@ my_error_exit (j_common_ptr cinfo)
   longjmp (myerr->setjmp_buffer, 1);
 }
 
+static void
+my_emit_message (j_common_ptr cinfo,
+                 int          msg_level)
+{
+  if (msg_level == -1)
+    {
+      /*  disable loading of EXIF data  */
+      cinfo->client_data = GINT_TO_POINTER (TRUE);
+
+      (*cinfo->err->output_message) (cinfo);
+    }
+}
+
+static void
+my_output_message (j_common_ptr cinfo)
+{
+  gchar  buffer[JMSG_LENGTH_MAX + 1];
+
+  (*cinfo->err->format_message)(cinfo, buffer);
+
+  if (GPOINTER_TO_INT (cinfo->client_data))
+    {
+      gchar *msg = g_strconcat (buffer,
+                                "\n\n",
+                                _("EXIF data will be ignored."),
+                                NULL);
+      g_message (msg);
+      g_free (msg);
+    }
+  else
+    {
+      g_message (buffer);
+    }
+}
+
 static gint32
 load_image (const gchar *filename,
 	    GimpRunMode  runmode,
@@ -762,6 +797,15 @@ load_image (const gchar *filename,
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
+
+  /* flag warnings, so we try to ignore corrupt EXIF data */
+  if (!preview)
+    {
+      cinfo.client_data = GINT_TO_POINTER (FALSE);
+
+      jerr.pub.emit_message   = my_emit_message;
+      jerr.pub.output_message = my_output_message;
+    }
 
   if ((infile = fopen (filename, "rb")) == NULL)
     {
@@ -795,6 +839,7 @@ load_image (const gchar *filename,
 	destroy_preview();
       gimp_quit ();
     }
+
   /* Now we can initialize the JPEG decompression object. */
   jpeg_create_decompress (&cinfo);
 
@@ -809,6 +854,7 @@ load_image (const gchar *filename,
   /* Step 3: read file parameters with jpeg_read_header() */
 
   (void) jpeg_read_header (&cinfo, TRUE);
+
   /* We can ignore the return value from jpeg_read_header since
    *   (a) suspension is not possible with the stdio data source, and
    *   (b) we passed TRUE to reject a tables-only JPEG file as an error.
@@ -1104,21 +1150,31 @@ load_image (const gchar *filename,
 	}
 
 #ifdef HAVE_EXIF
-      exif_data = exif_data_new_from_file (filename);
-      if (exif_data)
-        {
-          guchar *exif_buf;
-          guint   exif_buf_len;
+#define EXIF_HEADER_SIZE 8
 
-          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-          exif_data_unref (exif_data);
-          exif_parasite = gimp_parasite_new ("jpeg-exif-data",
-                                             GIMP_PARASITE_PERSISTENT,
-                                             exif_buf_len, exif_buf);
-          gimp_image_parasite_attach (image_ID, exif_parasite);
-          gimp_parasite_free (exif_parasite);
-          free (exif_buf);
-        }
+      if (! GPOINTER_TO_INT (cinfo.client_data))
+	{
+	  exif_data = exif_data_new_from_file (filename);
+	  if (exif_data)
+	    {
+	      guchar *exif_buf;
+	      guint   exif_buf_len;
+
+	      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+	      exif_data_unref (exif_data);
+
+	      if (exif_buf_len > EXIF_HEADER_SIZE)
+		{
+		  exif_parasite = gimp_parasite_new ("exif-data",
+						     GIMP_PARASITE_PERSISTENT,
+						     exif_buf_len, exif_buf);
+		  gimp_image_parasite_attach (image_ID, exif_parasite);
+		  gimp_parasite_free (exif_parasite);
+		}
+
+	      free (exif_buf);
+	    }
+	}
 #endif
 
     }
