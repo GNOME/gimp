@@ -1071,6 +1071,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   else
     {
       const gchar *undo_desc;
+      gint         offset_x, offset_y;
 
       if (GIMP_IS_LAYER (drawable))
         {
@@ -1103,15 +1104,11 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                          GIMP_ITEM (drawable)->width,
                          GIMP_ITEM (drawable)->height);
 
-      gimp_drawable_set_tiles (drawable,
-                              TRUE, undo_desc,
-                              tiles, drawable->type);
+      tile_manager_get_offsets (tiles, &offset_x, &offset_y);
 
-      GIMP_ITEM (drawable)->width  = tile_manager_width (tiles);
-      GIMP_ITEM (drawable)->height = tile_manager_height (tiles);
-      tile_manager_get_offsets (tiles,
-                                &GIMP_ITEM (drawable)->offset_x,
-                                &GIMP_ITEM (drawable)->offset_y);
+      gimp_drawable_set_tiles_full (drawable, TRUE, undo_desc,
+                                    tiles, drawable->type,
+                                    offset_x, offset_y);
 
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);

@@ -133,7 +133,9 @@ static void      gimp_channel_set_tiles      (GimpDrawable     *drawable,
                                               gboolean          push_undo,
                                               const gchar      *undo_desc,
                                               TileManager      *tiles,
-                                              GimpImageType     type);
+                                              GimpImageType     type,
+                                              gint              offset_x,
+                                              gint              offset_y);
 static void      gimp_channel_swap_pixels    (GimpDrawable     *drawable,
                                               TileManager      *tiles,
                                               gboolean          sparse,
@@ -769,7 +771,9 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
                         gboolean      push_undo,
                         const gchar  *undo_desc,
                         TileManager  *tiles,
-                        GimpImageType type)
+                        GimpImageType type,
+                        gint          offset_x,
+                        gint          offset_y)
 {
   if (push_undo)
     gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
@@ -778,7 +782,8 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
-                                                 tiles, type);
+                                                 tiles, type,
+                                                 offset_x, offset_y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }

@@ -983,10 +983,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
           gimp_channel_push_undo (gimp_image_get_mask (gdisp->gimage), NULL);
 
-          gimp_drawable_set_tiles (drawable,
-                                   FALSE, NULL,
-                                   new_tiles, drawable->type);
-
+          gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
           tile_manager_unref (new_tiles);
 
           gimp_drawable_update (GIMP_DRAWABLE (active_item),

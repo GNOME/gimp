@@ -941,10 +941,10 @@ gimp_image_convert (GimpImage              *gimage,
 	  break;
 	}
 
-      gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
-                               TRUE, NULL,
-                               new_tiles, new_layer_type);
-
+      gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer), TRUE, NULL,
+                                    new_tiles, new_layer_type,
+                                    GIMP_ITEM (layer)->offset_x,
+                                    GIMP_ITEM (layer)->offset_y);
       tile_manager_unref (new_tiles);
     }
 

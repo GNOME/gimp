@@ -112,7 +112,9 @@ static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
                                                     gboolean           push_undo,
                                                     const gchar       *undo_desc,
                                                     TileManager       *tiles,
-                                                    GimpImageType      type);
+                                                    GimpImageType      type,
+                                                    gint               offset_x,
+                                                    gint               offset_y);
 
 static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     TileManager       *tiles,
@@ -382,19 +384,13 @@ gimp_drawable_scale (GimpItem              *item,
                 GIMP_INTERPOLATION_NONE : interpolation_type,
                 progress_callback, progress_data);
 
-  gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                           new_tiles, gimp_drawable_type (drawable));
+  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+                                new_tiles, gimp_drawable_type (drawable),
+                                new_offset_x, new_offset_y);
   tile_manager_unref (new_tiles);
-
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
-                                         new_offset_x, new_offset_y,
-                                         interpolation_type,
-                                         progress_callback, progress_data);
 
   /*  Update the new position  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
 }
 
 static void
@@ -464,17 +460,14 @@ gimp_drawable_resize (GimpItem *item,
       copy_region (&srcPR, &destPR);
     }
 
-  gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                           new_tiles, gimp_drawable_type (drawable));
+  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
+                                new_tiles, gimp_drawable_type (drawable),
+                                item->offset_x - offset_x,
+                                item->offset_y - offset_y);
   tile_manager_unref (new_tiles);
-
-  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
-                                          offset_x, offset_y);
 
   /*  update the new area  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
 }
 
 static void
@@ -598,11 +591,16 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
                               gboolean      push_undo,
                               const gchar  *undo_desc,
                               TileManager  *tiles,
-                              GimpImageType type)
+                              GimpImageType type,
+                              gint          offset_x,
+                              gint          offset_y)
 {
-  gboolean old_has_alpha;
+  GimpItem *item;
+  gboolean  old_has_alpha;
 
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
+
+  item = GIMP_ITEM (drawable);
 
   old_has_alpha = gimp_drawable_has_alpha (drawable);
 
@@ -615,6 +613,18 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->type      = type;
   drawable->bytes     = tile_manager_bpp (tiles);
   drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+
+  item->offset_x = offset_x;
+  item->offset_y = offset_y;
+
+  if (item->width  != tile_manager_width (tiles) ||
+      item->height != tile_manager_height (tiles))
+    {
+      item->width  = tile_manager_width (tiles);
+      item->height = tile_manager_height (tiles);
+
+      gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
+    }
 
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
@@ -808,15 +818,36 @@ void
 gimp_drawable_set_tiles (GimpDrawable *drawable,
                          gboolean      push_undo,
                          const gchar  *undo_desc,
-                         TileManager  *tiles,
-                         GimpImageType type)
+                         TileManager  *tiles)
+{
+  gint offset_x, offset_y;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (tiles != NULL);
+
+  gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+  gimp_drawable_set_tiles_full (drawable, push_undo, undo_desc, tiles,
+                                gimp_drawable_type (drawable),
+                                offset_x, offset_y);
+}
+
+void
+gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
+                              gboolean            push_undo,
+                              const gchar        *undo_desc,
+                              TileManager        *tiles,
+                              GimpImageType       type,
+                              gint                offset_x,
+                              gint                offset_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
                                                  push_undo, undo_desc,
-                                                 tiles, type);
+                                                 tiles, type,
+                                                 offset_x, offset_y);
 }
 
 void

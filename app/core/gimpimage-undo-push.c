@@ -1407,26 +1407,9 @@ undo_pop_layer_mod (GimpUndo            *undo,
   lmu->offset_x = GIMP_ITEM (layer)->offset_x;
   lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
-  GIMP_ITEM (layer)->width    = tile_manager_width (tiles);
-  GIMP_ITEM (layer)->height   = tile_manager_height (tiles);
-  GIMP_ITEM (layer)->offset_x = offset_x;
-  GIMP_ITEM (layer)->offset_y = offset_y;
-
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), FALSE, NULL,
-                           tiles, layer_type);
+  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer), FALSE, NULL,
+                                tiles, layer_type, offset_x, offset_y);
   tile_manager_unref (tiles);
-
-  if (layer->mask)
-    {
-      GIMP_ITEM (layer->mask)->offset_x = offset_x;
-      GIMP_ITEM (layer->mask)->offset_y = offset_y;
-    }
-
-  if (GIMP_ITEM (layer)->width  != tile_manager_width  (lmu->tiles) ||
-      GIMP_ITEM (layer)->height != tile_manager_height (lmu->tiles))
-    {
-      gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
-    }
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -2072,18 +2055,8 @@ undo_pop_channel_mod (GimpUndo            *undo,
 
   cmu->tiles = tile_manager_ref (GIMP_DRAWABLE (channel)->tiles);
 
-  GIMP_ITEM (channel)->width  = tile_manager_width (tiles);
-  GIMP_ITEM (channel)->height = tile_manager_height (tiles);
-
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (channel), FALSE, NULL,
-                           tiles, gimp_drawable_type (GIMP_DRAWABLE (channel)));
+  gimp_drawable_set_tiles (GIMP_DRAWABLE (channel), FALSE, NULL, tiles);
   tile_manager_unref (tiles);
-
-  if (GIMP_ITEM (channel)->width  != tile_manager_width  (cmu->tiles) ||
-      GIMP_ITEM (channel)->height != tile_manager_height (cmu->tiles))
-    {
-      gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
-    }
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),

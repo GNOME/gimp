@@ -1,5 +1,31 @@
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: added "offset_x" and "offset_y"
+	parameters to GimpDrawable::set_tiles().
+
+	(gimp_drawable_set_tiles): removed the "GimpImageType" parameter.
+
+	(gimp_drawable_set_tiles_full): new function adding type, offset_x
+	and offset_y parameters.
+
+	(gimp_drawable_real_set_tiles): set the drawable's offsets from
+	the offset parameters and its size from the passed TileManager's
+	size. Emit "size_changed" accordingly.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimplayer.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimptransformtool.c: changed accordingly: removed
+	calls to gimp_viewable_size_changed() and all sorts of hackish
+	assignments of the drawable's width/height/offset_x/offset_y
+	properties.
+
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/text/gimptextlayer.c (gimp_text_layer_render): don't call
 	gimp_image_flush().
 

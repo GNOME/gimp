@@ -322,8 +322,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                            FALSE);
 
   /*  set the tiles  */
-  gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                           new_tiles, gimp_drawable_type (drawable));
+  gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
   tile_manager_unref (new_tiles);
 
   /*  update the drawable  */

@@ -85,7 +85,9 @@ struct _GimpDrawableClass
                                   gboolean              push_undo,
                                   const gchar          *undo_desc,
                                   TileManager          *tiles,
-                                  GimpImageType         type);
+                                  GimpImageType         type,
+                                  gint                  offset_x,
+                                  gint                  offset_y);
   void (* swap_pixels)           (GimpDrawable         *drawable,
                                   TileManager          *tiles,
                                   gboolean              sparse,
@@ -139,8 +141,14 @@ void            gimp_drawable_replace_region     (GimpDrawable       *drawable,
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
+                                                  TileManager        *tiles);
+void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc,
                                                   TileManager        *tiles,
-                                                  GimpImageType       type);
+                                                  GimpImageType       type,
+                                                  gint                offset_x,
+                                                  gint                offset_y);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   TileManager        *tiles,

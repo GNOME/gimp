@@ -126,7 +126,9 @@ static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  const gchar        *undo_desc,
                                                  TileManager        *tiles,
-                                                 GimpImageType       type);
+                                                 GimpImageType       type,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -389,8 +391,12 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
                       gboolean      push_undo,
                       const gchar  *undo_desc,
                       TileManager  *tiles,
-                      GimpImageType type)
+                      GimpImageType type,
+                      gint          offset_x,
+                      gint          offset_y)
 {
+  GimpLayer *layer = GIMP_LAYER (drawable);
+
   if (push_undo)
     gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
                                     undo_desc,
@@ -398,7 +404,14 @@ gimp_layer_set_tiles (GimpDrawable *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
-                                                 tiles, type);
+                                                 tiles, type,
+                                                 offset_x, offset_y);
+
+  if (layer->mask)
+    {
+      GIMP_ITEM (layer->mask)->offset_x = offset_x;
+      GIMP_ITEM (layer->mask)->offset_y = offset_y;
+    }
 }
 
 static void
@@ -540,7 +553,10 @@ gimp_layer_convert (GimpItem  *item,
           break;
         }
 
-      gimp_drawable_set_tiles (new_drawable, FALSE, NULL, new_tiles, new_type);
+      gimp_drawable_set_tiles_full (new_drawable, FALSE, NULL,
+                                    new_tiles, new_type,
+                                    GIMP_ITEM (layer)->offset_x,
+                                    GIMP_ITEM (layer)->offset_y);
       tile_manager_unref (new_tiles);
     }
 
@@ -1385,8 +1401,11 @@ gimp_layer_add_alpha (GimpLayer *layer)
   add_alpha_region (&srcPR, &destPR);
 
   /*  Set the new tiles  */
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), TRUE, _("Add Alpha Channel"),
-                           new_tiles, new_type);
+  gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
+                                TRUE, _("Add Alpha Channel"),
+                                new_tiles, new_type,
+                                GIMP_ITEM (layer)->offset_x,
+                                GIMP_ITEM (layer)->offset_y);
   tile_manager_unref (new_tiles);
 
   GIMP_DRAWABLE (layer)->preview_valid = FALSE;

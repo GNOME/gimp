@@ -89,7 +89,9 @@ static void       gimp_text_layer_set_tiles      (GimpDrawable   *drawable,
                                                   gboolean        push_undo,
                                                   const gchar    *undo_desc,
                                                   TileManager    *tiles,
-                                                  GimpImageType   type);
+                                                  GimpImageType   type,
+                                                  gint            offset_x,
+                                                  gint            offset_y);
 static void       gimp_text_layer_swap_pixels    (GimpDrawable   *drawable,
                                                   TileManager    *tiles,
                                                   gboolean        sparse,
@@ -299,11 +301,14 @@ gimp_text_layer_set_tiles (GimpDrawable  *drawable,
                            gboolean       push_undo,
                            const gchar   *undo_desc,
                            TileManager   *tiles,
-                           GimpImageType  type)
+                           GimpImageType  type,
+                           gint           offset_x,
+                           gint           offset_y)
 {
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
-                                                 tiles, type);
+                                                 tiles, type,
+                                                 offset_x, offset_y);
   GIMP_TEXT_LAYER (drawable)->modified = TRUE;
 }
 
@@ -491,10 +496,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;
 
-          new_tiles = tile_manager_new (width, height, drawable->bytes),
+          new_tiles = tile_manager_new (width, height, drawable->bytes);
 
-          gimp_drawable_set_tiles (drawable, FALSE, NULL,
-                                   new_tiles, gimp_drawable_type (drawable));
+          gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
           tile_manager_unref (new_tiles);
 
           gimp_drawable_update (drawable,
