@@ -1,5 +1,7 @@
 Sat Apr 24 11:30:34 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* libgimp/gimpenv.c (gimp_data_directory): Set gimp_data_dir (OS/2).
+
 	* libgimp/gimp.c (set_gimp_PLUG_IN_INFO): Set the PLUG_IN_INFO
 	structure in a normal way (at run-time). 
 	The UNIX PLUG_IN_INFO is set at linking time!

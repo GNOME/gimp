@@ -29,6 +29,10 @@
 #include <windows.h>		/* For GetModuleFileName */
 #endif
 
+#ifdef __EMX__
+extern const char *__XOS2RedirRoot(const char *);
+#endif
+
 char *
 gimp_directory ()
 {
@@ -115,7 +119,11 @@ gimp_data_directory ()
   else
     {
 #ifndef NATIVE_WIN32
+#ifndef __EMX__
       gimp_data_dir = DATADIR;
+#else
+      gimp_data_dir = g_strdup(__XOS2RedirRoot(DATADIR));
+#endif
 #else
       /* Figure it out from the executable name */
       char filename[MAX_PATH];
