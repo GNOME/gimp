@@ -89,10 +89,11 @@ static guint clist_n_targets = (sizeof (clist_target_table) /
 				sizeof (clist_target_table[0]));
 
 /*  list of active dialogs   */
-GSList *gradient_active_dialogs = NULL;
+GSList         *gradient_active_dialogs = NULL;
 
 /*  the main gradient selection dialog  */
-GradientSelect *gradient_select_dialog = NULL;
+GradientSelect *gradient_select_dialog  = NULL;
+
 
 void
 gradient_dialog_create (void)
@@ -131,17 +132,17 @@ GradientSelect *
 gradient_select_new (gchar *title,
 		     gchar *initial_gradient)
 {
-  GradientSelect *gsp;
-  GtkWidget   *vbox;
-  GtkWidget   *scrolled_win;
-  GdkColormap *colormap;
-  gchar       *titles[2];
-  gint         column_width;
-  gint         select_pos;
+  GradientSelect  *gsp;
+  GtkWidget       *vbox;
+  GtkWidget       *scrolled_win;
+  GdkColormap     *colormap;
+  gchar           *titles[2];
+  gint             column_width;
+  gint             select_pos;
 
-  gradient_t *active = NULL;
+  gradient_t      *active = NULL;
 
-  static gboolean first_call = TRUE;
+  static gboolean  first_call = TRUE;
 
   gsp = g_new (GradientSelect, 1);
   gsp->callback_name = NULL;
@@ -302,11 +303,11 @@ static void
 gradient_change_callbacks (GradientSelect *gsp,
 			   gboolean        closing)
 {
-  gchar * name;
-  ProcRecord *prec = NULL;
-  gradient_t *gradient;
-  gint nreturn_vals;
-  static gboolean busy = FALSE;
+  gchar           *name;
+  ProcRecord      *prec = NULL;
+  gradient_t      *gradient;
+  gint             nreturn_vals;
+  static gboolean  busy = FALSE;
 
   /* Any procs registered to callback? */
   Argument *return_vals; 
@@ -326,9 +327,9 @@ gradient_change_callbacks (GradientSelect *gsp,
       gdouble  *values, *pv;
       double    pos, delta;
       double    r, g, b, a;
-      int i = gsp->sample_size;
-      pos   = 0.0;
-      delta = 1.0 / (i - 1);
+      gint i = gsp->sample_size;
+      pos    = 0.0;
+      delta  = 1.0 / (i - 1);
       
       values = g_new (gdouble, 4 * i);
       pv     = values;
@@ -367,9 +368,9 @@ void
 gradients_check_dialogs (void)
 {
   GradientSelect *gsp;
-  GSList *list;
-  gchar *name;
-  ProcRecord *prec = NULL;
+  GSList         *list;
+  gchar          *name;
+  ProcRecord     *prec = NULL;
 
   list = gradient_active_dialogs;
 
@@ -394,17 +395,19 @@ gradients_check_dialogs (void)
 }
 
 void
-gradient_select_rename_all (gint        n,
-			    gradient_t *gradient)
+gradient_select_rename_all (gradient_t *gradient)
 {
   GradientSelect *gsp; 
-  GSList *list;
+  GSList         *list;
+  gint            row;
 
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradientSelect *) list->data;
 
-      gtk_clist_set_text (GTK_CLIST (gsp->clist), n, 1, gradient->name);  
+      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
+      if (row > -1)
+	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
     }
 }
 
@@ -413,7 +416,7 @@ gradient_select_insert_all (gint        pos,
 			    gradient_t *gradient)
 {
   GradientSelect *gsp; 
-  GSList *list;
+  GSList         *list;
 
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
@@ -427,16 +430,19 @@ gradient_select_insert_all (gint        pos,
 }
 
 void
-gradient_select_delete_all (gint n)
+gradient_select_delete_all (gradient_t *gradient)
 {
   GradientSelect *gsp; 
-  GSList *list;
+  GSList         *list;
+  gint            row;
 
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradientSelect *) list->data;
-
-      gtk_clist_remove (GTK_CLIST (gsp->clist), n);
+      
+      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
+      if (row > -1)
+	gtk_clist_remove (GTK_CLIST (gsp->clist), row);
     }
 }
 
@@ -450,9 +456,7 @@ gradient_select_free_all (void)
     {
       gsp = (GradientSelect *) list->data;
 
-      gtk_clist_freeze (GTK_CLIST (gsp->clist));
       gtk_clist_clear (GTK_CLIST (gsp->clist));
-      gtk_clist_thaw (GTK_CLIST (gsp->clist));
     }
 }
 
@@ -460,8 +464,8 @@ void
 gradient_select_refill_all (void)
 {
   GradientSelect *gsp;
-  GSList *list;
-  gint index = -1;
+  GSList         *list;
+  gint            index = -1;
 
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
@@ -476,17 +480,19 @@ gradient_select_refill_all (void)
 }
 
 void
-gradient_select_update_all (gint        row,
-			    gradient_t *gradient)
+gradient_select_update_all (gradient_t *gradient)
 {
-  GSList *list;
+  GSList         *list;
   GradientSelect *gsp; 
-
+  gint            row;
+  
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradientSelect *) list->data;
 
-      gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
+      row = gtk_clist_find_row_from_data (GTK_CLIST (gsp->clist), gradient);
+      if (row > -1)
+	gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, gradient->name);  
     }
 }
 
@@ -602,7 +608,7 @@ gradient_select_list_item_update (GtkWidget      *widget,
   GradientSelect *gsp;
   GSList *list;
 
-  gsp = (GradientSelect *) data;
+  gsp  = (GradientSelect *) data;
   list = g_slist_nth (gradients_list, row);
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (gsp->context), gsp);

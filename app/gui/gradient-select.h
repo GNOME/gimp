@@ -54,15 +54,13 @@ GradientSelect * gradient_select_new        (gchar          *title,
 
 void             gradient_select_free       (GradientSelect *gsp);
 
-void             gradient_select_rename_all (gint            n,
-					     gradient_t     *gradient);
+void             gradient_select_rename_all (gradient_t     *gradient);
 void             gradient_select_insert_all (gint            pos,
 					     gradient_t     *gradient);
-void             gradient_select_delete_all (gint            n);
+void             gradient_select_delete_all (gradient_t     *gradient);
 void             gradient_select_free_all   (void);
 void             gradient_select_refill_all (void);
-void             gradient_select_update_all (gint            row,
-					     gradient_t     *gradient);
+void             gradient_select_update_all (gradient_t     *gradient);
 
 void             gradients_check_dialogs   (void);
 

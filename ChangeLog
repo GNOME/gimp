@@ -1,3 +1,14 @@
+2000-12-21  Sven Neumann  <sven@gimp.org>
+
+	* app/gradient.c
+	* app/gradient_select.[ch]: reviewed the gradient code. The old code
+	used to use list indices which led to bug #35612 and other problems.
+	We now attach a pointer to the gradient to each row in the GtkClists
+	and retrieve the matching row for a gradient using 
+	gtk_clist_find_row_from_data(). Additionally I have added similar code
+	as we use for brushes to assure that no two gradients have the same
+	name.
+
 2000-12-20  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/makefile.mingw.in (COMMON): Remove gpb and

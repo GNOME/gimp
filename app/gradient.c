@@ -327,17 +327,17 @@ static void      ed_instant_update_update         (GtkWidget       *widget,
 
 /* Gradient preview functions */
 
-static gint      prev_events                      (GtkWidget       *widget,
+static gint      preview_events                   (GtkWidget       *widget,
 						   GdkEvent        *event,
 						   gpointer         data);
-static void      prev_set_hint                    (gint             x);
+static void      preview_set_hint                 (gint             x);
 
-static void      prev_set_foreground              (gint             x);
-static void      prev_set_background              (gint             x);
+static void      preview_set_foreground           (gint             x);
+static void      preview_set_background           (gint             x);
 
 static void      gradient_update                  (void);
-static void      prev_update                      (gboolean         recalculate);
-static void      prev_fill_image                  (gint             width,
+static void      preview_update                   (gboolean         recalculate);
+static void      preview_fill_image               (gint             width,
 						   gint             height,
 						   gdouble          left,
 						   gdouble          right);
@@ -584,10 +584,11 @@ static void             grad_save_all                 (gboolean    need_free);
 
 static gradient_t     * grad_create_default_gradient  (void);
 
-static int              grad_insert_in_gradients_list (gradient_t *grad);
+static gint             grad_insert_in_gradients_list (gradient_t *grad);
 
 static void             grad_dump_gradient            (gradient_t *grad,
 						       FILE       *file);
+static void     gradients_list_uniquefy_gradient_name (gradient_t *gradient);
 
 
 /* Segment functions */
@@ -621,6 +622,7 @@ static gdouble   calc_sphere_decreasing_factor (gdouble  middle,
 
 static gchar   * build_user_filename           (gchar   *name,
 						gchar   *path_str);
+
 
 /***** Global variables *****/
 
@@ -1124,7 +1126,7 @@ gradient_editor_create (void)
 
   gtk_widget_set_events (g_editor->preview, GRAD_PREVIEW_EVENT_MASK);
   gtk_signal_connect (GTK_OBJECT (g_editor->preview), "event",
-		      GTK_SIGNAL_FUNC (prev_events),
+		      GTK_SIGNAL_FUNC (preview_events),
 		      g_editor);
 
   gtk_drag_dest_set (g_editor->preview,
@@ -1344,12 +1346,12 @@ ed_update_editor (int flags)
 {
   if (flags & GRAD_UPDATE_GRADIENT)
     {
-      prev_update (TRUE);
+      preview_update (TRUE);
       gradient_update ();
     }
 
   if (flags & GRAD_UPDATE_PREVIEW)
-    prev_update (TRUE);
+    preview_update (TRUE);
 
   if (flags & GRAD_UPDATE_CONTROL)
     control_update (FALSE);
@@ -1493,6 +1495,9 @@ gradient_clist_init (GtkWidget  *shell,
   if (sel_gradient == NULL)
     sel_gradient = curr_gradient;
 
+  if (sel_gradient == NULL)
+    return 0;
+
   gtk_clist_freeze (GTK_CLIST (clist));
 
   for (list = gradients_list, n = 0; list; list = g_slist_next (list), n++)
@@ -1525,10 +1530,13 @@ gradient_clist_insert (GtkWidget  *shell,
 {
   gchar *string[2];
 
+  g_return_if_fail (gradient != NULL);
+
   string[0] = NULL;
   string[1] = gradient->name;
 
-  gtk_clist_insert (GTK_CLIST (clist), pos, string);
+  pos = gtk_clist_insert (GTK_CLIST (clist), pos, string);
+  gtk_clist_set_row_data (GTK_CLIST (clist), pos, gradient);
 
   if (gradient->pixmap == NULL)
     {
@@ -1546,7 +1554,6 @@ gradient_clist_insert (GtkWidget  *shell,
       gtk_clist_select_row (GTK_CLIST (clist), pos, -1);
       gtk_clist_moveto (GTK_CLIST (clist), pos, 0, 0.5, 0.0);
     }
-
 }
 
 /*****/
@@ -1559,8 +1566,8 @@ ed_list_item_update (GtkWidget      *widget,
 		     gpointer        data)
 {
   /* Update current gradient */
-  GSList* tmp = g_slist_nth (gradients_list,row);
-  curr_gradient = dnd_gradient = (gradient_t *)(tmp->data);
+  curr_gradient = dnd_gradient = 
+    (gradient_t *) gtk_clist_get_row_data (GTK_CLIST (widget), row); 
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 }
@@ -1677,7 +1684,8 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
   grad = grad_create_default_gradient ();
 
-  grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
+  grad->name     = gradient_name; /* We don't need to copy since 
+				     this memory is ours */
   grad->dirty    = TRUE;
   grad->filename = build_user_filename (grad->name, gradient_path);
 
@@ -1740,8 +1748,11 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
   /* Copy current gradient */
   grad = grad_new_gradient ();
+  if (grad == NULL)
+    return;
 
-  grad->name     = gradient_name; /* We don't need to copy since this memory is ours */
+  grad->name     = gradient_name; /* We don't need to copy since 
+				     this memory is ours */
   grad->dirty    = TRUE;
   grad->filename = build_user_filename (grad->name, gradient_path);
 
@@ -1811,9 +1822,9 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 				gpointer   data)
 {
   gradient_t *grad = (gradient_t *) data;
-  gradient_t *grad_list = NULL;
-  GSList     *tmp;
-  gint        n;
+  gint        row;
+
+  g_return_if_fail (grad != NULL);
 
   if (!gradient_name)
     {
@@ -1821,22 +1832,9 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
       return;
     }
 
-  for (tmp = gradients_list, n = 0; tmp; tmp = g_slist_next (tmp), n++)
-    {
-      grad_list = tmp->data;
-
-      if (grad_list == grad)
-	break;
-    }
-
-  if (!grad || !grad_list)
-    {
-      g_warning ("can't find gradient to rename");
-      return;
-    }
-
   g_free (grad->name);
-  grad->name  = gradient_name; /* We don't need to copy since this memory is ours */
+  grad->name  = gradient_name; /* We don't need to copy since 
+				  this memory is ours */
   grad->dirty = TRUE;
 
   /* Delete file and free gradient */
@@ -1845,12 +1843,14 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
   g_free (grad->filename);
   grad->filename = build_user_filename (grad->name, gradient_path);
 
-  gtk_clist_set_text (GTK_CLIST (g_editor->clist), n, 1, grad->name);  
+  row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), grad);
+  if (row > -1)
+    gtk_clist_set_text (GTK_CLIST (g_editor->clist), row, 1, grad->name);
+
+  gradient_select_rename_all (grad);
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 	
-  gradient_select_rename_all (n, grad);
-
   gimp_context_update_gradients (grad);
 }
 
@@ -1863,7 +1863,7 @@ ed_delete_gradient_callback (GtkWidget *widget,
   GtkWidget *dialog;
   gchar     *str;
 
-  if (num_gradients <= 1)
+  if (num_gradients <= 1 || curr_gradient == NULL)
     return;
 
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
@@ -1893,57 +1893,32 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
 				gboolean   delete,
 				gpointer   data)
 {
-  GSList     *tmp;
-  gint        n;
-  gint        real_pos;
-  gradient_t *gradient;
+  gradient_t *delete_gradient;
+  gint        row;
 
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
 
-  if (! delete)
+  if (! delete || curr_gradient == NULL)
     return;
+  
+  delete_gradient = curr_gradient;
+  curr_gradient   = NULL;
 
-  /* See which gradient we will have to select once the current one is deleted */
+ /* Delete gradient from clists */
+  gradient_select_delete_all (delete_gradient);
 
-  real_pos = 0;
-
-  for (n = 0, tmp = gradients_list; tmp; tmp = g_slist_next (tmp), n++)
-    {
-      gradient = tmp->data;
-
-      if (gradient == curr_gradient)
-	{
-	  real_pos = n;
-
-	  if (tmp->next == NULL)
-	    n--;  /* Will have to select the *previous* one */
-
-	  break;  /* We found the one we want */
-	}
-    }
-
-  if (tmp == NULL)
-    gimp_fatal_error ("Could not find gradient to delete!");
+  row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), 
+				      delete_gradient);
+  if (row > -1)
+    gtk_clist_remove (GTK_CLIST (g_editor->clist), row);
 
   /* Delete gradient from gradients list */
-  gradients_list = g_slist_remove (gradients_list, curr_gradient);
+  gradients_list = g_slist_remove (gradients_list, delete_gradient);
+  num_gradients--;
 
-  /* Delete file and free gradient */
-  unlink (curr_gradient->filename);
-  grad_free_gradient (curr_gradient);
-
-  /* Delete gradient from listbox */
-  gtk_clist_remove (GTK_CLIST (g_editor->clist), real_pos);
-
-  /* Select new gradient */
-  curr_gradient = g_slist_nth (gradients_list, n)->data;
-  gtk_clist_select_row (GTK_CLIST (g_editor->clist), n, -1);
-  gtk_clist_moveto (GTK_CLIST (g_editor->clist), n, 0, 0.5, 0.0);
-
-  /* Update! */
-  ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
-
-  gradient_select_delete_all (real_pos);
+  /* Delete file and free gradient*/
+  unlink (delete_gradient->filename);
+  grad_free_gradient (delete_gradient);
 
   gimp_context_refresh_gradients ();
 }
@@ -1995,6 +1970,9 @@ ed_do_save_pov_callback (GtkWidget *widget,
   gchar          *filename;
   FILE           *file;
   grad_segment_t *seg;
+
+  if (curr_gradient == NULL)
+    return;
 
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
 
@@ -2237,7 +2215,7 @@ ed_instant_update_update (GtkWidget *widget,
 /***** Gradient preview functions *****/
 
 static gint
-prev_events (GtkWidget *widget,
+preview_events (GtkWidget *widget,
 	     GdkEvent  *event,
 	     gpointer   data)
 {
@@ -2252,7 +2230,7 @@ prev_events (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_EXPOSE:
-      prev_update (FALSE);
+      preview_update (FALSE);
       break;
 
     case GDK_LEAVE_NOTIFY:
@@ -2271,13 +2249,13 @@ prev_events (GtkWidget *widget,
 	  if (g_editor->preview_button_down)
 	    {
 	      if (mevent->state & GDK_CONTROL_MASK)
-		prev_set_background (x);
+		preview_set_background (x);
 	      else
-		prev_set_foreground (x);
+		preview_set_foreground (x);
 	    }
 	  else
 	    {
-	      prev_set_hint (x);
+	      preview_set_hint (x);
 	    }
 	}
       break;
@@ -2293,9 +2271,9 @@ prev_events (GtkWidget *widget,
 	  g_editor->preview_last_x = x;
 	  g_editor->preview_button_down = TRUE;
 	  if (bevent->state & GDK_CONTROL_MASK)
-	    prev_set_background (x);
+	    preview_set_background (x);
 	  else
-	    prev_set_foreground (x);
+	    preview_set_foreground (x);
 	  break;
 
 	case 3:
@@ -2339,9 +2317,9 @@ prev_events (GtkWidget *widget,
 	  g_editor->preview_last_x = x;
 	  g_editor->preview_button_down = FALSE;
 	  if (bevent->state & GDK_CONTROL_MASK)
-	    prev_set_background (x);
+	    preview_set_background (x);
 	  else
-	    prev_set_foreground (x);
+	    preview_set_foreground (x);
 	  break;
 	}
 
@@ -2357,7 +2335,7 @@ prev_events (GtkWidget *widget,
 /*****/
 
 static void
-prev_set_hint (gint x)
+preview_set_hint (gint x)
 {
   gdouble  xpos;
   gdouble  r, g, b, a;
@@ -2387,7 +2365,7 @@ prev_set_hint (gint x)
 /*****/
 
 static void
-prev_set_foreground (gint x)
+preview_set_foreground (gint x)
 {
   gdouble  xpos;
   gdouble  r, g, b, a;
@@ -2411,7 +2389,7 @@ prev_set_foreground (gint x)
 }
 
 static void
-prev_set_background (gint x)
+preview_set_background (gint x)
 {
   gdouble xpos;
   gdouble r, g, b, a;
@@ -2441,32 +2419,31 @@ gradient_update (void)
 {
   gint row;
 
-  row = gradient_list_get_gradient_index (gradients_list, curr_gradient);
+  row = gtk_clist_find_row_from_data (GTK_CLIST (g_editor->clist), 
+				      curr_gradient);  
+  if (row < 0)
+    return;
 
   gradient_clist_draw_small_preview (g_editor->gc, g_editor->clist,
 				     curr_gradient, row);
 
   /*  Update all selectors that are on screen  */
-  gradient_select_update_all (row, curr_gradient);
+  gradient_select_update_all (curr_gradient);
 
   /*  Update all contexts  */
   gimp_context_update_gradients (curr_gradient);
 }
 
 static void
-prev_update (gboolean recalculate)
+preview_update (gboolean recalculate)
 {
   glong          rowsiz;
   GtkAdjustment *adjustment;
-  guint16        width, height;
-  GSList        *tmp;
-  gint           n;
-  gradient_t    *g;
+  guint16        width;
+  guint16        height;
 
-  static gradient_t *last_grad   = NULL;
-
-  static guint16     last_width  = 0;
-  static guint16     last_height = 0;
+  static guint16  last_width  = 0;
+  static guint16  last_height = 0;
 
   /* We only update if we can draw to the widget and a gradient is present */
   if (curr_gradient == NULL) 
@@ -2508,38 +2485,21 @@ prev_update (gboolean recalculate)
     {
       adjustment = GTK_ADJUSTMENT (g_editor->scroll_data);
 
-      prev_fill_image (width, height,
-		       adjustment->value,
-		       adjustment->value + adjustment->page_size);
+      preview_fill_image (width, height,
+			  adjustment->value,
+			  adjustment->value + adjustment->page_size);
 
       gtk_widget_draw (g_editor->preview, NULL);
-    }
-
-  if (last_grad != curr_gradient)
-    {
-      n = 0;
-
-      for (tmp = gradients_list; tmp; tmp = g_slist_next (tmp))
-	{
-	  g = tmp->data;
-
-	  if (g == curr_gradient)
-	    break; /* We found the one we want */
-		  
-	  n++; /* Next gradient */
-	}
-
-      last_grad = curr_gradient;
     }
 }
 
 /*****/
 
 static void
-prev_fill_image (gint    width,
-		 gint    height,
-		 gdouble left,
-		 gdouble right)
+preview_fill_image (gint    width,
+		    gint    height,
+		    gdouble left,
+		    gdouble right)
 {
   guchar  *p0, *p1;
   gint     x, y;
@@ -2775,6 +2735,9 @@ control_button_press (gint  x,
 
   /* See which button was pressed */
 
+  if (curr_gradient == NULL)
+    return;
+  
   switch (button)
     {
     case 1:
@@ -2788,7 +2751,8 @@ control_button_press (gint  x,
     case 4:
       {
 	GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
-	gfloat new_value = adj->value - adj->page_increment / 2;
+	gfloat new_value   = adj->value - adj->page_increment / 2;
+
 	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
 	gtk_adjustment_set_value (adj, new_value);
       }
@@ -2797,7 +2761,8 @@ control_button_press (gint  x,
     case 5:
       {
 	GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
-	gfloat new_value = adj->value + adj->page_increment / 2;
+	gfloat new_value   = adj->value + adj->page_increment / 2;
+
 	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
 	gtk_adjustment_set_value (adj, new_value);
       }
@@ -5876,15 +5841,16 @@ grad_free_gradients (void)
 /*****/
 
 static void
-grad_load_gradient (char *filename)
+grad_load_gradient (gchar *filename)
 {
   FILE           *file;
   gradient_t     *grad;
-  grad_segment_t *seg, *prev;
-  int             num_segments;
-  int             i;
-  int             type, color;
-  char            line[1024];
+  grad_segment_t *seg;
+  grad_segment_t *prev;
+  gint            num_segments;
+  gint            i;
+  gint            type, color;
+  gchar           line[1024];
 
   g_assert (filename != NULL);
 
@@ -6027,44 +5993,109 @@ grad_create_default_gradient (void)
 
 /*****/
 
-static int
+static gint
 grad_insert_in_gradients_list (gradient_t *grad)
 {
   GSList     *tmp;
   gradient_t *g;
-  int         n;
+  gint        n;
+
+  g_return_val_if_fail (grad != NULL, 0);
 
   /* We insert gradients in alphabetical order.  Find the index
    * of the gradient after which we will insert the current one.
    */
 
-  n   = 0;
-  g   = NULL;
+  g = NULL;
 
-  for (tmp = gradients_list; tmp; tmp = g_slist_next (tmp))
+  for (tmp = gradients_list, n = 0; tmp; tmp = g_slist_next (tmp), n++)
     {
       g = tmp->data;
 
       if (strcmp (grad->name, g->name) <= 0)
 	break; /* We found the one we want */
-
-      n++;
     }
 
   /* is there a gradient with this name already? */
   if (g && strcmp (grad->name, g->name) == 0)
-    {
-      gradients_list = g_slist_remove (gradients_list, g);
-      grad_free_gradient (g);
-      num_gradients--;
-      /* force refresh in case anyone had the gradient selected */
-      gimp_context_refresh_gradients ();
-    }
+    gradients_list_uniquefy_gradient_name (grad);
 
   num_gradients++;
   gradients_list = g_slist_insert (gradients_list, grad, n);
 
   return n;
+}
+
+static void
+gradients_list_uniquefy_gradient_name (gradient_t *gradient)
+{
+  GSList     *list;
+  GSList     *listg;
+  gradient_t *gradg;
+  gint        number = 1;
+  gchar      *newname;
+  gchar      *oldname;
+  gchar      *ext;
+  
+  g_return_if_fail (gradient != NULL);
+  
+  for (list = gradients_list; list; list = g_slist_next (list))
+    {
+      gradg = (gradient_t *) list->data;
+      
+      if (! gradg->name)
+	continue;
+
+      if (gradient != gradg &&
+	  strcmp (gradient->name, gradg->name) == 0)
+	{
+	  /* names conflict */
+	  oldname = gradient->name;
+	  newname = g_malloc (strlen (oldname) + 10); /* if this aint enough 
+							 yer screwed */
+	  strcpy (newname, oldname);
+	  if ((ext = strrchr (newname, '#')))
+	    {
+	      number = atoi (ext + 1);
+	      
+	      if (&ext[(gint)(log10 (number) + 1)] !=
+		  &newname[strlen (newname) - 1])
+		{
+		  number = 1;
+		  ext = &newname[strlen (newname)];
+		}
+	    }
+	  else
+	    {
+	      number = 1;
+	      ext = &newname[strlen (newname)];
+	    }
+	  sprintf (ext, "#%d", number + 1);
+	  
+	  for (listg = gradients_list; listg; listg = g_slist_next (listg))
+	    {
+	      gradg = (gradient_t *) listg->data;
+
+	      if (! gradg->name)
+		continue;
+
+	      if (gradient != gradg &&
+		  strcmp (newname,  gradg->name) == 0)
+		{
+		  number++;
+		  sprintf (ext, "#%d", number+1);
+		  listg = gradients_list;
+		}
+	    }
+	  
+	  g_free (gradient->name);
+	  gradient->name = newname;
+
+	  /*  should resort the list here  */
+
+	  return;
+	}
+    }
 }
 
 /*****/
