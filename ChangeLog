@@ -1,3 +1,18 @@
+2004-05-27  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/ccanalyze.c: code clean-up. Improved speed a lot
+	(500 percent for 1000 x 1000 RGB image) by replacing O(n^2) algorithm
+	with O(n) version.
+
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/guillotine.c: Use HIG capitalization style plus
+	minor code clean-up.
+
 2004-05-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c (respin_cmap): handle an empty colormap.

@@ -446,7 +446,7 @@ save_dialog (gint32 image_ID)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Generate Full HTML Document"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Generate full HTML document"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
@@ -473,7 +473,7 @@ save_dialog (gint32 image_ID)
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use Cellspan"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use cellspan"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
@@ -538,7 +538,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("C_ell Content:"), 0.0, 0.5,
+			     _("C_ell content:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   gtk_widget_show (entry);
 
@@ -609,7 +609,7 @@ save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Cell-_Padding:"), 0.0, 0.5,
+			     _("Cell-_padding:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -622,7 +622,7 @@ save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Cell-_Spacing:"), 0.0, 0.5,
+			     _("Cell-_spacing:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,

@@ -27,25 +27,6 @@
  *
  */
 
-/*
- * History:
- * 1.0 first release
- * 1.2 now handles RGB*
- * 1.5 fixed a small bug
- * 1.6 fixed a bug that was added by v1.5 :-(
- * 1.7 added patch from Art Haas to make it compile with HP-UX, a small
- *     clean-up
- * 1.8 Dscho added transform file load/save, bug-fixes
- * 1.9 rewrote renderloop.
- * 1.9a fixed a bug.
- * 1.9b fixed MAIN()
- * 1.10 added optimizer
- * 1.11 uses tile iterator, antialiasing thanks to Simon Thum, compiles
- *      outside GIMP-tree
- * 1.12 small fix to behave more like the original, button to control
- *      antialaising, remeber last used filename, bugfixes+cleanups
- */
-
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif

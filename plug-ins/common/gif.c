@@ -1275,7 +1275,7 @@ save_dialog (gint32 image_ID)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Interlace"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
@@ -1291,7 +1291,7 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
   gtk_widget_show (align);
 
-  toggle = gtk_check_button_new_with_label (_("GIF Comment:"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_GIF comment:"));
   gtk_container_add (GTK_CONTAINER (align), toggle);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
   gtk_widget_show (toggle);
@@ -1357,7 +1357,7 @@ save_dialog (gint32 image_ID)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Loop forever"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Loop forever"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
   gtk_widget_show (toggle);
@@ -1370,7 +1370,7 @@ save_dialog (gint32 image_ID)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Delay between Frames where Unspecified:"));
+  label = gtk_label_new (_("_Delay between frames where unspecified:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1383,7 +1383,7 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gsvals.default_delay);
 
-  label = gtk_label_new (_("Milliseconds"));
+  label = gtk_label_new (_("milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1393,15 +1393,15 @@ save_dialog (gint32 image_ID)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Frame Disposal where Unspecified: "));
+  label = gtk_label_new (_("Frame disposal where unspecified: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gimp_int_combo_box_new (_("I don't Care"),
+  combo = gimp_int_combo_box_new (_("I don't care"),
                                   DISPOSE_UNSPECIFIED,
-                                  _("Cumulative Layers (Combine)"),
+                                  _("Cumulative layers (combine)"),
                                   DISPOSE_COMBINE,
-                                  _("One Frame per Layer (Replace)"),
+                                  _("One frame per layer (replace)"),
                                   DISPOSE_REPLACE,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),

@@ -859,7 +859,7 @@ gih_save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adjustment, info.spacing,
 				     1, 1000, 1, 10, 10, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Spacing (Percent):"), 0.0, 0.5,
+			     _("Spacing (percent):"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value_changed",
@@ -931,7 +931,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_show (label);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Cell Size:"), 0.0, 0.5,
+			     _("Cell size:"), 0.0, 0.5,
 			     box, 1, FALSE);
 
   g_free (layer_ID);
@@ -943,7 +943,7 @@ gih_save_dialog (gint32 image_ID)
 				     gihparams.ncells, 1, 1000, 1, 10, 10,
 				     1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Number of Cells:"), 0.0, 0.5,
+			     _("Number of cells:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value_changed",
@@ -980,7 +980,7 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.other_count = &gihparams.rows;
   gtk_widget_show (label);
 
-  label = gtk_label_new (_(" Columns on each Layer"));
+  label = gtk_label_new (_(" Columns on each layer"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

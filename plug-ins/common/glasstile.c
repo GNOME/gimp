@@ -40,7 +40,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -263,7 +262,7 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Width */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Tile _Width:"), 150, 0,
+                              _("Tile _width:"), 150, 0,
                               gtvals.xblock, 10, 50, 2, 10, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -277,7 +276,7 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Height */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("Tile _Height:"), 150, 0,
+                              _("Tile _height:"), 150, 0,
                               gtvals.yblock, 10, 50, 2, 10, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -419,9 +418,9 @@ glasstile (GimpDrawable *drawable,
           xpixel1 = (xmitt + xoffs) * bytes;
           xpixel2 = (xmitt + xoffs * 2) * bytes;
 
-          if (xpixel2 < ((x2 - x1) * bytes))
+          if (xpixel2 < (x2 - x1) * bytes)
             {
-              if(xpixel2 < 0)
+              if (xpixel2 < 0)
                 xpixel2 = 0;
               for (i = 0; i < bytes; i++)
                 d[xpixel1 + i] = cur_row[xpixel2 + i];
@@ -465,7 +464,7 @@ glasstile (GimpDrawable *drawable,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
-                            x1, y1, (x2 - x1), (y2 - y1));
+                            x1, y1, x2 - x1, y2 - y1);
     }
 
   g_free (cur_row);

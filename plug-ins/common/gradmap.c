@@ -19,38 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * version 1.07
- * This plug-in requires GIMP v0.99.10 or above.
- *
- * This plug-in maps the image using active gradient. (See help_string
- * in query ()).
- *
- *	Eiichi Takamori <taka@ma1.seikyou.ne.jp>
- *	http://ha1.seikyou.ne.jp/home/taka/gimp/
- *
- * Changes from version 1.06 to version 1.07:
- * - If layer is RGBA or GRAYA (partially transparent), preserve
- *   the alpha channel instead of making invisible pixels visible.
- *   See also: http://bugzilla.gnome.org/show_bug.cgi?id=70964
- *
- * Changes from version 1.05 to version 1.06:
- * - Fixed bug that completely white pixel (= grayscale 255) was not
- *   mapped properly.  (Thanks to Dov Grobgeld)
- *
- * Changes from version 1.04 to version 1.05:
- * - Now it uses gimp_gradients_sample_uniform () instead of blend
- *   tool. Maybe right thing.
- *
- * Changes from revision 1.1 to version 1.04:
- * - Fix bug that it didn't work with alpha channel.
- * - Changed calling `gimp_blend' so that it works in v0.99.9.
- * - Changed calling `gimp_blend' so that it works with Quartic's
- *   asupsample patch.
- * - Fix the way to calculate luminosity of RGB image.
- *   (Thanks to Michael Lamertz)
- */
-
 #include "config.h"
 
 #include <libgimp/gimp.h>
