@@ -7,44 +7,42 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-06 05:03+0100\n"
-"PO-Revision-Date: 2003-01-14 11:02+EDT\n"
+"POT-Creation-Date: 2003-01-23 11:11+0100\n"
+"PO-Revision-Date: 2003-01-24 09:30+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:110
-msgid "The GIMP is not properly installed for the current user\n"
-msgstr ""
-
-#: app/app_procs.c:111
-msgid ""
-"User installation was skipped because the '--nointerface' flag was "
-"encountered\n"
-msgstr ""
-
 #: app/app_procs.c:112
 msgid ""
-"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+"GIMP is not properly installed for the current user.\n"
+"User installation was skipped because the '--no-interface' flag was used.\n"
+"To perform user installation, run the GIMP without the '--no-interface' flag."
+msgstr ""
+
+#: app/main.c:170
+msgid ""
+"GIMP could not initialize the graphical user interface.\n"
+"Make sure a proper setup for your display environment exists."
 msgstr ""
 
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:312
+#: app/main.c:327
 #, c-format
 msgid ""
 "\n"
 "Invalid option \"%s\"\n"
 msgstr ""
 
-#: app/main.c:329
+#: app/main.c:449
 msgid "GIMP version"
 msgstr "የGIMP ዝርያ"
 
-#: app/main.c:334
+#: app/main.c:457
 #, c-format
 msgid ""
 "\n"
@@ -52,88 +50,89 @@ msgid ""
 "\n"
 msgstr ""
 
-#: app/main.c:335
+#: app/main.c:458
 msgid "Options:\n"
 msgstr "ምርጫዎች፦\n"
 
-#: app/main.c:336
+#: app/main.c:459
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr ""
 
-#: app/main.c:337
+#: app/main.c:460
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 
-#: app/main.c:338
+#: app/main.c:461
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
 
-#: app/main.c:339
+#: app/main.c:462
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr ""
 
-#: app/main.c:340
+#: app/main.c:463
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr ""
 
-#: app/main.c:341
+#: app/main.c:464
 msgid "  -h, --help               Output this help.\n"
 msgstr ""
 
-#: app/main.c:342
+#: app/main.c:465
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr ""
 
-#: app/main.c:343
+#: app/main.c:466
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr ""
 
-#: app/main.c:344
+#: app/main.c:467
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr ""
 
-#: app/main.c:345
+#: app/main.c:468
 msgid "  -v, --version            Output version information.\n"
 msgstr ""
 
-#: app/main.c:346
+#: app/main.c:469
 msgid "  --verbose                Show startup messages.\n"
 msgstr ""
 
-#: app/main.c:347
+#: app/main.c:470
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 
-#: app/main.c:348
+#: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr ""
 
-#: app/main.c:349
+#: app/main.c:472
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 
-#: app/main.c:350
+#: app/main.c:473
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr ""
 
-#: app/main.c:351
+#: app/main.c:474
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 
-#: app/main.c:353
+#: app/main.c:475
 msgid ""
+"  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
 
-#: app/main.c:370
+#: app/main.c:494
 msgid "(This console window will close in ten seconds)\n"
 msgstr ""
 
@@ -162,7 +161,7 @@ msgstr "ምስልን ለዋጭ"
 msgid "Crop Image"
 msgstr ""
 
-#: app/undo.c:3610 app/gui/image-commands.c:308
+#: app/undo.c:3610 app/gui/image-commands.c:310
 msgid "Merge Layers"
 msgstr ""
 
@@ -263,7 +262,7 @@ msgstr "የምስል መጠን"
 msgid "Resolution Change"
 msgstr ""
 
-#: app/undo.c:3638 app/core/gimpchannel.c:505
+#: app/undo.c:3638 app/core/gimpchannel.c:509
 msgid "Selection Mask"
 msgstr ""
 
@@ -271,7 +270,7 @@ msgstr ""
 msgid "Rename Item"
 msgstr ""
 
-#: app/undo.c:3640 app/gui/layers-commands.c:607 app/gui/layers-commands.c:639
+#: app/undo.c:3640 app/gui/layers-commands.c:608 app/gui/layers-commands.c:640
 msgid "New Layer"
 msgstr "አዲስ ደረጃ"
 
@@ -283,7 +282,7 @@ msgstr "ደረጃ አጥፉ"
 msgid "Layer Mod"
 msgstr ""
 
-#: app/undo.c:3643 app/gui/layers-commands.c:894
+#: app/undo.c:3643 app/gui/layers-commands.c:895
 msgid "Add Layer Mask"
 msgstr ""
 
@@ -448,7 +447,7 @@ msgstr ""
 #: app/config/gimpconfig-deserialize.c:192 app/config/gimpconfig.c:349
 #: app/config/gimpconfig.c:362 app/config/gimpscanner.c:307
 #: app/config/gimpscanner.c:370 app/core/gimpunits.c:158 app/gui/session.c:169
-#: app/plug-in/plug-in-rc.c:131
+#: app/plug-in/plug-in-rc.c:130
 msgid "fatal parse error"
 msgstr ""
 
@@ -507,8 +506,8 @@ msgstr ""
 msgid "Failed to create file '%s': %s"
 msgstr ""
 
-#: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:184
-#: app/gui/gui.c:195
+#: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:190
+#: app/gui/gui.c:201
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr ""
@@ -518,9 +517,9 @@ msgstr ""
 msgid "Saving '%s'\n"
 msgstr "'%s'ን በማስቀመጥ ላይ\n"
 
-#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1891
-#: app/gui/paths-dialog.c:2016 app/tools/gimpcurvestool.c:1414
-#: app/tools/gimplevelstool.c:1373
+#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1963
+#: app/gui/paths-dialog.c:2088 app/tools/gimpcurvestool.c:1414
+#: app/tools/gimplevelstool.c:1384
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr ""
@@ -721,53 +720,53 @@ msgid "Backward (Corrective)"
 msgstr ""
 
 #. register all internal procedures
-#: app/core/gimp.c:713
+#: app/core/gimp.c:711
 msgid "Procedural Database"
 msgstr ""
 
-#: app/core/gimp.c:716
+#: app/core/gimp.c:714
 msgid "Plug-In Environment"
 msgstr ""
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:732
+#: app/core/gimp.c:730
 msgid "Looking for data files"
 msgstr ""
 
-#: app/core/gimp.c:732
+#: app/core/gimp.c:730
 msgid "Parasites"
 msgstr ""
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:736 app/gui/dialogs-constructors.c:371
-#: app/gui/dialogs-constructors.c:519 app/gui/preferences-dialog.c:1791
+#: app/core/gimp.c:734 app/gui/dialogs-constructors.c:364
+#: app/gui/dialogs-constructors.c:512 app/gui/preferences-dialog.c:1791
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr ""
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:740 app/gui/dialogs-constructors.c:392
-#: app/gui/dialogs-constructors.c:540 app/gui/preferences-dialog.c:1795
+#: app/core/gimp.c:738 app/gui/dialogs-constructors.c:385
+#: app/gui/dialogs-constructors.c:533 app/gui/preferences-dialog.c:1795
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "ንድፎች"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:744 app/gui/dialogs-constructors.c:434
-#: app/gui/dialogs-constructors.c:582 app/gui/preferences-dialog.c:1799
+#: app/core/gimp.c:742 app/gui/dialogs-constructors.c:427
+#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1799
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr ""
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:748 app/gui/dialogs-constructors.c:413
-#: app/gui/dialogs-constructors.c:561 app/gui/preferences-dialog.c:1803
+#: app/core/gimp.c:746 app/gui/dialogs-constructors.c:406
+#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1803
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr ""
 
 #. initialize the document history
-#: app/core/gimp.c:752
+#: app/core/gimp.c:750
 msgid "Documents"
 msgstr "ሰነዶች"
 
@@ -779,9 +778,9 @@ msgstr ""
 msgid "FG to BG (HSV clockwise hue)"
 msgstr ""
 
-#: app/core/gimpbrush.c:375 app/core/gimpbrushpipe.c:318
-#: app/core/gimpgradient.c:338 app/core/gimppalette.c:299
-#: app/core/gimppattern.c:302
+#: app/core/gimpbrush.c:375 app/core/gimpbrushgenerated.c:390
+#: app/core/gimpbrushpipe.c:318 app/core/gimpgradient.c:338
+#: app/core/gimppalette.c:299 app/core/gimppattern.c:302
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr ""
@@ -811,8 +810,9 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:342
-#: app/core/gimpcontext.c:1229 app/core/gimpgradient.c:369
-#: app/core/gimppalette.c:355 app/core/gimppattern.c:368
+#: app/core/gimpcontext.c:1229 app/core/gimpdrawable.c:251
+#: app/core/gimpgradient.c:369 app/core/gimppalette.c:355
+#: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:308
 msgid "Unnamed"
 msgstr ""
 
@@ -822,6 +822,22 @@ msgid ""
 "Unsupported brush depth %d\n"
 "in file '%s'.\n"
 "GIMP brushes must be GRAY or RGBA."
+msgstr ""
+
+#: app/core/gimpbrushgenerated.c:131 app/core/gimpgradient.c:487
+#: app/core/gimpgradient.c:572 app/core/gimppalette.c:498
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr ""
+
+#: app/core/gimpbrushgenerated.c:401
+#, c-format
+msgid "Fatal Parse Error: '%s' is not a GIMP Brush file"
+msgstr ""
+
+#: app/core/gimpbrushgenerated.c:411
+#, c-format
+msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
 msgstr ""
 
 #: app/core/gimpbrushpipe.c:350 app/core/gimpbrushpipe.c:370
@@ -845,11 +861,11 @@ msgid ""
 msgstr ""
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
-#: app/core/gimpdrawable.c:283 app/core/gimpdrawable.c:286
+#: app/core/gimpdrawable.c:284 app/core/gimpdrawable.c:287
 msgid "copy"
 msgstr "ቅጂ"
 
-#: app/core/gimpdatafactory.c:392 app/core/gimpdrawable.c:295
+#: app/core/gimpdatafactory.c:392 app/core/gimpdrawable.c:296
 #, c-format
 msgid "%s copy"
 msgstr "%s ቅጂ"
@@ -913,12 +929,6 @@ msgstr ""
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr ""
 
-#: app/core/gimpgradient.c:487 app/core/gimpgradient.c:572
-#: app/core/gimppalette.c:498
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr ""
-
 #: app/core/gimpimage-mask.c:226
 msgid ""
 "Unable to cut or copy because the\n"
@@ -931,7 +941,7 @@ msgid ""
 "selected region is empty."
 msgstr ""
 
-#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:827
+#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:828
 msgid "Floating Selection"
 msgstr ""
 
@@ -1001,7 +1011,7 @@ msgstr ""
 
 #: app/core/gimpimage.c:1062 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
-#: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:262
+#: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:266
 msgid "Untitled"
 msgstr "ያልተሰየመ"
 
@@ -1335,62 +1345,44 @@ msgid "Custom Color"
 msgstr ""
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:659
+#: app/display/gimpdisplayshell.c:669
 msgid "Set Canvas Padding Color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:668
+#: app/display/gimpdisplayshell.c:678
 msgid "Set canvas padding color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:680
+#: app/display/gimpdisplayshell.c:690
 msgid "/From Theme"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:683
+#: app/display/gimpdisplayshell.c:693
 msgid "/Light Check Color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:686
+#: app/display/gimpdisplayshell.c:696
 msgid "/Dark Check Color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:692
+#: app/display/gimpdisplayshell.c:702
 msgid "/Select Custom Color..."
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:696
+#: app/display/gimpdisplayshell.c:706
 msgid "/As in Preferences"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:721
+#: app/display/gimpdisplayshell.c:731
 msgid "Toggle QuickMask"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:976
-#, c-format
-msgid "Undo %s"
-msgstr "ወደ ነበረበት መልስ %s"
-
-#: app/display/gimpdisplayshell.c:979
-#, c-format
-msgid "Redo %s"
-msgstr "እንደገና አድርግ %s"
-
-#: app/display/gimpdisplayshell.c:981 app/pdb/internal_procs.c:181
-msgid "Undo"
-msgstr "ወደ ነበረበት መልስ"
-
-#: app/display/gimpdisplayshell.c:982
-msgid "Redo"
-msgstr "እንደገና አድርግ"
-
-#: app/display/gimpdisplayshell.c:2045
+#: app/display/gimpdisplayshell.c:1683
 #, c-format
 msgid "Close %s?"
 msgstr "ዝጋ %s?"
 
-#: app/display/gimpdisplayshell.c:2047
+#: app/display/gimpdisplayshell.c:1685
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1552,20 +1544,56 @@ msgstr ""
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr ""
 
-#: app/gui/brush-select.c:185 app/tools/paint_options.c:124
+#: app/gui/brush-select.c:179 app/tools/paint_options.c:124
 #: app/widgets/gimplayerlistview.c:179
 msgid "Opacity:"
 msgstr ""
 
-#: app/gui/brush-select.c:202 app/tools/paint_options.c:145
-#: app/tools/selection_options.c:130 app/widgets/gimplayerlistview.c:172
+#: app/gui/brush-select.c:196 app/tools/paint_options.c:145
+#: app/tools/selection_options.c:140 app/widgets/gimplayerlistview.c:172
 msgid "Mode:"
 msgstr "የአሠራሩ ዘዴ፦"
 
-#: app/gui/brush-select.c:323
+#: app/gui/brush-select.c:318
 msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
+msgstr ""
+
+#: app/gui/brushes-menu.c:44
+msgid "/New Brush"
+msgstr ""
+
+#: app/gui/brushes-menu.c:49
+msgid "/Duplicate Brush"
+msgstr ""
+
+#: app/gui/brushes-menu.c:54
+msgid "/Edit Brush..."
+msgstr ""
+
+#: app/gui/brushes-menu.c:59
+msgid "/Delete Brush..."
+msgstr ""
+
+#: app/gui/brushes-menu.c:67
+msgid "/Refresh Brushes"
+msgstr ""
+
+#: app/gui/buffers-menu.c:41
+msgid "/Paste Buffer"
+msgstr ""
+
+#: app/gui/buffers-menu.c:46
+msgid "/Paste Buffer Into"
+msgstr ""
+
+#: app/gui/buffers-menu.c:51
+msgid "/Paste Buffer as New"
+msgstr ""
+
+#: app/gui/buffers-menu.c:56
+msgid "/Delete Buffer"
 msgstr ""
 
 #: app/gui/channels-commands.c:292
@@ -1600,6 +1628,46 @@ msgstr ""
 msgid "Edit Channel Attributes"
 msgstr ""
 
+#: app/gui/channels-menu.c:42
+msgid "/New Channel..."
+msgstr "/አዲስ ጣቢያ..."
+
+#: app/gui/channels-menu.c:47
+msgid "/Raise Channel"
+msgstr ""
+
+#: app/gui/channels-menu.c:52
+msgid "/Lower Channel"
+msgstr ""
+
+#: app/gui/channels-menu.c:57
+msgid "/Duplicate Channel"
+msgstr ""
+
+#: app/gui/channels-menu.c:65
+msgid "/Channel to Selection"
+msgstr ""
+
+#: app/gui/channels-menu.c:70 app/gui/vectors-menu.c:71
+msgid "/Add to Selection"
+msgstr ""
+
+#: app/gui/channels-menu.c:75 app/gui/vectors-menu.c:76
+msgid "/Subtract from Selection"
+msgstr ""
+
+#: app/gui/channels-menu.c:80 app/gui/vectors-menu.c:81
+msgid "/Intersect with Selection"
+msgstr ""
+
+#: app/gui/channels-menu.c:88
+msgid "/Delete Channel"
+msgstr "/ጣቢያን አጥፉ"
+
+#: app/gui/channels-menu.c:96
+msgid "/Edit Channel Attributes..."
+msgstr ""
+
 #: app/gui/color-notebook.c:380
 msgid "Current:"
 msgstr "የአሁኑን፦"
@@ -1616,13 +1684,21 @@ msgstr ""
 msgid "Add the current color to the color history"
 msgstr ""
 
-#: app/gui/colormap-editor-commands.c:108
+#: app/gui/colormap-editor-commands.c:99
 msgid "Edit Indexed Color"
 msgstr ""
 
-#: app/gui/colormap-editor-commands.c:110
+#: app/gui/colormap-editor-commands.c:101
 msgid "Edit Indexed Image Palette Color"
 msgstr ""
+
+#: app/gui/colormap-editor-menu.c:40
+msgid "/Add Color"
+msgstr "/ቀለም ተጨማሪ"
+
+#: app/gui/colormap-editor-menu.c:45 app/gui/palette-editor-menu.c:43
+msgid "/Edit Color..."
+msgstr "/ቀለምን ያስተካክሉ..."
 
 #: app/gui/convert-dialog.c:128
 msgid "Indexed Color Conversion"
@@ -1699,182 +1775,342 @@ msgstr "ፊት ለፊት፦ %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "መደብ፦ %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:305 app/gui/preferences-dialog.c:1214
+#: app/gui/dialogs-constructors.c:298 app/gui/preferences-dialog.c:1214
 #: app/gui/preferences-dialog.c:1217
 msgid "Tool Options"
 msgstr "የመስሪያውን ምርጫዎች"
 
-#: app/gui/dialogs-constructors.c:325
+#: app/gui/dialogs-constructors.c:318
 msgid "Error Console"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:325
+#: app/gui/dialogs-constructors.c:318
 msgid "Errors"
 msgstr "ስህተቶች"
 
-#: app/gui/dialogs-constructors.c:349
+#: app/gui/dialogs-constructors.c:342
 msgid "Image List"
 msgstr "የምስል ዝርዝር"
 
-#: app/gui/dialogs-constructors.c:349 app/gui/dialogs-constructors.c:497
+#: app/gui/dialogs-constructors.c:342 app/gui/dialogs-constructors.c:490
 msgid "Images"
 msgstr "ምስሎች"
 
-#: app/gui/dialogs-constructors.c:371
+#: app/gui/dialogs-constructors.c:364
 msgid "Brush List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:392
+#: app/gui/dialogs-constructors.c:385
 msgid "Pattern List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:413
+#: app/gui/dialogs-constructors.c:406
 msgid "Gradient List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:434
+#: app/gui/dialogs-constructors.c:427
 msgid "Palette List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:453
+#: app/gui/dialogs-constructors.c:446
 msgid "Tool List"
 msgstr "የመስሪያው ዝርዝር"
 
-#: app/gui/dialogs-constructors.c:453 app/gui/dialogs-constructors.c:601
+#: app/gui/dialogs-constructors.c:446 app/gui/dialogs-constructors.c:594
 msgid "Tools"
 msgstr "መሣሪያዎች"
 
-#: app/gui/dialogs-constructors.c:473
+#: app/gui/dialogs-constructors.c:466
 msgid "Buffer List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:473 app/gui/dialogs-constructors.c:621
+#: app/gui/dialogs-constructors.c:466 app/gui/dialogs-constructors.c:614
 msgid "Buffers"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:497
+#: app/gui/dialogs-constructors.c:490
 msgid "Image Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:519
+#: app/gui/dialogs-constructors.c:512
 msgid "Brush Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:540
+#: app/gui/dialogs-constructors.c:533
 msgid "Pattern Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:561
+#: app/gui/dialogs-constructors.c:554
 msgid "Gradient Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:582
+#: app/gui/dialogs-constructors.c:575
 msgid "Palette Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:601
+#: app/gui/dialogs-constructors.c:594
 msgid "Tool Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:621
+#: app/gui/dialogs-constructors.c:614
 msgid "Buffer Grid"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:665
+#: app/gui/dialogs-constructors.c:658
 msgid "Layer List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:665
+#: app/gui/dialogs-constructors.c:658
 msgid "Layers"
 msgstr "ደረጃዎች"
 
-#: app/gui/dialogs-constructors.c:704
+#: app/gui/dialogs-constructors.c:697
 msgid "Channel List"
 msgstr "የጣቢያ ዝርዝር"
 
-#: app/gui/dialogs-constructors.c:704
+#: app/gui/dialogs-constructors.c:697
 msgid "Channels"
 msgstr "ጣቢያዎች"
 
-#: app/gui/dialogs-constructors.c:759
+#: app/gui/dialogs-constructors.c:752
 msgid "Paths List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:759 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:752 app/pdb/internal_procs.c:154
 msgid "Paths"
 msgstr "መተላለፊያዎች"
 
-#: app/gui/dialogs-constructors.c:785
+#: app/gui/dialogs-constructors.c:778
 msgid "Old Path List"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:785
+#: app/gui/dialogs-constructors.c:778
 msgid "Old Paths"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:808
+#: app/gui/dialogs-constructors.c:801
 msgid "Indexed Palette"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:808
+#: app/gui/dialogs-constructors.c:801
 msgid "Colormap"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:835
+#: app/gui/dialogs-constructors.c:828
 msgid "Selection Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:835 app/gui/layers-commands.c:923
+#: app/gui/dialogs-constructors.c:828 app/gui/layers-commands.c:924
 msgid "Selection"
 msgstr "ምርጫ"
 
-#: app/gui/dialogs-constructors.c:858
+#: app/gui/dialogs-constructors.c:851
 msgid "Color Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:858 app/pdb/internal_procs.c:88
+#: app/gui/dialogs-constructors.c:851 app/pdb/internal_procs.c:88
 #: app/tools/paint_options.c:392 app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "ቀለም"
 
-#: app/gui/dialogs-constructors.c:879
+#: app/gui/dialogs-constructors.c:873
 msgid "Document History"
 msgstr "የሰነዱ ታሪክ"
 
-#: app/gui/dialogs-constructors.c:879
+#: app/gui/dialogs-constructors.c:873
 msgid "History"
 msgstr "ታሪክ"
 
-#: app/gui/dialogs-constructors.c:900
+#: app/gui/dialogs-constructors.c:894
 msgid "Brush Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:927
+#: app/gui/dialogs-constructors.c:922
 msgid "Gradient Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:954
+#: app/gui/dialogs-constructors.c:950
 msgid "Palette Editor"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:988
+#: app/gui/dialogs-constructors.c:984
 msgid "Display Navigation"
 msgstr ""
 
-#: app/gui/dialogs-constructors.c:988
+#: app/gui/dialogs-constructors.c:984
 msgid "Navigation"
 msgstr ""
 
-#: app/gui/drawable-commands.c:78
+#: app/gui/dialogs-menu.c:53
+msgid "/Select Tab"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:56
+msgid "/Add Tab/Tool Options..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:61
+msgid "/Add Tab/Layers..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:62
+msgid "/Add Tab/Channels..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:63
+msgid "/Add Tab/Paths..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:64
+msgid "/Add Tab/Indexed Palette..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:66
+msgid "/Add Tab/Selection Editor..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:68
+msgid "/Add Tab/Navigation..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:73
+msgid "/Add Tab/Colors..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:75
+msgid "/Add Tab/Brushes..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:77
+msgid "/Add Tab/Patterns..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:79
+msgid "/Add Tab/Gradients..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:81
+msgid "/Add Tab/Palettes..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:83
+msgid "/Add Tab/Buffers..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:88
+msgid "/Add Tab/Images..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:89
+msgid "/Add Tab/Document History..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:91
+msgid "/Add Tab/Error Console..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:96
+msgid "/Add Tab/Tools..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:97
+msgid "/Add Tab/Old Paths..."
+msgstr ""
+
+#: app/gui/dialogs-menu.c:99
+msgid "/Remove Tab"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:108
+msgid "/Preview Size/Tiny"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:113
+msgid "/Preview Size/Extra Small"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:114
+msgid "/Preview Size/Small"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:115
+msgid "/Preview Size/Medium"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:116
+msgid "/Preview Size/Large"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:117
+msgid "/Preview Size/Extra Large"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:118
+msgid "/Preview Size/Huge"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:119
+msgid "/Preview Size/Enormous"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:120
+msgid "/Preview Size/Gigantic"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:122
+msgid "/View as List"
+msgstr "/እንደ ዝርዝር አሳይ"
+
+#: app/gui/dialogs-menu.c:125
+msgid "/View as Grid"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:131
+msgid "/Show Image Menu"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:134
+msgid "/Auto Follow Active Image"
+msgstr ""
+
+#: app/gui/documents-menu.c:42
+msgid "/Open Image"
+msgstr "/ምስል ክፈት"
+
+#: app/gui/documents-menu.c:46
+msgid "/Raise or Open Image"
+msgstr ""
+
+#: app/gui/documents-menu.c:50
+msgid "/File Open Dialog..."
+msgstr ""
+
+#: app/gui/documents-menu.c:54
+msgid "/Remove Entry"
+msgstr ""
+
+#: app/gui/documents-menu.c:61
+msgid "/Recreate Preview"
+msgstr ""
+
+#: app/gui/documents-menu.c:65
+msgid "/Reload all Previews"
+msgstr ""
+
+#: app/gui/documents-menu.c:69
+msgid "/Remove Dangling Entries"
+msgstr ""
+
+#: app/gui/drawable-commands.c:79
 msgid "Desaturate operates only on RGB color drawables."
 msgstr ""
 
-#: app/gui/drawable-commands.c:96
+#: app/gui/drawable-commands.c:97
 msgid "Invert does not operate on indexed drawables."
 msgstr ""
 
-#: app/gui/drawable-commands.c:114
+#: app/gui/drawable-commands.c:115
 msgid "Equalize does not operate on indexed drawables."
 msgstr ""
 
@@ -1922,18 +2158,18 @@ msgid ""
 msgstr ""
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:204 app/gui/file-save-dialog.c:441
+#: app/gui/file-commands.c:221 app/gui/file-save-dialog.c:383
 #, c-format
 msgid "Saving '%s' failed."
 msgstr ""
 
-#: app/gui/file-commands.c:248
+#: app/gui/file-commands.c:265
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
 
-#: app/gui/file-commands.c:262
+#: app/gui/file-commands.c:279
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -1943,18 +2179,18 @@ msgid ""
 "including all undo information)"
 msgstr ""
 
-#: app/gui/file-commands.c:270
+#: app/gui/file-commands.c:287
 msgid "Revert Image"
 msgstr ""
 
-#: app/gui/file-commands.c:359
+#: app/gui/file-commands.c:382
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "%s"
 msgstr ""
 
-#: app/gui/file-dialog-utils.c:102
+#: app/gui/file-dialog-utils.c:114
 msgid "Determine File Type:"
 msgstr ""
 
@@ -1969,15 +2205,15 @@ msgstr ""
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:162 app/gui/file-new-dialog.c:180
-#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:402
+#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:408
 msgid "Width:"
 msgstr "ስፋት፦"
 
 #: app/gui/file-new-dialog.c:168 app/gui/file-new-dialog.c:186
-#: app/gui/layers-commands.c:651 app/gui/resize-dialog.c:285
+#: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:1014 app/tools/gimpscaletool.c:173
-#: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:415
+#: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:421
 msgid "Height:"
 msgstr "እርዝማኔ፦"
 
@@ -2028,11 +2264,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr ""
 
-#: app/gui/file-open-dialog.c:210 app/gui/file-open-dialog.c:234
+#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:185
 msgid "Open Image"
 msgstr "ምስል ክፈት"
 
-#: app/gui/file-open-dialog.c:281
+#: app/gui/file-open-dialog.c:232
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -2040,270 +2276,1005 @@ msgid ""
 msgstr ""
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:298 app/tools/gimpimagemaptool.c:228
+#: app/gui/file-open-dialog.c:249 app/tools/gimpimagemaptool.c:229
 msgid "_Preview"
 msgstr "ቅድመ ዕይታ (_P)"
 
-#: app/gui/file-open-dialog.c:351 app/gui/file-open-dialog.c:470
+#: app/gui/file-open-dialog.c:302 app/gui/file-open-dialog.c:410
 msgid "No Selection"
 msgstr ""
 
-#: app/gui/file-open-dialog.c:559 app/gui/file-open-dialog.c:589
+#: app/gui/file-open-dialog.c:499 app/gui/file-open-dialog.c:529
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:169 app/gui/file-save-dialog.c:237
+#: app/gui/file-open-menu.c:44
+msgid "/Automatic"
+msgstr "/አውቶማቲክ"
+
+#: app/gui/file-save-dialog.c:119 app/gui/file-save-dialog.c:190
 msgid "Save Image"
 msgstr "ምስሉን አስቀምት"
 
-#: app/gui/file-save-dialog.c:216
+#: app/gui/file-save-dialog.c:168
 msgid "Save a Copy of the Image"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:374
+#: app/gui/file-save-dialog.c:316
 #, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
 
-#: app/gui/file-save-dialog.c:377
+#: app/gui/file-save-dialog.c:319
 msgid "File Exists!"
 msgstr "ፋይሉ በፊትም ነበር!"
 
-#: app/gui/gradient-editor-commands.c:88
+#: app/gui/file-save-menu.c:44
+msgid "/By Extension"
+msgstr ""
+
+#: app/gui/gradient-editor-commands.c:83
 msgid "Left Endpoint Color"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:90
+#: app/gui/gradient-editor-commands.c:85
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:215
+#: app/gui/gradient-editor-commands.c:201
 msgid "Right Endpoint Color"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:217
+#: app/gui/gradient-editor-commands.c:203
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:551
+#: app/gui/gradient-editor-commands.c:519
 msgid "Replicate Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:552
+#: app/gui/gradient-editor-commands.c:520
 msgid "Replicate Gradient Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:556
+#: app/gui/gradient-editor-commands.c:524
 msgid "Replicate Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:557
+#: app/gui/gradient-editor-commands.c:525
 msgid "Replicate Gradient Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:571
+#: app/gui/gradient-editor-commands.c:539
 msgid "Replicate"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:584
+#: app/gui/gradient-editor-commands.c:552
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:587
+#: app/gui/gradient-editor-commands.c:555
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:665
+#: app/gui/gradient-editor-commands.c:627
 msgid "Split Segment Uniformly"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:666
+#: app/gui/gradient-editor-commands.c:628
 msgid "Split Gradient Segment Uniformly"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:670
+#: app/gui/gradient-editor-commands.c:632
 msgid "Split Segments Uniformly"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:671
+#: app/gui/gradient-editor-commands.c:633
 msgid "Split Gradient Segments Uniformly"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:686
+#: app/gui/gradient-editor-commands.c:648
 msgid "Split"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:700
+#: app/gui/gradient-editor-commands.c:662
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:703
+#: app/gui/gradient-editor-commands.c:665
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1094
+#: app/gui/gradient-editor-menu.c:58
+msgid "/Left Endpoint's Color..."
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:63
+msgid "/Load Left Color From/Left Neighbor's Right Endpoint"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:67
+msgid "/Load Left Color From/Right Endpoint"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:71
+msgid "/Load Left Color From/FG Color"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:75
+msgid "/Load Left Color From/BG Color"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:93
+msgid "/Save Left Color To"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:108
+msgid "/Right Endpoint's Color..."
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:113
+msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:117
+msgid "/Load Right Color From/Left Endpoint"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:121
+msgid "/Load Right Color From/FG Color"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:125
+msgid "/Load Right Color From/BG Color"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:143
+msgid "/Save Right Color To"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:158
+msgid "/blendingfunction/Linear"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:163
+msgid "/blendingfunction/Curved"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:168
+msgid "/blendingfunction/Sinusodial"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:173
+msgid "/blendingfunction/Spherical (increasing)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:178
+msgid "/blendingfunction/Spherical (decreasing)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:183
+msgid "/blendingfunction/(Varies)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:188
+msgid "/coloringtype/RGB"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:193
+msgid "/coloringtype/HSV (counter-clockwise hue)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:198
+msgid "/coloringtype/HSV (clockwise hue)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:203
+msgid "/coloringtype/(Varies)"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:241
+msgid "/Blend Endpoints' Colors"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:245
+msgid "/Blend Endpoints' Opacity"
+msgstr ""
+
+#: app/gui/gradient-editor-menu.c:390
 msgid "Blending Function for Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1095
+#: app/gui/gradient-editor-menu.c:391
 msgid "Coloring Type for Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1097
+#: app/gui/gradient-editor-menu.c:393
 msgid "Flip Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1098
+#: app/gui/gradient-editor-menu.c:394
 msgid "Replicate Segment..."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1099
+#: app/gui/gradient-editor-menu.c:395
 msgid "Split Segment at Midpoint"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1100
+#: app/gui/gradient-editor-menu.c:396
 msgid "Split Segment Uniformly..."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1101
+#: app/gui/gradient-editor-menu.c:397
 msgid "Delete Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1102
+#: app/gui/gradient-editor-menu.c:398
 msgid "Re-center Segment's Midpoint"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1103
+#: app/gui/gradient-editor-menu.c:399
 msgid "Re-distribute Handles in Segment"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1107
+#: app/gui/gradient-editor-menu.c:403
 msgid "Blending Function for Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1108
+#: app/gui/gradient-editor-menu.c:404
 msgid "Coloring Type for Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1110
+#: app/gui/gradient-editor-menu.c:406
 msgid "Flip Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1111
+#: app/gui/gradient-editor-menu.c:407
 msgid "Replicate Selection..."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1112
+#: app/gui/gradient-editor-menu.c:408
 msgid "Split Segments at Midpoints"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1113
+#: app/gui/gradient-editor-menu.c:409
 msgid "Split Segments Uniformly..."
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1114
+#: app/gui/gradient-editor-menu.c:410
 msgid "Delete Selection"
 msgstr "ምርጫ አጥፉ"
 
-#: app/gui/gradient-editor-commands.c:1115
+#: app/gui/gradient-editor-menu.c:411
 msgid "Re-center Midpoints in Selection"
 msgstr ""
 
-#: app/gui/gradient-editor-commands.c:1116
+#: app/gui/gradient-editor-menu.c:412
 msgid "Re-distribute Handles in Selection"
 msgstr ""
 
-#: app/gui/gradient-select.c:266
+#: app/gui/gradient-select.c:264
 msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
 
-#: app/gui/gradients-commands.c:110
+#: app/gui/gradients-commands.c:73
 #, c-format
 msgid "Save \"%s\" as POV-Ray"
 msgstr ""
 
-#: app/gui/gui.c:458
+#: app/gui/gradients-menu.c:45
+msgid "/New Gradient"
+msgstr ""
+
+#: app/gui/gradients-menu.c:50
+msgid "/Duplicate Gradient"
+msgstr ""
+
+#: app/gui/gradients-menu.c:55
+msgid "/Edit Gradient..."
+msgstr ""
+
+#: app/gui/gradients-menu.c:60
+msgid "/Delete Gradient..."
+msgstr ""
+
+#: app/gui/gradients-menu.c:68
+msgid "/Refresh Gradients"
+msgstr ""
+
+#: app/gui/gradients-menu.c:76
+msgid "/Save as POV-Ray..."
+msgstr ""
+
+#: app/gui/gui.c:477
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
 
-#: app/gui/gui.c:524
+#: app/gui/gui.c:543
 msgid "Quit The GIMP?"
 msgstr "ከግምፑ ውጣ?"
 
-#: app/gui/gui.c:528
+#: app/gui/gui.c:547
 msgid ""
 "Some files are unsaved.\n"
 "\n"
 "Really quit The GIMP?"
 msgstr ""
 
-#: app/gui/image-commands.c:215 app/gui/layers-commands.c:295
+#: app/gui/image-commands.c:215 app/gui/layers-commands.c:296
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 
-#: app/gui/image-commands.c:310
+#: app/gui/image-commands.c:312
 msgid "Layers Merge Options"
 msgstr ""
 
-#: app/gui/image-commands.c:335
+#: app/gui/image-commands.c:337
 msgid "Final, Merged Layer should be:"
 msgstr ""
 
-#: app/gui/image-commands.c:336
+#: app/gui/image-commands.c:338
 msgid "Final, Anchored Layer should be:"
 msgstr ""
 
-#: app/gui/image-commands.c:341
+#: app/gui/image-commands.c:343
 msgid "Expanded as necessary"
 msgstr ""
 
-#: app/gui/image-commands.c:344
+#: app/gui/image-commands.c:346
 msgid "Clipped to image"
 msgstr ""
 
-#: app/gui/image-commands.c:347
+#: app/gui/image-commands.c:349
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: app/gui/image-commands.c:387
+#: app/gui/image-commands.c:389
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 
-#: app/gui/image-commands.c:420
+#: app/gui/image-commands.c:422
 msgid "Layer Too Small"
 msgstr ""
 
-#: app/gui/image-commands.c:424
+#: app/gui/image-commands.c:426
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
 
-#: app/gui/image-commands.c:507 app/tools/gimpscaletool.c:161
+#: app/gui/image-commands.c:509 app/tools/gimpscaletool.c:161
 msgid "Scaling..."
 msgstr ""
 
-#: app/gui/image-commands.c:522
+#: app/gui/image-commands.c:524
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 
+#. <Image>/File
+#: app/gui/image-menu.c:79 app/gui/toolbox-menu.c:49
+msgid "/File/New..."
+msgstr "/ፋይል/አዲስ..."
+
+#: app/gui/image-menu.c:84 app/gui/toolbox-menu.c:54
+msgid "/File/Open..."
+msgstr "/ፋይል/ክፈት..."
+
+#. <Image>/File/Open Recent
+#: app/gui/image-menu.c:92 app/gui/toolbox-menu.c:62
+msgid "/File/Open Recent/(None)"
+msgstr ""
+
+#: app/gui/image-menu.c:97
+msgid "/File/Save"
+msgstr "/ፋይል/አስቀምጥ"
+
+#: app/gui/image-menu.c:102
+msgid "/File/Save as..."
+msgstr "/ፋይል/በሌላ ስም _አስቀምጥ..."
+
+#: app/gui/image-menu.c:107
+msgid "/File/Save a Copy..."
+msgstr ""
+
+#: app/gui/image-menu.c:111
+msgid "/File/Revert..."
+msgstr ""
+
+#: app/gui/image-menu.c:119
+msgid "/File/Close"
+msgstr "/ፋይል/ዝጋ"
+
+#: app/gui/image-menu.c:124 app/gui/toolbox-menu.c:201
+msgid "/File/Quit"
+msgstr "/ፋይል/ውጣ"
+
+#. <Image>/Edit
+#: app/gui/image-menu.c:134
+msgid "/Edit/Undo"
+msgstr "/አስተካክል/ወደ ነበረበት መልስ"
+
+#: app/gui/image-menu.c:139
+msgid "/Edit/Redo"
+msgstr "/አስተካክል/እንደገና አድርግ"
+
+#: app/gui/image-menu.c:147
+msgid "/Edit/Cut"
+msgstr "/አስተካክል/ቁረጥ"
+
+#: app/gui/image-menu.c:152
+msgid "/Edit/Copy"
+msgstr "/አስተካክል/ቅጂ"
+
+#: app/gui/image-menu.c:157
+msgid "/Edit/Paste"
+msgstr "/አስተካክል/ለጥፍ"
+
+#: app/gui/image-menu.c:162
+msgid "/Edit/Paste Into"
+msgstr ""
+
+#: app/gui/image-menu.c:167
+msgid "/Edit/Paste as New"
+msgstr ""
+
+#. <Image>/Edit/Buffer
+#: app/gui/image-menu.c:175
+msgid "/Edit/Buffer/Cut Named..."
+msgstr ""
+
+#: app/gui/image-menu.c:180
+msgid "/Edit/Buffer/Copy Named..."
+msgstr ""
+
+#: app/gui/image-menu.c:185
+msgid "/Edit/Buffer/Paste Named..."
+msgstr ""
+
+#: app/gui/image-menu.c:193
+msgid "/Edit/Clear"
+msgstr "/አስተካክል/ሰርዝ"
+
+#: app/gui/image-menu.c:198
+msgid "/Edit/Fill with FG Color"
+msgstr ""
+
+#: app/gui/image-menu.c:203
+msgid "/Edit/Fill with BG Color"
+msgstr ""
+
+#: app/gui/image-menu.c:208
+msgid "/Edit/Stroke"
+msgstr ""
+
+#. <Image>/Select
+#: app/gui/image-menu.c:218
+msgid "/Select/Invert"
+msgstr ""
+
+#: app/gui/image-menu.c:223
+msgid "/Select/All"
+msgstr "/ምረጡ/ሁሉንም"
+
+#: app/gui/image-menu.c:228
+msgid "/Select/None"
+msgstr "/ምረጡ/ምንም"
+
+#: app/gui/image-menu.c:233
+msgid "/Select/Float"
+msgstr ""
+
+#: app/gui/image-menu.c:240
+msgid "/Select/Feather..."
+msgstr ""
+
+#: app/gui/image-menu.c:244
+msgid "/Select/Sharpen"
+msgstr ""
+
+#: app/gui/image-menu.c:248
+msgid "/Select/Shrink..."
+msgstr ""
+
+#: app/gui/image-menu.c:253
+msgid "/Select/Grow..."
+msgstr ""
+
+#: app/gui/image-menu.c:258
+msgid "/Select/Border..."
+msgstr ""
+
+#: app/gui/image-menu.c:265
+msgid "/Select/Toggle QuickMask"
+msgstr ""
+
+#: app/gui/image-menu.c:270
+msgid "/Select/Save to Channel"
+msgstr ""
+
+#. <Image>/View
+#: app/gui/image-menu.c:278
+msgid "/View/Zoom In"
+msgstr "/ተመልከት/ከቅርበት ዕይታ"
+
+#: app/gui/image-menu.c:283
+msgid "/View/Zoom Out"
+msgstr "/ተመልከት/ከርቀት ዕይታ"
+
+#: app/gui/image-menu.c:288
+msgid "/View/Zoom to Fit Window"
+msgstr ""
+
+#: app/gui/image-menu.c:293
+msgid "/View/Shrink Wrap"
+msgstr ""
+
+#. <Image>/View/Zoom
+#: app/gui/image-menu.c:300
+msgid "/View/Zoom/16:1"
+msgstr "/ተመልከት/ቅርበትና ርቀት/16:1"
+
+#: app/gui/image-menu.c:305
+msgid "/View/Zoom/8:1"
+msgstr "/ተመልከት/ቅርበትና ርቀት/8:1"
+
+#: app/gui/image-menu.c:310
+msgid "/View/Zoom/4:1"
+msgstr "/ተመልከት/ቅርበትና ርቀት/4:1"
+
+#: app/gui/image-menu.c:315
+msgid "/View/Zoom/2:1"
+msgstr "/ተመልከት/ቅርበትና ርቀት/2:1"
+
+#: app/gui/image-menu.c:320
+msgid "/View/Zoom/1:1"
+msgstr "/ተመልከት/ቅርበትና ርቀት/1:1"
+
+#: app/gui/image-menu.c:325
+msgid "/View/Zoom/1:2"
+msgstr "/ተመልከት/ቅርበትና ርቀት/1:2"
+
+#: app/gui/image-menu.c:330
+msgid "/View/Zoom/1:4"
+msgstr "/ተመልከት/ቅርበትና ርቀት/1:4"
+
+#: app/gui/image-menu.c:335
+msgid "/View/Zoom/1:8"
+msgstr "/ተመልከት/ቅርበትና ርቀት/1:8"
+
+#: app/gui/image-menu.c:340
+msgid "/View/Zoom/1:16"
+msgstr "/ተመልከት/ቅርበትና ርቀት/1:16"
+
+#: app/gui/image-menu.c:346
+msgid "/View/Dot for Dot"
+msgstr ""
+
+#: app/gui/image-menu.c:353
+msgid "/View/Info Window..."
+msgstr ""
+
+#: app/gui/image-menu.c:358
+msgid "/View/Navigation Window..."
+msgstr ""
+
+#: app/gui/image-menu.c:363
+msgid "/View/Display Filters..."
+msgstr ""
+
+#: app/gui/image-menu.c:370
+msgid "/View/Show Selection"
+msgstr ""
+
+#: app/gui/image-menu.c:374
+msgid "/View/Show Layer Boundary"
+msgstr ""
+
+#: app/gui/image-menu.c:378
+msgid "/View/Show Guides"
+msgstr ""
+
+#: app/gui/image-menu.c:382
+msgid "/View/Snap to Guides"
+msgstr ""
+
+#: app/gui/image-menu.c:389
+msgid "/View/Show Menubar"
+msgstr ""
+
+#: app/gui/image-menu.c:393
+msgid "/View/Show Rulers"
+msgstr ""
+
+#: app/gui/image-menu.c:397
+msgid "/View/Show Statusbar"
+msgstr ""
+
+#: app/gui/image-menu.c:404
+msgid "/View/New View"
+msgstr ""
+
+#. <Image>/Image/Mode
+#: app/gui/image-menu.c:412
+msgid "/Image/Mode/RGB"
+msgstr ""
+
+#: app/gui/image-menu.c:417
+msgid "/Image/Mode/Grayscale"
+msgstr ""
+
+#: app/gui/image-menu.c:422
+msgid "/Image/Mode/Indexed..."
+msgstr ""
+
+#. <Image>/Image/Transform
+#: app/gui/image-menu.c:432
+msgid "/Image/Transform"
+msgstr ""
+
+#: app/gui/image-menu.c:438
+msgid "/Image/Canvas Size..."
+msgstr ""
+
+#: app/gui/image-menu.c:443
+msgid "/Image/Scale Image..."
+msgstr ""
+
+#: app/gui/image-menu.c:448
+msgid "/Image/Crop Image"
+msgstr ""
+
+#: app/gui/image-menu.c:453
+msgid "/Image/Duplicate"
+msgstr ""
+
+#: app/gui/image-menu.c:461
+msgid "/Image/Merge Visible Layers..."
+msgstr ""
+
+#: app/gui/image-menu.c:465
+msgid "/Image/Flatten Image"
+msgstr ""
+
+#: app/gui/image-menu.c:472
+msgid "/Image/Undo History..."
+msgstr ""
+
+#. <Image>/Layer
+#. <Image>/Layer/Stack
+#: app/gui/image-menu.c:481
+msgid "/Layer/Stack/Previous Layer"
+msgstr "/ደረጃ/Stack/Previous Layer"
+
+#: app/gui/image-menu.c:485
+msgid "/Layer/Stack/Next Layer"
+msgstr "/ደረጃ/Stack/Layer to Top"
+
+#: app/gui/image-menu.c:489
+msgid "/Layer/Stack/Raise Layer"
+msgstr "/ደረጃ/Scale Layer..."
+
+#: app/gui/image-menu.c:494
+msgid "/Layer/Stack/Lower Layer"
+msgstr "/ደረጃ/Anchor Layer"
+
+#: app/gui/image-menu.c:499
+msgid "/Layer/Stack/Layer to Top"
+msgstr "/ደረጃ/Stack/Layer to Top"
+
+#: app/gui/image-menu.c:504
+msgid "/Layer/Stack/Layer to Bottom"
+msgstr "/ደረጃ/Stack/Layer to Bottom"
+
+#: app/gui/image-menu.c:512
+msgid "/Layer/New Layer..."
+msgstr "/ደረጃ/አዲስ ደረጃ..."
+
+#: app/gui/image-menu.c:517
+msgid "/Layer/Duplicate Layer"
+msgstr "/ደረጃ/ደረጃን አባዙ"
+
+#: app/gui/image-menu.c:522
+msgid "/Layer/Anchor Layer"
+msgstr "/ደረጃ/Anchor Layer"
+
+#: app/gui/image-menu.c:527
+msgid "/Layer/Merge Down"
+msgstr "/ደረጃ/Merge Down"
+
+#: app/gui/image-menu.c:532
+msgid "/Layer/Delete Layer"
+msgstr "/ደረጃ/ደረጃን አጥፉ"
+
+#: app/gui/image-menu.c:540
+msgid "/Layer/Layer Boundary Size..."
+msgstr "/ደረጃ/Layer Boundary Size..."
+
+#: app/gui/image-menu.c:545
+msgid "/Layer/Layer to Imagesize"
+msgstr "/ደረጃ/Layer to Imagesize"
+
+#: app/gui/image-menu.c:550
+msgid "/Layer/Scale Layer..."
+msgstr "/ደረጃ/Scale Layer..."
+
+#: app/gui/image-menu.c:555
+msgid "/Layer/Crop Layer"
+msgstr "/ደረጃ/Crop Layer"
+
+#: app/gui/image-menu.c:565
+msgid "/Layer/Transform/Offset..."
+msgstr "/ደረጃ/Transform/Offset..."
+
+#: app/gui/image-menu.c:576
+msgid "/Layer/Colors/Desaturate"
+msgstr "/ደረጃ/ቀለሞች/Desaturate"
+
+#: app/gui/image-menu.c:581
+msgid "/Layer/Colors/Invert"
+msgstr "/ደረጃ/ቀለሞች/Invert"
+
+#. <Image>/Layer/Colors/Auto
+#: app/gui/image-menu.c:591
+msgid "/Layer/Colors/Auto/Equalize"
+msgstr "/ደረጃ/ቀለሞች/Auto/Equalize"
+
+#. <Image>/Layer/Mask
+#: app/gui/image-menu.c:600
+msgid "/Layer/Mask/Add Layer Mask..."
+msgstr "/ደረጃ/Mask/Add Layer Mask..."
+
+#: app/gui/image-menu.c:604
+msgid "/Layer/Mask/Apply Layer Mask"
+msgstr "/ደረጃ/Mask/Apply Layer Mask"
+
+#: app/gui/image-menu.c:608
+msgid "/Layer/Mask/Delete Layer Mask"
+msgstr "/ደረጃ/Mask/Delete Layer Mask"
+
+#: app/gui/image-menu.c:613
+msgid "/Layer/Mask/Mask to Selection"
+msgstr "/ደረጃ/Mask/Mask to Selection"
+
+#. <Image>/Layer/Transparency
+#: app/gui/image-menu.c:621
+msgid "/Layer/Transparency/Add Alpha Channel"
+msgstr ""
+
+#: app/gui/image-menu.c:625
+msgid "/Layer/Transparency/Alpha to Selection"
+msgstr ""
+
+#. <Image>/Tools
+#: app/gui/image-menu.c:637
+msgid "/Tools/Toolbox"
+msgstr "/መሣሪያዎች/Toolbox"
+
+#: app/gui/image-menu.c:641
+msgid "/Tools/Default Colors"
+msgstr "/መሣሪያዎች/የነበረው ቀለሞች"
+
+#: app/gui/image-menu.c:646
+msgid "/Tools/Swap Colors"
+msgstr "/መሣሪያዎች/Swap Colors"
+
+#: app/gui/image-menu.c:651
+msgid "/Tools/Swap Contexts"
+msgstr "/መሣሪያዎች/Swap Contexts"
+
+#: app/gui/image-menu.c:658
+msgid "/Tools/Selection Tools"
+msgstr "/መሣሪያዎች/Selection Tools"
+
+#: app/gui/image-menu.c:659
+msgid "/Tools/Paint Tools"
+msgstr "/መሣሪያዎች/Paint Tools"
+
+#: app/gui/image-menu.c:660
+msgid "/Tools/Transform Tools"
+msgstr "/መሣሪያዎች/Transform Tools"
+
+#. <Image>/Dialogs
+#: app/gui/image-menu.c:664
+msgid "/Dialogs/Layers, Channels & Paths..."
+msgstr ""
+
+#: app/gui/image-menu.c:668
+msgid "/Dialogs/Brushes, Patterns & Stuff..."
+msgstr ""
+
+#: app/gui/image-menu.c:672
+msgid "/Dialogs/Tool Options..."
+msgstr ""
+
+#: app/gui/image-menu.c:677
+msgid "/Dialogs/Device Status..."
+msgstr ""
+
+#: app/gui/image-menu.c:684
+msgid "/Dialogs/Layers..."
+msgstr ""
+
+#: app/gui/image-menu.c:688
+msgid "/Dialogs/Channels..."
+msgstr ""
+
+#: app/gui/image-menu.c:692
+msgid "/Dialogs/Paths..."
+msgstr ""
+
+#: app/gui/image-menu.c:696
+msgid "/Dialogs/Indexed Palette..."
+msgstr ""
+
+#: app/gui/image-menu.c:701
+msgid "/Dialogs/Selection Editor..."
+msgstr ""
+
+#: app/gui/image-menu.c:706
+msgid "/Dialogs/Navigation..."
+msgstr ""
+
+#: app/gui/image-menu.c:714
+msgid "/Dialogs/Colors..."
+msgstr ""
+
+#: app/gui/image-menu.c:719
+msgid "/Dialogs/Brushes..."
+msgstr ""
+
+#: app/gui/image-menu.c:724
+msgid "/Dialogs/Patterns..."
+msgstr ""
+
+#: app/gui/image-menu.c:729
+msgid "/Dialogs/Gradients..."
+msgstr ""
+
+#: app/gui/image-menu.c:734
+msgid "/Dialogs/Palettes..."
+msgstr ""
+
+#: app/gui/image-menu.c:739
+msgid "/Dialogs/Buffers..."
+msgstr ""
+
+#: app/gui/image-menu.c:747
+msgid "/Dialogs/Images..."
+msgstr ""
+
+#: app/gui/image-menu.c:751
+msgid "/Dialogs/Document History..."
+msgstr ""
+
+#: app/gui/image-menu.c:756
+msgid "/Dialogs/Error Console..."
+msgstr ""
+
+#. <Image>/Filters
+#: app/gui/image-menu.c:766
+msgid "/Filters/Repeat Last"
+msgstr ""
+
+#: app/gui/image-menu.c:771
+msgid "/Filters/Re-Show Last"
+msgstr ""
+
+#: app/gui/image-menu.c:779
+msgid "/Filters/Blur"
+msgstr ""
+
+#: app/gui/image-menu.c:780
+msgid "/Filters/Colors"
+msgstr ""
+
+#: app/gui/image-menu.c:781
+msgid "/Filters/Noise"
+msgstr ""
+
+#: app/gui/image-menu.c:782
+msgid "/Filters/Edge-Detect"
+msgstr ""
+
+#: app/gui/image-menu.c:783
+msgid "/Filters/Enhance"
+msgstr ""
+
+#: app/gui/image-menu.c:784
+msgid "/Filters/Generic"
+msgstr ""
+
+#: app/gui/image-menu.c:788
+msgid "/Filters/Glass Effects"
+msgstr ""
+
+#: app/gui/image-menu.c:789
+msgid "/Filters/Light Effects"
+msgstr ""
+
+#: app/gui/image-menu.c:790
+msgid "/Filters/Distorts"
+msgstr ""
+
+#: app/gui/image-menu.c:791
+msgid "/Filters/Artistic"
+msgstr ""
+
+#: app/gui/image-menu.c:792
+msgid "/Filters/Map"
+msgstr ""
+
+#: app/gui/image-menu.c:793
+msgid "/Filters/Render"
+msgstr ""
+
+#: app/gui/image-menu.c:794
+msgid "/Filters/Text"
+msgstr ""
+
+#: app/gui/image-menu.c:795
+msgid "/Filters/Web"
+msgstr ""
+
+#: app/gui/image-menu.c:799
+msgid "/Filters/Animation"
+msgstr ""
+
+#: app/gui/image-menu.c:800
+msgid "/Filters/Combine"
+msgstr ""
+
+#: app/gui/image-menu.c:804
+msgid "/Filters/Toys"
+msgstr ""
+
+#: app/gui/image-menu.c:1172
+#, c-format
+msgid "Undo %s"
+msgstr "ወደ ነበረበት መልስ %s"
+
+#: app/gui/image-menu.c:1175
+#, c-format
+msgid "Redo %s"
+msgstr "እንደገና አድርግ %s"
+
+#: app/gui/image-menu.c:1177 app/pdb/internal_procs.c:181
+msgid "Undo"
+msgstr "ወደ ነበረበት መልስ"
+
+#: app/gui/image-menu.c:1178
+msgid "Redo"
+msgstr "እንደገና አድርግ"
+
+#: app/gui/images-menu.c:42
+msgid "/Raise Displays"
+msgstr ""
+
+#: app/gui/images-menu.c:46
+msgid "/New Display"
+msgstr ""
+
+#: app/gui/images-menu.c:50
+msgid "/Delete Image"
+msgstr "/ምስልን አጥፉ"
+
 #. General
-#: app/gui/info-dialog.c:349 app/gui/preferences-dialog.c:1121
+#: app/gui/info-dialog.c:350 app/gui/preferences-dialog.c:1121
 #: app/gui/preferences-dialog.c:1188
 msgid "General"
 msgstr "አጠቃላይ"
@@ -2434,1365 +3405,151 @@ msgstr ""
 msgid "colors"
 msgstr "ቀለሞች"
 
-#: app/gui/layers-commands.c:581
+#: app/gui/layers-commands.c:582
 msgid "Empty Layer Copy"
 msgstr ""
 
-#: app/gui/layers-commands.c:609
+#: app/gui/layers-commands.c:610
 msgid "Create a New Layer"
 msgstr ""
 
-#: app/gui/layers-commands.c:641
+#: app/gui/layers-commands.c:642
 msgid "Layer _Name:"
 msgstr ""
 
 #. The size labels
-#: app/gui/layers-commands.c:645
+#: app/gui/layers-commands.c:646
 msgid "Layer Width:"
 msgstr ""
 
-#: app/gui/layers-commands.c:710
+#: app/gui/layers-commands.c:711
 msgid "Layer Fill Type"
 msgstr ""
 
-#: app/gui/layers-commands.c:793
+#: app/gui/layers-commands.c:794
 msgid "Layer Attributes"
 msgstr ""
 
-#: app/gui/layers-commands.c:796
+#: app/gui/layers-commands.c:797
 msgid "Edit Layer Attributes"
 msgstr ""
 
-#: app/gui/layers-commands.c:830
+#: app/gui/layers-commands.c:831
 msgid "Layer _Name"
 msgstr ""
 
-#: app/gui/layers-commands.c:896
+#: app/gui/layers-commands.c:897
 msgid "Add a Mask to the Layer"
 msgstr ""
 
-#: app/gui/layers-commands.c:918 app/gui/layers-commands.c:945
+#: app/gui/layers-commands.c:919 app/gui/layers-commands.c:946
 msgid "Initialize Layer Mask to:"
 msgstr ""
 
-#: app/gui/layers-commands.c:925
+#: app/gui/layers-commands.c:926
 msgid "Inverse Selection"
 msgstr ""
 
-#: app/gui/layers-commands.c:928 app/gui/layers-commands.c:950
+#: app/gui/layers-commands.c:929 app/gui/layers-commands.c:951
 msgid "Grayscale Copy of Layer"
 msgstr ""
 
-#: app/gui/layers-commands.c:930 app/gui/layers-commands.c:952
+#: app/gui/layers-commands.c:931 app/gui/layers-commands.c:953
 msgid "Inverse Grayscale Copy of Layer"
 msgstr ""
 
-#: app/gui/layers-commands.c:933 app/gui/layers-commands.c:955
+#: app/gui/layers-commands.c:934 app/gui/layers-commands.c:956
 msgid "White (Full Opacity)"
 msgstr ""
 
-#: app/gui/layers-commands.c:935 app/gui/layers-commands.c:957
+#: app/gui/layers-commands.c:936 app/gui/layers-commands.c:958
 msgid "Black (Full Transparency)"
 msgstr ""
 
-#: app/gui/layers-commands.c:937 app/gui/layers-commands.c:959
+#: app/gui/layers-commands.c:938 app/gui/layers-commands.c:960
 msgid "Layer's Alpha Channel"
 msgstr ""
 
-#: app/gui/layers-commands.c:1029 app/gui/layers-commands.c:1118
+#: app/gui/layers-commands.c:1030 app/gui/layers-commands.c:1119
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
 
-#. <Toolbox>/File
-#: app/gui/menus.c:124
-msgid "/_File"
-msgstr "/ፋይል (_F)"
-
-#. <Image>/File
-#: app/gui/menus.c:126 app/gui/menus.c:331
-msgid "/File/New..."
-msgstr "/ፋይል/አዲስ..."
-
-#: app/gui/menus.c:131 app/gui/menus.c:336
-msgid "/File/Open..."
-msgstr "/ፋይል/ክፈት..."
-
-#. <Toolbox>/File/Open Recent
-#: app/gui/menus.c:139 app/gui/menus.c:344
-msgid "/File/Open Recent/(None)"
-msgstr ""
-
-#. <Toolbox>/File/Acquire
-#: app/gui/menus.c:144
-msgid "/File/Acquire"
-msgstr ""
-
-#: app/gui/menus.c:148
-msgid "/File/Preferences..."
-msgstr "/ፋይል/ምርጫዎች..."
-
-#. <Toolbox>/File/Dialogs
-#: app/gui/menus.c:156
-msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr ""
-
-#: app/gui/menus.c:160
-msgid "/File/Dialogs/Brushes, Patterns & Stuff..."
-msgstr ""
-
-#: app/gui/menus.c:164
-msgid "/File/Dialogs/Tool Options..."
-msgstr ""
-
-#: app/gui/menus.c:169
-msgid "/File/Dialogs/Device Status..."
-msgstr ""
-
-#: app/gui/menus.c:176
-msgid "/File/Dialogs/Layers..."
-msgstr ""
-
-#: app/gui/menus.c:180
-msgid "/File/Dialogs/Channels..."
-msgstr ""
-
-#: app/gui/menus.c:184
-msgid "/File/Dialogs/Paths..."
-msgstr ""
-
-#: app/gui/menus.c:188
-msgid "/File/Dialogs/Indexed Palette..."
-msgstr ""
-
-#: app/gui/menus.c:193
-msgid "/File/Dialogs/Selection Editor..."
-msgstr ""
-
-#: app/gui/menus.c:198
-msgid "/File/Dialogs/Navigation..."
-msgstr ""
-
-#: app/gui/menus.c:206
-msgid "/File/Dialogs/Colors..."
-msgstr ""
-
-#: app/gui/menus.c:211
-msgid "/File/Dialogs/Brushes..."
-msgstr ""
-
-#: app/gui/menus.c:216
-msgid "/File/Dialogs/Patterns..."
-msgstr ""
-
-#: app/gui/menus.c:221
-msgid "/File/Dialogs/Gradients..."
-msgstr ""
-
-#: app/gui/menus.c:226
-msgid "/File/Dialogs/Palettes..."
-msgstr ""
-
-#: app/gui/menus.c:231
-msgid "/File/Dialogs/Buffers..."
-msgstr ""
-
-#: app/gui/menus.c:239
-msgid "/File/Dialogs/Images..."
-msgstr ""
-
-#: app/gui/menus.c:243
-msgid "/File/Dialogs/Document History..."
-msgstr ""
-
-#: app/gui/menus.c:248
-msgid "/File/Dialogs/Error Console..."
-msgstr ""
-
-#: app/gui/menus.c:278 app/gui/menus.c:376
-msgid "/File/Quit"
-msgstr "/ፋይል/ውጣ"
-
-#. <Toolbox>/Xtns
-#: app/gui/menus.c:286
-msgid "/_Xtns"
-msgstr "/_Xtns"
-
-#: app/gui/menus.c:288
-msgid "/Xtns/Module Browser..."
-msgstr ""
-
-#. <Toolbox>/Help
-#: app/gui/menus.c:297
-msgid "/_Help"
-msgstr "/መረጃ (_H)"
-
-#: app/gui/menus.c:299
-msgid "/Help/Help..."
-msgstr "/መረጃ/መረጃ..."
-
-#: app/gui/menus.c:304
-msgid "/Help/Context Help..."
-msgstr ""
-
-#: app/gui/menus.c:309
-msgid "/Help/Tip of the Day..."
-msgstr ""
-
-#: app/gui/menus.c:314
-msgid "/Help/About..."
-msgstr "/መረጃ/ስለ..."
-
-#: app/gui/menus.c:349
-msgid "/File/Save"
-msgstr "/ፋይል/አስቀምጥ"
-
-#: app/gui/menus.c:354
-msgid "/File/Save as..."
-msgstr "/ፋይል/በሌላ ስም _አስቀምጥ..."
-
-#: app/gui/menus.c:359
-msgid "/File/Save a Copy..."
-msgstr ""
-
-#: app/gui/menus.c:363
-msgid "/File/Revert..."
-msgstr ""
-
-#: app/gui/menus.c:371
-msgid "/File/Close"
-msgstr "/ፋይል/ዝጋ"
-
-#. <Image>/Edit
-#: app/gui/menus.c:386
-msgid "/Edit/Undo"
-msgstr "/አስተካክል/ወደ ነበረበት መልስ"
-
-#: app/gui/menus.c:391
-msgid "/Edit/Redo"
-msgstr "/አስተካክል/እንደገና አድርግ"
-
-#: app/gui/menus.c:399
-msgid "/Edit/Cut"
-msgstr "/አስተካክል/ቁረጥ"
-
-#: app/gui/menus.c:404
-msgid "/Edit/Copy"
-msgstr "/አስተካክል/ቅጂ"
-
-#: app/gui/menus.c:409
-msgid "/Edit/Paste"
-msgstr "/አስተካክል/ለጥፍ"
-
-#: app/gui/menus.c:414
-msgid "/Edit/Paste Into"
-msgstr ""
-
-#: app/gui/menus.c:419
-msgid "/Edit/Paste as New"
-msgstr ""
-
-#. <Image>/Edit/Buffer
-#: app/gui/menus.c:427
-msgid "/Edit/Buffer/Cut Named..."
-msgstr ""
-
-#: app/gui/menus.c:432
-msgid "/Edit/Buffer/Copy Named..."
-msgstr ""
-
-#: app/gui/menus.c:437
-msgid "/Edit/Buffer/Paste Named..."
-msgstr ""
-
-#: app/gui/menus.c:445
-msgid "/Edit/Clear"
-msgstr "/አስተካክል/ሰርዝ"
-
-#: app/gui/menus.c:450
-msgid "/Edit/Fill with FG Color"
-msgstr ""
-
-#: app/gui/menus.c:455
-msgid "/Edit/Fill with BG Color"
-msgstr ""
-
-#: app/gui/menus.c:460
-msgid "/Edit/Stroke"
-msgstr ""
-
-#. <Image>/Select
-#: app/gui/menus.c:470
-msgid "/Select/Invert"
-msgstr ""
-
-#: app/gui/menus.c:475
-msgid "/Select/All"
-msgstr "/ምረጡ/ሁሉንም"
-
-#: app/gui/menus.c:480
-msgid "/Select/None"
-msgstr "/ምረጡ/ምንም"
-
-#: app/gui/menus.c:485
-msgid "/Select/Float"
-msgstr ""
-
-#: app/gui/menus.c:492
-msgid "/Select/Feather..."
-msgstr ""
-
-#: app/gui/menus.c:496
-msgid "/Select/Sharpen"
-msgstr ""
-
-#: app/gui/menus.c:500
-msgid "/Select/Shrink..."
-msgstr ""
-
-#: app/gui/menus.c:505
-msgid "/Select/Grow..."
-msgstr ""
-
-#: app/gui/menus.c:510
-msgid "/Select/Border..."
-msgstr ""
-
-#: app/gui/menus.c:517
-msgid "/Select/Toggle QuickMask"
-msgstr ""
-
-#: app/gui/menus.c:522
-msgid "/Select/Save to Channel"
-msgstr ""
-
-#. <Image>/View
-#: app/gui/menus.c:530
-msgid "/View/Zoom In"
-msgstr "/ተመልከት/ከቅርበት ዕይታ"
-
-#: app/gui/menus.c:535
-msgid "/View/Zoom Out"
-msgstr "/ተመልከት/ከርቀት ዕይታ"
-
-#: app/gui/menus.c:540
-msgid "/View/Zoom to Fit Window"
-msgstr ""
-
-#: app/gui/menus.c:545
-msgid "/View/Shrink Wrap"
-msgstr ""
-
-#. <Image>/View/Zoom
-#: app/gui/menus.c:552
-msgid "/View/Zoom/16:1"
-msgstr "/ተመልከት/ቅርበትና ርቀት/16:1"
-
-#: app/gui/menus.c:557
-msgid "/View/Zoom/8:1"
-msgstr "/ተመልከት/ቅርበትና ርቀት/8:1"
-
-#: app/gui/menus.c:562
-msgid "/View/Zoom/4:1"
-msgstr "/ተመልከት/ቅርበትና ርቀት/4:1"
-
-#: app/gui/menus.c:567
-msgid "/View/Zoom/2:1"
-msgstr "/ተመልከት/ቅርበትና ርቀት/2:1"
-
-#: app/gui/menus.c:572
-msgid "/View/Zoom/1:1"
-msgstr "/ተመልከት/ቅርበትና ርቀት/1:1"
-
-#: app/gui/menus.c:577
-msgid "/View/Zoom/1:2"
-msgstr "/ተመልከት/ቅርበትና ርቀት/1:2"
-
-#: app/gui/menus.c:582
-msgid "/View/Zoom/1:4"
-msgstr "/ተመልከት/ቅርበትና ርቀት/1:4"
-
-#: app/gui/menus.c:587
-msgid "/View/Zoom/1:8"
-msgstr "/ተመልከት/ቅርበትና ርቀት/1:8"
-
-#: app/gui/menus.c:592
-msgid "/View/Zoom/1:16"
-msgstr "/ተመልከት/ቅርበትና ርቀት/1:16"
-
-#: app/gui/menus.c:598
-msgid "/View/Dot for Dot"
-msgstr ""
-
-#: app/gui/menus.c:605
-msgid "/View/Info Window..."
-msgstr ""
-
-#: app/gui/menus.c:610
-msgid "/View/Navigation Window..."
-msgstr ""
-
-#: app/gui/menus.c:615
-msgid "/View/Display Filters..."
-msgstr ""
-
-#: app/gui/menus.c:622
-msgid "/View/Show Selection"
-msgstr ""
-
-#: app/gui/menus.c:626
-msgid "/View/Show Layer Boundary"
-msgstr ""
-
-#: app/gui/menus.c:630
-msgid "/View/Show Guides"
-msgstr ""
-
-#: app/gui/menus.c:634
-msgid "/View/Snap to Guides"
-msgstr ""
-
-#: app/gui/menus.c:641
-msgid "/View/Show Menubar"
-msgstr ""
-
-#: app/gui/menus.c:645
-msgid "/View/Show Rulers"
-msgstr ""
-
-#: app/gui/menus.c:649
-msgid "/View/Show Statusbar"
-msgstr ""
-
-#: app/gui/menus.c:656
-msgid "/View/New View"
-msgstr ""
-
-#. <Image>/Image/Mode
-#: app/gui/menus.c:664
-msgid "/Image/Mode/RGB"
-msgstr ""
-
-#: app/gui/menus.c:669
-msgid "/Image/Mode/Grayscale"
-msgstr ""
-
-#: app/gui/menus.c:674
-msgid "/Image/Mode/Indexed..."
-msgstr ""
-
-#. <Image>/Image/Transform
-#: app/gui/menus.c:684
-msgid "/Image/Transform"
-msgstr ""
-
-#: app/gui/menus.c:690
-msgid "/Image/Canvas Size..."
-msgstr ""
-
-#: app/gui/menus.c:695
-msgid "/Image/Scale Image..."
-msgstr ""
-
-#: app/gui/menus.c:700
-msgid "/Image/Crop Image"
-msgstr ""
-
-#: app/gui/menus.c:705
-msgid "/Image/Duplicate"
-msgstr ""
-
-#: app/gui/menus.c:713
-msgid "/Image/Merge Visible Layers..."
-msgstr ""
-
-#: app/gui/menus.c:717
-msgid "/Image/Flatten Image"
-msgstr ""
-
-#: app/gui/menus.c:724
-msgid "/Image/Undo History..."
-msgstr ""
-
-#. <Image>/Layer
-#. <Image>/Layer/Stack
-#: app/gui/menus.c:733
-msgid "/Layer/Stack/Previous Layer"
-msgstr "/ደረጃ/Stack/Previous Layer"
-
-#: app/gui/menus.c:737
-msgid "/Layer/Stack/Next Layer"
-msgstr "/ደረጃ/Stack/Layer to Top"
-
-#: app/gui/menus.c:741
-msgid "/Layer/Stack/Raise Layer"
-msgstr "/ደረጃ/Scale Layer..."
-
-#: app/gui/menus.c:746
-msgid "/Layer/Stack/Lower Layer"
-msgstr "/ደረጃ/Anchor Layer"
-
-#: app/gui/menus.c:751
-msgid "/Layer/Stack/Layer to Top"
-msgstr "/ደረጃ/Stack/Layer to Top"
-
-#: app/gui/menus.c:756
-msgid "/Layer/Stack/Layer to Bottom"
-msgstr "/ደረጃ/Stack/Layer to Bottom"
-
-#: app/gui/menus.c:764
-msgid "/Layer/New Layer..."
-msgstr "/ደረጃ/አዲስ ደረጃ..."
-
-#: app/gui/menus.c:769
-msgid "/Layer/Duplicate Layer"
-msgstr "/ደረጃ/ደረጃን አባዙ"
-
-#: app/gui/menus.c:774
-msgid "/Layer/Anchor Layer"
-msgstr "/ደረጃ/Anchor Layer"
-
-#: app/gui/menus.c:779
-msgid "/Layer/Merge Down"
-msgstr "/ደረጃ/Merge Down"
-
-#: app/gui/menus.c:784
-msgid "/Layer/Delete Layer"
-msgstr "/ደረጃ/ደረጃን አጥፉ"
-
-#: app/gui/menus.c:792
-msgid "/Layer/Layer Boundary Size..."
-msgstr "/ደረጃ/Layer Boundary Size..."
-
-#: app/gui/menus.c:797
-msgid "/Layer/Layer to Imagesize"
-msgstr "/ደረጃ/Layer to Imagesize"
-
-#: app/gui/menus.c:802
-msgid "/Layer/Scale Layer..."
-msgstr "/ደረጃ/Scale Layer..."
-
-#: app/gui/menus.c:807
-msgid "/Layer/Crop Layer"
-msgstr "/ደረጃ/Crop Layer"
-
-#: app/gui/menus.c:817
-msgid "/Layer/Transform/Offset..."
-msgstr "/ደረጃ/Transform/Offset..."
-
-#: app/gui/menus.c:828
-msgid "/Layer/Colors/Desaturate"
-msgstr "/ደረጃ/ቀለሞች/Desaturate"
-
-#: app/gui/menus.c:833
-msgid "/Layer/Colors/Invert"
-msgstr "/ደረጃ/ቀለሞች/Invert"
-
-#. <Image>/Layer/Colors/Auto
-#: app/gui/menus.c:843
-msgid "/Layer/Colors/Auto/Equalize"
-msgstr "/ደረጃ/ቀለሞች/Auto/Equalize"
-
-#. <Image>/Layer/Mask
-#: app/gui/menus.c:852
-msgid "/Layer/Mask/Add Layer Mask..."
-msgstr "/ደረጃ/Mask/Add Layer Mask..."
-
-#: app/gui/menus.c:856
-msgid "/Layer/Mask/Apply Layer Mask"
-msgstr "/ደረጃ/Mask/Apply Layer Mask"
-
-#: app/gui/menus.c:860
-msgid "/Layer/Mask/Delete Layer Mask"
-msgstr "/ደረጃ/Mask/Delete Layer Mask"
-
-#: app/gui/menus.c:865
-msgid "/Layer/Mask/Mask to Selection"
-msgstr "/ደረጃ/Mask/Mask to Selection"
-
-#. <Image>/Layer/Alpha
-#: app/gui/menus.c:873
-msgid "/Layer/Alpha/Add Alpha Channel"
-msgstr "/ደረጃ/አልፋ/Add Alpha Channel"
-
-#: app/gui/menus.c:877
-msgid "/Layer/Alpha/Alpha to Selection"
-msgstr "/ደረጃ/አልፋ/Alpha to Selection"
-
-#. <Image>/Tools
-#: app/gui/menus.c:889
-msgid "/Tools/Toolbox"
-msgstr "/መሣሪያዎች/Toolbox"
-
-#: app/gui/menus.c:893
-msgid "/Tools/Default Colors"
-msgstr "/መሣሪያዎች/የነበረው ቀለሞች"
-
-#: app/gui/menus.c:898
-msgid "/Tools/Swap Colors"
-msgstr "/መሣሪያዎች/Swap Colors"
-
-#: app/gui/menus.c:903
-msgid "/Tools/Swap Contexts"
-msgstr "/መሣሪያዎች/Swap Contexts"
-
-#: app/gui/menus.c:910
-msgid "/Tools/Selection Tools"
-msgstr "/መሣሪያዎች/Selection Tools"
-
-#: app/gui/menus.c:911
-msgid "/Tools/Paint Tools"
-msgstr "/መሣሪያዎች/Paint Tools"
-
-#: app/gui/menus.c:912
-msgid "/Tools/Transform Tools"
-msgstr "/መሣሪያዎች/Transform Tools"
-
-#. <Image>/Dialogs
-#: app/gui/menus.c:916
-msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr ""
-
-#: app/gui/menus.c:920
-msgid "/Dialogs/Brushes, Patterns & Stuff..."
-msgstr ""
-
-#: app/gui/menus.c:924
-msgid "/Dialogs/Tool Options..."
-msgstr ""
-
-#: app/gui/menus.c:929
-msgid "/Dialogs/Device Status..."
-msgstr ""
-
-#: app/gui/menus.c:936
-msgid "/Dialogs/Layers..."
-msgstr ""
-
-#: app/gui/menus.c:940
-msgid "/Dialogs/Channels..."
-msgstr ""
-
-#: app/gui/menus.c:944
-msgid "/Dialogs/Paths..."
-msgstr ""
-
-#: app/gui/menus.c:948
-msgid "/Dialogs/Indexed Palette..."
-msgstr ""
-
-#: app/gui/menus.c:953
-msgid "/Dialogs/Selection Editor..."
-msgstr ""
-
-#: app/gui/menus.c:958
-msgid "/Dialogs/Navigation..."
-msgstr ""
-
-#: app/gui/menus.c:966
-msgid "/Dialogs/Colors..."
-msgstr ""
-
-#: app/gui/menus.c:971
-msgid "/Dialogs/Brushes..."
-msgstr ""
-
-#: app/gui/menus.c:976
-msgid "/Dialogs/Patterns..."
-msgstr ""
-
-#: app/gui/menus.c:981
-msgid "/Dialogs/Gradients..."
-msgstr ""
-
-#: app/gui/menus.c:986
-msgid "/Dialogs/Palettes..."
-msgstr ""
-
-#: app/gui/menus.c:991
-msgid "/Dialogs/Buffers..."
-msgstr ""
-
-#: app/gui/menus.c:999
-msgid "/Dialogs/Images..."
-msgstr ""
-
-#: app/gui/menus.c:1003
-msgid "/Dialogs/Document History..."
-msgstr ""
-
-#: app/gui/menus.c:1008
-msgid "/Dialogs/Error Console..."
-msgstr ""
-
-#. <Image>/Filters
-#: app/gui/menus.c:1018
-msgid "/Filters/Repeat Last"
-msgstr ""
-
-#: app/gui/menus.c:1023
-msgid "/Filters/Re-Show Last"
-msgstr ""
-
-#: app/gui/menus.c:1031
-msgid "/Filters/Blur"
-msgstr ""
-
-#: app/gui/menus.c:1032
-msgid "/Filters/Colors"
-msgstr ""
-
-#: app/gui/menus.c:1033
-msgid "/Filters/Noise"
-msgstr ""
-
-#: app/gui/menus.c:1034
-msgid "/Filters/Edge-Detect"
-msgstr ""
-
-#: app/gui/menus.c:1035
-msgid "/Filters/Enhance"
-msgstr ""
-
-#: app/gui/menus.c:1036
-msgid "/Filters/Generic"
-msgstr ""
-
-#: app/gui/menus.c:1040
-msgid "/Filters/Glass Effects"
-msgstr ""
-
-#: app/gui/menus.c:1041
-msgid "/Filters/Light Effects"
-msgstr ""
-
-#: app/gui/menus.c:1042
-msgid "/Filters/Distorts"
-msgstr ""
-
-#: app/gui/menus.c:1043
-msgid "/Filters/Artistic"
-msgstr ""
-
-#: app/gui/menus.c:1044
-msgid "/Filters/Map"
-msgstr ""
-
-#: app/gui/menus.c:1045
-msgid "/Filters/Render"
-msgstr ""
-
-#: app/gui/menus.c:1046
-msgid "/Filters/Text"
-msgstr ""
-
-#: app/gui/menus.c:1047
-msgid "/Filters/Web"
-msgstr ""
-
-#: app/gui/menus.c:1051
-msgid "/Filters/Animation"
-msgstr ""
-
-#: app/gui/menus.c:1052
-msgid "/Filters/Combine"
-msgstr ""
-
-#: app/gui/menus.c:1056
-msgid "/Filters/Toys"
-msgstr ""
-
-#: app/gui/menus.c:1064
-msgid "/Automatic"
-msgstr "/አውቶማቲክ"
-
-#: app/gui/menus.c:1077
-msgid "/By Extension"
-msgstr ""
-
-#: app/gui/menus.c:1090
+#: app/gui/layers-menu.c:43
 msgid "/New Layer..."
 msgstr "/አዲስ ደረጃ..."
 
-#: app/gui/menus.c:1096
+#: app/gui/layers-menu.c:49
 msgid "/Raise Layer"
 msgstr ""
 
-#: app/gui/menus.c:1101
+#: app/gui/layers-menu.c:54
 msgid "/Layer to Top"
 msgstr ""
 
-#: app/gui/menus.c:1106
+#: app/gui/layers-menu.c:59
 msgid "/Lower Layer"
 msgstr ""
 
-#: app/gui/menus.c:1111
+#: app/gui/layers-menu.c:64
 msgid "/Layer to Bottom"
 msgstr ""
 
-#: app/gui/menus.c:1117
+#: app/gui/layers-menu.c:70
 msgid "/Duplicate Layer"
 msgstr ""
 
-#: app/gui/menus.c:1122
+#: app/gui/layers-menu.c:75
 msgid "/Anchor Layer"
 msgstr ""
 
-#: app/gui/menus.c:1127
+#: app/gui/layers-menu.c:80
 msgid "/Merge Down"
 msgstr ""
 
-#: app/gui/menus.c:1132
+#: app/gui/layers-menu.c:85
 msgid "/Delete Layer"
 msgstr "/ደረጃ አጥፉ"
 
-#: app/gui/menus.c:1140
+#: app/gui/layers-menu.c:93
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/gui/menus.c:1145
+#: app/gui/layers-menu.c:98
 msgid "/Layer to Imagesize"
 msgstr ""
 
-#: app/gui/menus.c:1150
+#: app/gui/layers-menu.c:103
 msgid "/Scale Layer..."
 msgstr "/ደረጃን ለኩ..."
 
-#: app/gui/menus.c:1158
+#: app/gui/layers-menu.c:111
 msgid "/Add Layer Mask..."
 msgstr ""
 
-#: app/gui/menus.c:1162
+#: app/gui/layers-menu.c:115
 msgid "/Apply Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:1166
+#: app/gui/layers-menu.c:119
 msgid "/Delete Layer Mask"
 msgstr ""
 
-#: app/gui/menus.c:1171
+#: app/gui/layers-menu.c:124
 msgid "/Mask to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1179
+#: app/gui/layers-menu.c:132
 msgid "/Add Alpha Channel"
 msgstr ""
 
-#: app/gui/menus.c:1183
+#: app/gui/layers-menu.c:136
 msgid "/Alpha to Selection"
 msgstr ""
 
-#: app/gui/menus.c:1191
+#: app/gui/layers-menu.c:144
 msgid "/Edit Layer Attributes..."
-msgstr ""
-
-#: app/gui/menus.c:1203
-msgid "/New Channel..."
-msgstr "/አዲስ ጣቢያ..."
-
-#: app/gui/menus.c:1208
-msgid "/Raise Channel"
-msgstr ""
-
-#: app/gui/menus.c:1213
-msgid "/Lower Channel"
-msgstr ""
-
-#: app/gui/menus.c:1218
-msgid "/Duplicate Channel"
-msgstr ""
-
-#: app/gui/menus.c:1226
-msgid "/Channel to Selection"
-msgstr ""
-
-#: app/gui/menus.c:1231 app/gui/menus.c:1297
-msgid "/Add to Selection"
-msgstr ""
-
-#: app/gui/menus.c:1236 app/gui/menus.c:1302
-msgid "/Subtract from Selection"
-msgstr ""
-
-#: app/gui/menus.c:1241 app/gui/menus.c:1307
-msgid "/Intersect with Selection"
-msgstr ""
-
-#: app/gui/menus.c:1249
-msgid "/Delete Channel"
-msgstr "/ጣቢያን አጥፉ"
-
-#: app/gui/menus.c:1257
-msgid "/Edit Channel Attributes..."
-msgstr ""
-
-#: app/gui/menus.c:1269
-msgid "/New Path..."
-msgstr "/አዲስ መንገድ..."
-
-#: app/gui/menus.c:1274
-msgid "/Raise Path"
-msgstr ""
-
-#: app/gui/menus.c:1279
-msgid "/Lower Path"
-msgstr ""
-
-#: app/gui/menus.c:1284 app/gui/menus.c:1379
-msgid "/Duplicate Path"
-msgstr ""
-
-#: app/gui/menus.c:1292 app/gui/menus.c:1384
-msgid "/Path to Selection"
-msgstr ""
-
-#: app/gui/menus.c:1313 app/gui/menus.c:1389
-msgid "/Selection to Path"
-msgstr ""
-
-#: app/gui/menus.c:1318 app/gui/menus.c:1394
-msgid "/Stroke Path"
-msgstr ""
-
-#: app/gui/menus.c:1326 app/gui/menus.c:1407
-msgid "/Copy Path"
-msgstr ""
-
-#: app/gui/menus.c:1331 app/gui/menus.c:1412
-msgid "/Paste Path"
-msgstr ""
-
-#: app/gui/menus.c:1336 app/gui/menus.c:1417
-msgid "/Import Path..."
-msgstr ""
-
-#: app/gui/menus.c:1341 app/gui/menus.c:1422
-msgid "/Export Path..."
-msgstr ""
-
-#: app/gui/menus.c:1349 app/gui/menus.c:1399
-msgid "/Delete Path"
-msgstr "/የመተላለፊያ አጥፉ"
-
-#: app/gui/menus.c:1357
-msgid "/Path Tool"
-msgstr "/የመተላለፊያ መሣሪያዎች"
-
-#: app/gui/menus.c:1362 app/gui/menus.c:1430
-msgid "/Edit Path Attributes..."
-msgstr ""
-
-#: app/gui/menus.c:1374
-msgid "/New Path"
-msgstr "/አዲስ መንገድ"
-
-#: app/gui/menus.c:1449
-msgid "/Select Tab"
-msgstr ""
-
-#: app/gui/menus.c:1452
-msgid "/Add Tab/Tool Options..."
-msgstr ""
-
-#: app/gui/menus.c:1457
-msgid "/Add Tab/Layers..."
-msgstr ""
-
-#: app/gui/menus.c:1458
-msgid "/Add Tab/Channels..."
-msgstr ""
-
-#: app/gui/menus.c:1459
-msgid "/Add Tab/Paths..."
-msgstr ""
-
-#: app/gui/menus.c:1460
-msgid "/Add Tab/Indexed Palette..."
-msgstr ""
-
-#: app/gui/menus.c:1462
-msgid "/Add Tab/Selection Editor..."
-msgstr ""
-
-#: app/gui/menus.c:1464
-msgid "/Add Tab/Navigation..."
-msgstr ""
-
-#: app/gui/menus.c:1469
-msgid "/Add Tab/Colors..."
-msgstr ""
-
-#: app/gui/menus.c:1471
-msgid "/Add Tab/Brushes..."
-msgstr ""
-
-#: app/gui/menus.c:1473
-msgid "/Add Tab/Patterns..."
-msgstr ""
-
-#: app/gui/menus.c:1475
-msgid "/Add Tab/Gradients..."
-msgstr ""
-
-#: app/gui/menus.c:1477
-msgid "/Add Tab/Palettes..."
-msgstr ""
-
-#: app/gui/menus.c:1479
-msgid "/Add Tab/Buffers..."
-msgstr ""
-
-#: app/gui/menus.c:1484
-msgid "/Add Tab/Images..."
-msgstr ""
-
-#: app/gui/menus.c:1485
-msgid "/Add Tab/Document History..."
-msgstr ""
-
-#: app/gui/menus.c:1487
-msgid "/Add Tab/Error Console..."
-msgstr ""
-
-#: app/gui/menus.c:1492
-msgid "/Add Tab/Tools..."
-msgstr ""
-
-#: app/gui/menus.c:1493
-msgid "/Add Tab/Old Paths..."
-msgstr ""
-
-#: app/gui/menus.c:1495
-msgid "/Remove Tab"
-msgstr ""
-
-#: app/gui/menus.c:1504
-msgid "/Preview Size/Tiny"
-msgstr ""
-
-#: app/gui/menus.c:1509
-msgid "/Preview Size/Extra Small"
-msgstr ""
-
-#: app/gui/menus.c:1510
-msgid "/Preview Size/Small"
-msgstr ""
-
-#: app/gui/menus.c:1511
-msgid "/Preview Size/Medium"
-msgstr ""
-
-#: app/gui/menus.c:1512
-msgid "/Preview Size/Large"
-msgstr ""
-
-#: app/gui/menus.c:1513
-msgid "/Preview Size/Extra Large"
-msgstr ""
-
-#: app/gui/menus.c:1514
-msgid "/Preview Size/Huge"
-msgstr ""
-
-#: app/gui/menus.c:1515
-msgid "/Preview Size/Enormous"
-msgstr ""
-
-#: app/gui/menus.c:1516
-msgid "/Preview Size/Gigantic"
-msgstr ""
-
-#: app/gui/menus.c:1518
-msgid "/View as List"
-msgstr "/እንደ ዝርዝር አሳይ"
-
-#: app/gui/menus.c:1521
-msgid "/View as Grid"
-msgstr ""
-
-#: app/gui/menus.c:1527
-msgid "/Show Image Menu"
-msgstr ""
-
-#: app/gui/menus.c:1530
-msgid "/Auto Follow Active Image"
-msgstr ""
-
-#: app/gui/menus.c:1543
-msgid "/New Brush"
-msgstr ""
-
-#: app/gui/menus.c:1548
-msgid "/Duplicate Brush"
-msgstr ""
-
-#: app/gui/menus.c:1553
-msgid "/Edit Brush..."
-msgstr ""
-
-#: app/gui/menus.c:1558
-msgid "/Delete Brush..."
-msgstr ""
-
-#: app/gui/menus.c:1566
-msgid "/Refresh Brushes"
-msgstr ""
-
-#: app/gui/menus.c:1578
-msgid "/New Pattern"
-msgstr ""
-
-#: app/gui/menus.c:1583
-msgid "/Duplicate Pattern"
-msgstr ""
-
-#: app/gui/menus.c:1588
-msgid "/Edit Pattern..."
-msgstr ""
-
-#: app/gui/menus.c:1593
-msgid "/Delete Pattern..."
-msgstr ""
-
-#: app/gui/menus.c:1601
-msgid "/Refresh Patterns"
-msgstr ""
-
-#: app/gui/menus.c:1626
-msgid "/Left Endpoint's Color..."
-msgstr ""
-
-#: app/gui/menus.c:1631
-msgid "/Load Left Color From/Left Neighbor's Right Endpoint"
-msgstr ""
-
-#: app/gui/menus.c:1635
-msgid "/Load Left Color From/Right Endpoint"
-msgstr ""
-
-#: app/gui/menus.c:1639
-msgid "/Load Left Color From/FG Color"
-msgstr ""
-
-#: app/gui/menus.c:1643
-msgid "/Load Left Color From/BG Color"
-msgstr ""
-
-#: app/gui/menus.c:1661
-msgid "/Save Left Color To"
-msgstr ""
-
-#: app/gui/menus.c:1676
-msgid "/Right Endpoint's Color..."
-msgstr ""
-
-#: app/gui/menus.c:1681
-msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
-msgstr ""
-
-#: app/gui/menus.c:1685
-msgid "/Load Right Color From/Left Endpoint"
-msgstr ""
-
-#: app/gui/menus.c:1689
-msgid "/Load Right Color From/FG Color"
-msgstr ""
-
-#: app/gui/menus.c:1693
-msgid "/Load Right Color From/BG Color"
-msgstr ""
-
-#: app/gui/menus.c:1711
-msgid "/Save Right Color To"
-msgstr ""
-
-#: app/gui/menus.c:1726
-msgid "/blendingfunction/Linear"
-msgstr ""
-
-#: app/gui/menus.c:1731
-msgid "/blendingfunction/Curved"
-msgstr ""
-
-#: app/gui/menus.c:1736
-msgid "/blendingfunction/Sinusodial"
-msgstr ""
-
-#: app/gui/menus.c:1741
-msgid "/blendingfunction/Spherical (increasing)"
-msgstr ""
-
-#: app/gui/menus.c:1746
-msgid "/blendingfunction/Spherical (decreasing)"
-msgstr ""
-
-#: app/gui/menus.c:1751
-msgid "/blendingfunction/(Varies)"
-msgstr ""
-
-#: app/gui/menus.c:1756
-msgid "/coloringtype/RGB"
-msgstr ""
-
-#: app/gui/menus.c:1761
-msgid "/coloringtype/HSV (counter-clockwise hue)"
-msgstr ""
-
-#: app/gui/menus.c:1766
-msgid "/coloringtype/HSV (clockwise hue)"
-msgstr ""
-
-#: app/gui/menus.c:1771
-msgid "/coloringtype/(Varies)"
-msgstr ""
-
-#: app/gui/menus.c:1809
-msgid "/Blend Endpoints' Colors"
-msgstr ""
-
-#: app/gui/menus.c:1813
-msgid "/Blend Endpoints' Opacity"
-msgstr ""
-
-#: app/gui/menus.c:1829
-msgid "/New Gradient"
-msgstr ""
-
-#: app/gui/menus.c:1834
-msgid "/Duplicate Gradient"
-msgstr ""
-
-#: app/gui/menus.c:1839
-msgid "/Edit Gradient..."
-msgstr ""
-
-#: app/gui/menus.c:1844
-msgid "/Delete Gradient..."
-msgstr ""
-
-#: app/gui/menus.c:1852
-msgid "/Refresh Gradients"
-msgstr ""
-
-#: app/gui/menus.c:1860
-msgid "/Save as POV-Ray..."
-msgstr ""
-
-#: app/gui/menus.c:1872
-msgid "/New Color"
-msgstr "/አዲስ ቀለም"
-
-#: app/gui/menus.c:1877 app/gui/menus.c:1973
-msgid "/Edit Color..."
-msgstr "/ቀለምን ያስተካክሉ..."
-
-#: app/gui/menus.c:1882
-msgid "/Delete Color"
-msgstr "/ቀለምን አጥፉ"
-
-#: app/gui/menus.c:1894
-msgid "/New Palette"
-msgstr "/አዲስ መደርደሪያ"
-
-#: app/gui/menus.c:1899
-msgid "/Duplicate Palette"
-msgstr "/መደርደሪያን አባዛ..."
-
-#: app/gui/menus.c:1904
-msgid "/Edit Palette..."
-msgstr "/መደርደሪያን ያስተካክሉ..."
-
-#: app/gui/menus.c:1909
-msgid "/Delete Palette..."
-msgstr "/መደርደሪያን አጥፉ..."
-
-#: app/gui/menus.c:1917
-msgid "/Refresh Palettes"
-msgstr ""
-
-#: app/gui/menus.c:1925
-msgid "/Import Palette..."
-msgstr ""
-
-#: app/gui/menus.c:1930
-msgid "/Merge Palettes..."
-msgstr ""
-
-#: app/gui/menus.c:1941
-msgid "/Paste Buffer"
-msgstr ""
-
-#: app/gui/menus.c:1946
-msgid "/Paste Buffer Into"
-msgstr ""
-
-#: app/gui/menus.c:1951
-msgid "/Paste Buffer as New"
-msgstr ""
-
-#: app/gui/menus.c:1956
-msgid "/Delete Buffer"
-msgstr ""
-
-#: app/gui/menus.c:1968
-msgid "/Add Color"
-msgstr "/ቀለም ተጨማሪ"
-
-#: app/gui/menus.c:1985
-msgid "/Raise Displays"
-msgstr ""
-
-#: app/gui/menus.c:1989
-msgid "/New Display"
-msgstr ""
-
-#: app/gui/menus.c:1993
-msgid "/Delete Image"
-msgstr "/ምስልን አጥፉ"
-
-#: app/gui/menus.c:2004
-msgid "/Open Image"
-msgstr "/ምስል ክፈት"
-
-#: app/gui/menus.c:2008
-msgid "/Raise or Open Image"
-msgstr ""
-
-#: app/gui/menus.c:2012
-msgid "/File Open Dialog..."
-msgstr ""
-
-#: app/gui/menus.c:2016
-msgid "/Remove Entry"
-msgstr ""
-
-#: app/gui/menus.c:2023
-msgid "/Recreate Preview"
-msgstr ""
-
-#: app/gui/menus.c:2027
-msgid "/Reload all Previews"
-msgstr ""
-
-#: app/gui/menus.c:2031
-msgid "/Remove Dangling Entries"
-msgstr ""
-
-#: app/gui/menus.c:2042
-msgid "/QMask Active"
-msgstr ""
-
-#: app/gui/menus.c:2048
-msgid "/Mask Selected Areas"
-msgstr ""
-
-#: app/gui/menus.c:2051
-msgid "/Mask Unselected Areas"
-msgstr ""
-
-#: app/gui/menus.c:2057
-msgid "/Configure Color and Opacity..."
 msgstr ""
 
 #: app/gui/module-browser.c:121
@@ -3917,13 +3674,21 @@ msgstr "መደብ (_B)"
 msgid "_Transparent"
 msgstr ""
 
-#: app/gui/palette-editor-commands.c:104
+#: app/gui/palette-editor-commands.c:96
 msgid "Edit Palette Color"
 msgstr ""
 
-#: app/gui/palette-editor-commands.c:106
+#: app/gui/palette-editor-commands.c:98
 msgid "Edit Color Palette Entry"
 msgstr ""
+
+#: app/gui/palette-editor-menu.c:38
+msgid "/New Color"
+msgstr "/አዲስ ቀለም"
+
+#: app/gui/palette-editor-menu.c:48
+msgid "/Delete Color"
+msgstr "/ቀለምን አጥፉ"
 
 #: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
@@ -3986,121 +3751,213 @@ msgid ""
 "The corresponding plug-in may have crashed."
 msgstr ""
 
-#: app/gui/palettes-commands.c:126
+#: app/gui/palettes-commands.c:88
 msgid "Merge Palette"
 msgstr ""
 
-#: app/gui/palettes-commands.c:129
+#: app/gui/palettes-commands.c:91
 msgid "Enter a name for merged palette"
 msgstr ""
 
-#: app/gui/paths-dialog.c:167 app/gui/vectors-commands.c:462
-#: app/gui/vectors-commands.c:508
+#: app/gui/palettes-menu.c:45
+msgid "/New Palette"
+msgstr "/አዲስ መደርደሪያ"
+
+#: app/gui/palettes-menu.c:50
+msgid "/Duplicate Palette"
+msgstr "/መደርደሪያን አባዛ..."
+
+#: app/gui/palettes-menu.c:55
+msgid "/Edit Palette..."
+msgstr "/መደርደሪያን ያስተካክሉ..."
+
+#: app/gui/palettes-menu.c:60
+msgid "/Delete Palette..."
+msgstr "/መደርደሪያን አጥፉ..."
+
+#: app/gui/palettes-menu.c:68
+msgid "/Refresh Palettes"
+msgstr ""
+
+#: app/gui/palettes-menu.c:76
+msgid "/Import Palette..."
+msgstr ""
+
+#: app/gui/palettes-menu.c:81
+msgid "/Merge Palettes..."
+msgstr ""
+
+#: app/gui/paths-dialog.c:164
+msgid "/New Path"
+msgstr "/አዲስ መንገድ"
+
+#: app/gui/paths-dialog.c:169 app/gui/vectors-menu.c:58
+msgid "/Duplicate Path"
+msgstr ""
+
+#: app/gui/paths-dialog.c:174 app/gui/vectors-menu.c:66
+msgid "/Path to Selection"
+msgstr ""
+
+#: app/gui/paths-dialog.c:179 app/gui/vectors-menu.c:87
+msgid "/Selection to Path"
+msgstr ""
+
+#: app/gui/paths-dialog.c:184 app/gui/vectors-menu.c:92
+msgid "/Stroke Path"
+msgstr ""
+
+#: app/gui/paths-dialog.c:189 app/gui/vectors-menu.c:123
+msgid "/Delete Path"
+msgstr "/የመተላለፊያ አጥፉ"
+
+#: app/gui/paths-dialog.c:197 app/gui/vectors-menu.c:100
+msgid "/Copy Path"
+msgstr ""
+
+#: app/gui/paths-dialog.c:202 app/gui/vectors-menu.c:105
+msgid "/Paste Path"
+msgstr ""
+
+#: app/gui/paths-dialog.c:207 app/gui/vectors-menu.c:110
+msgid "/Import Path..."
+msgstr ""
+
+#: app/gui/paths-dialog.c:212 app/gui/vectors-menu.c:115
+msgid "/Export Path..."
+msgstr ""
+
+#: app/gui/paths-dialog.c:220 app/gui/vectors-menu.c:136
+msgid "/Edit Path Attributes..."
+msgstr ""
+
+#: app/gui/paths-dialog.c:239 app/gui/vectors-commands.c:459
+#: app/gui/vectors-commands.c:505
 msgid "New Path"
 msgstr "አዲስ መተላለፊያ"
 
-#: app/gui/paths-dialog.c:171
+#: app/gui/paths-dialog.c:243
 msgid "Duplicate Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:175
+#: app/gui/paths-dialog.c:247
 msgid "Path to Selection"
 msgstr ""
 
-#: app/gui/paths-dialog.c:179
+#: app/gui/paths-dialog.c:251
 msgid "Selection to Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:183 app/widgets/gimpvectorslistview.c:143
+#: app/gui/paths-dialog.c:255 app/widgets/gimpvectorslistview.c:143
 msgid "Stroke Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:187
+#: app/gui/paths-dialog.c:259
 msgid "Delete Path"
 msgstr "መተላለፊያን አጥፉ"
 
-#: app/gui/paths-dialog.c:196
+#: app/gui/paths-dialog.c:268
 msgid "New Point"
 msgstr "አዲስ ነጥብ"
 
-#: app/gui/paths-dialog.c:200
+#: app/gui/paths-dialog.c:272
 msgid "Add Point"
 msgstr "ነጥብ ጨምር"
 
-#: app/gui/paths-dialog.c:204
+#: app/gui/paths-dialog.c:276
 msgid "Delete Point"
 msgstr "ነጥብን አጥፉ"
 
-#: app/gui/paths-dialog.c:208
+#: app/gui/paths-dialog.c:280
 msgid "Edit Point"
 msgstr "ነጥብን ያስተካክሉ"
 
-#: app/gui/paths-dialog.c:439
+#: app/gui/paths-dialog.c:511
 #, c-format
 msgid "Path %d"
 msgstr "መተላለፊያ %d"
 
-#: app/gui/paths-dialog.c:994 app/gui/vectors-commands.c:580
+#: app/gui/paths-dialog.c:1066 app/gui/vectors-commands.c:577
 msgid "Edit Path Attributes"
 msgstr ""
 
-#: app/gui/paths-dialog.c:997
+#: app/gui/paths-dialog.c:1069
 msgid "Enter a new name for the path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:1907
+#: app/gui/paths-dialog.c:1979
 #, c-format
 msgid "Failed to read from '%s'."
 msgstr ""
 
-#: app/gui/paths-dialog.c:1922
+#: app/gui/paths-dialog.c:1994
 #, c-format
 msgid "Failed to read path from '%s'."
 msgstr ""
 
-#: app/gui/paths-dialog.c:1929
+#: app/gui/paths-dialog.c:2001
 #, c-format
 msgid "No points specified in path file '%s'."
 msgstr ""
 
-#: app/gui/paths-dialog.c:1940
+#: app/gui/paths-dialog.c:2012
 #, c-format
 msgid "Failed to read path points from '%s'."
 msgstr ""
 
-#: app/gui/paths-dialog.c:2039
+#: app/gui/paths-dialog.c:2111
 msgid "Load and Save Bezier Curves"
 msgstr ""
 
-#: app/gui/paths-dialog.c:2077
+#: app/gui/paths-dialog.c:2149
 msgid "Load Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:2099
+#: app/gui/paths-dialog.c:2171
 msgid "Save Path"
 msgstr ""
 
-#: app/gui/pattern-select.c:250
+#: app/gui/pattern-select.c:244
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
 
-#: app/gui/plug-in-menus.c:323
+#: app/gui/patterns-menu.c:44
+msgid "/New Pattern"
+msgstr ""
+
+#: app/gui/patterns-menu.c:49
+msgid "/Duplicate Pattern"
+msgstr ""
+
+#: app/gui/patterns-menu.c:54
+msgid "/Edit Pattern..."
+msgstr ""
+
+#: app/gui/patterns-menu.c:59
+msgid "/Delete Pattern..."
+msgstr ""
+
+#: app/gui/patterns-menu.c:67
+msgid "/Refresh Patterns"
+msgstr ""
+
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "Repeat \"%s\""
 msgstr ""
 
-#: app/gui/plug-in-menus.c:324
+#: app/gui/plug-in-menus.c:344
 #, c-format
 msgid "Re-show \"%s\""
 msgstr ""
 
-#: app/gui/plug-in-menus.c:350
+#: app/gui/plug-in-menus.c:370
 msgid "Repeat Last"
 msgstr ""
 
-#: app/gui/plug-in-menus.c:353
+#: app/gui/plug-in-menus.c:373
 msgid "Re-Show Last"
 msgstr ""
 
@@ -4605,20 +4462,36 @@ msgstr ""
 msgid "Select Theme Folders"
 msgstr ""
 
-#: app/gui/qmask-commands.c:169
+#: app/gui/qmask-commands.c:137
 msgid "Edit Qmask Color"
 msgstr ""
 
-#: app/gui/qmask-commands.c:179
+#: app/gui/qmask-commands.c:147
 msgid "Qmask Attributes"
 msgstr ""
 
-#: app/gui/qmask-commands.c:181
+#: app/gui/qmask-commands.c:149
 msgid "Edit QuickMask Attributes"
 msgstr ""
 
-#: app/gui/qmask-commands.c:223
+#: app/gui/qmask-commands.c:191
 msgid "Mask Opacity:"
+msgstr ""
+
+#: app/gui/qmask-menu.c:43
+msgid "/QMask Active"
+msgstr ""
+
+#: app/gui/qmask-menu.c:49
+msgid "/Mask Selected Areas"
+msgstr ""
+
+#: app/gui/qmask-menu.c:52
+msgid "/Mask Unselected Areas"
+msgstr ""
+
+#: app/gui/qmask-menu.c:58
+msgid "/Configure Color and Opacity..."
 msgstr ""
 
 #: app/gui/resize-dialog.c:194
@@ -4792,6 +4665,127 @@ msgstr ""
 #: app/gui/tool-options-dialog.c:130
 msgid "Reset"
 msgstr "እንደነበረ አድረግ"
+
+#. <Toolbox>/File
+#: app/gui/toolbox-menu.c:47
+msgid "/_File"
+msgstr "/ፋይል (_F)"
+
+#. <Toolbox>/File/Acquire
+#: app/gui/toolbox-menu.c:67
+msgid "/File/Acquire"
+msgstr ""
+
+#: app/gui/toolbox-menu.c:71
+msgid "/File/Preferences..."
+msgstr "/ፋይል/ምርጫዎች..."
+
+#. <Toolbox>/File/Dialogs
+#: app/gui/toolbox-menu.c:79
+msgid "/File/Dialogs/Layers, Channels & Paths..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:83
+msgid "/File/Dialogs/Brushes, Patterns & Stuff..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:87
+msgid "/File/Dialogs/Tool Options..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:92
+msgid "/File/Dialogs/Device Status..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:99
+msgid "/File/Dialogs/Layers..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:103
+msgid "/File/Dialogs/Channels..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:107
+msgid "/File/Dialogs/Paths..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:111
+msgid "/File/Dialogs/Indexed Palette..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:116
+msgid "/File/Dialogs/Selection Editor..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:121
+msgid "/File/Dialogs/Navigation..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:129
+msgid "/File/Dialogs/Colors..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:134
+msgid "/File/Dialogs/Brushes..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:139
+msgid "/File/Dialogs/Patterns..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:144
+msgid "/File/Dialogs/Gradients..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:149
+msgid "/File/Dialogs/Palettes..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:154
+msgid "/File/Dialogs/Buffers..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:162
+msgid "/File/Dialogs/Images..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:166
+msgid "/File/Dialogs/Document History..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:171
+msgid "/File/Dialogs/Error Console..."
+msgstr ""
+
+#. <Toolbox>/Xtns
+#: app/gui/toolbox-menu.c:209
+msgid "/_Xtns"
+msgstr "/_Xtns"
+
+#: app/gui/toolbox-menu.c:211
+msgid "/Xtns/Module Browser..."
+msgstr ""
+
+#. <Toolbox>/Help
+#: app/gui/toolbox-menu.c:220
+msgid "/_Help"
+msgstr "/መረጃ (_H)"
+
+#: app/gui/toolbox-menu.c:222
+msgid "/Help/Help..."
+msgstr "/መረጃ/መረጃ..."
+
+#: app/gui/toolbox-menu.c:227
+msgid "/Help/Context Help..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:232
+msgid "/Help/Tip of the Day..."
+msgstr ""
+
+#: app/gui/toolbox-menu.c:237
+msgid "/Help/About..."
+msgstr "/መረጃ/ስለ..."
 
 #: app/gui/user-install-dialog.c:138
 msgid ""
@@ -5184,22 +5178,42 @@ msgstr ""
 msgid "Calibrate"
 msgstr ""
 
-#: app/gui/vectors-commands.c:306
+#: app/gui/vectors-commands.c:305
 msgid "There is no active Layer or Channel to stroke to"
 msgstr ""
 
-#: app/gui/vectors-commands.c:464
+#: app/gui/vectors-commands.c:448
+msgid "Empty Vectors Copy"
+msgstr ""
+
+#: app/gui/vectors-commands.c:461
 msgid "New Path Options"
 msgstr "አዲስ መተላለፊያ መርጫዎች"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:497 app/gui/vectors-commands.c:613
+#: app/gui/vectors-commands.c:494 app/gui/vectors-commands.c:610
 msgid "Path name:"
 msgstr ""
 
-#: app/gui/vectors-commands.c:578
+#: app/gui/vectors-commands.c:575
 msgid "Path Attributes"
 msgstr ""
+
+#: app/gui/vectors-menu.c:43
+msgid "/New Path..."
+msgstr "/አዲስ መንገድ..."
+
+#: app/gui/vectors-menu.c:48
+msgid "/Raise Path"
+msgstr ""
+
+#: app/gui/vectors-menu.c:53
+msgid "/Lower Path"
+msgstr ""
+
+#: app/gui/vectors-menu.c:131
+msgid "/Path Tool"
+msgstr "/የመተላለፊያ መሣሪያዎች"
 
 #: app/paint/paint-enums.c:13
 msgid "Image Source"
@@ -5381,17 +5395,17 @@ msgstr ""
 msgid "Units"
 msgstr "ክፍሎች"
 
-#: app/pdb/procedural_db.c:179 app/pdb/procedural_db.c:192
+#: app/pdb/procedural_db.c:181 app/pdb/procedural_db.c:194
 #, c-format
 msgid "PDB calling error %s not found"
 msgstr ""
 
-#: app/pdb/procedural_db.c:211
+#: app/pdb/procedural_db.c:213
 #, c-format
 msgid "PDB calling error %s"
 msgstr ""
 
-#: app/pdb/procedural_db.c:292
+#: app/pdb/procedural_db.c:297
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -5414,12 +5428,7 @@ msgstr ""
 msgid "Temporary Procedure"
 msgstr ""
 
-#: app/plug-in/plug-in.c:406
-#, c-format
-msgid "Unable to locate Plug-In: \"%s\""
-msgstr ""
-
-#: app/plug-in/plug-in.c:951
+#: app/plug-in/plug-in.c:912
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5430,43 +5439,43 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/plug-in/plug-ins.c:143
+#: app/plug-in/plug-ins.c:141
 msgid "Resource configuration"
 msgstr ""
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:149
+#: app/plug-in/plug-ins.c:147
 msgid "Querying new Plug-ins"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:161
+#: app/plug-in/plug-ins.c:159
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:196
+#: app/plug-in/plug-ins.c:214
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr ""
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:247
+#: app/plug-in/plug-ins.c:264
 msgid "Initializing Plug-ins"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:256
+#: app/plug-in/plug-ins.c:273
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr ""
 
 #. run the available extensions
-#: app/plug-in/plug-ins.c:267
+#: app/plug-in/plug-ins.c:284
 msgid "Starting Extensions"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:279
+#: app/plug-in/plug-ins.c:296
 #, c-format
 msgid "Starting extension: \"%s\""
 msgstr ""
@@ -5574,7 +5583,7 @@ msgid "Max Depth:"
 msgstr ""
 
 #: app/tools/gimpblendtool.c:592 app/tools/gimpbucketfilltool.c:421
-#: app/tools/gimpmagnifytool.c:489 app/tools/selection_options.c:315
+#: app/tools/gimpmagnifytool.c:489 app/tools/selection_options.c:325
 msgid "Threshold:"
 msgstr ""
 
@@ -5623,7 +5632,7 @@ msgstr ""
 msgid "Fill Type  %s"
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:374 app/tools/selection_options.c:265
+#: app/tools/gimpbucketfilltool.c:374 app/tools/selection_options.c:275
 msgid "Finding Similar Colors"
 msgstr ""
 
@@ -5636,7 +5645,7 @@ msgid "Allow completely transparent regions to be filled"
 msgstr ""
 
 #: app/tools/gimpbucketfilltool.c:402 app/tools/gimpcolorpickertool.c:706
-#: app/tools/selection_options.c:293 app/tools/selection_options.c:361
+#: app/tools/selection_options.c:303 app/tools/selection_options.c:371
 msgid "Sample Merged"
 msgstr ""
 
@@ -5644,7 +5653,7 @@ msgstr ""
 msgid "Base filled area on all visible layers"
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:425 app/tools/selection_options.c:319
+#: app/tools/gimpbucketfilltool.c:425 app/tools/selection_options.c:329
 msgid "Maximum color difference"
 msgstr ""
 
@@ -5762,7 +5771,7 @@ msgid "Alpha:"
 msgstr "አልፋ፦"
 
 #: app/tools/gimpcolorpickertool.c:523 app/tools/gimpcolorpickertool.c:529
-#: app/widgets/gimpcolormapeditor.c:300
+#: app/widgets/gimpcolormapeditor.c:313
 msgid "Hex Triplet:"
 msgstr ""
 
@@ -5782,8 +5791,8 @@ msgstr ""
 msgid "Sample Average"
 msgstr ""
 
-#: app/tools/gimpcolorpickertool.c:745 app/tools/selection_options.c:210
-#: app/widgets/gimpbrusheditor.c:149
+#: app/tools/gimpcolorpickertool.c:745 app/tools/selection_options.c:220
+#: app/widgets/gimpbrusheditor.c:150
 msgid "Radius:"
 msgstr ""
 
@@ -5883,7 +5892,7 @@ msgstr ""
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimpcurvestool.c:619 app/tools/gimplevelstool.c:392
+#: app/tools/gimpcurvestool.c:619 app/tools/gimplevelstool.c:403
 msgid "R_eset Channel"
 msgstr ""
 
@@ -5904,7 +5913,7 @@ msgid "Curve Type:"
 msgstr ""
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:704 app/tools/gimplevelstool.c:647
+#: app/tools/gimpcurvestool.c:704 app/tools/gimplevelstool.c:658
 msgid "All Channels"
 msgstr ""
 
@@ -6006,7 +6015,7 @@ msgstr ""
 msgid "/Tools/Transform Tools/Flip"
 msgstr ""
 
-#: app/tools/gimpfreeselecttool.c:92
+#: app/tools/gimpfreeselecttool.c:92 libgimptool/gimptoolenums.c:116
 msgid "Free Select"
 msgstr ""
 
@@ -6030,55 +6039,55 @@ msgstr ""
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:120
+#: app/tools/gimphistogramtool.c:123
 msgid "Histogram"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:121
+#: app/tools/gimphistogramtool.c:124
 msgid "View image histogram"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:122
+#: app/tools/gimphistogramtool.c:125
 msgid "/Layer/Colors/Histogram..."
 msgstr "/ደረጃ/ቀለሞች/Histogram..."
 
-#: app/tools/gimphistogramtool.c:183
+#: app/tools/gimphistogramtool.c:186
 msgid "Histogram does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:328
+#: app/tools/gimphistogramtool.c:331
 msgid "Mean:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:329
+#: app/tools/gimphistogramtool.c:332
 msgid "Std Dev:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:330
+#: app/tools/gimphistogramtool.c:333
 msgid "Median:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:331
+#: app/tools/gimphistogramtool.c:334
 msgid "Pixels:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:332
+#: app/tools/gimphistogramtool.c:335
 msgid "Count:"
 msgstr "ቆጠራ፦"
 
-#: app/tools/gimphistogramtool.c:333
+#: app/tools/gimphistogramtool.c:336
 msgid "Percentile:"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:349
 msgid "View Image Histogram"
 msgstr ""
 
-#: app/tools/gimphistogramtool.c:364
+#: app/tools/gimphistogramtool.c:367
 msgid "Information on Channel:"
 msgstr "ስለ ጣቢያን መረጃ፦"
 
-#: app/tools/gimphistogramtool.c:377
+#: app/tools/gimphistogramtool.c:380
 msgid "Intensity Range:"
 msgstr ""
 
@@ -6180,7 +6189,7 @@ msgid "Size:"
 msgstr "መጠን፦"
 
 #: app/tools/gimpinktool.c:1434 app/tools/gimpmeasuretool.c:399
-#: app/tools/gimprotatetool.c:177 app/widgets/gimpbrusheditor.c:188
+#: app/tools/gimprotatetool.c:177 app/widgets/gimpbrusheditor.c:189
 msgid "Angle:"
 msgstr ""
 
@@ -6219,77 +6228,77 @@ msgstr ""
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:156
+#: app/tools/gimplevelstool.c:160
 msgid "Levels"
 msgstr "ደረጃዎች"
 
-#: app/tools/gimplevelstool.c:157
+#: app/tools/gimplevelstool.c:161
 msgid "Adjust color levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:158
+#: app/tools/gimplevelstool.c:162
 msgid "/Layer/Colors/Levels..."
 msgstr "/ደረጃ/ቀለሞች/Levels..."
 
-#: app/tools/gimplevelstool.c:225
+#: app/tools/gimplevelstool.c:229
 msgid "Adjust Color Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:275
+#: app/tools/gimplevelstool.c:279
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
-#: app/tools/gimplevelstool.c:380
+#: app/tools/gimplevelstool.c:391
 msgid "Modify Levels for Channel:"
 msgstr ""
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:402
+#: app/tools/gimplevelstool.c:413
 msgid "Input Levels"
 msgstr "የግብዓት ደረጃዎች"
 
-#: app/tools/gimplevelstool.c:479
+#: app/tools/gimplevelstool.c:490
 msgid "Pick Black Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:511
+#: app/tools/gimplevelstool.c:522
 msgid "Pick Gray Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:527
+#: app/tools/gimplevelstool.c:538
 msgid "Gamma"
 msgstr "ጋማ"
 
-#: app/tools/gimplevelstool.c:544
+#: app/tools/gimplevelstool.c:555
 msgid "Pick White Point"
 msgstr ""
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:568
+#: app/tools/gimplevelstool.c:579
 msgid "Output Levels"
 msgstr "የውጤት ደረጃዎች"
 
-#: app/tools/gimplevelstool.c:658
+#: app/tools/gimplevelstool.c:669
 msgid "_Auto"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:661
+#: app/tools/gimplevelstool.c:672
 msgid "Adjust levels automatically"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:671
+#: app/tools/gimplevelstool.c:682
 msgid "Read levels settings from file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:681
+#: app/tools/gimplevelstool.c:692
 msgid "Save levels settings to file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:1304
+#: app/tools/gimplevelstool.c:1315
 msgid "Load Levels"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:1319
+#: app/tools/gimplevelstool.c:1330
 msgid "Save Levels"
 msgstr ""
 
@@ -6596,7 +6605,7 @@ msgstr "_መጠን፦"
 msgid "_Border:"
 msgstr "_ወሰን፦፦"
 
-#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:430
+#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:436
 msgid "Unit:"
 msgstr "ክፍል፦"
 
@@ -6626,27 +6635,27 @@ msgstr ""
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:85
+#: app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:86
+#: app/tools/gimpthresholdtool.c:90
 msgid "Reduce image to two colors using a threshold"
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:87
+#: app/tools/gimpthresholdtool.c:91
 msgid "/Layer/Colors/Threshold..."
 msgstr "/ደረጃ/ቀለሞች/Threshold..."
 
-#: app/tools/gimpthresholdtool.c:153
+#: app/tools/gimpthresholdtool.c:157
 msgid "Apply Threshold"
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:195
+#: app/tools/gimpthresholdtool.c:199
 msgid "Threshold does not operate on indexed drawables."
 msgstr ""
 
-#: app/tools/gimpthresholdtool.c:249
+#: app/tools/gimpthresholdtool.c:260
 msgid "Threshold Range:"
 msgstr ""
 
@@ -6716,61 +6725,57 @@ msgstr "ዓይነት፦"
 msgid "Path Tool"
 msgstr "የመተላለፊያ መሣሪያዎች"
 
-#: app/tools/selection_options.c:114
+#: app/tools/selection_options.c:124
 msgid "Replace the current selection"
 msgstr ""
 
-#: app/tools/selection_options.c:115
+#: app/tools/selection_options.c:125
 msgid "Add to the current selection"
 msgstr ""
 
-#: app/tools/selection_options.c:116
+#: app/tools/selection_options.c:126
 msgid "Subtract from the current selection"
 msgstr ""
 
-#: app/tools/selection_options.c:117
+#: app/tools/selection_options.c:127
 msgid "Intersect with the current selection"
 msgstr ""
 
 #. the antialias toggle button
-#: app/tools/selection_options.c:164
+#: app/tools/selection_options.c:174
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: app/tools/selection_options.c:170
+#: app/tools/selection_options.c:180
 msgid "Smooth edges"
 msgstr ""
 
-#: app/tools/selection_options.c:192
+#: app/tools/selection_options.c:202
 msgid "Feather Edges"
 msgstr ""
 
-#: app/tools/selection_options.c:245
+#: app/tools/selection_options.c:255
 msgid "Show Interactive Boundary"
 msgstr ""
 
-#: app/tools/selection_options.c:276
+#: app/tools/selection_options.c:286
 msgid "Select Transparent Areas"
 msgstr ""
 
-#: app/tools/selection_options.c:284
+#: app/tools/selection_options.c:294
 msgid "Allow completely transparent regions to be selected"
 msgstr ""
 
-#: app/tools/selection_options.c:301
+#: app/tools/selection_options.c:311
 msgid "Base selection on all visible layers"
 msgstr ""
 
-#: app/tools/selection_options.c:346
+#: app/tools/selection_options.c:356
 msgid "Auto Shrink Selection"
 msgstr ""
 
-#: app/tools/selection_options.c:369
+#: app/tools/selection_options.c:379
 msgid "Use all visible layers when shrinking the selection"
-msgstr ""
-
-#: app/tools/selection_options.c:381
-msgid "Fixed Size / Aspect Ratio"
 msgstr ""
 
 #: app/tools/tool_options.c:47
@@ -6842,11 +6847,11 @@ msgstr "በውስጥ"
 msgid "Netscape"
 msgstr "Netscape"
 
-#: app/widgets/gimpbrusheditor.c:162
+#: app/widgets/gimpbrusheditor.c:163
 msgid "Hardness:"
 msgstr ""
 
-#: app/widgets/gimpbrusheditor.c:175
+#: app/widgets/gimpbrusheditor.c:176
 msgid "Aspect Ratio:"
 msgstr ""
 
@@ -6862,8 +6867,8 @@ msgstr ""
 msgid "Paste as New"
 msgstr ""
 
-#: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:221
-#: app/widgets/gimpitemlistview.c:237
+#: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:225
+#: app/widgets/gimpitemlistview.c:238
 msgid "Delete"
 msgstr "አጥፉ"
 
@@ -6892,7 +6897,7 @@ msgstr ""
 msgid "Edit Background Color"
 msgstr ""
 
-#: app/widgets/gimpcolormapeditor.c:289
+#: app/widgets/gimpcolormapeditor.c:302
 msgid "Color Index:"
 msgstr "የቀለም ማውጫ፦"
 
@@ -6905,42 +6910,42 @@ msgstr "ግራጫ"
 msgid "(None)"
 msgstr "(ምንም)"
 
-#: app/widgets/gimpdataeditor.c:128
+#: app/widgets/gimpdataeditor.c:131
 msgid "Save"
 msgstr "አስቀምጥ"
 
-#: app/widgets/gimpdataeditor.c:136
+#: app/widgets/gimpdataeditor.c:139
 msgid "Revert"
 msgstr "ወደ ነበረበት መልስ"
 
-#: app/widgets/gimpdatafactoryview.c:197 app/widgets/gimpitemlistview.c:190
+#: app/widgets/gimpdatafactoryview.c:201 app/widgets/gimpitemlistview.c:191
 msgid "New"
 msgstr "አዲስ"
 
-#: app/widgets/gimpdatafactoryview.c:205 app/widgets/gimpitemlistview.c:223
+#: app/widgets/gimpdatafactoryview.c:209 app/widgets/gimpitemlistview.c:224
 msgid "Duplicate"
 msgstr "አባዛ"
 
-#: app/widgets/gimpdatafactoryview.c:213 app/widgets/gimpitemlistview.c:230
+#: app/widgets/gimpdatafactoryview.c:217 app/widgets/gimpitemlistview.c:231
 msgid "Edit"
 msgstr "አስተካክል"
 
-#: app/widgets/gimpdatafactoryview.c:229
+#: app/widgets/gimpdatafactoryview.c:233
 msgid "Refresh"
 msgstr "በድጋሚ ጀምር"
 
-#: app/widgets/gimpdatafactoryview.c:382
+#: app/widgets/gimpdatafactoryview.c:386
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
 
-#: app/widgets/gimpdatafactoryview.c:386
+#: app/widgets/gimpdatafactoryview.c:390
 msgid "Delete Data Object"
 msgstr ""
 
-#: app/widgets/gimpdocumentview.c:163
+#: app/widgets/gimpdocumentview.c:166
 #, c-format
 msgid ""
 "Open the selected entry\n"
@@ -6948,11 +6953,11 @@ msgid ""
 "%s  Open image dialog"
 msgstr ""
 
-#: app/widgets/gimpdocumentview.c:181
+#: app/widgets/gimpdocumentview.c:184
 msgid "Remove selected entry"
 msgstr ""
 
-#: app/widgets/gimpdocumentview.c:186
+#: app/widgets/gimpdocumentview.c:189
 #, c-format
 msgid ""
 "Recreate preview\n"
@@ -6988,94 +6993,94 @@ msgstr "ከርቀት ዕይታ"
 msgid "Instant update"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:578
+#: app/widgets/gimpgradienteditor.c:584
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:581
+#: app/widgets/gimpgradienteditor.c:587
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:853
+#: app/widgets/gimpgradienteditor.c:856
 #, c-format
 msgid "Position: %0.6f"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:855
+#: app/widgets/gimpgradienteditor.c:858
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:858
+#: app/widgets/gimpgradienteditor.c:861
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:889 app/widgets/gimpgradienteditor.c:923
+#: app/widgets/gimpgradienteditor.c:892 app/widgets/gimpgradienteditor.c:926
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:896
+#: app/widgets/gimpgradienteditor.c:899
 msgid "Foreground color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:928
+#: app/widgets/gimpgradienteditor.c:931
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:931
+#: app/widgets/gimpgradienteditor.c:934
 msgid "Background color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1215 app/widgets/gimpgradienteditor.c:1277
+#: app/widgets/gimpgradienteditor.c:1218 app/widgets/gimpgradienteditor.c:1280
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1221
+#: app/widgets/gimpgradienteditor.c:1224
 msgid "Drag: move"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1227 app/widgets/gimpgradienteditor.c:1240
-#: app/widgets/gimpgradienteditor.c:1253 app/widgets/gimpgradienteditor.c:1274
+#: app/widgets/gimpgradienteditor.c:1230 app/widgets/gimpgradienteditor.c:1243
+#: app/widgets/gimpgradienteditor.c:1256 app/widgets/gimpgradienteditor.c:1277
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1233 app/widgets/gimpgradienteditor.c:1246
+#: app/widgets/gimpgradienteditor.c:1236 app/widgets/gimpgradienteditor.c:1249
 msgid "Click: select"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1259 app/widgets/gimpgradienteditor.c:1282
+#: app/widgets/gimpgradienteditor.c:1262 app/widgets/gimpgradienteditor.c:1285
 msgid "Click: select    Drag: move"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1541 app/widgets/gimpgradienteditor.c:1550
+#: app/widgets/gimpgradienteditor.c:1544 app/widgets/gimpgradienteditor.c:1553
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1569
+#: app/widgets/gimpgradienteditor.c:1572
 #, c-format
 msgid "Distance: %0.6f"
 msgstr ""
 
-#: app/widgets/gimphelp.c:200
+#: app/widgets/gimphelp.c:197
 msgid "Could not find GIMP Help Browser"
 msgstr ""
 
-#: app/widgets/gimphelp.c:202
+#: app/widgets/gimphelp.c:199
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/widgets/gimphelp.c:205
+#: app/widgets/gimphelp.c:202
 msgid "Use Netscape instead"
 msgstr ""
 
@@ -7100,19 +7105,19 @@ msgstr ""
 msgid "Delete this image"
 msgstr "ይህ ምስልን አጥፉ"
 
-#: app/widgets/gimpitemfactory.c:589
+#: app/widgets/gimpitemfactory.c:602
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/widgets/gimpitemlistview.c:195
+#: app/widgets/gimpitemlistview.c:196
 #, c-format
 msgid ""
 "Raise\n"
 "%s  To Top"
 msgstr ""
 
-#: app/widgets/gimpitemlistview.c:208
+#: app/widgets/gimpitemlistview.c:209
 #, c-format
 msgid ""
 "Lower\n"
@@ -7186,7 +7191,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 
-#: app/widgets/gimptoolbox.c:727
+#: app/widgets/gimptoolbox.c:728
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7317,7 +7322,7 @@ msgstr ""
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:400
+#: app/widgets/gimpwidgets-utils.c:287
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -7374,6 +7379,14 @@ msgstr ""
 #: libgimptool/gimptoolenums.c:15
 msgid "Resize"
 msgstr "እንደገና መጧን ማስተሥከል"
+
+#: libgimptool/gimptoolenums.c:117
+msgid "Fixed Size"
+msgstr ""
+
+#: libgimptool/gimptoolenums.c:118
+msgid "Fixed Aspect Ratio"
+msgstr ""
 
 #~ msgid "%s Options"
 #~ msgstr "%s ምርጫዎች"
