@@ -34,7 +34,6 @@ struct _GimpHistogramBox
 {
   GtkVBox            parent_instance;
 
-  GtkWidget         *label;
   GtkWidget         *slider_area;
   GimpHistogramView *view;
 
@@ -55,7 +54,7 @@ struct _GimpHistogramBoxClass
 
 GType       gimp_histogram_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_histogram_box_new         (const gchar          *label);
+GtkWidget * gimp_histogram_box_new         (void);
 void        gimp_histogram_box_set_channel (GimpHistogramBox     *box,
                                             GimpHistogramChannel  channel);
 

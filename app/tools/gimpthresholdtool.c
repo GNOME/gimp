@@ -271,7 +271,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
-  box = gimp_histogram_box_new (_("Threshold Range"));
+  box = gimp_histogram_box_new ();
   gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 

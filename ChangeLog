@@ -1,3 +1,12 @@
+2004-06-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrambox.[ch]: removed the label between the
+	spinbuttons, it looks silly. Converted tabs to spaces, removed
+	trailing whitespace.
+
+	* app/widgets/gimphistogrameditor.c
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
 2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimphistogrambox.[ch]:

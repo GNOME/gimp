@@ -136,7 +136,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   editor->drawable  = NULL;
   editor->histogram = NULL;
   editor->idle_id   = 0;
-  editor->box       = gimp_histogram_box_new (_("Intensity Range:"));
+  editor->box       = gimp_histogram_box_new ();
 
   editor->name = label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

@@ -17,6 +17,7 @@
  */
 
 #include "config.h"
+
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -37,12 +38,12 @@
 
 /*  #define DEBUG_VIEW  */
 
-#define GRADIENT_HEIGHT 12
+#define GRADIENT_HEIGHT  12
 #define CONTROL_HEIGHT    8
 
 #define HISTOGRAM_EVENT_MASK  (GDK_BUTTON_PRESS_MASK   | \
-			    GDK_BUTTON_RELEASE_MASK | \
-			    GDK_BUTTON_MOTION_MASK)
+                               GDK_BUTTON_RELEASE_MASK | \
+                               GDK_BUTTON_MOTION_MASK)
 
 
 /*  local function prototypes  */
@@ -64,15 +65,15 @@ static void   gimp_histogram_box_border_notify   (GimpHistogramView *view,
                                                   GParamSpec        *pspec,
                                                   GimpColorBar      *bar);
 static gboolean gimp_histogram_slider_area_event (GtkWidget         *widget,
-						  GdkEvent          *event,
-						  GimpHistogramBox  *box);
+                                                  GdkEvent          *event,
+                                                  GimpHistogramBox  *box);
 static gboolean gimp_histogram_slider_area_expose (GtkWidget        *widget,
-						  GdkEvent          *event,
-						  GimpHistogramBox  *box);
+                                                  GdkEvent          *event,
+                                                  GimpHistogramBox  *box);
 static void gimp_histogram_draw_slider           (GtkWidget *widget,
-						  GdkGC     *border_gc,
-						  GdkGC     *fill_gc,
-						  gint       xpos);
+                                                  GdkGC     *border_gc,
+                                                  GdkGC     *fill_gc,
+                                                  gint       xpos);
 
 GType
 gimp_histogram_box_get_type (void)
@@ -84,14 +85,14 @@ gimp_histogram_box_get_type (void)
       static const GTypeInfo box_info =
       {
         sizeof (GimpHistogramBoxClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) NULL,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) NULL,
         NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpHistogramBox),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_histogram_box_init,
+        NULL,           /* class_data     */
+        sizeof (GimpHistogramBox),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_histogram_box_init,
       };
 
       box_type = g_type_register_static (GTK_TYPE_VBOX,
@@ -192,10 +193,6 @@ gimp_histogram_box_init (GimpHistogramBox *box)
                     G_CALLBACK (gimp_histogram_box_low_adj_update),
                     box);
 
-  box->label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), box->label, TRUE, TRUE, 0);
-  gtk_widget_show (box->label);
-
   /*  high spinbutton  */
   spinbutton = gimp_spin_button_new (&adjustment,
                                      255.0, 0.0, 255.0, 1.0, 16.0, 0.0,
@@ -290,13 +287,9 @@ gimp_histogram_box_border_notify (GimpHistogramView *view,
 }
 
 GtkWidget *
-gimp_histogram_box_new (const gchar *label)
+gimp_histogram_box_new (void)
 {
-  GimpHistogramBox *box = g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL);
-
-  gtk_label_set_text (GTK_LABEL (box->label), label);
-
-  return GTK_WIDGET (box);
+  return GTK_WIDGET (g_object_new (GIMP_TYPE_HISTOGRAM_BOX, NULL));
 }
 
 void
@@ -309,10 +302,10 @@ gimp_histogram_box_set_channel (GimpHistogramBox     *box,
     gimp_histogram_view_set_channel (box->view, channel);
 }
 
-static gboolean 
+static gboolean
 gimp_histogram_slider_area_event (GtkWidget         *widget,
-				  GdkEvent          *event,
-				  GimpHistogramBox  *box)
+                                  GdkEvent          *event,
+                                  GimpHistogramBox  *box)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -327,11 +320,11 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
 
       distance = G_MAXINT;
       for (i = 0; i < 2; i++)
-	if (fabs (bevent->x - box->slider_pos[i]) < distance)
-	  {
-	    box->active_slider = i;
-	    distance = fabs (bevent->x - box->slider_pos[i]);
-	  }
+        if (fabs (bevent->x - box->slider_pos[i]) < distance)
+          {
+            box->active_slider = i;
+            distance = fabs (bevent->x - box->slider_pos[i]);
+          }
 
       x = bevent->x;
       update = TRUE;
@@ -339,14 +332,14 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
 
     case GDK_BUTTON_RELEASE:
       switch (box->active_slider)
-	{
-	case 3:  /*  low output  */
-	  gtk_adjustment_set_value (box->low_adj, box->low_slider_val);
-	  break;
-	case 4:  /*  high output  */
-	  gtk_adjustment_set_value (box->high_adj, box->high_slider_val);
-	  break;
-	}
+        {
+        case 3:  /*  low output  */
+          gtk_adjustment_set_value (box->low_adj, box->low_slider_val);
+          break;
+        case 4:  /*  high output  */
+          gtk_adjustment_set_value (box->high_adj, box->high_slider_val);
+          break;
+        }
 
       break;
 
@@ -373,37 +366,37 @@ gimp_histogram_slider_area_event (GtkWidget         *widget,
         return FALSE;
 
       switch (box->active_slider)
-	{
-	case 0:  /*  low output  */
-	  box->low_adj->value =
+        {
+        case 0:  /*  low output  */
+          box->low_adj->value =
             ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
-	  box->low_adj->value =
+          box->low_adj->value =
             CLAMP (box->low_adj->value, 0, 255);
 
-	  gimp_histogram_box_low_adj_update (box->low_adj, box);
-	  break;
+          gimp_histogram_box_low_adj_update (box->low_adj, box);
+          break;
 
-	case 1:  /*  high output  */
-	  box->high_adj->value =
+        case 1:  /*  high output  */
+          box->high_adj->value =
             ((gdouble) (x - border) / (gdouble) width) * 255.0;
 
-	  box->high_adj->value =
+          box->high_adj->value =
             CLAMP (box->high_adj->value, 0, 255);
 
-	  gimp_histogram_box_high_adj_update (box->high_adj, box);
-	  break;
-	}
+          gimp_histogram_box_high_adj_update (box->high_adj, box);
+          break;
+        }
 
     }
 
   return FALSE;
 }
 
-static gboolean 
+static gboolean
 gimp_histogram_slider_area_expose (GtkWidget        *widget,
-				   GdkEvent          *event,
-				   GimpHistogramBox  *box)
+                                   GdkEvent          *event,
+                                   GimpHistogramBox  *box)
 {
   gint     width  = widget->allocation.width;
   gint     border;
@@ -421,22 +414,22 @@ gimp_histogram_slider_area_expose (GtkWidget        *widget,
                                256.0) + border;
 
   gimp_histogram_draw_slider (widget,
-			      widget->style->black_gc,
-			      widget->style->black_gc,
-			      box->slider_pos[0]);
+                              widget->style->black_gc,
+                              widget->style->black_gc,
+                              box->slider_pos[0]);
   gimp_histogram_draw_slider (widget,
-			      widget->style->black_gc,
-			      widget->style->white_gc,
-			      box->slider_pos[1]);
+                              widget->style->black_gc,
+                              widget->style->white_gc,
+                              box->slider_pos[1]);
 
   return FALSE;
 }
 
 static void
 gimp_histogram_draw_slider (GtkWidget *widget,
-		    GdkGC     *border_gc,
-		    GdkGC     *fill_gc,
-		    gint       xpos)
+                    GdkGC     *border_gc,
+                    GdkGC     *fill_gc,
+                    gint       xpos)
 {
   gint y;
 
@@ -448,19 +441,19 @@ gimp_histogram_draw_slider (GtkWidget *widget,
   gdk_draw_line (widget->window, border_gc,
                  xpos,
                  GRADIENT_HEIGHT,
-		 xpos - (CONTROL_HEIGHT - 1) / 2,
+                 xpos - (CONTROL_HEIGHT - 1) / 2,
                  GRADIENT_HEIGHT + CONTROL_HEIGHT - 1);
 
   gdk_draw_line (widget->window, border_gc,
                  xpos,
                  GRADIENT_HEIGHT,
-		 xpos + (CONTROL_HEIGHT - 1) / 2,
+                 xpos + (CONTROL_HEIGHT - 1) / 2,
                  GRADIENT_HEIGHT + CONTROL_HEIGHT - 1);
 
   gdk_draw_line (widget->window, border_gc,
                  xpos - (CONTROL_HEIGHT - 1) / 2,
                  GRADIENT_HEIGHT + CONTROL_HEIGHT - 1,
-		 xpos + (CONTROL_HEIGHT - 1) / 2,
+                 xpos + (CONTROL_HEIGHT - 1) / 2,
                  GRADIENT_HEIGHT + CONTROL_HEIGHT - 1);
 }
 
