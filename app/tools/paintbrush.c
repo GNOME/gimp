@@ -319,7 +319,7 @@ ProcRecord paintbrush_proc =
 
 ProcRecord paintbrush_extended_proc =
 {
-  "gimp_paintbrush_exteneded",
+  "gimp_paintbrush_extended",
   "Paint in the current brush with optional fade out parameter",
   "This tool is the standard paintbrush.  It draws linearly interpolated lines through the specified stroke coordinates.  It operates on the specified drawable in the foreground color with the active brush.  The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off.  The pressure is set to the maximum at the beginning of the stroke.  As the distance of the stroke nears the fade_out value, the pressure will approach zero.",
   "Spencer Kimball & Peter Mattis",
