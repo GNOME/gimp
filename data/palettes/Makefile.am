@@ -24,7 +24,7 @@ palettedata_DATA = \
 	GrayViolet.gpl		\
 	Greens.gpl		\
 	Hilite.gpl		\
-	Kahki.gpl		\
+	Khaki.gpl		\
 	Lights.gpl		\
 	Muted.gpl		\
 	Named_Colors.gpl	\

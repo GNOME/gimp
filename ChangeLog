@@ -1,3 +1,8 @@
+2003-08-31  Raphael Quinet  <raphael@gamers.org>
+
+	* data/palettes/Makefile.am (palettedata_DATA): fixed the spelling
+	of Khaki.gpl after Sven's last commit.
+
 2003-08-31  Danilo Šegan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
