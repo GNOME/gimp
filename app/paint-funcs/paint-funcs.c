@@ -3532,13 +3532,12 @@ fatten_region (PixelRegion *src,
 
   for (x = 0; x < src->w; x++) /* set up max for top of image */
     {
-      max[x][0] = buf[0][x];
-      for (j = 1; j < yradius+1; j++)
-        if (max[x][j] < buf[j][x])
-          max[x][j] = buf[j][x];
-        else
-          max[x][j] = max[x][j-1];
+      max[x][0] = 0;         /* buf[0][x] is always 0 */
+      max[x][1] = buf[1][x]; /* MAX (buf[1][x], max[x][0]) always = buf[1][x]*/
+      for (j = 2; j < yradius+1; j++)
+	max[x][j] = MAX(buf[j][x], max[x][j-1]);
     }
+
   for (y = 0; y < src->h; y++)
     {
       rotate_pointers((void **)buf, yradius+1);
@@ -3680,14 +3679,12 @@ thin_region (PixelRegion *src,
   else
     memset (buf[0], 0, src->w);
 
+
   for (x = 0; x < src->w; x++) /* set up max for top of image */
     {
       max[x][0] = buf[0][x];
       for (j = 1; j < yradius+1; j++)
-        if (max[x][j] > buf[j][x])
-          max[x][j] = buf[j][x];
-        else
-          max[x][j] = max[x][j-1];
+	max[x][j] = MIN(buf[j][x], max[x][j-1]);
     }
 
   for (y = 0; y < src->h; y++)

@@ -1,3 +1,8 @@
+2003-02-17  Jay Cox  <jaycox@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c: Fixed an initialization error
+	in fatten_region and thin_region discovered by hans_meine@gmx.net
+
 2003-02-18  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/Makefile.am: add enumcode-py.pl to EXTRA_DIST
