@@ -87,14 +87,13 @@ typedef struct _ColorSelect ColorSelect, *ColorSelectP;
 
 struct _ColorSelect
 {
-  GtkWidget     *xy_color;
-  GtkWidget     *z_color;
-  GtkWidget     *new_color;
-  GtkWidget     *orig_color;
-  GtkWidget     *toggles[6];
-  GtkWidget     *entries[6];
-  GtkWidget     *hex_entry;
-  GtkAdjustment *slider_data[6];
+  GtkWidget *xy_color;
+  GtkWidget *z_color;
+  GtkWidget *new_color;
+  GtkWidget *orig_color;
+  GtkWidget *toggles[6];
+  GtkObject *slider_data[6];
+  GtkWidget *hex_entry;
 
   gint      pos[3];
   gint      values[6];
@@ -142,8 +141,7 @@ static void color_select_update_values     (ColorSelect *);
 static void color_select_update_rgb_values (ColorSelect *);
 static void color_select_update_hsv_values (ColorSelect *);
 static void color_select_update_pos        (ColorSelect *);
-static void color_select_update_sliders    (ColorSelect *, gint);
-static void color_select_update_entries    (ColorSelect *, gint);
+static void color_select_update_scales     (ColorSelect *, gint);
 static void color_select_update_colors     (ColorSelect *, gint);
 
 static gint color_select_xy_expose       (GtkWidget *, GdkEventExpose *,
@@ -155,8 +153,7 @@ static gint color_select_z_expose        (GtkWidget *, GdkEventExpose *,
 static gint color_select_z_events        (GtkWidget *, GdkEvent *,
 					  ColorSelect *);
 static gint color_select_color_events    (GtkWidget *, GdkEvent *);
-static void color_select_slider_update   (GtkAdjustment *, gpointer);
-static void color_select_entry_update    (GtkWidget *, gpointer);
+static void color_select_scale_update    (GtkObject *, gpointer);
 static void color_select_toggle_update   (GtkWidget *, gpointer);
 static gint color_select_hex_entry_events(GtkWidget *, GdkEvent *, gpointer);
 
@@ -236,10 +233,27 @@ color_select_widget_new (ColorSelect *csp,
 			 gint         g,
 			 gint         b)
 {
-  static gchar  *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
-  static gfloat  slider_max_vals[6] = { 360, 100, 100, 255, 255, 255 };
-  static gfloat  slider_incs[6] = { 0.1, 0.1, 0.1, 1.0, 1.0, 1.0 };
-
+  static gchar *toggle_titles[6] = 
+  { 
+    N_("H"),  
+    N_("S"),  
+    N_("V"),
+    N_("R"),
+    N_("G"),
+    N_("B")
+  };
+  static gchar *slider_tips[6] = 
+  { 
+    N_("Hue"), 
+    N_("Saturation"), 
+    N_("Value"),
+    N_("Red"),
+    N_("Green"),
+    N_("Blue") 
+  };
+  static gdouble  slider_max_vals[6] = { 360, 100, 100, 255, 255, 255 };
+  static gdouble  slider_incs[6]     = {  30,  10,  10,  16,  16,  16 };
+			
   GtkWidget *main_vbox;
   GtkWidget *main_hbox;
   GtkWidget *xy_frame;
@@ -248,12 +262,11 @@ color_select_widget_new (ColorSelect *csp,
   GtkWidget *colors_hbox;
   GtkWidget *right_vbox;
   GtkWidget *table;
-  GtkWidget *slider;
   GtkWidget *hex_hbox;
   GtkWidget *label;
-  GSList *group;
-  gchar buffer[16];
-  gint i;
+  GSList    *group;
+  gchar      buffer[16];
+  gint       i;
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
@@ -374,8 +387,8 @@ color_select_widget_new (ColorSelect *csp,
 
   /*  The color space sliders, toggle buttons and entries  */
   table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 3);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
@@ -384,7 +397,8 @@ color_select_widget_new (ColorSelect *csp,
   for (i = 0; i < 6; i++)
     {
       csp->toggles[i] =
-	gtk_radio_button_new_with_label (group, toggle_titles[i]);
+	gtk_radio_button_new_with_label (group, gettext (toggle_titles[i]));
+      gimp_help_set_help_data (csp->toggles[i], gettext (slider_tips[i]), NULL);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (csp->toggles[i]));
       gtk_table_attach (GTK_TABLE (table), csp->toggles[i],
 			0, 1, i, i+1, GTK_FILL, GTK_EXPAND, 0, 0);
@@ -393,32 +407,17 @@ color_select_widget_new (ColorSelect *csp,
 			  csp);
       gtk_widget_show (csp->toggles[i]);
 
-      csp->slider_data[i] =
-	GTK_ADJUSTMENT (gtk_adjustment_new (csp->values[i], 0.0,
-					    slider_max_vals[i],
-					    slider_incs[i],
-					    1.0, 0.0));
-
-      slider = gtk_hscale_new (csp->slider_data[i]);
-      gtk_table_attach (GTK_TABLE (table), slider, 1, 2, i, i+1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-      gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-      gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
+      csp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 0, i,
+						  NULL, 
+						  80, 55,
+						  csp->values[i], 
+						  0.0, slider_max_vals[i],
+						  1.0, slider_incs[i],
+						  0, TRUE, 0.0, 0.0,
+						  gettext (slider_tips[i]), NULL);
       gtk_signal_connect (GTK_OBJECT (csp->slider_data[i]), "value_changed",
-			  (GtkSignalFunc) color_select_slider_update,
+			  (GtkSignalFunc) color_select_scale_update,
 			  csp);
-      gtk_widget_show (slider);
-
-      csp->entries[i] = gtk_entry_new ();
-      g_snprintf (buffer, sizeof (buffer), "%d", csp->values[i]);
-      gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
-      gtk_widget_set_usize (GTK_WIDGET (csp->entries[i]), 40, 0);
-      gtk_table_attach (GTK_TABLE (table), csp->entries[i],
-			2, 3, i, i+1, GTK_FILL, GTK_EXPAND, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (csp->entries[i]), "changed",
-			  (GtkSignalFunc) color_select_entry_update,
-			  csp);
-      gtk_widget_show (csp->entries[i]);
     }
 
   /* The hex triplet entry */
@@ -479,8 +478,7 @@ color_select_drop_new_color (GtkWidget *widget,
 
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
-  color_select_update_sliders (csp, -1);
-  color_select_update_entries (csp, -1);
+  color_select_update_scales (csp, -1);
   color_select_update_colors (csp, 0);
 
   color_select_update (csp, UPDATE_Z_COLOR);
@@ -526,8 +524,7 @@ color_select_set_color (ColorSelect *csp,
 
 	  color_select_update_hsv_values (csp);
 	  color_select_update_pos (csp);
-	  color_select_update_sliders (csp, -1);
-	  color_select_update_entries (csp, -1);
+	  color_select_update_scales (csp, -1);
 	  color_select_update_colors (csp, 0);
 
 	  color_select_update (csp, UPDATE_Z_COLOR);
@@ -548,8 +545,7 @@ color_select_update (ColorSelect           *csp,
       if (update & UPDATE_VALUES)
 	{
 	  color_select_update_values (csp);
-	  color_select_update_sliders (csp, -1);
-	  color_select_update_entries (csp, -1);
+	  color_select_update_scales (csp, -1);
 
 	  if (!(update & UPDATE_NEW_COLOR))
 	    color_select_update_colors (csp, 0);
@@ -824,42 +820,20 @@ color_select_update_pos (ColorSelect *csp)
 }
 
 static void
-color_select_update_sliders (ColorSelect *csp,
-			     gint         skip)
-{
-  gint i;
-
-  if (csp)
-    {
-      for (i = 0; i < 6; i++)
-	if (i != skip)
-	  {
-	    csp->slider_data[i]->value = (gfloat) csp->values[i];
-
-	    gtk_signal_handler_block_by_data (GTK_OBJECT (csp->slider_data[i]), csp);
-	    gtk_signal_emit_by_name (GTK_OBJECT (csp->slider_data[i]), "value_changed");
-	    gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->slider_data[i]), csp);
-	  }
-    }
-}
-
-static void
-color_select_update_entries (ColorSelect *csp,
-			     gint         skip)
+color_select_update_scales (ColorSelect *csp,
+			    gint         skip)
 {
   gchar buffer[16];
-  gint i;
+  gint  i;
 
   if (csp)
     {
       for (i = 0; i < 6; i++)
 	if (i != skip)
 	  {
-	    g_snprintf (buffer, sizeof (buffer), "%d", csp->values[i]);
-
-	    gtk_signal_handler_block_by_data (GTK_OBJECT (csp->entries[i]), csp);
-	    gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
-	    gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->entries[i]), csp);
+	    gtk_signal_handler_block_by_data (GTK_OBJECT (csp->slider_data[i]), csp);
+	    gtk_adjustment_set_value (GTK_ADJUSTMENT (csp->slider_data[i]), csp->values[i]);
+	    gtk_signal_handler_unblock_by_data (GTK_OBJECT (csp->slider_data[i]), csp);
 	  }
 
       g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
@@ -1146,8 +1120,8 @@ color_select_color_events (GtkWidget *widget,
 }
 
 static void
-color_select_slider_update (GtkAdjustment *adjustment,
-			    gpointer       data)
+color_select_scale_update (GtkObject *adjustment,
+			   gpointer   data)
 {
   ColorSelect *csp;
   gint old_values[6];
@@ -1166,87 +1140,13 @@ color_select_slider_update (GtkAdjustment *adjustment,
       for (j = 0; j < 6; j++)
 	old_values[j] = csp->values[j];
 
-      csp->values[i] = (int) adjustment->value;
+      csp->values[i] = (int) (GTK_ADJUSTMENT (adjustment)->value);
 
       if ((i >= COLOR_SELECT_HUE) && (i <= COLOR_SELECT_VALUE))
 	color_select_update_rgb_values (csp);
       else if ((i >= COLOR_SELECT_RED) && (i <= COLOR_SELECT_BLUE))
 	color_select_update_hsv_values (csp);
-      color_select_update_sliders (csp, i);
-      color_select_update_entries (csp, -1);
-
-      update_z_marker = 0;
-      update_xy_marker = 0;
-      for (j = 0; j < 6; j++)
-	{
-	  if (j == csp->z_color_fill)
-	    {
-	      if (old_values[j] != csp->values[j])
-		update_z_marker = 1;
-	    }
-	  else
-	    {
-	      if (old_values[j] != csp->values[j])
-		update_xy_marker = 1;
-	    }
-	}
-
-      if (update_z_marker)
-	{
-	  color_select_draw_z_marker (csp, NULL);
-	  color_select_update (csp, UPDATE_POS | UPDATE_XY_COLOR);
-	  color_select_draw_z_marker (csp, NULL);
-	}
-      else
-	{
-	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, NULL);
-	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, NULL);
-
-	  color_select_update (csp, UPDATE_POS);
-
-	  if (update_z_marker)
-	    color_select_draw_z_marker (csp, NULL);
-	  if (update_xy_marker)
-	    color_select_draw_xy_marker (csp, NULL);
-	}
-
-      color_select_update (csp, UPDATE_NEW_COLOR);
-    }
-}
-
-static void
-color_select_entry_update (GtkWidget *widget,
-			   gpointer   data)
-{
-  ColorSelect *csp;
-  int old_values[6];
-  int update_z_marker;
-  int update_xy_marker;
-  gint i, j;
-
-  csp = (ColorSelect *) data;
-
-  if (csp)
-    {
-      for (i = 0; i < 6; i++)
-	if (csp->entries[i] == widget)
-	  break;
-
-      for (j = 0; j < 6; j++)
-	old_values[j] = csp->values[j];
-
-      csp->values[i] = atoi (gtk_entry_get_text (GTK_ENTRY (csp->entries[i])));
-      if (csp->values[i] == old_values[i])
-	return;
-
-      if ((i >= COLOR_SELECT_HUE) && (i <= COLOR_SELECT_VALUE))
-	color_select_update_rgb_values (csp);
-      else if ((i >= COLOR_SELECT_RED) && (i <= COLOR_SELECT_BLUE))
-	color_select_update_hsv_values (csp);
-      color_select_update_entries (csp, i);
-      color_select_update_sliders (csp, -1);
+      color_select_update_scales (csp, i);
 
       update_z_marker = 0;
       update_xy_marker = 0;

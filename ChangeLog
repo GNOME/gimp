@@ -1,3 +1,8 @@
+2000-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/color_select.c: use spinbuttons in the GIMP
+	color_selector
+
 Sat May 27 04:27:36 EDT 2000 calvinw@mindspring.com
 
 	* app/gimpimage.c
