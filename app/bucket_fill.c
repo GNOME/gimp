@@ -60,7 +60,7 @@ struct _BucketOptions
 
   BucketFillMode  fill_mode;
   BucketFillMode  fill_mode_d;
-  GtkWidget      *fill_mode_w[2];  /* 2 radio buttons */
+  GtkWidget      *fill_mode_w[3];  /* 3 radio buttons */
 };
 
 
@@ -104,10 +104,7 @@ bucket_options_reset (void)
 				options->sample_merged_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
-  gtk_toggle_button_set_active (((options->fill_mode_d == FG_BUCKET_FILL) ?
-				 GTK_TOGGLE_BUTTON (options->fill_mode_w[0]) :
-				 GTK_TOGGLE_BUTTON (options->fill_mode_w[1])),
-				TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
 }
 
 static BucketOptions *
@@ -125,9 +122,10 @@ bucket_options_new (void)
   GtkWidget *radio_button;
 
   int i;
-  char *button_names[2] =
+  char *button_names[3] =
   {
-    N_("Color Fill"),
+    N_("FG Color Fill"),
+    N_("BG Color Fill"),
     N_("Pattern Fill")
   };
 
@@ -183,14 +181,14 @@ bucket_options_new (void)
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
   /*  the radio buttons  */
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < 3; i++)
     {
       radio_button =
 	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) bucket_fill_mode_callback,
-			  (gpointer) ((long) (i == 1 ? PATTERN_BUCKET_FILL : FG_BUCKET_FILL)));  /* kludgy */
+			  (gpointer) i);
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
@@ -254,9 +252,12 @@ bucket_fill_button_release (Tool           *tool,
     {
       fill_mode = bucket_options->fill_mode;
 
-      /*  If the mode is color filling, and shift mask is down, fill with background  */
-      if (bevent->state & GDK_SHIFT_MASK && fill_mode == FG_BUCKET_FILL)
-	fill_mode = BG_BUCKET_FILL;
+      /*  If the mode is color filling, and shift mask is down,
+       *  toggle FG/BG fill mode
+       */
+      if ((bevent->state & GDK_SHIFT_MASK) && (fill_mode != PATTERN_BUCKET_FILL))
+	fill_mode =
+	  (fill_mode == BG_BUCKET_FILL) ? FG_BUCKET_FILL : BG_BUCKET_FILL;
 
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
@@ -401,7 +402,7 @@ bucket_fill (GimpImage      *gimage,
 	pat_buf = pattern->mask;
     }
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
 
   bytes = drawable_bytes (drawable);
   has_alpha = drawable_has_alpha (drawable);
@@ -428,7 +429,7 @@ bucket_fill (GimpImage      *gimage,
 	  x2 = BOUNDS (x2, off_x, (off_x + drawable_width (drawable)));
 	  y2 = BOUNDS (y2, off_y, (off_y + drawable_height (drawable)));
 
-	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)), 
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
@@ -438,7 +439,7 @@ bucket_fill (GimpImage      *gimage,
 	  y2 -= off_y;
 	}
       else
-	pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+	pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)), 
 			   x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       /*  if the gimage doesn't have an alpha channel,
@@ -477,7 +478,7 @@ bucket_fill (GimpImage      *gimage,
   if (new_buf)
     temp_buf_free (pat_buf);
 
-  gimp_remove_busy_cursors(NULL);
+  gimp_remove_busy_cursors (NULL);
 }
 
 
@@ -485,9 +486,9 @@ static void
 bucket_fill_line_color (unsigned char *buf,
 			unsigned char *mask,
 			unsigned char *col,
-			int           has_alpha,
-			int           bytes,
-			int           width)
+			int            has_alpha,
+			int            bytes,
+			int            width)
 {
   int alpha, b;
 

@@ -1,3 +1,13 @@
+1999-04-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/bucket_fill.c: added a "BG Color Fill" radio button.
+	Toggling FG/BG with <shift> works in both color fill modes now.
+
+	* app/brush_select.c: session management sets the size of the
+	dialog again (depending on the current paint options mode because
+	bad things happen if the brush preview's size is reduced beyond
+	it's minimum).
+
 Thu Apr 22 22:14:02 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimpdrawable.c: gave parasite undo a MISC_UNDO class for now

@@ -121,8 +121,9 @@ brush_select_new (gchar   *title,
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *slider;
-  GimpBrushP active = NULL;
   GtkWidget *button2;
+
+  GimpBrushP active = NULL;
   gint gotinitbrush = FALSE;
 
   static ActionAreaItem action_items[] =
@@ -148,19 +149,23 @@ brush_select_new (gchar   *title,
   if(!title)
     {
       gtk_window_set_title (GTK_WINDOW (bsp->shell), _("Brush Selection"));
+
+      /*  set dialog's size later because weird thing will happen if the
+       *  size was not saved in the current paint options mode
+       */
       session_set_window_geometry (bsp->shell, &brush_select_session_info,
 				   FALSE);
     }
   else
     {
       gtk_window_set_title (GTK_WINDOW (bsp->shell), title);
-      if(init_name && strlen(init_name))
-	 active = gimp_brush_list_get_brush(brush_list, init_name);
-      if(active)
+      if (init_name && strlen (init_name))
+	active = gimp_brush_list_get_brush (brush_list, init_name);
+      if (active)
 	gotinitbrush = TRUE;
     }
 
-  gtk_window_set_policy(GTK_WINDOW(bsp->shell), FALSE, TRUE, TRUE);
+  gtk_window_set_policy (GTK_WINDOW (bsp->shell), FALSE, TRUE, FALSE);
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
@@ -353,14 +358,12 @@ brush_select_new (gchar   *title,
   gtk_widget_show (bsp->options_box);
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
-  gtk_widget_show (bsp->shell);
 
   /* calculate the scrollbar */
-  if(no_data)
-    brushes_init(FALSE);
+  if (no_data)
+    brushes_init (FALSE);
   /* This is done by size_allocate anyway, which is much better */
   preview_calc_scrollbar (bsp);
-
 
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
@@ -379,8 +382,24 @@ brush_select_new (gchar   *title,
 			  (GtkSignalFunc) brush_removed_callback,
 			  bsp);
 
-      /*  if we are in per-toop paint options mode, hide the paint options  */
+      /*  Check if it's possible to set the dialog's size before ...  */
+      if ((bsp->shell->allocation.width <= brush_select_session_info.width) &&
+	  (bsp->shell->allocation.height <= brush_select_session_info.height))
+	session_set_window_geometry (bsp->shell, &brush_select_session_info,
+				     TRUE);
+
+      /*  if we are in per-tool paint options mode, hide the paint options  */
       brush_select_show_paint_options (bsp, global_paint_options);
+
+      /*  ... and after it has (eventually) changed it's size.
+       *  This is necessary because the brush preview follows the size of
+       *  the dialog and will cause ugly SIGFPE's when it's size is reduced
+       *  beyond it's minimum.
+       */
+      if ((bsp->shell->allocation.width <= brush_select_session_info.width) &&
+	  (bsp->shell->allocation.height <= brush_select_session_info.height))
+	session_set_window_geometry (bsp->shell, &brush_select_session_info,
+				     TRUE);
 
       /*  add a toggle button which switches from global to per-tool
        *  paint options mode
@@ -409,12 +428,12 @@ brush_select_new (gchar   *title,
       gtk_widget_show (sep);
       */
     }
-  
+
   /*  update the active selection  */
-  if(!active)
+  if (!active)
     active = get_active_brush ();
 
-  if(title)
+  if (title)
     {
       bsp->brush = active;
     }
@@ -437,19 +456,23 @@ brush_select_new (gchar   *title,
       brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
 								 active));
 
-      if(gotinitbrush && init_spacing >= 0)
+      if (gotinitbrush && init_spacing >= 0)
 	{
 	  /* Use passed spacing instead of brushes default */
 	  bsp->spacing_data->value = init_spacing;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data),
+				   "value_changed");
 	}
       bsp->redraw = old_value;
-      if (GIMP_IS_BRUSH_GENERATED(active))
+      if (GIMP_IS_BRUSH_GENERATED (active))
 	gtk_widget_set_sensitive (bsp->edit_button, 1);
       else
 	gtk_widget_set_sensitive (bsp->edit_button, 0); 
     }
-  
+
+  /*  Finally, show the dialog  */
+  gtk_widget_show (bsp->shell);
+
   return bsp;
 }
 
@@ -484,8 +507,7 @@ brush_select_free (BrushSelectP bsp)
 	g_free (bsp->callback_name);
 
       /* remove from active list */
-
-      brush_active_dialogs = g_slist_remove(brush_active_dialogs,bsp);
+      brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
 
       g_free (bsp);
     }
@@ -915,17 +937,14 @@ preview_calc_scrollbar (BrushSelectP bsp)
   int num_rows;
   int page_size;
   int max;
-  int offs;
 
-  offs = bsp->scroll_offset;
+  bsp->scroll_offset = 0;
   num_rows = (gimp_brush_list_length(brush_list) + (bsp->NUM_BRUSH_COLUMNS) - 1)
     / (bsp->NUM_BRUSH_COLUMNS);
   max = num_rows * bsp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = bsp->preview->allocation.height;
-  page_size = ((page_size < max) ? page_size : max);
 
-  bsp->scroll_offset = offs;
   bsp->sbar_data->value = bsp->scroll_offset;
   bsp->sbar_data->upper = max;
   bsp->sbar_data->page_size = ((page_size < max) ? page_size : max);
@@ -1016,7 +1035,6 @@ brush_select_events (GtkWidget    *widget,
 	  /*  Get the brush and display the popup brush preview  */
 	  if ((brush = gimp_brush_list_get_brush_by_index (brush_list, index)))
 	    {
-
 	      gdk_pointer_grab (bsp->preview->window, FALSE,
 				(GDK_POINTER_MOTION_HINT_MASK |
 				 GDK_BUTTON1_MOTION_MASK |
@@ -1173,19 +1191,17 @@ brush_select_refresh_callback (GtkWidget *w,
   /*  re-init the brush list  */
   brushes_init (FALSE);
 
-  /*  update the active selection  */
-  active = get_active_brush ();
-  if (active)
-    brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
-							       active));
-
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (bsp);
 
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
- 
+  /*  update the active selection  */
+  active = get_active_brush ();
+  if (active)
+    brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
+							       active));
 
   /*  update the display  */
   if (bsp->redraw)
@@ -1208,14 +1224,14 @@ preview_scroll_update (GtkAdjustment *adjustment,
       bsp->scroll_offset = adjustment->value;
       display_brushes (bsp);
 
-      if(bsp->brush)
-	active = bsp->brush;
-      else
+      if (brush_select_dialog == bsp)
 	active = get_active_brush ();
+      else
+	active = bsp->brush;
 
       if (active)
 	{
-	  index = gimp_brush_list_get_brush_index(brush_list, active);
+	  index = gimp_brush_list_get_brush_index (brush_list, active);
 	  if (index < 0)
 	    return;
 	  row = index / bsp->NUM_BRUSH_COLUMNS;
