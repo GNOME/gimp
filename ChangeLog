@@ -1,5 +1,10 @@
 2004-10-17  DindinX  <dindinx@gimp.org>
 
+	* libgimp/gimppixelrgn.c: clarify some usecases for
+	gimp_pixel_rgn_init().
+
+2004-10-17  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/colortoalpha.c: Added a preview.
 
 2004-10-17  DindinX  <dindinx@gimp.org>
