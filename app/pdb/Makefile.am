@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libapppdb.la
+noinst_LIBRARIES = libapppdb.a
 
-libapppdb_la_SOURCES = \
+libapppdb_a_SOURCES = \
 	pdb_glue.h		\
 	internal_procs.c	\
 	internal_procs.h	\

@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libappwidgets.la
+noinst_LIBRARIES = libappwidgets.a
 
-libappwidgets_la_SOURCES = \
+libappwidgets_a_SOURCES = \
 	widgets-types.h			\
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\

@@ -1,3 +1,17 @@
+2001-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/gui/Makefile.am
+	* app/paint-funcs/Makefile.am
+	* app/pdb/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am: no need to build .la objects for
+	convenience libraries which are never linked into another dynamic
+	library. Create simple .a files instead. Reduces compilation time
+	of app/ by about 50%.
+
 2001-06-05  Dave Neary  <dneary@eircom.net>
 
 	* po/POTFILES.in: Changed one line to satisfy dependencies

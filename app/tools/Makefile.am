@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libapptools.la
+noinst_LIBRARIES = libapptools.a
 
-libapptools_la_SOURCES = \
+libapptools_a_SOURCES = \
 	tools.c				\
 	tools.h				\
 	tools-types.h			\

@@ -177,13 +177,13 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
-	paint-funcs/libapppaint-funcs.la				\
-	pdb/libapppdb.la						\
-	tools/libapptools.la						\
-	gui/libappgui.la						\
-	widgets/libappwidgets.la					\
-	core/libappcore.la						\
-	base/libappbase.la						\
+	paint-funcs/libapppaint-funcs.a					\
+	pdb/libapppdb.a							\
+	tools/libapptools.a						\
+	gui/libappgui.a							\
+	widgets/libappwidgets.a						\
+	core/libappcore.a						\
+	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\

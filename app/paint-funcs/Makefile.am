@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libapppaint-funcs.la
+noinst_LIBRARIES = libapppaint-funcs.a
 
 if HAVE_ASM_MMX
 mmx_sources = \
@@ -9,7 +9,7 @@ else
 mmx_sources =
 endif
 
-libapppaint_funcs_la_SOURCES = \
+libapppaint_funcs_a_SOURCES = \
 	paint-funcs.c	\
 	paint-funcs.h	\
 	$(mmx_sources)

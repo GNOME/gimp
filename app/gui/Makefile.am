@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libappgui.la
+noinst_LIBRARIES = libappgui.a
 
-libappgui_la_SOURCES = \
+libappgui_a_SOURCES = \
 	about-dialog.c			\
 	about-dialog.h			\
 	authors.h			\

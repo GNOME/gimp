@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libappbase.la
+noinst_LIBRARIES = libappbase.a
 
-libappbase_la_SOURCES = \
+libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
 	base-types.h		\

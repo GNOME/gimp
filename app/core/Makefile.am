@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-noinst_LTLIBRARIES = libappcore.la
+noinst_LIBRARIES = libappcore.a
 
-libappcore_la_SOURCES = \
+libappcore_a_SOURCES = \
 	core-types.h			\
 	gimpbrush.c			\
 	gimpbrush.h			\
