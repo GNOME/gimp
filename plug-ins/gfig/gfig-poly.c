@@ -484,7 +484,7 @@ d_poly_object_class_init (void)
   GfigObjectClass *class = &dobj_class[POLY];
 
   class->type      = POLY;
-  class->name      = "Poly";
+  class->name      = "POLY";
   class->drawfunc  = d_draw_poly;
   class->paintfunc = d_paint_poly;
   class->copyfunc  = d_copy_poly;

@@ -527,7 +527,7 @@ d_arc_object_class_init (void)
   GfigObjectClass *class = &dobj_class[ARC];
 
   class->type      = ARC;
-  class->name      = "Arc";
+  class->name      = "ARC";
   class->drawfunc  = d_draw_arc;
   class->paintfunc = d_paint_arc;
   class->copyfunc  = d_copy_arc;

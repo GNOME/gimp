@@ -1,3 +1,16 @@
+2004-11-28  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c: made the class name uppercase since it is
+	used to parse a gfig file.
+
 2004-11-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: make sure that widgets in the Grid

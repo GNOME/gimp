@@ -130,7 +130,7 @@ d_line_object_class_init (void)
   GfigObjectClass *class = &dobj_class[LINE];
 
   class->type      = LINE;
-  class->name      = "Line";
+  class->name      = "LINE";
   class->drawfunc  = d_draw_line;
   class->paintfunc = d_paint_line;
   class->copyfunc  = d_copy_line;

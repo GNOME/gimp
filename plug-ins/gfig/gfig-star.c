@@ -325,7 +325,7 @@ d_star_object_class_init (void)
   GfigObjectClass *class = &dobj_class[STAR];
 
   class->type      = STAR;
-  class->name      = "Star";
+  class->name      = "STAR";
   class->drawfunc  = d_draw_star;
   class->paintfunc = d_paint_star;
   class->copyfunc  = d_copy_star;

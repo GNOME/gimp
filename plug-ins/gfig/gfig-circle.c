@@ -146,7 +146,7 @@ d_circle_object_class_init (void)
   GfigObjectClass *class = &dobj_class[CIRCLE];
 
   class->type      = CIRCLE;
-  class->name      = "Circle";
+  class->name      = "CIRCLE";
   class->drawfunc  = d_draw_circle;
   class->paintfunc = d_paint_circle;
   class->copyfunc  = d_copy_circle;

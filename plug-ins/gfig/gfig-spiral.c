@@ -272,7 +272,7 @@ d_spiral_object_class_init (void)
   GfigObjectClass *class = &dobj_class[SPIRAL];
 
   class->type      = SPIRAL;
-  class->name      = "Spiral";
+  class->name      = "SPIRAL";
   class->drawfunc  = d_draw_spiral;
   class->paintfunc = d_paint_spiral;
   class->copyfunc  = d_copy_spiral;

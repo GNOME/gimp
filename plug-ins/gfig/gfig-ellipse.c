@@ -169,7 +169,7 @@ d_ellipse_object_class_init (void)
   GfigObjectClass *class = &dobj_class[ELLIPSE];
 
   class->type      = ELLIPSE;
-  class->name      = "Ellipse";
+  class->name      = "ELLIPSE";
   class->drawfunc  = d_draw_ellipse;
   class->paintfunc = d_paint_ellipse;
   class->copyfunc  = d_copy_ellipse;

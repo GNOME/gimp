@@ -291,7 +291,7 @@ d_bezier_object_class_init (void)
   GfigObjectClass *class = &dobj_class[BEZIER];
 
   class->type      = BEZIER;
-  class->name      = "Bezier";
+  class->name      = "BEZIER";
   class->drawfunc  = d_draw_bezier;
   class->paintfunc = d_paint_bezier;
   class->copyfunc  = d_copy_bezier;

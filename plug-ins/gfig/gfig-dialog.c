@@ -1870,6 +1870,8 @@ gfig_paint_callback (void)
 
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
 
+  /* gimp_drawable_fill (gfig_context->drawable_id, GIMP_PATTERN_FILL); */
+
   /* remember current style because it will be changed while painting */
   style0 = gfig_context->current_style;
 
