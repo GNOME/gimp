@@ -1,3 +1,20 @@
+2004-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/gui.c (gui_display_changed): if the active display
+	becomes NULL (e.g. by closing a view), don't leave the user
+	context with an image but no display. Instead, try to find another
+	display of the same image instead and if that fails set the image
+	to NULL.
+
+	Prevents the various foo_actions_update() functions from being
+	called with a NULL display while there is still an active image in
+	the context.
+
+	Fixes bug #159304.
+
+	(Removed #warning about being misplaced from that function because
+	it's a typical piece of ugly glue code that belongs exactly here).
+
 2004-11-24  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_linux_input.c: Accept >= 0 return values of the

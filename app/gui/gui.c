@@ -35,6 +35,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -573,16 +574,36 @@ gui_device_change_notify (Gimp *gimp)
     }
 }
 
-
-#ifdef __GNUC__
-#warning FIXME: this junk should mostly go to the display subsystem
-#endif
-
 static void
 gui_display_changed (GimpContext *context,
 		     GimpDisplay *display,
 		     Gimp        *gimp)
 {
+  if (! display)
+    {
+      GimpImage *image = gimp_context_get_image (context);
+
+      if (image)
+        {
+          GList *list;
+
+          for (list = GIMP_LIST (gimp->displays)->list;
+               list;
+               list = g_list_next (list))
+            {
+              GimpDisplay *display2 = list->data;
+
+              if (display2->gimage == image)
+                {
+                  gimp_context_set_display (context, display2);
+                  return;
+                }
+            }
+
+          gimp_context_set_image (context, NULL);
+        }
+    }
+
   gimp_ui_manager_update (image_ui_manager, display);
 }
 
