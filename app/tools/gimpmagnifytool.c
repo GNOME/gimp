@@ -281,7 +281,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       gimp_display_shell_scale_by_values (shell,
                                           new_scale,
                                           offset_x, offset_y,
-                                          options->allow_resize);
+                                          options->auto_resize);
     }
 }
 

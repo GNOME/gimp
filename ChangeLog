@@ -1,5 +1,11 @@
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpmagnifyoptions.[ch]
+	* app/tools/gimpmagnifytool.c: applied a patch from William Skaggs
+	that changes a misleading option label. Fixes bug #137508.
+
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpdisplayconfig.c (DEFAULT_IMAGE_TITLE_FORMAT):
 	removed the display scale from the default image title because
 	it's now displayed in the statusbar. Show the image pixel size

@@ -42,7 +42,7 @@
 enum
 {
   PROP_0,
-  PROP_ALLOW_RESIZE,
+  PROP_AUTO_RESIZE,
   PROP_ZOOM_TYPE,
   PROP_THRESHOLD
 };
@@ -111,8 +111,8 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 
   options_class->reset       = gimp_magnify_options_reset;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_RESIZE,
-                                    "allow-resize", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
+                                    "auto-resize", NULL,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
@@ -143,8 +143,8 @@ gimp_magnify_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_ALLOW_RESIZE:
-      options->allow_resize = g_value_get_boolean (value);
+    case PROP_AUTO_RESIZE:
+      options->auto_resize = g_value_get_boolean (value);
       break;
     case PROP_ZOOM_TYPE:
       options->zoom_type = g_value_get_enum (value);
@@ -170,8 +170,8 @@ gimp_magnify_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_ALLOW_RESIZE:
-      g_value_set_boolean (value, options->allow_resize);
+    case PROP_AUTO_RESIZE:
+      g_value_set_boolean (value, options->auto_resize);
       break;
     case PROP_ZOOM_TYPE:
       g_value_set_enum (value, options->zoom_type);
@@ -199,7 +199,7 @@ gimp_magnify_options_set_defaults (GimpToolOptions *tool_options)
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
-                                        "allow-resize");
+                                        "auto-resize");
 
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
@@ -220,9 +220,9 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  /*  the allow_resize toggle button  */
-  button = gimp_prop_check_button_new (config, "allow-resize",
-                                       _("Allow Window Resizing"));
+  /*  the auto_resize toggle button  */
+  button = gimp_prop_check_button_new (config, "auto-resize",
+                                       _("Auto-Resize Window"));
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

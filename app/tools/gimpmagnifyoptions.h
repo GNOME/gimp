@@ -38,7 +38,7 @@ struct _GimpMagnifyOptions
 {
   GimpToolOptions   parent_instance;
 
-  gboolean          allow_resize;
+  gboolean          auto_resize;
   GimpZoomType      zoom_type;
   gdouble           threshold;
 };
