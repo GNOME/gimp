@@ -72,14 +72,8 @@
 #define  STATUSBAR_SIZE 128
 
 
-enum
-{
-  PAINT,
-  LAST_SIGNAL
-};
-
-
 /*  local function prototypes  */
+
 static void   gimp_paint_tool_class_init      (GimpPaintToolClass  *klass);
 static void   gimp_paint_tool_init            (GimpPaintTool       *paint_tool);
 
@@ -209,9 +203,6 @@ static MaskBuf  *kernel_brushes[SUBSAMPLE + 1][SUBSAMPLE + 1];
 static MaskBuf  *last_brush_mask = NULL;
 static gboolean  cache_invalid   = FALSE;
 
-
-static guint gimp_paint_tool_signals[LAST_SIGNAL] = { 0 };
-
 static GimpDrawToolClass *parent_class = NULL;
 
 
@@ -253,17 +244,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  gimp_paint_tool_signals[PAINT] =
-    g_signal_new ("paint",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPaintToolClass, paint),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_INT,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_POINTER,
-		  G_TYPE_INT);
 
   tool_class->control        = gimp_paint_tool_control;
   tool_class->button_press   = gimp_paint_tool_button_press;
@@ -853,12 +833,11 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
 }
 
 void
-gimp_paint_tool_paint (GimpPaintTool *tool,
+gimp_paint_tool_paint (GimpPaintTool *paint_tool,
 		       GimpDrawable  *drawable,
 		       PaintState     state)
 {
-  g_signal_emit (G_OBJECT(tool), gimp_paint_tool_signals[PAINT], 0,
-                 drawable, state);
+  GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint (paint_tool, drawable, state);
 }
 
 gboolean

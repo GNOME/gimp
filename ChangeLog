@@ -1,5 +1,15 @@
 2001-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimprectselecttool.[ch]
+	* app/tools/gimptool.[ch]
+	* app/tools/gimptransformtool.[ch]: use simple virtual functions
+	instead of signals for all tools because they are much faster and
+	don't need to be signals at all.
+
+2001-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.c: put a g_object_ref() on a different line.
 
 	* app/core/gimpdrawable-bucket-fill.c

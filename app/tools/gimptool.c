@@ -36,21 +36,6 @@
 #include "libgimp/gimpintl.h"
 
 
-enum
-{
-  INITIALIZE,
-  CONTROL,
-  BUTTON_PRESS,
-  BUTTON_RELEASE,
-  MOTION,
-  ARROW_KEY,
-  MODIFIER_KEY,
-  OPER_UPDATE,
-  CURSOR_UPDATE,
-  LAST_SIGNAL
-};
-
-
 static void   gimp_tool_class_init          (GimpToolClass   *klass);
 static void   gimp_tool_init                (GimpTool        *tool);
 
@@ -92,8 +77,6 @@ static void   gimp_tool_real_cursor_update  (GimpTool        *tool,
 					     GimpDisplay     *gdisp);
 
 
-static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
-
 static GimpObjectClass *parent_class = NULL;
 
 static gint global_tool_ID = 0;
@@ -132,114 +115,6 @@ gimp_tool_class_init (GimpToolClass *klass)
 {
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_tool_signals[INITIALIZE] =
-    g_signal_new ("initialize",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, initialize),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_DISPLAY);
-
-  gimp_tool_signals[CONTROL] =
-    g_signal_new ("control",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, control),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_OBJECT,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[BUTTON_PRESS] =
-    g_signal_new ("button_press",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, button_press),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_UINT_INT_OBJECT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_POINTER,
-                  G_TYPE_UINT,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY);
-
-  gimp_tool_signals[BUTTON_RELEASE] =
-    g_signal_new ("button_release",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, button_release),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_UINT_INT_OBJECT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_POINTER,
-                  G_TYPE_UINT,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[MOTION] =
-    g_signal_new ("motion",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, motion),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_UINT_INT_OBJECT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_POINTER,
-                  G_TYPE_UINT,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[ARROW_KEY] =
-    g_signal_new ("arrow_key",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, arrow_key),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_OBJECT,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_POINTER,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[MODIFIER_KEY] =
-    g_signal_new ("modifier_key",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, modifier_key),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_BOOLEAN_INT_OBJECT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_INT,
-                  G_TYPE_BOOLEAN,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[OPER_UPDATE] =
-    g_signal_new ("oper_update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, oper_update),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_INT_OBJECT,
-		  G_TYPE_NONE, 3,
-		  G_TYPE_POINTER,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY); 
-
-  gimp_tool_signals[CURSOR_UPDATE] =
-    g_signal_new ("cursor_update",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpToolClass, cursor_update),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__POINTER_INT_OBJECT,
-		  G_TYPE_NONE, 3,
-		  G_TYPE_POINTER,
-                  G_TYPE_INT,
-		  GIMP_TYPE_DISPLAY);
-
   klass->initialize     = gimp_tool_real_initialize;
   klass->control        = gimp_tool_real_control;
   klass->button_press   = gimp_tool_real_button_press;
@@ -276,8 +151,7 @@ gimp_tool_initialize (GimpTool    *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[INITIALIZE], 0,
-                 gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->initialize (tool, gdisp);
 }
 
 void
@@ -287,8 +161,7 @@ gimp_tool_control (GimpTool    *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[CONTROL], 0,
-                 action, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
 }
 
 void
@@ -302,8 +175,7 @@ gimp_tool_button_press (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[BUTTON_PRESS], 0,
-                 coords, time, state, gdisp); 
+  GIMP_TOOL_GET_CLASS (tool)->button_press (tool, coords, time, state, gdisp);
 }
 
 void
@@ -317,8 +189,7 @@ gimp_tool_button_release (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[BUTTON_RELEASE], 0,
-                 coords, time, state, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state, gdisp);
 }
 
 void
@@ -332,8 +203,7 @@ gimp_tool_motion (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[MOTION], 0,
-                 coords, time, state, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, gdisp);
 }
 
 void
@@ -344,8 +214,7 @@ gimp_tool_arrow_key (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[ARROW_KEY], 0,
-                 kevent, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->arrow_key (tool, kevent, gdisp);
 }
 
 void
@@ -358,8 +227,7 @@ gimp_tool_modifier_key (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[MODIFIER_KEY], 0,
-                 key, press, state, gdisp);  
+  GIMP_TOOL_GET_CLASS (tool)->modifier_key (tool, key, press, state, gdisp);
 }
 
 void
@@ -372,8 +240,7 @@ gimp_tool_oper_update (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[OPER_UPDATE], 0,
-                 coords, state, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, gdisp);
 }
 
 void
@@ -386,8 +253,7 @@ gimp_tool_cursor_update (GimpTool        *tool,
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[CURSOR_UPDATE], 0,
-                 coords, state, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->cursor_update (tool, coords, state, gdisp);
 }
 
 

@@ -72,6 +72,8 @@ struct _GimpToolClass
 {
   GimpObjectClass  parent_class;
 
+  /*  virtual functions  */
+
   void (* initialize)     (GimpTool        *tool,
 			   GimpDisplay     *gdisp);
   void (* control)        (GimpTool        *tool,

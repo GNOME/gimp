@@ -93,6 +93,8 @@ struct _GimpTransformToolClass
 {
   GimpDrawToolClass parent_class;
 
+  /*  virtual function  */
+
   TileManager * (* transform) (GimpTransformTool    *tool,
 		               GimpDisplay          *gdisp,
 		               TransformState        state);

@@ -30,12 +30,6 @@
 #include "gimpdrawtool.h"
 
 
-enum
-{
-  DRAW,
-  LAST_SIGNAL
-};
-
 static void          gimp_draw_tool_class_init (GimpDrawToolClass *klass);
 static void          gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
 
@@ -63,10 +57,7 @@ static inline void   gimp_draw_tool_shift_to_center
                                                 gdouble           *shifted_y);
 
 
-static guint gimp_draw_tool_signals[LAST_SIGNAL] = { 0 };
-
 static GimpToolClass *parent_class = NULL;
-
 
 
 GType
@@ -108,18 +99,11 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_draw_tool_signals[DRAW] =
-    g_signal_new ("draw",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDrawToolClass, draw),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
   object_class->finalize = gimp_draw_tool_finalize;
 
   tool_class->control    = gimp_draw_tool_control;
+
+  klass->draw            = NULL;
 }
 
 static void
@@ -211,7 +195,7 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 			      draw_tool->cap_style,
                               draw_tool->join_style);
 
-  g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
+  GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
   draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
 }
@@ -224,7 +208,7 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
   if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_INVISIBLE)
     return;
 
-  g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
+  GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
   draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
 }
@@ -236,7 +220,7 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
     {
       draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
 
-      g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
+      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
     }
 
   draw_tool->paused_count++;
@@ -254,7 +238,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     {
       draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
 
-      g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
+      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
     }
 }
 

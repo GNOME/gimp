@@ -54,6 +54,8 @@ struct _GimpRectSelectToolClass
 {
   GimpSelectionToolClass parent_class;
 
+  /*  virtual function  */
+
   void (* rect_select) (GimpRectSelectTool *rect_tool,
                         gint                x,
                         gint                y,

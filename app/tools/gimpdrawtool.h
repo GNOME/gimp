@@ -70,6 +70,8 @@ struct _GimpDrawToolClass
 {
   GimpToolClass   parent_class;
 
+  /*  virtual function  */
+
   void (* draw) (GimpDrawTool *draw_tool);
 };
 

@@ -66,12 +66,6 @@
 
 #define HANDLE 10
 
-enum
-{
-  TRANSFORM,
-  LAST_SIGNAL
-};
-
 
 /*  local function prototypes  */
 
@@ -133,8 +127,6 @@ static gboolean           transform_info_inited = FALSE;
 
 static GimpDrawToolClass *parent_class = NULL;
 
-static guint   gimp_transform_tool_signals[LAST_SIGNAL] = { 0 };
-
 
 GType
 gimp_transform_tool_get_type (void)
@@ -176,17 +168,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  gimp_transform_tool_signals[TRANSFORM] =
-    g_signal_new ("transform",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpTransformToolClass, transform),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__POINTER_INT,
-		  G_TYPE_POINTER, 2,
-		  G_TYPE_POINTER,
-		  G_TYPE_INT);
 
   object_class->finalize     = gimp_transform_tool_finalize;
 
@@ -708,14 +689,9 @@ gimp_transform_tool_transform (GimpTransformTool   *tool,
                                GimpDisplay         *gdisp,
 			       TransformState       state)
 {
-  TileManager *retval;
-
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tool), NULL);
 
-  g_signal_emit (G_OBJECT (tool), gimp_transform_tool_signals[TRANSFORM], 0,
-                 gdisp, state, &retval);
-
-  return retval;
+  return GIMP_TRANSFORM_TOOL_GET_CLASS (tool)->transform (tool, gdisp, state);
 }
 
 static void

@@ -53,13 +53,6 @@
 #define STATUSBAR_SIZE 128
 
 
-enum
-{
-  RECT_SELECT,
-  LAST_SIGNAL
-};
-
-
 static void   gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass);
 static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_select);
 
@@ -87,8 +80,6 @@ static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_t
                                                       gint                w,
                                                       gint                h);
 
-
-static guint rect_select_signals[LAST_SIGNAL] = { 0 };
 
 static GimpSelectionToolClass *parent_class = NULL;
 
@@ -152,19 +143,6 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
   draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  rect_select_signals[RECT_SELECT] =
-    g_signal_new ("rect_select",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpRectSelectToolClass, rect_select),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_INT_INT_INT,
-		  G_TYPE_NONE, 4,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
 
   tool_class->button_press   = gimp_rect_select_tool_button_press;
   tool_class->button_release = gimp_rect_select_tool_button_release;
@@ -643,6 +621,6 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
         }
     }
 
-  g_signal_emit (G_OBJECT (rect_tool), rect_select_signals[RECT_SELECT], 0,
-                 x, y, w, h);
+  GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_tool)->rect_select (rect_tool,
+                                                            x, y, w, h);
 }

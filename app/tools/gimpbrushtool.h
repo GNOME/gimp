@@ -91,6 +91,8 @@ struct _GimpPaintToolClass
 {
   GimpDrawToolClass parent_class;
 
+  /*  virtual function  */
+
   void (* paint) (GimpPaintTool *tool,
 		  GimpDrawable 	*drawable,
 		  PaintState     paint_state);
