@@ -27,9 +27,9 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpaction.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
-#include "gimpitemfactory.h"
 
 
 /*  local function prototypes  */
@@ -37,16 +37,17 @@
 static void       gimp_color_panel_class_init    (GimpColorPanelClass  *klass);
 static void       gimp_color_panel_init          (GimpColorPanel       *panel);
 
-static void       gimp_color_panel_destroy       (GtkObject            *object);
-static gboolean   gimp_color_panel_button_press  (GtkWidget            *widget,
-                                                  GdkEventButton       *bevent);
-static void       gimp_color_panel_color_changed (GimpColorButton      *button);
-static void       gimp_color_panel_clicked       (GtkButton            *button);
+static void       gimp_color_panel_destroy         (GtkObject          *object);
+static gboolean   gimp_color_panel_button_press    (GtkWidget          *widget,
+                                                    GdkEventButton     *bevent);
+static void       gimp_color_panel_clicked         (GtkButton          *button);
+static void       gimp_color_panel_color_changed   (GimpColorButton    *button);
+static GType      gimp_color_panel_get_action_type (GimpColorButton    *button);
 
-static void       gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
-                                                  const GimpRGB        *color,
-                                                  GimpColorDialogState  state,
-                                                  GimpColorPanel       *panel);
+static void       gimp_color_panel_dialog_update   (GimpColorDialog    *dialog,
+                                                    const GimpRGB      *color,
+                                                    GimpColorDialogState state,
+                                                    GimpColorPanel     *panel);
 
 
 static GimpColorButtonClass *parent_class = NULL;
@@ -90,10 +91,11 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy             = gimp_color_panel_destroy;
-  widget_class->button_press_event  = gimp_color_panel_button_press;
-  button_class->clicked             = gimp_color_panel_clicked;
-  color_button_class->color_changed = gimp_color_panel_color_changed;
+  object_class->destroy               = gimp_color_panel_destroy;
+  widget_class->button_press_event    = gimp_color_panel_button_press;
+  button_class->clicked               = gimp_color_panel_clicked;
+  color_button_class->color_changed   = gimp_color_panel_color_changed;
+  color_button_class->get_action_type = gimp_color_panel_get_action_type;
 }
 
 static void
@@ -125,96 +127,51 @@ gimp_color_panel_button_press (GtkWidget      *widget,
     {
       GimpColorButton *color_button;
       GimpColorPanel  *color_panel;
-      GtkItemFactory  *item_factory;
-      GimpRGB          black, white;
+      GtkUIManager    *ui_manager;
+      GtkActionGroup  *group;
+      GtkAction       *action;
+      GimpRGB          color;
 
       color_button = GIMP_COLOR_BUTTON (widget);
       color_panel  = GIMP_COLOR_PANEL (widget);
-      item_factory = GTK_ITEM_FACTORY (color_button->popup_menu);
+      ui_manager   = GTK_UI_MANAGER (color_button->popup_menu);
 
-      gimp_item_factory_set_visible (item_factory,
-                                     "/Foreground color",
-                                     color_panel->context != NULL);
-      gimp_item_factory_set_visible (item_factory,
-                                     "/Background color",
-                                     color_panel->context != NULL);
-      gimp_item_factory_set_visible (item_factory,
-                                     "/fg-bg-separator",
-                                     color_panel->context != NULL);
+      group = gtk_ui_manager_get_action_groups (ui_manager)->data;
+
+      action = gtk_action_group_get_action (group,
+                                            "color-button-use-foreground");
+      g_object_set (action, "visible", color_panel->context != NULL, NULL);
+
+      action = gtk_action_group_get_action (group,
+                                            "color-button-use-background");
+      g_object_set (action, "visible", color_panel->context != NULL, NULL);
 
       if (color_panel->context)
         {
-          GimpRGB fg, bg;
+          action = gtk_action_group_get_action (group,
+                                                "color-button-use-foreground");
+          gimp_context_get_foreground (color_panel->context, &color);
+          g_object_set (action, "color", &color, NULL);
 
-          gimp_context_get_foreground (color_panel->context, &fg);
-          gimp_context_get_background (color_panel->context, &bg);
-
-          gimp_item_factory_set_color (item_factory,
-                                       "/Foreground color", &fg, FALSE);
-          gimp_item_factory_set_color (item_factory,
-                                       "/Background color", &bg, FALSE);
+          action = gtk_action_group_get_action (group,
+                                                "color-button-use-background");
+          gimp_context_get_background (color_panel->context, &color);
+          g_object_set (action, "color", &color, NULL);
         }
 
-      gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-      gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      action = gtk_action_group_get_action (group, "color-button-use-black");
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+      g_object_set (action, "color", &color, NULL);
 
-      gimp_item_factory_set_color (item_factory,
-                                   "/Black", &black, FALSE);
-      gimp_item_factory_set_color (item_factory,
-                                   "/White", &white, FALSE);
+      action = gtk_action_group_get_action (group, "color-button-use-white");
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      g_object_set (action, "color", &color, NULL);
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
     return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
   return FALSE;
-}
-
-GtkWidget *
-gimp_color_panel_new (const gchar       *title,
-		      const GimpRGB     *color,
-		      GimpColorAreaType  type,
-		      gint               width,
-		      gint               height)
-{
-  GimpColorPanel *panel;
-
-  g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (color != NULL, NULL);
-
-  panel = g_object_new (GIMP_TYPE_COLOR_PANEL, NULL);
-
-  GIMP_COLOR_BUTTON (panel)->title = g_strdup (title);
-
-  gimp_color_button_set_type (GIMP_COLOR_BUTTON (panel), type);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-  gtk_widget_set_size_request (GTK_WIDGET (panel), width, height);
-
-  return GTK_WIDGET (panel);
-}
-
-void
-gimp_color_panel_set_context (GimpColorPanel *panel,
-                              GimpContext    *context)
-{
-  g_return_if_fail (GIMP_IS_COLOR_PANEL (panel));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
-
-  panel->context = context;
-}
-
-static void
-gimp_color_panel_color_changed (GimpColorButton *button)
-{
-  GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
-  GimpRGB         color;
-
-  if (panel->color_dialog)
-    {
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                   &color);
-    }
 }
 
 static void
@@ -248,6 +205,65 @@ gimp_color_panel_clicked (GtkButton *button)
 
   gtk_window_present (GTK_WINDOW (panel->color_dialog));
 }
+
+static GType
+gimp_color_panel_get_action_type (GimpColorButton *button)
+{
+  return GIMP_TYPE_ACTION;
+}
+
+
+/*  public functions  */
+
+GtkWidget *
+gimp_color_panel_new (const gchar       *title,
+		      const GimpRGB     *color,
+		      GimpColorAreaType  type,
+		      gint               width,
+		      gint               height)
+{
+  GimpColorPanel *panel;
+
+  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+
+  panel = g_object_new (GIMP_TYPE_COLOR_PANEL, NULL);
+
+  GIMP_COLOR_BUTTON (panel)->title = g_strdup (title);
+
+  gimp_color_button_set_type (GIMP_COLOR_BUTTON (panel), type);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+  gtk_widget_set_size_request (GTK_WIDGET (panel), width, height);
+
+  return GTK_WIDGET (panel);
+}
+
+static void
+gimp_color_panel_color_changed (GimpColorButton *button)
+{
+  GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
+  GimpRGB         color;
+
+  if (panel->color_dialog)
+    {
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
+                                   &color);
+    }
+}
+
+void
+gimp_color_panel_set_context (GimpColorPanel *panel,
+                              GimpContext    *context)
+{
+  g_return_if_fail (GIMP_IS_COLOR_PANEL (panel));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  panel->context = context;
+}
+
+
+/*  private functions  */
 
 static void
 gimp_color_panel_dialog_update (GimpColorDialog      *dialog,

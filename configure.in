@@ -1493,10 +1493,7 @@ if test "x$have_glib_2_5" != "xyes"; then
 fi
 
 if test "x$have_gtk_2_5" != "xyes"; then
-  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED"
-
-# -DGTK_DISABLE_DEPRECATED"
-
+  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
 if test "x$have_pango_1_5" != "xyes"; then

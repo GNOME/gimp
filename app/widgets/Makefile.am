@@ -166,8 +166,6 @@ libappwidgets_a_sources = \
 	gimpimageeditor.h		\
 	gimpimageview.c			\
 	gimpimageview.h			\
-	gimpitemfactory.c		\
-	gimpitemfactory.h		\
 	gimpitemtreeview.c		\
 	gimpitemtreeview.h		\
 	gimplayertreeview.c		\

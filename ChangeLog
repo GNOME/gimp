@@ -1,5 +1,22 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorbutton.[ch]: use a GtkUIManager instead
+	of a GtkItemFactory. Added virtual function ::get_action_type()
+	and create the manager's actions manually using that action type
+	instead of using gtk_action_group_add_actions().
+
+	* app/widgets/gimpcolorpanel.c: override ::get_action_type() so it
+	creates GimpActions (which can have a color attached) instead of
+	GtkActions. Changed the menu item visibility and color preview
+	code accordingly.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpitemfactory.[ch]: finally removed.
+
+	* configure.in: added -DGTK_DISABLE_DEPRECATED to CPPFLAGS again.
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpoldwidgets.c: #undef GTK_DISABLE_DEPRECATED
 
 	* libgimpwidgets/gimpunitmenu.h: #include <gtk/gtkoptionmenu.h>
