@@ -1712,7 +1712,7 @@ combine_inten_a_and_inten_row_float16  (
 	    }
 	  
 	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+	    dest[alpha] = (affect[alpha]) ? FLT16 (new_alpha) : src1[alpha];
 	  else
 	    {
 	      val = affect[alpha] ? new_alpha : FLT (src1[alpha]);
@@ -1831,7 +1831,7 @@ combine_inten_a_and_inten_a_row_float16  (
 	  }
 	
 	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+	  dest[alpha] = (affect[alpha]) ? FLT16(new_alpha) : src1[alpha];
 	else
 	  {
 	    val = affect[alpha] ? new_alpha : FLT (src1[alpha]);

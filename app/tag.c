@@ -564,13 +564,13 @@ tag_from_drawable_type (
     case FLOAT16_RGBA_GIMAGE:
       a = ALPHA_YES;
     case FLOAT16_RGB_GIMAGE:
-      p = PRECISION_FLOAT;
+      p = PRECISION_FLOAT16;
       f = FORMAT_RGB;
       break;
     case FLOAT16_GRAYA_GIMAGE:
       a = ALPHA_YES;
     case FLOAT16_GRAY_GIMAGE:
-      p = PRECISION_FLOAT;
+      p = PRECISION_FLOAT16;
       f = FORMAT_GRAY;
       break;
 

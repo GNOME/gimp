@@ -2398,7 +2398,6 @@ render_image_rgb_a_4 (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
-
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
   lookup_blue = g_lookup_blue;
@@ -5634,7 +5633,6 @@ render_image_rgb_float16_3 (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
-
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
   lookup_blue = g_lookup_blue;
@@ -5827,7 +5825,7 @@ render_image_rgb_a_float16_3 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
 		if (dark_light & 0x1)
 		  {
 		    r = blend_dark_check[(a | FLOAT_TO_8BIT (FLT (src[RED_PIX])))];
@@ -5913,6 +5911,7 @@ render_image_rgb_a_float16_4 (RenderInfo *info)
   int x, xe;
   int initial;
 
+
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
   lookup_blue = g_lookup_blue;
@@ -5940,7 +5939,7 @@ render_image_rgb_a_float16_4 (RenderInfo *info)
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
-	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+	        a = alpha[FLOAT_TO_8BIT(FLT (src[ALPHA_PIX]))];
 		if (dark_light & 0x1)
 		  {
 		    r = blend_dark_check[(a | FLOAT_TO_8BIT(FLT (src[RED_PIX])))];
@@ -5953,7 +5952,7 @@ render_image_rgb_a_float16_4 (RenderInfo *info)
 		    g = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[GREEN_PIX])))];
 		    b = blend_light_check[(a | FLOAT_TO_8BIT(FLT (src[BLUE_PIX])))];
 		  }
-
+		
 		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
