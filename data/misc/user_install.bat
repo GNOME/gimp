@@ -8,6 +8,7 @@ mkdir %2\brushes
 mkdir %2\generated_brushes
 mkdir %2\gradients
 mkdir %2\palettes
+copy %1\palettes\* %2\palettes
 mkdir %2\patterns
 mkdir %2\plug-ins
 mkdir %2\modules

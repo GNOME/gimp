@@ -16,7 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#define __DIALOG_HANDLER_C__ 1
+
+/* Make dialog_handler.h bypass the declarations for the exported entry points
+ * in this file.
+ */
+#define __DIALOG_HANDLER_C_ 1
 
 #include <gtk/gtk.h>
 

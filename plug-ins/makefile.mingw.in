@@ -54,7 +54,9 @@ COMMON = 			\
 	bumpmap			\
 	c_astretch		\
 	checkerboard		\
+	color_enhance		\
 	colorify		\
+	colortoalpha		\
 	compose			\
 	convmatrix		\
 	csource			\
@@ -144,6 +146,7 @@ COMMON = 			\
 	tile			\
 	tileit			\
 	tiler			\
+	uniteditor		\
 	unsharp			\
 	video			\
 	vinvert			\
@@ -208,6 +211,7 @@ UNOFFICIAL = 			\
 	mathmap			\
 	psd_save		\
 	resynthesizer		\
+	u7shp			\
 	user_filter
 
 # The main target
@@ -706,6 +710,7 @@ OBJECTS = \
 	lispreader.o \
 	macros.o \
 	mathmap.o \
+	mathmap_common.o \
 	noise.o \
 	overload.o \
 	parser.o \
@@ -716,8 +721,6 @@ OBJECTS = \
 	userval.o \
 	vars.o
 
-EXTRACFLAGS = -Drandom=g_random_int
-
 parser.c parser.h : parser.y
 	bison -p mm -d parser.y
 	mv parser.tab.c parser.c
@@ -726,6 +729,8 @@ parser.c parser.h : parser.y
 scanner.c : scanner.fl parser.h
 	flex -Pmm scanner.fl
 	mv lex.mm.c scanner.c
+
+EXTRACFLAGS = -DGIMP
 
 endif
 

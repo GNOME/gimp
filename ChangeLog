@@ -1,3 +1,17 @@
+2001-03-10  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/makefile.mingw.in: Add some missing standard plug-ins,
+	and some new unofficial ones. Don't define -Drandom=g_random_int,
+	the RAND_FUNC in config.h.win32 takes care of this. Define GIMP
+	for mathmap.
+
+	* user_install.bat: Copy the default palettes to the user's
+	palette directory.
+
+	* app/dialog_handler.c: Define __DIALOG_HANDLER_C_, not
+	__DIALOG_HANDLER_C__, to match the #ifndef in
+	dialog_handler.h. Add comment why __DIALOG_HANDLER_C_ is needed.
+
 2001-03-04  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* app/commands.c (image_scale_callback),
