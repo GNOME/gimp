@@ -1,5 +1,11 @@
 2003-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_origin_menu_popup): set the active display
+	before showing the menu (fixes bug #109472).
+
+2003-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-guides.c
 	* tools/pdbgen/pdb/guides.pdb: fixed to accept guide->position ==
 	image->width/height. Guides live *between* pixels, so they must be

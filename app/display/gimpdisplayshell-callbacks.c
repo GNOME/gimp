@@ -1614,6 +1614,9 @@ gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
   GtkItemFactory *factory;
   gint            x, y;
 
+  gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
+                            shell->gdisp);
+
   factory = GTK_ITEM_FACTORY (shell->popup_factory);
 
   gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
