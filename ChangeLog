@@ -26,7 +26,7 @@
 	* app/composite/gimp-composite-regression.[ch]: New function to
 	initialise a GimpCompositeContext
 
-	* Makefile.am: do not generate the test form of
+	* app/composite/Makefile.am: do not generate the test form of
 	gimp-composite-generic.c
 
 	* app/composite/gimp-composite-generic-test.c: unused, removed.
