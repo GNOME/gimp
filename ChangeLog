@@ -1,7 +1,12 @@
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ccanalyze.c (fillPreview): optimized preview
+	filling a little bit, removed trailing whitespace.
+
 2004-07-30  DindinX  <david@dindinx.org>
 
-	* common/ccanalyze.c: converted to use a GimpPreviewArea, and some
-	small cleanups (g_malloc to g_new, removing tabs)
+	* plug-ins/common/ccanalyze.c: converted to use a GimpPreviewArea,
+	and some small cleanups (g_malloc to g_new, removing tabs)
 
 2004-07-30  Sven Neumann  <sven@gimp.org>
 

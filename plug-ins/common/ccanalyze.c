@@ -313,7 +313,7 @@ insertcolor (guchar  r,
       return;
     }
 
-  g_hash_table_insert (hash_table, GINT_TO_POINTER (key), 
+  g_hash_table_insert (hash_table, GINT_TO_POINTER (key),
                        GINT_TO_POINTER (1));
 
   uniques++;
@@ -445,15 +445,15 @@ doLabel (GtkWidget   *vbox,
 static void
 fillPreview (GtkWidget *preview)
 {
-  guchar  *image, *pixel;
+  guchar  *image, *column, *pixel;
   gint     x, y, rowstride;
   gdouble  histcount, val;
 
-  image = g_new0 (guchar, PREWIDTH * PREHEIGHT * 3);
-
   rowstride = PREWIDTH * 3;
 
-  for (x = 0; x < PREWIDTH; x++)
+  image = g_new0 (guchar, PREWIDTH * rowstride);
+
+  for (x = 0, column = image; x < PREWIDTH; x++, column += 3)
     {
       /*
        * For every channel, calculate a logarithmic value, scale it,
@@ -467,10 +467,12 @@ fillPreview (GtkWidget *preview)
       if (val > PREHEIGHT)
         val = PREHEIGHT;
 
-      for (y = PREHEIGHT - 1; y > (PREHEIGHT - val); y--)
+      y = PREHEIGHT - 1;
+      pixel = column + (y * rowstride);
+      for (; y > (PREHEIGHT - val); y--)
         {
-          pixel = image + (x * 3) + (y * rowstride);
-          *pixel = 255;
+          pixel[0] = 255;
+          pixel -= rowstride;
         }
 
       histcount = hist_green[x] > 1.0 ? hist_green[x] : 1.0;
@@ -480,10 +482,12 @@ fillPreview (GtkWidget *preview)
       if (val > PREHEIGHT)
         val = PREHEIGHT;
 
-      for (y = PREHEIGHT - 1; y > (PREHEIGHT - val); y--)
+      y = PREHEIGHT - 1;
+      pixel = column + (y * rowstride);
+      for (; y > (PREHEIGHT - val); y--)
         {
-          pixel = image + (x * 3) + (y * rowstride);
-          *(pixel + 1) = 255;
+          pixel[1] = 255;
+          pixel -= rowstride;
         }
 
       histcount = hist_blue[x] > 1.0 ? hist_blue[x] : 1.0;
@@ -493,10 +497,12 @@ fillPreview (GtkWidget *preview)
       if (val > PREHEIGHT)
         val = PREHEIGHT;
 
-      for (y = PREHEIGHT - 1; y > (PREHEIGHT - val); y--)
+      y = PREHEIGHT - 1;
+      pixel = column + (y * rowstride);
+      for (; y > (PREHEIGHT - val); y--)
         {
-          pixel = image + (x * 3) + (y * rowstride);
-          *(pixel + 2) = 255;
+          pixel[2] = 255;
+          pixel -= rowstride;
         }
     }
 
@@ -506,7 +512,7 @@ fillPreview (GtkWidget *preview)
                           GIMP_RGB_IMAGE,
                           image,
                           3 * PREWIDTH);
-                          
+
   g_free (image);
 }
 
