@@ -1,5 +1,15 @@
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontrollereditor.[ch]: new widget built from
+	preliminary code from the prefs dialog. Prerequisite for finally
+	fixing bug #106920.
+
+	* app/dialogs/preferences-dialog.c: use the new widget.
+
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/retinex.c: cleaned up the GUI and GIMP-specific
 	code a bit. Use gimp_drawable_mask_intersect().
 

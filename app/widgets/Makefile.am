@@ -81,6 +81,8 @@ libappwidgets_a_sources = \
 	gimpcontainerview.h		\
 	gimpcontainerview-utils.c	\
 	gimpcontainerview-utils.h	\
+	gimpcontrollereditor.c		\
+	gimpcontrollereditor.h		\
 	gimpcontrollerinfo.c		\
 	gimpcontrollerinfo.h		\
 	gimpcontrollers.c		\

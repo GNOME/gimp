@@ -25,7 +25,6 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
-#include "libgimpwidgets/gimpcontroller.h"
 
 #include "dialogs-types.h"
 
@@ -43,7 +42,7 @@
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontrollers.h"
-#include "widgets/gimpcontrollerinfo.h"
+#include "widgets/gimpcontrollereditor.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
@@ -2032,13 +2031,6 @@ prefs_dialog_new (Gimp       *gimp,
     GimpContainer *controllers;
     GtkWidget     *notebook;
     GList         *list;
-    enum
-    {
-      COLUMN_EVENT,
-      COLUMN_ACTION,
-      NUM_COLUMNS
-    };
-
 
     controllers = gimp_controllers_get_list (gimp);
 
@@ -2052,147 +2044,15 @@ prefs_dialog_new (Gimp       *gimp,
          list;
          list = g_list_next (list))
       {
-        GimpControllerInfo   *info       = list->data;
-        GimpController       *controller = info->controller;
-        GimpControllerClass  *controller_class;
-        GtkListStore         *store;
-        GtkWidget            *vbox3;
-        GtkWidget            *vbox4;
-        GtkWidget            *tv;
-        GtkWidget            *sw;
-        GtkWidget            *entry;
-        GParamSpec          **property_specs;
-        guint                 n_property_specs;
-        gint                  n_events;
-        gint                  row;
-        gint                  i;
+        GimpControllerInfo *info = list->data;
+        GtkWidget          *editor;
 
-        controller_class = GIMP_CONTROLLER_GET_CLASS (controller);
-
-        vbox3 = gtk_vbox_new (FALSE, 4);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox3), 4);
-        gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox3,
+        editor = gimp_controller_editor_new (info);
+        gtk_container_set_border_width (GTK_CONTAINER (editor), 4);
+        gtk_notebook_append_page (GTK_NOTEBOOK (notebook), editor,
                                   gimp_prop_label_new (G_OBJECT (info),
                                                        "name"));
-        gtk_widget_show (vbox3);
-
-        vbox4 = prefs_frame_new (_("General"),
-                                 GTK_CONTAINER (vbox3), FALSE);
-
-        entry = gimp_prop_entry_new (G_OBJECT (info), "name", -1);
-        gtk_box_pack_start (GTK_BOX (vbox4), entry, FALSE, FALSE, 0);
-        gtk_widget_show (entry);
-
-        prefs_check_button_add (G_OBJECT (info), "debug-events",
-                                _("Dump events from this controller"),
-                                GTK_BOX (vbox4));
-        prefs_check_button_add (G_OBJECT (info), "enabled",
-                                _("Enable this controller"),
-                                GTK_BOX (vbox4));
-
-        vbox4 = prefs_frame_new (controller_class->name,
-                                 GTK_CONTAINER (vbox3), TRUE);
-
-        property_specs =
-          g_object_class_list_properties (G_OBJECT_CLASS (controller_class),
-                                          &n_property_specs);
-
-        table = prefs_table_new (1, GTK_CONTAINER (vbox4));
-        row   = 0;
-
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                   _("Name:"), 0.0, 0.5,
-                                   gimp_prop_label_new (G_OBJECT (controller),
-                                                        "name"),
-                                   1, TRUE);
-
-        for (i = 0; i < n_property_specs; i++)
-          {
-            GParamSpec *prop_spec = property_specs[i];
-            GtkWidget  *widget    = NULL;
-
-            if (prop_spec->owner_type == GIMP_TYPE_CONTROLLER)
-              continue;
-
-            if (G_IS_PARAM_SPEC_STRING (prop_spec))
-              {
-                if (prop_spec->flags & G_PARAM_WRITABLE)
-                  widget = gimp_prop_entry_new (G_OBJECT (controller),
-                                                prop_spec->name, -1);
-                else
-                  widget = gimp_prop_label_new (G_OBJECT (controller),
-                                                prop_spec->name);
-
-                gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                           g_param_spec_get_nick (prop_spec),
-                                           0.0, 0.5,
-                                           widget,
-                                           1, FALSE);
-              }
-            else if (G_IS_PARAM_SPEC_INT (prop_spec))
-              {
-                if (prop_spec->flags & G_PARAM_WRITABLE)
-                  {
-                    widget = gimp_prop_spin_button_new (G_OBJECT (controller),
-                                                        prop_spec->name,
-                                                        1, 8, 0);
-
-                    gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                               g_param_spec_get_nick (prop_spec),
-                                               0.0, 0.5,
-                                               widget,
-                                               1, TRUE);
-                  }
-              }
-          }
-
-        g_free (property_specs);
-
-        store = gtk_list_store_new (NUM_COLUMNS,
-                                    G_TYPE_STRING, G_TYPE_STRING);
-        tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
-        g_object_unref (store);
-
-        sw = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
-                                             GTK_SHADOW_IN);
-        gtk_container_add (GTK_CONTAINER (sw), tv);
-        gtk_widget_show (tv);
-
-        gtk_container_add (GTK_CONTAINER (vbox4), sw);
-        gtk_widget_show (sw);
-
-        n_events = gimp_controller_get_n_events (controller);
-
-        for (i = 0; i < n_events; i++)
-          {
-            GtkTreeIter iter;
-            const gchar *event_name;
-            const gchar *event_blurb;
-            const gchar *event_action;
-
-            event_name  = gimp_controller_get_event_name  (controller, i);
-            event_blurb = gimp_controller_get_event_blurb (controller, i);
-
-            event_action = g_hash_table_lookup (info->mapping, event_name);
-
-            gtk_list_store_append (store, &iter);
-            gtk_list_store_set (store, &iter,
-                                COLUMN_EVENT,  event_blurb,
-                                COLUMN_ACTION, event_action,
-                                -1);
-          }
-
-        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 0,
-                                                     _("Event"),
-                                                     gtk_cell_renderer_text_new (),
-                                                     "text", COLUMN_EVENT,
-                                                     NULL);
-        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 2,
-                                                     _("Action"),
-                                                     gtk_cell_renderer_text_new (),
-                                                     "text", COLUMN_ACTION,
-                                                     NULL);
+        gtk_widget_show (editor);
       }
   }
 
