@@ -490,17 +490,17 @@ paintbrush_motion (PaintCore            *paint_core,
 		   PaintApplicationMode  incremental,
 		   GradientPaintMode     gradient_type)
 {
-  GImage *gimage;
-  TempBuf * area;
-  gdouble x, paint_left;
-  gdouble position;
-  guchar local_blend = OPAQUE_OPACITY;
-  guchar temp_blend = OPAQUE_OPACITY;
-  guchar col[MAX_CHANNELS];
-  gdouble r,g,b,a;
-  gint mode;
-  gint opacity;
-  gdouble scale;
+  GImage  *gimage;
+  TempBuf *area;
+  gdouble  x, paint_left;
+  gdouble  position;
+  guchar   local_blend = OPAQUE_OPACITY;
+  guchar   temp_blend = OPAQUE_OPACITY;
+  guchar   col[MAX_CHANNELS];
+  GimpRGB  color;
+  gint     mode;
+  gint     opacity;
+  gdouble  scale;
   PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   position = 0.0;
@@ -538,19 +538,19 @@ paintbrush_motion (PaintCore            *paint_core,
 	{
 	  if (pressure_options->color)
 	    gradient_get_color_at (gimp_context_get_gradient (NULL),
-				   paint_core->curpressure, &r, &g, &b, &a);
+				   paint_core->curpressure, &color);
 	  else
 	    paint_core_get_color_from_gradient (paint_core, gradient_length, 
-						&r, &g, &b, &a, mode);
-	  r = r * 255.0;
-	  g = g * 255.0;
-	  b = b * 255.0;
- 	  a = a * 255.0;
-	  temp_blend =  (gint)((a * local_blend) / 255);
-	  col[0] = (gint)r;
-	  col[1] = (gint)g;
-	  col[2] = (gint)b;
-	  col[3] = OPAQUE_OPACITY;
+						&color, mode);
+
+	  temp_blend =  (gint) ((color.a * local_blend));
+
+	  gimp_rgb_get_uchar (&color,
+			      &col[RED_PIX],
+			      &col[GREEN_PIX],
+			      &col[BLUE_PIX]);
+	  col[ALPHA_PIX] = OPAQUE_OPACITY;
+
 	  /* always use incremental mode with gradients */
 	  /* make the gui cool later */
 	  paint_appl_mode = INCREMENTAL;

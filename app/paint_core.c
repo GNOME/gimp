@@ -1019,10 +1019,7 @@ paint_core_cleanup (void)
 void
 paint_core_get_color_from_gradient (PaintCore         *paint_core, 
 				    gdouble            gradient_length, 
-				    gdouble           *r, 
-				    gdouble           *g, 
-				    gdouble           *b, 
-				    gdouble           *a, 
+				    GimpRGB           *color,
 				    GradientPaintMode  mode)
 {
   gdouble y;
@@ -1040,7 +1037,7 @@ paint_core_get_color_from_gradient (PaintCore         *paint_core,
   else
     y = y - (int)y;
 
-  gradient_get_color_at (gimp_context_get_gradient (NULL), y, r, g, b, a);
+  gradient_get_color_at (gimp_context_get_gradient (NULL), y, color);
 }
 
 

@@ -904,11 +904,11 @@ draw_gradient (GtkPreview *preview,
 	       gint        width,
 	       gint        height)
 {
-  guchar *p0, *p1, *even, *odd;
-  gint x, y;
-  gdouble dx, cur_x;
-  gdouble r, g, b, a;
-  gdouble c0, c1;
+  guchar  *p0, *p1, *even, *odd;
+  gint     x, y;
+  gdouble  dx, cur_x;
+  GimpRGB  color;
+  gdouble  c0, c1;
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
@@ -917,7 +917,7 @@ draw_gradient (GtkPreview *preview,
 
   for (x = 0; x < width; x++) 
     {
-      gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, cur_x, &color);
     
       if ((x / GIMP_CHECK_SIZE_SM) & 1) 
 	{
@@ -930,13 +930,13 @@ draw_gradient (GtkPreview *preview,
 	  c1 = GIMP_CHECK_LIGHT;
 	}
 
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p0++ = (c0 + (color.r - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.g - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.b - c0) * color.a) * 255.0;
       
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      *p1++ = (c1 + (color.r - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.g - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.b - c1) * color.a) * 255.0;
       
       cur_x += dx;
     }

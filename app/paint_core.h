@@ -155,10 +155,7 @@ void          paint_core_cleanup         (void);
 
 void  paint_core_get_color_from_gradient (PaintCore            *paint_core, 
 					  gdouble               gradient_length, 
-					  gdouble              *r, 
-					  gdouble              *g, 
-					  gdouble              *b, 
-					  gdouble              *a, 
+					  GimpRGB              *color,
 					  GradientPaintMode     mode);
 
 /*  paint tool painting functions  */

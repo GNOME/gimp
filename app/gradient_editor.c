@@ -711,10 +711,7 @@ gradient_list_get_gradient_index (GSList     *list,
 void
 gradient_get_color_at (gradient_t *gradient,
 		       gdouble     pos,
-		       gdouble    *r,
-		       gdouble    *g,
-		       gdouble    *b,
-		       gdouble    *a)
+		       GimpRGB    *color)
 {
   gdouble         factor = 0.0;
   grad_segment_t *seg;
@@ -722,10 +719,12 @@ gradient_get_color_at (gradient_t *gradient,
   gdouble         middle;
   GimpRGB         rgb;
 
+  g_return_if_fail (color != NULL);
+
   /* if there is no gradient return a totally transparent black */
   if (gradient == NULL) 
     {
-      r = 0; g = 0; b = 0; a = 0;
+      gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
       return;
     }
 
@@ -780,13 +779,18 @@ gradient_get_color_at (gradient_t *gradient,
 
   /* Calculate color components */
 
-  *a = seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
+  rgb.a = seg->left_color.a + (seg->right_color.a - seg->left_color.a) * factor;
 
   if (seg->color == GRAD_RGB)
     {
-      *r = seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
-      *g = seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
-      *b = seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
+      rgb.r 
+	= seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
+
+      rgb.g =
+	seg->left_color.g + (seg->right_color.g - seg->left_color.g) * factor;
+
+      rgb.b =
+	seg->left_color.b + (seg->right_color.b - seg->left_color.b) * factor;
     }
   else
     {
@@ -837,11 +841,9 @@ gradient_get_color_at (gradient_t *gradient,
 	}
 
       gimp_hsv_to_rgb (&left_hsv, &rgb);
-
-      *r = rgb.r;
-      *g = rgb.g;
-      *b = rgb.b;
     }
+
+  *color = rgb;
 }
 
 /***** The main gradient editor dialog *****/
@@ -1361,7 +1363,7 @@ gradient_clist_fill_preview (gradient_t *gradient,
   guchar  *even, *odd;
   gint     x, y;
   gdouble  dx, cur_x;
-  gdouble  r, g, b, a;
+  GimpRGB  color;
   gdouble  c0, c1;
 
   dx    = (right - left) / (width - 1);
@@ -1373,7 +1375,7 @@ gradient_clist_fill_preview (gradient_t *gradient,
 
   for (x = 0; x < width; x++)
     {
-      gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, cur_x, &color);
 
       if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	{
@@ -1386,13 +1388,13 @@ gradient_clist_fill_preview (gradient_t *gradient,
 	  c1 = GIMP_CHECK_LIGHT;
 	}
 
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p0++ = (c0 + (color.r - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.g - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.b - c0) * color.a) * 255.0;
 
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      *p1++ = (c1 + (color.r - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.g - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.b - c1) * color.a) * 255.0;
 
       cur_x += dx;
     }
@@ -2298,25 +2300,28 @@ static void
 preview_set_hint (gint x)
 {
   gdouble  xpos;
-  gdouble  r, g, b, a;
-  gdouble  h, s, v;
+  GimpRGB  rgb;
+  GimpHSV  hsv;
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
 
-  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos, &rgb);
 
-  h = r;
-  s = g;
-  v = b;
-
-  gimp_rgb_to_hsv_double (&h, &s, &v);
+  gimp_rgb_to_hsv (&rgb, &hsv);
 
   str = g_strdup_printf (_("Position: %0.6f    "
 			   "RGB (%0.3f, %0.3f, %0.3f)    "
 			   "HSV (%0.3f, %0.3f, %0.3f)    "
 			   "Opacity: %0.3f"),
-			 xpos, r, g, b, h * 360.0, s, v, a);
+			 xpos,
+			 rgb.r,
+			 rgb.g,
+			 rgb.b,
+			 hsv.h * 360.0,
+			 hsv.s,
+			 hsv.v,
+			 rgb.a);
 
   ed_set_hint (str);
   g_free (str);
@@ -2332,8 +2337,7 @@ preview_set_foreground (gint x)
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos,
-			 &color.r, &color.g, &color.b, &color.a);
+  gradient_get_color_at (curr_gradient, xpos, &color);
 
   gimp_context_set_foreground (gimp_context_get_user (), &color);
 
@@ -2356,8 +2360,7 @@ preview_set_background (gint x)
   gchar   *str;
 
   xpos = control_calc_g_pos (x);
-  gradient_get_color_at (curr_gradient, xpos,
-			 &color.r, &color.g, &color.b, &color.a);
+  gradient_get_color_at (curr_gradient, xpos, &color);
 
   gimp_context_set_background (gimp_context_get_user (), &color);
 
@@ -2464,7 +2467,7 @@ preview_fill_image (gint    width,
   guchar  *p0, *p1;
   gint     x, y;
   gdouble  dx, cur_x;
-  gdouble  r, g, b, a;
+  GimpRGB  color;
   gdouble  c0, c1;
 
   dx    = (right - left) / (width - 1);
@@ -2475,7 +2478,7 @@ preview_fill_image (gint    width,
   /* Create lines to fill the image */
   for (x = 0; x < width; x++)
     {
-      gradient_get_color_at (curr_gradient, cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (curr_gradient, cur_x, &color);
 
       if ((x / GIMP_CHECK_SIZE) & 1)
 	{
@@ -2488,13 +2491,13 @@ preview_fill_image (gint    width,
 	  c1 = GIMP_CHECK_LIGHT;
 	}
 
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p0++ = (c0 + (color.r - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.g - c0) * color.a) * 255.0;
+      *p0++ = (c0 + (color.b - c0) * color.a) * 255.0;
 
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      *p1++ = (c1 + (color.r - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.g - c1) * color.a) * 255.0;
+      *p1++ = (c1 + (color.b - c1) * color.a) * 255.0;
 
       cur_x += dx;
     }
@@ -4713,11 +4716,11 @@ cpopup_split_midpoint (grad_segment_t  *lseg,
 		       grad_segment_t **newl,
 		       grad_segment_t **newr)
 {
-  double          r, g, b, a;
+  GimpRGB         color;
   grad_segment_t *newseg;
 
   /* Get color at original segment's midpoint */
-  gradient_get_color_at (curr_gradient, lseg->middle, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, lseg->middle, &color);
 
   /* Create a new segment and insert it in the list */
 
@@ -4746,10 +4749,10 @@ cpopup_split_midpoint (grad_segment_t  *lseg,
 
   newseg->right_color = lseg->right_color;
 
-  lseg->right_color.r = newseg->left_color.r = r;
-  lseg->right_color.g = newseg->left_color.g = g;
-  lseg->right_color.b = newseg->left_color.b = b;
-  lseg->right_color.a = newseg->left_color.a = a;
+  lseg->right_color.r = newseg->left_color.r = color.r;
+  lseg->right_color.g = newseg->left_color.g = color.g;
+  lseg->right_color.b = newseg->left_color.b = color.b;
+  lseg->right_color.a = newseg->left_color.a = color.a;
 
   /* Set parameters of new segment */
 
@@ -4904,16 +4907,8 @@ cpopup_split_uniform (grad_segment_t  *lseg,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      gradient_get_color_at (curr_gradient, seg->left,
-			     &seg->left_color.r,
-			     &seg->left_color.g,
-			     &seg->left_color.b,
-			     &seg->left_color.a);
-      gradient_get_color_at (curr_gradient, seg->right,
-			     &seg->right_color.r,
-			     &seg->right_color.g,
-			     &seg->right_color.b,
-			     &seg->right_color.a);
+      gradient_get_color_at (curr_gradient, seg->left,  &seg->left_color);
+      gradient_get_color_at (curr_gradient, seg->right, &seg->right_color);
 
       seg->type  = lseg->type;
       seg->color = lseg->color;

@@ -149,7 +149,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gradient_t *gradient', 'gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv' ],
+	vars => [ 'gradient_t *gradient', 'gdouble pos, delta', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   pos = 0.0;
@@ -163,12 +163,12 @@ HELP
 
   while (i--)
     {
-      gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, pos, &color);
 
-      *pv++ = r;
-      *pv++ = g;
-      *pv++ = b;
-      *pv++ = a;
+      *pv++ = color.r;
+      *pv++ = color.g;
+      *pv++ = color.b;
+      *pv++ = color.a;
 
       pos += delta;
     }
@@ -204,7 +204,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gradient_t *gradient', 'gdouble r, g, b, a', 'gdouble *pv' ],
+	vars => [ 'gradient_t *gradient', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   array_length = i * 4;
@@ -215,12 +215,12 @@ HELP
 
   while (i--)
     {
-      gradient_get_color_at (gradient, *pos, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, *pos, &color);
 
-      *pv++ = r;
-      *pv++ = g;
-      *pv++ = b;
-      *pv++ = a;
+      *pv++ = color.r;
+      *pv++ = color.g;
+      *pv++ = color.b;
+      *pv++ = color.a;
 
       pos++;
     }

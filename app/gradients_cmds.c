@@ -211,7 +211,7 @@ gradients_sample_uniform_invoker (Argument *args)
   gdouble *color_samples = NULL;
   gradient_t *gradient;
   gdouble pos, delta;
-  gdouble r, g, b, a;
+  GimpRGB color;
   gdouble *pv;
 
   i = args[0].value.pdb_int;
@@ -231,12 +231,12 @@ gradients_sample_uniform_invoker (Argument *args)
     
       while (i--)
 	{
-	  gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, pos, &color);
     
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
+	  *pv++ = color.r;
+	  *pv++ = color.g;
+	  *pv++ = color.b;
+	  *pv++ = color.a;
     
 	  pos += delta;
 	}
@@ -302,7 +302,7 @@ gradients_sample_custom_invoker (Argument *args)
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
   gradient_t *gradient;
-  gdouble r, g, b, a;
+  GimpRGB color;
   gdouble *pv;
 
   i = args[0].value.pdb_int;
@@ -321,12 +321,12 @@ gradients_sample_custom_invoker (Argument *args)
     
       while (i--)
 	{
-	  gradient_get_color_at (gradient, *pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, *pos, &color);
     
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
+	  *pv++ = color.r;
+	  *pv++ = color.g;
+	  *pv++ = color.b;
+	  *pv++ = color.a;
     
 	  pos++;
 	}

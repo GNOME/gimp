@@ -1,5 +1,23 @@
 2001-01-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/gradient.[ch]: made gradient_get_color_at() use GimpRGB.
+
+	* app/airbrush.c
+	* app/blend.c
+	* app/gimpcontextpreview.c
+	* app/gradient_select.c
+	* app/paint_core.[ch]
+	* app/paintbrush.c
+	* app/palette.c
+	* app/pencil.c
+
+	* app/gradients_cmds.c
+	* app/gradient_select_cmds.c
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb: changed accordingly.
+
+2001-01-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_notebook.[ch]
 	* app/gimpcontext.[ch]
 	* app/gimpdnd.h: made the _set_color() and _drop_color() functions

@@ -328,8 +328,10 @@ gradient_change_callbacks (GradientSelect *gsp,
     {
       gdouble  *values, *pv;
       double    pos, delta;
-      double    r, g, b, a;
-      gint i = gsp->sample_size;
+      GimpRGB   color;
+      gint      i;
+
+      i      = gsp->sample_size;
       pos    = 0.0;
       delta  = 1.0 / (i - 1);
       
@@ -338,12 +340,12 @@ gradient_change_callbacks (GradientSelect *gsp,
 
       while (i--)
 	{
-	  gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, pos, &color);
 
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
+	  *pv++ = color.r;
+	  *pv++ = color.g;
+	  *pv++ = color.b;
+	  *pv++ = color.a;
 
 	  pos += delta;
 	}

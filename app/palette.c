@@ -2319,21 +2319,23 @@ static void
 palette_import_fill_grad_preview (GtkWidget  *preview,
 				  gradient_t *gradient)
 {
-  guchar buffer[3*IMPORT_PREVIEW_WIDTH];
-  gint loop;
-  guchar *p = buffer;
+  guchar   buffer[3*IMPORT_PREVIEW_WIDTH];
+  gint     loop;
+  guchar  *p = buffer;
   gdouble  dx, cur_x;
-  gdouble  r, g, b, a;
+  GimpRGB  color;
 
   dx    = 1.0/ (IMPORT_PREVIEW_WIDTH - 1);
   cur_x = 0;
 
   for (loop = 0 ; loop < IMPORT_PREVIEW_WIDTH; loop++)
     {
-      gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
-      *p++ = r * 255.0;
-      *p++ = g * 255.0;
-      *p++ = b * 255.0;
+      gradient_get_color_at (gradient, cur_x, &color);
+
+      *p++ = (guchar) (color.r * 255.999);
+      *p++ = (guchar) (color.g * 255.999);
+      *p++ = (guchar) (color.b * 255.999);
+
       cur_x += dx;
     }
 
@@ -2736,7 +2738,8 @@ palette_import_create_from_grad (gchar *name)
     {
       /* Add names to entry */
       gdouble  dx, cur_x;
-      gdouble  r, g, b, a;
+      GimpRGB  color;
+      guchar   r, g, b;
 
       gint sample_sz;
       gint loop;
@@ -2749,13 +2752,15 @@ palette_import_create_from_grad (gchar *name)
       
       for (loop = 0; loop < sample_sz; loop++)
 	{
-	  gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
-	  r = r * 255.0;
-	  g = g * 255.0;
-	  b = b * 255.0;
+	  gradient_get_color_at (gradient, cur_x, &color);
+
+	  gimp_rgb_get_uchar (&color, &r, &g, &b);
+
 	  cur_x += dx;
 	  palette_entries_add_entry (entries, _("Untitled"),
-				     (gint) r, (gint) g, (gint) b);
+				     (gint) r,
+				     (gint) g,
+				     (gint) b);
 	}
 
       palette_insert_all (entries);

@@ -39,10 +39,7 @@ gint         gradient_list_get_gradient_index (GSList     *list,
 
 void         gradient_get_color_at            (gradient_t *gradient,
 					       gdouble     pos,
-					       gdouble    *r,
-					       gdouble    *g,
-					       gdouble    *b,
-					       gdouble    *a);
+					       GimpRGB    *color);
 
 
 #endif  /* __GRADIENT_H__ */

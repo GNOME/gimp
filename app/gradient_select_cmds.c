@@ -327,23 +327,24 @@ gradients_get_gradient_data_invoker (Argument *args)
       if (success)
 	{
 	  gdouble *pv;
-	  gdouble pos, delta;
-	  gdouble r, g, b, a;
-	  int i = sample_size;
+	  gdouble  pos, delta;
+	  GimpRGB  color;
+	  gint     i;
     
-	  pos = 0.0;
+	  i     = sample_size;
+	  pos   = 0.0;
 	  delta = 1.0 / (i - 1);
     
 	  pv = values = g_new (gdouble, i * 4);
     
 	  while (i--)
 	    {
-	      gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
+	      gradient_get_color_at (gradient, pos, &color);
     
-	      *pv++ = r;
-	      *pv++ = g;
-	      *pv++ = b;
-	      *pv++ = a;
+	      *pv++ = color.r;
+	      *pv++ = color.g;
+	      *pv++ = color.b;
+	      *pv++ = color.a;
     
 	      pos += delta;
 	    }

@@ -172,14 +172,17 @@ pencil_motion (PaintCore            *paint_core,
   /*  color the pixels  */
   if (pressure_options->color)
     {
-      gdouble r, g, b, a;
+      GimpRGB color;
       
       gradient_get_color_at (gimp_context_get_gradient (NULL),
-			     paint_core->curpressure, &r, &g, &b, &a);
-      col[0] = r * 255.0;
-      col[1] = g * 255.0;
-      col[2] = b * 255.0;
-      col[3] = a * 255.0;
+			     paint_core->curpressure, &color);
+
+      gimp_rgba_get_uchar (&color,
+			   &col[RED_PIX],
+			   &col[GREEN_PIX],
+			   &col[BLUE_PIX],
+			   &col[ALPHA_PIX]);
+
       paint_appl_mode = INCREMENTAL;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);

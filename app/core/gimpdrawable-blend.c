@@ -1383,8 +1383,9 @@ gradient_render_pixel (double    x,
   /* Blend the colors */
 
   if (rbd->blend_mode == CUSTOM_MODE)
-    gradient_get_color_at (gimp_context_get_gradient (NULL),
-			   factor, &color->r, &color->g, &color->b, &color->a);
+    {
+      gradient_get_color_at (gimp_context_get_gradient (NULL), factor, color);
+    }
   else
     {
       /* Blend values */
