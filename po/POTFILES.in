@@ -131,7 +131,7 @@ app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
 app/display/gimpdisplayshell-scale.c
 app/display/gimpdisplayshell-title.c
-app/display/gimpnavigationview.c
+app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 
 app/file/file-open.c
@@ -297,6 +297,7 @@ app/widgets/gimpdockable.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
+app/widgets/gimperrordialog.c
 app/widgets/gimpfiledialog.c
 app/widgets/gimpfileprocview.c
 app/widgets/gimpgradienteditor.c
@@ -307,6 +308,7 @@ app/widgets/gimpimagedock.c
 app/widgets/gimpitemfactory.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
+app/widgets/gimpmessagebox.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimpprogressdialog.c
