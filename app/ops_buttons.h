@@ -50,8 +50,7 @@ struct _OpsButton
 
 /* Function declarations */
 
-GtkWidget * ops_button_box_new (GtkWidget     *parent,
-				OpsButton     *ops_button,
+GtkWidget * ops_button_box_new (OpsButton     *ops_button,
 				OpsButtonType  ops_type);
 
 #endif /* __OPS_BUTTONS_H__ */

@@ -312,9 +312,7 @@ paths_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (paths_dialog->vbox), vbox);
 
   /* The point operations */
-  button_box = ops_button_box_new (lc_dialog->shell,
-				   point_ops_buttons, OPS_BUTTON_RADIO);
-  /* gtk_container_set_border_width (GTK_CONTAINER (button_box), 2); */
+  button_box = ops_button_box_new (point_ops_buttons, OPS_BUTTON_RADIO);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, TRUE, 2);
   gtk_widget_show (button_box);
 
@@ -366,8 +364,7 @@ paths_dialog_create (void)
   gtk_widget_show (paths_dialog->vbox);
 
   /*  The ops buttons  */
-  button_box = ops_button_box_new (lc_dialog->shell,
-				   paths_ops_buttons, OPS_BUTTON_NORMAL);
+  button_box = ops_button_box_new (paths_ops_buttons, OPS_BUTTON_NORMAL);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
 

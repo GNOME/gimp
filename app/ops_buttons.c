@@ -22,72 +22,64 @@
 #include "gimphelp.h"
 #include "ops_buttons.h"
 
+#include "libgimp/gimppixmap.h"
+
 #include "libgimp/gimpintl.h"
 
-static void ops_button_pressed_callback  (GtkWidget*, GdkEventButton*, gpointer);
-static void ops_button_extended_callback (GtkWidget*, gpointer);
+static void ops_button_pressed_callback  (GtkWidget      *widget,
+					  GdkEventButton *bevent,
+					  gpointer        data);
+static void ops_button_extended_callback (GtkWidget      *widget,
+					  gpointer        data);
 
 
 GtkWidget *
-ops_button_box_new (GtkWidget     *parent,
-		    OpsButton     *ops_button,
+ops_button_box_new (OpsButton     *ops_button,
 		    OpsButtonType  ops_type)   
 {
   GtkWidget *button;
   GtkWidget *button_box;
-  GtkWidget *pixmap_widget;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
+  GtkWidget *pixmap;
   GSList    *group = NULL;
-  
-  gtk_widget_realize (parent);
-  style = gtk_widget_get_style (parent);
 
   button_box = gtk_hbox_new (TRUE, 1);
 
   while (ops_button->xpm_data)
     {
-      pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
-					     &mask,
-					     &style->bg[GTK_STATE_NORMAL],
-					     ops_button->xpm_data);
-      pixmap_widget = gtk_pixmap_new (pixmap, mask);
-      gdk_pixmap_unref (pixmap);
-      gdk_bitmap_unref (mask);
+      pixmap = gimp_pixmap_new (ops_button->xpm_data);
 
       switch (ops_type)
 	{
-	case OPS_BUTTON_NORMAL :
+	case OPS_BUTTON_NORMAL:
 	  button = gtk_button_new ();
 	  break;
-	case OPS_BUTTON_RADIO :
+
+	case OPS_BUTTON_RADIO:
 	  button = gtk_radio_button_new (group);
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-	  gtk_container_set_border_width (GTK_CONTAINER (button), 0);
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 	  break;
-	default :
-	  button = NULL; /*stop compiler complaints */
-	  g_error ("ops_button_box_new: unknown type %d\n", ops_type);
-	  break;
+
+	default:
+	  g_warning ("ops_button_box_new: unknown type %d\n", ops_type);
+	  continue;
 	}
 
-      gtk_container_add (GTK_CONTAINER (button), pixmap_widget);
-      
+      gtk_container_add (GTK_CONTAINER (button), pixmap);
+
       if (ops_button->ext_callbacks == NULL)
 	{
 	  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				     (GtkSignalFunc) ops_button->callback,
+				     GTK_SIGNAL_FUNC (ops_button->callback),
 				     NULL);
 	}
       else
 	{
 	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			      (GtkSignalFunc) ops_button_pressed_callback,
+			      GTK_SIGNAL_FUNC (ops_button_pressed_callback),
 			      ops_button);	  
 	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      (GtkSignalFunc) ops_button_extended_callback,
+			      GTK_SIGNAL_FUNC (ops_button_extended_callback),
 			      ops_button);
 	}
 
@@ -97,7 +89,7 @@ ops_button_box_new (GtkWidget     *parent,
 
       gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0); 
 
-      gtk_widget_show (pixmap_widget);
+      gtk_widget_show (pixmap);
       gtk_widget_show (button);
 
       ops_button->widget = button;
@@ -106,18 +98,18 @@ ops_button_box_new (GtkWidget     *parent,
       ops_button++;
     }
 
-  return (button_box);
+  return button_box;
 }
 
 static void
 ops_button_pressed_callback (GtkWidget      *widget, 
 			     GdkEventButton *bevent,
-			     gpointer        client_data)
+			     gpointer        data)
 {
   OpsButton *ops_button;
 
-  g_return_if_fail (client_data != NULL);
-  ops_button = (OpsButton*)client_data;
+  g_return_if_fail (data != NULL);
+  ops_button = (OpsButton *) data;
 
   if (bevent->state & GDK_SHIFT_MASK)
     {
@@ -136,12 +128,12 @@ ops_button_pressed_callback (GtkWidget      *widget,
 
 static void
 ops_button_extended_callback (GtkWidget *widget, 
-			      gpointer   client_data)
+			      gpointer   data)
 {
   OpsButton *ops_button;
 
-  g_return_if_fail (client_data != NULL);
-  ops_button = (OpsButton*)client_data;
+  g_return_if_fail (data != NULL);
+  ops_button = (OpsButton *) data;
 
   if (ops_button->modifier > OPS_BUTTON_MODIFIER_NONE &&
       ops_button->modifier < OPS_BUTTON_MODIFIER_LAST)

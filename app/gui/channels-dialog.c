@@ -335,8 +335,7 @@ channels_dialog_create (void)
   gtk_widget_show (channelsD->scrolled_win);
 
   /*  The ops buttons  */
-  button_box = ops_button_box_new (lc_dialog->shell, channels_ops_buttons,
-				   OPS_BUTTON_NORMAL);
+  button_box = ops_button_box_new (channels_ops_buttons, OPS_BUTTON_NORMAL);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
 

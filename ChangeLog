@@ -1,6 +1,15 @@
+2000-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/ops_buttons.[ch]
+	* app/paths_dialog.c: use GimpPixmap widgets. Don't pass the
+	parent widget pointer to ops_button_box_new().
+
 2000-02-25  Asbjorn Pettersen  <asbjornP@dualog.no>
 
-	* libgimp/gimpenv.c: <sys/types.h> before <sys/stat.h> to skip warning (OS/2)
+	* libgimp/gimpenv.c: <sys/types.h> before <sys/stat.h> to skip
+	warning (OS/2)
 
 Fri Feb 25 19:50:35 CET 2000  Sven Neumann <sven@gimp.org>
 
