@@ -1,3 +1,8 @@
+2004-12-09  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/cartoon.c: marked the menu entry for translation
+	(reported by Zigomar)
+
 2004-12-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/print-size-dialog.c
