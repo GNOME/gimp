@@ -2,7 +2,7 @@
 
 	* plug-ins/pygimp/plug-ins/clothify.py
 	* plug-ins/pygimp/plug-ins/foggify.py: Add layers to images before
-	using then. Fixes bug #162707.
+	using them. Fixes bug #162707.
 
 2005-01-02  Maurits Rijk  <m.rijk@chello.nl>
 
