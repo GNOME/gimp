@@ -391,7 +391,8 @@ AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DREGEX_MALLOC			\
-	@GIMP_THREAD_FLAGS@
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -404,6 +405,7 @@ gimp_LDADD = \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
+	$(GIMP_MP_LIBS)				\
 	$(INTLLIBS)
 
 DEPS = \

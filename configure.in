@@ -432,17 +432,17 @@ fi
 
 dnl Multi-Processor Support
 AC_ARG_WITH(mp, [  --with-mp=[no]          support multiple processors ])
-GIMP_THREAD_LIBS=
+GIMP_MP_LIBS=
 if test "x$with_mp" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init, 
     [AC_DEFINE(ENABLE_MP)
-    GIMP_THREAD_LIBS="-lpthread"
-    GIMP_THREAD_FLAGS="-D_REENTRANT"],
+    GIMP_MP_LIBS="-lpthread"
+    GIMP_MP_FLAGS="-D_REENTRANT"],
     # AIX has libpthreads, cause they're special. Special friends (TM)
     AC_CHECK_LIB(pthreads, pthread_attr_init,
       [AC_DEFINE(ENABLE_MP)
-      GIMP_THREAD_LIBS="-lpthreads"
-      GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+      GIMP_MP_LIBS="-lpthreads"
+      GIMP_MP_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
 fi
 
 gimpdatadir=$datadir/gimp
@@ -626,6 +626,8 @@ AC_SUBST(LPC_DEF)
 AC_SUBST(MAILER)
 AC_SUBST(GIMP_THREAD_FLAGS)
 AC_SUBST(GIMP_THREAD_LIBS)
+AC_SUBST(GIMP_MP_FLAGS)
+AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMPDOCS)
 
