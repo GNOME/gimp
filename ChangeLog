@@ -1,5 +1,17 @@
 2004-11-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.[ch]
+	* plug-ins/script-fu/siod-wrapper.c: appled patch from Kevin
+	Cozens which adds (script-fu-menu-register) and allows scripts to
+	register their menu_paths the same undeprecated way as plug-ins.
+	Fixes bug #158117.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: example how to use
+	the new API. Doesn't change strings because test-shpere.scm is an
+	untranslated example script.
+
+2004-11-17  Michael Natterer  <mitch@gimp.org>
+
 	Made plug-in menu registration work the same way for ordinary and
 	temporary procedures. Addresses bug #158117.
 

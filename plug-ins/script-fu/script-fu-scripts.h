@@ -22,6 +22,7 @@
 
 void  script_fu_find_scripts  (void);
 LISP  script_fu_add_script    (LISP         a);
+LISP  script_fu_add_menu      (LISP         a);
 void  script_fu_error_msg     (const gchar *command);
 
 

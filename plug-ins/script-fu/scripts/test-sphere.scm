@@ -223,7 +223,7 @@
     (gimp-context-pop)))
 
 (script-fu-register "script-fu-test-sphere"
-		    "<Toolbox>/Xtns/Script-Fu/Test/_Sphere..."
+		    "_Sphere..."
 		    "Simple script to test and show the usage of the new Script-Fu API extensions."
 		    "Spencer Kimball, Sven Neumann"
 		    "Spencer Kimball"
@@ -253,3 +253,6 @@
 		    SF-LAYER      "Layer"              -1
 		    SF-CHANNEL    "Channel"            -1
 		    SF-DRAWABLE   "Drawable"           -1)
+
+(script-fu-menu-register "script-fu-test-sphere"
+			 "<Toolbox>/Xtns/Script-Fu/Test")

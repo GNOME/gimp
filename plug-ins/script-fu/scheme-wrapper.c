@@ -173,14 +173,15 @@ siod_init (gboolean local_register_scripts)
 
 }
 
-static void  convert_string           (gchar    *str);
-static gint  sputs_fcn                (gchar    *st,
-                                       gpointer  dest);
-static LISP  lprin1s                  (LISP      exp,
-                                       gchar    *dest);
-static LISP  marshall_proc_db_call    (LISP      a);
-static LISP  script_fu_register_call  (LISP      a);
-static LISP  script_fu_quit_call      (LISP      a);
+static void  convert_string               (gchar    *str);
+static gint  sputs_fcn                    (gchar    *st,
+                                           gpointer  dest);
+static LISP  lprin1s                      (LISP      exp,
+                                           gchar    *dest);
+static LISP  marshall_proc_db_call        (LISP      a);
+static LISP  script_fu_register_call      (LISP      a);
+static LISP  script_fu_menu_register_call (LISP      a);
+static LISP  script_fu_quit_call          (LISP      a);
 
 
 /*
@@ -209,9 +210,10 @@ init_procedures (void)
   gint             i;
 
   /*  register the database execution procedure  */
-  init_lsubr ("gimp-proc-db-call",  marshall_proc_db_call);
-  init_lsubr ("script-fu-register", script_fu_register_call);
-  init_lsubr ("script-fu-quit",     script_fu_quit_call);
+  init_lsubr ("gimp-proc-db-call",       marshall_proc_db_call);
+  init_lsubr ("script-fu-register",      script_fu_register_call);
+  init_lsubr ("script-fu-menu-register", script_fu_menu_register_call);
+  init_lsubr ("script-fu-quit",          script_fu_quit_call);
 
   gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
                             &num_procs, &proc_list);
@@ -1215,6 +1217,15 @@ script_fu_register_call (LISP a)
 {
   if (register_scripts)
     return script_fu_add_script (a);
+  else
+    return NIL;
+}
+
+static LISP
+script_fu_menu_register_call (LISP a)
+{
+  if (register_scripts)
+    return script_fu_add_menu (a);
   else
     return NIL;
 }

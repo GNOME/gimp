@@ -18,8 +18,7 @@
 
 #include "config.h"
 
-#include <glib.h>		/* Include early for obscure Win32
-				   build reasons */
+#include <glib.h>    /* Include early for obscure Win32 build reasons */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,6 +54,13 @@
 #define SLIDER_WIDTH          80
 
 
+typedef struct
+{
+  gchar *pdb_name;
+  gchar *menu_path;
+} SFMenu;
+
+
 /* External functions
  */
 extern long  nlength (LISP obj);
@@ -68,6 +74,8 @@ static void       script_fu_load_script    (const GimpDatafileData *file_data,
 static gboolean   script_fu_install_script (gpointer                foo,
                                             SFScript               *script,
                                             gpointer                bar);
+static void       script_fu_install_menu   (SFMenu                 *menu,
+                                            gpointer                foo);
 static gboolean   script_fu_remove_script  (gpointer                foo,
                                             SFScript               *script,
                                             gpointer                bar);
@@ -85,7 +93,8 @@ static void       script_fu_free_script    (SFScript               *script);
  *  Local variables
  */
 
-static GTree *script_list  = NULL;
+static GTree  *script_list       = NULL;
+static GSList *script_menu_list  = NULL;
 
 
 /*
@@ -123,6 +132,13 @@ script_fu_find_scripts (void)
   g_tree_foreach (script_list,
                   (GTraverseFunc) script_fu_install_script,
                   NULL);
+  g_slist_foreach (script_menu_list,
+                   (GFunc) script_fu_install_menu,
+                   NULL);
+
+  /*  Now we are done with the list of menu entries  */
+  g_slist_free (script_menu_list);
+  script_menu_list = NULL;
 }
 
 LISP
@@ -155,7 +171,6 @@ script_fu_add_script (LISP a)
    * this does not hurt anybody, yet improves the life of many... ;)
    */
   script->pdb_name = g_strdup (val);
-
   for (s = script->pdb_name; *s; s++)
     if (*s == '-')
       *s = '_';
@@ -544,6 +559,38 @@ script_fu_add_script (LISP a)
   return NIL;
 }
 
+LISP
+script_fu_add_menu (LISP a)
+{
+  SFMenu *menu;
+  gchar  *val;
+  gchar  *s;
+
+  /*  Check the length of a  */
+  if (nlength (a) != 2)
+    return my_err ("Incorrect number of arguments for script-fu-menu-register",
+                   NIL);
+
+  /*  Create a new list of menus  */
+  menu = g_new0 (SFMenu, 1);
+
+  /*  Find the script PDB entry name  */
+  val = get_c_string (car (a));
+  menu->pdb_name = g_strdup (val);
+  for (s = menu->pdb_name; *s; s++)
+    if (*s == '-')
+      *s = '_';
+  a = cdr (a);
+
+  /*  Find the script menu path  */
+  val = get_c_string (car (a));
+  menu->menu_path = g_strdup (gettext (val));
+
+  script_menu_list = g_slist_append (script_menu_list, menu);
+
+  return NIL;
+}
+
 void
 script_fu_error_msg (const gchar *command)
 {
@@ -573,7 +620,7 @@ script_fu_load_script (const GimpDatafileData *file_data,
       /* No, I don't know why, but this is
        * necessary on NT 4.0.
        */
-      Sleep(0);
+      Sleep (0);
 #endif
 
       g_free (command);
@@ -612,6 +659,20 @@ script_fu_install_script (gpointer  foo,
   script->args = NULL;
 
   return FALSE;
+}
+
+/*
+ *  The following function is a GFunc.
+ */
+static void
+script_fu_install_menu (SFMenu   *menu,
+                        gpointer  foo)
+{
+  gimp_plugin_menu_register (menu->pdb_name, menu->menu_path);
+
+  g_free (menu->pdb_name);
+  g_free (menu->menu_path);
+  g_free (menu);
 }
 
 /*
