@@ -1,3 +1,8 @@
+Tue Apr 28 15:09:02 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/CEL/CEL.c
+	* plug-ins/psd/psd.c: portability fix for SunOS 4
+
 Mon Apr 27 20:43:14 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/animationplay/animationplay.c
