@@ -7,6 +7,7 @@
 	* plug-ins/common/pnm.c
 	* plug-ins/common/xbm.c
 	* plug-ins/flame/libifs.c
+	* plug-ins/print/print.c
 	* plug-ins/script-fu/siod/slib.c
 	* plug-ins/script-fu/siod/sliba.c: don't include ctype.h, use
 	g_ascii_* functions from GLib instead.
@@ -19,7 +20,6 @@
 	* plug-ins/common/gifload.c
 	* plug-ins/common/hrz.c
 	* plug-ins/common/pat.c
-	* plug-ins/print/print.c
 	* plug-ins/script-fu/script-fu-server.c
 	* plug-ins/twain/twain.c
 	* plug-ins/winsnap/winsnap.c: removed unused includes (mainly

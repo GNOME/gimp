@@ -901,21 +901,21 @@ printrc_load (void)
 	* Read new format printrc lines...
 	*/
 
-	char *keyword, *end, *value;
+	gchar *keyword, *end, *value;
 
 	keyword = line;
-	for (keyword = line; isspace(*keyword); keyword++)
+	for (keyword = line; g_ascii_isspace (*keyword); keyword++)
 	{
 	  /* skip initial spaces... */
 	}
-	if (!isalpha(*keyword))
+	if (!g_ascii_isalpha (*keyword))
 	  continue;
-	for (end = keyword; isalnum(*end) || *end == '-'; end++)
+	for (end = keyword; g_ascii_isalnum (*end) || *end == '-'; end++)
 	{
 	  /* find end of keyword... */
 	}
 	value = end;
-	while (isspace(*value)) {
+	while (g_ascii_isspace (*value)) {
 	  /* skip over white space... */
 	  value++;
 	}
@@ -923,7 +923,7 @@ printrc_load (void)
 	  continue;
 	value++;
 	*end = '\0';
-	while (isspace(*value)) {
+	while (g_ascii_isspace (*value)) {
 	  /* skip over white space... */
 	  value++;
 	}
