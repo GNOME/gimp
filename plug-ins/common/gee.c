@@ -383,7 +383,7 @@ iterate (void)
   gint thisbump;
   guchar sx,sy;
   guint32 *dest;
-  guint32 *env;
+  guint32 *environment;
   guchar *basebump;
   unsigned int basesx;
   unsigned int basesy;
@@ -406,7 +406,7 @@ iterate (void)
 
   frame++;
 
-  env = (guint32*) env;
+  environment = (guint32*) env;
   dest = (guint32*) disp;
   srcbump = (frame&1) ? bump1 : bump2;
   destbump = (frame&1) ? bump2 : bump1;
@@ -446,7 +446,7 @@ iterate (void)
       i = IWIDTH;
       while (i--)
 	{
-	  *dest++ = *env++;
+	  *dest++ = *environment++;
 	}
     }
   return;
@@ -496,7 +496,7 @@ iterate (void)
 	     casting an aligned long-word search. */
 	  if (thisbump == 0)
 	    {
-	      *(dest++) = *( env + (i | (j<<8) ) );
+	      *(dest++) = *( environment + (i | (j<<8) ) );
 	      /* *(dest++) = 111; */
 	      *(destbump++) = 0;
 	    }
@@ -514,7 +514,7 @@ iterate (void)
 		 sx = i + ( ((thisbump) - *(++destbump))<<1);  + blah; */
 	      sy = j + ( ((thisbump) - *(destbump+IWIDTH)));
 	      sx = i + ( ((thisbump) - *(++destbump)));
-	      *dest++ = *( env + (sx | (sy<<8) ) );
+	      *dest++ = *( environment + (sx | (sy<<8) ) );
 	      /* sx = ( ((thisbump) - *(destbump+IWIDTH)));
 		 sy = ( ((thisbump) - *(++destbump)));
 		 *dest++ = (sx) | (sy<<8) | (sx<<16); */

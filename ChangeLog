@@ -1,3 +1,8 @@
+2000-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gee.c: Using "env" instead of "environ" caused
+	a clash. Changed the other one to "environment".
+
 2000-12-17  Tor Lillqvist  <tml@iki.fi>
 
 	* config.h.win32: Typo.
