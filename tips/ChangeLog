@@ -1,3 +1,8 @@
+2003-02-26  Miloslav Trmac  <mitr@volny.cz>
+
+	* Makefile.am (tips_POFILES): Added cs (Czech)
+	* cs.po: Added Czech translation.
+
 2003-02-24  Evandro Fernandes Giovanini <evandrofg@ig.com.br>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation from
