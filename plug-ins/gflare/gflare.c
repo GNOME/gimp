@@ -337,6 +337,7 @@ struct _Preview
   gint               current_y;
   gint               drawn_y;
   guchar            *buffer;
+  guchar            *full_image_buffer;
 };
 
 typedef struct
@@ -4102,9 +4103,9 @@ preview_new (gint		   width,
 
   preview = g_new0 (Preview, 1);
 
-  preview->widget = gtk_preview_new (GTK_PREVIEW_COLOR);
+  preview->widget = gimp_preview_area_new ();
   gtk_object_set_user_data (GTK_OBJECT (preview->widget), preview);
-  gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
+  gtk_widget_set_size_request (preview->widget, width, height);
   gtk_widget_show (preview->widget);
 
   preview->width	   = width;
@@ -4117,6 +4118,7 @@ preview_new (gint		   width,
   preview->deinit_data	   = deinit_data;
   preview->idle_tag	   = 0;
   preview->buffer	   = g_new (guchar, width * 3);
+  preview->full_image_buffer = g_new (guchar, width * height * 3);
 
   return preview;
 }
@@ -4127,6 +4129,7 @@ preview_free (Preview *preview)
   preview_render_end (preview);
   /* not destroy preview->widget */
   g_free (preview->buffer);
+  g_free (preview->full_image_buffer);
   g_free (preview);
 }
 
@@ -4195,25 +4198,22 @@ preview_handle_idle (Preview *preview)
   else
     memset (preview->buffer, 0, preview->width * 3);
 
-  gtk_preview_draw_row (GTK_PREVIEW (preview->widget), preview->buffer,
-			0, preview->current_y, preview->width);
+  memcpy (preview->full_image_buffer + preview->width * 3 * preview->current_y, 
+          preview->buffer,
+          preview->width * 3);
 
   if (++preview->current_y >= preview->height)
     done = TRUE;
 
-  if (done || preview->current_y % 20 == 0)
-    {
-      gtk_widget_queue_draw_area (preview->widget,
-                                  0,
-                                  preview->drawn_y,
-                                  preview->width,
-                                  preview->current_y - preview->drawn_y);
-
-      preview->drawn_y = preview->current_y;
-    }
-
   if (done)
     {
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->widget),
+                              0, 0, preview->width, preview->height,
+                              GIMP_RGB_IMAGE,
+                              preview->full_image_buffer,
+                              preview->width * 3);
+
+      preview->drawn_y = preview->current_y;
       preview_render_end (preview);
       return FALSE;
     }
@@ -4320,9 +4320,9 @@ gradient_menu_new (GradientMenuCallback callback,
   gm->callback = callback;
   gm->callback_data = callback_data;
 
-  gm->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (gm->preview),
-		    GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT);
+  gm->preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (gm->preview, 
+                               GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT);
 
   gm->combo = gimp_int_combo_box_new (NULL, 0);
 
@@ -4405,7 +4405,6 @@ gm_gradient_combo_callback (GtkWidget *widget,
   gradient_name_copy (gm->gradient_name, gradient_name);
 
   gm_preview_draw (gm->preview, gradient_name);
-  gtk_widget_queue_draw (gm->preview);
 
   if (gm->callback)
     (* gm->callback) (gradient_name, gm->callback_data);
@@ -4422,9 +4421,13 @@ gm_preview_draw (GtkWidget   *preview,
   guchar     *dest;
   guchar     *src;
   gint        check, b;
+  guchar     *dest_total_preview_buffer;
   const gint  alpha = 3;
 
   gradient_get_values (gradient_name, (guchar *)values, nvalues);
+
+  dest_total_preview_buffer = g_new (guchar,
+                                     GM_PREVIEW_HEIGHT * GM_PREVIEW_WIDTH * 3);
 
   for (row = 0; row < GM_PREVIEW_HEIGHT; row += GIMP_CHECK_SIZE_SM)
     {
@@ -4464,11 +4467,18 @@ gm_preview_draw (GtkWidget   *preview,
 	}
       for(irow = 0; irow < GIMP_CHECK_SIZE_SM && row + irow < GM_PREVIEW_HEIGHT; irow++)
 	{
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar*) dest_row,
-				0, row + irow, GM_PREVIEW_WIDTH);
+          memcpy (dest_total_preview_buffer+(row+irow)*3*GM_PREVIEW_WIDTH,
+                  dest_row,
+                  GM_PREVIEW_WIDTH*3);
 	}
     }
+    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                            0, 0, GM_PREVIEW_WIDTH, GM_PREVIEW_HEIGHT,
+                            GIMP_RGB_IMAGE,
+                            (guchar*) dest_total_preview_buffer,
+                            GM_PREVIEW_WIDTH*3);
 
+    g_free (dest_total_preview_buffer);
 }
 
 static void
