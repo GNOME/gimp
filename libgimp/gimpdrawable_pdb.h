@@ -46,8 +46,10 @@ gboolean      gimp_drawable_offsets         (gint32           drawable_ID,
 					     gint            *offset_x,
 					     gint            *offset_y);
 gint32        gimp_drawable_get_image       (gint32           drawable_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
 					     gint32           image_ID);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gchar*        gimp_drawable_get_name        (gint32           drawable_ID);
 gboolean      gimp_drawable_set_name        (gint32           drawable_ID,
 					     const gchar     *name);

@@ -1065,8 +1065,8 @@ gimp_item_set_image (GimpItem  *item,
                      GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_floating (item));
-  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (! gimp_item_is_attached (item));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
 
   if (gimage == NULL)
     {

@@ -380,12 +380,23 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
     {
       if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
         {
-          g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
-                     "called deprecated procedure '%s'.\n"
-                     "It should call '%s' instead!",
-                     gimp_filename_to_utf8 (plug_in->name),
-                     gimp_filename_to_utf8 (plug_in->prog),
-                     proc_run->name, proc_rec->deprecated);
+          if (! strcmp (proc_rec->deprecated, "NONE"))
+            {
+              g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
+                         "called deprecated procedure '%s'.",
+                         gimp_filename_to_utf8 (plug_in->name),
+                         gimp_filename_to_utf8 (plug_in->prog),
+                         proc_run->name);
+            }
+          else
+            {
+              g_message ("WARNING: Plug-In \"%s\"\n(%s)\n"
+                         "called deprecated procedure '%s'.\n"
+                         "It should call '%s' instead!",
+                         gimp_filename_to_utf8 (plug_in->name),
+                         gimp_filename_to_utf8 (plug_in->prog),
+                         proc_run->name, proc_rec->deprecated);
+            }
         }
       else if (plug_in->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_OFF)
         {

@@ -587,14 +587,7 @@ CODE
 }
 
 sub drawable_set_image {
-    $blurb = 'Set image where drawable belongs to.';
-
-    $help = <<'HELP';
-Set the image the drawable should be a part of (Use this before adding a
-drawable to another image).
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated();
 
     @inargs = (
 	&drawable_arg,
@@ -603,10 +596,7 @@ HELP
 
     %invoke = ( code =><<'CODE'
 {
-  success = gimp_item_is_floating (GIMP_ITEM (drawable));
-
-  if (success)
-    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
+  success = (gimage == gimp_item_get_image (GIMP_ITEM (drawable)));
 }
 CODE
     );

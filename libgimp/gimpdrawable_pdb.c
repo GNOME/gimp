@@ -511,10 +511,7 @@ gimp_drawable_get_image (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @image_ID: The image.
  *
- * Set image where drawable belongs to.
- *
- * Set the image the drawable should be a part of (Use this before
- * adding a drawable to another image).
+ * This procedure is deprecated!
  *
  * Returns: TRUE on success.
  */

@@ -457,8 +457,13 @@ CODE
 	}
 
 	if ($proc->{deprecated}) {
-	    $procdesc = &desc_wrap("This procedure is deprecated! " .
-                                   "Use $proc->{deprecated}() instead.");
+            if ($proc->{deprecated} eq 'NONE') {
+		$procdesc = &desc_wrap("This procedure is deprecated!");
+	    }
+	    else {
+		$procdesc = &desc_wrap("This procedure is deprecated! " .
+				       "Use $proc->{deprecated}() instead.");
+	    }
 	}
 	else {
 	    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n" .

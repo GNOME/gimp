@@ -23,9 +23,14 @@ sub std_pdb_misc {
 }
 
 sub std_pdb_deprecated {
-    $blurb = $help = "This procedure is deprecated! Use '@_' instead.";
+    if (@_) {
+        $blurb = $help = "This procedure is deprecated! Use '@_' instead.";
+        $deprecated = "@_";
+    } else {
+        $blurb = $help = "This procedure is deprecated!";
+        $deprecated = "NONE";
+    }
     $author = $copyright = $date = '';
-    $deprecated = "@_";
 }
 
 sub std_image_arg () {{

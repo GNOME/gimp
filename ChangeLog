@@ -1,3 +1,25 @@
+2004-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/stddefs.pdb: added support for deprecated procedures
+	without any replacement.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): added
+	a special warning for procedures without replacement.
+
+	* tools/pdbgen/pdb/drawable.pdb: deprecated drawable_set_image()
+	without any replacement and made it a nop (which fails if the
+	passed image is different from the drawable's image). It's not
+	needed any longer since 2.0 and moreover dangerous to use.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
+	* app/core/gimpitem.c (gimp_item_set_image): replaced assertion
+	for gimp_item_is_floating() by !gimp_item_is_attached(). The
+	former warned when adding a layer with already added mask to the
+	image (which is a perfectly valid operation).
+
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/wmf.c: added a thumbnail load procedure

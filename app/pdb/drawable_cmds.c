@@ -996,10 +996,7 @@ drawable_set_image_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_item_is_floating (GIMP_ITEM (drawable));
-
-      if (success)
-        gimp_item_set_image (GIMP_ITEM (drawable), gimage);
+      success = (gimage == gimp_item_get_image (GIMP_ITEM (drawable)));
     }
 
   return procedural_db_return_args (&drawable_set_image_proc, success);
@@ -1022,12 +1019,12 @@ static ProcArg drawable_set_image_inargs[] =
 static ProcRecord drawable_set_image_proc =
 {
   "gimp_drawable_set_image",
-  "Set image where drawable belongs to.",
-  "Set the image the drawable should be a part of (Use this before adding a drawable to another image).",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
+  "This procedure is deprecated!",
+  "This procedure is deprecated!",
+  "",
+  "",
+  "",
+  "NONE",
   GIMP_INTERNAL,
   2,
   drawable_set_image_inargs,
