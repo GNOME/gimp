@@ -1,3 +1,9 @@
+2002-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/resize.c: fixed insane ratio spinbutton acceleration
+	(#63741) by setting the spinbutton's climb_rate to a small value
+	(not by changing the adjustment's page_size as suggested).
+
 Mon Feb 11 15:49:55 PST 2002 Manish Singh <yosh@gimp.org>
 
 	* Made 1.2.3 release

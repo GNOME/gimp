@@ -393,7 +393,8 @@ resize_widget_new (ResizeType    type,
 			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
 			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
 			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj), 1, 4);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj),
+                                    0.01, 4);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
                                    GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -409,7 +410,8 @@ resize_widget_new (ResizeType    type,
 			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
 			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
 			0.01, 0.1, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj), 1, 4);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj),
+                                    0.01, 4);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
                                    GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
