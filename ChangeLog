@@ -1,3 +1,8 @@
+2001-12-28  Sven Neumann  <sven@gimp.org>
+
+	* app/scan_convert.c (scan_converter_to_channel): fixed a stupid bug
+	I've introduced when fixing #66003.
+
 2001-12-27  Simos Xenitellis  <simos@hellug.gr>
 
 	* configure.in: Added Greek (el) to ALL_LINGUAS.

@@ -233,7 +233,7 @@ scan_converter_to_channel (ScanConverter *sc,
     guint antialias2;
     unsigned char *buf, *b;
     int * vals, val;
-    int x, x2, w;
+    int x, w;
     int i, j;
 
     antialias = sc->antialias;
@@ -293,7 +293,7 @@ scan_converter_to_channel (ScanConverter *sc,
 	    }
 	    else
 	    {
-		w = x2 - x;
+		w = GPOINTER_TO_INT (list->data) - x;
 
 		if (w > 0)
 		{
