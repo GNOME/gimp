@@ -449,7 +449,7 @@ load_image (gchar *filename)
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
 		  _("PNM: Premature end of file."));
   CHECK_FOR_ERROR((buf[0] != 'P' || buf[2]), pnminfo->jmpbuf,
-		  _("PNM: %s is not a valid file."));
+		  _("PNM: Invalid file."));
 
   /* Look up magic number to see what type of PNM this is */
   for (ctr=0; pnm_types[ctr].name; ctr++)

@@ -120,6 +120,7 @@ EXTRA_DIST = \
 	cursors/smudge_small_mask.xbm		\
 	cursors/measure_small.xbm		\
 	cursors/measure_small_mask.xbm		\
+	docs/Wilber.svg				\
 	docs/Wilber.xcf.gz			\
 	docs/Wilber.xcf.gz.README		\
 	docs/cheat_sheet.txt			\
