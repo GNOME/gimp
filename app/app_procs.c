@@ -298,7 +298,6 @@ destroy_initialization_status_window(void)
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
       gtk_idle_remove(idle_tag);
-      gtk_preview_reset (); /* so we can reinit the colormaps */
     }
 }
 
