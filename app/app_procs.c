@@ -275,12 +275,6 @@ splash_text_draw (GtkWidget *widget)
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
 		   (0.80 * logo_area_height),
 		   AUTHORS);
-  /*  
-   *  This is a hack: we try to compute a good guess for the maximum number
-   *  of charcters that will fit into the splash-screen using the given font 
-   */
-  max_label_length = (float)strlen (AUTHORS) * 
-        ( (float)logo_area_width / (float)gdk_string_width (font, AUTHORS) ); 
 }
 
 static void
@@ -335,6 +329,7 @@ make_initialization_status_window(void)
       if (no_splash == FALSE)
 	{
 	  GtkWidget *vbox;
+	  GtkStyle *style;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
 	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
@@ -387,6 +382,14 @@ make_initialization_status_window(void)
 	  gtk_widget_show(win_initstatus);
 
 	  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
+	  /*
+	   *  This is a hack: we try to compute a good guess for the maximum 
+	   *  number of charcters that will fit into the splash-screen using 
+	   *  the default_font
+	   */
+	  style = gtk_widget_get_style (win_initstatus);
+	  max_label_length = 0.95 * (float)strlen (AUTHORS) *
+	    ( (float)logo_area_width / (float)gdk_string_width (style->font, AUTHORS) );
 	}
     }
 }
