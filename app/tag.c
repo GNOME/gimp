@@ -639,26 +639,3 @@ tag_from_image_type (
   return tag_new (p, f, a);
 }
 
-/* hack hack */
-Tag 
-tag_by_bytes  (
-               guint bytes
-               )
-{
-  switch (bytes)
-    {
-    case 1:
-      return tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
-      break;
-    case 2:
-      return tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_YES);
-      break;
-    case 3:
-      return tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO);
-      break;
-    case 4:
-      return tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_YES);
-      break;
-    }
-  return tag_null ();
-}

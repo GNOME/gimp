@@ -36,6 +36,8 @@
 
 #include "drawable_pvt.h"
 #include "canvas.h"
+#include "shmbuf.h"
+#include "tilebuf.h"
 
 
 enum {
@@ -607,6 +609,8 @@ drawable_deallocate (GimpDrawable *drawable)
 {
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
+  if (drawable->canvas)
+    canvas_delete (drawable->canvas);
 }
 
 static void
@@ -709,14 +713,20 @@ gimp_drawable_configure (GimpDrawable *drawable,
     }
   
   tag = tag_new (precision, format, alpha);
-  gimp_drawable_configure_tag( drawable, gimage_ID, width, height, tag, name);  
+  gimp_drawable_configure_tag( drawable, gimage_ID, width, height, tag, STORAGE_TILED, name);  
 }
 
   
-void
-gimp_drawable_configure_tag (GimpDrawable *drawable,
-			 int gimage_ID, int width, int height, 
-			 Tag tag, char *name)
+void 
+gimp_drawable_configure_tag  (
+                              GimpDrawable * drawable,
+                              int gimage_ID,
+                              int width,
+                              int height,
+                              Tag tag,
+                              Storage storage,
+                              char * name
+                              )
 {
   if (!name)
     name = "unnamed";
@@ -755,7 +765,7 @@ gimp_drawable_configure_tag (GimpDrawable *drawable,
   
   if (drawable->canvas)
     canvas_delete (drawable->canvas);
-  drawable->canvas = canvas_new (drawable->tag, width, height, STORAGE_FLAT);
+  drawable->canvas = canvas_new (drawable->tag, width, height, storage);
 
   drawable->dirty = FALSE;
   drawable->visible = TRUE;

@@ -23,6 +23,7 @@
 #include "temp_buf.h"
 
 #include "tag.h"
+#include "canvas.h"
 
 struct _Canvas;
 
@@ -79,6 +80,6 @@ void		 drawable_deallocate	     (GimpDrawable *);
 void		 gimp_drawable_configure     (GimpDrawable *,
 					      int, int, int, int, char *);
 void             gimp_drawable_configure_tag (GimpDrawable *, 
-					      int, int, int, Tag, char *);
+					      int, int, int, Tag, Storage, char *);
 
 #endif /* __DRAWABLE_H__ */

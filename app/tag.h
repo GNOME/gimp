@@ -88,8 +88,5 @@ gint      tag_to_image_type      (Tag);
 Tag       tag_from_drawable_type (gint);
 Tag       tag_from_image_type    (gint);
 
-/* hack hack */
-Tag       tag_by_bytes          (guint);
-
 
 #endif /* __TAG_H__ */

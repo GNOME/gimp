@@ -28,6 +28,8 @@ gimp_SOURCES = \
 	tilebuf.h               \
 	flatbuf.c               \
 	flatbuf.h               \
+	shmbuf.c                \
+	shmbuf.h                \
 	paint_core_16.c         \
 	paint_core_16.h         \
 	trace.c                 \

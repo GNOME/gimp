@@ -2929,7 +2929,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
     {
       merge_layer_tag = gimage_tag (gimage);
       merge_layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
-		       merge_layer_tag, drawable_name (GIMP_DRAWABLE(layer)), 
+		       merge_layer_tag, STORAGE_TILED, drawable_name (GIMP_DRAWABLE(layer)), 
 			OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
@@ -2960,7 +2960,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       merge_layer_tag = tag_set_alpha (layer_tag, ALPHA_YES);
 
       merge_layer = layer_new_tag (gimage->ID, (x2 - x1), (y2 - y1),
-			       merge_layer_tag,
+			       merge_layer_tag, STORAGE_TILED,
 			       drawable_name (GIMP_DRAWABLE(layer)),
 			       layer->opacity, layer->mode);
       

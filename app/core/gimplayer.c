@@ -274,18 +274,21 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
     }
   
   tag = tag_new (prec, format, alpha); 
-  return layer_new_tag (gimage_ID, width, height, tag, name, opacity, mode);
+  return layer_new_tag (gimage_ID, width, height, tag, STORAGE_TILED, name, opacity, mode);
 }
 
 
-Layer *
-layer_new_tag (gimage_ID, width, height, tag, name, opacity, mode)
-     int gimage_ID;
-     int width, height;
-     Tag tag;
-     char * name;
-     int opacity;
-     int mode;
+Layer * 
+layer_new_tag  (
+                int gimage_ID,
+                int width,
+                int height,
+                Tag tag,
+                Storage storage,
+                char * name,
+                int opacity,
+                int mode
+                )
 {
   Layer * layer;
 
@@ -297,7 +300,7 @@ layer_new_tag (gimage_ID, width, height, tag, name, opacity, mode)
   layer = gtk_type_new (gimp_layer_get_type ());
 
   gimp_drawable_configure_tag (GIMP_DRAWABLE(layer), 
-			   gimage_ID, width, height, tag, name);
+			   gimage_ID, width, height, tag, storage, name);
 
   /*  allocate the memory for this layer  */
   layer->linked = 0;
@@ -444,7 +447,7 @@ layer_copy (layer, add_alpha)
   /*  allocate a new layer object  */
   new_layer = layer_new_tag (GIMP_DRAWABLE(layer)->gimage_ID, 
 			 GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, 
-			 new_layer_tag, layer_name, 
+			 new_layer_tag, STORAGE_TILED, layer_name, 
 			 layer->opacity, layer->mode);
   if (!new_layer) {
     warning("layer_copy: could not allocate new layer");
@@ -577,7 +580,7 @@ layer_from_canvas (gimage_ptr, drawable, canvas, name, opacity, mode)
 
   /*  Create the new layer  */
   new_layer = layer_new_tag (0, canvas_width (canvas), canvas_height (canvas),
-			 new_layer_tag, name, opacity, mode);
+			 new_layer_tag, STORAGE_TILED, name, opacity, mode);
 
   if (!new_layer) {
     warning("layer_from_canvas: could not allocate new layer");
@@ -1985,7 +1988,7 @@ layer_mask_new_tag(int gimage_ID, int width, int height,
   layer_mask = gtk_type_new (gimp_layer_mask_get_type ());
 
   gimp_drawable_configure_tag (GIMP_DRAWABLE(layer_mask), 
-			   gimage_ID, width, height, tag, name);
+			   gimage_ID, width, height, tag, STORAGE_TILED, name);
 
   /*  set the layer_mask color and opacity  */
   for (i = 0; i < 3; i++)

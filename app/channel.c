@@ -138,7 +138,7 @@ channel_new_tag (int gimage_ID, int width, int height, Tag tag, char *name, int 
   channel = gtk_type_new (gimp_channel_get_type ());
 
   gimp_drawable_configure_tag (GIMP_DRAWABLE(channel), 
-			   gimage_ID, width, height, tag, name);
+			   gimage_ID, width, height, tag, STORAGE_TILED, name);
 
   /*  set the channel color and opacity  */
   for (i = 0; i < 3; i++)

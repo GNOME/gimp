@@ -390,6 +390,11 @@ init_constants ()
   setvar (cintern ("RGB"), flocons (0), NIL);
   setvar (cintern ("GRAY"), flocons (1), NIL);
   setvar (cintern ("INDEXED"), flocons (2), NIL);
+  setvar (cintern ("U16_RGB"), flocons (3), NIL);
+  setvar (cintern ("U16_GRAY"), flocons (4), NIL);
+  setvar (cintern ("U16_INDEXED"), flocons (5), NIL);
+  setvar (cintern ("FLOAT_RGB"), flocons (6), NIL);
+  setvar (cintern ("FLOAT_GRAY"), flocons (7), NIL);
 
   setvar (cintern ("RGB_IMAGE"), flocons (0), NIL);
   setvar (cintern ("RGBA_IMAGE"), flocons (1), NIL);
@@ -397,6 +402,16 @@ init_constants ()
   setvar (cintern ("GRAYA_IMAGE"), flocons (3), NIL);
   setvar (cintern ("INDEXED_IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA_IMAGE"), flocons (5), NIL);
+  setvar (cintern ("U16_RGB_IMAGE"), flocons (6), NIL);
+  setvar (cintern ("U16_RGBA_IMAGE"), flocons (7), NIL);
+  setvar (cintern ("U16_GRAY_IMAGE"), flocons (8), NIL);
+  setvar (cintern ("U16_GRAYA_IMAGE"), flocons (9), NIL);
+  setvar (cintern ("U16_INDEXED_IMAGE"), flocons (10), NIL);
+  setvar (cintern ("U16_INDEXEDA_IMAGE"), flocons (11), NIL);
+  setvar (cintern ("FLOAT_RGB_IMAGE"), flocons (12), NIL);
+  setvar (cintern ("FLOAT_RGBA_IMAGE"), flocons (13), NIL);
+  setvar (cintern ("FLOAT_GRAY_IMAGE"), flocons (14), NIL);
+  setvar (cintern ("FLOAT_GRAYA_IMAGE"), flocons (15), NIL);
 
   setvar (cintern ("RED-CHANNEL"), flocons (0), NIL);
   setvar (cintern ("GREEN-CHANNEL"), flocons (1), NIL);

@@ -292,6 +292,9 @@ plug-ins/gbr/Makefile
 plug-ins/tiff/Makefile
 plug-ins/sgi/Makefile
 plug-ins/pat/Makefile
+plug-ins/script-fu/Makefile
+plug-ins/script-fu/scripts/Makefile
+plug-ins/dbbrowser/Makefile
 app/Makefile
 docs/Makefile
 )

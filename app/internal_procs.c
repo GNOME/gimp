@@ -66,10 +66,12 @@
 #include "rotate_tool.h"
 #include "scale_tool.h"
 #include "shear_tool.h"
+#include "shmbuf.h"
 #include "text_tool.h"
 #include "threshold.h"
 #include "undo_cmds.h"
 #include "procedural_db.h"
+
 
 
 void
@@ -77,7 +79,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 204;
+  gfloat total_pcount = 209;
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
 
@@ -365,4 +367,15 @@ internal_procs_init ()
   procedural_db_register (&procedural_db_proc_val_proc); pcount++;
   procedural_db_register (&procedural_db_get_data_proc); pcount++;
   procedural_db_register (&procedural_db_set_data_proc); pcount++;
+
+  
+  app_init_update_status(NULL, "Shared Memory Images",
+			 pcount/total_pcount);
+
+  /*  SHM  */
+  procedural_db_register (&shmseg_new_proc); pcount++;
+  procedural_db_register (&shmseg_delete_proc); pcount++;
+  procedural_db_register (&shmseg_attach_proc); pcount++;
+  procedural_db_register (&shmseg_detach_proc); pcount++;
+  procedural_db_register (&shmseg_status_proc); pcount++;
 }

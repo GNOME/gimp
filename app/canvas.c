@@ -20,21 +20,27 @@
 
 #include "canvas.h"
 #include "flatbuf.h"
+#include "shmbuf.h"
 #include "tilebuf.h"
 #include "trace.h"
 
 
 struct _Canvas
 {
-  Storage    storage;
-  AutoAlloc  autoalloc;
-  TileBuf  * tile_data;
-  FlatBuf  * flat_data;
-
-  Tag   tag;
-  int   bytes;
+  /* the image size */
   int   width;
   int   height;
+
+  /* should a ref of a non-existent area allocate the memory? */
+  AutoAlloc  autoalloc;
+
+  /* the physical buffer holding the image */
+  Storage    storage;
+  void *     rep;
+
+  /* cached info about the physical rep */
+  Tag   tag;
+  int   bytes;
 };
 
 
@@ -62,16 +68,20 @@ canvas_new (
   switch (storage)
     {
     case STORAGE_FLAT:
-      c->tile_data = NULL;
-      c->flat_data = flatbuf_new (tag, w, h, c);
+      c->rep = (void *) flatbuf_new (tag, w, h, c);
       break;
     case STORAGE_TILED:
-      c->flat_data = NULL;
-      c->tile_data = tilebuf_new (tag, w, h, c);
+      c->rep = (void *) tilebuf_new (tag, w, h, c);
+      break;
+    case STORAGE_SHM:
+      c->rep = (void *) shmbuf_new (tag, w, h, c);
       break;
     default:
-      g_free (c);
-      return NULL;
+      c->storage = STORAGE_NONE;
+      c->rep = NULL;
+      c->tag = tag_null ();
+      c->bytes = tag_bytes (c->tag);
+      break;
     }
 
   return c;
@@ -85,10 +95,23 @@ canvas_delete  (
 {
   if (c)
     {
-      if (c->tile_data)
-        tilebuf_delete (c->tile_data);
-      if (c->flat_data)
-        flatbuf_delete (c->flat_data);
+      if (c->rep)
+        {
+          switch (c->storage)
+            {
+            case STORAGE_FLAT:
+              flatbuf_delete ((FlatBuf *) c->rep);
+              break;
+            case STORAGE_TILED:
+              tilebuf_delete ((TileBuf *) c->rep);
+              break;
+            case STORAGE_SHM:
+              shmbuf_delete ((ShmBuf *) c->rep);
+              break;
+            default:
+              break;
+            }
+        }
       g_free (c);
     }
 }
@@ -102,18 +125,29 @@ canvas_info (
   if (c)
     {
       trace_begin ("Canvas 0x%x", c);
+      trace_printf ("Width: %d  Height: %d", c->width, c->height);
       trace_printf (c->autoalloc==AUTOALLOC_ON ? "AutoAlloc" : "No AutoAlloc" );
-      switch (c->storage)
+      if (c->rep)
         {
-        case STORAGE_TILED:
-          tilebuf_info (c->tile_data);
-          break;
-        case STORAGE_FLAT:
-          flatbuf_info (c->flat_data);
-          break;
-        default:
-          trace_printf ("Unknown image data");
-          break;
+          switch (c->storage)
+            {
+            case STORAGE_TILED:
+              tilebuf_info ((TileBuf *) c->rep);
+              break;
+            case STORAGE_FLAT:
+              flatbuf_info ((FlatBuf *) c->rep);
+              break;
+            case STORAGE_SHM:
+              shmbuf_info ((ShmBuf *) c->rep);
+              break;
+            default:
+              trace_printf ("Unknown image data");
+              break;
+            }
+        }
+      else
+        {
+          trace_printf ("No image data");
         }
       trace_end ();
     }
@@ -125,10 +159,7 @@ canvas_tag  (
              Canvas * c
              )
 {
-  if (c)
-    return c->tag;
-
-  return tag_null ();
+  return ( c ? c->tag : tag_null ());
 }
 
 
@@ -243,12 +274,22 @@ canvas_portion_ref  (
 {
   RefRC rc = REFRC_FAIL;
   
-  if (c)
+  if (c && c->rep)
     {
-      if (c->tile_data)
-        rc = tilebuf_portion_ref (c->tile_data, x, y);
-      else if (c->flat_data)
-        rc = flatbuf_portion_ref (c->flat_data, x, y);
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          rc = tilebuf_portion_ref ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          rc = flatbuf_portion_ref ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          rc = shmbuf_portion_ref ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
     }
   
   switch (rc)
@@ -274,12 +315,22 @@ canvas_portion_refrw  (
 {
   RefRC rc = REFRC_FAIL;
   
-  if (c)
+  if (c && c->rep)
     {
-      if (c->tile_data)
-        rc = tilebuf_portion_refrw (c->tile_data, x, y);
-      else if (c->flat_data)
-        rc = flatbuf_portion_refrw (c->flat_data, x, y);
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          rc = tilebuf_portion_refrw ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          rc = flatbuf_portion_refrw ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          rc = shmbuf_portion_refrw ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
     }
   
   switch (rc)
@@ -305,12 +356,23 @@ canvas_portion_unref  (
 {
   RefRC rc = REFRC_FAIL;
   
-  if (c)
+
+  if (c && c->rep)
     {
-      if (c->tile_data)
-        rc = tilebuf_portion_unref (c->tile_data, x, y);
-      else if (c->flat_data)
-        rc = flatbuf_portion_unref (c->flat_data, x, y);
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          rc = tilebuf_portion_unref ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          rc = flatbuf_portion_unref ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          rc = shmbuf_portion_unref ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
     }
   
   switch (rc)
@@ -335,11 +397,23 @@ canvas_portion_width  (
                        int y
                        )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_width (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_width (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_width ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_width ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_width ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return 0;
 }
@@ -352,11 +426,23 @@ canvas_portion_height  (
                         int y
                         )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_height (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_height (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_height ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_height ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_height ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return 0;
 }
@@ -369,11 +455,23 @@ canvas_portion_y  (
                    int y
                    )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_y (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_y (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_y ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_y ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_y ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return 0;
 }
@@ -386,11 +484,23 @@ canvas_portion_x  (
                    int y
                    )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_x (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_x (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_x ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_x ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_x ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return 0;
 }
@@ -403,11 +513,23 @@ canvas_portion_data  (
                       int y
                       )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_data (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_data (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_data ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_data ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_data ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return NULL;
 }
@@ -420,11 +542,23 @@ canvas_portion_rowstride  (
                            int y
                            )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_rowstride (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_rowstride (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_rowstride ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_rowstride ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_rowstride ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return 0;
 }
@@ -437,11 +571,23 @@ canvas_portion_alloced  (
                          int y
                          )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_alloced (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_alloced (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_alloced ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_alloced ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_alloced ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return FALSE;
 }
@@ -454,11 +600,23 @@ canvas_portion_alloc  (
                        int y
                        )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_alloc (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_alloc (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_alloc ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_alloc ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_alloc ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return FALSE;
 }
@@ -471,11 +629,23 @@ canvas_portion_unalloc  (
                          int y
                          )
 {
-  if (c)
-    if (c->tile_data)
-      return tilebuf_portion_unalloc (c->tile_data, x, y);
-    else if (c->flat_data)
-      return flatbuf_portion_unalloc (c->flat_data, x, y);
+  if (c && c->rep)
+    {
+      switch (c->storage)
+        {
+        case STORAGE_TILED:
+          return tilebuf_portion_unalloc ((TileBuf *) c->rep, x, y);
+          break;
+        case STORAGE_FLAT:
+          return flatbuf_portion_unalloc ((FlatBuf *) c->rep, x, y);
+          break;
+        case STORAGE_SHM:
+          return shmbuf_portion_unalloc ((ShmBuf *) c->rep, x, y);
+          break;
+        default:
+          break;
+        }
+    }
 
   return FALSE;
 }

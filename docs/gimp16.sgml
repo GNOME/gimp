@@ -10,7 +10,7 @@
         <name>Ray Lehtiniemi</name>
       </author>
 
-      <date>June 22, 1998</date>
+      <date>July 5, 1998</date>
 
       <abstract>Work is being done by Ray Lehtiniemi, Calvin
       Williamson, and Bill Bishop to add 16 bit image support to the
@@ -46,6 +46,11 @@
 
       <p>transform core is under way.  A major thing still missing is
       layers and channel support, as well as cut/paste.</p>
+
+      <p>Experimental support is in place for painting to images in
+      memory shared with another process.  This allows Gimp to be used
+      as an efficient image compositing and touch-up server by another
+      image processing tool.</p>
 
     </chapt>
 
@@ -109,11 +114,11 @@
         interface.  This abstract interface is called Canvas.</p>
 
         <p>Canvas could be implemented in many different ways.  At
-        present, there are two implementations, TileBuf and FlatBuf.
-        These correspond to TileManager and TempBuf,
-        respectively. Other possibilities include blocks of memory
-        shared with another process and mmap()ed TIFF or XCF
-        files.</p>
+        present, there are two implementations, TileBuf and
+        FlatBuf. These correspond to TileManager and TempBuf,
+        respectively.  An experimental shared memory implementation
+        exists, called ShmBuf.  Other possibilities include mmap()ed
+        TIFF or XCF files.</p>
 
       </sect>
 
@@ -148,9 +153,9 @@
         operators with random access to arbitrarily tiled image
         data.</p>
 
-        <p>There are currently two implementations of the canvas
-        interface, tilebuf and flatbuf.  They are selected by the
-        chosen storage format.</p>
+        <p>There are currently one experimental and two working
+        implementations of the canvas interface.  They are selected by
+        the chosen storage format.</p>
 
         <sect1>
           <heading>TileBuf</heading>
@@ -168,6 +173,19 @@
           <p>FlatBuf is the replacement for TempBuf.  Again, swapping
           to disk is unimplemented at present.</p>
           
+        </sect1>
+
+        <sect1>
+          <heading>ShmBuf</heading>
+
+          <p>ShmBuf is an experimental shared memory interface.  The
+          intent is to allow Gimp to connect to an image in another
+          processes address space and manipulate it directly. At
+          present, the system is limited to sharing a single image
+          buffer in a single shared memory segment between multiple
+          invocations of the Gimp.  The data is arranged in a FlatBuf
+          format with no Tag or type information.</p>
+
         </sect1>
 
       </sect>
@@ -265,6 +283,25 @@
         and saves to compete with existing commercial packages.  Gimp
         loaded a 2048x1536 image in 122 seconds, versus 8-20 seconds
         for various other packages.</p>
+
+      </sect>
+
+
+      
+      <sect>
+        <heading>Image Creation</heading>
+        
+        <p>Right now, when a Layer, Channel, etc is created, the
+        associated physical storage is created "behind-the-scenes" in
+        gimp_drawable_configure().  The user has no control over the
+        storage format chosen, which is STORAGE_TILED by default.  To
+        support shared memory images nicely, it will probably be
+        neccesary to provide an interface where the user creates a
+        physical representation manually, then constructs the image
+        around it.  ie: create the buffer, then fill in the image
+        fields from it, rather than specifying the image
+        characteristics and creating a blank buffer to store the
+        data.</p>
 
       </sect>
 
@@ -525,6 +562,8 @@
             <item><url url="tilebuf.c"></item>
             <item><url url="flatbuf.h"></item>
             <item><url url="flatbuf.c"></item>
+            <item><url url="shmbuf.h"></item>
+            <item><url url="shmbuf.c"></item>
           </itemize></p>
 
       </sect>
@@ -539,16 +578,14 @@
         like convolution will work on both tiled and non-tiled images
         without modification.</p>
 
-        <p>A canvas may be created from scratch or cloned from an
-        existing canvas.  However a canvas is created, the image size
-        and tag are fixed. These values may not be subsequently
-        changed. Query operations are provided to retrieve these
-        values. (It might be good to provide canvas resizing, but a
-        change of tag will require an image copy anyway, so there is
-        no benefit over simply copying the image to a differently
-        tagged buffer)</p>
+        <p>When a canvas is created, the image size and tag are
+        fixed. These values may not be subsequently changed. Query
+        operations are provided to retrieve these values. (It might be
+        good to provide canvas resizing, but a change of tag will
+        require an image copy anyway, so there is no benefit over
+        simply copying the image to a differently tagged buffer)</p>
 
-        <p>The essential interface provided by the canvas object is
+        <p>The essential abstraction provided by the canvas object is
         the "portion".  A portion is an area of the image defined
         relative to a single coordinate.  Specifically, the coordinate
         fixes the upper left corner of a rectangular portion of the
@@ -565,27 +602,43 @@
         store.</p>
 
         <p>Given these definitions, it is clear that canvases are
-        constructed of rectangular tiles of indeterminate size.  Any
-        given point on a tile splits that tile into quadrants.  The
-        portion associated with that pixel at that point is defined to
-        be the lower right quadrant.</p>
+        constructed of rectangular tiles of indeterminate size.  The
+        entire tile forms a contiguous chunk of memory which is
+        independently allocated from any other tile.  Any given point
+        on a tile splits that tile into quadrants.  The portion
+        associated with that pixel at that point is defined to be the
+        lower right quadrant of the tile.</p>
 
         <p>Memory management is done by "referencing" portions.  The
         act of referencing a portion causes memory for that portion to
-        be either allocated or swapped in.  Allocating memory for the
-        portion will also cause memory for the other three quadrants
-        to be allocated (unless the pixel is the top left corner of a
-        tile).  The allocated memory is zero-filled.  Additional
-        references to a given portion increment the refcount.
-        Unreferencing the portion reduces the refcount.  If this count
-        drops to zero, the portion is swapped to disk
-        (unimplemented).</p>
+        be either allocated or swapped in.  Additional references to a
+        given portion increment the refcount.  Unreferencing the
+        portion reduces the refcount.  If this count drops to zero,
+        the portion is swapped to disk (unimplemented at present).</p>
+
+        <p>You must declare your intention to modify a portion at the
+        time it is referenced, rather than when it is unreferenced.
+        This is to pave the way for copy-on-write (COW) tiles in the
+        future.</p>
 
         <p>No memory is allocated for the image portions at canvas
-        creation time.  By default, pieces of backing store are
-        allocated on an as-needed basis when canvas portions are
-        referenced.  If this automatic allocation feature is not
-        desirable, it may be disabled for any canvas.</p>
+        creation time.  By default, pieces of backing store are lazily
+        allocated when canvas portions are referenced.  Allocating
+        memory for a portion will also cause memory for the other
+        three quadrants to be allocated.  The allocated memory is
+        zero-filled.  If an initializer is registered for the Canvas,
+        it is called to fill the entire chunk of backing store (all
+        parts of all four quadrants lying within the image boundaries)
+        with initial values.</p>
+
+        <p>If the automatic allocation feature is not desirable (eg:
+        undo_tiles in paint_core), it may be disabled for that
+        particular canvas.  The canvas is then called "sparse", and a
+        reference of an unallocated portion will fail.  Memory will
+        only be allocated if explicitly requested via the
+        canvas_portion_alloc() method.  This is useful when you would
+        like allocation and initialization to be controlled by a
+        single routine.</p>
 
         <p>If a portion has allocated backing store, then a pointer to
         the image data for the portion may be retrieved.  Using the
@@ -594,11 +647,11 @@
         fact that the portion defines a contiguous rectangular area of
         the image.</p>
 
-        <p>Currently, two canvas storage formats are supported.
-        STORAGE_FLAT is modelled after the old TempBuf paradigm, and
-        STORAGE_TILED is the replacement for TileManagers.  In the
-        future, a format is planned using shared memory with a package
-        called Chalice.</p>
+        <p>Currently, two canvas storage formats are
+        supported. STORAGE_FLAT is modelled after the old TempBuf
+        paradigm, and STORAGE_TILED is the replacement for
+        TileManagers.  Experimental support is in place for using
+        shared memory segments with a package called Chalice.</p>
 
       </sect>
 
@@ -655,6 +708,15 @@
         want.  If you would prefer to manually reference each portion
         of each canvas on each pass, use the <tt>noref</tt> variant of
         the pixelarea_register function.</p>
+
+        <p>PixelAreas will correctly handle "sparse" images, ie:
+        images which do not automatically allocate memory when they
+        are referenced.  If any Canvas in the set being iterated over
+        fails to reference (ie: it chose not to auto-alloc), then all
+        successful references are undone, and the iterator tries the
+        next segment until it finds one that works.  This means that
+        the user may observe the iterator "skipping" segments of the
+        image.</p>
 
         <p>PixelArea objects are meant to be allocated on the stack.
         They should not outlive the image manipulation operation being

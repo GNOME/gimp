@@ -76,6 +76,7 @@ typedef struct {
   int width;
   int height;
   int type;
+  Storage storage;
   int fill_type;
 } NewImageValues;
 
@@ -96,6 +97,7 @@ static void file_new_toggle_callback (GtkWidget *, gpointer);
 static   int          last_width = 256;
 static   int          last_height = 256;
 static   int          last_type = RGB;
+static   Storage      last_storage = STORAGE_TILED;
 static   int          last_fill_type = BACKGROUND_FILL;
 
 /*  preferences local functions  */
@@ -191,12 +193,14 @@ file_new_ok_callback (GtkWidget *widget,
   last_width = vals->width;
   last_height = vals->height;
   last_type = vals->type;
+  last_storage = vals->storage;
   last_fill_type = vals->fill_type;
 
   switch (vals->fill_type)
     {
     case BACKGROUND_FILL:
     case WHITE_FILL:
+    case NO_FILL:
       type = (vals->type == RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
       format = (vals->type == RGB) ? FORMAT_RGB: FORMAT_GRAY;
       alpha = ALPHA_NO;
@@ -226,15 +230,16 @@ file_new_ok_callback (GtkWidget *widget,
 
     /*  Make the background (or first) layer  */
     layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
-		       tag, "Background", OPAQUE_OPACITY, NORMAL);
+                           tag, vals->storage, "Background", OPAQUE_OPACITY, NORMAL);
   }
   if (layer) {
     /*  add the new layer to the gimage  */
     gimage_disable_undo (gimage);
     gimage_add_layer (gimage, layer, 0);
     gimage_enable_undo (gimage);
-    
-    drawable_fill (GIMP_DRAWABLE(layer), vals->fill_type);
+
+    if (vals->fill_type != NO_FILL)
+      drawable_fill (GIMP_DRAWABLE(layer), vals->fill_type);
 
     gimage_clean_all (gimage);
     
@@ -312,6 +317,7 @@ file_new_cmd_callback (GtkWidget *widget,
     gdisp = NULL;
 
   vals = g_malloc (sizeof (NewImageValues));
+  vals->storage = last_storage;
   vals->fill_type = last_fill_type;
 
   if (gdisp)
@@ -435,6 +441,49 @@ file_new_cmd_callback (GtkWidget *widget,
   gtk_widget_show (button);
 
 
+  frame = gtk_frame_new ("Storage Type");
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
+  gtk_container_add (GTK_CONTAINER (frame), radio_box);
+  gtk_widget_show (radio_box);
+
+  button = gtk_radio_button_new_with_label (NULL, "Tiled");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) STORAGE_TILED);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->storage);
+  if (vals->storage == STORAGE_TILED)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
+  button = gtk_radio_button_new_with_label (group, "Flat");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) STORAGE_FLAT);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->storage);
+  if (vals->storage == STORAGE_FLAT)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
+  button = gtk_radio_button_new_with_label (group, "Shared Memory");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) STORAGE_SHM);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->storage);
+  if (vals->storage == STORAGE_SHM)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
+
   frame = gtk_frame_new ("Fill Type");
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -474,6 +523,17 @@ file_new_cmd_callback (GtkWidget *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->fill_type);
   if (vals->fill_type == TRANSPARENT_FILL)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
+  button = gtk_radio_button_new_with_label (group, "No Fill");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) NO_FILL);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->fill_type);
+  if (vals->fill_type == NO_FILL)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 

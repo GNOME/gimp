@@ -48,13 +48,15 @@ layer_new_invoker (Argument *args)
   int mode;
   Argument *return_args;
   Tag tag;
+  Storage storage;
 
   layer     = NULL;
   gimage_id = -1;
   type      = 0;
   opacity   = 255;
   mode      = NORMAL_MODE;
-
+  storage   = STORAGE_TILED;
+  
   success = TRUE;
   if (success)
     {
@@ -74,7 +76,9 @@ layer_new_invoker (Argument *args)
     {
 #define LAYER_CMDS_C_1_cw
       int_value = args[3].value.pdb_int;
-      tag = tag_from_drawable_type (int_value);
+      tag = tag_from_drawable_type (int_value & 0xff);
+      if (int_value & 0xff00)
+        storage = STORAGE_SHM;
       if (!tag_valid (tag) )
 	success = FALSE;
     }
@@ -98,7 +102,7 @@ layer_new_invoker (Argument *args)
     }
 
   if (success)
-    success = ((layer = layer_new_tag (gimage_id, width, height, tag, name, opacity, mode)) != NULL);
+    success = ((layer = layer_new_tag (gimage_id, width, height, tag, storage, name, opacity, mode)) != NULL);
 
   return_args = procedural_db_return_args (&layer_new_proc, success);
 

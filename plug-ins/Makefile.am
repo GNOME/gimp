@@ -4,6 +4,8 @@ SUBDIRS = 			\
 	@TIFF@			\
 	gbr			\
 	pat			\
+	dbbrowser		\
+	script-fu		\
 	sgi
 
 scriptdata =
