@@ -25,6 +25,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
@@ -184,36 +185,24 @@ gimp_image_undo_group_end (GimpImage *gimage)
 
 GimpUndo *
 gimp_image_undo_push (GimpImage        *gimage,
+                      GType             undo_gtype,
                       gint64            size,
                       gsize             struct_size,
                       GimpUndoType      type,
                       const gchar      *name,
                       gboolean          dirties_image,
                       GimpUndoPopFunc   pop_func,
-                      GimpUndoFreeFunc  free_func)
+                      GimpUndoFreeFunc  free_func,
+                      ...)
 {
-  return gimp_image_undo_push_item (gimage, NULL,
-                                    size, struct_size,
-                                    type, name, dirties_image,
-                                    pop_func, free_func);
-}
-
-GimpUndo *
-gimp_image_undo_push_item (GimpImage        *gimage,
-                           GimpItem         *item,
-                           gint64            size,
-                           gsize             struct_size,
-                           GimpUndoType      type,
-                           const gchar      *name,
-                           gboolean          dirties_image,
-                           GimpUndoPopFunc   pop_func,
-                           GimpUndoFreeFunc  free_func)
-{
-  GimpUndo *undo;
-  gpointer  undo_struct = NULL;
+  GParameter *params   = NULL;
+  gint        n_params = 0;
+  va_list     args;
+  GimpUndo   *undo;
+  gpointer    undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (item == NULL || GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (g_type_is_a (undo_gtype, GIMP_TYPE_UNDO), NULL);
   g_return_val_if_fail (type > GIMP_UNDO_GROUP_LAST, NULL);
 
   /* Does this undo dirty the image?  If so, we always want to mark
@@ -225,40 +214,30 @@ gimp_image_undo_push_item (GimpImage        *gimage,
   if (gimage->undo_freeze_count > 0)
     return NULL;
 
+  if (! name)
+    name = gimp_undo_type_to_name (type);
+
   if (struct_size > 0)
     undo_struct = g_malloc0 (struct_size);
 
-  if (item)
-    {
-      undo = gimp_item_undo_new (gimage, item,
-                                 type, name,
-                                 undo_struct, size,
-                                 dirties_image,
-                                 pop_func, free_func);
-    }
-  else
-    {
-      undo = gimp_undo_new (gimage,
-                            type, name,
-                            undo_struct, size,
-                            dirties_image,
-                            pop_func, free_func);
-    }
+  params = gimp_parameters_append (undo_gtype, params, &n_params,
+                                   "name",          name,
+                                   "image",         gimage,
+                                   "undo-type",     type,
+                                   "dirties-image", dirties_image,
+                                   "data",          undo_struct,
+                                   "size",          size,
+                                   "pop-func",      pop_func,
+                                   "free-func",     free_func,
+                                   NULL);
 
-  if (gimp_image_undo_push_undo (gimage, undo))
-    return undo;
+  va_start (args, free_func);
+  params = gimp_parameters_append_valist (undo_gtype, params, &n_params, args);
+  va_end (args);
 
-  return NULL;
-}
+  undo = g_object_newv (undo_gtype, n_params, params);
 
-gboolean
-gimp_image_undo_push_undo (GimpImage *gimage,
-                           GimpUndo  *undo)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_UNDO (undo), FALSE);
-  g_return_val_if_fail (undo->gimage == gimage, FALSE);
-  g_return_val_if_fail (gimage->undo_freeze_count == 0, FALSE);
+  gimp_parameters_free (params, n_params);
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (gimage);
@@ -282,7 +261,7 @@ gimp_image_undo_push_undo (GimpImage *gimage,
 
       /*  freeing undo space may have freed the newly pushed undo  */
       if (gimp_undo_stack_peek (gimage->undo_stack) == undo)
-        return TRUE;
+        return undo;
     }
   else
     {
@@ -292,10 +271,10 @@ gimp_image_undo_push_undo (GimpImage *gimage,
 
       gimp_undo_stack_push_undo (undo_group, undo);
 
-      return TRUE;
+      return undo;
     }
 
-  return FALSE;
+  return NULL;
 }
 
 

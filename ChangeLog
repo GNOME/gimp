@@ -1,3 +1,27 @@
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpundo.[ch]
+	* app/core/gimpitemundo.[ch]
+	* app/text/gimptextundo.[ch]: removed all _new() functions and
+	added properties and GObject::constructor() implementations
+	instead.
+
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_push): added
+	"GType undo_gtype" parameter and allow to pass name-value pairs as
+	"...". Une the new GParameter utility functions to construct the
+	appropriate undo step with g_object_newv().
+
+	(gimp_image_undo_push_item): removed.
+
+	(gimp_image_undo_push_undo): removed. Merged its code back into
+	gimp_image_undo_push(), where it originally came from.
+
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpundostack.c
+	* app/paint/gimppaintcore-undo.c
+	* app/tools/gimptransformtool-undo.c
+	* app/widgets/gimpundoeditor.c: changed accordingly.
+
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c

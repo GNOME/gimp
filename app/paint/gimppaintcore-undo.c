@@ -59,17 +59,16 @@ gimp_paint_core_push_undo (GimpImage     *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
 
-  if ((new = gimp_image_undo_push (gimage,
+  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
                                    sizeof (PaintUndo),
                                    sizeof (PaintUndo),
                                    GIMP_UNDO_PAINT, undo_desc,
                                    FALSE,
                                    undo_pop_paint,
-                                   undo_free_paint)))
+                                   undo_free_paint,
+                                   NULL)))
     {
-      PaintUndo *pu;
-
-      pu = new->data;
+      PaintUndo *pu = new->data;
 
       pu->core        = core;
       pu->last_coords = core->start_coords;
@@ -87,9 +86,7 @@ undo_pop_paint (GimpUndo            *undo,
                 GimpUndoMode         undo_mode,
                 GimpUndoAccumulator *accum)
 {
-  PaintUndo *pu;
-
-  pu = (PaintUndo *) undo->data;
+  PaintUndo *pu = undo->data;
 
   /*  only pop if the core still exists  */
   if (pu->core)
@@ -108,9 +105,7 @@ static void
 undo_free_paint (GimpUndo     *undo,
                  GimpUndoMode  undo_mode)
 {
-  PaintUndo *pu;
-
-  pu = (PaintUndo *) undo->data;
+  PaintUndo *pu = undo->data;
 
   if (pu->core)
     g_object_remove_weak_pointer (G_OBJECT (pu->core), (gpointer) &pu->core);

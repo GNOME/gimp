@@ -46,17 +46,7 @@ struct _GimpItemUndoClass
 };
 
 
-GType      gimp_item_undo_get_type (void) G_GNUC_CONST;
-
-GimpUndo * gimp_item_undo_new      (GimpImage           *gimage,
-                                    GimpItem            *item,
-                                    GimpUndoType         undo_type,
-                                    const gchar         *name,
-                                    gpointer             data,
-                                    gint64               size,
-                                    gboolean             dirties_image,
-                                    GimpUndoPopFunc      pop_func,
-                                    GimpUndoFreeFunc     free_func);
+GType   gimp_item_undo_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_ITEM_UNDO_H__ */

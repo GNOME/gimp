@@ -31,24 +31,15 @@ gboolean   gimp_image_undo_group_start (GimpImage        *gimage,
 gboolean   gimp_image_undo_group_end   (GimpImage        *gimage);
 
 GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
+                                        GType             undo_gtype,
                                         gint64            size,
                                         gsize             struct_size,
                                         GimpUndoType      type,
                                         const gchar      *name,
                                         gboolean          dirties_image,
                                         GimpUndoPopFunc   pop_func,
-                                        GimpUndoFreeFunc  free_func);
-GimpUndo * gimp_image_undo_push_item   (GimpImage        *gimage,
-                                        GimpItem         *item,
-                                        gint64            size,
-                                        gsize             struct_size,
-                                        GimpUndoType      type,
-                                        const gchar      *name,
-                                        gboolean          dirties_image,
-                                        GimpUndoPopFunc   pop_func,
-                                        GimpUndoFreeFunc  free_func);
-gboolean   gimp_image_undo_push_undo   (GimpImage        *gimage,
-                                        GimpUndo         *undo);
+                                        GimpUndoFreeFunc  free_func,
+                                        ...);
 
 
 #endif /* __GIMP_IMAGE_UNDO_H__ */

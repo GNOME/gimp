@@ -67,18 +67,17 @@ gimp_transform_tool_push_undo (GimpImage   *gimage,
 {
   GimpUndo *new;
 
-  if ((new = gimp_image_undo_push (gimage,
+  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
                                    sizeof (TransformUndo),
                                    sizeof (TransformUndo),
                                    GIMP_UNDO_TRANSFORM, undo_desc,
                                    FALSE,
                                    undo_pop_transform,
-                                   undo_free_transform)))
+                                   undo_free_transform,
+                                   NULL)))
     {
-      TransformUndo *tu;
+      TransformUndo *tu = new->data;
       gint           i;
-
-      tu = new->data;
 
       tu->tool_ID   = tool_ID;
       tu->tool_type = tool_type;
@@ -106,11 +105,8 @@ undo_pop_transform (GimpUndo            *undo,
 
   if (GIMP_IS_TRANSFORM_TOOL (active_tool))
     {
-      GimpTransformTool *tt;
-      TransformUndo     *tu;
-
-      tt = GIMP_TRANSFORM_TOOL (active_tool);
-      tu = (TransformUndo *) undo->data;
+      GimpTransformTool *tt = GIMP_TRANSFORM_TOOL (active_tool);
+      TransformUndo     *tu = undo->data;
 
       /*  only pop if the active tool is the tool that pushed this undo  */
       if (tu->tool_ID == active_tool->ID)
@@ -150,9 +146,7 @@ static void
 undo_free_transform (GimpUndo     *undo,
                      GimpUndoMode  undo_mode)
 {
-  TransformUndo * tu;
-
-  tu = (TransformUndo *) undo->data;
+  TransformUndo * tu = undo->data;
 
   if (tu->original)
     tile_manager_unref (tu->original);

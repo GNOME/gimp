@@ -250,9 +250,10 @@ gimp_undo_editor_fill (GimpUndoEditor *editor)
 
   /*  create a container as model for the undo history list  */
   editor->container = gimp_list_new (GIMP_TYPE_UNDO, FALSE);
-  editor->base_item = gimp_undo_new (gimage, GIMP_UNDO_GROUP_NONE,
-                                     _("[ Base Image ]"),
-                                     NULL, 0, FALSE, NULL, NULL);
+  editor->base_item = g_object_new (GIMP_TYPE_UNDO,
+                                    "image", gimage,
+                                    "name",  _("[ Base Image ]"),
+                                    NULL);
 
   /*  the list prepends its items, so first add the redo items...  */
   for (list = GIMP_LIST (gimage->redo_stack->undos)->list;

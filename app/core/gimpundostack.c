@@ -168,15 +168,11 @@ gimp_undo_stack_free (GimpUndo     *undo,
 GimpUndoStack *
 gimp_undo_stack_new (GimpImage *gimage)
 {
-  GimpUndoStack *stack;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  stack = g_object_new (GIMP_TYPE_UNDO_STACK, NULL);
-
-  GIMP_UNDO (stack)->gimage = gimage;
-
-  return stack;
+  return g_object_new (GIMP_TYPE_UNDO_STACK,
+                       "image", gimage,
+                       NULL);
 }
 
 void

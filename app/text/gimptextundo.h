@@ -51,9 +51,5 @@ struct _GimpTextUndoClass
 
 GType      gimp_text_undo_get_type (void) G_GNUC_CONST;
 
-GimpUndo * gimp_text_undo_new      (GimpTextLayer    *layer,
-                                    const GParamSpec *pspec,
-                                    const gchar      *name);
-
 
 #endif /* __GIMP_TEXT_UNDO_H__ */

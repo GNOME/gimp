@@ -42,11 +42,33 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_IMAGE,
+  PROP_UNDO_TYPE,
+  PROP_DIRTIES_IMAGE,
+  PROP_DATA,
+  PROP_SIZE,
+  PROP_POP_FUNC,
+  PROP_FREE_FUNC
+};
+
 
 static void      gimp_undo_class_init          (GimpUndoClass       *klass);
-static void      gimp_undo_init                (GimpUndo            *undo);
 
+static GObject * gimp_undo_constructor         (GType                type,
+                                                guint                n_params,
+                                                GObjectConstructParam *params);
 static void      gimp_undo_finalize            (GObject             *object);
+static void      gimp_undo_set_property        (GObject             *object,
+                                                guint                property_id,
+                                                const GValue        *value,
+                                                GParamSpec          *pspec);
+static void      gimp_undo_get_property        (GObject             *object,
+                                                guint                property_id,
+                                                GValue              *value,
+                                                GParamSpec          *pspec);
 
 static gint64    gimp_undo_get_memsize         (GimpObject          *object,
                                                 gint64              *gui_size);
@@ -86,19 +108,19 @@ gimp_undo_get_type (void)
       static const GTypeInfo undo_info =
       {
         sizeof (GimpUndoClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_undo_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpUndo),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_undo_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_undo_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpUndo),
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       undo_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					  "GimpUndo",
-					  &undo_info, 0);
+                                          "GimpUndo",
+                                          &undo_info, 0);
   }
 
   return undo_type;
@@ -107,38 +129,37 @@ gimp_undo_get_type (void)
 static void
 gimp_undo_class_init (GimpUndoClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   undo_signals[POP] =
     g_signal_new ("pop",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpUndoClass, pop),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM_POINTER,
-		  G_TYPE_NONE, 2,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpUndoClass, pop),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM_POINTER,
+                  G_TYPE_NONE, 2,
                   GIMP_TYPE_UNDO_MODE,
                   G_TYPE_POINTER);
 
   undo_signals[FREE] =
     g_signal_new ("free",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpUndoClass, free),
-		  NULL, NULL,
-		  gimp_marshal_VOID__ENUM,
-		  G_TYPE_NONE, 1,
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpUndoClass, free),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
                   GIMP_TYPE_UNDO_MODE);
 
+  object_class->constructor        = gimp_undo_constructor;
   object_class->finalize           = gimp_undo_finalize;
+  object_class->set_property       = gimp_undo_set_property;
+  object_class->get_property       = gimp_undo_get_property;
 
   gimp_object_class->get_memsize   = gimp_undo_get_memsize;
 
@@ -148,18 +169,64 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   klass->pop                       = gimp_undo_real_pop;
   klass->free                      = gimp_undo_real_free;
+
+  g_object_class_install_property (object_class, PROP_IMAGE,
+                                   g_param_spec_object ("image", NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_UNDO_TYPE,
+                                   g_param_spec_enum ("undo-type", NULL, NULL,
+                                                      GIMP_TYPE_UNDO_TYPE,
+                                                      GIMP_UNDO_GROUP_NONE,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_DIRTIES_IMAGE,
+                                   g_param_spec_boolean ("dirties-image",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_DATA,
+                                   g_param_spec_pointer ("data", NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_SIZE,
+                                   g_param_spec_int64 ("size", NULL, NULL,
+                                                       0, G_MAXINT64, 0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_POP_FUNC,
+                                   g_param_spec_pointer ("pop-func", NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_FREE_FUNC,
+                                   g_param_spec_pointer ("free-func", NULL, NULL,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
-static void
-gimp_undo_init (GimpUndo *undo)
+static GObject *
+gimp_undo_constructor (GType                  type,
+                       guint                  n_params,
+                       GObjectConstructParam *params)
 {
-  undo->gimage        = NULL;
-  undo->undo_type     = 0;
-  undo->data          = NULL;
-  undo->dirties_image = FALSE;
-  undo->pop_func      = NULL;
-  undo->free_func     = NULL;
-  undo->preview       = NULL;
+  GObject  *object;
+  GimpUndo *undo;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  undo = GIMP_UNDO (object);
+
+  g_assert (GIMP_IS_IMAGE (undo->gimage));
+
+  return object;
 }
 
 static void
@@ -180,6 +247,81 @@ gimp_undo_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_undo_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GimpUndo *undo = GIMP_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      /* don't ref */
+      undo->gimage = (GimpImage *) g_value_get_object (value);
+      break;
+    case PROP_UNDO_TYPE:
+      undo->undo_type = g_value_get_enum (value);
+      break;
+    case PROP_DIRTIES_IMAGE:
+      undo->dirties_image = g_value_get_boolean (value);
+      break;
+    case PROP_DATA:
+      undo->data = g_value_get_pointer (value);
+      break;
+    case PROP_SIZE:
+      undo->size = g_value_get_int64 (value);
+      break;
+    case PROP_POP_FUNC:
+      undo->pop_func = g_value_get_pointer (value);
+      break;
+    case PROP_FREE_FUNC:
+      undo->free_func = g_value_get_pointer (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_undo_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GimpUndo *undo = GIMP_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      g_value_set_object (value, undo->gimage);
+      break;
+    case PROP_UNDO_TYPE:
+      g_value_set_enum (value, undo->undo_type);
+      break;
+    case PROP_DIRTIES_IMAGE:
+      g_value_set_boolean (value, undo->dirties_image);
+      break;
+    case PROP_DATA:
+      g_value_set_pointer (value, undo->data);
+      break;
+    case PROP_SIZE:
+      g_value_set_int64 (value, undo->size);
+      break;
+    case PROP_POP_FUNC:
+      g_value_set_pointer (value, undo->pop_func);
+      break;
+    case PROP_FREE_FUNC:
+      g_value_set_pointer (value, undo->free_func);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gint64
@@ -266,39 +408,6 @@ gimp_undo_real_free (GimpUndo     *undo,
 {
   if (undo->free_func)
     undo->free_func (undo, undo_mode);
-}
-
-GimpUndo *
-gimp_undo_new (GimpImage        *gimage,
-               GimpUndoType      undo_type,
-               const gchar      *name,
-               gpointer          data,
-               gint64            size,
-               gboolean          dirties_image,
-               GimpUndoPopFunc   pop_func,
-               GimpUndoFreeFunc  free_func)
-{
-  GimpUndo *undo;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (size == 0 || data != NULL, NULL);
-
-  if (! name)
-    name = gimp_undo_type_to_name (undo_type);
-
-  undo = g_object_new (GIMP_TYPE_UNDO,
-                       "name", name,
-                       NULL);
-
-  undo->gimage        = gimage;
-  undo->undo_type     = undo_type;
-  undo->data          = data;
-  undo->size          = size;
-  undo->dirties_image = dirties_image ? TRUE : FALSE;
-  undo->pop_func      = pop_func;
-  undo->free_func     = free_func;
-
-  return undo;
 }
 
 void
