@@ -21,11 +21,14 @@
 
 #include "gimpsignal.h"
 
+
+/* Courtesy of Austin Donnelly 06-04-2000 to address bug #2742 */
+
 /** 
- * gimp_signal: 
- * @signum:   selects signal to be handled see man 5 signal
- * @handler:  handler that maps to signum. Invoked by O/S. 
- *            handler gets signal that caused invocation. 
+ * gimp_signal_private: 
+ * @signum: selects signal to be handled see man 5 signal
+ * @gimp_sighandler:  handler that maps to signum. Invoked by O/S. 
+ *                    handler gets signal that caused invocation. 
  * @sa_flags: preferences. OR'ed SA_<xxx>. See signal.h 
  *
  * This function furnishes a workalike for signal(2) but
@@ -33,21 +36,17 @@
  * sa_flags are set; these primarily to ensure restarting
  * of interrupted system calls. See sigaction(2)  It is a 
  * aid to transition and not new development: that effort 
- * should employ sigaction directly. [<gosgood@idt.net> 18.04.2000] 
+ * should employ sigaction directly. [gosgood 18.04.2000] 
  *
  * Cause handler to be run when signum is delivered.  We
  * use sigaction(2) rather than signal(2) so that we can control the
  * signal hander's environment completely via sa_flags: some signal(2)
  * implementations differ in their sematics, so we need to nail down
- * exactly what we want. [<austin@gimp.org> 06.04.2000]
+ * exactly what we want. [austin 06.04.2000]
  *
- * Returns: RetSigType (a reference to a signal handling function)  
- *
+ * Returns: a reference to a signal handling function
  */
-
-/* Courtesy of Austin Donnelly 06-04-2000 to address bug #2742 */
-
-RetSigType
+GimpRetSigType
 gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags)
 {
   int ret;
