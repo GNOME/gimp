@@ -1013,9 +1013,6 @@ gimp_item_factory_translate_func (const gchar *path,
 	  complete    = g_strconcat (item_factory->path, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
-          gimp_factory->translation_trash =
-            g_list_prepend (gimp_factory->translation_trash, translation);
-
 	  while (*complete && *translation && strcmp (complete, full_path))
 	    {
 	      p = strrchr (complete, '/');
@@ -1034,8 +1031,11 @@ gimp_item_factory_translate_func (const gchar *path,
 	}
       else
 	{
-	  translation = dgettext (domain, full_path);
+	  translation = g_strdup (dgettext (domain, full_path));
 	}
+
+      gimp_factory->translation_trash =
+        g_list_prepend (gimp_factory->translation_trash, translation);
 
       if (strncmp (item_factory->path, translation,
                    strlen (item_factory->path)) == 0)

@@ -1,3 +1,9 @@
+2003-08-31  Manish Singh  <yosh@gimp.org>
+
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_translate_func):
+	make a copy of dgettext() results from full_path in all cases, since
+	it might return our original string. Fixes #121083.
+
 2003-08-31  Michael Natterer  <mitch@gimp.org>
 
 	Removed libgck from the public libgimp API:
@@ -205,7 +211,8 @@
 
 	* app/core/gimpimage-convert.c (gimp_image_convert): free the
 	colormap and set colormap size to 0 after converting from indexed.
-	Should make gimp_image_get_cmap() behave as advertized again.
+	Should make gimp_image_get_cmap() behave as advertised again.
+	Fixes #121033.
 
 	* tools/pdbgen/pdb/image.pdb: use gimp_image_get_colormap_size()
 	instead of accessing gimage->num_cols directly.
