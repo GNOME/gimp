@@ -172,8 +172,6 @@ static void       script_fu_ok                  (SFScript         *script);
 static void       script_fu_reset               (SFScript         *script);
 static void       script_fu_about_callback      (GtkWidget        *widget,
                                                  SFScript         *script);
-static void       script_fu_menu_callback       (gint32            id,
-                                                 gpointer          data);
 
 static void       script_fu_file_entry_callback (GtkWidget        *widget,
                                                  SFFilename       *fil);
@@ -1194,6 +1192,7 @@ script_fu_interface (SFScript *script)
       gchar     *label_text;
       gfloat     label_yalign     = 0.5;
       gboolean   widget_leftalign = TRUE;
+      gint      *ID_ptr           = NULL;
 
       /*  we add a colon after the label;
           some languages want an extra space here  */
@@ -1206,38 +1205,37 @@ script_fu_interface (SFScript *script)
 	case SF_DRAWABLE:
 	case SF_LAYER:
 	case SF_CHANNEL:
-	  widget = gtk_option_menu_new ();
 	  switch (script->arg_types[i])
 	    {
 	    case SF_IMAGE:
-	      menu = gimp_image_menu_new (NULL, script_fu_menu_callback,
-					  &script->arg_values[i].sfa_image,
-					  script->arg_values[i].sfa_image);
+              widget = gimp_image_combo_box_new (NULL, NULL);
+              ID_ptr = &script->arg_values[i].sfa_image;
 	      break;
 
 	    case SF_DRAWABLE:
-	      menu = gimp_drawable_menu_new (NULL, script_fu_menu_callback,
-					     &script->arg_values[i].sfa_drawable,
-					     script->arg_values[i].sfa_drawable);
-	      break;
+              widget = gimp_drawable_combo_box_new (NULL, NULL);
+              ID_ptr = &script->arg_values[i].sfa_drawable;
+              break;
 
 	    case SF_LAYER:
-	      menu = gimp_layer_menu_new (NULL, script_fu_menu_callback,
-					  &script->arg_values[i].sfa_layer,
-					  script->arg_values[i].sfa_layer);
+              widget = gimp_layer_combo_box_new (NULL, NULL);
+              ID_ptr = &script->arg_values[i].sfa_layer;
 	      break;
 
 	    case SF_CHANNEL:
-	      menu = gimp_channel_menu_new (NULL, script_fu_menu_callback,
-					    &script->arg_values[i].sfa_channel,
-					    script->arg_values[i].sfa_channel);
+              widget = gimp_channel_combo_box_new (NULL, NULL);
+              ID_ptr = &script->arg_values[i].sfa_channel;
 	      break;
 
 	    default:
 	      menu = NULL;
 	      break;
 	    }
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (widget), menu);
+
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), *ID_ptr);
+          g_signal_connect (widget, "changed",
+                            G_CALLBACK (gimp_int_combo_box_get_active),
+                            ID_ptr);
 	  break;
 
 	case SF_COLOR:
@@ -1956,13 +1954,6 @@ script_fu_about_callback (GtkWidget *widget,
     }
 
   gtk_widget_show (sf_interface->about_dialog);
-}
-
-static void
-script_fu_menu_callback (gint32   id,
-                         gpointer data)
-{
-  *((gint32 *) data) = id;
 }
 
 static void

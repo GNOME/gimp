@@ -1,6 +1,9 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimpdrawablecombobox.h
+ * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,24 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
-
-#include <gtk/gtk.h>
-
-#include <libgimpwidgets/gimpwidgets.h>
-
-#include <libgimp/gimpuitypes.h>
-
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimpbrushmenu.h>
-#include <libgimp/gimpfontmenu.h>
-#include <libgimp/gimpgradientmenu.h>
-#include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimppixbuf.h>
-#include <libgimp/gimpdrawablecombobox.h>
-#include <libgimp/gimpimagecombobox.h>
+#ifndef __GIMP_DRAWABLE_COMBO_BOX_H__
+#define __GIMP_DRAWABLE_COMBO_BOX_H__
 
 
 G_BEGIN_DECLS
@@ -42,10 +29,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+typedef gboolean (* GimpDrawableConstraintFunc) (gint32   image_id,
+                                                 gint32   drawable_id,
+                                                 gpointer data);
+
+
+GtkWidget * gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
+                                         gpointer                   data);
+GtkWidget * gimp_channel_combo_box_new  (GimpDrawableConstraintFunc constraint,
+                                         gpointer                   data);
+GtkWidget * gimp_layer_combo_box_new    (GimpDrawableConstraintFunc constraint,
+                                         gpointer                   data);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_DRAWABLE_COMBO_BOX_H__ */

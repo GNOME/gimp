@@ -206,6 +206,12 @@ libgimpui_2_0_la_SOURCES = \
 	gimpgradientmenu.h 	\
 	gimppatternmenu.c	\
 	gimppatternmenu.h	\
+	gimpdrawablecombobox.c	\
+	gimpdrawablecombobox.h	\
+	gimpimagecombobox.c	\
+	gimpimagecombobox.h	\
+	gimppixbuf.c		\
+	gimppixbuf.h		\
 	gimpexport.c		\
 	gimpexport.h
 
@@ -230,14 +236,17 @@ gimpinclude_HEADERS = \
 	gimpselection.h		\
 	gimptile.h		\
 	\
-	gimpexport.h		\
 	gimpui.h		\
 	gimpuitypes.h		\
 	gimpmenu.h		\
 	gimpbrushmenu.h		\
 	gimpfontmenu.h		\
 	gimpgradientmenu.h	\
-	gimppatternmenu.h
+	gimppatternmenu.h	\
+	gimppixbuf.h		\
+	gimpdrawablecombobox.h	\
+	gimpimagecombobox.h	\
+	gimpexport.h
 
 libgimp_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

@@ -1,3 +1,17 @@
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimppixbuf.[ch]: new file that holds pixbuf accessors
+	to gimp data (drawable and image thumbnails for now).
+
+	* libgimp/gimpdrawablecombobox.[ch]
+	* libgimp/gimpimagecombobox.[ch]: new files with GimpIntComboBox
+	constructors for image, drawable, channel and layer menus.
+
+	* plug-ins/script-fu/script-fu-scripts.c: use the new functions
+	instead of the gimpmenu API that is about to be deprecated.
+
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail): removed

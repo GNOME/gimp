@@ -1,6 +1,9 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimppixbuf.h
+ * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,24 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
-
-#include <gtk/gtk.h>
-
-#include <libgimpwidgets/gimpwidgets.h>
-
-#include <libgimp/gimpuitypes.h>
-
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimpbrushmenu.h>
-#include <libgimp/gimpfontmenu.h>
-#include <libgimp/gimpgradientmenu.h>
-#include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimppixbuf.h>
-#include <libgimp/gimpdrawablecombobox.h>
-#include <libgimp/gimpimagecombobox.h>
+#ifndef __GIMP_PIXBUF_H__
+#define __GIMP_PIXBUF_H__
 
 
 G_BEGIN_DECLS
@@ -42,10 +29,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+typedef enum
+{
+  GIMP_PIXBUF_KEEP_ALPHA,
+  GIMP_PIXBUF_SMALL_CHECKS,
+  GIMP_PIXBUF_LARGE_CHECKS
+} GimpPixbufTransparency;
+
+
+GdkPixbuf * gimp_image_get_thumbnail    (gint32                  image_ID,
+                                         gint                    width,
+                                         gint                    height,
+                                         GimpPixbufTransparency  alpha);
+GdkPixbuf * gimp_drawable_get_thumbnail (gint32                  drawable_ID,
+                                         gint                    width,
+                                         gint                    height,
+                                         GimpPixbufTransparency  alpha);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_PIXBUF_H__ */
