@@ -19,6 +19,11 @@
  *  CompuServe Incorporated.  GIF(sm) is a Service Mark property of
  *  CompuServe Incorporated." 
  */
+/* Copyright notice for GIF code from which this plugin was long ago     */
+/* derived (David Koblas has granted permission to relicense):           */
+/* +-------------------------------------------------------------------+ */
+/* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@extra.com)     | */
+/* +-------------------------------------------------------------------+ */
 
 /*
  * REVISION HISTORY
@@ -251,17 +256,6 @@
  *   dialog.
  *
  */
-
-/* Copyright notice for code which this plugin was long ago derived from */
-/* +-------------------------------------------------------------------+ */
-/* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@netcom.com)    | */
-/* |   Permission to use, copy, modify, and distribute this software   | */
-/* |   and its documentation for any purpose and without fee is hereby | */
-/* |   granted, provided that the above copyright notice appear in all | */
-/* |   copies and that both that copyright notice and this permission  | */
-/* |   notice appear in supporting documentation.  This software is    | */
-/* |   provided "as is" without express or implied warranty.           | */
-/* +-------------------------------------------------------------------+ */
 
 #include "config.h"
 

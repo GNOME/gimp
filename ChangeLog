@@ -1,3 +1,11 @@
+2003-05-13  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c: bolsh got permission from David Koblas
+        to relicense the prehistoric code that begat the original GIMP GIF
+	plugin, so Koblas' mildly-GPL-unfriendly license boilerplate can
+	finally rest in peace.
+
 2003-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added "gboolean clip_result" to
