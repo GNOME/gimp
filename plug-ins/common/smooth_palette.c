@@ -76,7 +76,7 @@ static void query()
 			 "Scott Draves",
 			 "Scott Draves",
 			 "1997",
-			 "<Image>/Filters/Colors/SmoothPalette...",
+			 "<Image>/Filters/Colors/Smooth Palette...",
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

@@ -1,3 +1,15 @@
+Wed Dec 15 00:10:54 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/channel_ops.c
+	* app/info_window.c
+	* app/nav_window.c
+	* app/tips_dialog.c
+	* app/undo_history.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/smooth_palette.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/fp/fp_gtk.c: more cosmetic changes
+
 Tue Dec 14 11:56:15 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdbgen.pl

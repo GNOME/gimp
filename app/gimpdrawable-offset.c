@@ -162,7 +162,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_widget_show (table);
 
   /*  The wrap around option  */
-  check = gtk_check_button_new_with_label (_("Wrap-Around"));
+  check = gtk_check_button_new_with_label (_("Wrap Around"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 

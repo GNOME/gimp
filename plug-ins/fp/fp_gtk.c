@@ -866,14 +866,6 @@ int fp_dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("Reset");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) resetFilterPacks,
-		      NULL);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   button = gtk_button_new_with_label ("OK");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -881,6 +873,14 @@ int fp_dialog()
 		      dlg);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ("Reset");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) resetFilterPacks,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label ("Cancel");

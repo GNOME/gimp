@@ -429,7 +429,7 @@ undo_history_gimage_rename_callback (GimpImage *gimage,
   undo_history_st *st = data;
   gchar *title;
 
-  title = g_strdup_printf (_("%s: undo history"),
+  title = g_strdup_printf (_("Undo History: %s"),
 			   g_basename (gimage_filename (gimage)));
   gtk_window_set_title (GTK_WINDOW (st->shell), title);
   g_free (title);

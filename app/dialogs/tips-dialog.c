@@ -67,7 +67,7 @@ tips_dialog_create ()
     {
       tips_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the day"));
+      gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
       gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
 			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);

@@ -111,7 +111,7 @@ query ()
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
 			  _("7th Aug 1999"),
-			  N_("<Image>/Filters/Colors/Color To Alpha..."),
+			  N_("<Image>/Filters/Colors/Color to Alpha..."),
 			  "RGBA",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -432,20 +432,23 @@ colortoalpha_dialog (GDrawable *drawable)
   gtk_widget_show (button);
 
   table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
   label = gtk_label_new (_("From:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults ( GTK_TABLE(table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
   
-  button = gimp_color_button_new (_("Color To Alpha Color Picker"), 
+  button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
 				  PRV_WIDTH, PRV_HEIGHT,
 				  pvals.color, 3);
-  gtk_table_attach( GTK_TABLE(table), button, 1, 2, 0, 1, 
-                                 GTK_EXPAND, GTK_SHRINK, 4, 4) ; 
+  gtk_table_attach (GTK_TABLE(table), button, 1, 2, 0, 1, 
+		    GTK_FILL, GTK_SHRINK, 4, 4) ; 
   gtk_widget_show(button);
   ppreview.color_button = button;
 
   label = gtk_label_new (_("to alpha"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults ( GTK_TABLE(table), label, 2, 3, 0, 1);
   gtk_widget_show (label);
 

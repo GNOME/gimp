@@ -1251,7 +1251,7 @@ nav_window_title(GDisplay   *gdisp)
   title = g_basename (gimage_filename (gdisp->gimage));
 
   /*  create the info dialog  */
-  title_buf = g_strdup_printf (_("Window Navigation:%s-%d.%d"), 
+  title_buf = g_strdup_printf (_("Navigation: %s-%d.%d"), 
 			       title,
 			       pdb_image_to_id (gdisp->gimage),
 			       gdisp->instance);

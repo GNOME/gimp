@@ -2227,7 +2227,7 @@ GtkWidget* makewindow (void)
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (window), "window", window);
   gtk_container_border_width (GTK_CONTAINER (window), 5);
-  gtk_window_set_title (GTK_WINDOW (window), _("SphereDesigner"));
+  gtk_window_set_title (GTK_WINDOW (window), _("Sphere Designer"));
   gtk_window_set_policy (GTK_WINDOW (window), FALSE, TRUE, FALSE);
 
   table1 = gtk_table_new (4, 3, FALSE);
@@ -2847,7 +2847,7 @@ static void query (void)
 			  "Vidar Madsen",
                           "Vidar Madsen",
                           "1999",
-                          N_("<Image>/Filters/Render/SphereDesigner..."),
+                          N_("<Image>/Filters/Render/Sphere Designer..."),
                           "RGB*, GRAY*",
                           PROC_PLUG_IN,
 			  nargs, nreturn_vals,
