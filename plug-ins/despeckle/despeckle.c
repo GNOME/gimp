@@ -43,22 +43,26 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.10  1998/04/24 02:18:39  yosh
- *   * Added sharpen to stable dist
+ *   Revision 1.11  1998/04/27 22:00:59  neo
+ *   Updated sharpen and despeckle. Wow, sharpen is balzingly fast now, while
+ *   despeckle is still sort of lame...
  *
- *   * updated sgi and despeckle plugins
  *
- *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
- *   to this is not-supported.
+ *   --Sven
  *
- *   * plug-in/gfig/gfig.c: spelling corrections :)
+ *   Revision 1.20  1998/04/27  15:59:17  mike
+ *   Fixed RGB preview problem...
  *
- *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
- *   file dialog
+ *   Revision 1.19  1998/04/27  15:45:27  mike
+ *   OK, put the shadow buffer stuff back in - without shadowing the undo stuff
+ *   will *not* work...  sigh...
+ *   Doubled tile cache to avoid cache thrashing with shadow buffer.
  *
- *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
- *
- *   -Yosh
+ *   Revision 1.18  1998/04/27  15:39:48  mike
+ *   Fixed destination region code - was using a shadow buffer when it wasn't
+ *   needed.
+ *   Now add 1 to the number of tiles needed in the cache to avoid possible
+ *   rounding error and resulting cache thrashing.
  *
  *   Revision 1.17  1998/04/23  14:39:47  mike
  *   Updated preview code to handle images with alpha (preview now shows checker
@@ -136,11 +140,19 @@
 
 
 /*
+ * Macros...
+ */
+
+#define MIN(a,b)		(((a) < (b)) ? (a) : (b))
+#define MAX(a,b)		(((a) > (b)) ? (a) : (b))
+
+
+/*
  * Constants...
  */
 
 #define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.3 - 23 April 1998"
+#define PLUG_IN_VERSION		"1.3.1 - 27 April 1998"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
@@ -390,8 +402,8 @@ run(char   *name,		/* I - Name of filter program. */
       * Set the tile cache size...
       */
 
-      gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) /
-                             gimp_tile_width());
+      gimp_tile_cache_ntiles(2 * (drawable->width + gimp_tile_width() - 1) /
+                             gimp_tile_width() + 1);
 
      /*
       * Run!
@@ -481,8 +493,10 @@ despeckle(void)
   * Setup for filter...
   */
 
-  gimp_pixel_rgn_init(&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  gimp_pixel_rgn_init(&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height,
+                      FALSE, FALSE);
+  gimp_pixel_rgn_init(&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height,
+                      TRUE, TRUE);
 
   size     = despeckle_radius * 2 + 1;
   max_row  = 2 * gimp_tile_height();
@@ -1097,7 +1111,7 @@ preview_update(void)
           break;
 
       case 3 :
-          memcpy(rgb_ptr, dst_ptr, preview_width * 3);
+          memcpy(rgb_ptr, preview_dst, preview_width * 3);
           break;
 
       case 4 :
@@ -1151,6 +1165,12 @@ preview_update(void)
 static void
 preview_exit(void)
 {
+  int	row,	/* Looping var */
+	size;	/* Size of row buffer */
+
+
+  size = MAX_RADIUS * 2 + 1;
+
   g_free(preview_src);
   g_free(preview_dst);
   g_free(preview_sort);
