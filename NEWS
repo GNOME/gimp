@@ -13,19 +13,27 @@ Overview of Changes in GIMP 2.1.4
 - Rewritten internal handling of progress indicators. Embed progress
   bars to the File Open dialog to reduce annoying dialogs popping up.
 
-- Ported remaining plug-ins to GimpPreviewArea and removed
+- Ported remaining plug-ins and modules to GimpPreviewArea and removed
   GimpOldPreview.
 
 - Show progress while converting from RGB to Indexed Colors.
 
-- Better previews in Unsharp Mask and Scatter RGB plug-ins.
+- Better previews in Unsharp Mask and Scatter RGB plug-ins, added
+  preview to Edge and Selective Gaussian Blur plug-ins.
 
 - Added new plug-ins Cartoon, Neon, Photocopy and Softglow.
+
+- Let color selectors adapt to the given size.
+
+- Import basic SVG shapes as paths.
+
+- Improved GIH and guillotine plug-ins.
+
 
 Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Shlomi Fish, Bill Skaggs,
-   Simon Budig, Ari Pollak, Spencer Kimball
+   Simon Budig, Ari Pollak, Spencer Kimball, Michael Schumacher
 
 
 
