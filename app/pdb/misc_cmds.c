@@ -30,7 +30,7 @@
 
 #include "app_procs.h"
 
-#include "libgimp/gimpfeatures.h"
+#include "libgimpbase/gimpbase.h"
 
 static ProcRecord version_proc;
 static ProcRecord quit_proc;

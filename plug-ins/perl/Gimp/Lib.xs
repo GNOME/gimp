@@ -1087,50 +1087,6 @@ destroy_params (GimpParam *arg, int count)
   g_free (arg);
 }
 
-#ifdef GIMP_HAVE_DESTROY_PARAMDEFS
-#define destroy_paramdefs gimp_destroy_paramdefs
-#else
-static void
-destroy_paramdefs (GimpParamDef *arg, int count)
-{
-  int i;
-  
-  for (i = 0; i < count; i++)
-    {
-      g_free (arg[i].name);
-      g_free (arg[i].description);
-    }
-  
-  g_free (arg);
-}
-#endif
-
-#ifdef GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE
-#define get_data_size gimp_get_data_size
-#else
-static guint32
-get_data_size (gchar *id)
-{
-  GimpParam *return_vals;
-  int nreturn_vals;
-  int length;
-
-  return_vals = gimp_run_procedure ("gimp_procedural_db_get_data",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, id,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    length = return_vals[1].data.d_int32;
-  else
-    length = 0;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return length;
-}
-#endif
-
 static void simple_perl_call (char *function, char *arg1)
 {
    dSP;
@@ -1191,7 +1147,7 @@ static void pii_run(char *name, int nparams, GimpParam *param, int *xnreturn_val
       g_free (proc_author);
       g_free (proc_copyright);
       g_free (proc_date);
-      destroy_paramdefs (params, _nparams);
+      gimp_destroy_paramdefs (params, _nparams);
       
       PUSHMARK(SP);
 
@@ -1267,7 +1223,7 @@ static void pii_run(char *name, int nparams, GimpParam *param, int *xnreturn_val
 	    err_msg = g_strdup_printf (__("plug-in returned %d more values than expected"), count);
 	}
       
-      destroy_paramdefs (return_defs, nreturn_vals);
+      gimp_destroy_paramdefs (return_defs, nreturn_vals);
       
       PUTBACK;
     }
@@ -1441,8 +1397,8 @@ _gimp_procedure_available(proc_name)
 		    g_free (proc_author);
 		    g_free (proc_copyright);
 		    g_free (proc_date);
-		    destroy_paramdefs (params, nparams);
-		    destroy_paramdefs (return_vals, nreturn_vals);
+		    gimp_destroy_paramdefs (params, nparams);
+		    gimp_destroy_paramdefs (return_vals, nreturn_vals);
 		    RETVAL = TRUE;
 		  }
 		else
@@ -1485,8 +1441,8 @@ gimp_procedural_db_proc_info(proc_name)
 		    PUSHs (newSVpv (proc_copyright,0));	g_free (proc_copyright);
 		    PUSHs (newSVpv (proc_date,0));	g_free (proc_date);
 		    PUSHs (newSViv (proc_type));
-                    PUSHs (newSV_paramdefs (params, nparams));		destroy_paramdefs (params, nparams);
-		    PUSHs (newSV_paramdefs (return_vals, nreturn_vals));destroy_paramdefs (return_vals, nreturn_vals);
+                    PUSHs (newSV_paramdefs (params, nparams));		gimp_destroy_paramdefs (params, nparams);
+		    PUSHs (newSV_paramdefs (return_vals, nreturn_vals));gimp_destroy_paramdefs (return_vals, nreturn_vals);
 		  }
 	}
 
@@ -1631,8 +1587,8 @@ gimp_call_procedure (proc_name, ...)
                     if (values)
                       gimp_destroy_params (values, nreturn_vals);
                     
-                    destroy_paramdefs (params, nparams);
-                    destroy_paramdefs (return_vals, nreturn_vals);
+                    gimp_destroy_paramdefs (params, nparams);
+                    gimp_destroy_paramdefs (return_vals, nreturn_vals);
                     
 		
                     if (croak_str[0])
@@ -1715,7 +1671,7 @@ gimp_get_data(id)
 		SV *data;
 		STRLEN dlen;
 		
-		dlen = get_data_size (SvPV_nolen (id));
+		dlen = gimp_get_data_size (SvPV_nolen (id));
 		/* I count on dlen being zero if "id" doesn't exist.  */
 		data = newSVpv ("", 0);
 		gimp_get_data (SvPV_nolen (id), SvGROW (data, dlen+1));
@@ -2289,12 +2245,8 @@ _gimp_progress_init (message)
         CODE:
         gimp_progress_init (message);
 
-#ifdef GIMP_HAVE_DEFAULT_DISPLAY
-
 DISPLAY
 gimp_default_display()
-
-#endif
 
 # functions using different calling conventions:
 #void

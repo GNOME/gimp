@@ -597,8 +597,6 @@ query (void)
 				    "");
 }
 
-
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 static void
 ps_set_save_size (PSSaveVals *vals,
                   gint32      image_ID)
@@ -636,7 +634,6 @@ ps_set_save_size (PSSaveVals *vals,
   vals->width  = iw;
   vals->height = ih;
 }
-#endif
 
 static void
 run (gchar   *name,
@@ -751,9 +748,8 @@ run (gchar   *name,
           if ((k >= 4) && (strcmp (param[3].data.d_string+k-4, ".eps") == 0))
             psvals.eps = 1;
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
           ps_set_save_size (&psvals, orig_image_ID);
-#endif
+
           /*  First acquire information with a dialog  */
           if (! save_dialog ())
             status = GIMP_PDB_CANCEL;
@@ -792,10 +788,9 @@ run (gchar   *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 	  if ((psvals.width == 0.0) || (psvals.height == 0.0))
 	    ps_set_save_size (&psvals, orig_image_ID);
-#endif
+
 	  check_save_vals ();
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
@@ -916,11 +911,11 @@ load_image (gchar *filename)
 	{
 	  image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
 	  if (image_ID == -1) break;
-#ifdef GIMP_HAVE_RESOLUTION_INFO
+
 	  gimp_image_set_resolution (image_ID,
 				     (double) plvals.resolution,
 				     (double) plvals.resolution);
-#endif
+
 	  if (n_images == max_images)
 	    {
 	      nl = (gint32 *) g_realloc (image_list,

@@ -221,7 +221,6 @@ WriteBMP (gchar  *filename,
 
   Bitmap_Head.biSizeIm = SpZeile * rows;
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     gdouble xresolution;
     gdouble yresolution;
@@ -243,10 +242,7 @@ WriteBMP (gchar  *filename,
         Bitmap_Head.biYPels = (long int) yresolution * 100.0 / 2.54;
       }
   }
-#else /* GIMP_HAVE_RESOLUTION_INFO */
-  Bitmap_Head.biXPels = 1;
-  Bitmap_Head.biYPels = 1;
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
+
   if (BitsPerPixel < 24) 
     Bitmap_Head.biClrUsed = colors;
   else 

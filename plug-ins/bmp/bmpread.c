@@ -239,24 +239,22 @@ ReadBMP (gchar *name)
 			rowbytes, 
 			Grey);
   
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   if (Bitmap_Head.biXPels > 0 && Bitmap_Head.biYPels > 0)
-  {
-    /* Fixed up from scott@asofyet's changes last year, njl195 */
-    gdouble xresolution;
-    gdouble yresolution;
+    {
+      /* Fixed up from scott@asofyet's changes last year, njl195 */
+      gdouble xresolution;
+      gdouble yresolution;
 
-    /* I don't agree with scott's feeling that Gimp should be
-     * trying to "fix" metric resolution translations, in the
-     * long term Gimp should be SI (metric) anyway, but we
-     * haven't told the Americans that yet  */
+      /* I don't agree with scott's feeling that Gimp should be
+       * trying to "fix" metric resolution translations, in the
+       * long term Gimp should be SI (metric) anyway, but we
+       * haven't told the Americans that yet  */
 
-    xresolution = Bitmap_Head.biXPels * 0.0254;
-    yresolution = Bitmap_Head.biYPels * 0.0254;
+      xresolution = Bitmap_Head.biXPels * 0.0254;
+      yresolution = Bitmap_Head.biYPels * 0.0254;
 
-    gimp_image_set_resolution (image_ID, xresolution, yresolution);
-  }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
 
   return (image_ID);
 }

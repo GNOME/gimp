@@ -246,9 +246,7 @@ run (gchar   *name,
   static GimpParam values[2];
   GimpRunModeType  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-#ifdef GIMP_HAVE_PARASITES
   GimpParasite *parasite;
-#endif /* GIMP_HAVE_PARASITES */
   gint32        image;
   gint32        drawable;
   gint32        orig_image;
@@ -307,12 +305,10 @@ run (gchar   *name,
 	  break;
 	}
 
-#ifdef GIMP_HAVE_PARASITES
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
         image_comment = g_strdup (parasite->data);
       gimp_parasite_free (parasite);
-#endif /* GIMP_HAVE_PARASITES */
 
       if (!image_comment)
 	image_comment = g_strdup (DEFAULT_COMMENT);	  
@@ -323,7 +319,6 @@ run (gchar   *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 
-#ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
@@ -331,7 +326,6 @@ run (gchar   *name,
 		((TiffSaveVals *) parasite->data)->compression;
 	    }
 	  gimp_parasite_free (parasite);
-#endif /* GIMP_HAVE_PARASITES */
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -363,7 +357,6 @@ run (gchar   *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 
-#ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
 	  if (parasite)
 	    {
@@ -371,7 +364,6 @@ run (gchar   *name,
 		((TiffSaveVals *) parasite->data)->compression;
 	    }
 	  gimp_parasite_free (parasite);
-#endif /* GIMP_HAVE_PARASITES */
 	  break;
 
 	default:
@@ -433,9 +425,7 @@ load_image (gchar *filename)
   gchar *name;
 
   TiffSaveVals save_vals;
-#ifdef GIMP_HAVE_PARASITES
   GimpParasite *parasite;
-#endif /* GIMP_HAVE_PARASITES */
   guint16 tmp;
 #ifdef TIFFTAG_ICCPROFILE
   uint32 profile_size;
@@ -541,12 +531,10 @@ load_image (gchar *filename)
 	/* If TIFFTAG_ICCPROFILE is defined we are dealing with a libtiff version 
          * that can handle ICC profiles. Otherwise just ignore this section. */
   if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile)) {
-#ifdef GIMP_HAVE_PARASITES
     parasite = gimp_parasite_new("icc-profile", 0,
 			    profile_size, icc_profile);
     gimp_image_parasite_attach(image, parasite);
     gimp_parasite_free(parasite);
-#endif
   }    
 #endif
 
@@ -555,18 +543,15 @@ load_image (gchar *filename)
     save_vals.compression = COMPRESSION_NONE;
   else
     save_vals.compression = tmp;
-#ifdef GIMP_HAVE_PARASITES
+
   parasite = gimp_parasite_new ("tiff-save-options", 0,
 				sizeof (save_vals), &save_vals);
   gimp_image_parasite_attach (image, parasite);
   gimp_parasite_free (parasite);
-#endif /* GIMP_HAVE_PARASITES */
-
 
   /* Attach a parasite containing the image description.  Pretend to
    * be a gimp comment so other plugins will use this description as
    * an image comment where appropriate. */
-#ifdef GIMP_HAVE_PARASITES
   {
     char *img_desc;
 
@@ -585,10 +570,8 @@ load_image (gchar *filename)
       gimp_parasite_free (parasite);
     }
   }
-#endif /* GIMP_HAVE_PARASITES */
 
   /* any resolution info in the file? */
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     gfloat   xres = 72.0, yres = 72.0;
     gushort  read_unit;
@@ -656,8 +639,6 @@ load_image (gchar *filename)
        should feel free to shoot the author of the broken program
        that produced the damaged TIFF file in the first place. */
   }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
-
 
   /* Install colormap for INDEXED images only */
   if (image_type == GIMP_INDEXED) 
@@ -1424,7 +1405,6 @@ save_image (gchar   *filename,
   /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
   TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   /* resolution fields */
   {
     gdouble  xresolution;
@@ -1456,12 +1436,10 @@ save_image (gchar   *filename,
 	TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
   }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   /* do we have a comment?  If so, create a new parasite to hold it,
    * and attach it to the image. The attach function automatically
    * detaches a previous incarnation of the parasite. */
-#ifdef GIMP_HAVE_PARASITES
   if (image_comment && *image_comment != '\000')
     {
       GimpParasite *parasite;
@@ -1473,10 +1451,8 @@ save_image (gchar   *filename,
       gimp_image_parasite_attach (orig_image, parasite);
       gimp_parasite_free (parasite);
     }
-#endif /* GIMP_HAVE_PARASITES */
 
   /* do we have an ICC profile? If so, write it to the TIFF file */
-#ifdef GIMP_HAVE_PARASITES
 #ifdef TIFFTAG_ICCPROFILE
   {
     GimpParasite *parasite;
@@ -1493,7 +1469,6 @@ save_image (gchar   *filename,
         gimp_parasite_free(parasite);
       }
   }
-#endif
 #endif
 
   if (drawable_type == GIMP_INDEXED_IMAGE)

@@ -360,9 +360,7 @@ run (gchar      *name,
   gint32                drawable_ID;
   gint32                orig_image_ID;
   gint32                display_ID = -1;
-#ifdef GIMP_HAVE_PARASITES
   GimpParasite         *parasite;
-#endif /* GIMP_HAVE_PARASITES */
   gboolean              err;
   GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
@@ -428,14 +426,13 @@ run (gchar      *name,
       g_free (image_comment);
       image_comment = NULL;
     
-#ifdef GIMP_HAVE_PARASITES
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
       if (parasite) 
 	{
 	  image_comment = g_strdup (parasite->data);
 	  gimp_parasite_free (parasite);
 	}
-#endif /* GIMP_HAVE_PARASITES */
+
       if (!image_comment) 
 	image_comment = g_strdup (DEFAULT_COMMENT);
 
@@ -455,7 +452,6 @@ run (gchar      *name,
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 
-#ifdef GIMP_HAVE_PARASITES
 	  /* load up the previously used values */
 	  parasite = gimp_image_parasite_find (orig_image_ID,
 					       "jpeg-save-options");
@@ -472,7 +468,6 @@ run (gchar      *name,
 	      jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
 	      gimp_parasite_free (parasite);
 	    }
-#endif /* GIMP_HAVE_PARASITES */
 
 	  /* we start an undo_group and immediately freeze undo saving
 	     so that we can avoid sucking up tile cache with our unneeded
@@ -536,7 +531,7 @@ run (gchar      *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
-#ifdef GIMP_HAVE_PARASITES
+
 	  parasite = gimp_image_parasite_find (orig_image_ID,
 					       "jpeg-save-options");
 	  if (parasite)
@@ -552,7 +547,6 @@ run (gchar      *name,
 	      jsvals.preview     = FALSE;
 	      gimp_parasite_free (parasite);
 	    }
-#endif /* GIMP_HAVE_PARASITES */
 	  break;
 
 	default:
@@ -587,7 +581,6 @@ run (gchar      *name,
 	    gimp_image_delete (image_ID);
 	}
 
-#ifdef GIMP_HAVE_PARASITES
       /* pw - now we need to change the defaults to be whatever
        * was used to save this image.  Dump the old parasites
        * and add new ones. */
@@ -608,7 +601,6 @@ run (gchar      *name,
 				    0, sizeof (jsvals), &jsvals);
       gimp_image_parasite_attach (orig_image_ID, parasite);
       gimp_parasite_free (parasite);
-#endif /* Have Parasites */  
     }
   else
     {
@@ -718,11 +710,9 @@ load_image (gchar           *filename,
   gint     scanlines;
   gint     i, start, end;
 
-#ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
   GimpParasite * volatile comment_parasite = NULL;
   GimpParasite * volatile vals_parasite    = NULL;
-#endif /* GIMP_HAVE_PARASITES */
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -777,7 +767,6 @@ load_image (gchar           *filename,
    * See libjpeg.doc for more info.
    */
 
-#ifdef GIMP_HAVE_PARASITES
   if (!preview) 
     {
       /* if we had any comments then make a parasite for them */
@@ -819,8 +808,6 @@ load_image (gchar           *filename,
 					 sizeof (local_save_vals),
 					 &local_save_vals);
     } 
-#endif /* GIMP_HAVE_PARASITES */
-  
   
   /* Step 4: set parameters for decompression */
 
@@ -907,7 +894,6 @@ load_image (gchar           *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height, TRUE, FALSE);
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   /* Step 5.1: if the file had resolution information, set it on the image */
   if (!preview && cinfo.saw_JFIF_marker)
     {
@@ -945,7 +931,6 @@ load_image (gchar           *filename,
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
     }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -1042,7 +1027,6 @@ load_image (gchar           *filename,
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
      there was no image. */
 
-#ifdef GIMP_HAVE_PARASITES
   if (!preview) 
     {
       if (comment_parasite)
@@ -1057,7 +1041,6 @@ load_image (gchar           *filename,
 	  gimp_parasite_free (vals_parasite);
 	}   
     }
-#endif /* GIMP_HAVE_PARASITES */
 
   return image_ID;
 }
@@ -1352,7 +1335,6 @@ save_image (gchar    *filename,
       break;
     }
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
   {
     gdouble xresolution;
     gdouble yresolution;
@@ -1382,7 +1364,6 @@ save_image (gchar    *filename,
 	cinfo.Y_density = yresolution;
       }
   }
-#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   /* Step 4: Start compressor */
 

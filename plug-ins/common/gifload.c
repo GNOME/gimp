@@ -85,9 +85,7 @@
 
 /* Does the version of GIMP we're compiling for support
    data attachments to images?  ('Parasites') */
-#ifdef GIMP_HAVE_PARASITES
 #define FACEHUGGERS aieee
-#endif
 /* PS: I know that technically facehuggers aren't parasites,
    the pupal-forms are.  But facehuggers are ky00te. */
 

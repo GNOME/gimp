@@ -17,12 +17,18 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
+	gimpversion.h.in	\
 	makefile.mingw		\
 	makefile.mingw.in	\
 	makefile.msc		\
 	gimpbase.def
 
 lib_LTLIBRARIES = libgimpbase-1.3.la
+
+# help `make' along by giving another name for the file, which it knows
+# how to build
+../libgimpbase/gimpversion.h: gimpversion.h
+	@:
 
 libgimpbase_1_3_la_SOURCES = \
 	gimpbase.h		\
@@ -41,6 +47,7 @@ libgimpbase_1_3_la_SOURCES = \
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpunit.h		\
+	gimpversion.h		\
 	gimpwire.c		\
 	gimpwire.h
 
@@ -53,7 +60,8 @@ libgimpbaseinclude_HEADERS = \
 	gimputils.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
-	gimpunit.h
+	gimpunit.h		\
+	gimpversion.h
 
 libgimpbase_1_3_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)

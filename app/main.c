@@ -40,8 +40,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "libgimp/gimpfeatures.h"
-
 #include "apptypes.h"
 
 #include "appenv.h"

@@ -1,3 +1,43 @@
+2001-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/.cvsignore
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpfeatures.h.in: removed gimpfeatures.h
+
+	* libgimpbase/.cvsignore
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpbasetypes.h
+	* libgimpbase/gimpversion.h.in: and added it as gimpversion.h
+
+	* configure.in: changed accordingly.
+
+	* app/app_procs.c
+	* app/main.c
+	* app/gui/about-dialog.c
+	* app/gui/splash.c
+	* app/pdb/misc_cmds.c
+	* tools/pdbgen/pdb/misc.pdb: fixed includes.
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/tiff.c
+	* plug-ins/gdyntext/gdyntextcompat.h
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/perl/Gimp.xs
+	* plug-ins/perl/Gimp/Lib.xs
+	* plug-ins/pygimp/gimpmodule.c
+	* tools/gimp-remote.c: removed all #ifdef GIMP_HAVE_BLAH
+	conditionals as they are broken anyway since we changed all
+	plug-ins with perl scripts shortly before 1.2. Also, refering to
+	intermediate unstable releases is evil.
+
 2001-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c

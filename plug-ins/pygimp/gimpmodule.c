@@ -37,14 +37,6 @@
 
 static PyObject *ErrorObject;
 
-#ifndef GIMP_CHECK_VERSION
-#  define GIMP_CHECK_VERSION(major, minor, micro) \
-    (GIMP_MAJOR_VERSION > (major) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
-     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
-      GIMP_MICRO_VERSION >= (micro)))
-#endif
-
 #ifndef PG_DEBUG
 # define PG_DEBUG 0
 #endif
@@ -158,7 +150,6 @@ static probject *newprobject(drwobject *drw, int, int, int, int, int, int);
 
 /* ---------------------------------------------------------------- */
 
-#ifdef GIMP_HAVE_PARASITES
 /* Declarations for objects of type GimpParasite */
 
 typedef struct {
@@ -170,7 +161,6 @@ staticforward PyTypeObject Paratype;
 #define para_check(v) ((v)->ob_type == &Paratype)
 static paraobject *newparaobject(GimpParasite *para);
 
-#endif
 /* ---------------------------------------------------------------- */
 
 /* routines to convert between Python tuples and gimp GimpParam's */
@@ -422,13 +412,11 @@ GParam_to_tuple(int nparams, GimpParam *params) {
 	    PyTuple_SetItem(args, i, PyInt_FromLong(
 						    params[i].data.d_path));
 	    break;
-#ifdef GIMP_HAVE_PARASITES
 	case GIMP_PDB_PARASITE:
 	    PyTuple_SetItem(args, i,
 		(PyObject *)newparaobject(gimp_parasite_copy(
 					&(params[i].data.d_parasite))));
 	    break;
-#endif
 	case GIMP_PDB_STATUS:
 	    PyTuple_SetItem(args, i, PyInt_FromLong(
 						    params[i].data.d_status));
@@ -649,11 +637,9 @@ tuple_to_GParam(PyObject *args, GimpParamDef *ptype, int nparams) {
 	    check(!PyInt_Check(item))
 		ret[i].data.d_path = PyInt_AsLong(item);
 	    break;
-#ifdef GIMP_HAVE_PARASITES
 	case GIMP_PDB_PARASITE:
 	    /* can't do anything, since size of GimpParasite is not known */
 	    break;
-#endif
 	case GIMP_PDB_STATUS:
 	    check(!PyInt_Check(item))
 		ret[i].data.d_status = PyInt_AsLong(item);
@@ -944,19 +930,6 @@ newpfobject(name)
     return self;
 }
 
-#ifndef GIMP_HAVE_DESTROY_PARAMDEFS
-static void
-gimp_destroy_paramdefs (GimpParamDef *paramdefs,
-                        int        nparams)
-{
-    while (nparams--) {
-      g_free (paramdefs[nparams].name);
-      g_free (paramdefs[nparams].description);
-    }
-  
-    g_free (paramdefs);
-}
-#endif
 static void
 pf_dealloc(self)
      pfobject *self;
@@ -1462,7 +1435,6 @@ img_set_component_visible(self, args)
     return Py_None;
 }
 
-#ifdef GIMP_HAVE_PARASITES
 static PyObject *
 img_parasite_find(self, args)
      imgobject *self;
@@ -1515,15 +1487,11 @@ img_parasite_detach(self, args)
     return Py_None;
 }
 
-#endif
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 /* gimp_image_set_resolution
  * gimp_image_get_resolution
  * gimp_set_unit
  * gimp_get_unit
  */
-#endif
-#if GIMP_CHECK_VERSION(1,1,0)
 static PyObject *
 img_get_layer_by_tattoo(self, args)
      imgobject *self;
@@ -1619,7 +1587,6 @@ img_get_guide_position(self, args)
 	return NULL;
     return PyInt_FromLong(gimp_image_get_guide_position(self->ID, guide));
 }
-#endif
 
 static struct PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
@@ -1643,13 +1610,10 @@ static struct PyMethodDef img_methods[] = {
     {"get_component_visible",	(PyCFunction)img_get_component_visible,	METH_VARARGS},
     {"set_component_active",	(PyCFunction)img_set_component_active,	METH_VARARGS},
     {"set_component_visible",	(PyCFunction)img_set_component_visible,	METH_VARARGS},
-#ifdef GIMP_HAVE_PARASITES
     {"parasite_find",       (PyCFunction)img_parasite_find,      METH_VARARGS},
     {"parasite_attach",     (PyCFunction)img_parasite_attach,    METH_VARARGS},
     {"attach_new_parasite", (PyCFunction)img_attach_new_parasite,METH_VARARGS},
     {"parasite_detach",     (PyCFunction)img_parasite_detach,    METH_VARARGS},
-#endif
-#if GIMP_CHECK_VERSION(1,1,0)
     {"get_layer_by_tattoo",(PyCFunction)img_get_layer_by_tattoo,METH_VARARGS},
     {"get_channel_by_tattoo",(PyCFunction)img_get_channel_by_tattoo,METH_VARARGS},
     {"add_hguide", (PyCFunction)img_add_hguide, METH_VARARGS},
@@ -1658,7 +1622,6 @@ static struct PyMethodDef img_methods[] = {
     {"find_next_guide", (PyCFunction)img_find_next_guide, METH_VARARGS},
     {"get_guide_orientation",(PyCFunction)img_get_guide_orientation,METH_VARARGS},
     {"get_guide_position", (PyCFunction)img_get_guide_position, METH_VARARGS},
-#endif
     {NULL,		NULL}		/* sentinel */
 };
 
@@ -1701,22 +1664,14 @@ img_getattr(self, name)
     PyObject *ret;
     if (!strcmp(name, "__members__"))
 	return Py_BuildValue(
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 			     "[ssssssssssss]",
-#else
-			     "[ssssssssss]",
-#endif
 			     "ID", "active_channel",
 			     "active_layer", "base_type", "channels", "cmap",
 			     "filename", "floating_selection",
 			     "height", "layers",
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 			     "resolution",
-#endif
 			     "selection",
-#ifdef GIMP_HAVE_RESOLUTION_INFO
 			     "unit",
-#endif
 			     "width");
     if (!strcmp(name, "ID"))
 	return PyInt_FromLong(self->ID);
@@ -1774,7 +1729,6 @@ img_getattr(self, name)
     if (!strcmp(name, "width"))
 	return PyInt_FromLong(gimp_image_width(self->ID));
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
     if (!strcmp(name, "resolution")) {
 	double xres, yres;
 	gimp_image_get_resolution(self->ID, &xres, &yres);
@@ -1782,7 +1736,6 @@ img_getattr(self, name)
     }
     if (!strcmp(name, "unit"))
 	return PyInt_FromLong(gimp_image_get_unit(self->ID));
-#endif
 		
     return Py_FindMethod(img_methods, (PyObject *)self, name);
 }
@@ -1830,7 +1783,6 @@ img_setattr(self, name, v)
 	gimp_image_set_filename(self->ID, PyString_AsString(v));
 	return 0;
     }
-#ifdef GIMP_HAVE_RESOLUTION_INFO
     if (!strcmp(name, "resolution")) {
 	PyObject *xo, *yo;
 	if (!PySequence_Check(v) ||
@@ -1849,7 +1801,6 @@ img_setattr(self, name, v)
 	}
 	gimp_image_set_unit(self->ID, PyInt_AsLong(v));
     }
-#endif
     if (!strcmp(name, "channels") || !strcmp(name, "layers") ||
 	!strcmp(name, "selection") || !strcmp(name, "height") ||
 	!strcmp(name, "base_type") || !strcmp(name, "width") ||
@@ -2092,7 +2043,6 @@ drw_get_pixel_rgn(self, args)
 				   dirty, shadow);
 }
 
-#ifdef GIMP_HAVE_PARASITES
 static PyObject *
 drw_parasite_find(self, args)
      drwobject *self;
@@ -2145,10 +2095,8 @@ drw_parasite_detach(self, args)
     Py_INCREF(Py_None);
     return Py_None;
 }
-#endif
 
 /* for inclusion with the methods of layer and channel objects */
-#ifdef GIMP_HAVE_PARASITES
 #define drw_methods() \
     {"flush",	(PyCFunction)drw_flush,	METH_VARARGS}, \
     {"update",	(PyCFunction)drw_update,	METH_VARARGS}, \
@@ -2161,16 +2109,6 @@ drw_parasite_detach(self, args)
     {"parasite_attach",     (PyCFunction)drw_parasite_attach, METH_VARARGS},\
     {"attach_new_parasite",(PyCFunction)drw_attach_new_parasite,METH_VARARGS},\
     {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS}
-#else
-#define drw_methods() \
-    {"flush",	(PyCFunction)drw_flush,	METH_VARARGS}, \
-    {"update",	(PyCFunction)drw_update,	METH_VARARGS}, \
-    {"merge_shadow",	(PyCFunction)drw_merge_shadow,	METH_VARARGS}, \
-    {"fill",	(PyCFunction)drw_fill,	METH_VARARGS}, \
-    {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS}, \
-    {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS}, \
-    {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS}
-#endif
 /* ---------- */
 
 
@@ -2319,7 +2257,6 @@ lay_set_offsets(self, args)
     return Py_None;
 }
 
-#if GIMP_CHECK_VERSION(1,1,0)
 static PyObject *
 lay_get_tattoo(self, args)
      layobject *self;
@@ -2329,7 +2266,6 @@ lay_get_tattoo(self, args)
 	return NULL;
     return PyInt_FromLong(gimp_layer_get_tattoo(self->ID));
 }
-#endif
 
 static struct PyMethodDef lay_methods[] = {
     {"copy",	(PyCFunction)lay_copy,	METH_VARARGS},
@@ -2339,9 +2275,7 @@ static struct PyMethodDef lay_methods[] = {
     {"scale",	(PyCFunction)lay_scale,	METH_VARARGS},
     {"translate",	(PyCFunction)lay_translate,	METH_VARARGS},
     {"set_offsets",	(PyCFunction)lay_set_offsets,	METH_VARARGS},
-#if GIMP_CHECK_VERSION(1,1,0)
     {"get_tattoo",      (PyCFunction)lay_get_tattoo,    METH_VARARGS},
-#endif
 
     drw_methods(), 
     {NULL,		NULL}		/* sentinel */
@@ -2623,7 +2557,6 @@ chn_copy(self, args)
     return (PyObject *)newchnobject(id);
 }
 
-#if GIMP_CHECK_VERSION(1,1,0)
 static PyObject *
 chn_get_tattoo(self, args)
      chnobject *self;
@@ -2633,13 +2566,10 @@ chn_get_tattoo(self, args)
 	return NULL;
     return PyInt_FromLong(gimp_channel_get_tattoo(self->ID));
 }
-#endif
 
 static struct PyMethodDef chn_methods[] = {
     {"copy",	(PyCFunction)chn_copy,	METH_VARARGS},
-#if GIMP_CHECK_VERSION(1,1,0)
     {"get_tattoo", (PyCFunction)chn_get_tattoo, METH_VARARGS},
-#endif
     drw_methods(),
     {NULL,		NULL}		/* sentinel */
 };
@@ -3484,7 +3414,6 @@ static PyTypeObject Prtype = {
 /* End of code for PixelRegion objects */
 /* -------------------------------------------------------- */
 
-#ifdef GIMP_HAVE_PARASITES
 static PyObject *
 para_copy(self, args)
      paraobject *self;
@@ -3559,20 +3488,13 @@ para_getattr(self, name)
      char *name;
 {
     if (!strcmp(name, "__members__")) {
-#if GIMP_CHECK_VERSION(1,1,5)
 	return Py_BuildValue("[sssss]", "data", "flags", "is_persistent",
 			     "is_undoable", "name");
-#else
-	return Py_BuildValue("[ssss]", "data", "flags", "is_persistent",
-			     "name");
-#endif
     }
     if (!strcmp(name, "is_persistent"))
 	return PyInt_FromLong(gimp_parasite_is_persistent(self->para));
-#if GIMP_CHECK_VERSION(1,1,5)
     if (!strcmp(name, "is_undoable"))
 	return PyInt_FromLong(gimp_parasite_is_undoable(self->para));
-#endif
     if (!strcmp(name, "flags"))
 	return PyInt_FromLong(gimp_parasite_flags(self->para));
     if (!strcmp(name, "name"))
@@ -3629,7 +3551,6 @@ static PyTypeObject Paratype = {
 
 /* End of code for GimpParasite objects */
 /* -------------------------------------------------------- */
-#endif
 
 GimpPlugInInfo PLUG_IN_INFO = {
     NULL, /* init_proc */
@@ -4429,7 +4350,6 @@ gimp_Extension_process(self, args)
     return Py_None;
 }
 
-#ifdef GIMP_HAVE_PARASITES
 static PyObject *
 new_parasite(self, args)
      PyObject *self, *args;
@@ -4489,9 +4409,7 @@ gimp_Parasite_detach(self, args)
     Py_INCREF(Py_None);
     return Py_None;
 }
-#endif
 
-#ifdef GIMP_HAVE_DEFAULT_DISPLAY
 static PyObject *
 gimp_Default_display(self, args)
      PyObject *self, *args;
@@ -4500,7 +4418,6 @@ gimp_Default_display(self, args)
 	return NULL;
     return (PyObject *)newdispobject(gimp_default_display());
 }
-#endif
 
 static PyObject *
 id2image(self, args)
@@ -4584,16 +4501,12 @@ static struct PyMethodDef gimp_methods[] = {
     {"tile_height", (PyCFunction)gimp_Tile_height, METH_VARARGS},
     {"extension_ack", (PyCFunction)gimp_Extension_ack, METH_VARARGS},
     {"extension_process", (PyCFunction)gimp_Extension_process, METH_VARARGS},
-#ifdef GIMP_HAVE_PARASITES
     {"parasite",           (PyCFunction)new_parasite,            METH_VARARGS},
     {"parasite_find",      (PyCFunction)gimp_Parasite_find,      METH_VARARGS},
     {"parasite_attach",    (PyCFunction)gimp_Parasite_attach,    METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)gimp_Attach_new_parasite,METH_VARARGS},
     {"parasite_detach",    (PyCFunction)gimp_Parasite_detach,    METH_VARARGS},
-#endif
-#ifdef GIMP_HAVE_DEFAULT_DISPLAY
     {"default_display",  (PyCFunction)gimp_Default_display,  METH_VARARGS},
-#endif
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},
@@ -4645,9 +4558,7 @@ initgimp()
     PyDict_SetItemString(d, "DisplayType", (PyObject *)&Disptype);
     PyDict_SetItemString(d, "TileType", (PyObject *)&Tiletype);
     PyDict_SetItemString(d, "PixelRegionType", (PyObject *)&Prtype);
-#ifdef GIMP_HAVE_PARASITES
     PyDict_SetItemString(d, "ParasiteType", (PyObject *)&Paratype);
-#endif
 
     PyDict_SetItemString(d, "major_version",
 			 i=PyInt_FromLong(gimp_major_version));

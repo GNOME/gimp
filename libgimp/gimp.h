@@ -33,7 +33,6 @@
 
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
-#include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>

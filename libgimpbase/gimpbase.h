@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,7 @@
 #include <libgimpbase/gimpparasite.h>
 #include <libgimpbase/gimpunit.h>
 #include <libgimpbase/gimputils.h>
+#include <libgimpbase/gimpversion.h>
 
 #ifndef G_OS_WIN32
 #include <libgimpbase/gimpsignal.h>

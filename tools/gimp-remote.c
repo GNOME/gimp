@@ -73,7 +73,7 @@
 
 #include <X11/Xmu/WinUtil.h>       /*  for XmuClientWindow ()  */
 
-#include "libgimp/gimpfeatures.h"  /*  for GIMP_VERSION        */
+#include "libgimpbase/gimpversion.h"
 
 
 static gboolean  start_new = FALSE;

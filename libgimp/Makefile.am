@@ -17,7 +17,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	gimpfeatures.h.in	\
 	makefile.mingw		\
 	makefile.mingw.in	\
 	makefile.msc		\
@@ -93,11 +92,6 @@ PDB_WRAPPERS_H = \
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h
 
-# help `make' along by giving another name for the file, which it knows
-# how to build
-../libgimp/gimpfeatures.h: gimpfeatures.h
-	@:
-
 libgimp_1_3_la_SOURCES = \
 	gimp.c				\
 	gimp.h				\
@@ -153,7 +147,6 @@ gimpinclude_HEADERS = \
 	gimpchannel.h			\
 	gimpdrawable.h			\
 	gimpenums.h			\
-	gimpfeatures.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
 	gimplayer.h			\

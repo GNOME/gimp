@@ -1175,9 +1175,10 @@ newsprint_dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
-  GSList *group = NULL;
-  gint    bpp;
-  gint    i;
+  GSList    *group = NULL;
+  gint       bpp;
+  gint       i;
+  gdouble    xres, yres;
 
   gimp_ui_init ("newsprint", TRUE);
 
@@ -1236,17 +1237,12 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-#ifdef GIMP_HAVE_RESOLUTION_INFO
-  {
-    double xres, yres;
-    gimp_image_get_resolution (gimp_drawable_image_id( drawable->id),
-			       &xres, &yres);
-    /* XXX hack: should really note both resolutions, and use
-     * rectangular cells, not square cells.  But I'm being lazy,
-     * and the majority of the world works with xres == yres */
-    pvals_ui.input_spi = xres;
-  }
-#endif
+  gimp_image_get_resolution (gimp_drawable_image_id( drawable->id),
+			     &xres, &yres);
+  /* XXX hack: should really note both resolutions, and use
+   * rectangular cells, not square cells.  But I'm being lazy,
+   * and the majority of the world works with xres == yres */
+  pvals_ui.input_spi = xres;
 
   st.input_spi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

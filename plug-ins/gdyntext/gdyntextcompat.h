@@ -62,13 +62,6 @@ typedef enum
 } GDTCompatBlock;
 
 
-/* gimp-1.1.14+ function names reorganization forgotten something */
-#if defined(GIMP_HAVE_PARASITES) && GIMP_MINOR_VERSION < 2 && GIMP_MICRO_VERSION < 14
-#	warning Replacing missing function 'gimp_drawable_parasite_find'
-#	define gimp_drawable_parasite_find gimp_drawable_parasite_find
-#endif
-
-
 gboolean gdt_compat_load(GdtVals *data);
 
 #endif /* _GDYNTEXTCOMPAT_H_ */

@@ -28,10 +28,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#ifndef GIMP_CHECK_VERSION
-#define GIMP_CHECK_VERSION(a,b,c) 0
-#endif
-
 #ifdef G_OS_WIN32
 # ifndef S_ISDIR
 #  define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
@@ -54,7 +50,6 @@ GList * parsepath (void)
   if (lastpath)
     return lastpath;
 
-#if GIMP_CHECK_VERSION(1, 1, 0)
   gimpdatasubdir = g_strconcat (gimp_data_directory (),
 				G_DIR_SEPARATOR_S,
 				"gimpressionist",
@@ -67,11 +62,6 @@ GList * parsepath (void)
 			     gimpdatasubdir,
 			     NULL);
  
-#else
-  defaultpath = DEFAULTPATH;
-  gimpdatasubdir = strchr (defaultpath, ':') + 1;
-#endif
-
   if (standalone)
     tmps = g_strdup (defaultpath);
   else
@@ -85,16 +75,12 @@ GList * parsepath (void)
 	    {
 	      /* No gimpressionist-path parameter,
 	       * and the default doesn't exist */
-#if GIMP_CHECK_VERSION(1, 1, 0)
 	      g_message( "*** Warning ***\n"
 			 "It is highly recommended to add\n"
 			 " (gimpressionist-path \"${gimp_dir}" G_DIR_SEPARATOR_S "gimpressionist"
 			 G_SEARCHPATH_SEPARATOR_S
 			 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gimpressionist\")\n"
 			 "(or similar) to your gimprc file.\n");
-#else
-	      g_message( _("*** Warning ***\nIt is highly recommended to add\n  (gimpressionist-path \"%s\")\n(or similar) to your gimprc file.\n"), defaultpath);
-#endif
 	    }
 	  tmps = g_strdup (defaultpath);
 	}

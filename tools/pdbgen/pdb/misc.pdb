@@ -35,7 +35,7 @@ HELP
 	  alias => 'g_strdup (GIMP_VERSION)', no_declare => 1 }
     );
 
-    %invoke = ( headers => [ qw("libgimp/gimpfeatures.h") ] );
+    %invoke = ( headers => [ qw("libgimpbase/gimpbase.h") ] );
 }
 
 sub quit {

@@ -16,9 +16,9 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-#ifndef __GIMP_FEATURES_H__
-#define __GIMP_FEATURES_H__
 
+#ifndef __GIMP_VERSION_H__
+#define __GIMP_VERSION_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,25 +35,9 @@ extern "C" {
      (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
       GIMP_MICRO_VERSION >= (micro)))
 
-#define GIMP_HAVE_PROCEDURAL_DB_GET_DATA_SIZE		1-1-0
-#define GIMP_HAVE_PARASITES				1-1-0
-#define GIMP_HAVE_RESOLUTION_INFO			1-1-0
-#define GIMP_HAVE_DESTROY_PARAMDEFS			1-1-0
-
-#define GIMP_HAVE_FEATURES_1_1_5			1-1-5
-
-#define GIMP_HAVE_DEFAULT_DISPLAY			1-1-5
-#define GIMP_HAVE_PIXEL_RGNS_REGISTER2			1-1-5
-
-#define GIMP_HAVE_NEW_ENUMS				1-1-10
-
-#define GIMP_HAVE_EXPORT                                1-1-10
-
-#define GIMP_HAVE_SYSCONFDIR                            1-1-28
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-
-#endif /* __GIMP_FEATURES_H__ */
+#endif /* __GIMP_VERSION_H__ */

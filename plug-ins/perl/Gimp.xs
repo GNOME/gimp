@@ -1,9 +1,7 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-#ifdef GIMP_HAVE_EXPORT
 #include <libgimp/gimpexport.h>
-#endif
 
 #include <locale.h>
 
@@ -144,7 +142,7 @@ BOOT:
 #if HAVE_DIVIDE_MODE || IN_GIMP
    /*newCONSTSUB(stash,"GIMP_DIVIDE_MODE",newSViv(GIMP_DIVIDE_MODE));*/
 #endif
-#ifdef GIMP_HAVE_EXPORT
+
    newCONSTSUB(stash,"EXPORT_CAN_HANDLE_RGB", newSViv(GIMP_EXPORT_CAN_HANDLE_RGB));
    newCONSTSUB(stash,"EXPORT_CAN_HANDLE_GRAY", newSViv(GIMP_EXPORT_CAN_HANDLE_GRAY));
    newCONSTSUB(stash,"EXPORT_CAN_HANDLE_INDEXED", newSViv(GIMP_EXPORT_CAN_HANDLE_INDEXED));
@@ -156,7 +154,6 @@ BOOT:
    newCONSTSUB(stash,"EXPORT_CANCEL", newSViv(GIMP_EXPORT_CANCEL));
    newCONSTSUB(stash,"EXPORT_IGNORE", newSViv(GIMP_EXPORT_CANCEL));
    newCONSTSUB(stash,"EXPORT_EXPORT", newSViv(GIMP_EXPORT_EXPORT));
-#endif
 }
 
 MODULE = Gimp	PACKAGE = Gimp::RAW

@@ -781,9 +781,9 @@ gimptool-1.4
 gimptool.1
 gimp-remote.1
 gimp.spec
-libgimp/gimpfeatures.h
 libgimp/Makefile
 libgimp/makefile.mingw
+libgimpbase/gimpversion.h
 libgimpbase/Makefile
 libgimpbase/makefile.mingw
 libgimpcolor/Makefile
