@@ -1,3 +1,7 @@
+2003-10-26  Danilo Šegan  <dsegan@gmx.net>
+
+	* sr.po, sr@Latn.po: Updated Serbian translation.
+
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/tools/gimphistogramoptions.c.
