@@ -21,6 +21,7 @@ Perl-Server
 etc/configure
 etc/configure.in
 etc/aclocal.m4
+etc/acconfig.h
 etc/config.h.in
 etc/config.pl.in
 etc/configure.frag
@@ -35,6 +36,7 @@ Gimp/PDL.pm
 Gimp/Pixel.pod
 Gimp/UI.pm
 Gimp/Util.pm
+Gimp/Feature.pm
 examples/PDB
 examples/alpha2color.pl
 examples/tex-to-float
@@ -61,3 +63,4 @@ examples/blowinout.pl
 examples/terral_text
 examples/xachvision.pl
 examples/gimpmagick
+examples/perlcc

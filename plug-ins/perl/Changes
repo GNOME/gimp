@@ -14,6 +14,16 @@ Revision history for Gimp-Perl extension.
           system without authorization. argh). This required a
           protocol change, so old clients are unable to connect using
           password-authenticitation.
+        - new function Gimp::initialized that returns true whenever its
+          safe to call gimp functins.
+        - added the Gimp::Feature module, allowing for easy feature checks.
+          See examples/gimpmagick or examples/parasite-editor for example
+          usage.
+        - added perlcc, the perl control center. Only displays log messages
+          at the moment.
+        - Data::Dumper is now longer required to run the scripts, some
+          buttons and RUN_WITH_LAST_VALS won't work, though.
+        - removed POSIX dependency in examples/gimpmagick.
 
 1.06  Sat Mar  6 19:36:12 CET 1999
 	- Gimp::Fu does no longer display the returned image when it

@@ -6,8 +6,6 @@ use PDL;
 use base qw(Exporter);
 
 require Exporter;
-require DynaLoader;
-require AutoLoader;
 
 @EXPORT = ();
 

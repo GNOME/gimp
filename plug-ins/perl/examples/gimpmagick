@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
-BEGIN { $] >= 5.005 or exit main }
+use Gimp::Feature qw(:gtk :perl-5.005);
 use Gimp 1.06;
 use Gimp::Fu;
-use POSIX;
-BEGIN { eval "use Gtk; use Image::Magick 1.45"; $@ and exit main };
+use Gtk;
+BEGIN { eval "use Image::Magick 1.45"; $@ and Gimp::Feature::missing ("Image::Magick version 1.45 or higher") };
 
 $VERSION = '0.1';
 
@@ -178,7 +178,7 @@ sub update_preview {
    }
    if(0==open BLOB,"-|") {
       $im->Write('RGB:-');
-      POSIX::_exit(0);
+      Gimp::_exit;
    }
 
    my($w,$h)=$im->get('width','height');
@@ -194,6 +194,9 @@ sub update_preview {
 # Interactively apply Image::Magick
 sub gimp_magick {
    my ($drawable)=@_;
+
+   init Gtk;
+   parse Gtk::Rc Gimp->gtkrc;
 
    # generate main window
    my $im = new Image::Magick;

@@ -72,6 +72,9 @@ static char pkg_anyable[] = PKG_DRAWABLE ", " PKG_LAYER " or " PKG_CHANNEL;
 
 static int trace = TRACE_NONE;
 
+/* set when its safe to call gimp functions.  */
+static int gimp_is_initialized = 0;
+
 typedef gint32 IMAGE;
 typedef gint32 LAYER;
 typedef gint32 CHANNEL;
@@ -777,11 +780,13 @@ destroy_paramdefs (GParamDef *arg, int count)
 /* first check wether the procedure exists at all.  */
 static void try_call (char *name, int req)
 {
+  dSP;
   CV *cv = perl_get_cv (name, 0);
+
+  PUSHMARK(sp); perl_call_pv ("Gimp::_initialized_callback", G_DISCARD | G_NOARGS);
   
   /* it's not an error if the callback doesn't exist.  */
   if (cv) {
-    dSP;
     PUSHMARK(sp);
     perl_call_sv ((SV *)cv, G_DISCARD | G_NOARGS);
   } else if (req)
@@ -812,6 +817,8 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   int _nparams;
   GParamDef *params;
   
+  PUSHMARK(sp); perl_call_pv ("Gimp::_initialized_callback", G_DISCARD | G_NOARGS);
+
   if (return_vals) /* the libgimp is soooooooo braindamaged. */
     {
       destroy_params (return_vals, nreturn_vals);
@@ -862,7 +869,19 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
         }
       
       if (SvTRUE (ERRSV))
-        err_msg = g_strdup (SvPV (ERRSV, dc));
+        {
+           if (strEQ ("BE QUIET ABOUT THIS DIE\n", SvPV (ERRSV, dc)))
+             {
+               nreturn_vals = 1;
+               return_vals = g_new (GParam, 1);
+               return_vals->type = PARAM_STATUS;
+               return_vals->data.d_status = STATUS_SUCCESS;
+               *xnreturn_vals = nreturn_vals;
+               *xreturn_vals = return_vals;
+             }
+           else
+             err_msg = g_strdup (SvPV (ERRSV, dc));
+        }
       else
         {
           int i;
@@ -1015,12 +1034,21 @@ gimp_main(...)
 		    else
 		      croak ("arguments to main not yet supported!");
 		    
+                    gimp_is_initialized = 1;
 		    RETVAL = gimp_main (argc, argv);
+                    gimp_is_initialized = 0;
 		  }
 	OUTPUT:
 	RETVAL
 
 PROTOTYPES: ENABLE
+
+int
+initialized()
+	CODE:
+        RETVAL = gimp_is_initialized;
+	OUTPUT:
+	RETVAL
 
 int
 gimp_major_version()

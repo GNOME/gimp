@@ -23,10 +23,13 @@ AM_PATH_GIMP(1.0.2,, AC_MSG_ERROR(
 ** You can get the Gimp from ftp://ftp.gimp.org/pub/gimp.
 ))
 
-ac_save_CPPFLAGS="$CPPFLAGS"
+ac_gimp_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GIMP_CFLAGS"
 AC_EGREP_CPP(DIVIDE_MODE,[#include <libgimp/gimp.h>],AC_DEFINE(HAVE_DIVIDE_MODE))
-CPPFLAGS="$ac_save_CPPFLAGS"
+CPPFLAGS="$ac_gimp_save_CPPFLAGS"
+
+AC_CHECK_HEADERS(unistd.h)
+AC_CHECK_FUNCS(_exit)
 
 CONFIG_H="config.h"
 

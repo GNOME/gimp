@@ -106,7 +106,7 @@ EOF
 unless ($major > 0
         || ($major == 0 && $minor >  3)
         || ($major == 0 && $minor == 3 && $patch >= -1)) {
-   print <<EOF;
+   $GTK && print <<EOF;
 
 WARNING: version 0.3 of Gtk is _required_ for this module to
          build properly.  You can get the newest version from
@@ -119,10 +119,10 @@ EOF
 @examples =
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick);
+      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc);
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server scm2perl scm2scm examples/example-net.pl examples/homepage-logo.pl
-      examples/example-fu.pl));
+      examples/example-fu.pl examples/example-oo.pl));
 
 for(@shebang) {
    print "updating bangpath in $_\n";
@@ -172,6 +172,7 @@ WriteMakefile(
     		    'Gimp/Net.pm'	=> '$(INST_LIBDIR)/Gimp/Net.pm',
     		    'Gimp/PDL.pm'	=> '$(INST_LIBDIR)/Gimp/PDL.pm',
     		    'Gimp/Util.pm'	=> '$(INST_LIBDIR)/Gimp/Util.pm',
+    		    'Gimp/Feature.pm'	=> '$(INST_LIBDIR)/Gimp/Feature.pm',
     		   },
     'LIBS'	=> [''],
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",

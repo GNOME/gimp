@@ -1,0 +1,150 @@
+#!/usr/bin/perl
+
+use Gimp ();
+use Gimp::Feature;
+
+$VERSION='0.0';
+
+$gtk = Gimp::Feature::present 'gtk';
+
+if($gtk) {
+   # make a relatively extensive check for gtk capabilities
+   # this must be done before initializing Gtk in the main program (thus here)
+   unless(open GTK,"-|") {
+      close STDERR;
+      require Gtk;
+      init Gtk;
+      my $w = new Gtk::Dialog;
+      show_all $w;
+      Gtk->idle_add(sub{main_quit Gtk});
+      main Gtk;
+      print "OK";
+      exit;
+   }
+   unless (<GTK> eq "OK") {
+      $gtk=0;
+      Gimp::logger(message => 'gtk module present but unusable', function => 'gtktest');
+   }
+   close GTK;
+}
+
+sub generate_status {
+   my ($log);
+   $log="Feature Status\n\n";
+   $log.=sprintf "%-12s %-7s %s\n",'Feature','Present','Description';
+   for(sort &Gimp::Feature::list) {
+      $log.=sprintf "%-12s %-7s %s\n",$_,Gimp::Feature::present($_) ? 'Yes':'No',Gimp::Feature::describe($_);
+   }
+   $log;
+}
+
+sub generate_log {
+   my ($log);
+   $log="Log Entries\n\n";
+   $log.=sprintf "%-16s %-5s %s\n", 'File','Fatal', 'Message';
+   for (split /\x00/,Gimp->get_data ('gimp-perl-log')) {
+      my ($file,$function,$msg,$installed)=split /\x01/;
+      @msg = split /\n/,Gimp::wrap_text ($msg.($function ? " ($function)" : ""),56);
+      $log.=sprintf "%-16s %-5s %s\n",$file,$installed ? 'Yes':'No',shift(@msg);
+      while(@msg) {
+         $log.=sprintf "%-16s %-5s %s\n",'','+->',shift(@msg);
+      }
+   }
+   $log;
+}
+
+sub gtkview_log {
+   my($title,$log)=@_;
+   my($w,$b,$font,$lines);
+   $w = new Gtk::Dialog;
+   $w->set_title ($title);
+
+   $b = new Gtk::Text;
+   $b->set_editable(0);
+
+   $lines=$log=~y/\n//;
+   $lines=25 if $lines>25;
+
+   $font = load Gtk::Gdk::Font "9x15bold";
+   $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
+   $font = $b->style->font unless $font;
+   $b->insert($font,$b->style->fg(-normal),undef,$log);
+   $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+1));
+   $w->vbox->add($b);
+
+   $b = new Gtk::Button "OK";
+   $b->can_default(1);
+   $b->grab_default;
+   $b->signal_connect(clicked => sub { destroy $w });
+   $w->action_area->add($b);
+
+   show_all $w;
+}
+
+# the extension that's called.
+sub extension_perl_control_center {
+   if ($gtk) {
+      my($w,$b);
+
+      init Gtk;
+      parse Gtk::Rc Gimp->gtkrc;
+
+      $w = new Gtk::Dialog;
+      $w->set_title ('Perl Control Center');
+      
+      $b = new Gtk::Button "View Perl Feature Status";
+      $b->signal_connect(clicked => sub { gtkview_log 'Perl Feature Status',generate_status});
+      $w->vbox->add($b);
+
+      $b = new Gtk::Button "View Perl Error/Warning Log";
+      $b->signal_connect(clicked => sub { gtkview_log 'Perl Error/Warning Log',generate_log });
+      $w->vbox->add($b);
+
+      $b = new Gtk::Button "Clear Perl Error/Warning Log";
+      $b->signal_connect(clicked => sub { Gimp->set_data('gimp-perl-log',"") });
+      $w->vbox->add($b);
+
+      $b = new Gtk::Button "OK";
+      $b->can_default(1);
+      $b->grab_default;
+      $b->signal_connect(clicked => sub { main_quit Gtk });
+      $w->action_area->add($b);
+      $w->signal_connect(destroy => sub { main_quit Gtk });
+      show_all $w;
+      main Gtk;
+   } else {
+      my $temp="/tmp/gimp-perl-$$-".rand; # this is not very secure
+      require Fcntl;
+      sysopen TEMP,$temp,&Fcntl::O_EXCL|&Fcntl::O_CREAT|&Fcntl::O_WRONLY or die "unable to create temporary file $temp\n";
+      print TEMP generate_status,"\n",generate_log,"\n<using xterm for display, press enter to continue>";
+      close TEMP;
+
+      system("xterm +ls -sb -sl 500 -geometry 80x30 -T 'Perl Control Center Error Log (Version $VERSION)' ".
+             "-e sh -c 'cat $temp; rm -f $temp; read' >/dev/null 2>&1");
+
+      if ($? >> 8 && -f $temp) {
+         system("xterm -e sh -c 'cat $temp; rm -f $temp; read' >/dev/null 2>&1");
+      }
+      if ($? >> 8) {
+         print STDERR "\n",generate_status,"\n",generate_log,"\n";
+         Gimp->message (generate_status."\n".generate_log."\n<using gimp_message for display>");
+      }
+      unlink $temp;
+   }
+}
+
+sub net {
+   extension_perl_control_center;
+#   print "\n",generate_log,"\n";
+}
+
+sub query {
+  Gimp->install_procedure("extension_perl_control_center", "the perl control center gives information about gimp-perl",
+                          "The perl control center gives information about the status of gimp-perl and allows configuration of important system parameters",
+                          "Marc Lehmann", "Marc Lehmann", $VERSION,
+                          "<Toolbox>/Xtns/Perl Control Center", "*", &Gimp::PROC_EXTENSION,
+                          [[&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"]], []);
+}
+
+exit Gimp::main;
+

@@ -33,6 +33,9 @@ extern "C" {
 # define GIMP_PARASITE 1
 #endif
 
+/* expect iso-c here.  */
+#include <signal.h>
+
 /* Shamelesssly stolen from IO.xs.  See perlguts, this is only for
  * 5.004 compatibility.
  */
@@ -73,6 +76,18 @@ newCONSTSUB(stash,name,sv)
 MODULE = Gimp	PACKAGE = Gimp
 
 PROTOTYPES: ENABLE
+
+void
+_exit()
+	CODE:
+#ifdef HAVE__EXIT
+        _exit(0);
+#elif defined(SIGKILL)
+        raise(SIGKILL);
+#else
+        raise(9);
+#endif
+        abort();
 
 BOOT:
 {

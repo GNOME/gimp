@@ -12,6 +12,7 @@ $VERSION = $Gimp::VERSION;
 use subs qw(
 	gimp_call_procedure		gimp_main	gimp_init
 	_gimp_procedure_available	set_trace	gimp_end
+        initialized
 );
 
 sub gimp_init {
@@ -77,6 +78,11 @@ sub Gimp::PixelRgn::DESTROY {
    $self->{_drawable}->{_id}->update($self->{_x},$self->{_y},$self->{_w},$self->{_h})
       if $self->dirty;
 };
+
+# this is here to be atomic over the perl-server
+sub _gimp_append_data($$) {
+   gimp_set_data ($_[0], gimp_get_data ($_[0]) . $_[1]);
+}
 
 1;
 __END__

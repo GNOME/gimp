@@ -4,7 +4,7 @@
 
 use Gimp;
 use Gimp::Fu;
-BEGIN { eval "use PDL"; $@ and exit main }
+use Gimp::Feature qw(:pdl);
 use Gimp::PDL;
 use PDL::LiteF;
 
@@ -15,7 +15,7 @@ register "border_average",
          "calulcates the average border colour",
          "Marc Lehmann",
          "Marc Lehmann",
-         "0.2",
+         "0.2.1",
          "<Image>/Filters/Misc/Border Average",
          "RGB",
          [

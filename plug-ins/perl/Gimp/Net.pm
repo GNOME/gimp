@@ -22,8 +22,15 @@ $default_unix_sock = "gimp-perl-serv";
 $trace_res = *STDERR;
 $trace_level = 0;
 
+my $initialized = 0;
+
+sub initialized { $initialized }
+
 sub import {
-   return if @_>1;
+   my $pkg = shift;
+
+   return if @_;
+
    *Gimp::Tile::DESTROY=
    *Gimp::PixelRgn::DESTROY=
    *Gimp::GDrawable::DESTROY=sub {
@@ -213,9 +220,14 @@ sub gimp_init {
          print "authorization ok, but: $r[1]\n" if $Gimp::verbose and $r[1];
       }
    }
+
+   $initialized = 1;
+   Gimp::_initialized_callback;
 }
 
 sub gimp_end {
+   $initialized = 0;
+
    undef $server_fh;
    kill 'KILL',$gimp_pid if $gimp_pid;
    undef $gimp_pid;
@@ -239,16 +251,6 @@ sub set_connection($) {
 
 END {
    gimp_end;
-}
-
-# provide some functions for the Gimp::PDL module to override
-# this is yet another hack (YAH)
-for my $f (qw(gimp_pixel_rgn_get_pixel gimp_pixel_rgn_get_row gimp_pixel_rgn_get_col gimp_pixel_rgn_get_rect
-              gimp_pixel_rgn_set_pixel gimp_pixel_rgn_set_row gimp_pixel_rgn_set_col gimp_pixel_rgn_set_rect)) {
-   no strict;
-   *{$f} = sub {
-      gimp_call_procedure $f,@_;
-   };
 }
 
 1;
