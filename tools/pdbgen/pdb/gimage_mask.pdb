@@ -46,7 +46,7 @@ sub selection_change_proc {
 
     @inargs = (
 	&std_image_arg,
-	{ name => $arg, type => "0 < $type",
+	{ name => $arg, type => "0 <= $type",
 	  desc => "\u$arg of $op (in pixels)" }
     );
 

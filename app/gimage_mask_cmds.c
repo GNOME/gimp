@@ -626,7 +626,7 @@ selection_feather_invoker (Argument *args)
     success = FALSE;
 
   radius = args[1].value.pdb_float;
-  if (radius <= 0.0)
+  if (radius < 0.0)
     success = FALSE;
 
   if (success)
@@ -677,7 +677,7 @@ selection_border_invoker (Argument *args)
     success = FALSE;
 
   radius = args[1].value.pdb_int;
-  if (radius <= 0)
+  if (radius < 0)
     success = FALSE;
 
   if (success)
@@ -728,7 +728,7 @@ selection_grow_invoker (Argument *args)
     success = FALSE;
 
   steps = args[1].value.pdb_int;
-  if (steps <= 0)
+  if (steps < 0)
     success = FALSE;
 
   if (success)
@@ -779,7 +779,7 @@ selection_shrink_invoker (Argument *args)
     success = FALSE;
 
   radius = args[1].value.pdb_int;
-  if (radius <= 0)
+  if (radius < 0)
     success = FALSE;
 
   if (success)

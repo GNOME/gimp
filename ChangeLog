@@ -1,3 +1,8 @@
+Fri Jan 28 02:43:36 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * tools/pdbgen/pdb/gimage_mask.pdb, app/gimage_mask_cmds.c: Allow
+        zero radius arguments for selection_{shrink,grow,border,feather}.
+
 Fri Jan 28 01:16:35 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * PLUGIN_CVS: updated to give Kevin Turner write access to
