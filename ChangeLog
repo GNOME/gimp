@@ -1,5 +1,10 @@
 2000-06-01  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
+	
+	* libgimp/gimpgradientmenu.c: forgot a small change here...
+
+2000-06-01  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
 
 	Completed the new file structure. Yet only few of the _pdb.[ch] 
 	files are based upon generated code and nothing is really 
