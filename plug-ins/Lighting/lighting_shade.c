@@ -58,7 +58,7 @@ phong_shade (GimpVector3 *position,
   if (dist != 0.0)
     gimp_vector3_mul (&l, 1.0 / dist);
 
-  nl = 2.0 * gimp_vector3_inner_product (&n, &l);
+  nl = MAX (0., 2.0 * gimp_vector3_inner_product (&n, &l));
 
   lnormal = l;
   gimp_vector3_normalize (&lnormal);
