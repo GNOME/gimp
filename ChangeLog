@@ -1,3 +1,10 @@
+2000-04-29  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* app/gimage_cmds.c (finite): #define finite(d) isfinite(d) for OS/2
+
+	* libgimp/gimpsignal.h: #define SA_RESTART SA_SYSV
+	SA_RESTART isnt's defined for OS/2!
+
 2000-04-29  Jay Cox  <jaycox@earthlink.net>
 
 	* modules/Makefile.am
