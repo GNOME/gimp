@@ -184,8 +184,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	  switch (*format)
 	    {
 	    case 0:
-	      g_warning ("image-title-format string ended within %%-sequence");
-	      break;
+	      /* format string ends within %-sequence, print literal '%' */
 
 	    case '%':
 	      title[i++] = '%';
@@ -267,8 +266,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 'D': /* dirty flag */
 	      if (format[1] == 0)
 		{
-		  g_warning ("image-title-format string ended within "
-                             "%%D-sequence");
+		  /* format string ends within %D-sequence, print literal '%D' */
+                  i += print (title, title_len, i, "%%D");
 		  break;
 		}
 	      if (image->dirty)
@@ -279,8 +278,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	    case 'C': /* clean flag */
 	      if (format[1] == 0)
 		{
-		  g_warning ("image-title-format string ended within "
-                             "%%C-sequence");
+		  /* format string ends within %C-sequence, print literal '%C' */
+                  i += print (title, title_len, i, "%%C");
 		  break;
 		}
 	      if (! image->dirty)
@@ -406,9 +405,9 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	       */
 
 	    default:
-	      g_warning ("image-title-format contains unknown "
-                         "format sequence '%%%c'", *format);
-	      break;
+              /* format string contains unknown %-sequence, print it literally */
+              i += print (title, title_len, i, "%%%c", *format);
+              break;
 	    }
 	  break;
 
