@@ -17,7 +17,7 @@ Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
 Requires: 	gtk+ >= 1.2.0
-Source: 	ftp://ftp.gimp.org/pub/gimp/unstable/v%{version}/%{name}-%{version}.tar.bz2
+Source: 	ftp://ftp.gimp.org/pub/gimp/v%{version}/%{name}-%{version}.tar.bz2
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
