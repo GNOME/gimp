@@ -1,14 +1,13 @@
 2002-05-14  Dave Neary  <bolsh@gimp.org>
 
-	* plug-ins/common/plasma.c: Fix to have the preview and
-	actual render seed values match. "Run with last values"
-	still generates a new image, if "Use time as seed" is
-	set, though.
+	* plug-ins/common/plasma.c: Fix to have the preview and actual
+	render seed values match. "Run with last values" still generates a
+	new image, if "Use time as seed" is set, though. Closed bug #81732.
 	
 2002-05-14  Dave Neary  <bolsh@gimp.org>
 
-	* plug-ins/common/plasma.c: Fix to get greyscale previews
-	for greyscale images. Closes bug #81730.
+	* plug-ins/common/plasma.c: Fix to get greyscale previews for
+	greyscale images. Closes bug #81730.
 
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
