@@ -364,7 +364,7 @@ sel2path_dialog (SELVALS *sels)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( ("Default Values"));
+  button = gtk_button_new_with_label (_("Default Values"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) sel2path_reset_callback,
