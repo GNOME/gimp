@@ -1,3 +1,7 @@
+Wed Feb 25 02:46:28 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* added webbrowser plugin for gimp help
+
 Tue Feb 24 22:14:06 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/xpm/xpm.c: update. Hopefully this fixes all

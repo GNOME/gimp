@@ -63,6 +63,11 @@ AC_DEFUN(AC_GIMP_CHECK,
 		x_libs="-lXext $x_libs", ,
 		$x_libs)
 
+	dnl FIXME: I have to think of a better way
+	AC_CHECK_LIB(Xmu, XmuClientWindow,
+		x_libs="-lXmu $x_libs", ,
+		$x_libs)
+
 	X_LIBS="$X_LIBS -lgtk -lgdk -lglib $x_libs -lm"
 
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
@@ -375,6 +380,7 @@ plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
 plug-ins/fs/Makefile
 plug-ins/flarefx/Makefile
+plug-ins/webbrowser/Makefile
 app/Makefile
 docs/Makefile
 )

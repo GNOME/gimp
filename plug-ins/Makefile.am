@@ -112,6 +112,7 @@ SUBDIRS = 			\
 	vinvert			\
 	vpropagate		\
 	waves			\
+	webbrowser		\
 	whirlpinch		\
 	xwd			\
 	zealouscrop

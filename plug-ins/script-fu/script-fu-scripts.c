@@ -326,18 +326,19 @@ script_fu_add_script (LISP a)
   /*  Check the supplied number of arguments  */
   script->num_args = nlength (a) / 3;
 
+  args = g_new (GParamDef, script->num_args + 1);
+  args[0].type = PARAM_INT32;
+  args[0].name = "run_mode";
+  args[0].description = "Interactive, non-interactive";
+
+  script->args_widgets = NULL;
+  script->arg_types = g_new (SFArgType, script->num_args);
+  script->arg_labels = g_new (char *, script->num_args);
+  script->arg_defaults = g_new (SFArgValue, script->num_args);
+  script->arg_values = g_new (SFArgValue, script->num_args);
+
   if (script->num_args > 0)
     {
-      script->args_widgets = NULL;
-      script->arg_types = g_new (SFArgType, script->num_args);
-      script->arg_labels = g_new (char *, script->num_args);
-      script->arg_defaults = g_new (SFArgValue, script->num_args);
-      script->arg_values = g_new (SFArgValue, script->num_args);
-      args = g_new (GParamDef, script->num_args + 1);
-      args[0].type = PARAM_INT32;
-      args[0].name = "run_mode";
-      args[0].description = "Interactive, non-interactive";
-
       for (i = 0; i < script->num_args; i++)
 	{
 	  if (a != NIL)
@@ -516,6 +517,9 @@ script_fu_script_proc (char     *name,
     status = STATUS_CALLING_ERROR;
   else
     {
+      if (script->num_args == 0)
+	run_mode = RUN_NONINTERACTIVE;
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -577,6 +581,8 @@ script_fu_script_proc (char     *name,
 
 	      c = command = g_new (char, length);
 
+	      if (script->num_args)
+	      {
 	      sprintf (command, "(%s ", script->script_name);
 	      c += strlen (script->script_name) + 2;
 	      for (i = 0; i < script->num_args; i++)
@@ -614,6 +620,9 @@ script_fu_script_proc (char     *name,
 		    sprintf (c, "%s ", text);
 		  c += strlen (text) + 1;
 		}
+	      }
+	      else
+		sprintf (command, "(%s)", script->script_name);
 
 	      /*  run the command through the interpreter  */
 	      err_msg = (repl_c_string (command, 0, 0, 1) != 0) ? TRUE : FALSE;

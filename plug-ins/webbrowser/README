@@ -1,0 +1,129 @@
+			Web Browser GIMP Extension v0.3
+			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		    by Misha Dynin <misha@xcf.berkeley.edu>
+
+Introduction
+~~~~~~~~~~~~
+
+    Web Browser GIMP extension is not an HTML browser (at least, not yet ;-);
+    it's just an interface to an external web browser that allows GIMP, using
+    a PDB call, to instruct a browser to open a URL.
+
+    Currently, it works with Netscape, version 1.1 or above, using a protocol
+    described in detail on http://home.netscape.com/newsref/std/x-remote.html.
+    If Netscape is not running already, the extension starts it, with a URL
+    as a command-line argument.
+
+Possible uses of this extension:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  * Providing a set of bookmarks, accessible from the GIMP.
+
+    This is implemented -- web-browser.scm, included in a distribution,
+    builds a menu of frequently accessed GIMP websites.  It's cool.
+
+  * Implementing GIMP online help.
+
+    This is the most promising use of the extension.  GIMP plugins and
+    main application can provide "Help" and "About" buttons, which,
+    when pressed, cause a corresponding page to be opened in Netscape.
+
+    This is doable now; the only problem is to design a standard way
+    to do that.  It would be great to be able to access the documentation
+    either from the web site or, if installed, from local disk.
+    (add gimp-path to .gimprc; use as prefix in gimp-help() function?)
+    I request input of experienced GIMP developers on this.
+
+  * Providing a preview in a web browser.
+
+    Large percentage of the graphics designed in GIMP ends up on the WWW.
+    With this extension, you can write a script that automatically
+    launches a web browser and displays the image as it will be viewed.
+    Imagine: have a set of scripts defining page style, change one attribute,
+    and have GIMP not only recompute all the images, but also automagically
+    open the redesigned page design in a browser window!
+
+How to use the extension:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+  * Interactively:
+
+    select Xtns -> Web Browser -> Open URL, type in the URL, press Ok;
+
+  * Non-interactively:
+
+    use procedure extension-web-browser (url, new-window), which takes
+    as the first argument a URL of a page to open, and second argument
+    is a boolean which specifies whether you want the browser to open
+    a new window with a document (new-window == TRUE) or use current
+    window (new-window == FALSE).  If the browser is not already running,
+    new-window value is ignored.
+
+    I didn't provide a more detailed API on purpose -- making it more
+    detailed would make it more Netscape-specific, and I want to be able
+    to add support for other browsers.  If someone has a convincing argument
+    for adding more functions (i.e. to check whether browser is running, etc.),
+    email me.
+
+Status:
+~~~~~~
+
+    Netscape support is stable.  I haven't tested it on many platforms,
+    but I don't expect any problems.  What other browsers, if any, do we
+    need to support?
+
+    Included "web-browser.scm" has links to the most popular (IMHO)
+    GIMP pages.  I hope that the extension will get incorporated into
+    the main source tree, and I will not have to maintain the bookmarks
+    list.
+
+    Need help system design based on the web browser extension.
+    If some GIMP guru (petm? spencer?) tells me what's the right way to do it,
+    I can implement the help system.
+
+    I didn't write a proof-of-concept implementation of the preview 
+    script mainly because I am lazy.  If someone writes such a script --
+    please email it to me.
+
+Building Web Browser Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Compiling it should be fairly easy.  I've included Makefile diff's (for
+    the Makefile in plug-ins directory).  webbrowser requires libXmu;
+    it should be linked with -lXmu.
+
+    Enclosed script, web-browser.scm, creates a bookmarks menu in
+    Xnts/Web Browser/*.  Note that there is a bug in script-fu
+    (at least as of version 0.99.15) which prevents it from handling
+    scripts with zero arguments.  Enclosed patch to
+    plug-ins/script-fu/script-fu-scripts.c fixes that bug.  Without
+    this patch, web-browser.scm won't work.
+
+Where To Find This Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The extension can be downloaded from
+	ftp://ftp.xcf.berkeley.edu/pub/misha/webbrowser.tar.gz
+    
+    For the up-to-date information about this extension, check out
+	http://www.xcf.berkeley.edu/~misha/gimp/
+
+Author
+~~~~~~
+
+    This extension is written by Misha Dynin <misha@xcf.berkeley.edu>.
+
+    I used the code from GUMP plugin, by Adrian Likins <aklikins@eos.ncsu.edu>.
+
+    Netscape interface code copyright:
+
+    * Copyright © 1996 Netscape Communications Corporation, all rights reserved.
+    * Created: Jamie Zawinski <jwz@netscape.com>, 24-Dec-94.
+    *
+    * Permission to use, copy, modify, distribute, and sell this software and its
+    * documentation for any purpose is hereby granted without fee, provided that
+    * the above copyright notice appear in all copies and that both that
+    * copyright notice and this permission notice appear in supporting
+    * documentation.  No representations are made about the suitability of this
+    * software for any purpose.  It is provided "as is" without express or 
+    * implied warranty.
