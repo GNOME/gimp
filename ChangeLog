@@ -1,8 +1,8 @@
 Sun Mar 26 00:41:56 CET 2000  Sven Neumann  <sven@gimp.org>
 
-	* app/convert.c: reverted Martins change since it gives no
+	* app/convert.c: reverted Martin's change since it gives no
 	noticeable speedup. Martin, you are definitely not in the 
-	position to mess around with Adams code. There even was a pretty
+	position to mess around with Adam's code. There even was a pretty
 	clear comment that those values have to match the ones defined
 	in gimpcolorspace.h.
 	
