@@ -1,14 +1,14 @@
 # libgimp's Portuguese Translation
-# Copyright (C) 2002, 2003 gimp
+# Copyright © 2002, 2004 gimp
 # Distributed under the same licence as the gimp package
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2003
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2004
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2003-12-13 01:45+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-03-08 21:26+0000\n"
+"PO-Revision-Date: 2004-03-08 21:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -507,16 +507,15 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
-msgstr ""
+msgstr "_Nova Semente"
 
 #: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Semente de geração aleatória com número gerado aleatoriamente"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-#, fuzzy
-msgid "Randomize"
-msgstr "Aleató_rio"
+msgid "_Randomize"
+msgstr "_Aleatorizar"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

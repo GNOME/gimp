@@ -1,5 +1,5 @@
 # gimp-script-fu's Portuguese translation.
-# Copyright (C) 2002, 2004 gimp
+# Copyright © 2002, 2004 gimp
 # This file is distributed under the same license as the GIMP package
 # Filipe Maia <fmaia@gmx.net>, 2002
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004
@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:15+0100\n"
-"PO-Revision-Date: 2004-01-11 14:45+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-03-08 21:36+0000\n"
+"PO-Revision-Date: 2004-03-08 21:40+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1974,7 +1974,6 @@ msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Script-Fu/Selecção/Para _Imagem"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid ""
 ")))\n"
 "  (set! filename2 (string-append data-dir\n"
@@ -1982,17 +1981,15 @@ msgid ""
 msgstr ""
 ")))\n"
 "    (definir! nomeficheiro2 (expressão-acrescentar directório-dados\n"
-"\t\t\t\t   "
+"\t\t\t\t "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Script-Fu/Selecção/Para _Pincel..."
+msgstr "<Image>/Script-Fu/Selecção/Para _Padrão..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-#, fuzzy
 msgid "Pattern Name"
-msgstr "Padrão"
+msgstr "Nome de Padrão"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."

@@ -1,14 +1,14 @@
 # gimp-tips's Portuguese Translation
-# Copyright (C) 2002, 2004 gimp
+# Copyright © 2002, 2004 gimp
 # Distributed under the same licence as the gimp package
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "POT-Creation-Date: 2004-03-05 00:12+0100\n"
-"PO-Revision-Date: 2004-01-11 02:40+0000\n"
+"PO-Revision-Date: 2004-03-08 21:50+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,6 @@ msgstr ""
 "cor de fundo em vez da cor de primeiro plano."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -74,7 +73,6 @@ msgstr ""
 "os menus para o fazer."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -111,7 +109,6 @@ msgstr ""
 "(Camada-&gt;Cores-&gt;Curvas)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -132,7 +129,6 @@ msgstr ""
 "outros diálogos."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -152,7 +148,6 @@ msgstr ""
 "dos erros..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -275,7 +270,6 @@ msgstr ""
 "arrastando para a esquerda e direita."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -304,7 +298,6 @@ msgstr ""
 "encher a imagem actual ou a selecção com essa cor."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "

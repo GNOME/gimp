@@ -1,5 +1,5 @@
 # gimp-plugins' Portuguese translation.
-# Copyright (C) 2002, 2004 gimp
+# Copyright © 2002, 2004 gimp
 # Distributed under the same licence as the gimp package
 #
 # Filipe Maia <fmaia@gmx.net>, 2002
@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-01-11 14:40+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-03-08 21:29+0000\n"
+"PO-Revision-Date: 2004-03-08 21:35+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -42,27 +42,6 @@ msgid "About"
 msgstr "Sobre"
 
 #. Preview
-#. Create the Preview
-#. ==================
-#. Create the Preview
-#. Preview area, top of column
-#.
-#. * Preview window...
-#.
-#. Preview
-#. hbox created and packed into the dialog
-#. make a nice frame
-#. Preview
-#.
-#. * Preview window...
-#.
-#. Preview
-#.
-#. *	Preview
-#.
-#. Previews: frame
-#. * Misc: Preview settings *
-#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -76,8 +55,10 @@ msgstr "Sobre"
 #: plug-ins/flame/flame.c:920 plug-ins/gflare/gflare.c:2325
 #: plug-ins/gflare/gflare.c:3243 plug-ins/gimpressionist/orientmap.c:504
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:458
-#: plug-ins/ifscompose/ifscompose.c:927 plug-ins/print/gimp_main_window.c:413
-#: plug-ins/rcm/rcm_dialog.c:117 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/ifscompose/ifscompose.c:927
+#: plug-ins/libgimpoldpreview/gimpoldpreview.c:51
+#: plug-ins/print/gimp_main_window.c:413 plug-ins/rcm/rcm_dialog.c:117
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Preview"
 msgstr "Antever"
 
@@ -307,7 +288,6 @@ msgid "Color Function"
 msgstr "Função Cores"
 
 #. Redmode radio frame
-#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -374,14 +354,12 @@ msgstr ""
 "mais baixos e vice versa"
 
 #. Greenmode radio frame
-#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -466,7 +444,6 @@ msgid "Save Fractal Parameters"
 msgstr "Gravas Parâmetros Fractais"
 
 #. Do not rely on librsvg setting GError on failure!
-#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
@@ -478,8 +455,8 @@ msgstr "Gravas Parâmetros Fractais"
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
-#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
-#: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
+#: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
+#: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
 #: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
@@ -706,7 +683,7 @@ msgstr "Posição X da fonte de luz em posição XYZ"
 
 #: plug-ins/Lighting/lighting_ui.c:568 plug-ins/common/flarefx.c:761
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
-#: plug-ins/common/svg.c:799 plug-ins/common/xbm.c:1241
+#: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y:"
@@ -1184,11 +1161,6 @@ msgid "Bad colormap"
 msgstr "Mapa de cor inadequado"
 
 #. Set up progress display
-#. put up a progress bar
-#. max. rows allocated
-#. column, highest column ever used
-#. -1  assume fsel is not available (and not attached to any drawable)
-#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1255,8 +1227,6 @@ msgid "Cannot operate on unknown image types."
 msgstr "Incapaz de operar em tipos de imagens desconhecidos."
 
 #. And let's begin the progress
-#. init the progress meter
-#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1987,35 +1957,6 @@ msgstr "Alinhar Camadas Visíveis"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#. parameter settings
-#.
-#. * Filter type controls...
-#.
-#. parameter settings
-#. filter routine, initial pass
-#. Parameter settings
-#. left side of the UI is done
-#. right side
-#. parameter settings
-#. preview noisify
-#. parameter settings
-#. Controls
-#.
-#. *  Parameter settings
-#. *
-#. *  First set up the basic containers, label them, etc.
-#.
-#. Parameter Settings
-#. parameter settings
-#.
-#. * Sharpness control...
-#.
-#. parameter settings
-#. Parameter settings
-#. main parameter frame
-#. Parameter settings
-#. Controls
-#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:322
@@ -2912,14 +2853,12 @@ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtros/Distorção/_Curve Bend..."
 
 #: plug-ins/common/curve_bend.c:709
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Curva funciona apenas em camadas (mas foi chamado no canal ou máscara)"
+msgstr "Apenas funciona em camadas (mas foi chamado no canal ou máscara)."
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Incapaz de operar em tipos de imagens desconhecidos."
+msgstr "Incapaz de operar em selecções vazias."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -2938,8 +2877,6 @@ msgid "Automatic Pre_view"
 msgstr "Ante_visão Automática"
 
 #. Options area, bottom of column
-#. the vertical box and its toggle buttons
-#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
@@ -3836,9 +3773,9 @@ msgid "Error in GIMP brush file '%s'"
 msgstr "Erro no ficheiro pincel do GIMP '%s'"
 
 #: plug-ins/common/gbr.c:395
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Expressão UTF-8 inválida em ficheiro PSD"
+msgstr "Expressão UTF-8 inválida em ficheiro de pincel '%s'."
 
 #: plug-ins/common/gbr.c:401 plug-ins/common/gih.c:478
 #: plug-ins/common/gih.c:1118 plug-ins/gflare/gflare.c:2986
@@ -3846,9 +3783,8 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: plug-ins/common/gbr.c:573
-#, fuzzy
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Os pinceis do GIMP são em ESCALA CINZA ou RGBA\n"
+msgstr "Os pinceis do GIMP são em ESCALA CINZA ou RGBA"
 
 #: plug-ins/common/gbr.c:658
 msgid "Save as Brush"
@@ -4199,7 +4135,7 @@ msgid "Intersection"
 msgstr "Intersecção"
 
 #. Width and Height
-#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:697
+#: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
 #: plug-ins/print/gimp_main_window.c:1008
 #: plug-ins/print/gimp_main_window.c:1224
 msgid "Width:"
@@ -5189,7 +5125,6 @@ msgid "_Factory Defaults"
 msgstr "Valores por _Omissão"
 
 #. anti-alias control
-#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -5406,9 +5341,9 @@ msgid "<Image>/Filters/Map/_Paper Tile..."
 msgstr "<Image>/Filtros/Mapa/Mosaico _Papel..."
 
 #: plug-ins/common/pat.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Expressão UTF-8 inválida em ficheiro PSD"
+msgstr "Expressão UTF-8 inválida em ficheiro de padrão '%s'."
 
 #: plug-ins/common/pat.c:496
 msgid "Save as Pattern"
@@ -5766,7 +5701,7 @@ msgstr "Gravar em PostScript não suporta imagens com canais alfa"
 #: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
 #, c-format
 msgid "Error starting ghostscript (%s)"
-msgstr ""
+msgstr "Erro ao iniciar o ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
@@ -5783,7 +5718,7 @@ msgid "Rendering"
 msgstr "Renderização"
 
 #. Resolution
-#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:818
+#: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
 #: plug-ins/print/gimp_main_window.c:1103
 msgid "Resolution:"
 msgstr "Resolução:"
@@ -6142,7 +6077,6 @@ msgid "Error obtaining Screen Shot"
 msgstr "Erro ao obter Captura Ecrã"
 
 #. single window
-#. Action area
 #: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Capturar"
@@ -6812,19 +6746,19 @@ msgstr "Gravar como SUNRAS"
 msgid "RunLength Encoded"
 msgstr "Profundidade de Execução Codificada"
 
-#: plug-ins/common/svg.c:243 plug-ins/common/svg.c:626
+#: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 msgid "Unknown reason"
 msgstr "Motivo desconhecido"
 
-#: plug-ins/common/svg.c:247
+#: plug-ins/common/svg.c:249
 msgid "Rendering SVG..."
 msgstr "A Renderizar SVG..."
 
-#: plug-ins/common/svg.c:257
+#: plug-ins/common/svg.c:259
 msgid "Rendered SVG"
 msgstr "SVG Renderizado"
 
-#: plug-ins/common/svg.c:422
+#: plug-ins/common/svg.c:424
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -6832,67 +6766,63 @@ msgstr ""
 "Ficheiro SVG não\n"
 "especifica um tamanho!"
 
-#: plug-ins/common/svg.c:428
+#: plug-ins/common/svg.c:430
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: plug-ins/common/svg.c:632
+#: plug-ins/common/svg.c:634
 msgid "Open SVG"
 msgstr "Abrir SVG"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/svg.c:644
+#: plug-ins/common/svg.c:646
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizar Gráfico Vectores Escalável (SVG)"
 
-#: plug-ins/common/svg.c:703 plug-ins/print/gimp_main_window.c:1025
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
 #: plug-ins/print/gimp_main_window.c:1237
 msgid "Height:"
 msgstr "Altura:"
 
-#: plug-ins/common/svg.c:777
+#: plug-ins/common/svg.c:779
 msgid "Ratio _X:"
 msgstr "Rácio _X:"
 
-#: plug-ins/common/svg.c:813
+#: plug-ins/common/svg.c:815
 msgid "Constrain aspect ratio"
 msgstr "Rácio de restrição de aparência"
 
-#: plug-ins/common/svg.c:824
+#: plug-ins/common/svg.c:826
 #, c-format
 msgid "pixels/%a"
 msgstr "pixeis/%a"
 
 #. Path Import
-#: plug-ins/common/svg.c:844
+#: plug-ins/common/svg.c:846
 msgid "Import _Paths"
 msgstr "Importar _Caminhos"
 
-#: plug-ins/common/svg.c:850
+#: plug-ins/common/svg.c:852
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar elementos de caminho do SVG para que possam ser utilizador com a "
 "ferramenta de caminhos GIMP"
 
-#: plug-ins/common/svg.c:863
+#: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
 msgstr "Juntar Caminhos Importados"
 
 #: plug-ins/common/tga.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read footer from '%s'"
-msgstr ""
-"Incapaz de ler rodapé de\n"
-"'%s'"
+msgstr "Incapaz de ler rodapé de '%s'"
 
 #: plug-ins/common/tga.c:442
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot read extension from '%s'"
-msgstr ""
-"Incapaz de ler extensão de\n"
-"'%s'"
+msgstr "Incapaz de ler extensão de '%s'"
 
 #: plug-ins/common/tga.c:1193
 msgid "Save as TGA"
@@ -6991,9 +6921,8 @@ msgid "_JPEG"
 msgstr "_JPEG"
 
 #: plug-ins/common/tiff.c:2110
-#, fuzzy
 msgid "Save _color values from transparent pixels"
-msgstr "Gravar _Valores de Cor de Pixels Transparentes"
+msgstr "Gravar valores de _cor de pixels transparentes"
 
 #: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
 msgid "Comment:"
@@ -7635,7 +7564,6 @@ msgstr "Vento"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Estilo"
@@ -8852,7 +8780,6 @@ msgid "(none)"
 msgstr "(nenhum)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
-#, c-format
 msgid "<NONE>"
 msgstr "<NONE>"
 
@@ -8937,9 +8864,6 @@ msgstr "Por Omissão"
 
 #.
 #. *  Scales
-#.
-#.
-#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2672 plug-ins/gflare/gflare.c:3483
 #: plug-ins/gflare/gflare.c:3590 plug-ins/gflare/gflare.c:3729
@@ -9849,12 +9773,12 @@ msgstr ""
 "instalação está completa antes de reportar isto como um erro."
 
 #: plug-ins/helpbrowser/domain.c:113
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to open help files:\n"
 "%s"
 msgstr ""
-"Falha ao abrir ficheiro '%s':\n"
+"Falha ao abrir ficheiros de ajuda:\n"
 "%s"
 
 #: plug-ins/helpbrowser/domain.c:115
@@ -9865,23 +9789,27 @@ msgid ""
 "\n"
 "(Added entires before error anyway)"
 msgstr ""
+"Erro de parseamento no domínio de ajuda:\n"
+"%s\n"
+"\n"
+"(De qualquer modo entradas adicionadas antes do erro)"
 
 #: plug-ins/helpbrowser/domain.c:130
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr ""
+msgstr "ID de ajuda '%s' desconhecido"
 
 #: plug-ins/helpbrowser/domain.c:252
 msgid "The GIMP help files are not installed."
-msgstr ""
+msgstr "Os ficheiros de ajuda do GIMP não estão instalados."
 
 #: plug-ins/helpbrowser/domain.c:254
 msgid "The requested help files are not installed."
-msgstr ""
+msgstr "Os ficheiros de ajuda pedidos não estão instalados."
 
 #: plug-ins/helpbrowser/domain.c:261
 msgid "Please check your installation."
-msgstr ""
+msgstr "Verifique a sua instalação."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -10040,7 +9968,7 @@ msgstr "Plug-in Mapa Imagens 2.0"
 
 #: plug-ins/imagemap/imap_about.c:44
 msgid "Copyright(c) 1999-2003 by Maurits Rijk"
-msgstr "Copyright(c) 1999-2003 por Maurits Rijk"
+msgstr "Copyright© 1999-2003 por Maurits Rijk"
 
 #: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
@@ -11246,7 +11174,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
+"Copyright © 1997-2001 Michael Sweet, Robert Krawitz,\n"
 "e o resto da Equipa de Desenvolvimento do Gimp-Print.\n"
 "\n"
 "Visite a nossa página web em http://gimp-print.sourceforge.net.\n"
