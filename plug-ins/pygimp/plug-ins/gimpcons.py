@@ -36,12 +36,15 @@ def plug_in_python_fu_console():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
 
+    def bye(*args):
+	gtk.main_quit()
+
     win = gtk.Window()
-    win.connect("destroy", gtk.mainquit)
+    win.connect("destroy", bye)
     win.set_title("Gimp-Python Console")
 
     import gtkcons
-    cons = gtkcons.Console(namespace=namespace, quit_cb=gtk.mainquit)
+    cons = gtkcons.Console(namespace=namespace, quit_cb=bye)
 
     def browse(button, cons):
         import pygtk
@@ -54,10 +57,10 @@ def plug_in_python_fu_console():
             browse.destroy()
 
         win = pdbbrowse.BrowseWin(ok_button=ok_clicked)
-        win.connect("destroy", gtk.mainquit)
+        win.connect("destroy", bye)
         win.set_modal(TRUE)
         win.show()
-        gtk.mainloop()
+        gtk.main()
 
     button = gtk.Button("Browse")
     button.connect("clicked", browse, cons)
@@ -75,7 +78,7 @@ def plug_in_python_fu_console():
         return TRUE
 
     gtk.timeout_add(500, timeout)
-    gtk.mainloop()
+    gtk.main()
 
 register(
     "python_fu_console",

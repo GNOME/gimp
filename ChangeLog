@@ -1,3 +1,9 @@
+2004-08-31  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py: remove deprecated mainloop
+	calls.
+
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablepreview.c: increased default preview size to

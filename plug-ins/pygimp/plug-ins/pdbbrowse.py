@@ -301,11 +301,14 @@ if __name__ == '__main__':
 
         define_browse_win()
 
+        def bye(*args):
+	    gtk.main_quit()
+
 	win = BrowseWin()
-	win.connect("destroy", gtk.mainquit)
+	win.connect("destroy", bye)
 	win.show()
 
-	gtk.mainloop()
+	gtk.main()
 
     register(
 	"python_fu_pdb_browse",
