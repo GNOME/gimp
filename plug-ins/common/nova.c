@@ -129,7 +129,7 @@ static void        run   (const gchar      *name,
 static void        nova                    (GimpDrawable *drawable,
                                             gboolean      preview_mode);
 
-static gint        nova_dialog             (GimpDrawable *drawable);
+static gboolean    nova_dialog             (GimpDrawable *drawable);
 
 static GtkWidget * nova_center_create            (GimpDrawable  *drawable);
 static void        nova_center_destroy           (GtkWidget     *widget,
@@ -139,10 +139,10 @@ static void        nova_center_draw              (NovaCenter    *center,
 static void        nova_center_adjustment_update (GtkAdjustment *widget,
                                                   gpointer       data);
 static void        nova_center_cursor_update     (NovaCenter    *center);
-static gint        nova_center_preview_expose    (GtkWidget     *widget,
+static gboolean    nova_center_preview_expose    (GtkWidget     *widget,
                                                   GdkEvent      *event,
                                                   gpointer       data);
-static gint        nova_center_preview_events    (GtkWidget     *widget,
+static gboolean    nova_center_preview_events    (GtkWidget     *widget,
                                                   GdkEvent      *event,
                                                   gpointer       data);
 
@@ -302,7 +302,7 @@ run (const gchar       *name,
 /*   Main Dialog   */
 /*******************/
 
-static gint
+static gboolean
 nova_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -341,6 +341,7 @@ nova_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
                     0, 0, 0, 0);
 
+  /* Color */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       button = gimp_color_button_new (_("SuperNova Color Picker"),
@@ -357,6 +358,8 @@ nova_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (nova),
                                 drawable);
     }
+
+  /* Radius */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                               _("_Radius:"), SCALE_WIDTH, 8,
                               pvals.radius, 1, 100, 1, 10, 0,
@@ -368,6 +371,7 @@ nova_dialog (GimpDrawable *drawable)
   g_signal_connect_swapped (adj, "value_changed",
                             G_CALLBACK (nova),
                             drawable);
+  /* Number of spokes */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
                               _("_Spokes:"), SCALE_WIDTH, 8,
                               pvals.nspoke, 1, 1024, 1, 16, 0,
@@ -380,6 +384,7 @@ nova_dialog (GimpDrawable *drawable)
                             G_CALLBACK (nova),
                             drawable);
 
+  /* Randomness of hue */
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
@@ -645,7 +650,7 @@ nova_center_cursor_update (NovaCenter *center)
 /*
  *    Handle the expose event on the preview
  */
-static gint
+static gboolean
 nova_center_preview_expose (GtkWidget *widget,
                             GdkEvent  *event,
                             gpointer   data)
@@ -658,7 +663,7 @@ nova_center_preview_expose (GtkWidget *widget,
  *    Handle other events on the preview
  */
 
-static gint
+static gboolean
 nova_center_preview_events (GtkWidget *widget,
                             GdkEvent  *event,
                             gpointer   data)
@@ -740,7 +745,7 @@ nova (GimpDrawable *drawable,
    gint          progress, max_progress;
    gboolean      has_alpha;
    gint          xc, yc; /* center of nova */
-   gdouble       u, v, l, w, w1, c;
+   gdouble       u, v, l, w, w1, c, t;
    gdouble      *spoke;
    gdouble       nova_alpha, src_alpha, new_alpha = 0.0;
    gdouble       compl_ratio, ratio;
@@ -798,7 +803,7 @@ nova (GimpDrawable *drawable,
        gimp_pixel_rgn_init (&dest_rgn, drawable,
                             x1, y1, x2-x1, y2-y1, TRUE, TRUE);
      }
-       alpha = (has_alpha) ? bpp - 1 : bpp;
+   alpha = (has_alpha) ? bpp - 1 : bpp;
 
    /* Initialize progress */
    progress     = 0;
@@ -823,11 +828,11 @@ nova (GimpDrawable *drawable,
                l = sqrt (u * u + v * v);
 
                /* This algorithm is still under construction. */
-               c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
-               i = (gint) floor (c);
-               c -= i;
+               t = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
+               i = (gint) floor (t);
+               t -= i;
                i %= pvals.nspoke;
-               w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
+               w1 = spoke[i] * (1 - t) + spoke[(i + 1) % pvals.nspoke] * t;
                w1 = w1 * w1;
 
                w = 1.0 / (l + 0.001) * 0.9;
@@ -849,8 +854,8 @@ nova (GimpDrawable *drawable,
                compl_ratio = 1.0 - ratio;
                
                /* red or gray */
-               spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
-                          (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
+               spokecol = (gdouble)spokecolor[i                   ].r * (1.0-t) +
+                          (gdouble)spokecolor[(i+1) % pvals.nspoke].r * t;
 
                if (w>1.0)
                  color.r = CLAMP (spokecol * w, 0.0, 1.0);
@@ -863,8 +868,8 @@ nova (GimpDrawable *drawable,
                if (bpp>2)
                {
                  /* green */
-                 spokecol = (gdouble)spokecolor[i                   ].g * (1.0-c) +
-                            (gdouble)spokecolor[(i+1) % pvals.nspoke].g * c;
+                 spokecol = (gdouble)spokecolor[i                   ].g * (1.0-t) +
+                            (gdouble)spokecolor[(i+1) % pvals.nspoke].g * t;
 
                  if (w>1.0)
                    color.g = CLAMP (spokecol * w, 0.0, 1.0);
@@ -875,8 +880,8 @@ nova (GimpDrawable *drawable,
                  dest[1] = CLAMP (color.g*255.0, 0, 255);
 
                  /* blue */
-                 spokecol = (gdouble)spokecolor[i                   ].b * (1.0-c) +
-                            (gdouble)spokecolor[(i+1) % pvals.nspoke].b * c;
+                 spokecol = (gdouble)spokecolor[i                   ].b * (1.0-t) +
+                            (gdouble)spokecolor[(i+1) % pvals.nspoke].b * t;
 
                  if (w>1.0)
                    color.b = CLAMP (spokecol * w, 0.0, 1.0);
@@ -897,7 +902,7 @@ nova (GimpDrawable *drawable,
            
            src_row   += preview->rowstride;
 
-           gimp_old_preview_do_row (preview, row, y2, dest_row);
+           gimp_old_preview_do_row (preview, row, preview->width, dest_row);
          }
 
        gtk_widget_queue_draw (preview->widget);
@@ -925,11 +930,11 @@ nova (GimpDrawable *drawable,
                    l = sqrt(u*u + v*v);
 
                    /* This algorithm is still under construction. */
-                   c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
-                   i = (gint) floor (c);
-                   c -= i;
+                   t = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
+                   i = (gint) floor (t);
+                   t -= i;
                    i %= pvals.nspoke;
-                   w1 = spoke[i] * (1 - c) + spoke[(i + 1) % pvals.nspoke] * c;
+                   w1 = spoke[i] * (1 - t) + spoke[(i + 1) % pvals.nspoke] * t;
                    w1 = w1 * w1;
 
                    w = 1/(l+0.001)*0.9;
@@ -956,8 +961,8 @@ nova (GimpDrawable *drawable,
                      case 1:
                      case 2:
                        /* gray */
-                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
-                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
+                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-t) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * t;
                        if (w>1.0)
                          color.r = CLAMP (spokecol * w, 0.0, 1.0);
                        else
@@ -969,8 +974,8 @@ nova (GimpDrawable *drawable,
                      case 3:
                      case 4:
                        /* red */
-                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-c) +
-                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * c;
+                       spokecol = (gdouble)spokecolor[i                   ].r * (1.0-t) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].r * t;
                        if (w>1.0)
                          color.r = CLAMP (spokecol * w, 0.0, 1.0);
                        else
@@ -979,8 +984,8 @@ nova (GimpDrawable *drawable,
                        color.r += c;
                        dest[0] = CLAMP (color.r*255.0, 0, 255);
                        /* green */
-                       spokecol = (gdouble)spokecolor[i                   ].g * (1.0-c) +
-                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].g * c;
+                       spokecol = (gdouble)spokecolor[i                   ].g * (1.0-t) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].g * t;
                        if (w>1.0)
                          color.g = CLAMP (spokecol * w, 0.0, 1.0);
                        else
@@ -989,8 +994,8 @@ nova (GimpDrawable *drawable,
                        color.g += c;
                        dest[1] = CLAMP (color.g*255.0, 0, 255);
                        /* blue */
-                       spokecol = (gdouble)spokecolor[i                   ].b * (1.0-c) +
-                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].b * c;
+                       spokecol = (gdouble)spokecolor[i                   ].b * (1.0-t) +
+                                  (gdouble)spokecolor[(i+1) % pvals.nspoke].b * t;
                        if (w>1.0)
                          color.b = CLAMP (spokecol * w, 0.0, 1.0);
                        else
