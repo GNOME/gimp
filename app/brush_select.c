@@ -603,7 +603,7 @@ preview_calc_scrollbar (BrushSelectP bsp)
   int page_size;
   int max;
   int offs;
-  int rowy;
+  /* int rowy; */
 
   offs = bsp->scroll_offset;
   num_rows = (num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;

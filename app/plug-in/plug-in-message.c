@@ -672,6 +672,7 @@ plug_in_new (char *name)
   plug_in->my_write = 0;
   plug_in->his_read = 0;
   plug_in->his_write = 0;
+  plug_in->input_id = 0;
   plug_in->write_buffer_index = 0;
   plug_in->temp_proc_defs = NULL;
   plug_in->progress = NULL;

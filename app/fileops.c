@@ -488,7 +488,7 @@ file_open_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), ".");
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), "./");
       gtk_window_set_title (GTK_WINDOW (fileload), "Load Image");
     }
 
@@ -579,7 +579,7 @@ file_save_as_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), ".");
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), "./");
       gtk_window_set_title (GTK_WINDOW (filesave), "Save Image");
     }
 

@@ -1,3 +1,13 @@
+Mon Mar 30 21:58:34 PST 1998 Manish Singh <yosh@gimp.org>
+
+        * app/brush_select.c
+        * app/iscissors.c: get rid of unused variable warnings
+
+        * app/fileops.c: refresh the filesel better
+
+        * app/plug_in.c: make sure everything gets initialized to something
+        in the plug-in struct
+
 Mon Mar 30 13:52:50 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	*plug-ins/png/png.c: changed nparams it expected 
