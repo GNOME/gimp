@@ -31,10 +31,12 @@
  *                        Fix bug with gimp_export_image()
  *                        (moved it from load to save)
  */
+
 static char ident[] = "@(#) GIMP FITS file-plugin v1.06  21-Nov-99";
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -344,7 +346,7 @@ load_image (gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("Can't open file for reading"));
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return (-1);
     }
   fclose (fp);
@@ -456,13 +458,14 @@ save_image (gchar  *filename,
   ofp = fits_open (filename, "w");
   if (!ofp)
     {
-      g_message (_("Can't open file for writing"));
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return (FALSE);
     }
 
   if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-      temp = g_strdup_printf (_("Saving %s:"), filename);
+      temp = g_strdup_printf (_("Saving '%s':"), filename);
       gimp_progress_init (temp);
       g_free (temp);
     }

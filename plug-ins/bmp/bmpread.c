@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,7 +64,7 @@ ReadColorMap (FILE   *fd,
     {
       if (!ReadOK (fd, rgb, size))
 	{
-	  g_message (_("%s: bad colormap"), prog_name);
+	  g_message (_("Bad colormap"));
 	  return FALSE;
 	}
       
@@ -87,24 +88,20 @@ ReadBMP (gchar *name)
   guchar ColorMap[256][3];
   gint32 image_ID;
   guchar magick[2];
-  
-  if (interactive_bmp)
-    {
-      temp_buf = g_strdup_printf (_("Loading %s:"), name);
-      gimp_progress_init (temp_buf);
-      g_free (temp_buf);
-    }
 
   filename = name;
   fd = fopen (filename, "rb");
-  
-  /* Is this a valid File? Should never be used because Gimp tests it. */
-  
+
   if (!fd)
     {
-      g_message (_("%s: can't open \"%s\""), prog_name, filename);
+      g_message (_("Can't open '%s':\n%s"),
+                 filename, g_strerror (errno));
       return -1;
     }
+
+  temp_buf = g_strdup_printf (_("Opening '%s'..."), name);
+  gimp_progress_init (temp_buf);
+  g_free (temp_buf);
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 
@@ -113,7 +110,7 @@ ReadBMP (gchar *name)
      !strncmp(magick,"PI",2) || !strncmp(magick,"CI",2) ||
      !strncmp(magick,"CP",2)))
     {
-      g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+      g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
     }
   
@@ -121,19 +118,19 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK(fd, buffer, 12))
 	{
-          g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+          g_message (_("'%s' is not a valid BMP file"), filename);
           return -1;
         }
       if (!ReadOK(fd, magick, 2))
 	{
-          g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+          g_message (_("'%s' is not a valid BMP file"), filename);
           return -1;
         }
     }
 
   if (!ReadOK(fd, buffer, 12))
     {
-      g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
+      g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
     }
 
@@ -146,7 +143,7 @@ ReadBMP (gchar *name)
   
   if (!ReadOK(fd, buffer, 4))
     {
-      g_message(_("%s: %s is not a valid BMP file"), prog_name, filename);
+      g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
     }
   
@@ -158,7 +155,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, 8))
         {
-          g_message (_("%s: error reading BMP file header"), prog_name);
+          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
           return -1;
         }
 
@@ -176,7 +173,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("%s: error reading BMP file header"), prog_name);
+          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);	/* 12 */
@@ -196,7 +193,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("%s: error reading BMP file header"), prog_name);
+          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
@@ -214,7 +211,7 @@ ReadBMP (gchar *name)
     }
   else
     {
-      g_message (_("%s: error reading BMP file header"), prog_name);
+      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
       return -1;
     }
 
@@ -232,17 +229,17 @@ ReadBMP (gchar *name)
   /* Sanity checks */
 
   if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0) {
-      g_message (_("%s: error reading BMP file header"), prog_name);
+      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
       return -1;
   }
 
   if (Bitmap_Head.biPlanes != 1) {
-      g_message (_("%s: error reading BMP file header"), prog_name);
+      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
       return -1;
   }
 
   if (ColormapSize > 256 || Bitmap_Head.biClrUsed > 256) {
-      g_message (_("%s: error reading BMP file header"), prog_name);
+      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
       return -1;
   }
 
@@ -375,7 +372,7 @@ ReadImage (FILE   *fd,
             }
           --ypos; /* next line */
           cur_progress++;
-          if ((interactive_bmp) && ((cur_progress % 5) == 0))
+          if ((cur_progress % 5) == 0)
             gimp_progress_update ((gdouble) cur_progress /
                                   (gdouble) max_progress);
         }
@@ -395,7 +392,7 @@ ReadImage (FILE   *fd,
             }
           --ypos; /* next line */
           cur_progress++;
-          if ((interactive_bmp) && ((cur_progress % 5) == 0))
+          if ((cur_progress % 5) == 0)
             gimp_progress_update ((gdouble) cur_progress /
                                   (gdouble) max_progress);
         }
@@ -416,7 +413,7 @@ ReadImage (FILE   *fd,
             }
           --ypos; /* next line */
           cur_progress++;
-          if ((interactive_bmp) && ((cur_progress % 5) == 0))
+          if ((cur_progress % 5) == 0)
             gimp_progress_update ((gdouble) cur_progress /
                                   (gdouble) max_progress);
         }
@@ -445,8 +442,7 @@ ReadImage (FILE   *fd,
 		    xpos = 0;
 
 		    cur_progress++;
-		    if ((interactive_bmp) &&
-			((cur_progress % 5) == 0))
+		    if ((cur_progress % 5) == 0)
 		      gimp_progress_update ((gdouble) cur_progress /
 					    (gdouble) max_progress);
 		  }
@@ -514,8 +510,7 @@ ReadImage (FILE   *fd,
 		    xpos = 0;
 
 		    cur_progress++;
-		    if ((interactive_bmp) &&
-			((cur_progress % 5) == 0))
+		    if ((cur_progress % 5) == 0)
 		      gimp_progress_update ((gdouble) cur_progress /
 					    (gdouble)  max_progress);
 		  }
@@ -550,8 +545,7 @@ ReadImage (FILE   *fd,
 	gimp_cmap[j++] = cmap[i][2];
       }
 
-  if (interactive_bmp)
-    gimp_progress_update (1);
+  gimp_progress_update (1);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
 		       0, 0, drawable->width, drawable->height, TRUE, FALSE);

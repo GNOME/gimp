@@ -29,6 +29,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -133,7 +134,7 @@ WriteBMP (gchar  *filename,
 		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
   if (gimp_drawable_has_alpha(drawable_ID))
     {
-      g_message(_("BMP: cannot operate on unknown image types or alpha images"));
+      g_message (_("Cannot operate on unknown image types or alpha images"));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -195,7 +196,8 @@ WriteBMP (gchar  *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("Can't open %s"), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -205,12 +207,10 @@ WriteBMP (gchar  *filename,
 			   0, 0, drawable->width, drawable->height);
 
   /* And let's begin the progress */
-  if (interactive_bmp)
-    {
-      temp_buf = g_strdup_printf (_("Saving %s:"), filename);
-      gimp_progress_init (temp_buf);
-      g_free (temp_buf);
-    }
+  temp_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp_buf);
+  g_free (temp_buf);
+
   cur_progress = 0;
   max_progress = drawable->height;
 
@@ -369,8 +369,7 @@ WriteImage (FILE   *f,
 	  Write (f, &buf[3], spzeile - (width * 3));
 
 	  cur_progress++;
-	  if ((interactive_bmp) &&
-	      ((cur_progress % 5) == 0))
+	  if ((cur_progress % 5) == 0)
 	    gimp_progress_update ((gdouble) cur_progress /
 				  (gdouble) max_progress);
 
@@ -405,8 +404,7 @@ WriteImage (FILE   *f,
 		xpos = 0;
 
 		cur_progress++;
-		if ((interactive_bmp) &&
-		    ((cur_progress % 5) == 0))
+		if ((cur_progress % 5) == 0)
 		  gimp_progress_update ((gdouble) cur_progress /
 					(gdouble) max_progress);
 	      }
@@ -520,8 +518,7 @@ WriteImage (FILE   *f,
 		laenge += 2;
 
 		cur_progress++;
-		if ((interactive_bmp) &&
-		    ((cur_progress % 5) == 0))
+		if ((cur_progress % 5) == 0)
 		  gimp_progress_update ((gdouble) cur_progress /
 					(gdouble) max_progress);
 	      }
@@ -541,8 +538,8 @@ WriteImage (FILE   *f,
 	  }
 	}
     }
-  if (interactive_bmp)
-    gimp_progress_update (1);
+
+  gimp_progress_update (1);
 }
 
 static gint

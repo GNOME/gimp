@@ -71,6 +71,7 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.15  04-Oct-2002";
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -173,10 +174,10 @@ static PSSaveInterface psint =
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
+static void   run        (gchar      *name,
+                          gint        nparams,
                           GimpParam  *param,
-                          gint    *nreturn_vals,
+                          gint       *nreturn_vals,
                           GimpParam **return_vals);
 
 static gint32 load_image (gchar   *filename);
@@ -644,20 +645,20 @@ ps_set_save_size (PSSaveVals *vals,
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID = -1;
-  gint32        drawable_ID = -1;
-  gint32        orig_image_ID = -1;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
-  gint k;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status        = GIMP_PDB_SUCCESS;
+  gint32               image_ID      = -1;
+  gint32               drawable_ID   = -1;
+  gint32               orig_image_ID = -1;
+  GimpExportReturnType export        = GIMP_EXPORT_CANCEL;
+  gint                 k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -871,22 +872,20 @@ load_image (gchar *filename)
   ifp = fopen (filename, "r");
   if (ifp == NULL)
     {
-      g_message (_("PS: can't open file for reading"));
-      return (-1);
+      g_message (_("Can't open '%s':\n%s"),
+                 filename, g_strerror (errno));
+      return -1;
     }
   fclose (ifp);
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Interpreting and Loading %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
-      g_message (_("PS: can't interprete file"));
+      g_message (_("Can't interpret file"));
       return (-1);
     }
 
@@ -984,7 +983,7 @@ save_image (gchar  *filename,
     case GIMP_RGB_IMAGE:
       break;
     default:
-      g_message (_("PS: cannot operate on unknown image types"));
+      g_message (_("Cannot operate on unknown image types"));
       return (FALSE);
       break;
     }
@@ -993,16 +992,14 @@ save_image (gchar  *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("PS: can't open file for writing"));
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return (FALSE);
     }
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Saving %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   save_ps_header (ofp, filename);
 
@@ -1586,7 +1583,7 @@ skip_ps (FILE *ifp)
       while (k-- > 0) c = getc (ifp);
       if (c == EOF) return (-1);
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
     }
 
@@ -1700,7 +1697,7 @@ load_ps (gchar *filename,
 	scan_lines++;
 	total_scan_lines++;
 
-	if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	if ((i % 20) == 0)
 	  gimp_progress_update ((double)(i+1) / (double)image_height);
 
 	if ((scan_lines == tile_height) || ((i+1) == image_height))
@@ -1727,7 +1724,7 @@ load_ps (gchar *filename,
 	  scan_lines++;
 	  total_scan_lines++;
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double)(i+1) / (double)image_height);
 
 	  if ((scan_lines == tile_height) || ((i+1) == image_height))
@@ -2087,7 +2084,7 @@ save_ps_preview (FILE   *ofp,
       if (out_count != 0)
 	fprintf (ofp, "\n");
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((y % 20) == 0))
+      if ((y % 20) == 0)
 	gimp_progress_update ((double)(y) / (double)height);
     }
 
@@ -2170,18 +2167,23 @@ save_gray  (FILE   *ofp,
           ascii85_nout (nout, packb, ofp);
           src += width;
 	}
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
+
   if (level2)
-  {
-    ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-    ascii85_done (ofp);
-  }
+    {
+      ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+      ascii85_done (ofp);
+    }
+
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
-  if (packb) g_free (packb);
+
+  if (packb)
+    g_free (packb);
 
   gimp_drawable_detach (drawable);
 
@@ -2293,21 +2295,26 @@ save_bw (FILE   *ofp,
           compress_packbits (nbsl, scanline, &nout, packb);
           ascii85_nout (nout, packb, ofp);
 	}
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
+
   if (level2)
-  {
-    ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-    ascii85_done (ofp);
-  }
+    {
+      ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
+      ascii85_done (ofp);
+    }
+
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (hex_scanline);
   g_free (scanline);
   g_free (data);
-  if (packb != NULL) g_free (packb);
+
+  if (packb)
+    g_free (packb);
 
   gimp_drawable_detach (drawable);
 
@@ -2443,15 +2450,21 @@ save_index (FILE   *ofp,
           }
           src += width;
         }
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
+
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (data);
-  if (packb != NULL) g_free (packb);
-  if (plane != NULL) g_free (plane);
+
+  if (packb)
+    g_free (packb);
+
+  if (plane)
+    g_free (plane);
 
   gimp_drawable_detach (drawable);
 
@@ -2566,14 +2579,20 @@ save_rgb (FILE   *ofp,
           }
           src += 3*width;
 	}
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
+
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
-  if (packb != NULL) g_free (packb);
-  if (plane != NULL) g_free (plane);
+
+  if (packb)
+    g_free (packb);
+
+  if (plane)
+    g_free (plane);
 
   gimp_drawable_detach (drawable);
 

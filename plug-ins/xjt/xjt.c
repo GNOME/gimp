@@ -1703,7 +1703,7 @@ save_xjt_image (gchar   *filename,
 	break;
    }
 
-   l_name = g_strdup_printf (_("Saving %s:"), filename);
+   l_name = g_strdup_printf (_("Saving '%s'..."), filename);
    gimp_progress_init (l_name);
    g_free (l_name);
    
@@ -3321,7 +3321,7 @@ load_xjt_image (gchar *filename)
    l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
    l_fsel_id = -1;                /* -1  assume there is no floating selection */
 
-   l_name = g_strdup_printf (_("Loading %s:"), filename);
+   l_name = g_strdup_printf (_("Opening '%s'..."), filename);
    gimp_progress_init (l_name);
    g_free (l_name);
    

@@ -325,7 +325,7 @@ render_blast (GimpDrawable   *drawable,
     } 
   else 
     {
-      gimp_progress_init( _("Rendering Blast..."));
+      gimp_progress_init (_("Rendering Blast..."));
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
       width = x2 - x1;
@@ -444,7 +444,7 @@ render_wind (GimpDrawable   *drawable,
     } 
   else 
     {
-      gimp_progress_init( _("Rendering Wind..."));
+      gimp_progress_init (_("Rendering Wind..."));
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
       bytes = drawable->bpp;

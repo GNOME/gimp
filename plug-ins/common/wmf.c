@@ -24,6 +24,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -927,7 +928,7 @@ new_object (ObjectType type,
 	break;
       }
   if (i == nobjects)
-    g_message ("WMF: Creating too many objects");
+    g_message ("Creating too many objects");
 
   return result;
 }
@@ -1116,7 +1117,7 @@ load_image (char *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message ("WMF: can't open \"%s\"", filename);
+      g_message ("Can't open '%s':%s", filename, g_strerror (errno));
       return -1;
     }
 
@@ -1126,7 +1127,7 @@ load_image (char *filename)
 
   if (!ReadOK (fp, buffer, SIZE_WMFHEAD))
     {
-      g_message ("WMF: Failed to read metafile header");
+      g_message ("Failed to read metafile header");
       return -1;
     }
 
@@ -1137,7 +1138,7 @@ load_image (char *filename)
       if (!ReadOK (fp, buffer + SIZE_WMFHEAD,
 		   SIZE_PLACEABLEMETAHEADER - SIZE_WMFHEAD))
 	{
-	  g_message ("WMF: Failed to read placeable metafile header");
+	  g_message ("Failed to read placeable metafile header");
 	  return -1;
 	}
       g_memmove (&apm_head.Left, buffer + 6, 2);
@@ -1160,7 +1161,7 @@ load_image (char *filename)
 #endif
       if (!ReadOK (fp, buffer, SIZE_WMFHEAD))
 	{
-	  g_message ("WMF: Failed to read metafile header");
+	  g_message ("Failed to read metafile header");
 	  return -1;
 	}
     }
@@ -1187,7 +1188,7 @@ load_image (char *filename)
 
   if (GUINT16_FROM_LE (wmf_head.Version) != 0x0300)
     {
-      g_message ("WMF: Metafile has wrong version, got %#x, expected 0x300",
+      g_message ("Metafile has wrong version, got %#x, expected 0x300",
 		 GUINT16_FROM_LE (wmf_head.Version));
       return -1;
     }
@@ -1201,7 +1202,7 @@ load_image (char *filename)
     {
       if (!ReadOK (fp, buffer, SIZE_WMFRECORD))
 	{
-	  g_message ("WMF: Failed to read metafile record");
+	  g_message ("Failed to read metafile record");
 	  return -1;
 	}
       g_memmove (&record.Size, buffer, 4);
@@ -1273,7 +1274,7 @@ load_image (char *filename)
 	  if (ix >= 0)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: RestoreDC with positive argument (%d)?", ix);
+	      g_message ("RestoreDC with positive argument (%d)?", ix);
 	      return -1;
 	    }
 	  while (ix++ < 0)
@@ -1281,7 +1282,7 @@ load_image (char *filename)
 	      if (canvas->dc_stack == NULL)
 		{
 		  fclose (fp);
-		  g_message ("WMF: DC stack underflow");
+		  g_message ("DC stack underflow");
 		  return -1;
 		}
 	      gdk_gc_unref (canvas->dc.gc);
@@ -1305,7 +1306,7 @@ load_image (char *filename)
 	  if (!gdk_color_alloc (canvas->colormap, &canvas->dc.bg))
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Couldn't allocate color");
+	      g_message ("Couldn't allocate color");
 	      return -1;
 	    }
 #ifdef DEBUG
@@ -1332,7 +1333,7 @@ load_image (char *filename)
 	      break;
 	    default:
 	      fclose (fp);
-	      g_message ("WMF: Invalid case %d at line %d",
+	      g_message ("Invalid case %d at line %d",
 			 GINT16_FROM_LE (params[0]), __LINE__);
 	      break;
 	    }
@@ -1352,7 +1353,7 @@ load_image (char *filename)
 	  if (!gdk_color_alloc (canvas->colormap, &canvas->dc.textColor))
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Couldn't allocate color");
+	      g_message ("Couldn't allocate color");
 	      return -1;
 	    }
 #ifdef DEBUG
@@ -1475,7 +1476,7 @@ load_image (char *filename)
 
 	    default:
 	      fclose (fp);
-	      g_message ("WMF: Invalid case %d at line %d",
+	      g_message ("Invalid case %d at line %d",
 			 GUINT16_FROM_LE (params[0]), __LINE__);
 	      return -1;
 	    }
@@ -1518,7 +1519,7 @@ load_image (char *filename)
 	      break;
 
 	    default:
-	      g_message ("WMF: Unrecognized pen style %#x",
+	      g_message ("Unrecognized pen style %#x",
 			 GUINT16_FROM_LE (params[0]));
 	      fclose (fp);
 	      return -1;
@@ -1542,7 +1543,7 @@ load_image (char *filename)
 #endif
 	  if (!gdk_color_alloc (canvas->colormap, &objp->u.pen.color))
 	    {
-	      g_message ("WMF: Couldn't allocate color");
+	      g_message ("Couldn't allocate color");
 	      fclose (fp);
 	      return -1;
 	    }
@@ -1578,7 +1579,7 @@ load_image (char *filename)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
 	  if (!gdk_color_alloc (canvas->colormap, &objp->u.brush.color))
 	    {
-	      g_message ("WMF: Couldn't allocate color");
+	      g_message ("Couldn't allocate color");
 	      fclose (fp);
 	      return -1;
 	    }
@@ -1735,7 +1736,7 @@ load_image (char *filename)
 		if (objp->u.font.font == NULL)
 		  {
 		    fclose (fp);
-		    g_message ("WMF: Cannot load suitable font, not even %s",
+		    g_message ("Cannot load suitable font, not even %s",
 			       fontname);
 		    return -1;
 		  }
@@ -1752,14 +1753,14 @@ load_image (char *filename)
 	  if (k >= nobjects)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Selecting out of bounds object index");
+	      g_message ("Selecting out of bounds object index");
 	      return -1;
 	    }
 	  objp = objects[k];
 	  if (objp == NULL)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Selecting NULL object");
+	      g_message ("Selecting NULL object");
 	      return -1;
 	    }
 #ifdef DEBUG
@@ -1801,7 +1802,7 @@ load_image (char *filename)
 
 	    default:
 	      fclose (fp);
-	      g_message ("WMF: Unhandled case %d at line %d",
+	      g_message ("Unhandled case %d at line %d",
 			 objp->type, __LINE__);
 	      return -1;
 	    }
@@ -1815,20 +1816,20 @@ load_image (char *filename)
 	  if (k >= nobjects)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Selecting out of bounds palette index");
+	      g_message ("Selecting out of bounds palette index");
 	      return -1;
 	    }
 	  objp = objects[k];
 	  if (objp == NULL)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Selecting NULL palette");
+	      g_message ("Selecting NULL palette");
 	      return -1;
 	    }
 	  if (objp->type != OBJ_PALETTE)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: SelectPalette selects non-palette");
+	      g_message ("SelectPalette selects non-palette");
 	      return -1;
 	    }
 	  /* XXX */
@@ -1847,14 +1848,14 @@ load_image (char *filename)
 	  if (k >= nobjects)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Deleting out of bounds object index");
+	      g_message ("Deleting out of bounds object index");
 	      return -1;
 	    }
 	  objp = objects[k];
 	  if (objp == NULL)
 	    {
 	      fclose (fp);
-	      g_message ("WMF: Deleting already deleted object");
+	      g_message ("Deleting already deleted object");
 	      return -1;
 	    }
 	  if (objp->type == OBJ_FONT)
@@ -2299,7 +2300,7 @@ load_image (char *filename)
 	default:
 	  if (!warned_unhandled)
 	    {
-	      g_message ("WMF: Unhandled operation %#x.",
+	      g_message ("Unhandled operation %#x.",
 			 GUINT16_FROM_LE (record.Function));
 	      warned_unhandled = TRUE;
 	    }
@@ -2331,7 +2332,7 @@ readparams (DWORD size,
       if (nwords < nparams)
 	{
 	  fclose (fp);
-	  g_message ("WMF: too small record?");
+	  g_message ("Too small record?");
 	  return 0;
 	}
     }
@@ -2339,14 +2340,14 @@ readparams (DWORD size,
   if (nparams > NPARMWORDS)
     {
       fclose (fp);
-      g_message ("WMF: too large record?");
+      g_message ("Too large record?");
       return 0;
     }
       
   if (nparams > 0 && !ReadOK (fp, params, nparams  * sizeof (WORD)))
     {
       fclose (fp);
-      g_message ("WMF: Read failed");
+      g_message ("Read failed");
       return 0;
     }
 

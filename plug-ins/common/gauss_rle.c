@@ -239,7 +239,7 @@ run (gchar      *name,
       
       if (!(bvals.horizontal || bvals.vertical))
 	{
-	  g_message ( _("gauss_rle: you must specify either horizontal or vertical (or both)"));
+	  g_message ( _("You must specify either horizontal or vertical (or both)"));
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
 

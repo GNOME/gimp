@@ -1,3 +1,59 @@
+2003-06-13  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up and improved the message system:
+
+	* app/core/gimp.[ch]: added "const gchar *domain" to
+	GimpMessageFunc (a NULL domain means the message is from the GIMP
+	core, everything else is a plug-in).
+
+	* app/errors.c: pass "domain == NULL" to gimp_message().
+
+	* tools/pdbgen/pdb/message.pdb: derive the message domain from the
+	current plug-in's menu_path (evil hack but works reasonably well).
+
+	* app/pdb/message_cmds.c: regenerated.
+
+	* app/widgets/gimpwidgets-utils.[ch] (gimp_message_box): added a
+	header showing the message domain and changed the dialog layout to
+	follow the HIG more closely.
+
+	* app/gui/error-console-dialog.[ch]: removed.
+
+	* app/widgets/gimperrorconsole.[ch]
+	* app/gui/error-console-commands.[ch]
+	* app/gui/error-console-menu.[ch]: new files containing a
+	re-implementation of the error console dialog.
+
+	* app/gui/Makefile.am
+	* app/gui/dialogs-constructors.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: changed accordingly.
+
+	* app/display/gimpprogress.c: added more spacing and removed the
+	separator (more HIG compliant).
+
+	* plug-ins/[most plug-ins].c: Changed lots of messages and
+	progress strings:
+
+	- Removed plug-in names from messages since that's automatically
+	  covered by "domain" now.
+	- Put all filenames in ''.
+	- Changed "Loading" to "Opening".
+	- Added "..." to all progress messages.
+	- Cleaned up all file open/save error messages to look the
+	  same and include g_strerror(errno).
+	- Removed special casing for progress bars and *always* show them,
+	  not only if run_mode != GIMP_RUN_NONINTERACTIVE (we can't expect
+	  all plug-ins to do this correctly but need to hack the core to
+	  sort out unwanted progress bars).
+
+	Unrelated:
+
+	- Cleaned up indentation, spacing, #includes, coding style and
+	  other stuff while I was at all these files.
+
 2003-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-save-dialog.c (file_save_ok_callback): removed

@@ -379,7 +379,8 @@ run (gchar      *name,
 	    case RNDM_PICK: rndm_type_str = "pick"; break;
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
-	  sprintf (prog_label, "%s (%s)", gettext(RNDM_VERSION[rndm_type - 1]),
+	  sprintf (prog_label, "%s (%s)...",
+                   gettext(RNDM_VERSION[rndm_type - 1]),
 		   gettext(rndm_type_str));
 	  gimp_progress_init(prog_label);
 	  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));

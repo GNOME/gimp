@@ -34,8 +34,10 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -432,15 +434,13 @@ load_image (gchar *filename)
 
   tif = TIFFOpen (filename, "r");
   if (!tif) {
-    g_message (_("TIFF: Can't open '%s'"), filename);
+    g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
     gimp_quit ();
   }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE) {
-    name = g_strdup_printf( _("Loading '%s' ..."), filename);
-    gimp_progress_init (name);
-    g_free (name);
-  }
+  name = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (name);
+  g_free (name);
 
   TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
@@ -454,17 +454,17 @@ load_image (gchar *filename)
     extra = 0;
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols)) {
-    g_message ("TIFF: Can't get image width");
+    g_message ("Can't get image width");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows)) {
-    g_message ("TIFF: Can't get image length");
+    g_message ("Can't get image length");
     gimp_quit ();
   }
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet)) {
-    g_message("TIFF: Can't get photometric\nAssuming min-is-black\n");
+    g_message ("Can't get photometric\nAssuming min-is-black");
     /* old AppleScan software misses out the photometric tag (and
      * incidentally assumes min-is-white, but xv assumes min-is-black,
      * so we follow xv's lead.  It's not much hardship to invert the
@@ -515,7 +515,7 @@ load_image (gchar *filename)
   }
 
   if ((image = gimp_image_new (cols, rows, image_type)) == -1) {
-    g_message ("TIFF: Can't create a new image");
+    g_message ("Can't create a new image");
     gimp_quit ();
   }
   gimp_image_set_filename (image, filename);
@@ -581,7 +581,7 @@ load_image (gchar *filename)
 	      {
 	      case RESUNIT_NONE:
 		/* ImageMagick writes files with this silly resunit */
-		g_message ("TIFF warning: resolution units meaningless");
+		g_message ("Warning: resolution units meaningless");
 		break;
 		
 	      case RESUNIT_INCH:
@@ -595,7 +595,7 @@ load_image (gchar *filename)
 		break;
 		
 	      default:
-		g_message ("TIFF file error: unknown resolution unit type %d, "
+		g_message ("File error: unknown resolution unit type %d, "
 			   "assuming dpi", read_unit);
 		break;
 	      }
@@ -603,13 +603,13 @@ load_image (gchar *filename)
 	else 
 	  { /* no res unit tag */
 	    /* old AppleScan software produces these */
-	    g_message ("TIFF warning: resolution specified without any units tag, "
+	    g_message ("Warning: resolution specified without any units tag, "
 		       "assuming dpi");
 	  }
       }
       else 
 	{ /* xres but no yres */
-	  g_message ("TIFF warning: no y resolution info, assuming same as x");
+	  g_message ("Warning: no y resolution info, assuming same as x");
 	  yres = xres;
 	}
 
@@ -640,7 +640,7 @@ load_image (gchar *filename)
     {
       if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) 
 	{
-	  g_message ("TIFF: Can't get colormaps");
+	  g_message ("Can't get colormaps");
 	  gimp_quit ();
 	}
 
@@ -672,7 +672,7 @@ load_image (gchar *filename)
   }
 
   if (bps == 16)
-    g_message (_("TIFF warning:\n"
+    g_message (_("Warning:\n"
 		 "The image you are loading has 16 bits per channel. GIMP "
 		 "can only handle 8 bit, so it will be converted for you. "
 		 "Information will be lost because of this conversion."));
@@ -765,14 +765,14 @@ load_rgba (TIFF *tif, channel_data *channel)
   channel[0].pixels = (guchar*) buffer;
 
   if (!TIFFReadRGBAImage(tif, imageWidth, imageLength, buffer, 0))
-    g_message ("TIFF Unsupported layout, no RGBA loader");
+    g_message ("Unsupported layout, no RGBA loader");
 
   for (row = 0; row < imageLength; ++row) {
     gimp_pixel_rgn_set_rect(&(channel[0].pixel_rgn),
                               channel[0].pixels + row * imageWidth * 4,
                               0, imageLength -row -1, imageWidth, 1);
-    if (run_mode == GIMP_RUN_INTERACTIVE)
-      gimp_progress_update ((gdouble) row / (gdouble) imageLength);
+
+    gimp_progress_update ((gdouble) row / (gdouble) imageLength);
   }
 }
 
@@ -804,9 +804,9 @@ load_tiles (TIFF *tif, channel_data *channel,
 
   for (y = 0; y < imageLength; y += tileLength) {
     for (x = 0; x < imageWidth; x += tileWidth) {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_progress_update (progress + one_row *
-                              ( (double) x / (double) imageWidth));
+      gimp_progress_update (progress + one_row *
+                            ( (double) x / (double) imageWidth));
+
       TIFFReadTile(tif, buffer, x, y, 0, 0);
       cols= MIN(imageWidth - x, tileWidth);
       rows= MIN(imageLength - y, tileLength);
@@ -852,8 +852,8 @@ load_lines (TIFF *tif, channel_data *channel,
   buffer = g_malloc(lineSize * tile_height);
   if (planar == PLANARCONFIG_CONTIG) {
     for (y = 0; y < imageLength; y+= tile_height ) {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_progress_update ( (double) y / (double) imageLength);
+      gimp_progress_update ( (double) y / (double) imageLength);
+
       rows = MIN(tile_height, imageLength - y);
       for (i = 0; i < rows; ++i)
 	TIFFReadScanline(tif, buffer + i * lineSize, y + i, 0);
@@ -873,8 +873,8 @@ load_lines (TIFF *tif, channel_data *channel,
     TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samples);
     for (s = 0; s < samples; ++s) {
       for (y = 0; y < imageLength; y+= tile_height ) {
-        if (run_mode == GIMP_RUN_INTERACTIVE)
-	  gimp_progress_update ( (double) y / (double) imageLength);
+        gimp_progress_update ( (double) y / (double) imageLength);
+
 	rows = MIN(tile_height, imageLength - y);
 	for (i = 0; i < rows; ++i)
 	  TIFFReadScanline(tif, buffer + i * lineSize, y + i, s);
@@ -1288,7 +1288,7 @@ read_separate (guchar       *source,
   gint    bitsleft = 8, maxval = (1 << bps) - 1;
 
   if (bps > 8) {
-    g_message ("TIFF: Unsupported layout");
+    g_message ("Unsupported layout");
     gimp_quit ();
   }
 
@@ -1386,15 +1386,14 @@ save_image (gchar   *filename,
   tif = TIFFOpen (filename, "w");
   if (!tif) 
     {
-      g_print ("Can't write image to\n%s", filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return 0;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE) {
-    name = g_strdup_printf( _("Saving %s:"), filename);
-    gimp_progress_init (name);
-    g_free (name);
-  }
+  name = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (name);
+  g_free (name);
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
@@ -1602,13 +1601,12 @@ save_image (gchar   *filename,
 	    }
 
 	  if (!success) {
-	    g_message ("TIFF: Failed a scanline write on row %d", row);
+	    g_message ("Failed a scanline write on row %d", row);
 	    return 0;
 	  }
 	}
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_progress_update ((gdouble) row / (gdouble) rows);
+      gimp_progress_update ((gdouble) row / (gdouble) rows);
     }
 
   TIFFFlushData (tif);
@@ -1726,7 +1724,7 @@ comment_entry_callback (GtkWidget *widget,
   /* Temporary kludge for overlength strings - just return */
   if (len > 240)
     {
-      g_message (_("TIFF: Your comment string is too long."));
+      g_message (_("Your comment string is too long."));
       return;
     }
 

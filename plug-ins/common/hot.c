@@ -353,17 +353,18 @@ pluginCore (piArgs *argp)
 
   src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * 4);
-  gimp_pixel_rgn_init (&srcPr, drw, sel_x1, sel_y1, width, height, FALSE, 
-		       FALSE);
+  gimp_pixel_rgn_init (&srcPr, drw, sel_x1, sel_y1, width, height,
+                       FALSE, FALSE);
+
   if (argp->new_layerp)
     {
-      gimp_pixel_rgn_init (&dstPr, ndrw, sel_x1, sel_y1, width, height, FALSE, 
-			   FALSE);
+      gimp_pixel_rgn_init (&dstPr, ndrw, sel_x1, sel_y1, width, height,
+                           FALSE, FALSE);
     }
   else
     {
-      gimp_pixel_rgn_init (&dstPr, drw, sel_x1, sel_y1, width, height, TRUE, 
-			   TRUE);
+      gimp_pixel_rgn_init (&dstPr, drw, sel_x1, sel_y1, width, height,
+                           TRUE, TRUE);
     }
 
   gimp_pixel_rgn_get_rect (&srcPr, src, sel_x1, sel_y1, width, height);
@@ -373,13 +374,14 @@ pluginCore (piArgs *argp)
 
   build_tab (argp->mode);
 
-  gimp_progress_init (_("Hot"));
+  gimp_progress_init (_("Hot..."));
   prog_interval = height / 10;
 
   for (y = sel_y1; y < sel_y2; y++)
     {
       if (y % prog_interval == 0)
 	gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
+
       for (x = sel_x1; x < sel_x2; x++)
 	{
 	  if (hotp (r = *(s + 0), g = *(s + 1), b = *(s + 2)))

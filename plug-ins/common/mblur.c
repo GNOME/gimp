@@ -666,7 +666,7 @@ mblur_zoom (void)
 static void
 mblur (void)
 {
-  gimp_progress_init (_("Blurring..."));
+  gimp_progress_init (_("Motion Blurring..."));
 
   switch (mbvals.mblur_type)
     {

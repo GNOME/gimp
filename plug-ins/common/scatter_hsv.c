@@ -180,7 +180,7 @@ run (gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (!gimp_drawable_is_rgb (drawable_id))
 	{
-	  g_message ("Scatter HSV: RGB drawable is not selected.");
+	  g_message ("Cannot operate on non-RGB drawables.");
 	  return;
 	}
       if (! scatter_hsv_dialog ())
@@ -238,7 +238,7 @@ scatter_hsv (gint32 drawable_id)
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-  gimp_progress_init (_("Scatter HSV: Scattering..."));
+  gimp_progress_init (_("Scattering HSV..."));
 
   gimp_rgn_iterate2 (drawable, run_mode, scatter_hsv_func, NULL);
 

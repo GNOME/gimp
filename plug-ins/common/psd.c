@@ -144,6 +144,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
@@ -505,7 +506,7 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
     case PSD_INDEXEDA_IMAGE:
     case PSD_INDEXED_IMAGE: return(GIMP_INDEXED);
     default:
-      g_message ("PSD: Error: Can't convert PSD imagetype to GIMP imagetype\n");
+      g_message ("Error: Can't convert PSD imagetype to GIMP imagetype");
       gimp_quit();
       return(GIMP_RGB);
     }
@@ -540,7 +541,7 @@ psd_mode_to_gimp_base_type (gushort psdtype)
     case 2: return GIMP_INDEXED;
     case 3: return GIMP_RGB;
     default:
-      g_message ("PSD: Error: Can't convert PSD mode to GIMP base imagetype\n");
+      g_message ("Error: Can't convert PSD mode to GIMP base imagetype");
       gimp_quit();
       return GIMP_RGB;
     }
@@ -954,7 +955,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   
   if (strncmp(sig, "8BIM", 4)!=0)
     {
-      g_message ("PSD: Error - layer blend signature is incorrect. :-(\n");
+      g_message ("Error: layer blend signature is incorrect. :-(");
       gimp_quit();
     }
 
@@ -1221,7 +1222,7 @@ seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli)
       break;
     default: /* *unknown* */
       IFDBG {printf("\nEEP!\n");fflush(stdout);}
-      g_message ("*** Unknown compression type in channel.\n");
+      g_message ("*** Unknown compression type in channel.");
       gimp_quit();
       break;
     }
@@ -1648,17 +1649,18 @@ load_image(char *name)
 
   IFDBG printf("------- %s ---------------------------------\n",name);
 
-  name_buf = g_strdup_printf( _("Loading %s:"), name);
+  fd = fopen (name, "rb");
+  if (! fd)
+    {
+      g_message (_("Can't open '%s':\n%s"), name, g_strerror (errno));
+      return -1;
+    }
 
-  gimp_progress_init(name_buf);
+  name_buf = g_strdup_printf (_("Opening '%s'..."), name);
+  gimp_progress_init (name_buf);
+  g_free (name_buf);
 
-  fd = fopen(name, "rb");
-  if (!fd) {
-    printf("%s: can't open \"%s\"\n", prog_name, name);
-    return(-1);
-  }
-
-  read_whole_file(fd);
+  read_whole_file (fd);
 
   if (psd_image.num_layers > 0) /* PS3-style */
     {
@@ -2000,8 +2002,6 @@ load_image(char *name)
 				     psd_type_to_gimp_type(imagetype),
 				     100, GIMP_NORMAL_MODE);
 
-	  g_free(name_buf);
-
 	  gimp_image_add_layer (image_ID, layer_ID, 0);
 	  drawable = gimp_drawable_get (layer_ID);
     
@@ -2050,6 +2050,7 @@ load_image(char *name)
 	  if (!cmyk)
 	    {
 	      gimp_progress_update ((double)1.00);
+
 	      if(imagetype==PSD_BITMAP_IMAGE) /* convert bitmap to grayscale */
 		{
 		  guchar *monobuf;
@@ -2067,6 +2068,7 @@ load_image(char *name)
 	  else
 	    {
 	      gimp_progress_update ((double)1.00);
+
 	      cmykbuf = g_malloc(step * nguchars);
 	      decode(PSDheader.imgdatalen, nguchars, temp, cmykbuf, step);
 	      
@@ -2081,12 +2083,14 @@ load_image(char *name)
 	  if (!cmyk)
 	    {
 	      gimp_progress_update ((double)1.00);
+
 	      xfread_interlaced(fd, dest, PSDheader.imgdatalen,
 				"raw image data", step);
 	    }
 	  else
 	    {	  
 	      gimp_progress_update ((double)1.00);
+
 	      cmykbuf = g_malloc(PSDheader.imgdatalen);
 	      xfread_interlaced(fd, cmykbuf, PSDheader.imgdatalen,
 				"raw cmyk image data", step);
@@ -2325,8 +2329,10 @@ cmyk2rgb(unsigned char * src, unsigned char * dst,
 	    if (alpha)
 		*dst++ = *src++;
 	}
+
 	if ((i % 5) == 0)
-	    gimp_progress_update ((double)(2.0*(double)height)/((double)height+(double)i));
+          gimp_progress_update ((double)(2.0*(double)height)/
+                                ((double)height+(double)i));
     }
 }
 
@@ -2366,7 +2372,8 @@ cmykp2rgb(unsigned char * src, unsigned char * dst,
 		*dst++ = *ap++;
 	}
 	if ((i % 5) == 0)
-	  gimp_progress_update ((double)(2.0*(double)height)/((double)height+(double)i));
+	  gimp_progress_update ((double)(2.0*(double)height)/
+                                ((double)height+(double)i));
     }
 }
 

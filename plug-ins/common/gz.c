@@ -267,7 +267,7 @@ spawn_gzip (gchar *filename,
   
   if (!(f = fopen (filename,"w")))
     {
-      g_message ("gz: fopen failed: %s\n", g_strerror (errno));
+      g_message ("fopen() failed: %s", g_strerror (errno));
       return -1;
     }
 
@@ -276,7 +276,7 @@ spawn_gzip (gchar *filename,
   /* make stdout for this process be the output file */
   if (dup2 (fileno (f), fileno (stdout)) == -1)
     {
-      g_message ("gz: dup2 failed: %s\n", g_strerror (errno));
+      g_message ("dup2() failed: %s", g_strerror (errno));
       close (tfd);
       return -1;
     }
@@ -288,7 +288,7 @@ spawn_gzip (gchar *filename,
   close (tfd);
   if (*pid == -1)
     {
-      g_message ("gz: spawn failed: %s\n", g_strerror (errno));
+      g_message ("spawn failed: %s", g_strerror (errno));
       return -1;
     }
   return 0;
@@ -316,7 +316,7 @@ save_image (gchar  *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("gz: no sensible extension, saving as gzip'd xcf\n"));
+      g_message (_("No sensible extension, saving as gzip'd xcf"));
       ext = ".xcf";
     }
 
@@ -347,7 +347,7 @@ save_image (gchar  *filename,
   /* fork off a gzip process */
   if ((pid = fork ()) < 0)
     {
-      g_message ("gz: fork failed: %s\n", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -356,18 +356,18 @@ save_image (gchar  *filename,
 
       if (!(f = fopen (filename, "w")))
 	{
-	  g_message ("gz: fopen failed: %s\n", g_strerror (errno));
+	  g_message ("fopen() failed: %s", g_strerror (errno));
 	  g_free (tmpname);
 	  _exit (127);
 	}
 
       /* make stdout for this process be the output file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))
-	g_message ("gz: dup2 failed: %s\n", g_strerror (errno));
+	g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and gzip into it */
       execlp ("gzip", "gzip", "-cf", tmpname, NULL);
-      g_message ("gz: exec failed: gzip: %s\n", g_strerror (errno));
+      g_message ("exec failed: gzip: %s", g_strerror (errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -379,7 +379,7 @@ save_image (gchar  *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gz: gzip exited abnormally on file %s\n", tmpname);
+	  g_message ("gzip exited abnormally on file\n'%s'", tmpname);
 	  g_free (tmpname);
 	  return 0;
 	}
@@ -406,7 +406,7 @@ save_image (gchar  *filename,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed. Minigzip.exe not in the ?\n");
+      g_message ("CreateProcess failed. Minigzip.exe not in the path?");
       g_free (tmpname);
       _exit (127);
     }
@@ -441,7 +441,7 @@ load_image (gchar             *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("gz: no sensible extension, attempting to load with file magic\n"));
+      g_message (_("No sensible extension, attempting to load with file magic"));
     }
 
   /* find a temp name */
@@ -459,7 +459,7 @@ load_image (gchar             *filename,
 /* fork off a g(un)zip and wait for it */
   if ((pid = fork ()) < 0)
     {
-      g_message ("gz: fork failed: %s\n", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
@@ -469,7 +469,7 @@ load_image (gchar             *filename,
       FILE *f;
        if (!(f = fopen (tmpname, "w")))
 	 {
-	   g_message ("gz: fopen failed: %s\n", g_strerror (errno));
+	   g_message ("fopen() failed: %s", g_strerror (errno));
 	   g_free (tmpname);
 	   _exit(127);
 	 }
@@ -478,12 +478,12 @@ load_image (gchar             *filename,
       if (-1 == dup2 (fileno (f), fileno (stdout)))
 	{
 	  g_free (tmpname);
-	  g_message ("gz: dup2 failed: %s\n", g_strerror (errno));
+	  g_message ("dup2() failed: %s", g_strerror (errno));
 	}
 
       /* and unzip into it */
       execlp ("gzip", "gzip", "-cfd", filename, NULL);
-      g_message ("gz: exec failed: gunzip: %s\n", g_strerror (errno));
+      g_message ("exec failed: gunzip: %s", g_strerror (errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -495,7 +495,7 @@ load_image (gchar             *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
+	  g_message ("gzip exited abnormally on file\n'%s'", filename);
 	  g_free (tmpname);
 	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;
@@ -523,7 +523,7 @@ load_image (gchar             *filename,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
+      g_message ("CreateProcess failed: %d", GetLastError ());
       g_free (tmpname);
       _exit (127);
     }

@@ -624,7 +624,7 @@ compute_image (void)
   gimp_pixel_rgn_init (&dest_region, output_drawable,
 		       0, 0, width, height, TRUE, TRUE);
 
-  gimp_progress_init (_("Van Gogh (LIC)"));
+  gimp_progress_init (_("Van Gogh (LIC)..."));
 
   if (licvals.effect_convolve == 0)
     generatevectors ();

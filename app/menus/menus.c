@@ -42,6 +42,7 @@
 #include "colormap-editor-menu.h"
 #include "dialogs-menu.h"
 #include "documents-menu.h"
+#include "error-console-menu.h"
 #include "file-open-menu.h"
 #include "file-save-menu.h"
 #include "file-commands.h"
@@ -225,6 +226,12 @@ menus_init (Gimp *gimp)
                                    NULL, qmask_menu_update, TRUE,
                                    n_qmask_menu_entries,
                                    qmask_menu_entries);
+
+  gimp_menu_factory_menu_register (global_menu_factory,
+                                   "<ErrorConsole>", "error_console",
+                                   NULL, error_console_menu_update, TRUE,
+                                   n_error_console_menu_entries,
+                                   error_console_menu_entries);
 }
 
 void

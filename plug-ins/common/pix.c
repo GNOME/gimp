@@ -44,6 +44,7 @@ static char ident[] = "@(#) GIMP Alias|Wavefront pix image file-plugin v1.0  24-
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -323,20 +324,21 @@ load_image (gchar *filename)
   GimpImageBaseType  imgtype;
   GimpImageType gdtype;
   
-  /* Set up progress display */
-  progMessage = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (progMessage);
-  g_free (progMessage);
-
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
   /* Open the file */
   file = fopen (filename, "rb");
   if (NULL == file)
     {
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
   
+  /* Set up progress display */
+  progMessage = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (progMessage);
+  g_free (progMessage);
+
   /* Read header information */
   width  = get_short (file);
   height = get_short (file);
@@ -508,10 +510,14 @@ save_image (gchar  *filename,
   /* Open the output file. */
   file = fopen (filename, "wb");
   if (!file)
-    return FALSE;
+    {
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
 
   /* Set up progress display */
-  progMessage = g_strdup_printf (_("Saving %s:"), filename);
+  progMessage = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (progMessage);
   g_free (progMessage);
 

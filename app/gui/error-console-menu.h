@@ -1,9 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * errorconsole.h - text window for collecting error messages
- * Copyright (C) 1998 Nick Fetchak <nuke@bayside.net>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -19,14 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ERROR_CONSOLE_DIALOG_H__
-#define __ERROR_CONSOLE_DIALOG_H__
+#ifndef __ERROR_CONSOLE_MENU_H__
+#define __ERROR_CONSOLE_MENU_H__
 
 
-GtkWidget * error_console_create (Gimp        *gimp);
-
-void        error_console_add    (Gimp        *gimp,
-                                  const gchar *errormsg);
+extern GimpItemFactoryEntry error_console_menu_entries[];
+extern gint                 n_error_console_menu_entries;
 
 
-#endif /* __ERROR_CONSOLE_DIALOG_H__ */
+void   error_console_menu_update (GtkItemFactory *factory,
+                                  gpointer        data);
+
+
+#endif /* __ERROR_CONSOLE_MENU_H__ */

@@ -769,9 +769,11 @@ iwarp (void)
 	  gimp_layer_set_name (animlayers[i], st);
 	  g_free (st);
 	  destdrawable = gimp_drawable_get (animlayers[i]);
-	  st = g_strdup_printf (_("Warping Frame Nr %d ..."), frame_number);
+
+	  st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
 	  gimp_progress_init (st);
 	  g_free (st);
+
 	  if (animate_deform_value >0.0)
 	    iwarp_frame ();
 	  gimp_image_add_layer (imageID, animlayers[i], 0);
@@ -780,9 +782,10 @@ iwarp (void)
 	}
       if (do_animate_ping_pong)
 	{
-	  st = g_strdup_printf (_("Warping Frame Nr %d ..."), frame_number);
+	  st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
 	  gimp_progress_init (_("Ping Pong"));
 	  g_free (st);
+
 	  for (i = 0; i < animate_num_frames; i++)
 	    {
 	      gimp_progress_update ((gdouble) i / (animate_num_frames - 1));

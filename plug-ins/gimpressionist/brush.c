@@ -187,7 +187,7 @@ void savebrush(GtkWidget *wg, gpointer data)
   char path[200];
 
   if(!brushppm.col) {
-    g_message( _("GIMPressionist: Can only save drawables!\n"));
+    g_message( _("Can only save drawables!"));
     return;
   }
 

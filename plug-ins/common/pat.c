@@ -8,6 +8,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -152,6 +153,7 @@ run (gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -184,8 +186,8 @@ run (gchar      *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("pat", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
-				      (GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_RGB));
+				      GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                      GIMP_EXPORT_CAN_HANDLE_RGB);
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -259,14 +261,17 @@ load_image (gchar *filename)
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
-  temp = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-
   fd = open (filename, O_RDONLY | _O_BINARY);
 
   if (fd == -1)
-    return -1;
+    {
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      return -1;
+    }
+
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader)) 
     {
@@ -297,7 +302,7 @@ load_image (gchar *filename)
     }
 
   /* Now there's just raw data left. */
-  
+
   /*
    * Create a new image of the proper size and associate the filename with it.
    */
@@ -327,7 +332,8 @@ load_image (gchar *filename)
 		 "Loading it anyway...");
       break;
     default:
-      g_message ("Unsupported pattern depth: %d\nGIMP Patterns must be GRAY or RGB\n", ph.bytes);
+      g_message ("Unsupported pattern depth: %d\n"
+                 "GIMP Patterns must be GRAY or RGB", ph.bytes);
       return -1;
     }
 
@@ -377,18 +383,22 @@ save_image (gchar  *filename,
   GimpPixelRgn  pixel_rgn;
   gchar        *temp;
 
-  temp = g_strdup_printf (_("Saving %s:"), filename);
+  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+
+  if (fd == -1)
+    {
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
+
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
   drawable = gimp_drawable_get (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
 		       drawable->height, FALSE, FALSE);
-
-  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
-
-  if (fd == -1)
-    return FALSE;
 
   ph.header_size  = g_htonl (sizeof (PatternHeader) + strlen (description) + 1);
   ph.version      = g_htonl (1);

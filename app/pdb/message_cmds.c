@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <string.h>
 
 #include <glib-object.h>
 
@@ -29,6 +30,10 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "gimp-intl.h"
+#include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
 
 static ProcRecord message_proc;
 static ProcRecord message_get_handler_proc;
@@ -57,12 +62,56 @@ message_invoker (Gimp     *gimp,
     {
       if (! g_utf8_validate (message, -1, NULL))
 	{
-	   g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
-	   success = FALSE;
+	  g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
+	  success = FALSE;
 	}
       else
 	{
-	   g_message ("%s", message);
+	  gchar *domain = NULL;
+    
+	  if (gimp->current_plug_in)
+	    {
+	      GSList *list;
+    
+	      for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
+		{
+		  PlugInProcDef *proc_def = list->data;
+    
+		  if (&proc_def->db_info == gimp->current_plug_in->proc_rec)
+		    {
+		      const gchar *progname;
+    
+		      progname = plug_in_proc_def_get_progname (proc_def);
+    
+		      if (proc_def->menu_path)
+			{
+			  const gchar *path;
+			  gchar       *ellipses;
+    
+			  path = dgettext (plug_ins_locale_domain (gimp, progname,
+								   NULL),
+					   proc_def->menu_path);
+    
+			  domain = g_path_get_basename (path);
+    
+			  ellipses = strstr (domain, "...");
+    
+			  if (ellipses && ellipses == (domain + strlen (domain) - 3))
+			    *ellipses = '\0';
+			}
+		      else
+			{
+			  domain = g_path_get_basename (progname);
+			}
+    
+		      break;
+		    }
+		}
+	    }
+    
+	  gimp_message (gimp, domain, message);
+    
+	  g_free (domain);
 	}
     }
 

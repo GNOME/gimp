@@ -306,7 +306,7 @@ solid_noise (GimpDrawable *drawable)
 
   /*  Initialization  */
   solid_noise_init ();
-  gimp_progress_init ( _("Solid Noise..."));
+  gimp_progress_init (_("Solid Noise..."));
   progress = 0;
   max_progress = sel_width * sel_height;
   chns = gimp_drawable_bpp (drawable->drawable_id);
@@ -320,7 +320,8 @@ solid_noise (GimpDrawable *drawable)
                        sel_height, TRUE, TRUE);
 
   /*  One, two, three, go!  */
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL;
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
       dest_row = dest_rgn.data;
@@ -331,9 +332,14 @@ solid_noise (GimpDrawable *drawable)
           
           for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
             {
-              val = (guchar) floor (255.0 * noise ((double) (col - sel_x1) / sel_width, (double) (row - sel_y1) / sel_height));
+              val =
+                (guchar) floor (255.0 *
+                                noise ((double) (col - sel_x1) / sel_width,
+                                       (double) (row - sel_y1) / sel_height));
+
               for (i = 0; i < chns; i++)
                 *dest++ = val;
+
               if (has_alpha)
                 *dest++ = 255;
             }

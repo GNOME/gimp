@@ -301,7 +301,7 @@ run (gchar      *name,
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
   if ((drawable_type != GIMP_RGB_IMAGE) && (drawable_type != GIMP_RGBA_IMAGE))
     {
-      g_message ("Decompose: Can only work on RGB images.");
+      g_message ("Can only work on RGB images.");
       status = GIMP_PDB_CALLING_ERROR;
     }
   if (status == GIMP_PDB_SUCCESS)
@@ -371,14 +371,14 @@ decompose (gint32  image_ID,
   drawable_src = gimp_drawable_get (drawable_ID);
   if (drawable_src->bpp < 3)
     {
-      g_message ("Decompose: Not an RGB image.");
+      g_message ("Not an RGB image.");
       return (-1);
     }
   if ((extract[extract_idx].extract_fun == extract_alpha || 
        extract[extract_idx].extract_fun == extract_rgba) &&
       (!gimp_drawable_has_alpha (drawable_ID)))
     {
-      g_message ("Decompose: No alpha channel available.");
+      g_message ("No alpha channel available.");
       return (-1);
     }
   

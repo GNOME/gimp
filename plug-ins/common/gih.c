@@ -42,6 +42,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -620,17 +621,18 @@ gih_load_image (gchar *filename)
   gchar   *paramstring;
   GimpParasite *pipe_parasite;
 
-  temp = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-  
   fd = open (filename, O_RDONLY | _O_BINARY);
   
   if (fd == -1) 
     {
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
 
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+  
   /* The file format starts with a painfully simple text header */
 
   /*  get the name  */
@@ -645,7 +647,7 @@ gih_load_image (gchar *filename)
 
   if (!name)
     {
-      g_message ("Couldn't read name for brush pipe from file '%s'\n", 
+      g_message ("Couldn't read name for brush pipe\nfrom '%s'", 
 		 filename);
       close (fd);
       return -1;
@@ -1219,17 +1221,18 @@ gih_save_image (gchar  *filename,
   imageh = gimp_image_height (image_ID);
   gimp_tile_cache_size (gimp_tile_height () * imagew * 4);
 
-  msg = g_strdup_printf (_("Saving %s:"), filename);
-  gimp_progress_init (msg);
-  g_free (msg);
-
   fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
   
   if (fd == -1) 
     {
-      g_message( _("Unable to open %s"), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
+
+  msg = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (msg);
+  g_free (msg);
 
   parstring = gimp_pixpipe_params_build (&gihparams);
 

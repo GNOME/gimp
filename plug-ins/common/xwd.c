@@ -52,6 +52,7 @@ static char ident[] = "@(#) GIMP XWD file-plugin v1.95  02-Jul-2001";
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -375,14 +376,14 @@ load_image (gchar *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
     {
-      g_message (_("can't open file for reading"));
-      return (-1);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      return -1;
     }
 
   read_xwd_header (ifp, &xwdhdr);
   if (xwdhdr.l_file_version != 7)
     {
-      g_message(_("can't open file as XWD file"));
+      g_message(_("Can't open file as XWD file"));
       fclose (ifp);
       return (-1);
     }
@@ -401,40 +402,32 @@ load_image (gchar *filename)
   if (xwdhdr.l_colormap_entries > 0)
     {
       xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
-      if (xwdcolmap == NULL)
-	{
-	  g_message (_("can't get memory for colormap"));
-	  fclose (ifp);
-	  return (-1);
-	}
 
-    read_xwd_cols (ifp, &xwdhdr, xwdcolmap);
+      read_xwd_cols (ifp, &xwdhdr, xwdcolmap);
 #ifdef XWD_COL_DEBUG
-    {
-      int j;
-      printf ("File %s\n",filename);
-      for (j=0; j < xwdhdr.l_colormap_entries; j++)
-	printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
-		(long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
-		(long)xwdcolmap[j].l_green,(long)xwdcolmap[j].l_blue,
-		(int)xwdcolmap[j].l_flags);
-    }
-#endif
-    if (xwdhdr.l_file_version != 7)
       {
-	g_message (_("can't read color entries"));
-	g_free (xwdcolmap);
-	fclose (ifp);
-	return (-1);
+        int j;
+        printf ("File %s\n",filename);
+        for (j=0; j < xwdhdr.l_colormap_entries; j++)
+          printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
+                  (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
+                  (long)xwdcolmap[j].l_green,(long)xwdcolmap[j].l_blue,
+                  (int)xwdcolmap[j].l_flags);
       }
+#endif
+
+      if (xwdhdr.l_file_version != 7)
+        {
+          g_message (_("can't read color entries"));
+          g_free (xwdcolmap);
+          fclose (ifp);
+          return (-1);
+        }
     }
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Loading %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   depth = xwdhdr.l_pixmap_depth;
   bpp = xwdhdr.l_bits_per_pixel;
@@ -529,16 +522,14 @@ save_image (char   *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("can't open file for writing"));
-      return (FALSE);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
     }
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Saving %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp, image_ID, drawable_ID, 0);
@@ -551,7 +542,7 @@ save_image (char   *filename,
 
   fclose (ofp);
 
-  return (retval);
+  return retval;
 }
 
 
@@ -1218,7 +1209,7 @@ load_xwd_f2_d1_b1 (char            *filename,
       
       scan_lines++;
       
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
       
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1318,7 +1309,7 @@ load_xwd_f2_d8_b8 (char            *filename,
       
       scan_lines++;
       
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
       
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1479,7 +1470,7 @@ load_xwd_f2_d16_b16 (char            *filename,
       
       scan_lines++;
       
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
       
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1627,7 +1618,7 @@ load_xwd_f2_d24_b32 (char            *filename,
 	  for (j = 0; j < linepad; j++)
 	    getc (ifp);
 	  
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double)(i+1) / (double)height);
 	  
 	  if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1676,7 +1667,7 @@ load_xwd_f2_d24_b32 (char            *filename,
 	  for (j = 0; j < linepad; j++)
 	    getc (ifp);
 	  
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double)(i+1) / (double)height);
 	  
 	  if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1931,9 +1922,8 @@ load_xwd_f1_d24_b1 (char            *filename,
 	       }
 	   }
        }
-     
-     if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-       gimp_progress_update ((double)(tile_end) / (double)(height));
+
+     gimp_progress_update ((double)(tile_end) / (double)(height));
      
      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, tile_start,
 			      width, tile_end-tile_start+1);
@@ -2057,7 +2047,7 @@ save_index (FILE    *ofp,
       if (linepad) fwrite ((char *)&tmp, linepad, 1, ofp);
       src += width;
       
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
   g_free (data);
@@ -2146,7 +2136,7 @@ save_rgb (FILE   *ofp,
       if (linepad) fwrite ((char *)&tmp, linepad, 1, ofp);
       src += width*3;
       
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double) i / (double) height);
     }
   g_free (data);

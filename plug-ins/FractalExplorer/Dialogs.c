@@ -1,5 +1,6 @@
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1579,7 +1580,6 @@ save_callback (void)
 {
   FILE  *fp;
   gchar *savename;
-  gchar *message;
 
   savename = filename;
 
@@ -1587,14 +1587,11 @@ save_callback (void)
 
   if (!fp) 
     {
-      message = g_strconcat (_("Error opening: %s"), 
-			     "\n",
-			     _("Could not save."), 
-			     savename);
-      g_message (message);
-      g_free (message);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 savename, g_strerror (errno));
       return;
     }
+
   /* Write header out */
   fputs (FRACTAL_HEADER, fp);
   fputs ("#**********************************************************************\n", fp);
@@ -1605,7 +1602,9 @@ save_callback (void)
   save_options (fp);
 
   if (ferror (fp))
-    g_message (_("Failed to write file\n"));
+    g_message (_("Failed to write '%s':\n%s"),
+               savename, g_strerror (ferror (fp)));
+
   fclose (fp);
 }
 
@@ -1992,23 +1991,24 @@ explorer_load (void)
 
   if (!fp)
     {
-      g_warning ("Error opening: %s", filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return;
     }
   get_line (load_buf, MAX_LOAD_LINE, fp, 1);
 
   if (strncmp (FRACTAL_HEADER, load_buf, strlen (load_buf)))
     {
-      g_message (_("File '%s' is not a FractalExplorer file"), filename);
+      g_message (_("'%s'\nis not a FractalExplorer file"), filename);
       return;
     }
   if (load_options (current_obj,fp))
     {
-      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), 
+      g_message (_("'%s' is corrupt.\nLine %d Option section incorrect"), 
 		 filename, line_no);
       return;
     }
 
   wvals = current_obj->opts;
+
   fclose (fp);
 }

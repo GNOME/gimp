@@ -19,6 +19,7 @@
 
 #include <glib.h>		/* Include early for G_OS_WIN32 */
 
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -277,31 +278,33 @@ run (gchar      *name,
 static gint32 
 load_image (gchar *filename) 
 {
-  gchar         *temp;
-  gchar         *name = NULL;
-  gint           fd;
-  BrushHeader    bh;
-  guchar        *brush_buf   = NULL;
-  gint32         image_ID;
-  gint32         layer_ID;
-  GimpDrawable  *drawable;
-  GimpPixelRgn   pixel_rgn;
-  gint           version_extra;
-  gint           bn_size;
+  gchar             *temp;
+  gchar             *name = NULL;
+  gint               fd;
+  BrushHeader        bh;
+  guchar            *brush_buf   = NULL;
+  gint32             image_ID;
+  gint32             layer_ID;
+  GimpDrawable      *drawable;
+  GimpPixelRgn       pixel_rgn;
+  gint               version_extra;
+  gint               bn_size;
   GimpImageBaseType  base_type;
   GimpImageType      image_type;
-  
-  temp = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-  
+
   fd = open (filename, O_RDONLY | _O_BINARY);
   
   if (fd == -1) 
     {
+      g_message (_("Can't open '%s':\n%s"),
+                 filename, g_strerror (errno));
       return -1;
     }
-  
+
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+
   if (read (fd, &bh, sizeof (bh)) != sizeof (bh)) 
     {
       close (fd);
@@ -342,7 +345,7 @@ load_image (gchar *filename)
       name = g_new (gchar, bn_size);
       if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP brush file \"%s\"."), filename);
+	  g_message (_("Error in GIMP brush file\n'%s'"), filename);
 	  close (fd);
 	  g_free (name);
 	  return -1;
@@ -484,6 +487,15 @@ save_image (gchar  *filename,
       return FALSE;
     }
 
+  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  
+  if (fd == -1) 
+    {
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
+
   temp = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
@@ -493,14 +505,6 @@ save_image (gchar  *filename,
 		       0, 0, drawable->width, drawable->height, 
 		       FALSE, FALSE);
   
-  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
-  
-  if (fd == -1) 
-    {
-      g_message( _("Unable to open %s"), filename);
-      return FALSE;
-    }
-
   bh.header_size  = g_htonl (sizeof (bh) + strlen (info.description) + 1);
   bh.version      = g_htonl (2);
   bh.width        = g_htonl (drawable->width);

@@ -457,7 +457,8 @@ file_ok_callback (GtkWidget *widget,
 
       if (NULL == f)
 	{
-	  g_message ("%s: %s", filename, g_strerror (errno));
+	  g_message (_("Can't open '%s' for writing:\n%s"),
+                     filename, g_strerror (errno));
 	  return;
 	}
 

@@ -85,6 +85,8 @@ libappwidgets_a_sources = \
 	gimpeditor.h			\
 	gimpenummenu.c			\
 	gimpenummenu.h			\
+	gimperrorconsole.c		\
+	gimperrorconsole.h		\
 	gimpfontselection.c		\
 	gimpfontselection.h		\
 	gimpfontselection-dialog.c	\

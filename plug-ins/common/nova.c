@@ -205,8 +205,7 @@ query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "May 2000",
-			  /* don't translate '<Image>', it's a keyword
-			   * of the gtk toolkit */
+			  /* don't translate '<Image>' */
                           N_("<Image>/Filters/Light Effects/SuperNova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
@@ -257,6 +256,7 @@ run (gchar       *name,
       /*  Make sure all the arguments are there!  */
       if (nparams != 9)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           pvals.xcenter   = param[3].data.d_int32;

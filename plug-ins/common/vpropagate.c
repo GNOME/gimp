@@ -458,7 +458,7 @@ value_propagate_body (gint drawable_id)
 
   best = g_new (guchar, bytes);
 
-  gimp_progress_init (_("Value propagating..."));
+  gimp_progress_init (_("Value Propagating..."));
   gimp_palette_get_foreground (&foreground);
   gimp_rgb_get_uchar (&foreground, fore+0, fore+1, fore+2);
 

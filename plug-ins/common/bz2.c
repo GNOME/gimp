@@ -217,9 +217,9 @@ spawn_bz (gchar *filename,
   FILE *f;
   gint tfd;
   
-  if (!(f = fopen(filename,"wb")))
+  if (!(f = fopen (filename,"wb")))
     {
-      g_message ("bz: fopen failed: %s\n", g_strerror (errno));
+      g_message ("fopen() failed: %s", g_strerror (errno));
       return -1;
     }
 
@@ -228,7 +228,7 @@ spawn_bz (gchar *filename,
   /* make stdout for this process be the output file */
   if (dup2 (fileno (f), fileno (stdout)) == -1)
     {
-      g_message ("bz: dup2 failed: %s\n", g_strerror (errno));
+      g_message ("dup2() failed: %s", g_strerror (errno));
       close (tfd);
       return -1;
     }
@@ -240,7 +240,7 @@ spawn_bz (gchar *filename,
   close (tfd);
   if (*pid == -1)
     {
-      g_message ("bz: spawn failed: %s\n", g_strerror (errno));
+      g_message ("spawn() failed: %s", g_strerror (errno));
       return -1;
     }
   return 0;  
@@ -262,8 +262,8 @@ save_image (gchar  *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("bz2: can't open bzip2ed file without a "
-		   "sensible extension\n"));
+      g_message (_("Can't open bzip2ed file without a "
+		   "sensible extension"));
       return GIMP_PDB_CALLING_ERROR;
     }
 
@@ -285,7 +285,7 @@ save_image (gchar  *filename,
   /* fork off a bzip2 process */
   if ((pid = fork ()) < 0)
     {
-      g_message ("bz2: fork failed: %s\n", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -293,18 +293,18 @@ save_image (gchar  *filename,
     {
       if (!(f = fopen (filename, "w")))
 	{
-	  g_message ("bz2: fopen failed: %s\n", g_strerror (errno));
+	  g_message ("fopen() failed: %s", g_strerror (errno));
 	  g_free (tmpname);
 	  _exit(127);
 	}
 
       /* make stdout for this process be the output file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))
-	g_message ("bz2: dup2 failed: %s\n", g_strerror (errno));
+	g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
-      g_message ("bz2: exec failed: bzip2: %s\n", g_strerror (errno));
+      g_message ("exec failed: bzip2: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
     }
@@ -323,7 +323,7 @@ save_image (gchar  *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("bz2: bzip2 exited abnormally on file %s\n", tmpname);
+	  g_message ("bzip2 exited abnormally on file\n'%s'", tmpname);
 	  g_free (tmpname);
 	  return GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -349,8 +349,7 @@ load_image (gchar             *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("bz2: can't open bzip2ed file without a "
-		   "sensible extension\n"));
+      g_message (_("Can't open bzip2ed file without a sensible extension"));
       *status = GIMP_PDB_CALLING_ERROR;
       return -1;
     }
@@ -362,7 +361,7 @@ load_image (gchar             *filename,
   /* fork off a bzip2 and wait for it */
   if ((pid = fork ()) < 0)
     {
-      g_message ("bz2: fork failed: %s\n", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
@@ -372,18 +371,18 @@ load_image (gchar             *filename,
       FILE *f;
        if (!(f = fopen (tmpname,"w")))
 	 {
-	   g_message ("bz2: fopen failed: %s\n", g_strerror (errno));
+	   g_message ("fopen() failed: %s", g_strerror (errno));
 	   g_free (tmpname);
 	   _exit (127);
 	 }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))
-	g_message ("bz2: dup2 failed: %s\n", g_strerror (errno));
+	g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
-      g_message ("bz2: exec failed: bunzip2: %s\n", g_strerror (errno));
+      g_message ("exec failed: bunzip2: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
     }
@@ -403,7 +402,7 @@ load_image (gchar             *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("bz2: bzip2 exited abnormally on file %s\n", filename);
+	  g_message ("bzip2 exited abnormally on file\n'%s'", filename);
 	  g_free (tmpname);
 	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;

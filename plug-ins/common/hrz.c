@@ -33,6 +33,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -328,38 +329,38 @@ load_image (gchar *filename)
   void *mapped;  /* memory mapped file data */
   struct stat statbuf;  /* must check file size */
 
-  temp = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-
   /* open the file */
   filedes = open (filename, O_RDONLY | _O_BINARY);
 
   if (filedes == -1)
     {
-      /* errno is set to indicate the error, but the user won't know :-( */
-      /*gimp_message("hrz filter: can't open file\n");*/
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
+
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+
   /* stat the file to see if it is the right size */
   fstat (filedes, &statbuf);
   if (statbuf.st_size != 256*240*3)
     {
-      g_message ("hrz: file is not HRZ type");
+      g_message (_("'%s' is not a HRZ file"), filename);
       return -1;
     }
 #ifdef HAVE_MMAP
   mapped = mmap(NULL, 256*240*3, PROT_READ, MAP_PRIVATE, filedes, 0);
   if (mapped == (void *)(-1))
     {
-      g_message ("hrz: could not map file");
+      g_message ("Could not map file");
       return -1;
     }
 #else
   mapped = g_malloc(256*240*3);
   if (read (filedes, mapped, 256*240*3) != 256*240*3)
     {
-      g_message ("hrz: file read error");
+      g_message ("File read error");
       return -1;
     }
 #endif
@@ -447,8 +448,8 @@ save_image (gchar  *filename,
   fp = fopen (filename, "wb");
   if (fp == NULL)
     {
-      /* Ought to pass errno back... */
-      g_message ("hrz: can't open \"%s\"\n", filename);
+      g_message ("Can't open '%s' for writing:\n%s",
+                 filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -457,16 +458,16 @@ save_image (gchar  *filename,
 
   if ((xres != 256) || (yres != 240))
     {
-      g_message ("hrz: Image must be 256x240 for HRZ format.");
+      g_message (_("Image must be 256x240"));
       return FALSE;
     }
   if (drawable_type == GIMP_INDEXED_IMAGE)
     {
-      g_message ("hrz: Image must be RGB or GRAY for HRZ format.");
+      g_message (_("Image must be RGB or GRAY"));
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving %s:"), filename);
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (temp);
   g_free (temp);
 

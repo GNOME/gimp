@@ -137,7 +137,8 @@ run (gchar      *name,
      gint       *nretvals,
      GimpParam **retvals)
 {
-  static GimpParam rvals[1];
+  static GimpParam  rvals[1];
+  GimpDrawable     *drawable;
 
   piArgs args;
 
@@ -158,7 +159,6 @@ run (gchar      *name,
 
   switch (param[0].data.d_int32)
     {
-      GimpDrawable *drawable;
     case GIMP_RUN_INTERACTIVE:
       /* XXX: add code here for interactive running */
       if (args.radius == -1)
@@ -211,11 +211,11 @@ static gint
 pluginCore (piArgs *argp)
 {
   GimpDrawable *drw;
-  GimpPixelRgn srcPr, dstPr;
-  guchar *srcbuf, *dstbuf;
-  guchar *lastrow, *thisrow, *nextrow, *temprow;
-  guint width, height, bpp;
-  gint filtno, y, rowsize, exrowsize, p_update;
+  GimpPixelRgn  srcPr, dstPr;
+  guchar       *srcbuf, *dstbuf;
+  guchar       *lastrow, *thisrow, *nextrow, *temprow;
+  guint         width, height, bpp;
+  gint          filtno, y, rowsize, exrowsize, p_update;
 
   drw = gimp_drawable_get (argp->drw);
 
@@ -241,7 +241,7 @@ pluginCore (piArgs *argp)
   nextrow = thisrow + exrowsize;
 
   filtno = nlfiltInit (argp->alpha, argp->radius, argp->filter);
-  gimp_progress_init (_("NL Filter"));
+  gimp_progress_init (_("NL Filter..."));
 
   /* first row */
   gimp_pixel_rgn_get_row (&srcPr, thisrow, 0, 0, width);

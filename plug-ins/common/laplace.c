@@ -197,22 +197,22 @@ static void
 laplace (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  gint current;
-  gint gradient;
-  gint max_gradient = 0;
-  gint alpha;
-  gint counter;
-  guchar *dest, *d;
-  guchar *prev_row, *pr;
-  guchar *cur_row, *cr;
-  guchar *next_row, *nr;
-  guchar *tmp;
-  gint row, col;
-  gint x1, y1, x2, y2;
-  gint minval, maxval;
-  gfloat scale = 1.0;
+  gint         width, height;
+  gint         bytes;
+  gint         current;
+  gint         gradient;
+  gint         max_gradient = 0;
+  gint         alpha;
+  gint         counter;
+  guchar      *dest, *d;
+  guchar      *prev_row, *pr;
+  guchar      *cur_row, *cr;
+  guchar      *next_row, *nr;
+  guchar      *tmp;
+  gint         row, col;
+  gint         x1, y1, x2, y2;
+  gint         minval, maxval;
+  gfloat       scale = 1.0;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -222,7 +222,7 @@ laplace (GimpDrawable *drawable)
    */
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init ( _("Laplace..."));
+  gimp_progress_init (_("Laplace..."));
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -299,7 +299,7 @@ laplace (GimpDrawable *drawable)
   laplace_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
   laplace_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
 
-  gimp_progress_init ( _("Cleanup..."));
+  gimp_progress_init (_("Cleanup..."));
   scale = (255.0 / (gfloat) max_gradient);
   counter =0;
 

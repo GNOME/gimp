@@ -154,7 +154,7 @@ run (gchar      *name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
 	{
-	  g_message (_("Max RGB: Can only operate on RGB drawables."));
+	  g_message (_("Can only operate on RGB drawables."));
 	  return;
 	}
       if (! dialog (drawable))
@@ -229,9 +229,8 @@ main_function (GimpDrawable *drawable,
       gimp_fixme_preview_update (preview, max_rgb_func, &param);
     } 
   else 
-    { /* normal mode */
-
-      gimp_progress_init ( _("Max RGB: Scanning..."));
+    {
+      gimp_progress_init ( _("Max RGB..."));
 
       gimp_rgn_iterate2 (drawable, run_mode, max_rgb_func, &param);
 

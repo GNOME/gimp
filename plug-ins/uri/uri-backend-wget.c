@@ -150,7 +150,7 @@ load_image (gchar             *filename,
 
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
     {
-      g_message ("url: can't open URL without an extension");
+      g_message ("Can't open URL without an extension");
       *status = GIMP_PDB_CALLING_ERROR;
       return -1;
     }
@@ -160,7 +160,7 @@ load_image (gchar             *filename,
 #ifndef __EMX__
   if (pipe (p) != 0)
     {
-      g_message ("url: pipe() failed: %s", g_strerror (errno));
+      g_message ("pipe() failed: %s", g_strerror (errno));
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
@@ -168,7 +168,7 @@ load_image (gchar             *filename,
 
   if ((pid = fork()) < 0)
     {
-      g_message ("url: fork() failed: %s", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
@@ -188,7 +188,7 @@ load_image (gchar             *filename,
 #endif
 
       execlp ("wget", "wget", "-T", TIMEOUT, filename, "-O", tmpname, NULL);
-      g_message ("url: exec() failed: wget: %s", g_strerror (errno));
+      g_message ("exec() failed: wget: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
     }
@@ -202,7 +202,7 @@ load_image (gchar             *filename,
 	      || !WIFEXITED (process_status)
 	      || (WEXITSTATUS (process_status) != 0))
 	    {
-	      g_message ("url: wget exited abnormally on URL %s", filename);
+	      g_message ("wget exited abnormally on URL %s", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -248,7 +248,7 @@ load_image (gchar             *filename,
 	  /*  The second line is the local copy of the file  */
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("url: wget exited abnormally on URL\n%s", filename);
+	      g_message ("wget exited abnormally on URL\n'%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -263,7 +263,7 @@ load_image (gchar             *filename,
 read_connect:
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("url: wget exited abnormally on URL\n%s", filename);
+	      g_message ("wget exited abnormally on URL\n'%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -287,14 +287,14 @@ read_connect:
 
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("url: wget exited abnormally on URL\n%s", filename);
+	      g_message ("wget exited abnormally on URL\n'%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	  else if (! connected)
 	    {
-	      g_message ("url: a network error occured: %s", buf);
+	      g_message ("A network error occured: %s", buf);
 
 	      DEBUG (buf);
 
@@ -308,7 +308,7 @@ read_connect:
 	  /*  The fifth line is either the length of the file or an error  */
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
-	      g_message ("url: wget exited abnormally on URL\n%s", filename);
+	      g_message ("wget exited abnormally on URL\n'%s'", filename);
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -319,7 +319,7 @@ read_connect:
 	    }
 	  else
 	    {
-	      g_message ("url: a network error occured: %s", buf);
+	      g_message ("A network error occured: %s", buf);
 
 	      DEBUG (buf);
 
@@ -332,7 +332,7 @@ read_connect:
 
 	  if (sscanf (buf, "Length: %31s", sizestr) != 1)
 	    {
-	      g_message ("url: could not parse wget's file length message");
+	      g_message ("Could not parse wget's file length message");
 	      g_free (tmpname);
 	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
@@ -397,7 +397,7 @@ read_connect:
 
 	  if (! finished)
 	    {
-	      g_message ("url: wget exited before finishing downloading URL\n%s",
+	      g_message ("wget exited before finishing downloading URL\n'%s'",
 			 filename);
 	      unlink (tmpname);
 	      g_free (tmpname);
@@ -414,7 +414,7 @@ read_connect:
 
     if (pid == -1)
       {
-	g_message ("url: spawn failed: %s", g_strerror (errno));
+	g_message ("spawn failed: %s", g_strerror (errno));
 	g_free (tmpname);
 	*status = GIMP_PDB_EXECUTION_ERROR;
 	return -1;
@@ -426,7 +426,7 @@ read_connect:
 	|| !WIFEXITED (process_status)
 	|| (WEXITSTATUS (process_status) != 0))
       {
-	g_message ("url: wget exited abnormally on URL %s", filename);
+	g_message ("wget exited abnormally on URL\n'%s'", filename);
 	g_free (tmpname);
 	*status = GIMP_PDB_EXECUTION_ERROR;
 	return -1;

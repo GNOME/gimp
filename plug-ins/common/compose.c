@@ -352,7 +352,7 @@ run (gchar      *name,
           layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
           if ((layer_list == NULL) || (nlayers <= 0))
             {
-              g_message (_("Compose: Could not get layers for image %d"),
+              g_message (_("Could not get layers for image %d"),
                          (gint) param[1].data.d_int32);
               return;
             }
@@ -472,7 +472,7 @@ compose (const gchar *compose_type,
 	  if ((width != (gint)gimp_drawable_width (compose_ID[j])) ||
 	      (height != (gint)gimp_drawable_height (compose_ID[j])))
 	    {
-	      g_message (_("Compose: Drawables have different size"));
+	      g_message (_("Drawables have different size"));
 	      return -1;
 	    }
 	}
@@ -489,7 +489,7 @@ compose (const gchar *compose_type,
 	  if ((width != (gint)gimp_image_width (compose_ID[j])) ||
 	      (height != (gint)gimp_image_height (compose_ID[j])))
 	    {
-	      g_message (_("Compose: Images have different size"));
+	      g_message (_("Images have different size"));
 	      return -1;
 	    }
 	}
@@ -503,7 +503,7 @@ compose (const gchar *compose_type,
 	  g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
 	  if ((g32 == NULL) || (num_layers <= 0))
 	    {
-	      g_message (_("Compose: Error in getting layer IDs"));
+	      g_message (_("Error in getting layer IDs"));
 	      return -1;
 	    }
 
@@ -520,7 +520,7 @@ compose (const gchar *compose_type,
       incr_src[j] = drawable_src[j]->bpp;
       if ((incr_src[j] != 1) && (incr_src[j] != 2))
 	{
-	  g_message (_("Compose: Image is not a gray image (bpp=%d)"), 
+	  g_message (_("Image is not a gray image (bpp=%d)"), 
 		     incr_src[j]);
 	  return -1;
 	}

@@ -42,6 +42,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -453,7 +454,7 @@ load_image (gchar * filename)   /* I - File to load */
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("%s\nPNG error. File corrupted?"), filename);
+      g_message (_("'%s':\nPNG error. File corrupted?"), filename);
       return image;
     }
 
@@ -469,18 +470,13 @@ load_image (gchar * filename)   /* I - File to load */
 
   if (fp == NULL)
     {
-      g_message ("%s\nis not present or is unreadable", filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       gimp_quit ();
     }
 
   png_init_io (pp, fp);
 
-  if (strrchr (filename, '/') != NULL)
-    progress =
-      g_strdup_printf (_("Loading %s:"), strrchr (filename, '/') + 1);
-  else
-    progress = g_strdup_printf (_("Loading %s:"), filename);
-
+  progress = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -589,14 +585,14 @@ load_image (gchar * filename)   /* I - File to load */
       layer_type = GIMP_INDEXED_IMAGE;
       break;
     default:                   /* Aie! Unknown type */
-      g_message (_("%s\nPNG unknown color model"), filename);
+      g_message (_("'%s':\nUnknown PNG color model"), filename);
       return -1;
     };
 
   image = gimp_image_new (info->width, info->height, image_type);
   if (image == -1)
     {
-      g_message ("Can't allocate new image\n%s", filename);
+      g_message ("'%s'\nCan't allocate new image", filename);
       gimp_quit ();
     };
 
@@ -835,7 +831,7 @@ save_image (gchar * filename,   /* I - File to save to */
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("%s\nPNG error. Couldn't save image"), filename);
+      g_message (_("'%s':\nPNG error. Couldn't save image"), filename);
       return 0;
     }
 
@@ -846,17 +842,14 @@ save_image (gchar * filename,   /* I - File to save to */
   fp = fopen (filename, "wb");
   if (fp == NULL)
     {
-      g_message (_("%s\nCouldn't create file"), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return 0;
     }
 
   png_init_io (pp, fp);
 
-  if (strrchr (filename, '/') != NULL)
-    progress = g_strdup_printf (_("Saving %s:"), strrchr (filename, '/') + 1);
-  else
-    progress = g_strdup_printf (_("Saving %s:"), filename);
-
+  progress = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -922,7 +915,7 @@ save_image (gchar * filename,   /* I - File to save to */
       respin_cmap (pp, info, remap, image_ID, drawable);        /* fix up transparency */
       break;
     default:
-      g_message ("%s\nImage type can't be saved as PNG", filename);
+      g_message ("'%s':\nImage type can't be saved as PNG", filename);
       return 0;
     };
 
@@ -1178,8 +1171,8 @@ respin_cmap (png_structp pp,
     {
       /* Inform the user that we couldn't losslessly save the 
        * transparency & just use the full palette */
-      g_message (_
-                 ("Couldn't losslessly save transparency, saving opacity instead.\n"));
+      g_message (_("Couldn't losslessly save transparency,\n"
+                   "saving opacity instead."));
       png_set_PLTE (pp, info, (png_colorp) before, colors);
     }
 #else

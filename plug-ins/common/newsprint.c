@@ -660,7 +660,7 @@ run (gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
-	  gimp_progress_init (_("Newsprintifing..."));
+	  gimp_progress_init (_("Newsprint..."));
 
 	  /*  set the tile cache size  */
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);

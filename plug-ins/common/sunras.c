@@ -40,6 +40,7 @@ static char ident[] = "@(#) GIMP SunRaster file-plugin v1.97  20-Dec-00";
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -381,8 +382,8 @@ load_image (gchar *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
     {
-      g_message (_("Can't open file for reading"));
-      return (-1);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      return -1;
     }
 
   read_msb_first = 1;   /* SUN raster is always most significant byte first */
@@ -431,13 +432,10 @@ load_image (gchar *filename)
       fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
-  
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Loading %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   switch (sunhdr.l_ras_depth)
     {
@@ -511,16 +509,14 @@ save_image (gchar  *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("Can't open file for writing"));
-      return (FALSE);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
     }
 
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      temp = g_strdup_printf (_("Saving %s:"), filename);
-      gimp_progress_init (temp);
-      g_free (temp);
-    }
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp,image_ID, drawable_ID, 0, (int)psvals.rle);
@@ -1016,7 +1012,7 @@ load_sun_d1 (gchar           *filename,
 
       scan_lines++;
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1107,7 +1103,7 @@ load_sun_d8 (gchar           *filename,
       dest += width;
       scan_lines++;
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1188,7 +1184,7 @@ load_sun_d24 (gchar            *filename,
 
       scan_lines++;
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1283,7 +1279,7 @@ load_sun_d32 (gchar           *filename,
 
       scan_lines++;
 
-      if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+      if ((i % 20) == 0)
 	gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
@@ -1423,7 +1419,7 @@ save_index (FILE    *ofp,
 	  if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
 	  src += width;
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double) i / (double) height);
 	}
     }
@@ -1436,7 +1432,7 @@ save_index (FILE    *ofp,
 	  if (linepad) (*write_fun) ((char *)&tmp, linepad, 1, ofp);
 	  src += width;
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double) i / (double) height);
 	}
     }
@@ -1527,7 +1523,7 @@ save_rgb (FILE   *ofp,
 	  for (j = 0; j < linepad; j++)
 	    putc (0, ofp);
 	  
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double) i / (double) height);
 	}
     }
@@ -1549,7 +1545,7 @@ save_rgb (FILE   *ofp,
 	  for (j = 0; j < linepad; j++)
 	    rle_putc (0, ofp);
 
-	  if ((l_run_mode != GIMP_RUN_NONINTERACTIVE) && ((i % 20) == 0))
+	  if ((i % 20) == 0)
 	    gimp_progress_update ((double) i / (double) height);
 	}
 

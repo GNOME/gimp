@@ -461,7 +461,7 @@ run (gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
-      gimp_progress_init( _("Assembling Jigsaw"));
+      gimp_progress_init (_("Assembling Jigsaw..."));
       if (jigsaw(FALSE) == -1)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;

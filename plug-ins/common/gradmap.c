@@ -126,24 +126,24 @@ query()
 }
 
 static void
-run (gchar   *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam  **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   INIT_I18N();
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -153,7 +153,7 @@ run (gchar   *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_progress_init ( _("Gradient Map..."));
+      gimp_progress_init (_("Gradient Map..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       gradmap (drawable);

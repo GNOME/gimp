@@ -268,14 +268,14 @@ shoot (void)
   /*  fork off a xwd process  */
   if ((pid = fork ()) < 0)
     {
-      g_message ("screenshot: fork failed: %s\n", g_strerror (errno));
+      g_message ("fork() failed: %s", g_strerror (errno));
       return;
     }
   else if (pid == 0)
     {
       execvp (XWD, xwdargv);
       /*  What are we doing here? exec must have failed  */
-      g_message ("screenshot: exec failed: xwd: %s\n", g_strerror (errno));
+      g_message ("exec failed: xwd: %s", g_strerror (errno));
       return;
     }
   else
@@ -283,7 +283,7 @@ shoot (void)
   pid = spawnvp (P_NOWAIT, XWD, xwdargv);
   if (pid == -1)
     {
-      g_message ("screenshot: spawn failed: %s\n", g_strerror (errno));
+      g_message ("spawn failed: %s", g_strerror (errno));
       return;
     }
 #endif
@@ -296,7 +296,7 @@ shoot (void)
 	  /*  the tmpfile may have been created even if xwd failed  */
 	  unlink (tmpname);
 	  g_free (tmpname);
-	  g_message ("screenshot: xwd didn't work\n");
+	  g_message ("xwd didn't work");
 	  return;
 	}
     }

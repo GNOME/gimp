@@ -447,7 +447,7 @@ mosaic (GimpDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   /*  progress bar for gradient finding  */
-  gimp_progress_init ( _("Finding Edges..."));
+  gimp_progress_init (_("Finding Edges..."));
 
   /*  Find the gradients  */
   find_gradients (drawable, std_dev);
@@ -511,7 +511,7 @@ mosaic (GimpDrawable *drawable)
     0.5 : 1.0 - mvals.tile_spacing / mvals.tile_size;
 
   /*  Progress bar for rendering tiles  */
-  gimp_progress_init ( _("Rendering Tiles..."));
+  gimp_progress_init (_("Rendering Tiles..."));
 
   /*  Render the tiles  */
   grid_render (drawable);

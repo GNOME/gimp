@@ -35,17 +35,17 @@
 
 
 /* Declare local functions. */
-static void query  (void);
-static void run    (gchar      *name,
-		    gint        nparams,
-		    GimpParam  *param,
-		    gint       *nreturn_vals,
-		    GimpParam **return_vals);
+static void query      (void);
+static void run        (gchar        *name,
+                        gint          nparams,
+                        GimpParam    *param,
+                        gint         *nreturn_vals,
+                        GimpParam   **return_vals);
 
-static gboolean   dialog (GimpDrawable *drawable);
+static gboolean dialog (GimpDrawable *drawable);
 
-static gint32 doit   (GimpDrawable *drawable,
-		      gint32       *layer_id);
+static gint32   doit   (GimpDrawable *drawable,
+                        gint32       *layer_id);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -175,19 +175,25 @@ run (gchar      *name,
     {
       if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
-	  gimp_progress_init (_("Deriving smooth palette..."));
+	  gimp_progress_init (_("Deriving Smooth Palette..."));
+
 	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
 				  gimp_tile_width ());
+
 	  values[1].data.d_image = doit (drawable, &values[2].data.d_layer);
+
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
 	  if (config.show_image)
 	    gimp_display_new (values[1].data.d_image);
 	}
       else
-	status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+
       gimp_drawable_detach (drawable);
-  }
+    }
 
   values[0].data.d_status = status;
 }

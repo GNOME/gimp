@@ -60,7 +60,7 @@ gimp_message_log_func (const gchar    *log_domain,
 
   if (! console_messages && GIMP_IS_GIMP (gimp))
     {
-      gimp_message (gimp, message);
+      gimp_message (gimp, NULL, message);
       return;
     }
 

@@ -885,6 +885,7 @@ gimp_unset_busy (Gimp *gimp)
 
 void
 gimp_message (Gimp        *gimp,
+              const gchar *domain,
               const gchar *message)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -895,7 +896,7 @@ gimp_message (Gimp        *gimp,
     case GIMP_ERROR_CONSOLE:
       if (gimp->gui_message_func)
         {
-          gimp->gui_message_func (gimp, message);
+          gimp->gui_message_func (gimp, domain, message);
           return;
         }
       break;
@@ -904,7 +905,7 @@ gimp_message (Gimp        *gimp,
       break;
     }
 
-  g_printerr ("%s: %s\n", GIMP_OBJECT (gimp)->name, message);
+  g_printerr ("%s: %s\n", domain ? domain : GIMP_OBJECT (gimp)->name, message);
 }
 
 GimpImage *

@@ -30,6 +30,7 @@ typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage   *gimage,
 typedef void         (* GimpSetBusyFunc)       (Gimp        *gimp);
 typedef void         (* GimpUnsetBusyFunc)     (Gimp        *gimp);
 typedef void         (* GimpMessageFunc)       (Gimp        *gimp,
+                                                const gchar *domain,
                                                 const gchar *message);
 
 
@@ -184,6 +185,7 @@ void          gimp_set_busy_until_idle  (Gimp               *gimp);
 void          gimp_unset_busy           (Gimp               *gimp);
 
 void          gimp_message              (Gimp               *gimp,
+                                         const gchar        *domain,
                                          const gchar        *message);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,

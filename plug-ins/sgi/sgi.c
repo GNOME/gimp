@@ -312,19 +312,15 @@ load_image (gchar *filename)	/* I - File to load */
   * Open the file for reading...
   */
 
-  sgip = sgiOpen(filename, SGI_READ, 0, 0, 0, 0, 0);
+  sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
-      g_message ("can't open image file\n");
+      g_message ("Can't open '%s'", filename);
       return -1;
     };
 
-  if (strrchr(filename, '/') != NULL)
-    progress = g_strdup_printf (_("Loading %s:"), strrchr(filename, '/') + 1);
-  else
-    progress = g_strdup_printf (_("Loading %s:"), filename);
-
-  gimp_progress_init(progress);
+  progress = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (progress);
   g_free (progress);
 
   /*
@@ -355,10 +351,10 @@ load_image (gchar *filename)	/* I - File to load */
       break;
     }
 
-  image = gimp_image_new(sgip->xsize, sgip->ysize, image_type);
+  image = gimp_image_new (sgip->xsize, sgip->ysize, image_type);
   if (image == -1)
     {
-      g_message ("can't allocate new image\n");
+      g_message ("Can't allocate new image");
       return -1;
     }
 
@@ -370,16 +366,16 @@ load_image (gchar *filename)	/* I - File to load */
 
   layer = gimp_layer_new (image, _("Background"), sgip->xsize, sgip->ysize,
 			  layer_type, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer(image, layer, 0);
+  gimp_image_add_layer (image, layer, 0);
 
   /*
    * Get the drawable and set the pixel region for our load...
    */
 
-  drawable = gimp_drawable_get(layer);
+  drawable = gimp_drawable_get (layer);
 
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-                      drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
+                       drawable->height, TRUE, FALSE);
 
   /*
    * Temporary buffers...
@@ -520,9 +516,8 @@ save_image (gchar  *filename,
       zsize = 4;
       break;
     default:
-      g_message ("SGI: Image must be of type RGB or GRAY\n");
+      g_message ("Image must be of type RGB or GRAY");
       return FALSE;
-      break;
     }
 
   /*
@@ -533,16 +528,12 @@ save_image (gchar  *filename,
 		  drawable->height, zsize);
   if (sgip == NULL)
     {
-      g_message ("SGI: Can't create image file\n");
+      g_message (_("Can't open '%s' for writing"), filename);
       return FALSE;
     };
 
-  if (strrchr(filename, '/') != NULL)
-    progress = g_strdup_printf (_("Saving %s:"), strrchr(filename, '/') + 1);
-  else
-    progress = g_strdup_printf (_("Saving %s:"), filename);
-
-  gimp_progress_init(progress);
+  progress = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (progress);
   g_free (progress);
 
   /*

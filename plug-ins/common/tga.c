@@ -73,6 +73,7 @@
 # include <sys/times.h>
 #endif
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -421,17 +422,17 @@ load_image (gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("TGA: can't open \"%s\"\n"), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf( _("Loading %s:"), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
   if (!fseek (fp, -26L, SEEK_END)) { /* Is file big enough for a footer? */
     if (fread (footer, sizeof (footer), 1, fp) != 1) {
-      g_message (_("TGA: Cannot read footer from \"%s\"\n"), filename);
+      g_message (_("Cannot read footer from\n'%s'"), filename);
       return -1;
     } else if (memcmp (footer + 8, magic, sizeof (magic)) == 0) {
 
@@ -443,7 +444,7 @@ load_image (gchar *filename)
       if (offset != 0) {
         if (fseek (fp, offset, SEEK_SET) ||
             fread (extension, sizeof (extension), 1, fp) != 1) {
-          g_message (_("TGA: Cannot read extension from \"%s\"\n"), filename);
+          g_message (_("Cannot read extension from\n'%s'"), filename);
           return -1;
         }
         /* Eventually actually handle version 2 TGA here */
@@ -455,7 +456,7 @@ load_image (gchar *filename)
   if (fseek (fp, 0, SEEK_SET) ||
       fread (header, sizeof (header), 1, fp) != 1)
     {
-      g_message ("TGA: Cannot read header from \"%s\"\n", filename);
+      g_message ("Cannot read header from\n'%s'", filename);
       return -1;
     }
 
@@ -514,7 +515,7 @@ load_image (gchar *filename)
       case TGA_TYPE_MAPPED:
         if (info.bpp != 8)
           {
-            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            g_message ("Unhandled sub-format in\n'%s'", filename);
             return -1;
           }
         break;
@@ -522,48 +523,48 @@ load_image (gchar *filename)
         if (info.bpp != 15 && info.bpp != 16 && info.bpp != 24
                      && info.bpp != 32)
           {
-            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            g_message ("Unhandled sub-format in\n'%s'", filename);
             return -1;
           }
         break;
       case TGA_TYPE_GRAY:
         if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 || info.bpp != 15)))
           {
-            g_message ("TGA: Unhandled sub-format in \"%s\"\n", filename);
+            g_message ("Unhandled sub-format in\n'%s'", filename);
             return -1;
           }
         break;
 
       default:
-        g_message ("TGA: Unknown image type for \"%s\"\n", filename);
+        g_message ("Unknown image type for\n'%s'", filename);
         return -1;
     }
 
   /* Plausible but unhandled formats */
   if (info.bytes * 8 != info.bpp && !(info.bytes == 2 && info.bpp == 15))
     {
-      g_message ("TGA: No support yet for TGA with these parameters\n");
+      g_message ("No support yet for TGA with these parameters");
       return -1;
     }
 
   /* Check that we have a color map only when we need it. */
   if (info.imageType == TGA_TYPE_MAPPED && info.colorMapType != 1)
     {
-      g_message ("TGA: indexed image has invalid color map type %d\n",
-                  info.colorMapType);
+      g_message ("Indexed image has invalid color map type %d",
+                 info.colorMapType);
       return -1;
     }
   else if (info.imageType != TGA_TYPE_MAPPED && info.colorMapType != 0)
     {
-      g_message ("TGA: non-indexed image has invalid color map type %d\n",
-                  info.colorMapType);
+      g_message ("Non-indexed image has invalid color map type %d",
+                 info.colorMapType);
       return -1;
     }
 
   /* Skip the image ID field. */
   if (info.idLength && fseek (fp, info.idLength, SEEK_CUR))
     {
-      g_message ("TGA: File is truncated or corrupted \"%s\"\n", filename);
+      g_message ("File '%s'\nis truncated or corrupted", filename);
       return -1;
     }
 
@@ -909,7 +910,7 @@ ReadImage (FILE     *fp,
         }
       else
         {
-          g_message ("TGA: File is truncated or corrupted \"%s\"\n", filename);
+          g_message ("File '%s'\nis truncated or corrupted", filename);
           return -1;
         }
     }
@@ -952,11 +953,11 @@ ReadImage (FILE     *fp,
               read_line(fp, row, buffer, info, drawable);
             }
 
-            gimp_progress_update((double) (i + tileheight)
-                               / (double) info->height);
-            gimp_pixel_rgn_set_rect(&pixel_rgn, data, 0, 
-                               info->height - i - tileheight,  
-                               info->width, tileheight);
+            gimp_progress_update ((double) (i + tileheight) /
+                                  (double) info->height);
+            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, 
+                                     info->height - i - tileheight,  
+                                     info->width, tileheight);
         }
     }
   else
@@ -971,10 +972,10 @@ ReadImage (FILE     *fp,
               read_line(fp, row, buffer, info, drawable);
             }
 
-            gimp_progress_update((double) (i + tileheight)
-                               / (double) info->height);
-            gimp_pixel_rgn_set_rect(&pixel_rgn, data, 0, i, 
-                               info->width, tileheight);
+            gimp_progress_update ((double) (i + tileheight) /
+                                  (double) info->height);
+            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i, 
+                                     info->width, tileheight);
         }
     }
 
@@ -1000,7 +1001,7 @@ save_image (gchar  *filename,
   gint           height;
 
   FILE     *fp;
-  guchar   *name_buf;
+  gchar    *name_buf;
   gint      tileheight;
   gint      out_bpp = 0;
   gboolean  status  = TRUE;
@@ -1020,15 +1021,16 @@ save_image (gchar  *filename,
   width  = drawable->width;
   height = drawable->height;
 
-  name_buf = g_strdup_printf (_("Saving %s:"), filename);
-  gimp_progress_init ((gchar *)name_buf);
-  g_free (name_buf);
-
   if ((fp = fopen (filename, "wb")) == NULL)
     {
-      g_message ("TGA: can't create \"%s\"\n", filename);
+      g_message ("Can't open '%s'\nfor writing: %s",
+                 filename, g_strerror (errno));
       return FALSE;
     }
+
+  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (name_buf);
+  g_free (name_buf);
 
   header[0] = 0; /* No image identifier / description */
 

@@ -24,6 +24,7 @@
  */
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -249,11 +250,11 @@ load_image (gchar *file,
 
   if (fp == NULL)
     {
-      g_message (_("%s\nis not present or is unreadable"), file);
+      g_message (_("Can't open '%s':\n%s"), file, g_strerror (errno));
       return -1;
     }
 
-  progress = g_strdup_printf (_("Loading %s:"), brief);
+  progress = g_strdup_printf (_("Opening '%s'..."), brief);
   gimp_progress_init (progress);
   g_free (progress);
 
@@ -283,7 +284,7 @@ load_image (gchar *file,
 
   if (image == -1)
     {
-      g_message (_("CEL Can't create a new image"));
+      g_message (_("Can't create a new image"));
       return -1;
     }
 
@@ -462,18 +463,18 @@ save_image (gchar  *file,
 	    gint32  image,
 	    gint32  layer)
 {
-  FILE*		fp;		/* Write file pointer */
-  char		*progress;	/* Title for progress display */
-  guchar	header[32];	/* File header */
-  gint		colours, type,	/* Number of colours, type of layer */
-  		offx, offy;	/* Layer offsets */
+  FILE          *fp;            /* Write file pointer */
+  char          *progress;      /* Title for progress display */
+  guchar         header[32];    /* File header */
+  gint           colours, type; /* Number of colours, type of layer */
+  gint           offx, offy;    /* Layer offsets */
 
-  guchar	*buffer,	/* Temporary buffer */
-  		*line;		/* Pixel data */
-  GimpDrawable	*drawable;	/* Drawable for layer */
-  GimpPixelRgn	pixel_rgn;	/* Pixel region for layer */
+  guchar        *buffer;        /* Temporary buffer */
+  guchar        *line;          /* Pixel data */
+  GimpDrawable  *drawable;      /* Drawable for layer */
+  GimpPixelRgn   pixel_rgn;     /* Pixel region for layer */
 
-  int		i, j, k;	/* Counters */
+  gint           i, j, k;       /* Counters */
 
   /* Check that this is an indexed image, fail otherwise */
   type = gimp_drawable_type (layer);
@@ -493,11 +494,12 @@ save_image (gchar  *file,
 
   if (fp == NULL)
     {
-      g_message (_("CEL Couldn't write image to\n%s"), file);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 file, g_strerror (errno));
       return FALSE;
     }
 
-  progress = g_strdup_printf (_("Saving %s:"), brief);
+  progress = g_strdup_printf (_("Saving '%s'..."), brief);
   gimp_progress_init (progress);
   g_free (progress);
 

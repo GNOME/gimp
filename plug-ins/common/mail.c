@@ -358,7 +358,7 @@ save_image (gchar  *filename,
       /* fork off a uuencode process */
       if ((pid = fork ()) < 0)
 	{
-	  g_message ("mail: fork failed: %s\n", g_strerror (errno));
+	  g_message ("fork() failed: %s", g_strerror (errno));
 	  g_free (tmpname);
 	  return GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -366,12 +366,12 @@ save_image (gchar  *filename,
 	{
 	  if (-1 == dup2 (fileno (mailpipe), fileno (stdout)))
 	    {
-	      g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
+	      g_message ("dup2() failed: %s", g_strerror (errno));
 	    }
 
 	  execlp (UUENCODE, UUENCODE, tmpname, filename, NULL);
 	  /* What are we doing here? exec must have failed */
-	  g_message ("mail: exec failed: uuencode: %s\n", g_strerror (errno));
+	  g_message ("exec failed: uuencode: %s", g_strerror (errno));
 
 	  /* close the pipe now */
 	  pclose (mailpipe);
@@ -385,7 +385,7 @@ save_image (gchar  *filename,
       tfd = dup (fileno (stdout));
       if (dup2 (fileno (mailpipe), fileno (stdout)) == -1)
 	{
-	  g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
+	  g_message ("dup2() failed: %s", g_strerror (errno));
 	  close (tfd);
 	  g_free (tmpname);
 	  return GIMP_PDB_EXECUTION_ERROR;
@@ -397,7 +397,7 @@ save_image (gchar  *filename,
       close (tfd);
       if (pid == -1)
 	{
-	  g_message ("mail: spawn failed: %s\n", g_strerror (errno));
+	  g_message ("spawn failed: %s", g_strerror (errno));
 	  g_free (tmpname);
 	  return GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -409,7 +409,7 @@ save_image (gchar  *filename,
 	      || !WIFEXITED (process_status)
 	      || (WEXITSTATUS (process_status) != 0))
 	    {
-	      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
+	      g_message ("mail didnt work or something on file\n'%s'", tmpname);
 	      g_free (tmpname);
 	      return GIMP_PDB_EXECUTION_ERROR;
 	    }
@@ -686,7 +686,7 @@ find_extension (gchar *filename)
     {
       if (!ext || ext[1] == 0 || strchr (ext, '/'))
 	{
-	  g_message (_("mail: some sort of error with the file extension or lack thereof \n"));
+	  g_message (_("some sort of error with the file extension or lack thereof"));
 	  
 	  return NULL;
 	}

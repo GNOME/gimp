@@ -213,7 +213,7 @@ do_zcrop (GimpDrawable *drawable,
   if (((livingcols==0) || (livingrows==0)) ||
       ((livingcols==width) && (livingrows==height)))
     {
-      g_message (_("ZealousCrop(tm): Nothing to crop."));
+      g_message (_("Nothing to crop."));
       return;
     }
 

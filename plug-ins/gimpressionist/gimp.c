@@ -86,14 +86,12 @@ static GimpDrawable *drawable;
 static void
 query(void)
 {
-  static GimpParamDef args[] = {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive" },
-    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+  static GimpParamDef args[] =
+  {
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive"    },
+    { GIMP_PDB_IMAGE,    "image",     "Input image"    },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-  }; /* args */
-
-  static GimpParamDef *return_vals = NULL;
-  static int        nreturn_vals = 0;
+  };
 
   gimp_install_procedure (PLUG_IN_NAME,
                           "Performs various artistic operations on an image",
@@ -104,11 +102,9 @@ query(void)
                           N_("<Image>/Filters/Artistic/GIMPressionist..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          nreturn_vals,
-                          args,
-                          return_vals);
-} /* query */
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+}
 
 static void
 gimpressionist_get_data(char *name, void *ptr)
@@ -124,28 +120,27 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-
-  GimpRunMode run_mode;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
 
-  status = GIMP_PDB_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N ();
 
   /* Get the active drawable info */
 
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gr = g_rand_new();
+  gr = g_rand_new ();
 
   switch (run_mode)
     {
@@ -155,14 +150,13 @@ run (gchar      *name,
         return;
       break;
     case GIMP_RUN_NONINTERACTIVE:
-      g_message("GIMPressionist: GIMP_RUN_NONINTERACTIVE not implemented yet!\n");
+      g_message ("GIMP_RUN_NONINTERACTIVE not implemented yet!");
       status = GIMP_PDB_EXECUTION_ERROR;
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       gimpressionist_get_data(PLUG_IN_NAME, &pcvals);
       break;
     default:
-      g_message("Huh?!\n");
       status = GIMP_PDB_EXECUTION_ERROR;
       break;
     }
@@ -297,7 +291,7 @@ static void gimpressionist_main(void)
 
   dest_row = g_new (guchar, (x2 - x1) * bpp);
 
-  gimp_progress_init( _("Painting..."));
+  gimp_progress_init (_("Painting..."));
 
   if(!infile.col) {
     grabarea();

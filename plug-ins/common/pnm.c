@@ -27,6 +27,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -398,18 +399,18 @@ load_image (gchar *filename)
   PNMScanner * volatile scan;
   int ctr;
 
-  temp = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-
   /* open the file */
   fd = open (filename, O_RDONLY | _O_BINARY);
 
   if (fd == -1)
     {
-      g_message (_("PNM: Can't open file %s."), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
+
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);
@@ -449,7 +450,7 @@ load_image (gchar *filename)
       }
   if (!pnminfo->loader)
     {
-      g_message (_("PNM: File not in a supported format."));
+      g_message (_("File not in a supported format."));
       longjmp(pnminfo->jmpbuf,1);
     }
 
@@ -773,18 +774,19 @@ save_image (gchar  *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving %s:"), filename);
-  gimp_progress_init (temp);
-  g_free (temp);
-
   /* open the file */
   fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC | _O_BINARY, 0644);
 
   if (fd == -1)
     {
-      g_message ("pnm: can't open \"%s\"", filename);
+      g_message ("Can't open '%s' for writing:\n%s",
+                 filename, g_strerror (errno));
       return FALSE;
     }
+
+  temp = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp);
+  g_free (temp);
 
   xres = drawable->width;
   yres = drawable->height;

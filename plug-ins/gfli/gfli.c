@@ -52,6 +52,7 @@
 
 #include <config.h>
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -416,7 +417,7 @@ get_info (gchar  *filename,
 
   if (!file)
     {
-      g_message (_("FLI: Can't open \"%s\""), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return FALSE;
     }
   fli_read_header (file, &fli_header);
@@ -448,16 +449,17 @@ load_image (gchar  *filename,
 
   gint cnt;
 
-  name_buf = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
-
   file = fopen (filename ,"rb");
   if (!file)
     {
-      g_message (_("FLI: Can't open \"%s\""), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
+
+  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (name_buf);
+  g_free (name_buf);
+
   fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)
     return -1;
@@ -666,11 +668,11 @@ save_image (gchar  *filename,
       break;
       
     default:
-      g_message (_("FLI: Sorry, I can save only INDEXED and GRAY images."));
+      g_message (_("Sorry, I can save only INDEXED and GRAY images."));
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving %s:"), filename);
+  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -702,7 +704,8 @@ save_image (gchar  *filename,
   file = fopen (filename ,"wb");
   if (!file)
     {
-      g_message (_("FLI: Can't open \"%s\""), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
   fseek (file, 128, SEEK_SET);
@@ -762,7 +765,7 @@ save_image (gchar  *filename,
 	memcpy (ofb, fb, fli_header.width * fli_header.height);
  
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
-     }
+    }
 
   /*
    * finish fli

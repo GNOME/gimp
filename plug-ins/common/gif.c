@@ -259,6 +259,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -671,7 +672,7 @@ static int find_unused_ia_colour (guchar *pixels,
       return ((*colors)-1);
     }
   
-  g_message (_("GIF: Couldn't simply reduce colors further.\nSaving as opaque.\n"));
+  g_message (_("Couldn't simply reduce colors further.\nSaving as opaque."));
   return (-1);
 }
 
@@ -931,28 +932,26 @@ save_image (gchar  *filename,
       break;
 
     default:
-      g_message (_("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n"));
+      g_message (_("Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first."));
       return FALSE;
       break;
     }
-
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      /* init the progress meter */    
-      temp_buf = g_strdup_printf (_("Saving %s:"), filename);
-      gimp_progress_init (temp_buf);
-      g_free (temp_buf);
-    }
-  
 
   /* open the destination file for writing */
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("GIF: can't open %s\n"), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
 
+
+  /* init the progress meter */    
+  temp_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (temp_buf);
+  g_free (temp_buf);
+  
 
   /* write the GIFheader */
 
@@ -1490,12 +1489,9 @@ BumpPixel (void)
    */
   if (curx == Width)
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  cur_progress++;
-	  if ((cur_progress % 16) == 0)
-	    gimp_progress_update ((double) cur_progress / (double) max_progress);
-	}
+      cur_progress++;
+      if ((cur_progress % 16) == 0)
+        gimp_progress_update ((double) cur_progress / (double) max_progress);
 
       curx = 0;
 
@@ -2358,7 +2354,7 @@ cl_hash (register count_int hsize)			/* reset code table */
 static void
 writeerr ()
 {
-  g_message (_("GIF: error writing output file\n"));
+  g_message (_("Error writing output file."));
   return;
 }
 

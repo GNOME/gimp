@@ -45,6 +45,7 @@
 
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
@@ -53,7 +54,6 @@
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
-#include "error-console-dialog.h"
 #include "gui.h"
 #include "menus.h"
 #include "session.h"
@@ -74,6 +74,7 @@ static void         gui_threads_leave           (Gimp             *gimp);
 static void         gui_set_busy                (Gimp             *gimp);
 static void         gui_unset_busy              (Gimp             *gimp);
 static void         gui_message                 (Gimp             *gimp,
+                                                 const gchar      *domain,
                                                  const gchar      *message);
 static GimpObject * gui_display_new             (GimpImage        *gimage,
                                                  guint             scale);
@@ -407,23 +408,31 @@ gui_unset_busy (Gimp *gimp)
 
 static void
 gui_message (Gimp        *gimp,
+             const gchar *domain,
              const gchar *message)
 {
-  switch (gimp->message_handler)
+  if (gimp->message_handler == GIMP_ERROR_CONSOLE)
     {
-    case GIMP_MESSAGE_BOX:
-      gimp_message_box (message, NULL, NULL);
-      break;
+      GtkWidget *dockable;
 
-    case GIMP_ERROR_CONSOLE:
-      gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                        "gimp-error-console", -1);
-      error_console_add (gimp, message);
-      break;
+      dockable = gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                                   "gimp-error-console", -1);
 
-    default:
-      break;
+      if (dockable)
+        {
+          GimpErrorConsole *console;
+
+          console = GIMP_ERROR_CONSOLE (GTK_BIN (dockable)->child);
+
+          gimp_error_console_add (console, GIMP_STOCK_WARNING, domain, message);
+
+          return;
+        }
+
+      gimp->message_handler = GIMP_MESSAGE_BOX;
     }
+
+  gimp_message_box (GIMP_STOCK_WARNING, domain, message, NULL, NULL);
 }
 
 static GimpObject *

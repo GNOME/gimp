@@ -51,6 +51,20 @@
  * BUGS:
  */
 
+#include "config.h"
+
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+#include <glib.h>
+
+#include "libgimp/gimp.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 /* *** DEFINES *** */
 
@@ -64,15 +78,6 @@
 #define IF_DEEP_DBG if (DEBUG && DEBUG_LEVEL == 2)
 
 /* *** END OF DEFINES *** */
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <glib.h>
-#include "libgimp/gimp.h"
 
 
 /* Local types etc
@@ -596,7 +601,7 @@ gimpBaseTypeToPsdMode (gint gimpBaseType)
     case GIMP_INDEXED_IMAGE:
       return 2;                                         /* Indexed */
     default:
-      g_message ("PSD: Error: Can't convert GIMP base imagetype to PSD mode\n");
+      g_message ("Error: Can't convert GIMP base imagetype to PSD mode");
       IFDBG printf ("PSD Save: gimpBaseType value is %d, can't convert to PSD mode", gimpBaseType);
       gimp_quit ();
       return 3;                            /* Return RGB by default */
@@ -1513,19 +1518,17 @@ save_image (gchar *filename, gint32 image_id)
 
   IFDBG printf (" Function: save_image\n");
 
-  name_buf = g_malloc (64 + strlen (filename));
-  IFDBG printf (name_buf, "Saving %s:", filename);
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
-
-  IFDBG printf ("      Wrote message to GIMP\n");
-
   fd = fopen (filename, "wb");
   if (fd == NULL)
     {
-      IFDBG printf ("PSD Save: can't open \"%s\"\n", filename);
-      return -1;
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
     }
+
+  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (name_buf);
+  g_free (name_buf);
 
   IFDBG printf ("      File \"%s\" has been opened\n", filename);
 

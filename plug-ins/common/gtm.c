@@ -50,6 +50,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -115,22 +116,23 @@ static void   run        (gchar      *name,
                           gint       *nreturn_vals,
                           GimpParam **return_vals);
 
-static gint   save_image  (gchar        *filename,
-			   GimpDrawable *drawable);
-static gint   save_dialog (gint32        image_ID);
+static gboolean save_image          (gchar        *filename,
+                                     GimpDrawable *drawable);
+static gboolean save_dialog         (gint32        image_ID);
 
-static gboolean color_comp               (guchar    *buffer,
-					guchar    *buf2);
+static gboolean color_comp             (guchar    *buffer,
+                                        guchar    *buf2);
 static void   save_ok_callback         (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 static void   gtm_caption_callback     (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 static void   gtm_cellcontent_callback (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 static void   gtm_clwidth_callback     (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
 static void   gtm_clheight_callback    (GtkWidget *widget,
-					gpointer   data);
+                                        gpointer   data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -148,11 +150,11 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
   };
 
   gimp_install_procedure ("file_GTM_save",
@@ -214,142 +216,184 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint
-save_image (gchar     *filename,
+static gboolean
+save_image (gchar        *filename,
 	    GimpDrawable *drawable)
 {
-  int row,col, cols, rows, x, y;
-  int colcount, colspan, rowspan;
-  /* This works only in gcc - not allowed according */
-  /* to ANSI C */
-  /*int palloc[drawable->width][drawable->height];*/
-  int *palloc;
-  guchar *buffer, *buf2;
-  gchar *width, *height;
-  GimpPixelRgn pixel_rgn;
-  char *name;
+  gint          row,col, cols, rows, x, y;
+  gint          colcount, colspan, rowspan;
+  gint         *palloc;
+  guchar       *buffer, *buf2;
+  gchar        *width, *height;
+  GimpPixelRgn  pixel_rgn;
+  gchar        *name;
+  FILE         *fp;
 
-  FILE *fp, *fopen();
+  palloc = g_new (int, drawable->width * drawable->height);
 
-  palloc = malloc(drawable->width * drawable->height * sizeof(int));
+  fp = fopen (filename, "w");
 
-  fp = fopen(filename, "w");
-  if (gtmvals.fulldoc) {
-    fprintf (fp,"<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",filename);
-    fprintf (fp,"<H1>%s</H1>\n",filename);
-  }
-  fprintf (fp,"<TABLE BORDER=%d CELLPADDING=%d CELLSPACING=%d>\n",gtmvals.border,gtmvals.cellpadding,gtmvals.cellspacing);
+  if (! fp)
+    {
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
+
+  if (gtmvals.fulldoc)
+    {
+      fprintf (fp, "<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",
+               filename);
+      fprintf (fp, "<H1>%s</H1>\n",
+               filename);
+    }
+
+  fprintf (fp, "<TABLE BORDER=%d CELLPADDING=%d CELLSPACING=%d>\n",
+           gtmvals.border, gtmvals.cellpadding, gtmvals.cellspacing);
+
   if (gtmvals.caption)
-    fprintf (fp,"<CAPTION>%s</CAPTION>\n",gtmvals.captiontxt); 
+    fprintf (fp, "<CAPTION>%s</CAPTION>\n",
+             gtmvals.captiontxt); 
 
-  name = g_strdup_printf (_("Saving %s:"), filename);
+  name = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (name);
   g_free (name);
 
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+                       0, 0, drawable->width, drawable->height,
+                       FALSE, FALSE);
 
-  cols = drawable->width;
-  rows = drawable->height;
-  buffer = g_new(guchar,drawable->bpp);
-  buf2 = g_new(guchar,drawable->bpp);
+  cols   = drawable->width;
+  rows   = drawable->height;
+  buffer = g_new (guchar, drawable->bpp);
+  buf2   = g_new (guchar, drawable->bpp);
 
-  width = malloc (2);
-  height = malloc (2);
-  sprintf(width," ");
-  sprintf(height," ");
-  if (strcmp (gtmvals.clwidth, "") != 0) {
-    width = malloc (strlen (gtmvals.clwidth) + 11);
-    sprintf(width," WIDTH=\"%s\"",gtmvals.clwidth);
-  }
-  if (strcmp (gtmvals.clheight, "") != 0) {
-    height = malloc (strlen (gtmvals.clheight) + 13);
-    sprintf(height," HEIGHT=\"%s\" ",gtmvals.clheight);
-  }  
-  
+  width  = g_malloc (2);
+  height = g_malloc (2);
+  sprintf (width, " ");
+  sprintf (height, " ");
+
+  if (strcmp (gtmvals.clwidth, "") != 0)
+    {
+      width = g_malloc (strlen (gtmvals.clwidth) + 11);
+      sprintf (width," WIDTH=\"%s\"", gtmvals.clwidth);
+    }
+
+  if (strcmp (gtmvals.clheight, "") != 0)
+    {
+      height = g_malloc (strlen (gtmvals.clheight) + 13);
+      sprintf (height, " HEIGHT=\"%s\" ", gtmvals.clheight);
+    }
+
   /* Initialize array to hold ROWSPAN and COLSPAN cell allocation table */
 
-  for (row=0; row < rows; row++)
-    for (col=0; col < cols; col++)
-      palloc[drawable->width * row + col]=1;
+  for (row = 0; row < rows; row++)
+    for (col = 0; col < cols; col++)
+      palloc[drawable->width * row + col] = 1;
 
-  colspan=0;
-  rowspan=0;
+  colspan = 0;
+  rowspan = 0;
 
-  for (y = 0; y < rows; y++) {
-    fprintf (fp,"   <TR>\n");
-    for (x = 0; x < cols; x++) {
-      gimp_pixel_rgn_get_pixel(&pixel_rgn, buffer, x, y);
+  for (y = 0; y < rows; y++)
+    {
+      fprintf (fp,"   <TR>\n");
 
-      /* Determine ROWSPAN and COLSPAN */
+      for (x = 0; x < cols; x++)
+        {
+          gimp_pixel_rgn_get_pixel (&pixel_rgn, buffer, x, y);
 
-      if (gtmvals.spantags) { 
-	col=x;
-	row=y;
-	colcount=0;
-	colspan=0;
-	rowspan=0;
-	gimp_pixel_rgn_get_pixel(&pixel_rgn, buf2, col, row);
-	
-	while (color_comp(buffer,buf2) && palloc[drawable->width * row + col] == 1 && row < drawable->height) {
-	  while (color_comp(buffer,buf2) && palloc[drawable->width * row + col] == 1 && col < drawable->width ) {
-	    colcount++;
-	    col++;
-	    gimp_pixel_rgn_get_pixel(&pixel_rgn, buf2, col, row);
-	  }
-	  
-	  if (colcount != 0) {
-	    row++;
-	    rowspan++;
-	  }
-	  
-	  if (colcount < colspan || colspan == 0)
-	    colspan=colcount;
-	  
-	  col=x;
-	  colcount=0;
-	  gimp_pixel_rgn_get_pixel(&pixel_rgn, buf2, col, row);
-	}
-	
-	if (colspan > 1 || rowspan > 1) {
-	  for (row=0; row < rowspan; row++)
-	    for (col=0; col < colspan; col++)
-	      palloc[drawable->width * (row+y) + (col+x)]=0;
-	  palloc[drawable->width * y + x]=2;
-	}
-      }
+          /* Determine ROWSPAN and COLSPAN */
 
-      if (palloc[drawable->width * y + x]==1)
-	fprintf (fp,"      <TD%s%sBGCOLOR=#%02x%02x%02x>",width,height,buffer[0],buffer[1],buffer[2]);
+          if (gtmvals.spantags)
+            {
+              col      = x;
+              row      = y;
+              colcount = 0;
+              colspan  = 0;
+              rowspan  = 0;
 
-      if (palloc[drawable->width * y + x]==2)
-	fprintf (fp,"      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",rowspan,colspan,width,height,buffer[0],buffer[1],buffer[2]);
+              gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
 
-      if (palloc[drawable->width * y + x]!=0) {
-	if (gtmvals.tdcomp)
-	  fprintf (fp,"%s</TD>\n",gtmvals.cellcontent);
-	else 
-	  fprintf (fp,"\n      %s\n      </TD>\n",gtmvals.cellcontent);
-      }
+              while (color_comp (buffer,buf2) &&
+                     palloc[drawable->width * row + col] == 1 &&
+                     row < drawable->height)
+                {
+                  while (color_comp (buffer,buf2) &&
+                         palloc[drawable->width * row + col] == 1 &&
+                         col < drawable->width )
+                    {
+                      colcount++;
+                      col++;
+
+                      gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
+                    }
+
+                  if (colcount != 0)
+                    {
+                      row++;
+                      rowspan++;
+                    }
+
+                  if (colcount < colspan || colspan == 0)
+                    colspan = colcount;
+
+                  col = x;
+                  colcount = 0;
+
+                  gimp_pixel_rgn_get_pixel (&pixel_rgn, buf2, col, row);
+                }
+
+              if (colspan > 1 || rowspan > 1)
+                {
+                  for (row = 0; row < rowspan; row++)
+                    for (col = 0; col < colspan; col++)
+                      palloc[drawable->width * (row + y) + (col + x)] = 0;
+
+                  palloc[drawable->width * y + x] = 2;
+                }
+            }
+
+          if (palloc[drawable->width * y + x] == 1)
+            fprintf (fp, "      <TD%s%sBGCOLOR=#%02x%02x%02x>",
+                     width, height, buffer[0], buffer[1], buffer[2]);
+
+          if (palloc[drawable->width * y + x] == 2)
+            fprintf (fp,"      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",
+                     rowspan, colspan, width, height,
+                     buffer[0], buffer[1], buffer[2]);
+
+          if (palloc[drawable->width * y + x] != 0)
+            {
+              if (gtmvals.tdcomp)
+                fprintf (fp, "%s</TD>\n", gtmvals.cellcontent);
+              else
+                fprintf (fp, "\n      %s\n      </TD>\n", gtmvals.cellcontent);
+            }
+        }
+
+      fprintf (fp,"   </TR>\n");
+
+      gimp_progress_update ((double) y / (double) rows);
     }
-    fprintf (fp,"   </TR>\n");
-    gimp_progress_update ((double) y / (double) rows);
-  }
 
   if (gtmvals.fulldoc)
-    fprintf (fp,"</TABLE></BODY></HTML>\n");  
-  else fprintf (fp,"</TABLE>\n");
-  fclose(fp);
+    fprintf (fp, "</TABLE></BODY></HTML>\n");  
+  else
+    fprintf (fp, "</TABLE>\n");
+
+  fclose (fp);
   gimp_drawable_detach (drawable);
-  free(width);
-  free(height);
 
-  free(palloc);
+  g_free (width);
+  g_free (height);
 
-  return 1;
+  g_free (palloc);
+
+  return TRUE;
 }
 
 static gint
-save_dialog (image_ID)
+save_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;

@@ -52,6 +52,7 @@
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimperrorconsole.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpimageview.h"
 #include "widgets/gimpitemtreeview.h"
@@ -78,7 +79,6 @@
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "error-console-dialog.h"
 #include "file-commands.h"
 #include "file-new-dialog.h"
 #include "layers-commands.h"
@@ -284,7 +284,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
   if (view)
     return NULL;
 
-  view = error_console_create (context->gimp);
+  view = gimp_error_console_new (context->gimp, factory->menu_factory);
 
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 

@@ -22,6 +22,7 @@
 
 #include <glib.h>		/* For G_OS_WIN32 */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
@@ -192,7 +193,7 @@ load_image (gchar *filename)
   int	max_rows;		/* max. rows allocated */
   int	col, hcol;		/* column, highest column ever used */
 
-  name = g_strdup_printf (_("Loading %s:"), filename);
+  name = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (name);
   g_free (name);
 
@@ -204,7 +205,13 @@ load_image (gchar *filename)
 
   init_byte_tab( 0, byte_tab );
 
-  fd = open(filename, O_RDONLY | _O_BINARY );
+  fd = open (filename, O_RDONLY | _O_BINARY);
+
+  if (fd < 0)
+    {
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      return -1;
+    }
 
   hibit = 0;
   data = 0;

@@ -144,8 +144,11 @@ gimp_progress_start (GimpDisplay *gdisp,
 
                                           NULL);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_window_set_resizable (GTK_WINDOW (progress->dialog), FALSE);
+      gtk_dialog_set_has_separator (GTK_DIALOG (progress->dialog), FALSE);
+
+      vbox = gtk_vbox_new (FALSE, 10);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (progress->dialog)->vbox),
                          vbox);
       gtk_widget_show (vbox);
@@ -154,12 +157,13 @@ gimp_progress_start (GimpDisplay *gdisp,
                                               _("Please wait..."));
       gtk_misc_set_alignment (GTK_MISC (progress->dialog_label), 0.0, 0.5);
       gtk_box_pack_start (GTK_BOX (vbox), progress->dialog_label,
-                          FALSE, TRUE, 0);
+                          FALSE, FALSE, 0);
       gtk_widget_show (progress->dialog_label);
 
       progress->progressbar = gtk_progress_bar_new ();
       gtk_widget_set_size_request (progress->progressbar, 150, 20);
-      gtk_box_pack_start (GTK_BOX (vbox), progress->progressbar, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), progress->progressbar,
+                          FALSE, FALSE, 0);
       gtk_widget_show (progress->progressbar);
 
       gtk_widget_show (progress->dialog);

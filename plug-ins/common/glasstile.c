@@ -196,7 +196,7 @@ run (gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
-	  gimp_progress_init ( _("Glass Tile..."));
+	  gimp_progress_init (_("Glass Tile..."));
 	  gimp_tile_cache_ntiles (2 * 
                                   (drawable->width / gimp_tile_width () + 1));
 	  
@@ -210,7 +210,7 @@ run (gchar      *name,
 	      gimp_set_data ("plug_in_glasstile", &gtvals, 
 			     sizeof (GlassValues));
 	      gimp_fixme_preview_free (preview);
-	  }
+            }
 	}
       else
 	{

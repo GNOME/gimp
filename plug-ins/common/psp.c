@@ -39,6 +39,8 @@
 #include <glib.h>		/* We want glib.h first because of some
 				 * pretty obscure Win32 compilation issues.
 				 */
+
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -509,22 +511,22 @@ read_block_header (FILE    *f,
       || fread (&len, 4, 1, f) < 1
       || (major < 4 && fread (total_len, 4, 1, f) < 1))
     {
-      g_message ("PSP: Error reading block header");
+      g_message ("Error reading block header");
       fclose (f);
       return -1;
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
     {
       IFDBG(3) 
-	g_message ("PSP: Invalid block header at %ld", header_start);
+	g_message ("Invalid block header at %ld", header_start);
       else
-	g_message ("PSP: Invalid block header");
+	g_message ("Invalid block header");
     
       fclose (f);
       return -1;
     }
 
-  IFDBG(3) g_message ("PSP: %s at %ld", block_name (id), header_start);
+  IFDBG(3) g_message ("%s at %ld", block_name (id), header_start);
 
   if (major < 4)
     {
@@ -554,7 +556,7 @@ read_general_image_attribute_block (FILE     *f,
 
   if (init_len < 38 || total_len < 38)
     {
-      g_message ("PSP: Invalid general image attribute chunk size");
+      g_message ("Invalid general image attribute chunk size");
       fclose (f);
       return -1;
     }
@@ -574,7 +576,7 @@ read_general_image_attribute_block (FILE     *f,
       || fread (&ia->active_layer, 4, 1, f) < 1
       || fread (&ia->layer_count, 2, 1, f) < 1)
     {
-      g_message ("PSP: Error reading general image attribute block");
+      g_message ("Error reading general image attribute block");
       fclose (f);
       return -1;
     }
@@ -589,7 +591,7 @@ read_general_image_attribute_block (FILE     *f,
   ia->compression = GUINT16_FROM_LE (ia->compression);
   if (ia->compression > PSP_COMP_LZ77)
     {
-      g_message ("PSP: Unknown compression type %d", ia->compression);
+      g_message ("Unknown compression type %d", ia->compression);
       fclose (f);
       return -1;
     }
@@ -597,7 +599,7 @@ read_general_image_attribute_block (FILE     *f,
   ia->depth = GUINT16_FROM_LE (ia->depth);
   if (ia->depth != 24)
     {
-      g_message ("PSP: Unsupported bit depth %d", ia->depth);
+      g_message ("Unsupported bit depth %d", ia->depth);
       fclose (f);
       return -1;
     }
@@ -615,7 +617,7 @@ try_fseek (FILE  *f,
 {
   if (fseek (f, pos, whence) < 0)
     {
-      g_message ("PSP: Seek error");
+      g_message ("Seek error: %s", g_strerror (errno));
       fclose (f);
       return -1;
     }
@@ -648,14 +650,14 @@ read_creator_block (FILE     *f,
 	  || fread (&keyword, 2, 1, f) < 1
 	  || fread (&length, 4, 1, f) < 1)
 	{
-	  g_message ("PSP: Error reading creator keyword chunk");
+	  g_message ("Error reading creator keyword chunk");
 	  fclose (f);
 	  gimp_image_delete (image_ID);
 	  return -1;
 	}
       if (memcmp (buf, "~FL\0", 4) != 0)
 	{
-	  g_message ("PSP: Invalid keyword chunk header");
+	  g_message ("Invalid keyword chunk header");
 	  fclose (f);
 	  gimp_image_delete (image_ID);
 	  return -1;
@@ -671,7 +673,7 @@ read_creator_block (FILE     *f,
 	  string = g_malloc (length + 1);
 	  if (fread (string, length, 1, f) < 1)
 	    {
-	      g_message ("PSP: Error reading creator keyword data");
+	      g_message ("Error reading creator keyword data");
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
@@ -696,7 +698,7 @@ read_creator_block (FILE     *f,
 	case PSP_CRTR_FLD_APP_VER:
 	  if (fread (&dword, 4, 1, f) < 1)
 	    {
-	      g_message ("PSP: Error reading creator keyword data");
+	      g_message ("Error reading creator keyword data");
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
@@ -1001,7 +1003,7 @@ read_channel_data (FILE       *f,
       zstream.opaque = f;
       if (inflateInit (&zstream) != Z_OK)
 	{
-	  g_message ("PSP: zlib error");
+	  g_message ("zlib error");
 	  fclose (f);
 	  return -1;
 	}
@@ -1015,7 +1017,7 @@ read_channel_data (FILE       *f,
       zstream.avail_out = npixels;
       if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
 	{
-	  g_message ("PSP: zlib error");
+	  g_message ("zlib error");
 	  inflateEnd (&zstream);
 	  fclose (f);
 	  return -1;
@@ -1081,7 +1083,7 @@ read_layer_block (FILE     *f,
 	}
       if (sub_id != PSP_LAYER_BLOCK)
 	{
-	  g_message ("PSP: Invalid layer sub-block %s, should be LAYER",
+	  g_message ("Invalid layer sub-block %s, should be LAYER",
 		     block_name (sub_id));
 	  fclose (f);
 	  gimp_image_delete (image_ID);
@@ -1114,7 +1116,7 @@ read_layer_block (FILE     *f,
 	      || fread (&bitmap_count, 2, 1, f) < 1
 	      || fread (&channel_count, 2, 1, f) < 1)
 	    {
-	      g_message ("PSP: Error reading layer information chunk");
+	      g_message ("Error reading layer information chunk");
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
@@ -1143,7 +1145,7 @@ read_layer_block (FILE     *f,
 	      || fread (&bitmap_count, 2, 1, f) < 1
 	      || fread (&channel_count, 2, 1, f) < 1)
 	    {
-	      g_message ("PSP: Error reading layer information chunk");
+	      g_message ("Error reading layer information chunk");
 	      g_free (name);
 	      fclose (f);
 	      gimp_image_delete (image_ID);
@@ -1152,7 +1154,7 @@ read_layer_block (FILE     *f,
 	}
 
       if (type == PSP_LAYER_FLOATING_SELECTION)
-	g_message ("PSP: Floating selection restored as normal layer");
+	g_message ("Floating selection restored as normal layer");
 
       swab_rect (image_rect);
       swab_rect (saved_image_rect);
@@ -1164,7 +1166,7 @@ read_layer_block (FILE     *f,
       layer_mode = gimp_layer_mode_from_psp_blend_mode (blend_mode);
       if ((int) layer_mode == -1)
 	{
-	  g_message ("PSP: Unsupported PSP layer blend mode %s "
+	  g_message ("Unsupported PSP layer blend mode %s "
 		     "for layer %s, setting layer invisible",
 		     blend_mode_name (blend_mode), name);
 	  layer_mode = GIMP_NORMAL_MODE;
@@ -1175,7 +1177,7 @@ read_layer_block (FILE     *f,
       height = saved_image_rect[3] - saved_image_rect[1];
 
       IFDBG(2) g_message
-	("PSP: layer: %s %dx%d (%dx%d) @%d,%d opacity %d blend_mode %s "
+	("layer: %s %dx%d (%dx%d) @%d,%d opacity %d blend_mode %s "
 	 "%d bitmaps %d channels",
 	 name,
 	 image_rect[2] - image_rect[0], image_rect[3] - image_rect[1],
@@ -1185,7 +1187,7 @@ read_layer_block (FILE     *f,
 	 bitmap_count, channel_count);
 
       IFDBG(2) g_message
-	("PSP: mask %dx%d (%dx%d) @%d,%d",
+	("mask %dx%d (%dx%d) @%d,%d",
 	 mask_rect[2] - mask_rect[0],
 	 mask_rect[3] - mask_rect[1],
 	 saved_mask_rect[2] - saved_mask_rect[0],
@@ -1221,7 +1223,7 @@ read_layer_block (FILE     *f,
 				 layer_mode);
       if (layer_ID == -1)
 	{
-	  g_message ("PSP: Error creating layer");
+	  g_message ("Error creating layer");
 	  fclose (f);
 	  gimp_image_delete (image_ID);
 	  return -1;
@@ -1276,7 +1278,7 @@ read_layer_block (FILE     *f,
 
 	  if (sub_id != PSP_CHANNEL_BLOCK)
 	    {
-	      g_message ("PSP: Invalid layer sub-block %s, should be CHANNEL",
+	      g_message ("Invalid layer sub-block %s, should be CHANNEL",
 			 block_name (sub_id));
 	      fclose (f);
 	      gimp_image_delete (image_ID);
@@ -1293,7 +1295,7 @@ read_layer_block (FILE     *f,
 	      || fread (&bitmap_type, 2, 1, f) < 1
 	      || fread (&channel_type, 2, 1, f) < 1)
 	    {
-	      g_message ("PSP: Error reading channel information chunk");
+	      g_message ("Error reading channel information chunk");
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
@@ -1306,8 +1308,7 @@ read_layer_block (FILE     *f,
 
 	  if (bitmap_type > PSP_DIB_USER_MASK)
 	    {
-	      g_message ("PSP: Invalid bitmap type %d "
-			 "in channel information chunk",
+	      g_message ("Invalid bitmap type %d in channel information chunk",
 			 bitmap_type);
 	      fclose (f);
 	      gimp_image_delete (image_ID);
@@ -1316,16 +1317,14 @@ read_layer_block (FILE     *f,
 
 	  if (channel_type > PSP_CHANNEL_BLUE)
 	    {
-	      g_message ("PSP: Invalid channel type %d "
-			 "in channel information chunk",
+	      g_message ("Invalid channel type %d in channel information chunk",
 			 channel_type);
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 
-	  IFDBG(2) g_message ("PSP: channel: %s %s %d (%d) bytes "
-			      "%d bytespp",
+	  IFDBG(2) g_message ("channel: %s %s %d (%d) bytes %d bytespp",
 			      bitmap_type_name (bitmap_type),
 			      channel_type_name (channel_type),
 			      uncompressed_len, compressed_len,
@@ -1401,7 +1400,7 @@ read_tube_block (FILE     *f,
       || fread (&placement_mode, 4, 1, f) < 1
       || fread (&selection_mode, 4, 1, f) < 1)
     {
-      g_message ("PSP: Error reading tube data chunk");
+      g_message ("Error reading tube data chunk");
       fclose (f);
       gimp_image_delete (image_ID);
       return -1;
@@ -1487,20 +1486,23 @@ load_image (gchar *filename)
 
   f = fopen (filename, "rb");
   if (f == NULL)
-    return -1;
+    {
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      return -1;
+    }
 
   /* Read thePSP File Header */
   if (fread (buf, 32, 1, f) < 1
       || fread (&major, 2, 1, f) < 1
       || fread (&minor, 2, 1, f) < 1)
     {
-      g_message ("PSP: Error reading file header");
+      g_message ("Error reading file header");
       fclose (f);
       return -1;
     }
   if (memcmp (buf, "Paint Shop Pro Image File\n\032\0\0\0\0\0", 32) != 0)
     {
-      g_message ("PSP: Incorrect file signature");
+      g_message ("Incorrect file signature");
       fclose (f);
       return -1;
     }
@@ -1514,7 +1516,7 @@ load_image (gchar *filename)
    */
   if (major < 3)
     {
-      g_message ("PSP: Unsupported PSP file format version "
+      g_message ("Unsupported PSP file format version "
 		 "%d.%d, only knows 3.0 (and later?)",
 		 major, minor);
       fclose (f);
@@ -1523,13 +1525,13 @@ load_image (gchar *filename)
   else if (major == 3)
     ; /* OK */
   else if (major == 4 && minor == 0)
-    g_message ("PSP: Warning: PSP file format version "
+    g_message ("Warning: PSP file format version "
 	       "4.0. Support for this format version "
 	       "is based on reverse engineering, "
 	       "as no documentation has been made available");
   else
     {
-      g_message ("PSP: Unsupported PSP file format version %d.%d",
+      g_message ("Unsupported PSP file format version %d.%d",
 		 major, minor);
       fclose (f);
       return -1;
@@ -1538,7 +1540,7 @@ load_image (gchar *filename)
   /* Read all the blocks */
   block_number = 0;
 
-  IFDBG(3) g_message ("PSP: size = %d", (int)st.st_size);
+  IFDBG(3) g_message ("size = %d", (int)st.st_size);
   while (ftell (f) != st.st_size
 	 && (id = read_block_header (f, &block_init_len,
 				     &block_total_len)) != -1)
@@ -1549,7 +1551,7 @@ load_image (gchar *filename)
 	{
 	  if (block_number != 0)
 	    {
-	      g_message ("PSP: Duplicate General Image Attributes block");
+	      g_message ("Duplicate General Image Attributes block");
 	      fclose (f);
 	      return -1;
 	    }
@@ -1557,7 +1559,7 @@ load_image (gchar *filename)
 						  block_total_len, &ia) == -1)
 	    return -1;
 
-	  IFDBG(2) g_message ("PSP: %d dpi %dx%d %s",
+	  IFDBG(2) g_message ("%d dpi %dx%d %s",
 			      (int) ia.resolution,
 			      ia.width, ia.height,
 			      compression_name (ia.compression));
@@ -1575,7 +1577,7 @@ load_image (gchar *filename)
 	{
 	  if (block_number == 0)
 	    {
-	      g_message ("PSP: Missing General Image Attributes block");
+	      g_message ("Missing General Image Attributes block");
 	      fclose (f);
 	      gimp_image_delete (image_ID);
 	      return -1;
@@ -1615,13 +1617,13 @@ load_image (gchar *filename)
 	    case PSP_LAYER_BLOCK:
 	    case PSP_CHANNEL_BLOCK:
 	    case PSP_ALPHA_CHANNEL_BLOCK:
-	      g_message ("PSP: Sub-block %s should not occur "
+	      g_message ("Sub-block %s should not occur "
 			 "at main level of file",
 			 block_name (id));
 	      break;
 
 	    default:
-	      g_message ("PSP: Unrecognized block id %d", id);
+	      g_message ("Unrecognized block id %d", id);
 	      break;
 	    }
 	}
@@ -1654,7 +1656,7 @@ save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  g_message ("PSP: Saving not implemented yet");
+  g_message ("Saving not implemented yet");
 
   return FALSE;
 }

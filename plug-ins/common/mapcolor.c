@@ -434,8 +434,7 @@ run (gchar      *name,
 
 	  plvals.map_mode = 0;
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_init (_("Adjusting Foreground/Background"));
+          gimp_progress_init (_("Adjusting Foreground/Background..."));
 
 	  color_mapping (drawable);
 	  break;
@@ -477,8 +476,7 @@ run (gchar      *name,
 	      break;
 	    }
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_progress_init (_("Mapping colors"));
+          gimp_progress_init (_("Mapping colors..."));
 
 	  color_mapping (drawable);
 
@@ -793,17 +791,15 @@ color_mapping (GimpDrawable *drawable)
 	      processed++;
 	    }
 	}
-      if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  if ((gdouble) processed / (gdouble) total - progress > 0.1)
-	    {
-	      progress = (gdouble) processed / (gdouble) total;
-	      gimp_progress_update (progress);
-	    }
-	}
+
+      if ((gdouble) processed / (gdouble) total - progress > 0.1)
+        {
+          progress = (gdouble) processed / (gdouble) total;
+          gimp_progress_update (progress);
+        }
     }
-  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_progress_update (1.0);
+
+  gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);

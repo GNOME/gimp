@@ -16,6 +16,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -294,26 +295,26 @@ load_image (gchar *filename)
   gint32 image, layer;
   guchar *dest, cmap[768];
 
-  message = g_strdup_printf (_("Loading %s:"), filename);
-  gimp_progress_init (message);
-  g_free (message);
-
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message ("PCX: Can't open\n%s", filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
 
+  message = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (message);
+  g_free (message);
+
   if (fread (&pcx_header, 128, 1, fd) == 0)
     {
-      g_message ("PCX: Can't read header from\n%s", filename);
+      g_message (_("Can't read header from\n'%s'"), filename);
       return -1;
     }
 
   if (pcx_header.manufacturer != 10)
     {
-      g_message ("%s\nis not a PCX file", filename);
+      g_message (_("'%s'\nis not a PCX file"), filename);
       return -1;
     }
 
@@ -366,7 +367,7 @@ load_image (gchar *filename)
     }
   else
     {
-      g_message ("Unusual PCX flavour, giving up");
+      g_message (_("Unusual PCX flavour, giving up"));
       return -1;
     }
 
@@ -540,7 +541,7 @@ save_image (gchar   *filename,
   height = drawable->height;
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  message = g_strdup_printf (_("Saving %s:"), filename);
+  message = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (message);
   g_free (message);
 
@@ -573,14 +574,14 @@ save_image (gchar   *filename,
       break;
 
     default:
-      g_message ("PCX Can't save this image type\nFlatten your image");
+      g_message (_("Can't save layers with alpha.\nFlatten your image"));
       return FALSE;
-      break;
   }
 
-  if ((fp = fopen(filename, "wb")) == NULL) 
+  if ((fp = fopen (filename, "wb")) == NULL) 
     {
-      g_message ("PCX Can't open \n%s", filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -609,9 +610,11 @@ save_image (gchar   *filename,
 	  fputc (0, fp); fputc (0, fp); fputc (0, fp);
 	}
       break;
+
     case GIMP_RGB_IMAGE:
       save_24 (fp, width, height, pixels);
       break;
+
     case GIMP_GRAY_IMAGE:
       save_8 (fp, width, height, pixels);
       fputc (0x0c, fp);
@@ -620,10 +623,9 @@ save_image (gchar   *filename,
 	  fputc ((guchar) i, fp); fputc ((guchar) i, fp); fputc ((guchar) i, fp);
 	}
       break;
+
     default:
-      g_message ("Can't save this image as PCX\nFlatten your image");
       return FALSE;
-      break;
     }
 
   gimp_drawable_detach (drawable);

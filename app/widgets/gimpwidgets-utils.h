@@ -23,7 +23,9 @@
 #define __GIMP_WIDGETS_UTILS_H__
 
 
-void          gimp_message_box           (const gchar *message,
+void          gimp_message_box           (const gchar *stock_id,
+                                          const gchar *domain,
+                                          const gchar *message,
                                           GtkCallback  callback,
                                           gpointer     data);
 

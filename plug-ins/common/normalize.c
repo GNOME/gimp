@@ -116,10 +116,12 @@ run (gchar      *name,
   image_ID = param[1].data.d_image;
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->drawable_id) || gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+      gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Normalizing..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+
       normalize (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -128,6 +130,7 @@ run (gchar      *name,
   else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
       indexed_normalize (image_ID);
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
@@ -138,9 +141,9 @@ run (gchar      *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);

@@ -376,7 +376,7 @@ whirl_pinch (void)
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  gimp_progress_init (_("Whirling and pinching..."));
+  gimp_progress_init (_("Whirling and Pinching..."));
 
   whirl   = wpvals.whirl * G_PI / 180;
   radius2 = radius * radius * wpvals.radius;

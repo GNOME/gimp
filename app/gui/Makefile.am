@@ -17,8 +17,6 @@ dialogs_sources = \
 	dialogs.h			\
 	dialogs-constructors.c		\
 	dialogs-constructors.h		\
-	error-console-dialog.c		\
-	error-console-dialog.h		\
 	file-dialog-utils.c		\
 	file-dialog-utils.h		\
 	file-new-dialog.c		\
@@ -95,6 +93,10 @@ menus_sources = \
 	drawable-commands.h		\
 	edit-commands.c			\
 	edit-commands.h			\
+	error-console-commands.c	\
+	error-console-commands.h	\
+	error-console-menu.c		\
+	error-console-menu.h		\
 	file-commands.c			\
 	file-commands.h			\
 	file-open-menu.c		\

@@ -38,6 +38,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -731,11 +732,11 @@ load_image (gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("XBM: cannot open \"%s\"\n"), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Loading %s:"), filename);
+  name_buf = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -814,25 +815,26 @@ load_image (gchar *filename)
 
   if (c == EOF)
     {
-      g_message (_("XBM: cannot read header (ftell == %ld)\n"), ftell (fp));
+      g_message (_("'%s':\nCan't read header (ftell == %ld)"),
+                 filename, ftell (fp));
       return -1;
     }
 
   if (width == 0)
     {
-      g_message (_("XBM: no image width specified\n"));
+      g_message (_("'%s':\nNo image width specified"), filename);
       return -1;
     }
 
   if (height == 0)
     {
-      g_message (_("XBM: no image height specified\n"));
+      g_message (_("'%s':\nNo image height specified"), filename);
       return -1;
     }
 
   if (intbits == 0)
     {
-      g_message (_("XBM: no image data type specified\n"));
+      g_message (_("'%s':\nNo image data type specified"), filename);
       return -1;
     }
 
@@ -983,10 +985,6 @@ save_image (gchar    *filename,
 
   bpp = gimp_drawable_bpp (drawable_ID);
 
-  name_buf = g_strdup_printf (_("Saving %s:"), filename);
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
-
   /* Figure out which color is black, and which is white. */
   dark = 0;
   if (colors > 1)
@@ -1005,9 +1003,14 @@ save_image (gchar    *filename,
   fp = fopen (filename, "w");
   if (!fp)
     {
-      g_message (_("XBM: cannot create \"%s\"\n"), filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
+
+  name_buf = g_strdup_printf (_("Saving '%s'..."), filename);
+  gimp_progress_init (name_buf);
+  g_free (name_buf);
 
   /* Maybe write the image comment. */
 #if 0

@@ -305,7 +305,7 @@ CB_CopyImage (gboolean interactive,
   
   /* following the slow part ... */
   if (interactive)
-    gimp_progress_init (_("Copying ..."));
+    gimp_progress_init (_("Copying..."));
   
   /* speed it up with: */
   gimp_tile_cache_size (drawable->width * gimp_tile_height () * drawable->bpp);

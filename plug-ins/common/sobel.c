@@ -222,7 +222,7 @@ run (gchar      *name,
     }
   else
     {
-      /* g_message ("sobel: cannot operate on indexed color images"); */
+      /* g_message ("Cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 

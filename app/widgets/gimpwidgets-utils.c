@@ -52,6 +52,7 @@ struct _MessageBox
   GtkWidget   *mbox;
   GtkWidget   *vbox;
   GtkWidget   *repeat_label;
+  gchar       *domain;
   gchar       *message;
   gint         repeat_count;
   GtkCallback  callback;
@@ -64,34 +65,44 @@ struct _MessageBox
 static GList *message_boxes = NULL;
 
 void
-gimp_message_box (const gchar *message,
+gimp_message_box (const gchar *stock_id,
+                  const gchar *domain,
+                  const gchar *message,
 		  GtkCallback  callback,
 		  gpointer     data)
 {
-  MessageBox  *msg_box;
-  GtkWidget   *mbox;
-  GtkWidget   *hbox;
-  GtkWidget   *vbox;
-  GtkWidget   *image;
-  GtkWidget   *label;
-  GList       *list;
-  const gchar *stock_id = GIMP_STOCK_WARNING;
+  MessageBox     *msg_box;
+  GtkWidget      *mbox;
+  GtkWidget      *hbox;
+  GtkWidget      *vbox;
+  GtkWidget      *image;
+  GtkWidget      *label;
+  GList          *list;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+  gchar          *str;
 
-  if (!message)
-    return;
+  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (message != NULL);
+
+  if (! domain)
+    domain = _("GIMP");
 
   if (g_list_length (message_boxes) > MESSAGE_BOX_MAXIMUM)
     {
-      g_printerr ("%s: %s\n", prog_name, message);
+      g_printerr ("%s: %s\n", domain, message);
       return;
     }
 
   for (list = message_boxes; list; list = list->next)
     {
       msg_box = list->data;
-      if (strcmp (msg_box->message, message) == 0)
+
+      if (strcmp (msg_box->message, message) == 0 &&
+          strcmp (msg_box->domain,  domain)  == 0)
 	{
 	  msg_box->repeat_count++;
+
 	  if (msg_box->repeat_count > 1)
 	    {
 	      gchar *text = g_strdup_printf (_("Message repeated %d times."), 
@@ -103,11 +114,21 @@ gimp_message_box (const gchar *message,
 	    {
               GtkWidget *label;
 
+              attrs = pango_attr_list_new ();
+
+              attr = pango_attr_style_new (PANGO_STYLE_OBLIQUE);
+              attr->start_index = 0;
+              attr->end_index   = -1;
+              pango_attr_list_insert (attrs, attr);
+
               label = gtk_label_new (_("Message repeated once."));
-              gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+              gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+              gtk_label_set_attributes (GTK_LABEL (label), attrs);
 	      gtk_box_pack_end (GTK_BOX (msg_box->vbox), label,
                                 FALSE, FALSE, 0);
 	      gtk_widget_show (label);
+
+              pango_attr_list_unref (attrs);
 
 	      msg_box->repeat_label = label;
 	    }
@@ -119,13 +140,12 @@ gimp_message_box (const gchar *message,
 
   if (g_list_length (message_boxes) == MESSAGE_BOX_MAXIMUM)
     {
-      g_printerr ("%s: %s\n", prog_name, message);
+      g_printerr ("%s: %s\n", domain, message);
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
 		  "Messages are redirected to stderr.");
-      stock_id = GIMP_STOCK_WARNING;
     }
-  
+
   msg_box = g_new0 (MessageBox, 1);
 
   mbox = gimp_dialog_new (_("GIMP Message"), "gimp-message",
@@ -138,30 +158,59 @@ gimp_message_box (const gchar *message,
 
 			  NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (mbox), FALSE);
+  gtk_dialog_set_has_separator (GTK_DIALOG (mbox), FALSE);
+
   hbox = gtk_hbox_new (FALSE, 10);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), hbox);
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);  
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);  
+  gtk_widget_show (vbox);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  str = g_strdup_printf (_("%s Message"), domain);
+  label = gtk_label_new (str);
+  g_free (str);
+
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  pango_attr_list_unref (attrs);
 
   label = gtk_label_new (message);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   msg_box->mbox     = mbox;
   msg_box->vbox     = vbox;
+  msg_box->domain   = g_strdup (domain);
   msg_box->message  = g_strdup (message);
   msg_box->callback = callback;
   msg_box->data     = data;
 
-  message_boxes = g_list_append (message_boxes, msg_box);
+  message_boxes = g_list_prepend (message_boxes, msg_box);
 
   gtk_widget_show (mbox);
 }
@@ -184,6 +233,7 @@ gimp_message_box_close_callback (GtkWidget *widget,
   /* make this box available again */
   message_boxes = g_list_remove (message_boxes, msg_box);
 
+  g_free (msg_box->domain);
   g_free (msg_box->message);
   g_free (msg_box);
 }

@@ -133,6 +133,7 @@
 #include <glib.h>     /* We want glib.h first because of some
 		       * pretty obscure Win32 compilation issues.
 		       */
+#include <errno.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <stdio.h>
@@ -729,16 +730,13 @@ load_image (gchar       *filename,
 
   if ((infile = fopen (filename, "rb")) == NULL)
     {
-      g_message (_("can't open \"%s\"\n"), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       gimp_quit ();
     }
 
-  if (runmode != GIMP_RUN_NONINTERACTIVE)
-    {
-      name = g_strdup_printf (_("Loading %s:"), filename);
-      gimp_progress_init (name);
-      g_free (name);
-    }
+  name = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (name);
+  g_free (name);
 
   image_ID = -1;
   /* Establish the setjmp return context for my_error_exit to use. */
@@ -853,7 +851,9 @@ load_image (gchar       *filename,
       /*fallthrough*/
 
     default:
-      g_message ("don't know how to load JPEGs\nwith %d color channels\nusing colorspace %d (%d)",
+      g_message ("Don't know how to load JPEGs\n"
+                 "with %d color channels\n"
+                 "using colorspace %d (%d)",
 		 cinfo.output_components, cinfo.out_color_space,
 		 cinfo.jpeg_color_space);
       gimp_quit ();
@@ -933,7 +933,7 @@ load_image (gchar       *filename,
 	  break;
 
 	default:
-	  g_message ("unknown density unit %d\nassuming dots per inch",
+	  g_message ("Unknown density unit %d\nassuming dots per inch",
 		     cinfo.density_unit);
 	  break;
 	}
@@ -1011,11 +1011,8 @@ load_image (gchar       *filename,
       gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
 			       0, start, drawable->width, scanlines);
 
-      if (runmode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  gimp_progress_update ((gdouble) cinfo.output_scanline / 
-				(gdouble) cinfo.output_height);
-	}
+      gimp_progress_update ((gdouble) cinfo.output_scanline / 
+                            (gdouble) cinfo.output_height);
     }
 
   /* Step 7: Finish decompression */
@@ -1200,7 +1197,7 @@ save_image (gchar    *filename,
 
   if (!preview) 
     {
-      name = g_strdup_printf (_("Saving %s:"), filename);
+      name = g_strdup_printf (_("Saving '%s'..."), filename);
       gimp_progress_init (name);
       g_free (name);
     }
@@ -1244,7 +1241,8 @@ save_image (gchar    *filename,
    */
   if ((outfile = fopen (filename, "wb")) == NULL)
     {
-      g_message ("can't open %s\n", filename);
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
       return FALSE;
     }
   jpeg_stdio_dest (&cinfo, outfile);
@@ -1749,9 +1747,9 @@ save_dialog (void)
                     restart);
 
   gtk_widget_set_sensitive (restart_markers_label, 
-			    (jsvals.restart ? TRUE : FALSE));
+			    jsvals.restart ? TRUE : FALSE);
   gtk_widget_set_sensitive (restart_markers_scale,
-			    (jsvals.restart ? TRUE : FALSE));
+			    jsvals.restart ? TRUE : FALSE);
 
   gtk_widget_show (restart_markers_scale);
 
@@ -1929,9 +1927,9 @@ save_restart_update (GtkAdjustment *adjustment,
   jsvals.restart = GTK_TOGGLE_BUTTON (toggle)->active ? adjustment->value : 0;
 
   gtk_widget_set_sensitive (restart_markers_label,
-			    (jsvals.restart ? TRUE : FALSE));
+			    jsvals.restart ? TRUE : FALSE);
   gtk_widget_set_sensitive (restart_markers_scale,
-			    (jsvals.restart ? TRUE : FALSE));
+			    jsvals.restart ? TRUE : FALSE);
           
   make_preview ();
 }

@@ -496,7 +496,7 @@ void saveppm(ppm_t *p, const char *fn)
 
   if (!f)
     {
-      g_message (_("GIMPressionist:\nFailed to save PPM file '%s':\n%s"),
+      g_message (_("Failed to save PPM file '%s':\n%s"),
                  fn, g_strerror (errno));
       return;
     }

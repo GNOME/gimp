@@ -255,8 +255,8 @@ unsharp_mask (GimpDrawable *drawable,
   gint  x1, y1, x2, y2;
 
   /* Get the input */
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init(_("Blurring..."));
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_progress_init (_("Blurring..."));
 
   width = drawable->width;
   height = drawable->height;
@@ -343,7 +343,7 @@ unsharp_region (GimpPixelRgn srcPR,
       gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
 
       if (row%5 == 0)
-	gimp_progress_update((gdouble)row/(3*y));
+	gimp_progress_update ((gdouble)row/(3*y));
     }
 
   /* allocate column buffers */
@@ -359,10 +359,10 @@ unsharp_region (GimpPixelRgn srcPR,
       gimp_pixel_rgn_set_col(&destPR, dest_col, x1+col, y1, y);
 
       if (col%5 == 0)
-	gimp_progress_update((gdouble)col/(3*x) + 0.33);
+	gimp_progress_update ((gdouble)col/(3*x) + 0.33);
     }
 
-  gimp_progress_init(_("Merging..."));
+  gimp_progress_init (_("Merging..."));
 
   /* find integer value of threshold */
   threshold = unsharp_params.threshold;
@@ -394,7 +394,9 @@ unsharp_region (GimpPixelRgn srcPR,
 	    }
 	}
       /* update progress bar every five rows */
-      if (row%5 == 0) gimp_progress_update((gdouble)row/(3*y) + 0.67);
+      if (row%5 == 0)
+        gimp_progress_update ((gdouble)row/(3*y) + 0.67);
+
       gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
     }
 
