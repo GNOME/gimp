@@ -41,7 +41,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
-#include "color-history.h"
 #include "session.h"
 
 #include "gimp-intl.h"
@@ -50,7 +49,6 @@
 enum
 {
   SESSION_INFO = 1,
-  COLOR_HISTORY,
   LAST_TIP_SHOWN
 };
 
@@ -93,8 +91,6 @@ session_init (Gimp *gimp)
 
   g_scanner_scope_add_symbol (scanner, 0, "session-info",
                               GINT_TO_POINTER (SESSION_INFO));
-  g_scanner_scope_add_symbol (scanner, 0, "color-history",
-                              GINT_TO_POINTER (COLOR_HISTORY));
   g_scanner_scope_add_symbol (scanner, 0,  "last-tip-shown",
                               GINT_TO_POINTER (LAST_TIP_SHOWN));
 
@@ -120,18 +116,6 @@ session_init (Gimp *gimp)
                 g_scanner_set_scope (scanner, 0);
               else
                 break;
-            }
-          else if (scanner->value.v_symbol == GINT_TO_POINTER (COLOR_HISTORY))
-            {
-              while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
-                {
-                  GimpRGB color;
-
-                  if (! gimp_scanner_parse_color (scanner, &color))
-                    goto error;
-
-                  color_history_add_from_rc (&color);
-                }
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))
             {
@@ -160,8 +144,6 @@ session_init (Gimp *gimp)
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
     }
-
- error:
 
   if (error)
     {
@@ -219,9 +201,6 @@ session_save (Gimp *gimp)
   gimp_config_writer_printf (writer, "%d",
                              GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
   gimp_config_writer_close (writer);
-  gimp_config_writer_linefeed (writer);
-
-  color_history_write (writer);
 
   gimp_config_writer_finish (writer, "end of sessionrc", NULL);
 }

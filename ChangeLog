@@ -1,3 +1,10 @@
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/color-history.[ch]
+	* app/gui/gui.c
+	* app/gui/session.c: moved the color history out of the sessionrc
+	into it's own little file called colorrc.
+
 2003-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppreviewrenderer.[ch]: multihead fix: added

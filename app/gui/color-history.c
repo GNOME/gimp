@@ -23,16 +23,26 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gui-types.h"
 
+#include "config/gimpconfig-utils.h"
 #include "config/gimpconfigwriter.h"
+#include "config/gimpscanner.h"
 
 #include "color-history.h"
 
 
-static void   color_history_init (void);
+enum
+{
+  COLOR_HISTORY = 1
+};
+
+
+static void   color_history_init        (void);
+static void   color_history_add_from_rc (GimpRGB *color);
 
 
 static GimpRGB   color_history[COLOR_HISTORY_SIZE];
@@ -40,23 +50,23 @@ static gboolean  color_history_initialized = FALSE;
 
 
 void
-color_history_add_from_rc (GimpRGB *color)
+color_history_save (void)
 {
-  static gint index = 0;
+  GimpConfigWriter *writer;
+  gchar            *filename;
+  gint              i;
 
-  if (! color_history_initialized)
-    color_history_init ();
+  filename = gimp_personal_rc_file ("colorrc");
+  writer = gimp_config_writer_new_file (filename,
+                                        TRUE,
+                                        "GIMP colorrc\n\n"
+                                        "This file holds a list of "
+                                        "recently used colors.",
+                                        NULL);
+  g_free (filename);
 
-  if (color && index < COLOR_HISTORY_SIZE)
-    {
-      color_history[index++] = *color;
-    }
-}
-
-void
-color_history_write (GimpConfigWriter *writer)
-{
-  gint i;
+  if (!writer)
+    return;
 
   if (! color_history_initialized)
     color_history_init ();
@@ -83,6 +93,66 @@ color_history_write (GimpConfigWriter *writer)
     }
 
   gimp_config_writer_close (writer);
+
+  gimp_config_writer_finish (writer, "end of colorrc", NULL);
+}
+
+void
+color_history_restore (void)
+{
+  gchar      *filename;
+  GScanner   *scanner;
+  GTokenType  token;
+
+  filename = gimp_personal_rc_file ("colorrc");
+  scanner = gimp_scanner_new_file (filename, NULL);
+  g_free (filename);
+
+  if (! scanner)
+    return;
+
+  g_scanner_scope_add_symbol (scanner, 0, "color-history",
+                              GINT_TO_POINTER (COLOR_HISTORY));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          if (scanner->value.v_symbol == GINT_TO_POINTER (COLOR_HISTORY))
+            {
+              while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+                {
+                  GimpRGB color;
+
+                  if (! gimp_scanner_parse_color (scanner, &color))
+                    goto error;
+
+                  color_history_add_from_rc (&color);
+                }
+            }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+ error:
+  gimp_scanner_destroy (scanner);
 }
 
 void
@@ -179,4 +249,18 @@ color_history_init (void)
     gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   color_history_initialized = TRUE;
+}
+
+static void
+color_history_add_from_rc (GimpRGB *color)
+{
+  static gint index = 0;
+
+  if (! color_history_initialized)
+    color_history_init ();
+
+  if (color && index < COLOR_HISTORY_SIZE)
+    {
+      color_history[index++] = *color;
+    }
 }
