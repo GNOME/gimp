@@ -184,6 +184,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_LAYER,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_FLOATING_SELECTION,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_RED,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL_GREEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -329,6 +330,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_24                    },
   { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_24               },
+  { GIMP_STOCK_FLOATING_SELECTION,       stock_floating_selection_24       },
   { GIMP_STOCK_PATH,                     stock_path_22                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_24          },
@@ -422,6 +424,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_16                    },
   { GIMP_STOCK_LAYER,                    stock_layer_16                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_16               },
+  { GIMP_STOCK_FLOATING_SELECTION,       stock_floating_selection_16       },
   { GIMP_STOCK_PATH,                     stock_path_16                     },
   { GIMP_STOCK_TEMPLATE,                 stock_template_16                 },
   { GIMP_STOCK_INDEXED_PALETTE,          stock_indexed_palette_16          },
@@ -522,7 +525,8 @@ gimp_stock_dnd_pixbufs[] =
   { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_32        },
   { GIMP_STOCK_IMAGE,                stock_image_32                },
   { GIMP_STOCK_LAYER,                stock_layer_32                },
-  { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_32           }
+  { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_32           },
+  { GIMP_STOCK_FLOATING_SELECTION,   stock_floating_selection_32   }
 };
 
 static struct
@@ -541,6 +545,7 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_IMAGE,                stock_image_48                },
   { GIMP_STOCK_LAYER,                stock_layer_48                },
   { GIMP_STOCK_TEXT_LAYER,           stock_text_layer_48           },
+  { GIMP_STOCK_FLOATING_SELECTION,   stock_floating_selection_48   },
 
   { GIMP_STOCK_ERROR,                stock_error_64                },
   { GIMP_STOCK_INFO,                 stock_info_64                 },

@@ -38,6 +38,7 @@ STOCK_MENU_IMAGES = \
 	stock-eye-12.png				\
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
+	stock-floating-selection-16.png			\
 	stock-gradient-bilinear-16.png			\
 	stock-gradient-conical-asymmetric-16.png	\
 	stock-gradient-conical-symmetric-16.png		\
@@ -109,6 +110,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\
+	stock-floating-selection-24.png		\
 	stock-gravity-east-24.png		\
 	stock-gravity-north-24.png		\
 	stock-gravity-north-east-24.png		\
@@ -161,6 +163,7 @@ STOCK_DND_IMAGES = \
 	stock-channel-gray-32.png		\
 	stock-channel-green-32.png		\
 	stock-channel-red-32.png		\
+	stock-floating-selection-32.png		\
 	stock-image-32.png			\
 	stock-layer-32.png			\
 	stock-text-layer-32.png
@@ -173,6 +176,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-channel-green-48.png		\
 	stock-channel-red-48.png		\
 	stock-error-64.png			\
+	stock-floating-selection-48.png		\
 	stock-image-48.png			\
 	stock-info-64.png			\
 	stock-layer-48.png			\

@@ -153,6 +153,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_IMAGE                "gimp-image"
 #define GIMP_STOCK_LAYER                "gimp-layer"
 #define GIMP_STOCK_TEXT_LAYER           "gimp-text-layer"
+#define GIMP_STOCK_FLOATING_SELECTION   "gimp-floating-selection"
 #define GIMP_STOCK_CHANNEL              "gimp-channel"
 #define GIMP_STOCK_CHANNEL_RED          "gimp-channel-red"
 #define GIMP_STOCK_CHANNEL_GREEN        "gimp-channel-green"
