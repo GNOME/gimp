@@ -1,3 +1,12 @@
+Mon Feb 15  21:14:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+	* plug-ins/perl/examples/prep4gif.pl
+	* plug-ins/perl/examples/alpha2color.pl
+	* plug-ins/perl/examples/windy.pl
+    * plug-ins/perl/examples/feedback.pl 
+	* plug-ins/perl/examples/xachlego.pl 
+	* plug-ins/perl/examples/xachshadows.pl: added email addresses and 
+       put things in a more sane spot in the menus
+
 Mon Feb 15 05:23:18 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/color_balance.c (color_balance): Use the rgb_to_l function.

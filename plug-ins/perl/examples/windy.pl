@@ -1,6 +1,6 @@
-#!/usr/app/bin/perl
+#!/usr/bin/perl
 
-# sent to me by Seth Burgess <sjburges@ou.edu>
+# sent to me by Seth Burgess <sjburges@gimp.org>
 # small changes my Marc Lehmann <pcg@goof.com>
 
 use Gimp;
@@ -49,9 +49,9 @@ register
 	"Add wind to an image",
 	"Blow your image all over :)",
 	"Seth Burgess",
-	"Seth Burgess (c)",
+	"Seth Burgess <sjburges\@gimp.org>",
 	"1998-09-14",
-	"<Image>/Filters/Artistic/Windify",
+	"<Image>/Filters/Distorts/Windify",
 	"*",
 	[
 	 [PF_INT32, "Angle", "Wind Angle, 0 is left", 120],
