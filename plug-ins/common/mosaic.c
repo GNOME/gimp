@@ -517,21 +517,20 @@ mosaic_dialog (void)
 			 NULL);
 
   /*  The main hbox -- splits the scripts and the info vbox  */
-  main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
 		      TRUE, TRUE, 0);
 
   /*  The vbox for first column of options  */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
 
   /*  the vertical box and its toggle buttons  */
-  frame = gtk_frame_new (_("Options"));
+  frame = gimp_frame_new (_("Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 2);
+  toggle_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
@@ -602,13 +601,12 @@ mosaic_dialog (void)
   gtk_widget_show (vbox);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
+  frame = gimp_frame_new (_("Settings"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

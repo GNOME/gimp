@@ -526,10 +526,9 @@ static gboolean
 dialog (gint32 drawable_ID)
 {
   GtkWidget   *dlg;
-  GtkWidget   *frame, *pframe;
-  GtkWidget   *abox;
+  GtkWidget   *vbox;
+  GtkWidget   *frame;
   GtkWidget   *table;
-  GtkWidget   *preview;
   IMG_PREVIEW *ip;
   gint         j;
   gboolean     run;
@@ -547,54 +546,49 @@ dialog (gint32 drawable_ID)
 
 			 NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   /* Preview */
   ip = img_preview_create_from_drawable (IMG_PRV_SIZE, drawable_ID);
   if (ip)
     {
+      GtkWidget *hbox;
+      GtkWidget *preview;
+
       plinterface.img_preview = ip;
       img_preview_copy (plinterface.img_preview, &(plinterface.map_preview));
 
-      frame = gtk_frame_new (_("Preview"));
-      gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
-			  FALSE, FALSE, 0);
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-      gtk_container_add (GTK_CONTAINER (frame), abox);
-
-      pframe = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
-      gtk_container_add (GTK_CONTAINER (abox), pframe);
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
 
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       plinterface.preview = preview;
       gtk_preview_size (GTK_PREVIEW (preview), ip->width, ip->height);
-      gtk_container_add (GTK_CONTAINER (pframe), preview);
-
+      gtk_container_add (GTK_CONTAINER (frame), preview);
       gtk_widget_show (preview);
-      gtk_widget_show (pframe);
-      gtk_widget_show (abox);
-      gtk_widget_show (frame);
     }
 
   for (j = 0; j < 2; j++)
     {
-      frame = gtk_frame_new ((j == 0) ?
-			     _("Source color range") :
-			     _("Destination color range"));
-      gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
-			  FALSE, FALSE, 0);
+      frame = gimp_frame_new ((j == 0) ?
+                              _("Source color range") :
+                              _("Destination color range"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
       /* The table keeps the color selections */
       table = gtk_table_new (1, 4, FALSE);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -633,7 +627,7 @@ add_color_button (gint       csel_index,
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), left + 1, top,
 			     (left == 0) ? _("From:") : _("To:"),
-			     1.0, 0.5,
+			     0.0, 0.5,
 			     button, 1, TRUE);
 
   g_signal_connect (button, "color_changed",

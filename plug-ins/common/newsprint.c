@@ -463,7 +463,7 @@ static void	run	(const gchar      *name,
 			 gint             *nreturn_vals,
 			 GimpParam       **return_vals);
 
-static gint	newsprint_dialog            (GimpDrawable  *drawable);
+static gboolean newsprint_dialog            (GimpDrawable  *drawable);
 static void	newsprint_cspace_update     (GtkWidget     *widget,
                                              gpointer       data);
 
@@ -984,25 +984,28 @@ newsprint_defaults_callback (GtkWidget *widget,
 static channel_st *
 new_channel (const chan_tmpl *ct)
 {
-  GtkWidget   *table;
-  GtkWidget   *hbox;
-  GtkWidget   *hbox2;
-  GtkWidget   *abox;
-  GtkWidget   *label;
-  spot_info_t *sf;
-  channel_st  *chst;
-  gint         i;
+  GtkSizeGroup *group;
+  GtkWidget    *table;
+  GtkWidget    *hbox;
+  GtkWidget    *hbox2;
+  GtkWidget    *abox;
+  GtkWidget    *label;
+  spot_info_t  *sf;
+  channel_st   *chst;
+  gint          i;
 
   /* create the channel state record */
   chst = new_preview (ct->spotfn);
 
-  chst->vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (chst->vbox), 4);
+  chst->vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (chst->vbox), 12);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (chst->vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
+
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* angle slider */
   chst->angle_adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1012,6 +1015,9 @@ new_channel (const chan_tmpl *ct)
 					  TRUE, 0, 0,
 					  NULL, NULL);
   g_object_set_data (G_OBJECT (chst->angle_adj), "angle", ct->angle);
+
+  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (chst->angle_adj));
+  g_object_unref (group);
 
   g_signal_connect (chst->angle_adj, "value_changed",
                     G_CALLBACK (angle_callback),
@@ -1026,14 +1032,16 @@ new_channel (const chan_tmpl *ct)
   gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  hbox2 = gtk_hbox_new (FALSE, 4);
+  hbox2 = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
   gtk_widget_show (hbox2);
 
   label = gtk_label_new_with_mnemonic (_("_Spot Function:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  gtk_size_group_add_widget (group, label);
 
   chst->combo = gimp_int_combo_box_new (NULL, 0);
 
@@ -1138,7 +1146,7 @@ gen_channels (NewsprintDialog_st *st,
 }
 
 
-static gint
+static gboolean
 newsprint_dialog (GimpDrawable *drawable)
 {
   /* widgets we need from callbacks stored here */
@@ -1186,21 +1194,22 @@ newsprint_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st.dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /* resolution settings  */
-  frame = gtk_frame_new (_("Resolution"));
+  frame = gimp_frame_new (_("Resolution"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   gimp_image_get_resolution (gimp_drawable_get_image (drawable->drawable_id),
 			     &xres, &yres);
@@ -1241,15 +1250,11 @@ newsprint_dialog (GimpDrawable *drawable)
                     G_CALLBACK (cellsize_callback),
                     &st);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
-
   /* screen settings */
-  frame = gtk_frame_new (_("Screen"));
+  frame = gimp_frame_new (_("Screen"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  st.vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (st.vbox), 4);
+  st.vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), st.vbox);
 
   /* optional portion begins */
@@ -1257,13 +1262,11 @@ newsprint_dialog (GimpDrawable *drawable)
     {
       GtkWidget *hbox;
       GtkWidget *label;
-      GtkWidget *sep;
       GtkWidget *button;
       GtkWidget *toggle;
 
       st.pull_table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (st.pull_table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (st.pull_table), 2);
+      gtk_table_set_col_spacings (GTK_TABLE (st.pull_table), 6);
 
       /* black pullout */
       st.pull = gimp_scale_entry_new (GTK_TABLE (st.pull_table), 0, 0,
@@ -1282,10 +1285,6 @@ newsprint_dialog (GimpDrawable *drawable)
       /* RGB / CMYK / Intensity select */
       hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
-
-      sep = gtk_hseparator_new ();
-      gtk_box_pack_start (GTK_BOX (st.vbox), sep, FALSE, FALSE, 0);
-      gtk_widget_show (sep);
 
       /*  pack the scaleentry table  */
       gtk_box_pack_start (GTK_BOX (st.vbox), st.pull_table, FALSE, FALSE, 0);
@@ -1337,7 +1336,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
       /* channel lock & factory defaults button */
       hbox = gtk_hbutton_box_new ();
-      gtk_box_set_spacing (GTK_BOX (hbox), 10);
+      gtk_box_set_spacing (GTK_BOX (hbox), 6);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -1374,12 +1373,11 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   /* anti-alias control */
-  frame = gtk_frame_new (_("Antialiasing"));
+  frame = gimp_frame_new (_("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

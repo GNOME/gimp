@@ -1193,15 +1193,14 @@ mng_save_dialog (gint32 image_id)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
 
-  frame = gtk_frame_new (_("MNG Options"));
+  frame = gimp_frame_new (_("MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Interlace"));
@@ -1259,9 +1258,8 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (toggle);
 
   table = gtk_table_new (2, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1287,7 +1285,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_set_sensitive (combo, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Default Chunks Type:"), 1.0, 0.5,
+                             _("Default Chunks Type:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   combo = gimp_int_combo_box_new (_("Combine"), DISPOSE_COMBINE,
@@ -1302,7 +1300,7 @@ mng_save_dialog (gint32 image_id)
                     &mng_data.default_dispose);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Default Frame Disposal:"), 1.0, 0.5,
+                             _("Default Frame Disposal:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   scale_adj = gtk_adjustment_new (mng_data.compression_level,
@@ -1314,7 +1312,7 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("PNG Compression Level:"), 1.0, 1.0,
+                             _("PNG Compression Level:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1336,7 +1334,7 @@ mng_save_dialog (gint32 image_id)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("JPEG Compression Quality:"), 1.0, 1.0,
+                             _("JPEG Compression Quality:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1353,7 +1351,7 @@ mng_save_dialog (gint32 image_id)
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("JPEG Smoothing Factor:"), 1.0, 1.0,
+                             _("JPEG Smoothing Factor:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value_changed",
@@ -1363,11 +1361,10 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Animated MNG Options"));
+  frame = gimp_frame_new (_("Animated MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Loop"));

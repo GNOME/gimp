@@ -62,7 +62,7 @@ static void      run    (const gchar      *name,
 static void      oilify_rgb         (GimpDrawable *drawable);
 static void      oilify_intensity   (GimpDrawable *drawable);
 
-static gint      oilify_dialog      (void);
+static gboolean  oilify_dialog      (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -434,7 +434,6 @@ static gint
 oilify_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
@@ -451,29 +450,14 @@ oilify_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use Intensity Algorithm"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &ovals.mode);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Mask Size:"), SCALE_WIDTH, 0,
 			      ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
@@ -481,6 +465,15 @@ oilify_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.mask_size);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use Intensity Algorithm"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &ovals.mode);
 
   gtk_widget_show (dlg);
 
