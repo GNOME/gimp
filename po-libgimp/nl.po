@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
-"PO-Revision-Date: 2004-10-24 23:32+0200\n"
+"POT-Creation-Date: 2004-11-17 19:11+0100\n"
+"PO-Revision-Date: 2004-11-18 02:35+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,14 +198,13 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Leeg)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Patroonselectie"
+msgstr "Paletselectie"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -380,21 +379,21 @@ msgstr "Kon de map '%s' voor de miniaturen niet aanmaken."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kon geen miniatuur aanmaken voor %s: %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/_Voorgrondkleur"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "_Voorgrondkleur"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/_Achtergrondkleur"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "_Achtergrondkleur"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/_Zwart"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "_Zwart"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/_Wit"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Wit"
 
 # 'Schaalt'? 'Schubben'? Weegschalen
 # Misschien gaat het over kleurbereik
@@ -495,19 +494,16 @@ msgid "Select File"
 msgstr "Selecteer bestand"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
-msgstr "Kilobytes"
+msgstr "Kilobyte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
-msgstr "Megabytes"
+msgstr "Megabyte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
-msgstr "Gigabytes"
+msgstr "Gigabyte"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
@@ -544,66 +540,70 @@ msgid "Anchor"
 msgstr "Verankeren"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "_Centreren"
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Dupliceren"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "_Bewerken"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Gekoppeld"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Plakken als Nieuw"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Plakken in"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Opnieuw instellen"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Zichtbaar"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr "_Doorhalen"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "L_etterspatiëring"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "_Regelhoogte"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "_Herschalen"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "_Schalen"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Snijden"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_Transformeren"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "_Hellen"
 
