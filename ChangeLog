@@ -1,4 +1,17 @@
-2004-01-10  Sven Neumann  <sven@gimp.org>
+2004-01-11  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c: further tweaks.
+	now excluding fractions where numerator*denominator > 200
+	(only when both are > 1).
+	This is a simple heuristic to exclude some absurd looking
+	fractions.
+
+	Also ensure that 1/ratio results in b:a, when ratio results
+	in a:b.
+
+	IMHO fixes bug #124073.
+
+2004-01-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.[ch] (gimp_imagefile_update): removed the
 	size parameter and do nothing but invalidating the preview.

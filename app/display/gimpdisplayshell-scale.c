@@ -105,12 +105,20 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
                                         gint    *scalesrc,
                                         gint    *scaledest)
 {
-  gint    p0, p1, p2;
-  gint    q0, q1, q2;
-  gdouble remainder, next_cf;
+  gint     p0, p1, p2;
+  gint     q0, q1, q2;
+  gdouble  remainder, next_cf;
+  gboolean swapped = FALSE;
 
   g_return_if_fail (scalesrc != NULL);
   g_return_if_fail (scaledest != NULL);
+
+  /* make sure that zooming behaves symmetrically */
+  if (zoom_factor < 1.0)
+    {
+      zoom_factor = 1.0 / zoom_factor;
+      swapped = TRUE;
+    }
 
   /* calculate the continued fraction for the desired zoom factor */
 
@@ -132,7 +140,8 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
       q2 = next_cf * q1 + q0;
 
       /* Numerator and Denominator are limited by 255 */
-      if (p2 > 255 || q2 > 255)
+      /* also absurd ratios like 170:171 are excluded */
+      if (p2 > 255 || q2 > 255 || (p2 > 1 && q2 > 1 && p2 * q2 > 200))
         break;
 
       /* remember the last two fractions */
@@ -159,8 +168,16 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
       q1 = 255;
     }
 
-  *scalesrc = q1;
-  *scaledest = p1;
+  if (swapped)
+    {
+      *scalesrc = p1;
+      *scaledest = q1;
+    }
+  else
+    {
+      *scalesrc = q1;
+      *scaledest = p1;
+    }
 }
 
 void
