@@ -38,14 +38,3 @@ special values defined by your system's signal.h header file (like
 @Returns: 
 
 
-<!-- ##### MACRO gimp_signal_syscallrestart ##### -->
-<para>
-Installs a signal handler in a way that system calls which were not finished
-at the time of signal handler invocation will be silently restarted
-by the system (without failing with an error of EINTR).
-</para>
-
-@signum: The number of the signal.
-@handler: The signal handler.
-
-

@@ -1,3 +1,8 @@
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpsignal.sgml: updated.
+
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-sections.txt: updated.

@@ -27,29 +27,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-/* A gimp-level interface to a Posix.1-compliant signal package lives here
- * For 1.2, this gimp-level interface mostly passes through to posix calls
- * without modification. Certain calls manipulate struct sigaction in
- * ways useful to Gimp.
- */
-
 /* GimpSignalHandlerFunc is a reference to a (signal handler) function
  * that takes a signal ID and returns void.
  * signal(2) returns such references; so does gimp_signal_private.
  */
 typedef void (* GimpSignalHandlerFunc) (gint signum);
 
-/* Internal implementation that can be DEFINEd into various flavors of
- * signal(2) lookalikes.
- */
 GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
 					    GimpSignalHandlerFunc  handler,
 					    gint                   flags);
-
-/* the gimp_signal_syscallrestart() lookalike looks like signal(2) but
- * quietly requests the restarting of system calls. Addresses #2742
- */
-#define gimp_signal_syscallrestart(signum,handler) gimp_signal_private ((signum), (handler), SA_RESTART)
 
 
 G_END_DECLS

@@ -100,10 +100,8 @@ gp_extension_ack_write
 
 <SECTION>
 <FILE>gimpsignal</FILE>
-SA_RESTART
 GimpSignalHandlerFunc
 gimp_signal_private
-gimp_signal_syscallrestart
 </SECTION>
 
 <SECTION>
