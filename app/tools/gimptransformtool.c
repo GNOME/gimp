@@ -281,8 +281,16 @@ gimp_transform_tool_constructor (GType                  type,
                                G_CALLBACK (gimp_transform_tool_notify_type),
                                tr_tool, 0);
       g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::type",
+                               G_CALLBACK (gimp_transform_tool_notify_preview),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
                                "notify::direction",
                                G_CALLBACK (gimp_transform_tool_notify_type),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::direction",
+                               G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
       g_signal_connect_object (tool->tool_info->tool_options,
                                "notify::grid-type",
@@ -1434,7 +1442,8 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
   options =
     GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
-  if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
+  if (options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
+      options->direction == GIMP_TRANSFORM_FORWARD)
     gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
                                            options->show_preview);
   else
@@ -1552,7 +1561,8 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
-  if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
+  if (options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
+      options->direction == GIMP_TRANSFORM_FORWARD)
     {
       gimp_display_shell_set_show_transform (shell, options->show_preview);
 
@@ -1565,5 +1575,9 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
       options->show_preview = show_preview;
     }
   else
-    gimp_display_shell_set_show_transform (shell, FALSE);
+    {
+      gimp_display_shell_set_show_transform (shell, FALSE);
+
+      gimp_transform_tool_expose_preview (tr_tool);
+    }
 }

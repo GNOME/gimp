@@ -1,3 +1,9 @@
+2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/tools/gimptransformtool.c: Disable preview in corrective
+	mode, and notify preview when switching transform type and
+	direction.
+
 2004-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintcore.[ch]: added new virtual function
