@@ -23,13 +23,14 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "gimpcontainer.h"
 #include "gimpdnd.h"
 #include "gimpmenuitem.h"
-#include "gimpmarshal.h"
 #include "gimppreview.h"
+
+#include "gimpcontainer.h"
+#include "gimpmarshal.h"
 #include "gimpviewable.h"
 
 

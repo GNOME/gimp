@@ -25,16 +25,17 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpdnd.h"
+#include "gimpdrawablelistitem.h"
+#include "gimpdrawablelistview.h"
+#include "gimppreview.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpcontainer.h"
-#include "gimpdnd.h"
-#include "gimpdrawablelistitem.h"
-#include "gimpdrawablelistview.h"
 #include "gimpimage.h"
-#include "gimppreview.h"
 #include "gimpviewable.h"
 
 #include "pixmaps/eye.xpm"

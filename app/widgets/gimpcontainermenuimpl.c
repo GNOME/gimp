@@ -25,15 +25,15 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "appenv.h"
-#include "gimpcontainer.h"
 #include "gimpcontainermenuimpl.h"
-#include "gimpcontext.h"
-#include "gimplist.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
+
+#include "gimpcontainer.h"
+#include "gimpcontext.h"
+#include "gimplist.h"
 
 
 static void     gimp_container_menu_impl_class_init   (GimpContainerMenuImplClass *klass);

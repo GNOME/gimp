@@ -46,6 +46,18 @@ typedef enum
   INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
 } GimpImageType;
 
+/* Channel types */
+typedef enum
+{
+  RED_CHANNEL,
+  GREEN_CHANNEL,
+  BLUE_CHANNEL,
+  GRAY_CHANNEL,
+  INDEXED_CHANNEL,
+  ALPHA_CHANNEL,
+  AUXILLARY_CHANNEL
+} ChannelType;
+
 /* Fill types */
 typedef enum
 {

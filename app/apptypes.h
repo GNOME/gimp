@@ -20,18 +20,14 @@
 #define __APPTYPES_H__
 
 
+#include "libgimp/gimpunit.h"
+
 #include "libgimpcolor/gimpcolortypes.h"
 #include "libgimpmath/gimpmathtypes.h"
-#include "libgimpwidgets/gimpwidgetstypes.h"
-
 
 #include "undo_types.h"
 
 #include "appenums.h"
-
-#ifdef __GTK_H__
-#include "widgets/widgets-types.h"
-#endif
 
 
 /*  base objects  */

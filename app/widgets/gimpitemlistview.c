@@ -26,13 +26,12 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gdisplay.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimpmarshal.h"
@@ -40,6 +39,7 @@
 #include "gimpviewable.h"
 
 #include "gimpchannellistview.h"
+#include "gimpdnd.h"
 #include "gimpdrawablelistview.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"

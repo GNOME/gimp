@@ -27,6 +27,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
+#include "widgets/widgets-types.h"
 
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"

@@ -25,9 +25,8 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "appenv.h"
 #include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontext.h"

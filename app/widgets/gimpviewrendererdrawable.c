@@ -25,10 +25,11 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpdrawablepreview.h"
 
 #include "gimpdrawable.h"
-#include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "temp_buf.h"
 

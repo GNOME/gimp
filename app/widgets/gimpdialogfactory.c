@@ -25,7 +25,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"

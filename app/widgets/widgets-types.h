@@ -20,6 +20,11 @@
 #define __WIDGETS_TYPES_H__
 
 
+#include "libgimpwidgets/gimpwidgetstypes.h"
+
+#include "apptypes.h"
+
+
 /*  non-widget objects  */
 
 typedef struct _GimpDialogFactory     GimpDialogFactory;

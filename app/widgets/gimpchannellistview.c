@@ -26,23 +26,23 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpchannellistview.h"
+#include "gimpcomponentlistitem.h"
+#include "gimpdnd.h"
+#include "gimpimagepreview.h"
+#include "gimplistitem.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontainer.h"
 #include "gimpchannel.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpviewable.h"
-
-#include "gimpchannellistview.h"
-#include "gimpcomponentlistitem.h"
-#include "gimpimagepreview.h"
-#include "gimplistitem.h"
 
 #include "tools/paint_options.h"
 

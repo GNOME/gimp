@@ -25,7 +25,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimpdnd.h"
 #include "gimpchannellistitem.h"

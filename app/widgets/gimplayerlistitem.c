@@ -26,18 +26,19 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpdnd.h"
+#include "gimplayerlistitem.h"
+#include "gimppreview.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
-#include "gimpdnd.h"
-#include "gimplayerlistitem.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "gimppreview.h"
 #include "gimpviewable.h"
 
 #include "pixmaps/linked.xpm"

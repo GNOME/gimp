@@ -25,14 +25,13 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimpdialogfactory.h"
+#include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
-
-#include "gimpdnd.h"
 
 
 #define GIMP_DOCK_MINIMAL_WIDTH 280

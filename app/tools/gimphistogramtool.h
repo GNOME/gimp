@@ -20,6 +20,10 @@
 #define __HISTOGRAM_TOOL_H__
 
 
+/* FIXME: remove the dependency from pdb/color_cmds.c */
+#include "widgets/widgets-types.h"
+
+
 #define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
 

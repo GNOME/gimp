@@ -23,10 +23,11 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimppatternpreview.h"
 
 #include "gimppattern.h"
-#include "gimppatternpreview.h"
 #include "temp_buf.h"
 
 

@@ -46,6 +46,20 @@ package Gimp::CodeGen::enums;
 		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
 		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
 	},
+    ChannelType =>
+	{ contig => 1,
+	  header => 'appenums.h',
+	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
+			  GRAY_CHANNEL INDEXED_CHANNEL ALPHA_CHANNEL
+			  AUXILLARY_CHANNEL) ],
+	  mapping => { RED_CHANNEL => '0',
+		       GREEN_CHANNEL => '1',
+		       BLUE_CHANNEL => '2',
+		       GRAY_CHANNEL => '3',
+		       INDEXED_CHANNEL => '4',
+		       ALPHA_CHANNEL => '5',
+		       AUXILLARY_CHANNEL => '6' }
+	},
     GimpFillType =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -271,20 +285,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
-	},
-    ChannelType =>
-	{ contig => 1,
-	  header => 'gimpimage.h',
-	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
-			  GRAY_CHANNEL INDEXED_CHANNEL ALPHA_CHANNEL
-			  AUXILLARY_CHANNEL) ],
-	  mapping => { RED_CHANNEL => '0',
-		       GREEN_CHANNEL => '1',
-		       BLUE_CHANNEL => '2',
-		       GRAY_CHANNEL => '3',
-		       INDEXED_CHANNEL => '4',
-		       ALPHA_CHANNEL => '5',
-		       AUXILLARY_CHANNEL => '6' }
 	},
     MergeType =>
 	{ contig => 1,

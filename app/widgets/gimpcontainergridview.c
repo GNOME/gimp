@@ -27,9 +27,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "appenv.h"
 #include "colormaps.h"
 #include "gimpcontainer.h"
 #include "gimpcontainergridview.h"

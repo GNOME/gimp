@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gui/color-notebook.h"
 

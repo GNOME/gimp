@@ -29,17 +29,18 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "gimpcontainer.h"
 #include "gimpcontainerview.h"
-#include "gimpdata.h"
-#include "gimpdatafactory.h"
 #include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
-#include "gimpcontext.h"
 #include "gimpdnd.h"
+
+#include "gimpcontainer.h"
+#include "gimpdata.h"
+#include "gimpdatafactory.h"
+#include "gimpcontext.h"
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
 

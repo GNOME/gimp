@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"

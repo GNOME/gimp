@@ -23,10 +23,10 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
-#include "gimpdnd.h"
 #include "gimpchannellistitem.h"
+#include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
 #include "gimplayerlistitem.h"
 #include "gimplistitem.h"

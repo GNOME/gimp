@@ -26,19 +26,20 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimplayer.h"
-#include "gimplayerlistview.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimplistitem.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gimpviewable.h"
+
+#include "gimpdnd.h"
+#include "gimplayerlistview.h"
 
 #include "tools/paint_options.h"
 

@@ -25,17 +25,17 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpcomponentlistitem.h"
+#include "gimpdnd.h"
+#include "gimpimagepreview.h"
+#include "gimppreview.h"
 
 #include "gdisplay.h"
 #include "gimpcontainer.h"
-#include "gimpdnd.h"
 #include "gimpimage.h"
 #include "gimpviewable.h"
-
-#include "gimpcomponentlistitem.h"
-#include "gimpimagepreview.h"
-#include "gimppreview.h"
 
 #include "libgimp/gimpintl.h"
 

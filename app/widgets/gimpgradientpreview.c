@@ -23,10 +23,11 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
+
+#include "gimpgradientpreview.h"
 
 #include "gimpgradient.h"
-#include "gimpgradientpreview.h"
 #include "temp_buf.h"
 
 

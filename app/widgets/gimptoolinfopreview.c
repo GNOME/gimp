@@ -23,11 +23,12 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "tools/gimptoolinfo.h"
 
 #include "gimptoolinfopreview.h"
+
 #include "temp_buf.h"
 
 

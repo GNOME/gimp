@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimpdockable.h"
 #include "gimpdockbook.h"

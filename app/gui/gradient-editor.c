@@ -65,8 +65,6 @@
 
 #include "apptypes.h"
 
-#include "widgets/gimpcontainerlistview.h"
-
 #include "color-notebook.h"
 #include "gradient-editor.h"
 

@@ -22,7 +22,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "widgets-types.h"
 
 #include "gimphistogramview.h"
 
