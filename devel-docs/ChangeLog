@@ -1,3 +1,8 @@
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpdrawabletransform.sgml: updated.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

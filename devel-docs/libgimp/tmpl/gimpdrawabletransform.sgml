@@ -45,7 +45,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_flip_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_flip_default ##### -->
 <para>
 
 </para>
@@ -82,7 +82,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_perspective_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_perspective_default ##### -->
 <para>
 
 </para>
@@ -133,7 +133,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_rotate_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_rotate_default ##### -->
 <para>
 
 </para>
@@ -166,7 +166,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_scale_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_scale_default ##### -->
 <para>
 
 </para>
@@ -197,7 +197,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_shear_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_shear_default ##### -->
 <para>
 
 </para>
@@ -231,7 +231,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_2d_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_2d_default ##### -->
 <para>
 
 </para>
@@ -272,7 +272,7 @@ gimpdrawabletransform
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_transform_matrix_defaults ##### -->
+<!-- ##### FUNCTION gimp_drawable_transform_matrix_default ##### -->
 <para>
 
 </para>
