@@ -87,6 +87,7 @@ static ProcRecord image_undo_disable_proc;
 static ProcRecord image_undo_freeze_proc;
 static ProcRecord image_undo_thaw_proc;
 static ProcRecord image_clean_all_proc;
+static ProcRecord image_is_dirty_proc;
 static ProcRecord image_floating_selection_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_thumbnail_proc;
@@ -153,6 +154,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_undo_freeze_proc);
   procedural_db_register (gimp, &image_undo_thaw_proc);
   procedural_db_register (gimp, &image_clean_all_proc);
+  procedural_db_register (gimp, &image_is_dirty_proc);
   procedural_db_register (gimp, &image_floating_selection_proc);
   procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
   procedural_db_register (gimp, &image_thumbnail_proc);
@@ -2406,6 +2408,64 @@ static ProcRecord image_clean_all_proc =
   0,
   NULL,
   { { image_clean_all_invoker } }
+};
+
+static Argument *
+image_is_dirty_invoker (Gimp     *gimp,
+                        Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gboolean dirty = FALSE;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    dirty = (gimage->dirty != 0);
+
+  return_args = procedural_db_return_args (&image_is_dirty_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = dirty;
+
+  return return_args;
+}
+
+static ProcArg image_is_dirty_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_is_dirty_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "dirty",
+    "True if the image has unsaved changed."
+  }
+};
+
+static ProcRecord image_is_dirty_proc =
+{
+  "gimp_image_is_dirty",
+  "Checks if the image has unsaved changes.",
+  "This procedure checks the specified image's dirty count to see if it needs to be saved.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_is_dirty_inargs,
+  1,
+  image_is_dirty_outargs,
+  { { image_is_dirty_invoker } }
 };
 
 static Argument *

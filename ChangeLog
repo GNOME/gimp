@@ -1,3 +1,12 @@
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: added new PDB function
+	gimp_image_is_dirty() on request of Wolfgang Hofer (#77508).
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpimage_pdb.h: regenerated.
+
 2002-12-12  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gimpressionist/color.c

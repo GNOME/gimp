@@ -1,3 +1,8 @@
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmp/gimpimage.sgml: updated for new PDB function.
+
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

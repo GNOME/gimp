@@ -1358,6 +1358,37 @@ gimp_image_clean_all (gint32 image_ID)
 }
 
 /**
+ * gimp_image_is_dirty:
+ * @image_ID: The image.
+ *
+ * Checks if the image has unsaved changes.
+ *
+ * This procedure checks the specified image's dirty count to see if it
+ * needs to be saved.
+ *
+ * Returns: True if the image has unsaved changed.
+ */
+gboolean
+gimp_image_is_dirty (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean dirty = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_image_is_dirty",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    dirty = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return dirty;
+}
+
+/**
  * gimp_image_floating_selection:
  * @image_ID: The image.
  *

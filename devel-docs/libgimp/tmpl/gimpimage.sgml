@@ -366,6 +366,15 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_is_dirty ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_floating_selection ##### -->
 <para>
 

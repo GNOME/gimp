@@ -1020,6 +1020,26 @@ HELP
     %invoke = ( code => 'gimp_image_clean_all (gimage);' );
 }
 
+sub image_is_dirty {
+    $blurb = 'Checks if the image has unsaved changes.';
+
+    $help = <<'HELP';
+This procedure checks the specified image's dirty count to see if it needs
+to be saved.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'dirty', type => 'boolean', init => 1,
+	  desc => 'True if the image has unsaved changed.' }
+    );
+
+    %invoke = ( code => 'dirty = (gimage->dirty != 0);' );
+}
+
 sub image_floating_selection {
     $blurb = 'Return the floating selection of the image.';
 
@@ -1580,7 +1600,7 @@ unshift @procs, qw(image_list image_new image_delete image_base_type
                    image_get_cmap image_set_cmap
                    image_undo_is_enabled image_undo_enable
 		   image_undo_disable image_undo_freeze image_undo_thaw
-		   image_clean_all image_floating_selection
+		   image_clean_all image_is_dirty image_floating_selection
 		   image_floating_sel_attached_to image_thumbnail
 		   image_set_tattoo_state image_get_tattoo_state
 		   image_duplicate);
