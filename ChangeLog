@@ -1,3 +1,13 @@
+Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@gimp.org>
+
+	* Added a check in some of the layer/channel preview code
+	to keep stuff from breaking when it got ) values for size
+
+	* Removed all the old stale *.[ch] files fom plug-ins/ dir
+
+	* Added a work around for the weirdness resulting from 
+	rezing the palette dialog
+
 Wed Nov 26 14:38:30 1997  Larry Ewing  <lewing@isc.tamu.edu>
 	
 	* Added a bounds check to undo_push_image* to fix drawing
