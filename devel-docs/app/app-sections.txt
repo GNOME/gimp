@@ -1583,6 +1583,18 @@ gimp_display_shell_drop_vectors
 </SECTION>
 
 <SECTION>
+<FILE>gimpdisplayshell-draw</FILE>
+<TITLE>GimpDisplayShell-draw</TITLE>
+gimp_display_shell_draw_guide
+gimp_display_shell_draw_guides
+gimp_display_shell_draw_grid
+gimp_display_shell_draw_vector
+gimp_display_shell_draw_vectors
+gimp_display_shell_draw_cursor
+gimp_display_shell_draw_area
+</SECTION>
+
+<SECTION>
 <FILE>gimpdisplayshell-filter-dialog</FILE>
 <TITLE>GimpDisplayShell-filter-dialog</TITLE>
 gimp_display_shell_filter_dialog_new
