@@ -1346,6 +1346,25 @@ crop_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
+  /*  tool toggle  */
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
+				 G_CALLBACK (gimp_radio_button_update),
+				 &options->type,
+                                 GINT_TO_POINTER (options->type),
+
+				 _("Crop"),
+                                 GINT_TO_POINTER (CROP_CROP),
+				 &options->type_w[0],
+
+				 _("Resize"),
+                                 GINT_TO_POINTER (RESIZE_CROP),
+				 &options->type_w[1],
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   /*  layer toggle  */
   options->layer_only_w =
     gtk_check_button_new_with_label(_("Current Layer only"));
@@ -1369,25 +1388,6 @@ crop_options_new (GimpToolInfo *tool_info)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
 				options->allow_enlarge_d);
   gtk_widget_show (options->allow_enlarge_w);
-
-  /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
-				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-				 _("Crop"),
-                                 GINT_TO_POINTER (CROP_CROP),
-				 &options->type_w[0],
-
-				 _("Resize"),
-                                 GINT_TO_POINTER (RESIZE_CROP),
-				 &options->type_w[1],
-
-				 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   return (GimpToolOptions *) options;
 }

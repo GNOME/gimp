@@ -1,3 +1,37 @@
+2002-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/tool-options-dialog.[ch]: made the tool options dialog
+	dockable. Create a fancy tab for it which looks like the old
+	dialog header.
+
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/toolbox.c: changed accordingly.
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimperasertool.c: moved the tool toggling widgets to
+	the top.
+
+	* app/tools/paint_options.c: show the paint mode menu for all
+	paint tools but set it insensitive where it makes no sense.
+	Reduces flickering and makes the tools' similarity more obvious.
+
+	* app/widgets/gimpdataeditor.c: fixed segfault in
+	gimp_data_editor_set_data() (data may be NULL), don't pass NULL to
+	gtk_entry_set_text(), make the name entry insensitive if data ==
+	NULL.
+
+	* app/widgets/gimpdialogfactory.c: fixed longstanding bug which
+	made newly created docks steal the first session entry with a NULL
+	widget instead of the first _dock_ session entry with a NULL
+	widget. Added even more debugging output. Cleanup.
+
+	* app/widgets/gimpdockbook.c: made the tab/menu widget code more
+	general to cover the tool options tab.
+
 2002-03-09  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.4 release.

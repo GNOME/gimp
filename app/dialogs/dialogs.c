@@ -39,7 +39,6 @@ GimpDialogFactory *global_dock_factory   = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   { "gimp:toolbox",                dialogs_toolbox_get,         32, TRUE,  TRUE,  TRUE,  TRUE  },
-  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:device-status-dialog",   dialogs_device_status_get,   32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:brush-select-dialog",    dialogs_brush_select_get,    32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
@@ -55,6 +54,9 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
+  { "gimp:tool-options",     dialogs_tool_options_get,        0, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp:error-console",    dialogs_error_console_get,       0, TRUE,  FALSE, FALSE, TRUE },
+
   { "gimp:image-list",       dialogs_image_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
   { "gimp:brush-list",       dialogs_brush_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
   { "gimp:pattern-list",     dialogs_pattern_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
@@ -81,9 +83,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
 
   { "gimp:brush-editor",     dialogs_brush_editor_get,        0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp:gradient-editor",  dialogs_gradient_editor_get,     0, TRUE,  FALSE, FALSE, TRUE },
-  { "gimp:palette-editor",   dialogs_palette_editor_get,      0, TRUE,  FALSE, FALSE, TRUE },
-
-  { "gimp:error-console",    dialogs_error_console_get,       0, TRUE,  FALSE, FALSE, TRUE }
+  { "gimp:palette-editor",   dialogs_palette_editor_get,      0, TRUE,  FALSE, FALSE, TRUE }
 };
 
 

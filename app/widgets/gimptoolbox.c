@@ -417,8 +417,9 @@ toolbox_tool_button_press (GtkWidget      *widget,
 {
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     {
-      gimp_dialog_factory_dialog_new (global_dialog_factory,
-				      "gimp:tool-options-dialog", -1);
+      gimp_dialog_factory_dialog_raise (global_dock_factory,
+                                        "gimp:tool-options",
+                                        -1);
     }
 
   return FALSE;

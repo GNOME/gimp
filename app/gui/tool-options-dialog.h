@@ -21,7 +21,6 @@
 
 
 GtkWidget * tool_options_dialog_create (Gimp *gimp);
-void        tool_options_dialog_free   (Gimp *gimp);
 
 
 #endif  /*  __TOOL_OPTIONS_DIALOG_H__  */

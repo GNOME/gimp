@@ -35,10 +35,7 @@
 #include "gimpdockbook.h"
 #include "gimpimagedock.h"
 #include "gimpitemfactory.h"
-
-/* EEK, see below  */
-#include "gimpcontainerview.h"
-#include "gimpcontainerview-utils.h"
+#include "gimppreview.h"
 
 
 #define TAB_WIDGET_SIZE     24
@@ -232,7 +229,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
 
-  if (GTK_IS_LABEL (tab_widget))
+  if (GTK_WIDGET_NO_WINDOW (tab_widget))
     {
       GtkWidget *event_box;
 
@@ -278,7 +275,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (GTK_IS_WIDGET (menu_widget));
 
-  if (! GTK_IS_LABEL (menu_widget))
+  if (GIMP_IS_PREVIEW (menu_widget))
     {
       GtkWidget *hbox;
       GtkWidget *label;
@@ -294,7 +291,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
       menu_widget = hbox;
     }
-  else
+  else if (GTK_IS_LABEL (menu_widget))
     {
       gtk_widget_destroy (menu_widget);
 

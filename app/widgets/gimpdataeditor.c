@@ -156,8 +156,6 @@ static void
 gimp_data_editor_real_set_data (GimpDataEditor *editor,
                                 GimpData       *data)
 {
-  const gchar *name = NULL;
-
   if (editor->data)
     {
       g_signal_handlers_disconnect_by_func (G_OBJECT (editor->data),
@@ -177,10 +175,16 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
                         G_CALLBACK (gimp_data_editor_data_name_changed),
                         editor);
 
-      name = gimp_object_get_name (GIMP_OBJECT (editor->data));
+      gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
+                          gimp_object_get_name (GIMP_OBJECT (editor->data)));
+      gtk_widget_set_sensitive (editor->name_entry, TRUE);
+    }
+  else
+    {
+      gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
+      gtk_widget_set_sensitive (editor->name_entry, FALSE);
     }
 
-  gtk_entry_set_text (GTK_ENTRY (editor->name_entry), name);
 }
 
 gboolean
@@ -211,8 +215,8 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
 {
   g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
   g_return_if_fail (! data || GIMP_IS_DATA (data));
-  g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (data),
-                                 editor->data_type));
+  g_return_if_fail (! data || g_type_is_a (G_TYPE_FROM_INSTANCE (data),
+                                           editor->data_type));
 
   if (editor->data != data)
     {

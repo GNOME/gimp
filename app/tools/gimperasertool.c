@@ -180,26 +180,28 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
-  /* the hard toggle */
-  options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (options->hard_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->hard);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
-				options->hard_d);
-  gtk_widget_show (options->hard_w);
-
   /* the anti_erase toggle */
   options->anti_erase_w =
     gtk_check_button_new_with_label (_("Anti Erase (<Ctrl>)"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
+				options->anti_erase_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->anti_erase_w);
+
   g_signal_connect (G_OBJECT (options->anti_erase_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->anti_erase);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
-				options->anti_erase_d);
-  gtk_widget_show (options->anti_erase_w);
+
+  /* the hard toggle */
+  options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
+				options->hard_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->hard_w);
+
+  g_signal_connect (G_OBJECT (options->hard_w), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->hard);
 
   return (GimpToolOptions *) options;
 }
@@ -213,8 +215,8 @@ gimp_eraser_tool_options_reset (GimpToolOptions *tool_options)
 
   paint_options_reset (tool_options);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
-				options->hard_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
+				options->hard_d);
 }

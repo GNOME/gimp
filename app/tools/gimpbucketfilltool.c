@@ -353,6 +353,29 @@ bucket_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
+  /*  fill type  */
+  frame = gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->fill_mode,
+                                 GINT_TO_POINTER (options->fill_mode),
+
+                                 _("FG Color Fill"),
+                                 GINT_TO_POINTER (FG_BUCKET_FILL),
+                                 &options->fill_mode_w[0],
+
+                                 _("BG Color Fill"),
+                                 GINT_TO_POINTER (BG_BUCKET_FILL),
+                                 &options->fill_mode_w[1],
+
+                                 _("Pattern Fill"),
+                                 GINT_TO_POINTER (PATTERN_BUCKET_FILL),
+                                 &options->fill_mode_w[2],
+
+                                 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   frame = gtk_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -410,29 +433,6 @@ bucket_options_new (GimpToolInfo *tool_info)
   g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->threshold);
-
-  /*  fill type  */
-  frame = gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->fill_mode,
-                                 GINT_TO_POINTER (options->fill_mode),
-
-                                 _("FG Color Fill"),
-                                 GINT_TO_POINTER (FG_BUCKET_FILL),
-                                 &options->fill_mode_w[0],
-
-                                 _("BG Color Fill"),
-                                 GINT_TO_POINTER (BG_BUCKET_FILL),
-                                 &options->fill_mode_w[1],
-
-                                 _("Pattern Fill"),
-                                 GINT_TO_POINTER (PATTERN_BUCKET_FILL),
-                                 &options->fill_mode_w[2],
-
-                                 NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
 
   bucket_options_reset ((GimpToolOptions *) options);
 
