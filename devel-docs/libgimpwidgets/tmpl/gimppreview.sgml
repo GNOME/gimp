@@ -20,39 +20,31 @@ GimpPreview
 </para>
 
 
-<!-- ##### SIGNAL GimpPreview::updated ##### -->
+<!-- ##### SIGNAL GimpPreview::invalidated ##### -->
 <para>
 
 </para>
 
 @gimppreview: the object which received the signal.
 
-<!-- ##### ARG GimpPreview:show-toggle-preview ##### -->
+<!-- ##### ARG GimpPreview:show-update-toggle ##### -->
 <para>
 
 </para>
 
-<!-- ##### ARG GimpPreview:update-preview ##### -->
+<!-- ##### ARG GimpPreview:update ##### -->
 <para>
 
 </para>
 
-<!-- ##### FUNCTION gimp_preview_get_width ##### -->
-<para>
-
-</para>
-
-@preview: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_preview_get_height ##### -->
+<!-- ##### FUNCTION gimp_preview_get_size ##### -->
 <para>
 
 </para>
 
 @preview: 
-@Returns: 
+@width: 
+@height: 
 
 
 <!-- ##### FUNCTION gimp_preview_get_position ##### -->
@@ -72,5 +64,13 @@ GimpPreview
 
 @preview: 
 @show_update: 
+
+
+<!-- ##### FUNCTION gimp_preview_invalidate ##### -->
+<para>
+
+</para>
+
+@preview: 
 
 

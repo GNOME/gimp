@@ -1,15 +1,20 @@
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.c: allow to pan the preview with all
+	mouse buttons. Set a cursor to indicate that panning is possible.
+
 2004-08-31  DindinX  <david@dindinx.org>
 
 	* libgimpwidgets/gimppreview.c
 	* libgimpwidgets/gimppreview.h: renamed the "updated" signal to
 	"invalidated" and the confusing "update" virtual function to "draw".
 
-	Renamed the property with saner names, too.
+	Gave the properties saner names, too.
 
 	Removed _get_width and _get_height functions in favor of a _get_size
-	on.
+	one.
 
-	Added a gimp_preview_invalidate function that emit the "invalidated"
+	Added gimp_preview_invalidate function that emits the "invalidated"
 	signal if needed.
 
 	* libgimp/gimpdrawablepreview.c

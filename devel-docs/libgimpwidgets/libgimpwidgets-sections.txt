@@ -797,10 +797,10 @@ GIMP_PREVIEW_AREA_GET_CLASS
 <FILE>gimppreview</FILE>
 <TITLE>GimpPreview</TITLE>
 GimpPreview
-gimp_preview_get_width
-gimp_preview_get_height
+gimp_preview_get_size
 gimp_preview_get_position
 gimp_preview_show_update_toggle
+gimp_preview_invalidate
 <SUBSECTION Standard>
 GimpPreviewClass
 GIMP_PREVIEW

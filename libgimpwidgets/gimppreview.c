@@ -46,22 +46,23 @@ enum
   PROP_SHOW_UPDATE_TOGGLE
 };
 
+
 static void     gimp_preview_class_init         (GimpPreviewClass *klass);
 static void     gimp_preview_init               (GimpPreview      *preview);
-static void     gimp_preview_get_property       (GObject         *object,
-                                                 guint            param_id,
-                                                 GValue          *value,
-                                                 GParamSpec      *pspec);
-static void     gimp_preview_set_property       (GObject         *object,
-                                                 guint            param_id,
-                                                 const GValue    *value,
-                                                 GParamSpec      *pspec);
+static void     gimp_preview_get_property       (GObject          *object,
+                                                 guint             param_id,
+                                                 GValue           *value,
+                                                 GParamSpec       *pspec);
+static void     gimp_preview_set_property       (GObject          *object,
+                                                 guint             param_id,
+                                                 const GValue     *value,
+                                                 GParamSpec       *pspec);
 
-static void     gimp_preview_emit_invalidated   (GimpPreview      *preview);
 static gboolean gimp_preview_button_release     (GtkWidget        *hs,
                                                  GdkEventButton   *ev,
                                                  GimpPreview      *preview);
 static void     gimp_preview_draw               (GimpPreview      *preview);
+static void     gimp_preview_area_realize       (GtkWidget        *widget);
 static void     gimp_preview_area_size_allocate (GimpPreview      *preview);
 static void     gimp_preview_h_scroll           (GtkAdjustment    *hadj,
                                                  GimpPreview      *preview);
@@ -123,8 +124,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  klass->draw = NULL;
-
   object_class->get_property = gimp_preview_get_property;
   object_class->set_property = gimp_preview_set_property;
 
@@ -144,6 +143,8 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+
+  klass->draw = NULL;
 }
 
 static void
@@ -163,7 +164,7 @@ gimp_preview_init (GimpPreview *preview)
 
   sel_width       = preview->xmax - preview->xmin;
   sel_height      = preview->ymax - preview->ymin;
-  preview->width  = MIN (sel_width, PREVIEW_SIZE);
+  preview->width  = MIN (sel_width,  PREVIEW_SIZE);
   preview->height = MIN (sel_height, PREVIEW_SIZE);
 
   gtk_table_resize (GTK_TABLE (preview), 3, 2);
@@ -226,7 +227,13 @@ gimp_preview_init (GimpPreview *preview)
                          GDK_BUTTON_MOTION_MASK);
 
   g_signal_connect (preview->area, "event",
-                    G_CALLBACK (gimp_preview_area_event), preview);
+                    G_CALLBACK (gimp_preview_area_event),
+                    preview);
+
+  g_signal_connect (preview->area, "realize",
+                    G_CALLBACK (gimp_preview_area_realize),
+                    NULL);
+
   g_signal_connect_swapped (preview->area, "size_allocate",
                             G_CALLBACK (gimp_preview_area_size_allocate),
                             preview);
@@ -321,19 +328,27 @@ gimp_preview_draw (GimpPreview *preview)
 }
 
 static void
+gimp_preview_area_realize (GtkWidget *widget)
+{
+  GdkDisplay *display = gtk_widget_get_display (widget);
+  GdkCursor  *cursor  = gdk_cursor_new_for_display (display, GDK_FLEUR);
+
+  gdk_window_set_cursor (widget->window, cursor);
+
+  gdk_cursor_unref (cursor);
+}
+
+static void
 gimp_preview_area_size_allocate (GimpPreview *preview)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
   gimp_preview_draw (preview);
   gimp_preview_invalidate (preview);
 }
 
 static void
-gimp_preview_h_scroll (GtkAdjustment *hadj, GimpPreview *preview)
+gimp_preview_h_scroll (GtkAdjustment *hadj,
+                       GimpPreview   *preview)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
   preview->xoff = hadj->value;
 
   if (!preview->in_drag)
@@ -341,10 +356,9 @@ gimp_preview_h_scroll (GtkAdjustment *hadj, GimpPreview *preview)
 }
 
 static void
-gimp_preview_v_scroll (GtkAdjustment *vadj, GimpPreview *preview)
+gimp_preview_v_scroll (GtkAdjustment *vadj,
+                       GimpPreview   *preview)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
   preview->yoff = vadj->value;
 
   if (!preview->in_drag)
@@ -356,32 +370,24 @@ gimp_preview_area_event (GtkWidget   *area,
                          GdkEvent    *event,
                          GimpPreview *preview)
 {
-  GdkEventButton *button_event;
-  gint            x, y;
-  gint            dx, dy;
-
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
-
-  button_event = (GdkEventButton *) event;
+  gint  x, y;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      if (button_event->button == 2)
-        {
-          gtk_widget_get_pointer (area, &x, &y);
+      gtk_widget_get_pointer (area, &x, &y);
 
-          preview->in_drag = TRUE;
-          preview->drag_x = x;
-          preview->drag_y = y;
-          preview->drag_xoff = preview->xoff;
-          preview->drag_yoff = preview->yoff;
-          gtk_grab_add (area);
-        }
+      preview->in_drag = TRUE;
+      preview->drag_x = x;
+      preview->drag_y = y;
+      preview->drag_xoff = preview->xoff;
+      preview->drag_yoff = preview->yoff;
+
+      gtk_grab_add (area);
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (preview->in_drag && button_event->button == 2)
+      if (preview->in_drag)
         {
           gtk_grab_remove (area);
           preview->in_drag = FALSE;
@@ -392,7 +398,9 @@ gimp_preview_area_event (GtkWidget   *area,
     case GDK_MOTION_NOTIFY:
       if (preview->in_drag)
         {
+          gint dx, dy;
           gint xoff, yoff;
+
           gtk_widget_get_pointer (area, &x, &y);
 
           dx = x - preview->drag_x;
@@ -419,8 +427,6 @@ static void
 gimp_preview_toggle_callback (GtkWidget   *toggle,
                               GimpPreview *preview)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
     {
       preview->update_preview = TRUE;
@@ -459,8 +465,8 @@ gimp_preview_get_size (GimpPreview *preview,
 /**
  * gimp_preview_get_posistion:
  * @preview: a #GimpPreview widget
- * @x:       return location for horizontal offset
- * @y:       return location for vertical offset
+ * @x:       return location for the horizontal offset
+ * @y:       return location for the vertical offset
  *
  * Since: GIMP 2.2
  **/
@@ -498,7 +504,7 @@ gimp_preview_show_update_toggle (GimpPreview *preview,
 
 /*
  * gimp_preview_invalidate:
- * @preview:     a #GimpPreview widget
+ * @preview: a #GimpPreview widget
  *
  * Since: GIMP 2.2
  **/
