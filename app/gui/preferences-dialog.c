@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <string.h>
 
 #include "appenv.h"
@@ -30,12 +32,12 @@
 #include "session.h"
 #include "tile_cache.h"
 
-#include "config.h"
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpfileselection.h"
 #include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimplimits.h"
+
 #include "libgimp/gimpintl.h"
 
 
@@ -56,7 +58,6 @@ static void file_prefs_preview_size_callback       (GtkWidget *, gpointer);
 static void file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
 static void file_prefs_mem_size_callback           (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
-static void file_prefs_int_adjustment_callback     (GtkAdjustment *, gpointer);
 static void file_prefs_string_callback             (GtkWidget *, gpointer);
 static void file_prefs_filename_callback           (GtkWidget *, gpointer);
 static void file_prefs_path_callback               (GtkWidget *, gpointer);
@@ -166,6 +167,7 @@ static GtkWidget *prefs_dlg = NULL;
    palette-path
    gradient-path
    nav-window-per-display
+   info_window_follows_mouse
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -328,19 +330,11 @@ file_prefs_check_settings (void)
 }
 
 static void
-file_prefs_restart_notification_close_callback (GtkWidget *widget,
-						gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_main_quit ();
-}
-
-static void
 file_prefs_restart_notification_save_callback (GtkWidget *widget,
 					       gpointer   data)
 {
   file_prefs_save_callback (widget, prefs_dlg);
-  file_prefs_restart_notification_close_callback (widget, data);
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 /* The user pressed OK and not Save, but has changed some settings that
@@ -360,10 +354,14 @@ file_prefs_restart_notification (void)
 			 
 			 _("Save"), file_prefs_restart_notification_save_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Close"), file_prefs_restart_notification_close_callback,
-			 NULL, NULL, NULL, FALSE, TRUE,
+			 _("Close"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 			 
 			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, FALSE, 4);
@@ -590,29 +588,29 @@ file_prefs_save_callback (GtkWidget *widget,
   if (edit_stingy_memory_use != stingy_memory_use)
     update = g_list_append (update, "stingy-memory-use");
   if (edit_install_cmap != old_install_cmap)
-      update = g_list_append (update, "install-colormap");
+    update = g_list_append (update, "install-colormap");
   if (edit_cycled_marching_ants != cycled_marching_ants)
-      update = g_list_append (update, "colormap-cycling");
+    update = g_list_append (update, "colormap-cycling");
   if (edit_last_opened_size != last_opened_size)
-      update = g_list_append (update, "last-opened-size");
+    update = g_list_append (update, "last-opened-size");
   if (file_prefs_strcmp (temp_path, edit_temp_path))
-      update = g_list_append (update, "temp-path");
+    update = g_list_append (update, "temp-path");
   if (file_prefs_strcmp (swap_path, edit_swap_path))
-      update = g_list_append (update, "swap-path");
+    update = g_list_append (update, "swap-path");
   if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
-      update = g_list_append (update, "plug-in-path");
+    update = g_list_append (update, "plug-in-path");
   if (file_prefs_strcmp (module_path, edit_module_path))
-      update = g_list_append (update, "module-path");
-   if (file_prefs_strcmp (brush_path, edit_brush_path))
-      update = g_list_append (update, "brush-path");
+    update = g_list_append (update, "module-path");
+  if (file_prefs_strcmp (brush_path, edit_brush_path))
+    update = g_list_append (update, "brush-path");
   if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
-      update = g_list_append (update, "brush-vbr-path");
+    update = g_list_append (update, "brush-vbr-path");
   if (file_prefs_strcmp (pattern_path, edit_pattern_path))
-       update = g_list_append (update, "pattern-path");
+    update = g_list_append (update, "pattern-path");
   if (file_prefs_strcmp (palette_path, edit_palette_path))
-      update = g_list_append (update, "palette-path");
+    update = g_list_append (update, "palette-path");
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
-      update = g_list_append (update, "gradient-path");
+    update = g_list_append (update, "gradient-path");
   if (using_xserver_resolution)
     {
       /* special value of 0 for either x or y res in the gimprc file
@@ -925,16 +923,6 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
 		       (gpointer) divided_mem_size);
   gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
 		       (gpointer) mem_size_unit);
-}
-
-static void
-file_prefs_int_adjustment_callback (GtkAdjustment *adj,
-				    gpointer       data)
-{
-  gint *val;
-
-  val = data;
-  *val = (int) adj->value;
 }
 
 static void
@@ -1716,7 +1704,7 @@ file_pref_cmd_callback (GtkWidget *widget,
     gimp_spin_button_new (&adjustment, edit_last_opened_size,
 			  0.0, 16.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_int_adjustment_callback),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &edit_last_opened_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 3,
 			     _("Recent Documents List Size:"), 1.0, 0.5,
@@ -1870,7 +1858,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  marching_speed, 50.0, 32000.0, 10.0, 100.0, 1.0,
 			  1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_int_adjustment_callback),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &marching_speed);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Marching Ants Speed:"), 1.0, 0.5,
@@ -2004,7 +1992,7 @@ file_pref_cmd_callback (GtkWidget *widget,
     gimp_spin_button_new (&adjustment,
 			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &levels_of_undo);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Levels of Undo:"), 1.0, 0.5, spinbutton, TRUE);
@@ -2057,7 +2045,7 @@ file_pref_cmd_callback (GtkWidget *widget,
     gimp_spin_button_new (&adjustment,
 			  num_processors, 1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_int_adjustment_callback),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
@@ -2402,5 +2390,3 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   gtk_widget_show (prefs_dlg);
 }
-
-
