@@ -1,3 +1,13 @@
+2004-08-28  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse2.c: More updates to accomodate
+	  the clobber registers. Additional progress against bug #147013.
+
+	* app/composite/gimp-composite-sse.h: Fixed a bug where the wrong
+	manifest constant definition caused sse2 instructions to never be
+	compiled.
+	
 2004-08-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/vpropagate.c (run): fixed confusion about which

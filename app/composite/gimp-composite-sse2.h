@@ -14,14 +14,14 @@ extern gboolean gimp_composite_sse2_install (void);
 #if defined(ARCH_X86)
 #if __GNUC__ >= 3
 #if defined(ARCH_X86_64) || !defined(PIC)
-#define COMPILE_SSE2_OKAY (1)
+#define COMPILE_SSE2_IS_OKAY (1)
 #endif		/* defined(ARCH_X86_64) || !defined(PIC) */
 #endif		/* __GNUC__ >= 3*/
 #endif		/* defined(ARCH_X86) */
 #endif		/* defined(USE_SSE) */
 #endif		/* !defined(__INTEL_COMPILER) */
 
-#ifdef COMPILE_SSE2_OKAY
+#ifdef COMPILE_SSE2_IS_OKAY
 extern void gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);
 extern void gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *ctx);

@@ -35,7 +35,7 @@
 #include "gimp-composite.h"
 #include "gimp-composite-sse2.h"
 
-#ifdef COMPILE_SSE2_OKAY
+#ifdef COMPILE_SSE2_IS_OKAY
 
 #include "gimp-composite-x86.h"
 
@@ -109,7 +109,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
            "\tpand    %%xmm0,%%xmm2\n"
            "\tpor     %%xmm2,%%xmm1\n"
            "\tmovdqu  %%xmm1,%0\n"
-           : "+m" (*op.D)
+           : "=m" (*op.D)
            : "m" (*op.A), "m" (*op.B)
            : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7");
       op.A += 16;
@@ -129,7 +129,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
            "\tpand    %%mm0,%%mm2\n"
            "\tpor     %%mm2,%%mm1\n"
            "\tmovq    %%mm1,%0\n"
-           : "+m" (*op.D)
+           : "=m" (*op.D)
            : "m" (*op.A), "m" (*op.B)
            : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
       op.A += 8;
@@ -149,7 +149,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
                     "\tmovd    %%mm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
       op.A += 4;
@@ -220,7 +220,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
   asm volatile ("  movq   %0,%%mm0\n"
                 "\tmovdqu %1,%%xmm0"
-                :
+                :               /*  */
                 : "m" (*rgba8_alpha_mask_64), "m" (*rgba8_alpha_mask_128)
                 : "%mm0", "%xmm0");
 
@@ -239,7 +239,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand      %%xmm0,%%xmm2\n"
                     "\tpor       %%xmm2,%%xmm1\n"
                     "\tmovdqu    %%xmm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5");
       op.A += 16;
@@ -262,7 +262,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
                     "\tmovq    %%mm1, %0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
       op.A += 8;
@@ -285,7 +285,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
                     "\tmovd    %%mm1, %0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
     }
@@ -438,7 +438,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   asm volatile ("  movq       %0,%%mm0\n"
                 "\tpxor    %%mm6,%%mm6\n"
                 "\tmovq       %1,%%mm7\n"
-																"\tmovdqu     %2,%%xmm0\n"
+								"\tmovdqu     %2,%%xmm0\n"
                 "\tpxor   %%xmm6,%%xmm6\n"
                 "\tmovdqu     %3,%%xmm7\n"
                 : /* empty */
@@ -472,7 +472,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
                     "\tpor       %%xmm2,%%xmm1\n"
                     "\tmovdqu    %%xmm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%xmm1", "%xmm2", "%xmm3", "%xmm4");
       op.A += 16;
@@ -507,7 +507,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
                     "\tpor       %%mm2,%%mm1\n"
                     "\tmovq      %%mm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
       op.A += 8;
@@ -532,7 +532,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand      %%mm0, %%mm2\n"
                     "\tpor       %%mm2, %%mm1\n"
                     "\tmovd      %%mm1, %0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
@@ -631,7 +631,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand     %%xmm0,%%xmm2\n"
                     "\tpor      %%xmm2,%%xmm1\n"
                     "\tmovdqu   %%xmm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%xmm1", "%xmm2", "%xmm3", "%xmm4");
       op.A += 16;
@@ -651,7 +651,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
                     "\tmovq    %%mm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
       op.A += 8;
@@ -671,7 +671,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tpand    %%mm0,%%mm2\n"
                     "\tpor     %%mm2,%%mm1\n"
                     "\tmovd    %%mm1,%0\n"
-                    : "+m" (*op.D)
+                    : "=m" (*op.D)
                     : "m" (*op.A), "m" (*op.B)
                     : "%mm1", "%mm2", "%mm3", "%mm4");
     }
@@ -801,12 +801,12 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   asm("emms");
 }
 
-#endif /* COMPILE_SSE2_OKAY */
+#endif /* COMPILE_SSE2_IS_OKAY */
 
 gboolean
 gimp_composite_sse2_init (void)
 {
-#ifdef COMPILE_SSE2_OKAY
+#ifdef COMPILE_SSE2_IS_OKAY
   guint32 cpu = cpu_accel ();
 
   if (cpu & CPU_ACCEL_X86_SSE2)
