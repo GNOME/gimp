@@ -5,6 +5,12 @@ Revision history for Gimp-Perl extension.
           systems with underpowered dynamic linkers).
         - gtk-1.0.x and gimp < 1.0.4 are no longer "officially" supported.
         - added COMPRESSION_*-constants for file_tiff.
+        - added examples/pixelmap, needs doc!
+        - probably fixed SIGPIPE problem in gimpdoc.
+        - fixed pager bug in gimpdoc.
+        - cleaned filehandle handling in Gimp/Net.pm.
+        - streamlined config code again.
+        - updated examples/parasite-editor.
 
 1.091 Sun May 23 13:21:34 CEST 1999
 	- include a fake typemap.pdl.
