@@ -1,3 +1,15 @@
+2000-12-17  Sven Neumann  <sven@gimp.org>
+
+	* app/curves.c: preview the curve settings in the image window when
+	initializing the tool. This way the new curves behaviour (init with
+	last settings) is visible.
+
+	* app/user_install.c: check that strings are non-NULL before passing
+	them to strcmp.
+
+	* libgimp/gimpfileselection: do not try to pass a NULL text to 
+	gtk_entry_set_text, use an empty string instead.
+
 2000-12-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gimppreviewcache.h

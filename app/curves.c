@@ -466,8 +466,8 @@ curves_initialize (GDisplay *gdisp)
         }
     }
 
-  curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  curves_dialog->color = drawable_color (curves_dialog->drawable);
+  curves_dialog->drawable  = gimage_active_drawable (gdisp->gimage);
+  curves_dialog->color     = drawable_color (curves_dialog->drawable);
   curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 
   /* check for alpha channel */
@@ -488,13 +488,18 @@ curves_initialize (GDisplay *gdisp)
   gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
 			       curves_dialog->channel);
 
-  gimp_lut_setup (curves_dialog->lut, (GimpLutFunc) curves_lut_func,
-                  (void *) curves_dialog, gimp_drawable_bytes (curves_dialog->drawable));
+  gimp_lut_setup (curves_dialog->lut, 
+		  (GimpLutFunc) curves_lut_func,
+                  (void *) curves_dialog, 
+		  gimp_drawable_bytes (curves_dialog->drawable));
 
   if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
     gtk_widget_show (curves_dialog->shell);
 
   curves_update (curves_dialog, GRAPH | DRAW);
+
+  if (curves_dialog->preview)
+    curves_preview (curves_dialog);
 }
 
 void

@@ -254,7 +254,7 @@ gimp_file_selection_set_filename (GimpFileSelection *gfs,
   g_return_if_fail (gfs != NULL);
   g_return_if_fail (GIMP_IS_FILE_SELECTION (gfs));
 
-  gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename);
+  gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename ? filename : "");
 
   /*  update everything
    */

@@ -1292,7 +1292,8 @@ user_install_resolution_done (void)
       tile_cache_size = new_tile_cache_size;
       update = g_list_append (update, "tile-cache-size");
     }
-  if (strcmp (swap_path, new_swap_path))
+  if (swap_path && new_swap_path && 
+      strcmp (swap_path, new_swap_path))
     {
       g_free (swap_path);      swap_path = new_swap_path;
       update = g_list_append (update, "swap-path");
