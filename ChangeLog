@@ -1,3 +1,9 @@
+2003-08-09  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/batch.c
+	* app/main.c: moved global variables out of main.c.
+
 2003-08-09  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/iwarp.c: Fixed bug #119440 with Raphael Quinet. 

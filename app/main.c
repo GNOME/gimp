@@ -64,26 +64,6 @@ static void   gimp_show_help         (const gchar *progname);
 static void   gimp_text_console_exit (gboolean     fail);
 
 
-/*  command line options  */
-gboolean             no_interface            = FALSE;
-gboolean             no_data                 = FALSE;
-gboolean             no_splash               = FALSE;
-gboolean             no_splash_image         = FALSE;
-gboolean             be_verbose              = FALSE;
-gboolean             use_shm                 = FALSE;
-gboolean             use_debug_handler       = FALSE;
-gboolean             console_messages        = FALSE;
-gboolean             restore_session         = FALSE;
-gboolean             use_mmx                 = TRUE;
-GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
-gchar               *alternate_gimprc        = NULL;
-gchar               *alternate_system_gimprc = NULL;
-gchar              **batch_cmds              = NULL;
-
-/*  other global variables  */
-gchar *prog_name = NULL;  /* our executable name */
-
-
 /*
  *  argv processing: 
  *      Arguments are either switches, their associated

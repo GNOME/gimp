@@ -77,6 +77,25 @@ static gboolean   app_exit_finish_callback (Gimp        *gimp,
 
 Gimp *the_gimp = NULL;
 
+/*  command-line options  */
+
+gboolean             no_interface            = FALSE;
+gboolean             no_data                 = FALSE;
+gboolean             no_splash               = FALSE;
+gboolean             no_splash_image         = FALSE;
+gboolean             be_verbose              = FALSE;
+gboolean             use_shm                 = FALSE;
+gboolean             use_debug_handler       = FALSE;
+gboolean             console_messages        = FALSE;
+gboolean             restore_session         = FALSE;
+gboolean             use_mmx                 = TRUE;
+GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
+gchar               *alternate_gimprc        = NULL;
+gchar               *alternate_system_gimprc = NULL;
+
+/*  other global variables  */
+gchar *prog_name = NULL;  /* our executable name */
+
 
 /*  public functions  */
 
