@@ -1,3 +1,15 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-save.c: enabled error checking for GimpParasite
+	saving and factored GimpParasiteList saving out to a new
+	function. Cleaned up the (still disabled) PROP_VECTORS saving
+	code and save the vector's parasites.
+
+	* app/xcf/xcf-load.c: changed PROP_VECTORS loading accordingly.
+
+	Note that the PROP_VECTORS changes are completely untested since
+	Simon can judge its correctness much better than myself.
+
 2003-09-10  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c: started to add framework for

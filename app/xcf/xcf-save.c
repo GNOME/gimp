@@ -64,52 +64,55 @@
 #undef NEW_SAVE_CODE
 
 
-static gboolean xcf_save_image_props   (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        GError     **error);
-static gboolean xcf_save_layer_props   (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        GimpLayer   *layer,
-                                        GError     **error);
-static gboolean xcf_save_channel_props (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        GimpChannel *channel,
-                                        GError     **error);
-static gboolean xcf_save_prop          (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        PropType     prop_type,
-                                        GError     **error,
+static gboolean xcf_save_image_props   (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GError           **error);
+static gboolean xcf_save_layer_props   (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GimpLayer         *layer,
+                                        GError           **error);
+static gboolean xcf_save_channel_props (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GimpChannel       *channel,
+                                        GError           **error);
+static gboolean xcf_save_prop          (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        PropType           prop_type,
+                                        GError           **error,
                                         ...);
-static gboolean xcf_save_layer         (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        GimpLayer   *layer,
-                                        GError     **error);
-static gboolean xcf_save_channel       (XcfInfo     *info,
-                                        GimpImage   *gimage,
-                                        GimpChannel *channel,
-                                        GError     **error);
-static gboolean xcf_save_hierarchy     (XcfInfo     *info,
-                                        TileManager *tiles,
-                                        GError     **error);
-static gboolean xcf_save_level         (XcfInfo     *info,
-                                        TileManager *tiles,
-                                        GError     **error);
-static gboolean xcf_save_tile          (XcfInfo     *info,
-                                        Tile        *tile,
-                                        GError     **error);
-static gboolean xcf_save_tile_rle      (XcfInfo     *info,
-                                        Tile        *tile,
-                                        guchar      *rlebuf,
-                                        GError     **error);
-static void     xcf_save_parasite      (gchar        *key,
-                                        GimpParasite *parasite,
-                                        XcfInfo      *info);
-static gboolean xcf_save_old_paths     (XcfInfo      *info,
-                                        GimpImage    *gimage,
-                                        GError      **error);
-static gboolean xcf_save_vectors       (XcfInfo      *info,
-                                        GimpImage    *gimage,
-                                        GError      **error);
+static gboolean xcf_save_layer         (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GimpLayer         *layer,
+                                        GError           **error);
+static gboolean xcf_save_channel       (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GimpChannel       *channel,
+                                        GError           **error);
+static gboolean xcf_save_hierarchy     (XcfInfo           *info,
+                                        TileManager       *tiles,
+                                        GError           **error);
+static gboolean xcf_save_level         (XcfInfo           *info,
+                                        TileManager       *tiles,
+                                        GError           **error);
+static gboolean xcf_save_tile          (XcfInfo           *info,
+                                        Tile              *tile,
+                                        GError           **error);
+static gboolean xcf_save_tile_rle      (XcfInfo           *info,
+                                        Tile              *tile,
+                                        guchar            *rlebuf,
+                                        GError           **error);
+static gboolean xcf_save_parasite      (XcfInfo           *info,
+                                        GimpParasite      *parasite,
+                                        GError           **error);
+static gboolean xcf_save_parasite_list (XcfInfo           *info,
+                                        GimpParasiteList  *parasite,
+                                        GError           **error);
+static gboolean xcf_save_old_paths     (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GError           **error);
+static gboolean xcf_save_vectors       (XcfInfo           *info,
+                                        GimpImage         *gimage,
+                                        GError           **error);
 
 
 /* private convieniece macros */
@@ -894,8 +897,9 @@ xcf_save_prop (XcfInfo   *info,
             pos = info->cp;
 	    xcf_write_int32_check_error (info->fp, &length, 1);
 	    base = info->cp;
-	    gimp_parasite_list_foreach (list,
-                                        (GHFunc) xcf_save_parasite, info);
+
+            xcf_check_error (xcf_save_parasite_list (info, list, error));
+
 	    length = info->cp - base;
 	    /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
@@ -1466,20 +1470,58 @@ xcf_save_tile_rle (XcfInfo  *info,
   return TRUE;
 }
 
-static void
-xcf_save_parasite (gchar        *key,
-                   GimpParasite *parasite,
-                   XcfInfo      *info)
+static gboolean
+xcf_save_parasite (XcfInfo       *info,
+                   GimpParasite  *parasite,
+                   GError       **error)
 {
-  /* can't fail fast because there is no way to exit g_slist_foreach */
+  if (gimp_parasite_is_persistent (parasite))
+    {
+      GError *tmp_error = NULL;
 
-  if (! gimp_parasite_is_persistent (parasite))
-    return;
+      xcf_write_string_check_error (info->fp, &parasite->name,  1);
+      xcf_write_int32_check_error  (info->fp, &parasite->flags, 1);
+      xcf_write_int32_check_error  (info->fp, &parasite->size,  1);
+      xcf_write_int8_check_error   (info->fp, parasite->data, parasite->size);
+    }
 
-  info->cp += xcf_write_string (info->fp, &parasite->name,  1, NULL);
-  info->cp += xcf_write_int32  (info->fp, &parasite->flags, 1, NULL);
-  info->cp += xcf_write_int32  (info->fp, &parasite->size,  1, NULL);
-  info->cp += xcf_write_int8   (info->fp, parasite->data, parasite->size, NULL);
+  return TRUE;
+}
+
+typedef struct
+{
+  XcfInfo *info;
+  GError  *error;
+} XcfParasiteData;
+
+static void
+xcf_save_parasite_func (gchar           *key,
+                        GimpParasite    *parasite,
+                        XcfParasiteData *data)
+{
+  if (! data->error)
+    xcf_save_parasite (data->info, parasite, &data->error);
+}
+
+static gboolean
+xcf_save_parasite_list (XcfInfo           *info,
+                        GimpParasiteList  *list,
+                        GError           **error)
+{
+  XcfParasiteData data;
+
+  data.info  = info;
+  data.error = NULL;
+
+  gimp_parasite_list_foreach (list, (GHFunc) xcf_save_parasite_func, &data);
+
+  if (data.error)
+    {
+      g_propagate_error (error, data.error);
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static gboolean
@@ -1594,22 +1636,21 @@ xcf_save_vectors (XcfInfo    *info,
                   GError    **error)
 {
   GimpVectors *active_vectors;
-  guint32      num_paths;
+  guint32      version      = 1;
   guint32      active_index = 0;
-  guint32      version = 1;
+  guint32      num_paths;
   GList       *list;
   GList       *stroke_list;
   GError      *tmp_error = NULL;
 
   /* Write out the following:-
    *
-   * last_selected_row (gint)
-   * number_of_paths (gint)
+   * version (gint)
+   * active_index (gint)
+   * num_paths (gint)
    *
    * then each path:-
    */
-
-  num_paths = gimp_container_num_children (gimage->vectors);
 
   active_vectors = gimp_image_get_active_vectors (gimage);
 
@@ -1617,54 +1658,71 @@ xcf_save_vectors (XcfInfo    *info,
     active_index = gimp_container_get_child_index (gimage->vectors,
                                                    GIMP_OBJECT (active_vectors));
 
+  num_paths = gimp_container_num_children (gimage->vectors);
+
   xcf_write_int32_check_error (info->fp, &version,      1);
   xcf_write_int32_check_error (info->fp, &active_index, 1);
   xcf_write_int32_check_error (info->fp, &num_paths,    1);
 
-  g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
+  g_printerr ("%d paths (active: %d, version: %d)\n",
+              num_paths, active_index, version);
 
   for (list = GIMP_LIST (gimage->vectors)->list;
        list;
        list = g_list_next (list))
     {
-      GimpVectors *vectors = list->data;
-      gchar       *name;
-      guint32      locked;
-      guint32      num_strokes;
-      guint32      tattoo;
+      GimpVectors      *vectors = list->data;
+      GimpParasiteList *parasites;
+      gchar            *name;
+      guint32           tattoo;
+      guint32           linked;
+      guint32           num_parasites;
+      guint32           num_strokes;
 
       /*
        * name (string)
-       * locked (gint)
        * tattoo (gint)
-       * number strokes (gint)
+       * linked (gint)
+       * num_parasites (gint)
+       * num_strokes (gint)
        *
-       * then each stroke.
+       * then each parasite
+       * then each stroke
        */
 
-      name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
-      locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
-      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
-      num_strokes = g_list_length (vectors->strokes);
+      parasites = GIMP_ITEM (vectors)->parasites;
 
-      xcf_write_string_check_error (info->fp, &name,        1);
-      xcf_write_int32_check_error  (info->fp, &locked,      1);
-      xcf_write_int32_check_error  (info->fp, &tattoo,      1);
-      xcf_write_int32_check_error  (info->fp, &num_strokes, 1);
+      name          = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
+      tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+      num_parasites = gimp_parasite_list_persistent_length (parasites);
+      num_strokes   = g_list_length (vectors->strokes);
 
-      g_printerr ("name: %s, version: %d, locked: %d, tattoo: %d, num_strokes %d\n", name, version, locked, tattoo, num_strokes);
+      xcf_write_string_check_error (info->fp, &name,          1);
+      xcf_write_int32_check_error  (info->fp, &tattoo,        1);
+      xcf_write_int32_check_error  (info->fp, &linked,        1);
+      xcf_write_int32_check_error  (info->fp, &num_parasites, 1);
+      xcf_write_int32_check_error  (info->fp, &num_strokes,   1);
+
+      g_printerr ("name: %s, tattoo: %d, linked: %d, num_parasites %d, "
+                  "num_strokes %d\n",
+                  name, tattoo, linked, num_parasites, num_strokes);
+
+      xcf_check_error (xcf_save_parasite_list (info, parasites, error));
 
       for (stroke_list = g_list_first (vectors->strokes);
            stroke_list;
            stroke_list = g_list_next (stroke_list))
         {
           GimpStroke *stroke;
-          gint stroke_type, closed, num_axes;
-          GArray *control_points;
-          gint i;
+          guint32     stroke_type;
+          guint32     closed;
+          guint32     num_axes;
+          GArray     *control_points;
+          gint        i;
 
-          gint   type;
-          gfloat coords[6];
+          guint32     type;
+          gfloat      coords[6];
 
           /*
            * stroke_type (gint)
@@ -1690,10 +1748,10 @@ xcf_save_vectors (XcfInfo    *info,
 
           control_points = gimp_stroke_control_points_get (stroke, &closed);
 
-          xcf_write_int32_check_error  (info->fp, &stroke_type,           1);
-          xcf_write_int32_check_error  (info->fp, &closed,                1);
-          xcf_write_int32_check_error  (info->fp, &num_axes,              1);
-          xcf_write_int32_check_error  (info->fp, &(control_points->len), 1);
+          xcf_write_int32_check_error (info->fp, &stroke_type,         1);
+          xcf_write_int32_check_error (info->fp, &closed,              1);
+          xcf_write_int32_check_error (info->fp, &num_axes,            1);
+          xcf_write_int32_check_error (info->fp, &control_points->len, 1);
 
           g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
                       stroke_type, closed, num_axes, control_points->len);
@@ -1704,7 +1762,7 @@ xcf_save_vectors (XcfInfo    *info,
 
               anchor = & (g_array_index (control_points, GimpAnchor, i));
 
-              type = anchor->type;
+              type      = anchor->type;
               coords[0] = anchor->position.x;
               coords[1] = anchor->position.y;
               coords[2] = anchor->position.pressure;
@@ -1714,11 +1772,14 @@ xcf_save_vectors (XcfInfo    *info,
 
               /*
                * type (gint)
-               * x (gfloat)
-               * y (gfloat)
-               * ....
-               * wheel (gfloat)
-               * (but only the first num_axis elements)
+               *
+               * the first num_axis elements of:
+               * [0] x (gfloat)
+               * [1] y (gfloat)
+               * [2] pressure (gfloat)
+               * [3] xtilt (gfloat)
+               * [4] ytilt (gfloat)
+               * [5] wheel (gfloat)
                */
 
               xcf_write_int32_check_error (info->fp, &type, 1);
@@ -1735,4 +1796,3 @@ xcf_save_vectors (XcfInfo    *info,
 
   return TRUE;
 }
-

@@ -497,9 +497,12 @@ xcf_load_image_props (XcfInfo   *info,
                                base + prop_size - info->cp);
                     xcf_seek_pos (info, base + prop_size, NULL);
                   }
-              } else {
+              }
+            else
+              {
                 /* skip silently since we don't understand the format and
-                 * xcf_load_vectors already explained what was wrong */
+                 * xcf_load_vectors already explained what was wrong
+                 */
                 xcf_seek_pos (info, base + prop_size, NULL);
               }
           }
@@ -629,12 +632,12 @@ xcf_load_layer_props (XcfInfo   *info,
            }
 	 break;
 	default:
-	  g_message ("unexpected/unknown layer property: %d (skipping)",
-                     prop_type);
-
 	  {
 	    guint8 buf[16];
 	    guint  amount;
+
+            g_message ("unexpected/unknown layer property: %d (skipping)",
+                       prop_type);
 
 	    while (prop_size > 0)
 	      {
@@ -1506,9 +1509,9 @@ static gboolean
 xcf_load_vectors (XcfInfo   *info,
                   GimpImage *gimage)
 {
-  guint32      num_paths;
-  guint32      last_selected_row;
   guint32      version;
+  guint32      active_index;
+  guint32      num_paths;
   GimpVectors *active_vectors;
   guint32      base;
 
@@ -1520,21 +1523,21 @@ xcf_load_vectors (XcfInfo   *info,
 
   if (version != 1)
     {
-      g_warning ("Unknown vectors type %d. Possibly corrupt XCF file", version);
-
+      g_message ("Unknown vectors version: %d (skipping)", version);
       return FALSE;
     }
 
-  info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
+  info->cp += xcf_read_int32 (info->fp, &active_index, 1);
+  info->cp += xcf_read_int32 (info->fp, &num_paths,    1);
 
-  g_printerr ("%d paths (active: %d)\n", num_paths, last_selected_row);
+  g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
 
   while (num_paths-- > 0)
-    xcf_load_vector (info, gimage);
+    if (! xcf_load_vector (info, gimage))
+      return FALSE;
 
   active_vectors = (GimpVectors *)
-    gimp_container_get_child_by_index (gimage->vectors, last_selected_row);
+    gimp_container_get_child_by_index (gimage->vectors, active_index);
 
   if (active_vectors)
     gimp_image_set_active_vectors (gimage, active_vectors);
@@ -1547,44 +1550,68 @@ static gboolean
 xcf_load_vector (XcfInfo   *info,
                  GimpImage *gimage)
 {
-  gchar                  *name;
-  guint32                 locked;
-  guint32                 num_strokes;
-  GimpTattoo              tattoo = 0;
-  GimpVectors            *vectors;
-  gint                    i, j;
+  gchar       *name;
+  GimpTattoo   tattoo = 0;
+  guint32      linked;
+  guint32      num_parasites;
+  guint32      num_strokes;
+  GimpVectors *vectors;
+  gint         i;
 
   g_printerr ("xcf_load_vector\n");
-  info->cp += xcf_read_string (info->fp, &name, 1);
-  info->cp += xcf_read_int32 (info->fp, &locked, 1);
-  info->cp += xcf_read_int32 (info->fp, &tattoo, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_strokes, 1);
 
-  g_printerr ("name: %s, locked: %d, tattoo: %d, num_strokes %d\n", name, locked, tattoo, num_strokes);
+  info->cp += xcf_read_string (info->fp, &name,          1);
+  info->cp += xcf_read_int32  (info->fp, &tattoo,        1);
+  info->cp += xcf_read_int32  (info->fp, &linked,        1);
+  info->cp += xcf_read_int32  (info->fp, &num_parasites, 1);
+  info->cp += xcf_read_int32  (info->fp, &num_strokes,   1);
+
+  g_printerr ("name: %s, tattoo: %d, linked: %d, num_parasites %d, "
+              "num_strokes %d\n",
+              name, tattoo, linked, num_parasites, num_strokes);
 
   vectors = gimp_vectors_new (gimage, name);
 
+  GIMP_ITEM (vectors)->linked = linked;
+
+  if (tattoo)
+    GIMP_ITEM (vectors)->tattoo = tattoo;
+
+  for (i = 0; i < num_parasites; i++)
+    {
+      GimpParasite *parasite;
+
+      parasite = xcf_load_parasite (info);
+
+      if (! parasite)
+        return FALSE;
+
+      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+      gimp_parasite_free (parasite);
+    }
+
   for (i = 0; i < num_strokes; i++)
     {
-      gint stroke_type_id;
-      gint closed;
-      gint num_axes;
-      gint num_control_points;
-      gint type;
-      gfloat coords[6] = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
-      GimpStroke *stroke;
+      gint         stroke_type_id;
+      gint         closed;
+      gint         num_axes;
+      gint         num_control_points;
+      gint         type;
+      gfloat       coords[6] = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+      GimpStroke  *stroke;
+      gint         j;
 
       GValueArray *control_points;
-      GValue value = { 0, };
-      GimpAnchor anchor;
-      GType stroke_type;
+      GValue       value = { 0, };
+      GimpAnchor   anchor;
+      GType        stroke_type;
 
-      g_value_init (&value, gimp_anchor_get_type ());
+      g_value_init (&value, GIMP_TYPE_ANCHOR);
 
-      info->cp += xcf_read_int32 (info->fp, &stroke_type_id, 1);
-      info->cp += xcf_read_int32 (info->fp, &closed,  1);
-      info->cp += xcf_read_int32 (info->fp, &num_axes,  1);
-      info->cp += xcf_read_int32 (info->fp, &num_control_points,  1);
+      info->cp += xcf_read_int32 (info->fp, &stroke_type_id,     1);
+      info->cp += xcf_read_int32 (info->fp, &closed,             1);
+      info->cp += xcf_read_int32 (info->fp, &num_axes,           1);
+      info->cp += xcf_read_int32 (info->fp, &num_control_points, 1);
 
       g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
                   stroke_type_id, closed, num_axes, num_control_points);
@@ -1594,6 +1621,7 @@ xcf_load_vector (XcfInfo   *info,
         case XCF_STROKETYPE_BEZIER_STROKE:
           stroke_type = gimp_bezier_stroke_get_type ();
           break;
+
         default:
           g_printerr ("skipping unknown stroke type\n");
           xcf_seek_pos (info,
@@ -1604,9 +1632,9 @@ xcf_load_vector (XcfInfo   *info,
 
       control_points = g_value_array_new (num_control_points);
 
-      anchor.selected          = FALSE;
+      anchor.selected = FALSE;
 
-      for (j=0; j < num_control_points; j++)
+      for (j = 0; j < num_control_points; j++)
         {
           info->cp += xcf_read_int32 (info->fp, &type, 1);
           info->cp += xcf_read_float (info->fp, coords, num_axes);
@@ -1625,24 +1653,17 @@ xcf_load_vector (XcfInfo   *info,
           g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
                       coords[0], coords[1], coords[2], coords[3],
                       coords[4], coords[5]);
-
         }
 
       g_value_unset (&value);
 
-      /* here the stroke has to be created */
-      stroke = GIMP_STROKE (g_object_new (stroke_type,
-                                          "closed", closed,
-                                          "control-points", control_points,
-                                          NULL));
+      stroke = g_object_new (stroke_type,
+                             "closed",         closed,
+                             "control-points", control_points,
+                             NULL);
 
       gimp_vectors_stroke_add (vectors, stroke);
     }
-
-  GIMP_ITEM (vectors)->linked = locked;
-
-  if (tattoo)
-    GIMP_ITEM (vectors)->tattoo = tattoo;
 
   gimp_image_add_vectors (gimage, vectors,
                           gimp_container_num_children (gimage->vectors));
