@@ -1,0 +1,39 @@
+# style <name> [= <name>]
+# {
+#   <option>
+# }
+#
+# widget <widget_set> style <style_name>
+# widget_class <widget_class_set> style <style_name>
+
+pixmap_path "/home/tigert/.gnome/textures"
+
+style "default"
+{
+#  font = "-schumacher-clean-medium-r-normal--8-80-75-75-c-50-iso8859-1"
+  font = "-*-lucida-medium-r-normal-*-10-*-*-*-*-*-iso8859-1"
+
+# base, text, bg, fg are possible
+bg[NORMAL] = { 0.70, 0.75, 0.67 }
+bg[SELECTED] = { 0.31, 0.35, 0.35 }
+bg[INSENSITIVE] = { 0.70, 0.75, 0.67 }
+bg[ACTIVE] = { 0.61, 0.65, 0.58 }
+bg[PRELIGHT] = { 0.84, 0.89, 0.81 }
+
+fg[NORMAL] = { 0.0, 0.0, 0.0 }
+fg[SELECTED] = { 0.9, 0.9, 0.9 }
+fg[ACTIVE] = { 0.33, 0.2, 0.0 }
+fg[PRELIGHT] = { 0.5, 0.1, 0.0 }
+
+text[INSENSITIVE] = { 0.60, 0.65, 0.57 }
+
+}
+
+style "ruler" = "default"
+{
+  font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
+}
+
+
+widget_class "*Ruler*" style "ruler"
+widget_class "*" style "default"
