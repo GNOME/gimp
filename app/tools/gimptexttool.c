@@ -24,19 +24,15 @@
 #include <errno.h>
 
 #include <gtk/gtk.h>
-#include <pango/pangoft2.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
@@ -392,13 +388,11 @@ text_tool_render (GimpTextTool *text_tool)
 static GimpToolOptions *
 text_tool_options_new (GimpToolInfo *tool_info)
 {
-  GimpDisplayConfig *config;
-  TextOptions       *options;
-  PangoContext      *pango_context;
-  GtkWidget         *vbox;
-  GtkWidget         *table;
-  GtkWidget         *size_spinbutton;
-  GtkWidget         *spin_button;
+  TextOptions *options;
+  GtkWidget   *vbox;
+  GtkWidget   *table;
+  GtkWidget   *size_spinbutton;
+  GtkWidget   *spin_button;
 
   options = g_new0 (TextOptions, 1);
 
@@ -422,14 +416,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  config = GIMP_DISPLAY_CONFIG (tool_info->gimp->config);
-
-  pango_context = pango_ft2_get_context (config->monitor_xres,
-                                         config->monitor_yres);
-
-  options->font_selection = gimp_font_selection_new (pango_context);
-
-  g_object_unref (pango_context);
+  options->font_selection = gimp_font_selection_new (NULL);
 
   gimp_font_selection_set_fontname 
     (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);

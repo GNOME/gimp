@@ -1,5 +1,18 @@
 2003-01-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfontselection.c: allow NULL as context parameter
+	in gimp_font_selection_new(). The widget then uses a default
+	PangoFT2Context.
+
+	* app/tools/gimptexttool.c (text_tool_options_new): call
+	gimp_font_selection_new() with a NULL context. The text tool now
+	doesn't know about Pango any longer.
+
+	* app/paint/Makefile.am
+	* app/tools/Makefile.am (INCLUDES): removed PANGOFT2_CFLAGS.
+
+2003-01-31  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-enums.[ch]: added new enum GimpGravityType.
 
 	* app/text/gimptext.[ch]

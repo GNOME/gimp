@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <pango/pangoft2.h>
 
 #include "widgets-types.h"
 
@@ -57,6 +58,9 @@ static gboolean gimp_font_selection_entry_focus_out   (GtkWidget *widget,
                                                        GdkEvent  *event,
                                                        gpointer   data);
 
+static PangoContext * gimp_font_selection_get_default_context (void);
+
+
 enum
 {
   FONT_CHANGED,
@@ -66,7 +70,8 @@ enum
 
 static guint gimp_font_selection_signals[LAST_SIGNAL] = { 0 };
 
-static GtkHBoxClass   *parent_class = NULL;
+static GtkHBoxClass  *parent_class    = NULL;
+static PangoContext  *default_context = NULL; 
 
 
 GType
@@ -188,7 +193,8 @@ gimp_font_selection_finalize (GObject *object)
 
 /**
  * gimp_font_selection_new:
- * @context: the #PangoContext to select a font from.
+ * @context: the #PangoContext to select a font from or %NULL to use a
+ * default context.
  *
  * Creates a new #GimpFontSelection widget.
  *
@@ -199,9 +205,12 @@ gimp_font_selection_new (PangoContext *context)
 {
   GimpFontSelection *fontsel;
 
-  g_return_val_if_fail (PANGO_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (context == NULL || PANGO_IS_CONTEXT (context), NULL);
 
   fontsel = g_object_new (GIMP_TYPE_FONT_SELECTION, NULL);
+
+  if (!context)
+    context = gimp_font_selection_get_default_context ();
 
   fontsel->context = context;
   g_object_ref (fontsel->context);
@@ -381,4 +390,18 @@ gimp_font_selection_entry_focus_out (GtkWidget *widget,
   gimp_font_selection_entry_callback (widget, data);
 
   return FALSE;
+}
+
+static PangoContext *
+gimp_font_selection_get_default_context (void)
+{
+  if (default_context)
+    return default_context;
+
+  default_context = pango_ft2_get_context (72.0, 72.0);
+
+  g_object_add_weak_pointer (G_OBJECT (default_context),
+                             (gpointer *) &default_context);
+
+  return default_context;
 }

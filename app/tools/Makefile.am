@@ -128,5 +128,4 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
-	$(PANGOFT2_CFLAGS)	\
 	-I$(includedir)
