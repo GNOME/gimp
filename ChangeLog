@@ -1,3 +1,16 @@
+2000-06-08  Sven Neumann  <sven@gimp.org>
+
+	* app/qmask.c: call undo_push_qmask() before removing the
+	channel since the callback will set the qmask_state 
+	incorrectly otherwise. Fixes bug #13472.
+	
+	* app/undo.[ch]: code cleanup
+
+	* plug-ins/common/gif.c: put save_comment into the values
+	that are stored between calls to the GIF plug-in, so it 
+	remembers if the user wants to save the comment. Fixes
+	bug #12755.
+	
 Wed Jun  7 12:00:39 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	[patches from Daniel Egger]

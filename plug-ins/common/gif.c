@@ -297,6 +297,7 @@ enum
 typedef struct
 {
   gint interlace;
+  gint save_comment;
   gint loop;
   gint default_delay;
   gint default_dispose;
@@ -355,10 +356,11 @@ GPlugInInfo PLUG_IN_INFO =
 
 static GIFSaveVals gsvals =
 {
-  FALSE,   /* interlace */
-  TRUE,    /* loop infinitely */
+  FALSE,   /* interlace                            */
+  TRUE,    /* save comment                         */
+  TRUE,    /* loop infinitely                      */
   100,     /* default_delay between frames (100ms) */
-  0        /* default_dispose = "don't care" */
+  0        /* default_dispose = "don't care"       */
 };
 
 static GIFSaveInterface gsint =
@@ -475,8 +477,9 @@ run (gchar   *name,
 		}
 	      else
 		{
-		  gsvals.interlace = (param[5].data.d_int32) ? TRUE : FALSE;
-		  gsvals.loop      = (param[6].data.d_int32) ? TRUE : FALSE;
+		  gsvals.interlace       = (param[5].data.d_int32) ? TRUE : FALSE;
+		  gsvals.save_comment    = TRUE;  /*  no way to to specify that through the PDB  */
+		  gsvals.loop            = (param[6].data.d_int32) ? TRUE : FALSE;
 		  gsvals.default_delay   = param[7].data.d_int32;
 		  gsvals.default_dispose = param[8].data.d_int32;
 		}
@@ -533,7 +536,6 @@ typedef guchar CMap[3][MAXCOLORMAPSIZE];
 
 gint   verbose = FALSE;
 gchar *globalcomment = NULL;
-gint   globalusecomment = TRUE;
 
 
 
@@ -890,7 +892,8 @@ save_image (gchar  *filename,
      GIF87a. */
   if (nlayers > 1)
     is_gif89 = TRUE;
-  if (globalusecomment)
+
+  if (gsvals.save_comment)
     is_gif89 = TRUE;
 
   switch (drawable_type)
@@ -983,7 +986,7 @@ save_image (gchar  *filename,
     GIFEncodeLoopExt (outfile, 0);
 
   /* Write comment extension - mustn't be written before the looping ext. */
-  if (globalusecomment)
+  if (gsvals.save_comment)
     {
       GIFEncodeCommentExt (outfile, globalcomment);
     }
@@ -1249,8 +1252,8 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &globalusecomment);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+		      &gsvals.save_comment);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
   gtk_widget_show (toggle);
 
   com_table = gtk_table_new (1, 1, FALSE);
