@@ -1,5 +1,11 @@
 2004-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/xcf/xcf-load.c (xcf_load_layer): no need to set the layer
+	mask's offsets, gimp_layer_add_mask() does this for us. Simplified
+	mask property assignments.
+
+2004-02-01  Michael Natterer  <mitch@gimp.org>
+
 	Reworked random seed handling once more:
 
 	* libgimpwidgets/gimpwidgets.c (gimp_random_seed_new): make sure

@@ -867,15 +867,11 @@ xcf_load_layer (XcfInfo   *info,
       if (! layer_mask)
 	goto error;
 
-      /* set the offsets of the layer_mask */
-      GIMP_ITEM (layer_mask)->offset_x = GIMP_ITEM (layer)->offset_x;
-      GIMP_ITEM (layer_mask)->offset_y = GIMP_ITEM (layer)->offset_y;
+      layer_mask->apply_mask = apply_mask;
+      layer_mask->edit_mask  = edit_mask;
+      layer_mask->show_mask  = show_mask;
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
-
-      layer->mask->apply_mask = apply_mask;
-      layer->mask->edit_mask  = edit_mask;
-      layer->mask->show_mask  = show_mask;
     }
 
   /* attach the floating selection... */
