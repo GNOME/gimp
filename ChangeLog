@@ -1,3 +1,9 @@
+2002-12-17  Nathan Summers  <rock@gimp.org>
+
+        * libgimp/gimp.[ch]
+        * libgimp/gimpdrawable.c
+        * libgimp/gimpimage.c: added some documentation
+
 2002-12-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/perl/Gimp.pm: merged fix for #84884 from stable branch.
