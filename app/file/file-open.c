@@ -139,7 +139,14 @@ file_open_image (Gimp               *gimp,
     {
       if (gimage_id != -1)
         {
-          return gimp_image_get_by_ID (gimp, gimage_id);
+          GimpImage *gimage;
+
+          gimage = gimp_image_get_by_ID (gimp, gimage_id);
+
+          gimp_image_invalidate_layer_previews (gimage);
+          gimp_image_invalidate_channel_previews (gimage);
+
+          return gimage;
         }
       else
         {
