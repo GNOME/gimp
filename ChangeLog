@@ -1,5 +1,13 @@
 2003-10-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/main.c (main): call g_set_prgname() in the --no-interface
+	case (GDK is doing this for us otherwise).
+
+	Always set a human readable localized application name using
+	g_set_application_name().
+
+2003-10-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox-color-area.[ch]: cleanup & cruft removal.
 
 2003-10-13  Michael Natterer  <mitch@gimp.org>

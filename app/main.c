@@ -157,21 +157,26 @@ main (int    argc,
 
   if (no_interface)
     {
+      gchar *basename;
+
+      basename = g_path_get_basename (argv[0]);
+      g_set_prgname (basename);
+      g_free (basename);
+
       g_type_init ();
     }
-  else
+  else if (! app_gui_libs_init (&argc, &argv))
     {
-      if (! app_gui_libs_init (&argc, &argv))
-	{
-          const gchar *msg;
+      const gchar *msg;
 
-          msg = _("GIMP could not initialize the graphical user interface.\n"
-                  "Make sure a proper setup for your display environment exists.");
-          g_print ("%s\n\n", msg);
+      msg = _("GIMP could not initialize the graphical user interface.\n"
+              "Make sure a proper setup for your display environment exists.");
+      g_print ("%s\n\n", msg);
 
-	  gimp_text_console_exit (TRUE);
-	}
+      gimp_text_console_exit (TRUE);
     }
+
+  g_set_application_name (_("The GIMP"));
 
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
