@@ -19,8 +19,8 @@ libapptools_la_SOURCES = \
 ##	gimpconvolvetool.h	\
 	gimpcroptool.c		\
 	gimpcroptool.h		\
-##	gimpdodgeburntool.c	\
-##	gimpdodgeburntool.h	\
+	gimpdodgeburntool.c	\
+	gimpdodgeburntool.h	\
 	gimpdrawtool.c		\
 	gimpdrawtool.h		\
 	gimpeditselectiontool.c	\

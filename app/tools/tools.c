@@ -63,7 +63,7 @@ register_tools (void)
   /*  paint tools  */
 
   /* gimp_smudge_tool_register (); */
-  /* gimp_dodgeburn_tool_register (); */
+  gimp_dodgeburn_tool_register (); 
   gimp_ink_tool_register ();
   /* gimp_convolve_tool_register (): */
   /* gimp_clone_tool_register (); */

@@ -35,6 +35,7 @@
 
 #include "gimpblendtool.h"
 #include "gimpbucketfilltool.h"
+#include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimpinktool.h"
 #include "gimppaintbrushtool.h"
