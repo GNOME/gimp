@@ -860,7 +860,7 @@ plug_in_open (PlugIn *plug_in)
 #else
       sprintf (plug_in->args[2], "%d",
 	       g_io_channel_win32_get_fd (plug_in->his_read));
-      sprintf (plug_in->args[3], "%d:%ud:%d",
+      sprintf (plug_in->args[3], "%d:%u:%d",
 	       g_io_channel_win32_get_fd (plug_in->his_write),
 	       GetCurrentThreadId (),
 	       g_io_channel_win32_get_fd (plug_in->my_read));

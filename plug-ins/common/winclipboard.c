@@ -120,12 +120,12 @@ query ()
                           copy_args, NULL);
 
   gimp_install_procedure ("extension_clipboard_paste",
-                          "paste image from clipboard",
-                          "Paste image from clipboard, creates a new image.",
+                          "Get image from clipboard",
+                          "Get an image from the Windows clipboard, creating a new image",
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          "<Toolbox>/Xtns/Paste from Clipboard",
+                          "<Toolbox>/File/Acquire/From Clipboard",
                           "",
                           PROC_EXTENSION,
                           ncopy_args, 0,

@@ -136,6 +136,41 @@ gimp_main (int   argc,
 #ifdef NATIVE_WIN32
   char *peer, *peer_fd;
   guint32 thread;
+  int i, j, k;
+#endif
+
+#ifdef NATIVE_WIN32
+  /* Check for exe file name with spaces in the path having been split up
+   * by buggy NT C runtime, or something. I don't know why this happens
+   * on NT (including w2k), but not on w95/98.
+   */
+
+  for (i = 1; i < argc; i++)
+    {
+      k = strlen (argv[i]);
+      if (k > 10)
+	if (g_strcasecmp (argv[i] + k - 4, ".exe") == 0)
+	  {
+	    /* Found the end of the executable name, most probably.
+	     * Splice the parts of the name back together.
+	     */
+	    GString *s;
+
+	    s = g_string_new (argv[0]);
+	    for (j = 1; j <= i; j++)
+	      {
+		s = g_string_append_c (s, ' ');
+		s = g_string_append (s, argv[j]);
+	      }
+	    argv[0] = s->str;
+	    /* Move rest of argv down */
+	    for (j = 1; j < argc - i; j++)
+	      argv[j] = argv[j + i];
+	    argv[argc - i] = NULL;
+	    argc -= i;
+	    break;
+	  }
+    }    
 #endif
 
   if ((argc < 4) || (strcmp (argv[1], "-gimp") != 0))

@@ -1,5 +1,17 @@
 1999-08-28  Tor Lillqvist  <tml@iki.fi>
 
+	* libgimp/gimp.c (gimp_main): Put in a workaround for the problem
+	with plug-ins on NT and W2K, where installing the GIMP under a
+	directory path with spaces (\Program Files\GIMP) would cause the
+	plug-ins to malfunction. Turns out the argv gets set up by the C
+	runtime incorrectly in such a case, the path name of the
+	executable is split at the spaces. The workaround is to splice
+	argv[0] together from the pieces again, shifting the rest of argv
+	down.
+
+	* app/plug_in.c (plug_in_open): Correct (harmless) typo in the
+	Win32 code.
+
 	* app/gimpbrushpipe.c (gimp_brush_pixmap_select_brush): In the
 	case of angular selection, offset angle with G_PI/2 to be
 	compatible with PSP tubes. Restrict the index of each dimension
@@ -7,6 +19,9 @@
 
 	* plug-ins/common/gpb.c (gih_save_dialog): Must not free the combo
 	box string list, the strings are not strdup'ed by the combo box.
+
+	* plug-ins/common/winclipboard.c: Put the pasting of a new image
+	under File/Acquire.
 
 Fri Aug 27 18:15:33 PDT 1999 Manish Singh <yosh@gimp.org>
 
