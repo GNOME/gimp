@@ -1,4 +1,4 @@
-Sun Aug 15 17:59:20 MEST 1999  Sven Neumann <sven@gimp.org>
+Sun Aug 15 20:47:20 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.[ch]: new files
 	* app/Makefile.am

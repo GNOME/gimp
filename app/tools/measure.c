@@ -30,13 +30,15 @@
 /*  handle size (actually half of TARGET_[WIDTH|HEIGHT])  */
 #define  HANDLE_SIZE    7
 
+#define  ARC_RADIUS     50
+
 #define  STATUSBAR_SIZE 128
 
 /*  possible measure functions  */
 #define CREATING        0
 #define MOVING_START    1
 #define MOVING_END      2
-
+#define FINISHED        4
 
 /*  the measure structure  */
 typedef struct _MeasureTool MeasureTool;
@@ -48,6 +50,7 @@ struct _MeasureTool
   int       starty;      /*  starting y coord     */
   int       endx;        /*  ending x coord       */
   int       endy;        /*  ending y coord       */
+  double    angle;       /*  angle                */
 
   int       function;    /*  moving or resizing   */
   guint     context_id;  /*  for the statusbar    */
@@ -143,6 +146,8 @@ measure_tool_button_release (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
+  
+  measure_tool->function = FINISHED;
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -231,20 +236,27 @@ measure_tool_motion (Tool           *tool,
   if (gdisp->dot_for_dot)
     {
       distance = sqrt (SQR (x2 - x1) + SQR (y2 - y1));
-      g_snprintf (distance_str, sizeof (distance_str), "%s %.1f pixels",
-		  _("Distance: "), distance);
+      measure_tool->angle = 180.0 / G_PI * atan ((double)(y2 - y1) / (double)(x2 - x1)); 
+      g_snprintf (distance_str, sizeof (distance_str), "%s %.1f %s, %s %.2f %s",
+		  _("Distance:"), distance, _("pixels"), _("Angle:"), fabs(measure_tool->angle), _("degrees"));
     }
   else /* show real world units */
     {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
+      gchar *format_str = g_strdup_printf ("%s %%.%df %s, %s %%.2f %s",
+					   _("Distance:"),
+					   gimp_unit_get_digits (gdisp->gimage->unit),
+					   gimp_unit_get_symbol (gdisp->gimage->unit),
+					   _("Angle:"), _("degrees"));
 
       distance = 
 	sqrt (SQR ((x2 - x1) / gdisp->gimage->xresolution) +
 	      SQR ((y2 - y1) / gdisp->gimage->yresolution));
-
-      g_snprintf (distance_str, sizeof (distance_str), "%s %.3f %s",
-		  _("Distance: "), distance * unit_factor, 
-		  gimp_unit_get_symbol (gdisp->gimage->unit));
+      measure_tool->angle = 180.0 / G_PI * atan (((double)(y2 - y1) / gdisp->gimage->xresolution) /
+						 ((double)(x2 - x1) / gdisp->gimage->yresolution)); 
+      
+      g_snprintf (distance_str, sizeof (distance_str), format_str,
+		  distance * gimp_unit_get_factor (gdisp->gimage->unit), fabs (measure_tool->angle));
+      g_free (format_str);
     }
 
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id,
@@ -268,7 +280,7 @@ measure_tool_cursor_update (Tool           *tool,
 
   ctype = GDK_TCROSS;
 
-  if (tool->state == ACTIVE &&  tool->gdisp_ptr == gdisp_ptr)
+  if (tool->state == ACTIVE && tool->gdisp_ptr == gdisp_ptr)
     {
       if (mevent->x == BOUNDS (mevent->x, measure_tool->startx - HANDLE_SIZE, measure_tool->startx + HANDLE_SIZE) &&
 	  mevent->y == BOUNDS (mevent->y, measure_tool->starty - HANDLE_SIZE, measure_tool->starty + HANDLE_SIZE))
@@ -286,6 +298,8 @@ measure_tool_draw (Tool *tool)
 {
   GDisplay * gdisp;
   MeasureTool * measure_tool;
+  int anglex;
+  int angley;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -306,10 +320,54 @@ measure_tool_draw (Tool *tool)
 		 measure_tool->endx, measure_tool->endy - (TARGET_HEIGHT >> 1),
 		 measure_tool->endx, measure_tool->endy + (TARGET_HEIGHT >> 1));
 
+  /*  Draw an arc to indicate where the angle is measured  */
+  if (measure_tool->angle != 0.0)
+    {
+      if (measure_tool->endx >= measure_tool->startx)
+	{
+	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+			measure_tool->startx - ARC_RADIUS, measure_tool->starty - ARC_RADIUS,
+			2 * ARC_RADIUS, 2 * ARC_RADIUS, 0, measure_tool->angle * -64.0);
+	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			 measure_tool->startx, measure_tool->starty,
+			 measure_tool->startx + ARC_RADIUS + 5, measure_tool->starty);
+	  anglex = measure_tool->startx + 
+	    (double)(ARC_RADIUS + 5) * cos (measure_tool->angle / 180.0 * G_PI);
+	  angley = measure_tool->starty + 
+	    (double)(ARC_RADIUS + 5) * sin (measure_tool->angle / 180.0 * G_PI);
+	}
+      else
+	{
+	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+			measure_tool->startx - ARC_RADIUS, measure_tool->starty - ARC_RADIUS,
+			2 * ARC_RADIUS, 2 * ARC_RADIUS, 11520, measure_tool->angle * -64.0);
+	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			 measure_tool->startx, measure_tool->starty,
+			 measure_tool->startx - ARC_RADIUS - 5, measure_tool->starty);
+	  anglex = measure_tool->startx - 
+	    (double)(ARC_RADIUS + 5) * cos (measure_tool->angle / 180.0 * G_PI);
+	  angley = measure_tool->starty - 
+	    (double)(ARC_RADIUS + 5) * sin (measure_tool->angle / 180.0 * G_PI);
+	}
+    }
+  else
+    {
+      anglex = measure_tool->startx;
+      angley = measure_tool->starty;
+    }
+
   /*  Draw the line between the start and end coords  */
-  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		 measure_tool->startx, measure_tool->starty, 
-		 measure_tool->endx, measure_tool->endy);
+  if (SQR (measure_tool->startx - measure_tool->endx) + 
+      SQR (measure_tool->starty - measure_tool->endy) >
+      SQR (measure_tool->startx - anglex) +
+      SQR (measure_tool->starty - angley))
+    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+		   measure_tool->startx, measure_tool->starty,
+		   measure_tool->endx, measure_tool->endy);
+  else
+    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+		   measure_tool->startx, measure_tool->starty,
+		   anglex, angley);
 }
 
 
@@ -363,7 +421,8 @@ tools_new_measure_tool (void)
 
   private->core = draw_core_new (measure_tool_draw);
   private->startx = private->starty = 0;
-  private->function = CREATING;
+  private->angle  = 0.0;
+   private->function = CREATING;
 
   tool->private = (void *) private;
  
