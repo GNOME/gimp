@@ -143,7 +143,7 @@ InterpolationType  interpolation_type = LINEAR_INTERPOLATION;
 gboolean           confirm_on_close = TRUE;
 gboolean           save_session_info = TRUE;
 gboolean           save_device_status = FALSE;
-gboolean           always_restore_session = FALSE;
+gboolean           always_restore_session = TRUE;
 gint               default_width = 983;
 gint               default_height = 857;
 /* temporary default size increase to stress test stuff.  -- austin 7/11/99 */

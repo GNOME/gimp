@@ -62,75 +62,98 @@ static void session_reset_open_state (SessionInfo *info);
 
 GList *session_info_updates = NULL;
 
+#define LEFT_OFFSET 60
+#define TOP_OFFSET  60
+
 /* global session variables */
 SessionInfo toolbox_session_info =
 {
   "toolbox",
   NULL,
-  0, 0, 0, 0, 0, FALSE
+  LEFT_OFFSET, TOP_OFFSET,
+  0, 0,
+  0, FALSE
 };
 
 SessionInfo lc_dialog_session_info =
 {
   "lc-dialog",
   (GtkItemFactoryCallback) dialogs_lc_cmd_callback,
-  0, 400, 0, 0, 0, FALSE
-};
-
-SessionInfo info_dialog_session_info =
-{
-  "info-dialog",
-  NULL,
-  165, 0, 0, 0, 0, FALSE
+  LEFT_OFFSET, TOP_OFFSET + 300,
+  0, 0,
+  0, FALSE
 };
 
 SessionInfo tool_options_session_info =
 {
   "tool-options",
   (GtkItemFactoryCallback) dialogs_tool_options_cmd_callback,
-  0, 345, 0, 0, 0, FALSE
-};
-
-SessionInfo palette_session_info =
-{
-  "palette",
-  (GtkItemFactoryCallback) dialogs_palette_cmd_callback,
-  140, 180, 0, 0, 0, FALSE
-};
-
-SessionInfo brush_select_session_info =
-{
-  "brush-select",
-  (GtkItemFactoryCallback) dialogs_brushes_cmd_callback,
-  150, 180, 0, 0, 0, FALSE
-};
-
-SessionInfo pattern_select_session_info =
-{
-  "pattern-select",
-  (GtkItemFactoryCallback) dialogs_patterns_cmd_callback,
-  160, 180, 0, 0, 0, FALSE
-};
-
-SessionInfo gradient_select_session_info =
-{
-  "gradient-select",
-  (GtkItemFactoryCallback) dialogs_gradients_cmd_callback,
-  170, 180, 0, 0, 0, FALSE
+  LEFT_OFFSET + 150, TOP_OFFSET,
+  0, 0,
+  0, FALSE
 };
 
 SessionInfo device_status_session_info =
 {
   "device-status",
   (GtkItemFactoryCallback) dialogs_device_status_cmd_callback,
-  0, 600, 0, 0, 0, FALSE
+  LEFT_OFFSET + 150, TOP_OFFSET + 250,
+  0, 0,
+  0, FALSE
+};
+
+SessionInfo brush_select_session_info =
+{
+  "brush-select",
+  (GtkItemFactoryCallback) dialogs_brushes_cmd_callback,
+  LEFT_OFFSET + 350, TOP_OFFSET,
+  0, 0,
+  0, FALSE
+};
+
+SessionInfo pattern_select_session_info =
+{
+  "pattern-select",
+  (GtkItemFactoryCallback) dialogs_patterns_cmd_callback,
+  LEFT_OFFSET + 400, TOP_OFFSET + 50,
+  0, 0,
+  0, FALSE
+};
+
+SessionInfo gradient_select_session_info =
+{
+  "gradient-select",
+  (GtkItemFactoryCallback) dialogs_gradients_cmd_callback,
+  LEFT_OFFSET + 450, TOP_OFFSET + 100,
+  0, 0,
+  0, FALSE
+};
+
+SessionInfo palette_session_info =
+{
+  "palette",
+  (GtkItemFactoryCallback) dialogs_palette_cmd_callback,
+  LEFT_OFFSET + 500, TOP_OFFSET + 150,
+  0, 0,
+  0, FALSE
+};
+
+SessionInfo info_dialog_session_info =
+{
+  "info-dialog",
+  NULL,
+  LEFT_OFFSET + 350, TOP_OFFSET + 250,
+  0, 0,
+  0, FALSE
 };
 
 SessionInfo error_console_session_info =
 {
   "error-console",
   (GtkItemFactoryCallback) dialogs_error_console_cmd_callback,
-  400, 0, 250, 300, 0, FALSE
+  LEFT_OFFSET, TOP_OFFSET + 250,
+  400, 150,
+  0, FALSE
 };
 
 
@@ -236,12 +259,16 @@ session_init (void)
   filename = gimp_personal_rc_file ("sessionrc");
   app_init_update_status (NULL, filename, -1);
 
-  /*  always show L&C and Brushes on first invocation  */
-  if (! parse_gimprc_file (filename) && save_session_info)
+  /*  always show L&C&P, Tool Options and Brushes on first invocation  */
+  if (! parse_gimprc_file (filename))
     {
       lc_dialog_session_info.open = TRUE;
       session_info_updates =
 	g_list_append (session_info_updates, &lc_dialog_session_info);
+
+      tool_options_session_info.open = TRUE;
+      session_info_updates =
+	g_list_append (session_info_updates, &tool_options_session_info);
 
       brush_select_session_info.open = TRUE;
       session_info_updates =

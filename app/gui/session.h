@@ -39,13 +39,13 @@ struct _SessionInfo
 /*  global session variables  */
 extern SessionInfo toolbox_session_info;
 extern SessionInfo lc_dialog_session_info;
-extern SessionInfo info_dialog_session_info;
 extern SessionInfo tool_options_session_info;
-extern SessionInfo palette_session_info;
+extern SessionInfo device_status_session_info;
 extern SessionInfo brush_select_session_info;
 extern SessionInfo pattern_select_session_info;
 extern SessionInfo gradient_select_session_info;
-extern SessionInfo device_status_session_info;
+extern SessionInfo palette_session_info;
+extern SessionInfo info_dialog_session_info;
 extern SessionInfo error_console_session_info;
 
 extern GList *session_info_updates;  /* This list holds all session_infos

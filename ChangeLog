@@ -1,5 +1,16 @@
 2000-04-20  Michael Natterer  <mitch@gimp.org>
 
+	* gimprc.in
+	* app/gimprc.c: default to restore_session == TRUE so first time
+	users really see the automatically opened dialogs.
+
+	* app/session.[ch]: also open "Tool Options" if no sessionrc
+	exists. Moved the harcoded initial positions away from the top and
+	left edges of the screen to avoid dialogs which appear underneath
+	panels. Also arranged the four default dialogs non-overlapping.
+
+2000-04-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/fuzzy_select.c
 	* app/selection_options.h
 	* app/tool_options.c: moved the "Threshold" scale from the fuzzy

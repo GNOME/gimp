@@ -218,7 +218,7 @@
 # Session managment 
 #  To let GIMP try to restore your last saved session, 
 #  just uncomment the line below...
-# (always-restore-session)
+(always-restore-session)
 
 # Setting the level of interpolation
 #  Uncommenting this line will enable cubic interpolation.
