@@ -7,7 +7,7 @@ package Gimp::Net;
 use strict;
 use Carp;
 use vars qw(
-   $VERSION @ISA
+   $VERSION
    $default_tcp_port $default_unix_dir $default_unix_sock
    $server_fh $trace_level $trace_res $auth $gimp_pid
 );
@@ -15,8 +15,6 @@ use subs qw(gimp_call_procedure);
 
 use IO::Socket;
 
-@ISA = ();
- 
 $default_tcp_port  = 10009;
 $default_unix_dir  = "/tmp/gimp-perl-serv/";
 $default_unix_sock = "gimp-perl-serv";
@@ -171,7 +169,7 @@ sub try_connect {
    undef $auth;
 }
 
-sub gimp_main {
+sub gimp_init {
    if (defined($Gimp::host)) {
       $server_fh = try_connect ($Gimp::host);
    } elsif (defined($ENV{GIMP_HOST})) {
@@ -201,14 +199,23 @@ sub gimp_main {
          print "authorization ok, but: $r[1]\n" if $Gimp::verbose and $r[1];
       }
    }
-   
+}
+
+sub gimp_end {
+   kill 'KILL',$gimp_pid if $gimp_pid;
+   undef $gimp_pid;
+}
+
+sub gimp_main {
+   gimp_init;
    no strict 'refs';
    &{caller()."::net"};
+   gimp_end;
    return 0;
 }
 
 END {
-   kill 'KILL',$gimp_pid if $gimp_pid;
+   gimp_end;
 }
 
 1;

@@ -83,8 +83,8 @@ sub new($$$$) {
 package Gimp::UI::PreviewSelect;
 
 use Gtk;
+use base 'Gtk::Button';
 
-@ISA='Gtk::Button';
 register_type Gimp::UI::PreviewSelect;
 
 sub GTK_CLASS_INIT {
@@ -176,8 +176,8 @@ sub GTK_OBJECT_INIT {
 package Gimp::UI::PatternSelect;
 
 use Gtk;
+use base 'Gimp::UI::PreviewSelect';
 
-@ISA = 'Gimp::UI::PreviewSelect';
 register_type Gimp::UI::PatternSelect;
 
 sub get_title { "Pattern Selection Dialog" }
@@ -225,8 +225,8 @@ sub new {
 package Gimp::UI::BrushSelect;
 
 use Gtk;
+use base 'Gimp::UI::PreviewSelect';
 
-@ISA='Gimp::UI::PreviewSelect';
 register_type Gimp::UI::BrushSelect;
 
 sub get_title { "Brush Selection Dialog" }
@@ -268,8 +268,8 @@ sub new {
 package Gimp::UI::GradientSelect;
 
 use Gtk;
+use base 'Gimp::UI::PreviewSelect';
 
-@ISA='Gimp::UI::PreviewSelect';
 register_type Gimp::UI::GradientSelect;
 
 sub get_title { "Gradient Selection Dialog" }

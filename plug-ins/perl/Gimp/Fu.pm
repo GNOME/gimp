@@ -11,6 +11,7 @@ use File::Basename;
 use Gtk;
 use Gtk::ColorSelectButton;
 use Data::Dumper;
+use base qw(Exporter);
 
 require Exporter;
 require DynaLoader;
@@ -73,20 +74,20 @@ sub PF_LAYER	() { PARAM_LAYER	};
 sub PF_CHANNEL	() { PARAM_CHANNEL	};
 sub PF_DRAWABLE	() { PARAM_DRAWABLE	};
 
-sub PF_TOGGLE	() { &PARAM_END+1	};
-sub PF_SLIDER	() { &PARAM_END+2	};
-sub PF_FONT	() { &PARAM_END+3	};
-sub PF_SPINNER	() { &PARAM_END+4	};
-sub PF_ADJUSTMENT(){ &PARAM_END+5	}; # compatibility fix for script-fu
-sub PF_BRUSH	() { &PARAM_END+6	};
-sub PF_PATTERN	() { &PARAM_END+7	};
-sub PF_GRADIENT	() { &PARAM_END+8	};
+sub PF_TOGGLE	() { PARAM_END+1	};
+sub PF_SLIDER	() { PARAM_END+2	};
+sub PF_FONT	() { PARAM_END+3	};
+sub PF_SPINNER	() { PARAM_END+4	};
+sub PF_ADJUSTMENT(){ PARAM_END+5	}; # compatibility fix for script-fu _ONLY_
+sub PF_BRUSH	() { PARAM_END+6	};
+sub PF_PATTERN	() { PARAM_END+7	};
+sub PF_GRADIENT	() { PARAM_END+8	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
 sub PF_VALUE	() { PF_STRING		};
 
-sub Gimp::RUN_FULLINTERACTIVE { &Gimp::RUN_INTERACTIVE+100 };	# you don't want to know
+sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want to know
 
 %pf_type2string = (
          &PF_INT8	=> 'small integer',
@@ -115,7 +116,6 @@ sub Gimp::RUN_FULLINTERACTIVE { &Gimp::RUN_INTERACTIVE+100 };	# you don't want t
             PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
             PF_BRUSH PF_PATTERN PF_GRADIENT);
 
-@ISA = qw(Exporter);
 @EXPORT = (qw(register main gimp_main xlfd_size),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
 %EXPORT_TAGS = (params => [@_params]);

@@ -3,16 +3,24 @@ package Gimp::Lib;
 use strict;
 use Carp;
 use vars qw($VERSION @ISA);
+use base qw(DynaLoader);
 
 require DynaLoader;
 
-@ISA = qw(DynaLoader);
 $VERSION = $Gimp::VERSION;
 
 use subs qw(
-	gimp_call_procedure		gimp_main
-	_gimp_procedure_available	set_trace
+	gimp_call_procedure		gimp_main	gimp_init
+	_gimp_procedure_available	set_trace	gimp_end
 );
+
+sub gimp_init {
+   die "gimp_init not implemented for the Lib interface";
+}
+
+sub gimp_end {
+   die "gimp_end not implemented for in the Lib interface";
+}
 
 sub import {}
 

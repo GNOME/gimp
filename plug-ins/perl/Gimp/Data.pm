@@ -6,8 +6,8 @@ use Tie::Hash;
 use Gimp qw();
 use Exporter ();
 use vars qw(@EXPORT @ISA);
+use base qw(Tie::StdHash Exporter);
 
-@ISA = qw(Tie::StdHash Exporter);
 @EXPORT = qw();
 
 sub FETCH {

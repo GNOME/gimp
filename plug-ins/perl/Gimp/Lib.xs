@@ -22,7 +22,11 @@
 
 /* I actually do care a bit about older perls... */
 #ifndef ERRSV
-# define ERRSV GvSV(errgv)
+# define ERRSV perl_get_sv("@",FALSE)
+#endif
+/* And also for newer perls... */
+#ifndef na
+# define na PL_na
 #endif
 
 /* FIXME */

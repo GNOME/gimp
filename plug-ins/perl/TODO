@@ -9,9 +9,7 @@ bugs
 
   * perl_fu_webify in homepage-logo.pl
   * save_image should be called for non-null return values
-[DONE]  * attempt to free unreferenced
   * drawable is compatible to layer AND VICE VERSA (convert_sv2gimp)
-[DONE]  * return values do not at all work
   * enable t/run.t again (but how? different solutions
     for gimp-1.0 and gimp-1.1???)
   * wait for working gimp_file_load (or do it myself?)
@@ -21,16 +19,15 @@ bugs
   
 important issues
 
+  * substr 4th argument form for Net:: -> require 5.005!!!! DO IT!
+  * use Gimp qw(GIMP_HOST=jfjf)???
   * brushes look inverted
   * zero-copy PDL support
-  * gimp_init, gimp_deinit
+[DONE]  * gimp_init, gimp_deinit
   * duplicate HAVE_VPRINTF in gimp
   * get rid of superfluous image arguments
-[DONE]  * put it into the cvs tree
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
-[DONE]  * PF_PALETTE (maybe not) <-- NOT
-[DONE]  * kill RUN_INTERACTIVE/run_mode-shit
   * --function localfunc to select one of the registered scripts
   * brush etc. buttons (maybe use gimp's interface, but
     only when local(?))

@@ -3,12 +3,12 @@ package Gimp::PDL;
 use Carp;
 use Gimp;
 use PDL;
+use base qw(Exporter);
 
 require Exporter;
 require DynaLoader;
 require AutoLoader;
 
-@ISA = qw(Exporter);
 @EXPORT = ();
 
 $old_w = $^W; $^W = 0;
