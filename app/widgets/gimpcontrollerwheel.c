@@ -255,8 +255,8 @@ gimp_controller_wheel_get_event_blurb (GimpController *controller,
 }
 
 gboolean
-gimp_controller_wheel_scrolled (GimpControllerWheel  *wheel,
-                                const GdkEventScroll *sevent)
+gimp_controller_wheel_scroll (GimpControllerWheel  *wheel,
+                              const GdkEventScroll *sevent)
 {
   gint i;
 

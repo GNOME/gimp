@@ -883,8 +883,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         wheel = gimp_controllers_get_wheel (gimp);
 
         if (wheel &&
-            gimp_controller_wheel_scrolled (GIMP_CONTROLLER_WHEEL (wheel),
-                                            sevent))
+            gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),
+                                          sevent))
           return TRUE;
 
         direction = sevent->direction;

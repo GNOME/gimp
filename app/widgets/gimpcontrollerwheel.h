@@ -50,7 +50,7 @@ struct _GimpControllerWheelClass
 
 GType      gimp_controller_wheel_get_type (void) G_GNUC_CONST;
 
-gboolean   gimp_controller_wheel_scrolled (GimpControllerWheel  *wheel,
+gboolean   gimp_controller_wheel_scroll   (GimpControllerWheel  *wheel,
                                            const GdkEventScroll *sevent);
 
 
