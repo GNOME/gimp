@@ -189,7 +189,7 @@ gimp_stroke_get_memsize (GimpObject *object)
 
 GimpAnchor *
 gimp_stroke_anchor_get (const GimpStroke *stroke,
-			const GimpCoords *coord)
+                        const GimpCoords *coord)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -246,7 +246,7 @@ gimp_stroke_real_anchor_get (const GimpStroke *stroke,
 
 GimpAnchor *
 gimp_stroke_anchor_get_next (const GimpStroke *stroke,
-		             const GimpAnchor *prev)
+                             const GimpAnchor *prev)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
@@ -317,7 +317,7 @@ gimp_stroke_real_anchor_select (GimpStroke *stroke,
 void
 gimp_stroke_anchor_move_relative (GimpStroke            *stroke,
                                   GimpAnchor            *anchor,
-				  const GimpCoords      *delta,
+                                  const GimpCoords      *delta,
                                   GimpAnchorFeatureType  feature)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));

@@ -65,7 +65,7 @@ struct _GimpStrokeClass
                                           GimpAnchorFeatureType  feature);
   void          (* anchor_move_absolute) (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,
-					  const GimpCoords      *coord,
+                                          const GimpCoords      *coord,
                                           GimpAnchorFeatureType  feature);
   void          (* anchor_convert)       (GimpStroke            *stroke,
                                           GimpAnchor            *anchor,

@@ -330,7 +330,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                    0);
         }
 
-      stroke = gimp_bezier_stroke_new (coords);
+      stroke = gimp_bezier_stroke_new ();
+      anchor = gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (stroke), coords,
+                                          NULL, EXTEND_EDITABLE);
       anchor = gimp_stroke_anchor_get (stroke, coords);
 
       gimp_vectors_stroke_add (vector_tool->vectors, stroke);
@@ -673,7 +675,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 {
   GimpDrawTool *draw_tool;
   GimpTool     *tool;
-  GimpItem     *item;
+  GimpItem     *item = NULL;
 
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
   g_return_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors));

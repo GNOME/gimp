@@ -160,21 +160,21 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   gimp_vectors_signals[FREEZE] =
     g_signal_new ("freeze",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpVectorsClass, freeze),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpVectorsClass, freeze),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_vectors_signals[THAW] =
     g_signal_new ("thaw",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpVectorsClass, thaw),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpVectorsClass, thaw),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_vectors_finalize;
 
@@ -481,7 +481,7 @@ gimp_vectors_real_thaw (GimpVectors *vectors)
 
 GimpVectors *
 gimp_vectors_new (GimpImage   *gimage,
-		  const gchar *name)
+                  const gchar *name)
 {
   GimpVectors *vectors;
 
@@ -773,7 +773,7 @@ gimp_vectors_real_get_length (const GimpVectors *vectors,
 
 gdouble
 gimp_vectors_get_distance (const GimpVectors *vectors,
-			   const GimpCoords  *coord)
+                           const GimpCoords  *coord)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
 

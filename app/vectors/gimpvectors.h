@@ -56,7 +56,7 @@ struct _GimpVectorsClass
   void          (* stroke_add)        (GimpVectors       *vectors,
                                        GimpStroke        *stroke);
   GimpStroke  * (* stroke_get)        (const GimpVectors *vectors,
-		                       const GimpCoords  *coord);
+                                       const GimpCoords  *coord);
   GimpStroke  * (* stroke_get_next)   (const GimpVectors *vectors,
                                        const GimpStroke  *prev);
   gdouble       (* stroke_get_length) (const GimpVectors *vectors,

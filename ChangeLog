@@ -1,3 +1,14 @@
+2003-05-19  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.[ch]: Implemented closed paths. Not
+	yet available in a sane manner via the UI. Added the last missing
+	line from gimp_bezier_stroke_interpolate ().
+	
+	* app/tools/gimpvectortool.c: Changed accordingly
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpvectors.[ch]: removed Tabs.
+
 2003-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c (xcf_load_channel): set gimage->qmask_state
