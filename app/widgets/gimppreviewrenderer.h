@@ -116,6 +116,21 @@ void   gimp_preview_renderer_draw             (GimpPreviewRenderer *renderer,
 
 /*  protected  */
 
+void   gimp_preview_renderer_default_render_buffer (GimpPreviewRenderer *renderer,
+                                                    GtkWidget           *widget,
+                                                    TempBuf             *temp_buf);
+void   gimp_preview_renderer_default_render_stock (GimpPreviewRenderer  *renderer,
+                                                   GtkWidget            *widget,
+                                                   const gchar          *stock_id);
+void   gimp_preview_renderer_render_buffer        (GimpPreviewRenderer *renderer,
+                                                   TempBuf             *temp_buf,
+                                                   gint                 channel,
+                                                   GimpPreviewBG        inside_bg,
+                                                   GimpPreviewBG        outside_bg);
+
+
+/*  general purpose temp_buf to buffer projection function  */
+
 void   gimp_preview_render_to_buffer          (TempBuf             *temp_buf,
                                                gint                 channel,
                                                GimpPreviewBG        inside_bg,
@@ -125,12 +140,6 @@ void   gimp_preview_render_to_buffer          (TempBuf             *temp_buf,
                                                gint                 dest_height,
                                                gint                 dest_rowstride,
                                                gint                 dest_bytes);
-
-void   gimp_preview_renderer_render_preview   (GimpPreviewRenderer *renderer,
-                                               TempBuf             *temp_buf,
-                                               gint                 channel,
-                                               GimpPreviewBG        inside_bg,
-                                               GimpPreviewBG        outside_bg);
 
 
 #endif /* __GIMP_PREVIEW_RENDERER_H__ */

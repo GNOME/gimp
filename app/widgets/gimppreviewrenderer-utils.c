@@ -28,9 +28,11 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "text/gimptextlayer.h"
 
 #include "gimppreviewrendererbrush.h"
 #include "gimppreviewrendererdrawable.h"
+#include "gimppreviewrenderertextlayer.h"
 #include "gimppreviewrendererimage.h"
 
 
@@ -49,6 +51,10 @@ gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
   else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {
       type = GIMP_TYPE_PREVIEW_RENDERER_IMAGE;
+    }
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_TEXT_LAYER))
+    {
+      type = GIMP_TYPE_PREVIEW_RENDERER_TEXT_LAYER;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {

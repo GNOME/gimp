@@ -34,7 +34,7 @@
 
 
 static void   gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass);
-static void   gimp_preview_renderer_brush_init       (GimpPreviewRendererBrush      *preview);
+static void   gimp_preview_renderer_brush_init       (GimpPreviewRendererBrush      *renderer);
 
 static void     gimp_preview_renderer_brush_finalize       (GObject     *object);
 static void     gimp_preview_renderer_brush_render         (GimpPreviewRenderer *renderer,
@@ -147,9 +147,9 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 
   if (renderer->is_popup)
     {
-      gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
-                                            GIMP_PREVIEW_BG_WHITE,
-                                            GIMP_PREVIEW_BG_WHITE);
+      gimp_preview_renderer_render_buffer (renderer, temp_buf, -1,
+                                           GIMP_PREVIEW_BG_WHITE,
+                                           GIMP_PREVIEW_BG_WHITE);
 
       temp_buf_free (temp_buf);
 
@@ -174,9 +174,9 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
       return;
     }
 
-  gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
-                                        GIMP_PREVIEW_BG_WHITE,
-                                        GIMP_PREVIEW_BG_WHITE);
+  gimp_preview_renderer_render_buffer (renderer, temp_buf, -1,
+                                       GIMP_PREVIEW_BG_WHITE,
+                                       GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 
@@ -324,9 +324,9 @@ gimp_preview_renderer_brush_render_timeout (gpointer data)
 					    renderer->width,
 					    renderer->height);
 
-  gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
-                                        GIMP_PREVIEW_BG_WHITE,
-                                        GIMP_PREVIEW_BG_WHITE);
+  gimp_preview_renderer_render_buffer (renderer, temp_buf, -1,
+                                       GIMP_PREVIEW_BG_WHITE,
+                                       GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 

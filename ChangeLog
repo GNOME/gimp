@@ -1,3 +1,21 @@
+2003-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreviewrenderer.[ch]: made the default buffer
+	and stock rendering functions public so derived renderers
+	can use them. Renamed gimp_preview_renderer_render_preview()
+	to gimp_preview_renderer_render_buffer().
+
+	* app/widgets/gimppreviewrendererbrush.c
+	* app/widgets/gimppreviewrendererdrawable.c
+	* app/widgets/gimppreviewrendererimage.c: changed accordingly.
+
+	* app/widgets/gimppreviewrenderertextlayer.[ch]: new renderer
+	for text layers which always renders the stock icon.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppreviewrenderer-utils.c: changed accordingly.
+
 2003-03-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/edge.c (edge): fixed a typo in the kernel for

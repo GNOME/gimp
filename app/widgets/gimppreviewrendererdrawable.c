@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawablepreview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * gimppreviewrendererdrawable.c
+ * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 
 
 static void   gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *klass);
-static void   gimp_preview_renderer_drawable_init       (GimpPreviewRendererDrawable      *preview);
+static void   gimp_preview_renderer_drawable_init       (GimpPreviewRendererDrawable      *renderer);
 
 static void   gimp_preview_renderer_drawable_render     (GimpPreviewRenderer *renderer,
                                                          GtkWidget           *widget);
@@ -86,7 +86,7 @@ gimp_preview_renderer_drawable_class_init (GimpPreviewRendererDrawableClass *kla
 }
 
 static void
-gimp_preview_renderer_drawable_init (GimpPreviewRendererDrawable *preview)
+gimp_preview_renderer_drawable_init (GimpPreviewRendererDrawable *renderer)
 {
 }
 
@@ -182,9 +182,9 @@ gimp_preview_renderer_drawable_render (GimpPreviewRenderer *renderer,
 	render_buf->y = (height - preview_height) / 2;
     }
 
-  gimp_preview_renderer_render_preview (renderer, render_buf, -1,
-                                        GIMP_PREVIEW_BG_CHECKS,
-                                        GIMP_PREVIEW_BG_CHECKS);
+  gimp_preview_renderer_render_buffer (renderer, render_buf, -1,
+                                       GIMP_PREVIEW_BG_CHECKS,
+                                       GIMP_PREVIEW_BG_CHECKS);
 
   temp_buf_free (render_buf);
 }

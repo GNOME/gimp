@@ -618,112 +618,21 @@ gimp_preview_renderer_real_render (GimpPreviewRenderer *renderer,
 {
   TempBuf *temp_buf;
 
-  if (renderer->no_preview_pixbuf)
-    {
-      g_object_unref (renderer->no_preview_pixbuf);
-      renderer->no_preview_pixbuf = NULL;
-    }
-
   temp_buf = gimp_viewable_get_preview (renderer->viewable,
 					renderer->width,
 					renderer->height);
 
   if (temp_buf)
     {
-      if (temp_buf->width < renderer->width)
-        temp_buf->x = (renderer->width - temp_buf->width)  / 2;
-
-      if (temp_buf->height < renderer->height)
-        temp_buf->y = (renderer->height - temp_buf->height) / 2;
-
-      gimp_preview_renderer_render_preview (renderer, temp_buf, -1,
-                                            GIMP_PREVIEW_BG_CHECKS,
-                                            GIMP_PREVIEW_BG_WHITE);
+      gimp_preview_renderer_default_render_buffer (renderer, widget, temp_buf);
     }
   else /* no preview available */
     {
-      GdkPixbuf    *pixbuf;
-      GtkIconSet   *icon_set;
-      GtkIconSize  *sizes;
-      gint          n_sizes;
-      gint          i;
-      gint          width_diff  = 1024;
-      gint          height_diff = 1024;
-      GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
       const gchar  *stock_id;
 
-      if (renderer->buffer)
-        {
-          g_free (renderer->buffer);
-          renderer->buffer = NULL;
-        }
-
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-      icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
 
-      gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
-
-      for (i = 0; i < n_sizes; i++)
-        {
-          gint icon_width;
-          gint icon_height;
-
-          if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
-            {
-              if (icon_width  <= renderer->width  &&
-                  icon_height <= renderer->height &&
-                  (ABS (icon_width  - renderer->width)  < width_diff ||
-                   ABS (icon_height - renderer->height) < height_diff))
-                {
-                  width_diff  = ABS (icon_width  - renderer->width);
-                  height_diff = ABS (icon_height - renderer->height);
-
-                  icon_size = sizes[i];
-                }
-            }
-        }
-
-      g_free (sizes);
-
-      pixbuf = gtk_icon_set_render_icon (icon_set,
-                                         widget->style,
-                                         gtk_widget_get_direction (widget),
-                                         widget->state,
-                                         icon_size,
-                                         widget, NULL);
-
-      if (pixbuf)
-        {
-          if (gdk_pixbuf_get_width (pixbuf)  > renderer->width ||
-              gdk_pixbuf_get_height (pixbuf) > renderer->height)
-            {
-              GdkPixbuf *scaled_pixbuf;
-              gint       pixbuf_width;
-              gint       pixbuf_height;
-
-              gimp_viewable_calc_preview_size (renderer->viewable,
-                                               gdk_pixbuf_get_width (pixbuf),
-                                               gdk_pixbuf_get_height (pixbuf),
-                                               renderer->width,
-                                               renderer->height,
-                                               TRUE, 1.0, 1.0,
-                                               &pixbuf_width,
-                                               &pixbuf_height,
-                                               NULL);
-
-              scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                       pixbuf_width,
-                                                       pixbuf_height,
-                                                       GDK_INTERP_BILINEAR);
-
-              g_object_unref (pixbuf);
-              pixbuf = scaled_pixbuf;
-            }
-
-          renderer->no_preview_pixbuf = pixbuf;
-        }
-
-      renderer->needs_render = FALSE;
+      gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
     }
 }
 
@@ -740,6 +649,152 @@ gimp_preview_renderer_size_changed (GimpPreviewRenderer *renderer,
 
 
 /*  protected functions  */
+
+void
+gimp_preview_renderer_default_render_buffer (GimpPreviewRenderer *renderer,
+                                             GtkWidget           *widget,
+                                             TempBuf             *temp_buf)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (temp_buf != NULL);
+
+  if (renderer->no_preview_pixbuf)
+    {
+      g_object_unref (renderer->no_preview_pixbuf);
+      renderer->no_preview_pixbuf = NULL;
+    }
+
+  if (temp_buf->width < renderer->width)
+    temp_buf->x = (renderer->width - temp_buf->width)  / 2;
+
+  if (temp_buf->height < renderer->height)
+    temp_buf->y = (renderer->height - temp_buf->height) / 2;
+
+  gimp_preview_renderer_render_buffer (renderer, temp_buf, -1,
+                                       GIMP_PREVIEW_BG_CHECKS,
+                                       GIMP_PREVIEW_BG_WHITE);
+}
+
+void
+gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
+                                            GtkWidget           *widget,
+                                            const gchar         *stock_id)
+{
+  GdkPixbuf    *pixbuf;
+  GtkIconSet   *icon_set;
+  GtkIconSize  *sizes;
+  gint          n_sizes;
+  gint          i;
+  gint          width_diff  = 1024;
+  gint          height_diff = 1024;
+  GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (stock_id != NULL);
+
+  if (renderer->no_preview_pixbuf)
+    {
+      g_object_unref (renderer->no_preview_pixbuf);
+      renderer->no_preview_pixbuf = NULL;
+    }
+
+  if (renderer->buffer)
+    {
+      g_free (renderer->buffer);
+      renderer->buffer = NULL;
+    }
+
+  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
+
+  gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
+
+  for (i = 0; i < n_sizes; i++)
+    {
+      gint icon_width;
+      gint icon_height;
+
+      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
+        {
+          if (icon_width  <= renderer->width  &&
+              icon_height <= renderer->height &&
+              (ABS (icon_width  - renderer->width)  < width_diff ||
+               ABS (icon_height - renderer->height) < height_diff))
+            {
+              width_diff  = ABS (icon_width  - renderer->width);
+              height_diff = ABS (icon_height - renderer->height);
+
+              icon_size = sizes[i];
+            }
+        }
+    }
+
+  g_free (sizes);
+
+  pixbuf = gtk_icon_set_render_icon (icon_set,
+                                     widget->style,
+                                     gtk_widget_get_direction (widget),
+                                     widget->state,
+                                     icon_size,
+                                     widget, NULL);
+
+  if (pixbuf)
+    {
+      if (gdk_pixbuf_get_width (pixbuf)  > renderer->width ||
+          gdk_pixbuf_get_height (pixbuf) > renderer->height)
+        {
+          GdkPixbuf *scaled_pixbuf;
+          gint       pixbuf_width;
+          gint       pixbuf_height;
+
+          gimp_viewable_calc_preview_size (renderer->viewable,
+                                           gdk_pixbuf_get_width (pixbuf),
+                                           gdk_pixbuf_get_height (pixbuf),
+                                           renderer->width,
+                                           renderer->height,
+                                           TRUE, 1.0, 1.0,
+                                           &pixbuf_width,
+                                           &pixbuf_height,
+                                           NULL);
+
+          scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                                   pixbuf_width,
+                                                   pixbuf_height,
+                                                   GDK_INTERP_BILINEAR);
+
+          g_object_unref (pixbuf);
+          pixbuf = scaled_pixbuf;
+        }
+
+      renderer->no_preview_pixbuf = pixbuf;
+    }
+
+  renderer->needs_render = FALSE;
+}
+
+void
+gimp_preview_renderer_render_buffer (GimpPreviewRenderer *renderer,
+                                     TempBuf             *temp_buf,
+                                     gint                 channel,
+                                     GimpPreviewBG        inside_bg,
+                                     GimpPreviewBG        outside_bg)
+{
+  if (! renderer->buffer)
+    renderer->buffer = g_new0 (guchar, renderer->height * renderer->rowstride);
+
+  gimp_preview_render_to_buffer (temp_buf,
+                                 channel,
+                                 inside_bg,
+                                 outside_bg,
+                                 renderer->buffer,
+                                 renderer->width,
+                                 renderer->height,
+                                 renderer->rowstride,
+                                 renderer->bytes);
+
+  renderer->needs_render = FALSE;
+}
 
 void
 gimp_preview_render_to_buffer (TempBuf       *temp_buf,
@@ -918,27 +973,4 @@ gimp_preview_render_to_buffer (TempBuf       *temp_buf,
               render_temp_buf,
               dest_width * dest_bytes);
     }
-}
-
-void
-gimp_preview_renderer_render_preview (GimpPreviewRenderer *renderer,
-                                      TempBuf             *temp_buf,
-                                      gint                 channel,
-                                      GimpPreviewBG        inside_bg,
-                                      GimpPreviewBG        outside_bg)
-{
-  if (! renderer->buffer)
-    renderer->buffer = g_new0 (guchar, renderer->height * renderer->rowstride);
-
-  gimp_preview_render_to_buffer (temp_buf,
-                                 channel,
-                                 inside_bg,
-                                 outside_bg,
-                                 renderer->buffer,
-                                 renderer->width,
-                                 renderer->height,
-                                 renderer->rowstride,
-                                 renderer->bytes);
-
-  renderer->needs_render = FALSE;
 }

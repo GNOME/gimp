@@ -33,7 +33,7 @@
 
 
 static void   gimp_preview_renderer_image_class_init (GimpPreviewRendererImageClass *klass);
-static void   gimp_preview_renderer_image_init       (GimpPreviewRendererImage      *preview);
+static void   gimp_preview_renderer_image_init       (GimpPreviewRendererImage      *renderer);
 
 static void   gimp_preview_renderer_image_render     (GimpPreviewRenderer *renderer,
                                                       GtkWidget           *widget);
@@ -147,10 +147,10 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
   if (preview_height < renderer->height)
     render_buf->y = (renderer->height - preview_height) / 2;
 
-  gimp_preview_renderer_render_preview (renderer, render_buf,
-                                        GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel,
-                                        GIMP_PREVIEW_BG_CHECKS,
-                                        GIMP_PREVIEW_BG_WHITE);
+  gimp_preview_renderer_render_buffer (renderer, render_buf,
+                                       GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel,
+                                       GIMP_PREVIEW_BG_CHECKS,
+                                       GIMP_PREVIEW_BG_WHITE);
 
   temp_buf_free (render_buf);
 }
