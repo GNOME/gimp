@@ -1,5 +1,12 @@
 2004-10-11  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h: tweaked the thumbnail related blurbs.
+
+	* app/dialogs/preferences-dialog.c: group the thumbnail related
+	controls together. Could probably still be improved...
+
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/documents-commands.c
 	(documents_recreate_preview_cmd_callback): when recreating the
 	thumbnail, delete old thumbnails and create it in the configured

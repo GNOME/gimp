@@ -357,12 +357,12 @@ N_("Sets the temporary storage directory. Files will appear here " \
 "Sets the theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \
-N_("Sets the size of the thumbnail saved with each image. Note that GIMP " \
-   "can not save thumbnails if layer previews are disabled.")
+N_("Sets the size of the thumbnail shown in the Open dialog. Note that " \
+   "GIMP can not create thumbnails if layer previews are disabled.")
 
 #define THUMBNAIL_FILESIZE_LIMIT_BLURB \
-N_("The preview thumbnail in the Open dialog will be updated on demand " \
-   "unless the file being previewed is larger than the size set here.")
+N_("The thumbnail in the Open dialog will be automatically updated " \
+   "if the file being previewed is smaller than the size set here.")
 
 #define TILE_CACHE_SIZE_BLURB \
 N_("The tile cache is used to make sure the GIMP doesn't thrash " \
