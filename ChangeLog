@@ -1,3 +1,15 @@
+2004-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/*.xbm: removed...
+
+	* cursors/xbm/*.xbm: ...and added here instead. Renamed them
+	all to match the PNG file names.
+
+	* cursors/Makefile.am: changed accordingly.
+
+	* app/widget/gimpcursor.c: ditto. Merged the two cursor creating
+	functions again because they duplicated too much code.
+
 2004-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/menus/plug-in-menus.c (plug_in_menus_setup): populate the
