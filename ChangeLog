@@ -1,3 +1,7 @@
+2004-08-04  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Really really really really fix WINDRES logic.
+
 2004-08-03  DindinX  <david@dindinx.org>
 
 	* plug-ins/winicon/icodialog.c: ported to GimpPreviewArea. Still needs

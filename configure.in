@@ -242,11 +242,11 @@ AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
 AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
 
-WINDRES=":"
-
 if test "$os_win32" = "yes"; then
   AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   AC_CHECK_TOOL(WINDRES, windres, :)
+else
+  WINDRES=":"
 fi
 
 AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
