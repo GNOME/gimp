@@ -17,6 +17,7 @@ INCLUDES = \
 EXTRA_DIST = \
 	gimpfeatures.h.in	\
 	makefile.msc		\
+	makefile.cygwin		\
 	gimp.def		\
 	gimpui.def		\
 	gimpfeatures.h.win32

@@ -44,7 +44,7 @@ gcg_OBJECTS = \
 	marshall.o	\
 
 gcg.exe : $(gcg_OBJECTS)
-	$(CC) $(CFLAGS) -o gcg.exe $(gcg_OBJECTS) -L $(GLIB) -lglib-$(GLIB_VER) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o gcg.exe $(gcg_OBJECTS) -L $(GLIB) -lglib-$(GLIB_VER).gcc $(LDFLAGS)
 
 clean:
 	-rm parser.[ch] lexer.c *.exe *.o

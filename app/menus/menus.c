@@ -583,6 +583,11 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
                                 guint      num)
 {
   gchar *filename, *raw_filename;
+  guint num_entries;
+
+  num_entries = g_slist_length (last_opened_raw_filenames); 
+  if (num >= num_entries)
+    return;
 
   raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
   filename = g_basename (raw_filename);

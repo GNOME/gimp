@@ -25,25 +25,28 @@ CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I
 LDFLAGS = -s
 
 MODULES = \
-	colorsel_gtk.dll	\
-	colorsel_triangle.dll
+	colorsel_gtk-$(GIMP_VER).gcc.dll \
+	colorsel_triangle-$(GIMP_VER).gcc.dll \
+	colorsel_water-$(GIMP_VER).gcc.dll
 
 
 all : \
 	$(MODULES)
 
 install : all
-	$(INSTALL) colorsel_gtk.dll $(BIN)
-	$(INSTALL) colorsel_triangle.dll $(BIN)
+	for m in $(MODULES); do $(INSTALL) $$m $(BIN); done
 
 ../config.h : ../config.h.win32
 	cp ../config.h.win32 $@
 
-colorsel_gtk.dll : colorsel_gtk.o module.def
-	$(GLIB)/build-dll colorsel_gtk - module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+colorsel_gtk-$(GIMP_VER).gcc.dll : colorsel_gtk.o module.def
+	$(GLIB)/build-dll colorsel_gtk $(GIMP_VER).gcc module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
 
-colorsel_triangle.dll : colorsel_triangle.o module.def
-	$(GLIB)/build-dll colorsel_triangle - module.def colorsel_triangle.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+colorsel_triangle-$(GIMP_VER).gcc.dll : colorsel_triangle.o module.def
+	$(GLIB)/build-dll colorsel_triangle $(GIMP_VER).gcc module.def colorsel_triangle.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
+
+colorsel_water-$(GIMP_VER).gcc.dll : colorsel_water.o module.def
+	$(GLIB)/build-dll colorsel_water $(GIMP_VER).gcc module.def colorsel_water.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
 
 
 # General rule for building 
@@ -51,4 +54,4 @@ colorsel_triangle.dll : colorsel_triangle.o module.def
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	-rm *.exe *.a *.o *.exp *.base
+	-rm *.dll *.a *.o *.exp *.base

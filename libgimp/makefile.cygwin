@@ -1,0 +1,148 @@
+## Makefile for building the GIMP DLLs and LIBs with gcc -mno-cygwin.
+## Use: make -f makefile.cygwin
+
+# Change this to wherever you want to install the DLLs. This directory
+# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
+# only, it probably is best to keep them in the GIMP's bin directory.
+BIN = /gimp/bin
+
+# The name of the directory in your %HOME% where the GIMP's personal settings
+# and stuff is saved.
+GIMPDIR = _gimp$(GIMP_VER)
+
+OPTIMIZE = -g -O
+
+################################################################
+
+# Nothing much configurable below
+
+CC = gcc -mno-cygwin -mpentium
+
+CP = cp
+LD = ld
+DLLTOOL = dlltool
+INSTALL = install
+
+GTK_VER = 1.3
+GLIB_VER = 1.3
+GIMP_VER = 1.1
+
+GTK = ../../gtk+
+GLIB = ../../glib
+GETTEXT = ../../gettext-0.10.35
+
+GIMP_VER = 1.1
+
+CFLAGS = $(OPTIMIZE) -I.. -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK) -I$(GETTEXT)/intl -DGIMPDIR=\"$(GIMPDIR)\"
+
+all : \
+	../config.h	\
+	gimpfeatures.h	\
+	libgimpi.a	\
+	gimp-$(GIMP_VER).gcc.dll	\
+	gimpui-$(GIMP_VER).gcc.dll
+
+../config.h : ../config.h.win32
+	cp ../config.h.win32 ../config.h
+
+gimpfeatures.h : gimpfeatures.h.win32
+	cp gimpfeatures.h.win32 gimpfeatures.h
+
+install : all
+	$(INSTALL) gimp-$(GIMP_VER).gcc.dll $(BIN)
+	$(INSTALL) gimpui-$(GIMP_VER).gcc.dll $(BIN)
+
+gimpi_OBJECTS = \
+	gimpenv.o	\
+	gimpchainbutton.o\
+	gimpfileselection.o\
+	gimpmatrix.o	\
+	gimppatheditor.o\
+	gimpprotocol.o	\
+	gimpsizeentry.o	\
+	gimpunitmenu.o	\
+	gimpwire.o	\
+	gserialize.o	\
+	parasite.o
+
+libgimpi.a : $(gimpi_OBJECTS)
+	ar cr libgimpi.a $(gimpi_OBJECTS)
+
+gimp_OBJECTS = \
+	gimp.o		\
+	gimpchannel.o	\
+	gimpdisplay.o	\
+	gimpdrawable.o	\
+	gimpenv.o	\
+	gimpgradient.o	\
+	gimpimage.o	\
+	gimplayer.o	\
+	gimpmatrix.o	\
+	gimppalette.o	\
+	gimpparasite.o	\
+	gimppixelrgn.o	\
+	gimpprotocol.o	\
+	gimptile.o	\
+	gimpunit.o	\
+	gimpwire.o	\
+	gserialize.o	\
+	parasite.o
+
+gimp-$(GIMP_VER).gcc.dll : $(gimp_OBJECTS) gimp.def
+	$(GLIB)/build-dll gimp $(GIMP_VER).gcc gimp.def -s $(gimp_OBJECTS) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc -luser32
+
+# Pass -DLIBGIMP_COMPILATION when compiling gimp_OBJECTS
+
+gimp.o : gimp.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimp.c
+gimpchannel.o : gimpchannel.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpchannel.c
+gimpdisplay.o : gimpdisplay.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpdisplay.c
+gimpdrawable.o : gimpdrawable.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpdrawable.c
+gimpenv.o : gimpenv.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpenv.c
+gimpgradient.o : gimpgradient.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpgradient.c
+gimpimage.o : gimpimage.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpimage.c
+gimplayer.o : gimplayer.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimplayer.c
+gimpmatrix.o : gimpmatrix.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpmatrix.c
+gimppalette.o : gimppalette.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimppalette.c
+gimpparasite.o : gimpparasite.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpparasite.c
+gimppixelrgn.o : gimppixelrgn.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimppixelrgn.c
+gimpprotocol.o : gimpprotocol.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpprotocol.c
+gimptile.o : gimptile.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimptile.c
+gimpunit.o : gimpunit.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpunit.c
+gimpwire.o : gimpwire.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpwire.c
+gserialize.o : gserialize.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gserialize.c
+parasite.o : parasite.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION parasite.c
+
+gimpui_OBJECTS = \
+	gimpmenu.o	\
+	gimpbrushmenu.o	\
+	gimpfileselection.o\
+	gimpgradientmenu.o\
+	gimppatternmenu.o
+
+gimpui-$(GIMP_VER).gcc.dll : $(gimpui_OBJECTS) gimpui.def
+	$(GLIB)/build-dll gimpui $(GIMP_VER).gcc gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER).gcc -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc
+
+# General rule for compiling, used by the objects that don't go into
+# gimp-$(GIMP_VER).gcc.dll. 
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+clean:
+	-rm *.o *.exe *.dll *.a *.base *.exp 

@@ -27,6 +27,10 @@
  * 0.1 First version.
  */
 
+#include "config.h"
+
+#include <glib.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,6 +46,9 @@
 #include "sel2path.h"
 #include "libgimp/stdplugins-intl.h"
 
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
 
 #define MID_POINT 127
 

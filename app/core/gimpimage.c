@@ -1464,7 +1464,10 @@ gimp_image_initialize_projection (GimpImage *gimage,
 	  (off_y <= y) &&
 	  (off_x + drawable_width (GIMP_DRAWABLE(layer)) >= x + w) &&
 	  (off_y + drawable_height (GIMP_DRAWABLE(layer)) >= y + h))
-	coverage = 1;
+	{
+	  coverage = 1;
+	  break;
+	}
 
       list = g_slist_next (list);
     }

@@ -98,6 +98,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
    ones here are only needed by us, so we do not provide them in
    unprototyped form.  Others are declared both ways in lib.h.  */
 
+#if 0				/* These aren't actually defined anywhere */
 /* Return the current date and time a la date(1).  */
 extern string now (void);
 
@@ -116,6 +117,8 @@ extern const unsigned atou (string);
 extern string itoa (int);
 extern string utoa (unsigned);
 extern string dtoa (double);
+
+#endif
 
 /* Like their stdio counterparts, but abort on error, after calling
    perror(3) with FILENAME as its argument.  */

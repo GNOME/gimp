@@ -1,3 +1,55 @@
+1999-07-14  Tor Lillqvist  <tml@iki.fi>
+
+	* app/makefile.cygwin
+	* app/makefile.msc
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc
+	* modules/makefile.cygwin
+	* modules/makefile.msc
+	* tools/gcg/makefile.cygwin: Various updates. GCC-compiled DLL
+	name change.
+
+	* app/context_manager.c: Include paint_options.h for prototype.
+
+	* app/gimpimage.c (gimp_image_initialize_projection): Break out of
+ 	loop as soon as possible.
+
+	* app/menus.c (menus_last_opened_cmd_callback): Check if referring
+ 	to entry not in list.
+
+	* app/module_db.c (valid_module_name): (Win32) Require module DLL
+ 	names to include name of compiler built with.
+
+	* app/paths_dialog.c (paths_draw_segment_points): No use to draw
+ 	lines if we have less that two points.
+
+	* app/qmask.c: Include stdio.h and floating_sel.h.
+
+	* libgimp/makefile.cygwin: New file.
+
+	* libgimp/Makefile.am:  Distribute above file.
+
+	* libgimp/gimp.def: Update.
+
+	* libgimp/gimpenv.c (gimp_directory): Don't warn about missing
+ 	home directory on Win32, it is perfectly natural.
+
+	* plug-ins/sel2path/global.h: Bypass unused declarations, some
+	of which clash with functions in MSVCRT.
+
+	* plug-ins/sel2path/math.c
+	* modules/colorsel_water.c: Define M_PI if necessary.
+
+	* plug-ins/sel2path/sel2path.c: Include config.h and
+ 	glib.h. Define rint() if needed.
+	
+	* plug-ins/sel2path/vector.c: Include glib.h (for hypot() renaming
+ 	on Win32; In the MS C runtime, as hypot() is non-ANSI, it's called
+ 	_hypot(), sigh).
+
+	* plug-ins/sinus/sinus_logo.h: Use indexed format, it is easier on
+ 	some compilers than the huge string.
+
 Wed Jul 14 11:42:49 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/ink.c: we were leaking a blob at each button_press
@@ -288,9 +340,6 @@ Mon Jul  5 20:39:42 BST 1999  Austin Donnelly  <austin@gimp.org>
 	demand :)
 
 1999-07-04  Tor Lillqvist  <tml@iki.fi>
-
-	* libgimp/gimpenv.c (gimp_directory): Don't warn about missing
- 	home directory on Win32, it is perfectly natural.
 
 	* app/color_notebook.c
 	* libgimp/color_selector.h: Bypass the declaration of the exported

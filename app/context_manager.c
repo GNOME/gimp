@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimprc.h"
+#include "paint_options.h"
 #include "tools.h"
 
 static GimpContext * global_user_context;

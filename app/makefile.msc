@@ -4,6 +4,10 @@
 # Change this to wherever you want to install gimp.exe.
 BIN = C:\gimp\bin
 
+################################################################
+
+# Nothing much configurable below
+
 !IFNDEF DEBUG
 # Full optimization:
 OPTIMIZE = -Ox -MD
@@ -13,10 +17,6 @@ LINKDEBUG = /subsystem:windows
 OPTIMIZE = -Zi -MDd
 LINKDEBUG = /subsystem:console /debug
 !ENDIF
-
-################################################################
-
-# Nothing much configurable below
 
 # cl -? describes the options
 CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -nologo
@@ -214,6 +214,7 @@ gimp_OBJECTS = \
 	preferences_dialog.obj	\
 	procedural_db.obj	\
 	procedural_db_cmds.obj	\
+	qmask.obj		\
 	rect_select.obj		\
 	regex.obj		\
 	resize.obj		\

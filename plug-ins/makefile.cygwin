@@ -22,21 +22,21 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # the one used with Microsoft's nmake, which has silly limits.
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
+COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
-COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
+COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sgi sinus struc unsharp
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sel2path sgi sinus struc unsharp
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = guash user_filter twain
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze curve_bend fuse gimp_ace gimpressionist guash user_filter twain
 
 # The main target
 
@@ -268,6 +268,19 @@ EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 endif
 
+ifdef EXTRA_sel2path
+OBJECTS = \
+	curve.o \
+	edge.o \
+	fit.o \
+	math.o \
+	pxl-outline.o \
+	sel2path.o \
+	sel2path_adv_dialog.o \
+	spline.o \
+	vector.o
+endif
+
 ifdef EXTRA_sgi
 OBJECTS = \
 	sgi.o	\
@@ -288,7 +301,34 @@ endif
 ifdef EXTRA_unsharp
 OBJECTS = \
 	dialog_f.o \
+	dialog_i.o \
 	unsharp.o
+endif
+
+ifdef EXTRA_gimp_ace
+EXTRACFLAGS = -DGLACE_GIMP
+OBJECTS = \
+	gimp_ace.o \
+	glace.o \
+	glaceG.o
+endif
+
+ifdef EXTRA_gimpressionist
+OBJECTS = \
+	gimpressionist.o \
+	ppmtool.o \
+	paper.o \
+	brush.o \
+	orientation.o \
+	preview.o \
+	repaint.o \
+	general.o \
+	gimp.o \
+	plasma.o \
+	presets.o \
+	about.o \
+	placement.o \
+	orientmap.o
 endif
 
 ifdef EXTRA_guash
@@ -296,6 +336,12 @@ HAVE_RESOURCE = YES
 endif
 
 ifdef EXTRA_user_filter
+
+uf_lexer.c : uf_lexer.l
+	flex -Cem -ouf_lexer.c uf_lexer.l
+uf_parser.tab.c: uf_parser.y
+	bison --defines --verbose uf_parser.y
+
 OBJECTS = \
 	libyywrap.o \
 	uf_eval.o \
@@ -353,7 +399,7 @@ RESOURCE = ../../app/gimpres.o
 endif
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/megawidget -lmegawidget -L $(PLUGINDIR)/gpc -lgpc  -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -mwindows -s -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/megawidget -lmegawidget -L $(PLUGINDIR)/gpc -lgpc  -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER).gcc -lgimpui-$(GIMP_VER).gcc -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN)res.o : $(PLUGIN).rc
 	windres $(PLUGIN).rc $(PLUGIN)res.o

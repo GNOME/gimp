@@ -1884,7 +1884,7 @@ paths_draw_segment_points(BezierSelect *bezier_sel,
 
   pwidget = (PATHWIDGETP)gtk_clist_get_row_data(GTK_CLIST(paths_dialog->paths_list),row);
   
-  if(pcount == 0)
+  if(pcount < 2)
     return;
 
   g_return_if_fail(pwidget != NULL);

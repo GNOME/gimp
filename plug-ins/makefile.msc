@@ -21,21 +21,21 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
+COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
 COMMON5 = scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sgi sinus struc unsharp
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gfli ifscompose maze mosaic pagecurl print rcm sel2path sgi sinus struc unsharp
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = guash user_filter twain
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze curve_bend fuse gimp_ace gimpressionist guash user_filter twain
 
 # The main target
 
@@ -134,6 +134,9 @@ scripts-install :
 # This part is used when building individual plug-ins or one of
 # the libraries. 
 
+# If a plug-in has several object files, or needs extra libraries or
+# compiler flags, these are in an EXTRA_xxx part.
+
 !IFDEF EXTRA_Lighting
 OBJECTS = \
 	lighting_apply.obj \
@@ -153,6 +156,7 @@ OBJECTS = \
 	mapobject_preview.obj \
 	mapobject_shade.obj \
 	mapobject_ui.obj
+OPTIMIZE =
 !ENDIF
 
 !IFDEF EXTRA_bmp
@@ -222,6 +226,10 @@ OBJECTS = \
 	ifscompose_utils.obj
 !ENDIF
 
+!IFDEF EXTRA_iwarp
+OPTIMIZE =
+!ENDIF
+
 !IFDEF EXTRA_jpeg
 # Location of jpeg-6b sources
 JPEG = $(TOP)\..\jpeg-6b
@@ -281,6 +289,19 @@ EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
 
+!IFDEF EXTRA_sel2path
+OBJECTS = \
+	curve.obj \
+	edge.obj \
+	fit.obj \
+	math.obj \
+	pxl-outline.obj \
+	sel2path.obj \
+	sel2path_adv_dialog.obj \
+	spline.obj \
+	vector.obj
+!ENDIF
+
 !IFDEF EXTRA_sgi
 OBJECTS = \
 	sgi.obj \
@@ -301,7 +322,35 @@ EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB)\zlib.lib user32.lib
 !IFDEF EXTRA_unsharp
 OBJECTS = \
 	dialog_f.obj \
+	dialog_i.obj \
 	unsharp.obj
+!ENDIF
+
+!IFDEF EXTRA_gimp_ace
+EXTRACFLAGS = -DGLACE_GIMP
+OBJECTS = \
+	gimp_ace.obj \
+	glace.obj \
+	glaceG.obj
+!ENDIF
+
+!IFDEF EXTRA_gimpressionist
+
+OBJECTS = \
+	gimpressionist.obj \
+	ppmtool.obj \
+	paper.obj \
+	brush.obj \
+	orientation.obj \
+	preview.obj \
+	repaint.obj \
+	general.obj \
+	gimp.obj \
+	plasma.obj \
+	presets.obj \
+	about.obj \
+	placement.obj \
+	orientmap.obj
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -309,6 +358,12 @@ HAVE_RESOURCE = YES
 !ENDIF
 
 !IFDEF EXTRA_user_filter
+
+uf_lexer.c : uf_lexer.l
+	flex -Cem -ouf_lexer.c uf_lexer.l
+uf_parser.tab.c: uf_parser.y
+	bison --defines --verbose uf_parser.y
+
 OBJECTS = \
 	libyywrap.obj \
 	uf_eval.obj \

@@ -18,10 +18,12 @@
 
 #include <glib.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "appenv.h" 
 #include "channel.h"
+#include "floating_sel.h"
 #include "gdisplayF.h"
 #include "gimpcontext.h"
 #include "gimage_mask.h"

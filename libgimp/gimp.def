@@ -1,6 +1,6 @@
 EXPORTS
-	g_free_serial_description
 	g_deserialize
+	g_free_serial_description
 	g_new_serial_description
 	g_new_serial_item
 	g_serialize
@@ -24,8 +24,8 @@ EXPORTS
 	gimp_channel_width
 	gimp_color_cube
 	gimp_data_directory
-	gimp_destroy_params
 	gimp_destroy_paramdefs
+	gimp_destroy_params
 	gimp_directory
 	gimp_display_delete
 	gimp_display_new
@@ -86,8 +86,8 @@ EXPORTS
 	gimp_image_detach_parasite
 	gimp_image_disable_undo
 	gimp_image_enable_undo
-	gimp_image_find_parasite
 	gimp_image_find_next_guide
+	gimp_image_find_parasite
 	gimp_image_flatten
 	gimp_image_floating_selection
 	gimp_image_get_active_channel
@@ -100,8 +100,8 @@ EXPORTS
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
 	gimp_image_get_layers
-	gimp_image_get_selection
 	gimp_image_get_resolution
+	gimp_image_get_selection
 	gimp_image_get_unit
 	gimp_image_height
 	gimp_image_lower_channel
@@ -162,17 +162,20 @@ EXPORTS
 	gimp_layer_width
 	gimp_main
 	gimp_major_version
+	gimp_matrix_determinant
 	gimp_matrix_duplicate
-	gimp_matrix_transform_point
-	gimp_matrix_mult
 	gimp_matrix_identity
-	gimp_matrix_translate
-	gimp_matrix_scale
+	gimp_matrix_invert
+	gimp_matrix_is_diagonal
+	gimp_matrix_is_identity
+	gimp_matrix_is_simple
+	gimp_matrix_mult
 	gimp_matrix_rotate
+	gimp_matrix_scale
+	gimp_matrix_transform_point
+	gimp_matrix_translate
 	gimp_matrix_xshear
 	gimp_matrix_yshear
-	gimp_matrix_determinant
-	gimp_matrix_invert
 	gimp_message
 	gimp_micro_version
 	gimp_minor_version
@@ -221,8 +224,8 @@ EXPORTS
 	gimp_unit_get_digits
 	gimp_unit_get_factor
 	gimp_unit_get_identifier
-	gimp_unit_get_number_of_units
 	gimp_unit_get_number_of_built_in_units
+	gimp_unit_get_number_of_units
 	gimp_unit_get_plural
 	gimp_unit_get_singular
 	gimp_unit_get_symbol

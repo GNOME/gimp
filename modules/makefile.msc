@@ -9,10 +9,20 @@ BIN = $(GIMP)\modules
 
 # Nothing much configurable below
 
-# cl -? describes the options
-CC = cl -G5 -GF -Ox -W3 -MD -nologo
+!IFNDEF DEBUG
+# Full optimization:
+OPTIMIZE = -Ox -MD
+LINKDEBUG = /subsystem:windows
+!ELSE
+# Debugging:
+OPTIMIZE = -Zi -MDd
+LINKDEBUG = /subsystem:console /debug
+!ENDIF
 
-LDFLAGS = /link /machine:ix86
+# cl -? describes the options
+CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
+
+LDFLAGS = /link $(LINKDEBUG)
 INSTALL = copy
 
 GIMP_VER = 1.1
@@ -26,32 +36,35 @@ GTK = ..\..\gtk+
 CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)
 
 MODULES = \
-	colorsel_gtk.dll	\
-	colorsel_triangle.dll
+	colorsel_gtk-$(GIMP_VER).msvc.dll \
+	colorsel_triangle-$(GIMP_VER).msvc.dll \
+	colorsel_water-$(GIMP_VER).msvc.dll
 
 
 all : \
 	$(MODULES)
 
 install : all
-	$(INSTALL) colorsel_gtk.dll $(BIN)
-	$(INSTALL) colorsel_triangle.dll $(BIN)
+	for %m in ($(MODULES)) do copy %m $(BIN)
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
 
-colorsel_gtk.dll : colorsel_gtk.obj module.def
-	$(CC) $(CFLAGS) -LD -Fecolorsel_gtk.dll colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+colorsel_gtk-$(GIMP_VER).msvc.dll : colorsel_gtk.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
-colorsel_triangle.dll : colorsel_triangle.obj module.def
-	$(CC) $(CFLAGS) -LD -Fecolorsel_triangle.dll colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+colorsel_triangle-$(GIMP_VER).msvc.dll : colorsel_triangle.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+
+colorsel_water-$(GIMP_VER).msvc.dll : colorsel_water.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
 # General rule for building 
 .c.obj:
 	$(CC) $(CFLAGS) -GD -c $<
 
 clean:
-	del *.exe
+	del *.dll
 	del *.lib
 	del *.obj
 	del *.exp

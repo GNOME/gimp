@@ -470,11 +470,23 @@ valid_module_name (const char *filename)
 
   if (strcmp (basename + len - 3, ".so"))
     return FALSE;
-#else
-  if (len < 1 + 4)
+#elif defined (__GNUC__)
+  /* When compiled with gcc on Win32, require modules to be compiled with
+   * gcc, too. Use the convention that gcc-compiled GIMP modules are named
+   * *.gcc.dll. Subject to change.
+   */
+  if (len < 1 + 8)
       return FALSE;
 
-  if (g_strcasecmp (basename + len - 4, ".dll"))
+  if (g_strcasecmp (basename + len - 8, ".gcc.dll"))
+    return FALSE;
+#else
+  /* When compiled with MSVC, the modules should be called *.msvc.dll.
+   */
+  if (len < 1 + 9)
+      return FALSE;
+
+  if (g_strcasecmp (basename + len - 9, ".msvc.dll"))
     return FALSE;
 #endif
 
