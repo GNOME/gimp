@@ -219,7 +219,7 @@ static GtkRadioActionEntry color_entries[] = {
 };
 
 static GtkRadioActionEntry mapping_entries[] = {
-  { "Arrow", IMAP_STOCK_ARROW, "Arrow", NULL, "Select existing area", 0},
+  { "Arrow", GIMP_STOCK_CURSOR, "Arrow", NULL, "Select existing area", 0},
   { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL, 
     "Define Rectangle area", 1},
   { "Circle", IMAP_STOCK_CIRCLE, "Circle", NULL, "Define Circle/Oval area", 2},

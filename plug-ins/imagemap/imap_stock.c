@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,12 +35,10 @@ static GtkIconFactory *imap_icon_factory = NULL;
 
 static GtkStockItem imap_stock_items[] =
 {
-  { IMAP_STOCK_ARROW,        	NULL, 0, 0, NULL },
   { IMAP_STOCK_CIRCLE,		NULL, 0, 0, NULL },
   { IMAP_STOCK_COORD,  	 	NULL, 0, 0, NULL },
   { IMAP_STOCK_DIMENSION,       NULL, 0, 0, NULL },
   { IMAP_STOCK_JAVA, 		NULL, 0, 0, NULL },
-  { IMAP_STOCK_LINK,       	NULL, 0, 0, NULL },
   { IMAP_STOCK_MAP_INFO,
     N_("Edit Map Info..."), 0, 0, GETTEXT_PACKAGE "-std-plug-ins" },
   { IMAP_STOCK_POLYGON,       	NULL, 0, 0, NULL },
@@ -81,12 +79,10 @@ init_stock_icons (void)
 {
    imap_icon_factory = gtk_icon_factory_new ();
 
-   add_stock_icon (IMAP_STOCK_ARROW,     stock_arrow);
    add_stock_icon (IMAP_STOCK_CIRCLE,    stock_circle);
    add_stock_icon (IMAP_STOCK_COORD,     stock_coord);
    add_stock_icon (IMAP_STOCK_DIMENSION, stock_dimension);
    add_stock_icon (IMAP_STOCK_JAVA,      stock_java);
-   add_stock_icon (IMAP_STOCK_LINK,      stock_link);
    add_stock_icon (IMAP_STOCK_MAP_INFO,  stock_map_info);
    add_stock_icon (IMAP_STOCK_POLYGON,   stock_polygon);
    add_stock_icon (IMAP_STOCK_RECTANGLE, stock_rectangle);

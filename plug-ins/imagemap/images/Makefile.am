@@ -1,12 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
 STOCK_IMAGES = \
-	stock-arrow.png		\
 	stock-circle.png	\
 	stock-coord.png		\
 	stock-dimension.png	\
 	stock-java.png		\
-	stock-link.png		\
 	stock-map-info.png	\
 	stock-polygon.png	\
 	stock-rectangle.png	\

@@ -1,3 +1,15 @@
+2005-04-04  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_stock.c: replaced 2 icons by GIMP stock
+	icons
+
+	* plug-ins/imagemap/images/Makefile.am: changed accordingly
+	
+	* plug-ins/imagemap/images/stock-arrow.png
+	* plug-ins/imagemap/images/stock-link.png: removed accordingly
+	
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.c (gimp_data_create_filename): return early if
