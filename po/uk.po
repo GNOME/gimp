@@ -3808,7 +3808,7 @@ msgstr "/╤нструменти/Перетворення"
 
 #: app/menus.c:547
 msgid "/Tools/Paint Tools"
-msgstr "/╤нструменти/Пензель"
+msgstr "/╤нструменти/Малювання"
 
 #. <Image>/Dialogs
 #: app/menus.c:552
@@ -5633,9 +5633,8 @@ msgid "Pick colors from the image"
 msgstr "Взяти кол╕р ╕з зображення"
 
 #: app/tools.c:342
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/╤нструменти/Заповнення"
+msgstr "/╤нструменти/Малювання/Заповнення"
 
 #: app/tools.c:345
 msgid "Fill with a color or pattern"
@@ -5646,45 +5645,40 @@ msgid "Blend"
 msgstr "Злиття"
 
 #: app/tools.c:358
-#, fuzzy
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/╤нструменти/Злиття"
+msgstr "/╤нструменти/Малювання/Злиття"
 
 #: app/tools.c:361
 msgid "Fill with a color gradient"
 msgstr "Заповнення град╕╓нтом кольору"
 
 #: app/tools.c:374
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/╤нструменти/Ол╕вець"
+msgstr "/╤нструменти/Малювання/Ол╕вець"
 
 #: app/tools.c:377
 msgid "Draw sharp pencil strokes"
 msgstr "Нанесення ч╕тких контур╕в обвод╕в ол╕вцем"
 
 #: app/tools.c:390
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/╤нструменти/Пензель"
+msgstr "/╤нструменти/Малювання/Пензель"
 
 #: app/tools.c:393
 msgid "Paint fuzzy brush strokes"
 msgstr "Нанесення розмитих мазк╕в пензлем"
 
 #: app/tools.c:406
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/╤нструменти/Гумка"
+msgstr "/╤нструменти/Малювання/Гумка"
 
 #: app/tools.c:409
 msgid "Erase to background or transparency"
 msgstr "Витирання до тла чи прозорост╕"
 
 #: app/tools.c:422
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/╤нструменти/Пензель"
+msgstr "/╤нструменти/Малювання/Аерограф"
 
 #: app/tools.c:425
 msgid "Airbrush with variable pressure"
@@ -5695,9 +5689,8 @@ msgid "Clone"
 msgstr "Клонування"
 
 #: app/tools.c:438
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/╤нструменти/Клонування"
+msgstr "/╤нструменти/Малювання/Клонування"
 
 #: app/tools.c:441
 msgid "Paint using patterns or image regions"
@@ -5708,9 +5701,8 @@ msgid "Convolve"
 msgstr "Розмивач"
 
 #: app/tools.c:454
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/╤нструменти/Розмивач"
+msgstr "/╤нструменти/Малювання/Розмивач"
 
 #: app/tools.c:457
 msgid "Blur or sharpen"
@@ -5721,32 +5713,28 @@ msgid "Ink"
 msgstr "Чорнило"
 
 #: app/tools.c:470
-#, fuzzy
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/╤нструменти/Пензель"
+msgstr "/╤нструменти/Малювання/Чорнило"
 
 #: app/tools.c:473
 msgid "Draw in ink"
 msgstr "Малювання чорнилом"
 
 #: app/tools.c:486
-#, fuzzy
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/╤нструменти/Осв╕тлення-Затемнення"
+msgstr "/╤нструменти/Малювання/Осв╕тлення-Затемнення"
 
 #: app/tools.c:501 app/tools.c:505
 msgid "Smudge"
 msgstr "Палець"
 
 #: app/tools.c:502
-#, fuzzy
 msgid "/Tools/Paint Tools/Smudge"
-msgstr "/╤нструменти/Палець"
+msgstr "/╤нструменти/Малювання/Палець"
 
 #: app/tools.c:518
-#, fuzzy
 msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/╤нструменти/Аерограф Xinput"
+msgstr "/╤нструменти/Малювання/Аерограф Xinput"
 
 #: app/tools.c:521
 msgid "Natural Airbrush"
