@@ -215,8 +215,14 @@ file_open_with_proc_and_display (Gimp               *gimp,
       documents = GIMP_DOCUMENT_LIST (gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri);
 
-      /* save a thumbnail of every opened image */
-      gimp_imagefile_save_thumbnail (imagefile, gimage);
+      /*  can only create a thumbnail if the passed uri and the
+       *  resulting image's uri match.
+       */
+      if (! strcmp (uri, gimp_image_get_uri (gimage)))
+        {
+          /* save a thumbnail of every opened image */
+          gimp_imagefile_save_thumbnail (imagefile, gimage);
+        }
     }
 
   return gimage;

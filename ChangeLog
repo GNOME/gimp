@@ -1,5 +1,18 @@
 2003-11-27  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/ps.c (create_new_image): don't add the page
+	number to the filename of the image corresponsing to the
+	postscript file's first page. Enables thumbnail generation
+	for PS files.
+
+	Indented function prototypes.
+
+	* app/file/file-open.c (file_open_with_proc_and_display): create a
+	thumbnail of the opened image only if the image's uri matches the
+	passed uri.
+
+2003-11-27  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/animationplay.c (is_ms_tag): more
 	s/toupper/g_ascii_toupper/.
 

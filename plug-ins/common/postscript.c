@@ -153,86 +153,86 @@ static PSSaveVals psvals =
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void   query            (void);
+static void   run              (const gchar       *name,
+                                gint               nparams,
+                                const GimpParam   *param,
+                                gint              *nreturn_vals,
+                                GimpParam        **return_vals);
 
-static gint32 load_image (const gchar   *filename);
-static gint   save_image (const gchar   *filename,
-                          gint32         image_ID,
-                          gint32         drawable_ID);
+static gint32 load_image       (const gchar       *filename);
+static gint   save_image       (const gchar       *filename,
+                                gint32             image_ID,
+                                gint32             drawable_ID);
 
-static gint save_gray  (FILE   *ofp,
-                        gint32  image_ID,
-                        gint32  drawable_ID);
-static gint save_bw    (FILE   *ofp,
-                        gint32  image_ID,
-                        gint32  drawable_ID);
-static gint save_index (FILE   *ofp,
-                        gint32  image_ID,
-                        gint32  drawable_ID);
-static gint save_rgb   (FILE   *ofp,
-                        gint32  image_ID,
-                        gint32  drawable_ID);
+static gint   save_gray        (FILE              *ofp,
+                                gint32             image_ID,
+                                gint32             drawable_ID);
+static gint   save_bw          (FILE              *ofp,
+                                gint32             image_ID,
+                                gint32             drawable_ID);
+static gint   save_index       (FILE              *ofp,
+                                gint32             image_ID,
+                                gint32             drawable_ID);
+static gint   save_rgb         (FILE              *ofp,
+                                gint32             image_ID,
+                                gint32             drawable_ID);
 
-static gint32 create_new_image (const gchar   *filename,
-				guint          pagenum,
-				guint          width,
-				guint          height,
+static gint32 create_new_image (const gchar       *filename,
+				guint              pagenum,
+				guint              width,
+				guint              height,
 				GimpImageBaseType  type,
-				gint32        *layer_ID,
-				GimpDrawable **drawable,
-				GimpPixelRgn  *pixel_rgn);
+				gint32            *layer_ID,
+				GimpDrawable     **drawable,
+				GimpPixelRgn      *pixel_rgn);
 
 static void   check_load_vals  (void);
 static void   check_save_vals  (void);
 
-static gint   page_in_list  (gchar *list,
-			     guint  pagenum);
+static gint   page_in_list     (gchar             *list,
+                                guint              pagenum);
 
-static gint   get_bbox      (const gchar *filename,
-			     gint        *x0,
-			     gint        *y0,
-			     gint        *x1,
-			     gint        *y1);
+static gint   get_bbox         (const gchar       *filename,
+                                gint              *x0,
+                                gint              *y0,
+                                gint              *x1,
+                                gint              *y1);
 
-static FILE  *ps_open       (const gchar      *filename,
-			     const PSLoadVals *loadopt,
-			     gint             *llx,
-			     gint             *lly,
-			     gint             *urx,
-			     gint             *ury,
-			     gint             *is_epsf);
+static FILE * ps_open          (const gchar       *filename,
+                                const PSLoadVals  *loadopt,
+                                gint              *llx,
+                                gint              *lly,
+                                gint              *urx,
+                                gint              *ury,
+                                gint              *is_epsf);
 
-static void   ps_close      (FILE *ifp);
+static void   ps_close         (FILE              *ifp);
 
-static gint32 skip_ps       (FILE *ifp);
+static gint32 skip_ps          (FILE              *ifp);
 
-static gint32 load_ps       (const gchar *filename,
-			     guint        pagenum,
-			     FILE        *ifp,
-			     gint         llx,
-			     gint         lly,
-			     gint         urx,
-			     gint         ury);
+static gint32 load_ps          (const gchar       *filename,
+                                guint              pagenum,
+                                FILE              *ifp,
+                                gint               llx,
+                                gint               lly,
+                                gint               urx,
+                                gint               ury);
 
-static void save_ps_header  (FILE        *ofp,
-			     const gchar *filename);
-static void save_ps_setup   (FILE   *ofp,
-			     gint32  drawable_ID,
-			     gint    width,
-			     gint    height,
-			     gint    bpp);
-static void save_ps_trailer (FILE   *ofp);
-static void save_ps_preview (FILE   *ofp,
-                             gint32  drawable_ID);
-static void dither_grey     (guchar *grey,
-			     guchar *bw,
-			     gint    npix,
-			     gint    linecount);
+static void   save_ps_header   (FILE              *ofp,
+                                const gchar       *filename);
+static void   save_ps_setup    (FILE              *ofp,
+                                gint32             drawable_ID,
+                                gint               width,
+                                gint               height,
+                                gint               bpp);
+static void   save_ps_trailer  (FILE              *ofp);
+static void   save_ps_preview  (FILE              *ofp,
+                                gint32             drawable_ID);
+static void   dither_grey      (guchar            *grey,
+                                guchar            *bw,
+                                gint               npix,
+                                gint               linecount);
 
 
 #ifdef G_OS_WIN32
@@ -267,9 +267,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 /* The run mode */
 static GimpRunMode l_run_mode;
 
-static void compress_packbits (int nin,
+static void compress_packbits (int            nin,
                                unsigned char *src,
-                               int *nout,
+                               int           *nout,
                                unsigned char *dst);
 
 
@@ -1511,27 +1511,36 @@ read_pnmraw_type (FILE *ifp,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (const gchar *filename,
-                  guint        pagenum,
-                  guint        width,
-                  guint        height,
+create_new_image (const gchar        *filename,
+                  guint               pagenum,
+                  guint               width,
+                  guint               height,
                   GimpImageBaseType   type,
-                  gint32      *layer_ID,
-                  GimpDrawable  **drawable,
-                  GimpPixelRgn   *pixel_rgn)
+                  gint32             *layer_ID,
+                  GimpDrawable      **drawable,
+                  GimpPixelRgn       *pixel_rgn)
 {
-  gint32 image_ID;
-  GimpImageType gdtype;
-  char *tmp;
+  gint32         image_ID;
+  GimpImageType  gdtype;
 
   if (type == GIMP_GRAY) gdtype = GIMP_GRAY_IMAGE;
   else if (type == GIMP_INDEXED) gdtype = GIMP_INDEXED_IMAGE;
   else gdtype = GIMP_RGB_IMAGE;
 
   image_ID = gimp_image_new (width, height, type);
-  tmp = g_strdup_printf ("%s-pg%ld", filename, (long)pagenum);
-  gimp_image_set_filename (image_ID, tmp);
-  g_free (tmp);
+
+  if (pagenum > 1)
+    {
+      gchar *tmp;
+
+      tmp = g_strdup_printf ("%s-pg%ld", filename, (long)pagenum);
+      gimp_image_set_filename (image_ID, tmp);
+      g_free (tmp);
+    }
+  else
+    {
+      gimp_image_set_filename (image_ID, filename);
+    }
 
   *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
 			      gdtype, 100, GIMP_NORMAL_MODE);
@@ -1541,7 +1550,7 @@ create_new_image (const gchar *filename,
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
 		       (*drawable)->height, TRUE, FALSE);
 
-  return (image_ID);
+  return image_ID;
 }
 
 
