@@ -22,22 +22,6 @@
 
 /*  image undos  */
 
-gboolean gimp_image_undo_push_image                 (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpDrawable  *drawable,
-                                                     gint           x1,
-                                                     gint           y1,
-                                                     gint           x2,
-                                                     gint           y2);
-gboolean gimp_image_undo_push_image_mod             (GimpImage     *gimage,
-                                                     const gchar   *undo_desc,
-                                                     GimpDrawable  *drawable,
-                                                     gint           x1,
-                                                     gint           y1,
-                                                     gint           x2,
-                                                     gint           y2,
-                                                     TileManager   *tiles,
-                                                     gboolean       sparse);
 gboolean gimp_image_undo_push_image_type            (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
 gboolean gimp_image_undo_push_image_size            (GimpImage     *gimage,
@@ -52,6 +36,19 @@ gboolean gimp_image_undo_push_image_guide           (GimpImage     *gimage,
                                                      GimpGuide     *guide);
 gboolean gimp_image_undo_push_image_colormap        (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
+
+
+/*  drawable undo  */
+
+gboolean gimp_image_undo_push_drawable              (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     TileManager   *tiles,
+                                                     gboolean       sparse,
+                                                     gint           x,
+                                                     gint           y,
+                                                     gint           width,
+                                                     gint           height);
 
 
 /*  mask undo  */

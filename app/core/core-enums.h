@@ -447,14 +447,13 @@ typedef enum /*< pdb-skip >*/
 
   /*  Undo types which actually do something  */
 
-  GIMP_UNDO_IMAGE,                    /*< desc="Image"                     >*/
-  GIMP_UNDO_IMAGE_MOD,                /*< desc="Image Mod"                 >*/
   GIMP_UNDO_IMAGE_TYPE,               /*< desc="Image Type"                >*/
   GIMP_UNDO_IMAGE_SIZE,               /*< desc="Image Size"                >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Resolution Change"         >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                      >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/
+  GIMP_UNDO_DRAWABLE,                 /*< desc="Drawable Mod"              >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection Mask"            >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename Item"               >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move Item"                 >*/

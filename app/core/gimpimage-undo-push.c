@@ -33,7 +33,6 @@
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
-#include "base/tile.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -62,245 +61,6 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimp-intl.h"
-
-
-/****************/
-/*  Image Undo  */
-/****************/
-
-typedef struct _ImageUndo ImageUndo;
-
-struct _ImageUndo
-{
-  TileManager *tiles;
-  gint         x1, y1, x2, y2;
-  gboolean     sparse;
-};
-
-static gboolean undo_pop_image  (GimpUndo            *undo,
-                                 GimpUndoMode         undo_mode,
-                                 GimpUndoAccumulator *accum);
-static void     undo_free_image (GimpUndo            *undo,
-                                 GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_image (GimpImage    *gimage,
-                            const gchar  *undo_desc,
-                            GimpDrawable *drawable,
-                            gint          x1,
-                            gint          y1,
-                            gint          x2,
-                            gint          y2)
-{
-  GimpUndo *new;
-  GimpItem *item;
-  gint64    size;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  item = GIMP_ITEM (drawable);
-
-  x1 = CLAMP (x1, 0, gimp_item_width  (item));
-  y1 = CLAMP (y1, 0, gimp_item_height (item));
-  x2 = CLAMP (x2, 0, gimp_item_width  (item));
-  y2 = CLAMP (y2, 0, gimp_item_height (item));
-
-  size = sizeof (ImageUndo) + ((x2 - x1) * (y2 - y1) *
-                               gimp_drawable_bytes (drawable));
-
-  if ((new = gimp_image_undo_push_item (gimage, item,
-                                        size, sizeof (ImageUndo),
-                                        GIMP_UNDO_IMAGE, undo_desc,
-                                        TRUE,
-                                        undo_pop_image,
-                                        undo_free_image)))
-    {
-      ImageUndo   *image_undo;
-      TileManager *tiles;
-      PixelRegion  srcPR, destPR;
-
-      image_undo = new->data;
-
-      /*  If we cannot create a new temp buf -- either because our
-       *  parameters are degenerate or something else failed, simply
-       *  return an unsuccessful push.
-       */
-      tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-				gimp_drawable_bytes (drawable));
-      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, tiles,
-			 0, 0, (x2 - x1), (y2 - y1), TRUE);
-      copy_region (&srcPR, &destPR);
-
-      /*  set the image undo structure  */
-      image_undo->tiles  = tiles;
-      image_undo->x1     = x1;
-      image_undo->y1     = y1;
-      image_undo->x2     = x2;
-      image_undo->y2     = y2;
-      image_undo->sparse = FALSE;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-gboolean
-gimp_image_undo_push_image_mod (GimpImage    *gimage,
-                                const gchar  *undo_desc,
-                                GimpDrawable *drawable,
-                                gint          x1,
-                                gint          y1,
-                                gint          x2,
-                                gint          y2,
-                                TileManager  *tiles,
-                                gboolean      sparse)
-{
-  GimpUndo *new;
-  GimpItem *item;
-  gint64    size;
-  gint      dwidth, dheight;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (tiles != NULL, FALSE);
-
-  item = GIMP_ITEM (drawable);
-
-  dwidth  = gimp_item_width  (item);
-  dheight = gimp_item_height (item);
-
-  x1 = CLAMP (x1, 0, dwidth);
-  y1 = CLAMP (y1, 0, dheight);
-  x2 = CLAMP (x2, 0, dwidth);
-  y2 = CLAMP (y2, 0, dheight);
-
-  size = sizeof (ImageUndo) + tile_manager_get_memsize (tiles);
-
-  if ((new = gimp_image_undo_push_item (gimage, item,
-                                        size, sizeof (ImageUndo),
-                                        GIMP_UNDO_IMAGE_MOD, undo_desc,
-                                        TRUE,
-                                        undo_pop_image,
-                                        undo_free_image)))
-    {
-      ImageUndo *image_undo;
-
-      image_undo = new->data;
-
-      image_undo->tiles  = tile_manager_ref (tiles);
-      image_undo->x1     = x1;
-      image_undo->y1     = y1;
-      image_undo->x2     = x2;
-      image_undo->y2     = y2;
-      image_undo->sparse = sparse;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_image (GimpUndo            *undo,
-                GimpUndoMode         undo_mode,
-                GimpUndoAccumulator *accum)
-{
-  ImageUndo    *image_undo;
-  GimpDrawable *drawable;
-  TileManager  *tiles;
-  PixelRegion   PR1, PR2;
-  gint          x, y;
-  gint          w, h;
-
-  image_undo = (ImageUndo *) undo->data;
-
-  drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
-
-  tiles = image_undo->tiles;
-
-  /*  some useful values  */
-  x = image_undo->x1;
-  y = image_undo->y1;
-
-  if (GIMP_IS_CHANNEL (drawable))
-    gimp_drawable_invalidate_boundary (drawable);
-
-  if (image_undo->sparse == FALSE)
-    {
-      w = tile_manager_width (tiles);
-      h = tile_manager_height (tiles);
-
-      pixel_region_init (&PR1, tiles,
-			 0, 0, w, h, TRUE);
-      pixel_region_init (&PR2, gimp_drawable_data (drawable),
-			 x, y, w, h, TRUE);
-
-      /*  swap the regions  */
-      swap_region (&PR1, &PR2);
-    }
-  else
-    {
-      Tile *src_tile;
-      Tile *dest_tile;
-      gint  i, j;
-
-      w = image_undo->x2 - image_undo->x1;
-      h = image_undo->y2 - image_undo->y1;
-
-      for (i = y; i < image_undo->y2; i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-	{
-	  for (j = x; j < image_undo->x2; j += (TILE_WIDTH - (j % TILE_WIDTH)))
-	    {
-	      src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
-
-	      if (tile_is_valid (src_tile))
-		{
-		  /* swap tiles, not pixels! */
-
-		  src_tile = tile_manager_get_tile (tiles,
-                                                    j, i, TRUE, FALSE /*TRUE*/);
-		  dest_tile = tile_manager_get_tile (gimp_drawable_data (drawable), j, i, TRUE, FALSE /* TRUE */);
-
-		  tile_manager_map_tile (tiles,
-                                         j, i, dest_tile);
-		  tile_manager_map_tile (gimp_drawable_data (drawable),
-                                         j, i, src_tile);
-#if 0
-		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
-			       tile_data_pointer (dest_tile, 0, 0),
-			       tile_size (src_tile));
-#endif
-
-		  tile_release (dest_tile, FALSE /* TRUE */);
-		  tile_release (src_tile, FALSE /* TRUE */);
-		}
-	    }
-	}
-    }
-
-  if (GIMP_IS_CHANNEL (drawable))
-    GIMP_CHANNEL (drawable)->bounds_known = FALSE;
-
-  gimp_drawable_update (drawable, x, y, w, h);
-
-  return TRUE;
-}
-
-static void
-undo_free_image (GimpUndo     *undo,
-                 GimpUndoMode  undo_mode)
-{
-  ImageUndo *image_undo;
-
-  image_undo = (ImageUndo *) undo->data;
-
-  tile_manager_unref (image_undo->tiles);
-  g_free (image_undo);
-}
 
 
 /*********************/
@@ -816,6 +576,110 @@ undo_free_image_colormap (GimpUndo     *undo,
     g_free (cu->cmap);
 
   g_free (cu);
+}
+
+
+/*******************/
+/*  Drawable Undo  */
+/*******************/
+
+typedef struct _DrawableUndo DrawableUndo;
+
+struct _DrawableUndo
+{
+  TileManager *tiles;
+  gboolean     sparse;
+  gint         x, y, width, height;
+};
+
+static gboolean undo_pop_drawable  (GimpUndo            *undo,
+                                    GimpUndoMode         undo_mode,
+                                    GimpUndoAccumulator *accum);
+static void     undo_free_drawable (GimpUndo            *undo,
+                                    GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_drawable (GimpImage    *gimage,
+                               const gchar  *undo_desc,
+                               GimpDrawable *drawable,
+                               TileManager  *tiles,
+                               gboolean      sparse,
+                               gint          x,
+                               gint          y,
+                               gint          width,
+                               gint          height)
+{
+  GimpItem *item;
+  GimpUndo *new;
+  gint64    size;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (tiles != NULL, FALSE);
+  g_return_val_if_fail (sparse == TRUE ||
+                        tile_manager_width (tiles) == width, FALSE);
+  g_return_val_if_fail (sparse == TRUE ||
+                        tile_manager_height (tiles) == height, FALSE);
+
+  item = GIMP_ITEM (drawable);
+
+  g_return_val_if_fail (sparse == FALSE ||
+                        tile_manager_width (tiles) == gimp_item_width (item),
+                        FALSE);
+  g_return_val_if_fail (sparse == FALSE ||
+                        tile_manager_height (tiles) == gimp_item_height (item),
+                        FALSE);
+
+  size = sizeof (DrawableUndo) + tile_manager_get_memsize (tiles);
+
+  if ((new = gimp_image_undo_push_item (gimage, item,
+                                        size, sizeof (DrawableUndo),
+                                        GIMP_UNDO_DRAWABLE, undo_desc,
+                                        TRUE,
+                                        undo_pop_drawable,
+                                        undo_free_drawable)))
+    {
+      DrawableUndo *drawable_undo = new->data;
+
+      drawable_undo->tiles  = tile_manager_ref (tiles);
+      drawable_undo->sparse = sparse;
+      drawable_undo->x      = x;
+      drawable_undo->y      = y;
+      drawable_undo->width  = width;
+      drawable_undo->height = height;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_drawable (GimpUndo            *undo,
+                   GimpUndoMode         undo_mode,
+                   GimpUndoAccumulator *accum)
+{
+  DrawableUndo *drawable_undo = undo->data;
+
+  gimp_drawable_swap_pixels (GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item),
+                             drawable_undo->tiles,
+                             drawable_undo->sparse,
+                             drawable_undo->x,
+                             drawable_undo->y,
+                             drawable_undo->width,
+                             drawable_undo->height);
+
+  return TRUE;
+}
+
+static void
+undo_free_drawable (GimpUndo     *undo,
+                    GimpUndoMode  undo_mode)
+{
+  DrawableUndo *drawable_undo = undo->data;
+
+  tile_manager_unref (drawable_undo->tiles);
+  g_free (drawable_undo);
 }
 
 

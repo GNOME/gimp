@@ -86,6 +86,13 @@ struct _GimpDrawableClass
                                   const gchar          *undo_desc,
                                   TileManager          *tiles,
                                   GimpImageType         type);
+  void (* swap_pixels)           (GimpDrawable         *drawable,
+                                  TileManager          *tiles,
+                                  gboolean              sparse,
+                                  gint                  x,
+                                  gint                  y,
+                                  gint                  width,
+                                  gint                  height);
 };
 
 
@@ -135,6 +142,13 @@ void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   TileManager        *tiles,
                                                   GimpImageType       type);
 
+void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
+                                                  TileManager        *tiles,
+                                                  gboolean            sparse,
+                                                  gint                x,
+                                                  gint                y,
+                                                  gint                width,
+                                                  gint                height);
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,

@@ -1,3 +1,31 @@
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
+	Prepare the undo system for proper text layer undo:
+
+	* app/core/core-enums.[ch] (enum GimpUndoType): replaced
+	GIMP_UNDO_IMAGE and GIMP_UNDO_IMAGE_MOD by GIMP_UNDO_DRAWABLE.
+
+	* app/core/gimpimage-undo-push.[ch]: ditto: replaced
+	gimp_image_undo_push_image() and gimp_image_undo_push_image_mod()
+	by gimp_image_undo_push_drawable() which *always* expects to get a
+	TileManager passed. Also added g_return_if_fail()s to check if the
+	passed in tile manager follows the semantics of the "sparse"
+	boolean.
+
+	(undo_pop_drawable): removed all code and call the new
+	gimp_drawable_swap_pixels() instead (see below).
+
+	* app/core/gimpdrawable.[ch] (gimp_drawable_push_undo): if tiles
+	are NULL, create a copy of the area here and always pass tiles to
+	gimp_image_undo_push_drawable(). Added lots of g_return_if_fail()
+	here too.
+
+	Added new vitrual function GimpDrawable::swap_pixels() which
+	does what undo_pop_drawable() did.
+
+	* app/core/gimpchannel.c: implement swap_pixels() and invalidate
+	the channel's bounds and boundary.
+
 2004-03-15  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c: don't show a web-browser setting

@@ -134,6 +134,13 @@ static void      gimp_channel_set_tiles      (GimpDrawable     *drawable,
                                               const gchar      *undo_desc,
                                               TileManager      *tiles,
                                               GimpImageType     type);
+static void      gimp_channel_swap_pixels    (GimpDrawable     *drawable,
+                                              TileManager      *tiles,
+                                              gboolean          sparse,
+                                              gint              x,
+                                              gint              y,
+                                              gint              width,
+                                              gint              height);
 
 static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
                                               const BoundSeg  **segs_in,
@@ -255,6 +262,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->apply_region          = gimp_channel_apply_region;
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->set_tiles             = gimp_channel_set_tiles;
+  drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 
   klass->boundary       = gimp_channel_real_boundary;
   klass->bounds         = gimp_channel_real_bounds;
@@ -771,6 +779,23 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type);
+}
+
+static void
+gimp_channel_swap_pixels (GimpDrawable *drawable,
+                          TileManager  *tiles,
+                          gboolean      sparse,
+                          gint          x,
+                          gint          y,
+                          gint          width,
+                          gint          height)
+{
+  gimp_drawable_invalidate_boundary (drawable);
+
+  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, tiles, sparse,
+                                                   x, y, width, height);
+
+  GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
 
 static gboolean
