@@ -1,3 +1,8 @@
+2004-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: make sure that gimp-console is enabled for
+	'make dist'. Use it to dump the system gimprc and gimprc man-page.
+
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimptextundo.[ch]: removed member "guint time"...

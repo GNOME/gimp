@@ -206,9 +206,23 @@ endif
 endif
 
 
-# hooks to assure that the system gimprc and the gimprc manpage are
-# uptodate when a release is made
+# require gimp-console when making dist
+#
+if ENABLE_GIMP_CONSOLE
+dist-check-gimp-console:
+else
+dist-check-gimp-console:
+	@echo "*** gimp-console must be enabled in order to make dist"
+	@false
+endif
 
-dist-hook: gimp-$(GIMP_APP_VERSION)$(EXEEXT)
+
+# hook to assure that the system gimprc and the gimprc manpage are
+# uptodate when a release is made
+#
+dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
 	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc.5.in
+
+
+dist-hook: dist-check-gimp-console dist-dump-gimprc
