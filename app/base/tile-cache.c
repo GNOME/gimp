@@ -255,43 +255,58 @@ tile_idle_thread (void *data)
 
   while(1) 
     {
-      if (!dirty_list.first) sleep(1);
-      if (!dirty_list.first) {
+      CACHE_LOCK;
+      while (cur_cache_dirty < max_cache_size - cur_cache_size) {
+	CACHE_UNLOCK;
 	pthread_mutex_lock(&dirty_mutex);
 	pthread_cond_wait(&dirty_signal,&dirty_mutex);
 	pthread_mutex_unlock(&dirty_mutex);
+	CACHE_LOCK;
       }
       if ((tile = dirty_list.first)) 
 	{
+	  CACHE_UNLOCK;
 	  TILE_MUTEX_LOCK (tile);
 	  CACHE_LOCK;
 
-	  list = tile->listhead;
+	  if (tile->dirty) 
+	    {
+	      list = tile->listhead;
+	      
+	      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
+	      
+	      if (tile->next) 
+		tile->next->prev = tile->prev;
+	      else
+		list->last = tile->prev;
+	      
+	      if (tile->prev)
+		tile->prev->next = tile->next;
+	      else
+		list->first = tile->next;
+	      
+	      tile->next = NULL;
+	      tile->prev = clean_list.last;
+	      tile->listhead = &clean_list;
+	      
+	      if (clean_list.last) clean_list.last->next = tile;
+	      else                 clean_list.first = tile;
+	      clean_list.last = tile;
 
-	  if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
-	  
-	  if (tile->next) 
-	    tile->next->prev = tile->prev;
-	  else
-	    list->last = tile->prev;
-      
-	  if (tile->prev)
-	    tile->prev->next = tile->next;
-	  else
-	    list->first = tile->next;
+	      CACHE_UNLOCK;
 
-	  tile->next = NULL;
-	  tile->prev = clean_list.last;
-	  tile->listhead = &clean_list;
+	      tile_swap_out(tile);
+	    }
+	  else 
+	    {
+	      CACHE_UNLOCK;
+	    }
 
-	  if (clean_list.last) clean_list.last->next = tile;
-	  else                 clean_list.first = tile;
-	  clean_list.last = tile;
-
-	  CACHE_UNLOCK;
-
-	  tile_swap_out(tile);
 	  TILE_MUTEX_UNLOCK (tile);
+	}
+      else 
+	{
+	  CACHE_UNLOCK;
 	}
     }
 }

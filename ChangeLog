@@ -1,3 +1,9 @@
+Sat Jul 11 19:57:28 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/tile.c: Added some more debugging code.
+	* app/tile_cache.c (tile_idle_thread): Modified tile preswapper to
+	be a bit less aggressive.
+
 Sun Jul 12 00:44:57 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/session.c: disabled setting the size of the dialogs since

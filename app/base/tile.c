@@ -35,6 +35,7 @@
 
 static void tile_destroy (Tile *tile);
 
+int tile_count = 0;
 
 void
 tile_init (Tile *tile,
@@ -58,6 +59,7 @@ tile_init (Tile *tile,
   {
     pthread_mutex_init(&tile->mutex, NULL);
   }
+  tile_count++;
 #endif
 }
 
@@ -183,6 +185,7 @@ tile_destroy (Tile *tile)
   
   TILE_MUTEX_UNLOCK (tile); 
   g_free (tile);
+  tile_count --;
 }
 
 
