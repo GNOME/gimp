@@ -1,5 +1,21 @@
 2003-07-14  Michael Natterer  <mitch@gimp.org>
 
+	Argh...
+
+	* app/paint/Makefile.am
+	* app/paint/gimppencil.[ch]: added it again as GimpPaintbrush
+	subclass and override nothing but the user visible undo name and
+	the paint_options type.
+
+	* app/paint/paint.c
+	* app/tools/tool_manager.c
+	* app/tools/gimppenciltool.c
+	* tools/pdbgen/pdb/paint_tools.pdb: reverted my last changes.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+2003-07-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/Makefile.am
 	* app/paint/gimppencil.[ch]: removed.
 
@@ -10,7 +26,7 @@
 	* app/tools/tool_manager.c: changed accordingly.
 
 	* app/tools/gimppenciltool.c
-	* tools/pdbgen/pdb/paint_tools.pdb: use the pintbrush core for
+	* tools/pdbgen/pdb/paint_tools.pdb: use the paintbrush core for
 	pencil drawing.
 
 	* app/pdb/paint_tools_cmds.c: regenerated.

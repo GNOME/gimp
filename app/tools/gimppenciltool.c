@@ -24,7 +24,7 @@
 
 #include "tools-types.h"
 
-#include "paint/gimppaintbrush.h"
+#include "paint/gimppencil.h"
 #include "paint/gimppenciloptions.h"
 
 #include "gimppenciltool.h"
@@ -111,5 +111,5 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_PENCIL_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
-  paint_tool->core        = g_object_new (GIMP_TYPE_PAINTBRUSH, NULL);
+  paint_tool->core        = g_object_new (GIMP_TYPE_PENCIL, NULL);
 }

@@ -525,7 +525,7 @@ tool_manager_register_tool (GType                   tool_type,
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-      paint_core_name = "GimpPaintbrush";
+      paint_core_name = "GimpPencil";
     }
   else if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
     {

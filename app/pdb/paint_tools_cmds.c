@@ -42,6 +42,7 @@
 #include "paint/gimperaseroptions.h"
 #include "paint/gimppaintbrush.h"
 #include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppencil.h"
 #include "paint/gimppenciloptions.h"
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
@@ -1194,7 +1195,7 @@ pencil_invoker (Gimp     *gimp,
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
     
       success = paint_tools_stroke (gimp,
-				    GIMP_TYPE_PAINTBRUSH,
+				    GIMP_TYPE_PENCIL,
 				    options,
 				    drawable,
 				    num_strokes, strokes);
