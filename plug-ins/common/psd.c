@@ -1,13 +1,13 @@
 /*
- * PSD Plugin version 2.0.7
+ * PSD Plugin version 2.0.8
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
  *
  *     If this plug-in fails to load a file which you think it should,
- *     please tell me what seemed to go wrong, and anything you know
- *     about the image you tried to load.  Please don't send big PSD
- *     files to me without asking first.
+ *     please file a bug report at http://bugzilla.gnome.org/ including
+ *     details of what went wrong, anything you know about the image you
+ *     tried to load, and a copy of the image.
  *
  *          Copyright (C) 1997-2003 Adam D. Moss
  *          Copyright (C) 1996      Torsten Martinsen
@@ -34,6 +34,9 @@
 
 /*
  * Revision history:
+ *
+ *  2003.12.03 / v2.0.8 / Adam D. Moss
+ *       Avoid under-allocation when reading a 1-bit image.
  *
  *  2003.06.16 / v2.0.7 / Adam D. Moss
  *       Avoid memory corruption when things get shot to hell in the
@@ -2175,7 +2178,7 @@ load_image(char *name)
 	      gimp_progress_update ((double)1.00);
 	      if(imagetype==PSD_BITMAP_IMAGE) /* convert bitmap to grayscale */
 		{
-		  guchar *monobuf=(guchar *)xmalloc(PSDheader.columns*PSDheader.rows>>3);
+		  guchar *monobuf=(guchar *)xmalloc(((PSDheader.columns+7)>>3)*PSDheader.rows);
 		  decode(PSDheader.imgdatalen,nguchars>>3,temp,monobuf,step);
 		  bitmap2gray(monobuf,dest,PSDheader.columns,PSDheader.rows);
 		  g_free((gpointer)monobuf);		  		  

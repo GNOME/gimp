@@ -1,3 +1,9 @@
+2003-12-03  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c: Avoid potential under-allocation when
+	reading a 1-bit image.  Based on a fix by Morten Eriksen (thanks!),
+	though his original fix was unfortunately bugged.  ;)
+
 2003-11-28  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c:
