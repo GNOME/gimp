@@ -1,3 +1,18 @@
+Wed Sep  9 03:02:17 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: added -std1 check for DU4
+
+	* gimptool.in: added strip options
+
+	* plug-ins/hrz/hrz.c: #ifndef'd NeXT out munmap call
+
+	* plug-ins/maze/maze.c: commented out some debug code differently
+	so NeXT compiler won't barf.
+
+	* configure.in
+	* po/sv.po: added a preliminary Swedish translation from
+	Tomas Ogren <stric@ing.umu.se>
+
 Tue Sep  8 18:28:44 1998  Jay Cox  (jaycox@earthlink.net)
 
 	* app/brush_generated.c: more carefull when the active brush

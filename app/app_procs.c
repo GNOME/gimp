@@ -404,7 +404,6 @@ app_init_update_status(char *label1val,
 
   if(no_interface == FALSE && no_splash == FALSE && win_initstatus)
     {
-      GdkRectangle area = {0, 0, -1, -1};
       if(label1val
 	 && strcmp(label1val, GTK_LABEL(label1)->label))
 	{

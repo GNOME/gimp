@@ -668,8 +668,8 @@ mask_maze(gint32 drawable_ID, guchar *maz, guint mw, guint mh,
 	  } /* next yy */	    
 
      } /* next pr sel_rgn tile thing */
-  /* #ifdef MAZE_DEBUG
-     maze_dump(maz,mw,mh);
-     #endif */
+#ifdef MAZE_DEBUG
+     /* maze_dump(maz,mw,mh); */
+#endif
 } /* mask_maze */
 #endif /* 0 */

@@ -316,7 +316,9 @@ load_image (char *filename)
   do_hrz_load(mapped, &pixel_rgn);
 
   /* close the file */
+#ifndef NeXT /* @#%@! NeXTStep */
   munmap(mapped, 256*240*3);
+#endif
 
   /* Tell the GIMP to display the image.
    */

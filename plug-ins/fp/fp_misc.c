@@ -177,13 +177,13 @@ fp_render_preview(GtkWidget     *preview,
 	
 	/*DO SATURATION FIRST*/
 	if (changewhat != NONEATALL) {
-	  if (M!=m)
+	  if (M!=m) {
 	    for (k=0; k<3; k++)
 	      if (backupP[k] == M)
 		P[k] = MAX(P[k]+partial*Current.satAdj[JudgeBy][Inten],middle);
 	      else if (backupP[k] == m)
 		P[k] = MIN(P[k]-partial*Current.satAdj[JudgeBy][Inten],middle); 
-	  
+	  }
 	  P[0]  += partial*Current.redAdj[JudgeBy][Inten];
 	  P[1]  += partial*Current.greenAdj[JudgeBy][Inten];
 	  P[2]  += partial*Current.blueAdj[JudgeBy][Inten];
@@ -203,13 +203,14 @@ fp_render_preview(GtkWidget     *preview,
       case SATURATION:
 	for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++)
 	  for (k=0; k<3; k++)
-	    if (M!=m)
+	    if (M!=m) {
 	      if (backupP[k] == M)
 		P[k] = MAX(P[k]+
 			   partial*tempSat[JudgeBy][Inten],middle);
 	      else if (backupP[k] == m)
 		P[k] = MIN(P[k]-
 			   partial*tempSat[JudgeBy][Inten],middle);
+	    }
 	break;
 
       case VALUE:

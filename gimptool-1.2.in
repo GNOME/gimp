@@ -43,7 +43,10 @@ The --install options can be prefixed with --install-admin instead to install
 a plug-in or script in the site directory instead of a user directory.
 
 For plug-ins which do not use GTK+, the --build and --install options can be
-appended with --noui for appropriate settings.
+appended with -noui for appropriate settings.
+
+All binary build and install options can be appended with -strip to discard
+debugging information.
 EOF
 
   exit $1
@@ -68,6 +71,10 @@ if test x${GTK_CONFIG+set} != xset ; then
 else
   gtk_cflags=`$GTK_CONFIG --cflags`
   gtk_libs=`$GTK_CONFIG --libs`
+fi
+
+if test x${INSTALL+set} != xset ; then
+  INSTALL='@INSTALL@'
 fi
 
 if test x${CC+set} != xset ; then
@@ -181,22 +188,31 @@ while test $# -gt 0; do
       echo -L@libdir@ -lgimp-@LT_RELEASE@ $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
+    | --install-bin-strip | --install-admin-bin-strip \
     | --install-script | --install-admin-script)
       case $1 in
         --install-bin)
-          install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
+          install_cmd="@INSTALL_PROGRAM@"
+          install_dir="$HOME/@gimpdir@/plug-ins"
+          ;;
+        --install-bin-strip)
+          install_cmd="@INSTALL_PROGRAM@ -s"
           install_dir="$HOME/@gimpdir@/plug-ins"
           ;;
         --install-admin-bin)
-          install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
+          install_cmd="@INSTALL_PROGRAM@"
+          install_dir="$plug_in_dir/plug-ins"
+          ;;
+        --install-admin-bin-strip)
+          install_cmd="@INSTALL_PROGRAM@ -s"
           install_dir="$plug_in_dir/plug-ins"
           ;;
         --install-script)
-          install_cmd="@INSTALL@ @INSTALL_DATA@"
+          install_cmd="@INSTALL_DATA@"
           install_dir="$HOME/.gimp/scripts"
           ;;
         --install-admin-script)
-          install_cmd="@INSTALL@ @INSTALL_DATA@"
+          install_cmd="@INSTALL_DATA@"
           install_dir="$data_dir/scripts"
           ;;
       esac
@@ -216,8 +232,14 @@ while test $# -gt 0; do
       fi
       ;;
     --build | --install | --install-admin \
-    | --build-noui | --install-noui | --install-admin-noui)
-      case $1 in
+    | --build-strip | --install-strip | --install-admin-strip \
+    | --build-noui | --install-noui | --install-admin-noui \
+    | --build-noui-strip | --install-noui-strip | --install-admin-noui-strip)
+      opt=`echo $1 | sed 's/-strip$//'`
+      if test "x$opt" != "x$1" ; then
+        cflags=`echo $cflags | sed -e 's/-g //g' -e 's/ -g//g'`
+      fi
+      case $opt in
         --build | --build-noui)
           install_dir=. ;;
         --install | --install-noui)
@@ -225,7 +247,7 @@ while test $# -gt 0; do
         --install-admin | --install-admin-noui)
           install_dir="$plug_in_dir/plug-ins" ;;
       esac
-      noui=`echo $1 | sed 's/^.*\(noui\)$/\1/'`
+      noui=`echo $opt | sed 's/^.*\(noui\)$/\1/'`
       if test "$noui" = "noui" ; then
         gimp_cflags=`$0 --cflags-noui`
         gimp_libs=`$0 --libs-noui`
