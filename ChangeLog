@@ -1,3 +1,15 @@
+Sat Apr 22 12:37:24 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.20 release (1.2pre)
+
+	* plug-ins/Makefile.am
+	* configure.in: removed python and unittest stuff
+
+	* libgimp/gimp.c: reordered signal includes
+
+	* plug-ins/print/Makefile.am: reference print-printers.c and
+	print_gimp.h
+
 2000-04-22 Garry R. Osgood <gosgood@idt.net>
 
 	* app/bezier_select.c

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-19 14:55+0200\n"
+"POT-Creation-Date: 2000-04-21 11:39-0700\n"
 "PO-Revision-Date: 2000-04-19 15:01+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -47,9 +47,9 @@ msgstr "Über"
 #: plug-ins/bmp/bmpwrite.c:562 plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
-#: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
+#: plug-ins/common/align_layers.c:434 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:622
-#: plug-ins/common/bumpmap.c:868 plug-ins/common/checkerboard.c:359
+#: plug-ins/common/bumpmap.c:874 plug-ins/common/checkerboard.c:359
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:423
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
@@ -128,9 +128,9 @@ msgstr "OK"
 #: plug-ins/Lighting/lighting_ui.c:1077 plug-ins/MapObject/mapobject_ui.c:1384
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
-#: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:422
+#: plug-ins/common/aa.c:365 plug-ins/common/align_layers.c:436
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
-#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:870
+#: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:876
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
@@ -272,7 +272,7 @@ msgstr "Kosinus"
 #: plug-ins/AlienMap/AlienMap.c:754 plug-ins/FractalExplorer/Dialogs.c:737
 #: plug-ins/FractalExplorer/Dialogs.c:778
 #: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/CML_explorer.c:167
-#: plug-ins/common/align_layers.c:447 plug-ins/common/align_layers.c:480
+#: plug-ins/common/align_layers.c:461 plug-ins/common/align_layers.c:494
 #: plug-ins/common/ps.c:2657 plug-ins/common/ps.c:2670
 #: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1490
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:276
@@ -1025,7 +1025,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
 #: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1061 plug-ins/common/emboss.c:602
+#: plug-ins/common/bumpmap.c:1067 plug-ins/common/emboss.c:602
 #: plug-ins/struc/struc.c:304
 msgid "Depth:"
 msgstr "Tiefe:"
@@ -1155,7 +1155,7 @@ msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
 
 #: plug-ins/Lighting/lighting_ui.c:740 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:1101
+#: plug-ins/common/bumpmap.c:1107
 msgid "Ambient:"
 msgstr "Ambient:"
 
@@ -1466,7 +1466,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/pix.c:329 plug-ins/common/png.c:423
 #: plug-ins/common/png.c:425 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
-#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:441
+#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:445
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
 #: plug-ins/common/xwd.c:448 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
@@ -1514,7 +1514,7 @@ msgstr "%s: fehlerhafte Palette\n"
 #: plug-ins/common/png.c:571 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
-#: plug-ins/common/tiff.c:651 plug-ins/common/tile.c:264
+#: plug-ins/common/tiff.c:655 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2358
 #: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2867
@@ -1542,7 +1542,7 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/png.c:748 plug-ins/common/png.c:750
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1225 plug-ins/common/xbm.c:959
+#: plug-ins/common/tiff.c:1230 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:654 plug-ins/common/xwd.c:552
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
@@ -2123,7 +2123,7 @@ msgstr "<Image>/Filter/Sichtbare Ebenen anordnen..."
 msgid "Align Visible Layers: there are too few layers."
 msgstr "Sichtbare Ebenen anordnen: zu wenig Ebenen."
 
-#: plug-ins/common/align_layers.c:415
+#: plug-ins/common/align_layers.c:429
 msgid "Align Visible Layers"
 msgstr "Sichtbare Ebenen anordnen"
 
@@ -2132,9 +2132,9 @@ msgstr "Sichtbare Ebenen anordnen"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/common/align_layers.c:431 plug-ins/common/apply_lens.c:415
+#: plug-ins/common/align_layers.c:445 plug-ins/common/apply_lens.c:415
 #: plug-ins/common/blinds.c:424 plug-ins/common/blur.c:640
-#: plug-ins/common/bumpmap.c:1002 plug-ins/common/checkerboard.c:371
+#: plug-ins/common/bumpmap.c:1008 plug-ins/common/checkerboard.c:371
 #: plug-ins/common/cubism.c:328 plug-ins/common/despeckle.c:747
 #: plug-ins/common/destripe.c:658 plug-ins/common/edge.c:668
 #: plug-ins/common/emboss.c:572 plug-ins/common/engrave.c:246
@@ -2160,73 +2160,73 @@ msgstr "Sichtbare Ebenen anordnen"
 msgid "Parameter Settings"
 msgstr "Parameter-Einstellungen"
 
-#: plug-ins/common/align_layers.c:449 plug-ins/common/align_layers.c:482
+#: plug-ins/common/align_layers.c:463 plug-ins/common/align_layers.c:496
 msgid "Collect"
 msgstr "Zusammenfassen"
 
-#: plug-ins/common/align_layers.c:451
+#: plug-ins/common/align_layers.c:465
 msgid "Fill (left to right)"
 msgstr "Füllen (von links nach rechts)"
 
-#: plug-ins/common/align_layers.c:453
+#: plug-ins/common/align_layers.c:467
 msgid "Fill (right to left)"
 msgstr "Füllen (von rechts nach links)"
 
-#: plug-ins/common/align_layers.c:455 plug-ins/common/align_layers.c:488
+#: plug-ins/common/align_layers.c:469 plug-ins/common/align_layers.c:502
 #: plug-ins/gfig/gfig.c:3415
 msgid "Snap to Grid"
 msgstr "Am Gitter ausrichten"
 
-#: plug-ins/common/align_layers.c:460
+#: plug-ins/common/align_layers.c:474
 msgid "Horizontal Style:"
 msgstr "Horizontaler Stil:"
 
-#: plug-ins/common/align_layers.c:467
+#: plug-ins/common/align_layers.c:481
 msgid "Left Edge"
 msgstr "Linker Rand"
 
-#: plug-ins/common/align_layers.c:468 plug-ins/common/align_layers.c:501
+#: plug-ins/common/align_layers.c:482 plug-ins/common/align_layers.c:515
 #: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2888
 msgid "Center"
 msgstr "Mitte"
 
-#: plug-ins/common/align_layers.c:469
+#: plug-ins/common/align_layers.c:483
 msgid "Right Edge"
 msgstr "Rechter Rand"
 
-#: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
+#: plug-ins/common/align_layers.c:487 plug-ins/common/align_layers.c:520
 msgid "Horizontal Base:"
 msgstr "Horizontale Basis:"
 
-#: plug-ins/common/align_layers.c:484
+#: plug-ins/common/align_layers.c:498
 msgid "Fill (top to bottom)"
 msgstr "Füllen (von oben nach unten)"
 
-#: plug-ins/common/align_layers.c:486
+#: plug-ins/common/align_layers.c:500
 msgid "Fill (bottom to top)"
 msgstr "Füllen (von unten nach oben)"
 
-#: plug-ins/common/align_layers.c:493
+#: plug-ins/common/align_layers.c:507
 msgid "Vertical Style:"
 msgstr "Vertikaler Stil:"
 
-#: plug-ins/common/align_layers.c:500
+#: plug-ins/common/align_layers.c:514
 msgid "Top Edge"
 msgstr "Oberer Rand"
 
-#: plug-ins/common/align_layers.c:502
+#: plug-ins/common/align_layers.c:516
 msgid "Bottom Edge"
 msgstr "Unterer Rand"
 
-#: plug-ins/common/align_layers.c:511
+#: plug-ins/common/align_layers.c:525
 msgid "Ignore the Bottom Layer even if Visible"
 msgstr "Ignoriere die unterste Ebene auch wenn sie sichtbar ist"
 
-#: plug-ins/common/align_layers.c:521
+#: plug-ins/common/align_layers.c:535
 msgid "Use the (Invisible) Bottom Layer as the Base"
 msgstr "Benutze die unterste (unsichtbare) Ebene als Basis"
 
-#: plug-ins/common/align_layers.c:531
+#: plug-ins/common/align_layers.c:545
 msgid "Grid Size:"
 msgstr "Gitter-Abstand:"
 
@@ -2408,70 +2408,70 @@ msgstr "Wiederholen:"
 msgid "Number of times to apply filter"
 msgstr "wie oft der Filter angewendet werden soll"
 
-#: plug-ins/common/bumpmap.c:363
+#: plug-ins/common/bumpmap.c:369
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Filter/Abbilden/Bumpmap..."
 
-#: plug-ins/common/bumpmap.c:518
+#: plug-ins/common/bumpmap.c:524
 msgid "Bump-mapping..."
 msgstr "Wende Bumpmap-Effekt an..."
 
-#: plug-ins/common/bumpmap.c:863
+#: plug-ins/common/bumpmap.c:869
 msgid "Bump Map"
 msgstr "Bumpmap"
 
-#: plug-ins/common/bumpmap.c:954
+#: plug-ins/common/bumpmap.c:960
 msgid "Map Type"
 msgstr "Map Typ"
 
-#: plug-ins/common/bumpmap.c:958
+#: plug-ins/common/bumpmap.c:964
 msgid "Linear Map"
 msgstr "Lineare Abb."
 
-#: plug-ins/common/bumpmap.c:959
+#: plug-ins/common/bumpmap.c:965
 msgid "Spherical Map"
 msgstr "Spherische Abb."
 
-#: plug-ins/common/bumpmap.c:960
+#: plug-ins/common/bumpmap.c:966
 msgid "Sinuosidal Map"
 msgstr "Sinusförmige Abb."
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:973
+#: plug-ins/common/bumpmap.c:979
 msgid "Compensate for Darkening"
 msgstr "Verdunkelung kompensieren"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:983
+#: plug-ins/common/bumpmap.c:989
 msgid "Invert Bumpmap"
 msgstr "Bumpmap invertieren"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:993
+#: plug-ins/common/bumpmap.c:999
 msgid "Tile Bumpmap"
 msgstr "Bumpmap kacheln"
 
-#: plug-ins/common/bumpmap.c:1024
+#: plug-ins/common/bumpmap.c:1030
 msgid "Bump Map:"
 msgstr "Bumpmap:"
 
-#: plug-ins/common/bumpmap.c:1043 plug-ins/common/emboss.c:584
+#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:584
 msgid "Azimuth:"
 msgstr "Längengrad (Azimuth):"
 
-#: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:593
+#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:593
 msgid "Elevation:"
 msgstr "Breitengrad (Elevation):"
 
-#: plug-ins/common/bumpmap.c:1072 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1078 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "X-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1082 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1088 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Y-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1092
+#: plug-ins/common/bumpmap.c:1098
 msgid "Waterlevel:"
 msgstr "Wasserhöhe:"
 
@@ -2772,7 +2772,7 @@ msgid "Prefixed Name:"
 msgstr "Name mit Prefix:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1503 plug-ins/common/xbm.c:1196
+#: plug-ins/common/tiff.c:1505 plug-ins/common/xbm.c:1196
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -6090,7 +6090,7 @@ msgstr "Alpha-Schwellwert: Färbe Transparenz..."
 msgid "Threshold Alpha"
 msgstr "Alpha-Schwellwert"
 
-#: plug-ins/common/tiff.c:660
+#: plug-ins/common/tiff.c:664
 msgid "TIFF Channel"
 msgstr "TIFF Kanäle"
 
@@ -6109,6 +6109,15 @@ msgstr "LZW"
 #: plug-ins/common/tiff.c:1492
 msgid "Pack Bits"
 msgstr "Bits packen"
+
+#: plug-ins/common/tiff.c:1493
+#, fuzzy
+msgid "Deflate"
+msgstr "Löschen"
+
+#: plug-ins/common/tiff.c:1494
+msgid "JPEG"
+msgstr ""
 
 #: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."

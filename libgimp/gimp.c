@@ -22,11 +22,6 @@
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
-#ifndef G_OS_WIN32
-#include "gimpsignal.h"
-#else
-#include <signal.h>
-#endif
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -38,6 +33,11 @@
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifndef G_OS_WIN32
+#include "gimpsignal.h"
+#else
+#include <signal.h>
 #endif
 
 #include "parasiteP.h"

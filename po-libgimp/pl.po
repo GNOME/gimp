@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2000-04-08 13:25+0200\n"
+"POT-Creation-Date: 2000-04-20 17:17-0700\n"
 "PO-Revision-Date: 2000-04-08 13:25+0200\n"
 "Last-Translator: GNOME PL Team <gnomepl@pandora.info.bielsko.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -10,63 +10,59 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:1
+#: libgimp/gimpcolorbutton.c:116
 msgid "/Use Foreground Color"
 msgstr "/Wykorzystaj bie¿±cy kolor"
 
-#: libgimp/gimpcolorbutton.c:1
+#: libgimp/gimpcolorbutton.c:117
 msgid "/Use Background Color"
 msgstr "/Wykorzystaj kolor t³a"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:158
 msgid "can't Handle Layers"
 msgstr "nie obs³uguje warstw"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
 msgstr "Po³±cz widoczne warstwy"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
 msgid "can only Handle Layers as Animation Frames"
 msgstr "obs³uguje warstwy wy³±cznie jako ramki animacji"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Zapisz jako animacjê"
 
-#: libgimp/gimpexport.c:1
-msgid "Flatten"
-msgstr "Sp³aszcz"
-
-#: libgimp/gimpexport.c:1
-msgid "can't Handle Transparency"
-msgstr "nie obs³uguje prze¼roczysto¶ci"
-
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
 msgid "Flatten Image"
 msgstr "Sp³aszcz obraz"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:185
+msgid "can't Handle Transparency"
+msgstr "nie obs³uguje prze¼roczysto¶ci"
+
+#: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
 msgstr "obs³uguje wy³±cznie obrazy RGB"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
 msgid "Convert to RGB"
 msgstr "Przekonwertuj na RGB"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:203
 msgid "can only Handle Grayscale Images"
 msgstr "obs³uguje wy³±cznie obrazy w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
 msgid "Convert to Grayscale"
 msgstr "Przekonwertuj na odcienie szaro¶ci"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:212
 msgid "can only Handle Indexed Images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpexport.c:1 libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -74,23 +70,23 @@ msgstr ""
 "Przekonwertuj na indeksowany z u¿yciem ustawieñ domy¶lnych\n"
 "(rêczna konwersja pozwoli na lepsze dopasowanie ustawieñ)"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:222
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:231
 msgid "can only Handle RGB or Indexed Images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub indeksowane"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:241
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane lub w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:252
 msgid "needs an Alpha Channel"
 msgstr "Wymaga kana³u alfa"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:253
 msgid "Add Alpha Channel"
 msgstr "Dodaj kana³ alfa"
 
@@ -99,25 +95,25 @@ msgstr "Dodaj kana³ alfa"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:322
 msgid "Export File"
 msgstr "Eksport pliku"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:327
 msgid "Export"
 msgstr "Eksportuj"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:329
 msgid "Ignore"
 msgstr "Ignoruj"
 
-#: libgimp/gimpexport.c:1 libgimp/gimpquerybox.c:1
-#: libgimp/gimpquerybox.c:1 libgimp/gimpquerybox.c:1
-#: libgimp/gimpquerybox.c:1 libgimp/gimpunitmenu.c:1
+#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:180
+#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
+#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:346
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -126,84 +122,84 @@ msgstr ""
 "wyeksportowany:"
 
 #. the footline
-#: libgimp/gimpexport.c:1
+#: libgimp/gimpexport.c:409
 msgid "The export conversion won't modify your original image."
 msgstr "Konwersja podczas eksportu nie zmodyfikuje oryginalnego obrazu."
 
-#: libgimp/gimpfileselection.c:1
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Wybór pliku"
 
-#: libgimp/gimpquerybox.c:1 libgimp/gimpquerybox.c:1
-#: libgimp/gimpquerybox.c:1 libgimp/gimpquerybox.c:1
-#: libgimp/gimpunitmenu.c:1
+#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
+#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
+#: libgimp/gimpunitmenu.c:495
 msgid "OK"
 msgstr "OK"
 
 #. pseudo unit
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:47
 msgid "pixel"
 msgstr "piksel"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:47
 msgid "pixels"
 msgstr "piksele"
 
 #. standard units
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:50
 msgid "inch"
 msgstr "cal"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:50
 msgid "inches"
 msgstr "cale"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:51
 msgid "millimeter"
 msgstr "milimetr"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:51
 msgid "millimeters"
 msgstr "militetry"
 
 #. professional units
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:54
 msgid "point"
 msgstr "punkt"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:54
 msgid "points"
 msgstr "punkty"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:55
 msgid "pica"
 msgstr "cycero"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:55
 msgid "picas"
 msgstr "cycero"
 
-#: libgimp/gimpunit.c:1
+#: libgimp/gimpunit.c:62
 msgid "percent"
 msgstr "procent"
 
-#: libgimp/gimpunitmenu.c:1
+#: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Wiêcej..."
 
-#: libgimp/gimpunitmenu.c:1
+#: libgimp/gimpunitmenu.c:490
 msgid "Unit Selection"
 msgstr "Wybór jednostki"
 
-#: libgimp/gimpunitmenu.c:1
+#: libgimp/gimpunitmenu.c:527
 msgid "Unit"
 msgstr "Jednostka"
 
-#: libgimp/gimpunitmenu.c:1
+#: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Wspó³czynnik"
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:706
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -212,11 +208,11 @@ msgstr ""
 "wykorzystana do zainicjowania generatora liczb losowych. Pozwoli to na "
 "powtórzenie okre¶lonej \"losowej\" operacji."
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:711
 msgid "Time"
 msgstr "Czas"
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:720
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -224,14 +220,17 @@ msgstr ""
 "Inicjowanie generatora liczb losowych na podstawie bie¿±cego czasu. "
 "Gwarantuje to do¶æ dobr± losowo¶æ."
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:1032
 msgid "Bytes"
 msgstr "Bajty"
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:1033
 msgid "KiloBytes"
 msgstr "Kilobajty"
 
-#: libgimp/gimpwidgets.c:1
+#: libgimp/gimpwidgets.c:1034
 msgid "MegaBytes"
 msgstr "Megabajty"
+
+#~ msgid "Flatten"
+#~ msgstr "Sp³aszcz"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-03-26 12:27+0200\n"
+"POT-Creation-Date: 2000-03-28 01:56-0800\n"
 "PO-Revision-Date: dom feb  6 15:21:10 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -13,7 +13,8 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "La modalità console Script-Fu permette solamente invocazioni interattive"
+msgstr ""
+"La modalità console Script-Fu permette solamente invocazioni interattive"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
@@ -318,12 +319,16 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Small Header..."
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Tube Button Label..."
 
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Tube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Tube Sub-Button Label..."
 
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Tube Sub-Sub-Button "
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 
 msgid ""

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2000-04-13 02:18+0400\n"
+"POT-Creation-Date: 2000-04-20 17:17-0700\n"
 "PO-Revision-Date: 2000-04-13 02:22+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -129,7 +129,7 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Выбрать файл"
 
@@ -206,7 +206,10 @@ msgstr "Множитель"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Если кнопка \"Время\" не нажата, это значение используется для инициализации генератора случайных чисел, что позволяет вам повторить данное \"случайное\" действие "
+msgstr ""
+"Если кнопка \"Время\" не нажата, это значение используется для инициализации "
+"генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
+"действие "
 
 #: libgimp/gimpwidgets.c:711
 msgid "Time"
@@ -216,7 +219,9 @@ msgstr "Время"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "Инициализировать генератор случайных чисел текущим времене - это гарантирует надежную \"случайность\""
+msgstr ""
+"Инициализировать генератор случайных чисел текущим времене - это гарантирует "
+"надежную \"случайность\""
 
 #: libgimp/gimpwidgets.c:1032
 msgid "Bytes"

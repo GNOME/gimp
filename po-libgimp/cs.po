@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.19\n"
-"POT-Creation-Date: 2000-04-08 23:18+0200\n"
+"POT-Creation-Date: 2000-04-20 17:17-0700\n"
 "PO-Revision-Date: 2000-04-08 23:26+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -37,17 +37,13 @@ msgstr "umí zpracovat vrstvy pouze jako políèka animace"
 msgid "Save as Animation"
 msgstr "Zapsat jako animaci"
 
-#: libgimp/gimpexport.c:177
-msgid "Flatten"
-msgstr "Slouèit"
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+msgid "Flatten Image"
+msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:185
 msgid "can't Handle Transparency"
 msgstr "neumí zpracovat prùhlednost"
-
-#: libgimp/gimpexport.c:186
-msgid "Flatten Image"
-msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
@@ -131,7 +127,7 @@ msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Výbìr souboru"
 
@@ -234,3 +230,6 @@ msgstr "kilobajtù"
 #: libgimp/gimpwidgets.c:1034
 msgid "MegaBytes"
 msgstr "megabajtù"
+
+#~ msgid "Flatten"
+#~ msgstr "Slouèit"

@@ -2,9 +2,12 @@
 
 libexecdir = $(gimpplugindir)/plug-ins
 
+EXTRA_DIST = print-printers.c
+
 libexec_PROGRAMS = print
 
 print_SOURCES = \
+	print_gimp.h		\
 	print-escp2.c		\
 	print-pcl.c		\
 	print-ps.c		\

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-03-15 12:35-0800\n"
+"POT-Creation-Date: 2000-04-20 17:17-0700\n"
 "PO-Revision-Date: 2000-04-05 00:28+02:00\n"
 "Last-Translator: Gert Dewit <Gert.Dewit@sos.be>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -29,43 +29,43 @@ msgstr "ondersteunt geen lagen"
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
-#: libgimp/gimpexport.c:167
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
 msgid "can only Handle Layers as Animation Frames"
 msgstr "ondersteunt enkel lagen voor animatie"
 
-#: libgimp/gimpexport.c:168
+#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Bewaar als animatie"
 
-#: libgimp/gimpexport.c:176
-msgid "can't Handle Transparency"
-msgstr "ondersteunt geen transparantie"
-
-#: libgimp/gimpexport.c:177
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
 msgid "Flatten Image"
 msgstr "Beeld vervlakken"
 
 #: libgimp/gimpexport.c:185
+msgid "can't Handle Transparency"
+msgstr "ondersteunt geen transparantie"
+
+#: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
 msgstr "ondersteunt enkel RGB beelden"
 
-#: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
+#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
 msgid "Convert to RGB"
 msgstr "Converteren naar RGB"
 
-#: libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:203
 msgid "can only Handle Grayscale Images"
 msgstr "ondersteunt enkel beelden in grijswaarden"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
 msgid "Convert to Grayscale"
 msgstr "Converteren naar grijswaarden"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:212
 msgid "can only Handle Indexed Images"
 msgstr "ondersteunt enkel geïndexeerde beelden"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -73,23 +73,23 @@ msgstr ""
 "Converteer naar geïndexeerd beeld met de standaard instellingen\n"
 "(Doe het manueel om het resultaat bij te regelen)"
 
-#: libgimp/gimpexport.c:213
+#: libgimp/gimpexport.c:222
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "ondersteunt enkel RGB of grijswaarden"
 
-#: libgimp/gimpexport.c:222
+#: libgimp/gimpexport.c:231
 msgid "can only Handle RGB or Indexed Images"
 msgstr "ondersteunt enkel RGB of geïndexeerde beelden"
 
-#: libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:241
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "ondersteunt enkel grijswaarden of geïndexeerde beelden"
 
-#: libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:252
 msgid "needs an Alpha Channel"
 msgstr "heeft een Alfa kanaal nodig"
 
-#: libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:253
 msgid "Add Alpha Channel"
 msgstr "Voeg Alfa Kanaal toe"
 
@@ -98,25 +98,25 @@ msgstr "Voeg Alfa Kanaal toe"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:313
+#: libgimp/gimpexport.c:322
 msgid "Export File"
 msgstr "Exporteer Bestand"
 
-#: libgimp/gimpexport.c:318
+#: libgimp/gimpexport.c:327
 msgid "Export"
 msgstr "Exporteer"
 
-#: libgimp/gimpexport.c:320
+#: libgimp/gimpexport.c:329
 msgid "Ignore"
 msgstr "Negeren"
 
-#: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
+#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:180
 #: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
 #: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: libgimp/gimpexport.c:337
+#: libgimp/gimpexport.c:346
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -125,11 +125,11 @@ msgstr ""
 "volgende redenen :"
 
 #. the footline
-#: libgimp/gimpexport.c:400
+#: libgimp/gimpexport.c:409
 msgid "The export conversion won't modify your original image."
 msgstr "De export zal uw orgineel beeld niet wijzigen."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Selecteer Bestand"
 
@@ -202,7 +202,7 @@ msgstr "Eenheid"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimp/gimpwidgets.c:704
+#: libgimp/gimpwidgets.c:706
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -210,11 +210,11 @@ msgstr ""
 "Gebruik deze waarde om de willekeurige nummers te genereren als de "
 "\"Tijd\"-knop niet is ingedrukt "
 
-#: libgimp/gimpwidgets.c:709
+#: libgimp/gimpwidgets.c:711
 msgid "Time"
 msgstr "Tijd"
 
-#: libgimp/gimpwidgets.c:718
+#: libgimp/gimpwidgets.c:720
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -222,15 +222,15 @@ msgstr ""
 "Gebruik de tijd om willekeurige waarden te genereren - dit garandeert een "
 "aanvaardbaar resultaat"
 
-#: libgimp/gimpwidgets.c:1030
+#: libgimp/gimpwidgets.c:1032
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1031
+#: libgimp/gimpwidgets.c:1033
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1034
 msgid "MegaBytes"
 msgstr "Megabytes"
 

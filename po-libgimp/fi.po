@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-03-15 12:35-0800\n"
+"POT-Creation-Date: 2000-04-20 17:17-0700\n"
 "PO-Revision-Date: 2000-04-08 00:26+0300\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -30,43 +30,43 @@ msgstr "ei pysty k‰sittelem‰‰n tasoja"
 msgid "Merge Visible Layers"
 msgstr "Yhdist‰ n‰kyv‰t tasot"
 
-#: libgimp/gimpexport.c:167
+#: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
 msgid "can only Handle Layers as Animation Frames"
 msgstr "voi k‰ytt‰‰ tasoja ainoastaan animaation ruutuina"
 
-#: libgimp/gimpexport.c:168
+#: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Tallenna animaationa"
 
-#: libgimp/gimpexport.c:176
-msgid "can't Handle Transparency"
-msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
-
-#: libgimp/gimpexport.c:177
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
 msgid "Flatten Image"
 msgstr "Yhdist‰ kuva"
 
 #: libgimp/gimpexport.c:185
+msgid "can't Handle Transparency"
+msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
+
+#: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰rikuvia"
 
-#: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
+#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
 msgid "Convert to RGB"
 msgstr "Muunna t‰ysv‰rikuvaksi"
 
-#: libgimp/gimpexport.c:194
+#: libgimp/gimpexport.c:203
 msgid "can only Handle Grayscale Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
 msgid "Convert to Grayscale"
 msgstr "Muunna harmaas‰vyksi"
 
-#: libgimp/gimpexport.c:203
+#: libgimp/gimpexport.c:212
 msgid "can only Handle Indexed Images"
 msgstr "k‰sittelee ainoastaan indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -74,23 +74,23 @@ msgstr ""
 "Muunna indeksoiduksi k‰ytt‰en oletusasetuksia\n"
 "(Tee se k‰sin jos haluat k‰ytt‰‰ muita kuin oletuksia)"
 
-#: libgimp/gimpexport.c:213
+#: libgimp/gimpexport.c:222
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai harmaas‰vykuvia"
 
-#: libgimp/gimpexport.c:222
+#: libgimp/gimpexport.c:231
 msgid "can only Handle RGB or Indexed Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:241
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vy- tai indeksoituja kuvia"
 
-#: libgimp/gimpexport.c:243
+#: libgimp/gimpexport.c:252
 msgid "needs an Alpha Channel"
 msgstr "vaatii ett‰ kuvassa on alfakanava"
 
-#: libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:253
 msgid "Add Alpha Channel"
 msgstr "Lis‰‰ alfakanava"
 
@@ -99,36 +99,36 @@ msgstr "Lis‰‰ alfakanava"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:313
+#: libgimp/gimpexport.c:322
 msgid "Export File"
 msgstr "Tiedoston ulosvienti"
 
-#: libgimp/gimpexport.c:318
+#: libgimp/gimpexport.c:327
 msgid "Export"
 msgstr "Vie"
 
-#: libgimp/gimpexport.c:320
+#: libgimp/gimpexport.c:329
 msgid "Ignore"
 msgstr "Ohita"
 
-#: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
+#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:180
 #: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
 #: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
 msgid "Cancel"
 msgstr "Peru"
 
-#: libgimp/gimpexport.c:337
+#: libgimp/gimpexport.c:346
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Kuvaasi pit‰‰ ennen tallennusta muokata ulosvienti‰ varten koska:"
 
 #. the footline
-#: libgimp/gimpexport.c:400
+#: libgimp/gimpexport.c:409
 msgid "The export conversion won't modify your original image."
 msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
 
-#: libgimp/gimpfileselection.c:350
+#: libgimp/gimpfileselection.c:388
 msgid "Select File"
 msgstr "Valitse tiedosto"
 
@@ -201,7 +201,7 @@ msgstr "Mittayksikkˆ"
 msgid "Factor"
 msgstr "Kerroin"
 
-#: libgimp/gimpwidgets.c:704
+#: libgimp/gimpwidgets.c:706
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -210,11 +210,11 @@ msgstr ""
 "siemenen‰. T‰m‰ mahdollistaa n‰enn‰isesti satunnaisen toiminnon toiston "
 "samanlaisena"
 
-#: libgimp/gimpwidgets.c:709
+#: libgimp/gimpwidgets.c:711
 msgid "Time"
 msgstr "Aika"
 
-#: libgimp/gimpwidgets.c:718
+#: libgimp/gimpwidgets.c:720
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -222,14 +222,14 @@ msgstr ""
 "K‰yt‰ kellonaikaa satunnaislukujen siemenen‰. T‰m‰ takaa yleens‰ riitt‰v‰n "
 "satunnaisen tuloksen"
 
-#: libgimp/gimpwidgets.c:1030
+#: libgimp/gimpwidgets.c:1032
 msgid "Bytes"
 msgstr "tavuja"
 
-#: libgimp/gimpwidgets.c:1031
+#: libgimp/gimpwidgets.c:1033
 msgid "KiloBytes"
 msgstr "kitotavuja"
 
-#: libgimp/gimpwidgets.c:1032
+#: libgimp/gimpwidgets.c:1034
 msgid "MegaBytes"
 msgstr "megatavuja"

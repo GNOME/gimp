@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.20\n"
-"POT-Creation-Date: 2000-04-22 13:58+0900\n"
+"POT-Creation-Date: 2000-04-22 11:49-0700\n"
 "PO-Revision-Date: 2000-04-22 14:02+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -139,11 +139,11 @@ msgstr "ベジエパスは既に閉じています."
 msgid "Corrupt curve"
 msgstr "壊れた曲線"
 
-#: app/bezier_select.c:2941
+#: app/bezier_select.c:2939
 msgid "Curve not closed!"
 msgstr "曲線は閉じられていません!"
 
-#: app/bezier_select.c:3228 app/gimage_mask.c:618
+#: app/bezier_select.c:3226 app/gimage_mask.c:618
 msgid "Paintbrush operation failed."
 msgstr "絵筆操作失敗."
 

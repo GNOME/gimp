@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-04-20 10:47+0200\n"
+"POT-Creation-Date: 2000-04-22 11:49-0700\n"
 "PO-Revision-Date: 2000-04-20 11:56+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -139,11 +139,11 @@ msgstr "Bezier Pfad ist bereits geschlossen."
 msgid "Corrupt curve"
 msgstr "Kurve beschädigt"
 
-#: app/bezier_select.c:2941
+#: app/bezier_select.c:2939
 msgid "Curve not closed!"
 msgstr "Kurve ist nicht geschlossen!"
 
-#: app/bezier_select.c:3228 app/gimage_mask.c:618
+#: app/bezier_select.c:3226 app/gimage_mask.c:618
 msgid "Paintbrush operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -243,7 +243,7 @@ msgstr "Anpassende Hochrechnung"
 msgid "Max Depth:"
 msgstr "Maximale Tiefe:"
 
-#: app/blend.c:408 app/bucket_fill.c:128 app/fuzzy_select.c:660
+#: app/blend.c:408 app/bucket_fill.c:137 app/tool_options.c:285
 msgid "Threshold:"
 msgstr "Schwellwert:"
 
@@ -332,7 +332,7 @@ msgid "Close"
 msgstr "Schließen"
 
 #. the feather radius scale
-#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:199
+#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:201
 msgid "Radius:"
 msgstr "Radius:"
 
@@ -362,11 +362,11 @@ msgstr "Auffrischen"
 msgid "No Brushes available"
 msgstr "Keine Pinsel verfügbar"
 
-#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:504
+#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:364 app/tool_options.c:528
+#: app/brush_select.c:456 app/layers_dialog.c:364 app/tool_options.c:550
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -400,7 +400,7 @@ msgstr "Dieser Pinsel kann nicht bearbeitet werden."
 msgid "Sorry, this brush can't be deleted."
 msgstr "Dieser Pinsel kann nicht gelöscht werden."
 
-#: app/bucket_fill.c:148 app/color_picker.c:156 app/tool_options.c:273
+#: app/bucket_fill.c:126 app/color_picker.c:156 app/tool_options.c:270
 msgid "Sample Merged"
 msgstr "Vereinigung abtasten"
 
@@ -451,7 +451,7 @@ msgstr "Ersetzen"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: app/by_color_select.c:761 app/layers_dialog.c:380 app/tool_options.c:904
+#: app/by_color_select.c:761 app/layers_dialog.c:380 app/tool_options.c:926
 msgid "Subtract"
 msgstr "Subtraktion"
 
@@ -931,13 +931,13 @@ msgstr "Ursprung X:"
 
 #. the pixel size labels
 #: app/crop.c:1076 app/file_new_dialog.c:389 app/file_new_dialog.c:407
-#: app/tool_options.c:333
+#: app/tool_options.c:348
 msgid "Width:"
 msgstr "Breite:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
 #: app/layers_dialog.c:3479 app/resize.c:254 app/resize.c:279 app/resize.c:524
-#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:349
+#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Höhe:"
 
@@ -963,7 +963,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Verändere Kurven für Kanal:"
 
 #: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:386
-#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:910
+#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:932
 msgid "Value"
 msgstr "Wert"
 
@@ -2199,7 +2199,7 @@ msgstr "Farbton / Helligkeit / Sättigung"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:383 app/paint_funcs.c:94
-#: app/tool_options.c:907
+#: app/tool_options.c:929
 msgid "Hue"
 msgstr "Farbton"
 
@@ -2210,7 +2210,7 @@ msgstr "Helligkeit"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:384 app/paint_funcs.c:95
-#: app/tool_options.c:908
+#: app/tool_options.c:930
 msgid "Saturation"
 msgstr "Sättigung"
 
@@ -2433,7 +2433,7 @@ msgid "Channel Ops"
 msgstr "Kanal"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:385 app/paint_funcs.c:96
-#: app/tool_options.c:794 app/tool_options.c:909
+#: app/tool_options.c:816 app/tool_options.c:931
 msgid "Color"
 msgstr "Farbe"
 
@@ -2595,43 +2595,43 @@ msgstr "Ebene verankern"
 msgid "Delete Layer"
 msgstr "Ebene löschen"
 
-#: app/layers_dialog.c:372 app/paint_funcs.c:83 app/tool_options.c:895
+#: app/layers_dialog.c:372 app/paint_funcs.c:83 app/tool_options.c:917
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:373 app/paint_funcs.c:84 app/tool_options.c:896
+#: app/layers_dialog.c:373 app/paint_funcs.c:84 app/tool_options.c:918
 msgid "Dissolve"
 msgstr "Vernichtend"
 
-#: app/layers_dialog.c:374 app/paint_funcs.c:86 app/tool_options.c:898
+#: app/layers_dialog.c:374 app/paint_funcs.c:86 app/tool_options.c:920
 msgid "Multiply (Burn)"
 msgstr "Nachbelichten"
 
-#: app/layers_dialog.c:375 app/paint_funcs.c:98 app/tool_options.c:899
+#: app/layers_dialog.c:375 app/paint_funcs.c:98 app/tool_options.c:921
 msgid "Divide (Dodge)"
 msgstr "Abwedeln"
 
-#: app/layers_dialog.c:376 app/paint_funcs.c:87 app/tool_options.c:900
+#: app/layers_dialog.c:376 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
 msgstr "Schirm"
 
-#: app/layers_dialog.c:377 app/paint_funcs.c:88 app/tool_options.c:901
+#: app/layers_dialog.c:377 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
 msgstr "Überlagern"
 
-#: app/layers_dialog.c:378 app/paint_funcs.c:89 app/tool_options.c:902
+#: app/layers_dialog.c:378 app/paint_funcs.c:89 app/tool_options.c:924
 msgid "Difference"
 msgstr "Unterschied"
 
-#: app/layers_dialog.c:379 app/paint_funcs.c:90 app/tool_options.c:903
+#: app/layers_dialog.c:379 app/paint_funcs.c:90 app/tool_options.c:925
 msgid "Addition"
 msgstr "Addition"
 
-#: app/layers_dialog.c:381 app/paint_funcs.c:92 app/tool_options.c:905
+#: app/layers_dialog.c:381 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Darken Only"
 msgstr "Nur Abdunkeln"
 
-#: app/layers_dialog.c:382 app/paint_funcs.c:93 app/tool_options.c:906
+#: app/layers_dialog.c:382 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Nur Aufhellen"
 
@@ -2792,46 +2792,46 @@ msgstr "Hineinzoomen"
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: app/main.c:271
+#: app/main.c:274
 msgid "GIMP version"
 msgstr "GIMP Version"
 
-#: app/main.c:275
+#: app/main.c:278
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Benutzung: %s [Option ...] [Datei ...]\n"
 
-#: app/main.c:276
+#: app/main.c:279
 msgid "Valid options are:\n"
 msgstr "Gültige Möglichkeiten sind:\n"
 
-#: app/main.c:277
+#: app/main.c:280
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Gibt diese Hilfe aus.\n"
 
-#: app/main.c:278
+#: app/main.c:281
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Gibt Versionsinformationen aus.\n"
 
-#: app/main.c:279
+#: app/main.c:282
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <Befehle>     Startet im Stapelmodus.\n"
 
-#: app/main.c:280
+#: app/main.c:283
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Benutzt ein alternatives Profil.\n"
 
-#: app/main.c:281
+#: app/main.c:284
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Startet ohne Oberfläche.\n"
 
-#: app/main.c:282
+#: app/main.c:285
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr ""
 "  -r --restore-session     Versucht eine abgelegte Sitzung "
 "wiederherzustellen.\n"
 
-#: app/main.c:283
+#: app/main.c:286
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2839,19 +2839,19 @@ msgstr ""
 "  --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
 "Pinsel.\n"
 
-#: app/main.c:284
+#: app/main.c:287
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zeigt Startmeldungen.\n"
 
-#: app/main.c:285
+#: app/main.c:288
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Verbirgt Startfenster.\n"
 
-#: app/main.c:286
+#: app/main.c:289
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Lädt kein Bild ins Startfenster.\n"
 
-#: app/main.c:287
+#: app/main.c:290
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2859,11 +2859,11 @@ msgstr ""
 "  --no-shm                 Keiner geteilter Speicher zwischen GIMP und "
 "Plug-ins.\n"
 
-#: app/main.c:288
+#: app/main.c:291
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Benutzt die Xshm Erweiterung nicht.\n"
 
-#: app/main.c:289
+#: app/main.c:292
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2871,19 +2871,19 @@ msgstr ""
 "  --console-messages       Warnungen in einer Konsole statt in einem "
 "Dialog.\n"
 
-#: app/main.c:290
+#: app/main.c:293
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Aktiviert Fehlersuchroutinen.\n"
 
-#: app/main.c:291
+#: app/main.c:294
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <Anzeige>      Benutzt die angegebene X Anzeige.\n"
 
-#: app/main.c:292
+#: app/main.c:295
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Benutzt alternatives Systemprofil.\n"
 
-#: app/main.c:309
+#: app/main.c:312
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
@@ -3761,7 +3761,7 @@ msgstr "Navigation: Kein Bild"
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
-#: app/paint_funcs.c:85 app/tool_options.c:897
+#: app/paint_funcs.c:85 app/tool_options.c:919
 msgid "Behind"
 msgstr "Hinter"
 
@@ -4757,7 +4757,7 @@ msgstr "Auswahl: "
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
-#: app/resize.c:158 app/resize.c:183 app/tool_options.c:774
+#: app/resize.c:158 app/resize.c:183 app/tool_options.c:796
 msgid "Size"
 msgstr "Größe"
 
@@ -4866,7 +4866,7 @@ msgstr "Scherung..."
 msgid "Text Tool"
 msgstr "Textwerkzeug"
 
-#: app/text_tool.c:162 app/tool_options.c:232
+#: app/text_tool.c:162 app/tool_options.c:234
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -4979,79 +4979,79 @@ msgstr "Intelligente Schere"
 msgid "By-Color Selection"
 msgstr "Auswahl nach Farbe"
 
-#: app/tool_options.c:188
+#: app/tool_options.c:190
 msgid "Feather"
 msgstr "Ausblenden"
 
-#: app/tool_options.c:296
+#: app/tool_options.c:311
 msgid "Fixed Size / Aspect Ratio"
 msgstr "Feste Größe / Seitenverhältnis"
 
-#: app/tool_options.c:362
+#: app/tool_options.c:377
 msgid "Unit:"
 msgstr "Einheit:"
 
-#: app/tool_options.c:447 app/tools.c:376
+#: app/tool_options.c:469 app/tools.c:376
 msgid "Bucket Fill"
 msgstr "Füllen"
 
-#: app/tool_options.c:449
+#: app/tool_options.c:471
 msgid "Blend Tool"
 msgstr "Farbverlauf"
 
-#: app/tool_options.c:451 app/tools.c:412
+#: app/tool_options.c:473 app/tools.c:412
 msgid "Pencil"
 msgstr "Stift"
 
-#: app/tool_options.c:453 app/tools.c:430
+#: app/tool_options.c:475 app/tools.c:430
 msgid "Paintbrush"
 msgstr "Pinsel"
 
-#: app/tool_options.c:455 app/tools.c:448
+#: app/tool_options.c:477 app/tools.c:448
 msgid "Eraser"
 msgstr "Radierer"
 
-#: app/tool_options.c:457 app/tools.c:466
+#: app/tool_options.c:479 app/tools.c:466
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: app/tool_options.c:459
+#: app/tool_options.c:481
 msgid "Clone Tool"
 msgstr "Klonen"
 
-#: app/tool_options.c:461
+#: app/tool_options.c:483
 msgid "Convolver"
 msgstr "Verknüpfen"
 
-#: app/tool_options.c:463
+#: app/tool_options.c:485
 msgid "Ink Tool"
 msgstr "Tinte"
 
-#: app/tool_options.c:465 app/tools.c:538 app/tools.c:544
+#: app/tool_options.c:487 app/tools.c:538 app/tools.c:544
 msgid "Dodge or Burn"
 msgstr "Abwedeln oder Nachbelichten"
 
-#: app/tool_options.c:467
+#: app/tool_options.c:489
 msgid "Smudge Tool"
 msgstr "Verschmieren"
 
-#: app/tool_options.c:582
+#: app/tool_options.c:604
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: app/tool_options.c:688
+#: app/tool_options.c:710
 msgid "Pressure Sensitivity"
 msgstr "Druckempfindlichkeit"
 
-#: app/tool_options.c:707
+#: app/tool_options.c:729
 msgid "Opacity"
 msgstr "Deckkraft"
 
-#: app/tool_options.c:730
+#: app/tool_options.c:752
 msgid "Hardness"
 msgstr "Härte"
 
-#: app/tool_options.c:750
+#: app/tool_options.c:772
 msgid "Rate"
 msgstr "Rate"
 
