@@ -68,7 +68,6 @@ gimp_SOURCES = \
 	desaturate.h		\
 	devices.c		\
 	devices.h		\
-	dialog_types.h		\
 	dialog_handler.c	\
 	dialog_handler.h	\
 	disp_callbacks.c	\
@@ -160,16 +159,8 @@ gimp_SOURCES = \
 	gradient_select.h	\
 	gradient_select.c	\
 	gradient.h		\
-	gtkwrapbox.c		\
-	gtkwrapbox.h		\
-	gtkhwrapbox.c		\
-	gtkhwrapbox.h		\
-	gtkvwrapbox.c		\
-	gtkvwrapbox.h		\
 	gximage.c		\
 	gximage.h		\
-	histogramwidget.c	\
-	histogramwidget.h	\
 	image_map.c		\
 	image_map.h		\
 	image_new.c		\
@@ -201,7 +192,6 @@ gimp_SOURCES = \
 	lut_funcs.c		\
 	lut_funcs.h		\
 	main.c			\
-	marching_ants.h		\
 	menus.c			\
 	menus.h			\
 	module_db.c		\
@@ -217,8 +207,6 @@ gimp_SOURCES = \
 	palette_select.c	\
 	palette_select.h	\
 	paletteP.h		\
-	paint_funcs.c		\
-	paint_funcs.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	path.c			\
@@ -233,12 +221,6 @@ gimp_SOURCES = \
 	pattern_select.h	\
 	patterns.c		\
 	patterns.h		\
-	pixel_processor.c	\
-	pixel_processor.h	\
-	pixel_region.c		\
-	pixel_region.h		\
-	pixmaps.h		\
-	pixmaps2.h		\
 	plug_in.c		\
 	plug_in.h		\
 	preferences_dialog.c	\
@@ -259,18 +241,6 @@ gimp_SOURCES = \
 	selection.h		\
 	session.h		\
 	session.c		\
-	temp_buf.c		\
-	temp_buf.h		\
-	tile.c			\
-	tile.h			\
-	tile_pvt.h		\
-	tile_cache.c		\
-	tile_cache.h		\
-	tile_manager.c		\
-	tile_manager.h		\
-	tile_manager_pvt.h	\
-	tile_swap.c		\
-	tile_swap.h		\
 	tips_dialog.c		\
 	tips_dialog.h		\
 	toolbox.c		\
@@ -283,10 +253,42 @@ gimp_SOURCES = \
 	unitrc.h		\
 	user_install.c		\
 	user_install.h		\
-	wilber.h		\
 	xcf.c			\
 	xcf.h			\
-	$(regex_sources)
+	$(regex_sources)	\
+	\
+	paint_funcs.c		\
+	paint_funcs.h		\
+	pixel_processor.c	\
+	pixel_processor.h	\
+	pixel_region.c		\
+	pixel_region.h		\
+	temp_buf.c		\
+	temp_buf.h		\
+	tile.c			\
+	tile.h			\
+	tile_pvt.h		\
+	tile_cache.c		\
+	tile_cache.h		\
+	tile_manager.c		\
+	tile_manager.h		\
+	tile_manager_pvt.h	\
+	tile_swap.c		\
+	tile_swap.h		\
+	\
+	gtkwrapbox.c		\
+	gtkwrapbox.h		\
+	gtkhwrapbox.c		\
+	gtkhwrapbox.h		\
+	gtkvwrapbox.c		\
+	gtkvwrapbox.h		\
+	histogramwidget.c	\
+	histogramwidget.h	\
+	\
+	marching_ants.h		\
+	pixmaps.h		\
+	pixmaps2.h		\
+	wilber.h
 
 EXTRA_DIST = \
 	makefile.mingw		\

@@ -1,5 +1,13 @@
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialog_types.h: removed because it was unused.
+
+	* app/Makefile.am: removed dialog_types.h, reordered the file list
+	to group together what may go to "pixmaps", "widgets" and
+	"lowlevel" (???) directories.
+
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/channel.[ch]: removed channel_update() because channel.c
 	should not call gdisplays_update(). Use drawable_update() and
 	a subsequent gdisplays_update() instead.
