@@ -141,4 +141,6 @@ paint_register (Gimp  *gimp,
                                     pdb_string);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
+
+  g_object_unref (G_OBJECT (paint_info));
 }

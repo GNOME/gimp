@@ -125,6 +125,8 @@ session_init (Gimp *gimp)
 
               if (token == G_TOKEN_RIGHT_PAREN)
                 g_scanner_set_scope (scanner, 0);
+              else
+                break;
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (COLOR_HISTORY))
             {

@@ -572,6 +572,8 @@ gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
       gimp_help_set_help_data (tool_button,
 			       tooltip,
 			       tool_info->help_data);
+
+      g_free (tooltip);
     }
 }
 
