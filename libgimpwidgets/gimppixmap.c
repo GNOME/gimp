@@ -38,9 +38,9 @@ static GtkPixmapClass *parent_class = NULL;
 static void
 gimp_pixmap_destroy (GtkObject *object)
 {
-  GimpPixmap *pixmap;
+  GimpPixmap *pixmap = GIMP_PIXMAP (object);
 
-  g_return_if_fail (pixmap = GIMP_PIXMAP (object));
+  g_return_if_fail (pixmap != NULL);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);

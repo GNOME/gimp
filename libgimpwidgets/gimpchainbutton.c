@@ -73,9 +73,9 @@ static GtkTableClass *parent_class = NULL;
 static void
 gimp_chain_button_destroy (GtkObject *object)
 {
-  GimpChainButton *gcb;
+  GimpChainButton *gcb = GIMP_CHAIN_BUTTON (object);
 
-  g_return_if_fail (gcb = GIMP_CHAIN_BUTTON (object));
+  g_return_if_fail (gcb != NULL);
 
   if (gcb->broken)
     gdk_pixmap_unref (gcb->broken);

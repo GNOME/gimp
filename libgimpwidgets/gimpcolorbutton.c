@@ -88,9 +88,9 @@ static GtkPreviewClass *parent_class = NULL;
 static void
 gimp_color_button_destroy (GtkObject *object)
 {
-  GimpColorButton *gcb;
+  GimpColorButton *gcb = GIMP_COLOR_BUTTON (object);
    
-  g_return_if_fail (gcb = GIMP_COLOR_BUTTON (object));
+  g_return_if_fail (gcb != NULL);
   
   g_free (gcb->title);
 

@@ -1446,9 +1446,9 @@ static void
 image_scale_callback (GtkWidget *widget,
 		      gpointer   client_data)
 {
-  ImageResize *image_scale = NULL;
+  ImageResize *image_scale = (ImageResize *) client_data;
 
-  g_assert ((image_scale = (ImageResize *) client_data) != NULL);
+  g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
 
   gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
