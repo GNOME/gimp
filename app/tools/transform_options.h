@@ -19,37 +19,39 @@
 #ifndef __TRANSFORM_OPTIONS_H__
 #define __TRANSFORM_OPTIONS_H_
 
+
 #include "tool_options.h"
+
 
 typedef struct _TransformOptions TransformOptions;
 
 struct _TransformOptions
 {
-  GimpToolOptions  tool_options;
+  GimpToolOptions         tool_options;
 
-  gboolean     smoothing;
-  gboolean     smoothing_d;
-  GtkWidget   *smoothing_w;
+  gboolean                smoothing;
+  gboolean                smoothing_d;
+  GtkWidget              *smoothing_w;
 
-  gint	       direction;
-  gint         direction_d;
-  GtkWidget   *direction_w[2];  /* 2 radio buttons */
+  GimpTransformDirection  direction;
+  GimpTransformDirection  direction_d;
+  GtkWidget              *direction_w[2];  /* 2 radio buttons */
 
-  gboolean     show_grid;
-  gboolean     show_grid_d;
-  GtkWidget   *show_grid_w;
+  gboolean                show_grid;
+  gboolean                show_grid_d;
+  GtkWidget              *show_grid_w;
 
-  gint	       grid_size;
-  gint         grid_size_d;
-  GtkObject   *grid_size_w;
+  gint	                  grid_size;
+  gint                    grid_size_d;
+  GtkObject              *grid_size_w;
 
-  gboolean     clip;
-  gboolean     clip_d;
-  GtkWidget   *clip_w;
+  gboolean                clip;
+  gboolean                clip_d;
+  GtkWidget              *clip_w;
 
-  gboolean     showpath;
-  gboolean     showpath_d;
-  GtkWidget   *showpath_w;
+  gboolean                show_path;
+  gboolean                show_path_d;
+  GtkWidget              *show_path_w;
 };
 
 
@@ -60,13 +62,6 @@ void               transform_options_init  (TransformOptions     *options,
 					    GType                 tool_type,
 					    ToolOptionsResetFunc  reset_func);
 void               transform_options_reset (GimpToolOptions      *tool_options);
-
-gboolean           gimp_transform_tool_smoothing (void);
-gboolean           gimp_transform_tool_showpath  (void);
-gboolean           gimp_transform_tool_clip      (void);
-gint               gimp_transform_tool_direction (void);
-gint               gimp_transform_tool_grid_size (void);
-gboolean           gimp_transform_tool_show_grid (void);
 
 
 #endif /* __TRANSFORM_OPTIONS_H__ */

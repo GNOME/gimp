@@ -1,3 +1,52 @@
+2001-11-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay-foreach.c: forgot to commit last time.
+
+	Transform stuff cleanup:
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpdrawable-transform.[ch]: new files implementing
+	the actual transform functions cut from tools/gimptransformtool.*.
+
+	* app/core/gimpdrawable-transform-utils.[ch]: new files implementing
+	transform matrix assembly utility functions.
+
+	* app/tools/gimptransformtool.[ch]: removed the stuff here. cleanup.
+
+	* app/tools/transform_options.[ch]: removed all stuff which does
+	not belong here, e.g. the transform_tool_* functions and the
+	global "transform_options" variable. Works like all other tool
+	options now.
+
+	* app/tools/gimpfliptool.[ch]
+	* app/tools/gimpperspectivetool.[ch]
+	* app/tools/gimprotatetool.[ch]
+	* app/tools/gimpscaletool.[ch]
+	* app/tools/gimpsheartool.[ch]: massive code removal because
+	we can use core/gimpdrawable-fransform* functions now. cleanup.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl: added new PDB group "transform_tools".
+
+	* tools/pdbgen/pdb/tools.pdb: removed the transform stuff here...
+
+	* tools/pdbgen/pdb/transform_tools.pdb: and added *much*
+	simplified versions which use the new core/gimpdrawable-transform*
+	utilities.
+
+	* app/pdb/Makefile.am
+	* app/pdb/transform_tools_cmds.c: new file.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/tools_cmds.c: regenerated.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp_pdb.h
+	* libgimp/gimptransformtools_pdb.[ch]: new files.
+
+	* libgimp/gimptools_pdb.[ch]: regenerated.
+
 2001-11-19  Daniel Egger  <degger@fhm.edu>
 
 	* app/paint-funcs/paint-funcs.c

@@ -52,6 +52,7 @@
 #include <libgimp/gimpselectiontools_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
 #include <libgimp/gimptools_pdb.h>
+#include <libgimp/gimptransformtools_pdb.h>
 #include <libgimp/gimpundo_pdb.h>
 #include <libgimp/gimpunit_pdb.h>
 

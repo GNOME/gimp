@@ -27,160 +27,38 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "gimprc.h"
-
-#include "gimptool.h"
 #include "gimptransformtool.h"
 #include "transform_options.h"
 #include "tool_manager.h"
 
+#include "app_procs.h"
+#include "gimprc.h"
+
 #include "libgimp/gimpintl.h"
 
 
-static TransformOptions  *transform_options     = NULL;
+/*  local function prototypes  */
 
-/* Callback functions - need prototypes */
+static void   gimp_transform_tool_grid_density_update (GtkWidget *widget,
+                                                       gpointer   data);
+static void   gimp_transform_tool_show_grid_update    (GtkWidget *widget,
+                                                       gpointer   data);
+static void   gimp_transform_tool_show_path_update    (GtkWidget *widget,
+                                                       gpointer   data);
 
-static void
-gimp_transform_tool_direction_callback (GtkWidget *widget,
-			                gpointer   data)
-{
-  long dir = (long) data;
 
-  if (dir == TRANSFORM_TRADITIONAL)
-    transform_options->direction = TRANSFORM_TRADITIONAL;
-  else
-    transform_options->direction = TRANSFORM_CORRECTIVE;
-}
+/*  public functions  */
 
-static void
-gimp_transform_tool_grid_density_callback (GtkWidget *widget,
-				           gpointer   data)
-{
-  transform_options->grid_size =
-    (int) (pow (2.0, 7.0 - GTK_ADJUSTMENT (widget)->value) + 0.5);
-
-  gimp_transform_tool_grid_density_changed ();
-}
-
-static void
-gimp_transform_tool_show_grid_update (GtkWidget *widget,
-        	 		      gpointer   data)
-{
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
-  if (first_call)
-    {
-      first_call = FALSE;
-      return;
-    }
-
-  gimp_toggle_button_update (widget, data);
-
-  gimp_transform_tool_grid_density_changed ();
-}
-
-static void
-gimp_transform_tool_show_path_update (GtkWidget *widget,
-				      gpointer   data)
-{
-  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
-
-  if (first_call)
-    {
-      first_call = FALSE;
-      return;
-    }
-
-  gimp_transform_tool_showpath_changed (1); /* pause */
-  gimp_toggle_button_update (widget, data);
-  gimp_transform_tool_showpath_changed (0); /* resume */
-}
-
-/* Global functions. No magic needed yet. */
-
-/* Unhappy with this - making this stuff global is wrong. */
-
-gboolean
-gimp_transform_tool_smoothing (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->smoothing;
-}
-
-gboolean
-gimp_transform_tool_showpath (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->showpath;
-}
-
-gboolean
-gimp_transform_tool_clip (void)
-{
-  if (!transform_options)
-    return FALSE;
-  else
-    return transform_options->clip;
-}
-
-gint
-gimp_transform_tool_direction (void)
-{
-  if (!transform_options)
-    return TRANSFORM_TRADITIONAL;
-  else
-    return transform_options->direction;
-}
-
-gint
-gimp_transform_tool_grid_size (void)
-{
-  if (!transform_options)
-    return 32;
-  else
-    return transform_options->grid_size;
-}
-
-gboolean
-gimp_transform_tool_show_grid (void)
-{
-  if (!transform_options)
-    return TRUE;
-  else
-    return transform_options->show_grid;
-}
-
-/* Main options stuff - the rest doesn't need to be here (default 
- * callbacks is good, but none of this stuff should depend on having 
- * access to the options)
- */
-
-void
-transform_options_reset (GimpToolOptions *tool_options)
+TransformOptions *
+transform_options_new (GType                 tool_type,
+		       ToolOptionsResetFunc  reset_func)
 {
   TransformOptions *options;
 
-  options = (TransformOptions *) tool_options;
+  options = g_new (TransformOptions, 1);
+  transform_options_init (options, tool_type, reset_func);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
-				options->smoothing_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->showpath_w),
-				options->showpath_d);
-  gtk_toggle_button_set_active (((options->direction_d == TRANSFORM_TRADITIONAL) ?
-				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
-				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
-				TRUE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
-				options->show_grid_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
-			    7.0 - log (options->grid_size_d) / log (2.0));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
-				options->clip_d);
+  return options;
 }
 
 void
@@ -202,23 +80,26 @@ transform_options_init (TransformOptions     *options,
   vbox = options->tool_options.main_vbox;
 
   options->smoothing = options->smoothing_d = TRUE;
-  options->showpath  = options->showpath_d  = TRUE;
+  options->show_path = options->show_path_d = TRUE;
   options->clip      = options->clip_d      = FALSE;
-  options->direction = options->direction_d = TRANSFORM_TRADITIONAL;
+  options->direction = options->direction_d = GIMP_TRANSFORM_FORWARD;
   options->grid_size = options->grid_size_d = 32;
   options->show_grid = options->show_grid_d = TRUE;
 
-  frame = gimp_radio_group_new (TRUE, _("Tool Paradigm"),
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Paradigm"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->direction,
+                                 GINT_TO_POINTER (options->direction),
 
-				_("Traditional"), gimp_transform_tool_direction_callback,
-				TRANSFORM_TRADITIONAL, NULL,
-				&options->direction_w[0], TRUE,
+                                 _("Traditional"),
+                                 GINT_TO_POINTER (GIMP_TRANSFORM_FORWARD),
+                                 &options->direction_w[0],
 
-				_("Corrective"), gimp_transform_tool_direction_callback,
-				TRANSFORM_CORRECTIVE, NULL,
-				&options->direction_w[1], FALSE,
+                                 _("Corrective"),
+                                 GINT_TO_POINTER (GIMP_TRANSFORM_BACKWARD),
+                                 &options->direction_w[1],
 
-				NULL);
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -257,24 +138,24 @@ transform_options_init (TransformOptions     *options,
     gtk_spin_button_new (GTK_ADJUSTMENT (options->grid_size_w), 0, 0);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (grid_density), TRUE);
   g_signal_connect (G_OBJECT (options->grid_size_w), "value_changed",
-                    G_CALLBACK (gimp_transform_tool_grid_density_callback),
-                    &options->grid_size);
+                    G_CALLBACK (gimp_transform_tool_grid_density_update),
+                    options);
   gtk_box_pack_start (GTK_BOX (hbox), grid_density, FALSE, FALSE, 0);
   gtk_widget_show (grid_density);
 
   gtk_widget_set_sensitive (label, options->show_grid_d);
   gtk_widget_set_sensitive (grid_density, options->show_grid_d);
   g_object_set_data (G_OBJECT (options->show_grid_w), "set_sensitive",
-		       grid_density);
+                     grid_density);
   g_object_set_data (G_OBJECT (grid_density), "set_sensitive", label);  
 
-  /*  the showpath toggle button  */
-  options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
-  g_signal_connect (G_OBJECT (options->showpath_w), "toggled",
+  /*  the show_path toggle button  */
+  options->show_path_w = gtk_check_button_new_with_label (_("Show Path"));
+  g_signal_connect (G_OBJECT (options->show_path_w), "toggled",
                     G_CALLBACK (gimp_transform_tool_show_path_update),
-                    &options->showpath);
-  gtk_box_pack_start (GTK_BOX (vbox), options->showpath_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->showpath_w);
+                    &options->show_path);
+  gtk_box_pack_start (GTK_BOX (vbox), options->show_path_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->show_path_w);
 
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
@@ -296,21 +177,97 @@ transform_options_init (TransformOptions     *options,
   transform_options_reset ((GimpToolOptions *) options);
 }
 
-TransformOptions *
-transform_options_new (GType                 tool_type,
-		       ToolOptionsResetFunc  reset_func)
+void
+transform_options_reset (GimpToolOptions *tool_options)
 {
   TransformOptions *options;
 
-  options = g_new (TransformOptions, 1);
-  transform_options_init (options, tool_type, reset_func);
+  options = (TransformOptions *) tool_options;
 
-  /* Set our local copy of the active tool's options (so that 
-   * the methods/functions to access them work) */
-  transform_options = options;
-
-  return options;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
+				options->smoothing_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_path_w),
+				options->show_path_d);
+  gtk_toggle_button_set_active (((options->direction_d == GIMP_TRANSFORM_FORWARD) ?
+				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
+				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
+				TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
+				options->show_grid_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),
+			    7.0 - log (options->grid_size_d) / log (2.0));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
+				options->clip_d);
 }
 
 
+/*  private functions  */
 
+static void
+gimp_transform_tool_grid_density_update (GtkWidget *widget,
+                                         gpointer   data)
+{
+  TransformOptions *options;
+  GimpTool         *active_tool;
+
+  options = (TransformOptions *) data;
+
+  options->grid_size =
+    (gint) (pow (2.0, 7.0 - GTK_ADJUSTMENT (widget)->value) + 0.5);
+
+  active_tool = tool_manager_get_active (the_gimp);
+
+  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
+    gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
+}
+
+static void
+gimp_transform_tool_show_grid_update (GtkWidget *widget,
+        	 		      gpointer   data)
+{
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
+
+  GimpTool *active_tool;
+
+  if (first_call)
+    {
+      first_call = FALSE;
+      return;
+    }
+
+  gimp_toggle_button_update (widget, data);
+
+  active_tool = tool_manager_get_active (the_gimp);
+
+  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
+    gimp_transform_tool_grid_density_changed (GIMP_TRANSFORM_TOOL (active_tool));
+}
+
+static void
+gimp_transform_tool_show_path_update (GtkWidget *widget,
+				      gpointer   data)
+{
+  static gboolean first_call = TRUE;  /* eek, this hack avoids a segfault */
+
+  GimpTool          *active_tool;
+  GimpTransformTool *transform_tool = NULL;
+
+  if (first_call)
+    {
+      first_call = FALSE;
+      return;
+    }
+
+  active_tool = tool_manager_get_active (the_gimp);
+
+  if (GIMP_IS_TRANSFORM_TOOL (active_tool))
+    transform_tool = GIMP_TRANSFORM_TOOL (active_tool);
+
+  if (transform_tool)
+    gimp_transform_tool_show_path_changed (transform_tool, 1); /* pause */
+
+  gimp_toggle_button_update (widget, data);
+
+  if (transform_tool)
+    gimp_transform_tool_show_path_changed (transform_tool, 0); /* resume */
+}

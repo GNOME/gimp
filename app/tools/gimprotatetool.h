@@ -45,17 +45,9 @@ struct _GimpRotateToolClass
 };
 
 
-void          gimp_rotate_tool_register (Gimp           *gimp);
+void    gimp_rotate_tool_register (Gimp *gimp);
 
-GType         gimp_rotate_tool_get_type (void);
+GType   gimp_rotate_tool_get_type (void);
 
-
-TileManager * gimp_rotate_tool_rotate   (GimpImage      *gimage,
-					 GimpDrawable   *drawable,
-					 GimpDisplay    *gdisp,
-					 gdouble         angle,
-					 TileManager    *float_tiles,
-					 gboolean        interpolation,
-					 GimpMatrix3     matrix);
 
 #endif  /*  __GIMP_ROTATE_TOOL_H__  */

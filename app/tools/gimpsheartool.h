@@ -45,17 +45,9 @@ struct _GimpShearToolClass
 };
 
 
-void          gimp_shear_tool_register (Gimp           *gimp);
+void    gimp_shear_tool_register (Gimp *gimp);
 
-GType         gimp_shear_tool_get_type (void);
-
-
-TileManager * gimp_shear_tool_shear    (GimpImage      *gimage,
-					GimpDrawable   *drawable,
-					GimpDisplay    *gdisp,
-					TileManager    *float_tiles,
-					gboolean        interpolation,
-					GimpMatrix3     matrix);
+GType   gimp_shear_tool_get_type (void);
 
 
 #endif  /*  __GIMP_SHEAR_TOOL_H__  */

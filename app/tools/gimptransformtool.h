@@ -31,12 +31,8 @@
 #define MAX_INFO_BUF   40
 #define TRAN_INFO_SIZE  8
 
-enum BoundingBox
-{
-  X0, Y0, X1, Y1, X2, Y2, X3, Y3
-};
 
-typedef gdouble TranInfo[TRAN_INFO_SIZE];
+typedef gdouble TransInfo[TRAN_INFO_SIZE];
 
 
 #define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
@@ -75,13 +71,14 @@ struct _GimpTransformTool
   gdouble	  tcx, tcy;	/*                              */
 
   GimpMatrix3     transform;    /*  transformation matrix       */
-  TranInfo        trans_info;   /*  transformation info         */
+  TransInfo       trans_info;   /*  transformation info         */
 
   TileManager    *original;     /*  pointer to original tiles   */
 
   TransformAction function;     /*  current tool activity       */
 
-  gboolean        interactive;  /*  tool is interactive         */
+  gboolean        use_grid;     /*  does the tool use the grid  */
+
   gint		  ngx, ngy;	/*  number of grid lines in original
 				 *  x and y directions
 				 */
@@ -102,6 +99,7 @@ struct _GimpTransformToolClass
 
 };
 
+
 /*  Special undo type  */
 typedef struct _TransformUndo TransformUndo;
 
@@ -110,59 +108,26 @@ struct _TransformUndo
   gint         tool_ID;
   GType        tool_type;
 
-  TranInfo     trans_info;
+  TransInfo    trans_info;
   TileManager *original;
   gpointer     path_undo;
 };
-
-/*  transform directions  */
-#define TRANSFORM_TRADITIONAL 0
-#define TRANSFORM_CORRECTIVE  1
 
 
 /*  make this variable available to all  */
 /*  Do we still need to do this?  -- rock */
 extern InfoDialog * transform_info;
 
-/*  transform tool functions  */
-/* make PDB compile: ToolType doesn't exist any more 
-Tool        * gimp_transform_tool_new                    (GimpTransformToolType        tool_type,
-						     gboolean        interactive);
-*/
 
-GType         gimp_transform_tool_get_type               (void);
+GType   gimp_transform_tool_get_type               (void);
 
-void          gimp_transform_tool_transform_bounding_box (GimpTransformTool    *tool);
-void          gimp_transform_tool_reset                  (GimpTransformTool    *tool,
-                                                          GimpDisplay          *gdisp);
-void	      gimp_transform_tool_grid_density_changed   (void);
-void	      gimp_transform_tool_showpath_changed       (gint                  type);
-TileManager * gimp_transform_tool_transform              (GimpTransformTool    *tool,
-		                                          GimpDisplay          *gdisp,
-		                                          TransformState        state);
-/*  transform functions  */
-/* FIXME this function needs to be renamed */
-TileManager * gimp_transform_tool_do                     (GimpImage        *gimage,
-							  GimpDrawable     *drawable,
-							  TileManager      *float_tiles,
-							  gboolean          interpolation,
-							  GimpMatrix3       matrix,
-							  GimpProgressFunc  progress_callback,
-							  gpointer          progress_data);
-TileManager * gimp_transform_tool_cut                    (GimpImage        *gimage,
-							  GimpDrawable     *drawable,
-							  gboolean         *new_layer);
-gboolean      gimp_transform_tool_paste                  (GimpImage        *gimage,
-							  GimpDrawable     *drawable,
-							  TileManager      *tiles,
-							  gboolean          new_layer);
+TileManager * gimp_transform_tool_transform_tiles  (GimpTransformTool *tr_tool,
+                                                    const gchar       *progress_text);
+void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
 
-gboolean      gimp_transform_tool_smoothing              (void);
-gboolean      gimp_transform_tool_showpath               (void);
-gboolean      gimp_transform_tool_clip	                 (void);
-gint	      gimp_transform_tool_direction              (void);
-gint	      gimp_transform_tool_grid_size              (void);
-gboolean      gimp_transform_tool_show_grid              (void);
+void	gimp_transform_tool_grid_density_changed   (GimpTransformTool *tr_tool);
+void	gimp_transform_tool_show_path_changed      (GimpTransformTool *tr_tool,
+                                                    gint               type);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

@@ -193,6 +193,12 @@ typedef enum
   REPEAT_TRIANGULAR
 } RepeatMode;
 
+typedef enum /*< skip >*/
+{
+  GIMP_TRANSFORM_FORWARD,
+  GIMP_TRANSFORM_BACKWARD
+} GimpTransformDirection;
+
 
 /*  base objects  */
 

@@ -35,514 +35,7 @@ sub drawable_out_arg {
     $arg;
 }
 
-sub sample_merged_arg () {{
-    name => 'sample_merged',
-    type => 'boolean',
-    desc => 'Use the composite image, not the drawable'
-}}
-
-sub threshold_arg () {{
-    name => 'threshold',
-    type => '0 <= int32 <= 255',
-    desc => 'Threshold in intensity levels %%desc%%'
-}}
-
-sub feather_select_args () {(
-    { name => 'feather', type => 'boolean',
-      desc => 'Feather option for selections' },
-    { name => 'feather_radius', type => 'float',
-      desc => 'Radius for feather operation' }
-)}
-
-sub stroke_arg () {
-    { name => 'strokes', type => 'floatarray',
-      desc => 'Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
-	       sn.x, sn.y }',
-      array => { type => '2 <= int32', on_success => 'num_strokes /= 2;',
-		 desc => 'Number of stroke control points (count each
-			  coordinate as 2 points)' } }
-}
-
 # The defs
-
-sub airbrush {
-    $blurb  = <<'BLURB';
-Paint in the current brush with varying pressure. Paint application is
-time-dependent.
-BLURB
-
-    $help = <<'HELP';
-This tool simulates the use of an airbrush. Paint pressure represents the
-relative intensity of the paint application. High pressure results in a thicker
-layer of paint while low pressure results in a thinner layer.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the airbrush strokes (%%desc%%)' },
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpairbrushtool.h") ],
-	code => <<'CODE'
-success = airbrush_non_gui (drawable, pressure, num_strokes, strokes);
-CODE
-    );
-}
-
-sub airbrush_default {
-    $blurb  = <<'BLURB';
-Paint in the current brush with varying pressure. Paint application is
-time-dependent.
-BLURB
-
-    $help = <<'HELP';
-This tool simulates the use of an airbrush. It is similar to gimp_airbrush 
-except that the pressure is derived from the airbrush tools options box. 
-It the option has not been set the default for the option will be used.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpairbrushtool.h") ],
-	code => <<'CODE'
-success = airbrush_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-
-sub blend {
-    $blurb = <<'BLURB';
-Blend between the starting and ending coordinates with the specified blend mode
-and gradient type.
-BLURB
-
-    $help = <<'HELP';
-This tool requires information on the paint application mode, the blend mode,
-and the gradient type. It creates the specified variety of blend using the
-starting and ending coordinates as defined for each gradient type.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-        { name => 'blend_mode', type => 'enum BlendMode',
-	  desc => 'The type of blend: { %%desc%% }' },
-	{ name => 'paint_mode', type => 'enum LayerModeEffects',
-	  desc => 'The paint application mode: { %%desc%% }' },
-	{ name => 'gradient_type',  type => 'enum GradientType',
-	  desc => 'The type of gradient: { %%desc%% }' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final blend (%%desc%%)' },
-	{ name => 'offset', type => '0 <= float',
-	  desc => 'Offset relates to the starting and ending coordinates
-		   specified for the blend. This parameter is mode dependent
-		   (%%desc%%)' },
-	{ name => 'repeat', type => 'enum RepeatMode',
-	  desc => 'Repeat mode: { %%desc%% }' },
-	{ name => 'supersample', type => 'boolean',
-	  desc => 'Do adaptive supersampling (%%desc%%)' },
-	{ name => 'max_depth', type => '1 <= int32 <= 9',
-	  desc => 'Maximum recursion levels for supersampling',
-	  cond => [ 'supersample' ] },
-	{ name => 'threshold', type => '0 <= float <= 4',
-	  desc => 'Supersampling threshold',
-	  cond => [ 'supersample' ] },
-	{ name => 'x1', type => 'float',
-	  desc => "The x coordinate of this blend's starting point" },
-	{ name => 'y1', type => 'float',
-	  desc => "The y coordinate of this blend's starting point" },
-	{ name => 'x2', type => 'float',
-	  desc => "The x coordinate of this blend's ending point" },
-	{ name => 'y2', type => 'float',
-	  desc => "The y coordinate of this blend's ending point" }
-    );
-
-    %invoke = (
-        headers => [ qw("core/gimpdrawable-blend.h") ],
-	code => <<'CODE'
-{
-  if (! gimp_drawable_gimage (drawable))
-    {
-      success = FALSE;
-    }
-  else
-    {
-      gimp_drawable_blend (drawable,
-                           blend_mode,
-                           paint_mode,
-                           gradient_type,
-                           opacity / 100.0,
-	                   offset, repeat,
-                           supersample, max_depth,
-                           threshold,
-                           x1, y1, x2, y2,
-	                   NULL, NULL);
-    }
-}
-CODE
-    );
-}
-
-sub bucket_fill {
-    $blurb = <<'BLURB';
-Fill the area specified either by the current selection if there is one, or by
-a seed fill starting at the specified coordinates.
-BLURB
-
-    $help = <<'HELP';
-This tool requires information on the paint application mode, and the fill
-mode, which can either be in the foreground color, or in the currently active
-pattern. If there is no selection, a seed fill is executed at the specified
-coordinates and extends outward in keeping with the threshold parameter. If
-there is a selection in the target image, the threshold, sample merged, x, and
-y arguments are unused. If the sample_merged parameter is non-zero, the data of
-the composite image will be used instead of that for the specified drawable.
-This is equivalent to sampling for colors after merging all visible layers. In
-the case of merged sampling, the x,y coordinates are relative to the image's
-origin; otherwise, they are relative to the drawable's origin.
-HELP
-
-    &std_pdb_misc;
-
-    my $validity = 'This parameter is only valid when there is no selection in
-		    the specified image.';
-
-    @inargs = (
-	&drawable_arg,
-	{ name => 'fill_mode', type => 'enum BucketFillMode',
-	  desc => 'The type of fill: { %%desc%% }' },
-	{ name => paint_mode, type => 'enum LayerModeEffects',
-	  desc => 'The paint application mode: { %%desc%% }' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final bucket fill (%%desc%%)' },
-	{ name => 'threshold', type => '0 <= float <= 255',
-	  desc => "The threshold determines how extensive the seed fill will
-		   be. It's value is specified in terms of intensity levels
-		   (%%desc%%). $validity" },
-	&sample_merged_arg,
-    );
-
-    foreach (qw(x y)) {
-	push @inargs, { name => $_, type => 'float',
-			desc => "The $_ coordinate of this bucket fill's
-				 application. $validity" }
-    }
-
-    %invoke = (
-        headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
-	code => <<'CODE'
-{
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
-    {
-      success = FALSE;
-    }
-  else
-    {
-      gimp_drawable_bucket_fill (drawable, fill_mode,
-                                 paint_mode, opacity / 100.0,
-	                         threshold, sample_merged, x, y);
-    }
-}
-CODE
-    );
-}
-
-sub clone {
-    $blurb = <<'BLURB';
-Clone from the source to the dest drawable using the current brush
-BLURB
-
-    $help = <<'HELP';
-This tool clones (copies) from the source drawable starting at the specified 
-source coordinates to the dest drawable. If the "clone_type" argument is set 
-to PATTERN-CLONE, then the current pattern is used as the source and the
-"src_drawable" argument is ignored. Pattern cloning assumes a tileable
-pattern and mods the sum of the src coordinates and subsequent stroke offsets
-with the width and height of the pattern. For image cloning, if the sum of the
-src coordinates and subsequent stroke offsets exceeds the extents of the src
-drawable, then no paint is transferred. The clone tool is capable of
-transforming between any image types including RGB->Indexed--although
-converting from any type to indexed is significantly slower.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	{ name => 'src_drawable', type => 'drawable',
-	  desc => 'The source drawable' },
-	{ name => 'clone_type', type => 'enum CloneType',
-	  desc => 'The type of clone: { %%desc%% }' },
-	{ name => 'src_x', type => 'float',
-	  desc => 'The x coordinate in the source image' },
-	{ name => 'src_y', type => 'float',
-	  desc => 'The y coordinate in the source image' },
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpclonetool.h") ],
-	code => <<'CODE'
-success = clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
-			 num_strokes, strokes);
-CODE
-    );
-}
-
-sub clone_default {
-    $blurb = <<'BLURB';
-Clone from the source to the dest drawable using the current brush
-BLURB
-
-    $help = <<'HELP';
-This tool clones (copies) from the source drawable starting at the specified 
-source coordinates to the dest drawable. This function performs exactly
-the same as the gimp_clone function except that the tools arguments are 
-obtained from the clones option dialog. It this dialog has not been activated
-then the dialogs default values will be used.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpclonetool.h") ],
-	code => <<'CODE'
-success = clone_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-sub color_picker {
-    $blurb = <<'BLURB';
-Determine the color at the given drawable coordinates
-BLURB
-
-    $help = <<'HELP';
-This tool determines the color at the specified coordinates. The returned color
-is an RGB triplet even for grayscale and indexed drawables. If the coordinates
-lie outside of the extents of the specified drawable, then an error is
-returned. If the drawable has an alpha channel, the algorithm examines the
-alpha value of the drawable at the coordinates. If the alpha value is
-completely transparent (0), then an error is returned. If the sample_merged
-parameter is non-zero, the data of the composite image will be used instead of
-that for the specified drawable. This is equivalent to sampling for colors
-after merging all visible layers. In the case of a merged sampling, the
-supplied drawable is ignored.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg,
-	&drawable_arg,
-	{ name => 'x', type => 'float',
-	  desc => 'x coordinate of upper-left corner of rectangle' },
-	{ name => 'y', type => 'float',
-	  desc => 'y coordinate of upper-left corner of rectangle' },
-	&sample_merged_arg,
-	{ name => 'sample_average', type => 'boolean',
-	  desc => 'Average the color of all the pixels in a specified
-		   radius' },
-	{ name => 'average_radius', type => '0 < float',
-	  desc => 'The radius of pixels to average',
-	  cond => [ 'sample_average' ] },
-	{ name => 'save_color', type => 'boolean',
-	  desc => 'Save the color to the active palette' }
-    );
-    $inargs[1]->{no_success} = 1;
-
-    @outargs = (
-	{ name => 'color', type => 'color', void_ret => 1,
-	  desc => 'The return color', init => 1 }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpcolorpickertool.h") ],
-	code => <<'CODE'
-{
-  if (!sample_merged)
-    if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
-      success = FALSE;
-
-  if (success)
-    success = pick_color (gimage, drawable, (int) x, (int) y,
-			  sample_merged, sample_average, average_radius,
-			  save_color);
-  if (success)
-    {
-      gimp_rgba_set_uchar (&color, 
-		           col_value[RED_PIX],
-		           col_value[GREEN_PIX],
-		           col_value[BLUE_PIX],
-		           col_value[ALPHA_PIX]);
-    }
-}
-CODE
-    );
-}
-
-sub convolve_default {
-    $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
-
-    $help = <<'HELP';
-This tool convolves the specified drawable with either a sharpening or blurring
-kernel. This function performs exactly the same as the gimp_convolve
-function except that the tools arguments are obtained from the convolve 
-option dialog. It this dialog has not been activated then the dialogs 
-default values will be used.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpconvolvetool.h") ],
-	code => <<'CODE'
-success = convolve_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-sub convolve {
-    $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
-
-    $help = <<'HELP';
-This tool convolves the specified drawable with either a sharpening or blurring
-kernel. The pressure parameter controls the magnitude of the operation. Like
-the paintbrush, this tool linearly interpolates between the specified stroke
-coordinates.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	{ name => 'pressure', type => '0 <= float <= 100',
-	  desc => 'The pressure: %%desc%%' },
-	{ name => 'convolve_type',
-	  type => 'enum ConvolveType (no CUSTOM_CONVOLVE)',
-	  desc => 'Convolve type: { %%desc%% }' },
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpconvolvetool.h") ],
-	code => <<'CODE'
-success = convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);
-CODE
-    );
-}
-
-sub eraser_default {
-    $blurb = 'Erase using the current brush.';
-
-    $help = <<'HELP';
-This tool erases using the current brush mask. This function performs exactly
-the same as the gimp_eraser function except that the tools arguments are 
-obtained from the eraser option dialog. It this dialog has not been activated
-then the dialogs default values will be used.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
-	code => <<'CODE'
-success = eraser_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-sub eraser {
-    $blurb = 'Erase using the current brush.';
-
-    $help = <<'HELP';
-This tool erases using the current brush mask. If the specified drawable
-contains an alpha channel, then the erased pixels will become transparent.
-Otherwise, the eraser tool replaces the contents of the drawable with the
-background color. Like paintbrush, this tool linearly interpolates between the
-specified stroke coordinates.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg,
-	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
-	  desc => '%%desc%%' },
-	{ name => 'method', type => 'enum PaintApplicationMode',
-	  desc => '%%desc%%' }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
-	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE, FALSE);
-CODE
-    );
-}
-
-sub anti_eraser {
-    $blurb = 'Anti-erase using the current brush.';
-
-    $help = <<'HELP';
-This tool anti-erases using the current brush mask. If the specified drawable
-contains an alpha channel, then the erased pixels will become opaque.
-Otherwise, the eraser tool replaces the contents of the drawable with the
-background color. Like paintbrush, this tool linearly interpolates between the
-specified stroke coordinates.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg,
-	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
-	  desc => '%%desc%%' },
-	{ name => 'method', type => 'enum PaintApplicationMode',
-	  desc => '%%desc%%' }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
-	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE, FALSE);
-CODE
-    );
-}
 
 sub flip {
     $blurb = <<'BLURB';
@@ -572,147 +65,15 @@ HELP
     @outargs = ( &drawable_out_arg('flipped') );
 
     %invoke = (
-	headers => [ qw("tools/gimpfliptool.h" "tools/gimptransformtool.h" 
-                        "undo.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		   'gboolean new_layer' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-
-  /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
-
-  /* Cut/Copy from the specified drawable */
-  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
   flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
               flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
               ORIENTATION_UNKNOWN;
 
-  /* flip the buffer */
-  switch (flip_type)
-    {
-    case ORIENTATION_HORIZONTAL:
-    case ORIENTATION_VERTICAL:
-      new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
-      break;
-    default:
-      new_tiles = NULL;
-      break;
-    }
-
-  /* free the cut/copied buffer */
-  tile_manager_destroy (float_tiles);
-
-  if (new_tiles)
-    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-  else
-    success = FALSE;
-
-  /* push the undo group end  */
-  undo_push_group_end (gimage);
+  success = gimp_drawable_transform_flip (drawable, flip_type);
 }
 CODE
-    );
-}
-
-sub paintbrush {
-    $blurb = <<'BLURB';
-Paint in the current brush with optional fade out parameter and pull colors
-from a gradient.
-BLURB
-
-    $help = <<'HELP';
-This tool is the standard paintbrush. It draws linearly interpolated lines
-through the specified stroke coordinates. It operates on the specified drawable
-in the foreground color with the active brush. The "fade_out" parameter is
-measured in pixels and allows the brush stroke to linearly fall off. The
-pressure is set to the maximum at the beginning of the stroke. As the distance
-of the stroke nears the fade_out value, the pressure will approach zero. The
-gradient_length is the distance to spread the gradient over. It is measured in
-pixels. If the gradient_length is 0, no gradient is used.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	{ name => 'fade_out', type => '0 <= float',
-	  desc => 'Fade out parameter: %%desc%%' },
-	&stroke_arg,
-	{ name => 'method', type => 'enum PaintApplicationMode',
-	  desc => '%%desc%%' },
-	{ name => 'gradient_length', type => '0 <= float',
-	  desc => 'Length of gradient to draw: %%desc%%' }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimppaintbrushtool.h") ],
-	code => <<'CODE'
-success = gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
-	                                fade_out, method, gradient_length);
-CODE
-    );
-}
-
-sub paintbrush_default {
-    $blurb = <<'BLURB';
-Paint in the current brush. The fade out parameter and pull colors
-from a gradient parameter are set from the paintbrush options dialog. If this
-dialog has not been activated then the dialog defaults will be used.
-BLURB
-
-    $help = <<'HELP';
-This tool is similar to the standard paintbrush. It draws linearly interpolated lines
-through the specified stroke coordinates. It operates on the specified drawable
-in the foreground color with the active brush. The "fade_out" parameter is
-measured in pixels and allows the brush stroke to linearly fall 
-off (value obtained from the option dialog). The pressure is set 
-to the maximum at the beginning of the stroke. As the distance
-of the stroke nears the fade_out value, the pressure will approach zero. The
-gradient_length (value obtained from the option dialog) is the 
-distance to spread the gradient over. It is measured in pixels. If 
-the gradient_length is 0, no gradient is used.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimppaintbrushtool.h") ],
-	code => <<'CODE'
-success = gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-sub pencil {
-    $blurb = 'Paint in the current brush without sub-pixel sampling.';
-
-    $help = <<'HELP';
-This tool is the standard pencil. It draws linearly interpolated lines through
-the specified stroke coordinates. It operates on the specified drawable in the
-foreground color with the active brush. The brush mask is treated as though it
-contains only black and white values. Any value below half is treated as black;
-any above half, as white.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimppenciltool.h") ],
-	code => 'success = pencil_non_gui (drawable, num_strokes, strokes);'
     );
 }
 
@@ -762,57 +123,30 @@ HELP
     @outargs = ( &drawable_out_arg('newly mapped') );
 
     %invoke = (
-	headers => [ qw("tools/gimpperspectivetool.h" "tools/gimptransformtool.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'gboolean new_layer', 'gint offset_x, offset_y',
-	          'gdouble cx, cy', 'gdouble scalex, scaley', 
-	          'gdouble trans_info[8]', 'GimpMatrix3 m, matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'gdouble trans_info[8]',
+                  'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-
-  /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-  /* Cut/Copy from the specified drawable */
-  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
-  /* Determine the perspective transform that maps from
-   * the unit cube to the trans_info coordinates
-   */
-  gimp_perspective_tool_find_transform (trans_info, m);
-
-  tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);	
-  cx = (gdouble) offset_x;
-  cy = (gdouble) offset_y;		
-  scalex = 1.0;
-  scaley = 1.0;
-  if (tile_manager_width (float_tiles))
-    scalex = 1.0 / tile_manager_width (float_tiles);
-  if (tile_manager_height (float_tiles))
-    scaley = 1.0 / tile_manager_height (float_tiles);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* Assemble the transformation matrix */
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -cx, -cy);
-  gimp_matrix3_scale     (matrix, scalex, scaley);
-  gimp_matrix3_mult      (m, matrix);
+  gimp_drawable_transform_matrix_perspective (x1, y1, x2, y2,
+                                              trans_info[X0],
+                                              trans_info[Y0],
+                                              trans_info[X1],
+                                              trans_info[Y1],
+                                              trans_info[X2],
+                                              trans_info[Y2],
+                                              trans_info[X3],
+                                              trans_info[Y3],
+                                              matrix);
 
-  /* Perspective the buffer */
-  new_tiles = gimp_perspective_tool_perspective (gimage, drawable, NULL,
-					    float_tiles, interpolation,
-					    matrix);
-
-  /* Free the cut/copied buffer */
-  tile_manager_destroy (float_tiles);
-
-  if (new_tiles)
-    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-  else
-    success = FALSE;
-
-  /*  push the undo group end  */
-  undo_push_group_end (gimage);
+  /* Perspective the selection */
+  success = gimp_drawable_transform_affine (drawable,
+                                            interpolation, 
+                                            FALSE,
+				            matrix,
+                                            GIMP_TRANSFORM_FORWARD);
 }
 CODE
     );
@@ -847,44 +181,22 @@ HELP
     @outargs = ( &drawable_out_arg('rotated') );
 
     %invoke = (
-	headers => [ qw("tools/gimprotatetool.h" "tools/gimptransformtool.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'gboolean new_layer', 'gint offset_x, offset_y', 
-                  'gdouble cx, cy', 'GimpMatrix3 matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-
-  /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-  /* Cut/Copy from the specified drawable */
-  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
-  tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);	
-  cx = offset_x + tile_manager_width (float_tiles) / 2.0;
-  cy = offset_y + tile_manager_height (float_tiles) / 2.0;
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* Assemble the transformation matrix */
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -cx, -cy);
-  gimp_matrix3_rotate    (matrix, angle);
-  gimp_matrix3_translate (matrix, +cx, +cy);
+  gimp_drawable_transform_matrix_rotate (x1, y1, x2, y2,
+                                         angle,
+                                         matrix);
 
-  /* Rotate the buffer */
-  new_tiles = gimp_rotate_tool_rotate (gimage, drawable, NULL, angle,
-				  float_tiles, interpolation, matrix);
-
-  /* Free the cut/copied buffer */
-  tile_manager_destroy (float_tiles);
-
-  if (new_tiles)
-    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-  else
-    success = FALSE;
-
-  /* Push the undo group end */
-  undo_push_group_end (gimage);
+  /* Rotate the selection */
+  success = gimp_drawable_transform_affine (drawable,
+                                            interpolation,
+                                            FALSE,
+                                            matrix,
+                                            GIMP_TRANSFORM_FORWARD);
 }
 CODE
     );
@@ -927,57 +239,34 @@ HELP
     @outargs = ( &drawable_out_arg('scaled') );
 
     %invoke = (
-	headers => [ qw("tools/gimpscaletool.h" "tools/gimptransformtool.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'gboolean new_layer', 'gint offset_x, offset_y', 
-	          'gdouble scalex, scaley', 'gdouble trans_info[4]', 
-	          'GimpMatrix3 matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'gdouble trans_info[4]',
+                  'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
   if (trans_info[X0] < trans_info[X1] &&
       trans_info[Y0] < trans_info[X1])
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-
-      /* Start a transform undo group */
-      undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-      /* Cut/Copy from the specified drawable */
-      float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
-      scalex = scaley = 1.0;
-      if (tile_manager_width (float_tiles))
-        scalex = (trans_info[X1] - trans_info[X0]) /
-		 (gdouble) tile_manager_width (float_tiles);
-      if (tile_manager_height (float_tiles))
-        scaley = (trans_info[Y1] - trans_info[Y0]) /
-		 (gdouble) tile_manager_height (float_tiles);
-
-      tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);	
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
       /* Assemble the transformation matrix */
-      gimp_matrix3_identity  (matrix);
-      gimp_matrix3_translate (matrix, offset_x, offset_y);
-      gimp_matrix3_scale     (matrix, scalex, scaley);
-      gimp_matrix3_translate (matrix, trans_info[X0], trans_info[Y0]);
+      gimp_drawable_transform_matrix_scale (x1, y1, x2, y2,
+                                            trans_info[X0],
+                                            trans_info[Y0],
+                                            trans_info[X1],
+                                            trans_info[Y1],
+                                            matrix);
 
-      /* Scale the buffer */
-      new_tiles = gimp_scale_tool_scale (gimage, drawable, NULL, trans_info,
-				         float_tiles, interpolation, matrix);
-
-      /* Free the cut/copied buffer */
-      tile_manager_destroy (float_tiles);
-
-      if (new_tiles)
-	success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-      else
-        success = FALSE;
-
-      /*  push the undo group end  */
-      undo_push_group_end (gimage);
+      /* Scale the selection */
+      success = gimp_drawable_transform_affine (drawable,
+                                                interpolation,
+                                                FALSE,
+                                                matrix,
+                                                GIMP_TRANSFORM_FORWARD);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -1017,53 +306,27 @@ HELP
     @outargs = ( &drawable_out_arg('sheared') );
 
     %invoke = (
-	headers => [ qw("tools/gimpsheartool.h" "tools/gimptransformtool.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'gboolean new_layer', 'gdouble cx, cy', 
-	          'gint offset_x, offset_y', 'GimpMatrix3 matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-
-  /* Cut/Copy from the specified drawable */
-  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
-  tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);	
-
-  cx = offset_x + tile_manager_width  (float_tiles) / 2.0;
-  cy = offset_y + tile_manager_height (float_tiles) / 2.0;
-
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -cx, -cy);
-  /* Shear matrix */
   shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
                shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
                ORIENTATION_UNKNOWN;
 
-  if (shear_type == ORIENTATION_HORIZONTAL)
-    gimp_matrix3_xshear (matrix, magnitude / tile_manager_height (float_tiles));
-  else if (shear_type == ORIENTATION_VERTICAL)
-    gimp_matrix3_yshear (matrix, magnitude / tile_manager_width (float_tiles));
+  /* Assemble the transformation matrix */
+  gimp_drawable_transform_matrix_shear (x1, y1, x2, y2,
+                                        shear_type,
+                                        magnitude,
+                                        matrix);
 
-  gimp_matrix3_translate (matrix, +cx, +cy);
-
-  /* Shear the buffer */
-  new_tiles = gimp_shear_tool_shear (gimage, drawable, NULL, float_tiles,
-                                     interpolation, matrix);
-
-  /* Free the cut/copied buffer */
-  tile_manager_destroy (float_tiles);
-
-  if (new_tiles)
-    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-  else
-    success = FALSE;
-
-  /* Push the undo group end */
-  undo_push_group_end (gimage);
+  /* Shear the selection */
+  success = gimp_drawable_transform_affine (drawable,
+                                            interpolation,
+                                            FALSE,
+                                            matrix,
+                                            GIMP_TRANSFORM_FORWARD);
 }
 CODE
     );
@@ -1113,184 +376,32 @@ HELP
     @outargs = ( &drawable_out_arg('transformed') );
 
     %invoke = (
-	headers => [ qw("tools/gimptransformtool.h") ],
-	vars => [ 'GimpImage *gimage', 'TileManager *float_tiles, *new_tiles',
-		  'gboolean new_layer', 'GimpMatrix3 matrix' ],
+	vars => [ 'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-    
-  /* Start a transform undo group */
-  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
-    
-  /* Cut/Copy from the specified drawable */
-  float_tiles = gimp_transform_tool_cut (gimage, drawable, &new_layer);
-
   /* Assemble the transformation matrix */
   gimp_matrix3_identity  (matrix);
   gimp_matrix3_translate (matrix, -source_x, -source_y);
   gimp_matrix3_scale     (matrix, scale_x, scale_y);
   gimp_matrix3_rotate    (matrix, angle);
   gimp_matrix3_translate (matrix, dest_x, dest_y);
-    
-  /* Transform the buffer */
-  new_tiles = gimp_transform_tool_do (gimage, drawable, float_tiles,
-				      interpolation, matrix, NULL, NULL);
-    
-  /* Free the cut/copied buffer */
-  tile_manager_destroy (float_tiles);
-    
-  if (new_tiles)
-    success = gimp_transform_tool_paste (gimage, drawable, new_tiles, new_layer);
-  else
-    success = FALSE;
 
-  /* Push the undo group end */
-  undo_push_group_end (gimage);
+  /* Transform the selection */
+  success = gimp_drawable_transform_affine (drawable,
+				            interpolation,
+                                            FALSE,
+                                            matrix,
+                                            GIMP_TRANSFORM_FORWARD);
 }
 CODE
     );
 }
 
-sub smudge {
-    $blurb  = <<'BLURB';
-Smudge image with varying pressure.
-BLURB
+@headers = qw("libgimpmath/gimpmath.h" "core/gimpdrawable-transform.h"
+              "core/gimpdrawable-transform-utils.h" "core/gimpdrawable.h");
 
-    $help = <<'HELP';
-This tool simulates a smudge using the current brush. High pressure results 
-in a greater smudge of paint while low pressure results in a lesser smudge.
-HELP
+@procs = qw(flip perspective rotate scale shear transform_2d);
 
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	 { name => 'pressure', type => '0 <= float <= 100',
-	   desc => 'The pressure of the smudge strokes (%%desc%%)' },
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpsmudgetool.h") ],
-	code => <<'CODE'
-success = gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);
-CODE
-    );
-}
-
-sub smudge_default {
-    $blurb  = <<'BLURB';
-Smudge image with varying pressure.
-BLURB
-
-    $help = <<'HELP';
-This tool simulates a smudge using the current brush. It behaves exactly 
-the same as gimp_smudge except that the pressure value is taken from the
-smudge tool options or the options default if the tools option dialog has
-not been activated.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpsmudgetool.h") ],
-	code => <<'CODE'
-success = gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-sub dodgeburn {
-    $blurb  = <<'BLURB';
-Dodgeburn image with varying exposure.
-BLURB
-
-    $help = <<'HELP';
-Dodgebure. More details here later.
-HELP
-
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '1999';
-
-    @inargs = (
-	&drawable_arg,
-	 { name => 'exposure', type => '0 <= float <= 100',
-	   desc => 'The exposer of the  strokes (%%desc%%)' },
-        { name => 'dodgeburn_type', type => 'enum DodgeBurnType',
-	  desc => 'The type either dodge or burn: { %%desc%% }' },
-        { name => 'dodgeburn_mode', type => 'enum GimpTransferMode',
-	  desc => 'The mode: { %%desc%% }' },
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpdodgeburntool.h") ],
-	code => <<'CODE'
-success = gimp_dodgeburn_tool_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
-CODE
-    );
-}
-
-sub dodgeburn_default {
-    $blurb  = <<'BLURB';
-Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn
-function except that the exposure, type and mode are taken from the tools
-option dialog. If the dialog has not been activated then the defaults 
-as used by the dialog will be used.
-BLURB
-
-    $help = <<'HELP';
-Dodgeburn. More details here later.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpdodgeburntool.h") ],
-	code => <<'CODE'
-success = gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);
-CODE
-    );
-}
-
-
-# Incomplete
-
-sub ink {
-    $blurb = 'Paint in the current brush without sub-pixel sampling.';
-
-    $help = 'fixme fixme';
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-	&stroke_arg
-    );
-}
-
-@headers = qw("libgimpmath/gimpmath.h" "core/gimpimage-mask-select.h"
-	      "tools/tools-types.h" "core/gimpdrawable.h"
-              "base/tile-manager.h");
-
-@procs = qw(airbrush airbrush_default blend bucket_fill clone clone_default
-            color_picker convolve convolve_default dodgeburn dodgeburn_default
-	    eraser eraser_default flip paintbrush paintbrush_default
-	    pencil perspective rotate scale shear smudge smudge_default
-            transform_2d);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Tool procedures';

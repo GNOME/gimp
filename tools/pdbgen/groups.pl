@@ -30,6 +30,7 @@
     selection_tools
     text_tool
     tools
+    transform_tools
     undo
     unit
 );

@@ -44,17 +44,9 @@ struct _GimpScaleToolClass
 };
 
 
-void          gimp_scale_tool_register (Gimp         *gimp);
+void    gimp_scale_tool_register (Gimp *gimp);
 
-GType         gimp_scale_tool_get_type (void);
-
-TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,
-					GimpDrawable *drawable,
-					GimpDisplay  *gdisp,
-					gdouble      *trans_info,
-					TileManager  *float_tiles,
-					gboolean      interpolation,
-					GimpMatrix3   matrix);
+GType   gimp_scale_tool_get_type (void);
 
 
 #endif  /*  __GIMP_SCALE_TOOL_H__  */

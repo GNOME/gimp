@@ -32,6 +32,7 @@ pdb_sources = \
 	pdb/selection_tools.pdb	\
 	pdb/text_tool.pdb	\
 	pdb/tools.pdb		\
+	pdb/transform_tools.pdb	\
 	pdb/undo.pdb		\
 	pdb/unit.pdb
 

@@ -45,15 +45,9 @@ struct _GimpFlipToolClass
 };
 
 
-void          gimp_flip_tool_register (Gimp                    *gimp);
+void    gimp_flip_tool_register (Gimp *gimp);
 
-GType         gimp_flip_tool_get_type (void);
-
-TileManager * flip_tool_flip          (GimpImage               *gimage,
-				       GimpDrawable            *drawable,
-				       TileManager             *orig,
-				       gint                     flip,
-				       InternalOrientationType  type);
+GType   gimp_flip_tool_get_type (void);
 
 
 #endif  /*  __GIMP_FLIP_TOOL_H__  */

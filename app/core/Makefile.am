@@ -64,6 +64,10 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimpdrawable-offset.h		\
 	gimpdrawable-preview.c		\
 	gimpdrawable-preview.h		\
+	gimpdrawable-transform.c	\
+	gimpdrawable-transform.h	\
+	gimpdrawable-transform-utils.c	\
+	gimpdrawable-transform-utils.h	\
 	gimpedit.c			\
 	gimpedit.h			\
 	gimpgradient.c			\

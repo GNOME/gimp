@@ -93,8 +93,8 @@ gdisplays_delete (void)
 {
   GimpDisplay *gdisp;
 
-  /*  destroying the shell removes the GimpDisplay from the list, so
-   *  do a while loop "around" the first element to get them all
+  /*  this removes the GimpDisplay from the list, so do a while loop
+   *  "around" the first element to get them all
    */
   while (display_list)
     {

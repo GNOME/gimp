@@ -104,8 +104,6 @@ gboolean gimp_eraser             (gint32                    drawable_ID,
 gboolean gimp_eraser_default     (gint32                    drawable_ID,
 				  gint                      num_strokes,
 				  gdouble                  *strokes);
-gint32   gimp_flip               (gint32                    drawable_ID,
-				  GimpOrientationType       flip_type);
 gboolean gimp_paintbrush         (gint32                    drawable_ID,
 				  gdouble                   fade_out,
 				  gint                      num_strokes,
@@ -118,29 +116,6 @@ gboolean gimp_paintbrush_default (gint32                    drawable_ID,
 gboolean gimp_pencil             (gint32                    drawable_ID,
 				  gint                      num_strokes,
 				  gdouble                  *strokes);
-gint32   gimp_perspective        (gint32                    drawable_ID,
-				  gboolean                  interpolation,
-				  gdouble                   x0,
-				  gdouble                   y0,
-				  gdouble                   x1,
-				  gdouble                   y1,
-				  gdouble                   x2,
-				  gdouble                   y2,
-				  gdouble                   x3,
-				  gdouble                   y3);
-gint32   gimp_rotate             (gint32                    drawable_ID,
-				  gboolean                  interpolation,
-				  gdouble                   angle);
-gint32   gimp_scale              (gint32                    drawable_ID,
-				  gboolean                  interpolation,
-				  gdouble                   x0,
-				  gdouble                   y0,
-				  gdouble                   x1,
-				  gdouble                   y1);
-gint32   gimp_shear              (gint32                    drawable_ID,
-				  gboolean                  interpolation,
-				  GimpOrientationType       shear_type,
-				  gdouble                   magnitude);
 gboolean gimp_smudge             (gint32                    drawable_ID,
 				  gdouble                   pressure,
 				  gint                      num_strokes,
@@ -148,15 +123,6 @@ gboolean gimp_smudge             (gint32                    drawable_ID,
 gboolean gimp_smudge_default     (gint32                    drawable_ID,
 				  gint                      num_strokes,
 				  gdouble                  *strokes);
-gint32   gimp_transform_2d       (gint32                    drawable_ID,
-				  gboolean                  interpolation,
-				  gdouble                   source_x,
-				  gdouble                   source_y,
-				  gdouble                   scale_x,
-				  gdouble                   scale_y,
-				  gdouble                   angle,
-				  gdouble                   dest_x,
-				  gdouble                   dest_y);
 
 
 #ifdef __cplusplus

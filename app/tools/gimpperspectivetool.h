@@ -45,19 +45,9 @@ struct _GimpPerspectiveToolClass
 };
 
 
-void          gimp_perspective_tool_register       (Gimp           *gimp);
+void    gimp_perspective_tool_register (Gimp *gimp);
 
-GType         gimp_perspective_tool_get_type       (void);
-
-
-TileManager * gimp_perspective_tool_perspective    (GimpImage      *gimage,
-						    GimpDrawable   *drawable,
-						    GimpDisplay    *gdisp,
-						    TileManager    *float_tiles,
-						    gboolean        interpolation,
-						    GimpMatrix3     matrix);
-void          gimp_perspective_tool_find_transform (gdouble        *coords,
-						    GimpMatrix3     matrix);
+GType   gimp_perspective_tool_get_type (void);
 
 
 #endif  /*  __GIMP_PERSPECTIVE_TOOL_H__  */
