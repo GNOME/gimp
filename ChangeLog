@@ -1,3 +1,16 @@
+2002-09-05  Manish Singh  <yosh@gimp.org>
+
+	* acinclude.m4: emptied
+
+	* autogen.sh: support for automake version special casing, error
+	out on aclocal failure.
+
+	* m4compat/1.4/pysupport.m4
+	* m4compat/1.6/pysupport.m4
+	* configure.in
+	* plug-ins/Makefile.am: pygimp autoconf support, just to get it
+	some testing. We'll figure out policy later.
+
 2002-09-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcroptool.c (crop_tool_crop_image): call

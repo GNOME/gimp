@@ -17,8 +17,11 @@ FILE=plug-ins
 LIBTOOL_REQUIRED_VERSION=1.3.4
 AUTOCONF_REQUIRED_VERSION=2.52
 AUTOMAKE_REQUIRED_VERSION=1.4
+AUTOMAKE16_REQUIRED_VERSION=1.6
 GLIB_REQUIRED_VERSION=2.0.0
 INTLTOOL_REQUIRED_VERSION=0.17
+
+ACLOCAL_INTERNAL_FLAGS=
 
 
 srcdir=`dirname $0`
@@ -72,14 +75,35 @@ else
 fi
 
 echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
-if (automake --version) < /dev/null > /dev/null 2>&1; then
+if (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
+    VER=`automake-1.6 --version \
+         | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+    check_version $VER $AUTOMAKE16_REQUIRED_VERSION
+
+    AUTOMAKE=automake-1.6
+    ACLOCAL=aclocal-1.6
+    ACLOCAL_INTERNAL_FLAGS="-I m4compat/1.6"
+elif (automake --version) < /dev/null > /dev/null 2>&1; then
     VER=`automake --version \
          | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $AUTOMAKE_REQUIRED_VERSION
+
+    AUTOMAKE=automake
+    ACLOCAL=aclocal
+    ACLOCAL_INTERNAL_FLAGS="-I m4compat/1.4"
+
+    echo
+    echo "  You do not have automake 1.6."
+    echo "  The $PROJECT build will work, but the python binding will not be there."
+    echo "  Upgrade automake if you want this functionality."
+    echo
+    echo "  NOTE: you will get warnings from plug-ins/pygimp/Makefile.am."
+    echo "  This is normal."
+    echo
 else
     echo
     echo "  You must have automake installed to compile $PROJECT."
-    echo "  Get ftp://ftp.cygnus.com/pub/home/tromey/automake-1.4p1.tar.gz"
+    echo "  Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.6.3.tar.gz"
     echo "  (or a newer version if it is available)"
     DIE=1
 fi
@@ -139,6 +163,8 @@ case $CC in
     ;;
 esac
 
+echo
+
 if test -z "$ACLOCAL_FLAGS"; then
 
     acdir=`aclocal --print-ac-dir`
@@ -159,12 +185,15 @@ if test -z "$ACLOCAL_FLAGS"; then
     done
 fi
 
-aclocal $ACLOCAL_FLAGS
+if ! $ACLOCAL $ACLOCAL_INTERNAL_FLAGS $ACLOCAL_FLAGS; then
+   echo "$ACLOCAL gave errors. Please fix the error conditions and try again."
+   exit 1
+fi
 
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
 
-automake --add-missing $am_opt
+$AUTOMAKE --add-missing $am_opt
 autoconf
 
 glib-gettextize --copy --force
