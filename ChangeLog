@@ -1,3 +1,9 @@
+Thu Nov 18 12:31:08 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpimage.c: use PARAM_IMAGE instead of PARAM_DRAWABLE in
+	gimp_image_get_thumbnail_data. Thanks to Shuji Narazaki for pointing 
+	this out.
+
 Wed Nov 17 22:45:35 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/xcf.c: When greeted with a cheerfully corrupt poli^M^M^M^MXCF
