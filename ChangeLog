@@ -352,6 +352,11 @@
 
 	* app/core/gimpcontainer.c: fixed warning, coding style.
 
+2002-08-09  Kelly Martin  <kmartin@pyrzqxgl.org>
+
+	* app/tools/gimpposterizetool.c (gimp_posterize_tool_register):
+	fixed typo.
+
 2002-08-06  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpmagnifytool.[ch]: reverted Dave's change
