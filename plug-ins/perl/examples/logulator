@@ -1,4 +1,4 @@
-#!/usr/app/bin/perl
+#!/usr/bin/perl
 
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
@@ -289,7 +289,7 @@ register "perl_fu_carved_logo",
       [PF_STRING,    'text_string',      "Text String", "Marble"],
       [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [100, 2, 1000, 1, 10, 0, 1]],
       [PF_FONT,      'font',             "Font", "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"],
-      [PF_FILE,      'background_img',   "Background Img", "".'/usr/local/share/gimp'."/scripts/texture3.jpg"],
+      [PF_FILE,      'background_img',   "Background Img", "".'/usr/local/share/gimp/1.1'."/scripts/texture3.jpg"],
       [PF_TOGGLE,    'carve_raised_text',"Carve Raised Text", 0],
    ],
    \&script_fu_carved_logo;
@@ -511,8 +511,8 @@ register "perl_fu_crystal_logo",
       [PF_STRING,    'text_string',      "Text String", "Crystal"],
       [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [150, 2, 1000, 1, 10, 0, 1]],
       [PF_FONT,      'font',             "Font", "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"],
-      [PF_FILE,      'background_img',   "Background Img", "".'/usr/local/share/gimp'."/scripts/texture1.jpg"],
-      [PF_FILE,      'environment_map',  "Environment Map", "".'/usr/local/share/gimp'."/scripts/beavis.jpg"],
+      [PF_FILE,      'background_img',   "Background Img", "".'/usr/local/share/gimp/1.1'."/scripts/texture1.jpg"],
+      [PF_FILE,      'environment_map',  "Environment Map", "".'/usr/local/share/gimp/1.1'."/scripts/beavis.jpg"],
    ],
    \&script_fu_crystal_logo;
 
@@ -863,7 +863,7 @@ register "perl_fu_sota_chrome_logo",
       [PF_STRING,    'text_string',      "Text String", "The GIMP"],
       [PF_ADJUSTMENT,'font_size_pixels', "Font Size (pixels)", [150, 2, 1000, 1, 10, 0, 1]],
       [PF_FONT,      'font',             "Font", "-*-RoostHeavy-*-r-*-*-24-*-*-*-p-*-*-*"],
-      [PF_FILE,      'environment_map',  "Environment Map", "".'/usr/local/share/gimp'."/scripts/beavis.jpg"],
+      [PF_FILE,      'environment_map',  "Environment Map", "".'/usr/local/share/gimp/1.1'."/scripts/beavis.jpg"],
       [PF_COLOUR,    'highlight_balance',"Highlight Balance", [211, 95, 0]],
       [PF_COLOUR,    'chrome_balance',   "Chrome Balance", [0, 0, 0]],
    ],

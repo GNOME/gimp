@@ -32,7 +32,8 @@ register	"layer_apply",
 
                 # now apply the function
                 eval { $image->undo_push_group_start };
-                Gimp->progress_init("Applying Expression...");
+	        # 5.004 has problems with overlaying functions
+                Gimp->progress_init("Applying Expression...",-1);
                 for my $index (0..$n-1) {
                    $i = $index;
                    $I = $n-$i-1;

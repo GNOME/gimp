@@ -8,6 +8,7 @@ Revision history for Gimp-Perl extension.
           the new names would have a GIMP_ prefix).
         - updated to new commandline options.
         - updated enums.pl (And therefore, enumerations).
+        - applied 5.004 compatibility patch by artie@kmfms.com.
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **
