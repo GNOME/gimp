@@ -1,23 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# Željan Rikalo <zeljko@linuxfreak.com>, 2000.
-#
+# Translation of gimp-libgimp to Croatian
+# Copyright (C) Croatian team
+# Translators: Automatski Prijevod <>,
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.29\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:00+0100\n"
-"PO-Revision-Date: 2000-11-03:33+0100\n"
-"Last-Translator: Željan Rikalo <zeljko@linuxfreak.com>\n"
+"Project-Id-Version: gimp-libgimp 0\n"
+"POT-Creation-Date: 2003-11-06 18:07+0100\n"
+"PO-Revision-Date: 2003-11-07 18:41+CET\n"
+"Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: TransDict server\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Odabir Mjere"
+msgstr "Odabir Kista"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
@@ -48,7 +46,7 @@ msgstr "Spremi kao Animaciju"
 
 #: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
-msgstr "Ravna slika"
+msgstr "Izravnaj sliku"
 
 #: libgimp/gimpexport.c:228
 #, fuzzy, c-format
@@ -110,35 +108,33 @@ msgstr "trebam neki alfa kanal"
 msgid "Add Alpha Channel"
 msgstr "Dodaj Alfa Kanal"
 
-#.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
+#.  *  Otherwise bad things will happen now!!
+#. 
+#.  the dialog
 #: libgimp/gimpexport.c:370
 msgid "Confirm Save"
-msgstr ""
+msgstr "Potvrdite snimanje"
 
 #: libgimp/gimpexport.c:378
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdi"
 
-#.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
+#.  *  Otherwise bad things will happen now!!
+#. 
+#.  the dialog
 #: libgimp/gimpexport.c:431
 msgid "Export File"
 msgstr "Izvezi Datoteku"
 
 #: libgimp/gimpexport.c:436
 msgid "Ignore"
-msgstr "Ignoriraj"
+msgstr "Zanemari"
 
 #: libgimp/gimpexport.c:442
 msgid "Export"
-msgstr "Izvezi"
+msgstr "Izvoz"
 
 #: libgimp/gimpexport.c:468
 msgid ""
@@ -166,22 +162,20 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Odabir Mjere"
+msgstr "Izbor pisma"
 
 #: libgimp/gimpgradientmenu.c:103
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Odabir Mjere"
+msgstr "Odabir Gradijenta"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
-msgstr ""
+msgstr "Nijedan"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Pregled"
 
 #: libgimp/gimpmiscui.c:536
 #, c-format
@@ -193,18 +187,16 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpmiscui.c:556
-#, fuzzy
 msgid "Parameter Settings"
-msgstr "Odabir Mjere"
+msgstr "Odredi Osobitosti"
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Odabir Mjere"
+msgstr "Odabir Uzorka"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "postotak"
+msgstr "posto"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
@@ -213,32 +205,32 @@ msgstr ""
 #: libgimpbase/gimputils.c:189
 #, fuzzy, c-format
 msgid "%d Bytes"
-msgstr "Bajtova"
+msgstr "%d bajtova"
 
 #: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -252,7 +244,7 @@ msgstr ""
 msgid ""
 "Module '%s' load error:\n"
 "%s"
-msgstr ""
+msgstr "pogreška kod učit. modula: %s: %s"
 
 #: libgimpmodule/gimpmodule.c:271
 #, c-format
@@ -265,11 +257,11 @@ msgstr ""
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
-msgstr ""
+msgstr "Napunjeno"
 
 #: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
-msgstr ""
+msgstr "Pogreška kod učitavanja"
 
 #: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
@@ -295,63 +287,63 @@ msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr ""
+msgstr "Skale"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr ""
+msgstr "G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
-msgstr ""
+msgstr "Nijanse"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
-msgstr ""
+msgstr "Zasićenje"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
-msgstr ""
+msgstr "Vrijednost"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr ""
+msgstr "Crvena"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr ""
+msgstr "Zelena"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr ""
+msgstr "Plava"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
@@ -359,12 +351,11 @@ msgstr ""
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Hex Trio:"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Odaberi Datoteku"
+msgstr "Označi mapu"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -390,38 +381,36 @@ msgid ""
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:113
-#, fuzzy
 msgid "Anchor"
-msgstr "palac"
+msgstr "Sidro"
 
 #: libgimpwidgets/gimpstock.c:114
-#, fuzzy
 msgid "_Duplicate"
-msgstr "pica"
+msgstr "_Udvostruči"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
-msgstr ""
+msgstr "_Uredi"
 
 #: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
-msgstr ""
+msgstr "Povezano"
 
 #: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr ""
+msgstr "/Uredi/Ubaci kao Novu"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr ""
+msgstr "/Uredi/Ubaci u"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
-msgstr ""
+msgstr "_Vrati izvorno"
 
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
-msgstr ""
+msgstr "Vidljivo"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
@@ -433,27 +422,27 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
-msgstr ""
+msgstr "_Promjena veličine"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
-msgstr ""
+msgstr "Uzorak:"
 
 #: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
-msgstr ""
+msgstr "Izreži"
 
 #: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
-msgstr ""
+msgstr "_Transformacija"
 
 #: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
-msgstr ""
+msgstr "_Rotiraj"
 
 #: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
-msgstr ""
+msgstr "_Striženje"
 
 #: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
@@ -465,7 +454,7 @@ msgstr "Odabir Mjere"
 
 #: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
-msgstr "Mjera"
+msgstr "Jedinica"
 
 #: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
@@ -482,13 +471,12 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
-msgstr ""
+msgstr "Nasumično"
 
 #: libgimpwidgets/gimpwidgets.c:958
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Napravi generator slučajnih brojeva iz trenutnog vremena(sat) - ovo jamči "
+msgstr """Napravi generator slučajnih brojeva iz trenutnog vremena(sat) - ovo jamči "
 "sigurnu slučajnost"
 
 #: modules/cdisplay_colorblind.c:122
@@ -521,27 +509,27 @@ msgstr ""
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Filter Velikog Kontrasta Zaslona u Boji"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gama"
 
 #: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
-msgstr ""
+msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Filter Velikog Kontrasta Zaslona u Boji"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Kontrastni Ciklusi:"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -549,40 +537,39 @@ msgstr ""
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:152
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
-#, fuzzy
 msgid "Cyan"
-msgstr "Odustani"
+msgstr "Cijan"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
-msgstr ""
+msgstr "žuta"
 
 #: modules/colorsel_cmyk.c:159
 msgid "Black"
-msgstr ""
+msgstr "Crna"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
@@ -594,7 +581,7 @@ msgstr ""
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
-msgstr ""
+msgstr "Trokut"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
@@ -602,43 +589,9 @@ msgstr ""
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Vodena boja"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Pritisak"
 
-#, fuzzy
-#~ msgid "_Time"
-#~ msgstr "Vrijeme"
-
-#~ msgid "pixel"
-#~ msgstr "piksel"
-
-#~ msgid "pixels"
-#~ msgstr "piksela"
-
-#~ msgid "inches"
-#~ msgstr "palaca"
-
-#~ msgid "millimeter"
-#~ msgstr "milimetar"
-
-#~ msgid "millimeters"
-#~ msgstr "milimetara"
-
-#~ msgid "point"
-#~ msgstr "točka"
-
-#~ msgid "points"
-#~ msgstr "točaka"
-
-#~ msgid "picas"
-#~ msgstr "pica"
-
-#, fuzzy
-#~ msgid "Select Directory"
-#~ msgstr "Odaberi Datoteku"
-
-#~ msgid "OK"
-#~ msgstr "OK"

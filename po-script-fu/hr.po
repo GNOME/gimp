@@ -1,18 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# Željan Rikalo <zeljko@linuxfreak.com>, YEAR.
-#
+# Translation of gimp-script-fu to Croatian
+# Copyright (C) Croatian team
+# Translators: Automatski Prijevod <>,
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.29\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:02+0100\n"
-"PO-Revision-Date: 2000-11-04 18:50+0100\n"
-"Last-Translator: Željan Rikalo <zeljko@linuxfreak.com>\n"
+"Project-Id-Version: gimp-script-fu 0\n"
+"POT-Creation-Date: 2003-11-06 18:08+0100\n"
+"PO-Revision-Date: 2003-11-07 18:41+CET\n"
+"Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: TransDict server\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -34,7 +33,7 @@ msgstr "Trenutna Naredba"
 
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
-msgstr "Traži..."
+msgstr "Potraži..."
 
 #: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -55,7 +54,6 @@ msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#
 #: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
@@ -63,16 +61,15 @@ msgstr "Script-Fu: %s"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1163
 msgid "About"
-msgstr "O..."
+msgstr "O"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1173
 msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
-#
 #. we add a colon after the label;
-#. some languages want an extra space here
+#.  some languages want an extra space here
 #: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "%s:"
@@ -107,18 +104,18 @@ msgstr "Script-Fu Odabir Gradijenta"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Odabir Kista"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1863
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1863
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1869
 #: plug-ins/dbbrowser/dbbrowser_utils.c:508
+#: plug-ins/script-fu/script-fu-scripts.c:1869
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1875
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1875
 msgid "Date:"
 msgstr "Datum:"
 
@@ -167,53 +164,50 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Osvježi"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
-#, fuzzy
 msgid "DB Browser"
-msgstr "Traži..."
+msgstr "DB Pretraživač"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:124
 #: plug-ins/dbbrowser/dbbrowser_utils.c:143
 msgid "Search by _Name"
-msgstr ""
+msgstr "_Traži po imenu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:126
 #: plug-ins/dbbrowser/dbbrowser_utils.c:145
 msgid "Search by _Blurb"
-msgstr ""
+msgstr "_Traži po Opisu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:211
 msgid "_Search:"
-msgstr ""
+msgstr "Traži :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:351
-#, fuzzy
 msgid "Name:"
-msgstr "Datum:"
+msgstr "Ime:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "Zamućenje Y"
+msgstr "Zamućenje:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:372
 msgid "In:"
-msgstr ""
+msgstr "U:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:420
 msgid "Out:"
-msgstr ""
+msgstr "Van :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:474
 msgid "Help:"
-msgstr ""
+msgstr "Pomoć :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:599
 msgid "Searching by name - please wait"
-msgstr ""
+msgstr "Traženje po imenu - molim pričekajte"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:622
 msgid "Searching by blurb - please wait"
-msgstr ""
+msgstr "Pretraživanje po blurbu - molim pričekajte"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "Searching - please wait"
@@ -429,7 +423,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/3D Vijuge..."
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
 msgid "Background Color"
-msgstr "Boja Pozadine"
+msgstr "Boja pozadine"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
@@ -523,7 +517,7 @@ msgstr "Dolje"
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten Image"
-msgstr "Ravna Slika"
+msgstr "Izravnaj sliku"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -606,7 +600,7 @@ msgstr "Polumjer Isijanja"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
-msgstr "Podloga"
+msgstr "Popunjavanje"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 #: plug-ins/script-fu/scripts/asc2img.scm.h:9
@@ -688,7 +682,7 @@ msgstr "Vrijednost Spremnika (%Visine Teksta)"
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
 msgid "Filename"
-msgstr "Naziv Datoteke"
+msgstr "Ime datoteke"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
@@ -876,9 +870,8 @@ msgid "Spots density Y"
 msgstr "Osjetljivost Spota Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Script-Fu/Animatori/Miješanje..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
@@ -949,7 +942,7 @@ msgstr "Veličina Slike"
 #: plug-ins/script-fu/scripts/camo.scm.h:8
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
-msgstr "Ugladi"
+msgstr "Uglađeno"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
 #, fuzzy
@@ -1015,7 +1008,7 @@ msgstr "Vrijednost Chip"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
-msgstr "Daj Sjenu"
+msgstr "Pokaži sjenu"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
@@ -1023,7 +1016,7 @@ msgstr "Ispuni Pozadinu Uzorkom"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
-msgstr "Obratno"
+msgstr "Invertiraj"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Keep Background"
@@ -1275,11 +1268,11 @@ msgstr "<Image>/Script-Fu/Alkemija/Izbriši sve ostale Retke..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
-msgstr "Stupaca"
+msgstr "Stupci"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
-msgstr ""
+msgstr "Obriši"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/Fill"
@@ -1304,7 +1297,7 @@ msgstr "Neparni"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
-msgstr "Redova"
+msgstr "Redaka"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/Cols"
@@ -1323,7 +1316,7 @@ msgstr "Prihvati generiranu masku sloja"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
-msgstr "Veličina Ruba"
+msgstr "Veličina ruba"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
 msgid "Clear Unselected Maskarea"
@@ -1366,7 +1359,7 @@ msgstr "Širina Slike"
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random Seed"
-msgstr "Nasumična Kreacija"
+msgstr "Nasumično sjeme"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
 #: plug-ins/script-fu/scripts/land.scm.h:8
@@ -1384,32 +1377,28 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Uslužni/Mapa Fontova..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active Colors"
-msgstr "Vanjska Boja"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _Size (pixels)"
-msgstr "Veličina Pisma (pikseli)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use Font _Name as Text"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
-#, fuzzy
 msgid "_Border (pixels)"
-msgstr "Veličina Ruba (piksela)"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color Scheme"
-msgstr "Boja 3"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
@@ -1420,9 +1409,8 @@ msgid "_Labels"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
-#, fuzzy
 msgid "_Text"
-msgstr "Tekst"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 #, fuzzy
@@ -1502,8 +1490,7 @@ msgstr "Boja Sjene"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Oznaka Drugog Dugmeta...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
@@ -1515,8 +1502,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Oznaka Trećeg Dugmeta..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Gimp.Org/Valjci s oznakom..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
@@ -1822,7 +1808,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Napravi Kist/Pravokutan..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
-msgstr "Pojašnjenje"
+msgstr "Opis"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:15
 msgid "Feathering"
@@ -1831,7 +1817,7 @@ msgstr "Pokrivanje"
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:17
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
 msgid "Spacing"
-msgstr "Razmak"
+msgstr "Prored"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #, fuzzy
@@ -1980,7 +1966,7 @@ msgstr "Detalj u Sredini"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
-msgstr "Djelić"
+msgstr "Pločica"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 #, fuzzy
@@ -1989,7 +1975,7 @@ msgstr "<Image>/Script-Fu/Animatori/Umnožavanje..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Crna"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 #, fuzzy
@@ -2006,13 +1992,12 @@ msgid "Rippling Strength"
 msgstr "Jačina Smežuravanja"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-#, fuzzy
 msgid "Smear"
-msgstr "Sepia"
+msgstr "Razmazivanje"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Omotaj"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 #, fuzzy
@@ -2068,7 +2053,7 @@ msgstr "<Image>/Script-Fu/Dekor/Slajd..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font Color"
-msgstr "Boja Pisma"
+msgstr "Boja pisma"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
@@ -2106,7 +2091,7 @@ msgstr "<Image>/Script-Fu/Animatori/Oblik Globusa..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr "Okvira"
+msgstr "Okviri"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
@@ -2117,23 +2102,20 @@ msgid "Turn from Left to Right"
 msgstr "Ajde s lijeva na Desno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Script-Fu/Render/Spoj..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
-msgstr ""
+msgstr "Zračni kist"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-#, fuzzy
 msgid "Brush"
-msgstr "Koristi Kist"
+msgstr "Kist"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
-#, fuzzy
 msgid "Circle"
-msgstr "Djelić"
+msgstr "Krug"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 #, fuzzy
@@ -2151,9 +2133,8 @@ msgid "Epitrochoid"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-#, fuzzy
 msgid "Frame"
-msgstr "Okvira"
+msgstr "Okvir"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
@@ -2165,7 +2146,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
-msgstr ""
+msgstr "Šesterokut"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 #, fuzzy
@@ -2192,12 +2173,12 @@ msgstr "Vanjski Rub"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
-msgstr ""
+msgstr "Olovka"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 #, fuzzy
 msgid "Pentagon"
-msgstr "Orijentacija"
+msgstr "Peterokut"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
@@ -2217,10 +2198,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
-msgstr ""
+msgstr "Oblik"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Solid Color"
 msgstr "Boja Podloge"
 
@@ -2229,9 +2209,8 @@ msgid "Spyrograph"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
-#, fuzzy
 msgid "Square"
-msgstr "Četverokuti"
+msgstr "Kvadrat"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
@@ -2243,14 +2222,12 @@ msgid "Tool"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
-#, fuzzy
 msgid "Triangle"
-msgstr "Djelić"
+msgstr "Trokut"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
-#, fuzzy
 msgid "Type"
-msgstr "Vrsta Zamućenja"
+msgstr "Tip"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #, fuzzy
@@ -2376,7 +2353,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
-msgstr "Četverokuti"
+msgstr "Kvadrati"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting Blend"
@@ -2422,7 +2399,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Vijuga..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
-msgstr "Boja Prednjeg Plana"
+msgstr "Boja prvog plana"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 #, fuzzy
@@ -2537,134 +2514,3 @@ msgstr "Osvijetli X ofset"
 msgid "Highlight Y Offset"
 msgstr "Osvijetli Y ofset"
 
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Uvojci (rastavljivo)..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/FAQ za programere"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Novosti"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Učitelji"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Dokumentacija"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Linkovi"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Liste"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Izvori Podataka"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Xtns/Web Browser/Korisnički FAQ"
-
-#~ msgid "Border"
-#~ msgstr "Rub"
-
-#~ msgid "Fonts"
-#~ msgstr "Pisma"
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Render/Sistem mreže..."
-
-#~ msgid "Grids X"
-#~ msgstr "Mreže X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Mreže Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Uzorci/Trochoid..."
-
-#, fuzzy
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Osnovni Polumjer (piksel)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Izbriši prije Crtanja"
-
-#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-#~ msgstr "Pen Rad. / Wheel Rad. [0.0:1.0]"
-
-#~ msgid "Wheel Radius (hypo < 0 < epi)"
-#~ msgstr "Polumjer Kotača (hypo < 0 < epi)"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Najmanje jedan font koji ste izabrali je nepravilan.\n"
-#~ "Molim provjerite postavke.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animatori/Odabir u Animiranu sliku..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Anim-Filter za sve Kopije"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Ispuni Bojom Pozadine"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Broj Kopija"
-
-#, fuzzy
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Traži..."
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Vrati na standardno"
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu Odabir Datoteke"
-
-#~ msgid "NOT SET"
-#~ msgstr "NIJE PODEŠENO"
-
-#~ msgid "Close"
-#~ msgstr "Zatvori"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Odustani"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Script-Fu Greška\n"
-#~ "%s"
