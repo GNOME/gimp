@@ -150,9 +150,9 @@ struct GimpCompositeOptions
   gulong  bits;
 };
 
-#define GIMP_COMPOSITE_OPTION_USE         0x1
-#define GIMP_COMPOSITE_OPTION_INITIALISED 0x2
-#define GIMP_COMPOSITE_OPTION_VERBOSE     0x4
+#define GIMP_COMPOSITE_OPTION_USE           0x1
+#define GIMP_COMPOSITE_OPTION_NOEXTENSIONS  0x2
+#define GIMP_COMPOSITE_OPTION_VERBOSE       0x4
 
 
 extern struct GimpCompositeOptions gimp_composite_options;

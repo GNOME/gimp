@@ -372,7 +372,7 @@ gimp_composite_init (void)
    * it succeeded in hooking in the functions with the special
    * optimisation instructions, or hardware, or whatever.
    */
-  if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_INITIALISED))
+  if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_NOEXTENSIONS))
     {
       extern gboolean gimp_composite_mmx_install ();
       extern gboolean gimp_composite_sse_install ();
@@ -410,8 +410,6 @@ gimp_composite_init (void)
         g_printerr (" +vis");
       else
         g_printerr (" -vis");
-
-      gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_INITIALISED;
     }
 
   g_printerr ("\n");

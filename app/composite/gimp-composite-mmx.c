@@ -332,11 +332,13 @@ gimp_composite_difference_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
+xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm volatile ("movq    %0, %%mm0\n"
+  printf("A=%d B=%d %d  ", op.pixelformat_A, op.pixelformat_B, GIMP_PIXELFORMAT_RGBA8); fflush(stdout);
+
+  asm volatile ("  movq    %0, %%mm0\n"
                 "\tmovq    %1, %%mm7\n"
                 :
                 : "m" (*rgba8_alpha_mask), "m" (*rgba8_w1)
@@ -1216,14 +1218,14 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   if (op.n_pixels)
     {
-    asm volatile ("  movd       %0,%%mm2\n"
-                  "\tmovd       %1,%%mm3\n"
-                  "\tmovd    %%mm3,%0\n"
-                  "\tmovd    %%mm2,%1\n"
-                  : /* empty */
-                  : "m" (*op.A), "m" (*op.B)
-                  : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+      asm volatile ("  movd       %0,%%mm2\n"
+                    "\tmovd       %1,%%mm3\n"
+                    "\tmovd    %%mm3,%0\n"
+                    "\tmovd    %%mm2,%1\n"
+                    : /* empty */
+                    : "m" (*op.A), "m" (*op.B)
+                    : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4");
+    }
 
   asm("emms");
 }

@@ -1,5 +1,5 @@
 /* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
-	* The GIMP -- an image manipulation program
+ * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -588,8 +588,8 @@ gimp_composite_behind_any_any_any_generic (GimpCompositeContext * ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = gimp_composite_pixel_alphap[ctx->pixelformat_A]
-				? BEHIND_INTEN
-				: NO_COMBINATION;
+    ? BEHIND_INTEN
+    : NO_COMBINATION;
 }
 
 /**
@@ -656,8 +656,8 @@ gimp_composite_multiply_any_any_any_generic (GimpCompositeContext * ctx)
  * gimp_composite_divide_any_any_any_generic:
  * @ctx: The compositing context.
  *
- * Perform an RGB[A] divide operation between the pixel sources
- * ctx->A and ctx->B.
+ * Perform an RGB[A] divide operation between the pixel sources ctx->A
+ * and ctx->B.  ctx->A is the numerator, ctx->B the denominator.
  *
  **/
 void
@@ -1373,8 +1373,8 @@ gimp_composite_color_erase_any_any_any_generic (GimpCompositeContext *ctx)
 {
   ctx->D = ctx->B;
   ctx->combine = (gimp_composite_pixel_alphap[ctx->pixelformat_A] && gimp_composite_pixel_alphap[ctx->pixelformat_B])
-				? COLOR_ERASE_INTEN
-				: 0;
+    ? COLOR_ERASE_INTEN
+    : 0;
 }
 
 
@@ -1435,5 +1435,5 @@ gimp_composite_generic_init (void)
   for (i = 256; i <= 510; i++)
     add_lut[i] = 255;
 
-		return (TRUE);
+  return (TRUE);
 }

@@ -47,8 +47,8 @@ gimp_composite_3dnow_init (void)
 #if defined(USE_MMX) && defined(ARCH_X86)
   if (cpu_accel () & CPU_ACCEL_X86_3DNOW)
     {
-      return (FALSE);
+      return (TRUE);
     }
 #endif
-  return (TRUE);
+  return (FALSE);
 }
