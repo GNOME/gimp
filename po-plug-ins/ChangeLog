@@ -1,7 +1,11 @@
+2001-11-13  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: temporarily commented out gap, gdyntext and helpbrowser
+
 2001-11-08  Wang Jian  <lark@linux.net.cn>
 
-    * zh_CN.po: Added Simplified Chinese translation by
-    Xie Yuheng <phycommusyee@263.net>.
+	* zh_CN.po: Added Simplified Chinese translation by
+	Xie Yuheng <phycommusyee@263.net>.
 
 2001-11-05  Sven Neumann  <sven@gimp.org>
 
