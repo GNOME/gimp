@@ -32,6 +32,8 @@
 #include "gimpundo.h"
 #include "gimpundostack.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -439,8 +441,8 @@ gimp_undo_type_to_name (GimpUndoType type)
 
   value = g_enum_get_value (enum_class, type);
 
-  if (value)
-    return value->value_name;
-
-  return "";
+  if (value && value->value_name)
+    return gettext (value->value_name);
+  else
+    return "";
 }

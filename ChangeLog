@@ -1,3 +1,8 @@
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpundo.c (gimp_undo_type_to_name): added a missing
+	call to gettext(). Fixes bug #139000.
+
 2004-04-03  Manish Singh  <yosh@gimp.org>
 
 	* gimptool-2.0.in: Create any directories in the install path that do
