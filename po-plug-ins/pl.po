@@ -1,4 +1,4 @@
-# Copyright (C) 2001-2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -9,17 +9,19 @@
 #
 # Uwagi:
 # thumbnail - miniatura
+# unsharp mask - Wzmocnienie
 #
 # Light Effects / Lighting Effects - teraz oba to "efekty świetlne"
+#
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins\n"
+"Project-Id-Version: gimp-plug-ins.gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-30 18:32+0100\n"
-"PO-Revision-Date: 2005-01-30 10:15+0100\n"
+"POT-Creation-Date: 2005-02-16 14:38+0100\n"
+"PO-Revision-Date: 2005-02-14 23:51+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
@@ -442,7 +444,7 @@ msgstr "Zapis parametrów fraktala"
 #: plug-ins/common/xwd.c:422 plug-ins/faxg3/faxg3.c:220
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:412
 #: plug-ins/gfig/gfig.c:431 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
-#: plug-ins/help/domain.c:421 plug-ins/winicon/icoload.c:126
+#: plug-ins/help/domain.c:423 plug-ins/winicon/icoload.c:126
 #: plug-ins/xjt/xjt.c:2526 plug-ins/xjt/xjt.c:2534
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1275,7 +1277,7 @@ msgstr "Nie można pracować na nieznanych typach obrazów."
 #: plug-ins/common/tiff.c:1815 plug-ins/common/xbm.c:1001
 #: plug-ins/common/xpm.c:628 plug-ins/common/xwd.c:582
 #: plug-ins/fits/fits.c:455 plug-ins/gfli/gfli.c:682 plug-ins/sgi/sgi.c:545
-#: plug-ins/winicon/icosave.c:954 plug-ins/xjt/xjt.c:1682
+#: plug-ins/winicon/icosave.c:957 plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Zapisywanie \"%s\""
@@ -3462,7 +3464,7 @@ msgid "Composing Images..."
 msgstr "Składanie obrazów..."
 
 #: plug-ins/common/film.c:438 plug-ins/common/guillotine.c:183
-#: plug-ins/helpbrowser/dialog.c:523
+#: plug-ins/helpbrowser/dialog.c:525
 msgid "Untitled"
 msgstr "BezNazwy"
 
@@ -7398,7 +7400,7 @@ msgstr "Edytor jednostek"
 
 #: plug-ins/common/unsharp.c:143
 msgid "_Unsharp Mask..."
-msgstr "_Zmiękczenie maski..."
+msgstr "W_zmocnienie..."
 
 #: plug-ins/common/unsharp.c:468
 msgid "Merging..."
@@ -7406,7 +7408,7 @@ msgstr "Łączenie..."
 
 #: plug-ins/common/unsharp.c:635
 msgid "Unsharp Mask"
-msgstr "Zmiękczenie maski"
+msgstr "Wzmocnienie"
 
 #: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:421
 msgid "URL"
@@ -8753,9 +8755,8 @@ msgid "Star Number of Points"
 msgstr "Liczba punktów gwiazdy"
 
 #: plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "Tworzy okrąg"
+msgstr "Tworzy krzywą Beziera"
 
 #: plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -9687,24 +9688,24 @@ msgstr ""
 "  (gimpressionist-path \"%s\")\n"
 "(lub podobnego)."
 
-#: plug-ins/help/domain.c:175
+#: plug-ins/help/domain.c:177
 msgid "The GIMP help files are not installed."
 msgstr "Nie zainstalowano plików pomocy programu GIMP."
 
-#: plug-ins/help/domain.c:177
+#: plug-ins/help/domain.c:179
 msgid "There is a problem with the GIMP help files."
 msgstr "Przy dostępie do plików pomocy programu GIMP wystąpił błąd."
 
-#: plug-ins/help/domain.c:182
+#: plug-ins/help/domain.c:184
 msgid "Please check your installation."
 msgstr "Zweryfikuj instalację programu"
 
-#: plug-ins/help/domain.c:190
+#: plug-ins/help/domain.c:192
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Nieznany identyfikator pomocy: \"%s\""
 
-#: plug-ins/help/domain.c:447
+#: plug-ins/help/domain.c:449
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -9713,15 +9714,15 @@ msgstr ""
 "Błąd składniowy w pliku \"%s\":\n"
 "%s"
 
-#: plug-ins/helpbrowser/dialog.c:157
+#: plug-ins/helpbrowser/dialog.c:159
 msgid "GIMP Help browser"
 msgstr "Przeglądarka pomocy GIMP"
 
-#: plug-ins/helpbrowser/dialog.c:409
+#: plug-ins/helpbrowser/dialog.c:411
 msgid "Document not found"
 msgstr "Nie odnaleziono dokumentu"
 
-#: plug-ins/helpbrowser/dialog.c:411
+#: plug-ins/helpbrowser/dialog.c:413
 msgid "The requested URL could not be loaded:"
 msgstr "Rządany URL nie może być wczytany:"
 
@@ -11576,7 +11577,7 @@ msgstr "Szczegóły ikony"
 msgid "Icon #%i"
 msgstr "Ikona #%i"
 
-#: plug-ins/winicon/icosave.c:940
+#: plug-ins/winicon/icosave.c:943
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Ikona Windows nie może być wyższa ani szersza od 255 pikselów."
 
