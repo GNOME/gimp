@@ -1,3 +1,7 @@
+2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimpwidgets/gimpwidgets.def: added gimp_preview_area_fill
+
 2004-08-01  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/flame/flame.c: ported to GimpPreviewArea.
