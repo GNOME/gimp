@@ -1,3 +1,8 @@
+2000-10-14  Daniel Egger  <egger@suse.de>
+
+	* README.i18n: Added a few words about "Tip of the Day" translations
+	by <miha.tomsic@guest.arnes.si>.
+
 2000-10-14  Austin Donnelly  <austin@gimp.org>
 
 	* plug-ins/common/nlfilt.c: applied patch by David Hodson

@@ -174,12 +174,25 @@ Actually this one is maintained by me, that is Daniel Egger
  gimp_domain_plugin_add_with_path() before it registers any functions. Have a 
  look at the script-fu plug-in to see how it is done in detail.
 
-8. And more?
+8. Tip of the Day messages
+
+ In addition to message catalogs Gimp provides a file with tips that are
+ displayed in a Tip of The Day window. Tips in English language are located
+ in tips/gimp_tips.txt. Translated tips should go into
+ gimp_tips.<lang>.txt. There is one more thing: You need to make sure you
+ have the right reference set up in po/<lang>.po file something like this:  
+
+ #: app/tips_dialog.c:72
+ msgid "gimp_tips.txt"
+ msgstr "gimp_tips.<lang>.txt"
+
+9. And more?
 
  I hope I mentioned everything that is worth it and hope that this document
  will clarify some things. If it doesn't please write me a mail and tell me
  what you want to know. This text of course contains errors, so if you find one
  tell it to me, too....
+
 
 Happy Gimping. Yours,
                      Daniel Egger
