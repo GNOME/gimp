@@ -27,6 +27,19 @@
 #define __GIMP_THUMB_ENUMS_H__
 
 
+#define GIMP_TYPE_THUMB_FILE_TYPE (gimp_thumb_file_type_get_type ())
+
+GType gimp_thumb_file_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_THUMB_FILE_TYPE_NONE,
+  GIMP_THUMB_FILE_TYPE_REGULAR,
+  GIMP_THUMB_FILE_TYPE_FOLDER,
+  GIMP_THUMB_FILE_TYPE_SPECIAL
+} GimpThumbFileType;
+
+
 #define GIMP_TYPE_THUMB_SIZE (gimp_thumb_size_get_type ())
 
 GType gimp_thumb_size_get_type (void) G_GNUC_CONST;
@@ -47,6 +60,8 @@ typedef enum
 {
   GIMP_THUMB_STATE_UNKNOWN,
   GIMP_THUMB_STATE_REMOTE,
+  GIMP_THUMB_STATE_FOLDER,
+  GIMP_THUMB_STATE_SPECIAL,
   GIMP_THUMB_STATE_NOT_FOUND,
   GIMP_THUMB_STATE_EXISTS,
   GIMP_THUMB_STATE_OLD,

@@ -546,8 +546,8 @@ static void
 gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
 {
   GimpThumbState  state;
-  gint64          filesize = 0;
   gint64          mtime    = 0;
+  gint64          filesize = 0;
 
   if (! thumbnail->image_uri)
     return;
@@ -581,10 +581,25 @@ gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
       break;
 
     default:
-      if (gimp_thumb_file_test (thumbnail->image_filename, &mtime, &filesize))
-        state = GIMP_THUMB_STATE_EXISTS;
-      else
-        state = GIMP_THUMB_STATE_NOT_FOUND;
+      switch (gimp_thumb_file_test (thumbnail->image_filename,
+                                    &mtime, &filesize))
+        {
+        case GIMP_THUMB_FILE_TYPE_REGULAR:
+          state = GIMP_THUMB_STATE_EXISTS;
+          break;
+
+        case GIMP_THUMB_FILE_TYPE_FOLDER:
+          state = GIMP_THUMB_STATE_FOLDER;
+          break;
+
+        case GIMP_THUMB_FILE_TYPE_SPECIAL:
+          state = GIMP_THUMB_STATE_SPECIAL;
+          break;
+
+        default:
+          state = GIMP_THUMB_STATE_NOT_FOUND;
+          break;
+        }
       break;
     }
 

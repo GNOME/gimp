@@ -1,5 +1,20 @@
 2004-02-25  Michael Natterer  <mitch@gimp.org>
 
+	Changed libgimpthumb API in a way that will make GtkFileChooser
+	integration possible without doing major hacks:
+
+	* libgimpthumb/gimpthumb-enums.h: added GimpThumbFileType enum
+	and extended GimpThumbState enum.
+
+	* libgimpthumb/gimpthumb-utils.[ch]: return GimpThumbFileType
+	instead of gboolean from gimp_thumb_file_test().
+
+	* libgimpthumb/gimpthumbnail.c
+	* app/core/gimpimagefile.c: changed accordingly (the icons
+	used for REMOTE, FOLDER and SPECIAL need to be changed).
+
+2004-02-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.c: cleanup.
 
 	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): added 2px

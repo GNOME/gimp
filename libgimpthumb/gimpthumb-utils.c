@@ -262,7 +262,8 @@ gimp_thumb_find_thumb (const gchar   *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name, NULL, NULL))
+      if (gimp_thumb_file_test (thumb_name, NULL, NULL) ==
+          GIMP_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
           return thumb_name;
@@ -275,7 +276,8 @@ gimp_thumb_find_thumb (const gchar   *uri,
     {
       thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name, NULL, NULL))
+      if (gimp_thumb_file_test (thumb_name, NULL, NULL) ==
+          GIMP_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
           return thumb_name;
@@ -297,9 +299,10 @@ gimp_thumb_find_thumb (const gchar   *uri,
  * checks if the given @filename exists and returns modification time
  * and file size in 64bit integer values.
  *
- * Return value: %TRUE if the file exists, %FALSE otherwise
+ * Return value: The type of the file, or #GIMP_THUMB_FILE_TYPE_NONE if
+ *               the file doesn't exist.
  **/
-gboolean
+GimpThumbFileType
 gimp_thumb_file_test (const gchar *filename,
                       gint64      *mtime,
                       gint64      *size)
@@ -308,17 +311,27 @@ gimp_thumb_file_test (const gchar *filename,
 
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  if (stat (filename, &s) == 0 && (S_ISREG (s.st_mode)))
+  if (stat (filename, &s) == 0)
     {
-      if (mtime)
-        *mtime = s.st_mtime;
-      if (size)
-        *size = s.st_size;
+      if (mtime) *mtime = s.st_mtime;
+      if (size)  *size  = s.st_size;
 
-      return TRUE;
+      if (S_ISREG (s.st_mode))
+        {
+          return GIMP_THUMB_FILE_TYPE_REGULAR;
+        }
+      else if (S_ISDIR (s.st_mode))
+        {
+          return GIMP_THUMB_FILE_TYPE_FOLDER;
+        }
+
+      return GIMP_THUMB_FILE_TYPE_SPECIAL;
     }
 
-  return FALSE;
+  if (mtime) *mtime = 0;
+  if (size)  *size  = 0;
+
+  return GIMP_THUMB_FILE_TYPE_NONE;
 }
 
 static void

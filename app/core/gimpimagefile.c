@@ -312,6 +312,8 @@ gimp_imagefile_name_changed (GimpObject *object)
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
+  gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
+
   gimp_thumbnail_set_uri (imagefile->thumbnail, gimp_object_get_name (object));
 }
 
@@ -379,8 +381,26 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
 
           temp_buf_free (temp_buf);
 
-          return scaled_buf;
+          temp_buf = scaled_buf;
         }
+
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
+    }
+  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
+    {
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-network");
+    }
+  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+    {
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-open");
+    }
+  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_SPECIAL)
+    {
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-harddisk");
+    }
+  else
+    {
+      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
     }
 
   return temp_buf;
@@ -456,6 +476,16 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
     case GIMP_THUMB_STATE_REMOTE:
       imagefile->description = _("Remote image");
+      imagefile->static_desc = TRUE;
+      break;
+
+    case GIMP_THUMB_STATE_FOLDER:
+      imagefile->description = _("Folder");
+      imagefile->static_desc = TRUE;
+      break;
+
+    case GIMP_THUMB_STATE_SPECIAL:
+      imagefile->description = _("Special File");
       imagefile->static_desc = TRUE;
       break;
 
