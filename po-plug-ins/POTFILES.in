@@ -9,6 +9,7 @@ plug-ins/Lighting/lighting_ui.c
 plug-ins/MapObject/arcball.c
 plug-ins/MapObject/mapobject_main.c
 plug-ins/MapObject/mapobject_ui.c
+plug-ins/bmp/bmp.c
 plug-ins/bmp/bmpread.c
 plug-ins/bmp/bmpwrite.c
 plug-ins/common/AlienMap2.c
@@ -69,6 +70,7 @@ plug-ins/common/grid.c
 plug-ins/common/gtm.c
 plug-ins/common/guillotine.c
 plug-ins/common/gz.c
+plug-ins/common/header.c
 plug-ins/common/hot.c
 plug-ins/common/hrz.c
 plug-ins/common/illusion.c
@@ -230,7 +232,6 @@ plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_stock.c
 plug-ins/imagemap/imap_toolbar.c
 plug-ins/imagemap/imap_tools.c
-plug-ins/libgimpoldpreview/gimpoldpreview.c
 plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze_face.c
