@@ -364,11 +364,13 @@ rcm_change_preview (void)
   gtk_widget_hide (Current.Bna->before);
   gtk_widget_hide (Current.Bna->after);
 
-  gtk_preview_size (GTK_PREVIEW (Current.Bna->before),
-                    Current.reduced->width, Current.reduced->height);
+  gtk_widget_set_size_request (Current.Bna->before,
+                               Current.reduced->width,
+                               Current.reduced->height);
 
-  gtk_preview_size (GTK_PREVIEW (Current.Bna->after),
-                    Current.reduced->width, Current.reduced->height);
+  gtk_widget_set_size_request (Current.Bna->after,
+                               Current.reduced->width,
+                               Current.reduced->height);
 
   rcm_render_preview (Current.Bna->before, ORIGINAL);
   rcm_render_preview (Current.Bna->after, CURRENT);

@@ -41,11 +41,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -90,9 +85,9 @@ rcm_create_one_preview (GtkWidget **preview,
   gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
   gtk_widget_show (*frame);
 
-  *preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  *preview = gimp_preview_area_new ();
 
-  gtk_preview_size (GTK_PREVIEW (*preview), previewWidth, previewHeight);
+  gtk_widget_set_size_request (*preview, previewWidth, previewHeight);
   gtk_container_add (GTK_CONTAINER (*frame), *preview);
   gtk_widget_show (*preview);
 }
@@ -263,8 +258,8 @@ rcm_create_one_circle (gint   height,
   gtk_widget_show (frame);
 
   /* create preview */
-  st->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (st->preview), height, height);
+  st->preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (st->preview, height, height);
   gtk_container_add (GTK_CONTAINER (frame), st->preview);
   gtk_widget_show (st->preview);
 
@@ -286,8 +281,6 @@ rcm_create_one_circle (gint   height,
   g_signal_connect (st->preview, "motion_notify_event",
                     G_CALLBACK (rcm_motion_notify_event),
                     st);
-
-  rcm_render_circle (st->preview, SUM, MARGIN);
 
   /** Main: Circle: create table for buttons **/
   button_table = gtk_table_new (3, 1, FALSE);
@@ -462,8 +455,8 @@ rcm_create_gray (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  st->preview = preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), GRAY_SUM, GRAY_SUM);
+  st->preview = preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, GRAY_SUM, GRAY_SUM);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -598,9 +591,6 @@ rcm_create_gray (void)
                     G_CALLBACK (rcm_set_gray_sat),
                     st);
 
-  /* update circle (preview) */
-  rcm_render_circle (preview, GRAY_SUM, GRAY_MARGIN);
-
   return top_vbox;
 }
 
@@ -723,6 +713,9 @@ rcm_dialog (void)
 
   rcm_render_preview (Current.Bna->before, ORIGINAL);
   rcm_render_preview (Current.Bna->after,  CURRENT);
+  rcm_render_circle (Current.From->preview, SUM, MARGIN);
+  rcm_render_circle (Current.To->preview, SUM, MARGIN);
+  rcm_render_circle (Current.Gray->preview, GRAY_SUM, GRAY_MARGIN);
 
   rcm_set_pixmaps (Current.From);
   rcm_set_pixmaps (Current.To);

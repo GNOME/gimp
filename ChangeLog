@@ -1,3 +1,9 @@
+2004-08-03  DindinX  <david@dindinx.org>
+
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/rcm/rcm_misc.c: Ported to GimpPreviewArea.
+
 2004-08-02  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpbrusheditor.c: Fixed brush spacing for brushes

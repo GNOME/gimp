@@ -41,14 +41,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "rcm.h"
 #include "rcm_misc.h"
@@ -320,28 +316,17 @@ rcm_reduce_image (GimpDrawable *drawable,
 
 
 /* render before/after preview */
-
-static gint
-rcm_fake_transparency (gint i,
-		       gint j)
-{
-  if ( ((i%20)-10)*((j%20)-10) > 0 )
-    return 102;
-
-  return 153;
-}
-
 void
 rcm_render_preview (GtkWidget *preview,
 		    gint       version)
 {
   ReducedImage *reduced;
-  gint          RW, RH, bytes, i, j, k, unchanged, skip;
+  gint          RW, RH, bytes, i, j, unchanged, skip;
   guchar       *rgb_array, *a;
   gdouble       H, S, V;
   gdouble      *hsv_array;
   guchar        rgb[3];
-  gfloat        degree, transp;
+  gfloat        degree;
 
   /* init some variables */
 
@@ -354,7 +339,7 @@ rcm_render_preview (GtkWidget *preview,
   hsv_array = reduced->hsv;
   rgb_array = reduced->rgb;
 
-  a = g_new (guchar, bytes * RW);
+  a = g_new (guchar, 4 * RW * RH);
 
   if (version == CURRENT)
     {
@@ -413,23 +398,16 @@ rcm_render_preview (GtkWidget *preview,
               else
                 degree = reduced->mask[i*RW+j] / 255.0;
 
-              a[j*3+0] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 0] + degree * rgb[0];
-              a[j*3+1] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 1] + degree * rgb[1];
-              a[j*3+2] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 2] + degree * rgb[2];
+              a[(i*RW+j)*4+0] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 0] + degree * rgb[0];
+              a[(i*RW+j)*4+1] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 1] + degree * rgb[1];
+              a[(i*RW+j)*4+2] = (1-degree) * rgb_array[i*RW*bytes + j*bytes + 2] + degree * rgb[2];
 
               /* apply transparency */
               if (bytes == 4)
-                {
-                  for (k = 0; k < 3; k++)
-                    {
-                      /*	    transp = reduced->mask[i*RW*bytes+j*bytes+3] / 255.0; */
-                      transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
-                      a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
-                    }
-                }
+                a[(i*RW+j)*4+3] = rgb_array[i*RW*bytes+j*bytes+3];
+              else
+                a[(i*RW+j)*4+3] = 255;
             }
-
-          gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, i, RW);
         }
     }
   else /* ORIGINAL */
@@ -438,28 +416,24 @@ rcm_render_preview (GtkWidget *preview,
         {
           for (j = 0; j < RW; j++)
             {
-              a[j*3+0] = rgb_array[i*RW*bytes + j*bytes + 0];
-              a[j*3+1] = rgb_array[i*RW*bytes + j*bytes + 1];
-              a[j*3+2] = rgb_array[i*RW*bytes + j*bytes + 2];
+              a[(i*RW+j)*4+0] = rgb_array[i*RW*bytes + j*bytes + 0];
+              a[(i*RW+j)*4+1] = rgb_array[i*RW*bytes + j*bytes + 1];
+              a[(i*RW+j)*4+2] = rgb_array[i*RW*bytes + j*bytes + 2];
 
               if (bytes == 4)
-                {
-                  for (k = 0; k < 3; k++)
-                    {
-                      transp = rgb_array[i*RW*bytes+j*bytes+3] / 255.0;
-                      a[3*j+k] = transp * a[3*j+k] + (1-transp) * rcm_fake_transparency(i,j);
-                    }
-                }
+                a[(i*RW+j)*4+3] = rgb_array[i*RW*bytes+j*bytes+3];
+              else
+                a[(i*RW+j)*4+3] = 255;
             }
-
-          gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, i, RW);
         }
     }
-
+    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                            0, 0, RW, RH,
+                            GIMP_RGBA_IMAGE,
+                            a,
+                            RW * 4);
   g_free (a);
-  gtk_widget_queue_draw (preview);
 }
-
 
 /* render circle */
 
@@ -474,7 +448,7 @@ rcm_render_circle (GtkWidget *preview,
 
   if (preview == NULL) return;
 
-  a = g_new (guchar, 3*sum);
+  a = g_new (guchar, 3*sum*sum);
 
   for (j = 0; j < sum; j++)
     {
@@ -483,21 +457,23 @@ rcm_render_circle (GtkWidget *preview,
           s = sqrt ((SQR (i - sum / 2.0) + SQR (j - sum / 2.0)) / (float) SQR (sum / 2.0 - margin));
           if (s > 1)
             {
-              a[i*3+0] = 255;
-              a[i*3+1] = 255;
-              a[i*3+2] = 255;
+              a[(j*sum+i)*3+0] = 255;
+              a[(j*sum+i)*3+1] = 255;
+              a[(j*sum+i)*3+2] = 255;
             }
           else
             {
               h = arctg (sum / 2.0 - j, i - sum / 2.0) / (2 * G_PI);
               v = 1 - sqrt (s) / 4;
-              gimp_hsv_to_rgb4 (&a[i*3], h, s, v);
+              gimp_hsv_to_rgb4 (&a[(j*sum+i)*3], h, s, v);
             }
         }
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), a, 0, j, sum);
     }
-
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, sum, sum,
+                          GIMP_RGB_IMAGE,
+                          a,
+                          sum * 3);
   g_free (a);
-  gtk_widget_queue_draw (preview);
 }
+
