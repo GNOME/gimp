@@ -1,3 +1,8 @@
+2004-08-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpregioniterator.c: document the fact that "run_mode"
+	is unused. Also did some code cleanup.
+
 2004-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpregioniterator.c: always update the progress.
