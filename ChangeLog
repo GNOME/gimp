@@ -1,5 +1,10 @@
 2003-03-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpbrusheditor.[ch]: undeprecated and simplified a
+	lot by using GimpPreview instead of handmade preview stuff.
+
+2003-03-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-save.[ch]: added GError reporting, removed
 	g_message() stuff.
 

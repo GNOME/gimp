@@ -21,26 +21,17 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
-
-#include "base/temp-buf.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
 
 #include "gimpbrusheditor.h"
+#include "gimppreview.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -57,9 +48,6 @@ static void   gimp_brush_editor_update_brush   (GtkAdjustment   *adjustment,
                                                 GimpBrushEditor *editor);
 static void   gimp_brush_editor_preview_resize (GtkWidget       *widget,
                                                 GtkAllocation   *allocation,
-                                                GimpBrushEditor *editor);
-static void   gimp_brush_editor_clear_preview  (GimpBrushEditor *editor);
-static void   gimp_brush_editor_brush_dirty    (GimpBrush       *brush,
                                                 GimpBrushEditor *editor);
 
 
@@ -109,32 +97,26 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 static void
 gimp_brush_editor_init (GimpBrushEditor *editor)
 {
-  /* brush's preview widget w/frame  */
-  editor->frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (editor->frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (editor), editor->frame,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (editor->frame);
+  GtkWidget *frame;
 
-  editor->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (editor->preview), 125, 100);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-  /*  Enable auto-resizing of the preview but ensure a minimal size  */
-  gtk_widget_set_size_request (editor->preview, 125, 100);
-  gtk_preview_set_expand (GTK_PREVIEW (editor->preview), TRUE);
-  gtk_container_add (GTK_CONTAINER (editor->frame), editor->preview);
-  gtk_widget_show (editor->preview);
-
-  g_signal_connect_after (editor->frame, "size_allocate",
+  g_signal_connect_after (frame, "size_allocate",
 			  G_CALLBACK (gimp_brush_editor_preview_resize),
 			  editor);
 
-  /* table for sliders/labels */
-  editor->scale_label = gtk_label_new ("-1:1");
-  gtk_box_pack_start (GTK_BOX (editor), editor->scale_label, FALSE, FALSE, 0);
-  gtk_widget_show (editor->scale_label);
+  editor->preview = gimp_preview_new_full_by_types (GIMP_TYPE_PREVIEW,
+                                                    GIMP_TYPE_BRUSH,
+                                                    125, 100, 0,
+                                                    FALSE, FALSE, TRUE);
 
-  editor->scale = -1;
+  /*  ensure a minimal size  */
+  gtk_widget_set_size_request (editor->preview, 125, 100);
+  gtk_container_add (GTK_CONTAINER (frame), editor->preview);
+  gtk_widget_show (editor->preview);
 
   /* table for sliders/labels */
   editor->options_table = gtk_table_new (4, 3, FALSE);
@@ -201,29 +183,20 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
                             GimpData       *data)
 {
   GimpBrushEditor *brush_editor;
+  gdouble          radius   = 0.0;
+  gdouble          hardness = 0.0;
+  gdouble          angle    = 0.0;
+  gdouble          ratio    = 0.0;
 
   brush_editor = GIMP_BRUSH_EDITOR (editor);
 
-  if (editor->data)
-    {
-      g_signal_handlers_disconnect_by_func (editor->data,
-                                            gimp_brush_editor_brush_dirty,
-                                            editor);
-    }
-
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
+  gimp_preview_set_viewable (GIMP_PREVIEW (brush_editor->preview),
+                             (GimpViewable *) data);
+
   if (editor->data)
     {
-      gdouble radius   = 0.0;
-      gdouble hardness = 0.0;
-      gdouble angle    = 0.0;
-      gdouble ratio    = 0.0;
-
-      g_signal_connect (editor->data, "invalidate_preview",
-                        G_CALLBACK (gimp_brush_editor_brush_dirty),
-                        editor);
-
       if (GIMP_IS_BRUSH_GENERATED (editor->data))
         {
           GimpBrushGenerated *brush;
@@ -241,14 +214,16 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
         {
           gtk_widget_set_sensitive (brush_editor->options_table, FALSE);
         }
-
-      gtk_adjustment_set_value (brush_editor->radius_data,       radius);
-      gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
-      gtk_adjustment_set_value (brush_editor->angle_data,        angle);
-      gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
-
-      gimp_brush_editor_brush_dirty (GIMP_BRUSH (editor->data), brush_editor);
     }
+  else
+    {
+      gtk_widget_set_sensitive (brush_editor->options_table, FALSE);
+    }
+
+  gtk_adjustment_set_value (brush_editor->radius_data,       radius);
+  gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
+  gtk_adjustment_set_value (brush_editor->angle_data,        angle);
+  gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
 }
 
 
@@ -280,31 +255,32 @@ static void
 gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
                                 GimpBrushEditor *editor)
 {
-  GimpBrushGenerated *brush = NULL;
+  GimpBrushGenerated *brush;
 
-  if (GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
-    brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
+  if (! GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
+    return;
 
-  if (brush &&
-      ((editor->radius_data->value  
-	!= gimp_brush_generated_get_radius (brush))
+  brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
+
+  if (((editor->radius_data->value  
+        != gimp_brush_generated_get_radius (brush))
        || (editor->hardness_data->value
-	   != gimp_brush_generated_get_hardness (brush))
+           != gimp_brush_generated_get_hardness (brush))
        || (editor->aspect_ratio_data->value
-	   != gimp_brush_generated_get_aspect_ratio (brush))
+           != gimp_brush_generated_get_aspect_ratio (brush))
        || (editor->angle_data->value
-	   != gimp_brush_generated_get_angle (brush))))
+           != gimp_brush_generated_get_angle (brush))))
     {
       gimp_brush_generated_freeze (brush);
 
       gimp_brush_generated_set_radius       (brush,
-					     editor->radius_data->value);
+                                             editor->radius_data->value);
       gimp_brush_generated_set_hardness     (brush,
-					     editor->hardness_data->value);
+                                             editor->hardness_data->value);
       gimp_brush_generated_set_aspect_ratio (brush,
-					     editor->aspect_ratio_data->value);
+                                             editor->aspect_ratio_data->value);
       gimp_brush_generated_set_angle        (brush,
-					     editor->angle_data->value);
+                                             editor->angle_data->value);
 
       gimp_brush_generated_thaw (brush);
     }
@@ -315,80 +291,8 @@ gimp_brush_editor_preview_resize (GtkWidget       *widget,
                                   GtkAllocation   *allocation,
                                   GimpBrushEditor *editor)
 {
-  if (GIMP_DATA_EDITOR (editor)->data)
-    gimp_brush_editor_brush_dirty (GIMP_BRUSH (GIMP_DATA_EDITOR (editor)->data),
-                                   editor);
-}
-
-static void
-gimp_brush_editor_clear_preview (GimpBrushEditor *editor)
-{
-  guchar *buf;
-  gint    i;
-
-  buf = g_new (guchar, editor->preview->allocation.width);
-
-  /*  Set the buffer to white  */
-  memset (buf, 255, editor->preview->allocation.width);
-
-  /*  Set the image buffer to white  */
-  for (i = 0; i < editor->preview->allocation.height; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (editor->preview), buf, 0, i,
-			  editor->preview->allocation.width);
-
-  g_free (buf);
-}
-
-static void
-gimp_brush_editor_brush_dirty (GimpBrush       *brush,
-                               GimpBrushEditor *editor)
-{
-  gint    x, y, width, yend, ystart, xo;
-  gint    scale;
-  guchar *src, *buf;
-
-  gimp_brush_editor_clear_preview (editor);
-
-  if (! (brush && brush->mask))
-    return;
-
-  scale = MAX (ceil (brush->mask->width/
-		     (float) editor->preview->allocation.width),
-	       ceil (brush->mask->height/
-		     (float) editor->preview->allocation.height));
-
-  ystart = 0;
-  xo     = editor->preview->allocation.width  / 2 - brush->mask->width  / (2 * scale);
-  ystart = editor->preview->allocation.height / 2 - brush->mask->height / (2 * scale);
-  yend   = ystart + brush->mask->height / scale;
-  width  = CLAMP (brush->mask->width/scale, 0, editor->preview->allocation.width);
-
-  buf = g_new (guchar, width);
-  src = (guchar *) temp_buf_data (brush->mask);
-
-  for (y = ystart; y < yend; y++)
-    {
-      /*  Invert the mask for display.
-       */
-      for (x = 0; x < width; x++)
-	buf[x] = 255 - src[x * scale];
-
-      gtk_preview_draw_row (GTK_PREVIEW (editor->preview), buf,
-			    xo, y, width);
-
-      src += brush->mask->width * scale;
-    }
-
-  g_free (buf);
-
-  if (editor->scale != scale)
-    {
-      gchar str[255];
-
-      editor->scale = scale;
-      g_snprintf (str, sizeof (str), "%d:1", scale);
-      gtk_label_set_text (GTK_LABEL (editor->scale_label), str);
-    }
-
-  gtk_widget_queue_draw (editor->preview);
+  gimp_preview_set_size_full (GIMP_PREVIEW (editor->preview),
+                              allocation->width  - 2 * widget->style->xthickness,
+                              allocation->height - 2 * widget->style->ythickness,
+                              0);
 }

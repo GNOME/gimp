@@ -40,20 +40,13 @@ struct _GimpBrushEditor
 {
   GimpDataEditor  parent_instance;
 
-  GtkWidget      *frame;
   GtkWidget      *preview;
-  GtkWidget      *scale_label;
 
   GtkWidget      *options_table;
   GtkAdjustment  *radius_data;
   GtkAdjustment  *hardness_data;
   GtkAdjustment  *angle_data;
   GtkAdjustment  *aspect_ratio_data;
-
-  /*  Brush preview  */
-  GtkWidget          *brush_preview;
-  GimpBrushGenerated *brush;
-  gint                scale;
 };
 
 struct _GimpBrushEditorClass
