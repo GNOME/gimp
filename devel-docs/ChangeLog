@@ -1,6 +1,11 @@
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: landscape and portrait icons.
+
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimpstock.sgml: Jimmac keeps drawing icons
 	like crazy.
 

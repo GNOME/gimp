@@ -26,6 +26,18 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_ASPECT_TYPE (gimp_aspect_type_get_type ())
+
+GType gimp_aspect_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ASPECT_SQUARE,
+  GIMP_ASPECT_PORTRAIT,       /*< desc="Portrait"  >*/
+  GIMP_ASPECT_LANDSCAPE       /*< desc="Landscape" >*/
+} GimpAspectType;
+
+
 #define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
 
 GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
@@ -35,17 +47,6 @@ typedef enum
   GIMP_HELP_BROWSER_GIMP,     /*< desc="Internal" >*/
   GIMP_HELP_BROWSER_NETSCAPE  /*< desc="Netscape" >*/
 } GimpHelpBrowserType;
-
-
-#define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
-
-GType gimp_zoom_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ZOOM_IN,  /*< desc="Zoom in"  >*/
-  GIMP_ZOOM_OUT  /*< desc="Zoom out" >*/
-} GimpZoomType;
 
 
 #define GIMP_TYPE_HISTOGRAM_SCALE (gimp_histogram_scale_get_type ())
@@ -68,6 +69,17 @@ typedef enum
   GIMP_VIEW_TYPE_LIST,  /*< desc="View as List" >*/
   GIMP_VIEW_TYPE_GRID   /*< desc="View as Grid" >*/
 } GimpViewType;
+
+
+#define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
+
+GType gimp_zoom_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ZOOM_IN,  /*< desc="Zoom in"  >*/
+  GIMP_ZOOM_OUT  /*< desc="Zoom out" >*/
+} GimpZoomType;
 
 
 /*

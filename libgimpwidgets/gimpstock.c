@@ -201,6 +201,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRID,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_PORTRAIT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_LANDSCAPE,                NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_ERROR,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QUESTION,                 NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -414,6 +417,9 @@ gimp_stock_menu_pixbufs[] =
 
   { GIMP_STOCK_LIST,                     stock_list_16                     },
   { GIMP_STOCK_GRID,                     stock_grid_16                     },
+
+  { GIMP_STOCK_PORTRAIT,                 stock_portrait_16                 },
+  { GIMP_STOCK_LANDSCAPE,                stock_landscape_16                },
 
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },

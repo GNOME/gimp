@@ -180,6 +180,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LIST                 "gimp-list"
 #define GIMP_STOCK_GRID                 "gimp-grid"
 
+#define GIMP_STOCK_PORTRAIT             "gimp-portrait"
+#define GIMP_STOCK_LANDSCAPE            "gimp-landscape"
+
 /*  in dialog size:  */
 
 #define GIMP_STOCK_ERROR                "gimp-error"

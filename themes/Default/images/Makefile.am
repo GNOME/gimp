@@ -52,6 +52,7 @@ STOCK_MENU_IMAGES = \
 	stock-images-16.png			\
 	stock-info-16.png			\
 	stock-invert-16.png			\
+	stock-landscape-16.png			\
 	stock-layer-16.png			\
 	stock-layer-to-imagesize-16.png		\
 	stock-layers-16.png			\
@@ -60,6 +61,7 @@ STOCK_MENU_IMAGES = \
 	stock-navigation-16.png			\
 	stock-paths-16.png			\
 	stock-plugin-16.png			\
+	stock-portrait-16.png			\
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
 	stock-reshow-filter-16.png		\

@@ -8,6 +8,26 @@
 
 /* enumerations from "./widgets-enums.h" */
 
+static const GEnumValue gimp_aspect_type_enum_values[] =
+{
+  { GIMP_ASPECT_SQUARE, "GIMP_ASPECT_SQUARE", "square" },
+  { GIMP_ASPECT_PORTRAIT, N_("Portrait"), "portrait" },
+  { GIMP_ASPECT_LANDSCAPE, N_("Landscape"), "landscape" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_aspect_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpAspectType", gimp_aspect_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_help_browser_type_enum_values[] =
 {
   { GIMP_HELP_BROWSER_GIMP, N_("Internal"), "gimp" },
@@ -22,25 +42,6 @@ gimp_help_browser_type_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpHelpBrowserType", gimp_help_browser_type_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_zoom_type_enum_values[] =
-{
-  { GIMP_ZOOM_IN, N_("Zoom in"), "in" },
-  { GIMP_ZOOM_OUT, N_("Zoom out"), "out" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_zoom_type_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpZoomType", gimp_zoom_type_enum_values);
 
   return enum_type;
 }
@@ -79,6 +80,25 @@ gimp_view_type_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpViewType", gimp_view_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_zoom_type_enum_values[] =
+{
+  { GIMP_ZOOM_IN, N_("Zoom in"), "in" },
+  { GIMP_ZOOM_OUT, N_("Zoom out"), "out" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_zoom_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpZoomType", gimp_zoom_type_enum_values);
 
   return enum_type;
 }

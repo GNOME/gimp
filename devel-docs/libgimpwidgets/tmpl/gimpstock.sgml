@@ -194,6 +194,20 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_PORTRAIT ##### -->
+<para>
+<inlinegraphic fileref="stock-portrait-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_LANDSCAPE ##### -->
+<para>
+<inlinegraphic fileref="stock-landscape-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ALL ##### -->
 <para>
 <inlinegraphic fileref="stock-selection-all-16.png" format="png"></inlinegraphic>
