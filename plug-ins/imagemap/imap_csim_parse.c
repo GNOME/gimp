@@ -1,7 +1,6 @@
 
 /*  A Bison parser, made from imap_csim.y
- by  GNU Bison version 1.25
-  */
+    by GNU Bison version 1.28  */
 
 #define YYBISON 1  /* Identify Bison output.  */
 
@@ -12,32 +11,32 @@
 #define yychar csim_char
 #define yydebug csim_debug
 #define yynerrs csim_nerrs
-#define	IMG	258
-#define	SRC	259
-#define	WIDTH	260
-#define	HEIGHT	261
-#define	BORDER	262
-#define	USEMAP	263
-#define	START_MAP	264
-#define	END_MAP	265
-#define	NAME	266
-#define	AREA	267
-#define	SHAPE	268
-#define	COORDS	269
-#define	ALT	270
-#define	HREF	271
-#define	NOHREF	272
-#define	TARGET	273
-#define	ONMOUSEOVER	274
-#define	ONMOUSEOUT	275
-#define	ONFOCUS	276
-#define	ONBLUR	277
-#define	AUTHOR	278
-#define	DESCRIPTION	279
-#define	BEGIN_COMMENT	280
-#define	END_COMMENT	281
-#define	FLOAT	282
-#define	STRING	283
+#define	IMG	257
+#define	SRC	258
+#define	WIDTH	259
+#define	HEIGHT	260
+#define	BORDER	261
+#define	USEMAP	262
+#define	START_MAP	263
+#define	END_MAP	264
+#define	NAME	265
+#define	AREA	266
+#define	SHAPE	267
+#define	COORDS	268
+#define	ALT	269
+#define	HREF	270
+#define	NOHREF	271
+#define	TARGET	272
+#define	ONMOUSEOVER	273
+#define	ONMOUSEOUT	274
+#define	ONFOCUS	275
+#define	ONBLUR	276
+#define	AUTHOR	277
+#define	DESCRIPTION	278
+#define	BEGIN_COMMENT	279
+#define	END_COMMENT	280
+#define	FLOAT	281
+#define	STRING	282
 
 #line 1 "imap_csim.y"
 
@@ -105,7 +104,7 @@ typedef union {
 #define	YYFLAG		-32768
 #define	YYNTBASE	32
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 283 ? yytranslate[x] : 59)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 282 ? yytranslate[x] : 59)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -133,10 +132,10 @@ static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     1,     2,     3,     4,     5,
-     6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
-    16,    17,    18,    19,    20,    21,    22,    23,    24,    25,
-    26,    27,    28
+     2,     2,     2,     2,     2,     1,     3,     4,     5,     6,
+     7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
+    17,    18,    19,    20,    21,    22,    23,    24,    25,    26,
+    27,    28
 };
 
 #if YYDEBUG != 0
@@ -173,8 +172,8 @@ static const short yyrline[] = { 0,
     62,    65,    71,    72,    75,    76,    77,    78,    79,    82,
     88,    94,   100,   101,   104,   105,   106,   109,   114,   121,
    131,   132,   135,   142,   143,   146,   147,   148,   149,   150,
-   151,   152,   153,   154,   155,   158,   175,   232,   242,   247,
-   253,   259,   265,   271,   277,   283
+   151,   152,   153,   154,   155,   158,   175,   233,   243,   248,
+   254,   260,   266,   272,   278,   284
 };
 #endif
 
@@ -273,7 +272,8 @@ static const short yycheck[] = {     5,
     28,    28,    28,    28,    28,    28
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "bison.simple"
+#line 3 "/usr/share/misc/bison.simple"
+/* This file comes from bison-1.28.  */
 
 /* Skeleton output parser for bison,
    Copyright (C) 1984, 1989, 1990 Free Software Foundation, Inc.
@@ -290,46 +290,66 @@ static const short yycheck[] = {     5,
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+   Foundation, Inc., 59 Temple Place - Suite 330,
+   Boston, MA 02111-1307, USA.  */
 
 /* As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
    This special exception was added by the Free Software Foundation
    in version 1.24 of Bison.  */
 
-#ifndef alloca
-#ifdef __GNUC__
-#define alloca __builtin_alloca
-#else /* not GNU C.  */
-#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi)
-#include <alloca.h>
-#else /* not sparc */
-#if defined (MSDOS) && !defined (__TURBOC__)
-#include <malloc.h>
-#else /* not MSDOS, or __TURBOC__ */
-#if defined(_AIX)
-#include <malloc.h>
- #pragma alloca
-#else /* not MSDOS, __TURBOC__, or _AIX */
-#ifdef __hpux
-#ifdef __cplusplus
-extern "C" {
-void *alloca (unsigned int);
-};
-#else /* not __cplusplus */
-void *alloca ();
-#endif /* not __cplusplus */
-#endif /* __hpux */
-#endif /* not _AIX */
-#endif /* not MSDOS, or __TURBOC__ */
-#endif /* not sparc.  */
-#endif /* not GNU C.  */
-#endif /* alloca not defined.  */
-
 /* This is the parser code that is written into each bison parser
   when the %semantic_parser declaration is not specified in the grammar.
   It was written by Richard Stallman by simplifying the hairy parser
   used when %semantic_parser is specified.  */
+
+#ifndef YYSTACK_USE_ALLOCA
+#ifdef alloca
+#define YYSTACK_USE_ALLOCA
+#else /* alloca not defined */
+#ifdef __GNUC__
+#define YYSTACK_USE_ALLOCA
+#define alloca __builtin_alloca
+#else /* not GNU C.  */
+#if (!defined (__STDC__) && defined (sparc)) || defined (__sparc__) || defined (__sparc) || defined (__sgi) || (defined (__sun) && defined (__i386))
+#define YYSTACK_USE_ALLOCA
+#include <alloca.h>
+#else /* not sparc */
+/* We think this test detects Watcom and Microsoft C.  */
+/* This used to test MSDOS, but that is a bad idea
+   since that symbol is in the user namespace.  */
+#if (defined (_MSDOS) || defined (_MSDOS_)) && !defined (__TURBOC__)
+#if 0 /* No need for malloc.h, which pollutes the namespace;
+	 instead, just don't use alloca.  */
+#include <malloc.h>
+#endif
+#else /* not MSDOS, or __TURBOC__ */
+#if defined(_AIX)
+/* I don't know what this was needed for, but it pollutes the namespace.
+   So I turned it off.   rms, 2 May 1997.  */
+/* #include <malloc.h>  */
+ #pragma alloca
+#define YYSTACK_USE_ALLOCA
+#else /* not MSDOS, or __TURBOC__, or _AIX */
+#if 0
+#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
+		 and on HPUX 10.  Eventually we can turn this on.  */
+#define YYSTACK_USE_ALLOCA
+#define alloca __builtin_alloca
+#endif /* __hpux */
+#endif
+#endif /* not _AIX */
+#endif /* not MSDOS, or __TURBOC__ */
+#endif /* not sparc */
+#endif /* not GNU C */
+#endif /* alloca not defined */
+#endif /* YYSTACK_USE_ALLOCA not defined */
+
+#ifdef YYSTACK_USE_ALLOCA
+#define YYSTACK_ALLOC alloca
+#else
+#define YYSTACK_ALLOC malloc
+#endif
 
 /* Note: there must be only one dollar sign in this file.
    It is replaced by the list of actions, each action
@@ -339,8 +359,8 @@ void *alloca ();
 #define yyclearin	(yychar = YYEMPTY)
 #define YYEMPTY		-2
 #define YYEOF		0
-#define YYACCEPT	return(0)
-#define YYABORT 	return(1)
+#define YYACCEPT	goto yyacceptlab
+#define YYABORT 	goto yyabortlab
 #define YYERROR		goto yyerrlab1
 /* Like YYERROR except do call yyerror.
    This remains here temporarily to ease the
@@ -421,12 +441,12 @@ int yydebug;			/*  nonzero means print parse trace	*/
 #ifndef YYMAXDEPTH
 #define YYMAXDEPTH 10000
 #endif
-
-/* Prevent warning if -Wstrict-prototypes.  */
-#ifdef __GNUC__
-int yyparse (void);
-#endif
 
+/* Define __yy_memcpy.  Note that the size argument
+   should be passed with type unsigned int, because that is what the non-GCC
+   definitions require.  With GCC, __builtin_memcpy takes an arg
+   of type size_t, but it can handle unsigned int.  */
+
 #if __GNUC__ > 1		/* GNU C and GNU C++ define this.  */
 #define __yy_memcpy(TO,FROM,COUNT)	__builtin_memcpy(TO,FROM,COUNT)
 #else				/* not GNU C or C++ */
@@ -438,7 +458,7 @@ static void
 __yy_memcpy (to, from, count)
      char *to;
      char *from;
-     int count;
+     unsigned int count;
 {
   register char *f = from;
   register char *t = to;
@@ -453,10 +473,10 @@ __yy_memcpy (to, from, count)
 /* This is the most reliable way to avoid incompatibilities
    in available built-in functions on various systems.  */
 static void
-__yy_memcpy (char *to, char *from, int count)
+__yy_memcpy (char *to, char *from, unsigned int count)
 {
-  register char *f = from;
   register char *t = to;
+  register char *f = from;
   register int i = count;
 
   while (i-- > 0)
@@ -466,7 +486,7 @@ __yy_memcpy (char *to, char *from, int count)
 #endif
 #endif
 
-#line 196 "bison.simple"
+#line 217 "/usr/share/misc/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -486,6 +506,15 @@ __yy_memcpy (char *to, char *from, int count)
 #define YYPARSE_PARAM_ARG
 #define YYPARSE_PARAM_DECL
 #endif /* not YYPARSE_PARAM */
+
+/* Prevent warning if -Wstrict-prototypes.  */
+#ifdef __GNUC__
+#ifdef YYPARSE_PARAM
+int yyparse (void *);
+#else
+int yyparse (void);
+#endif
+#endif
 
 int
 yyparse(YYPARSE_PARAM_ARG)
@@ -515,6 +544,7 @@ yyparse(YYPARSE_PARAM_ARG)
 #endif
 
   int yystacksize = YYINITDEPTH;
+  int yyfree_stacks = 0;
 
 #ifdef YYPURE
   int yychar;
@@ -599,18 +629,32 @@ yynewstate:
       if (yystacksize >= YYMAXDEPTH)
 	{
 	  yyerror("parser stack overflow");
+	  if (yyfree_stacks)
+	    {
+	      free (yyss);
+	      free (yyvs);
+#ifdef YYLSP_NEEDED
+	      free (yyls);
+#endif
+	    }
 	  return 2;
 	}
       yystacksize *= 2;
       if (yystacksize > YYMAXDEPTH)
 	yystacksize = YYMAXDEPTH;
-      yyss = (short *) alloca (yystacksize * sizeof (*yyssp));
-      __yy_memcpy ((char *)yyss, (char *)yyss1, size * sizeof (*yyssp));
-      yyvs = (YYSTYPE *) alloca (yystacksize * sizeof (*yyvsp));
-      __yy_memcpy ((char *)yyvs, (char *)yyvs1, size * sizeof (*yyvsp));
+#ifndef YYSTACK_USE_ALLOCA
+      yyfree_stacks = 1;
+#endif
+      yyss = (short *) YYSTACK_ALLOC (yystacksize * sizeof (*yyssp));
+      __yy_memcpy ((char *)yyss, (char *)yyss1,
+		   size * (unsigned int) sizeof (*yyssp));
+      yyvs = (YYSTYPE *) YYSTACK_ALLOC (yystacksize * sizeof (*yyvsp));
+      __yy_memcpy ((char *)yyvs, (char *)yyvs1,
+		   size * (unsigned int) sizeof (*yyvsp));
 #ifdef YYLSP_NEEDED
-      yyls = (YYLTYPE *) alloca (yystacksize * sizeof (*yylsp));
-      __yy_memcpy ((char *)yyls, (char *)yyls1, size * sizeof (*yylsp));
+      yyls = (YYLTYPE *) YYSTACK_ALLOC (yystacksize * sizeof (*yylsp));
+      __yy_memcpy ((char *)yyls, (char *)yyls1,
+		   size * (unsigned int) sizeof (*yylsp));
 #endif
 #endif /* no yyoverflow */
 
@@ -903,6 +947,7 @@ case 37:
 		      }
 		      /* Remove last point if duplicate */
 		      first = (GdkPoint*) points->data;
+		      polygon->points = points;
 		      if (first->x == point->x && first->y == point->y)
 			 polygon_remove_last_point(polygon);
 		      polygon->points = points;
@@ -910,7 +955,7 @@ case 37:
 		;
     break;}
 case 38:
-#line 233 "imap_csim.y"
+#line 234 "imap_csim.y"
 {
 		   if (current_type == UNDEFINED) {
 		      g_strreplace(&_map_info->default_url, yyvsp[0].id);
@@ -920,49 +965,49 @@ case 38:
 		;
     break;}
 case 39:
-#line 243 "imap_csim.y"
+#line 244 "imap_csim.y"
 {
 		;
     break;}
 case 40:
-#line 248 "imap_csim.y"
+#line 249 "imap_csim.y"
 {
 		   object_set_comment(current_object, yyvsp[0].id);
 		;
     break;}
 case 41:
-#line 254 "imap_csim.y"
+#line 255 "imap_csim.y"
 {
 		   object_set_target(current_object, yyvsp[0].id);
 		;
     break;}
 case 42:
-#line 260 "imap_csim.y"
+#line 261 "imap_csim.y"
 {
 		   object_set_mouse_over(current_object, yyvsp[0].id);
 		;
     break;}
 case 43:
-#line 266 "imap_csim.y"
+#line 267 "imap_csim.y"
 {
 		   object_set_mouse_out(current_object, yyvsp[0].id);
 		;
     break;}
 case 44:
-#line 272 "imap_csim.y"
+#line 273 "imap_csim.y"
 {
 		   object_set_focus(current_object, yyvsp[0].id);
 		;
     break;}
 case 45:
-#line 278 "imap_csim.y"
+#line 279 "imap_csim.y"
 {
 		   object_set_blur(current_object, yyvsp[0].id);
 		;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 498 "bison.simple"
+#line 543 "/usr/share/misc/bison.simple"
 
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -1157,8 +1202,32 @@ yyerrhandle:
 
   yystate = yyn;
   goto yynewstate;
+
+ yyacceptlab:
+  /* YYACCEPT comes here.  */
+  if (yyfree_stacks)
+    {
+      free (yyss);
+      free (yyvs);
+#ifdef YYLSP_NEEDED
+      free (yyls);
+#endif
+    }
+  return 0;
+
+ yyabortlab:
+  /* YYABORT comes here.  */
+  if (yyfree_stacks)
+    {
+      free (yyss);
+      free (yyvs);
+#ifdef YYLSP_NEEDED
+      free (yyls);
+#endif
+    }
+  return 1;
 }
-#line 286 "imap_csim.y"
+#line 287 "imap_csim.y"
 
 
 static void 

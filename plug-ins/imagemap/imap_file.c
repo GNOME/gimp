@@ -21,13 +21,16 @@
  *
  */
 
+#include "config.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpui.h"
+
 #include "imap_default_dialog.h"
 #include "imap_file.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_table.h"
 
@@ -54,6 +57,7 @@ do_file_open_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Load Imagemap"));
+      gimp_dialog_set_icon (GTK_WINDOW (dialog));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -114,6 +118,7 @@ do_file_save_as_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Save Imagemap"));
+      gimp_dialog_set_icon (GTK_WINDOW (dialog));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));

@@ -3,32 +3,32 @@ typedef union {
    double value;
    char id[256];
 } YYSTYPE;
-#define	IMG	258
-#define	SRC	259
-#define	WIDTH	260
-#define	HEIGHT	261
-#define	BORDER	262
-#define	USEMAP	263
-#define	START_MAP	264
-#define	END_MAP	265
-#define	NAME	266
-#define	AREA	267
-#define	SHAPE	268
-#define	COORDS	269
-#define	ALT	270
-#define	HREF	271
-#define	NOHREF	272
-#define	TARGET	273
-#define	ONMOUSEOVER	274
-#define	ONMOUSEOUT	275
-#define	ONFOCUS	276
-#define	ONBLUR	277
-#define	AUTHOR	278
-#define	DESCRIPTION	279
-#define	BEGIN_COMMENT	280
-#define	END_COMMENT	281
-#define	FLOAT	282
-#define	STRING	283
+#define	IMG	257
+#define	SRC	258
+#define	WIDTH	259
+#define	HEIGHT	260
+#define	BORDER	261
+#define	USEMAP	262
+#define	START_MAP	263
+#define	END_MAP	264
+#define	NAME	265
+#define	AREA	266
+#define	SHAPE	267
+#define	COORDS	268
+#define	ALT	269
+#define	HREF	270
+#define	NOHREF	271
+#define	TARGET	272
+#define	ONMOUSEOVER	273
+#define	ONMOUSEOUT	274
+#define	ONFOCUS	275
+#define	ONBLUR	276
+#define	AUTHOR	277
+#define	DESCRIPTION	278
+#define	BEGIN_COMMENT	279
+#define	END_COMMENT	280
+#define	FLOAT	281
+#define	STRING	282
 
 
 extern YYSTYPE csim_lval;

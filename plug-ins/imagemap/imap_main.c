@@ -1333,6 +1333,7 @@ dialog(GDrawable *drawable)
    gtk_widget_realize(dlg);
 
    main_set_title(NULL);
+   gimp_help_connect_help_accel (dlg, gimp_standard_help_func, "filters/imagemap.html");
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
    gtk_signal_connect(GTK_OBJECT(dlg), "destroy",

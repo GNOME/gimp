@@ -33,7 +33,10 @@ EXTRA_DIST = \
 	AUTHORS		\
 	NEWS		\
 	README		\
-	TODO
+	TODO		\
+	imap_cern.y  	\
+	imap_csim.y  	\
+	imap_ncsa.y
 
 imagemap_SOURCES = \
 	imap_about.c			\

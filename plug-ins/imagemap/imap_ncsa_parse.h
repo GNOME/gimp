@@ -3,17 +3,17 @@ typedef union {
    double value;
    char id[256];
 } YYSTYPE;
-#define	RECTANGLE	258
-#define	POLYGON	259
-#define	CIRCLE	260
-#define	DEFAULT	261
-#define	AUTHOR	262
-#define	TITLE	263
-#define	DESCRIPTION	264
-#define	BEGIN_COMMENT	265
-#define	FLOAT	266
-#define	LINK	267
-#define	COMMENT	268
+#define	RECTANGLE	257
+#define	POLYGON	258
+#define	CIRCLE	259
+#define	DEFAULT	260
+#define	AUTHOR	261
+#define	TITLE	262
+#define	DESCRIPTION	263
+#define	BEGIN_COMMENT	264
+#define	FLOAT	265
+#define	LINK	266
+#define	COMMENT	267
 
 
 extern YYSTYPE ncsa_lval;

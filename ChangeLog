@@ -1,3 +1,16 @@
+2000-08-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/imagemap/imap_cern_parse.[ch]
+	* plug-ins/imagemap/imap_csim_parse.[ch]
+	* plug-ins/imagemap/imap_ncsa_parse.[ch]: recreated from yacc 
+	files and added those files to the distribution. Supposed to 
+	close bugs #8076, #9212 and #10090.
+
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_file.c
+	* plug-ins/imagemap/imap_main.c: set help accelerator and window icon.
+	
 Fri Aug 18 18:14:35 BST 2000 Austin Donnelly <austin@gimp.org>
 
 	* app/fileops.c: fix nasty bug where if overwriting a file and

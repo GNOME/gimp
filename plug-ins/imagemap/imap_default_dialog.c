@@ -22,6 +22,8 @@
  */
 
 #include "config.h"
+
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "imap_default_dialog.h"
@@ -97,6 +99,7 @@ make_default_dialog(const gchar *title)
    data->cancel_cb = NULL;
    data->dialog = dialog = gtk_dialog_new();
    gtk_window_set_title(GTK_WINDOW(dialog), title);
+   gimp_dialog_set_icon (GTK_WINDOW(dialog));
 
    gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
 		      GTK_SIGNAL_FUNC(dialog_destroy), (gpointer) data);
@@ -139,7 +142,7 @@ make_default_dialog(const gchar *title)
      gtk_box_pack_start(GTK_BOX(hbbox), data->help, FALSE, FALSE, 0);
      gtk_widget_show(data->help);
    */
-  
+ 
    return data;
 }
 
