@@ -1018,7 +1018,8 @@ gimp_image_delete_guide_invoker (Argument *args)
       guides = gimage->guides;
       while (guides)
 	{
-	  if (((Guide*)guides->data)->guide_ID == guide_id)
+	  if ((((Guide*)guides->data)->guide_ID == guide_id) &&
+	      (((Guide*)guides->data)->position >= 0) )
 	    {
 	      GList *tmp_next;
 
@@ -1027,7 +1028,9 @@ gimp_image_delete_guide_invoker (Argument *args)
 
 	      tmp_next = g_list_next(guides);
 
-	      gimp_image_remove_guide (gimage, ((Guide*)guides->data));
+	      ((Guide*)guides->data)->position = -1;
+	      undo_push_guide (gimage, ((Guide*)guides->data));
+	      /*gimp_image_remove_guide (gimage, ((Guide*)guides->data));*/
 
 	      guides = tmp_next;
 	    }
