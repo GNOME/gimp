@@ -417,6 +417,10 @@ plug-ins/apply_lens/Makefile
 plug-ins/animationplay/Makefile
 plug-ins/align_layers/Makefile
 plug-ins/CEL/Makefile
+plug-ins/glasstile/Makefile
+plug-ins/colorify/Makefile
+plug-ins/papertile/Makefile
+plug-ins/illusion/Makefile
 app/Makefile
 docs/Makefile
 )
