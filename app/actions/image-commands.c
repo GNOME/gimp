@@ -237,6 +237,10 @@ image_scale_cmd_callback (GtkAction *action,
                                    widget,
                                    image_scale_callback);
 
+  g_signal_connect_object (gdisp, "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog->dialog, G_CONNECT_SWAPPED);
+
   gtk_widget_show (dialog->dialog);
 }
 

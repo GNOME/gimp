@@ -63,13 +63,13 @@ static void   resize_dialog_response (GtkWidget    *dialog,
 static void   resize_dialog_reset    (ResizeDialog *private);
 
 static void   offset_update          (GtkWidget    *widget,
-                                      ResizeDialog *dialog);
+                                      ResizeDialog *private);
 static void   offsets_changed        (GtkWidget    *area,
                                       gint          off_x,
                                       gint          off_y,
-                                      ResizeDialog *dialog);
+                                      ResizeDialog *private);
 static void   offset_center_clicked  (GtkWidget    *widget,
-                                      ResizeDialog *dialog);
+                                      ResizeDialog *private);
 
 
 GtkWidget *
@@ -224,16 +224,16 @@ resize_dialog_new (GimpViewable       *viewable,
 
   g_signal_connect (entry, "value_changed",
                     G_CALLBACK (offset_update),
-                    dialog);
+                    private);
 
   button = gtk_button_new_with_mnemonic (_("C_enter"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_table_attach_defaults (GTK_TABLE (entry), button, 4, 5, 1, 2);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (offset_center_clicked),
-                    dialog);
+                    private);
 
   /*  frame to hold GimpOffsetArea  */
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -253,11 +253,9 @@ resize_dialog_new (GimpViewable       *viewable,
 
   gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);
 
-  g_object_unref (pixbuf);
-
   g_signal_connect (private->area, "offsets_changed",
                     G_CALLBACK (offsets_changed),
-                    dialog);
+                    private);
 
   gtk_widget_show (frame);
 
@@ -296,80 +294,79 @@ resize_dialog_response (GtkWidget    *dialog,
 }
 
 static void
-resize_dialog_reset (ResizeDialog *dialog)
+resize_dialog_reset (ResizeDialog *private)
 {
-  g_object_set (dialog->box,
-                "width",   dialog->old_width,
-                "height",  dialog->old_height,
+  g_object_set (private->box,
+                "width",   private->old_width,
+                "height",  private->old_height,
                 NULL);
 
-  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (dialog->offset), 0, 0);
+  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->offset), 0, 0);
 }
 
 static gint
-resize_bound_off_x (ResizeDialog *dialog,
+resize_bound_off_x (ResizeDialog *private,
 		    gint          offset_x)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (dialog->box);
+  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
 
-  if (dialog->old_width <= box->width)
-    return CLAMP (offset_x, 0, (box->width - dialog->old_width));
+  if (private->old_width <= box->width)
+    return CLAMP (offset_x, 0, (box->width - private->old_width));
   else
-    return CLAMP (offset_x, (box->width - dialog->old_width), 0);
+    return CLAMP (offset_x, (box->width - private->old_width), 0);
 }
 
 static gint
-resize_bound_off_y (ResizeDialog *dialog,
+resize_bound_off_y (ResizeDialog *private,
 		    gint          off_y)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (dialog->box);
+  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
 
-  if (dialog->old_height <= box->height)
-    return CLAMP (off_y, 0, (box->height - dialog->old_height));
+  if (private->old_height <= box->height)
+    return CLAMP (off_y, 0, (box->height - private->old_height));
   else
-    return CLAMP (off_y, (box->height - dialog->old_height), 0);
+    return CLAMP (off_y, (box->height - private->old_height), 0);
 }
 
 static void
 offset_update (GtkWidget    *widget,
-	       ResizeDialog *dialog)
+	       ResizeDialog *private)
 {
-  GimpSizeEntry *entry = GIMP_SIZE_ENTRY (dialog->offset);
+  GimpSizeEntry *entry = GIMP_SIZE_ENTRY (private->offset);
   gint           off_x;
   gint           off_y;
 
-  off_x = resize_bound_off_x (dialog,
+  off_x = resize_bound_off_x (private,
                               RINT (gimp_size_entry_get_refval (entry, 0)));
-  off_y = resize_bound_off_y (dialog,
+  off_y = resize_bound_off_y (private,
                               RINT (gimp_size_entry_get_refval (entry, 1)));
 
-  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (dialog->offset),
-                                off_x, off_y);
+  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (private->area), off_x, off_y);
 }
 
 static void
 offsets_changed (GtkWidget    *area,
                  gint          off_x,
                  gint          off_y,
-                 ResizeDialog *dialog)
+                 ResizeDialog *private)
 {
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->offset), 0, off_x);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->offset), 1, off_y);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 0, off_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
 }
 
 static void
 offset_center_clicked (GtkWidget    *widget,
-                       ResizeDialog *dialog)
+                       ResizeDialog *private)
 {
-  GimpSizeBox *box = GIMP_SIZE_BOX (dialog->box);
+  GimpSizeBox *box = GIMP_SIZE_BOX (private->box);
   gint         off_x;
   gint         off_y;
 
-  off_x = resize_bound_off_x (dialog, (box->width  - dialog->old_width)  / 2);
-  off_y = resize_bound_off_y (dialog, (box->height - dialog->old_height) / 2);
+  off_x = resize_bound_off_x (private, (box->width  - private->old_width)  / 2);
+  off_y = resize_bound_off_y (private, (box->height - private->old_height) / 2);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->offset), 0, off_x);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->offset), 1, off_y);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 0, off_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
 
-  g_signal_emit_by_name (dialog->offset, "value_changed", 0);
+  g_signal_emit_by_name (private->offset, "value_changed", 0);
 }

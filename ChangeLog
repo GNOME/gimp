@@ -1,3 +1,11 @@
+2004-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-commands.c (image_scale_cmd_callback): destroy
+	the scale dialog when the display is disconnected.
+
+	* app/dialogs/resize-dialog.c: fixed a couple of bugs related to
+	the offset area. Still work in progress.
+
 2004-10-30  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/newsprint.c: Moved the preview to the left, as
