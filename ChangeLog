@@ -1,3 +1,10 @@
+2004-04-16  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/tile.c (tile): changed a call to
+	gimp_image_undo_enable to _undo_disable which was obviously the
+	intention of the author. Added a call to gimp_drawable_update to
+	get the previews refreshed.
+
 2004-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcolorpickertool.c

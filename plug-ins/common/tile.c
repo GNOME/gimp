@@ -260,7 +260,7 @@ tile (gint32  image_id,
 
       new_image_id = gimp_image_new (tvals.new_width, tvals.new_height,
 				     image_type);
-      gimp_image_undo_enable (new_image_id);
+      gimp_image_undo_disable (new_image_id);
       *layer_id = gimp_layer_new (new_image_id, _("Background"),
 				  tvals.new_width, tvals.new_height,
 				  gimp_drawable_type (drawable_id),
@@ -354,7 +354,9 @@ tile (gint32  image_id,
       gimp_image_undo_group_end (image_id);
     }
 
-  gimp_drawable_flush (drawable);
+  gimp_drawable_update (drawable->drawable_id,
+                        0, 0,
+                        drawable->width, drawable->height);
   gimp_drawable_detach (drawable);
 
   return new_image_id;
