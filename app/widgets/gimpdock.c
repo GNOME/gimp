@@ -36,6 +36,9 @@
 #include "gimpdockbook.h"
 
 
+#define DEFAULT_SEPARATOR_HEIGHT 6
+
+
 static void        gimp_dock_class_init               (GimpDockClass  *klass);
 static void        gimp_dock_init                     (GimpDock       *dock);
 
@@ -125,7 +128,7 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
-                                                             6,
+                                                             DEFAULT_SEPARATOR_HEIGHT,
                                                              G_PARAM_READABLE));
 }
 
@@ -177,9 +180,12 @@ static void
 gimp_dock_style_set (GtkWidget *widget,
                      GtkStyle  *prev_style)
 {
-  GList *children;
-  GList *list;
-  gint   separator_height;
+  GimpDock *dock;
+  GList    *children;
+  GList    *list;
+  gint      separator_height;
+
+  dock = GIMP_DOCK (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -188,17 +194,14 @@ gimp_dock_style_set (GtkWidget *widget,
                         "separator_height", &separator_height,
                         NULL);
 
-  children = gtk_container_get_children (GTK_CONTAINER (widget));
+  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
 
   for (list = children; list; list = g_list_next (list))
     {
-      GtkWidget *child;
-
-      child = GTK_WIDGET (list->data);
-
-      if (GTK_IS_EVENT_BOX (child))
+      if (GTK_IS_EVENT_BOX (list->data))
         {
-          gtk_widget_set_size_request (child, -1, separator_height);
+          gtk_widget_set_size_request (GTK_WIDGET (list->data),
+                                       -1, separator_height);
        }
     }
 
@@ -210,9 +213,17 @@ gimp_dock_separator_new (GimpDock *dock)
 {
   GtkWidget *event_box;
   GtkWidget *frame;
+  gint       separator_height;
 
   event_box = gtk_event_box_new ();
-  gtk_widget_set_size_request (event_box, -1, 6);
+
+  gtk_widget_set_name (event_box, "dock-separator");
+
+  gtk_widget_style_get (GTK_WIDGET (dock),
+                        "separator_height", &separator_height,
+                        NULL);
+
+  gtk_widget_set_size_request (event_box, -1, separator_height);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);

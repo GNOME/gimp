@@ -36,7 +36,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 
 #include "vectors/gimpvectors.h"

@@ -56,7 +56,7 @@ typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpGradientOptions
 {
-  GtkWidget    *frame;
+  GtkWidget    *fade_frame;
 
   gboolean      use_fade;
   gboolean      use_fade_d;
@@ -69,6 +69,8 @@ struct _GimpGradientOptions
   GimpUnit      fade_unit;
   GimpUnit      fade_unit_d;
   GtkWidget    *fade_unit_w;
+
+  GtkWidget    *gradient_frame;
 
   gboolean      use_gradient;
   gboolean      use_gradient_d;

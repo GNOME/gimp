@@ -38,7 +38,9 @@
 #include "gimppreview.h"
 
 
-#define TAB_WIDGET_SIZE     24
+#define DEFAULT_TAB_BORDER   0
+#define DEFAULT_TAB_HEIGHT  24
+#define DND_WIDGET_SIZE     32
 #define MENU_WIDGET_SIZE    16
 #define MENU_WIDGET_SPACING  4
 
@@ -127,9 +129,14 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("tab_border",
                                                              NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
+                                                             0, G_MAXINT,
+                                                             DEFAULT_TAB_BORDER,
+                                                             G_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("tab_height",
+                                                             NULL, NULL,
+                                                             0, G_MAXINT,
+                                                             DEFAULT_TAB_HEIGHT,
                                                              G_PARAM_READABLE));
 }
 
@@ -157,18 +164,50 @@ static void
 gimp_dockbook_style_set (GtkWidget *widget,
                          GtkStyle  *prev_style)
 {
-  gint tab_border;
+  GList *children;
+  GList *list;
+  gint   tab_border;
+  gint   tab_height;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
                         "tab_border", &tab_border,
+                        "tab_height", &tab_height,
                         NULL);
 
   g_object_set (G_OBJECT (widget),
                 "tab_border", tab_border,
                 NULL);
+
+  children = gtk_container_get_children (GTK_CONTAINER (widget));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *tab_widget;
+
+      tab_widget = gimp_dockable_get_tab_widget (GIMP_DOCKABLE (list->data),
+                                                 GIMP_DOCKBOOK (widget),
+                                                 tab_height);
+
+      if (GTK_WIDGET_NO_WINDOW (tab_widget))
+        {
+          GtkWidget *event_box;
+
+          event_box = gtk_event_box_new ();
+          gtk_container_add (GTK_CONTAINER (event_box), tab_widget);
+          gtk_widget_show (tab_widget);
+
+          tab_widget = event_box;
+        }
+
+      gtk_notebook_set_tab_label (GTK_NOTEBOOK (widget),
+                                  GTK_WIDGET (list->data),
+                                  tab_widget);
+    }
+
+  g_list_free (children);
 }
 
 static gboolean
@@ -218,14 +257,19 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 {
   GtkWidget *tab_widget;
   GtkWidget *menu_widget;
+  gint       tab_height;
 
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (dockbook->dock != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (dockable->dockbook == NULL);
 
+  gtk_widget_style_get (GTK_WIDGET (dockbook),
+                        "tab_height", &tab_height,
+                        NULL);
+
   tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook,
-					     TAB_WIDGET_SIZE);
+					     tab_height);
 
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
 
@@ -523,7 +567,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_widget_show (frame);
 
   preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook,
-					  TAB_WIDGET_SIZE);
+					  DND_WIDGET_SIZE);
 
   if (GIMP_IS_PREVIEW (preview))
     {

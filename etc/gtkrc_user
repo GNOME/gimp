@@ -7,7 +7,36 @@
 #   <option>
 # }
 #
-# widget <widget_set> style <style_name>
-# widget_class <widget_class_set> style <style_name>
+# widget <widget_set>       style <style_name>
+# class  <widget_class_set> style <style_name>
 
 # You can add your own GIMP-specific GTK styles here.
+
+
+# Example style for small screens:
+
+style "gimp-small-style"
+{
+  GimpDock::separator_height    = 6
+  GimpImageDock::minimal_width  = 200
+  GimpToolbox::tool_icon_size   = menu
+  GimpDockbook::tab_border      = 0
+  GimpDockbook::tab_height      = 16
+  GimpDockable::content_border  = 1
+  GimpDockable::content_spacing = 1
+  GimpEditor::content_spacing   = 1
+  GimpEditor::button_spacing    = 1
+  GimpEditor::button_icon_size  = menu
+}
+
+# class "GtkWidget" style "gimp-small-style"
+
+
+# The dock separator is configurable using it's name:
+
+style "gimp-blue-separator-style"
+{
+  bg[NORMAL] = "#8888aa"
+}
+
+# widget "*dock-separator*" style "gimp-blue-separator-style"

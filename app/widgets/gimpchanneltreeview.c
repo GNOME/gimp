@@ -36,7 +36,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 
 #include "display/gimpdisplay-foreach.h"
 
@@ -60,9 +60,6 @@ static void   gimp_channel_list_view_select_item    (GimpContainerView   *view,
 						     gpointer             insert_data);
 static void   gimp_channel_list_view_set_preview_size (GimpContainerView *view);
 
-static void   gimp_channel_list_view_to_selection   (GimpChannelListView *view,
-						     GimpChannel         *channel,
-						     GimpChannelOps       operation);
 static void   gimp_channel_list_view_toselection_clicked
                                                     (GtkWidget           *widget,
 						     GimpChannelListView *view);
@@ -287,47 +284,6 @@ gimp_channel_list_view_set_preview_size (GimpContainerView *view)
   gtk_widget_queue_resize (channel_view->component_frame);
 }
 
-
-/*  "To Selection" functions  */
-
-static void
-gimp_channel_list_view_to_selection (GimpChannelListView *view,
-				     GimpChannel         *channel,
-				     GimpChannelOps       operation)
-{
-  if (channel)
-    {
-      GimpImage   *gimage;
-      GimpChannel *new_channel;
-
-      gimage = gimp_item_get_image (GIMP_ITEM (channel));
-
-      if (operation == GIMP_CHANNEL_OP_REPLACE)
-	{
-	  new_channel = channel;
-
-	  g_object_ref (G_OBJECT (channel));
-	}
-      else
-	{
-	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                           G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                           TRUE);
-
-	  gimp_channel_combine_mask (new_channel,
-				     channel,
-				     operation,
-				     0, 0);
-	}
-
-      gimp_image_mask_load (gimage, new_channel);
-
-      g_object_unref (G_OBJECT (new_channel));
-
-      gdisplays_flush ();
-    }
-}
-
 static void
 gimp_channel_list_view_toselection_clicked (GtkWidget           *widget,
 					    GimpChannelListView *view)
@@ -363,8 +319,12 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (viewable),
-					   operation);
+      gimp_image_mask_select_channel (gimp_item_get_image (GIMP_ITEM (viewable)),
+                                      GIMP_CHANNEL (viewable),
+                                      0, 0,
+                                      operation,
+                                      FALSE, 0.0, 0.0);
+      gdisplays_flush ();
     }
 }
 

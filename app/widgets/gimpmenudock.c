@@ -43,13 +43,16 @@
 #include "libgimp/gimpintl.h"
 
 
-#define GIMP_IMAGE_DOCK_MINIMAL_WIDTH 250
+#define DEFAULT_MINIMAL_WIDTH 250
 
 
 static void   gimp_image_dock_class_init            (GimpImageDockClass *klass);
 static void   gimp_image_dock_init                  (GimpImageDock      *dock);
 
 static void   gimp_image_dock_destroy               (GtkObject          *object);
+
+static void   gimp_image_dock_style_set             (GtkWidget          *widget,
+                                                     GtkStyle           *prev_style);
 
 static void   gimp_image_dock_factory_image_changed (GimpContext        *context,
 						     GimpImage          *gimage,
@@ -96,12 +99,24 @@ static void
 gimp_image_dock_class_init (GimpImageDockClass *klass)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_image_dock_destroy;
+  object_class->destroy   = gimp_image_dock_destroy;
+
+  widget_class->style_set = gimp_image_dock_style_set;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("minimal_width",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             DEFAULT_MINIMAL_WIDTH,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -113,9 +128,6 @@ gimp_image_dock_init (GimpImageDock *dock)
   dock->show_image_menu    = FALSE;
   dock->auto_follow_active = TRUE;
 
-  gtk_widget_set_size_request (GTK_WIDGET (dock),
-                               GIMP_IMAGE_DOCK_MINIMAL_WIDTH, -1);
- 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (GIMP_DOCK (dock)->main_vbox), hbox,
                       FALSE, FALSE, 0);
@@ -163,6 +175,22 @@ gimp_image_dock_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_image_dock_style_set (GtkWidget *widget,
+                           GtkStyle  *prev_style)
+{
+  gint minimal_width;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "minimal_width",  &minimal_width,
+			NULL);
+
+  gtk_widget_set_size_request (widget, minimal_width, -1);
 }
 
 GtkWidget *

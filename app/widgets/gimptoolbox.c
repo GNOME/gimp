@@ -54,6 +54,9 @@
 #include "pixmaps/swap.xpm"
 
 
+#define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON
+
+
 /*  local function prototypes  */
 
 static void       gimp_toolbox_class_init       (GimpToolboxClass *klass);
@@ -155,6 +158,13 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->delete_event  = gimp_toolbox_delete_event;
   widget_class->size_allocate = gimp_toolbox_size_allocate;
   widget_class->style_set     = gimp_toolbox_style_set;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("tool_icon_size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              DEFAULT_TOOL_ICON_SIZE,
+                                                              G_PARAM_READABLE));
 }
 
 static void
@@ -193,14 +203,8 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_LEFT);
 
-#if 0
-  /*  magic number to set a default 5x5 layout  */
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->wbox), 5.0 / 5.9);
-#endif
-
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
-
 }
 
 static gboolean
@@ -293,6 +297,8 @@ gimp_toolbox_style_set (GtkWidget *widget,
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GtkWidget    *tool_button;
+  GtkIconSize   tool_icon_size;
+  GList        *list;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
@@ -301,6 +307,30 @@ gimp_toolbox_style_set (GtkWidget *widget,
     return;
 
   gimp = GIMP_DOCK (widget)->context->gimp;
+
+  gtk_widget_style_get (widget,
+                        "tool_icon_size", &tool_icon_size,
+                        NULL);
+
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      tool_info = GIMP_TOOL_INFO (list->data);
+
+      tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
+
+      if (tool_button)
+        {
+          GtkImage *image;
+          gchar    *stock_id;
+
+          image = GTK_IMAGE (GTK_BIN (tool_button)->child);
+
+          gtk_image_get_stock (image, &stock_id, NULL);
+          gtk_image_set_from_stock (image, stock_id, tool_icon_size);
+        }
+    }
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list,

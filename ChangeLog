@@ -1,3 +1,36 @@
+2002-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintoptions.h
+	* app/tools/paint_options.c: put the "Fade Out" and "Gradient" stuff
+	into separate frames with togglebutton titles.
+
+	* app/widgets/gimpchannellistview.c: use
+	gimp_image_mask_select_channel() instead of reinventing the wheel.
+
+	* app/widgets/gimpvectorslistview.c: removed unneeded inclusion
+	of "core/gimpimage-mask.h".
+
+	* app/widgets/gimpcolormapeditor.c: set the hex entry to 7 digits,
+	some cleanup.
+
+	* app/widgets/gimppaletteeditor.c: set the vertical scrollbar
+	to GTK_POLICY_AUTOMATIC.
+
+	Added support for configuring some more GUI dimensions using
+	widget class style properties:
+
+	* app/widgets/gimpdock.c: made "separator_height" work correctly.
+	* app/widgets/gimpdockbook.c: added "tab_height".
+	* app/widgets/gimpeditor.c: added "button_icon_size".
+	* app/widgets/gimpimagedock.c: added "minimal_width".
+	* app/widgets/gimptoolbox.c: added "tool_icon_size".
+
+	* themes/Default/gtkrc: set the properties to their default values
+	for documentation.
+
+	* etc/gtkrc_user: added a (commented out) example style which makes
+	lots of things a smaller.
+
 2002-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h

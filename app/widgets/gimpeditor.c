@@ -31,6 +31,11 @@
 #include "gimpdnd.h"
 
 
+#define DEFAULT_CONTENT_SPACING  2
+#define DEFAULT_BUTTON_SPACING   2
+#define DEFAULT_BUTTON_ICON_SIZE GTK_ICON_SIZE_BUTTON
+
+
 static void   gimp_editor_class_init (GimpEditorClass *klass);
 static void   gimp_editor_init       (GimpEditor      *panel);
 
@@ -85,7 +90,7 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
-                                                             0,
+                                                             DEFAULT_CONTENT_SPACING,
                                                              G_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -93,8 +98,15 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
-                                                             0,
+                                                             DEFAULT_BUTTON_SPACING,
                                                              G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_enum ("button_icon_size",
+                                                              NULL, NULL,
+                                                              GTK_TYPE_ICON_SIZE,
+                                                              DEFAULT_BUTTON_ICON_SIZE,
+                                                              G_PARAM_READABLE));
 }
 
 static void
@@ -106,22 +118,44 @@ static void
 gimp_editor_style_set (GtkWidget *widget,
                        GtkStyle  *prev_style)
 {
-  GimpEditor *editor;
-  gint        content_spacing;
-  gint        button_spacing;
+  GimpEditor  *editor;
+  gint         content_spacing;
+  gint         button_spacing;
+  GtkIconSize  button_icon_size;
 
   editor = GIMP_EDITOR (widget);
 
   gtk_widget_style_get (widget,
-                        "content_spacing", &content_spacing,
-			"button_spacing",  &button_spacing,
+                        "content_spacing",  &content_spacing,
+			"button_spacing",   &button_spacing,
+                        "button_icon_size", &button_icon_size,
 			NULL);
 
   gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
 
   if (editor->button_box)
     {
+      GtkBin *bin;
+      GList  *children;
+      GList  *list;
+
       gtk_box_set_spacing (GTK_BOX (editor->button_box), button_spacing);
+
+      children = gtk_container_get_children (GTK_CONTAINER (editor->button_box));
+
+      for (list = children; list; list = g_list_next (list))
+        {
+          gchar *stock_id;
+
+          bin = GTK_BIN (list->data);
+
+          gtk_image_get_stock (GTK_IMAGE (bin->child), &stock_id, NULL);
+          gtk_image_set_from_stock (GTK_IMAGE (bin->child),
+                                    stock_id,
+                                    button_icon_size);
+        }
+
+      g_list_free (children);
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
@@ -147,15 +181,22 @@ gimp_editor_add_button (GimpEditor  *editor,
                         GCallback    extended_callback,
                         gpointer     callback_data)
 {
-  GtkWidget *button;
-  GtkWidget *image;
+  GtkWidget   *button;
+  GtkWidget   *image;
+  gint         button_spacing;
+  GtkIconSize  button_icon_size;
 
   g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
 
+  gtk_widget_style_get (GTK_WIDGET (editor),
+                        "button_spacing",   &button_spacing,
+                        "button_icon_size", &button_icon_size,
+                        NULL);
+
   if (! editor->button_box)
     {
-      editor->button_box = gtk_hbox_new (TRUE, 2);
+      editor->button_box = gtk_hbox_new (TRUE, button_spacing);
       gtk_box_pack_end (GTK_BOX (editor), editor->button_box, FALSE, FALSE, 0);
       gtk_widget_show (editor->button_box);
     }
@@ -177,7 +218,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 		      extended_callback,
 		      callback_data);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_stock (stock_id, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 

@@ -190,7 +190,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_widget_set_size_request (scrolledwindow, -1, PREVIEW_HEIGHT);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_ALWAYS);
+				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (editor), scrolledwindow, TRUE, TRUE, 0);
   gtk_widget_show (scrolledwindow);
 
