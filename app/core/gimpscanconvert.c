@@ -200,7 +200,7 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
   if (!closed)
     sc->have_open = TRUE;
 
-  /* We need two extra nodes later to close the path. */
+  /* make sure that we have enough space for the nodes */
   sc->vpath = art_renew (sc->vpath, ArtVpath,
                          sc->num_nodes + n_points + 2);
 
@@ -222,10 +222,12 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
         }
     }
 
-  /* for some reason we need to duplicate the last node?? */
-
-  sc->vpath[sc->num_nodes] = sc->vpath[sc->num_nodes - 1];
-  sc->num_nodes++;
+  if (closed && (prev.x != points[i].x || prev.y != points[i].y))
+    {
+      sc->vpath[sc->num_nodes] = sc->vpath[0];
+      sc->vpath[sc->num_nodes].code = ART_LINETO;
+      sc->num_nodes++;
+    }
   sc->vpath[sc->num_nodes].code = ART_END;
 
   /* If someone wants to mix this function with _add_points ()
@@ -473,7 +475,6 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 static void
 gimp_scan_convert_finish (GimpScanConvert *sc)
 {
-  ArtVpath *pert_vpath;
   ArtSVP   *svp, *svp2;
 
   /* return gracefully on empty path */
@@ -510,6 +511,9 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
           }
     }
 
+#undef USE_PERTURB
+
+#ifdef USE_PERTURB
   /*
    * Current Libart (2.3.8) recommends a slight random distorsion
    * of the path, because art_svp_uncross and art_svp_rewind_uncrossed
@@ -518,10 +522,21 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
    * visible effect.
    */
 
-  pert_vpath = art_vpath_perturb (sc->vpath);
+  {
+    ArtVPath *vpath;
 
-  svp  = art_svp_from_vpath (pert_vpath);
-  art_free (pert_vpath);
+    pert_vpath = art_vpath_perturb (sc->vpath);
+   
+    svp  = art_svp_from_vpath (pert_vpath);
+    art_free (pert_vpath);
+  }
+#else
+  /*
+   * using perturb apparently does more harm than good for libart
+   * 2.3.16. I don't really understand this.  (Simon)
+   */
+  svp  = art_svp_from_vpath (sc->vpath);
+#endif
 
   svp2 = art_svp_uncross (svp);
   art_svp_free (svp);

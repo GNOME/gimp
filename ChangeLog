@@ -1,3 +1,15 @@
+2004-01-21  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.c: removed the call to
+	art_vpath_perturb, since it apparently is responsible for the
+	artefacts described in bug #132036. I don't really understand
+	why these artefacts were happening in the first place, because
+	in theory art_vpath_perturb should not do any harm.
+	
+	Also properly close closed polygons.
+
+	Hopefully fixes #132036, please test this.
+
 2004-01-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c: added new command-line options --existing
