@@ -197,11 +197,12 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
   GList    *stroke;
   GArray   *coords = NULL;
   gboolean  closed;
+  gint      num_coords=0;
   const gchar *undo_name = "Select Vectors"; /* this probably should be an
                                                 argument */
 
   GimpScanConvert *scan_convert;
-  GimpChannel     *mask;
+  GimpChannel     *mask = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -237,6 +238,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
             {
               points[i].x = g_array_index (coords, GimpCoords, i).x;
               points[i].y = g_array_index (coords, GimpCoords, i).y;
+              num_coords++;
             }
 
           gimp_scan_convert_add_points (scan_convert, coords->len,
@@ -247,7 +249,8 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
         }
     }
 
-  mask = gimp_scan_convert_to_channel (scan_convert, gimage);
+  if (num_coords)
+    mask = gimp_scan_convert_to_channel (scan_convert, gimage);
 
   gimp_scan_convert_free (scan_convert);
 

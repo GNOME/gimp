@@ -1,3 +1,10 @@
+2003-08-28  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage-mask-select.c
+	* app/vectors/gimpbezierstroke.c: Fixed two crashes when a path
+	with a single node in a stroke got converted to a selection or got
+	stroked.
+
 2003-08-28  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontext.c (gimp_context_real_set_foreground)

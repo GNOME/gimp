@@ -1304,6 +1304,12 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
   *ret_closed = stroke->closed;
 
+  if (ret_coords->len == 0)
+    {
+      g_array_free (ret_coords, TRUE);
+      ret_coords = NULL;
+    }
+
   return ret_coords;
 }
 
@@ -1324,6 +1330,7 @@ gimp_bezier_stroke_get_anchor_listitem (GList *list)
     return list->next;
 
   g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);
+  return NULL;
 }
 
 
