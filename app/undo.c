@@ -31,6 +31,7 @@
 #include "layer.h"
 #include "paint_core.h"
 #include "paint_funcs.h"
+#include "parasitelist.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "undo.h"
@@ -2253,7 +2254,6 @@ undo_pop_parasite (GImage *gimage,
 {
   ParasiteUndo *data;
   Parasite *tmp;
-  int tmp_ref;
 
   data = data_ptr;
 

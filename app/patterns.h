@@ -20,7 +20,6 @@
 
 #include <glib.h>
 #include "temp_buf.h"
-#include "procedural_db.h"
 
 typedef struct _GPattern  GPattern, * GPatternP;
 
@@ -46,9 +45,4 @@ void                create_pattern_dialog      (void);
 extern GSList *     pattern_list;
 extern int          num_patterns;
 
-/*  Pattern procedures  */
-extern ProcRecord patterns_get_pattern_proc;
-extern ProcRecord patterns_set_pattern_proc;
-extern ProcRecord patterns_list_proc;
-extern ProcRecord patterns_get_pattern_data_proc;
 #endif  /*  __PATTERNS_H__  */

@@ -208,7 +208,7 @@ levels_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_indexed (drawable) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY))
+	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -562,7 +562,7 @@ curves_spline_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_indexed (drawable) || (num_points & 1) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY))
+	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{
@@ -681,7 +681,7 @@ curves_explicit_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_indexed (drawable) || (num_bytes != 256) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY))
+	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else 
 	{
@@ -922,7 +922,7 @@ histogram_invoker (Argument *args)
   if (success)
     {
       if (gimp_drawable_indexed (drawable) ||
-	  (gimp_drawable_gray (drawable) && channel != GRAY))
+	  (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
 	success = FALSE;
       else
 	{

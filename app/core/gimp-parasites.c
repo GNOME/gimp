@@ -18,6 +18,7 @@
 #include <glib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "app_procs.h"
 #include "parasitelist.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
@@ -101,9 +102,8 @@ static void save_func(char *key, Parasite *p, FILE *fp)
 }
 
 void
-gimp_parasiterc_save()
+gimp_parasiterc_save(void)
 {
-  int i;
   char *filename;
   FILE *fp;
 

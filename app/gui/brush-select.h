@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "gimpbrush.h"
-#include "procedural_db.h"
 
 typedef struct _BrushSelect _BrushSelect, *BrushSelectP;
 
@@ -94,10 +93,10 @@ void          brushes_check_dialogs  (void);
 void          brush_select_show_paint_options (BrushSelectP  bsp,
 					       gboolean      show);
 
-/* PDB entry */
-extern ProcRecord brushes_popup_proc;
-extern ProcRecord brushes_close_popup_proc;
-extern ProcRecord brushes_set_popup_proc;
-extern ProcRecord brushes_get_brush_data_proc;
+/* List of active dialogs */
+extern GSList *brush_active_dialogs;
+
+/* The main brush dialog */
+extern BrushSelectP brush_select_dialog;
 
 #endif  /*  __BRUSH_SELECT_H__  */

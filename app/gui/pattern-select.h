@@ -18,6 +18,7 @@
 #ifndef  __PATTERN_SELECT_H__
 #define  __PATTERN_SELECT_H__
 
+#include <gtk/gtk.h>
 #include "patterns.h"
 
 typedef struct _PatternSelect _PatternSelect, *PatternSelectP;
@@ -59,10 +60,7 @@ void            pattern_select_select  (PatternSelectP, int);
 void            pattern_select_free    (PatternSelectP);
 void            patterns_check_dialogs(void);
 
-/* PDB entry */
-extern ProcRecord patterns_popup_proc;
-extern ProcRecord patterns_close_popup_proc;
-extern ProcRecord patterns_set_popup_proc;
-
+extern GSList *pattern_active_dialogs; /* List of active dialogs */
+extern PatternSelectP pattern_select_dialog;
 
 #endif  /*  __PATTERN_SELECT_H__  */

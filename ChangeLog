@@ -1,3 +1,60 @@
+Thu Apr 22 22:14:02 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimpdrawable.c: gave parasite undo a MISC_UNDO class for now
+	so it compiles
+
+	* app/tools_cmds.c: fix crop invoker to give correct args to 
+	crop_image
+
+	* app/color_cmds.c: s/GRAY/GRAY_LUT/g;
+
+	* app/brush_select.[ch]: removed PDB procs, export brush_active_dialogs,
+	brush_select_dialog, s/active_dialogs/brush_active_dialogs/
+
+	* app/gimage_cmds.[ch]
+	* app/channel_ops.[ch]: removed channel ops PDB procs, moved duplicate
+	function from gimage_cmds to channel_ops, export offset and duplicate
+
+	* app/gimpbrushlist.[ch]: removed PDB procs
+
+	* app/gradient.[ch]: removed PDB procs,
+
+	* app/gradient_header.h: exported G_SAMPLE, GradSelect, num_gradients,
+	grad_active_dialogs, gradient_select_dialog
+
+	* app/gradient_select.c: removed PDB procs,
+	s/active_dialogs/grad_active_dialogs/
+
+	* app/patterns.[ch]: removed PDB procs
+
+	* app/pattern_select.[ch]: removed PDB procs,
+	s/active_dialogs/pattern_active_dialogs/
+
+	* app/procedural_db.c: removed PDB procs and supporting functions
+
+	* app/procedrual_db.h: fiddled with enums
+
+	* app/channel_cmds.[ch]
+	* app/drawable_cmds.[ch]
+	* app/parasite_cmds.[ch]: pdbgenned now, removed header files
+
+	* app/gimpparasite.c: minor cleanup
+
+	* app/internal_procs.c: use pdbgen stuff
+
+	* app/tools_cmds.c
+	* app/text_tool_cmds.c: updated from pdbgen
+
+	* app/brushes_cmds.c
+	* app/brush_select_cmds.c
+	* app/gradient_cmds.c
+	* app/gradient_select_cmds.c
+	* app/patterns_cmds.c
+	* app/pattern_select_cmds.c
+	* app/procedural_db_cmds.c: new pdbgen files
+
+	* app/Makefile.am: file shuffle (see above)
+
 Fri Apr 23 17:11:42 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/temp_buf.c: 

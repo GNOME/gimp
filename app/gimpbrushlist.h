@@ -19,7 +19,6 @@
 #define __GIMPBRUSHELIST_H__
 
 #include <glib.h>
-#include "procedural_db.h"
 #include "temp_buf.h"
 #include "gimpbrush.h"
 #include "gimpbrushlistF.h"
@@ -54,17 +53,5 @@ GimpBrushP get_active_brush         (void);
 
 /* TODO: {re}move this function */
 void       create_brush_dialog      (void);
-
-/*  Brush procedures  */
-extern ProcRecord brushes_get_opacity_proc;
-extern ProcRecord brushes_set_opacity_proc;
-extern ProcRecord brushes_get_spacing_proc;
-extern ProcRecord brushes_set_spacing_proc;
-extern ProcRecord brushes_get_paint_mode_proc;
-extern ProcRecord brushes_set_paint_mode_proc;
-extern ProcRecord brushes_get_brush_proc;
-extern ProcRecord brushes_set_brush_proc;
-extern ProcRecord brushes_list_proc;
-extern ProcRecord brushes_refresh_brush_proc;
 
 #endif  /*  __GIMPBRUSHELIST_H__  */

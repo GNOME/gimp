@@ -20,41 +20,41 @@
 #include <string.h>
 #include "appenv.h"
 #include "app_procs.h"
-#include "brush_select.h"
-#include "gimpbrushlist.h"
-#include "channel_cmds.h"
-#include "channel_ops.h"
-#include "drawable_cmds.h"
-#include "equalize.h"
 #include "gimage_cmds.h"
 #include "gimage_mask_cmds.h"
-#include "gimprc.h"
-#include "gradient.h"
 #include "layer_cmds.h"
 #include "internal_procs.h"
-#include "patterns.h"
-#include "pattern_select.h"
-#include "parasite_cmds.h"
 #include "procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 
-void register_gdisplay_procs     (void);
-void register_edit_procs         (void);
-void register_floating_sel_procs (void);
-void register_undo_procs         (void);
-void register_convert_procs      (void);
-void register_paths_procs        (void);
-void register_palette_procs      (void);
-void register_unit_procs         (void);
-void register_text_tool_procs    (void);
-void register_color_procs        (void);
-void register_misc_procs         (void);
-void register_tools_procs        (void);
-void register_gimprc_procs       (void);
+void register_gdisplay_procs        (void);
+void register_edit_procs            (void);
+void register_floating_sel_procs    (void);
+void register_undo_procs            (void);
+void register_convert_procs         (void);
+void register_paths_procs           (void);
+void register_palette_procs         (void);
+void register_unit_procs            (void);
+void register_text_tool_procs       (void);
+void register_color_procs           (void);
+void register_misc_procs            (void);
+void register_tools_procs           (void);
+void register_gimprc_procs          (void);
+void register_channel_procs         (void);
+void register_channel_ops_procs     (void);
+void register_gradient_procs        (void);
+void register_gradient_select_procs (void);
+void register_brushes_procs         (void);
+void register_brush_select_procs    (void);
+void register_patterns_procs        (void);
+void register_pattern_select_procs  (void);
+void register_parasite_procs        (void);
+void register_drawable_procs        (void);
+void register_procedural_db_procs   (void);
 
 void
-internal_procs_init ()
+internal_procs_init (void)
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
@@ -213,50 +213,15 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Channel procedures  */
-  procedural_db_register (&channel_new_proc); pcount++;
-  procedural_db_register (&channel_copy_proc); pcount++;
-  procedural_db_register (&channel_delete_proc); pcount++;
-  procedural_db_register (&channel_get_name_proc); pcount++;
-  procedural_db_register (&channel_set_name_proc); pcount++;
-  procedural_db_register (&channel_get_visible_proc); pcount++;
-  procedural_db_register (&channel_set_visible_proc); pcount++;
-  procedural_db_register (&channel_get_show_masked_proc); pcount++;
-  procedural_db_register (&channel_set_show_masked_proc); pcount++;
-  procedural_db_register (&channel_get_opacity_proc); pcount++;
-  procedural_db_register (&channel_set_opacity_proc); pcount++;
-  procedural_db_register (&channel_get_color_proc); pcount++;
-  procedural_db_register (&channel_set_color_proc); pcount++;
-  procedural_db_register (&channel_get_tattoo_proc); pcount++;
+  register_channel_procs ();
+  pcount += 14;
 
   app_init_update_status(NULL, _("Drawable procedures"),
 			 pcount/total_pcount);
 
   /*  Drawable procedures  */
-  procedural_db_register (&drawable_merge_shadow_proc); pcount++;
-  procedural_db_register (&drawable_fill_proc); pcount++;
-  procedural_db_register (&drawable_update_proc); pcount++;
-  procedural_db_register (&drawable_mask_bounds_proc); pcount++;
-  procedural_db_register (&drawable_gimage_proc); pcount++;
-  procedural_db_register (&drawable_type_proc); pcount++;
-  procedural_db_register (&drawable_has_alpha_proc); pcount++;
-  procedural_db_register (&drawable_type_with_alpha_proc); pcount++;
-  procedural_db_register (&drawable_color_proc); pcount++;
-  procedural_db_register (&drawable_gray_proc); pcount++;
-  procedural_db_register (&drawable_indexed_proc); pcount++;
-  procedural_db_register (&drawable_bytes_proc); pcount++;
-  procedural_db_register (&drawable_width_proc); pcount++;
-  procedural_db_register (&drawable_height_proc); pcount++;
-  procedural_db_register (&drawable_offsets_proc); pcount++;
-  procedural_db_register (&drawable_layer_proc); pcount++;
-  procedural_db_register (&drawable_layer_mask_proc); pcount++;
-  procedural_db_register (&drawable_channel_proc); pcount++;
-  procedural_db_register (&drawable_set_pixel_proc); pcount++;
-  procedural_db_register (&drawable_get_pixel_proc); pcount++;
-  procedural_db_register (&gimp_drawable_find_parasite_proc); pcount++;
-  procedural_db_register (&gimp_drawable_parasite_list_proc); pcount++;
-  procedural_db_register (&gimp_drawable_attach_parasite_proc); pcount++;
-  procedural_db_register (&gimp_drawable_detach_parasite_proc); pcount++;
-  procedural_db_register (&drawable_set_image_proc); pcount++;
+  register_drawable_procs ();
+  pcount += 25;
 
   app_init_update_status(NULL, _("Floating selections"),
 			 pcount/total_pcount);
@@ -283,37 +248,16 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Interface procs  */
-  procedural_db_register (&brushes_get_brush_proc); pcount++;
-  procedural_db_register (&brushes_refresh_brush_proc); pcount++;
-  procedural_db_register (&brushes_set_brush_proc); pcount++;
-  procedural_db_register (&brushes_get_opacity_proc); pcount++;
-  procedural_db_register (&brushes_set_opacity_proc); pcount++;
-  procedural_db_register (&brushes_get_spacing_proc); pcount++;
-  procedural_db_register (&brushes_set_spacing_proc); pcount++;
-  procedural_db_register (&brushes_get_paint_mode_proc); pcount++;
-  procedural_db_register (&brushes_set_paint_mode_proc); pcount++;
-  procedural_db_register (&brushes_list_proc); pcount++;
-  procedural_db_register (&brushes_popup_proc); pcount++;
-  procedural_db_register (&brushes_close_popup_proc); pcount++;
-  procedural_db_register (&brushes_set_popup_proc); pcount++;
-  procedural_db_register (&brushes_get_brush_data_proc); pcount++;
-  procedural_db_register (&patterns_get_pattern_proc); pcount++;
-  procedural_db_register (&patterns_set_pattern_proc); pcount++;
-  procedural_db_register (&patterns_list_proc); pcount++;
-  procedural_db_register (&patterns_get_pattern_data_proc); pcount++;
-  procedural_db_register (&patterns_popup_proc); pcount++;
-  procedural_db_register (&patterns_close_popup_proc); pcount++;
-  procedural_db_register (&patterns_set_popup_proc); pcount++;
+  register_brushes_procs ();
+  register_brush_select_procs ();
+  register_patterns_procs ();
+  register_pattern_select_procs ();
+  pcount += 20;
 
-  procedural_db_register (&gradients_get_list_proc); pcount++;
-  procedural_db_register (&gradients_get_active_proc); pcount++;
-  procedural_db_register (&gradients_set_active_proc); pcount++;
-  procedural_db_register (&gradients_sample_uniform_proc); pcount++;
-  procedural_db_register (&gradients_sample_custom_proc); pcount++;
-  procedural_db_register (&gradients_popup_proc); pcount++;
-  procedural_db_register (&gradients_close_popup_proc); pcount++;
-  procedural_db_register (&gradients_set_popup_proc); pcount++;
-  procedural_db_register (&gradients_get_gradient_data_proc); pcount++;
+
+  register_gradient_procs ();
+  register_gradient_select_procs ();
+  pcount += 9;
 
   app_init_update_status(NULL, _("Image procedures"),
 			 pcount/total_pcount);
@@ -328,8 +272,8 @@ internal_procs_init ()
 			 pcount/total_pcount);
 
   /*  Channel Ops procedures  */
-  procedural_db_register (&channel_ops_duplicate_proc); pcount++;
-  procedural_db_register (&channel_ops_offset_proc); pcount++;
+  register_channel_ops_procs ();
+  pcount += 2;
 
   app_init_update_status(NULL, _("gimprc ops"),
 			 pcount/total_pcount);
@@ -340,11 +284,8 @@ internal_procs_init ()
   app_init_update_status(NULL, _("parasites"),
 			 pcount/total_pcount);
   /*  parasite procedures  */
-  procedural_db_register (&parasite_new_proc); pcount++;
-  procedural_db_register (&gimp_parasite_list_proc); pcount++;
-  procedural_db_register (&gimp_find_parasite_proc); pcount++;
-  procedural_db_register (&gimp_attach_parasite_proc); pcount++;
-  procedural_db_register (&gimp_detach_parasite_proc); pcount++;
+  register_parasite_procs ();
+  pcount += 5;
 
   /* paths procedures */
   register_paths_procs ();
@@ -358,14 +299,8 @@ internal_procs_init ()
   pcount += 11;
 
   /*  Procedural Database  */
-  procedural_db_register (&procedural_db_dump_proc); pcount++;
-  procedural_db_register (&procedural_db_query_proc); pcount++;
-  procedural_db_register (&procedural_db_proc_info_proc); pcount++;
-  procedural_db_register (&procedural_db_proc_arg_proc); pcount++;
-  procedural_db_register (&procedural_db_proc_val_proc); pcount++;
-  procedural_db_register (&procedural_db_get_data_proc); pcount++;
-  procedural_db_register (&procedural_db_set_data_proc); pcount++;
-  procedural_db_register (&procedural_db_get_data_size_proc); pcount++;
-  
+  register_procedural_db_procs ();
+  pcount += 8;
+
   register_misc_procs ();
 }

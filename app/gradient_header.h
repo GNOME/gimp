@@ -19,6 +19,8 @@
 #ifndef __GRADIENT_HEADER_H__
 #define __GRADIENT_HEADER_H__
 
+#include <gtk/gtk.h>
+
 #define GRAD_LIST_WIDTH  300
 #define GRAD_LIST_HEIGHT 80
 
@@ -230,5 +232,28 @@ extern gradient_t *curr_gradient; /* The active gradient */
 extern GSList     *gradients_list; /* The list of gradients */
 extern gradient_t *grad_default_gradient;
 extern gradient_editor_t *g_editor; /* The gradient editor */
+extern int         num_gradients;
+
+#define G_SAMPLE 40
+
+typedef struct _GradSelect _GradSelect, *GradSelectP;
+
+struct _GradSelect {
+  GtkWidget         *shell;
+  GtkWidget         *frame;
+  GtkWidget         *preview;
+  GtkWidget         *clist;
+  gchar             *callback_name;
+  gradient_t        *grad;
+  gint              sample_size;
+  GdkColor          black;
+  GdkGC             *gc;
+};
+
+GradSelectP gsel_new_selection(gchar * title, gchar * initial_gradient);
+void        grad_select_free (GradSelectP gsp);
+
+extern GSList *grad_active_dialogs; /* List of active dialogs */
+extern GradSelectP gradient_select_dialog; /* The main selection dialog */
 
 #endif  /*  __GRADIENT_HEADER_H__  */

@@ -20,6 +20,7 @@
 
 #include "procedural_db.h"
 #include "gimpimageF.h"
+#include "gimpdrawableF.h"
 
 typedef enum {
   OFFSET_BACKGROUND,
@@ -27,9 +28,10 @@ typedef enum {
 } ChannelOffsetType;
 
 /*  channel_ops functions  */
-void  channel_ops_offset    (GimpImage*);
+void channel_ops_offset    (GimpImage *);
+void channel_ops_duplicate (GimpImage *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord channel_ops_offset_proc;
+void        offset    (GimpImage *, GimpDrawable *, gboolean, int, int, int);
+GimpImage * duplicate (GimpImage *);
 
 #endif  /*  __CHANNEL_OPS_H__  */

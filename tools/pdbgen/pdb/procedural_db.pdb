@@ -356,6 +356,7 @@ HELP
 
     @inargs = ( &data_ident_arg, &data_arg );
     $inargs[1]->{alias} = 'data_src';
+    delete @{$inargs[1]->{array}}{qw(alias no_declare)};
 
     %invoke = (
 	vars => [ 'PDBData *data = NULL', 'GList *list' ],
@@ -380,6 +381,7 @@ HELP
     g_free (data->data);
 
   data->identifier = g_strdup (identifier);
+  data->bytes = bytes;
   data->data = g_new (char, data->bytes);
   memcpy (data->data, (char *) data_src, data->bytes);
 }

@@ -71,14 +71,8 @@ gint NUM_PATTERN_COLUMNS = 6;
 gint NUM_PATTERN_ROWS    = 5;
 gint STD_CELL_SIZE = MIN_CELL_SIZE;
 
-/*  PDB interface data  */
-static int success;
-
 /*  List of active dialogs  */
-static GSList *active_dialogs = NULL;
-
-/*  The main pattern dialog  */
-extern PatternSelectP pattern_select_dialog;
+GSList *pattern_active_dialogs = NULL;
 
 
 /*  If title == NULL then it is the main pattern dialog  */
@@ -293,7 +287,7 @@ pattern_select_free (PatternSelectP psp)
 	g_free(psp->callback_name);
 
       /* remove from active list */
-      active_dialogs = g_slist_remove(active_dialogs,psp);
+      pattern_active_dialogs = g_slist_remove(pattern_active_dialogs,psp);
 
       g_free (psp);
     }
@@ -845,14 +839,14 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-patterns_check_dialogs()
+patterns_check_dialogs(void)
 {
   GSList *list;
   PatternSelectP psp;
   gchar * name;
   ProcRecord *prec = NULL;
 
-  list = active_dialogs;
+  list = pattern_active_dialogs;
 
   while (list)
     {
@@ -864,259 +858,10 @@ patterns_check_dialogs()
       
       if(!prec)
 	{
-	  active_dialogs = g_slist_remove(active_dialogs,psp);
+	  pattern_active_dialogs = g_slist_remove(pattern_active_dialogs,psp);
 
-	  /* Can alter active_dialogs list*/
+	  /* Can alter pattern_active_dialogs list*/
 	  pattern_select_close_callback(NULL,psp); 
 	}
     }
 }
-
-
-/************
- * PDB interfaces.
- */
-
-
-static Argument *
-patterns_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  gchar * title;
-  gchar * initial_pattern;
-  ProcRecord *prec = NULL;
-  PatternSelectP newdialog;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-  title = (char *) args[1].value.pdb_pointer;
-  initial_pattern = (char *) args[2].value.pdb_pointer;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&patterns_popup_proc, success);
-    }
-
-  if(initial_pattern && strlen(initial_pattern))
-    newdialog = pattern_select_new(title,
-				 initial_pattern);
-  else
-    newdialog = pattern_select_new(title,NULL);
-
-  /* Add to list of proc to run when pattern changes */
-  newdialog->callback_name = g_strdup(name);
-
-  /* Add to active pattern dialogs list */
-  active_dialogs = g_slist_append(active_dialogs,newdialog);
-
-  return procedural_db_return_args (&patterns_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg patterns_popup_in_args[] =
-{
-  { PDB_STRING,
-    "pattern_callback",
-    "the callback PDB proc to call when pattern selection is made"
-  },
-  { PDB_STRING,
-    "popup title",
-    "title to give the pattern popup window",
-  },
-  { PDB_STRING,
-    "initial pattern",
-    "The name of the pattern to set as the first selected",
-  },
-};
-
-ProcRecord patterns_popup_proc =
-{
-  "gimp_patterns_popup",
-  "Invokes the Gimp pattern selection",
-  "This procedure popups the pattern selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(patterns_popup_in_args) / sizeof(patterns_popup_in_args[0]),
-  patterns_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { patterns_popup_invoker } },
-};
-
-static PatternSelectP
-patterns_get_patternselect(gchar *name)
-{
-  GSList *list;
-  PatternSelectP psp;
-
-  list = active_dialogs;
-
-  while (list)
-    {
-      psp = (PatternSelectP) list->data;
-      list = list->next;
-      
-      if(strcmp(name,psp->callback_name) == 0)
-	{
-	  return psp;
-	}
-    }
-
-  return NULL;
-}
-
-static Argument *
-patterns_close_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  ProcRecord *prec = NULL;
-  PatternSelectP psp;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&patterns_close_popup_proc, success);
-    }
-
-  psp = patterns_get_patternselect(name);
-
-  if(psp)
-    {
-      active_dialogs = g_slist_remove(active_dialogs,psp);
-      
-      if (GTK_WIDGET_VISIBLE (psp->shell))
-	gtk_widget_hide (psp->shell);
-      
-      /* Free memory if poping down dialog which is not the main one */
-      if(psp != pattern_select_dialog)
-	{
-	  /* Send data back */
-	  gtk_widget_destroy(psp->shell); 
-	  pattern_select_free(psp); 
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&patterns_close_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg patterns_close_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback PDB entry name",
-    "The name of the callback registered for this popup",
-  },
-};
-
-ProcRecord patterns_close_popup_proc =
-{
-  "gimp_patterns_close_popup",
-  "Popdown the Gimp pattern selection",
-  "This procedure closes an opened pattern selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(patterns_close_popup_in_args) / sizeof(patterns_close_popup_in_args[0]),
-  patterns_close_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { patterns_close_popup_invoker } },
-};
-
-static Argument *
-patterns_set_popup_invoker (Argument *args)
-{
-  gchar * pdbname; 
-  gchar * pattern_name;
-  ProcRecord *prec = NULL;
-  PatternSelectP psp;
-
-  success = (pdbname = (char *) args[0].value.pdb_pointer) != NULL;
-  pattern_name = (char *) args[1].value.pdb_pointer;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(pdbname)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&patterns_set_popup_proc, success);
-    }
-
-  psp = patterns_get_patternselect(pdbname);
-
-  if(psp)
-    {
-      /* Can alter active_dialogs list*/
-      GPatternP active = pattern_list_get_pattern(pattern_list,pattern_name);
-      if(active)
-	{
-	  psp->pattern = active;
-	  pattern_select_select (psp, active->index);
-	  success = TRUE;
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&patterns_close_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg patterns_set_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback PDB entry name",
-    "The name of the callback registered for this popup",
-  },
-  { PDB_STRING,
-    "pattern name to set",
-    "The name of the pattern to set as selected",
-  },
-};
-
-ProcRecord patterns_set_popup_proc =
-{
-  "gimp_patterns_set_popup",
-  "Sets the current pattern selection in a popup",
-  "Sets the current pattern selection in a popup",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(patterns_set_popup_in_args) / sizeof(patterns_set_popup_in_args[0]),
-  patterns_set_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { patterns_set_popup_invoker } },
-};
-

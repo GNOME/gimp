@@ -24,6 +24,7 @@
 #include "blend.h"
 #include "bucket_fill.h"
 #include "by_color_select.h"
+#include "channel.h"
 #include "clone.h"
 #include "color_picker.h"
 #include "convolve.h"
@@ -34,6 +35,8 @@
 #include "flip_tool.h"
 #include "free_select.h"
 #include "fuzzy_select.h"
+#include "paint_core.h"
+#include "paint_funcs.h"
 #include "paintbrush.h"
 #include "pencil.h"
 #include "perspective_tool.h"
@@ -893,7 +896,7 @@ crop_invoker (Argument *args)
 	success = FALSE;
       else
 	crop_image (gimage, offx, offy, offx + new_width, offy + new_height,
-	            FALSE, FALSE);
+	            FALSE, TRUE);
     }
 
   return procedural_db_return_args (&crop_proc, success);

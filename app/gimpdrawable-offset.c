@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "channel_ops.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "general.h"
@@ -31,6 +32,7 @@
 #include "libgimp/gimpintl.h"
 
 #include "channel_pvt.h"
+#include "layer_pvt.h"
 
 #define ENTRY_WIDTH        60
 
@@ -49,13 +51,6 @@ typedef struct
 } OffsetDialog;
 
 /*  Local procedures  */
-static void     offset     (GImage *gimage,
-			    GimpDrawable *drawable,
-			    int     wrap_around,
-			    int     fill_type,
-			    int     offset_x,
-			    int     offset_y);
-
 static void  offset_ok_callback       (GtkWidget *widget,
 				       gpointer   data);
 static void  offset_cancel_callback   (GtkWidget *widget,
@@ -71,8 +66,6 @@ static void  offset_wraparound_update (GtkWidget *widget,
 				       gpointer   data);
 static void  offset_halfheight_update (GtkWidget *widget,
 				       gpointer   data);
-
-static Argument * channel_ops_offset_invoker     (Argument *args);
 
 
 void
@@ -212,8 +205,8 @@ channel_ops_offset (GimpImage* gimage)
 }
 
 
-static void
-offset (GImage *gimage,
+void
+offset (GimpImage *gimage,
 	GimpDrawable *drawable,
 	int     wrap_around,
 	int     fill_type,
@@ -548,103 +541,177 @@ offset_halfheight_update (GtkWidget *widget,
   gtk_entry_set_text (GTK_ENTRY (off_d->off_y_entry), buffer);
 }
 
-
-
-/*
- *  Procedure database functions and data structures
- */
-
-/*
- *  Procedure database functions and data structures
- */
-
-/*  The offset procedure definition  */
-ProcArg channel_ops_offset_args[] =
+GimpImage *
+duplicate (GimpImage *gimage)
 {
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable to offset"
-  },
-  { PDB_INT32,
-    "wrap_around",
-    "wrap image around or fill vacated regions"
-  },
-  { PDB_INT32,
-    "fill_type",
-    "fill vacated regions of drawable with background or transparent: { OFFSET_BACKGROUND (0), OFFSET_TRANSPARENT (1) }"
-  },
-  { PDB_INT32,
-    "offset_x",
-    "offset by this amount in X direction"
-  },
-  { PDB_INT32,
-    "offset_y",
-    "offset by this amount in Y direction"
-  }
-};
+  PixelRegion srcPR, destPR;
+  GimpImage *new_gimage;
+  Layer *layer, *new_layer;
+  Layer *floating_layer;
+  Channel *channel, *new_channel;
+  GSList *list;
+  GList *glist;
+  Guide *guide = NULL;
+  Layer *active_layer = NULL;
+  Channel *active_channel = NULL;
+  GimpDrawable *new_floating_sel_drawable = NULL;
+  GimpDrawable *floating_sel_drawable = NULL;
+  int count;
 
-ProcRecord channel_ops_offset_proc =
+
+  gimp_add_busy_cursors_until_idle();
+
+  /*  Create a new image  */
+  new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
+  gimage_disable_undo (new_gimage);
+
+  /* Copy-on-write the projection tilemanager so we don't have
+     to reproject the new gimage - since if we do the duplicate
+     operation correctly, the projection for the new gimage is
+     identical to that of the source. */
+  new_gimage->construct_flag = gimage->construct_flag;
+  new_gimage->proj_type = gimage->proj_type;
+  new_gimage->proj_bytes = gimage->proj_bytes;
+  new_gimage->proj_level = gimage->proj_level;
+  pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
+		     gimage->width, gimage->height, FALSE);
+  pixel_region_init (&destPR, gimp_image_projection (new_gimage), 0, 0,
+		     new_gimage->width, new_gimage->height, TRUE);
+  /* We don't want to copy a half-redrawn projection, so force
+     a flush. */
+  gdisplays_finish_draw();
+  copy_region(&srcPR, &destPR);
+
+  /*  Copy floating layer  */
+  floating_layer = gimage_floating_sel (gimage);
+  if (floating_layer)
+    {
+      floating_sel_relax (floating_layer, FALSE);
+
+      floating_sel_drawable = floating_layer->fs.drawable;
+      floating_layer = NULL;
+    }
+
+  /*  Copy the layers  */
+  list = gimage->layers;
+  count = 0;
+  layer = NULL;
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      list = g_slist_next (list);
+
+      new_layer = layer_copy (layer, FALSE);
+
+      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_layer), new_gimage);
+
+      /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
+      layer_set_name(GIMP_LAYER(new_layer),
+		     layer_get_name(GIMP_LAYER(layer)));
+
+      /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
+      if (new_layer->mask)
+	{
+	  gimp_drawable_set_name(GIMP_DRAWABLE(new_layer->mask),
+			  gimp_drawable_get_name(GIMP_DRAWABLE(layer->mask)));
+	}
+
+      if (gimage->active_layer == layer)
+	active_layer = new_layer;
+
+      if (gimage->floating_sel == layer)
+	floating_layer = new_layer;
+
+      if (floating_sel_drawable == GIMP_DRAWABLE(layer))
+	new_floating_sel_drawable = GIMP_DRAWABLE(new_layer);
+
+      /*  Add the layer  */
+      if (floating_layer != new_layer)
+	gimage_add_layer (new_gimage, new_layer, count++);
+    }
+
+  /*  Copy the channels  */
+  list = gimage->channels;
+  count = 0;
+  while (list)
+    {
+      channel = (Channel *) list->data;
+      list = g_slist_next (list);
+
+      new_channel = channel_copy (channel);
+
+      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_channel), new_gimage);
+
+      /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
+      gimp_drawable_set_name(GIMP_DRAWABLE(new_channel),
+			     gimp_drawable_get_name(GIMP_DRAWABLE(channel)));
+
+      if (gimage->active_channel == channel)
+	active_channel = (new_channel);
+
+      if (floating_sel_drawable == GIMP_DRAWABLE(channel))
+	new_floating_sel_drawable = GIMP_DRAWABLE(new_channel);
+
+      /*  Add the channel  */
+      gimage_add_channel (new_gimage, new_channel, count++);
+    }
+
+  /*  Copy the selection mask  */
+  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 0, 0, gimage->width, gimage->height, FALSE);
+  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 0, 0, gimage->width, gimage->height, TRUE);
+  copy_region (&srcPR, &destPR);
+  new_gimage->selection_mask->bounds_known = FALSE;
+  new_gimage->selection_mask->boundary_known = FALSE;
+
+  /*  Set active layer, active channel  */
+  new_gimage->active_layer = active_layer;
+  new_gimage->active_channel = active_channel;
+  if (floating_layer)
+    floating_sel_attach (floating_layer, new_floating_sel_drawable);
+
+  /*  Copy the colormap if necessary  */
+  if (new_gimage->base_type == INDEXED)
+    memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
+  new_gimage->num_cols = gimage->num_cols;
+
+  /*  copy state of all color channels  */
+  for (count = 0; count < MAX_CHANNELS; count++)
+    {
+      new_gimage->visible[count] = gimage->visible[count];
+      new_gimage->active[count] = gimage->active[count];
+    }
+
+  /*  Copy any Guides  */
+  glist = gimage->guides;
+  while (glist)
+    {
+      Guide* new_guide;
+
+      guide = (Guide*) glist->data;
+      glist = g_list_next (glist);
+
+      switch (guide->orientation)
+	{
+	case HORIZONTAL_GUIDE:
+	  new_guide = gimp_image_add_hguide(new_gimage);
+	  new_guide->position = guide->position;
+	  break;
+	case VERTICAL_GUIDE:
+	  new_guide = gimp_image_add_vguide(new_gimage);
+	  new_guide->position = guide->position;
+	  break;
+	default:
+	  g_error("Unknown guide orientation.\n");
+	}
+    }
+
+  gimage_enable_undo (new_gimage);
+
+  return new_gimage;
+}
+
+void
+channel_ops_duplicate (GimpImage *gimage)
 {
-  "gimp_channel_ops_offset",
-  "Offset the drawable by the specified amounts in the X and Y directions",
-  "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'.  If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around.  Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  5,
-  channel_ops_offset_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { channel_ops_offset_invoker } },
-};
-
-
-static Argument *
-channel_ops_offset_invoker (Argument *args)
-{
-  int success = TRUE;
-  int int_value;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int wrap_around;
-  int fill_type;
-  int offset_x;
-  int offset_y;
-
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  if (success)
-    {
-      wrap_around = (args[1].value.pdb_int) ? TRUE : FALSE;
-    }
-  if (success)
-    {
-      fill_type = args[2].value.pdb_int;
-      if (fill_type < OFFSET_BACKGROUND || fill_type > OFFSET_TRANSPARENT)
-	success = FALSE;
-    }
-  if (success)
-    {
-      offset_x = args[3].value.pdb_int;
-      offset_y = args[4].value.pdb_int;
-    }
-
-  if (success)
-    offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
-
-  return procedural_db_return_args (&channel_ops_offset_proc, success);
+  gdisplay_new (duplicate (gimage), 0x0101);
 }

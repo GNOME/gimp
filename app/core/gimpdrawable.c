@@ -26,6 +26,7 @@
 #include "gimage_mask.h"
 #include "gimpparasite.h"
 #include "parasitelist.h"
+#include "undo.h"
 
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
@@ -448,7 +449,7 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
      parasite differs from the current one and we arn't undoable */
   if (parasite_is_undoable(parasite))
   {
-    undo_push_group_start(drawable->gimage); /* do a group in case we have
+    undo_push_group_start(drawable->gimage, MISC_UNDO); /* do a group in case we have
 						attach_parrent set        */
     undo_push_drawable_parasite (drawable->gimage, drawable, parasite);
   }

@@ -90,14 +90,8 @@ static void spacing_scale_update          (GtkAdjustment *, gpointer);
 
 /*  local variables  */
 
-/*  PDB interface data  */
-static int success;
-
 /*  List of active dialogs  */
-static GSList *active_dialogs = NULL;
-
-/*  The main brush dialog  */
-extern BrushSelectP brush_select_dialog;
+GSList *brush_active_dialogs = NULL;
 
 /*  Brush editor dialog (main brush dialog only)  */
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
@@ -491,7 +485,7 @@ brush_select_free (BrushSelectP bsp)
 
       /* remove from active list */
 
-      active_dialogs = g_slist_remove(active_dialogs,bsp);
+      brush_active_dialogs = g_slist_remove(brush_active_dialogs,bsp);
 
       g_free (bsp);
     }
@@ -1296,14 +1290,14 @@ paint_options_toggle_callback (GtkWidget *widget,
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-brushes_check_dialogs ()
+brushes_check_dialogs (void)
 {
   GSList *list;
   BrushSelectP bsp;
   gchar * name;
   ProcRecord *prec = NULL;
 
-  list = active_dialogs;
+  list = brush_active_dialogs;
 
   while (list)
     {
@@ -1315,314 +1309,10 @@ brushes_check_dialogs ()
       
       if(!prec)
 	{
-	  active_dialogs = g_slist_remove (active_dialogs,bsp);
+	  brush_active_dialogs = g_slist_remove (brush_active_dialogs,bsp);
 
-	  /* Can alter active_dialogs list*/
+	  /* Can alter brush_active_dialogs list*/
 	  brush_select_close_callback (NULL, bsp);
 	}
     }
 }
-
-/************
- * PDB interfaces.
- */
-
-
-static Argument *
-brushes_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  gchar * title;
-  gchar * initial_brush;
-  gdouble initial_opacity = 1.0;
-  gint initial_spacing = 20;
-  gint initial_mode = 0;
-  ProcRecord *prec = NULL;
-  BrushSelectP newdialog;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-  title = (char *) args[1].value.pdb_pointer;
-  initial_brush = (char *) args[2].value.pdb_pointer;
-
-  /* If null just use the active brush */
-  if (initial_brush && strlen (initial_brush))
-    {
-      initial_opacity = args[3].value.pdb_float;
-      initial_spacing = args[4].value.pdb_int;
-      initial_mode = args[5].value.pdb_int;
-    }
-  
-  /* Check the proc exists */
-  if (!success || (prec = procedural_db_lookup (name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&brushes_popup_proc, success);
-    }
-
-  /*create_brush_dialog();*/
-  if (initial_brush && strlen (initial_brush))
-    newdialog = brush_select_new (title,
-				  initial_brush,
-				  initial_opacity,
-				  initial_spacing,
-				  initial_mode);
-  else
-    newdialog = brush_select_new(title,NULL,0.0,0,0);
-
-  /* Add to list of proc to run when brush changes */
-  /* change_callbacks = g_list_append(change_callbacks,g_strdup(name));*/
-  newdialog->callback_name = g_strdup (name);
-
-  /* Add to active brush dialogs list */
-  active_dialogs = g_slist_append (active_dialogs,newdialog);
-
-  return procedural_db_return_args (&brushes_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg brushes_popup_in_args[] =
-{
-  { PDB_STRING,
-    "brush_callback",
-    "the callback PDB proc to call when brush selection is made"
-  },
-  { PDB_STRING,
-    "popup title",
-    "title to give the popup window",
-  },
-  { PDB_STRING,
-    "initial brush",
-    "The name of the brush to set as the first selected",
-  },
-  { PDB_FLOAT,
-    "initial opacity",
-    "The initial opacity of the brush",
-  },
-  { PDB_INT32,
-    "initial spacing",
-    "The initial spacing of the brush (if < 0 then use brush default spacing)",
-  },
-  { PDB_INT32,
-    "initial paint mode",
-    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
-  },
-};
-
-ProcRecord brushes_popup_proc =
-{
-  "gimp_brushes_popup",
-  "Invokes the Gimp brush selection",
-  "This procedure popups the brush selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof (brushes_popup_in_args) / sizeof (brushes_popup_in_args[0]),
-  brushes_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { brushes_popup_invoker } },
-};
-
-static BrushSelectP
-brush_get_brushselect (gchar *name)
-{
-  GSList *list;
-  BrushSelectP bsp;
-
-  list = active_dialogs;
-
-  while (list)
-    {
-      bsp = (BrushSelectP) list->data;
-      list = list->next;
-      
-      if (strcmp (name, bsp->callback_name) == 0)
-	{
-	  return bsp;
-	}
-    }
-
-  return NULL;
-}
-
-static Argument *
-brush_close_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  ProcRecord *prec = NULL;
-  BrushSelectP bsp;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup (name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&brushes_close_popup_proc, success);
-    }
-
-  bsp = brush_get_brushselect (name);
-
-  if(bsp)
-    {
-      active_dialogs = g_slist_remove(active_dialogs,bsp);
-      
-      if (GTK_WIDGET_VISIBLE (bsp->shell))
-	gtk_widget_hide (bsp->shell);
-
-      /* Free memory if poping down dialog which is not the main one */
-      if (bsp != brush_select_dialog)
-	{
-	  gtk_widget_destroy (bsp->shell); 
-	  brush_select_free (bsp); 
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&brushes_close_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg brush_close_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback_PDB_entry_name",
-    "The name of the callback registered for this popup",
-  },
-};
-
-ProcRecord brushes_close_popup_proc =
-{
-  "gimp_brushes_close_popup",
-  "Popdown the Gimp brush selection",
-  "This procedure closes an opened brush selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof (brush_close_popup_in_args) / sizeof (brush_close_popup_in_args[0]),
-  brush_close_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { brush_close_popup_invoker } },
-};
-
-static Argument *
-brush_set_popup_invoker (Argument *args)
-{
-  gchar * pdbname; 
-  gchar * brush_name;
-  ProcRecord *prec = NULL;
-  BrushSelectP bsp;
-
-  success = (pdbname = (char *) args[0].value.pdb_pointer) != NULL;
-  brush_name = (char *) args[1].value.pdb_pointer;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup (pdbname)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&brushes_set_popup_proc, success);
-    }
-
-  bsp = brush_get_brushselect (pdbname);
-
-
-  if(bsp)
-    {
-      GimpBrushP active = gimp_brush_list_get_brush (brush_list,brush_name);
-
-      if(active)
-	{
-	  /* Must alter the wigdets on screen as well */
-
-	  bsp->brush = active;
-	  brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, active));
-
-	  bsp->opacity_value = args[2].value.pdb_float;
-	  bsp->spacing_value = args[3].value.pdb_int;
-	  if(args[4].value.pdb_int >= 0 && args[4].value.pdb_int <= VALUE_MODE)
-	    bsp->paint_mode = args[4].value.pdb_int;
-
-	  bsp->spacing_data->value = bsp->spacing_value;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
-
-	  bsp->opacity_data->value = bsp->opacity_value * 100.0;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data), "value_changed");
-	  
-	  gtk_option_menu_set_history(GTK_OPTION_MENU(bsp->option_menu),bsp->paint_mode);
-
-	  /* Can alter active_dialogs list*/
-	  success = TRUE;
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&brushes_set_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg brush_set_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback_PDB_entry_name",
-    "The name of the callback registered for this popup",
-  },
-  { PDB_STRING,
-    "brushname",
-    "The name of the brush to set as selected",
-  },
-  { PDB_FLOAT,
-    "opacity",
-    "The initial opacity of the brush",
-  },
-  { PDB_INT32,
-    "spacing",
-    "The initial spacing of the brush (if < 0 then use brush default spacing)",
-  },
-  { PDB_INT32,
-    "initial paint mode",
-    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
-  },
-};
-
-ProcRecord brushes_set_popup_proc =
-{
-  "gimp_brushes_set_popup",
-  "Sets the current brush selection in a popup",
-  "Sets the current brush selection in a popup",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(brush_set_popup_in_args) / sizeof(brush_set_popup_in_args[0]),
-  brush_set_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { brush_set_popup_invoker } },
-};

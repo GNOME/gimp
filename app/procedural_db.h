@@ -47,11 +47,8 @@ typedef enum
   PDB_PATH,
   PDB_PARASITE,
   PDB_STATUS,
-  PDB_END
+  PDB_END       /*< skip >*/
 } PDBArgType;
-/* NOTE: If you change the PDBArgType enum above, you _must_ change
- * the type_str array in procedural_db.c to match. */
-
 
 /*  Error types  */
 typedef enum
@@ -64,12 +61,12 @@ typedef enum
 
 
 /*  Procedure types  */
-typedef enum
+typedef enum /*< chop=PDB_ >*/
 {
   PDB_INTERNAL,
   PDB_PLUGIN,
   PDB_EXTENSION,
-  PDB_TEMPORARY
+  PDB_TEMPORARY  /*< skip >*/
 } PDBProcType;
 
 
@@ -173,16 +170,6 @@ struct _ProcRecord
   } exec_method;
 };
 
-/*  External data  */
-extern ProcRecord procedural_db_dump_proc;
-extern ProcRecord procedural_db_query_proc;
-extern ProcRecord procedural_db_proc_info_proc;
-extern ProcRecord procedural_db_proc_arg_proc;
-extern ProcRecord procedural_db_proc_val_proc;
-extern ProcRecord procedural_db_get_data_proc;
-extern ProcRecord procedural_db_set_data_proc;
-extern ProcRecord procedural_db_get_data_size_proc;
-
 /*  Functions  */
 void          procedural_db_init         (void);
 void          procedural_db_free         (void);
@@ -198,14 +185,16 @@ Argument *    procedural_db_return_args  (ProcRecord *,
 					  int);
 void          procedural_db_destroy_args (Argument   *,
 					  int);
-void pdb_add_image(GimpImage* gimage);
-gint pdb_image_to_id(GimpImage* gimage);
-GimpImage* pdb_id_to_image(gint id);
-void pdb_remove_image(GimpImage* image);
+void          pdb_add_image              (GimpImage  *gimage);
+gint          pdb_image_to_id            (GimpImage  *gimage);
+GimpImage *   pdb_id_to_image            (gint id);
+void          pdb_remove_image           (GimpImage  *image);
 
 /* "type" should really be a PDBArgType, but we can cope with
- *  out-of-range values. */
-const char *pdb_type_name (gint type);
+ *  out-of-range values.
+ */
+const char *  pdb_type_name (gint type); /* really exists in _cmds.c file */
 
+extern GHashTable *procedural_ht;
 
 #endif  /*  __PROCEDURAL_DB_H__  */

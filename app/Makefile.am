@@ -56,6 +56,8 @@ gimp_SOURCES = \
 	brush_header.h		\
 	brush_select.c		\
 	brush_select.h		\
+	brush_select_cmds.c	\
+	brushes_cmds.c		\
 	bucket_fill.c		\
 	bucket_fill.h		\
 	buildmenu.c		\
@@ -66,11 +68,11 @@ gimp_SOURCES = \
 	channel.h		\
 	channel_pvt.h		\
 	channel_cmds.c		\
-	channel_cmds.h		\
 	channels_dialog.c	\
 	channels_dialog.h	\
 	channel_ops.c		\
 	channel_ops.h		\
+	channel_ops_cmds.c	\
 	clone.c			\
 	clone.h			\
 	color_area.c		\
@@ -126,7 +128,6 @@ gimp_SOURCES = \
 	drawable.h		\
 	drawable_pvt.h		\
 	drawable_cmds.c		\
-	drawable_cmds.h		\
 	edit_cmds.c		\
 	edit_selection.c	\
 	edit_selection.h	\
@@ -206,7 +207,9 @@ gimp_SOURCES = \
 	gradient.c		\
 	gradient_header.h	\
 	gradient_select.c	\
+	gradient_select_cmds.c	\
 	gradient.h		\
+	gradient_cmds.c		\
 	gximage.c		\
 	gximage.h		\
 	histogramwidget.c	\
@@ -277,7 +280,6 @@ gimp_SOURCES = \
 	paintbrush.c		\
 	paintbrush.h		\
 	parasite_cmds.c		\
-	parasite_cmds.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	parasitelistF.h		\
@@ -289,8 +291,10 @@ gimp_SOURCES = \
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\
+	pattern_select_cmds.c	\
 	patterns.c		\
 	patterns.h		\
+	patterns_cmds.c		\
 	pencil.c		\
 	pencil.h		\
 	perspective_tool.c	\
@@ -309,6 +313,7 @@ gimp_SOURCES = \
 	preferences_dialog.h	\
 	procedural_db.c		\
 	procedural_db.h		\
+	procedural_db_cmds.c	\
 	rect_select.c		\
 	rect_select.h		\
 	rect_selectP.h		\

@@ -61,26 +61,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#define G_SAMPLE 40
-
-typedef struct _GradSelect _GradSelect, *GradSelectP;
-
-struct _GradSelect {
-  GtkWidget         *shell;
-  GtkWidget         *frame;
-  GtkWidget         *preview;
-  GtkWidget         *clist;
-  gchar             *callback_name;
-  gradient_t        *grad;
-  gint              sample_size;
-  GdkColor          black;
-  GdkGC             *gc;
-};    
-
-static GSList *active_dialogs = NULL; /* List of active dialogs */
+GSList *grad_active_dialogs = NULL; /* List of active dialogs */
 GradSelectP gradient_select_dialog = NULL; /* The main selection dialog */
-static int success;
-static Argument    *return_args;
 
 static void grad_select_close_callback    (GtkWidget *, gpointer);
 static void grad_select_edit_callback  (GtkWidget *, gpointer);
@@ -104,7 +86,7 @@ grad_free_gradient_editor(void)
 void
 grad_sel_rename_all(gint n, gradient_t *grad)
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -123,7 +105,7 @@ grad_sel_rename_all(gint n, gradient_t *grad)
 void
 grad_sel_new_all(gint pos, gradient_t *grad)
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -146,7 +128,7 @@ grad_sel_new_all(gint pos, gradient_t *grad)
 void
 grad_sel_copy_all(gint pos, gradient_t *grad)
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -169,7 +151,7 @@ grad_sel_copy_all(gint pos, gradient_t *grad)
 void
 grad_sel_delete_all(gint n)
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -188,7 +170,7 @@ grad_sel_delete_all(gint n)
 void
 grad_sel_free_all()
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -211,7 +193,7 @@ grad_sel_free_all()
 void
 grad_sel_refill_all()
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
   int select_pos = -1;
 
@@ -244,7 +226,7 @@ void
 sel_update_dialogs(gint row, gradient_t *grad)
 {
   /* Go around each updating the names and hopefully the previews */
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
 
   while(list)
@@ -312,7 +294,7 @@ grad_select_free (GradSelectP gsp)
 
       /* remove from active list */
 
-      active_dialogs = g_slist_remove(active_dialogs,gsp);
+      grad_active_dialogs = g_slist_remove(grad_active_dialogs,gsp);
 
       g_free (gsp);
     }
@@ -321,14 +303,14 @@ grad_select_free (GradSelectP gsp)
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-gradients_check_dialogs()
+gradients_check_dialogs(void)
 {
   GSList *list;
   GradSelectP gsp;
   gchar * name;
   ProcRecord *prec = NULL;
 
-  list = active_dialogs;
+  list = grad_active_dialogs;
 
   while (list)
     {
@@ -340,9 +322,9 @@ gradients_check_dialogs()
       
       if(!prec)
 	{
-	  active_dialogs = g_slist_remove(active_dialogs,gsp);
+	  grad_active_dialogs = g_slist_remove(grad_active_dialogs,gsp);
 
-	  /* Can alter active_dialogs list*/
+	  /* Can alter grad_active_dialogs list*/
 	  grad_select_close_callback(NULL,gsp); 
 	}
     }
@@ -590,408 +572,3 @@ grad_create_gradient_editor(void)
       return;
     }
 }
-
-/************
- * PDB interfaces.
- */
-
-
-static Argument *
-gradients_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  gchar * title;
-  gchar * initial_gradient;
-  ProcRecord *prec = NULL;
-  gint sample_sz;
-  GradSelectP newdialog;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-  title = (char *) args[1].value.pdb_pointer;
-  initial_gradient = (char *) args[2].value.pdb_pointer;
-  sample_sz = args[3].value.pdb_int;
-
-  if(sample_sz < 0 || sample_sz > 10000)
-    sample_sz = G_SAMPLE;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&gradients_popup_proc, success);
-    }
-
-  if(initial_gradient && strlen(initial_gradient))
-    newdialog = gsel_new_selection(title,
-				 initial_gradient);
-  else
-    newdialog = gsel_new_selection(title,NULL);
-
-  /* Add to list of proc to run when pattern changes */
-  newdialog->callback_name = g_strdup(name);
-  newdialog->sample_size = sample_sz;
-
-  /* Add to active gradient dialogs list */
-  active_dialogs = g_slist_append(active_dialogs,newdialog);
-
-  return procedural_db_return_args (&gradients_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg gradients_popup_in_args[] =
-{
-  { PDB_STRING,
-    "gradients_callback",
-    "the callback PDB proc to call when gradient selection is made"
-  },
-  { PDB_STRING,
-    "popup title",
-    "title to give the gradient popup window",
-  },
-  { PDB_STRING,
-    "initial gradient",
-    "The name of the pattern to set as the first selected",
-  },
-  { PDB_INT32,
-    "sample size",
-    "size of the sample to return when the gradient is changed (< 10000)",
-  },
-};
-
-ProcRecord gradients_popup_proc =
-{
-  "gimp_gradients_popup",
-  "Invokes the Gimp gradients selection",
-  "This procedure popups the gradients selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(gradients_popup_in_args) / sizeof(gradients_popup_in_args[0]),
-  gradients_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { gradients_popup_invoker } },
-};
-
-static GradSelectP
-gradients_get_gradientselect(gchar *name)
-{
-  GSList *list;
-  GradSelectP gsp;
-
-  list = active_dialogs;
-
-  while (list)
-    {
-      gsp = (GradSelectP) list->data;
-      list = list->next;
-      
-      if(strcmp(name,gsp->callback_name) == 0)
-	{
-	  return gsp;
-	}
-    }
-
-  return NULL;
-}
-
-static Argument *
-gradients_close_popup_invoker (Argument *args)
-{
-  gchar * name; 
-  ProcRecord *prec = NULL;
-  GradSelectP gsp;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(name)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&gradients_close_popup_proc, success);
-    }
-
-  gsp = gradients_get_gradientselect(name);
-
-  if(gsp)
-    {
-      active_dialogs = g_slist_remove(active_dialogs,gsp);
-      
-      if (GTK_WIDGET_VISIBLE (gsp->shell))
-	gtk_widget_hide (gsp->shell);
-      
-      /* Free memory if poping down dialog which is not the main one */
-      if(gsp != gradient_select_dialog)
-	{
-	  /* Send data back */
-	  gtk_widget_destroy(gsp->shell); 
-	  grad_select_free(gsp); 
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&gradients_close_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg gradients_close_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback PDB entry name",
-    "The name of the callback registered for this popup",
-  },
-};
-
-ProcRecord gradients_close_popup_proc =
-{
-  "gimp_gradients_close_popup",
-  "Popdown the Gimp gradient selection",
-  "This procedure closes an opened gradient selection dialog",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(gradients_close_popup_in_args) / sizeof(gradients_close_popup_in_args[0]),
-  gradients_close_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { gradients_close_popup_invoker } },
-};
-
-static Argument *
-gradients_set_popup_invoker (Argument *args)
-{
-  gchar * pdbname; 
-  gchar * gradient_name;
-  ProcRecord *prec = NULL;
-  GradSelectP gsp;
-
-  success = (pdbname = (char *) args[0].value.pdb_pointer) != NULL;
-  gradient_name = (char *) args[1].value.pdb_pointer;
-
-  /* Check the proc exists */
-  if(!success || (prec = procedural_db_lookup(pdbname)) == NULL)
-    {
-      success = 0;
-      return procedural_db_return_args (&gradients_set_popup_proc, success);
-    }
-
-  gsp = gradients_get_gradientselect(pdbname);
-
-  if(gsp)
-    {
-      /* Can alter active_dialogs list*/
-	GSList     *tmp;
-	gradient_t *active = NULL;
-	int pos = 0;
-
-	tmp = gradients_list;
-
-	while (tmp) {
-		active = tmp->data;
-
-		if (strcmp(gradient_name, active->name) == 0)
-			break; /* We found the one we want */
-
-		pos++;
-		tmp = g_slist_next(tmp);
-	} /* while */
-
-      if(active)
-	{
-	  gtk_clist_select_row(GTK_CLIST(gsp->clist),pos,-1);
-	  gtk_clist_moveto(GTK_CLIST(gsp->clist),pos,0,0.0,0.0);
-	  success = TRUE;
-	}
-    }
-  else
-    {
-      success = FALSE;
-    }
-
-  return procedural_db_return_args (&gradients_close_popup_proc, success);
-}
-
-/*  The procedure definition  */
-ProcArg gradients_set_popup_in_args[] =
-{
-  { PDB_STRING,
-    "callback PDB entry name",
-    "The name of the callback registered for this popup",
-  },
-  { PDB_STRING,
-    "gradient name to set",
-    "The name of the gradient to set as selected",
-  },
-};
-
-ProcRecord gradients_set_popup_proc =
-{
-  "gimp_gradients_set_popup",
-  "Sets the current gradient selection in a popup",
-  "Sets the current gradient selection in a popup",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(gradients_set_popup_in_args) / sizeof(gradients_set_popup_in_args[0]),
-  gradients_set_popup_in_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { gradients_set_popup_invoker } },
-};
-
-/*********************************/
-/*  GRADIENTS_GET_GRADIENT_DATA  */
-
-static Argument *
-gradients_get_gradient_data_invoker (Argument *args)
-{
-  gradient_t * grad = NULL;
-  GSList *list;
-  char *name;
-  gint sample_sz;
-
-  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
-  sample_sz = args[1].value.pdb_int;
-
-  if(sample_sz < 0 || sample_sz > 10000)
-    sample_sz = G_SAMPLE;
-
-  if (!success)
-    {
-      /* No name use active pattern */
-      success = (grad = curr_gradient) != NULL;
-    }
-  else
-    {
-      success = FALSE;
-
-      list = gradients_list;
-      
-      while (list) {
-	grad = list->data;
-	
-	if (strcmp(grad->name, name) == 0) 
-	  {
-	      success = TRUE;
-	      break;	  /* We found it! */
-	  }
-	  
-	  /* Select that gradient in the listbox */
-	  /* Only if gradient editor has been created */
-	  
-	list = g_slist_next(list);
-      } /* while */
-    }
-
-  return_args = procedural_db_return_args (&gradients_get_gradient_data_proc, success);
-
-  if (success)
-    {
-      gdouble  *values, *pv;
-      double    pos, delta;
-      double    r, g, b, a;
-      int i = sample_sz;
-      gradient_t *oldgrad = curr_gradient;
-      pos   = 0.0;
-      delta = 1.0 / (i - 1);
-      
-      values = g_malloc(i * 4 * sizeof(gdouble));
-      pv     = values;
-
-      curr_gradient = grad;
-     
-      while (i--) {
-	grad_get_color_at(pos, &r, &g, &b, &a);
-	
-	*pv++ = r;
-	*pv++ = g;
-	*pv++ = b;
-	*pv++ = a;
-	
-	pos += delta;
-      } /* while */
-
-      curr_gradient = oldgrad;
-
-      return_args[1].value.pdb_pointer = g_strdup (grad->name);
-      return_args[2].value.pdb_int = sample_sz*4;
-      return_args[3].value.pdb_pointer = values;
-    }
-
-  return return_args;
-}
-
-/*  The procedure definition  */
-
-ProcArg gradients_get_gradient_data_in_args[] =
-{
-  { PDB_STRING,
-    "name",
-    "the gradient name (\"\" means current active gradient) "
-  },
- { PDB_INT32,
-    "sample size",
-    "size of the sample to return when the gradient is changed (< 10000)"
- },
-};
-
-ProcArg gradients_get_gradient_data_out_args[] =
-{
-  { PDB_STRING,
-    "name",
-    "the gradient name"
-  },
-  { PDB_INT32,
-    "width",
-    "the gradient sample width (r,g,b,a) "
-  },
-  { PDB_FLOATARRAY,
-    "grad data",
-    "the gradient sample data"},
-};
-
-ProcRecord gradients_get_gradient_data_proc =
-{
-  "gimp_gradients_get_gradient_data",
-  "Retrieve information about the specified gradient (including data)",
-  "This procedure retrieves information about the gradient.  This includes the gradient name, and the sample data for the gradient.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  sizeof(gradients_get_gradient_data_in_args) / sizeof(gradients_get_gradient_data_in_args[0]),
-  gradients_get_gradient_data_in_args,
-
-  /*  Output arguments  */
-  sizeof(gradients_get_gradient_data_out_args) / sizeof(gradients_get_gradient_data_out_args[0]),
-  gradients_get_gradient_data_out_args,
-
-  /*  Exec method  */
-  { { gradients_get_gradient_data_invoker } },
-};

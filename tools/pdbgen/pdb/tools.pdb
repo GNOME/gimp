@@ -441,7 +441,7 @@ HELP
     success = FALSE;
   else
     crop_image (gimage, offx, offy, offx + new_width, offy + new_height,
-		FALSE, FALSE);
+		FALSE, TRUE);
 }
 CODE
     );

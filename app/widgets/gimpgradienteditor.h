@@ -23,12 +23,6 @@
 #ifndef _GRADIENT_H_
 #define _GRADIENT_H_
 
-
-#include "procedural_db.h"
-
-
-/***** Functions *****/
-
 void gradients_init(int no_data);
 void gradients_free(void);
 
@@ -37,18 +31,5 @@ void grad_get_color_at(double pos, double *r, double *g, double *b, double *a);
 void grad_create_gradient_editor(void);
 void grad_free_gradient_editor(void);
 void gradients_check_dialogs(void);
-
-
-/***** Procedural database exports *****/
-
-extern ProcRecord gradients_get_list_proc;
-extern ProcRecord gradients_get_active_proc;
-extern ProcRecord gradients_set_active_proc;
-extern ProcRecord gradients_sample_uniform_proc;
-extern ProcRecord gradients_sample_custom_proc;
-extern ProcRecord gradients_close_popup_proc;
-extern ProcRecord gradients_set_popup_proc;
-extern ProcRecord gradients_popup_proc;
-extern ProcRecord gradients_get_gradient_data_proc;
 
 #endif

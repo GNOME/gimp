@@ -20,10 +20,10 @@
 
 #include "procedural_db.h"
 
+#include <stdio.h>
 #include "drawable.h"
 #include "layer.h"
 #include "text_tool.h"
-#include <stdio.h>
 
 static ProcRecord text_fontname_proc;
 static ProcRecord text_get_extents_fontname_proc;

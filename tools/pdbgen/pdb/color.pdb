@@ -125,7 +125,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_indexed (drawable) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY))
+      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
@@ -341,7 +341,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_indexed (drawable) || (num_points & 1) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY))
+      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
@@ -421,7 +421,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_indexed (drawable) || (num_bytes != 256) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY))
+      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else 
     {
@@ -593,7 +593,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_indexed (drawable) ||
-      (gimp_drawable_gray (drawable) && channel != GRAY))
+      (gimp_drawable_gray (drawable) && channel != GRAY_LUT))
     success = FALSE;
   else
     {
