@@ -263,14 +263,16 @@
 /* |   provided "as is" without express or implied warranty.           | */
 /* +-------------------------------------------------------------------+ */
 
-
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* uncomment the line below for a little debugging info */
@@ -318,15 +320,12 @@ static gboolean boundscheck            (gint32 image_ID);
 static gboolean badbounds_dialog       (void);
 
 static void   cropok_callback          (GtkWidget *widget, gpointer   data);
-static void   cropclose_callback       (GtkWidget *widget, gpointer   data);
 static void   cropcancel_callback      (GtkWidget *widget, gpointer   data);
 
 static gint   save_dialog              (gint32 image_ID);
 
-static void   save_close_callback      (GtkWidget *widget, gpointer   data);
 static void   save_ok_callback         (GtkWidget *widget, gpointer   data);
 static void   save_cancel_callback     (GtkWidget *widget, gpointer   data);
-static void   save_windelete_callback  (GtkWidget *widget, gpointer   data);
 static void   disposal_select_callback (GtkWidget *widget, gpointer   data);
 static void   save_toggle_update       (GtkWidget *widget, gpointer   data);
 static void   save_entry_callback      (GtkWidget *widget, gpointer   data);
@@ -1161,82 +1160,55 @@ static gboolean
 badbounds_dialog ( void )
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *vbox;
 
-
   can_crop = FALSE;
 
+  dlg = gimp_dialog_new (_("GIF Warning"), "gif_warning",
+			 gimp_plugin_help_func, "filters/gif.html#warning",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, FALSE, FALSE,
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "GIF Warning");
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+			 _("OK"), cropok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), cropcancel_callback,
+			 NULL, NULL, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) cropclose_callback,
-		      dlg);
-  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) cropclose_callback,
-		      dlg);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("Crop"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) cropok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) cropcancel_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /*  the warning message  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   
-  label= gtk_label_new(_(
-		       "The image which you are trying to save as a GIF\n"
-		       "contains layers which extend beyond the actual\n"
-		       "borders of the image.  This isn't allowed in GIFs,\n"
-		       "I'm afraid.\n\n"
-		       "You may choose whether to crop all of the layers to\n"
-		       "the image borders, or cancel this save."
-		       ));
+  label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
+			  "contains layers which extend beyond the actual\n"
+			  "borders of the image.  This isn't allowed in GIFs,\n"
+			  "I'm afraid.\n\n"
+			  "You may choose whether to crop all of the layers to\n"
+			  "the image borders, or cancel this save."));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show(label);
 
   gtk_widget_show(vbox);
-
   gtk_widget_show(frame);
 
   gtk_widget_show(dlg);
-  
 
   gtk_main ();
 
-  gtk_widget_destroy (GTK_WIDGET(dlg));
+  gtk_widget_destroy (GTK_WIDGET (dlg));
 
   gdk_flush ();
 
@@ -1245,11 +1217,9 @@ badbounds_dialog ( void )
 
 
 static gint
-save_dialog ( gint32 image_ID )
+save_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *label;
   GtkWidget *entry;
@@ -1265,49 +1235,26 @@ save_dialog ( gint32 image_ID )
   Parasite* GIF2_CMNT;
 #endif
 
-
-  gchar buffer[10];
+  gchar  buffer[10];
   gint32 nlayers;
-
 
   gimp_image_get_layers (image_ID, &nlayers);
 
+  dlg = gimp_dialog_new (_("Save as GIF"), "gif",
+			 gimp_plugin_help_func, "filters/gif.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as GIF"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), save_cancel_callback,
+			 NULL, NULL, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) save_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
-		      (GtkSignalFunc) save_windelete_callback,
-		      dlg);
-
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_cancel_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  regular gif parameter settings  */
   frame = gtk_frame_new (_("GIF Options"));
@@ -1419,7 +1366,7 @@ save_dialog ( gint32 image_ID )
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_set_usize (entry, 80, 0);
-  sprintf (buffer, "%d", gsvals.default_delay);
+  g_snprintf (buffer, sizeof (buffer), "%d", gsvals.default_delay);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       (GtkSignalFunc) save_entry_callback,
@@ -2508,7 +2455,6 @@ flush_char ()
 }
 
 
-
 /* crop dialog functions */
 
 static void
@@ -2527,22 +2473,8 @@ cropcancel_callback (GtkWidget *widget,
   gtk_main_quit ();
 }
 
-static void
-cropclose_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
-
 
 /*  Save interface functions  */
-
-static void
-save_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gtk_main_quit ();
-}
 
 static void
 save_ok_callback (GtkWidget *widget,
@@ -2558,13 +2490,6 @@ save_cancel_callback (GtkWidget *widget,
 {
   gsint.run = FALSE;
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-save_windelete_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  gsint.run = FALSE;
 }
 
 static void

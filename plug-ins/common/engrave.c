@@ -23,12 +23,16 @@
  * Much of the code is stolen from the Pixelize plug-in.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
@@ -56,8 +60,6 @@ static void run(gchar * name,
 		GParam ** return_vals);
 
 static gint engrave_dialog(void);
-static void engrave_close_callback(GtkWidget * widget,
-				   gpointer data);
 static void engrave_ok_callback(GtkWidget * widget,
 				gpointer data);
 
@@ -210,120 +212,100 @@ run(gchar * name,
 
 
 static gint
-engrave_dialog()
+engrave_dialog (void)
 {
-    GtkWidget *dlg;
-    GtkWidget *frame;
-    GtkWidget *table;
-    GtkWidget *hbbox;
-    GtkWidget *button;
-    GtkWidget *toggle;
-    gchar **argv;
-    gint argc;
+  GtkWidget *dlg;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *hbbox;
+  GtkWidget *button;
+  GtkWidget *toggle;
+  gchar **argv;
+  gint argc;
 
-    argc = 1;
-    argv = g_new(gchar *, 1);
-    argv[0] = g_strdup("engrave");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("engrave");
 
-    gtk_init(&argc, &argv);
-    gtk_rc_parse(gimp_gtkrc());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-    dlg = gtk_dialog_new();
-    gtk_window_set_title(GTK_WINDOW(dlg), _("Engrave"));
-    gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-    gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-		       (GtkSignalFunc) engrave_close_callback,
-		       NULL);
+  dlg = gimp_dialog_new (_("Engrave"), "engrave",
+			 gimp_plugin_help_func, "filters/engrave.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-    /*  Action area  */
-    gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-    gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-    hbbox = gtk_hbutton_box_new ();
-    gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-    gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbbox);
-    
-    button = gtk_button_new_with_label ( _("OK"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			(GtkSignalFunc) engrave_ok_callback,
-			dlg);
-    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-    gtk_widget_grab_default (button);
-    gtk_widget_show (button);
-    
-    button = gtk_button_new_with_label ( _("Cancel"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			       (GtkSignalFunc) gtk_widget_destroy,
-			       GTK_OBJECT (dlg));
-    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-    
-    /*  parameter settings  */
-    frame = gtk_frame_new( _("Parameter Settings"));
-    gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width(GTK_CONTAINER(frame), 10);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
-    table = gtk_table_new(2, 3, FALSE);
-    gtk_container_border_width(GTK_CONTAINER(table), 10);
-    gtk_container_add(GTK_CONTAINER(frame), table);
+			 _("OK"), engrave_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
-    toggle = gtk_check_button_new_with_label ( _("Limit line width"));
-    gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
-    gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			(GtkSignalFunc) engrave_toggle_update,
-			&pvals.limit);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
-    gtk_widget_show (toggle);
+			 NULL);
 
-    dialog_create_value( _("Height"), GTK_TABLE(table), 1, &pvals.height, 2.0, 16.0);
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-    gtk_widget_show(frame);
-    gtk_widget_show(table);
-    gtk_widget_show(dlg);
+  /*  parameter settings  */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER(table), 10);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
-    gtk_main();
-    gdk_flush();
+  toggle = gtk_check_button_new_with_label (_("Limit line width"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (engrave_toggle_update),
+		      &pvals.limit);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
+  gtk_widget_show (toggle);
 
-    return pint.run;
+  dialog_create_value (_("Height"), GTK_TABLE (table), 1,
+		       &pvals.height, 2.0, 16.0);
+
+  gtk_widget_show (frame);
+  gtk_widget_show (table);
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+  gdk_flush ();
+
+  return pint.run;
 }
 
 /*  Engrave interface functions  */
 
 static void
-engrave_close_callback(GtkWidget * widget,
-		       gpointer data)
+engrave_ok_callback (GtkWidget *widget,
+		     gpointer   data)
 {
-    gtk_main_quit();
+  pint.run = TRUE;
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
-engrave_ok_callback(GtkWidget * widget,
-		    gpointer data)
+engrave (GDrawable *drawable)
 {
-    pint.run = TRUE;
-    gtk_widget_destroy(GTK_WIDGET(data));
+  gint tile_width;
+  gint height;
+  gint limit;
+
+  tile_width = gimp_tile_width();
+  height = (gint) pvals.height;
+  limit = (gint) pvals.limit;
+  if (height >= tile_width)
+    engrave_large (drawable, height, limit);
+  else
+    engrave_small (drawable, height, limit, tile_width);
 }
 
 static void
-engrave(GDrawable * drawable)
-{
-    gint tile_width;
-    gint height;
-    gint limit;
-    tile_width = gimp_tile_width();
-    height = (gint) pvals.height;
-    limit = (gint) pvals.limit;
-    if (height >= tile_width)
-	engrave_large(drawable, height, limit);
-    else
-	engrave_small(drawable, height, limit, tile_width);
-}
-
-
-static void
-engrave_large(GDrawable * drawable, gint height, gint limit)
+engrave_large (GDrawable *drawable,
+	       gint       height,
+	       gint       limit)
 {
     GPixelRgn src_rgn, dest_rgn;
     guchar *src_row, *dest_row;

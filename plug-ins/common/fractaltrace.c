@@ -26,12 +26,17 @@
 
 /******************************************************************************/
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "config.h"
+
 #include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef PI_2
@@ -40,15 +45,15 @@
 
 /******************************************************************************/
 
-static void query( void );
-static void run( char*, int, GParam*, int*, GParam** );
-static void filter( GDrawable* );
+static void query (void);
+static void run (char*, int, GParam*, int*, GParam**);
+static void filter (GDrawable*);
 
-static void pixels_init( GDrawable* );
-static void pixels_free( void );
+static void pixels_init (GDrawable*);
+static void pixels_free (void);
 
-static int  dialog_show( void );
-static void dialog_preview_draw( void );
+static int  dialog_show (void);
+static void dialog_preview_draw (void);
 
 /******************************************************************************/
 
@@ -102,7 +107,8 @@ static parameter_t parameters = {
 
 /******************************************************************************/
 
-static void query( void )
+static void
+query (void)
 {
   static GParamDef args[] = {
     { PARAM_INT32,    "run_mode",     "interactive / non-interactive"    },
@@ -165,7 +171,11 @@ static image_t     image;
   
 /******************************************************************************/
 
-static void run( char *name, int argc, GParam *args, int *retc, GParam **rets )
+static void run (char    *name,
+		 int      argc,
+		 GParam  *args,
+		 int     *retc,
+		 GParam **rets)
 {
   GDrawable     *drawable;
   GRunModeType   run_mode;
@@ -253,7 +263,8 @@ typedef struct {
   guchar a;
 } pixel_t;
 
-static void pixels_init( GDrawable *drawable )
+static void
+pixels_init  (GDrawable *drawable)
 {
   gint y;
   gimp_pixel_rgn_init( &sPR, drawable,
@@ -269,7 +280,8 @@ static void pixels_init( GDrawable *drawable )
   }
 }
 
-static void pixels_free( void )
+static void
+pixels_free (void)
 {
   gint y;
   for( y = 0; y < image.height; y++ ){
@@ -280,7 +292,10 @@ static void pixels_free( void )
   g_free( dpixels );
 }
 
-static void pixels_get( gint x, gint y, pixel_t *pixel )
+static void
+pixels_get (gint     x,
+	    gint     y,
+	    pixel_t *pixel)
 {
   if( x < 0 ) x = 0; else if( image.width  <= x ) x = image.width  - 1;
   if( y < 0 ) y = 0; else if( image.height <= y ) y = image.height - 1;
@@ -313,7 +328,10 @@ static void pixels_get( gint x, gint y, pixel_t *pixel )
   }
 }
 
-static void pixels_get_biliner( gdouble x, gdouble y, pixel_t *pixel )
+static void
+pixels_get_biliner (gdouble  x,
+		    gdouble  y,
+		    pixel_t *pixel)
 {
   pixel_t A, B, C, D;
   gdouble a, b, c, d;
@@ -347,7 +365,10 @@ static void pixels_get_biliner( gdouble x, gdouble y, pixel_t *pixel )
 		       c * (gdouble)C.a + d * (gdouble)D.a );
 }
 
-static void pixels_set( gint x, gint y, pixel_t *pixel )
+static void
+pixels_set (gint     x,
+	    gint     y,
+	    pixel_t *pixel)
 {
   switch( image.bpp ){
   case 1: /* GRAY */
@@ -371,7 +392,8 @@ static void pixels_set( gint x, gint y, pixel_t *pixel )
   }
 }
 
-static void pixels_store( void )
+static void
+pixels_store (void)
 {
   gint y;
   for( y = selection.y1; y < selection.y2; y++ ){
@@ -381,7 +403,11 @@ static void pixels_store( void )
 
 /******************************************************************************/
 
-static void mandelbrot( gdouble x, gdouble y, gdouble *u, gdouble *v )
+static void
+mandelbrot (gdouble  x,
+	    gdouble  y,
+	    gdouble *u,
+	    gdouble *v)
 {
   gint    iter = 0;
   gdouble xx   = x;
@@ -404,7 +430,8 @@ static void mandelbrot( gdouble x, gdouble y, gdouble *u, gdouble *v )
 
 /******************************************************************************/
 
-static void filter( GDrawable *drawable )
+static void
+filter (GDrawable *drawable)
 {
   gint    x, y;
   pixel_t pixel;
@@ -472,7 +499,9 @@ static int dialog_status;
 
 /******************************************************************************/
 
-static void dialog_entry_gint32_callback( GtkWidget *widget, gpointer *data )
+static void
+dialog_entry_gint32_callback (GtkWidget *widget,
+			      gpointer  *data)
 {
   gint32 value = (gint32)atof( gtk_entry_get_text( GTK_ENTRY( widget ) ) );
   if( *(gint32*)data != value ){
@@ -481,8 +510,11 @@ static void dialog_entry_gint32_callback( GtkWidget *widget, gpointer *data )
   }
 }
 
-static void dialog_entry_gint32_new( char *caption, gint32 *value,
-					    GtkWidget *table, gint row )
+static void
+dialog_entry_gint32_new (char      *caption,
+			 gint32    *value,
+			 GtkWidget *table,
+			 gint       row )
 {
   GtkWidget *label;
   GtkWidget *entry;
@@ -503,7 +535,9 @@ static void dialog_entry_gint32_new( char *caption, gint32 *value,
 
 /******************************************************************************/
 
-static void dialog_entry_gdouble_callback( GtkWidget *widget, gpointer *data )
+static void
+dialog_entry_gdouble_callback (GtkWidget *widget,
+			       gpointer  *data)
 {
   gdouble value = (gdouble)atof( gtk_entry_get_text( GTK_ENTRY( widget ) ) );
   if( *(gdouble*)data != value ){
@@ -512,8 +546,11 @@ static void dialog_entry_gdouble_callback( GtkWidget *widget, gpointer *data )
   }
 }
 
-static void dialog_entry_gdouble_new( char *caption, gdouble *value,
-					    GtkWidget *table, gint row )
+static void
+dialog_entry_gdouble_new (char      *caption,
+			  gdouble   *value,
+			  GtkWidget *table,
+			  gint       row )
 {
   GtkWidget *label;
   GtkWidget *entry;
@@ -534,7 +571,8 @@ static void dialog_entry_gdouble_new( char *caption, gdouble *value,
 
 /******************************************************************************/
 
-static GtkWidget* dialog_entry_table( void )
+static GtkWidget*
+dialog_entry_table (void)
 {
   GtkWidget *table;
   
@@ -552,31 +590,27 @@ static GtkWidget* dialog_entry_table( void )
 
 /******************************************************************************/
 
-static void dialog_destroy_callback( GtkWidget *widget, gpointer data )
-{
-  gtk_main_quit();
-  gdk_flush();
-}
-
-static void dialog_ok_callback( GtkWidget *widget, gpointer data )
+static void
+dialog_ok_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   dialog_status = TRUE;
   gtk_widget_destroy( GTK_WIDGET( data ) );
 }
 
-static void dialog_cancel_callback( GtkWidget *widget, gpointer data )
+static void
+dialog_cancel_callback (GtkWidget *widget,
+			gpointer   data)
 {
   dialog_status = FALSE;
   gtk_widget_destroy( GTK_WIDGET( data ) );
 }
 
-static void dialog_help_callback( GtkWidget *widget, gpointer data )
-{
-}
-
 /******************************************************************************/
 
-static void dialog_outside_type_callback( GtkWidget *widget, gpointer *data )
+static void
+dialog_outside_type_callback (GtkWidget *widget,
+			      gpointer  *data)
 {
   gint32 value = *(gint32*)data;
 
@@ -602,7 +636,10 @@ typedef struct {
 
 static preview_t preview;
 
-static void dialog_preview_setpixel( gint x, gint y, pixel_t *pixel )
+static void
+dialog_preview_setpixel (gint     x,
+			 gint     y,
+			 pixel_t *pixel)
 {
   switch( preview.bpp ){
   case 1:
@@ -616,7 +653,8 @@ static void dialog_preview_setpixel( gint x, gint y, pixel_t *pixel )
   }
 }
 
-static void dialog_preview_store( void )
+static void
+dialog_preview_store (void)
 {
   gint y;
   for( y = 0; y < preview.height; y++ ){
@@ -627,7 +665,8 @@ static void dialog_preview_store( void )
   gdk_flush();
 }
 
-static void dialog_preview_init( void )
+static void
+dialog_preview_init (void)
 {
   {
     guchar *cube;
@@ -681,7 +720,8 @@ static void dialog_preview_init( void )
   }
 }
 
-static void dialog_preview_draw( void )
+static void
+dialog_preview_draw (void)
 {
   gint    x, y;
   pixel_t pixel;
@@ -728,76 +768,59 @@ static void dialog_preview_draw( void )
 
 /******************************************************************************/
 
-static gint dialog_show( void )
+static gint
+dialog_show (void)
 {
   GtkWidget *dialog;
   GtkWidget *mainbox;
-  
+
   dialog_status = FALSE;
-  
+
   {
     gint    argc = 1;
-    gchar **argv = g_new( gchar *, 1 );
-    argv[0]      = g_strdup( _("Fractal Trace"));
-    gtk_init( &argc, &argv );
-    gtk_rc_parse( gimp_gtkrc() );
+    gchar **argv = g_new (gchar *, 1);
+    argv[0]      = g_strdup (_("fractaltrace"));
+    gtk_init (&argc, &argv);
+    gtk_rc_parse (gimp_gtkrc());
   }
 
-  dialog = gtk_dialog_new();
-  gtk_signal_connect( GTK_OBJECT( dialog ), "destroy",
-		      GTK_SIGNAL_FUNC( dialog_destroy_callback ), NULL );
+  dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
+			    gimp_plugin_help_func, "filters/fractaltrace.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  mainbox = gtk_hbox_new( FALSE, 0 );
-  gtk_container_add( GTK_CONTAINER( GTK_DIALOG( dialog )->vbox ), mainbox );
-  gtk_widget_show( mainbox );
-  
-  {
-    GtkWidget *button;
-    
-    button = gtk_button_new_with_label( _("OK") );
-    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
-			GTK_SIGNAL_FUNC( dialog_ok_callback ),
-			GTK_OBJECT( dialog ) );
-    gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
-			button, TRUE, TRUE, 0 );
-    GTK_WIDGET_SET_FLAGS( button, GTK_CAN_DEFAULT );
-    gtk_widget_grab_default( button );
-    gtk_widget_show( button );
+			    _("OK"), dialog_ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), dialog_cancel_callback,
+			    NULL, NULL, NULL, FALSE, TRUE,
 
-    button = gtk_button_new_with_label( _("Cancel") );
-    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
-			GTK_SIGNAL_FUNC( dialog_cancel_callback ),
-			GTK_OBJECT( dialog ) );
-    gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
-			button, TRUE, TRUE, 0 );
-    gtk_widget_show( button );
+			    NULL);
 
-    button = gtk_button_new_with_label( _("Help") );
-    gtk_signal_connect( GTK_OBJECT( button ), "clicked",
-			GTK_SIGNAL_FUNC( dialog_help_callback ),
-			GTK_OBJECT( dialog ) );
-    gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->action_area ),
-			button, TRUE, TRUE, 0 );
-    gtk_widget_show( button );
-  }
-  
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  mainbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), mainbox);
+  gtk_widget_show (mainbox);
+
   {
     GtkWidget *vbox;
     GtkWidget *frame;
     
-    vbox = gtk_vbox_new( TRUE, 0 );
-    gtk_container_border_width( GTK_CONTAINER( vbox ), 10 );
-    gtk_box_pack_start( GTK_BOX( mainbox ), vbox, FALSE, FALSE, 0 );
-    gtk_widget_show( vbox );
+    vbox = gtk_vbox_new (TRUE, 0);
+    gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+    gtk_box_pack_start (GTK_BOX (mainbox), vbox, FALSE, FALSE, 0);
+    gtk_widget_show (vbox);
 
-    frame = gtk_frame_new( NULL );
-    gtk_frame_set_shadow_type( GTK_FRAME( frame ), GTK_SHADOW_IN );
-    gtk_box_pack_start( GTK_BOX( vbox ), frame, FALSE, FALSE, 0 );
-    gtk_widget_show( frame );
+    frame = gtk_frame_new (NULL);
+    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
 
-    dialog_preview_init();
-    gtk_container_add( GTK_CONTAINER( frame ), preview.preview );
-    gtk_widget_show( preview.preview );
+    dialog_preview_init ();
+    gtk_container_add (GTK_CONTAINER (frame), preview.preview);
+    gtk_widget_show (preview.preview);
   }
   
   {
@@ -809,88 +832,93 @@ static gint dialog_show( void )
     GtkWidget *button;
     GSList    *group;
     
-    vbox = gtk_vbox_new( FALSE, 0 );
-    gtk_container_border_width( GTK_CONTAINER( vbox ), 10 );
-    gtk_box_pack_start( GTK_BOX( mainbox ), vbox, FALSE, FALSE, 0 );
-    gtk_widget_show( vbox );
+    vbox = gtk_vbox_new (FALSE, 0);
+    gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+    gtk_box_pack_start (GTK_BOX (mainbox), vbox, FALSE, FALSE, 0);
+    gtk_widget_show (vbox);
 
-    entrytable = dialog_entry_table();
-    gtk_box_pack_start( GTK_BOX( vbox ), entrytable, FALSE, FALSE, 0 );
-    gtk_widget_show( entrytable );
+    entrytable = dialog_entry_table ();
+    gtk_box_pack_start (GTK_BOX (vbox), entrytable, FALSE, FALSE, 0);
+    gtk_widget_show (entrytable);
     
-    separator = gtk_hseparator_new();
-    gtk_box_pack_start( GTK_BOX( vbox ), separator, FALSE, FALSE, 0 );
-    gtk_widget_show( entrytable );
+    separator = gtk_hseparator_new ();
+    gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
+    gtk_widget_show (entrytable);
 
-    frame = gtk_frame_new( _("Outside Type") );
-    gtk_container_border_width( GTK_CONTAINER( frame ), 5 );
-    gtk_box_pack_start( GTK_BOX( vbox ), frame, TRUE, TRUE, 0 );
-    gtk_widget_show( frame );
+    frame = gtk_frame_new (_("Outside Type"));
+    gtk_container_border_width (GTK_CONTAINER (frame), 5);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+    gtk_widget_show (frame);
 
-    framebox = gtk_vbox_new( FALSE, 0 );
-    gtk_container_border_width( GTK_CONTAINER( framebox ), 5 );
-    gtk_container_add( GTK_CONTAINER( frame ), framebox );
-    gtk_widget_show( framebox );
+    framebox = gtk_vbox_new (FALSE, 0);
+    gtk_container_border_width (GTK_CONTAINER (framebox), 5);
+    gtk_container_add (GTK_CONTAINER (frame), framebox);
+    gtk_widget_show (framebox);
 
     group = NULL;
     
-    button = gtk_radio_button_new_with_label( group, _("Wrap") );
-    gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
-    gtk_signal_connect( GTK_OBJECT( button ), "toggled",
-			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
-			&outside_type.wrap );
-    gtk_widget_show( button );
-    if( parameters.outside_type == OUTSIDE_TYPE_WRAP ){
-      gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
-    }
-    group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
+    button = gtk_radio_button_new_with_label (group, _("Wrap"));
+    gtk_box_pack_start (GTK_BOX (framebox), button, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			GTK_SIGNAL_FUNC (dialog_outside_type_callback),
+			&outside_type.wrap);
+    gtk_widget_show (button);
+    if (parameters.outside_type == OUTSIDE_TYPE_WRAP)
+      {
+	gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (button));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      }
+    group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
-    button = gtk_radio_button_new_with_label( group, _("Transparent") );
-    gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
-    gtk_signal_connect( GTK_OBJECT( button ), "toggled",
-			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
-			&outside_type.transparent );
-    gtk_widget_show( button );
-    if( parameters.outside_type == OUTSIDE_TYPE_TRANSPARENT ){
-      gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
-    }
-    if( !image.alpha ){
-      gtk_widget_set_sensitive( button, FALSE );
-    }
-    group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
+    button = gtk_radio_button_new_with_label (group, _("Transparent"));
+    gtk_box_pack_start (GTK_BOX (framebox), button, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			GTK_SIGNAL_FUNC (dialog_outside_type_callback),
+			&outside_type.transparent);
+    gtk_widget_show (button);
+    if (parameters.outside_type == OUTSIDE_TYPE_TRANSPARENT)
+      {
+	gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (button));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      }
+    if (!image.alpha)
+      {
+	gtk_widget_set_sensitive (button, FALSE);
+      }
+    group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
     
-    button = gtk_radio_button_new_with_label( group, _("Black") );
-    gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
-    gtk_signal_connect( GTK_OBJECT( button ), "toggled",
-			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
-			&outside_type.black );
-    gtk_widget_show( button );
-    if( parameters.outside_type == OUTSIDE_TYPE_BLACK ){
-      gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
-    }
-    group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
+    button = gtk_radio_button_new_with_label (group, _("Black"));
+    gtk_box_pack_start (GTK_BOX (framebox), button, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			GTK_SIGNAL_FUNC (dialog_outside_type_callback),
+			&outside_type.black);
+    gtk_widget_show (button);
+    if (parameters.outside_type == OUTSIDE_TYPE_BLACK)
+      {
+	gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (button));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      }
+    group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
     
-    button = gtk_radio_button_new_with_label( group, _("White") );
-    gtk_box_pack_start( GTK_BOX( framebox ), button, FALSE, FALSE, 0 );
-    gtk_signal_connect( GTK_OBJECT( button ), "toggled",
-			GTK_SIGNAL_FUNC( dialog_outside_type_callback ),
-			&outside_type.white );
-    gtk_widget_show( button );
-    if( parameters.outside_type == OUTSIDE_TYPE_WHITE ){
-      gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
-    }
-    group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
-    
+    button = gtk_radio_button_new_with_label (group, _("White"));
+    gtk_box_pack_start (GTK_BOX (framebox), button, FALSE, FALSE, 0);
+    gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			GTK_SIGNAL_FUNC (dialog_outside_type_callback),
+			&outside_type.white);
+    gtk_widget_show (button);
+    if (parameters.outside_type == OUTSIDE_TYPE_WHITE)
+      {
+	gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (button));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      }
+    group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   }
-  
-  gtk_widget_show( dialog );
-  dialog_preview_draw();
 
-  gtk_main();
+  gtk_widget_show (dialog);
+  dialog_preview_draw ();
+
+  gtk_main ();
+  gdk_flush ();
 
   return dialog_status;
 }

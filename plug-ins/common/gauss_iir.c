@@ -21,8 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH 100
@@ -75,8 +78,6 @@ static void      transfer_pixels  (gdouble * src1,
 				   gint      bytes,
 				   gint      width);
 
-static void      gauss_close_callback  (GtkWidget *widget,
-					gpointer   data);
 static void      gauss_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 static void      gauss_toggle_update   (GtkWidget *widget,
@@ -242,59 +243,41 @@ run (gchar   *name,
 }
 
 static gint
-gauss_iir_dialog ()
+gauss_iir_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
   GtkWidget *entry;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  gchar buffer[12];
+  gchar   buffer[12];
   gchar **argv;
-  gint argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("gauss");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gauss_iir");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("IIR Gaussian Blur"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("IIR Raussian Blur"), "gauss_iir",
+			 gimp_plugin_help_func, "filters/gauss_iir.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), gauss_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gauss_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) gauss_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Parameter Settings"));
@@ -331,7 +314,7 @@ gauss_iir_dialog ()
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%f", bvals.radius);
+  g_snprintf (buffer, sizeof (buffer), "%f", bvals.radius);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) gauss_entry_callback,
@@ -728,13 +711,6 @@ find_constants (gdouble n_p[],
 /*  Gauss interface functions  */
 
 static void
-gauss_close_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void
 gauss_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
@@ -744,7 +720,7 @@ gauss_ok_callback (GtkWidget *widget,
 
 static void
 gauss_toggle_update (GtkWidget *widget,
-		       gpointer   data)
+		     gpointer   data)
 {
   int *toggle_val;
 

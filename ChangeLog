@@ -1,3 +1,29 @@
+2000-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimphelpui.c: make sure that the help signals are
+	created for all widget classes where we need them.
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/gtm.c: more plugins which use the dialog
+	constructor. Did some code formating and indentation.
+
 2000-01-06  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* plug-ins/perl/examples/fit-text (growfont): Fixed some really
@@ -19,7 +45,7 @@ Thu Jan  6 18:39:05 GMT 2000  Adam D. Moss <adam@gimp.org>
 2000-01-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/[all files using the dialog or action area constructors]
-	* libgimp/gimpdialog.[ch]: added a "slot_object" agrument to the
+	* libgimp/gimpdialog.[ch]: added a "slot_object" argument to the
 	constructors' va_args lists to allow the action area buttons to be
 	connected wich gtk_signal_connect_object().
 

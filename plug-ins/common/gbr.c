@@ -35,9 +35,11 @@
 #define _O_BINARY 0
 #endif
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 #include "app/brush_header.h"
 
@@ -74,8 +76,6 @@ static gint   save_image     (char   *filename,
 
 static void   init_gtk       (void);
 static gint   save_dialog    (void);
-static void   close_callback (GtkWidget *widget, 
-			      gpointer   data);
 static void   ok_callback    (GtkWidget *widget, 
 			      gpointer   data);
 static void   entry_callback (GtkWidget *widget, 
@@ -444,104 +444,83 @@ save_dialog (void)
   GtkWidget *entry;
   GtkWidget *table;
   gchar buffer[12];
-  
-  dlg = gtk_dialog_new();
-  gtk_window_set_title (GTK_WINDOW(dlg), _("Save As Brush"));
-  gtk_window_position (GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
-  
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  dlg = gimp_dialog_new (_("Save as Brush"), "gbr",
+			 gimp_plugin_help_func, "filters/gbr.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /* The main table */
-  /* Set its size (y, x) */
-  table = gtk_table_new(2, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 10);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show(table);
-  
-  gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-  gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-  
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
+
+  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+
   /**********************
    * label
    **********************/
-  label = gtk_label_new( _("Spacing:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0,
-		   0);
-  gtk_widget_show(label);
-  
+  label = gtk_label_new (_("Spacing:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   /************************
    * The entry
    ************************/
-  entry = gtk_entry_new();
-  gtk_table_attach(GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL,
-		   GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize(entry, 200, 0);
-  sprintf(buffer, "%i", info.spacing);
-  gtk_entry_set_text(GTK_ENTRY(entry), buffer);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) entry_callback, &info.spacing);
-  gtk_widget_show(entry);
-  
+  entry = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize (entry, 200, 0);
+  g_snprintf (buffer, sizeof (buffer), "%i", info.spacing);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      &info.spacing);
+  gtk_widget_show (entry);
+
   /**********************
    * label
    **********************/
-  label = gtk_label_new( _("Description:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0,
-		   0);
-  gtk_widget_show(label);
-  
+  label = gtk_label_new (_("Description:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
   /************************
    * The entry
    ************************/
-  entry = gtk_entry_new();
-  gtk_table_attach(GTK_TABLE(table), entry, 1, 2, 1, 2, GTK_EXPAND | GTK_FILL,
-		   GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_set_usize(entry, 200, 0);
-  gtk_entry_set_text(GTK_ENTRY(entry), info.description);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) entry_callback, info.description);
-  gtk_widget_show(entry);
+  entry = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize (entry, 200, 0);
+  gtk_entry_set_text (GTK_ENTRY (entry), info.description);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      GTK_SIGNAL_FUNC (entry_callback),
+		      info.description);
+  gtk_widget_show (entry);
   
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
   
-  gtk_main();
-  gdk_flush();
+  gtk_main ();
+  gdk_flush ();
   
   return run_flag;
-}
-
-static void 
-close_callback (GtkWidget *widget, 
-		gpointer   data)
-{
-  gtk_main_quit ();
 }
 
 static void 
@@ -549,7 +528,7 @@ ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
   run_flag = 1;
-  gtk_widget_destroy (GTK_WIDGET(data));
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void 
@@ -557,7 +536,7 @@ entry_callback (GtkWidget *widget,
 		gpointer   data)
 {
   if (data == info.description)
-    strncpy(info.description, gtk_entry_get_text(GTK_ENTRY(widget)), 256);
+    strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
   else if (data == &info.spacing)
-    info.spacing = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
+    info.spacing = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }

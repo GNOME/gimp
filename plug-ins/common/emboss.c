@@ -35,8 +35,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-#include <libgimp/gimp.h>
 #include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 #include <plug-ins/megawidget/megawidget.h>
 #include "libgimp/stdplugins-intl.h"
 
@@ -383,37 +385,65 @@ int pluginCore(struct piArgs *argp) {
   return 0;
 }
 
-int pluginCoreIA(struct piArgs *argp) {
+gboolean run_flag = FALSE;
+
+static void
+emboss_ok_callback (GtkWidget *widget,
+		    gpointer   data)
+{
+  run_flag = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+int
+pluginCoreIA (struct piArgs *argp)
+{
   GtkWidget *dlg;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *preview;
   GtkWidget *frame;
+  gchar **argv;
+  gint    argc;
+  gint    i;
 
-  gint runp;
   struct mwRadioGroup functions[] = {
      { N_("Emboss"), 0 },
      { N_("Bumpmap"), 0 },
      { NULL, 0 },
   };
-  gchar **argv;
-  gint argc;
-  gint i;
  
   /* Set args */
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("emboss");
-  gtk_init(&argc, &argv);
-  gtk_rc_parse(gimp_gtkrc ());
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("emboss");
+
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+
   for (i = 0; functions[i].name != NULL; i++)
     functions[i].name = gettext(functions[i].name);
 
   functions[!argp->embossp].var = 1;
 
-  dlg = mw_app_new("plug_in_emboss", _("Emboss"), &runp);
+  dlg = gimp_dialog_new (_("Emboss"), "emboss",
+			 gimp_plugin_help_func, "filters/emboss.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  hbox = gtk_hbox_new(FALSE, 5);
+			 _("OK"), emboss_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  hbox = gtk_hbox_new (FALSE, 5);
   gtk_container_border_width(GTK_CONTAINER(hbox), 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show(hbox);
@@ -446,15 +476,16 @@ int pluginCoreIA(struct piArgs *argp) {
 
   gtk_widget_show(table);
   gtk_widget_show(dlg);
-  gtk_main();
-  gdk_flush();
+
+  gtk_main ();
+  gdk_flush ();
 
   argp->embossp = !mw_radio_result(functions);
-  if(runp){
-    return pluginCore(argp);
-  } else {
+
+  if (run_flag)
+    return pluginCore (argp);
+  else
     return -1;
-  }
 }
 
 

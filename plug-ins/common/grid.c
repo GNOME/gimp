@@ -28,11 +28,15 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -353,15 +357,6 @@ doit (GDrawable * drawable)
  * GUI stuff
  */
 
-
-static void
-close_callback (GtkWidget *widget, 
-		gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_main_quit ();
-}
-
 static void
 ok_callback (GtkWidget *widget, 
 	     gpointer   data)
@@ -386,7 +381,6 @@ ok_callback (GtkWidget *widget,
   grid_cfg.ioffset = (int)(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (entry), 2) + 0.5);
 
   gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_main_quit ();
 }
 
 static void
@@ -480,10 +474,14 @@ dialog (gint32     image_ID,
 
 			 _("OK"), ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), close_callback,
-			 NULL, NULL, NULL, FALSE, TRUE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);

@@ -34,13 +34,17 @@
  *  
  */ 
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* --- Defines --- */
@@ -58,7 +62,8 @@
 #define DEBUG1 printf
 #else
 #define DEBUG1 dummy_printf
-static void dummy_printf( char *fmt, ... ) {}
+static void
+dummy_printf (gchar *fmt, ...) {}
 #endif
 
 
@@ -107,26 +112,23 @@ static void run (char      *name,
        	         GParam    *param,
 		 int       *nreturn_vals,
 	         GParam   **return_vals);
-static gint flare_dialog ( GDrawable *drawable );
+static gint flare_dialog (GDrawable *drawable);
 
 
-
-static GtkWidget * flare_center_create ( GDrawable *drawable );
-static void	   flare_center_destroy ( GtkWidget *widget,
-					 gpointer data );
-static void	   flare_center_preview_init ( FlareCenter *center );
-static void	   flare_center_draw ( FlareCenter *center, gint update );
-static void	   flare_center_entry_update ( GtkWidget *widget,
-					      gpointer data );
-static void	   flare_center_cursor_update ( FlareCenter *center );
-static gint	   flare_center_preview_expose ( GtkWidget *widget,
-						GdkEvent *event );
-static gint	   flare_center_preview_events ( GtkWidget *widget,
-						GdkEvent *event );
-
+static GtkWidget * flare_center_create (GDrawable *drawable);
+static void	   flare_center_destroy (GtkWidget *widget,
+					 gpointer   data);
+static void	   flare_center_preview_init (FlareCenter *center);
+static void	   flare_center_draw (FlareCenter *center, gint update);
+static void	   flare_center_entry_update (GtkWidget *widget,
+					      gpointer   data);
+static void	   flare_center_cursor_update (FlareCenter *center);
+static gint	   flare_center_preview_expose (GtkWidget *widget,
+						GdkEvent  *event);
+static gint	   flare_center_preview_events (GtkWidget *widget,
+						GdkEvent  *event);
 
 
-static void flare_close_callback (GtkWidget *widget, gpointer data);
 static void flare_ok_callback (GtkWidget *widget, gpointer data);
 static void FlareFX (GDrawable *drawable);
 void mcolor (guchar *s, gfloat h);
@@ -170,7 +172,8 @@ Reflect ref1[19];
 /* --- Functions --- */
 MAIN ()
 
-static void query () 
+static void
+query (void) 
 {
   static GParamDef args[] =
   {
@@ -199,11 +202,12 @@ static void query ()
 			  args, return_vals);
 }
 
-static void run (gchar   *name,
-                 gint     nparams,
-                 GParam  *param,
-                 gint    *nreturn_vals,
-                 GParam **return_vals)
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -229,7 +233,7 @@ static void run (gchar   *name,
       gimp_get_data ("plug_in_flarefx", &fvals);
 
       /*  First acquire information with a dialog  */
-      if (! flare_dialog ( drawable ))
+      if (! flare_dialog (drawable))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -263,7 +267,7 @@ static void run (gchar   *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ( _("Render flare..."));
+	  gimp_progress_init (_("Render flare..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  
 	  FlareFX (drawable);
@@ -287,15 +291,16 @@ static void run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint flare_dialog( GDrawable *drawable )
+static gint
+flare_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *hbbox;
   GtkWidget *button;
-  guchar *color_cube;
-  gchar **argv;
-  gint  argc;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -315,46 +320,30 @@ static gint flare_dialog( GDrawable *drawable )
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
 #if 0
-  printf("Waiting... (pid %d)\n", getpid());
-  kill(getpid(), 19); /* SIGSTOP */
+  g_print ("Waiting... (pid %d)\n", getpid ());
+  kill (getpid (), 19); /* SIGSTOP */
 #endif
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("FlareFX"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("FlareFX"), "flarefx",
+			 gimp_plugin_help_func, "filters/flarefx.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), flare_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) flare_close_callback,
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) flare_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /*  parameter settings  */
-  frame = flare_center_create ( drawable );
+  frame = flare_center_create (drawable);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   gtk_widget_show (frame);
@@ -367,19 +356,18 @@ static gint flare_dialog( GDrawable *drawable )
 }
 
 /* --- Interface functions --- */
-static void flare_close_callback (GtkWidget *widget, gpointer data)
-{
-  gtk_main_quit ();
-}
-
-static void flare_ok_callback (GtkWidget *widget, gpointer data)
+static void
+flare_ok_callback (GtkWidget *widget,
+		   gpointer   data)
 {
   fint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 /* --- Filter functions --- */
-static void FlareFX (GDrawable *drawable)
+static void
+FlareFX (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height;
@@ -480,43 +468,54 @@ static void FlareFX (GDrawable *drawable)
   free (dest);
 }
 
-void mcolor (guchar *s, gfloat h)
+void
+mcolor (guchar *s,
+	gfloat  h)
 {
   static gfloat procent;
   
   procent = scolor - h;
   procent/=scolor;
-  if (procent > 0.0) {
-    procent*=procent;
-    fixpix (s, procent, color); 
-  }
+  if (procent > 0.0)
+    {
+      procent*=procent;
+      fixpix (s, procent, color); 
+    }
 }
 
-void mglow (guchar *s, gfloat h)
+void
+mglow (guchar *s,
+       gfloat  h)
 {
   static gfloat procent;
   
   procent = sglow - h;
   procent/=sglow;
-  if (procent > 0.0) {
-    procent*=procent;
-    fixpix (s, procent, glow); 
-  }
+  if (procent > 0.0)
+    {
+      procent*=procent;
+      fixpix (s, procent, glow); 
+    }
 }
 
-void minner (guchar *s, gfloat h)
+void
+minner (guchar *s,
+	gfloat  h)
 {
   static gfloat procent;
   
   procent = sinner - h;
   procent/=sinner;
-  if (procent > 0.0) {
-    procent*=procent;
-    fixpix (s, procent, inner); 
-  }
+  if (procent > 0.0)
+    {
+      procent*=procent;
+      fixpix (s, procent, inner); 
+    }
 }
 
-void mouter (guchar *s, gfloat h)
+void
+mouter (guchar *s,
+	gfloat  h)
 {
   static gfloat procent;
   
@@ -526,7 +525,9 @@ void mouter (guchar *s, gfloat h)
     fixpix (s, procent, outer); 
 }
 
-void mhalo (guchar *s, gfloat h)
+void
+mhalo (guchar *s,
+       gfloat  h)
 {
   static gfloat procent;
   
@@ -537,14 +538,22 @@ void mhalo (guchar *s, gfloat h)
     fixpix (s, 1.0 - procent, halo); 
 }
 
-void fixpix (guchar *data, float procent, RGBfloat colpro)
+void
+fixpix (guchar   *data,
+	float     procent,
+	RGBfloat  colpro)
 {
   data[0] = data[0] + (255 - data[0]) * procent * colpro.r;
   data[1] = data[1] + (255 - data[1]) * procent * colpro.g;
   data[2] = data[2] + (255 - data[2]) * procent * colpro.b;
 }
 
-void initref (gint sx, gint sy, gint width, gint height, gint matt)
+void
+initref (gint sx,
+	 gint sy,
+	 gint width,
+	 gint height,
+	 gint matt)
 {
   gint xh, yh, dx, dy;
   
@@ -610,43 +619,62 @@ void initref (gint sx, gint sy, gint width, gint height, gint matt)
   ref1[18].ccol.r=17.0/255.0; ref1[18].ccol.g=4.0/255.0; ref1[18].ccol.b=0.0;
 }
 
-void mrt1 (guchar *s, gint i, gint col, gint row)
+void
+mrt1 (guchar *s,
+      gint    i,
+      gint    col,
+      gint    row)
 {
   static gfloat procent;
   
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=ref1[i].size;
-  if (procent > 0.0) {
-    procent*=procent;
-    fixpix (s, procent, ref1[i].ccol); 
-  }  
+  if (procent > 0.0)
+    {
+      procent*=procent;
+      fixpix (s, procent, ref1[i].ccol); 
+    }  
 }
 
-void mrt2 (guchar *s, gint i, gint col, gint row)
+void
+mrt2 (guchar *s,
+      gint    i,
+      gint    col,
+      gint    row)
 {
   static gfloat procent;
   
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=(ref1[i].size * 0.15);
-  if (procent > 0.0) {
-    if (procent > 1.0) procent = 1.0;
-    fixpix (s, procent, ref1[i].ccol); 
-  }  
+  if (procent > 0.0)
+    {
+      if (procent > 1.0) procent = 1.0;
+      fixpix (s, procent, ref1[i].ccol); 
+    }  
 }
 
-void mrt3 (guchar *s, gint i, gint col, gint row)
+void
+mrt3 (guchar *s,
+      gint    i,
+      gint    col,
+      gint    row)
 {
   static gfloat procent;
   
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=(ref1[i].size * 0.12);
-  if (procent > 0.0) {
-    if (procent > 1.0) procent = 1.0 - (procent * 0.12);
-    fixpix (s, procent, ref1[i].ccol); 
-  }  
+  if (procent > 0.0)
+    {
+      if (procent > 1.0) procent = 1.0 - (procent * 0.12);
+      fixpix (s, procent, ref1[i].ccol); 
+    }  
 }
 
-void mrt4 (guchar *s, gint i, gint col, gint row)
+void
+mrt4 (guchar *s,
+      gint    i,
+      gint    col,
+      gint    row)
 {
   static gfloat procent;
   
@@ -672,7 +700,7 @@ void mrt4 (guchar *s, gint i, gint col, gint row)
  */
 
 static GtkWidget *
-flare_center_create ( GDrawable *drawable )
+flare_center_create (GDrawable *drawable)
 {
   FlareCenter	 *center;
   GtkWidget	 *frame;
@@ -683,12 +711,12 @@ flare_center_create ( GDrawable *drawable )
   GtkWidget	 *preview;
   gchar		 buf[256];
 
-  center = g_new( FlareCenter, 1 );
+  center = g_new (FlareCenter, 1);
   center->drawable = drawable;
   center->dwidth   = gimp_drawable_width(drawable->id );
   center->dheight  = gimp_drawable_height(drawable->id );
   center->bpp	   = gimp_drawable_bpp(drawable->id);
-  if ( gimp_drawable_has_alpha(drawable->id) )
+  if (gimp_drawable_has_alpha(drawable->id))
     center->bpp--;
   center->cursor = FALSE;
   center->curx = 0;
@@ -697,118 +725,128 @@ flare_center_create ( GDrawable *drawable )
   center->oldy = 0;
   center->in_call = TRUE;  /* to avoid side effects while initialization */
 
-  frame = gtk_frame_new ( _("Center of FlareFX") );
-  gtk_signal_connect( GTK_OBJECT( frame ), "destroy",
-		      (GtkSignalFunc) flare_center_destroy,
-		      center );
-  gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
-  gtk_container_border_width( GTK_CONTAINER( frame ), 10 );
+  frame = gtk_frame_new (_("Center of FlareFX"));
+  gtk_signal_connect(GTK_OBJECT (frame), "destroy",
+		     (GtkSignalFunc) flare_center_destroy,
+		     center );
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
 
-  table = gtk_table_new ( 2, 4, FALSE );
+  table = gtk_table_new (2, 4, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 
-  label = gtk_label_new ( _("X: ") );
-  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(table), label, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(label);
+  label = gtk_label_new (_("X: "));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   center->xentry = entry = gtk_entry_new ();
-  gtk_object_set_user_data( GTK_OBJECT(entry), center );
-  gtk_signal_connect( GTK_OBJECT(entry), "changed",
+  gtk_object_set_user_data (GTK_OBJECT (entry), center);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) flare_center_entry_update,
-		      &fvals.posx );
-  gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH,0 );
-  gtk_table_attach( GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(entry);
+		      &fvals.posx);
+  gtk_widget_set_usize (GTK_WIDGET (entry), ENTRY_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (entry);
 
-  label = gtk_label_new ( _("Y: ") );
-  gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5 );
-  gtk_table_attach( GTK_TABLE(table), label, 2, 3, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Y: "));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5 );
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
   center->yentry = entry = gtk_entry_new ();
-  gtk_object_set_user_data( GTK_OBJECT(entry), center );
-  gtk_signal_connect( GTK_OBJECT(entry), "changed",
+  gtk_object_set_user_data (GTK_OBJECT (entry), center);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) flare_center_entry_update,
-		      &fvals.posy );
-  gtk_widget_set_usize( GTK_WIDGET(entry), ENTRY_WIDTH, 0 );
-  gtk_table_attach( GTK_TABLE(table), entry, 3, 4, 0, 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0 );
-  gtk_widget_show(entry);
+		      &fvals.posy);
+  gtk_widget_set_usize (GTK_WIDGET (entry), ENTRY_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 3, 4, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (entry);
 
   /* frame (shadow_in) that contains preview */
-  pframe = gtk_frame_new ( NULL );
-  gtk_frame_set_shadow_type( GTK_FRAME( pframe ), GTK_SHADOW_IN );
-  gtk_table_attach( GTK_TABLE(table), pframe, 0, 4, 1, 2, 0, 0, 0, 0 );
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), pframe, 0, 4, 1, 2, 0, 0, 0, 0);
 
   /* PREVIEW */
-  center->preview = preview = gtk_preview_new( center->bpp==3 ? GTK_PREVIEW_COLOR : GTK_PREVIEW_GRAYSCALE );
-  gtk_object_set_user_data( GTK_OBJECT(preview), center );
-  gtk_widget_set_events( GTK_WIDGET(preview), PREVIEW_MASK );
-  gtk_signal_connect_after( GTK_OBJECT(preview), "expose_event",
-		      (GtkSignalFunc) flare_center_preview_expose,
-		      center );
-  gtk_signal_connect( GTK_OBJECT(preview), "event",
+  center->preview = preview = gtk_preview_new (center->bpp==3 ? GTK_PREVIEW_COLOR : GTK_PREVIEW_GRAYSCALE);
+  gtk_object_set_user_data (GTK_OBJECT (preview), center);
+  gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK);
+  gtk_signal_connect_after (GTK_OBJECT (preview), "expose_event",
+			    (GtkSignalFunc) flare_center_preview_expose,
+			    center );
+  gtk_signal_connect (GTK_OBJECT (preview), "event",
 		      (GtkSignalFunc) flare_center_preview_events,
-		      center );
-  gtk_container_add( GTK_CONTAINER( pframe ), center->preview );
+		      center);
+  gtk_container_add (GTK_CONTAINER (pframe ), center->preview);
 
   /*
    * Resize the greater one of dwidth and dheight to PREVIEW_SIZE
    */
-  if ( center->dwidth > center->dheight ) {
-    center->pheight = center->dheight * PREVIEW_SIZE / center->dwidth;
-    center->pwidth = PREVIEW_SIZE;
-  } else {
-    center->pwidth = center->dwidth * PREVIEW_SIZE / center->dheight;
-    center->pheight = PREVIEW_SIZE;
-  }
-  gtk_preview_size( GTK_PREVIEW( preview ), center->pwidth, center->pheight );
+  if ( center->dwidth > center->dheight )
+    {
+      center->pheight = center->dheight * PREVIEW_SIZE / center->dwidth;
+      center->pwidth = PREVIEW_SIZE;
+    }
+  else
+    {
+      center->pwidth = center->dwidth * PREVIEW_SIZE / center->dheight;
+      center->pheight = PREVIEW_SIZE;
+    }
+  gtk_preview_size (GTK_PREVIEW  (preview), center->pwidth, center->pheight);
 
   /* Draw the contents of preview, that is saved in the preview widget */
-  flare_center_preview_init( center );
-  gtk_widget_show(preview);
+  flare_center_preview_init (center);
+  gtk_widget_show (preview);
 
-  gtk_widget_show( pframe );
-  gtk_widget_show( table );
-  gtk_widget_show( frame );
+  gtk_widget_show (pframe);
+  gtk_widget_show (table);
+  gtk_widget_show (frame);
 
-  sprintf( buf, "%d", fvals.posx );
-  gtk_entry_set_text( GTK_ENTRY(center->xentry), buf );
-  sprintf( buf, "%d", fvals.posy );
-  gtk_entry_set_text( GTK_ENTRY(center->yentry), buf );
+  g_snprintf (buf, sizeof (buf), "%d", fvals.posx);
+  gtk_entry_set_text (GTK_ENTRY (center->xentry), buf);
+  g_snprintf (buf, sizeof (buf), "%d", fvals.posy);
+  gtk_entry_set_text (GTK_ENTRY (center->yentry), buf);
 
-  flare_center_cursor_update( center );
+  flare_center_cursor_update (center);
 
   center->cursor = FALSE;    /* Make sure that the cursor has not been drawn */
   center->in_call = FALSE;   /* End of initialization */
-  DEBUG1("fvals center=%d,%d\n", fvals.posx, fvals.posy );
-  DEBUG1("center cur=%d,%d\n", center->curx, center->cury );
+  DEBUG1 ("fvals center=%d,%d\n", fvals.posx, fvals.posy);
+  DEBUG1 ("center cur=%d,%d\n", center->curx, center->cury);
+
   return frame;
 }
 
 static void
-flare_center_destroy ( GtkWidget *widget,
-		      gpointer data )
+flare_center_destroy (GtkWidget *widget,
+		      gpointer   data)
 {
   FlareCenter *center = data;
-  g_free( center );
+  g_free (center);
 }
 
-static void render_preview ( GtkWidget *preview, GPixelRgn *srcrgn );
+static void
+render_preview (GtkWidget *preview,
+		GPixelRgn *srcrgn);
 
 /*
  *  Initialize preview
  *  Draw the contents into the internal buffer of the preview widget
  */
 static void
-flare_center_preview_init ( FlareCenter *center )
+flare_center_preview_init (FlareCenter *center)
 {
-  GtkWidget	 *preview;
-  GPixelRgn	 src_rgn;
-  gint		 dwidth, dheight, pwidth, pheight, bpp;
+  GtkWidget *preview;
+  GPixelRgn  src_rgn;
+  gint	     dwidth, dheight, pwidth, pheight, bpp;
 
   preview = center->preview;
   dwidth = center->dwidth;
@@ -817,9 +855,9 @@ flare_center_preview_init ( FlareCenter *center )
   pheight = center->pheight;
   bpp = center->bpp;
 
-  gimp_pixel_rgn_init ( &src_rgn, center->drawable, 0, 0,
-			center->dwidth, center->dheight, FALSE, FALSE );
-  render_preview( center->preview, &src_rgn );
+  gimp_pixel_rgn_init (&src_rgn, center->drawable, 0, 0,
+		       center->dwidth, center->dheight, FALSE, FALSE);
+  render_preview (center->preview, &src_rgn);
 }
 
 
@@ -835,21 +873,22 @@ flare_center_preview_init ( FlareCenter *center )
 #endif
 
 static void
-render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
+render_preview (GtkWidget *preview,
+		GPixelRgn *srcrgn)
 {
-  guchar	 *src_row, *dest_row, *src, *dest;
-  gint		 row, col;
-  gint		 dwidth, dheight, pwidth, pheight;
-  gint		 *src_col;
-  gint		 bpp, alpha, has_alpha, b;
-  guchar	 check;
+  guchar *src_row, *dest_row, *src, *dest;
+  gint    row, col;
+  gint    dwidth, dheight, pwidth, pheight;
+  gint   *src_col;
+  gint    bpp, alpha, has_alpha, b;
+  guchar  check;
 
   dwidth  = srcrgn->w;
   dheight = srcrgn->h;
-  if( GTK_PREVIEW(preview)->buffer )
+  if (GTK_PREVIEW (preview)->buffer)
     {
-      pwidth  = GTK_PREVIEW(preview)->buffer_width;
-      pheight = GTK_PREVIEW(preview)->buffer_height;
+      pwidth  = GTK_PREVIEW (preview)->buffer_width;
+      pheight = GTK_PREVIEW (preview)->buffer_height;
     }
   else
     {
@@ -859,27 +898,27 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 
   bpp = srcrgn->bpp;
   alpha = bpp;
-  has_alpha = gimp_drawable_has_alpha( srcrgn->drawable->id );
-  if( has_alpha ) alpha--;
+  has_alpha = gimp_drawable_has_alpha (srcrgn->drawable->id);
+  if (has_alpha) alpha--;
   /*  printf("render_preview: %d %d %d", bpp, alpha, has_alpha);
       printf(" (%d %d %d %d)\n", dwidth, dheight, pwidth, pheight); */
 
-  src_row = g_new ( guchar, dwidth * bpp );
-  dest_row = g_new ( guchar, pwidth * bpp );
-  src_col = g_new ( gint, pwidth );
+  src_row = g_new (guchar, dwidth * bpp);
+  dest_row = g_new (guchar, pwidth * bpp);
+  src_col = g_new (gint, pwidth);
 
-  for ( col = 0; col < pwidth; col++ )
-    src_col[ col ] = ( col * dwidth / pwidth ) * bpp;
+  for (col = 0; col < pwidth; col++)
+    src_col[ col ] = (col * dwidth / pwidth) * bpp;
 
-  for ( row = 0; row < pheight; row++ )
+  for (row = 0; row < pheight; row++)
     {
-      gimp_pixel_rgn_get_row ( srcrgn, src_row,
-			       0, row * dheight / pheight, dwidth );
+      gimp_pixel_rgn_get_row (srcrgn, src_row,
+			      0, row * dheight / pheight, dwidth);
       dest = dest_row;
-      for ( col = 0; col < pwidth; col++ )
+      for (col = 0; col < pwidth; col++)
 	{
 	  src = &src_row[ src_col[col] ];
-	  if( !has_alpha || src[alpha] == OPAQUE )
+	  if (!has_alpha || src[alpha] == OPAQUE)
 	    {
 	      /* no alpha channel or opaque -- simple way */
 	      for ( b = 0; b < alpha; b++ )
@@ -888,34 +927,34 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
 	  else
 	    {
 	      /* more or less transparent */
-	      if( ( col % (CHECKWIDTH*2) < CHECKWIDTH ) ^
-		  ( row % (CHECKWIDTH*2) < CHECKWIDTH ) )
+	      if ((col % (CHECKWIDTH*2) < CHECKWIDTH) ^
+		  (row % (CHECKWIDTH*2) < CHECKWIDTH))
 		check = LIGHTCHECK;
 	      else
 		check = DARKCHECK;
 
-	      if ( src[alpha] == 0 )
+	      if (src[alpha] == 0)
 		{
 		  /* full transparent -- check */
-		  for ( b = 0; b < alpha; b++ )
+		  for (b = 0; b < alpha; b++)
 		    dest[b] = check;
 		}
 	      else
 		{
 		  /* middlemost transparent -- mix check and src */
-		  for ( b = 0; b < alpha; b++ )
-		    dest[b] = ( src[b]*src[alpha] + check*(OPAQUE-src[alpha]) ) / OPAQUE;
+		  for (b = 0; b < alpha; b++)
+		    dest[b] = (src[b]*src[alpha] + check*(OPAQUE-src[alpha])) / OPAQUE;
 		}
 	    }
 	  dest += alpha;
 	}
-      gtk_preview_draw_row( GTK_PREVIEW( preview ), dest_row,
-			    0, row, pwidth );
+      gtk_preview_draw_row (GTK_PREVIEW (preview), dest_row,
+			    0, row, pwidth);
     }
 
-  g_free ( src_col );
-  g_free ( src_row );
-  g_free ( dest_row );
+  g_free (src_col);
+  g_free (src_row);
+  g_free (dest_row);
 }
 
 /*======================================================================
@@ -929,39 +968,41 @@ render_preview ( GtkWidget *preview, GPixelRgn *srcrgn )
  */
 
 static void
-flare_center_draw ( FlareCenter *center, gint update )
+flare_center_draw (FlareCenter *center,
+		   gint         update)
 {
-  if( update & PREVIEW )
+  if (update & PREVIEW)
     {
       center->cursor = FALSE;
-      DEBUG1("draw-preview\n");
+      DEBUG1 ("draw-preview\n");
     }
 
-  if( update & CURSOR )
+  if (update & CURSOR)
     {
-      DEBUG1("draw-cursor %d old=%d,%d cur=%d,%d\n",
-	     center->cursor, center->oldx, center->oldy, center->curx, center->cury);
-      gdk_gc_set_function ( center->preview->style->black_gc, GDK_INVERT);
-      if( center->cursor )
+      DEBUG1 ("draw-cursor %d old=%d,%d cur=%d,%d\n",
+	      center->cursor,
+	      center->oldx, center->oldy, center->curx, center->cury);
+      gdk_gc_set_function (center->preview->style->black_gc, GDK_INVERT);
+      if (center->cursor)
 	{
-	  gdk_draw_line ( center->preview->window,
-			  center->preview->style->black_gc,
-			  center->oldx, 1, center->oldx, center->pheight-1 );
-	  gdk_draw_line ( center->preview->window,
-			  center->preview->style->black_gc,
-			  1, center->oldy, center->pwidth-1, center->oldy );
+	  gdk_draw_line (center->preview->window,
+			 center->preview->style->black_gc,
+			 center->oldx, 1, center->oldx, center->pheight-1);
+	  gdk_draw_line (center->preview->window,
+			 center->preview->style->black_gc,
+			 1, center->oldy, center->pwidth-1, center->oldy);
 	}
-      gdk_draw_line ( center->preview->window,
-		      center->preview->style->black_gc,
-		      center->curx, 1, center->curx, center->pheight-1 );
-      gdk_draw_line ( center->preview->window,
-		      center->preview->style->black_gc,
-		      1, center->cury, center->pwidth-1, center->cury );
+      gdk_draw_line (center->preview->window,
+		     center->preview->style->black_gc,
+		     center->curx, 1, center->curx, center->pheight-1);
+      gdk_draw_line (center->preview->window,
+		     center->preview->style->black_gc,
+		     1, center->cury, center->pwidth-1, center->cury);
       /* current position of cursor is updated */
       center->oldx = center->curx;
       center->oldy = center->cury;
       center->cursor = TRUE;
-      gdk_gc_set_function ( center->preview->style->black_gc, GDK_COPY);
+      gdk_gc_set_function (center->preview->style->black_gc, GDK_COPY);
     }
 }
 
@@ -971,25 +1012,26 @@ flare_center_draw ( FlareCenter *center, gint update )
  */
 
 static void
-flare_center_entry_update ( GtkWidget *widget,
-			     gpointer data )
+flare_center_entry_update (GtkWidget *widget,
+			   gpointer   data)
 {
   FlareCenter *center;
   gint *val, new_val;
 
-  DEBUG1("entry\n");
+  DEBUG1 ("entry\n");
   val = data;
-  new_val = atoi ( gtk_entry_get_text( GTK_ENTRY(widget) ) );
+  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 
-  if( *val != new_val )
+  if (*val != new_val)
     {
       *val = new_val;
-      center = gtk_object_get_user_data( GTK_OBJECT(widget) );
-      DEBUG1("entry:newval in_call=%d\n", center->in_call );
-      if( !center->in_call )
+
+      center = gtk_object_get_user_data (GTK_OBJECT (widget));
+      DEBUG1 ("entry:newval in_call=%d\n", center->in_call);
+      if (!center->in_call)
 	{
-	  flare_center_cursor_update( center );
-	  flare_center_draw ( center, CURSOR );
+	  flare_center_cursor_update (center);
+	  flare_center_draw (center, CURSOR);
 	}
     }
 }
@@ -1000,15 +1042,15 @@ flare_center_entry_update ( GtkWidget *widget,
  */
 
 static void
-flare_center_cursor_update ( FlareCenter *center )
+flare_center_cursor_update (FlareCenter *center)
 {
   center->curx = fvals.posx * center->pwidth / center->dwidth;
   center->cury = fvals.posy * center->pheight / center->dheight;
 
-  if( center->curx < 0 )		     center->curx = 0;
-  else if( center->curx >= center->pwidth )  center->curx = center->pwidth-1;
-  if( center->cury < 0 )		     center->cury = 0;
-  else if( center->cury >= center->pheight)  center->cury = center->pheight-1;
+  if ( center->curx < 0)		     center->curx = 0;
+  else if (center->curx >= center->pwidth)   center->curx = center->pwidth-1;
+  if (center->cury < 0)		             center->cury = 0;
+  else if (center->cury >= center->pheight)  center->cury = center->pheight-1;
 
 }
 
@@ -1016,13 +1058,13 @@ flare_center_cursor_update ( FlareCenter *center )
  *    Handle the expose event on the preview
  */
 static gint
-flare_center_preview_expose( GtkWidget *widget,
-			    GdkEvent *event )
+flare_center_preview_expose (GtkWidget *widget,
+			     GdkEvent  *event)
 {
   FlareCenter *center;
 
-  center = gtk_object_get_user_data( GTK_OBJECT(widget) );
-  flare_center_draw( center, ALL );
+  center = gtk_object_get_user_data (GTK_OBJECT (widget));
+  flare_center_draw (center, ALL);
   return FALSE;
 }
 
@@ -1032,15 +1074,15 @@ flare_center_preview_expose( GtkWidget *widget,
  */
 
 static gint
-flare_center_preview_events ( GtkWidget *widget,
-			     GdkEvent *event )
+flare_center_preview_events (GtkWidget *widget,
+			     GdkEvent  *event)
 {
   FlareCenter *center;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
   gchar buf[256];
 
-  center = gtk_object_get_user_data ( GTK_OBJECT(widget) );
+  center = gtk_object_get_user_data (GTK_OBJECT (widget));
 
   switch (event->type)
     {
@@ -1055,16 +1097,18 @@ flare_center_preview_events ( GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      if ( !mevent->state ) break;
+      if (!mevent->state) break;
       center->curx = mevent->x;
       center->cury = mevent->y;
     mouse:
-      flare_center_draw( center, CURSOR );
+      flare_center_draw (center, CURSOR);
       center->in_call = TRUE;
-      sprintf(buf, "%d", center->curx * center->dwidth / center->pwidth );
-      gtk_entry_set_text( GTK_ENTRY(center->xentry), buf );
-      sprintf(buf, "%d", center->cury * center->dheight / center->pheight );
-      gtk_entry_set_text( GTK_ENTRY(center->yentry), buf );
+      g_snprintf (buf, sizeof (buf), "%d",
+		  center->curx * center->dwidth / center->pwidth );
+      gtk_entry_set_text (GTK_ENTRY (center->xentry), buf);
+      g_snprintf (buf, sizeof (buf), "%d",
+		  center->cury * center->dheight / center->pheight );
+      gtk_entry_set_text (GTK_ENTRY (center->yentry), buf);
       center->in_call = FALSE;
       break;
 

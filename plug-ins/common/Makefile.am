@@ -427,6 +427,7 @@ edge_SOURCES = \
 	edge.c
 
 edge_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -436,6 +437,7 @@ emboss_SOURCES = \
 
 emboss_LDADD = \
 	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -444,6 +446,7 @@ engrave_SOURCES = \
 	engrave.c
 
 engrave_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -452,6 +455,7 @@ exchange_SOURCES = \
 	exchange.c
 
 exchange_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -469,6 +473,7 @@ flarefx_SOURCES = \
 	flarefx.c
 
 flarefx_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -477,6 +482,7 @@ fractaltrace_SOURCES = \
 	fractaltrace.c
 
 fractaltrace_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -485,6 +491,7 @@ gauss_iir_SOURCES = \
 	gauss_iir.c
 
 gauss_iir_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -493,6 +500,7 @@ gauss_rle_SOURCES = \
 	gauss_rle.c
 
 gauss_rle_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -510,6 +518,7 @@ gee_SOURCES = \
 	gee.c
 
 gee_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -544,6 +553,7 @@ glasstile_SOURCES = \
 	glasstile.c
 
 glasstile_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -561,6 +571,7 @@ gqbist_SOURCES = \
 	gqbist.c
 
 gqbist_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -586,6 +597,7 @@ gtm_SOURCES = \
 	gtm.c
 
 gtm_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

@@ -137,8 +137,6 @@ static GtkWidget *add_image_list (int add_box_flag, int n, gint32 *image_id,
                                   GtkWidget *frame);
 
 static gint      film_dialog         (gint32 image_ID);
-static void      film_close_callback (GtkWidget *widget,
-                                      gpointer data);
 static void      film_ok_callback    (GtkWidget *widget,
                                       gpointer data);
 static void      numbering_toggle_update (GtkWidget *widget,
@@ -1188,17 +1186,15 @@ film_dialog (gint32 image_ID)
 
 {
   GtkWidget *dlg;
-  GtkWidget *button;
-  GtkWidget *hbbox;
   GtkWidget *hbox, *h0box;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *vbox, *v0box;
   guchar *color_cube;
-  char buffer[80];
+  gchar   buffer[80];
   gint32 *image_id_list;
-  int nimages, j;
+  gint    nimages, j;
 
   gchar **argv;
   gint argc;
@@ -1210,47 +1206,32 @@ film_dialog (gint32 image_ID)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  gdk_set_use_xshm(gimp_use_xshm());
+  gdk_set_use_xshm (gimp_use_xshm ());
 
-  gtk_preview_set_gamma(gimp_gamma());
-  gtk_preview_set_install_cmap(gimp_install_cmap());
-  color_cube = gimp_color_cube();
-  gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2],
-                             color_cube[3]);
-  gtk_widget_set_default_visual(gtk_preview_get_visual());
-  gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1], color_cube[2],
+			      color_cube[3]);
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  filmint.dialog = dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Film"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  filmint.dialog = dlg =
+    gimp_dialog_new (_("Film"), "film",
+		     gimp_plugin_help_func, "filters/film.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
+
+		     _("OK"), film_ok_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      (GtkSignalFunc) film_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) film_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /* parameter settings */
   hbox = gtk_hbox_new (FALSE, 0);
@@ -1293,7 +1274,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (table);
 
   /* Film height */
-  sprintf (buffer, "%d", (int)filmvals.film_height);
+  g_snprintf (buffer, sizeof (buffer), "%d", (int)filmvals.film_height);
   filmint.left_entry[0] = add_label_with_entry (_("Height:"), buffer, 0, table);
 
   /* Film colour */
@@ -1319,7 +1300,7 @@ film_dialog (gint32 image_ID)
   gtk_widget_show (table);
 
   /* Startindex */
-  sprintf (buffer, "%d", (int)filmvals.number_start);
+  g_snprintf (buffer, sizeof (buffer), "%d", (int)filmvals.number_start);
   filmint.left_entry[1] = add_label_with_entry (_("Startindex:"), buffer,
                                                 0, table);
 
@@ -1379,15 +1360,6 @@ film_dialog (gint32 image_ID)
   gdk_flush ();
 
   return filmint.run;
-}
-
-
-static void
-film_close_callback (GtkWidget *widget,
-                     gpointer data)
-
-{
-  gtk_main_quit ();
 }
 
 

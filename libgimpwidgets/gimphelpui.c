@@ -24,6 +24,9 @@
 
 #include "gimphelpui.h"
 
+/*  external functions  */
+void        gimp_help                            (gchar          *help_data);
+
 /*  local function prototypes  */
 static void gimp_help_callback                   (GtkWidget      *widget,
 						  gpointer        data);
@@ -100,7 +103,10 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
        */
       tips_query->parent = widget;
       gtk_widget_realize (tips_query);
+    }
 
+  if (! gtk_signal_lookup ("tips_query", GTK_OBJECT (widget)->klass->type))
+    {
       gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
 					"tips_query",
 					GTK_RUN_LAST,

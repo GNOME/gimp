@@ -35,11 +35,16 @@
  *                                        --Sven <sven@gimp.org>
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* big scales */
@@ -232,146 +237,138 @@ void	exchange()
 }
 
 /* show our dialog */
-static
-int	doDialog()
+static int
+doDialog (void)
 {
-	GtkWidget	*dialog;
-	GtkWidget	*hbbox;
-	GtkWidget	*button;
-	GtkWidget	*frame;
-	GtkWidget	*table;
-	GtkWidget	*mainbox;
-	GtkWidget	*tobox;
-	GtkWidget	*frombox;
-	GtkWidget	*prevbox;
-	guchar 		*color_cube;
-	gchar		**argv;
-	gint		argc;
-	int		framenumber;
+  GtkWidget    *dialog;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkWidget    *mainbox;
+  GtkWidget    *tobox;
+  GtkWidget    *frombox;
+  GtkWidget    *prevbox;
+  guchar       *color_cube;
+  gchar	      **argv;
+  gint		argc;
+  gint		framenumber;
 
-	argc = 1;
-	argv = g_new(gchar *, 1);
-	argv[0] = g_strdup("exchange");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("exchange");
 
-	gtk_init(&argc, &argv);
-        gtk_rc_parse(gimp_gtkrc());
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 
-	/* stuff for preview */
-	gtk_preview_set_gamma(gimp_gamma());
-	gtk_preview_set_install_cmap(gimp_install_cmap()); 
-	color_cube = gimp_color_cube();
-	gtk_preview_set_color_cube(color_cube[0], color_cube[1], color_cube[2], color_cube[3]); 
-	gtk_widget_set_default_visual(gtk_preview_get_visual());
-	gtk_widget_set_default_colormap(gtk_preview_get_cmap());
-	
-	/* load pixelregion */
-	gimp_pixel_rgn_init(&origregion, drw, 0, 0, PREVIEW_SIZE, PREVIEW_SIZE, FALSE, FALSE);
+  /* stuff for preview */
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ()); 
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]); 
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-	/* set up the dialog */
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Color Exchange"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) gtk_main_quit,
-			   NULL);
+  /* load pixelregion */
+  gimp_pixel_rgn_init (&origregion, drw,
+		       0, 0, PREVIEW_SIZE, PREVIEW_SIZE, FALSE, FALSE);
 
-	/*  Action area  */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-	gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-	hbbox = gtk_hbutton_box_new ();
-	gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbbox);
-	
-	button = gtk_button_new_with_label ( _("OK"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    (GtkSignalFunc) ok_callback,
-			    dialog);
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-	
-	button = gtk_button_new_with_label ( _("Cancel"));
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				   (GtkSignalFunc) gtk_widget_destroy,
-				   GTK_OBJECT (dialog));
-	gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-	
-	/* do some boxes here */
-	mainbox = gtk_vbox_new(FALSE, 5);
-	gtk_container_border_width(GTK_CONTAINER(mainbox), 10);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), mainbox, TRUE, TRUE, 0);
+  /* set up the dialog */
+  dialog = gimp_dialog_new (_("Color Exchange"), "exchange",
+			    gimp_plugin_help_func, "filters/exchange.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-	prevbox = gtk_hbox_new(FALSE, 5);
-	gtk_container_border_width(GTK_CONTAINER(prevbox), 0);
-	gtk_box_pack_start(GTK_BOX(mainbox), prevbox, TRUE, TRUE, 0);
+			    _("OK"), ok_callback,
+			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
 
-	frombox = gtk_hbox_new(FALSE, 5);
-	gtk_container_border_width(GTK_CONTAINER(frombox), 0);
-	gtk_box_pack_start(GTK_BOX(mainbox), frombox, TRUE, TRUE, 0);
+			    NULL);
 
-	tobox = gtk_hbox_new(FALSE, 5);
-	gtk_container_border_width(GTK_CONTAINER(tobox), 0);
-	gtk_box_pack_start(GTK_BOX(mainbox), tobox, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
-	frame = gtk_frame_new( _("Preview"));
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-	gtk_container_border_width(GTK_CONTAINER(frame), 0);
-	gtk_box_pack_start(GTK_BOX(prevbox), frame, TRUE, TRUE, 0);
-	gtk_widget_show(frame);
+  /* do some boxes here */
+  mainbox = gtk_vbox_new (FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (mainbox), 10);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), mainbox,
+		      TRUE, TRUE, 0);
 
-	preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_size(GTK_PREVIEW(preview), prev_width, prev_height);
-	gtk_container_add(GTK_CONTAINER(frame), preview);
-	update_preview();
-	gtk_widget_show(preview); 
+  prevbox = gtk_hbox_new(FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (prevbox), 0);
+  gtk_box_pack_start (GTK_BOX (mainbox), prevbox, TRUE, TRUE, 0);
 
-	/* and our scales */
-	for (framenumber = 0; framenumber < 2; framenumber++)
+  frombox = gtk_hbox_new (FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (frombox), 0);
+  gtk_box_pack_start (GTK_BOX (mainbox), frombox, TRUE, TRUE, 0);
+
+  tobox = gtk_hbox_new (FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (tobox), 0);
+  gtk_box_pack_start (GTK_BOX (mainbox), tobox, TRUE, TRUE, 0);
+
+  frame = gtk_frame_new (_("Preview"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
+  gtk_box_pack_start (GTK_BOX (prevbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), prev_width, prev_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  update_preview ();
+  gtk_widget_show (preview); 
+
+  /* and our scales */
+  for (framenumber = 0; framenumber < 2; framenumber++)
+    {
+      frame = gtk_frame_new (framenumber ? _("To color") : _("From color"));
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+      gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
+      gtk_box_pack_start (framenumber ? GTK_BOX (tobox) : GTK_BOX (frombox),
+			  frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
+      table = gtk_table_new (8, 2, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 0);
+      gtk_container_add (GTK_CONTAINER (frame), table);
+      doLabelAndScale (_("Red"), table,
+		       framenumber ? &xargs.tored : &xargs.fromred);
+      if (! framenumber)
+	doLabelAndScale (_("Red threshold"), table, &xargs.red_threshold);
+      doLabelAndScale (_("Green"), table,
+		       framenumber ? &xargs.togreen : &xargs.fromgreen);
+      if (! framenumber)
+	doLabelAndScale (_("Green threshold"), table, &xargs.green_threshold);
+      doLabelAndScale (_("Blue"), table,
+		       framenumber ? &xargs.toblue : &xargs.fromblue);
+      if (! framenumber)
+	doLabelAndScale (_("Blue threshold"), table, &xargs.blue_threshold);
+      if (! framenumber)
 	{
-		frame = gtk_frame_new(framenumber ? _("To color") : _("From color"));
-		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-		gtk_container_border_width(GTK_CONTAINER(frame), 0);
-		gtk_box_pack_start(framenumber ? GTK_BOX(tobox) : GTK_BOX(frombox),
-		                   frame, TRUE, TRUE, 0);
-		gtk_widget_show(frame);
-		table = gtk_table_new(8, 2, FALSE);
-		gtk_container_border_width(GTK_CONTAINER(table), 0);
-		gtk_container_add(GTK_CONTAINER(frame), table);
-		doLabelAndScale( _("Red"), table, framenumber ? &xargs.tored : &xargs.fromred);
-		if (! framenumber)
-			doLabelAndScale( _("Red threshold"), table, &xargs.red_threshold);
-		doLabelAndScale( _("Green"), table, framenumber ? &xargs.togreen : &xargs.fromgreen);
-		if (! framenumber)
-			doLabelAndScale( _("Green threshold"), table, &xargs.green_threshold);
-		doLabelAndScale( _("Blue"), table, framenumber ? &xargs.toblue : &xargs.fromblue);
-		if (! framenumber)
-			doLabelAndScale( _("Blue threshold"), table, &xargs.blue_threshold);
-		if (! framenumber)
-		{
-			GtkWidget	*button;
-			
-			button = gtk_check_button_new_with_label( _("Lock thresholds"));
-			gtk_table_attach(GTK_TABLE(table), button, 1, 2, 6, 7, GTK_FILL, 0, 0, 0);
-			gtk_signal_connect(GTK_OBJECT(button), "clicked", (GtkSignalFunc) lock_callback, dialog);
-			gtk_widget_show(button);
-		}
-		gtk_widget_show(table);
+	  GtkWidget *button;
+
+	  button = gtk_check_button_new_with_label (_("Lock thresholds"));
+	  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 6, 7,
+			    GTK_FILL, 0, 0, 0);
+	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			      (GtkSignalFunc) lock_callback,
+			      dialog);
+	  gtk_widget_show (button);
 	}
+      gtk_widget_show (table);
+    }
 
-	/* show everything */
-	gtk_widget_show(prevbox);
-	gtk_widget_show(tobox);
-	gtk_widget_show(frombox);
-	gtk_widget_show(mainbox);
-	gtk_widget_show(dialog);
-	gtk_main();
-	gdk_flush();
+  /* show everything */
+  gtk_widget_show (prevbox);
+  gtk_widget_show (tobox);
+  gtk_widget_show (frombox);
+  gtk_widget_show (mainbox);
+  gtk_widget_show (dialog);
 
-	return running;
+  gtk_main ();
+  gdk_flush ();
+
+  return running;
 }
 
 static

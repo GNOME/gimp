@@ -27,9 +27,11 @@
 #include <ctype.h>
 #include <time.h>
 
-#include "glib.h"
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
@@ -235,10 +237,11 @@ build_dialog(GImageType basetype,
 		      (GtkSignalFunc) window_delete_callback,
 		      NULL);
 
-  
+  gimp_help_connect_help_accel (dlg, gimp_plugin_help_func, "filters/gee.html");
+
   /* Action area - 'close' button only. */
 
-  button = gtk_button_new_with_label ( _("** Thank you for choosing GIMP **"));
+  button = gtk_button_new_with_label (_("** Thank you for choosing GIMP **"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) window_close_callback,

@@ -48,13 +48,17 @@
  *                                       ddunbar@diads.com
  */
 
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "config.h"
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Typedefs */
@@ -112,7 +116,6 @@ static gint   save_image (char   *filename,
 static gint   save_dialog ();
 
 static gint   color_comp (guchar *buffer, guchar *buf2);
-static void   save_close_callback  (GtkWidget *widget, gpointer   data);
 static void   gtm_entry_callback  (GtkWidget *widget, gpointer   data);
 static void   gtm_toggle_callback  (GtkWidget *widget, gpointer   data);
 static void   save_ok_callback     (GtkWidget *widget, gpointer   data);
@@ -120,7 +123,6 @@ static void   gtm_caption_callback     (GtkWidget *widget, gpointer   data);
 static void   gtm_cellcontent_callback     (GtkWidget *widget, gpointer   data);
 static void   gtm_clwidth_callback     (GtkWidget *widget, gpointer   data);
 static void   gtm_clheight_callback     (GtkWidget *widget, gpointer   data);
-static void   set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -328,145 +330,130 @@ save_image (char   *filename,
   return 1;
 }
 
-static gint save_dialog ()
+static gint
+save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *toggle;
-  GtkTooltips *tips;
-  GdkColor tips_fg, tips_bg;
   gchar **argv;
-  gchar buffer[32];
-  gint argc;
+  gchar   buffer[32];
+  gint    argc;
 
-  bint.run=FALSE;
+  bint.run = FALSE;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gtm");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("GIMP Table Magic"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("GIMP Table Magic"), "gtm",
+			 gimp_plugin_help_func, "filters/gtm.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), save_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-                      (GtkSignalFunc) save_close_callback,
+                      GTK_SIGNAL_FUNC (gtk_main_quit),
                       NULL);
 
   /* Initialize Tooltips */
-
-  /* use black as foreground: */
-  tips = gtk_tooltips_new ();
-  tips_fg.red   = 0;
-  tips_fg.green = 0;
-  tips_fg.blue  = 0;
-  /* postit yellow (khaki) as background: */
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_fg);
-  tips_bg.red   = 61669;
-  tips_bg.green = 59113;
-  tips_bg.blue  = 35979;
-  gdk_color_alloc (gtk_widget_get_colormap (dlg), &tips_bg);
-  gtk_tooltips_set_colors (tips,&tips_bg,&tips_fg);
-
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) save_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  gimp_help_init ();
 
   /* HTML Page Options */
 
-  frame = gtk_frame_new ( _("HTML Page Options"));
+  frame = gtk_frame_new (_("HTML Page Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
 
-  toggle = gtk_check_button_new_with_label ( _("Generate Full HTML Document"));
-  gtk_container_add (GTK_CONTAINER(frame), toggle);
+  toggle = gtk_check_button_new_with_label (_("Generate Full HTML Document"));
+  gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gtm_toggle_callback, 
+		      GTK_SIGNAL_FUNC (gtm_toggle_callback),
 		      &gtmvals.fulldoc);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html."));
+  gimp_help_set_help_data (toggle,
+			   _("If checked GTM will output a full HTML document "
+			     "with <HTML>, <BODY>, etc. tags instead of just "
+			     "the table html."),
+			   NULL);
 
   gtk_widget_show (frame);
 
   /* HTML Table Creation Options */
 
-  frame = gtk_frame_new ( _("Table Creation Options"));
+  frame = gtk_frame_new (_("Table Creation Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ( _("Use Cellspan"));
+  toggle = gtk_check_button_new_with_label (_("Use Cellspan"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		     (GtkSignalFunc) gtm_toggle_callback, 
+		      GTK_SIGNAL_FUNC (gtm_toggle_callback),
 		     &gtmvals.spantags);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."));
+  gimp_help_set_help_data (toggle,
+			   _("If checked GTM will replace any rectangular "
+			     "sections of identically colored blocks with one "
+			     "large cell with ROWSPAN and COLSPAN values."),
+			   NULL);
 
-  toggle = gtk_check_button_new_with_label ( _("Compress TD tags"));
+  toggle = gtk_check_button_new_with_label (_("Compress TD tags"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		     (GtkSignalFunc) gtm_toggle_callback, 
-		     &gtmvals.tdcomp);
+		      GTK_SIGNAL_FUNC (gtm_toggle_callback),
+		      &gtmvals.tdcomp);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control."));
+  gimp_help_set_help_data (toggle,
+			   _("Checking this tag will cause GTM to leave no "
+			     "whitespace between the TD tags and the "
+			     "cellcontent.  This is only necessary for pixel "
+			     "level positioning control."),
+			   NULL);
 
-  toggle = gtk_check_button_new_with_label ( _("Caption"));
+  toggle = gtk_check_button_new_with_label (_("Caption"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		     (GtkSignalFunc) gtm_toggle_callback, 
+		      GTK_SIGNAL_FUNC (gtm_toggle_callback),
 		     &gtmvals.caption);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle, _("Check if you would like to have the table captioned."));
+  gimp_help_set_help_data (toggle,
+			   _("Check if you would like to have the table "
+			     "captioned."),
+			   NULL);
 
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_set_usize (entry, 100, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                    (GtkSignalFunc) gtm_caption_callback,
-                    NULL);
+		      GTK_SIGNAL_FUNC (gtm_caption_callback),
+		      NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.captiontxt);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The text for the table caption."));
+  gimp_help_set_help_data (entry, _("The text for the table caption."), NULL);
 
-  label = gtk_label_new ( _("Cell Content"));
+  label = gtk_label_new (_("Cell Content"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -474,100 +461,118 @@ static gint save_dialog ()
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3, GTK_FILL, 0, 5, 0);
   gtk_widget_set_usize (entry, 100, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                    (GtkSignalFunc) gtm_cellcontent_callback,
-                    NULL);
+		      GTK_SIGNAL_FUNC (gtm_cellcontent_callback),
+		      NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The text to go into each cell."));
+  gimp_help_set_help_data (entry, _("The text to go into each cell."), NULL);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
- 
+
   /* HTML Table Options */
 
   frame = gtk_frame_new ( _("Table Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (5, 4, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ( _("Border"));
+  label = gtk_label_new (_("Border"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 35, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) gtm_entry_callback,
+                      GTK_SIGNAL_FUNC (gtm_entry_callback),
                       &gtmvals.border);
-  sprintf(buffer, "%d", gtmvals.border);
+  g_snprintf (buffer, sizeof (buffer), "%d", gtmvals.border);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The number of pixels in the table border.  Can only be a number."));
+  gimp_help_set_help_data (entry,
+			   _("The number of pixels in the table border.  "
+			     "Can only be a number."),
+			   NULL);
 
-  label = gtk_label_new ( _("Width"));
+  label = gtk_label_new (_("Width"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
     
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 35, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) gtm_clwidth_callback,
+                      GTK_SIGNAL_FUNC (gtm_clwidth_callback),
                       NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The width for each table cell.  Can be a number or a percent."));
+  gimp_help_set_help_data (entry,
+			   _("The width for each table cell.  "
+			     "Can be a number or a percent."),
+			   NULL);
 
-  label = gtk_label_new ( _("Height"));
+  label = gtk_label_new (_("Height"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 35, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) gtm_clheight_callback,
+                      GTK_SIGNAL_FUNC (gtm_clheight_callback),
                       NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The height for each table cell.  Can be a number or a percent."));
+  gimp_help_set_help_data (entry,
+			   _("The height for each table cell.  "
+			     "Can be a number or a percent."),
+			   NULL);
 
-  label = gtk_label_new ( _("Cell-Padding"));
+  label = gtk_label_new (_("Cell-Padding"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 3, 4, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 3, 4, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 35, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) gtm_entry_callback,
+                      GTK_SIGNAL_FUNC (gtm_entry_callback),
                       &gtmvals.cellpadding);
-  sprintf(buffer, "%d", gtmvals.cellpadding);
+  g_snprintf (buffer, sizeof (buffer), "%d", gtmvals.cellpadding);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The amount of cellpadding.  Can only be a number."));
+  gimp_help_set_help_data (entry,
+			   _("The amount of cellpadding.  "
+			     "Can only be a number."),
+			   NULL);
 
-
-  label = gtk_label_new ( _("Cell-Spacing"));
+  label = gtk_label_new (_("Cell-Spacing"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
-  gtk_table_attach (GTK_TABLE (table), entry, 3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), entry, 3, 4, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_set_usize (entry, 35, 0);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      (GtkSignalFunc) gtm_entry_callback,
+                      GTK_SIGNAL_FUNC (gtm_entry_callback),
                       &gtmvals.cellspacing);
-  sprintf(buffer, "%d", gtmvals.cellspacing);
+  g_snprintf (buffer, sizeof (buffer), "%d", gtmvals.cellspacing);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry, _("The amount of cellspacing.  Can only be a number."));
-
+  gimp_help_set_help_data (entry,
+			   _("The amount of cellspacing.  "
+			     "Can only be a number."),
+			   NULL);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -579,17 +584,21 @@ static gint save_dialog ()
   return bint.run;
 }
 
-static gint color_comp (guchar *buffer, guchar *buf2) {
+static gint
+color_comp (guchar *buffer,
+	    guchar *buf2)
+{
   if (buffer[0] == buf2[0] && buffer[1] == buf2[1] && buffer[2] == buf2[2])
     return 1;
   else
     return 0;
 }  
 
-
 /*  Save interface functions  */
 
-static void gtm_toggle_callback (GtkWidget *widget, gpointer   data)
+static void
+gtm_toggle_callback (GtkWidget *widget,
+		     gpointer   data)
 {
   int *toggle_val;
 
@@ -601,7 +610,9 @@ static void gtm_toggle_callback (GtkWidget *widget, gpointer   data)
     *toggle_val = FALSE;
 }
 
-static void gtm_entry_callback (GtkWidget *widget, gpointer data)
+static void
+gtm_entry_callback (GtkWidget *widget,
+		    gpointer data)
 {
   gint *text_val;
 
@@ -609,40 +620,38 @@ static void gtm_entry_callback (GtkWidget *widget, gpointer data)
   *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
-static void save_close_callback (GtkWidget *widget, gpointer   data)
-{
-  gtk_main_quit ();
-}
-
-static void save_ok_callback (GtkWidget *widget, gpointer   data)
+static void
+save_ok_callback (GtkWidget *widget,
+		  gpointer   data)
 {
   bint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void gtm_caption_callback (GtkWidget *widget, gpointer   data)
+static void
+gtm_caption_callback (GtkWidget *widget,
+		      gpointer   data)
 {
-  strcpy(gtmvals.captiontxt, gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void gtm_cellcontent_callback (GtkWidget *widget, gpointer   data)
-{
-  strcpy(gtmvals.cellcontent, gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void gtm_clwidth_callback (GtkWidget *widget, gpointer   data)
-{
-  strcpy(gtmvals.clwidth, gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void gtm_clheight_callback (GtkWidget *widget, gpointer   data)
-{
-  strcpy(gtmvals.clheight, gtk_entry_get_text (GTK_ENTRY (widget)));
+  strcpy (gtmvals.captiontxt, gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 static void
-set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
+gtm_cellcontent_callback (GtkWidget *widget,
+			  gpointer   data)
 {
-  if (desc && desc[0])
-    gtk_tooltips_set_tip (tooltips, widget, (char *) desc, NULL);
+  strcpy (gtmvals.cellcontent, gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+gtm_clwidth_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  strcpy (gtmvals.clwidth, gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+gtm_clheight_callback (GtkWidget *widget,
+		       gpointer   data)
+{
+  strcpy (gtmvals.clheight, gtk_entry_get_text (GTK_ENTRY (widget)));
 }
