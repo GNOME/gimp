@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimphistogramtool.h"
 #include "tool_manager.h"
@@ -39,7 +40,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 

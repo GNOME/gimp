@@ -24,9 +24,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
 #include "sys/types.h"
 
 #include <gtk/gtk.h>
@@ -38,7 +36,6 @@
 
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "plug_in.h"
 
 #include "libgimp/gimpintl.h"

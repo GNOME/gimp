@@ -51,7 +51,6 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "gui/menus.h"
 
 #include "gimage.h"

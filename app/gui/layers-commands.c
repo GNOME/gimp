@@ -36,8 +36,9 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "resize.h"

@@ -30,10 +30,10 @@
 #include "core/gimppattern.h"
 
 #include "widgets/gimpdnd.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "disp_callbacks.h"
 #include "gdisplay_ops.h"
-#include "gimpui.h"
 #include "interface.h"
 #include "gui/menus.h"
 #include "nav_window.h"

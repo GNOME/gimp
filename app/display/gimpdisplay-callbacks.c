@@ -45,6 +45,8 @@
 #include "tools/gimpmovetool.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
@@ -56,7 +58,6 @@
 #include "app_procs.h"
 #include "drawable.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "scale.h"
 #include "scroll.h"
 #include "selection.h"

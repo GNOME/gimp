@@ -30,8 +30,6 @@
 
 #include "gui/info-dialog.h"
 #include "gui/palette-editor.h"
-#include "gdisplay.h"
-#include "gimpui.h"
 
 #include "gimpdrawtool.h"
 #include "gimpcolorpickertool.h"
@@ -39,6 +37,7 @@
 #include "tool_options.h"
 
 #include "appenv.h"
+#include "gdisplay.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

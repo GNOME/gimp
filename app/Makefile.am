@@ -37,8 +37,6 @@ gimp_SOURCES = \
 	errorconsole.h		\
 	gimpprogress.c		\
 	gimpprogress.h		\
-	gimpui.c		\
-	gimpui.h		\
 	nav_window.c		\
 	nav_window.h		\
 	ops_buttons.c		\

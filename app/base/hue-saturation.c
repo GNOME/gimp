@@ -32,13 +32,14 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "image_map.h"
 
 #include "libgimp/gimpintl.h"

@@ -58,7 +58,6 @@
 #include "gdisplay_ops.h"
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "gimpui.h"
 #include "global_edit.h"
 #include "image_render.h"
 #include "nav_window.h"

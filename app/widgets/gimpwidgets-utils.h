@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_UI_H__
-#define __GIMP_UI_H__
+#ifndef __GIMP_WIDGETS_UTILS_H__
+#define __GIMP_WIDGETS_UTILS_H__
 
 
 void  gimp_message_box   (gchar        *message,
@@ -46,4 +46,4 @@ void  gimp_window_remove_accel_group (GtkWindow               *window,
 gpointer gimp_widget_get_callback_context (GtkWidget *widget);
 
 
-#endif /* __GIMP_UI_H__ */
+#endif /* __GIMP_WIDGETS_UTILS_H__ */

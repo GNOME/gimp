@@ -3,6 +3,7 @@
 noinst_LTLIBRARIES = libappwidgets.la
 
 libappwidgets_la_SOURCES = \
+	widgets-types.h			\
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\
 	gimpchannellistitem.c		\
@@ -69,6 +70,10 @@ libappwidgets_la_SOURCES = \
 	gimppreview.h			\
 	gimptoolinfopreview.c		\
 	gimptoolinfopreview.h		\
+	gimpwidgets-constructors.c	\
+	gimpwidgets-constructors.h	\
+	gimpwidgets-utils.c		\
+	gimpwidgets-utils.h		\
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\
@@ -76,8 +81,7 @@ libappwidgets_la_SOURCES = \
 	gtkvwrapbox.c			\
 	gtkvwrapbox.h			\
 	gimpconstrainedhwrapbox.c	\
-	gimpconstrainedhwrapbox.h	\
-	widgets-types.h
+	gimpconstrainedhwrapbox.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Widgets\"

@@ -1,5 +1,45 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimpui.[ch]: removed.
+
+	* app/tools/paint_options.[ch]: removed paint_mode_menu_new().
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpwidgets-constructors.[ch]
+	* app/widgets/gimpwidgets-utils.[ch]: added here.
+
+	* app/disp_callbacks.c
+	* app/errors.c
+	* app/gimphelp.c
+	* app/interface.c
+	* app/gui/brush-select.c
+	* app/gui/channels-commands.c
+	* app/gui/commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/layers-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimplayerlistview.c: changed accordingly.
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/tool_options_dialog.[ch]: removed.
 	* app/tools/tools.h: new file

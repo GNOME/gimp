@@ -28,6 +28,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
 #include "gimprc.h"
@@ -189,8 +190,8 @@ paint_options_init (PaintOptions         *options,
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       options->paint_mode_w =
-	paint_mode_menu_new (paint_options_paint_mode_update, options, TRUE,
-			     gimp_context_get_paint_mode (tool_info->context));
+	gimp_paint_mode_menu_new (paint_options_paint_mode_update, options, TRUE,
+				  gimp_context_get_paint_mode (tool_info->context));
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
 				 options->paint_mode_w, 1, TRUE);
@@ -334,71 +335,6 @@ paint_options_set_global (gboolean global)
 	    gtk_widget_hide (options->global);
 	}
     }
-}
-
-GtkWidget *
-paint_mode_menu_new (GtkSignalFunc    callback,
-		     gpointer         data,
-                     gboolean         with_behind_mode,
-		     LayerModeEffects initial)
-{
-  GtkWidget *menu;
-
-  if (with_behind_mode)
-    {
-      menu = gimp_option_menu_new2
-        (FALSE, callback, data, (gpointer) initial,
-
-         _("Normal"),       (gpointer) NORMAL_MODE,       NULL,
-         _("Dissolve"),     (gpointer) DISSOLVE_MODE,     NULL,
-         _("Behind"),       (gpointer) BEHIND_MODE,       NULL,
-         _("Multiply"),     (gpointer) MULTIPLY_MODE,     NULL,
-         _("Divide"),       (gpointer) DIVIDE_MODE,       NULL,
-         _("Screen"),       (gpointer) SCREEN_MODE,       NULL,
-         _("Overlay"),      (gpointer) OVERLAY_MODE,      NULL,
-         _("Dodge"),        (gpointer) DODGE_MODE,        NULL,
-         _("Burn"),         (gpointer) BURN_MODE,         NULL,
-         _("Hard Light"),   (gpointer) HARDLIGHT_MODE,    NULL,
-         _("Difference"),   (gpointer) DIFFERENCE_MODE,   NULL,
-         _("Addition"),     (gpointer) ADDITION_MODE,     NULL,
-         _("Subtract"),     (gpointer) SUBTRACT_MODE,     NULL,
-         _("Darken Only"),  (gpointer) DARKEN_ONLY_MODE,  NULL,
-         _("Lighten Only"), (gpointer) LIGHTEN_ONLY_MODE, NULL,
-         _("Hue"),          (gpointer) HUE_MODE,          NULL,
-         _("Saturation"),   (gpointer) SATURATION_MODE,   NULL,
-         _("Color"),        (gpointer) COLOR_MODE,        NULL,
-         _("Value"),        (gpointer) VALUE_MODE,        NULL,
-
-         NULL);
-    }
-  else
-    {
-      menu = gimp_option_menu_new2
-        (FALSE, callback, data, (gpointer) initial,
-
-         _("Normal"),       (gpointer) NORMAL_MODE,       NULL,
-         _("Dissolve"),     (gpointer) DISSOLVE_MODE,     NULL,
-         _("Multiply"),     (gpointer) MULTIPLY_MODE,     NULL,
-         _("Divide"),       (gpointer) DIVIDE_MODE,       NULL,
-         _("Screen"),       (gpointer) SCREEN_MODE,       NULL,
-         _("Overlay"),      (gpointer) OVERLAY_MODE,      NULL,
-         _("Dodge"),        (gpointer) DODGE_MODE,        NULL,
-         _("Burn"),         (gpointer) BURN_MODE,         NULL,
-         _("Hard Light"),   (gpointer) HARDLIGHT_MODE,    NULL,
-         _("Difference"),   (gpointer) DIFFERENCE_MODE,   NULL,
-         _("Addition"),     (gpointer) ADDITION_MODE,     NULL,
-         _("Subtract"),     (gpointer) SUBTRACT_MODE,     NULL,
-         _("Darken Only"),  (gpointer) DARKEN_ONLY_MODE,  NULL,
-         _("Lighten Only"), (gpointer) LIGHTEN_ONLY_MODE, NULL,
-         _("Hue"),          (gpointer) HUE_MODE,          NULL,
-         _("Saturation"),   (gpointer) SATURATION_MODE,   NULL,
-         _("Color"),        (gpointer) COLOR_MODE,        NULL,
-         _("Value"),        (gpointer) VALUE_MODE,        NULL,
-
-         NULL);
-    }
-
-  return menu;
 }
 
 

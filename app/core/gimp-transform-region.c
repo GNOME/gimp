@@ -46,24 +46,22 @@
 
 #include "gui/info-dialog.h"
 #include "gdisplay.h"
-#include "gimpui.h"
+
+#include "tool_manager.h"
+#include "tool_options.h"
+#include "transform_options.h"
+#include "gimptransformtool.h"
+#include "gimpperspectivetool.h"
+#include "gimprotatetool.h"
+#include "gimpscaletool.h"
+#include "gimpsheartool.h"
+#include "gimpfliptool.h"
 
 #include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "undo.h"
 #include "path_transform.h"
-
-#include "tool_manager.h"
-#include "tool_options.h"
-#include "transform_options.h"
-#include "gimptransformtool.h"
-
-#include "tools/gimpperspectivetool.h"
-#include "tools/gimprotatetool.h"
-#include "tools/gimpscaletool.h"
-#include "tools/gimpsheartool.h"
-#include "tools/gimpfliptool.h"
 
 #include "libgimp/gimpintl.h"
 

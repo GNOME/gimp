@@ -31,12 +31,13 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpbrightnesscontrasttool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "drawable.h"
-#include "gimpui.h"
 #include "gdisplay.h"
 #include "image_map.h"
 

@@ -30,11 +30,12 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "errorconsole.h"
 #include "errors.h"
-#include "gimpui.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>

@@ -31,10 +31,10 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "channels-commands.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "menus.h"
 
 #include "drawable.h"

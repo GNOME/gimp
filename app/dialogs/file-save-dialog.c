@@ -42,7 +42,6 @@
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "menus.h"
 
 #include "gimprc.h"

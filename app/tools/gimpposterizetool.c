@@ -30,13 +30,14 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpposterizetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "image_map.h"
 
 #include "libgimp/gimpintl.h"

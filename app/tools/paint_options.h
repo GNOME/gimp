@@ -148,11 +148,4 @@ void           paint_options_init   (PaintOptions         *options,
 void        paint_options_set_global       (gboolean          global);
 
 
-/*  a utility function which returns a paint mode menu  */
-GtkWidget * paint_mode_menu_new            (GtkSignalFunc     callback,
-					    gpointer          data,
-					    gboolean          with_behind_mode,
-					    LayerModeEffects  initial);
-
-
 #endif  /*  __PAINT_OPTIONS_H__  */

@@ -30,6 +30,7 @@
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_options.h"
@@ -38,7 +39,6 @@
 #include "tool-options-dialog.h"
 
 #include "dialog_handler.h"
-#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 

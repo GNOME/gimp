@@ -50,7 +50,6 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 

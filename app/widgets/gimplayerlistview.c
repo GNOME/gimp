@@ -33,17 +33,14 @@
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
-#include "drawable.h"
-#include "gdisplay.h"
-#include "gimplistitem.h"
-#include "gimprc.h"
-
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"
+#include "gimplistitem.h"
+#include "gimpwidgets-constructors.h"
 
-/* TODO: move the paint mode menu constructor to widgets/ */
-#include "tools/tools-types.h"
-#include "tools/paint_options.h"
+#include "drawable.h"
+#include "gdisplay.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -158,8 +155,8 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_widget_show (label);
 
   view->paint_mode_menu =
-    paint_mode_menu_new (gimp_layer_list_view_paint_mode_menu_callback, view,
-			 FALSE, NORMAL_MODE);
+    gimp_paint_mode_menu_new (gimp_layer_list_view_paint_mode_menu_callback,
+			      view, FALSE, NORMAL_MODE);
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 2);
   gtk_widget_show (view->paint_mode_menu);
 

@@ -42,16 +42,16 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpdnd.h"
-
-#include "context_manager.h"
-#include "gimprc.h"
-#include "gimpui.h"
-#include "gdisplay.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "context_manager.h"
+#include "gimprc.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

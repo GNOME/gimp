@@ -48,10 +48,11 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "global_edit.h"
 #include "plug_in.h"
 #include "undo.h"

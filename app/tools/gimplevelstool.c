@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimplevelstool.h"
 #include "tool_manager.h"
@@ -47,7 +48,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpui.h"
 #include "image_map.h"
 
 #include "libgimp/gimpintl.h"
