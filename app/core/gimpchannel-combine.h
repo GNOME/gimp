@@ -160,7 +160,8 @@ void            gimp_channel_push_undo         (GimpChannel       *mask);
 
 void            gimp_channel_clear             (GimpChannel       *mask);
 void            gimp_channel_all               (GimpChannel       *mask);
-void            gimp_channel_invert            (GimpChannel       *mask);
+void            gimp_channel_invert            (GimpChannel       *mask,
+                                                gboolean           push_undo);
 
 void            gimp_channel_border            (GimpChannel      *mask,
 						gint              radius_x,

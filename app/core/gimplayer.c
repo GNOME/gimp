@@ -1,5 +1,3 @@
-/* TODO: make sure has_alpha gets set */
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -175,19 +173,22 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
 
+  klass->opacity_changed             = NULL;
+  klass->mode_changed                = NULL;
+  klass->preserve_trans_changed      = NULL;
+  klass->linked_changed              = NULL;
   klass->mask_changed                = NULL;
 }
 
 static void
 gimp_layer_init (GimpLayer *layer)
 {
-  layer->linked         = FALSE;
-  layer->preserve_trans = FALSE;
-
-  layer->mask           = NULL;
-
   layer->opacity        = GIMP_OPACITY_OPAQUE;
   layer->mode           = GIMP_NORMAL_MODE;
+  layer->preserve_trans = FALSE;
+  layer->linked         = FALSE;
+
+  layer->mask           = NULL;
 
   /*  floating selection  */
   layer->fs.backing_store  = NULL;
@@ -253,10 +254,10 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
   GimpLayer *layer;
 
+  layer = GIMP_LAYER (viewable);
+
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
-
-  layer = GIMP_LAYER (viewable);
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
@@ -615,6 +616,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
   gchar         *mask_name;
   GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   mask_name = g_strdup_printf (_("%s mask"),
@@ -734,7 +737,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
     case GIMP_ADD_INVERSE_SELECTION_MASK:
     case GIMP_ADD_INVERSE_COPY_MASK:
-      gimp_drawable_invert (GIMP_DRAWABLE (mask));
+      gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
       break;
     }
 
@@ -840,6 +843,8 @@ gimp_layer_translate (GimpLayer *layer,
 		      gint       off_x,
 		      gint       off_y)
 {
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
   /*  the undo call goes here  */
   undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)), layer);
 
@@ -879,6 +884,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
   TileManager   *new_tiles;
   GimpImageType  type;
   GimpImage     *gimage;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
@@ -1022,6 +1029,8 @@ gimp_layer_check_scaling (const GimpLayer *layer,
   gint       new_layer_width;
   gint       new_layer_height;
 
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
   gimage           = gimp_item_get_image (GIMP_ITEM (layer));
   img_scale_w      = (gdouble) new_width  / (gdouble) gimage->width;
   img_scale_h      = (gdouble) new_height / (gdouble) gimage->height;
@@ -1069,6 +1078,8 @@ gimp_layer_scale_by_factors (GimpLayer             *layer,
 {
   gint new_width, new_height;
   gint new_offset_x, new_offset_y;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   if (w_factor == 0.0 || h_factor == 0.0)
     {
@@ -1129,6 +1140,8 @@ gimp_layer_scale (GimpLayer             *layer,
 {
   gint new_offset_x, new_offset_y;
 
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
   if (new_width == 0 || new_height == 0)
     {
       g_message ("gimp_layer_scale: Error. Requested width or height equals zero.");
@@ -1171,6 +1184,8 @@ gimp_layer_resize (GimpLayer *layer,
   TileManager *new_tiles;
   gint         w, h;
   gint         x1, y1, x2, y2;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   if (new_width < 1 || new_height < 1)
     return;
@@ -1286,6 +1301,8 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   gint       offset_x;
   gint       offset_y;
 
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
@@ -1308,6 +1325,8 @@ gimp_layer_boundary (GimpLayer *layer,
 		     gint      *num_segs)
 {
   BoundSeg *new_segs;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
   /*  Create the four boundary segments that encompass this
    *  layer's boundary.
@@ -1367,6 +1386,8 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
   GimpImage   *gimage;
   GimpChannel *mask;
 
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
 
@@ -1398,6 +1419,8 @@ gimp_layer_pick_correlate (GimpLayer *layer,
   Tile *tile;
   Tile *mask_tile;
   gint  val;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
   /*  Is the point inside the layer?
    *  First transform the point to layer coordinates...
@@ -1492,7 +1515,7 @@ gimp_layer_get_opacity (const GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_OPACITY_OPAQUE);
 
-  return (gdouble) layer->opacity;
+  return layer->opacity;
 }
 
 void

@@ -436,7 +436,7 @@ gimp_image_mask_undo (GimpImage *gimage)
 void
 gimp_image_mask_invert (GimpImage *gimage)
 {
-  gimp_channel_invert (gimp_image_get_mask (gimage));
+  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
 }
 
 

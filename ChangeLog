@@ -1,5 +1,19 @@
 2002-06-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.[ch] (gimp_channel_invert): added a boolean
+	"push_undo" parameter.
+
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-qmask.c: pass push_undo == TRUE.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): call
+	gimp_channel_invert(), not gimp_drawable_invert() because the
+	latter takes the current selection into accout (reported by Jimmac
+	on #gimp). Added g_return_if_fail() stuff to all public functions.
+	Cleanup.
+
+2002-06-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.c (gimp_container_get_child_by_index):
 	don't warn if an out-of-bounds index is passed in but simply
 	return NULL (removes the need to check if the container has 0

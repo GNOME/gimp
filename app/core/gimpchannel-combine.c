@@ -1322,15 +1322,16 @@ gimp_channel_all (GimpChannel *mask)
 }
 
 void
-gimp_channel_invert (GimpChannel *mask)
+gimp_channel_invert (GimpChannel *mask,
+                     gboolean     push_undo)
 {
   PixelRegion  maskPR;
   GimpLut     *lut;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
-  /*  push the current channel onto the undo stack  */
-  gimp_channel_push_undo (mask);
+  if (push_undo)
+    gimp_channel_push_undo (mask);
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
@@ -1339,8 +1340,9 @@ gimp_channel_invert (GimpChannel *mask)
   
   lut = invert_lut_new (1);
 
-  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
-				  lut, 1, &maskPR);
+  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline, lut,
+                                  1, &maskPR);
+
   gimp_lut_free (lut);
   mask->bounds_known = FALSE;
 }

@@ -104,7 +104,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                 }
 
               if (gimage->qmask_inverted)
-                gimp_channel_invert (mask);
+                gimp_channel_invert (mask, TRUE);
 
               undo_push_image_qmask (gimage);
 
@@ -131,7 +131,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
               undo_push_image_qmask (gimage);
 
               if (gimage->qmask_inverted)
-                gimp_channel_invert (mask);
+                gimp_channel_invert (mask, TRUE);
 
               gimp_image_mask_load (gimage, mask);
               gimp_image_remove_channel (gimage, mask);
@@ -167,7 +167,7 @@ gimp_image_qmask_invert (GimpImage *gimage)
 
       if (qmask)
         {
-          gimp_channel_invert (qmask);
+          gimp_channel_invert (qmask, TRUE);
 
           gimp_drawable_update (GIMP_DRAWABLE (qmask),
                                 0, 0,
