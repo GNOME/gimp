@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-06-04 15:17+0000\n"
-"PO-Revision-Date: 2000-06-04 15:34+00:00\n"
+"POT-Creation-Date: 2000-06-08 23:39+0000\n"
+"PO-Revision-Date: 2000-06-08 23:43+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,8 +59,8 @@ msgstr "О программе"
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:360
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
-#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1141
-#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:259
+#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1144
+#: plug-ins/common/gif.c:1215 plug-ins/common/glasstile.c:259
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:658 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:560
@@ -89,12 +89,12 @@ msgstr "О программе"
 #: plug-ins/common/vpropagate.c:934 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1007 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1128 plug-ins/common/xpm.c:800
-#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:624
-#: plug-ins/flame/flame.c:913 plug-ins/fp/fp_gtk.c:895
+#: plug-ins/common/xbm.c:1151 plug-ins/common/xpm.c:800
+#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
+#: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:895
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:221
-#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:469
+#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:487
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:201 plug-ins/gdyntext/gdyntext_ui.c:621
 #: plug-ins/gfig/gfig.c:4088 plug-ins/gfig/gfig.c:4433
@@ -106,7 +106,7 @@ msgstr "О программе"
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:781
-#: plug-ins/imagemap/imap_default_dialog.c:102 plug-ins/maze/maze_face.c:191
+#: plug-ins/imagemap/imap_default_dialog.c:114 plug-ins/maze/maze_face.c:191
 #: plug-ins/mosaic/mosaic.c:531 plug-ins/pagecurl/pagecurl.c:518
 #: plug-ins/print/gimp_main_window.c:597 plug-ins/rcm/rcm_dialog.c:727
 #: plug-ins/sel2path/sel2path.c:345 plug-ins/sgi/sgi.c:640
@@ -141,7 +141,7 @@ msgstr "Да"
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
-#: plug-ins/common/gif.c:1143 plug-ins/common/gif.c:1214
+#: plug-ins/common/gif.c:1146 plug-ins/common/gif.c:1217
 #: plug-ins/common/glasstile.c:261 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:660
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
@@ -171,16 +171,15 @@ msgstr "Да"
 #: plug-ins/common/vpropagate.c:936 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
 #: plug-ins/common/wind.c:1009 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:895 plug-ins/common/xbm.c:1130
-#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
-#: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:915
-#: plug-ins/fp/fp_gtk.c:899 plug-ins/gap/gap_arr_dialog.c:1012
-#: plug-ins/gap/gap_dbbrowser_utils.c:211
+#: plug-ins/common/xbm.c:1153 plug-ins/common/xpm.c:802
+#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
+#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
+#: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
 #: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
 #: plug-ins/gap/gap_lib.c:1018 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:500
-#: plug-ins/gap/gap_mov_dialog.c:2740 plug-ins/gap/gap_mpege.c:189
+#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:518
+#: plug-ins/gap/gap_mov_dialog.c:3019 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1204
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3941
 #: plug-ins/gfig/gfig.c:4088 plug-ins/gfig/gfig.c:4435
@@ -191,13 +190,13 @@ msgstr "Да"
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:789
-#: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:195
+#: plug-ins/imagemap/imap_default_dialog.c:129 plug-ins/maze/maze_face.c:195
 #: plug-ins/mosaic/mosaic.c:533 plug-ins/pagecurl/pagecurl.c:520
 #: plug-ins/print/gimp_main_window.c:212 plug-ins/print/gimp_main_window.c:599
 #: plug-ins/rcm/rcm_dialog.c:729 plug-ins/sel2path/sel2path.c:354
 #: plug-ins/sgi/sgi.c:642 plug-ins/sinus/sinus.c:748
 #: plug-ins/struc/struc.c:257 plug-ins/webbrowser/webbrowser.c:283
-#: plug-ins/winsnap/winsnap.c:912 plug-ins/xjt/xjt.c:795
+#: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -271,7 +270,7 @@ msgstr "Косинус"
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2640 plug-ins/common/ps.c:2653
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1508
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:284
+#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
 msgstr "Никакой"
 
@@ -455,7 +454,7 @@ msgstr "О Чужой Карте 2"
 #: plug-ins/common/sharpen.c:550 plug-ins/common/spheredesigner.c:2254
 #: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
 #: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1026
-#: plug-ins/flame/flame.c:933 plug-ins/gfig/gfig.c:3964
+#: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3964
 #: plug-ins/gflare/gflare.c:2492 plug-ins/gflare/gflare.c:3500
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
@@ -1096,8 +1095,8 @@ msgstr "Позиция"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:785
 #: plug-ins/common/nova.c:609 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1182 plug-ins/flame/flame.c:1195
-#: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2874
+#: plug-ins/flame/flame.c:1189 plug-ins/flame/flame.c:1202
+#: plug-ins/gap/gap_mov_dialog.c:2100 plug-ins/gflare/gflare.c:2874
 #: plug-ins/ifscompose/ifscompose.c:513
 msgid "X:"
 msgstr "X:"
@@ -1114,7 +1113,7 @@ msgstr "X-координата источника света в XYZ пространстве"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:803
 #: plug-ins/common/nova.c:627 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1221 plug-ins/gap/gap_mov_dialog.c:1873
+#: plug-ins/common/xbm.c:1244 plug-ins/gap/gap_mov_dialog.c:2118
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:527
 msgid "Y:"
 msgstr "Y:"
@@ -1209,7 +1208,7 @@ msgid "Bumpmap Image:"
 msgstr "Изображение рельефа:"
 
 #: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:784
-#: plug-ins/flame/flame.c:714 plug-ins/sinus/sinus.c:1032
+#: plug-ins/flame/flame.c:721 plug-ins/sinus/sinus.c:1032
 msgid "Linear"
 msgstr "Линейный"
 
@@ -1217,11 +1216,11 @@ msgstr "Линейный"
 msgid "Logarithmic"
 msgstr "Логарифмический"
 
-#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:715
+#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:722
 msgid "Sinusoidal"
 msgstr "Синусоидальный"
 
-#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:716
+#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:723
 msgid "Spherical"
 msgstr "Сферический"
 
@@ -1252,7 +1251,7 @@ msgstr ""
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1014 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:841 plug-ins/gfig/gfig.c:4018
+#: plug-ins/gap/gap_mov_dialog.c:859 plug-ins/gfig/gfig.c:4018
 msgid "Options"
 msgstr "Параметры"
 
@@ -1466,7 +1465,7 @@ msgstr "Показать скрыть каркас просмотра"
 #: plug-ins/common/png.c:417 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1713 plug-ins/common/sunras.c:441
 #: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:443
-#: plug-ins/common/xbm.c:674 plug-ins/common/xpm.c:334
+#: plug-ins/common/xbm.c:735 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
 #: plug-ins/xjt/xjt.c:3246
@@ -1512,10 +1511,10 @@ msgstr "%s: плохая цветовая карта"
 #: plug-ins/common/sunras.c:919 plug-ins/common/tga.c:1014
 #: plug-ins/common/tiff.c:654 plug-ins/common/tile.c:269
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
-#: plug-ins/common/xbm.c:812 plug-ins/faxg3/faxg3.c:448
+#: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2867
 #: plug-ins/gfig/gfig.c:3195 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
-#: plug-ins/winsnap/winsnap.c:1234
+#: plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
 msgstr "Фон"
 
@@ -1532,7 +1531,7 @@ msgstr "Невозможно открыть %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
-#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:937
+#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:940
 #: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
@@ -1540,7 +1539,7 @@ msgstr "Невозможно открыть %s"
 #: plug-ins/common/png.c:756 plug-ins/common/png.c:758
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:999
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:960
+#: plug-ins/common/tiff.c:1260 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -1790,7 +1789,7 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1280
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:281 plug-ins/fp/fp_gtk.c:413
-#: plug-ins/gap/gap_mov_dialog.c:257 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
 msgstr "Тон"
@@ -1798,13 +1797,13 @@ msgstr "Тон"
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1285
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:285 plug-ins/fp/fp_gtk.c:417 plug-ins/fp/fp_gtk.c:481
-#: plug-ins/gap/gap_mov_dialog.c:258 plug-ins/rcm/rcm_dialog.c:509
+#: plug-ins/gap/gap_mov_dialog.c:275 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
 msgstr "Насыщенность"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1290
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:289
-#: plug-ins/fp/fp_gtk.c:421 plug-ins/gap/gap_mov_dialog.c:260
+#: plug-ins/fp/fp_gtk.c:421 plug-ins/gap/gap_mov_dialog.c:277
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
@@ -2153,7 +2152,7 @@ msgid "Left Edge"
 msgstr "Левый край"
 
 #: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gflare/gflare.c:2862
+#: plug-ins/gap/gap_mov_dialog.c:288 plug-ins/gflare/gflare.c:2862
 msgid "Center"
 msgstr "Центр"
 
@@ -2197,16 +2196,16 @@ msgstr "Использовать (невидимый) нижний слой как основание"
 msgid "Grid Size:"
 msgstr "Размер направляющих:"
 
-#: plug-ins/common/animationplay.c:266
+#: plug-ins/common/animationplay.c:270
 msgid "<Image>/Filters/Animation/Animation Playback..."
 msgstr "<Image>/Фильтры/Анимация/Воспроизведение..."
 
-#: plug-ins/common/animationplay.c:662
+#: plug-ins/common/animationplay.c:666
 msgid "Animation Playback: "
 msgstr "Воспроизведение фильма: "
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:669 plug-ins/common/plugindetails.c:996
+#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:996
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
@@ -2220,43 +2219,43 @@ msgid "Close"
 msgstr "Закрыть"
 
 #. The 'playback' half of the dialog
-#: plug-ins/common/animationplay.c:683 plug-ins/common/animationplay.c:686
+#: plug-ins/common/animationplay.c:687 plug-ins/common/animationplay.c:690
 msgid "Playback: "
 msgstr "Воспроизведение:"
 
-#: plug-ins/common/animationplay.c:716
+#: plug-ins/common/animationplay.c:720
 msgid "Play/Stop"
 msgstr "Пуск/Стоп"
 
-#: plug-ins/common/animationplay.c:722
+#: plug-ins/common/animationplay.c:726
 msgid "Rewind"
 msgstr "Перемотка"
 
-#: plug-ins/common/animationplay.c:728
+#: plug-ins/common/animationplay.c:732
 msgid "Step"
 msgstr "Шаг"
 
-#: plug-ins/common/animationplay.c:786
+#: plug-ins/common/animationplay.c:790
 msgid "Frame %v of %u"
 msgstr "Кадр %v из %u"
 
-#: plug-ins/common/animoptimize.c:154
+#: plug-ins/common/animoptimize.c:158
 msgid "<Image>/Filters/Animation/Animation Optimize"
 msgstr "<Image>/Фильтры/Анимация/Оптимизация"
 
-#: plug-ins/common/animoptimize.c:170
+#: plug-ins/common/animoptimize.c:174
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
 msgstr "<Image>/Фильтры/Анимация/РазОптимизация"
 
-#: plug-ins/common/animoptimize.c:270
+#: plug-ins/common/animoptimize.c:274
 msgid "Optimizing Animation..."
 msgstr "Оптимизация фильма..."
 
-#: plug-ins/common/animoptimize.c:272
+#: plug-ins/common/animoptimize.c:276
 msgid "UnOptimizing Animation..."
 msgstr "РазОптимизация фильма..."
 
-#: plug-ins/common/animoptimize.c:301
+#: plug-ins/common/animoptimize.c:305
 msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr "Недостаточно памяти для буферов для оптимизации.\n"
 
@@ -2527,7 +2526,7 @@ msgstr "Раскрашивание"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
 #: plug-ins/common/ps.c:2625 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:259 plug-ins/gimpressionist/color.c:51
+#: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:425
 msgid "Color"
@@ -2768,7 +2767,7 @@ msgid "Prefixed Name:"
 msgstr "Префиксное имя:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:556
-#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1180
+#: plug-ins/common/tiff.c:1523 plug-ins/common/xbm.c:1203
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -2805,7 +2804,7 @@ msgstr "Сохранить альфа-канал (RGBA/RGB)"
 #. Opacity
 #. table col, row
 #: plug-ins/common/csource.c:757 plug-ins/common/sparkle.c:443
-#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:1925
+#: plug-ins/common/tileit.c:587 plug-ins/gap/gap_mov_dialog.c:2170
 #: plug-ins/gflare/gflare.c:3602 plug-ins/gflare/gflare.c:3632
 #: plug-ins/gflare/gflare.c:3662
 msgid "Opacity:"
@@ -3178,7 +3177,7 @@ msgstr "Создать гистограмму"
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2582 plug-ins/common/ps.c:2757
 #: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:421
-#: plug-ins/gap/gap_mov_dialog.c:1891 plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/gap/gap_mov_dialog.c:2136 plug-ins/imagemap/imap_rectangle.c:387
 msgid "Width:"
 msgstr "Ширина:"
 
@@ -3206,7 +3205,7 @@ msgstr "Контуры"
 msgid "Sharp edges"
 msgstr "Резкие края"
 
-#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1004
+#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
 #: plug-ins/print/gimp_color_window.c:100
 msgid "Brightness:"
 msgstr "Яркость:"
@@ -3265,7 +3264,7 @@ msgstr "Пятно"
 #: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
 #: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
-#: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1100
+#: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3328
 msgid "Black"
 msgstr "Черный"
@@ -3330,7 +3329,7 @@ msgstr "Ограничение ширины линии"
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1243
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2591
 #: plug-ins/common/ps.c:2766 plug-ins/common/smooth_palette.c:438
-#: plug-ins/common/tile.c:425 plug-ins/gap/gap_mov_dialog.c:1908
+#: plug-ins/common/tile.c:425 plug-ins/gap/gap_mov_dialog.c:2153
 #: plug-ins/imagemap/imap_rectangle.c:393
 msgid "Height:"
 msgstr "Высота:"
@@ -3645,7 +3644,7 @@ msgstr "Сохранить как GIcon"
 msgid "Icon Name:"
 msgstr "Название пиктограммы: "
 
-#: plug-ins/common/gif.c:672
+#: plug-ins/common/gif.c:674
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
@@ -3653,7 +3652,7 @@ msgstr ""
 "GIF: Невозможно дальнеешее уменьшение цветов.\n"
 "Сохранение как непрозрачного.\n"
 
-#: plug-ins/common/gif.c:929
+#: plug-ins/common/gif.c:932
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3661,16 +3660,16 @@ msgstr ""
 "GIF: Извините, невозможно сохранить RGB-изображение как GIF - сначала "
 "преобразуйте его в индексированное или серое.\n"
 
-#: plug-ins/common/gif.c:947
+#: plug-ins/common/gif.c:950
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: невозможно открыть %s\n"
 
-#: plug-ins/common/gif.c:1136
+#: plug-ins/common/gif.c:1139
 msgid "GIF Warning"
 msgstr "GIF Внимание"
 
-#: plug-ins/common/gif.c:1162
+#: plug-ins/common/gif.c:1165
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3688,61 +3687,61 @@ msgstr ""
 "Вы можете выбирать: или обрезать все слои по границе\n"
 "изображения или отменить это сохранение."
 
-#: plug-ins/common/gif.c:1207
+#: plug-ins/common/gif.c:1210
 msgid "Save as GIF"
 msgstr "Сохранить как GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1232
 msgid "GIF Options"
 msgstr "Параметры GIF"
 
-#: plug-ins/common/gif.c:1237
+#: plug-ins/common/gif.c:1240
 msgid "Interlace"
 msgstr "Черезстрочность"
 
-#: plug-ins/common/gif.c:1248
+#: plug-ins/common/gif.c:1251
 msgid "GIF Comment:"
 msgstr "Комментарий GIF:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1307
+#: plug-ins/common/gif.c:1310
 msgid "Animated GIF Options"
 msgstr "Параметры анимированного GIF"
 
-#: plug-ins/common/gif.c:1315
+#: plug-ins/common/gif.c:1318
 msgid "Loop forever"
 msgstr "Бесконечный цикл"
 
-#: plug-ins/common/gif.c:1327
+#: plug-ins/common/gif.c:1330
 msgid "Delay between Frames where Unspecified:"
 msgstr "Задержка между кадрами где не указана:"
 
-#: plug-ins/common/gif.c:1339
+#: plug-ins/common/gif.c:1342
 msgid "Milliseconds"
 msgstr "Миллисекунд"
 
-#: plug-ins/common/gif.c:1349
+#: plug-ins/common/gif.c:1352
 msgid "Frame Disposal where Unspecified: "
 msgstr "Расположение кадра если не указано: "
 
-#: plug-ins/common/gif.c:1358
+#: plug-ins/common/gif.c:1361
 msgid "I don't Care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1360
+#: plug-ins/common/gif.c:1363
 msgid "Cumulative Layers (Combine)"
 msgstr "Наложение слоев (об'единение)"
 
-#: plug-ins/common/gif.c:1362
+#: plug-ins/common/gif.c:1365
 msgid "One Frame per Layer (Replace)"
 msgstr "Один кадр на слой (замена)"
 
-#: plug-ins/common/gif.c:2346
+#: plug-ins/common/gif.c:2349
 msgid "GIF: error writing output file\n"
 msgstr "GIF: возникла ошибка при записи в файл вывода\n"
 
-#: plug-ins/common/gif.c:2437
+#: plug-ins/common/gif.c:2440
 msgid "GIF save: Your comment string is too long.\n"
 msgstr "GIF: строка вашего комментария слишком длинная.\n"
 
@@ -3885,7 +3884,7 @@ msgstr "Рисование сетки..."
 msgid "Grid"
 msgstr "Сетка"
 
-#: plug-ins/common/grid.c:708 plug-ins/gap/gap_mov_dialog.c:478
+#: plug-ins/common/grid.c:708 plug-ins/gap/gap_mov_dialog.c:496
 msgid "Update Preview"
 msgstr "Обновлить просмотр"
 
@@ -4658,7 +4657,7 @@ msgid "Output LPI:"
 msgstr "LPI на выходе:"
 
 #. screen settings
-#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:250
+#: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:267
 #: plug-ins/gflare/gflare.c:597
 msgid "Screen"
 msgstr "Экран"
@@ -5200,7 +5199,7 @@ msgid "Load PostScript"
 msgstr "Загрузка PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:987
+#: plug-ins/common/ps.c:2555 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "Визуализация"
 
@@ -5439,7 +5438,7 @@ msgstr "Окраска по образцу"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:156
 #: plug-ins/gdyntext/gdyntext_ui.c:643 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
-#: plug-ins/imagemap/imap_default_dialog.c:110
+#: plug-ins/imagemap/imap_default_dialog.c:122
 msgid "Apply"
 msgstr "Применить"
 
@@ -5535,7 +5534,7 @@ msgstr "Просмотр (1:4) - щелчок правой кнопкой для перехода"
 msgid "Holdness:"
 msgstr "Фиксация:"
 
-#: plug-ins/common/screenshot.c:150 plug-ins/winsnap/winsnap.c:1075
+#: plug-ins/common/screenshot.c:150 plug-ins/winsnap/winsnap.c:1076
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Файл/Захватить/Снимок экрана..."
 
@@ -5545,7 +5544,7 @@ msgid "Screen Shot"
 msgstr "Снимок экрана"
 
 #. Action area
-#: plug-ins/common/screenshot.c:393 plug-ins/winsnap/winsnap.c:902
+#: plug-ins/common/screenshot.c:393 plug-ins/winsnap/winsnap.c:903
 msgid "Grab"
 msgstr "Захват"
 
@@ -5561,11 +5560,11 @@ msgstr "Включая обрамление"
 msgid "Grab the Whole Screen"
 msgstr "Захватить весь экран"
 
-#: plug-ins/common/screenshot.c:469 plug-ins/winsnap/winsnap.c:1010
+#: plug-ins/common/screenshot.c:469 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
 msgstr "через"
 
-#: plug-ins/common/screenshot.c:478 plug-ins/winsnap/winsnap.c:1019
+#: plug-ins/common/screenshot.c:478 plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
 msgstr "Задержка в секундах"
 
@@ -6831,37 +6830,34 @@ msgstr "Интерпретация %s:"
 msgid "Transferring image"
 msgstr "Передача изображения"
 
-#: plug-ins/common/xbm.c:237
+#: plug-ins/common/xbm.c:246
 msgid "Created with The GIMP"
 msgstr "Создано в Gimp"
 
-#: plug-ins/common/xbm.c:670
+#: plug-ins/common/xbm.c:731
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: невозможно открыть \"%s\"\n"
 
-#: plug-ins/common/xbm.c:753
+#: plug-ins/common/xbm.c:814
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: невозможно прочесть заголовок (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:759
+#: plug-ins/common/xbm.c:820
 msgid "XBM: no image width specified\n"
 msgstr "XBM: ширина изображения не указана\n"
 
-#: plug-ins/common/xbm.c:765
+#: plug-ins/common/xbm.c:826
 msgid "XBM: no image height specified\n"
 msgstr "XBM: высота изображения не указана\n"
 
-#: plug-ins/common/xbm.c:771
+#: plug-ins/common/xbm.c:832
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: тип данных изображения не указан\n"
 
-#: plug-ins/common/xbm.c:890
-msgid "XBM Warning"
-msgstr "XBM Внимание"
-
-#: plug-ins/common/xbm.c:911
+#. The image is not black-and-white.
+#: plug-ins/common/xbm.c:965
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6875,37 +6871,58 @@ msgstr ""
 "Пожалуйста, преобразуйте его в чернобелое\n"
 "(1-бит) индексированное изображение и попробуйте снова."
 
-#: plug-ins/common/xbm.c:982
+#: plug-ins/common/xbm.c:976
+msgid ""
+"You cannot save a cursor mask for an image\n"
+"which has no alpha channel."
+msgstr ""
+"Невозможно сохранить маску курсора в\n"
+"изображении, которое не имеет альфа-канала."
+
+#: plug-ins/common/xbm.c:1005
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: невозможно создать \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1123
+#: plug-ins/common/xbm.c:1146
 msgid "Save as XBM"
 msgstr "Сохранить как XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1140
+#: plug-ins/common/xbm.c:1163
 msgid "XBM Options"
 msgstr "Параметры XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1151
+#: plug-ins/common/xbm.c:1174
 msgid "X10 Format Bitmap"
 msgstr "Битовая карта формата Х10"
 
-#: plug-ins/common/xbm.c:1169
+#: plug-ins/common/xbm.c:1192
 msgid "Identifier Prefix:"
 msgstr "Префикс идентификатора:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1187
+#: plug-ins/common/xbm.c:1210
 msgid "Write Hot Spot Values"
 msgstr "Записать значения \"горячих пятен\""
 
-#: plug-ins/common/xbm.c:1211
+#: plug-ins/common/xbm.c:1234
 msgid "Hot Spot X:"
 msgstr "\"Горячее пятно\" X:"
+
+#. mask file
+#: plug-ins/common/xbm.c:1248
+msgid "Mask File"
+msgstr "Файл маски"
+
+#: plug-ins/common/xbm.c:1259
+msgid "Write Extra Mask File"
+msgstr "Записать дополнительный файл маски"
+
+#: plug-ins/common/xbm.c:1270
+msgid "Mask File Extension:"
+msgstr "Расширение файла маски:"
 
 #: plug-ins/common/xpm.c:795
 msgid "Save as XPM"
@@ -7071,118 +7088,118 @@ msgstr "по DATAMIN/DATAMAX"
 msgid "Image Composing"
 msgstr "Сборка изображения"
 
-#: plug-ins/flame/flame.c:137
+#: plug-ins/flame/flame.c:144
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/Фильтры/Визуализация/Природа/Пламя..."
 
-#: plug-ins/flame/flame.c:218
+#: plug-ins/flame/flame.c:225
 msgid "Drawing Flame..."
 msgstr "Рисование пламени..."
 
-#: plug-ins/flame/flame.c:299
+#: plug-ins/flame/flame.c:306
 msgid "Flame works only on RGB drawables."
 msgstr "Пламя работает только с RGB изображениями."
 
-#: plug-ins/flame/flame.c:415
+#: plug-ins/flame/flame.c:422
 #, c-format
 msgid "%s: Is not a regular file"
 msgstr "%s: не пригодный файл"
 
-#: plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:965
+#: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:972
 msgid "Edit Flame"
 msgstr "Правка пламени"
 
-#: plug-ins/flame/flame.c:638
+#: plug-ins/flame/flame.c:645
 msgid "Directions"
 msgstr "Направления"
 
-#: plug-ins/flame/flame.c:668
+#: plug-ins/flame/flame.c:675
 msgid "Controls"
 msgstr "Управление"
 
-#: plug-ins/flame/flame.c:683
+#: plug-ins/flame/flame.c:690
 msgid "Speed:"
 msgstr "Скорость:"
 
-#: plug-ins/flame/flame.c:699
+#: plug-ins/flame/flame.c:706
 msgid "Randomize"
 msgstr "Перемешать"
 
-#: plug-ins/flame/flame.c:712
+#: plug-ins/flame/flame.c:719
 msgid "Same"
 msgstr "Оставить прежние"
 
-#: plug-ins/flame/flame.c:713 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:720 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr "Случайность"
 
-#: plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:724
 msgid "Swirl"
 msgstr "Вихрь"
 
-#: plug-ins/flame/flame.c:718
+#: plug-ins/flame/flame.c:725
 msgid "Horseshoe"
 msgstr "Подкова"
 
-#: plug-ins/flame/flame.c:719 plug-ins/gfig/gfig.c:3315
+#: plug-ins/flame/flame.c:726 plug-ins/gfig/gfig.c:3315
 msgid "Polar"
 msgstr "Полярность"
 
-#: plug-ins/flame/flame.c:720
+#: plug-ins/flame/flame.c:727
 msgid "Bent"
 msgstr "Изгиб"
 
-#: plug-ins/flame/flame.c:726
+#: plug-ins/flame/flame.c:733
 msgid "Variation:"
 msgstr "Изменение:"
 
-#: plug-ins/flame/flame.c:759 plug-ins/flame/flame.c:972
+#: plug-ins/flame/flame.c:766 plug-ins/flame/flame.c:979
 msgid "Load Flame"
 msgstr "Загрузить пламя"
 
-#: plug-ins/flame/flame.c:781 plug-ins/flame/flame.c:979
+#: plug-ins/flame/flame.c:788 plug-ins/flame/flame.c:986
 msgid "Save Flame"
 msgstr "Сохранить пламя"
 
-#: plug-ins/flame/flame.c:908 plug-ins/flame/flame.c:947
+#: plug-ins/flame/flame.c:915 plug-ins/flame/flame.c:954
 msgid "Flame"
 msgstr "Пламя"
 
-#: plug-ins/flame/flame.c:1017 plug-ins/print/gimp_color_window.c:114
+#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:114
 msgid "Contrast:"
 msgstr "Контраст:"
 
-#: plug-ins/flame/flame.c:1030 plug-ins/gimpressionist/brush.c:401
+#: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:401
 #: plug-ins/print/gimp_color_window.c:198
 msgid "Gamma:"
 msgstr "Гамма:"
 
-#: plug-ins/flame/flame.c:1043
+#: plug-ins/flame/flame.c:1050
 msgid "Sample Density:"
 msgstr "Плотность образца:"
 
-#: plug-ins/flame/flame.c:1053
+#: plug-ins/flame/flame.c:1060
 msgid "Spatial Oversample:"
 msgstr "Пространственное перекрывание:"
 
-#: plug-ins/flame/flame.c:1063
+#: plug-ins/flame/flame.c:1070
 msgid "Spatial Filter Radius:"
 msgstr "Радиус пространственного фильтра:"
 
-#: plug-ins/flame/flame.c:1089
+#: plug-ins/flame/flame.c:1096
 msgid "Colormap:"
 msgstr "Цветовая карта:"
 
-#: plug-ins/flame/flame.c:1137
+#: plug-ins/flame/flame.c:1144
 msgid "Custom Gradient"
 msgstr "Выбранный градиент"
 
-#: plug-ins/flame/flame.c:1157
+#: plug-ins/flame/flame.c:1164
 msgid "Camera"
 msgstr "Камера"
 
-#: plug-ins/flame/flame.c:1169
+#: plug-ins/flame/flame.c:1176
 msgid "Zoom:"
 msgstr "Масштаб:"
 
@@ -8151,7 +8168,7 @@ msgstr "От кадра:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:550
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:568
 #: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:442
 #: plug-ins/gap/gap_range_ops.c:601
 msgid "first handled frame"
@@ -8169,7 +8186,7 @@ msgstr "До кадра:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:565
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:583
 #: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:450
 #: plug-ins/gap/gap_range_ops.c:609
 msgid "last handled frame"
@@ -8265,85 +8282,85 @@ msgstr "Изменение кадров/слоев..."
 msgid "No selected Layer in start frame"
 msgstr "В начальном кадре нет выделенного слоя"
 
-#: plug-ins/gap/gap_mov_dialog.c:247 plug-ins/gfig/gfig.c:3327
+#: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3327
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "Нормальное"
 
-#: plug-ins/gap/gap_mov_dialog.c:248
+#: plug-ins/gap/gap_mov_dialog.c:265
 msgid "Dissolve"
 msgstr "Растворение"
 
-#: plug-ins/gap/gap_mov_dialog.c:249
+#: plug-ins/gap/gap_mov_dialog.c:266
 msgid "Multiply"
 msgstr "Умножение"
 
-#: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gflare/gflare.c:596
+#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr "Перекрывание"
 
-#: plug-ins/gap/gap_mov_dialog.c:252
+#: plug-ins/gap/gap_mov_dialog.c:269
 msgid "Difference"
 msgstr "Разница"
 
-#: plug-ins/gap/gap_mov_dialog.c:253 plug-ins/gflare/gflare.c:595
+#: plug-ins/gap/gap_mov_dialog.c:270 plug-ins/gflare/gflare.c:595
 msgid "Addition"
 msgstr "Добавление"
 
-#: plug-ins/gap/gap_mov_dialog.c:254 plug-ins/gfig/gfig.c:3148
+#: plug-ins/gap/gap_mov_dialog.c:271 plug-ins/gfig/gfig.c:3148
 msgid "Subtract"
 msgstr "Вычитание"
 
-#: plug-ins/gap/gap_mov_dialog.c:255
+#: plug-ins/gap/gap_mov_dialog.c:272
 msgid "Darken Only"
 msgstr "Замена темным"
 
-#: plug-ins/gap/gap_mov_dialog.c:256
+#: plug-ins/gap/gap_mov_dialog.c:273
 msgid "Lighten Only"
 msgstr "Замена светлым"
 
-#: plug-ins/gap/gap_mov_dialog.c:267
+#: plug-ins/gap/gap_mov_dialog.c:284
 msgid "Left  Top"
 msgstr "Левый верхний"
 
-#: plug-ins/gap/gap_mov_dialog.c:268
+#: plug-ins/gap/gap_mov_dialog.c:285
 msgid "Left  Bottom"
 msgstr "Левый нижний"
 
-#: plug-ins/gap/gap_mov_dialog.c:269
+#: plug-ins/gap/gap_mov_dialog.c:286
 msgid "Right Top"
 msgstr "Правый верхний"
 
-#: plug-ins/gap/gap_mov_dialog.c:270
+#: plug-ins/gap/gap_mov_dialog.c:287
 msgid "Right Bottom"
 msgstr "Правый нижний"
 
-#: plug-ins/gap/gap_mov_dialog.c:279
+#: plug-ins/gap/gap_mov_dialog.c:296
 msgid "Loop"
 msgstr "Цикл"
 
-#: plug-ins/gap/gap_mov_dialog.c:280
+#: plug-ins/gap/gap_mov_dialog.c:297
 msgid "Loop Reverse"
 msgstr "Обратный цикл"
 
-#: plug-ins/gap/gap_mov_dialog.c:281
+#: plug-ins/gap/gap_mov_dialog.c:298
 msgid "Once"
 msgstr "Один"
 
-#: plug-ins/gap/gap_mov_dialog.c:282
+#: plug-ins/gap/gap_mov_dialog.c:299
 msgid "OnceReverse"
 msgstr "Один назад"
 
-#: plug-ins/gap/gap_mov_dialog.c:283
+#: plug-ins/gap/gap_mov_dialog.c:300
 msgid "PingPong"
 msgstr "Пинг-Понг"
 
-#: plug-ins/gap/gap_mov_dialog.c:451
+#: plug-ins/gap/gap_mov_dialog.c:469
 msgid "Move Path"
 msgstr "Переместить путь"
 
-#: plug-ins/gap/gap_mov_dialog.c:485
+#: plug-ins/gap/gap_mov_dialog.c:503
 msgid ""
 "Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
@@ -8351,11 +8368,11 @@ msgstr ""
 "Показать кадр просмотра с выбранным\n"
 "исх.слоем в текущей управляющей точке."
 
-#: plug-ins/gap/gap_mov_dialog.c:489
+#: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Anim Preview"
 msgstr "Просмотр анимации"
 
-#: plug-ins/gap/gap_mov_dialog.c:496
+#: plug-ins/gap/gap_mov_dialog.c:514
 msgid ""
 "Generate Animated Preview\n"
 "as multilayer image"
@@ -8364,25 +8381,25 @@ msgstr ""
 "как многослойное изображение"
 
 #. parameter settings
-#: plug-ins/gap/gap_mov_dialog.c:509
+#: plug-ins/gap/gap_mov_dialog.c:527
 msgid "Copy moving source-layer(s) into frames"
 msgstr "Скопировать движущиеся исходные слои в кадры"
 
 #. the start frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:542
+#: plug-ins/gap/gap_mov_dialog.c:560
 msgid "Start Frame:"
 msgstr "Стартовый кадр:"
 
 #. the end frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:557
+#: plug-ins/gap/gap_mov_dialog.c:575
 msgid "End Frame:"
 msgstr "Конечный кадр:"
 
 #. the Preview Frame scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:572
+#: plug-ins/gap/gap_mov_dialog.c:590
 msgid "Preview Frame:"
 msgstr "Просмотр кадра:"
 
@@ -8394,7 +8411,7 @@ msgstr "Просмотр кадра:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:580
+#: plug-ins/gap/gap_mov_dialog.c:598
 msgid ""
 "frame to show when UpdPreview\n"
 "button is pressed"
@@ -8404,7 +8421,7 @@ msgstr ""
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:588 plug-ins/gap/gap_range_ops.c:265
+#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:265
 msgid "Layerstack:"
 msgstr "Стопка слоев:"
 
@@ -8416,7 +8433,7 @@ msgstr "Стопка слоев:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:596
+#: plug-ins/gap/gap_mov_dialog.c:614
 msgid ""
 "How to insert SrcLayer into the\n"
 "Dst. Frame's Layerstack\n"
@@ -8427,20 +8444,20 @@ msgstr ""
 "0 означает сверху, т.е. спереди "
 
 #. toggle force visibility
-#: plug-ins/gap/gap_mov_dialog.c:608
+#: plug-ins/gap/gap_mov_dialog.c:626
 msgid "Force visibility"
 msgstr "Принудительная видимость"
 
-#: plug-ins/gap/gap_mov_dialog.c:614
+#: plug-ins/gap/gap_mov_dialog.c:632
 msgid "Force visibility for all copied Src-Layers"
 msgstr "Принудительная видимость для всех скопированных исх.слоев"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:620
+#: plug-ins/gap/gap_mov_dialog.c:638
 msgid "Clip To Frame"
 msgstr "Обрезать по кадру"
 
-#: plug-ins/gap/gap_mov_dialog.c:626
+#: plug-ins/gap/gap_mov_dialog.c:644
 msgid ""
 "Clip all copied Src-Layers\n"
 "at Frame Boundaries"
@@ -8448,49 +8465,49 @@ msgstr ""
 "Обрезать все копируемые Исх-Слои\n"
 "по границам кадра"
 
-#: plug-ins/gap/gap_mov_dialog.c:674
+#: plug-ins/gap/gap_mov_dialog.c:692
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:770
+#: plug-ins/gap/gap_mov_dialog.c:788
 msgid "Object on empty frames"
 msgstr "Объект в пустых кадрах"
 
-#: plug-ins/gap/gap_mov_dialog.c:771
+#: plug-ins/gap/gap_mov_dialog.c:789
 msgid "Object on one frame"
 msgstr "Объект в одном кадре"
 
-#: plug-ins/gap/gap_mov_dialog.c:772
+#: plug-ins/gap/gap_mov_dialog.c:790
 msgid "Exact Object on frames"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:802
+#: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Anim Preview Mode"
 msgstr "Режим просмотра анимации"
 
-#: plug-ins/gap/gap_mov_dialog.c:810
+#: plug-ins/gap/gap_mov_dialog.c:828
 msgid "Scale Preview"
 msgstr "Масштаб просмотра"
 
-#: plug-ins/gap/gap_mov_dialog.c:811
+#: plug-ins/gap/gap_mov_dialog.c:829
 msgid "Scale down size of the generated animated preview (in %)"
 msgstr "Уменьшение размера создаваемого просмотра анимации (в %)"
 
-#: plug-ins/gap/gap_mov_dialog.c:819
+#: plug-ins/gap/gap_mov_dialog.c:837
 msgid "Framerate"
 msgstr "Скорость кадров"
 
-#: plug-ins/gap/gap_mov_dialog.c:820
+#: plug-ins/gap/gap_mov_dialog.c:838
 msgid "Framerate to use in the animated preview in frames/sec"
 msgstr "Скорость кадров, используемая в просмотре анимации в кадрах/сек"
 
-#: plug-ins/gap/gap_mov_dialog.c:834
+#: plug-ins/gap/gap_mov_dialog.c:852
 msgid "Copy to Video Buffer"
 msgstr "Скопировать в видеобуфер"
 
-#: plug-ins/gap/gap_mov_dialog.c:835
+#: plug-ins/gap/gap_mov_dialog.c:853
 msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
@@ -8498,68 +8515,68 @@ msgstr ""
 "Сохранить все одиночные кадры просмотра анимации в видеобуфере\n"
 "(настраивается в gimprc указанием video-paste-dir и video-paste-basename)"
 
-#: plug-ins/gap/gap_mov_dialog.c:840
+#: plug-ins/gap/gap_mov_dialog.c:858
 msgid "Move Path Animated Preview"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:886
+#: plug-ins/gap/gap_mov_dialog.c:904
 msgid "Generate Animated Preview failed\n"
 msgstr "Не удалось создать просмотр анимации\n"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1098
+#: plug-ins/gap/gap_mov_dialog.c:1343
 msgid "Load Path Points from file"
 msgstr "Загрузить точки пути из файла"
 
 #. filesel is already open
-#: plug-ins/gap/gap_mov_dialog.c:1134
+#: plug-ins/gap/gap_mov_dialog.c:1379
 msgid "Save Path Points to file"
 msgstr "Сохранить точки пути в файле"
 
-#: plug-ins/gap/gap_mov_dialog.c:1479
+#: plug-ins/gap/gap_mov_dialog.c:1724
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
 msgstr "Текущая точка: [ %3d ] [ %3d ]"
 
-#: plug-ins/gap/gap_mov_dialog.c:1670
+#: plug-ins/gap/gap_mov_dialog.c:1915
 msgid "Source Select"
 msgstr "Выбор источника"
 
 #. Source Layer menu
-#: plug-ins/gap/gap_mov_dialog.c:1687
+#: plug-ins/gap/gap_mov_dialog.c:1932
 msgid "Source Image/Layer:"
 msgstr "Исходное изображение/слой:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1697
+#: plug-ins/gap/gap_mov_dialog.c:1942
 msgid "Source Object to insert into Frame Range"
 msgstr "Исходный объект для вставки в диапазон кадров"
 
 #. Paintmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1712
+#: plug-ins/gap/gap_mov_dialog.c:1957
 msgid "Mode:"
 msgstr "Режим:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1721
+#: plug-ins/gap/gap_mov_dialog.c:1966
 msgid "Paintmode"
 msgstr "Режим рисования"
 
 #. Loop Stepmode menu
-#: plug-ins/gap/gap_mov_dialog.c:1736
+#: plug-ins/gap/gap_mov_dialog.c:1981
 msgid "Stepmode:"
 msgstr "Пошаговый режим:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1754
+#: plug-ins/gap/gap_mov_dialog.c:1999
 msgid ""
 "How to fetch the next SrcLayer   \n"
 "at the next handled frame"
 msgstr ""
 
 #. Source Image Handle menu
-#: plug-ins/gap/gap_mov_dialog.c:1760
+#: plug-ins/gap/gap_mov_dialog.c:2005
 msgid "Handle:"
 msgstr "Обработка:"
 
-#: plug-ins/gap/gap_mov_dialog.c:1778
+#: plug-ins/gap/gap_mov_dialog.c:2023
 msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Coordinates"
@@ -8569,17 +8586,17 @@ msgstr ""
 
 #. to avoid side effects while initialization
 #. the frame
-#: plug-ins/gap/gap_mov_dialog.c:1832
+#: plug-ins/gap/gap_mov_dialog.c:2077
 msgid "Move Path Preview"
 msgstr "Просмотр перемещения пути"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1864
+#: plug-ins/gap/gap_mov_dialog.c:2109
 msgid "X Coordinate"
 msgstr "X-координата"
 
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1882
+#: plug-ins/gap/gap_mov_dialog.c:2127
 msgid "Y Coordinate"
 msgstr "Y-координата"
 
@@ -8591,7 +8608,7 @@ msgstr "Y-координата"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1899
+#: plug-ins/gap/gap_mov_dialog.c:2144
 msgid "Scale Source Layer's Width in percent"
 msgstr "Масштаб ширины исходного слоя в процентах"
 
@@ -8603,7 +8620,7 @@ msgstr "Масштаб ширины исходного слоя в процентах"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1916
+#: plug-ins/gap/gap_mov_dialog.c:2161
 msgid ""
 "Scale SrcLayer's Height\n"
 "in percent"
@@ -8619,7 +8636,7 @@ msgstr ""
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1933
+#: plug-ins/gap/gap_mov_dialog.c:2178
 msgid ""
 "SrcLayer's Opacity\n"
 "in percent"
@@ -8629,7 +8646,7 @@ msgstr ""
 
 #. Rotation
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1942
+#: plug-ins/gap/gap_mov_dialog.c:2187
 msgid "Rotate:"
 msgstr "Вращение:"
 
@@ -8641,13 +8658,13 @@ msgstr "Вращение:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1950
+#: plug-ins/gap/gap_mov_dialog.c:2195
 msgid "Rotate SrcLayer (in degree)"
 msgstr "Поворот исходного слоя (в градусах)"
 
 #. Keyframe
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:1961
+#: plug-ins/gap/gap_mov_dialog.c:2206
 msgid "Keyframe:"
 msgstr "Ключевой кадр:"
 
@@ -8659,7 +8676,7 @@ msgstr "Ключевой кадр:"
 #. digits
 #. constrain
 #. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mov_dialog.c:1969
+#: plug-ins/gap/gap_mov_dialog.c:2214
 msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
@@ -8667,11 +8684,11 @@ msgstr ""
 "Фиксировать управляющую точку по номеру\n"
 "ключевого кадра (0 == нет ключевого кадра)"
 
-#: plug-ins/gap/gap_mov_dialog.c:2044
+#: plug-ins/gap/gap_mov_dialog.c:2289
 msgid "Add Point"
 msgstr "Добавить точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2052
+#: plug-ins/gap/gap_mov_dialog.c:2297
 msgid ""
 "Add Controlpoint at end        \n"
 "(the last Point is duplicated)"
@@ -8680,11 +8697,11 @@ msgstr ""
 "(последняя точка дублируется)"
 
 #. toggle clip_to_image
-#: plug-ins/gap/gap_mov_dialog.c:2057
+#: plug-ins/gap/gap_mov_dialog.c:2302
 msgid "Show Path"
 msgstr "Показать путь"
 
-#: plug-ins/gap/gap_mov_dialog.c:2063
+#: plug-ins/gap/gap_mov_dialog.c:2308
 msgid ""
 "Show Path Lines and enable\n"
 "pick/drag with left button\n"
@@ -8694,13 +8711,13 @@ msgstr ""
 "выбор/перетаскивание с помощью левой или\n"
 "перемещение с помощью правой кнопки мыши"
 
-#: plug-ins/gap/gap_mov_dialog.c:2073
+#: plug-ins/gap/gap_mov_dialog.c:2318
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
 msgstr "Вставить точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2081
+#: plug-ins/gap/gap_mov_dialog.c:2326
 msgid ""
 "Insert Controlpoint          \n"
 "(the current Point is duplicated)"
@@ -8708,53 +8725,53 @@ msgstr ""
 "Добавить контрольную точку\n"
 "(текущая точка дублируется)"
 
-#: plug-ins/gap/gap_mov_dialog.c:2085
+#: plug-ins/gap/gap_mov_dialog.c:2330
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
 msgstr "Удалить точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2093
+#: plug-ins/gap/gap_mov_dialog.c:2338
 msgid "Delete current Controlpoint"
 msgstr "Удалить текущую контрольную точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2099
+#: plug-ins/gap/gap_mov_dialog.c:2344
 msgid "Prev Point"
 msgstr "Пред. точка"
 
-#: plug-ins/gap/gap_mov_dialog.c:2107
+#: plug-ins/gap/gap_mov_dialog.c:2352
 msgid "Show Previous Controlpoint"
 msgstr "Показать пред. контрольную точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2111
+#: plug-ins/gap/gap_mov_dialog.c:2356
 msgid "Next Point"
 msgstr "След. точка"
 
-#: plug-ins/gap/gap_mov_dialog.c:2119
+#: plug-ins/gap/gap_mov_dialog.c:2364
 msgid "Show Next Controlpoint"
 msgstr "Показать след. контрольную точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2125
+#: plug-ins/gap/gap_mov_dialog.c:2370
 msgid "First Point"
 msgstr "Первая точка"
 
-#: plug-ins/gap/gap_mov_dialog.c:2133
+#: plug-ins/gap/gap_mov_dialog.c:2378
 msgid "Show First Controlpoint"
 msgstr "Показать первую контрольную точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2137
+#: plug-ins/gap/gap_mov_dialog.c:2382
 msgid "Last Point"
 msgstr "Последняя точка"
 
-#: plug-ins/gap/gap_mov_dialog.c:2145
+#: plug-ins/gap/gap_mov_dialog.c:2390
 msgid "Show Last Controlpoint"
 msgstr "Показать последнюю контрольную точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2151
+#: plug-ins/gap/gap_mov_dialog.c:2396
 msgid "Clear Point"
 msgstr "Очистить точку"
 
-#: plug-ins/gap/gap_mov_dialog.c:2159
+#: plug-ins/gap/gap_mov_dialog.c:2404
 msgid ""
 "Reset the current Controlpoint\n"
 "to default Values"
@@ -8762,35 +8779,53 @@ msgstr ""
 "Сбросить текущую контрольную точку\n"
 "в исходное значение"
 
-#: plug-ins/gap/gap_mov_dialog.c:2163
-msgid "Reset Points"
-msgstr "Сбросить точки"
+#: plug-ins/gap/gap_mov_dialog.c:2408
+msgid "Clear All Points"
+msgstr "Очистить все точки"
 
-#: plug-ins/gap/gap_mov_dialog.c:2171
+#: plug-ins/gap/gap_mov_dialog.c:2416
 msgid ""
-"Reset Controlpoints  \n"
-"to one Defaultpoint"
+"Reset all Controlpoints to default Values\n"
+"but dont change the path (X/Y Values)"
 msgstr ""
-"Сбросить контрольные точки\n"
-"до одной исходной точки"
 
-#: plug-ins/gap/gap_mov_dialog.c:2177
+#: plug-ins/gap/gap_mov_dialog.c:2423
+#, fuzzy
+msgid "Rotate Follow"
+msgstr "Вращение: "
+
+#: plug-ins/gap/gap_mov_dialog.c:2434
+msgid ""
+"Set Rotation for all Controlpoints\n"
+"to follow the shape of the path.\n"
+"(Shift: use Rotation of contolpoint 1 as offset)"
+msgstr ""
+
+#: plug-ins/gap/gap_mov_dialog.c:2441
+msgid "Delete All Points"
+msgstr "Удалить все точки"
+
+#: plug-ins/gap/gap_mov_dialog.c:2449
+msgid "Delete all Controlpoints"
+msgstr "Удалить все контрольные точки"
+
+#: plug-ins/gap/gap_mov_dialog.c:2456
 msgid "Load Points"
 msgstr "Загрузить точки"
 
-#: plug-ins/gap/gap_mov_dialog.c:2185
+#: plug-ins/gap/gap_mov_dialog.c:2464
 msgid "Load Controlpoints from file"
 msgstr "Загрузить контрольные точки из файла"
 
-#: plug-ins/gap/gap_mov_dialog.c:2189
+#: plug-ins/gap/gap_mov_dialog.c:2468
 msgid "Save Points"
 msgstr "Сохраненить точки"
 
-#: plug-ins/gap/gap_mov_dialog.c:2197
+#: plug-ins/gap/gap_mov_dialog.c:2476
 msgid "Save Controlpoints to file"
 msgstr "Сохранить контрольные точки в файле"
 
-#: plug-ins/gap/gap_mov_dialog.c:2668
+#: plug-ins/gap/gap_mov_dialog.c:2947
 #, c-format
 msgid ""
 "\n"
@@ -8800,7 +8835,7 @@ msgstr ""
 "Ошибка: Ключевой кадр %d в точке [%d] больше или равен последнему "
 "обработанному кадру"
 
-#: plug-ins/gap/gap_mov_dialog.c:2676
+#: plug-ins/gap/gap_mov_dialog.c:2955
 #, c-format
 msgid ""
 "\n"
@@ -8811,7 +8846,7 @@ msgstr ""
 "Ошибка: Ключевой кадр %d в точке [%d] вне доступного пространства кадров\n"
 "для предыдущей управляющей точки"
 
-#: plug-ins/gap/gap_mov_dialog.c:2686
+#: plug-ins/gap/gap_mov_dialog.c:2965
 #, c-format
 msgid ""
 "\n"
@@ -8820,7 +8855,7 @@ msgstr ""
 "\n"
 "Ошибка: Ключевой кадр %d не в последовательности в точке [%d]"
 
-#: plug-ins/gap/gap_mov_dialog.c:2704
+#: plug-ins/gap/gap_mov_dialog.c:2983
 #, c-format
 msgid ""
 "\n"
@@ -8829,7 +8864,7 @@ msgstr ""
 "\n"
 "Ошибка: управляющая точка [%d] вне обрабатываемого диапазона кадров"
 
-#: plug-ins/gap/gap_mov_dialog.c:2718
+#: plug-ins/gap/gap_mov_dialog.c:2997
 #, c-format
 msgid ""
 "\n"
@@ -8840,7 +8875,7 @@ msgstr ""
 "Ошибка: больше управляющих точек (%d) чем обрабатываемых кадров (%d)\n"
 "пожалуйста уменьшите число управляющих точек или выберите больше кадров"
 
-#: plug-ins/gap/gap_mov_dialog.c:2731
+#: plug-ins/gap/gap_mov_dialog.c:3010
 msgid ""
 "Cant operate with current Controlpoint\n"
 "or Keyframe settings"
@@ -8848,29 +8883,29 @@ msgstr ""
 "Невозможно работать с текущими настройками\n"
 "контрольную точки или ключевого кадра"
 
-#: plug-ins/gap/gap_mov_dialog.c:2738
+#: plug-ins/gap/gap_mov_dialog.c:3017
 msgid "Reset Keyframes"
 msgstr "Сбросить ключевые кадры"
 
-#: plug-ins/gap/gap_mov_dialog.c:2743
+#: plug-ins/gap/gap_mov_dialog.c:3022
 msgid "Move Path Controlpointcheck"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:2744
+#: plug-ins/gap/gap_mov_dialog.c:3023
 msgid "Errors:"
 msgstr "Ошибки:"
 
-#: plug-ins/gap/gap_mov_exec.c:337
+#: plug-ins/gap/gap_mov_exec.c:339
 msgid ""
 "No Source Image was selected.\n"
 "Please open a 2nd Image of the same type before opening Move Path."
 msgstr ""
 
-#: plug-ins/gap/gap_mov_exec.c:348
+#: plug-ins/gap/gap_mov_exec.c:350
 msgid "Copying Layers into Frames..."
 msgstr "Копирование слоев в кадры..."
 
-#: plug-ins/gap/gap_mov_exec.c:352
+#: plug-ins/gap/gap_mov_exec.c:354
 msgid "Generating Animated Preview..."
 msgstr "Создание просмотра анимации..."
 
@@ -11746,7 +11781,7 @@ msgstr "Снять выделение"
 msgid "Unselect All"
 msgstr "Снять выделение со всего"
 
-#: plug-ins/imagemap/imap_default_dialog.c:124
+#: plug-ins/imagemap/imap_default_dialog.c:136
 msgid "Help..."
 msgstr "Справка..."
 
@@ -11826,11 +11861,11 @@ msgstr "Размеры"
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:416
+#: plug-ins/imagemap/imap_edit_area_info.c:425
 msgid "Area Settings"
 msgstr "Настройки области"
 
-#: plug-ins/imagemap/imap_edit_area_info.c:459
+#: plug-ins/imagemap/imap_edit_area_info.c:469
 #, c-format
 msgid "Area #%d Settings"
 msgstr "Настройки области #%d"
@@ -12997,19 +13032,19 @@ msgstr "Окно:"
 msgid "Current"
 msgstr "Текущее"
 
-#: plug-ins/winsnap/winsnap.c:945
+#: plug-ins/winsnap/winsnap.c:946
 msgid "Grab a single window"
 msgstr "Захватить одно окно"
 
-#: plug-ins/winsnap/winsnap.c:956
+#: plug-ins/winsnap/winsnap.c:957
 msgid "Include decorations"
 msgstr "Включая обрамление"
 
-#: plug-ins/winsnap/winsnap.c:992
+#: plug-ins/winsnap/winsnap.c:993
 msgid "Grab the whole screen"
 msgstr "Захватить весь экран"
 
-#: plug-ins/winsnap/winsnap.c:1221
+#: plug-ins/winsnap/winsnap.c:1222
 msgid "No data captured"
 msgstr "Данные не захвачены"
 
