@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-12-21 16:43+0100\n"
-"PO-Revision-Date: 2000-12-21 16:19+0100\n"
+"POT-Creation-Date: 2000-12-22 12:43+0100\n"
+"PO-Revision-Date: 2000-12-22 12:49+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +123,7 @@ msgstr "Kilépés"
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
 #: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4976 app/gradient.c:5537 app/hue_saturation.c:383
+#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
 #: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
 #: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
 #: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
@@ -174,7 +174,7 @@ msgstr "Egyéni színátmenet"
 msgid "Blend:"
 msgstr "Színátmenet:"
 
-#: app/blend.c:325 app/gradient.c:641 app/preferences_dialog.c:2253
+#: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
 msgstr "lineáris"
 
@@ -326,7 +326,7 @@ msgstr "Ecset szerkesztõ"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:913 app/gradient_select.c:160
+#: app/gdisplay_ops.c:310 app/gradient.c:915 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
 #: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
@@ -357,7 +357,7 @@ msgstr "Dõlésszög:"
 msgid "Brush Selection"
 msgstr "Ecset választás"
 
-#: app/brush_select.c:285 app/gradient.c:911 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:913 app/module_db.c:359
 #: app/palette.c:2055 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Frissítés"
@@ -380,7 +380,7 @@ msgid "New"
 msgstr "Új"
 
 #: app/brush_select.c:479 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:158 app/palette.c:1177 app/palette.c:2071
+#: app/gradient_select.c:159 app/palette.c:1177 app/palette.c:2071
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Szerkesztés"
@@ -487,7 +487,7 @@ msgid "copy"
 msgstr "másol"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1712 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
 #, c-format
 msgid "%s copy"
 msgstr "%s másolás"
@@ -772,7 +772,7 @@ msgstr "B"
 #: app/color_select.c:251 app/layers_dialog.c:389 app/paint_funcs.c:99
 #: app/tool_options.c:934
 msgid "Hue"
-msgstr "Színesség"
+msgstr "Színezet"
 
 #: app/color_select.c:252 app/layers_dialog.c:390 app/paint_funcs.c:100
 #: app/tool_options.c:935
@@ -1870,112 +1870,112 @@ msgstr "Írd be a tároló nevét"
 msgid "Copy Named"
 msgstr "/Szerkeszt/Másol (név szerint)"
 
-#: app/gradient.c:642
+#: app/gradient.c:644
 msgid "Curved"
 msgstr "Ívelt"
 
-#: app/gradient.c:643
+#: app/gradient.c:645
 msgid "Sinusoidal"
 msgstr "szinuszoid"
 
-#: app/gradient.c:644
+#: app/gradient.c:646
 msgid "Spherical (increasing)"
 msgstr "szférikus (növekvõ)"
 
-#: app/gradient.c:645
+#: app/gradient.c:647
 msgid "Spherical (decreasing)"
 msgstr "szférikus (csökkenõ)"
 
-#: app/gradient.c:650
+#: app/gradient.c:652
 msgid "Plain RGB"
 msgstr "Egyszerû RGB"
 
-#: app/gradient.c:651
+#: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr "HSV (óramutató járásával ellentétes színesség)"
+msgstr "HSV (óramutató járásával ellentétes színezet)"
 
-#: app/gradient.c:652
+#: app/gradient.c:654
 msgid "HSV (clockwise hue)"
-msgstr "HSV (óramutató járása szerinti színesség)"
+msgstr "HSV (óramutató járása szerinti színezet)"
 
-#: app/gradient.c:905
+#: app/gradient.c:907
 msgid "Gradient Editor"
 msgstr "Színátmenet szerkesztõ"
 
-#: app/gradient.c:936 app/gradient_select.c:214 app/paintbrush.c:270
+#: app/gradient.c:938 app/gradient_select.c:215 app/paintbrush.c:270
 #: app/palette.c:3160
 msgid "Gradient"
 msgstr "Színátmenet"
 
-#: app/gradient.c:937 app/gradient_select.c:215 app/palette.c:2197
+#: app/gradient.c:939 app/gradient_select.c:216 app/palette.c:2197
 #: app/palette_select.c:93
 msgid "Name"
 msgstr "Név"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:982
+#: app/gradient.c:984
 msgid "Gradient Ops"
 msgstr "Színátmenetek beállításai"
 
 #. Buttons for gradient functions
-#: app/gradient.c:990
+#: app/gradient.c:992
 msgid "New Gradient"
 msgstr "Új színátmenet"
 
-#: app/gradient.c:998
+#: app/gradient.c:1000
 msgid "Copy Gradient"
 msgstr "Színátmenet másolása"
 
-#: app/gradient.c:1006 app/gradient.c:1876
+#: app/gradient.c:1008 app/gradient.c:1876
 msgid "Delete Gradient"
 msgstr "Színátmenet törlése"
 
-#: app/gradient.c:1014
+#: app/gradient.c:1016
 msgid "Rename Gradient"
 msgstr "Színátmenet átnevezése"
 
-#: app/gradient.c:1022 app/gradient.c:1962
+#: app/gradient.c:1024 app/gradient.c:1937
 msgid "Save as POV-Ray"
 msgstr "Mentés POV-Ray-ként"
 
 #. Zoom all button
-#: app/gradient.c:1040
+#: app/gradient.c:1042
 msgid "Zoom all"
 msgstr "Teljes méret"
 
-#: app/gradient.c:1091
+#: app/gradient.c:1093
 msgid "Instant update"
 msgstr "Azonnali frissítés"
 
-#: app/gradient.c:1226 app/gradient.c:2084
+#: app/gradient.c:1228 app/gradient.c:2062
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: app/gradient.c:1654
+#: app/gradient.c:1661
 msgid "New gradient"
 msgstr "Új színátmenet"
 
-#: app/gradient.c:1657
+#: app/gradient.c:1664
 msgid "Enter a name for the new gradient"
 msgstr "Írd be az új színátmenet nevét"
 
-#: app/gradient.c:1658
+#: app/gradient.c:1665
 msgid "untitled"
 msgstr "névtelen"
 
-#: app/gradient.c:1714
+#: app/gradient.c:1722
 msgid "Copy gradient"
 msgstr "Színátmenet másolása"
 
-#: app/gradient.c:1717
+#: app/gradient.c:1725
 msgid "Enter a name for the copied gradient"
 msgstr "Írd be a másolat nevét"
 
-#: app/gradient.c:1797
+#: app/gradient.c:1808
 msgid "Rename gradient"
 msgstr "Színátmenet átnevezése"
 
-#: app/gradient.c:1800
+#: app/gradient.c:1811
 msgid "Enter a new name for the gradient"
 msgstr "Írd be a színátmenet új nevét"
 
@@ -1986,12 +1986,12 @@ msgid ""
 "\"%s\" from the list and from disk?"
 msgstr "\"%s\"-t a listáról és a meghajtóról?"
 
-#: app/gradient.c:2121
+#: app/gradient.c:2099
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Nagyítás: %d:1    Ábrázolt tartomány: [%0.6f, %0.6f]"
 
-#: app/gradient.c:2377
+#: app/gradient.c:2355
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -2000,209 +2000,209 @@ msgstr ""
 "Helyzet: %0.6f     RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Átlátszatlanság: %0.3f"
 
-#: app/gradient.c:2402
+#: app/gradient.c:2380
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Elõtérszín beállítás: RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2426
+#: app/gradient.c:2404
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Háttérszín beállítás: RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2735
+#: app/gradient.c:2695
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr ""
 
-#: app/gradient.c:2737 app/gradient.c:2741
+#: app/gradient.c:2697 app/gradient.c:2701
 msgid "Click: select    Shift+click: extend selection"
 msgstr ""
 
-#: app/gradient.c:2747
+#: app/gradient.c:2707
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 
-#: app/gradient.c:2759
+#: app/gradient.c:2719
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
 
-#: app/gradient.c:3003 app/gradient.c:3012
+#: app/gradient.c:2968 app/gradient.c:2977
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr ""
 
-#: app/gradient.c:3030
+#: app/gradient.c:2995
 #, c-format
 msgid "Distance: %0.6f"
 msgstr ""
 
-#: app/gradient.c:3522 app/gradient.c:4585
+#: app/gradient.c:3487 app/gradient.c:4550
 msgid "Left endpoint's color"
 msgstr ""
 
-#: app/gradient.c:3533 app/gradient.c:3575
+#: app/gradient.c:3498 app/gradient.c:3540
 msgid "Load from"
 msgstr ""
 
-#: app/gradient.c:3537
+#: app/gradient.c:3502
 msgid "Left neighbor's right endpoint"
 msgstr ""
 
-#: app/gradient.c:3538
+#: app/gradient.c:3503
 msgid "Right endpoint"
 msgstr ""
 
-#: app/gradient.c:3548 app/gradient.c:3590
+#: app/gradient.c:3513 app/gradient.c:3555
 msgid "Save to"
 msgstr ""
 
-#: app/gradient.c:3564 app/gradient.c:4663
+#: app/gradient.c:3529 app/gradient.c:4628
 msgid "Right endpoint's color"
 msgstr ""
 
-#: app/gradient.c:3579
+#: app/gradient.c:3544
 msgid "Right neighbor's left endpoint"
 msgstr ""
 
-#: app/gradient.c:3580
+#: app/gradient.c:3545
 msgid "Left endpoint"
 msgstr ""
 
-#: app/gradient.c:3691
+#: app/gradient.c:3656
 msgid "Selection operations"
 msgstr ""
 
-#: app/gradient.c:3863
+#: app/gradient.c:3828
 msgid "Blending function for segment"
 msgstr ""
 
-#: app/gradient.c:3865
+#: app/gradient.c:3830
 msgid "Coloring type for segment"
 msgstr ""
 
-#: app/gradient.c:3867
+#: app/gradient.c:3832
 msgid "Split segment at midpoint"
 msgstr ""
 
-#: app/gradient.c:3869 app/gradient.c:4966
+#: app/gradient.c:3834 app/gradient.c:4931
 msgid "Split segment uniformly"
 msgstr ""
 
-#: app/gradient.c:3871
+#: app/gradient.c:3836
 msgid "Delete segment"
 msgstr ""
 
-#: app/gradient.c:3873
+#: app/gradient.c:3838
 msgid "Re-center segment's midpoint"
 msgstr ""
 
-#: app/gradient.c:3875
+#: app/gradient.c:3840
 msgid "Re-distribute handles in segment"
 msgstr ""
 
-#: app/gradient.c:3877
+#: app/gradient.c:3842
 msgid "Flip segment"
 msgstr ""
 
-#: app/gradient.c:3879 app/gradient.c:5527
+#: app/gradient.c:3844 app/gradient.c:5492
 msgid "Replicate segment"
 msgstr ""
 
-#: app/gradient.c:3884
+#: app/gradient.c:3849
 msgid "Blending function for selection"
 msgstr ""
 
-#: app/gradient.c:3886
+#: app/gradient.c:3851
 msgid "Coloring type for selection"
 msgstr ""
 
-#: app/gradient.c:3888
+#: app/gradient.c:3853
 msgid "Split segments at midpoints"
 msgstr ""
 
-#: app/gradient.c:3890 app/gradient.c:4967
+#: app/gradient.c:3855 app/gradient.c:4932
 msgid "Split segments uniformly"
 msgstr ""
 
-#: app/gradient.c:3892
+#: app/gradient.c:3857
 msgid "Delete selection"
 msgstr ""
 
-#: app/gradient.c:3894
+#: app/gradient.c:3859
 msgid "Re-center midpoints in selection"
 msgstr ""
 
-#: app/gradient.c:3896
+#: app/gradient.c:3861
 msgid "Re-distribute handles in selection"
 msgstr ""
 
-#: app/gradient.c:3898
+#: app/gradient.c:3863
 msgid "Flip selection"
 msgstr ""
 
-#: app/gradient.c:3900 app/gradient.c:5528
+#: app/gradient.c:3865 app/gradient.c:5493
 msgid "Replicate selection"
 msgstr ""
 
-#: app/gradient.c:4184
+#: app/gradient.c:4149
 msgid "FG color"
 msgstr ""
 
-#: app/gradient.c:4232
+#: app/gradient.c:4197
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:4752 app/gradient.c:4822
+#: app/gradient.c:4717 app/gradient.c:4787
 msgid "(Varies)"
 msgstr ""
 
-#: app/gradient.c:4974
+#: app/gradient.c:4939
 msgid "Split"
 msgstr ""
 
 #. Instructions
-#: app/gradient.c:4988
+#: app/gradient.c:4953
 msgid "Please select the number of uniform parts"
 msgstr ""
 
-#: app/gradient.c:4994
+#: app/gradient.c:4959
 msgid "in which you want to split the selected segment"
 msgstr ""
 
-#: app/gradient.c:4995
+#: app/gradient.c:4960
 msgid "in which you want to split the segments in the selection"
 msgstr ""
 
-#: app/gradient.c:5355
+#: app/gradient.c:5320
 msgid "Blend endpoints' colors"
 msgstr ""
 
-#: app/gradient.c:5367
+#: app/gradient.c:5332
 msgid "Blend endpoints' opacity"
 msgstr ""
 
-#: app/gradient.c:5535
+#: app/gradient.c:5500
 msgid "Replicate"
 msgstr ""
 
 #. Instructions
-#: app/gradient.c:5548
+#: app/gradient.c:5513
 msgid "Please select the number of times"
 msgstr ""
 
-#: app/gradient.c:5553
+#: app/gradient.c:5518
 msgid "you want to replicate the selected segment"
 msgstr ""
 
-#: app/gradient.c:5554
+#: app/gradient.c:5519
 msgid "you want to replicate the selection"
 msgstr ""
 
 #. The shell
-#: app/gradient_select.c:151
+#: app/gradient_select.c:152
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
@@ -2247,7 +2247,7 @@ msgstr ""
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
 msgid "Hue-Saturation"
-msgstr "Színesség-telítettség"
+msgstr "Színezet-telítettség"
 
 #: app/hue_saturation.c:292
 #, fuzzy
@@ -2273,12 +2273,12 @@ msgstr ""
 
 #: app/hue_saturation.c:451
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr ""
+msgstr "Színezet / Fényerõ / Telítettség beállításai"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
 msgid "Hue:"
-msgstr "Színesség:"
+msgstr "Színezet:"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
@@ -5738,43 +5738,39 @@ msgstr "Fényerõ-kontraszt"
 #: app/tools.c:1083
 #, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Kép/Színek/Színesség-telítettség"
+msgstr "/Kép/Színek/Színezet-telítettség"
 
 #: app/tools.c:1088
 msgid "Adjust hue and saturation"
-msgstr ""
+msgstr "Színezet és telítettség beállítása"
 
 #: app/tools.c:1111
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/Kép/Színek/Poszter"
+msgstr "/Kép/Színek/Poszter..."
 
 #: app/tools.c:1116
 msgid "Reduce image to a fixed numer of colors"
 msgstr ""
 
 #: app/tools.c:1139
-#, fuzzy
 msgid "/Image/Colors/Threshold..."
-msgstr "/Kép/Színek/Küszöbszint"
+msgstr "/Kép/Színek/Küszöbszint..."
 
 #: app/tools.c:1144
 msgid "Reduce image to two colors using a threshold"
 msgstr ""
 
 #: app/tools.c:1167
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/Kép/Színek/Görbék"
+msgstr "/Kép/Színek/Görbék..."
 
 #: app/tools.c:1172
 msgid "Adjust color curves"
 msgstr ""
 
 #: app/tools.c:1195
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/Kép/Színek/Szintek"
+msgstr "/Kép/Színek/Szintek..."
 
 #: app/tools.c:1200
 #, fuzzy
@@ -5782,9 +5778,8 @@ msgid "Adjust color levels"
 msgstr "Szintek"
 
 #: app/tools.c:1223
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/Kép/Hisztogram"
+msgstr "/Kép/Hisztogram..."
 
 #: app/tools.c:1228
 #, fuzzy
@@ -5793,7 +5788,7 @@ msgstr "/Kép/Hisztogram"
 
 #: app/transform_core.c:254
 msgid "Rotate"
-msgstr "Forgat"
+msgstr "Forgatás"
 
 #: app/transform_core.c:255
 msgid "Scale"
@@ -5801,7 +5796,7 @@ msgstr "Skálázás"
 
 #: app/transform_core.c:256
 msgid "Shear"
-msgstr "Csavar"
+msgstr "Csavarás"
 
 #: app/transform_core.c:365
 msgid ""
@@ -5812,14 +5807,12 @@ msgstr ""
 "maszkot tartalmazó rétegeken."
 
 #: app/transform_core.c:1609
-#, fuzzy
 msgid "Transformation"
 msgstr "Átalakítás"
 
 #: app/transform_tool.c:195
-#, fuzzy
 msgid "Transform Tool"
-msgstr "Átalakítás"
+msgstr "Átalakítás eszköz"
 
 #: app/transform_tool.c:218
 msgid "Rotation"
@@ -5848,14 +5841,12 @@ msgstr "Korrektív"
 
 #. the show grid toggle button
 #: app/transform_tool.c:262
-#, fuzzy
 msgid "Show Grid"
-msgstr "Rács megjelenítés"
+msgstr "Rács megjelenítése"
 
 #: app/transform_tool.c:273
-#, fuzzy
 msgid "Density:"
-msgstr "Intenzitás"
+msgstr "Sûrûség:"
 
 #. the smoothing toggle button
 #: app/transform_tool.c:300
@@ -5880,21 +5871,19 @@ msgstr ""
 
 #: app/undo.c:2906
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<érvénytelen>>"
 
 #: app/undo.c:2907
-#, fuzzy
 msgid "image"
-msgstr "Kép:"
+msgstr "kép"
 
 #: app/undo.c:2908
-#, fuzzy
 msgid "image mod"
-msgstr "Skálázás"
+msgstr ""
 
 #: app/undo.c:2909
 msgid "mask"
-msgstr ""
+msgstr "maszk"
 
 #: app/undo.c:2910
 #, fuzzy
@@ -5913,14 +5902,12 @@ msgid "paint"
 msgstr "Láthatóság:"
 
 #: app/undo.c:2913
-#, fuzzy
 msgid "new layer"
-msgstr "Új réteg"
+msgstr "új réteg"
 
 #: app/undo.c:2914
-#, fuzzy
 msgid "delete layer"
-msgstr "Réteg törlése"
+msgstr "réteg törlése"
 
 #: app/undo.c:2915
 #, fuzzy
@@ -5951,14 +5938,12 @@ msgstr "Réteg összefésülés beállítások"
 
 #. ok
 #: app/undo.c:2920
-#, fuzzy
 msgid "new channel"
-msgstr "Új csatorna"
+msgstr "új csatorna"
 
 #: app/undo.c:2921
-#, fuzzy
 msgid "delete channel"
-msgstr "Csatorna törlése"
+msgstr "csatorna törlése"
 
 #: app/undo.c:2922
 #, fuzzy
@@ -5989,23 +5974,20 @@ msgid "guide"
 msgstr ""
 
 #: app/undo.c:2928
-#, fuzzy
 msgid "text"
-msgstr "Szöveg"
+msgstr "szöveg"
 
 #: app/undo.c:2929
-#, fuzzy
 msgid "float selection"
-msgstr "Lebegõ kijelölés"
+msgstr "lebegõ kijelölés"
 
 #: app/undo.c:2930
-#, fuzzy
 msgid "paste"
-msgstr "Beilleszt"
+msgstr "beillesztés"
 
 #: app/undo.c:2931
 msgid "cut"
-msgstr ""
+msgstr "kivágás"
 
 #: app/undo.c:2932
 #, fuzzy
@@ -6017,15 +5999,13 @@ msgid "paint core"
 msgstr ""
 
 #: app/undo.c:2934
-#, fuzzy
 msgid "floating layer"
-msgstr "Réteg törlése"
+msgstr "lebegõ réteg"
 
 #. unused!
 #: app/undo.c:2935
-#, fuzzy
 msgid "linked layer"
-msgstr "Feljebb"
+msgstr "csatolt réteg"
 
 #: app/undo.c:2936
 #, fuzzy
@@ -6058,9 +6038,8 @@ msgid "layer scale"
 msgstr "fekete-fehér"
 
 #: app/undo.c:2942
-#, fuzzy
 msgid "layer resize"
-msgstr "Átméretezés"
+msgstr "réteg átméretezése"
 
 #: app/undo.c:2943
 msgid "quickmask"
@@ -6076,9 +6055,8 @@ msgid "remove parasite"
 msgstr ""
 
 #: app/undo.c:2946
-#, fuzzy
 msgid "resolution change"
-msgstr "Felbontás"
+msgstr "felbontás változtatása"
 
 #: app/undo.c:2947
 #, fuzzy
@@ -6086,13 +6064,12 @@ msgid "image scale"
 msgstr "Skálázás"
 
 #: app/undo.c:2948
-#, fuzzy
 msgid "image resize"
-msgstr "Átméretezés"
+msgstr "kép átméretezés"
 
 #: app/undo.c:2949
 msgid "misc"
-msgstr ""
+msgstr "egyéb"
 
 #: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
@@ -6594,9 +6571,9 @@ msgid "Color History"
 msgstr "Színpipetta"
 
 #, fuzzy
-msgid "Error in GIMP brush file...aborting."
-msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
+#~ msgid "Error in GIMP brush file...aborting."
+#~ msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
 
 #, fuzzy
-msgid "Error loading pattern \"%s\""
-msgstr "Hiba a GIMP ecsetfájlban... mûvelet megszakítás."
+#~ msgid "Error loading pattern \"%s\""
+#~ msgstr "Hiba a GIMP ecsetfájlban... mûvelet megszakítás."
