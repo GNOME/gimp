@@ -52,7 +52,7 @@ static void  gimp_md5_final     (GimpMD5Context *ctx,
 /**
  * gimp_md5_get_digest:
  * @buffer: byte buffer
- * @buffer_size: buffer size (in bytes)
+ * @buffer_size: buffer size (in bytes) or -1 if @buffer is nul-terminated.
  * @digest: 16 bytes buffer receiving the hash code.
  * 
  * Get the md5 hash of a buffer. The result is put in the 16 bytes
@@ -71,6 +71,12 @@ gimp_md5_get_digest (const gchar *buffer,
                      guchar       digest[16])
 {
   GimpMD5Context ctx;
+
+  g_return_if_fail (buffer != NULL);
+  g_return_if_fail (digest != NULL);
+  
+  if (buffer_size < 0)
+    buffer_size = strlen (buffer);
 
   gimp_md5_init (&ctx);
   gimp_md5_update (&ctx, buffer, buffer_size);
