@@ -7,11 +7,11 @@ There are some basic steps to building and installing the GIMP:
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK version 2.2.0 or better. Do not try
-     to use an older GTK+ version (1.2.x), it will not work. GTK+-2.2
-     itself needs recent versions of GLib-2.2, Pango and ATK. Grab them
-     from ftp://ftp.gtk.org/. GTK+-2.2 and friends can be installed side 
-     by side with GTK+-1.2.
+  2. You need to have installed GTK+ version 2.2.0 or better. Do not try to
+     use an older GTK+ version (1.2.x), it will not work. GTK+-2.2 itself
+     needs recent versions of GLib, Pango and ATK. Grab them from
+     ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed side by side
+     with GTK+-1.2.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
      you have FreeType2 installed before you compile Pango. It can be
@@ -86,7 +86,7 @@ recognizes. These are:
      them using the options given above.
  
   --enable-gtk-doc.  This option controls whether the libgimp API
-     reference will be created using gtk-doc. The HTML pages are 
+     references will be created using gtk-doc. The HTML pages are 
      included in a standard tarball, so you will only need this if you
      are building from CVS.
 
@@ -170,23 +170,15 @@ several reasons why this might fail:
   or
     LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
 
-* An old version of the GTK libraries was found instead of 
+* An old version of the GTK+ libraries was found instead of 
   your newly installed version. This commonly happens if a
-  binary package of GTK was previously installed on your system,
-  and you later compiled GTK from source.
+  binary package of GTK+ was previously installed on your system,
+  and you later compiled GTK+ from source.
 
   Fix: remove the old libraries and include files.
 
 A detailed log of the ./configure output is written to the file
 config.log. This may help diagnose problems.
-
-If you are sure of what you're doing, you can bypass the sanity check and
-just go by what gtk-config by using the --disable-gtktest option. Please
-only use this in dire circumstances.
-
-After fixing a problem, it is safest to delete the file 'config.cache'
-before re-running ./configure.
-
 
 
 When ./configure fails on plug-ins
@@ -210,8 +202,6 @@ Set your CPPFLAGS environment variable to look for the header file in a
 certain place, e.g. if you are working in a bash shell you would say:
       export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
 before you run configure.
-
-It's wise to remove the file 'config.cache' before re-running configure.
 
 
 
