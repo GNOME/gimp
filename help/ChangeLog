@@ -1,3 +1,12 @@
+Mon Nov 22 00:44:41 CET 1999 Olof S Kylander <olof@gimp.org>
+
+	* C/modes.html
+	* C/Makefile.am
+	* C/index.html
+
+	Added modes.html and made some small changes to Makefile.am 
+	and the main index file
+
 1999-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* C/dialogs/Makefile.am

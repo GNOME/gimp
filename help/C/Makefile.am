@@ -7,7 +7,8 @@ helpdatadir = $(gimpdatadir)/help/C
 helpdata_DATA = \
         contents.html \
         index.html \
-        welcome.html 
+        welcome.html \
+	modes.html 
 
 EXTRA_DIST = $(helpdata_DATA)
 
