@@ -157,7 +157,7 @@ static void      plug_in_params_destroy (GPParam   *params,
 static void      plug_in_args_destroy   (Argument  *args,
   					 int        nargs,
   					 int        full_destroy);
-
+static void      plug_in_init_shm (void);
 
 PlugIn *current_plug_in = NULL;
 GSList *proc_defs = NULL;
@@ -187,6 +187,77 @@ static HANDLE shm_handle;
 static int write_pluginrc = FALSE;
 
 
+
+
+static void
+plug_in_init_shm (void)
+{
+  /* allocate a piece of shared memory for use in transporting tiles
+   *  to plug-ins. if we can't allocate a piece of shared memory then
+   *  we'll fall back on sending the data over the pipe.
+   */
+  
+#ifdef HAVE_SHM_H
+  shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
+  
+  if (shm_ID == -1)
+    g_message (_("shmget failed...disabling shared memory tile transport"));
+  else
+    {
+      shm_addr = (guchar*) shmat (shm_ID, 0, 0);
+      if (shm_addr == (guchar*) -1)
+	{
+	  g_message (_("shmat failed...disabling shared memory tile transport"));
+	  shm_ID = -1;
+	}
+      
+#ifdef	IPC_RMID_DEFERRED_RELEASE
+      if (shm_addr != (guchar*) -1)
+	shmctl (shm_ID, IPC_RMID, 0);
+#endif
+    }
+#else
+#ifdef WIN32
+  /* Use Win32 shared memory mechanisms for
+   * transfering tile data.
+   */
+  int pid;
+  char fileMapName[MAX_PATH];
+  int tileByteSize = TILE_WIDTH * TILE_HEIGHT * 4;
+  
+  /* Our shared memory id will be our process ID */
+  pid = GetCurrentProcessId ();
+  
+  /* From the id, derive the file map name */
+  sprintf (fileMapName, "GIMP%d.SHM", pid);
+  
+  /* Create the file mapping into paging space */
+  shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
+				  PAGE_READWRITE, 0,
+				  tileByteSize, fileMapName);
+  
+  if (shm_handle)
+    {
+      /* Map the shared memory into our address space for use */
+      shm_addr = (guchar *) MapViewOfFile(shm_handle,
+					      FILE_MAP_ALL_ACCESS,
+					  0, 0, tileByteSize);
+      
+      /* Verify that we mapped our view */
+      if (shm_addr)
+	shm_ID = pid;
+      else {
+	g_warning ("MapViewOfFile error: %d... disabling shared memory transport\n", GetLastError());
+      }
+    }
+  else
+    {
+      g_warning ("CreateFileMapping error: %d... disabling shared memory transport\n", GetLastError());
+    }
+#endif
+#endif
+}
+
 void
 plug_in_init (void)
 {
@@ -209,66 +280,9 @@ plug_in_init (void)
    *  we'll fall back on sending the data over the pipe.
    */
   if (use_shm)
-    {
-#ifdef HAVE_SHM_H
-      shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
-      if (shm_ID == -1)
-	g_message (_("shmget failed...disabling shared memory tile transport"));
-      else
-	{
-	  shm_addr = (guchar*) shmat (shm_ID, 0, 0);
-	  if (shm_addr == (guchar*) -1)
-	    {
-	      g_message (_("shmat failed...disabling shared memory tile transport"));
-	      shm_ID = -1;
-	    }
-
-#ifdef	IPC_RMID_DEFERRED_RELEASE
-	  if (shm_addr != (guchar*) -1)
-	    shmctl (shm_ID, IPC_RMID, 0);
-#endif
-	}
-#else
-#ifdef WIN32
-      /* Use Win32 shared memory mechanisms for
-       * transfering tile data.
-       */
-      int pid;
-      char fileMapName[MAX_PATH];
-      int tileByteSize = TILE_WIDTH * TILE_HEIGHT * 4;
-
-      /* Our shared memory id will be our process ID */
-      pid = GetCurrentProcessId ();
-
-      /* From the id, derive the file map name */
-      sprintf (fileMapName, "GIMP%d.SHM", pid);
-
-      /* Create the file mapping into paging space */
-      shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
-				      PAGE_READWRITE, 0,
-				      tileByteSize, fileMapName);
-
-      if (shm_handle)
-	{
-	  /* Map the shared memory into our address space for use */
-	  shm_addr = (guchar *) MapViewOfFile(shm_handle,
-					      FILE_MAP_ALL_ACCESS,
-					      0, 0, tileByteSize);
-
-	  /* Verify that we mapped our view */
-	  if (shm_addr)
-	    shm_ID = pid;
-	  else {
-	    g_warning ("MapViewOfFile error: %d... disabling shared memory transport\n", GetLastError());
-	  }
-	}
-      else
-	{
-	  g_warning ("CreateFileMapping error: %d... disabling shared memory transport\n", GetLastError());
-	}
-#endif
-#endif
-    }
+  {
+      plug_in_init_shm();
+  }
   /* search for binaries in the plug-in directory path */
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
 
