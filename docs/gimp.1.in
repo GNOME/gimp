@@ -19,7 +19,7 @@ gimp - an image manipulation and paint program.
 
 .SH DESCRIPTION
 .PP
-The \fIGIMP\fP is the GNU Image Manipulation Program. It is used to
+The GIMP is the \fIGNU Image Manipulation Program\fP. It is used to
 edit and manipulate images. It can load and save a variety of image
 formats and can be used to convert between formats.
 .PP
