@@ -1,5 +1,11 @@
 2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimptransformoptions.c: use radio buttons
+	for constraint options.  Makes all options visible,
+	should resolve bug #68106.
+	
+2004-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/gui/file-save-dialog.c: to reduce clutter, hide overwrite
 	query dialog after user has responded.
 	

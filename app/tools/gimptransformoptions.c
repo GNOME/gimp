@@ -91,14 +91,14 @@ gimp_transform_options_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpTransformOptionsClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_transform_options_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpTransformOptions),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_transform_options_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_transform_options_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpTransformOptions),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_transform_options_init,
       };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
@@ -314,6 +314,30 @@ gimp_transform_options_set_defaults (GimpToolOptions *tool_options)
       tool_options->tool_info->gimp->config->interpolation_type;
 }
 
+static void
+gimp_scale_constraints_callback (GtkWidget *widget,
+                                 GObject   *config)
+{
+  gint      value;
+  gboolean  c0;
+  gboolean  c1;
+
+  value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                              "gimp-item-data"));
+  
+  c0 = c1 = FALSE;
+
+  if (value == 1 || value == 3)
+    c0 = TRUE;
+  if (value == 2 || value == 3)
+    c1 = TRUE;
+  
+  g_object_set (config,
+                "constrain-1", c0,
+                "constrain-2", c1,
+                NULL);
+}
+
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
@@ -366,7 +390,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the clip resulting image toggle button  */
-  button = gimp_prop_check_button_new (config, "clip", _("Clip Result"));
+  button = gimp_prop_check_button_new (config, "clip", _("Clip result"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -406,7 +430,11 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
       GtkWidget *vbox2;
+      GtkWidget *vbox3;
       gchar     *str;
+      gchar     *str1;
+      gchar     *str2;
+      gchar     *str3;
 
       /*  the constraints frame  */
       frame = gimp_frame_new (_("Constraints"));
@@ -420,7 +448,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
       if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
         {
-          str = g_strdup_printf (_("15 Degrees  %s"),
+          str = g_strdup_printf (_("15 degrees  %s"),
                                  gimp_get_mod_name_control ());
 
           button = gimp_prop_check_button_new (config, "constrain-1", str);
@@ -431,33 +459,35 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         }
       else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
-          str = g_strdup_printf (_("Keep Height  %s"),
+          g_object_set (config, 
+                        "constrain-1", FALSE,
+                        "constrain-2", FALSE,
+                        NULL);
+
+          str1 = g_strdup_printf (_("Keep height  %s"),
                                  gimp_get_mod_name_control ());
-
-          button = gimp_prop_check_button_new (config, "constrain-1", str);
-          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
-
-          g_free (str);
-
-          gimp_help_set_help_data (button,
-                                   _("Activate both the \"Keep Height\" and\n"
-                                     "\"Keep Width\" toggles to constrain\n"
-                                     "the aspect ratio"), NULL);
-
-          str = g_strdup_printf (_("Keep Width  %s"),
+          str2 = g_strdup_printf (_("Keep width  %s"),
                                  gimp_get_mod_name_alt ());
+          str3 = g_strdup_printf (_("Keep aspect  %s-%s"),
+                                 gimp_get_mod_name_control (), gimp_get_mod_name_alt ());
 
-          button = gimp_prop_check_button_new (config, "constrain-2", str);
-          gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-          gtk_widget_show (button);
+          vbox3 = gimp_int_radio_group_new (FALSE, NULL,
+                                            G_CALLBACK (gimp_scale_constraints_callback),
+                                            config, 0,
 
-          g_free (str);
+                                            _("None"), 0, NULL,
+                                            str1,      1, NULL,
+                                            str2,      2, NULL,
+                                            str3,      3, NULL,
 
-          gimp_help_set_help_data (button,
-                                   _("Activate both the \"Keep Height\" and\n"
-                                     "\"Keep Width\" toggles to constrain\n"
-                                     "the aspect ratio"), NULL);
+                                            NULL);
+                                            
+          gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
+          gtk_widget_show (vbox3);
+
+          g_free (str1);
+          g_free (str2);
+          g_free (str3);
         }
     }
 
