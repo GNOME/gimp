@@ -29,6 +29,7 @@
 #include "widgets-types.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpstroke.h"
 
 #include "gimppreviewrenderervectors.h"
 
@@ -86,15 +87,44 @@ static void
 gimp_preview_renderer_vectors_render (GimpPreviewRenderer *renderer,
                                       GtkWidget           *widget)
 {
-  const gchar *stock_id = NULL;
+  GimpVectors *vectors;
+  GimpStroke *stroke;
+  GArray *coordinates;
+  GimpCoords *coords;
+  GdkPoint *points;
+  gboolean closed;
+  gint i;
+  gdouble xscale, yscale;
+  
+  vectors = GIMP_VECTORS (renderer->viewable);
 
-  if (GIMP_IS_VECTORS (renderer->viewable))
+  gdk_draw_rectangle (widget->window, widget->style->white_gc, TRUE,
+                      widget->allocation.x, widget->allocation.y,
+                      widget->allocation.width, widget->allocation.height);
+
+  xscale = ((float) GIMP_ITEM (vectors)->width) /
+           ((float) widget->allocation.width);
+  yscale = ((float) GIMP_ITEM (vectors)->height) /
+           ((float) widget->allocation.height);
+
+  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       stroke != NULL;
+       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-    }
+      coordinates = gimp_stroke_interpolate (stroke, MIN (xscale, yscale),
+                                             &closed);
+      points = g_new (GdkPoint, coordinates->len);
 
-  if (stock_id)
-    gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
-  else
-    GIMP_PREVIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
+      for (i=0; i < coordinates->len; i++)
+        {
+          coords = &(g_array_index (coordinates, GimpCoords, i));
+          points[i].x = ROUND (coords->x / xscale) + widget->allocation.x;
+          points[i].y = ROUND (coords->y / yscale) + widget->allocation.y;
+        }
+      gdk_draw_lines (widget->window, widget->style->black_gc,
+                      points, coordinates->len);
+
+      g_array_free (coordinates, TRUE);
+      g_free (points);
+    }
 }

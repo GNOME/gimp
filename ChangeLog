@@ -1,3 +1,12 @@
+2003-09-29  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimppreviewrenderervectors.c: Made these widgets
+	show a preview of the vectors object. Does not work everywhere
+	right now, also most probably has scaling issues for non-square
+	images.
+
+	* app/tools/gimpdrawtool.c: Fixed Svens fix.
+
 2003-09-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpstrokeoptions.[ch]: removed "dash-unit" property and
