@@ -34,6 +34,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpimage.h"
@@ -56,20 +57,14 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
                               GimpStrokeOptions *options)
 {
   /* Stroke options */
-  gdouble               opacity;
-  GimpLayerModeEffects  paint_mode;
-  GimpStrokeStyle       style;
   gdouble               width;
-  GimpJoinStyle         join;
-  GimpCapStyle          cap;
-  gdouble               miter;
-  gboolean              antialias;
   GArray               *dash_array = NULL;
 
   gint             num_coords = 0;
   GimpStroke      *stroke;
 
   GimpImage       *gimage;
+  GimpContext     *context;
   GimpScanConvert *scan_convert;
   TileManager     *base;
   TileManager     *mask;
@@ -81,24 +76,8 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
 
-  g_object_get (options,
-                "opacity",    &opacity,
-                "paint-mode", &paint_mode,
-                "style",      &style,
-                "width",      &width,
-                "join-style", &join,
-                "cap-style",  &cap,
-                "miter",      &miter,
-                "antialias",  &antialias,
-                NULL);
-
+  context = GIMP_CONTEXT (options);
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  if (options->unit != GIMP_UNIT_PIXEL)
-    {
-      width *= (((gimage->xresolution + gimage->yresolution) / 2) /
-                _gimp_unit_get_factor (gimage->gimp, options->unit));
-    }
 
   /* what area do we operate on? */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -108,7 +87,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
 
   gimp_item_offsets (GIMP_ITEM (drawable), &x2, &y2);
 
-  scan_convert = gimp_scan_convert_new (w, h, antialias);
+  scan_convert = gimp_scan_convert_new (w, h, options->antialias);
 
   /* For each Stroke in the vector, interpolate it, and add it to the
    * ScanConvert
@@ -151,7 +130,23 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
       return;
     }
 
-  gimp_scan_convert_stroke (scan_convert, width, join, cap, miter,
+  width = options->width;
+
+  if (options->resolution > 0.0 &&
+      options->unit != GIMP_UNIT_PIXEL)
+    {
+      gimp_scan_convert_set_resolution (scan_convert,
+                                        gimage->xresolution,
+                                        gimage->yresolution);
+
+      width *= options->resolution /
+                    _gimp_unit_get_factor (gimage->gimp, options->unit);
+    }
+
+  gimp_scan_convert_stroke (scan_convert, width,
+                            options->join_style,
+                            options->cap_style,
+                            options->miter,
                             0.0, dash_array);
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape
@@ -176,22 +171,19 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
 
-  switch (style)
+  switch (options->style)
     {
     case GIMP_STROKE_STYLE_SOLID:
       {
-        GimpRGB *color;
-        guchar   tmp_col[MAX_CHANNELS] = { 0, };
-        guchar   col[MAX_CHANNELS]     = { 0, };
+        guchar  tmp_col[MAX_CHANNELS] = { 0, };
+        guchar  col[MAX_CHANNELS]     = { 0, };
 
-        g_object_get (options, "foreground", &color, NULL);
-        gimp_rgb_get_uchar (color,
+        gimp_rgb_get_uchar (&(context->foreground),
                             &tmp_col[RED_PIX],
                             &tmp_col[GREEN_PIX],
                             &tmp_col[BLUE_PIX]);
-        g_free (color);
 
-        gimp_image_transform_color (GIMP_ITEM (drawable)->gimage, drawable,
+        gimp_image_transform_color (gimage, drawable,
                                     col, GIMP_RGB, tmp_col);
         col[bytes - 1] = OPAQUE_OPACITY;
 
@@ -222,7 +214,9 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   pixel_region_init (&basePR, base, 0, 0, w, h, FALSE);
   gimp_image_apply_image (gimp_item_get_image (GIMP_ITEM (drawable)),
                           drawable, &basePR,
-                          TRUE, _("Render Stroke"), opacity, paint_mode,
+                          TRUE, _("Render Stroke"),
+                          context->opacity,
+                          context->paint_mode,
                           NULL, x1, y1);
 
   tile_manager_unref (mask);

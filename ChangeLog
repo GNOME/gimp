@@ -1,4 +1,18 @@
-2003-09-29  Sven Neumann  <sven@gimp.org>
+2003-09-30  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: Added support for setting
+	X- and Y-resolution for stroking paths. The width of a path
+	has to be given in pixels, using X-resolution.
+
+	* app/core/gimpstrokeoptions.[ch]: Added "resolution" property,
+	so that conversion between various width-units can happen.
+	Should be set to the target images X-resolution.
+
+	* app/gui/stroke-dialog.c: set the resolution of the options.
+
+	* app/core/gimpdrawable-stroke.c: Use that stuff, cleanup.
+
+2003-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/Makefile.am
 	* app/core/gimpitem-preview.[ch]: new files with preview code

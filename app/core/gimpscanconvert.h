@@ -32,6 +32,15 @@ GimpScanConvert * gimp_scan_convert_new        (guint            width,
 
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
+/* set the X- and Y-resolution for the ScanConvert.
+ * Only gets used for stroking.
+ * The stroke width has to be given in X-Resolution.
+ */
+void
+gimp_scan_convert_set_resolution (GimpScanConvert *sc,
+                                  gdouble          xresolution,
+                                  gdouble          yresolution);
+
 /* Add "npoints" from "pointlist" to the polygon currently being
  * described by "scan_converter". DEPRECATED.
  */
@@ -57,6 +66,11 @@ void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
  * defined with the commands above.
  *
  * You cannot add additional polygons after this command.
+ *
+ * Note that if you have nonstandard resolution, "width" gives the
+ * width (in pixels) for a vertical stroke, i.e. use the X-resolution
+ * to calculate the width of a stroke when operating with real world
+ * units.
  */
 
 void              gimp_scan_convert_stroke     (GimpScanConvert *sc,

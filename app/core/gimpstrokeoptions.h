@@ -43,6 +43,7 @@ struct _GimpStrokeOptions
   GimpStrokeStyle  style;
 
   gdouble          width;
+  gdouble          resolution;  /* in DPI */
   GimpUnit         unit;
 
   GimpCapStyle     cap_style;

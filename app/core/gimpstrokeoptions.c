@@ -36,6 +36,7 @@ enum
   PROP_0,
   PROP_STYLE,
   PROP_WIDTH,
+  PROP_RESOLUTION,
   PROP_UNIT,
   PROP_CAP_STYLE,
   PROP_JOIN_STYLE,
@@ -112,6 +113,10 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                    "width", NULL,
                                    0.0, 2000.0, 5.0,
                                    0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_RESOLUTION,
+                                   "resolution", NULL,
+                                   0.0, 4000.0, 72.0,
+                                   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
@@ -162,6 +167,9 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
+      break;
+    case PROP_RESOLUTION:
+      options->resolution = g_value_get_double (value);
       break;
     case PROP_UNIT:
       options->unit = g_value_get_int (value);
@@ -238,6 +246,9 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
+      break;
+    case PROP_RESOLUTION:
+      g_value_set_double (value, options->resolution);
       break;
     case PROP_UNIT:
       g_value_set_int (value, options->unit);
