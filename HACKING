@@ -34,10 +34,10 @@ If at all possible, please use CVS to get the latest development version of
 gimp, as well as the CVS version of gtk+.  You can do the following to get
 gimp and gtk+ from cvs:
 
-   $ export CVSROOT=':pserver:anonymous@cvs.gimp.org:/debian/home/gnomecvs'
+   $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
    $ cvs login
      (there is no password, just hit return)
-   $ cvs -z9 checkout gtk+ gimp
+   $ cvs -z3 checkout gtk+ gimp
 
 Please submit patches to the gimp-developer@scam.xcf.berkeley.edu mailing
 list.  All kinds of contributions are accepted.  Patches that you wish to go
