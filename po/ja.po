@@ -4,30 +4,30 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.22\n"
-"POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-05-14 11:00+09:00\n"
+"Project-Id-Version: GIMP 1.1.24\n"
+"POT-Creation-Date: 2000-05-31 20:57+0900\n"
+"PO-Revision-Date: 2000-05-31 20:59+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:192
+#: app/about_dialog.c:193
 msgid "About the GIMP"
 msgstr "GIMP について"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:243
+#: app/about_dialog.c:244
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal-*-*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:253
+#: app/about_dialog.c:254
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "バージョン %s の提供は"
 
-#: app/about_dialog.c:293
+#: app/about_dialog.c:294
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "詳しくは http://www.gimp.org/ を見て下さい"
 
@@ -144,7 +144,7 @@ msgstr "壊れた曲線"
 msgid "Curve not closed!"
 msgstr "曲線は閉じられていません!"
 
-#: app/bezier_select.c:3228 app/gimage_mask.c:618
+#: app/bezier_select.c:3228 app/gimage_mask.c:620
 msgid "Paintbrush operation failed."
 msgstr "絵筆操作失敗."
 
@@ -739,15 +739,15 @@ msgstr "N/A"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -1779,49 +1779,49 @@ msgid "GIMP Message"
 msgstr "GIMP メッセージ"
 
 #. pseudo unit
-#: app/gimpunit.c:58
+#: app/gimpunit.c:63
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/gimpunit.c:58 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
+#: app/gimpunit.c:63 app/measure.c:504 app/measure.c:508 app/paint_core.c:472
 msgid "pixels"
 msgstr "ピクセル"
 
 #. standard units
-#: app/gimpunit.c:61
+#: app/gimpunit.c:66
 msgid "inch"
 msgstr "インチ"
 
-#: app/gimpunit.c:61
+#: app/gimpunit.c:66
 msgid "inches"
 msgstr "インチ"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:67
 msgid "millimeter"
 msgstr "ミリメートル"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:67
 msgid "millimeters"
 msgstr "ミリメートル"
 
 #. professional units
-#: app/gimpunit.c:65
+#: app/gimpunit.c:70
 msgid "point"
 msgstr "ポイント"
 
-#: app/gimpunit.c:65
+#: app/gimpunit.c:70
 msgid "points"
 msgstr "ポイント"
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:71
 msgid "pica"
 msgstr "パイカ"
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:71
 msgid "picas"
 msgstr "パイカ"
 
-#: app/gimpunit.c:73
+#: app/gimpunit.c:78
 msgid "percent"
 msgstr "パーセント:"
 
@@ -3813,7 +3813,7 @@ msgstr "なび: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "なび: 画像無し"
 
-#: app/paint_core.c:745
+#: app/paint_core.c:706
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
@@ -4176,7 +4176,7 @@ msgid "Extensions"
 msgstr "拡張機能"
 
 #: app/plug_in.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "プラグインが見つかりません: \"%s\""
 
@@ -4190,6 +4190,12 @@ msgid ""
 "You may want to save your images and restart GIMP\n"
 "to be on the safe side."
 msgstr ""
+"プラグインクラッシュ: \"%s\"\n"
+"(%s)\n"
+"\n"
+"実行に失敗したプラグインは GIMP の内部状態を不安定にするかもしれません.\n"
+"念のため, 作業中の画像を一旦保存して GIMP を再起動することを\n"
+"お勧めします."
 
 #: app/posterize.c:148
 msgid "Posterize does not operate on indexed drawables."
@@ -5207,9 +5213,8 @@ msgid "Magnify"
 msgstr "虫めがね"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/道具/変換ツール/移動"
+msgstr "/道具/変換ツール/虫めがね"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -6349,13 +6354,3 @@ msgstr "水彩"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "色使用歴"
-
-#~ msgid ""
-#~ "Plug-In crashed: %s\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "プラグインクラッシュ: %s\n"
-#~ "(%s)"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/道具/虫めがね"

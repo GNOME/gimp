@@ -1,13 +1,13 @@
 # GIMP plug-ins message translation table
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
-# SHIRASAKI Yasuhiro <yasuhiro@awa.tohoku.ac.jp>, 1999, 2000.
+# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-05-26 23:52-0700\n"
-"PO-Revision-Date: 2000-03-28 16:28+09:00\n"
-"Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
+"Project-Id-Version: gimp 1.1.24\n"
+"POT-Creation-Date: 2000-05-31 20:57+0900\n"
+"PO-Revision-Date: 2000-05-31 21:06+09:00\n"
+"Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
@@ -18,7 +18,6 @@ msgid "<Image>/Filters/Colors/Map/Alien Map..."
 msgstr "<Image>/フィルタ/色/マップ/エイリアンマップ..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
-#, fuzzy
 msgid "AlienMap: Transforming..."
 msgstr "エイリアンマップ: 変換しています..."
 
@@ -338,7 +337,6 @@ msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
 msgstr "<Image>/フィルタ/色/マップ/エイリアンマップ 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
-#, fuzzy
 msgid "AlienMap2: Transforming..."
 msgstr "エイリアンマップ 2: 変換しています..."
 
@@ -782,14 +780,13 @@ msgid "Fractals"
 msgstr "フラクタル"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1492
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening: %s"
-msgstr "\"%s\" を開く際にエラー発生!\n"
+msgstr "%s を開く際にエラー発生"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1494
-#, fuzzy
 msgid "Could not save."
-msgstr "ファイルが保存できません:"
+msgstr "保存できません."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1584
 msgid "Failed to write file\n"
@@ -888,7 +885,7 @@ msgid "New Fractal"
 msgstr "新規フラクタル"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1159
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -896,10 +893,8 @@ msgid ""
 "to your %s file."
 msgstr ""
 "fractalexplorer-path が gimprc 中に見つかりません:\n"
-"%s/gimprc ファイルに\n"
-"(fractalexplorer-path "
-"\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
-"のように追加してみて下さい."
+"(fractalexplorer-path \"%s\")\n"
+"のように %s ファイルに追加してみて下さい."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1177
 msgid ""
@@ -1358,23 +1353,23 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1226
 #: plug-ins/print/gimp_main_window.c:307
 msgid "Top:"
-msgstr ""
+msgstr "上:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
 #: plug-ins/print/gimp_main_window.c:329
 msgid "Bottom:"
-msgstr ""
+msgstr "下:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:296
 msgid "Left:"
-msgstr ""
+msgstr "左:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:318
 msgid "Right:"
-msgstr ""
+msgstr "右:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
@@ -1463,27 +1458,27 @@ msgid "Loading %s:"
 msgstr "%s 読み込み中:"
 
 #: plug-ins/bmp/bmpread.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "%s: can't open \"%s\""
-msgstr "%s: \"%s\" を開けない\n"
+msgstr "%s: \"%s\" を開けない"
 
 #: plug-ins/bmp/bmpread.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s is not a valid BMP file"
-msgstr "%s: %s は不正な BMP ファイルです\n"
+msgstr "%s: %s は正常な BMP ファイルではありません"
 
 #: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
 #: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
 #: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
 #: plug-ins/bmp/bmpread.c:173
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error reading BMP file header"
-msgstr "%s: BMP ファイルヘッダ読み込み中にエラー発生\n"
+msgstr "%s: BMP ファイルヘッダ読み込み中にエラー発生"
 
 #: plug-ins/bmp/bmpread.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s: bad colormap"
-msgstr "%s: 不正なカラーマップです\n"
+msgstr "%s: 不正なカラーマップです"
 
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
@@ -1508,12 +1503,11 @@ msgid "Background"
 msgstr "背景"
 
 #: plug-ins/bmp/bmpwrite.c:104
-#, fuzzy
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr "bmp: 不明な画像種や透明度を持った画像に対しては使用できません"
+msgstr "BMP: 不明な画像種や透明度を持った画像に対しては使用できません"
 
 #: plug-ins/bmp/bmpwrite.c:167
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open %s"
 msgstr "%s が開けません"
 
@@ -2297,7 +2291,6 @@ msgid "<Image>/Filters/Distorts/Blinds..."
 msgstr "<Image>/フィルタ/歪み/ブラインド..."
 
 #: plug-ins/common/blinds.c:278
-#, fuzzy
 msgid "Adding Blinds..."
 msgstr "ブラインドを追加しています..."
 
@@ -2431,9 +2424,8 @@ msgstr "反転バンプマップ"
 
 #. Tile bumpmap
 #: plug-ins/common/bumpmap.c:973
-#, fuzzy
 msgid "Tile Bumpmap"
-msgstr "バンプマップ"
+msgstr "タイルバンプマップ"
 
 #: plug-ins/common/bumpmap.c:1004
 msgid "Bump Map:"
@@ -2926,7 +2918,6 @@ msgid "Save Curve Points to file"
 msgstr "カーブ点をファイルに保存"
 
 #: plug-ins/common/curve_bend.c:3333
-#, fuzzy
 msgid "Curve Bend..."
 msgstr "ひん曲げています..."
 
@@ -3118,9 +3109,8 @@ msgid "Despeckling..."
 msgstr "非斑化しています..."
 
 #: plug-ins/common/despeckle.c:612
-#, fuzzy
 msgid "Despeckle"
-msgstr "非斑化 "
+msgstr "非斑化"
 
 #.
 #. * Filter type controls...
@@ -3495,7 +3485,6 @@ msgid "<Image>/Filters/Light Effects/FlareFX..."
 msgstr "<Image>/フィルタ/ライト効果/フレア効果..."
 
 #: plug-ins/common/flarefx.c:290
-#, fuzzy
 msgid "Render Flare..."
 msgstr "フレアを描画しています..."
 
@@ -3510,9 +3499,8 @@ msgstr "フレア効果の中心"
 
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:845 plug-ins/common/nova.c:668
-#, fuzzy
 msgid "Show Cursor"
-msgstr "色表示"
+msgstr "カーソル表示"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
@@ -3834,7 +3822,6 @@ msgid "<Image>/Filters/Render/Pattern/Qbist..."
 msgstr "<Image>/フィルタ/下塗り/パターン/Qビスト..."
 
 #: plug-ins/common/gqbist.c:435
-#, fuzzy
 msgid "Qbist..."
 msgstr "Qビスト..."
 
@@ -4083,9 +4070,8 @@ msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/フィルタ/マップ/幻..."
 
 #: plug-ins/common/illusion.c:180
-#, fuzzy
 msgid "Illusion..."
-msgstr "幻"
+msgstr "幻を描いています..."
 
 #: plug-ins/common/illusion.c:555
 msgid "Illusion"
@@ -4100,7 +4086,6 @@ msgid "<Image>/Filters/Distorts/IWarp..."
 msgstr "<Image>/フィルタ/歪み/対話型歪め..."
 
 #: plug-ins/common/iwarp.c:651
-#, fuzzy
 msgid "Warping..."
 msgstr "歪めています..."
 
@@ -4118,28 +4103,24 @@ msgid "Animate"
 msgstr "動画化"
 
 #: plug-ins/common/iwarp.c:943
-#, fuzzy
 msgid "Number of Frames:"
-msgstr "フレーム数"
+msgstr "フレーム数:"
 
 #: plug-ins/common/iwarp.c:952
 msgid "Reverse"
 msgstr "逆転"
 
 #: plug-ins/common/iwarp.c:1000
-#, fuzzy
 msgid "Deform Radius:"
-msgstr "歪める半径"
+msgstr "歪める半径:"
 
 #: plug-ins/common/iwarp.c:1010
-#, fuzzy
 msgid "Deform Amount:"
-msgstr "歪める量"
+msgstr "歪める量:"
 
 #: plug-ins/common/iwarp.c:1019
-#, fuzzy
 msgid "Deform Mode"
-msgstr "カラーモード"
+msgstr "歪めモード"
 
 #: plug-ins/common/iwarp.c:1033 plug-ins/ifscompose/ifscompose.c:851
 #: plug-ins/ifscompose/ifscompose.c:1118 plug-ins/imagemap/imap_cmd_move.c:80
@@ -4438,18 +4419,16 @@ msgid "Send to Mail"
 msgstr "メールで画像を送る"
 
 #: plug-ins/common/mail.c:520
-#, fuzzy
 msgid "Recipient:"
-msgstr "繰り返し:"
+msgstr "宛先:"
 
 #: plug-ins/common/mail.c:532
-#, fuzzy
 msgid "Sender:"
-msgstr "種:"
+msgstr "送り主:"
 
 #: plug-ins/common/mail.c:544
 msgid "Subject:"
-msgstr "題:"
+msgstr "題名:"
 
 #: plug-ins/common/mail.c:568 plug-ins/gfig/gfig.c:3757
 #: plug-ins/imagemap/imap_settings.c:79
@@ -5016,20 +4995,26 @@ msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
+"%s\n"
+"PNG 不明な色モデル"
 
 #: plug-ins/common/png.c:739
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "PNG error. Couldn't save image"
-msgstr "ファイルが保存できません:"
+msgstr ""
+"%s\n"
+"PNG エラー. 画像を保存できませんでした"
 
 #: plug-ins/common/png.c:749
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Couldn't create file"
-msgstr "ファイルが読めません:"
+msgstr ""
+"%s\n"
+"ファイルが作成できませんでした"
 
 #: plug-ins/common/png.c:1016
 msgid "Save as PNG"
@@ -6099,13 +6084,12 @@ msgid "Pack Bits"
 msgstr "パックビット"
 
 #: plug-ins/common/tiff.c:1511
-#, fuzzy
 msgid "Deflate"
-msgstr "削除"
+msgstr ""
 
 #: plug-ins/common/tiff.c:1512
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/common/tile.c:126
 msgid "<Image>/Filters/Map/Tile..."
@@ -6655,7 +6639,6 @@ msgid "Pasted"
 msgstr "ペースト結果"
 
 #: plug-ins/common/winclipboard.c:536
-#, fuzzy
 msgid "Pasting..."
 msgstr "ペーストしています..."
 
@@ -7060,14 +7043,13 @@ msgid "Drawing Flame..."
 msgstr "炎を描いています..."
 
 #: plug-ins/flame/flame.c:299
-#, fuzzy
 msgid "Flame works only on RGB drawables."
-msgstr "RGB 値最大: RGB 描画対象のみ操作できます."
+msgstr "炎は RGB 描画対象にしか描けません."
 
 #: plug-ins/flame/flame.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Is not a regular file"
-msgstr "PNM: %s は不正なファイルです."
+msgstr "%s: は不正なファイルです"
 
 #: plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:965
 msgid "Edit Flame"
@@ -7082,9 +7064,8 @@ msgid "Controls"
 msgstr "コントロール"
 
 #: plug-ins/flame/flame.c:683
-#, fuzzy
 msgid "Speed:"
-msgstr "種:"
+msgstr "速度:"
 
 #: plug-ins/flame/flame.c:699
 msgid "Randomize"
@@ -7141,24 +7122,20 @@ msgid "Gamma:"
 msgstr "ガンマ:"
 
 #: plug-ins/flame/flame.c:1043
-#, fuzzy
 msgid "Sample Density:"
-msgstr "サンプル密度"
+msgstr "サンプル密度:"
 
 #: plug-ins/flame/flame.c:1053
-#, fuzzy
 msgid "Spatial Oversample:"
-msgstr "空間オーバーサンプル"
+msgstr "空間オーバーサンプル:"
 
 #: plug-ins/flame/flame.c:1063
-#, fuzzy
 msgid "Spatial Filter Radius:"
-msgstr "空間フィルタ半径"
+msgstr "空間フィルタ半径:"
 
 #: plug-ins/flame/flame.c:1089
-#, fuzzy
 msgid "Colormap:"
-msgstr "カラーマップ"
+msgstr "カラーマップ:"
 
 #: plug-ins/flame/flame.c:1137
 msgid "Custom Gradient"
@@ -7169,9 +7146,8 @@ msgid "Camera"
 msgstr "カメラ"
 
 #: plug-ins/flame/flame.c:1169
-#, fuzzy
 msgid "Zoom:"
-msgstr "拡大"
+msgstr "拡大:"
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
@@ -7734,7 +7710,6 @@ msgstr ""
 "(全ての中間レイヤーに対して)"
 
 #: plug-ins/gap/gap_filter_foreach.c:276
-#, fuzzy
 msgid "Applying Filter to all Layers..."
 msgstr "全てのレイヤーにフィルタを適用しています..."
 
@@ -7873,7 +7848,6 @@ msgstr ""
 "(99 より大きい回数)"
 
 #: plug-ins/gap/gap_lib.c:2128
-#, fuzzy
 msgid "Duplicate Frame Range"
 msgstr "複製するフレーム範囲"
 
@@ -7916,34 +7890,28 @@ msgid "Framesequence shift"
 msgstr "フレーム並びずらし"
 
 #: plug-ins/gap/gap_main.c:374
-#, fuzzy
 msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/動画/次へ"
+msgstr "<Image>/動画/移動/次のフレーム"
 
 #: plug-ins/gap/gap_main.c:386
-#, fuzzy
 msgid "<Image>/Video/Goto/Previous Frame"
-msgstr "<Image>/動画/前へ"
+msgstr "<Image>/動画/移動/前のフレーム"
 
 #: plug-ins/gap/gap_main.c:398
-#, fuzzy
 msgid "<Image>/Video/Goto/First Frame"
-msgstr "<Image>/動画/最初へ"
+msgstr "<Image>/動画/移動/最初のフレーム"
 
 #: plug-ins/gap/gap_main.c:410
-#, fuzzy
 msgid "<Image>/Video/Goto/Last Frame"
-msgstr "<Image>/動画/最後へ"
+msgstr "<Image>/動画/移動/最後のフレーム"
 
 #: plug-ins/gap/gap_main.c:422
-#, fuzzy
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/動画/指定する"
+msgstr "<Image>/動画/移動/指定したフレーム..."
 
 #: plug-ins/gap/gap_main.c:434
-#, fuzzy
 msgid "<Image>/Video/Delete Frames..."
-msgstr "<Image>/動画/フレーム削除"
+msgstr "<Image>/動画/フレーム削除..."
 
 #: plug-ins/gap/gap_main.c:446
 msgid "<Image>/Video/Duplicate Frames..."
@@ -8323,9 +8291,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:489
-#, fuzzy
 msgid "Anim Preview"
-msgstr "プレビュー"
+msgstr "動画プレビュー"
 
 #: plug-ins/gap/gap_mov_dialog.c:496
 msgid ""
@@ -8393,9 +8360,8 @@ msgstr ""
 
 #. toggle force visibility
 #: plug-ins/gap/gap_mov_dialog.c:608
-#, fuzzy
 msgid "Force visibility"
-msgstr "強制的に並べる?"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:614
 msgid "Force visibility for all copied Src-Layers"
@@ -8427,28 +8393,24 @@ msgid "Object on one frame"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:772
-#, fuzzy
 msgid "Exact Object on frames"
-msgstr "フレーム取り出しを有効にする"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:802
-#, fuzzy
 msgid "Anim Preview Mode"
-msgstr "プレビューサイズ"
+msgstr "動画プレビューモード"
 
 #: plug-ins/gap/gap_mov_dialog.c:810
-#, fuzzy
 msgid "Scale Preview"
-msgstr "画像プレビュー"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:811
 msgid "Scale down size of the generated animated preview (in %)"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:819
-#, fuzzy
 msgid "Framerate"
-msgstr "フレームレート:"
+msgstr "フレームレート"
 
 #: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Framerate to use in the animated preview in frames/sec"
@@ -8465,14 +8427,12 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:840
-#, fuzzy
 msgid "Move Path Animated Preview"
-msgstr "移動パスプレビュー"
+msgstr "移動パス動画プレビュー"
 
 #: plug-ins/gap/gap_mov_dialog.c:886
-#, fuzzy
 msgid "Generate Animated Preview failed\n"
-msgstr "最適パレットを生成する"
+msgstr "最適動画プレビュー生成失敗\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1098
@@ -8610,9 +8570,8 @@ msgstr ""
 #. Keyframe
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1961
-#, fuzzy
 msgid "Keyframe:"
-msgstr "オーバーサンプル:"
+msgstr ""
 
 #. label text
 #. scalesize spinsize
@@ -8784,18 +8743,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2738
-#, fuzzy
 msgid "Reset Keyframes"
-msgstr "初期値に戻す"
+msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2743
 msgid "Move Path Controlpointcheck"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2744
-#, fuzzy
 msgid "Errors:"
-msgstr "エラー"
+msgstr "エラー:"
 
 #: plug-ins/gap/gap_mov_exec.c:337
 msgid ""
@@ -8808,9 +8765,8 @@ msgid "Copying Layers into Frames..."
 msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:352
-#, fuzzy
 msgid "Generating Animated Preview..."
-msgstr "リアルタイムプレビュー"
+msgstr "動画プレビューを生成しています..."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
@@ -9142,15 +9098,13 @@ msgstr ""
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2950
-#, fuzzy
 msgid "Paste after"
-msgstr "パターン"
+msgstr ""
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2960
-#, fuzzy
 msgid "Paste replace"
-msgstr "インターレース"
+msgstr ""
 
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2970
@@ -9672,21 +9626,13 @@ msgstr ""
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/フィルタ/下塗り/ダイナミック文字..."
 
-#: plug-ins/gdyntext/gdyntext.c:307
-msgid ""
-"Current layer isn't a GDynText layer or it has no alpha channel.\n"
-"  Forcing new layer creation.\n"
-msgstr ""
-"このレイヤーは GDynText のレイヤーではないかアルファチャンネルがありません.\n"
-"  強制的に新しいレイヤーを作成します.\n"
-
-#: plug-ins/gdyntext/gdyntext.c:354
-#, fuzzy, c-format
+#: plug-ins/gdyntext/gdyntext.c:351
+#, c-format
 msgid "Upgrading old GDynText layer to %s\n"
-msgstr "古い GDynText レイヤーをアップグレード"
+msgstr "古い GDynText レイヤー を %s にアップグレードしています\n"
 
-#: plug-ins/gdyntext/gdyntext.c:358
-#, fuzzy, c-format
+#: plug-ins/gdyntext/gdyntext.c:355
+#, c-format
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
@@ -9696,36 +9642,32 @@ msgstr ""
 "警告: GDynText が古すぎます!\n"
 "  この文字列を編集すると幾らかの情報が失われます.\n"
 "  このレイヤーを編集するには新しい版が必要です.\n"
-"  以下の場所から取得して下さい "
+"  %s から取得して下さい\n"
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:397
+#: plug-ins/gdyntext/gdyntext.c:394
 msgid "GDynText Layer "
 msgstr "GDynText レイヤー "
 
-#: plug-ins/gdyntext/gdyntext.c:434
+#: plug-ins/gdyntext/gdyntext.c:431
 msgid "GIMP Dynamic Text"
 msgstr "GIMP ダイナミック文字"
 
-#: plug-ins/gdyntext/gdyntext.c:536
-#, fuzzy
+#: plug-ins/gdyntext/gdyntext.c:533
 msgid "GDynText Layer"
-msgstr "GDynText レイヤー "
+msgstr "GDynText レイヤー"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:127
-#, fuzzy
 msgid "GDynText Message Window"
-msgstr "GDynText レイヤー "
+msgstr "GDynText メッセージ窓"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:157
-#, fuzzy
 msgid "About GDynText"
-msgstr "GDynText "
+msgstr "GDynText について"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:221
-#, fuzzy
 msgid "GDynText: Select Color"
-msgstr "色を選択"
+msgstr "GDynText: 色選択"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:321
 msgid "Toggle creation of a new layer"
@@ -9772,9 +9714,8 @@ msgid "Set line spacing"
 msgstr "行間設定"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:514
-#, fuzzy
 msgid "Line Spacing"
-msgstr "行間"
+msgstr "行間隔"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:543
 msgid "Editable text sample"
@@ -9797,25 +9738,23 @@ msgstr ""
 "のようにレイヤー名を強制的に変更します."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1015
-#, fuzzy
 msgid "GDynText: CharMap"
-msgstr "GDynText "
+msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1088
-#, fuzzy
 msgid "GDynText: Load Text"
-msgstr "GDynText レイヤー "
+msgstr "GDynText: テキスト読み込み"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1134
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d)."
-msgstr "警告 ファイル \"%s\" は最大文字数 (%d) を越えています.\n"
+msgstr "警告 ファイル \"%s\" は最大文字数 (%d) を越えています."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1146
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!"
-msgstr "\"%s\" を開く際にエラー発生!\n"
+msgstr "\"%s\" を開く際にエラー発生!"
 
 #: plug-ins/gdyntext/message_window.c:113
 msgid "Dismiss"
@@ -9826,18 +9765,16 @@ msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/フィルタ/下塗り/Gfig..."
 
 #: plug-ins/gfig/gfig.c:850
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
 "You need to add an entry like\n"
 "(gfig-path \"%s\")\n"
 "to your %s file."
 msgstr ""
-"gflare-path が gimprc 中に見つかりません:\n"
-"\n"
-"%s/gimprc ファイルに\n"
-"(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
-"のように追加して下さい."
+"gfig-path が gimprc 中に見つかりません:\n"
+"(gfig-path \"%s\")\n"
+"のように %s ファイルに追加して下さい."
 
 #: plug-ins/gfig/gfig.c:869
 msgid "gfig-path misconfigured - the following directories were not found"
@@ -10297,17 +10234,15 @@ msgid "Load Gfig obj"
 msgstr "Gfig オブジェクト読み込み"
 
 #: plug-ins/gfig/gfig.c:4668
-#, fuzzy
 msgid "Error in copy layer for onlayers"
-msgstr "レイヤーを onlayers にコピー中にエラー発生\n"
+msgstr ""
 
 #. RGBA or GRAYA type
 #. opacity
 #. mode
 #: plug-ins/gfig/gfig.c:4700
-#, fuzzy
 msgid "Error in creating layer"
-msgstr "レイヤー作成中にエラー発生.\n"
+msgstr "レイヤー作成中にエラー発生"
 
 #: plug-ins/gfig/gfig.c:4784
 #, c-format
@@ -10381,7 +10316,7 @@ msgid "GFlare: cannot operate on indexed color images"
 msgstr "GFlare: インデックス画像には適用できません"
 
 #: plug-ins/gflare/gflare.c:998
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No gflare-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -10389,10 +10324,8 @@ msgid ""
 "to your %s file."
 msgstr ""
 "gflare-path が gimprc 中に見つかりません:\n"
-"\n"
-"%s/gimprc ファイルに\n"
-"(gflare-path \"${gimp_dir}/gflare:${gimp_data_dir}/gflare\")\n"
-"のように追加して下さい."
+"(gflare-path \"%s\")\n"
+"のように %s ファイルに追加して下さい."
 
 #: plug-ins/gflare/gflare.c:1017
 msgid "gflare-path misconfigured - the following directories were not found"
@@ -10409,7 +10342,7 @@ msgid "invalid formatted GFlare file: %s\n"
 msgstr "不正な Gフレア ファイルです: %s\n"
 
 #: plug-ins/gflare/gflare.c:1543
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GFlare `%s' is not saved.\n"
 "If you add a new entry in %s, like:\n"
@@ -10417,9 +10350,10 @@ msgid ""
 "and make a directory %s,\n"
 "then you can save your own GFlare's into that directory."
 msgstr ""
-"Gフレア `%s' は保存されません. gimprc に\n"
-"(gflare-path \"${gimp_dir}/gflare\")\n"
-"という行を追加して %s/gflare というディレクトリを\n"
+"Gフレア `%s' は保存されません.\n"
+"%s に:\n"
+"(gflare-path \"%s\")\n"
+"という行を追加して %s というディレクトリを\n"
 "作成すると自分の Gフレアを保存できるようになります."
 
 #: plug-ins/gflare/gflare.c:1570
@@ -11293,7 +11227,7 @@ msgstr "<名称未設定>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:733
 #: plug-ins/helpbrowser/helpbrowser.c:749
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11302,7 +11236,8 @@ msgid ""
 msgstr ""
 "GIMP ヘルプブラウザエラー.\n"
 "\n"
-"ルート HTML ディレクトリが見つかりません."
+"ルート HTML ディレクトリが見つかりません.\n"
+"(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:765
 msgid "GIMP Help Browser"
@@ -12113,12 +12048,11 @@ msgid "Selection is %dx%d"
 msgstr "選択は %dx%d"
 
 #: plug-ins/maze/maze_face.c:436
-#, fuzzy
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
-"選択サイズが偶数ではありません.   \n"
+"選択サイズが偶数ではありません.\n"
 "並べる迷路がうまくできないかもしれません."
 
 #. open URL for help
@@ -12248,7 +12182,6 @@ msgid "Curl Opacity"
 msgstr "曲がった部分の不透明度"
 
 #: plug-ins/pagecurl/pagecurl.c:823
-#, fuzzy
 msgid "Curl Layer"
 msgstr "めくり部分レイヤー"
 
@@ -12273,21 +12206,18 @@ msgid "Print v%s"
 msgstr "印刷 v%s"
 
 #: plug-ins/print/gimp_main_window.c:206
-#, fuzzy
 msgid ""
 "Print and\n"
 "Save Settings"
 msgstr ""
-"印刷と保存\n"
-"の設定"
+"印刷と\n"
+"設定保存"
 
 #: plug-ins/print/gimp_main_window.c:208
 msgid ""
 "Save\n"
 "Settings"
-msgstr ""
-"保存の\n"
-"設定"
+msgstr "設定を保存"
 
 #: plug-ins/print/gimp_main_window.c:210
 msgid "Print"
@@ -12368,9 +12298,8 @@ msgid "Set Image Scale"
 msgstr "画像拡大縮小設定"
 
 #: plug-ins/print/gimp_main_window.c:537
-#, fuzzy
 msgid "Adjust Color"
-msgstr "カスタムカラー:"
+msgstr "色調整"
 
 #: plug-ins/print/gimp_main_window.c:570
 msgid "Printer:"
@@ -12912,7 +12841,7 @@ msgid "Can't create working dir: %s"
 msgstr "作業ディレクトリ %s が作れません"
 
 #: plug-ins/xjt/xjt.c:1647
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open: %s"
 msgstr "%s が開けません"
 
@@ -12928,66 +12857,6 @@ msgid "Error: Can't read XJT propertyfile %s"
 msgstr "エラー: XJT プロパティファイル %s が読めません"
 
 #: plug-ins/xjt/xjt.c:3124
-#, fuzzy, c-format
+#, c-format
 msgid "Error: XJT propertyfile %s is empty"
-msgstr "エラー: XJT プロパティファイル %s が空です<"
-
-#~ msgid "%s: too many colors: %u\n"
-#~ msgstr "%s: 色数が多すぎます: %u\n"
-
-#~ msgid "can't open %s\n"
-#~ msgstr "%s が開けません\n"
-
-#~ msgid "GIMP Dynamic Text "
-#~ msgstr "GIMP ダイナミック文字 "
-
-#~ msgid "Error opening '%.100s' could not save"
-#~ msgstr "ファイルオープンエラー '%.100s' は保存できません"
-
-#~ msgid "Max Depth"
-#~ msgstr "最大深度"
-
-#~ msgid "Threshold"
-#~ msgstr "閾値"
-
-#~ msgid "Can't save image with alpha\n"
-#~ msgstr "アルファチャンネルを持った画像は保存できません\n"
-
-#~ msgid "Load/Save Flame"
-#~ msgstr "炎の保存/読込"
-
-#~ msgid "Speed"
-#~ msgstr "速度"
-
-#~ msgid "Contrast"
-#~ msgstr "コントラスト"
-
-#~ msgid "Gamma"
-#~ msgstr "ガンマ"
-
-#~ msgid "X"
-#~ msgstr "X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Maze Options"
-#~ msgstr "迷路オプション"
-
-#~ msgid "Tileable?"
-#~ msgstr "並べるか?"
-
-#~ msgid "At Your Own Risk"
-#~ msgstr "各自の責任でどうぞ"
-
-#~ msgid "Time"
-#~ msgstr "時間"
-
-#~ msgid "Algorithm:"
-#~ msgstr "アルゴリズム:"
-
-#~ msgid "Select Framerange"
-#~ msgstr "フレーム範囲選択"
-
-#~ msgid "Select Frame range"
-#~ msgstr "フレーム範囲選択"
+msgstr "エラー: XJT プロパティファイル %s が空です"
