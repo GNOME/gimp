@@ -7,11 +7,13 @@
 #include "actionarea.h"
 #include "color_select.h"
 #include "image_render.h"
+#include "dialog_handler.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "color_area.h"
 /*#include "gdisplay.h"*/
 #include "general.h"
+#include "gimpdnd.h"
 #include "libgimp/gimpintl.h"
 
 /*  Add these features:
@@ -63,6 +65,51 @@ image_rename_cb(GimpImage* img, GimpColormapDialog* ipal);
 static void
 image_cmap_change_cb(GimpImage* img, gint ncol, GimpColormapDialog* ipal);
 	       
+/*  dnd stuff  */
+static GtkTargetEntry color_palette_target_table[] =
+{
+  GIMP_TARGET_COLOR
+};
+static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
+					sizeof (color_palette_target_table[0]));
+
+static void
+palette_drag_color (GtkWidget *widget,
+		    guchar    *r,
+		    guchar    *g,
+		    guchar    *b,
+		    gpointer   data)
+{
+  GimpColormapDialog* ipal = (GimpColormapDialog*)data;
+  guint col = ipal->col_index;
+  GimpImage *gimage;
+
+  gimage = ipal->image;
+
+  *r = gimage->cmap[col * 3 + 0];
+  *g = gimage->cmap[col * 3 + 1];
+  *b = gimage->cmap[col * 3 + 2];
+}
+
+static void
+palette_drop_color (GtkWidget *widget,
+		    guchar      r,
+		    guchar      g,
+		    guchar      b,
+		    gpointer    data)
+{
+  GimpColormapDialog* ipal = (GimpColormapDialog*)data;
+
+  if(!GTK_WIDGET_IS_SENSITIVE (ipal->vbox) || 
+     !(ipal->image->num_cols < 256))
+    return;
+
+  ipal->image->cmap[ipal->image->num_cols * 3 + 0] = r;
+  ipal->image->cmap[ipal->image->num_cols * 3 + 1] = g;
+  ipal->image->cmap[ipal->image->num_cols * 3 + 2] = b;
+  ipal->image->num_cols++;
+  gimp_image_colormap_changed (ipal->image, -1);
+}
 
 /**************************************/
 /*  Public indexed palette functions  */
@@ -117,6 +164,7 @@ ipal_create (GimpSet* context)
 
   accel_group = gtk_accel_group_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ipal), "indexed_color_palette", "Gimp");
+  dialog_register(GTK_WIDGET(ipal));
   gtk_window_set_policy (GTK_WINDOW (ipal), TRUE, TRUE, TRUE); 
   gtk_window_set_title (GTK_WINDOW (ipal), _("Indexed Color Palette"));
   gtk_window_add_accel_group (GTK_WINDOW (ipal), accel_group);
@@ -186,7 +234,21 @@ ipal_create (GimpSet* context)
 			   ipal->event_handler);
 
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(ipal->palette));
-  
+
+  /*  dnd stuff  */
+  gtk_drag_source_set (GTK_WIDGET(ipal->palette),
+                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       color_palette_target_table, n_color_palette_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (ipal->palette, palette_drag_color, ipal);
+
+  gtk_drag_dest_set (GTK_WIDGET(ipal->palette),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     color_palette_target_table, n_color_palette_targets,
+                     GDK_ACTION_COPY);
+  gimp_dnd_color_dest_set (ipal->palette, palette_drop_color, ipal);
   
   /* some helpful hints */
   hbox = gtk_hbox_new(FALSE, 1);
@@ -563,6 +625,7 @@ image_cmap_change_cb(GimpImage* img, gint ncol, GimpColormapDialog* ipal){
   }else{
     ipal_update_image_list(ipal);
   }
+  gdisplays_flush_now();
 }
 	       
 static void
@@ -672,7 +735,7 @@ ipal_select_callback (int   r,
 	  gimage->cmap[ipal->col_index * 3 + 1] = g;
 	  gimage->cmap[ipal->col_index * 3 + 2] = b;
 	  gimp_image_colormap_changed (gimage, ipal->col_index);
-	  break;
+	  /* Fall through */
   case COLOR_SELECT_CANCEL:
 	  color_select_hide (ipal->color_select);
   }

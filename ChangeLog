@@ -1,3 +1,28 @@
+Wed Sep 29 21:56:52 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/colourmap_dialog.i.c
+	* app/gdisplay_ops.c
+	* app/palette.c
+
+	1) Index palette dialog now registered so it gets hidden/shown when
+	the "TAB key" is pressed in the canvas window.
+
+	2) When the index palette is modified the changes are now shown
+	immediately in all views.
+
+	3) DND now works in the index palette.
+
+	4) OK button when modifying a colour in the index palette 
+	dismisses the dialog correctly.
+	
+	5) DND in the colour palette viewer does not crash when no colours
+	are selected.
+
+	6) Corrected a problem with "New View". If your canvas is zoomed in
+	and the image is offset in the display and a new view is requested
+	the Canvas in the new view is corrupted. This bug is also in
+	gimp 1.0.x 
+	
 1999-09-29  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/iwarp.c: Back out my change of 1999-09-14. It

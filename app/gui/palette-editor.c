@@ -2275,7 +2275,7 @@ palette_drag_color (GtkWidget *widget,
 
   palette = (PaletteDialog *) data;
 
-  if (palette && palette->entries)
+  if (palette && palette->entries && palette->color)
     {
       *r = (guchar) palette->color->color[0];
       *g = (guchar) palette->color->color[1];
