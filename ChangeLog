@@ -1,3 +1,32 @@
+1999-10-3  Simon Budig  <Simon.Budig@unix-ag.org>
+
+	* app/path_tool.h
+	* app/path_tool.c
+	* app/path_toolP.h
+	* app/path_curves.h
+	* app/path_curves.c
+	* app/path_bezier.h
+	* app/path_bezer.c
+
+	Lots of stuff for the bezier-tool which will be also used for the
+	interface for the intelligent scissors. I started to factor out the
+	formulas for the actual curve type, so it is some kind of independant.
+	To try this out simply change the "#if 0" in app/path_curve.c to
+	a "#if 1" to handle straight lines instead of strange beziers with
+	fixed handles :-)
+	The functions in app/path_curves.c implement some kind of
+	default-action, where useful. To implement a new curve-tzpe it
+	should be sufficient to overload the path_curve_get_point()
+   	function. Of course, then the speed is not as performant... :-)
+
+	The API for other types is not yet completely fixed, esp. Im not
+	clear about when to give a Tool* or PathTool* as a parameter.
+	But it shows the way, I want to implement this. In the next step
+	I'll fill the stubs in app/path_bezer.c.
+
+	New handling functions: The Tool detects, when you are over an curve
+	and lets you split it there by shift clicking.
+
 1999-10-03  Sven Neumann <sven@gimp.org>
 
 	* app/channel_ops.c: copy resolution and unit information when duplicating

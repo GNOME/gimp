@@ -18,6 +18,9 @@
 #ifndef __PATH_TOOLP_H__
 #define __PATH_TOOLP_H__
 
+#undef PATH_TOOL_DEBUG
+
+#include "draw_core.h"
 
 #define IMAGE_COORDS    1
 #define AA_IMAGE_COORDS 2
@@ -33,11 +36,9 @@
 
 #define SUBDIVIDE  1000
 
+typedef enum { SEGMENT_LINE=0, SEGMENT_BEZIER} SegmentType;
 
 enum { ON_ANCHOR, ON_HANDLE, ON_CURVE, ON_CANVAS };
-
-typedef enum { SEGMENT_LINE, SEGMENT_BEZIER } SegmentType;
-
 
 typedef struct _path_segment PathSegment;
 typedef struct _path_curve PathCurve;
@@ -82,7 +83,7 @@ struct _path
 
 struct _path_tool
 {
-   gint click_pos;            /* where did the user click?         */
+   gint click_type;           /* where did the user click?         */
    gint click_x;              /* X-coordinate of the click         */
    gint click_y;              /* Y-coordinate of the click         */
    gint click_halfwidth;
@@ -90,6 +91,7 @@ struct _path_tool
    Path *click_path;          /* On which Path/Curve/Segment       */
    PathCurve *click_curve;    /* was the click?                    */
    PathSegment *click_segment;
+   gdouble click_position;    /* The position on the segment       */
 
    gint active_count;         /* How many segments are active?     */
    /*
@@ -109,7 +111,5 @@ struct _path_tool
 typedef void (*PathTraverseFunc) (Path *, PathCurve *, gpointer);
 typedef void (*CurveTraverseFunc) (Path *, PathCurve *, PathSegment *, gpointer);
 typedef void (*SegmentTraverseFunc) (Path *, PathCurve *, PathSegment *, gint, gint, gpointer);
-
-/* typedef void (*SegmentTraverseFunc) (PathTool *, GdkPoint *, gint, gpointer);*/
 
 #endif /* __PATH_TOOLP_H__ */

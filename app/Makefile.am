@@ -327,6 +327,10 @@ gimp_SOURCES = \
 	parasitelist.h		\
 	parasitelistF.h		\
 	parasitelistP.h		\
+	path_bezier.c		\
+	path_bezier.h		\
+	path_curves.c		\
+	path_curves.h		\
 	path_tool.c		\
 	path_tool.h		\
 	path_toolP.h		\
