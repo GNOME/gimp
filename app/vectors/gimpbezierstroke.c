@@ -447,10 +447,14 @@ gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
 
   g_return_if_fail (segment_start != NULL);
 
-  if (position <= 0.5)
-    feel_good = (pow(2 * position, 3)) / 2;
+  if (position <= 1.0 / 6.0)
+    feel_good = 0;
+  else if (position <= 0.5)
+    feel_good = (pow((6 * position - 1) / 4.0, 3)) / 2;
+  else if (position <= 5.0 / 6.0)
+    feel_good = (1 - pow((6 * (1-position) - 1) / 4.0, 3)) / 2 + 0.5;
   else
-    feel_good = (1 - pow((1-position)*2, 3)) / 2 + 0.5;
+    feel_good = 1;
 
   gimp_bezier_coords_scale ((1-feel_good)/(3*position*
                                            (1-position)*(1-position)),
