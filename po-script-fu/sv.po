@@ -10,132 +10,132 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:42+0100\n"
-"PO-Revision-Date: 2004-11-23 14:20+0900\n"
+"POT-Creation-Date: 2005-03-18 16:36+0900\n"
+"PO-Revision-Date: 2005-03-18 16:36+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:129
-#: plug-ins/script-fu/script-fu-text-console.c:66
+#: plug-ins/script-fu/script-fu-console.c:119
+#: plug-ins/script-fu/script-fu-text-console.c:67
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu-konsolläget tillåter endast interaktiv användning"
 
-#: plug-ins/script-fu/script-fu-console.c:156
+#: plug-ins/script-fu/script-fu-console.c:146
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsoll"
 
-#: plug-ins/script-fu/script-fu-console.c:183
+#: plug-ins/script-fu/script-fu-console.c:173
 msgid "SIOD Output"
 msgstr "SIOD-utdata"
 
-#: plug-ins/script-fu/script-fu-console.c:249
+#: plug-ins/script-fu/script-fu-console.c:239
 msgid "Current Command"
 msgstr "Aktuellt kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:257
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
-#: plug-ins/script-fu/script-fu-console.c:548
+#: plug-ins/script-fu/script-fu-console.c:538
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast interaktiv användning"
 
-#: plug-ins/script-fu/script-fu-interface.c:177
+#: plug-ins/script-fu/script-fu-interface.c:175
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: plug-ins/script-fu/script-fu-interface.c:179
+#: plug-ins/script-fu/script-fu-interface.c:177
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet \"%s\"."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-interface.c:200
 #: plug-ins/script-fu/script-fu-interface.c:202
-#: plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:217
+#: plug-ins/script-fu/script-fu-interface.c:215
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:254
+#: plug-ins/script-fu/script-fu-interface.c:259
 msgid "Script Arguments"
 msgstr "Skriptargument"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:285
+#: plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:328
+#: plug-ins/script-fu/script-fu-interface.c:333
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:431
+#: plug-ins/script-fu/script-fu-interface.c:436
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:435
+#: plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:447
+#: plug-ins/script-fu/script-fu-interface.c:452
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:454
+#: plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-palettväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/script-fu-interface.c:467
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:469
+#: plug-ins/script-fu/script-fu-interface.c:474
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-färgskaleväljare"
 
-#: plug-ins/script-fu/script-fu-interface.c:477
+#: plug-ins/script-fu/script-fu-interface.c:482
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:533
+#: plug-ins/script-fu/script-fu-interface.c:549
 msgid "Script Progress"
 msgstr "Skriptförlopp"
 
-#: plug-ins/script-fu/script-fu-interface.c:541
+#: plug-ins/script-fu/script-fu-interface.c:557
 msgid "(none)"
 msgstr "(inget)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1058
+#: plug-ins/script-fu/script-fu-interface.c:1083
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Författare:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1065
+#: plug-ins/script-fu/script-fu-interface.c:1090
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1072
+#: plug-ins/script-fu/script-fu-interface.c:1097
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1081
+#: plug-ins/script-fu/script-fu-interface.c:1106
 msgid "Image Types:"
 msgstr "Bildtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:611
+#: plug-ins/script-fu/script-fu-scripts.c:660
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -146,32 +146,32 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:642
+#: plug-ins/script-fu/script-fu-server.c:648
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: plug-ins/script-fu/script-fu-server.c:670
+#: plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Port:"
 msgstr "Serverport:"
 
-#: plug-ins/script-fu/script-fu-server.c:676
+#: plug-ins/script-fu/script-fu-server.c:682
 msgid "Server Logfile:"
 msgstr "Serverloggfil:"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "Script-Fu-konsoll"
 
-#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
-#: plug-ins/script-fu/script-fu.c:290
+#: plug-ins/script-fu/script-fu.c:123 plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:284
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Utökningar/Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:151
+#: plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Aktivera servern..."
 
-#: plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:276
 msgid "_Refresh Scripts"
 msgstr "_Uppdatera skript"
 
@@ -1274,7 +1274,7 @@ msgid "Offset Y"
 msgstr "Avstånd i Y-led"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
 msgstr "Opacitet"
 
@@ -1710,8 +1710,8 @@ msgid "Frame size"
 msgstr "Ramstorlek"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
-msgid "Imigre-26..."
-msgstr "Imigre-26..."
+msgid "Imigre-_26..."
+msgstr "Imigre-_26..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply layer mask (or discard)"
@@ -1862,8 +1862,8 @@ msgid "Density (%)"
 msgstr "Densitet (%)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:9
-msgid "Newsprint Text..."
-msgstr "Dagstidningstext..."
+msgid "Newsprint Te_xt..."
+msgstr "Dagstidningste_xt..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
@@ -1886,30 +1886,18 @@ msgid "Angle"
 msgstr "Vinkel"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Cubic"
-msgstr "Kubisk"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Interpolation"
 msgstr "Interpolation"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-msgid "Linear"
-msgstr "Linjär"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-msgid "None"
-msgstr "Ingen"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
 msgstr "Relativt avstånd till horisont"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative length of shadow"
 msgstr "Relativ längd på skugga"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:13
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
 msgstr "_Perspektiv..."
 
@@ -1974,7 +1962,7 @@ msgid "_Round Button..."
 msgstr "_Rund knapp..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Behaviour"
+msgid "Behavior"
 msgstr "Beteende"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
@@ -1994,7 +1982,7 @@ msgid "Black"
 msgstr "Svart"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge behaviour"
+msgid "Edge behavior"
 msgstr "Kantbeteende"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
@@ -2329,8 +2317,8 @@ msgid "Fill angle"
 msgstr "Fyllningsvinkel"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "Textcirkel..."
+msgid "Text C_ircle..."
+msgstr "Textc_irkel..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
@@ -2474,7 +2462,7 @@ msgstr "_Sajt för utvecklare"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "_Main Web Site"
-msgstr "_Huvugsajt"
+msgstr "_Huvudwebbplats"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2511,6 +2499,15 @@ msgstr "Markeringsopacitet"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-effekt..."
+
+#~ msgid "Cubic"
+#~ msgstr "Kubisk"
+
+#~ msgid "Linear"
+#~ msgstr "Linjär"
+
+#~ msgid "None"
+#~ msgstr "Ingen"
 
 #~ msgid "Buffer amount (% height of text)"
 #~ msgstr "Buffertmängd (% höjd av text)"
