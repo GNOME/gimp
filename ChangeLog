@@ -1,3 +1,9 @@
+2004-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c: redone this change. We should
+	probably add a GimpMessageDialog to avoid duplicating this code
+	every so often.
+
 2004-03-08  Dave Neary  <bolsh@gimp.org>
 
 	* app/display/gimpdisplayshell.c: First attempt to resolve bug 

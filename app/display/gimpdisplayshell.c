@@ -115,7 +115,7 @@ static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
 static void  gimp_display_shell_close_warning_response (GtkWidget        *widget,
                                                         gboolean          close,
-                                                        gpointer          data);
+                                                        GimpDisplayShell *shell);
 
 
 static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
@@ -1375,9 +1375,16 @@ static void
 gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
                                          GimpImage        *gimage)
 {
-  gchar *name;
-  gchar *title;
-  gchar *warning;
+  GtkWidget *dialog;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *image;
+  GtkWidget *label;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+  gchar     *name;
+  gchar     *title;
+  gchar     *message;
 
   if (shell->warning_dialog)
     {
@@ -1389,60 +1396,84 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 
   title = g_strdup_printf (_("Close %s?"), name);
 
-  warning = g_strdup_printf (_("Changes were made to '%s'. "
-                               "Unsaved changes will be lost."), name);
-
   shell->warning_dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage), 
-		              title,
-			      "gimp-display-shell-close",
-			      GIMP_STOCK_QUESTION,
-			      warning,
-			      GTK_WIDGET (shell),
-			      gimp_standard_help_func,
-			      GIMP_HELP_FILE_CLOSE_CONFIRM,
-			      
-			      _("Discard changes"), GTK_RESPONSE_CLOSE,
-			      _("Cancel"), GTK_RESPONSE_CANCEL,
-			      
-			      NULL);
+    dialog = gimp_dialog_new (title,
+                              "gimp-display-shell-close",
+                              GTK_WIDGET (shell), 0,
+                              gimp_standard_help_func,
+                              GIMP_HELP_FILE_CLOSE_CONFIRM,
 
-  g_signal_connect (shell->warning_dialog, "response",
+                              GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                              _("_Discard changes"), GTK_RESPONSE_OK,
+
+                              NULL);
+
+  g_free (title);
+
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &shell->warning_dialog);
+
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_display_shell_close_warning_response),
                     shell);
-                                                                                  
-  
-#if 0
-    gimp_query_boolean_box (title,
-                            GTK_WIDGET (shell),
-			    gimp_standard_help_func,
-			    GIMP_HELP_FILE_CLOSE_CONFIRM,
-			    GIMP_STOCK_QUESTION,
-			    warning,
-			    GTK_STOCK_CLOSE, GTK_STOCK_CANCEL,
-			    NULL, NULL,
-			    gimp_display_shell_close_warning_callback,
-			    shell);
-#endif
-  g_free (name);
-  g_free (title);
-  g_free (warning);
 
-  gtk_widget_show (shell->warning_dialog);
+  hbox = gtk_hbox_new (FALSE, 10);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_DIALOG);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  message = g_strdup_printf (_("Changes were made to '%s'."), name);
+
+  label = gtk_label_new (message);
+
+  g_free (message);
+  g_free (name);
+
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  pango_attr_list_unref (attrs);
+
+  label = gtk_label_new (_("Unsaved changes will be lost."));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (dialog);
 }
 
 static void
-gimp_display_shell_close_warning_response (GtkWidget *widget,
-                                           gint       response_id,
-                                           gpointer   data)
+gimp_display_shell_close_warning_response (GtkWidget        *widget,
+                                           gint              response_id,
+                                           GimpDisplayShell *shell)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
-
   gtk_widget_destroy (GTK_WIDGET (shell->warning_dialog));
-  
-  if (response_id == GTK_RESPONSE_CLOSE)
+
+  if (response_id == GTK_RESPONSE_OK)
     gimp_display_delete (shell->gdisp);
 }
 
