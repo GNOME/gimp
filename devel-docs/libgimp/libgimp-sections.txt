@@ -261,6 +261,12 @@ gp_extension_ack_write
 gp_request_wakeups_write
 </SECTION>
 
+<SECTION>
+<FILE>gimpsignal</FILE>
+gimp_signal_syscallrestart
+GimpRetSigType
+gimp_signal_private
+</SECTION>
 
 <SECTION>
 <FILE>gimpcolorspace</FILE>
@@ -399,6 +405,7 @@ RUN_WITH_LAST_VALS
 
 <SECTION>
 <FILE>gimpui</FILE>
+gimp_ui_init
 </SECTION>
 
 <SECTION>
@@ -537,6 +544,7 @@ GimpModuleInfo
 
 <SECTION>
 <FILE>gimpmath</FILE>
+FINITE
 G_PI
 G_PI_2
 G_PI_4
