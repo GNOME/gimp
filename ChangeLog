@@ -1,3 +1,16 @@
+2003-01-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/sample_colorize.c: code clean-up, added a few more
+	mnemonics to dialogs.
+
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/FractalExplorer/FractalExplorer.c: use new
+	gimp_plug_in_parse_path routine.
+
+	* libgimp/gimpmiscui.[ch] (gimp_plug_in_parse_path): new routine used
+	in several plug-ins.
+
 2003-01-27  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c: commented out debugging output.

@@ -711,11 +711,9 @@ delete_dialog_callback (GtkWidget *widget,
     }
 
   delete_dialog = NULL;
-  
-  return;
 }
 
-static gint
+static gboolean
 delete_fractal_callback (GtkWidget *widget,
 			 gpointer   data)
 {
@@ -765,10 +763,7 @@ fractalexplorer_list_ok_callback (GtkWidget *widget,
   list = options->list_entry;
 
   /*  Set the new layer name  */
-  if (options->obj->draw_name)
-    {
-      g_free(options->obj->draw_name);
-    }
+  g_free(options->obj->draw_name);
   options->obj->draw_name =
     g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
@@ -785,7 +780,6 @@ fractalexplorer_list_ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (options->query_box);
   g_free (options);
-
 }
 
 static void
@@ -795,7 +789,7 @@ fractalexplorer_list_cancel_callback (GtkWidget *widget,
   fractalexplorerListOptions *options;
 
   options = (fractalexplorerListOptions *) data;
-  if(options->created)
+  if (options->created)
     {
       /* We are creating an entry so if cancelled
        * must del the list item as well
@@ -909,9 +903,8 @@ new_button_press (GtkWidget      *widget,
 }
 
 /*
- * Load all fractalexplorer, which are founded in fractalexplorer-path-list, into fractalexplorer_list.
- * fractalexplorer-path-list must be initialized first. (plug_in_parse_fractalexplorer_path ())
- * based on code from Gflare.
+ * Load all fractalexplorer, which are founded in fractalexplorer-path-list, 
+ * into fractalexplorer_list.
  */
 
 static gint
@@ -932,7 +925,6 @@ fractalexplorer_list_pos (fractalexplorerOBJ *fractalexplorer)
 
       n++;
     }
-
   return n;
 }
 
@@ -1043,17 +1035,13 @@ static void
 list_button_update (fractalexplorerOBJ *obj)
 {
   g_return_if_fail (obj != NULL);
-  pic_obj = (fractalexplorerOBJ *)obj;
+  pic_obj = obj;
 }
 
 fractalexplorerOBJ *
 fractalexplorer_new (void)
 {
-  fractalexplorerOBJ * new;
-
-  new = g_new0 (fractalexplorerOBJ, 1);
-
-  return new;
+  return g_new0 (fractalexplorerOBJ, 1);
 }
 
 void
@@ -1127,62 +1115,11 @@ list_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-/*
- *	Query gimprc for fractalexplorer-path, and parse it.
- *	This code is based on script_fu_find_scripts ()
- *      and the Gflare plugin.
- */
 void
 plug_in_parse_fractalexplorer_path (void)
 {
-  GList *fail_list = NULL;
-  GList *list;
-  gchar *fractalexplorer_path;
-
-  gimp_path_free (fractalexplorer_path_list);
-  fractalexplorer_path_list = NULL;
-
-  fractalexplorer_path = gimp_gimprc_query ("fractalexplorer-path");
-  
-  if (!fractalexplorer_path)
-    {
-      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path = g_strescape
-	("${gimp_dir}" G_DIR_SEPARATOR_S "fractalexplorer"
-	 G_SEARCHPATH_SEPARATOR_S
-	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "fractalexplorer",
-	 NULL);
-      g_message (_("No fractalexplorer-path in gimprc:\n"
-		   "You need to add an entry like\n"
-		   "(fractalexplorer-path \"%s\")\n"
-		   "to your %s file."), path, gimprc);
-      g_free (gimprc);
-      g_free (path);
-      return;
-    }
-
-  fractalexplorer_path_list = gimp_path_parse (fractalexplorer_path,
-					       16, TRUE, &fail_list);
-
-  g_free (fractalexplorer_path);
-
-  if (fail_list)
-    {
-      GString *err =
-        g_string_new (_("fractalexplorer-path misconfigured - "
-                        "the following folders were not found:"));
-
-      for (list = fail_list; list; list = g_list_next (list))
-        {
-          g_string_append_c (err, '\n');
-          g_string_append (err, (gchar *) list->data);
-        }
-
-      g_message (err->str);
-
-      g_string_free (err, TRUE);
-      gimp_path_free (fail_list);
-    }
+  fractalexplorer_path_list = 
+    gimp_plug_in_parse_path ("fractalexplorer-path", "fractalexplorer");
 }
 
 static void
@@ -1201,7 +1138,7 @@ fractalexplorer_free_everything (fractalexplorerOBJ *fractalexplorer)
 {
   g_assert (fractalexplorer != NULL);
 
-  if(fractalexplorer->filename)
+  if (fractalexplorer->filename)
     {
       remove (fractalexplorer->filename);
     }
@@ -1211,15 +1148,7 @@ fractalexplorer_free_everything (fractalexplorerOBJ *fractalexplorer)
 static void
 fractalexplorer_list_free_all (void)
 {
-  GList * list;
-  fractalexplorerOBJ * fractalexplorer;
-
-  for (list = fractalexplorer_list; list; list = g_list_next (list))
-    {
-      fractalexplorer = (fractalexplorerOBJ *) list->data;
-      fractalexplorer_free (fractalexplorer);
-    }
-
+  g_list_foreach (fractalexplorer_list, (GFunc) fractalexplorer_free, NULL);
   g_list_free (fractalexplorer_list);
   fractalexplorer_list = NULL;
 }
@@ -1332,7 +1261,7 @@ fractalexplorer_list_load_all (GList *plist)
 	}
     }
 
-  if(!fractalexplorer_list)
+  if (!fractalexplorer_list)
     {
       /* lets have at least one! */
       fractalexplorer = fractalexplorer_new ();
@@ -1340,7 +1269,6 @@ fractalexplorer_list_load_all (GList *plist)
       fractalexplorer_list_insert (fractalexplorer);
     }
   pic_obj = current_obj = fractalexplorer_list->data;  /* set to first entry */
-
 }
 
 GtkWidget *
@@ -1457,7 +1385,6 @@ fractalexplorer_rescan_list (void)
       return;
     }
 
-  /*  the dialog  */
   dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
                          gimp_standard_help_func, "filters/fractalexplorer.html",
                          GTK_WIN_POS_MOUSE,

@@ -280,3 +280,64 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
 
   g_free (src);
 }
+
+GList*
+gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name)
+{
+  GList *path_list = NULL;
+  GList *fail_list = NULL;
+  GList *list;
+  gchar *path;
+
+  path = gimp_gimprc_query (path_name);
+
+  if (!path)
+    {
+      gchar *gimprc = gimp_personal_rc_file ("gimprc");
+      gchar *full_path;
+      gchar *esc_path;
+
+      full_path = g_strconcat 
+	("${gimp_dir}", G_DIR_SEPARATOR_S, dir_name,
+	 G_SEARCHPATH_SEPARATOR_S,
+	 "${gimp_data_dir}", G_DIR_SEPARATOR_S, dir_name,
+	 NULL);
+      esc_path = g_strescape (full_path, NULL);
+
+      g_message (_("No %s in gimprc:\n"
+		   "You need to add an entry like\n"
+		   "(%s \"%s\")\n"
+		   "to your %s file."), path_name, path_name, esc_path, 
+		 gimprc);
+
+      g_free (gimprc);
+      g_free (full_path);
+      g_free (esc_path);
+      return NULL;
+    }
+
+  path_list = gimp_path_parse (path, 16, TRUE, &fail_list);
+
+  g_free (path);
+
+  if (fail_list)
+    {
+      GString *err = g_string_new (path_name);
+      g_string_append (err, _(" misconfigured - "
+			      "the following folders were not found:"));
+
+      for (list = fail_list; list; list = g_list_next (list))
+        {
+          g_string_append_c (err, '\n');
+          g_string_append (err, (gchar *) list->data);
+        }
+
+      g_message (err->str);
+
+      g_string_free (err, TRUE);
+      gimp_path_free (fail_list);
+    }
+
+  return path_list;
+}
+

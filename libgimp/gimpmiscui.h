@@ -68,6 +68,7 @@ void gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 				gint    width,
 				guchar *src);
 
+GList *gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name);
 
 G_END_DECLS
 

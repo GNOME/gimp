@@ -770,66 +770,6 @@ run (gchar       *name,
 }
 
 /*
- *  Query gimprc for gfig-path, and parse it.
- */
-
-static void
-plug_in_parse_gfig_path (void)
-{
-  GList *fail_list = NULL;
-  GList *list;
-  gchar *gfig_path;
-
-  if (gfig_path_list)
-    gimp_path_free (gfig_path_list);
-  
-  gfig_path_list = NULL;
-  
-  gfig_path = gimp_gimprc_query ("gfig-path");
-
-  if (!gfig_path)
-    {
-      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path = g_strescape
-	("${gimp_dir}" G_DIR_SEPARATOR_S "gfig"
-	 G_SEARCHPATH_SEPARATOR_S
-	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gfig",
-	 NULL);
-      g_message (_("No gfig-path in gimprc:\n"
-		   "You need to add an entry like\n"
-		   "(gfig-path \"%s\")\n"
-		   "to your %s file."),
-		   path, gimprc);
-      g_free (gimprc);
-      g_free (path);
-      return;
-    }
-  
-  gfig_path_list = gimp_path_parse (gfig_path, 16, TRUE, &fail_list);
-
-  g_free (gfig_path);
-
-  if (fail_list)
-    {
-      GString *err =
-	g_string_new (_("gfig-path misconfigured - "
-			"the following folders were not found:"));
-
-      for (list = fail_list; list; list = g_list_next (list))
-	{
-	  g_string_append_c (err, '\n');
-	  g_string_append (err, (gchar *) list->data);
-	}
-
-      g_message (err->str);
-
-      g_string_free (err, TRUE);
-      gimp_path_free (fail_list);
-    }
-}
-
-
-/*
   Translate SPACE to "\\040", etc.
   Taken from gflare plugin
  */
@@ -901,26 +841,21 @@ gfig_list_pos (GFigObj *gfig)
 
       n++;
     }
-
   return n;
 }
+
+/*
+ *	Insert gfigs in alphabetical order
+ */
 
 static gint
 gfig_list_insert (GFigObj *gfig)
 {
   gint n;
 
-  /*
-   *	Insert gfigs in alphabetical order
-   */
-
   n = gfig_list_pos (gfig);
 
   gfig_list = g_list_insert (gfig_list, gfig, n);
-
-#ifdef DEBUG
-  printf ("gfig_list_insert %s => %d\n", gfig->draw_name, n);
-#endif /* DEBUG */
 
   return n;
 }
@@ -930,8 +865,7 @@ gfig_free (GFigObj *gfig)
 {
   g_assert (gfig != NULL);
 
-  if (gfig->obj_list)
-    free_all_objs (gfig->obj_list);
+  free_all_objs (gfig->obj_list);
 
   g_free (gfig->name);
   g_free (gfig->filename);
@@ -947,28 +881,15 @@ gfig_free_everything (GFigObj *gfig)
 
   if (gfig->filename)
     {
-#ifdef DEBUG
-      printf ("Removing filename '%s'\n", gfig->filename);
-#endif /* DEBUG */
-
       remove (gfig->filename);
     }
-
   gfig_free (gfig);
 }
 
 static void
 gfig_list_free_all (void)
 {
-  GList   *list;
-  GFigObj *gfig;
-
-  for (list = gfig_list; list; list = g_list_next (list))
-    {
-      gfig = (GFigObj *) list->data;
-      gfig_free (gfig);
-    }
-
+  g_list_foreach (gfig_list, (GFunc) gfig_free, NULL);
   g_list_free (gfig_list);
   gfig_list = NULL;
 }
@@ -1040,11 +961,7 @@ gfig_list_load_all (GList *plist)
 static GFigObj *
 gfig_new (void)
 {
-  GFigObj * new;
-
-  new = g_new0 (GFigObj, 1);
-
-  return new;
+  return g_new0 (GFigObj, 1);
 }
 
 static void
@@ -1409,13 +1326,10 @@ gfig_obj_counts (DAllObjs *objs)
 {
   gint count = 0;
 
-  while (objs)
-    {
-      count++;
-      objs = objs->next;
-    }
+  for (; objs; objs = objs->next)
+    count++;
 
-  return (count);
+  return count;
 }
 
 static void
@@ -1626,16 +1540,7 @@ cache_preview (void)
       img_bpp = real_img_bpp;
     }
 
-  switch (gimp_drawable_type (gfig_select_drawable->drawable_id))
-    {
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_GRAY_IMAGE:
-      isgrey = 1;
-    default:
-      break;
-    }
-
-  /*memset (p,-1, preview_width*preview_height*4); return;*/
+  isgrey = gimp_drawable_is_gray (gfig_select_drawable->drawable_id);
 
   for (y = 0; y < preview_height; y++)
     {
@@ -1748,13 +1653,8 @@ select_button_clicked (GtkWidget *widget,
 
   if (current_obj)
     {
-      objs = current_obj->obj_list;
-
-      while (objs)
-	{
-	  objs = objs->next;
-	  count++;
-	}
+      for (objs = current_obj->obj_list; objs; objs = objs->next)
+	count++;
     }
 
   switch (type)
@@ -2398,10 +2298,7 @@ gfig_brush_fill_preview (GtkWidget *pw,
   GimpDrawable *brushdrawable;
   gint          bcount = 3;
 
-  if (bdesc->pv_buf)
-    {
-      g_free (bdesc->pv_buf); /* Free old area */
-    }
+  g_free (bdesc->pv_buf); /* Free old area */
 
   brushdrawable = gimp_drawable_get (layer_ID);
 
@@ -3909,7 +3806,7 @@ gfig_dialog (void)
   yyy = gdk_rgb_get_visual ();
   xxx = gdk_rgb_get_colormap ();
 
-  plug_in_parse_gfig_path ();
+  gfig_path_list = gimp_plug_in_parse_path ("gfig-path", "gfig");
 
   /*cache_preview (); Get the preview image and store it also set has_alpha */
 
@@ -4279,10 +4176,8 @@ gfig_preview_events (GtkWidget *widget,
     default:
       break;
     }
-
   return FALSE;
 }
-
 
 /*
  *  The edit gfig name attributes dialog
@@ -4338,28 +4233,14 @@ gfig_list_ok_callback (GtkWidget *widget,
   list = options->list_entry;
 
   /*  Set the new layer name  */
-#ifdef DEBUG
-  printf ("Found obj %s\n", options->obj->draw_name);
-#endif /* DEBUG */
 
-  if (options->obj->draw_name)
-    g_free (options->obj->draw_name);
-
+  g_free (options->obj->draw_name);
   options->obj->draw_name =
     g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-#ifdef DEBUG
-  printf ("NEW name %s\n", options->obj->draw_name);
-#endif /* DEBUG */
-
   /* Need to reorder the list */
 /* gtk_label_set_text (GTK_LABEL (options->layer_widget->label), layer->name);*/
-
   pos = gtk_list_child_position (GTK_LIST (gfig_gtk_list), list);
-
-#ifdef DEBUG
-  printf ("pos = %d\n", pos);
-#endif /* DEBUG */
 
   gtk_list_clear_items (GTK_LIST (gfig_gtk_list), pos, pos + 1);
 
@@ -6197,8 +6078,7 @@ clear_undo (void)
 
   for (lv = undo_water_mark; lv >= 0; lv--) 
     {
-      if (undo_table[lv])
-	free_all_objs (undo_table[lv]);
+      free_all_objs (undo_table[lv]);
       undo_table[lv] = NULL;
     }
 
@@ -6504,23 +6384,16 @@ get_diffs (Dobject  *obj,
 
   g_assert (obj != NULL);
 
-  spnt = obj->points;
-  
-  if (!spnt)
-    return (NULL); /* no-line */
-  
-  /* Slow slow slowwwwww....*/
-  while (spnt)
+  for (spnt = obj->points; spnt; spnt = spnt->next)
     {
       if (spnt->found_me)
 	{
 	  *xdiff = spnt->pnt.x - to_pnt->x;
 	  *ydiff = spnt->pnt.y - to_pnt->y;
-	  return (spnt);
+	  return spnt;
 	}
-      spnt = spnt->next;
     }
-  return (NULL);
+  return NULL;
 }
 
 static void
@@ -6533,57 +6406,41 @@ update_pnts (Dobject *obj,
   g_assert (obj != NULL);
 
   /* Update all pnts */
-  spnt = obj->points;
-
-  if (!spnt)
-    return; /* no-line */
-  
-  /* Go around all the points drawing a line from one to the next */
-  while (spnt)
+  for (spnt = obj->points; spnt; spnt = spnt->next)
     {
-      spnt->pnt.x = spnt->pnt.x - xdiff;
-      spnt->pnt.y = spnt->pnt.y - ydiff;
-      spnt = spnt->next;
+      spnt->pnt.x -= xdiff;
+      spnt->pnt.y -= ydiff;
     }
 }
-
 
 static void
 do_move_all_obj (GdkPoint *to_pnt)
 {
   /* Move all objects in one go */
   /* Undraw/then draw in new pos */
-  DAllObjs *all;
-  Dobject *obj;
-  gint16 xdiff = 0;
-  gint16 ydiff = 0;
+  gint16 xdiff = move_all_pnt->x - to_pnt->x;
+  gint16 ydiff = move_all_pnt->y - to_pnt->y;
   
-  xdiff = move_all_pnt->x - to_pnt->x;
-  ydiff = move_all_pnt->y - to_pnt->y;
-  
-  if (!xdiff && !ydiff)
-    return;
-  
-  all = current_obj->obj_list;
-
-  while (all)
+  if (xdiff || ydiff)
     {
-      obj = all->obj;
-
-      /* undraw ! */
-      draw_one_obj (obj);
+      DAllObjs *all;
+  
+      for (all = current_obj->obj_list; all; all = all->next)
+	{
+	  Dobject *obj = all->obj;
+	  
+	  /* undraw ! */
+	  draw_one_obj (obj);
+	  
+	  update_pnts (obj, xdiff, ydiff);
+	  
+	  /* Draw in new pos */
+	  draw_one_obj (obj);
+	}
       
-      update_pnts (obj, xdiff, ydiff);
-      
-      /* Draw in new pos */
-      draw_one_obj (obj);
-
-      all = all->next;
+      *move_all_pnt = *to_pnt;
     }
-
-  *move_all_pnt = *to_pnt; /* Structure copy */
 }
-
 
 static void
 do_move_obj (Dobject  *obj,
@@ -6596,17 +6453,16 @@ do_move_obj (Dobject  *obj,
   
   get_diffs (obj, &xdiff, &ydiff, to_pnt);
   
-  if (!xdiff && !ydiff)
-    return;
-  
-  /* undraw ! */
-  draw_one_obj (obj);
-  
-  update_pnts (obj, xdiff, ydiff);
-  
-  /* Draw in new pos */
-  draw_one_obj (obj);
-  
+  if (xdiff || ydiff)
+    {  
+      /* undraw ! */
+      draw_one_obj (obj);
+      
+      update_pnts (obj, xdiff, ydiff);
+      
+      /* Draw in new pos */
+      draw_one_obj (obj);
+    }
 }
 
 static void
@@ -6703,7 +6559,7 @@ d_copy_line (Dobject *obj)
   Dobject *nl;
 
   if (!obj)
-    return (NULL);
+    return NULL;
 
   g_assert (obj->type == LINE);
 
@@ -6711,7 +6567,7 @@ d_copy_line (Dobject *obj)
   
   nl->points->next = d_copy_dobjpoints (obj->points->next);
 
-  return (nl);
+  return nl;
 }
 
 /* Draw the given line -- */
@@ -6772,29 +6628,19 @@ d_paint_line (Dobject *obj)
   gint seg_count = 0;
   gint i = 0;
 
-  spnt = obj->points;
+  for (spnt = obj->points; spnt; spnt = spnt->next)
+    seg_count++;
 
-  /* count */
-
-  while (spnt)
-    {
-      seg_count++;
-      spnt = spnt->next;
-    }
-
-  spnt = obj->points;
-
-  if (!spnt || !seg_count)
+  if (!seg_count)
     return; /* no-line */
 
   line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
   
   /* Go around all the points drawing a line from one to the next */
-  while (spnt)
+  for (spnt = obj->points; spnt; spnt = spnt->next)
     {
       line_pnts[i++] = spnt->pnt.x;
       line_pnts[i++] = spnt->pnt.y;
-      spnt = spnt->next;
     }
 
   /* Reverse line if approp */
@@ -6826,7 +6672,6 @@ d_paint_line (Dobject *obj)
 
   g_free (line_pnts);
 }
-
 
 /* Create a new line object. starting at the x, y point might add styles 
  * later.
@@ -6861,7 +6706,7 @@ d_new_line (gint x,
   nobj->paintfunc = d_paint_line;
   nobj->copyfunc  = d_copy_line;
 
-  return (nobj);
+  return nobj;
 }
 
 /* You guessed it delete the object !*/
@@ -7252,10 +7097,6 @@ d_copy_circle (Dobject * obj)
 {
   Dobject *nc;
 
-#if DEBUG
-  printf ("Copy circle\n");
-#endif /*DEBUG*/
-
   if (!obj)
     return NULL;
 
@@ -7264,13 +7105,6 @@ d_copy_circle (Dobject * obj)
   nc = d_new_circle (obj->points->pnt.x, obj->points->pnt.y);
 
   nc->points->next = d_copy_dobjpoints (obj->points->next);
-
-#if DEBUG
-  printf ("Circle (%x,%x) to (%x,%x)\n",
-	  nc->points->pnt.x, obj->points->pnt.y,
-	  nc->points->next->pnt.x, obj->points->next->pnt.y);
-  printf ("Done copy\n");
-#endif /*DEBUG*/
 
   return nc;
 }
@@ -7286,10 +7120,6 @@ d_new_circle (gint x,
 
   /* Start point */
   npnt = g_new0 (DobjPoints, 1);
-
-#if DEBUG
-  printf ("New circle start at (%x,%x)\n", x, y);
-#endif /* DEBUG */
 
   npnt->pnt.x = x;
   npnt->pnt.y = y;
@@ -7405,13 +7235,8 @@ d_save_ellipse (Dobject *obj,
 
   fprintf (to, "<ELLIPSE>\n");
 
-  while (spnt)
-    {
-      fprintf (to, "%d %d\n",
-	        spnt->pnt.x,
-	        spnt->pnt.y);
-      spnt = spnt->next;
-    }
+  for (; spnt; spnt = spnt->next)
+    fprintf (to, "%d %d\n", spnt->pnt.x, spnt->pnt.y);
 
   fprintf (to, "</ELLIPSE>\n");
 }
@@ -7604,8 +7429,7 @@ d_paint_approx_ellipse (Dobject *obj)
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
+	  first_pnt = calc_pnt;
 	  first = 0;
 	}
     }
@@ -7732,10 +7556,6 @@ d_copy_ellipse (Dobject * obj)
 {
   Dobject *nc;
 
-#if DEBUG
-  printf ("Copy ellipse\n");
-#endif /*DEBUG*/
-
   if (!obj)
     return (NULL);
 
@@ -7745,14 +7565,7 @@ d_copy_ellipse (Dobject * obj)
 
   nc->points->next = d_copy_dobjpoints (obj->points->next);
 
-#if DEBUG
-  printf ("Ellipse (%x,%x) to (%x,%x)\n",
-	 nc->points->pnt.x, obj->points->pnt.y,
-	 nc->points->next->pnt.x, obj->points->next->pnt.y);
-  printf ("Done copy\n");
-#endif /* DEBUG */
-
-  return (nc);
+  return nc;
 }
 
 static Dobject *
@@ -7913,7 +7726,6 @@ d_save_poly (Dobject * obj, FILE *to)
   fprintf (to, "<EXTRA>\n");
   fprintf (to, "%d\n</EXTRA>\n", obj->type_data);
   fprintf (to, "</POLY>\n");
-
 }
 
 /* Load a circle from the specified stream */
@@ -8597,7 +8409,7 @@ dist (gdouble x1,
   double s1 = x1 - x2;
   double s2 = y1 - y2;
 
-  return (sqrt ((s1*s1) + (s2*s2)));
+  return sqrt (s1 * s1 + s2 * s2);
 }
 
 /* Mid point of line returned */
@@ -8625,10 +8437,7 @@ line_grad (gdouble x1,
   dx = x1 - x2;
   dy = y1 - y2;
 
-  if (dx == 0.0)
-    return (0.0); /* Infinite ! */
-
-  return (dy/dx);
+  return (dx == 0.0) ? 0.0 : dy / dx;
 }
 
 /* Constant of line that goes through x, y with grad lgrad */
@@ -8637,7 +8446,7 @@ line_cons (gdouble x,
 	   gdouble y,
 	   gdouble lgrad)
 {
-  return (y - lgrad*x);
+  return y - lgrad * x;
 }
 
 /*Get grad & const for perpend. line to given points */
@@ -9145,8 +8954,7 @@ d_paint_arc (Dobject *obj)
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
+	  first_pnt = calc_pnt;
 	  first = 0;
 	}
     }
@@ -9328,7 +9136,7 @@ static void
 d_save_star (Dobject *obj,
 	     FILE    *to)
 {
-  DobjPoints * spnt;
+  DobjPoints *spnt;
   
   spnt = obj->points;
 
@@ -9671,8 +9479,7 @@ d_paint_star (Dobject *obj)
 
       if (first)
 	{
-	  first_pnt.x = calc_pnt.x;
-	  first_pnt.y = calc_pnt.y;
+	  first_pnt = calc_pnt;
 	  first = 0;
 	}
     }
@@ -9734,7 +9541,7 @@ d_copy_star (Dobject * obj)
   printf ("Done star copy\n");
 #endif /* DEBUG */
 
-  return (np);
+  return np;
 }
 
 static Dobject *
@@ -9767,7 +9574,7 @@ d_new_star (gint x,
   nobj->paintfunc = d_paint_star;
   nobj->copyfunc  = d_copy_star;
 
-  return (nobj);
+  return nobj;
 }
 
 static void
@@ -10555,28 +10362,20 @@ d_draw_bezier (Dobject *obj)
   spnt = obj->points;
 
   /* First count the number of points */
+  for (spnt = obj->points; spnt; spnt = spnt->next)
+    seg_count++;
 
-  /* count */
-  while (spnt)
-    {
-      seg_count++;
-      spnt = spnt->next;
-    }
-
-  spnt = obj->points;
-
-  if (!spnt || !seg_count)
+  if (!seg_count)
     return; /* no-line */
 
   line_pnts = (fp_pnt) g_new0 (gdouble, 2 * seg_count + 1);
 
   /* Go around all the points drawing a line from one to the next */
-  while (spnt)
+  for (spnt = obj->points; spnt; spnt = spnt->next)
     {
       draw_sqr (&spnt->pnt);
       line_pnts[i][0] = spnt->pnt.x;
       line_pnts[i++][1] = spnt->pnt.y;
-      spnt = spnt->next;
     }
 
   /* Generate an array of doubles which are the control points */
@@ -10603,33 +10402,22 @@ d_paint_bezier (Dobject *obj)
   gdouble (*bz_line_pnts)[2];
   DobjPoints *spnt;
   gint seg_count = 0;
-
   gint i = 0;
 
-  spnt = obj->points;
-
   /* First count the number of points */
+  for (spnt = obj->points; spnt; spnt = spnt->next)
+    seg_count++;
 
-  /* count */
-  while (spnt)
-    {
-      seg_count++;
-      spnt = spnt->next;
-    }
-
-  spnt = obj->points;
-
-  if (!spnt || !seg_count)
+  if (!seg_count)
     return; /* no-line */
 
   bz_line_pnts = (fp_pnt) g_new0 (gdouble, 2 * seg_count + 1);
 
   /* Go around all the points drawing a line from one to the next */
-  while (spnt)
+  for (spnt = obj->points; spnt; spnt = spnt->next)
     {
       bz_line_pnts[i][0] = spnt->pnt.x;
       bz_line_pnts[i++][1] = spnt->pnt.y;
-      spnt = spnt->next;
     }
 
   fp_pnt_start ();
@@ -10723,7 +10511,7 @@ d_new_bezier (gint x, gint y)
   nobj->paintfunc = d_paint_bezier;
   nobj->copyfunc  = d_copy_bezier;
 
-  return (nobj);
+  return nobj;
 }
 
 static void
