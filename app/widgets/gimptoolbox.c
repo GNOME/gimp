@@ -979,13 +979,13 @@ toolbox_tool_button_press (GtkWidget      *widget,
     }
   else if (event->type == GDK_BUTTON_PRESS && event->button == 2)
     {
-      GimpContext *context = GIMP_DOCK (toolbox)->context;
+      GimpContext  *context = GIMP_DOCK (toolbox)->context;
       GtkClipboard *clipboard;
 
       clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
-
-      g_object_ref (context);
-      gtk_clipboard_request_text (clipboard, toolbox_paste_received, context);
+      gtk_clipboard_request_text (clipboard,
+                                  toolbox_paste_received,
+                                  g_object_ref (context));
     }
 
   return FALSE;
@@ -1008,29 +1008,40 @@ toolbox_paste_received (GtkClipboard *clipboard,
 {
   GimpContext *context = GIMP_CONTEXT (data);
 
-  if (text && g_utf8_validate (text, -1, NULL))
+  if (text)
     {
-      GimpImage         *image;
-      GimpPDBStatusType  status;
-      GError            *error = NULL;
+      const gchar *newline = strchr (text, '\n');
+      gchar       *copy;
 
-      /* FIXME: need to validate the URI here!!
-       */
+      if (newline)
+        copy = g_strndup (text, newline - text);
+      else
+        copy = g_strdup (text);
 
-      image = file_open_with_display (context->gimp, context, NULL,
-                                      text, &status, &error);
+      g_strstrip (copy);
 
-      if (! image && status != GIMP_PDB_CANCEL)
+      if (strlen (copy))
         {
-          gchar *filename = file_utils_uri_to_utf8_filename (text);
+          GimpImage         *image;
+          GimpPDBStatusType  status;
+          GError            *error = NULL;
 
-          g_message (_("Opening '%s' failed:\n\n%s"),
-                     filename, error->message);
+          image = file_open_with_display (context->gimp, context, NULL,
+                                          copy, &status, &error);
 
-          g_clear_error (&error);
-          g_free (filename);
+          if (! image && status != GIMP_PDB_CANCEL)
+            {
+              gchar *filename = file_utils_uri_to_utf8_filename (copy);
+
+              g_message (_("Opening '%s' failed:\n\n%s"),
+                         filename, error->message);
+
+              g_clear_error (&error);
+              g_free (filename);
+            }
         }
 
+      g_free (copy);
     }
 
   g_object_unref (context);

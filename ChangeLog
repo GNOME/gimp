@@ -1,3 +1,9 @@
+2005-02-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptoolbox.c (toolbox_paste_received): drop
+	everything after the first newline and strip leading and trailing
+	whitespace from the pasted text.
+
 2005-02-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/layers-actions.c (layers_actions): fixed
