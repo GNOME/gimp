@@ -1,12 +1,12 @@
-# gimp-perl sk.po
-# Copyright (C) 2002 Free Software Foundation, Inc.
-# Zdenko Podobný <zdpo@mailbox.sk>, 2002.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-perl\n"
+"Project-Id-Version: gimp-perl 1.14\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2002-01-26 14:28GMT+0100\n"
+"PO-Revision-Date: 2002-03-12 15:36+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgid "<Image>/Image/Alpha/Clear Alpha..."
 msgstr "<Image>/Obrázok/Alfa/Oèisti» Alfa..."
 
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filtre/Mapovanie/Pixelová mapa..."
+msgstr "<Image>/Filtre/Mapovanie/Bodová mapa..."
 
 msgid "unable to fork: $!"
 msgstr "nepodarilo sa rozvetvi»: $!"
@@ -120,7 +120,7 @@ msgid "Text"
 msgstr "Text"
 
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtre/Zobrazenie/Náhodné zmesi..."
+msgstr "<Image>/Filtre/Zobrazenie/Náhodná zmes..."
 
 msgid "Synopsis"
 msgstr "Osnova"
@@ -171,7 +171,7 @@ msgid "Fileselector for $name"
 msgstr "Výber súboru pre $name"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Roz¹./Zobrazenie/Generátor pixelov..."
+msgstr "<Toolbox>/Roz¹./Zobrazenie/Generátor bodov..."
 
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "nie je mo¾né konvertova» Gimp::Drawable do Gimp::GimpDrawable (id %d)"
@@ -707,7 +707,7 @@ msgid "Accelerator"
 msgstr "Akcelerátor"
 
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Zru¹i»"
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Filtre/Mapovanie/Xach tiene..."
@@ -720,8 +720,8 @@ msgstr "Pozadie"
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"zmätok vo veµkosti v pixelov, pdl ma %d kanálových pixelov, ale je "
-"%d po¾adovaných kanálov"
+"zmätok vo veµkosti v bodov, pdl ma %d kanálových bodov, ale je "
+"po¾adovaných %d kanálov"
 
 msgid "<Image>/Filters/Render/Highlight Edges..."
 msgstr "<Image>/Filtre/Zobrazenie/Zvýraznenie hrán..."
