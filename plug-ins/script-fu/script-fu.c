@@ -419,7 +419,7 @@ init_constants ()
   setvar (cintern ("SHAPEBURST-SPHERICAL"), flocons (7), NIL);
   setvar (cintern ("SHAPEBURST-DIMPLED"), flocons (8), NIL);
   setvar (cintern ("SPIRAL-CLOCKWISE"), flocons (9), NIL);
-  setvar (cintern ("SPRIAL-ANTICLOCKWISE"), flocons (10), NIL);
+  setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
 
   setvar (cintern ("REPEAT-NONE"), flocons(0), NIL);
   setvar (cintern ("REPEAT-SAWTOOTH"), flocons(1), NIL);

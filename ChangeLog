@@ -1,3 +1,9 @@
+Wed Jul  7 03:54:54 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu.c: Fixed typo. 
+	We definitely need a pdbgen tool to generate the 
+	script-fu enum wrappers....
+
 Wed Jul  7 02:24:22 1999  Tim Janik  <timj@gtk.org>
 
 	* plug-ins/common/csource.c: save RGBA data as string and not seuqences
@@ -30,9 +36,9 @@ Tue Jul  6 22:40:16 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/commands.[ch]
 	* app/global_edit.[ch]
-	* app/menus.c: added "Paste As New" feature that allows to paste
+	* app/menus.c: Added "Paste As New" feature that allows to paste
 	the current (or a named) buffer to a new image. Still need to
-	add PDB call for that...
+	add PDB calls for that...
 
 Tue Jul  6 19:58:48 MEST 1999 Sven Neumann <sven@gimp.org>
 
