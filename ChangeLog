@@ -1,3 +1,8 @@
+2004-12-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolview.c (gimp_tool_view_select_item): no need
+	to update the ui manager here, the parent class already does it.
+
 2004-11-30  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/README: removed some very obsolete stuff.

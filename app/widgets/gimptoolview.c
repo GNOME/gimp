@@ -219,13 +219,11 @@ gimp_tool_view_select_item (GimpContainerEditor *editor,
 {
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 }
 
 static void
 gimp_tool_view_activate_item (GimpContainerEditor *editor,
-				GimpViewable        *viewable)
+                              GimpViewable        *viewable)
 {
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
