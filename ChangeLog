@@ -1,5 +1,14 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemtreeview.c
+	(gimp_item_tree_view_drop_viewable): handle drops of items of all
+	types from all images and convert them if needed.
+
+	* app/widgets/gimplayertreeview.c: enable dropping of all kinds of
+	drawables. Addresses bug #158133.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/widgets-enums.h (enum GimpDndType): reordered so
 	COMPONENT is after IMAGE.
 

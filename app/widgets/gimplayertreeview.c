@@ -412,6 +412,10 @@ gimp_layer_tree_view_constructor (GType                  type,
                            NULL, tree_view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
                               NULL, tree_view);
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
+                              NULL, tree_view);
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
+                              NULL, tree_view);
 
   /*  hide basically useless edit button  */
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
@@ -655,7 +659,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
   if  (src_type == GIMP_DND_TYPE_URI_LIST     ||
        src_type == GIMP_DND_TYPE_TEXT_PLAIN   ||
        src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
-       GIMP_IS_LAYER (src_viewable))
+       GIMP_IS_DRAWABLE (src_viewable))
     {
       GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
       GimpImage *dest_image = gimp_item_get_image (GIMP_ITEM (dest_layer));

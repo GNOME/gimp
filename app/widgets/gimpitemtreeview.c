@@ -742,34 +742,40 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
   GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpItemTreeViewClass *item_view_class;
   GimpContainer         *container;
-  gint                   src_index;
   gint                   dest_index;
 
   container = gimp_container_view_get_container (container_view);
 
-  src_index  = gimp_container_get_child_index (container,
-                                               GIMP_OBJECT (src_viewable));
   dest_index = gimp_container_get_child_index (container,
                                                GIMP_OBJECT (dest_viewable));
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
-  if (item_view->gimage != gimp_item_get_image (GIMP_ITEM (src_viewable)))
+  if (item_view->gimage != gimp_item_get_image (GIMP_ITEM (src_viewable)) ||
+      ! g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
+                     item_view_class->item_type))
     {
+      GType     item_type = item_view_class->item_type;
       GimpItem *new_item;
+
+      if (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable), item_type))
+        item_type = G_TYPE_FROM_INSTANCE (src_viewable);
 
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         dest_index++;
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
-                                    item_view->gimage,
-                                    G_TYPE_FROM_INSTANCE (src_viewable),
-                                    TRUE);
+                                    item_view->gimage, item_type, TRUE);
 
       item_view_class->add_item (item_view->gimage, new_item, dest_index);
     }
   else
     {
+      gint src_index;
+
+      src_index = gimp_container_get_child_index (container,
+                                                  GIMP_OBJECT (src_viewable));
+
       if (drop_pos == GTK_TREE_VIEW_DROP_AFTER && src_index > dest_index)
         {
           dest_index++;
