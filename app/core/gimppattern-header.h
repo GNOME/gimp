@@ -28,12 +28,12 @@ typedef struct _PatternHeader PatternHeader;
 
 struct _PatternHeader
 {
-  guint   header_size;  /*  header_size = sizeof(PatternHeader) + pattern name  */
-  guint   version;      /*  pattern file version #  */
-  guint   width;        /*  width of pattern  */
-  guint   height;       /*  height of pattern  */
-  guint   bytes;        /*  depth of pattern in bytes  */
-  guint   magic_number; /*  GIMP pattern magic number  */
+  guint32   header_size;  /*  header_size = sizeof(PatternHeader) + pattern name  */
+  guint32   version;      /*  pattern file version #  */
+  guint32   width;        /*  width of pattern  */
+  guint32   height;       /*  height of pattern  */
+  guint32   bytes;        /*  depth of pattern in bytes  */
+  guint32   magic_number; /*  GIMP pattern magic number  */
 };
 
 /*  In a pattern file, next comes the pattern name, null-terminated.  After that

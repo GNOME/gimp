@@ -28,13 +28,13 @@ typedef struct _BrushHeader BrushHeader;
 
 struct _BrushHeader
 {
-  guint   header_size;  /*  header_size = sizeof (BrushHeader) + brush name  */
-  guint   version;      /*  brush file version #  */
-  guint   width;        /*  width of brush  */
-  guint   height;       /*  height of brush  */
-  guint   bytes;        /*  depth of brush in bytes--always 1 */
-  guint   magic_number; /*  GIMP brush magic number  */
-  guint   spacing;      /*  brush spacing  */
+  guint32   header_size;  /*  header_size = sizeof (BrushHeader) + brush name  */
+  guint32   version;      /*  brush file version #  */
+  guint32   width;        /*  width of brush  */
+  guint32   height;       /*  height of brush  */
+  guint32   bytes;        /*  depth of brush in bytes--always 1 */
+  guint32   magic_number; /*  GIMP brush magic number  */
+  guint32   spacing;      /*  brush spacing  */
 };
 
 /*  In a brush file, next comes the brush name, null-terminated.  After that

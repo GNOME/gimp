@@ -171,6 +171,7 @@ AC_PROG_CPP
 dnl Large file support for the swap file
 AC_SYS_LARGEFILE
 
+AC_MSG_CHECKING([whether to turn on debugging])
 AC_ARG_ENABLE(debug,
               [  --enable-debug          turn on debugging (default=no)],
               if eval "test x$enable_debug = xyes"; then
@@ -178,7 +179,24 @@ AC_ARG_ENABLE(debug,
               fi)
 
 if test -n "$DEBUGFLAG"; then
+  AC_MSG_RESULT([yes])
   CFLAGS="$DEBUGFLAG $CFLAGS"
+else
+  AC_MSG_RESULT([no])
+fi
+
+AC_MSG_CHECKING([whether to turn on profiling])
+AC_ARG_ENABLE(profile,
+              [  --enable-profile        turn on profiling (default=no)],
+              if eval "test x$enable_profile = xyes"; then
+                PROFFLAG="-pg"
+              fi)
+
+if test -n "$PROFFLAG"; then
+  AC_MSG_RESULT([yes])
+  CFLAGS="$PROFFLAG $CFLAGS"
+else
+  AC_MSG_RESULT([no])
 fi
 
 AC_ARG_ENABLE(ansi,
