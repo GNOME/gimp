@@ -218,11 +218,14 @@ gimp_container_tree_view_constructor (GType                  type,
                               tree_view->model_columns);
   tree_view->model = GTK_TREE_MODEL (list);
 
-  tree_view->view =
-    GTK_TREE_VIEW (gtk_tree_view_new_with_model (tree_view->model));
+  tree_view->view = g_object_new (GTK_TYPE_TREE_VIEW,
+                                  "model",           list,
+                                  "search_column",   COLUMN_NAME,
+                                  "enable_search",   TRUE,
+                                  "headers_visible", FALSE,
+                                  NULL);
   g_object_unref (list);
 
-  gtk_tree_view_set_headers_visible (tree_view->view, FALSE);
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (tree_view->view));
   gtk_widget_show (GTK_WIDGET (tree_view->view));
@@ -272,9 +275,6 @@ gimp_container_tree_view_constructor (GType                  type,
   g_signal_connect (tree_view->view, "drag_drop",
                     G_CALLBACK (gimp_container_tree_view_drag_drop),
                     tree_view);
-
-  gtk_tree_view_set_search_column (tree_view->view, COLUMN_NAME);
-  gtk_tree_view_set_enable_search (tree_view->view, TRUE);
 
   return object;
 }
