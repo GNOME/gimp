@@ -121,7 +121,7 @@ gimp_airbrush_init (GimpAirbrush *airbrush)
 
   paint_core = GIMP_PAINT_CORE (airbrush);
 
-  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void
@@ -143,12 +143,8 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
                      GimpPaintCoreState  paint_state)
 {
   AirbrushOptions *options;
-  GimpBrush       *brush;
 
   options = (AirbrushOptions *) paint_options;
-
-  brush =
-    gimp_context_get_brush (gimp_get_current_context (drawable->gimage->gimp));
 
   switch (paint_state)
     {
@@ -309,7 +305,7 @@ gimp_airbrush_motion (GimpPaintCore *paint_core,
   /*  paste the newly painted area to the image  */
   gimp_paint_core_paste_canvas (paint_core, drawable,
 				MIN (pressure, 255),
-				(gint) (gimp_context_get_opacity (context) * 255),
-				gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
+				gimp_context_get_opacity (context) * 255,
+				gimp_context_get_paint_mode (context),
 				SOFT, scale, paint_appl_mode);
 }

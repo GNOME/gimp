@@ -21,6 +21,7 @@
 
 
 #include "core/core-types.h"
+#include "paint/paint-types.h"
 
 
 typedef struct _Argument   Argument;

@@ -119,7 +119,7 @@ gimp_smudge_init (GimpSmudge *smudge)
 
   paint_core = GIMP_PAINT_CORE (smudge);
 
-  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void

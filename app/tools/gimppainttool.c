@@ -24,27 +24,15 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
 #include "tools-types.h"
 
-#include "base/brush-scale.h"
-#include "base/pixel-region.h"
-#include "base/temp-buf.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "core/gimp.h"
-#include "core/gimpbrushpipe.h"
+#include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
-#include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintcore.h"
@@ -68,8 +56,6 @@
 #define TARGET_SIZE    15
 #define STATUSBAR_SIZE 128
 
-
-/*  local function prototypes  */
 
 static void   gimp_paint_tool_class_init     (GimpPaintToolClass  *klass);
 static void   gimp_paint_tool_init           (GimpPaintTool       *paint_tool);
@@ -169,11 +155,10 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   tool = GIMP_TOOL (paint_tool);
 
-  tool->perfectmouse = TRUE;
+  tool->perfectmouse      = TRUE;
 
-  paint_tool->state          = 0;
-  paint_tool->pick_colors    = FALSE;
-  paint_tool->pick_state     = FALSE;
+  paint_tool->pick_colors = FALSE;
+  paint_tool->pick_state  = FALSE;
 }
 
 static void
@@ -212,7 +197,8 @@ gimp_paint_tool_control (GimpTool    *tool,
       break;
 
     case HALT:
-      gimp_paint_core_paint (paint_tool->core, drawable,
+      gimp_paint_core_paint (paint_tool->core,
+                             drawable,
                              (PaintOptions *) tool->tool_info->tool_options,
                              FINISH_PAINT);
       gimp_paint_core_cleanup (paint_tool->core);
@@ -240,7 +226,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gboolean       draw_line;
   GimpDrawable  *drawable;
   GimpCoords     curr_coords;
-  gint           off_x, off_y;
 
   draw_tool  = GIMP_DRAW_TOOL (tool);
   paint_tool = GIMP_PAINT_TOOL (tool);
@@ -253,10 +238,14 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   curr_coords = *coords;
 
-  gimp_drawable_offsets (drawable, &off_x, &off_y);
+  {
+    gint off_x, off_y;
 
-  curr_coords.x -= off_x;
-  curr_coords.y -= off_y;
+    gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+    curr_coords.x -= off_x;
+    curr_coords.y -= off_y;
+  }
 
   if (draw_tool->gdisp)
     gimp_draw_tool_stop (draw_tool);
@@ -266,57 +255,28 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   draw_line = FALSE;
 
-  paint_tool->state = state;
-
-  /*  if this is a new image, reinit the core vals  */
   if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))
     {
+      /*  if this is a new image, reinit the core vals  */
+
       core->start_coords = core->cur_coords;
       core->last_coords  = core->cur_coords;
     }
-
-  /*  If shift is down and this is not the first paint
-   *  stroke, then draw a line from the last coords to the pointer
-   */
   else if (state & GDK_SHIFT_MASK)
     {
+      /*  If shift is down and this is not the first paint
+       *  stroke, then draw a line from the last coords to the pointer
+       */
+
       draw_line = TRUE;
 
       core->start_coords = core->last_coords;
 
-      /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (state & GDK_CONTROL_MASK)
 	{
-	  static const gint tangens2[6] = {  34, 106, 196, 334, 618, 1944    };
-	  static const gint cosinus[7]  = { 256, 247, 222, 181, 128,   66, 0 };
+          /* Restrict to multiples of 15 degrees if ctrl is pressed */
 
-	  gint dx, dy, i, radius, frac;
-
-	  dx = core->cur_coords.x - core->last_coords.x;
-	  dy = core->cur_coords.y - core->last_coords.y;
-
-	  if (dy)
-	    {
-	      radius = sqrt (SQR (dx) + SQR (dy));
-	      frac   = abs ((dx << 8) / dy);
-
-	      for (i = 0; i < 6; i++)
-		{
-		  if (frac < tangens2[i])
-		    break;
-		}
-
-	      dx = (dx > 0 ?
-                       (cosinus[6-i] * radius) >> 8 :
-                    - ((cosinus[6-i] * radius) >> 8));
-
-	      dy = (dy > 0 ?
-                       (cosinus[i] * radius)   >> 8 :
-                    - ((cosinus[i] * radius)   >> 8));
-	    }
-
-	  core->cur_coords.x = core->last_coords.x + dx;
-	  core->cur_coords.y = core->last_coords.y + dy;
+          gimp_paint_core_constrain (core);
 	}
     }
 
@@ -372,13 +332,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
                                        &core->last_coords,
                                        &core->cur_coords))
 	{
-	  if (core->flags & CORE_CAN_HANDLE_CHANGING_BRUSH)
-	    {
-	      core->brush = gimp_brush_select_brush (core->brush,
-                                                     &core->last_coords,
-                                                     &core->cur_coords);
-	    }
-
 	  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
 	}
     }
@@ -412,11 +365,11 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  /*  resume the current selection  */
-  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
-
   /*  Let the specific painting function finish up  */
   gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
+
+  /*  resume the current selection  */
+  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;
@@ -448,14 +401,12 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  paint_tool->state = state;
+  core->cur_coords = *coords;
 
   {
     gint off_x, off_y;
     
     gimp_drawable_offsets (drawable, &off_x, &off_y);
-
-    core->cur_coords = *coords;
 
     core->cur_coords.x -= off_x;
     core->cur_coords.y -= off_y;
@@ -494,8 +445,6 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
-  gchar             status_str[STATUSBAR_SIZE];
-  gboolean          pick_colors = FALSE;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
@@ -513,62 +462,39 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
-      gint off_x, off_y;
-
-      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-
-      /* If shift is down and this is not the first paint stroke, draw a line */
       if (gdisp == tool->gdisp && (state & GDK_SHIFT_MASK))
 	{
-	  gdouble dx, dy, d;
+          /*  If shift is down and this is not the first paint stroke,
+           *  draw a line
+           */
+
+          gint    off_x, off_y;
+	  gdouble dx, dy, dist;
+          gchar   status_str[STATUSBAR_SIZE];
+
+          gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
 	  /*  Get the current coordinates */
           core->cur_coords.x = coords->x - off_x;
           core->cur_coords.y = coords->y - off_y;
 
-	  dx = core->cur_coords.x - core->last_coords.x;
-	  dy = core->cur_coords.y - core->last_coords.y;
-
-	  /* Restrict to multiples of 15 degrees if ctrl is pressed */
 	  if (state & GDK_CONTROL_MASK)
 	    {
-	      static const gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
-	      static const gint cosinus[7]  = { 256, 247, 222, 181, 128,   66, 0 };
+              /*  Restrict to multiples of 15 degrees if ctrl is pressed  */
 
-	      gint idx = dx;
-	      gint idy = dy;
-	      gint i, radius, frac;
-
-	      if (idy)
-		{
-		  radius = sqrt (SQR (idx) + SQR (idy));
-		  frac   = abs ((idx << 8) / idy);
-
-		  for (i = 0; i < 6; i++)
-		    {
-		      if (frac < tangens2[i])
-			break;
-		    }
-
-		  dx = (idx > 0 ?
-                          (cosinus[6-i]  * radius) >> 8 :
-                        - ((cosinus[6-i] * radius) >> 8));
-
-		  dy = (idy > 0 ?
-                          (cosinus[i]  * radius) >> 8 :
-                        - ((cosinus[i] * radius) >> 8));
-		}
-
-	      core->cur_coords.x = core->last_coords.x + dx;
-	      core->cur_coords.y = core->last_coords.y + dy;
+              gimp_paint_core_constrain (core);
 	    }
+
+	  dx = core->cur_coords.x - core->last_coords.x;
+	  dy = core->cur_coords.y - core->last_coords.y;
 
 	  /*  show distance in statusbar  */
 	  if (gdisp->dot_for_dot)
 	    {
-	      d = sqrt (SQR (dx) + SQR (dy));
+	      dist = sqrt (SQR (dx) + SQR (dy));
+
 	      g_snprintf (status_str, sizeof (status_str), "%.1f %s",
-                          d, _("pixels"));
+                          dist, _("pixels"));
 	    }
 	  else
 	    {
@@ -578,11 +504,12 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
                           gimp_unit_get_digits (gdisp->gimage->unit),
                           gimp_unit_get_symbol (gdisp->gimage->unit));
 
-	      d = (gimp_unit_get_factor (gdisp->gimage->unit) *
-		   sqrt (SQR (dx / gdisp->gimage->xresolution) +
-			 SQR (dy / gdisp->gimage->yresolution)));
+	      dist = (gimp_unit_get_factor (gdisp->gimage->unit) *
+                      sqrt (SQR (dx / gdisp->gimage->xresolution) +
+                            SQR (dy / gdisp->gimage->yresolution)));
 
-	      g_snprintf (status_str, sizeof (status_str), format_str, d);
+	      g_snprintf (status_str, sizeof (status_str), format_str,
+                          dist);
 	    }
 
 	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
@@ -591,29 +518,21 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
           gimp_draw_tool_start (draw_tool, gdisp);
 	}
-      /* If Ctrl or Mod1 is pressed, pick colors */
       else if (paint_tool->pick_colors &&
 	       ! (state & GDK_SHIFT_MASK) &&
 	       (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
         {
-	  pick_colors = TRUE;
+          /* If Ctrl or Mod1 is pressed, pick colors */
+
+          gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_COLOR_PICKER_CURSOR,
+                                GIMP_COLOR_PICKER_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_NONE);
+          return;
 	}
     }
 
-  if (pick_colors)
-    {
-      gimp_tool_set_cursor (tool, gdisp,
-                            GIMP_COLOR_PICKER_CURSOR,
-                            GIMP_COLOR_PICKER_TOOL_CURSOR,
-                            GIMP_CURSOR_MODIFIER_NONE);
-    }
-  else
-    {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
-                                                     coords,
-                                                     state,
-                                                     gdisp);
-    }
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

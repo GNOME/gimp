@@ -136,7 +136,7 @@ gimp_clone_init (GimpClone *clone)
 
   paint_core = GIMP_PAINT_CORE (clone);
 
-  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
   paint_core->flags |= CORE_TRACES_ON_WINDOW;
 
   clone->set_source         = FALSE;
@@ -433,7 +433,7 @@ gimp_clone_motion (GimpPaintCore        *paint_core,
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_paste_canvas (paint_core, drawable, 
 				MIN (opacity, 255),
-				(gint) (gimp_context_get_opacity (context) * 255),
+				gimp_context_get_opacity (context) * 255,
 				gimp_context_get_paint_mode (context),
 				pressure_options->pressure ? PRESSURE : SOFT, 
 				scale, CONSTANT);

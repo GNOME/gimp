@@ -121,7 +121,7 @@ gimp_dodgeburn_init (GimpDodgeBurn *dodgeburn)
 
   paint_core = GIMP_PAINT_CORE (dodgeburn);
 
-  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void 

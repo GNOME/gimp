@@ -44,16 +44,18 @@ typedef enum /*< pdb-skip >*/
 
 typedef enum /*< pdb-skip >*/
 {
-  CORE_CAN_HANDLE_CHANGING_BRUSH = 0x0001, /* Set for tools that don't mind
-					    * if the brush changes while
-					    * painting.
-					    */
+  /*  Set for tools that don't mind if
+   *  the brush changes while painting.
+   */
+  CORE_HANDLES_CHANGING_BRUSH = 0x1 << 0,
 
-  CORE_TRACES_ON_WINDOW                    /* Set for tools that perform temporary
-                                            * rendering directly to the window. These
-                                            * require sequencing with gdisplay_flush()
-                                            * routines. See clone.c for example.
-                                            */
+  /* Set for tools that perform
+   * temporary rendering directly to the
+   * window. These require sequencing with
+   * gdisplay_flush() routines.
+   * See gimpclone.c for example.
+   */
+  CORE_TRACES_ON_WINDOW       = 0x1 << 1
 } GimpPaintCoreFlags;
 
 
@@ -71,18 +73,19 @@ struct _GimpPaintCore
 {
   GimpObject          parent_instance;
 
-  gint                ID;            /*  unique instance ID         */
+  gint                ID;            /*  unique instance ID               */
 
-  GimpCoords          start_coords;  /*  starting coords            */
-  GimpCoords          cur_coords;    /*  current coords             */
-  GimpCoords          last_coords;   /*  last coords                */
+  GimpCoords          start_coords;  /*  starting coords (for undo only)  */
 
-  gdouble             distance;      /*  distance traveled by brush */
-  gdouble             pixel_dist;    /*  distance in pixels         */
-  gdouble             spacing;       /*  spacing                    */
+  GimpCoords          cur_coords;    /*  current coords                   */
+  GimpCoords          last_coords;   /*  last coords                      */
 
-  gint                x1, y1;        /*  image space coords         */
-  gint                x2, y2;        /*  image space coords         */
+  gdouble             distance;      /*  distance traveled by brush       */
+  gdouble             pixel_dist;    /*  distance in pixels               */
+  gdouble             spacing;       /*  spacing                          */
+
+  gint                x1, y1;        /*  undo extents in image coords     */
+  gint                x2, y2;        /*  undo extents in image coords     */
 
   GimpBrush          *brush;         /*  current brush	      */
 
@@ -145,30 +148,35 @@ struct _GimpPaintCoreUndo
 };
 
 
-GType   gimp_paint_core_get_type        (void) G_GNUC_CONST;
+GType     gimp_paint_core_get_type    (void) G_GNUC_CONST;
 
-void    gimp_paint_core_paint           (GimpPaintCore       *core,
-					 GimpDrawable        *drawable,
-                                         PaintOptions        *options,
-					 GimpPaintCoreState   state);
+void      gimp_paint_core_paint       (GimpPaintCore       *core,
+                                       GimpDrawable        *drawable,
+                                       PaintOptions        *options,
+                                       GimpPaintCoreState   state);
 
-int     gimp_paint_core_start           (GimpPaintCore       *core,
-					 GimpDrawable        *drawable,
-					 GimpCoords          *coords);
-void    gimp_paint_core_interpolate     (GimpPaintCore       *core,
-					 GimpDrawable        *drawable,
-                                         PaintOptions        *paint_options);
-void    gimp_paint_core_finish          (GimpPaintCore       *core,
-					 GimpDrawable        *drawable);
-void    gimp_paint_core_cleanup         (GimpPaintCore       *core);
+gboolean  gimp_paint_core_start       (GimpPaintCore       *core,
+                                       GimpDrawable        *drawable,
+                                       GimpCoords          *coords);
+void      gimp_paint_core_finish      (GimpPaintCore       *core,
+                                       GimpDrawable        *drawable);
+void      gimp_paint_core_cleanup     (GimpPaintCore       *core);
 
-void    gimp_paint_core_get_color_from_gradient (GimpPaintCore     *core,
-                                                 GimpGradient      *gradient,
-						 gdouble            gradient_length,
-						 GimpRGB           *color,
-						 GradientPaintMode  mode);
+void      gimp_paint_core_constrain   (GimpPaintCore       *core);
 
-/*  paint core painting functions  */
+void      gimp_paint_core_interpolate (GimpPaintCore       *core,
+                                       GimpDrawable        *drawable,
+                                       PaintOptions        *paint_options);
+
+
+/*  protected functions  */
+
+void    gimp_paint_core_get_color_from_gradient (GimpPaintCore        *core,
+                                                 GimpGradient         *gradient,
+						 gdouble               gradient_length,
+						 GimpRGB              *color,
+						 GradientPaintMode     mode);
+
 TempBuf * gimp_paint_core_get_paint_area        (GimpPaintCore        *core,
                                                  GimpDrawable         *drawable,
                                                  gdouble               scale);

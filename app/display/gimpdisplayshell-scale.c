@@ -395,10 +395,11 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   if (resize_window || redisplay)
     {
       gimp_display_shell_expose_full (shell);
-      gdisplays_flush ();
 
       /* title may have changed if it includes the zoom ratio */
-      gimp_display_shell_update_title (shell);
+      shell->title_dirty = TRUE;
+
+      gdisplays_flush ();
     }
 
   /* re-enable the active tool */

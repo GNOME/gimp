@@ -1,3 +1,44 @@
+2002-02-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-handlers.c: added back the handler
+	which invalidates the display_title on dirty/clean. Removing it
+	was simply wrong.
+
+	* app/display/gimpdisplayshell-scale.c: don't call
+	gimp_display_shell_update_title() directly but set
+	shell->title_dirty to TRUE before calling gdisplays_flush().
+
+	* app/paint/gimppaintcore.[ch]: added gimp_paint_core_constrain()
+	which does the "snap to 15 degrees" stuff formerly done in
+	GimpPaintTool. Call gimp_brush_select_brush() in
+	gimp_paint_core_paint() if paint_state == MOTION, not in several
+	other places.  Reordered functions, added some comments and
+	documentation.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c:
+	s/CORE_CAN_HANDLE_CHANGING_BRUSH/CORE_HANDLES_CHANGING_BRUSH/g,
+	minor cleanup.
+
+	* app/pdb/pdb-types.h: include "paint/paint-types.h"
+
+	* app/tools/gimppainttool.[ch]: use gimp_paint_core_constrain(),
+	removed paint_tool->state because it's not needed any more,
+	lots of cleanup.
+
+	* tools/pdbgen/app.pl: another eeky special case for "paint/".
+
+	* tools/pdbgen/pdb/paint_tools.pdb: include stuff from "paint/",
+	not "tools/".
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2002-02-14  Michael Natterer  <mitch@gimp.org>
 
 	Core/UI separation for the paint tools:

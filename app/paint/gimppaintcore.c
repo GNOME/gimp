@@ -193,29 +193,39 @@ gimp_paint_core_init (GimpPaintCore *core)
 {
   gint i, j;
 
-  core->ID             = global_core_ID++;
+  core->ID                       = global_core_ID++;
 
-  core->distance       = 0.0;
-  core->spacing        = 0.0;
-  core->x1             = 0;
-  core->y1             = 0;
-  core->x2             = 0;
-  core->y2             = 0;
+  core->distance                 = 0.0;
+  core->spacing                  = 0.0;
+  core->x1                       = 0;
+  core->y1                       = 0;
+  core->x2                       = 0;
+  core->y2                       = 0;
 
-  core->brush          = NULL;
+  core->brush                    = NULL;
 
-  core->flags          = 0;
+  core->flags                    = 0;
 
-  core->undo_tiles     = NULL;
-  core->canvas_tiles   = NULL;
+  core->undo_tiles               = NULL;
+  core->canvas_tiles             = NULL;
 
-  core->orig_buf       = NULL;
-  core->canvas_buf     = NULL;
+  core->orig_buf                 = NULL;
+  core->canvas_buf               = NULL;
 
-  core->pressure_brush = NULL;
-  core->solid_brush    = NULL;
-  core->scale_brush    = NULL;
-  core->scale_pixmap   = NULL;
+  core->pressure_brush           = NULL;
+
+  core->solid_brush              = NULL;
+  core->last_solid_brush         = NULL;
+
+  core->scale_brush              = NULL;
+  core->last_scale_brush         = NULL;
+  core->last_scale_width         = 0;
+  core->last_scale_height        = 0;
+
+  core->scale_pixmap             = NULL;
+  core->last_scale_pixmap        = NULL;
+  core->last_scale_pixmap_width  = 0;
+  core->last_scale_pixmap_height = 0;
 
   g_assert (PAINT_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
 
@@ -223,10 +233,10 @@ gimp_paint_core_init (GimpPaintCore *core)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
       core->kernel_brushes[i][j] = NULL;
 
-  core->last_brush_mask = NULL;
-  core->cache_invalid   = FALSE;
+  core->last_brush_mask          = NULL;
+  core->cache_invalid            = FALSE;
 
-  core->grr_brush       = NULL;
+  core->grr_brush                = NULL;
 }
 
 static void
@@ -263,8 +273,6 @@ gimp_paint_core_finalize (GObject *object)
       core->scale_pixmap = NULL;
     }
 
-  g_assert (PAINT_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
-
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
       if (core->kernel_brushes[i][j])
@@ -294,6 +302,14 @@ gimp_paint_core_paint (GimpPaintCore      *core,
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (paint_options != NULL);
+
+  if (paint_state == MOTION_PAINT &&
+      (core->flags & CORE_HANDLES_CHANGING_BRUSH))
+    {
+      core->brush = gimp_brush_select_brush (core->brush,
+                                             &core->last_coords,
+                                             &core->cur_coords);
+    }
 
   GIMP_PAINT_CORE_GET_CLASS (core)->paint (core,
                                            drawable,
@@ -369,122 +385,6 @@ gimp_paint_core_start (GimpPaintCore *core,
   core->pixel_dist = 0.0;
 
   return TRUE;
-}
-
-void
-gimp_paint_core_interpolate (GimpPaintCore *core,
-			     GimpDrawable  *drawable,
-                             PaintOptions  *paint_options)
-{
-  GimpCoords  delta;
-  /*   double spacing; */
-  /*   double lastscale, curscale; */
-  gdouble     n;
-  gdouble     left;
-  gdouble     t;
-  gdouble     initial;
-  gdouble     dist;
-  gdouble     total;
-  gdouble     pixel_dist;
-  gdouble     pixel_initial;
-  gdouble     xd, yd;
-  gdouble     mag;
-
-  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (paint_options != NULL);
-
-  delta.x        = core->cur_coords.x        - core->last_coords.x;
-  delta.y        = core->cur_coords.y        - core->last_coords.y;
-  delta.pressure = core->cur_coords.pressure - core->last_coords.pressure;
-  delta.xtilt    = core->cur_coords.xtilt    - core->last_coords.xtilt;
-  delta.ytilt    = core->cur_coords.ytilt    - core->last_coords.ytilt;
-  delta.wheel    = core->cur_coords.wheel    - core->last_coords.wheel;
-
-  /* return if there has been no motion */
-  if (! delta.x &&
-      ! delta.y &&
-      ! delta.pressure &&
-      ! delta.xtilt &&
-      ! delta.ytilt &&
-      ! delta.wheel)
-    return;
-
-  /* calculate the distance traveled in the coordinate space of the brush */
-  mag = gimp_vector2_length (&(core->brush->x_axis));
-  xd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
-				    &(core->brush->x_axis)) / (mag * mag);
-
-  mag = gimp_vector2_length (&(core->brush->y_axis));
-  yd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
-				    &(core->brush->y_axis)) / (mag * mag);
-
-  dist    = 0.5 * sqrt (xd * xd + yd * yd);
-  total   = dist + core->distance;
-  initial = core->distance;
-
-  pixel_dist    = gimp_vector2_length ((GimpVector2 *) &delta);
-  pixel_initial = core->pixel_dist;
-
-  /*  FIXME: need to adapt the spacing to the size  */
-  /*   lastscale = MIN (gimp_paint_tool->lastpressure, 1/256); */
-  /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256); */
-  /*   spacing = gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
-
-  while (core->distance < total)
-    {
-      GimpBrush *current_brush;
-
-      n    = (gint) (core->distance / core->spacing + 1.0 + EPSILON);
-      left = n * core->spacing - core->distance;
-
-      core->distance += left;
-
-      if (core->distance <= (total + EPSILON))
-	{
-	  t = (core->distance - initial) / dist;
-
-	  core->cur_coords.x        = (core->last_coords.x +
-                                       delta.x * t);
-	  core->cur_coords.y        = (core->last_coords.y +
-                                       delta.y * t);
-	  core->cur_coords.pressure = (core->last_coords.pressure +
-                                       delta.pressure * t);
-	  core->cur_coords.xtilt    = (core->last_coords.xtilt +
-                                       delta.xtilt * t);
-	  core->cur_coords.ytilt    = (core->last_coords.ytilt +
-                                       delta.ytilt * t);
-	  core->cur_coords.wheel    = (core->last_coords.wheel +
-                                       delta.ytilt * t);
-
-	  core->pixel_dist = pixel_initial + pixel_dist * t;
-
-	  /*  save the current brush  */
-	  current_brush = core->brush;
-
-	  if (core->flags & CORE_CAN_HANDLE_CHANGING_BRUSH)
-	    {
-	      core->brush = gimp_brush_select_brush (core->brush,
-                                                     &core->last_coords,
-                                                     &core->cur_coords);
-	    }
-
-	  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
-
-	  /*  restore the current brush pointer  */
-          core->brush = current_brush;
-	}
-    }
-
-  core->cur_coords.x        = core->last_coords.x        + delta.x;
-  core->cur_coords.y        = core->last_coords.y        + delta.y;
-  core->cur_coords.pressure = core->last_coords.pressure + delta.pressure;
-  core->cur_coords.xtilt    = core->last_coords.xtilt    + delta.xtilt;
-  core->cur_coords.ytilt    = core->last_coords.ytilt    + delta.ytilt;
-  core->cur_coords.wheel    = core->last_coords.wheel    + delta.wheel;
-
-  core->distance   = total;
-  core->pixel_dist = pixel_initial + pixel_dist;
 }
 
 void
@@ -565,6 +465,156 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
     }
 }
 
+/**
+ * gimp_paint_core_constrain:
+ * @core: the #GimpPaintCore.
+ * 
+ * Restricts the (core->last_coords, core->curr_coords) vector to 15
+ * degree steps, possibly changing core->curr_coords
+ **/
+void
+gimp_paint_core_constrain (GimpPaintCore *core)
+{
+  static const gint tangens2[6] = {  34, 106, 196, 334, 618, 1944    };
+  static const gint cosinus[7]  = { 256, 247, 222, 181, 128,   66, 0 };
+
+  gint dx, dy, i, radius, frac;
+
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+
+  dx = core->cur_coords.x - core->last_coords.x;
+  dy = core->cur_coords.y - core->last_coords.y;
+
+  if (dy)
+    {
+      radius = sqrt (SQR (dx) + SQR (dy));
+      frac   = abs ((dx << 8) / dy);
+
+      for (i = 0; i < 6; i++)
+        {
+          if (frac < tangens2[i])
+            break;
+        }
+
+      dx = (dx > 0 ?
+            (cosinus[6-i] * radius) >> 8 :
+            - ((cosinus[6-i] * radius) >> 8));
+
+      dy = (dy > 0 ?
+            (cosinus[i] * radius)   >> 8 :
+            - ((cosinus[i] * radius)   >> 8));
+    }
+
+  core->cur_coords.x = core->last_coords.x + dx;
+  core->cur_coords.y = core->last_coords.y + dy;
+}
+
+void
+gimp_paint_core_interpolate (GimpPaintCore *core,
+			     GimpDrawable  *drawable,
+                             PaintOptions  *paint_options)
+{
+  GimpCoords  delta;
+  /*   double spacing; */
+  /*   double lastscale, curscale; */
+  gdouble     n;
+  gdouble     left;
+  gdouble     t;
+  gdouble     initial;
+  gdouble     dist;
+  gdouble     total;
+  gdouble     pixel_dist;
+  gdouble     pixel_initial;
+  gdouble     xd, yd;
+  gdouble     mag;
+
+  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (paint_options != NULL);
+
+  delta.x        = core->cur_coords.x        - core->last_coords.x;
+  delta.y        = core->cur_coords.y        - core->last_coords.y;
+  delta.pressure = core->cur_coords.pressure - core->last_coords.pressure;
+  delta.xtilt    = core->cur_coords.xtilt    - core->last_coords.xtilt;
+  delta.ytilt    = core->cur_coords.ytilt    - core->last_coords.ytilt;
+  delta.wheel    = core->cur_coords.wheel    - core->last_coords.wheel;
+
+  /*  return if there has been no motion  */
+  if (! delta.x        &&
+      ! delta.y        &&
+      ! delta.pressure &&
+      ! delta.xtilt    &&
+      ! delta.ytilt    &&
+      ! delta.wheel)
+    return;
+
+  /* calculate the distance traveled in the coordinate space of the brush */
+  mag = gimp_vector2_length (&(core->brush->x_axis));
+  xd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
+				    &(core->brush->x_axis)) / (mag * mag);
+
+  mag = gimp_vector2_length (&(core->brush->y_axis));
+  yd  = gimp_vector2_inner_product ((GimpVector2 *) &delta,
+				    &(core->brush->y_axis)) / (mag * mag);
+
+  dist    = 0.5 * sqrt (xd * xd + yd * yd);
+  total   = dist + core->distance;
+  initial = core->distance;
+
+  pixel_dist    = gimp_vector2_length ((GimpVector2 *) &delta);
+  pixel_initial = core->pixel_dist;
+
+  /*  FIXME: need to adapt the spacing to the size  */
+  /*   lastscale = MIN (gimp_paint_tool->lastpressure, 1/256); */
+  /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256); */
+  /*   spacing = gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
+
+  while (core->distance < total)
+    {
+      GimpBrush *current_brush;
+
+      n    = (gint) (core->distance / core->spacing + 1.0 + EPSILON);
+      left = n * core->spacing - core->distance;
+
+      core->distance += left;
+
+      if (core->distance <= (total + EPSILON))
+	{
+	  t = (core->distance - initial) / dist;
+
+	  core->cur_coords.x        = core->last_coords.x        + t * delta.x;
+	  core->cur_coords.y        = core->last_coords.y        + t * delta.y;
+	  core->cur_coords.pressure = core->last_coords.pressure + t * delta.pressure;
+	  core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta.xtilt;
+	  core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta.ytilt;
+	  core->cur_coords.wheel    = core->last_coords.wheel    + t * delta.wheel;
+
+	  core->pixel_dist = pixel_initial + t * pixel_dist;
+
+	  /*  save the current brush  */
+	  current_brush = core->brush;
+
+	  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
+
+	  /*  restore the current brush pointer  */
+          core->brush = current_brush;
+	}
+    }
+
+  core->cur_coords.x        = core->last_coords.x        + delta.x;
+  core->cur_coords.y        = core->last_coords.y        + delta.y;
+  core->cur_coords.pressure = core->last_coords.pressure + delta.pressure;
+  core->cur_coords.xtilt    = core->last_coords.xtilt    + delta.xtilt;
+  core->cur_coords.ytilt    = core->last_coords.ytilt    + delta.ytilt;
+  core->cur_coords.wheel    = core->last_coords.wheel    + delta.wheel;
+
+  core->distance   = total;
+  core->pixel_dist = pixel_initial + pixel_dist;
+}
+
+
+/*  protected functions  */
+
 void
 gimp_paint_core_get_color_from_gradient (GimpPaintCore     *core,
                                          GimpGradient      *gradient,
@@ -572,28 +622,21 @@ gimp_paint_core_get_color_from_gradient (GimpPaintCore     *core,
 					 GimpRGB           *color,
 					 GradientPaintMode  mode)
 {
-  gdouble distance;  /* distance in current brush stroke */
-  gdouble y;
+  gdouble pos;
 
-  distance = core->pixel_dist;
-  y        = (gdouble) distance / gradient_length;
+  pos = (gdouble) core->pixel_dist / gradient_length;
 
-  /* for the once modes, set y close to 1.0 after the first chunk */
-  if ((mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && y >= 1.0)
-    y = 0.9999999;
+  /*  for the once modes, set pos close to 1.0 after the first chunk  */
+  if ((mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && pos >= 1.0)
+    pos = 0.9999999;
 
-  if ((((gint) y & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
-    y = 1.0 - (y - (gint) y);
+  if ((((gint) pos & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
+    pos = 1.0 - (pos - (gint) pos);
   else
-    y = y - (gint) y;
+    pos = pos - (gint) pos;
 
-  gimp_gradient_get_color_at (gradient, y, color);
+  gimp_gradient_get_color_at (gradient, pos, color);
 }
-
-
-/************************/
-/*  Painting functions  */
-/************************/
 
 TempBuf *
 gimp_paint_core_get_paint_area (GimpPaintCore *core,

@@ -37,7 +37,6 @@ struct _GimpPaintTool
 {
   GimpDrawTool     parent_instance;
 
-  GdkModifierType  state;        /*  state of buttons and keys              */
   gboolean         pick_colors;  /*  pick color if ctrl or alt is pressed   */
   gboolean         pick_state;   /*  was ctrl or alt pressed when clicked?  */
 

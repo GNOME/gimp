@@ -38,6 +38,8 @@
 
 /*  local function prototypes  */
 
+static void   gimp_display_shell_clean_dirty_handler        (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_undo_event_handler         (GimpImage        *gimage,
                                                              gint              event,
                                                              GimpDisplayShell *shell);
@@ -72,6 +74,12 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   gimage = shell->gdisp->gimage;
 
+  g_signal_connect (G_OBJECT (gimage), "clean",
+                    G_CALLBACK (gimp_display_shell_clean_dirty_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "dirty",
+                    G_CALLBACK (gimp_display_shell_clean_dirty_handler),
+                    shell);
   g_signal_connect (G_OBJECT (gimage), "undo_event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
@@ -133,10 +141,20 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_undo_event_handler,
                                         shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_clean_dirty_handler,
+                                        shell);
 }
 
 
 /*  private functions  */
+
+static void
+gimp_display_shell_clean_dirty_handler (GimpImage        *gimage,
+                                        GimpDisplayShell *shell)
+{
+  shell->title_dirty = TRUE;
+}
 
 static void
 gimp_display_shell_undo_event_handler (GimpImage        *gimage,

@@ -68,7 +68,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpairbrushtool.h") ],
+	headers => [ qw("paint/gimpairbrush.h") ],
 	code => <<'CODE'
 success = FALSE; /*airbrush_non_gui (drawable, pressure, num_strokes, strokes);*/
 CODE
@@ -96,7 +96,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpairbrushtool.h") ],
+	headers => [ qw("paint/gimpairbrush.h") ],
 	code => <<'CODE'
 success = FALSE; /*airbrush_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -138,7 +138,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpclonetool.h") ],
+	headers => [ qw("paint/gimpclone.h") ],
 	code => <<'CODE'
 success = FALSE; /*clone_non_gui (drawable, src_drawable, clone_type, src_x, src_y,
 			 num_strokes, strokes);*/
@@ -168,7 +168,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpclonetool.h") ],
+	headers => [ qw("paint/gimpclone.h") ],
 	code => <<'CODE'
 success = FALSE; /*clone_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -196,7 +196,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpconvolvetool.h") ],
+	headers => [ qw("paint/gimpconvolve.h") ],
 	code => <<'CODE'
 success = FALSE; /*convolve_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -226,7 +226,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpconvolvetool.h") ],
+	headers => [ qw("paint/gimpconvolve.h") ],
 	code => <<'CODE'
 success = FALSE; /*convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);*/
 CODE
@@ -252,7 +252,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
+	headers => [ qw("paint/gimperaser.h") ],
 	code => <<'CODE'
 success = FALSE; /*eraser_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -282,7 +282,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
+	headers => [ qw("paint/gimperaser.h") ],
 	code => <<'CODE'
 success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
 CODE
@@ -312,7 +312,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimperasertool.h") ],
+	headers => [ qw("paint/gimperaser.h") ],
 	code => <<'CODE'
 success = FALSE; /*eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);*/
 CODE
@@ -350,7 +350,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimppaintbrushtool.h") ],
+	headers => [ qw("paint/gimppaintbrush.h") ],
 	code => <<'CODE'
 success = FALSE; /*gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
 	                                fade_out, method, gradient_length);*/
@@ -387,7 +387,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimppaintbrushtool.h") ],
+	headers => [ qw("paint/gimppaintbrush.h") ],
 	code => <<'CODE'
 success = FALSE; /*gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -413,7 +413,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimppenciltool.h") ],
+	headers => [ qw("paint/gimppencil.h") ],
 	code => <<'CODE'
 success = FALSE; /*pencil_non_gui (drawable, num_strokes, strokes);'*/
 CODE
@@ -440,7 +440,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpsmudgetool.h") ],
+	headers => [ qw("paint/gimpsmudge.h") ],
 	code => <<'CODE'
 success = FALSE; /*gimp_smudge_tool_non_gui (drawable, pressure, num_strokes, strokes);*/
 CODE
@@ -468,7 +468,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpsmudgetool.h") ],
+	headers => [ qw("paint/gimpsmudge.h") ],
 	code => <<'CODE'
 success = FALSE; /*gimp_smudge_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -527,7 +527,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpdodgeburntool.h") ],
+	headers => [ qw("paint/gimpdodgeburn.h") ],
 	code => <<'CODE'
 success = FALSE; /*gimp_dodgeburn_tool_non_gui_default (drawable, num_strokes, strokes);*/
 CODE
@@ -550,8 +550,7 @@ sub ink {
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "core/gimpimage-mask-select.h"
-	      "tools/tools-types.h" "core/gimpdrawable.h");
+@headers = qw("libgimpmath/gimpmath.h" "paint/paint-types.h");
 
 @procs = qw(airbrush airbrush_default
             clone clone_default

@@ -99,7 +99,7 @@ gimp_eraser_init (GimpEraser *eraser)
 
   paint_core = GIMP_PAINT_CORE (eraser);
 
-  paint_core->flags |= CORE_CAN_HANDLE_CHANGING_BRUSH;
+  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void

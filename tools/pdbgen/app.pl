@@ -677,6 +677,7 @@ GPL
     foreach $group (@main::groups) {
 	my $out = $out{$group};
         my $tool_eek = 0;
+        my $paint_eek = 0;
         my $widgets_eek = 0;
         my $display_eek = 0;
         my $gui_eek = 0;
@@ -688,6 +689,11 @@ GPL
         if (exists $out->{headers}->{q|"tools/tools-types.h"|}) {
 	    $tool_eek = 1;
 	    delete $out->{headers}->{q|"tools/tools-types.h"|};
+	}
+
+        if (exists $out->{headers}->{q|"paint/paint-types.h"|}) {
+	    $paint_eek = 1;
+	    delete $out->{headers}->{q|"paint/paint-types.h"|};
 	}
 
         if (exists $out->{headers}->{q|"widgets/widgets-types.h"|}) {
@@ -717,7 +723,7 @@ GPL
 	foreach (@headers) {
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "\n" if $seen;
-		$headers .= "#ifdef HAVE_UNISTD_H\n";	
+		$headers .= "#ifdef HAVE_UNISTD_H\n";
 	    }
 	    if ($_ eq '<process.h>') {
 		$headers .= "\n" if $seen;
@@ -732,7 +738,7 @@ GPL
 		$eek      = 1;
 		$headers .= "\n";
 
-		if ($tool_eek == 1 || $widgets_eek == 1 ||
+		if ($tool_eek == 1 || $paint_eek == 1 || $widgets_eek == 1 ||
 		    $display_eek == 1 || $gui_eek == 1) {
 		    $headers .= '#include <gtk/gtk.h>';
 		} else {
