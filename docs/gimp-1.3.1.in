@@ -12,22 +12,24 @@ gimp - an image manipulation and paint program.
 
 .SH DESCRIPTION
 .PP
-The \fIGIMP\fP is the GNU Image Manipulation Program. It is used to edit and
-manipulate images. It can load and save a variety of image formats and can
-be used to convert between formats. 
+The \fIGIMP\fP is the GNU Image Manipulation Program. It is used to
+edit and manipulate images. It can load and save a variety of image
+formats and can be used to convert between formats.
 .PP
-Gimp can also be used as a paint program. It features a set of drawing and 
-painting tools such as airbrush, clone, pencil, and paint brush. Painting 
-and drawing tools can be applied to an image with a variety of paint modes.
-It also offers an extensive array of selection tools like
-rectangle, ellipse, fuzzy select, bezier select,
-intelligent scissors, and select by color.  
+GIMP can also be used as a paint program. It features a set of drawing
+and painting tools such as airbrush, clone, pencil, and paint
+brush. Painting and drawing tools can be applied to an image with a
+variety of paint modes.  It also offers an extensive array of
+selection tools like rectangle, ellipse, fuzzy select, bezier select,
+intelligent scissors, and select by color.
 .PP
-Gimp offers a variety of plugins that perform a variety of image manipulations.
-Examples include bumpmap, edge detect, gaussian blur, and many others. 
+GIMP offers a variety of plugins that perform a variety of image
+manipulations.  Examples include bumpmap, edge detect, gaussian blur,
+and many others.
 .PP
-In addition, Gimp has several scripting extension which allow for advanced
-non-interactive processing and creation of images. 
+In addition, GIMP has several scripting extension which allow for
+advanced non-interactive processing and creation of images.
+
 .SH OPTIONS
 .l 
 The \fIgimp\fP accepts the following options:
@@ -41,7 +43,7 @@ Output the version info.
 .B \-b, \-\-batch \fI<commands>\fP
 Execute the set of \fI<commands>\fP non-interactively. The set
 of \fI<commands>\fP is typically in the form of a script that
-can be executed by one of the Gimp scripting extensions.
+can be executed by one of the GIMP scripting extensions.
 .TP 8
 .B \-g, \-\-gimprc \fI<gimprc>\fP
 Use an alternative gimprc instead of the default one. Useful in
@@ -101,22 +103,22 @@ to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
 .SH FILES
 
-Gimp's data files are stored in @gimpdatadir@, where ${prefix} 
-is set on install, but is typically /usr/local. Gimp's system-wide
+GIMP's data files are stored in @gimpdatadir@, where ${prefix} 
+is set on install, but is typically /usr/local. GIMP's system-wide
 configuration files are stored in @gimpsysconfdir@.
-Most gimp configuration is read in from the user's init file,
+Most GIMP configuration is read in from the user's init file,
 \fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
 @sysconfdir@/gimprc. The system wide file is parsed 
 first and the user gimprc can override the system settings. 
 @sysconfdir@/gimprc_user is the default gimprc
-placed in users' home directories the first time gimp is run.
+placed in users' home directories the first time GIMP is run.
 
 \fB$HOME\fP/.gimp-1.3/devicerc - holds settings for input devices
 together with the tool, colors, brush, pattern and gradient 
 associated to that device.
 
 \fB$HOME\fP/@gimpdir@/documents - lists all images that have been 
-opened or saved using Gimp.
+opened or saved using GIMP.
 
 \fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK 
 config settings. Options such as widget color and fonts sizes 
@@ -130,34 +132,35 @@ GTK config settings.
 @gimpsysconfdir@/menurc - system wide set of keybindings.
 
 \fB$HOME\fP/@gimpdir@/parasiterc - Description of all available 
-gimp parasites. This is file is recreated everytime gimp starts up.
+GIMP parasites. This is file is recreated everytime GIMP starts up.
 
-\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific info 
-(that is info, you want to keep between two gimp-sessions). You are
-not supposed to edit it manually, but of course you
-can do. This file will be entirely rewritten every time
-you quit the gimp. If this file isn't found, defaults are used.
+\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
+info (that is info, you want to keep between two gimp-sessions). You
+are not supposed to edit it manually, but of course you can do. This
+file will be entirely rewritten every time you quit the GIMP. If this
+file isn't found, defaults are used.
 
-@gimpsysconfdir@/unitrc - default user unit database. It
-contains the unit definitions for centimeters, meters, feet, yards,
-typographic points and typographic picas and is placed in users home
-directories the first time the gimp is ran.
+@gimpsysconfdir@/unitrc - default user unit database. It contains the
+unit definitions for centimeters, meters, feet, yards, typographic
+points and typographic picas and is placed in users home directories
+the first time the GIMP is ran.
 
 \fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit 
 database. You can modify this list with the unit editor. You are 
 not supposed to edit it manually, but of course you can do.
 This file will be entirely rewritten every time you
-quit the gimp.
+quit the GIMP.
 
 \fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plugins.
 
-\fB$HOME\fP/@gimpdir@/pluginrc - plugin initialization values are stored
-here. This file is parsed on startup and regenerated if need be.
+\fB$HOME\fP/@gimpdir@/pluginrc - plugin initialization values are
+stored here. This file is parsed on startup and regenerated if need
+be.
 
 \fB$HOME\fP/@gimpdir@/modules - location of user installed modules.
 
-\fB$HOME\fP/@gimpdir@/tmp - default location that gimp uses as temporary 
-space.
+\fB$HOME\fP/@gimpdir@/tmp - default location that GIMP uses as
+temporary space.
 
 @gimpdatadir@/brushes - system wide brush files.
 
@@ -178,18 +181,17 @@ and papers are stored here.
 the Levels tool.
 
 @gimpdatadir@/palettes - the system wide palette files. The 
-files are copied to the user palettes directory when gimp is first ran
+files are copied to the user palettes directory when GIMP is first ran
 to allow the user to modify the palettes. This directory is not searched 
 for palettes by default.
 
-\fB$HOME\fP/@gimpdir@/palettes - copies of the system palette files as well as
-user created and modified palette files.
+\fB$HOME\fP/@gimpdir@/palettes - copies of the system palette files as
+well as user created and modified palette files.
 
-@gimpdatadir@/patterns - basic set of patterns for use in 
-gimp.
+@gimpdatadir@/patterns - basic set of patterns for use in GIMP.
 
-\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp pattern
-files. This files are in the .pat format.
+\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp
+pattern files. This files are in the .pat format.
 
 @gimpdatadir@/gradients - standard system wide set of
 gradient files.
@@ -202,33 +204,32 @@ used in Script-Fu and other scripting extensions.
 
 \fB$HOME\fP/@gimpdir@/scripts - user created and installed scripts.
 
-@gimpdatadir@/gflares - system wide directory used by the 
-gflare plug-in.
+@gimpdatadir@/gflares - system wide directory used by the gflare
+plug-in.
 
 \fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare files.
 
-@gimpdatadir@/gfig - system wide directory used by the 
-gfig plug-in.
+@gimpdatadir@/gfig - system wide directory used by the gfig plug-in.
 
 \fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
 
 @gimpdatadir@/gimp_splash.ppm - graphic file used for 
-the gimp splash screen.
+the GIMP splash screen.
 
-@gimpdatadir@/gimp_logo.ppm - graphic file used in the 
-Gimp about dialog.
+@gimpdatadir@/gimp_logo.ppm - graphic file used in the GIMP about
+dialog.
 
-@gimpdatadir@/tips/gimp_tips.txt - list of tips displayed 
-in the "Tip of the Day" dialog box. At the same place you will find files 
-with tips in other languages.
+@gimpdatadir@/tips/gimp_tips.txt - list of tips displayed in the "Tip
+of the Day" dialog box. At the same place you will find files with
+tips in other languages.
 
 .SH SUGGESTIONS AND BUG REPORTS
 Any bugs found should be reported to the online bug-tracking system
 available on the web at http://bugzilla.gnome.org/. Before reporting
 bugs, please check to see if the bug has already been reported.
 
-When reporting Gimp bugs, it is important to include a reliable way to
-reproduce the bug, version number of Gimp (and probably GTK), OS name
+When reporting GIMP bugs, it is important to include a reliable way to
+reproduce the bug, version number of GIMP (and probably GTK), OS name
 and version, and any relevant hardware specs. If a bug is causing a
 crash, it is very useful if a stack trace can be provided. And of
 course, patches to rectify the bug are even better.
@@ -236,12 +237,12 @@ course, patches to rectify the bug are even better.
 .SH OTHER INFO
 
 The canonical place to find GIMP info is at http://www.gimp.org/.
-Here you can find links to just about every other gimp site, tutorials, data 
-sets, mailing list archives, and more.
+Here you can find links to just about many other GIMP sites,
+tutorials, data sets, mailing list archives, and more.
 
 There is also a GIMP User Manual available at 
 http://manual.gimp.org/ that goes into much more detail 
-about the interactive use of Gimp.
+about the interactive use of GIMP.
 
 The latest version of GIMP and the GTK+ libs is always available at 
 ftp://ftp.gimp.org/.

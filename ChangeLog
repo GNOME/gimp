@@ -1,3 +1,10 @@
+2003-01-23  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp-1.3.1.in
+	* docs/gimp-remote-1.3.1.in
+	* docs/gimptool-1.3.1.in: applied a patch from Carol that unifies
+	the spelling of GIMP in the man-pages.
+
 2003-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* modules/cdisplay_colorblind.c: Bob Dougherty <bobd@stanford.edu>
