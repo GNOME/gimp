@@ -133,11 +133,11 @@ msgstr "Einige Dateien wurden nicht gesichert. Wirklich beenden?"
 
 #: app/batch.c:35
 msgid "script-fu not available: batch mode disabled\n"
-msgstr "script-fu nicht verf\374gbar: Stapelmodus ausgeschaltet"
+msgstr "script-fu nicht verf<fixme-with-german-kbd>gbar: Stapelmodus ausgeschaltet\n"
 
 #: app/batch.c:46
 msgid "reading batch commands from stdin\n"
-msgstr "lese Stapelkommandos aus Standardeingabe"
+msgstr "lese Stapelkommandos aus Standardeingabe\n"
 
 #: app/batch.c:83
 msgid "batch command: experienced an execution error.\n"
@@ -3922,7 +3922,7 @@ msgstr "Kann Pipeline nicht \366ffnen"
 
 #: app/plug_in.c:932
 msgid "unable to run plug-in: %s\n"
-msgstr "Kann Erg\344nzung \"%s\" nicht starten"
+msgstr "Kann Erg\344nzung \"%s\" nicht starten\n"
 
 #: app/plug_in.c:1268
 msgid "<Image>/Filters/Repeat last"
@@ -4698,7 +4698,7 @@ msgstr ""
 
 #: app/session.c:146
 msgid "# GIMP sessionrc\n"
-msgstr "GIMP Version"
+msgstr "GIMP Version\n"
 
 #: app/session.c:147
 msgid "# This file takes session-specific info (that is info,\n"
