@@ -14,9 +14,10 @@
      (posx (- (car (gimp-drawable-offsets logo-layer))))
      (posy (- (cadr (gimp-drawable-offsets logo-layer))))
 	 (glow-layer (car (gimp-layer-copy logo-layer TRUE)))
-	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img glow-layer 1)
@@ -52,8 +53,7 @@
     (gimp-layer-set-mode logo-layer OVERLAY-MODE)
     (gimp-drawable-set-name glow-layer "Glow Layer")
 
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 
 (define (script-fu-glowing-logo-alpha img

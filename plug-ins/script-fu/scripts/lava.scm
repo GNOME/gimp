@@ -35,10 +35,10 @@
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
-	 (image-height (car (gimp-image-height image)))
-	 (old-gradient (car (gimp-gradients-get-gradient)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (image-height (car (gimp-image-height image))))
     
+    (gimp-context-push)
+
     (gimp-image-undo-disable image)
     (gimp-layer-add-alpha drawable)
     
@@ -87,16 +87,15 @@
     (plug-in-gauss-rle 1 image active-layer 2 TRUE TRUE)
     (plug-in-gradmap 1 image active-layer)
 
-    (gimp-gradients-set-gradient old-gradient)
-    (gimp-context-set-background old-bg)
-
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
    
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
     (gimp-image-undo-enable image)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-lava"
 		    _"<Image>/Script-Fu/Render/_Lava..."

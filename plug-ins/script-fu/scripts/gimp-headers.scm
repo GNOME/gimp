@@ -43,10 +43,10 @@
 				     font)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
-    
+	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -108,13 +108,10 @@
 				    FALSE FALSE ""))
     
 
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
-    
-    ))
 
+    (gimp-context-pop)))
 
 (define (script-fu-big-header-gimp-org text font font-size text-color
 					high-color side-color shadow-color

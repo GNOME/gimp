@@ -64,9 +64,9 @@
 							   GRAY RGB))))
 	 (drawable   (car (gimp-layer-new img width height (if (= colors 0)
 							       GRAY-IMAGE RGB-IMAGE)
-					  "Background" 100 NORMAL-MODE)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-fg (car (gimp-context-get-foreground)))) 
+					  "Background" 100 NORMAL-MODE)))) 
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
 
@@ -121,13 +121,10 @@
 
     (gimp-image-set-active-layer img drawable)
 
-    (if (= colors 0)
-	(begin
-	  (gimp-context-set-background old-bg)
-	  (gimp-context-set-foreground old-fg)))
-
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-font-map"
 		    _"<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."

@@ -44,141 +44,113 @@
                                   inFadeTo
                                   inGrowingSelection
                                   inApplyMask
-                                  inClearUnselected
-        )
+                                  inClearUnselected)
+  (let* ((l-idx 0)
+	 (l-has-selection TRUE))
 
-        (let* ((l-idx 0)
-               (l-old-bg-color (car (gimp-context-get-background)))
-               (l-has-selection TRUE)
-              )
+    (gimp-context-push)
+
+    ; check Fade from and To Values (and force values from 0% to 100%)
+    (if (> inFadeFrom 100) (begin (set! inFadeFrom 100 )) )
+    (if (< inFadeFrom 0)   (begin (set! inFadeFrom 0 )) )
+    (if (> inFadeTo 100) (begin (set! inFadeTo 100 )) )
+    (if (< inFadeTo 0)   (begin (set! inFadeTo 0 )) )
+    
+    (set! l-from-gray (* inFadeFrom 255))
+    (set! l-to-gray (* inFadeTo 255))
+    (set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
+    (set! l-gray l-to-gray)
+
+    ; do nothing if the layer is a layer mask
+    (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
+	(begin
+
+	  (gimp-image-undo-group-start inImage)
               
-	; check Fade from and To Values (and force values from 0% to 100%)
-	(if (> inFadeFrom 100) (begin (set! inFadeFrom 100 )) )
-	(if (< inFadeFrom 0)   (begin (set! inFadeFrom 0 )) )
-	(if (> inFadeTo 100) (begin (set! inFadeTo 100 )) )
-	(if (< inFadeTo 0)   (begin (set! inFadeTo 0 )) )
-         
-	(set! l-from-gray (* inFadeFrom 255))
-	(set! l-to-gray (* inFadeTo 255))
-        (set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
-        (set! l-gray l-to-gray)
+	  ; if the layer has no alpha add alpha channel
+	  (if (= (car (gimp-drawable-has-alpha inLayer)) FALSE)
+	      (begin
+		(gimp-layer-add-alpha inLayer)))
 
-        ; do nothing if the layer is a layer mask
-        (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
-            (begin
+          ; if the layer is the floating selection convert to normal layer
+          ; because floating selection cant have a layer mask
+	  (if (> (car (gimp-layer-is-floating-sel inLayer)) 0)
+	      (begin
+		(gimp-floating-sel-to-layer inLayer)))
 
-              (gimp-image-undo-group-start inImage)
-              
-              ; if the layer has no alpha add alpha channel
-              (if (= (car (gimp-drawable-has-alpha inLayer)) FALSE)
-                  (begin
-                     (gimp-layer-add-alpha inLayer)
-                  )
-               )
+          ; if there is no selection we use the layers alpha channel
+	  (if (= (car (gimp-selection-is-empty inImage)) TRUE)
+	      (begin
+		(set! l-has-selection FALSE)
+		(gimp-selection-layer-alpha inLayer)))
 
-             ; if the layer is the floating selection convert to normal layer
-              ; because floating selection cant have a layer mask
-              (if (> (car (gimp-layer-is-floating-sel inLayer)) 0)
-                  (begin
-                     (gimp-floating-sel-to-layer inLayer)
-                  )
-               )
+	  (gimp-selection-sharpen inImage)
 
-              ; if there is no selection we use the layers alpha channel
-              (if (= (car (gimp-selection-is-empty inImage)) TRUE)
-                  (begin
-                     (set! l-has-selection FALSE)
-                     (gimp-selection-layer-alpha inLayer)
-                  )
-               )
+          ; apply the existing mask before creating a new one
+	  (gimp-layer-remove-mask inLayer 0)
 
-               ;
-              (gimp-selection-sharpen inImage)
+	  (if (= inClearUnselected  TRUE)
+	      (begin
+		(set! l-mask (car (gimp-layer-create-mask inLayer ADD-BLACK-MASK))))
+	      (begin
+		(set! l-mask (car (gimp-layer-create-mask inLayer ADD-WHITE-MASK)))))
 
-               ; apply the existing mask before creating a new one
-              (gimp-layer-remove-mask inLayer 0)
+	  (gimp-layer-add-mask inLayer l-mask)
 
-              (if (= inClearUnselected  TRUE)
-                  (begin
-                    (set! l-mask (car (gimp-layer-create-mask inLayer ADD-BLACK-MASK)))
-                   )
-                  (begin
-                    (set! l-mask (car (gimp-layer-create-mask inLayer ADD-WHITE-MASK)))
-                  )
-               )
-
-              (gimp-layer-add-mask inLayer l-mask)
-
-              (if (= inGrowingSelection  TRUE)
-                  (begin
-	            (set! l-gray l-from-gray)
-	            (set! l-from-gray l-to-gray)
-                    (set! l-to-gray l-gray)
-                    (set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
-                    (set! l-orig-selection  (car (gimp-selection-save inImage)))
-                    (gimp-selection-invert inImage)
-                  )
-               )
+	  (if (= inGrowingSelection  TRUE)
+	      (begin
+		(set! l-gray l-from-gray)
+		(set! l-from-gray l-to-gray)
+		(set! l-to-gray l-gray)
+		(set! l-step (/  (- l-from-gray l-to-gray) (+ inBorderSize 1)))
+		(set! l-orig-selection  (car (gimp-selection-save inImage)))
+		(gimp-selection-invert inImage)))
                                            
-              (while (<= l-idx inBorderSize)
+	  (while (<= l-idx inBorderSize)
                  (if (= l-idx inBorderSize)
                      (begin
-                        (set! l-gray l-from-gray)
-                      )
-                  )
-                  (gimp-context-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
-                  (gimp-edit-fill l-mask BACKGROUND-FILL)
-                  (set! l-idx (+ l-idx 1))
-                  (set! l-gray (+ l-gray l-step))
-                  (gimp-selection-shrink inImage 1)
-                  ; check if selection has shrinked to none
-                  (if (= (car (gimp-selection-is-empty inImage)) TRUE)
-                      (begin
-                         (set! l-idx (+ inBorderSize 100))     ; break the while loop
-                      )
-                   )
+		       (set! l-gray l-from-gray)))
 
-              )
+		 (gimp-context-set-background (list (/ l-gray 100) (/ l-gray 100) (/ l-gray 100)))
+		 (gimp-edit-fill l-mask BACKGROUND-FILL)
+		 (set! l-idx (+ l-idx 1))
+		 (set! l-gray (+ l-gray l-step))
+		 (gimp-selection-shrink inImage 1)
+		 ; check if selection has shrinked to none
+		 (if (= (car (gimp-selection-is-empty inImage)) TRUE)
+		     (begin
+		       (set! l-idx (+ inBorderSize 100))     ; break the while loop
+		       )))
               
-              (if (= inGrowingSelection  TRUE)
-                  (begin
-                    (gimp-selection-load l-orig-selection)
-                    (gimp-context-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
-                    (gimp-edit-fill l-mask BACKGROUND-FILL)
-                    (gimp-selection-grow inImage inBorderSize)
-                    (gimp-selection-invert inImage)
-        	    (if (= inClearUnselected  TRUE)
-                	(begin
-                          ;(gimp-context-set-background (list (/ l-from-gray 100) (/ l-from-gray 100) (/ l-from-gray 100)))
-                          (gimp-context-set-background (list 0 0 0))
-                	 )
-                	(begin
-                          (gimp-context-set-background (list 255 255 255))
-                	)
-        	     )
-                    (gimp-edit-fill l-mask BACKGROUND-FILL)
-                    (gimp-image-remove-channel inImage l-orig-selection)
-                  )
-               )
+	  (if (= inGrowingSelection  TRUE)
+	      (begin
+		(gimp-selection-load l-orig-selection)
+		(gimp-context-set-background (list (/ l-to-gray 100) (/ l-to-gray 100) (/ l-to-gray 100)))
+		(gimp-edit-fill l-mask BACKGROUND-FILL)
+		(gimp-selection-grow inImage inBorderSize)
+		(gimp-selection-invert inImage)
+		(if (= inClearUnselected  TRUE)
+		    (begin
+		    ;(gimp-context-set-background (list (/ l-from-gray 100) (/ l-from-gray 100) (/ l-from-gray 100)))
+		      (gimp-context-set-background (list 0 0 0)))
 
-              (if (=  inApplyMask TRUE)
-                  (begin
-                    (gimp-layer-remove-mask inLayer 0)
-                  )
-               )
+		    (begin
+		      (gimp-context-set-background (list 255 255 255))))
 
-              (if (= l-has-selection FALSE)
-                  (gimp-selection-none inImage)
-              )
+		(gimp-edit-fill l-mask BACKGROUND-FILL)
+		(gimp-image-remove-channel inImage l-orig-selection)))
 
-             (gimp-context-set-background l-old-bg-color)
-             (gimp-image-undo-group-end inImage)
-             (gimp-displays-flush)
-             )
-        ))
-)
+	  (if (=  inApplyMask TRUE)
+	      (begin
+		(gimp-layer-remove-mask inLayer 0)))
 
+	  (if (= l-has-selection FALSE)
+	      (gimp-selection-none inImage))
 
+	  (gimp-image-undo-group-end inImage)
+	  (gimp-displays-flush)))
+
+    (gimp-context-pop)))
 
 
 ; Register the function with the GIMP:
@@ -199,5 +171,4 @@
     SF-ADJUSTMENT _"Fade to   %" '(0 0 100 1 10 0 0)
     SF-TOGGLE _"Use growing selection" FALSE
     SF-TOGGLE _"Apply generated layermask" FALSE
-    SF-TOGGLE _"Clear unselected maskarea" TRUE
-)
+    SF-TOGGLE _"Clear unselected maskarea" TRUE)

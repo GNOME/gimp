@@ -26,15 +26,12 @@
 	 (drawable (car (gimp-layer-new img width height RGB
 					"Gradient example" 100 NORMAL-MODE)))
 
-	 ; Save old foreground and background colors
-
-	 (old-fg-color (car (gimp-context-get-foreground)))
-	 (old-bg-color (car (gimp-context-get-background)))
-
 	 ; Calculate colors for checkerboard... just like in the gradient editor
 
 	 (fg-color (* 255 (/ 2 3)))
 	 (bg-color (* 255 (/ 1 3))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
@@ -53,11 +50,10 @@
 		     0 0 (- width 1) 0)
 
     ; Terminate
-
-    (gimp-context-set-foreground old-fg-color)
-    (gimp-context-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-gradient-example"
 		    _"<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."

@@ -30,9 +30,9 @@
          (indentX (+ b-size 12))
 	 (indentY (+ b-size (/ height 8)))
 	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-	 (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -71,8 +71,8 @@
     (gimp-invert blur-layer)
     (gimp-layer-set-opacity blur-layer 50.0)
     (gimp-image-set-active-layer img logo-layer)
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-gradient-bevel-logo-alpha img
 					     logo-layer

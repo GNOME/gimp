@@ -14,11 +14,10 @@
 	 (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE "Matte" 100 NORMAL-MODE)))
 	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 90 MULTIPLY-MODE)))
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (selection 0)
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
+	 (selection 0))
+
+    (gimp-context-push)
+
     (gimp-layer-add-mask logo-layer logo-layer-mask)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img sparkle-layer 2)
@@ -67,10 +66,8 @@
     (gimp-selection-none img)
     (gimp-image-remove-channel img selection)
     (gimp-layer-translate shadow-layer border border)
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-paint-mode old-paint-mode)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-frosty-logo-alpha img
 				     logo-layer

@@ -27,11 +27,10 @@
 	 (distortion-layer (car (gimp-layer-new distortion-img width height
 						GRAY-IMAGE "temp" 100 NORMAL-MODE)))
 	 (radius (/ font-size 10))
-	 (prob 0.5)
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-paint-mode (car (gimp-brushes-get-paint-mode))))
+	 (prob 0.5))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable distortion-img)
     (gimp-image-resize img width height 0 0)
@@ -75,15 +74,13 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill text-layer BACKGROUND-FILL)
     ;; post processing
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-image-set-active-layer img dist-text-layer)
     (gimp-selection-none img)
     (gimp-image-undo-enable img)
     (gimp-image-delete distortion-img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-i26-gunya2"

@@ -44,10 +44,10 @@
 				     font)))
 	 (bg-layer (car (gimp-layer-new  img 125 height
 					 RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (shadow-layer (car (gimp-layer-copy text-layer TRUE)))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
-    
+	 (shadow-layer (car (gimp-layer-copy text-layer TRUE))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img bg-layer 2)
@@ -78,11 +78,10 @@
     (if (= index TRUE)
    	(gimp-image-convert-indexed img FS-DITHER MAKE-PALETTE num-colors
 				    FALSE FALSE ""))
-
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 ;;;(define (script-fu-tube-button-label-gimp-org text rm-bg index)

@@ -45,12 +45,9 @@
          (posx (- (car (gimp-drawable-offsets logo-layer))))
          (posy (- (cadr (gimp-drawable-offsets logo-layer))))
          (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-         (grow-me (car (gimp-layer-copy logo-layer TRUE)))
+         (grow-me (car (gimp-layer-copy logo-layer TRUE))))
 
-         (old-gradient (car (gimp-gradients-get-gradient)))
-         (old-patterns (car (gimp-patterns-get-pattern)))
-         (old-fg (car (gimp-context-get-foreground)))
-         (old-bg (car (gimp-context-get-background))))
+    (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-drawable-set-name grow-me "Grow-me")
@@ -62,7 +59,6 @@
     (gimp-selection-all img)
     (gimp-edit-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
-    (gimp-context-set-background old-bg)
 
     (gimp-selection-layer-alpha logo-layer)
 
@@ -73,8 +69,8 @@
     (if (= use-pattern-text TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-text)
-        (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-        (gimp-patterns-set-pattern old-patterns)))
+        (gimp-edit-bucket-fill logo-layer
+			       PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)))
 
     (if (= use-pattern-text FALSE)
       (begin
@@ -99,8 +95,9 @@
     (if (= use-pattern-outline TRUE)
       (begin
         (gimp-patterns-set-pattern pattern-outline)
-        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-        (gimp-patterns-set-pattern old-patterns)))
+        (gimp-edit-bucket-fill grow-me
+			       PATTERN-BUCKET-FILL NORMAL-MODE 100
+			       0 FALSE 0 0)))
 
     (if (= use-pattern-outline FALSE)
       (begin
@@ -114,28 +111,30 @@
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map noninteractive img grow-me logo-layer 110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
+    (plug-in-bump-map noninteractive img grow-me logo-layer
+		      110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
     (gimp-layer-set-mode logo-layer SCREEN-MODE)
 
     (if (= use-pattern-overlay TRUE)
       (begin
         (gimp-selection-layer-alpha grow-me)
         (gimp-patterns-set-pattern pattern-overlay)
-        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY-MODE 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
+			       OVERLAY-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)
         (gimp-selection-none img)))
 
     (if (= shadow-toggle TRUE)
       (begin
 	(gimp-selection-layer-alpha logo-layer)
-	(set! dont-drop-me (car (script-fu-drop-shadow img logo-layer s-offset-x s-offset-y 15 '(0 0 0) 80 TRUE)))
+	(set! dont-drop-me (car (script-fu-drop-shadow img logo-layer
+						       s-offset-x s-offset-y
+						       15 '(0 0 0) 80 TRUE)))
         (set! width (car (gimp-image-width img)))
         (set! height (car (gimp-image-height img)))
         (gimp-selection-none img)))
 
-  (gimp-gradients-set-gradient old-gradient)
-  (gimp-context-set-background old-bg)
-  (gimp-context-set-foreground old-fg)))
+  (gimp-context-pop)))
 
 
 (define (script-fu-glossy-logo-alpha img

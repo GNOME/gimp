@@ -27,9 +27,9 @@
 	 (bg-layer (car (gimp-layer-new img width height  RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (text-layer (car (gimp-layer-new img width height  RGBA-IMAGE "Text layer" 100 NORMAL-MODE)))
 	 (text-mask 0)
-	 (grey (/ (* density 255) 100))
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (grey (/ (* density 255) 100)))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img bg-layer 1)
@@ -58,11 +58,10 @@
     (gimp-edit-fill text-layer FOREGROUND-FILL)
     (gimp-layer-remove-mask text-layer MASK-APPLY)
 
-    (gimp-context-set-foreground old-fg)
-    (gimp-context-set-background old-bg)
-
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-newsprint-text"
 	    _"<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."

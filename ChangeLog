@@ -1,3 +1,11 @@
+2004-09-23  Sven Neumann  <sven@gimp.org>
+
+	Converted the next bunch of scripts to the new context API:
+
+	* plug-ins/script-fu/scripts/[d-n]*.scm: push and pop a context.
+	Removed code that used to restore the context values changed by
+	the scripts.
+
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-message.c (plug_in_handle_proc_return_priv):

@@ -78,9 +78,10 @@
 	 (shadow-layer (if (= shadow TRUE)
 			   (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 NORMAL-MODE))
 			   0))
-	 (selection 0)
-	 (old-fg (car (gimp-context-get-foreground)))
-	 (old-bg (car (gimp-context-get-background))))
+	 (selection 0))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img tube-layer)
     (gimp-image-add-layer img bg-layer 1)
     (if (not (= shadow 0))
@@ -158,9 +159,9 @@
     (gimp-selection-none img)
 
     (gimp-drawable-set-name tube-layer "Neon Tubes")
-    (gimp-context-set-background old-bg)
-    (gimp-context-set-foreground old-fg)
-    (gimp-image-remove-channel img selection)))
+    (gimp-image-remove-channel img selection)
+
+    (gimp-context-pop)))
 
 (define (script-fu-neon-logo-alpha img
 				   tube-layer
