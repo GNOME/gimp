@@ -133,6 +133,7 @@ typedef struct _GimpArea            GimpArea;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpGuide           GimpGuide;
+typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef         guint32             GimpTattoo;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpPlugInDebug     GimpPlugInDebug;

@@ -34,6 +34,9 @@ gboolean gimp_image_undo_push_image_grid            (GimpImage     *gimage,
 gboolean gimp_image_undo_push_image_guide           (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpGuide     *guide);
+gboolean gimp_image_undo_push_image_sample_point    (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpSamplePoint *sample_point);
 gboolean gimp_image_undo_push_image_colormap        (GimpImage     *gimage,
                                                      const gchar   *undo_desc);
 

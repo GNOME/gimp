@@ -37,6 +37,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-snap.h"
 #include "core/gimpmarshal.h"
 
@@ -1261,6 +1262,33 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
     default:
       break;
     }
+}
+
+void
+gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
+                                        GimpSamplePoint  *sample_point)
+{
+  gint x, y;
+  gint xmin, xmax, ymin, ymax;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (sample_point != NULL);
+
+  if (sample_point->x < 0)
+    return;
+
+  gimp_display_shell_transform_xy (shell,
+                                   sample_point->x,
+                                   sample_point->y,
+                                   &x, &y,
+                                   FALSE);
+
+  xmin = MAX (0, x - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  xmax = MIN (shell->disp_width, x + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  ymin = MAX (0, y - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  ymax = MIN (shell->disp_height, y + GIMP_SAMPLE_POINT_DRAW_SIZE);
+
+  gimp_display_shell_expose_area (shell, xmin, ymin, xmax, ymax);
 }
 
 void

@@ -33,6 +33,7 @@
 #include "gimpimage-duplicate.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
@@ -233,6 +234,17 @@ gimp_image_duplicate (GimpImage *gimage)
 	default:
 	  g_error ("Unknown guide orientation.\n");
 	}
+    }
+
+  /*  Copy any sample points  */
+  for (list = gimage->sample_points; list; list = g_list_next (list))
+    {
+      GimpSamplePoint *sample_point = list->data;
+
+      gimp_image_add_sample_point_at_pos (new_gimage,
+                                          sample_point->x,
+                                          sample_point->y,
+                                          FALSE);
     }
 
   /*  Copy the grid  */

@@ -129,6 +129,7 @@ struct _GimpImage
 
   GList             *guides;                /*  guides                       */
   GimpGrid          *grid;                  /*  grid                         */
+  GList             *sample_points;         /*  color sample points          */
 
   /*  Layer/Channel attributes  */
   GimpContainer     *layers;                /*  the list of layers           */
@@ -207,6 +208,8 @@ struct _GimpImageClass
 					 gint                  height);
   void (* update_guide)                 (GimpImage            *gimage,
                                          GimpGuide            *guide);
+  void (* update_sample_point)          (GimpImage            *gimage,
+                                         GimpSamplePoint      *sample_point);
   void (* colormap_changed)             (GimpImage            *gimage,
 					 gint                  color_index);
   void (* undo_event)                   (GimpImage            *gimage,
@@ -294,6 +297,8 @@ void            gimp_image_update                (GimpImage          *gimage,
                                                   gint                height);
 void            gimp_image_update_guide          (GimpImage          *gimage,
                                                   GimpGuide          *guide);
+void            gimp_image_update_sample_point   (GimpImage          *gimage,
+                                                  GimpSamplePoint    *sample_point);
 void		gimp_image_colormap_changed      (GimpImage          *gimage,
                                                   gint                col);
 void            gimp_image_selection_control     (GimpImage          *gimage,

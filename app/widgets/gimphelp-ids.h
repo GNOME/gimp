@@ -80,6 +80,7 @@
 #define GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY        "gimp-view-show-layer-boundary"
 #define GIMP_HELP_VIEW_SHOW_GUIDES                "gimp-view-show-guides"
 #define GIMP_HELP_VIEW_SNAP_TO_GUIDES             "gimp-view-snap-to-guides"
+#define GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS         "gimp-view-show-sample-points"
 #define GIMP_HELP_VIEW_SHOW_GRID                  "gimp-view-show-grid"
 #define GIMP_HELP_VIEW_SNAP_TO_GRID               "gimp-view-snap-to-grid"
 #define GIMP_HELP_VIEW_SNAP_TO_CANVAS             "gimp-view-snap-to-canvas"

@@ -88,6 +88,7 @@ struct _Gimp
   GimpContainer          *images;
   gint                    next_image_ID;
   guint32                 next_guide_ID;
+  guint32                 next_sample_point_ID;
   GHashTable             *image_table;
 
   gint                    next_item_ID;

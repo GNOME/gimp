@@ -148,6 +148,8 @@ libappcore_a_sources = \
 	gimpimage-resize.h		\
 	gimpimage-rotate.c		\
 	gimpimage-rotate.h		\
+	gimpimage-sample-points.c	\
+	gimpimage-sample-points.h	\
 	gimpimage-scale.c		\
 	gimpimage-scale.h		\
 	gimpimage-snap.c		\

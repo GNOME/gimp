@@ -60,6 +60,10 @@ void       gimp_display_shell_set_show_guides     (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_guides     (GimpDisplayShell *shell);
 
+void       gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
+                                                      gboolean          show);
+gboolean   gimp_display_shell_get_show_sample_points (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_snap_to_grid    (GimpDisplayShell *shell,
                                                    gboolean          snap);
 gboolean   gimp_display_shell_get_snap_to_grid    (GimpDisplayShell *shell);

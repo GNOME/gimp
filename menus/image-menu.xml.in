@@ -238,6 +238,7 @@
       <menuitem action="view-show-selection" />
       <menuitem action="view-show-layer-boundary" />
       <menuitem action="view-show-guides" />
+      <menuitem action="view-show-sample-points" />
       <menuitem action="view-show-grid" />
       <separator />
       <menuitem action="view-snap-to-guides" />

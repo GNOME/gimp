@@ -38,6 +38,7 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
 #include "gimpitemundo.h"
@@ -478,6 +479,105 @@ undo_free_image_guide (GimpUndo     *undo,
   GuideUndo *gu = undo->data;
 
   gimp_image_guide_unref (gu->guide);
+  g_free (gu);
+}
+
+
+/**********************/
+/*  Sampe Point Undo  */
+/**********************/
+
+typedef struct _SamplePointUndo SamplePointUndo;
+
+struct _SamplePointUndo
+{
+  GimpSamplePoint     *sample_point;
+  gint                 x;
+  gint                 y;
+};
+
+static gboolean undo_pop_image_sample_point  (GimpUndo            *undo,
+                                              GimpUndoMode         undo_mode,
+                                              GimpUndoAccumulator *accum);
+static void     undo_free_image_sample_point (GimpUndo            *undo,
+                                              GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_image_sample_point (GimpImage       *gimage,
+                                         const gchar     *undo_desc,
+                                         GimpSamplePoint *sample_point)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (sample_point != NULL, FALSE);
+
+  if ((new = gimp_image_undo_push (gimage, GIMP_TYPE_UNDO,
+                                   sizeof (SamplePointUndo),
+                                   sizeof (SamplePointUndo),
+                                   GIMP_UNDO_IMAGE_SAMPLE_POINT, undo_desc,
+                                   GIMP_DIRTY_IMAGE_META,
+                                   undo_pop_image_sample_point,
+                                   undo_free_image_sample_point,
+                                   NULL)))
+    {
+      SamplePointUndo *gu = new->data;
+
+      gu->sample_point    = gimp_image_sample_point_ref (sample_point);
+      gu->x               = sample_point->x;
+      gu->y               = sample_point->y;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_image_sample_point (GimpUndo            *undo,
+                             GimpUndoMode         undo_mode,
+                             GimpUndoAccumulator *accum)
+{
+  SamplePointUndo *gu = undo->data;
+  gint             old_x;
+  gint             old_y;
+
+  old_x = gu->sample_point->x;
+  old_y = gu->sample_point->y;
+
+  if (gu->sample_point->x == -1)
+    {
+      undo->gimage->sample_points = g_list_prepend (undo->gimage->sample_points, gu->sample_point);
+      gu->sample_point->x = gu->x;
+      gu->sample_point->y = gu->y;
+      gimp_image_sample_point_ref (gu->sample_point);
+      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
+    }
+  else if (gu->x == -1)
+    {
+      gimp_image_remove_sample_point (undo->gimage, gu->sample_point, FALSE);
+    }
+  else
+    {
+      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
+      gu->sample_point->x = gu->x;
+      gu->sample_point->y = gu->y;
+      gimp_image_update_sample_point (undo->gimage, gu->sample_point);
+    }
+
+  gu->x = old_x;
+  gu->y = old_y;
+
+  return TRUE;
+}
+
+static void
+undo_free_image_sample_point (GimpUndo     *undo,
+                              GimpUndoMode  undo_mode)
+{
+  SamplePointUndo *gu = undo->data;
+
+  gimp_image_sample_point_unref (gu->sample_point);
   g_free (gu);
 }
 

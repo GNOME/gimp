@@ -241,6 +241,7 @@ gimp_init (Gimp *gimp)
 
   gimp->next_image_ID       = 1;
   gimp->next_guide_ID       = 1;
+  gimp->next_sample_point_ID = 1;
   gimp->image_table         = g_hash_table_new (g_direct_hash, NULL);
 
   gimp->next_item_ID        = 1;

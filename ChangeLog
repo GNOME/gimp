@@ -1,3 +1,42 @@
+2005-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpimage-sample-points.c
+	* app/core/gimpimage-sample-points.h: new files
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.c
+	* app/actions/view-commands.h
+	* app/config/gimprc-blurbs.h
+	* app/core/Makefile.am
+	* app/core/core-enums.c
+	* app/core/core-enums.h
+	* app/core/core-types.h
+	* app/core/gimp.c
+	* app/core/gimp.h
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage-undo-push.h
+	* app/core/gimpimage.c
+	* app/core/gimpimage.h
+	* app/display/gimpdisplayoptions.c
+	* app/display/gimpdisplayoptions.h
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-appearance.h
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-draw.h
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell.h
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: add support for a list of "sample
+	points" in each image, coded and handled very similarly to
+	guides, for use mainly in color correction.  See bug #137776.
+
 2005-03-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):

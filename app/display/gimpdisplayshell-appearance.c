@@ -403,6 +403,35 @@ gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
+                                           gboolean          show)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = GET_OPTIONS (shell);
+
+  g_object_set (options, "show-sample-points", show, NULL);
+
+  if (shell->gdisp->gimage->sample_points)
+    gimp_display_shell_expose_full (shell);
+
+  SET_ACTIVE (shell->menubar_manager, "view-show-sample-points", show);
+
+  if (IS_ACTIVE_DISPLAY (shell))
+    SET_ACTIVE (shell->popup_manager, "view-show-sample-points", show);
+}
+
+gboolean
+gimp_display_shell_get_show_sample_points (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_OPTIONS (shell)->show_sample_points;
+}
+
+void
 gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
                                      gboolean          snap)
 {

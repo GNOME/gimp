@@ -26,6 +26,7 @@
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimplist.h"
 
 #include "vectors/gimpstroke.h"
@@ -119,6 +120,73 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 	  gimp_display_shell_draw_guide (shell,
                                          (GimpGuide *) list->data,
                                          FALSE);
+	}
+    }
+}
+
+void
+gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
+                                      GimpSamplePoint  *sample_point,
+                                      gboolean          active)
+{
+  gint  x1, x2;
+  gint  y1, y2;
+  gint  x, y;
+  gint  w, h;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (sample_point != NULL);
+
+  if (sample_point->x < 0)
+    return;
+
+  gimp_display_shell_transform_xy (shell,
+                                   sample_point->x,
+                                   sample_point->y,
+                                   &x, &y, FALSE);
+
+  x1 = x - GIMP_SAMPLE_POINT_DRAW_SIZE;
+  x2 = x + GIMP_SAMPLE_POINT_DRAW_SIZE;
+  y1 = y - GIMP_SAMPLE_POINT_DRAW_SIZE;
+  y2 = y + GIMP_SAMPLE_POINT_DRAW_SIZE;
+
+
+  gdk_drawable_get_size (shell->canvas->window, &w, &h);
+
+  if (x < 0 || y < 0 || x >= w || y >= h)
+    return;
+
+  if (x1 < 0) x1 = 0;
+  if (y1 < 0) y1 = 0;
+  if (x2 > w) x2 = w;
+  if (y2 > h) y2 = h;
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                         (active ?
+                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
+                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x, y1, x, y2);
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                         (active ?
+                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
+                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x1, y, x2, y);
+}
+
+void
+gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (gimp_display_shell_get_show_sample_points (shell))
+    {
+      GList *list;
+
+      for (list = shell->gdisp->gimage->sample_points;
+           list;
+           list = g_list_next (list))
+	{
+	  gimp_display_shell_draw_sample_point(shell,
+                                               (GimpSamplePoint *) list->data,
+                                               FALSE);
 	}
     }
 }

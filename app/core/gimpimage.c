@@ -44,6 +44,7 @@
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
@@ -92,6 +93,7 @@ enum
   DIRTY,
   UPDATE,
   UPDATE_GUIDE,
+  UPDATE_SAMPLE_POINT,
   COLORMAP_CHANGED,
   UNDO_EVENT,
   FLUSH,
@@ -398,6 +400,16 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[UPDATE_SAMPLE_POINT] =
+    g_signal_new ("update_sample_point",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, update_sample_point),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
+
   gimp_image_signals[COLORMAP_CHANGED] =
     g_signal_new ("colormap_changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -460,6 +472,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->dirty                        = NULL;
   klass->update                       = NULL;
   klass->update_guide                 = NULL;
+  klass->update_sample_point          = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
   klass->undo_event                   = NULL;
   klass->flush                        = gimp_image_real_flush;
@@ -532,6 +545,8 @@ gimp_image_init (GimpImage *gimage)
   gimage->guides                = NULL;
 
   gimage->grid                  = NULL;
+
+  gimage->sample_points         = NULL;
 
   gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER,   TRUE);
   gimage->channels              = gimp_list_new (GIMP_TYPE_CHANNEL, TRUE);
@@ -858,6 +873,13 @@ gimp_image_finalize (GObject *object)
       gimage->grid = NULL;
     }
 
+  if (gimage->sample_points)
+    {
+      g_list_foreach (gimage->sample_points, (GFunc) gimp_image_sample_point_unref, NULL);
+      g_list_free (gimage->sample_points);
+      gimage->sample_points = NULL;
+    }
+
   if (gimage->undo_stack)
     {
       g_object_unref (gimage->undo_stack);
@@ -914,6 +936,8 @@ gimp_image_get_memsize (GimpObject *object,
                                         gui_size);
 
   memsize += gimp_g_list_get_memsize (gimage->guides, sizeof (GimpGuide));
+
+  memsize += gimp_g_list_get_memsize (gimage->sample_points, sizeof (GimpSamplePoint));
 
   if (gimage->grid)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid), gui_size);
@@ -1629,6 +1653,16 @@ gimp_image_update_guide (GimpImage *gimage,
   g_return_if_fail (guide != NULL);
 
   g_signal_emit (gimage, gimp_image_signals[UPDATE_GUIDE], 0, guide);
+}
+
+void
+gimp_image_update_sample_point (GimpImage       *gimage,
+                                GimpSamplePoint *sample_point)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (sample_point != NULL);
+
+  g_signal_emit (gimage, gimp_image_signals[UPDATE_SAMPLE_POINT], 0, sample_point);
 }
 
 void

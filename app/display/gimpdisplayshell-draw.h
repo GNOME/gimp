@@ -20,21 +20,25 @@
 #define __GIMP_DISPLAY_SHELL_DRAW_H__
 
 
-void   gimp_display_shell_draw_guide   (GimpDisplayShell   *shell,
-                                        GimpGuide          *guide,
-                                        gboolean            active);
-void   gimp_display_shell_draw_guides  (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_grid    (GimpDisplayShell   *shell,
-                                        const GdkRectangle *area);
-void   gimp_display_shell_draw_vector  (GimpDisplayShell   *shell,
-                                        GimpVectors        *vectors);
-void   gimp_display_shell_draw_vectors (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_cursor  (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_area    (GimpDisplayShell   *shell,
-                                        gint                x,
-                                        gint                y,
-                                        gint                w,
-                                        gint                h);
+void   gimp_display_shell_draw_guide         (GimpDisplayShell   *shell,
+                                              GimpGuide          *guide,
+                                              gboolean            active);
+void   gimp_display_shell_draw_guides        (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_sample_point  (GimpDisplayShell   *shell,
+                                             GimpSamplePoint     *sample_point,
+                                             gboolean             active);
+void   gimp_display_shell_draw_sample_points (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_grid          (GimpDisplayShell   *shell,
+                                              const GdkRectangle *area);
+void   gimp_display_shell_draw_vector        (GimpDisplayShell   *shell,
+                                              GimpVectors        *vectors);
+void   gimp_display_shell_draw_vectors       (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_cursor        (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_area          (GimpDisplayShell   *shell,
+                                              gint                x,
+                                              gint                y,
+                                              gint                w,
+                                              gint                h);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_DRAW_H__ */

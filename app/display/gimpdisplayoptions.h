@@ -49,6 +49,7 @@ struct _GimpDisplayOptions
   gboolean               show_selection;
   gboolean               show_layer_boundary;
   gboolean               show_guides;
+  gboolean               show_sample_points;
   gboolean               show_grid;
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;

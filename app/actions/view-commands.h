@@ -67,6 +67,8 @@ void   view_toggle_statusbar_cmd_callback      (GtkAction *action,
                                                 gpointer   data);
 void   view_toggle_guides_cmd_callback         (GtkAction *action,
                                                 gpointer   data);
+void   view_toggle_sample_points_cmd_callback  (GtkAction *action,
+                                                gpointer   data);
 void   view_toggle_grid_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 

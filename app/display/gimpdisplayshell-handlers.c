@@ -73,6 +73,9 @@ static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *g
 static void   gimp_display_shell_update_guide_handler       (GimpImage        *gimage,
                                                              GimpGuide        *guide,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_update_sample_point_handler(GimpImage        *gimage,
+                                                             GimpSamplePoint  *sample_point,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 
@@ -156,6 +159,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (gimage, "update_guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
+                    shell);
+  g_signal_connect (gimage, "update_sample_point",
+                    G_CALLBACK (gimp_display_shell_update_sample_point_handler),
                     shell);
   g_signal_connect (gimage, "invalidate_preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
@@ -310,6 +316,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_update_guide_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
+                                        gimp_display_shell_update_sample_point_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_qmask_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
@@ -442,6 +451,14 @@ gimp_display_shell_update_guide_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_guide (shell, guide);
+}
+
+static void
+gimp_display_shell_update_sample_point_handler (GimpImage        *gimage,
+                                                GimpSamplePoint  *sample_point,
+                                                GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_sample_point (shell, sample_point);
 }
 
 static void

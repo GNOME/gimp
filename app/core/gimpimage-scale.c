@@ -27,6 +27,7 @@
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -179,6 +180,16 @@ gimp_image_scale (GimpImage             *gimage,
 	default:
           break;
 	}
+    }
+
+  /*  Scale all sample points  */
+  for (list = gimage->sample_points; list; list = g_list_next (list))
+    {
+      GimpSamplePoint *sample_point = list->data;
+
+      gimp_image_undo_push_image_sample_point (gimage, NULL, sample_point);
+      sample_point->x = sample_point->x * new_width / old_width;
+      sample_point->y = sample_point->y * new_height / old_height;
     }
 
   gimp_image_undo_group_end (gimage);

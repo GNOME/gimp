@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
@@ -34,13 +35,15 @@
 #include "gimpprogress.h"
 
 
-static void  gimp_image_rotate_item_offset (GimpImage        *gimage,
-					    GimpRotationType  rotate_type,
-					    GimpItem         *item,
-					    gint              off_x,
-					    gint              off_y);
-static void  gimp_image_rotate_guides      (GimpImage        *gimage,
-					    GimpRotationType  rotate_type);
+static void  gimp_image_rotate_item_offset   (GimpImage        *gimage,
+                                              GimpRotationType  rotate_type,
+                                              GimpItem         *item,
+                                              gint              off_x,
+                                              gint              off_y);
+static void  gimp_image_rotate_guides        (GimpImage        *gimage,
+                                              GimpRotationType  rotate_type);
+static void  gimp_image_rotate_sample_points (GimpImage        *gimage,
+                                              GimpRotationType  rotate_type);
 
 
 void
@@ -168,6 +171,9 @@ gimp_image_rotate (GimpImage        *gimage,
 
   /*  Rotate all Guides  */
   gimp_image_rotate_guides (gimage, rotate_type);
+
+  /*  Rotate all sample points  */
+  gimp_image_rotate_sample_points (gimage, rotate_type);
 
   /*  Resize the image (if needed)  */
   if (size_changed)
@@ -304,6 +310,43 @@ gimp_image_rotate_guides (GimpImage        *gimage,
             default:
               break;
             }
+          break;
+	}
+    }
+}
+
+
+static void
+gimp_image_rotate_sample_points (GimpImage        *gimage,
+                                 GimpRotationType  rotate_type)
+{
+  GList *list;
+
+  /*  Rotate all sample points  */
+  for (list = gimage->sample_points; list; list = g_list_next (list))
+    {
+      GimpSamplePoint *sample_point = list->data;
+      gint             old_x;
+      gint             old_y;
+
+      old_x = sample_point->x;
+      old_y = sample_point->y;
+
+      switch (rotate_type)
+        {
+        case GIMP_ROTATE_90:
+          sample_point->x = old_y;
+          sample_point->y = gimage->height - old_x;
+          break;
+
+        case GIMP_ROTATE_180:
+          sample_point->x = gimage->height - old_x;
+          sample_point->y = gimage->width - old_y;
+          break;
+
+        case GIMP_ROTATE_270:
+          sample_point->x = gimage->width - old_y;
+          sample_point->y = old_x;
           break;
 	}
     }

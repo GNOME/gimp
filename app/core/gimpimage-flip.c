@@ -27,6 +27,7 @@
 #include "gimpimage.h"
 #include "gimpimage-flip.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
@@ -142,6 +143,24 @@ gimp_image_flip (GimpImage           *gimage,
 	default:
           break;
 	}
+    }
+
+  /*  Flip all sample points  */
+  for (list = gimage->sample_points; list; list = g_list_next (list))
+    {
+      GimpSamplePoint *sample_point = list->data;
+
+      if (flip_type == GIMP_ORIENTATION_VERTICAL)
+        gimp_image_move_sample_point (gimage, sample_point,
+                                      sample_point->x,
+                                      gimage->height - sample_point->y,
+                                      TRUE);
+
+      if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
+        gimp_image_move_sample_point (gimage, sample_point,
+                                      gimage->width - sample_point->x,
+                                      sample_point->y,
+                                      TRUE);
     }
 
   gimp_image_undo_group_end (gimage);

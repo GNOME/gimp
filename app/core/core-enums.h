@@ -336,6 +336,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="Quick Mask"                  >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,         /*< desc="Grid"                        >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/
+  GIMP_UNDO_GROUP_IMAGE_SAMPLE_POINT, /*< desc="Sample Point"                >*/
   GIMP_UNDO_GROUP_DRAWABLE,           /*< desc="Drawable"                    >*/
   GIMP_UNDO_GROUP_DRAWABLE_MOD,       /*< desc="Drawable mod"                >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection mask"              >*/
@@ -370,6 +371,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Resolution change"         >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                      >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
+  GIMP_UNDO_IMAGE_SAMPLE_POINT,       /*< desc="Sample Point"              >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change indexed palette"    >*/
   GIMP_UNDO_DRAWABLE,                 /*< desc="Drawable"                  >*/
   GIMP_UNDO_DRAWABLE_MOD,             /*< desc="Drawable mod"              >*/

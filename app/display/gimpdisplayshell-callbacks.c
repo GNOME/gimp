@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-qmask.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
@@ -217,6 +218,8 @@ gimp_display_shell_events (GtkWidget        *widget,
                                                 options->show_layer_boundary);
         gimp_display_shell_set_show_guides     (shell,
                                                 options->show_guides);
+        gimp_display_shell_set_show_sample_points (shell,
+                                                   options->show_sample_points);
         gimp_display_shell_set_show_grid       (shell,
                                                 options->show_grid);
         gimp_display_shell_set_padding         (shell,
@@ -407,6 +410,9 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
   /* draw the guides */
   gimp_display_shell_draw_guides (shell);
+
+  /* draw the sample points */
+  gimp_display_shell_draw_sample_points (shell);
 
   /* draw the grid */
   gimp_display_shell_draw_grid (shell, &eevent->area);
