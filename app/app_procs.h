@@ -29,9 +29,8 @@
 extern Gimp *the_gimp;
 
 
-void   app_init (gint       gimp_argc,
-                 gchar    **gimp_argv);
-void   app_exit (gboolean   kill_it);
+void   app_init (gint    gimp_argc,
+                 gchar **gimp_argv);
 
 
 #endif /* __APP_PROCS_H__ */

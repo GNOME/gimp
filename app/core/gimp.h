@@ -136,6 +136,9 @@ struct _Gimp
 struct _GimpClass
 {
   GimpObjectClass  parent_class;
+
+  gboolean (* exit) (Gimp     *gimp,
+                     gboolean  kill_it);
 };
 
 
@@ -149,14 +152,14 @@ Gimp        * gimp_new                  (gboolean            be_verbose,
 
 void          gimp_set_config           (Gimp               *gimp,
                                          GimpCoreConfig     *core_config);
-
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);
-
 void          gimp_restore              (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback,
 					 gboolean            no_data);
-void          gimp_shutdown             (Gimp               *gimp);
+
+void          gimp_exit                 (Gimp               *gimp,
+                                         gboolean            kill_it);
 
 void          gimp_main_loop            (Gimp               *gimp);
 void          gimp_main_loop_quit       (Gimp               *gimp);

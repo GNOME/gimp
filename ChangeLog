@@ -1,3 +1,32 @@
+2002-12-05  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up the exit process:
+
+	* app/core/gimp.[ch]: added an "exit" signal which carries a
+	"gboolean kill_it" parameter and has a boolean return value.
+	Added gimp_boolean_handled_accumulator() so the emission of "exit"
+	can be stopped by returning TRUE from a callback.  Removed
+	gimp_shutdown() from the public API and made it "exit"'s default
+	implementation. Addec gimp_exit() to emit the signal.
+
+	* app/core/gimpmarshal.list: added BOOLEAN__BOOLEAN marshaller.
+
+	* app/gui/gui.[ch]: Replaced public functions gui_shutdown() and
+	gui_exit() by "exit" callbacks. g_signal_connect_after() the
+	latter so the shutdown order is correct.
+
+	* app/app_procs.[ch]: removed app_exit() and connect to "exit".
+	Split the exit stuff into normal and connect_after callbacks as
+	above.
+
+	* app/batch.c
+	* app/gui/file-commands.c
+	* tools/pdbgen/pdb/misc.pdb
+	* app/widgets/gimptoolbox.c: call gimp_exit() instead of
+	app_exit(). Don't #include "app_procs.h".
+
+	* app/pdb/misc_cmds.c: regenerated.
+
 2002-12-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushpipe.c: use the same string as in

@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "app_procs.h"
+#include "core/gimp.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -87,7 +87,7 @@ quit_invoker (Gimp     *gimp,
 
   kill_it = args[0].value.pdb_int ? TRUE : FALSE;
 
-  app_exit (kill_it);
+  gimp_exit (gimp, kill_it);
 
   return procedural_db_return_args (&quit_proc, TRUE);
 }

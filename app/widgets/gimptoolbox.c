@@ -46,8 +46,6 @@
 #include "gimptoolbox-indicator-area.h"
 #include "gtkhwrapbox.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -216,7 +214,7 @@ static gboolean
 gimp_toolbox_delete_event (GtkWidget   *widget,
                            GdkEventAny *event)
 {
-  app_exit (FALSE);
+  gimp_exit (GIMP_DOCK (widget)->context->gimp, FALSE);
 
   return TRUE;
 }

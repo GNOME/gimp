@@ -22,6 +22,7 @@
 #   NONE        deprecated alias for VOID
 #   BOOL        deprecated alias for BOOLEAN
 
+BOOLEAN: BOOLEAN
 BOOLEAN: OBJECT
 BOOLEAN: POINTER
 BOOLEAN: VOID

@@ -56,8 +56,8 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("app_procs.h") ],
-	code => 'app_exit (kill_it);'
+	headers => [ qw("core/gimp.h") ],
+	code => 'gimp_exit (gimp, kill_it);'
     );
 }
 
@@ -67,4 +67,3 @@ HELP
 $desc = 'Miscellaneous';
 
 1;
-

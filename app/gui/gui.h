@@ -33,13 +33,8 @@ void          gui_restore               (Gimp      *gimp,
                                          gboolean   restore_session);
 void          gui_post_init             (Gimp      *gimp);
 
-void          gui_shutdown              (Gimp      *gimp);
-void          gui_exit                  (Gimp      *gimp);
-
 void          gui_get_screen_resolution (gdouble   *xres,
                                          gdouble   *yres);
-
-void          gui_really_quit_dialog    (GCallback  quit_func);
 
 
 #endif /* __GUI_H__ */

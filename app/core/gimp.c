@@ -54,6 +54,7 @@
 #include "gimpimage-new.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
+#include "gimpmarshal.h"
 #include "gimpmodules.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
@@ -64,23 +65,35 @@
 #include "libgimp/gimpintl.h"
 
 
-static void    gimp_class_init           (GimpClass  *klass);
-static void    gimp_init                 (Gimp       *gimp);
+enum
+{
+  EXIT,
+  LAST_SIGNAL
+};
 
-static void    gimp_dispose              (GObject    *object);
-static void    gimp_finalize             (GObject    *object);
 
-static gsize   gimp_get_memsize          (GimpObject *object);
+static void       gimp_class_init           (GimpClass  *klass);
+static void       gimp_init                 (Gimp       *gimp);
 
-static void    gimp_global_config_notify (GObject    *global_config,
-                                          GParamSpec *param_spec,
-                                          GObject    *edit_config);
-static void    gimp_edit_config_notify   (GObject    *edit_config,
-                                          GParamSpec *param_spec,
-                                          GObject    *global_config);
+static void       gimp_dispose              (GObject    *object);
+static void       gimp_finalize             (GObject    *object);
+
+static gsize      gimp_get_memsize          (GimpObject *object);
+
+static gboolean   gimp_real_exit            (Gimp       *gimp,
+                                             gboolean    kill_it);
+
+static void       gimp_global_config_notify (GObject    *global_config,
+                                             GParamSpec *param_spec,
+                                             GObject    *edit_config);
+static void       gimp_edit_config_notify   (GObject    *edit_config,
+                                             GParamSpec *param_spec,
+                                             GObject    *global_config);
 
 
 static GimpObjectClass *parent_class = NULL;
+
+static guint gimp_signals[LAST_SIGNAL] = { 0, };
 
 
 GType 
@@ -111,6 +124,22 @@ gimp_get_type (void)
   return object_type;
 }
 
+gboolean
+gimp_boolean_handled_accumulator (GSignalInvocationHint *ihint,
+                                  GValue                *return_accu,
+                                  const GValue          *handler_return,
+                                  gpointer               dummy)
+{
+  gboolean continue_emission;
+  gboolean signal_handled;
+
+  signal_handled = g_value_get_boolean (handler_return);
+  g_value_set_boolean (return_accu, signal_handled);
+  continue_emission = ! signal_handled;
+
+  return continue_emission;
+}
+
 static void
 gimp_class_init (GimpClass *klass)
 {
@@ -122,10 +151,22 @@ gimp_class_init (GimpClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  gimp_signals[EXIT] =
+    g_signal_new ("exit",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpClass, exit),
+                  gimp_boolean_handled_accumulator, NULL,
+                  gimp_marshal_BOOLEAN__BOOLEAN,
+                  G_TYPE_BOOLEAN, 1,
+                  G_TYPE_BOOLEAN);
+
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
 
   gimp_object_class->get_memsize = gimp_get_memsize;
+
+  klass->exit                    = gimp_real_exit;
 }
 
 static void
@@ -423,6 +464,25 @@ gimp_get_memsize (GimpObject *object)
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
 }
 
+static gboolean
+gimp_real_exit (Gimp     *gimp,
+                gboolean  kill_it)
+{
+  g_print ("EXIT: gimp_real_exit(%s)\n",
+           kill_it ? "TRUE" : "FALSE");
+
+  gimp_modules_unload (gimp);
+  gimp_data_factory_data_save (gimp->brush_factory);
+  gimp_data_factory_data_save (gimp->pattern_factory);
+  gimp_data_factory_data_save (gimp->gradient_factory);
+  gimp_data_factory_data_save (gimp->palette_factory);
+  gimp_documents_save (gimp);
+  gimp_parasiterc_save (gimp);
+  gimp_unitrc_save (gimp);
+
+  return FALSE; /* continue exiting */
+}
+
 Gimp *
 gimp_new (gboolean           be_verbose,
           gboolean           no_data,
@@ -696,18 +756,16 @@ gimp_restore (Gimp               *gimp,
 }
 
 void
-gimp_shutdown (Gimp *gimp)
+gimp_exit (Gimp     *gimp,
+           gboolean  kill_it)
 {
+  gboolean handled;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp_modules_unload (gimp);
-  gimp_data_factory_data_save (gimp->brush_factory);
-  gimp_data_factory_data_save (gimp->pattern_factory);
-  gimp_data_factory_data_save (gimp->gradient_factory);
-  gimp_data_factory_data_save (gimp->palette_factory);
-  gimp_documents_save (gimp);
-  gimp_parasiterc_save (gimp);
-  gimp_unitrc_save (gimp);
+  g_signal_emit (G_OBJECT (gimp), gimp_signals[EXIT], 0,
+                 kill_it ? TRUE : FALSE,
+                 &handled);
 }
 
 void

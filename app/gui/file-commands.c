@@ -45,7 +45,6 @@
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
 
-#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -286,7 +285,7 @@ file_quit_cmd_callback (GtkWidget *widget,
 			gpointer   data,
                         guint      action)
 {
-  app_exit (FALSE);
+  gimp_exit (GIMP (data), FALSE);
 }
 
 

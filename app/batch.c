@@ -30,7 +30,8 @@
 
 #include "core/core-types.h"
 
-#include "app_procs.h"
+#include "core/gimp.h"
+
 #include "batch.h"
 
 #include "pdb/procedural_db.h"
@@ -97,7 +98,7 @@ batch_init (Gimp   *gimp,
       batch_run_cmd (gimp, batch_cmds[i]);
 
       if (read_from_stdin)
-	app_exit (FALSE);
+	gimp_exit (gimp, FALSE);
     }
 }
 
@@ -112,7 +113,7 @@ batch_run_cmd (Gimp  *gimp,
 
   if (g_ascii_strcasecmp (cmd, "(gimp-quit 0)") == 0)
     {
-      app_exit (FALSE);
+      gimp_exit (gimp, FALSE);
       exit (0);
     }
 

@@ -76,10 +76,14 @@ static void         gui_themes_dir_foreach_func     (GimpDatafileData *file_data
 static gint         gui_rotate_the_shield_harmonics (GtkWidget   *widget,
                                                      GdkEvent    *eevent,
                                                      gpointer     data);
+
+static gboolean     gui_exit_callback               (Gimp        *gimp,
+                                                     gboolean     kill_it);
+static gboolean     gui_exit_finish_callback        (Gimp        *gimp,
+                                                     gboolean     kill_it);
 static void         gui_really_quit_callback        (GtkWidget   *button,
                                                      gboolean     quit,
                                                      gpointer     data);
-
 static void         gui_show_tooltips_notify        (GObject     *config,
                                                      GParamSpec  *param_spec,
                                                      Gimp        *gimp);
@@ -283,6 +287,13 @@ gui_restore (Gimp     *gimp,
     session_restore (gimp);
 
   dialogs_show_toolbox ();
+
+  g_signal_connect (G_OBJECT (gimp), "exit",
+                    G_CALLBACK (gui_exit_callback),
+                    NULL);
+  g_signal_connect_after (G_OBJECT (gimp), "exit",
+                          G_CALLBACK (gui_exit_finish_callback),
+                          NULL);
 }
 
 void
@@ -295,50 +306,6 @@ gui_post_init (Gimp *gimp)
       gimp_dialog_factory_dialog_new (global_dialog_factory,
                                       "gimp-tips-dialog", -1);
     }
-}
-
-void
-gui_shutdown (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gimp->message_handler = GIMP_CONSOLE;
-
-  session_save (gimp);
-
-  if (GIMP_GUI_CONFIG (gimp->config)->save_device_status)
-    gimp_devices_save (gimp);
-
-  gimp_displays_delete (gimp);
-}
-
-void
-gui_exit (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  menus_exit (gimp);
-  render_exit (gimp);
-
-  dialogs_exit (gimp);
-  gimp_devices_exit (gimp);
-
-  gimp_help_free ();
-
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
-                                        gui_show_tooltips_notify,
-                                        gimp);
-
-  gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
-  image_disconnect_handler_id = 0;
-
-  if (themes_hash)
-    {
-      g_hash_table_destroy (themes_hash);
-      themes_hash = NULL;
-    }
-
-  g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 }
 
 void
@@ -387,32 +354,6 @@ gui_get_screen_resolution (gdouble *xres,
 
   *xres = x;
   *yres = y;
-}
-
-void
-gui_really_quit_dialog (GCallback quit_func)
-{
-  GtkItemFactory *item_factory;
-  GtkWidget      *dialog;
-
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
-
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
-
-  dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
-				   gimp_standard_help_func,
-				   "dialogs/really_quit.html",
-				   GIMP_STOCK_WILBER_EEK,
-				   _("Some files are unsaved.\n"
-				     "\nReally quit The GIMP?"),
-				   GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
-				   NULL, NULL,
-				   gui_really_quit_callback,
-				   quit_func);
-
-  gtk_widget_show (dialog);
 }
 
 
@@ -561,18 +502,97 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
   return FALSE;
 }
 
+static gboolean
+gui_exit_callback (Gimp     *gimp,
+                   gboolean  kill_it)
+{
+  g_print ("EXIT: gui_exit_callback(%s)\n",
+           kill_it ? "TRUE" : "FALSE");
+
+  if (! kill_it && gimp_displays_dirty (gimp))
+    {
+      GtkItemFactory *item_factory;
+      GtkWidget      *dialog;
+
+      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
+      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
+
+      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
+      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
+
+      dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
+                                       gimp_standard_help_func,
+                                       "dialogs/really_quit.html",
+                                       GIMP_STOCK_WILBER_EEK,
+                                       _("Some files are unsaved.\n"
+                                         "\nReally quit The GIMP?"),
+                                       GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
+                                       NULL, NULL,
+                                       gui_really_quit_callback,
+                                       gimp);
+
+      gtk_widget_show (dialog);
+
+      return TRUE; /* stop exit for now */
+    }
+
+  gimp->message_handler = GIMP_CONSOLE;
+
+  session_save (gimp);
+
+  if (GIMP_GUI_CONFIG (gimp->config)->save_device_status)
+    gimp_devices_save (gimp);
+
+  gimp_displays_delete (gimp);
+
+  return FALSE; /* continue exiting */
+}
+
+static gboolean
+gui_exit_finish_callback (Gimp     *gimp,
+                          gboolean  kill_it)
+{
+  g_print ("EXIT: gui_exit_finish_callback(%s)\n",
+           kill_it ? "TRUE" : "FALSE");
+
+  menus_exit (gimp);
+  render_exit (gimp);
+
+  dialogs_exit (gimp);
+  gimp_devices_exit (gimp);
+
+  gimp_help_free ();
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->config),
+                                        gui_show_tooltips_notify,
+                                        gimp);
+
+  gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
+  image_disconnect_handler_id = 0;
+
+  if (themes_hash)
+    {
+      g_hash_table_destroy (themes_hash);
+      themes_hash = NULL;
+    }
+
+  g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
+
+  return FALSE; /* continue exiting */
+}
+
 static void
 gui_really_quit_callback (GtkWidget *button,
 			  gboolean   quit,
 			  gpointer   data)
 {
-  GCallback quit_func;
+  Gimp *gimp;
 
-  quit_func = G_CALLBACK (data);
+  gimp = GIMP (data);
 
   if (quit)
     {
-      (* quit_func) ();
+      gimp_exit (gimp, TRUE);
     }
   else
     {
@@ -585,7 +605,6 @@ gui_really_quit_callback (GtkWidget *button,
       gimp_item_factory_set_sensitive (item_factory, "/File/Quit", TRUE);
     }
 }
-
 
 static void
 gui_show_tooltips_notify (GObject    *config,

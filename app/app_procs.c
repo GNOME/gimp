@@ -41,15 +41,12 @@
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
-#include "core/gimpdatafactory.h"
 #include "core/gimpunits.h"
 
 #include "plug-in/plug-ins.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
 
@@ -60,17 +57,19 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /*  local prototypes  */
 
-static void   app_init_update_status (const gchar *text1,
-                                      const gchar *text2,
-                                      gdouble      percentage);
-static void   app_exit_finish        (void);
+static void       app_init_update_status   (const gchar *text1,
+                                            const gchar *text2,
+                                            gdouble      percentage);
+static gboolean   app_exit_callback        (Gimp        *gimp,
+                                            gboolean     kill_it);
+static gboolean   app_exit_finish_callback (Gimp        *gimp,
+                                            gboolean     kill_it);
 
 /* gimprc debugging code, to be removed */
 static void   gimprc_notify_callback (GObject    *object,
@@ -189,6 +188,16 @@ app_init (gint    gimp_argc,
       gui_restore (the_gimp, restore_session);
     }
 
+  /*  connext our "exit" callbacks after gui_restore() so they are
+   *  invoked after the GUI's "exit" callbacks
+   */
+  g_signal_connect (G_OBJECT (the_gimp), "exit",
+                    G_CALLBACK (app_exit_callback),
+                    NULL);
+  g_signal_connect_after (G_OBJECT (the_gimp), "exit",
+                          G_CALLBACK (app_exit_finish_callback),
+                          NULL);
+
   /*  Parse the rest of the command line arguments as images to load
    */
   if (gimp_argc > 0)
@@ -233,16 +242,6 @@ app_init (gint    gimp_argc,
   gimp_main_loop (the_gimp);
 }
 
-void
-app_exit (gboolean kill_it)
-{
-  /*  If it's the user's perogative, and there are dirty images  */
-  if (! kill_it && gimp_displays_dirty (the_gimp) && ! no_interface)
-    gui_really_quit_dialog (G_CALLBACK (app_exit_finish));
-  else
-    app_exit_finish ();
-}
-
 
 /*  private functions  */
 
@@ -257,26 +256,29 @@ app_init_update_status (const gchar *text1,
     }
 }
 
-static void
-app_exit_finish (void)
+static gboolean
+app_exit_callback (Gimp     *gimp,
+                   gboolean  kill_it)
 {
-  if (! no_interface)
-    {
-      gui_shutdown (the_gimp);
-    }
+  g_print ("EXIT: app_exit_callback(%s)\n",
+           kill_it ? "TRUE" : "FALSE");
 
-  plug_ins_exit (the_gimp);
+  plug_ins_exit (gimp);
 
   if (! no_interface)
-    {
-      tool_manager_exit (the_gimp);
+    tool_manager_exit (gimp);
 
-      gui_exit (the_gimp);
-    }
+  return FALSE; /* continue exiting */
+}
 
-  gimp_shutdown (the_gimp);
+static gboolean
+app_exit_finish_callback (Gimp     *gimp,
+                          gboolean  kill_it)
+{
+  g_print ("EXIT: app_exit_finish_callback(%s)\n",
+           kill_it ? "TRUE" : "FALSE");
 
-  g_object_unref (G_OBJECT (the_gimp));
+  g_object_unref (G_OBJECT (gimp));
   the_gimp = NULL;
 
   base_exit ();
@@ -285,6 +287,8 @@ app_exit_finish (void)
    *  that foo_main() was never called before we reach this point. --Sven  
    */
   exit (0);
+
+  return FALSE;
 }
 
 
