@@ -39,7 +39,8 @@ static GimpBrush * gimp_brush_select_brush     (PaintCore *paint_core);
 static gboolean    gimp_brush_want_null_motion (PaintCore *paint_core);
 
 static guint gimp_brush_signals[LAST_SIGNAL];
-static GimpObjectClass* parent_class;
+
+static GimpObjectClass *parent_class;
 
 static void
 gimp_brush_destroy (GtkObject *object)
@@ -53,7 +54,8 @@ gimp_brush_destroy (GtkObject *object)
   if (brush->mask)
     temp_buf_free (brush->mask);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 static void
@@ -62,13 +64,13 @@ gimp_brush_class_init (GimpBrushClass *klass)
   GtkObjectClass *object_class;
   GtkType type;
   
-  object_class = GTK_OBJECT_CLASS(klass);
+  object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = gtk_type_class (gimp_object_get_type ());
   
-  type=object_class->type;
+  type = object_class->type;
 
-  object_class->destroy =  gimp_brush_destroy;
+  object_class->destroy = gimp_brush_destroy;
 
   klass->select_brush = gimp_brush_select_brush;
   klass->want_null_motion = gimp_brush_want_null_motion;
@@ -122,7 +124,7 @@ gimp_brush_get_type (void)
 GimpBrush *
 gimp_brush_new (gchar *filename)
 {
-  GimpBrush *brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+  GimpBrush *brush = GIMP_BRUSH (gtk_type_new  (gimp_brush_get_type ()));
 
   gimp_brush_load (brush, filename);
 
@@ -149,7 +151,7 @@ gimp_brush_get_mask (GimpBrush *brush)
   return brush->mask;
 }
 
-char *
+gchar *
 gimp_brush_get_name (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
@@ -206,7 +208,7 @@ gimp_brush_load (GimpBrush *brush,
       return;
     }
 
-  gimp_brush_load_brush(brush,fp,filename);
+  gimp_brush_load_brush (brush, fp, filename);
 
   /*  Clean up  */
   fclose (fp);
@@ -215,7 +217,6 @@ gimp_brush_load (GimpBrush *brush,
   if (stingy_memory_use)
     temp_buf_swap (brush->mask);
 }
-
 
 gint
 gimp_brush_load_brush (GimpBrush *brush, 
@@ -304,4 +305,3 @@ gimp_brush_load_brush (GimpBrush *brush,
     }
   return 1;
 }
-

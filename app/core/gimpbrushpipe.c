@@ -35,9 +35,10 @@
 #include "paint_core.h"
 #include "gimprc.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/parasiteio.h"
+
+#include "libgimp/gimpintl.h"
 
 static GimpBrushClass       *gimp_brush_class;
 static GimpBrushPixmapClass *gimp_brush_pixmap_class;
@@ -80,7 +81,7 @@ void
 gimp_brush_pixmap_init (GimpBrushPixmap *brush)
 {
   brush->pixmap_mask = NULL;
-  brush->pipe = NULL;
+  brush->pipe        = NULL;
 }
 
 GtkType
@@ -137,10 +138,10 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 	  angle += G_PI_2;
 	  /* Map it to the [0..2*G_PI) interval */
 	  if (angle < 0)
-	    angle += 2.*G_PI;
-	  else if (angle > 2.*G_PI)
-	    angle -= 2.*G_PI;
-	  ix = RINT (angle / (2.*G_PI) * pipe->rank[i]);
+	    angle += 2.0 * G_PI;
+	  else if (angle > 2.0 * G_PI)
+	    angle -= 2.0 * G_PI;
+	  ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
 	  break;
 	case PIPE_SELECT_RANDOM:
 	  /* This probably isn't the right way */
@@ -177,7 +178,7 @@ static gboolean
 gimp_brush_pixmap_want_null_motion (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
-  int i;
+  gint i;
 
   g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), TRUE);
 

@@ -20,7 +20,6 @@
 
 #include <glib.h>
 
-#include "temp_buf.h"
 #include "gimpbrush.h"
 #include "gimpbrushlistF.h"
 

@@ -555,7 +555,7 @@ static guint n_gradient_targets = (sizeof (gradient_target_table) /
 /***** Public functions *****/
 
 void
-gradients_init (int no_data)
+gradients_init (gint no_data)
 {
   if (gradients_list)
     gradients_free ();
@@ -5694,6 +5694,9 @@ grad_free_gradient (gradient_t *grad)
   if (grad->filename)
     g_free (grad->filename);
 
+  if (grad->pixmap)
+    gdk_pixmap_unref (grad->pixmap);
+
   g_free (grad);
 }
 
@@ -5724,7 +5727,7 @@ static void
 grad_free_gradients (void)
 {
   grad_save_all (TRUE);  
-  
+
   g_slist_free (gradients_list);
 
   num_gradients  = 0;

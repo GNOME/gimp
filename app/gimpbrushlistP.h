@@ -7,16 +7,16 @@
 struct _GimpBrushList
 {
   GimpList gimplist;
-  int num_brushes;
+
+  gint     num_brushes;
 };
+
+typedef struct _GimpBrushListClass GimpBrushListClass;
 
 struct _GimpBrushListClass
 {
   GimpListClass parent_class;
 };
-
-typedef struct _GimpBrushListClass GimpBrushListClass;
-
 
 #define BRUSH_LIST_CLASS(klass) \
   GTK_CHECK_CLASS_CAST (klass, gimp_brush_list_get_type(), GimpBrushListClass)

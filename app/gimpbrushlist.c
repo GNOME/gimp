@@ -42,14 +42,13 @@
 #include "gimpbrush.h"
 #include "gimplistP.h"
 #include "gimpbrushlistP.h"
-#include "general.h"
 
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
-GimpBrushList    *brush_list     = NULL;
+GimpBrushList *brush_list = NULL;
 
 
 /*  local function prototypes  */
@@ -65,7 +64,7 @@ static void
 gimp_brush_list_add_func (GimpList *list,
 			  gpointer  val)
 {
-  list->list=g_slist_insert_sorted (list->list, val, brush_compare_func);
+  list->list = g_slist_insert_sorted (list->list, val, brush_compare_func);
   GIMP_BRUSH_LIST (list)->num_brushes++;
 }
 
@@ -130,7 +129,7 @@ gimp_brush_list_new (void)
 
   GIMP_LIST (list)->type = GIMP_TYPE_BRUSH;
   GIMP_LIST (list)->weak = FALSE;
-  
+
   return list;
 }
 
@@ -290,9 +289,9 @@ brushes_free (void)
       gimp_brush_list_remove (brush_list, brush);
     }
 
-  g_free (vbr_dir);
-
   brush_select_thaw_all ();
+
+  g_free (vbr_dir);
 }
 
 #if 0
@@ -333,28 +332,30 @@ gimp_brush_list_uniquefy_brush_name (GimpBrushList *brush_list,
 {
   GSList *list, *listb;
   GimpBrush *brushb;
-  int number = 1;
-  char *newname;
-  char *oldname;
-  char *ext;
+  gint   number = 1;
+  gchar *newname;
+  gchar *oldname;
+  gchar *ext;
+
   g_return_if_fail (GIMP_IS_BRUSH_LIST (brush_list));
   g_return_if_fail (GIMP_IS_BRUSH (brush));
-  list = GIMP_LIST (brush_list)->list;
-  while (list)
+
+  for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
     {
       brushb = GIMP_BRUSH (list->data);
       if (brush != brushb &&
 	  strcmp (gimp_brush_get_name (brush),
 		  gimp_brush_get_name (brushb)) == 0)
-	{ /* names conflict */
+	{
+	  /* names conflict */
 	  oldname = gimp_brush_get_name (brush);
 	  newname = g_malloc (strlen (oldname) + 10); /* if this aint enough 
 							 yer screwed */
 	  strcpy (newname, oldname);
-	  if ((ext = strrchr(newname, '#')))
+	  if ((ext = strrchr (newname, '#')))
 	    {
 	      number = atoi (ext+1);
-	      if (&ext[(int)(log10 (number) + 1)] !=
+	      if (&ext[(gint)(log10 (number) + 1)] !=
 		  &newname[strlen (newname) - 1])
 		{
 		  number = 1;
@@ -367,8 +368,7 @@ gimp_brush_list_uniquefy_brush_name (GimpBrushList *brush_list,
 	      ext = &newname[strlen (newname)];
 	    }
 	  sprintf (ext, "#%d", number+1);
-	  listb = GIMP_LIST (brush_list)->list;
-	  while (listb) /* make sure the new name is unique */
+	  for (listb = GIMP_LIST (brush_list)->list; listb; listb = listb->next)
 	    {
 	      brushb = GIMP_BRUSH (listb->data);
 	      if (brush != brushb &&
@@ -378,12 +378,12 @@ gimp_brush_list_uniquefy_brush_name (GimpBrushList *brush_list,
 		  sprintf (ext, "#%d", number+1);
 		  listb = GIMP_LIST (brush_list)->list;
 		}
-	      listb = listb->next;
 	    }
 	  gimp_brush_set_name (brush, newname);
 	  g_free (newname);
 	  if (gimp_list_have (GIMP_LIST (brush_list), brush))
-	    { /* ought to have a better way than this to resort the brush */
+	    {
+	      /* ought to have a better way than this to resort the brush */
 	      gtk_object_ref (GTK_OBJECT (brush));
 	      gimp_brush_list_remove (brush_list, brush);
 	      gimp_brush_list_add (brush_list, brush);
@@ -391,7 +391,6 @@ gimp_brush_list_uniquefy_brush_name (GimpBrushList *brush_list,
 	    }
 	  return;
 	}
-      list = list->next;
     }
 }
 

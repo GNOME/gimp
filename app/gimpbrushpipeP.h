@@ -40,6 +40,7 @@ typedef enum
 struct _GimpBrushPixmap
 {
   GimpBrush      gbrush;
+
   TempBuf       *pixmap_mask;
   GimpBrushPipe *pipe;
 };
@@ -60,14 +61,18 @@ struct _GimpBrushPipe
   gint *index;			/* Current index for incremental dimensions */
 };
 
-typedef struct _GimpBrushPixmapClass
+typedef struct _GimpBrushPixmapClass GimpBrushPixmapClass;
+
+struct _GimpBrushPixmapClass
 {
   GimpBrushClass parent_class;
-} GimpBrushPixmapClass;
+};
 
-typedef struct _GimpBrushPipeClass
+typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
+
+struct _GimpBrushPipeClass
 {
   GimpBrushPixmapClass parent_class;
-} GimpBrushPipeClass;
+};
 
 #endif  /* __GIMPBRUSHPIPEP_H__ */

@@ -331,10 +331,16 @@ palette_entries_free (PaletteEntries *entries)
       palette_entry_free (entry);
     }
 
-  g_free (entries->name);
+  g_slist_free (entries->colors);
+
+  if (entries->name)
+    g_free (entries->name);
 
   if (entries->filename)
     g_free (entries->filename);
+
+  if (entries->pixmap)
+    gdk_pixmap_unref (entries->pixmap);
 
   g_free (entries);
 }

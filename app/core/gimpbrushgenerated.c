@@ -38,33 +38,34 @@
 
 static void gimp_brush_generated_generate (GimpBrushGenerated *brush);
 
-static GimpObjectClass* parent_class;
+static GimpObjectClass *parent_class;
 
 static void
 gimp_brush_generated_destroy (GtkObject *object)
 {
-  GTK_OBJECT_CLASS(parent_class)->destroy (object);
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 static void
 gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 {
   GtkObjectClass *object_class;
-  
+
   object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
-  object_class->destroy =  gimp_brush_generated_destroy;
+  object_class->destroy = gimp_brush_generated_destroy;
 }
 
 static void
 gimp_brush_generated_init (GimpBrushGenerated *brush)
 {
-  brush->radius        = 5.0;
-  brush->hardness      = 0.0;
-  brush->angle         = 0.0;
-  brush->aspect_ratio  = 1.0;
-  brush->freeze        = 0;
+  brush->radius       = 5.0;
+  brush->hardness     = 0.0;
+  brush->angle        = 0.0;
+  brush->aspect_ratio = 1.0;
+  brush->freeze       = 0;
 }
 
 guint
@@ -86,7 +87,7 @@ gimp_brush_generated_get_type (void)
 	(GtkClassInitFunc) NULL
       };
 
-      type = gtk_type_unique(GIMP_TYPE_BRUSH, &info);
+      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
     }
 
   return type;
@@ -123,12 +124,12 @@ GimpBrushGenerated *
 gimp_brush_generated_load (const gchar *file_name)
 {
   GimpBrushGenerated *brush;
-  FILE *fp;
-  gchar string[256];
-  gfloat fl;
-  gfloat version;
+  FILE   *fp;
+  gchar   string[256];
+  gfloat  fl;
+  gfloat  version;
 
-  if ((fp = fopen(file_name, "rb")) == NULL)
+  if ((fp = fopen (file_name, "rb")) == NULL)
     return NULL;
 
   /* make sure the file we are reading is the right type */
@@ -191,7 +192,7 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
 
   if ((fp = fopen (file_name, "wb")) == NULL)
     {
-      g_warning("Unable to save file %s", file_name);
+      g_warning ("Unable to save file %s", file_name);
       return;
     }
 
@@ -260,28 +261,29 @@ gauss (gdouble f)
   if (f < -.5)
     {
       f = -1.0-f;
-      return (2.0*f*f);
+      return (2.0 * f*f);
     }
   if (f < .5)
-    return (1.0-2.0*f*f);
+    return (1.0 - 2.0 * f*f);
   f = 1.0 -f;
-  return (2.0*f*f);
+  return (2.0 * f*f);
 }
 
 void
 gimp_brush_generated_generate (GimpBrushGenerated *brush)
 {
   register GimpBrush *gbrush = NULL;
-  register int x, y;
+  register gint x, y;
   register guchar *centerp;
-  register double d;
-  register double exponent;
+  register gdouble d;
+  register gdouble exponent;
   register guchar a;
-  register int length;
+  register gint length;
   register guchar *lookup;
-  double buffer[OVERSAMPLING];
-  register double sum, c, s, tx, ty;
-  int width, height;
+  gdouble buffer[OVERSAMPLING];
+  register gdouble sum, c, s, tx, ty;
+  gint width, height;
+
   g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
   
@@ -352,9 +354,9 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
 	buffer[x%OVERSAMPLING] = 0.0;
       else
 	/* buffer[x%OVERSAMPLING] =  (1.0 - pow (d/brush->radius, exponent)); */
-	buffer[x%OVERSAMPLING] =  gauss (pow (d/brush->radius, exponent));
+	buffer[x%OVERSAMPLING] = gauss (pow (d/brush->radius, exponent));
       sum += buffer[x%OVERSAMPLING];
-      lookup[x++] =  RINT (sum*(255.0/OVERSAMPLING));
+      lookup[x++] = RINT (sum*(255.0/OVERSAMPLING));
     }
   while (x < length)
     {
@@ -389,7 +391,7 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
 
   if (radius < 0.0)
     radius = 0.0;
-  else if(radius > 32767.0)
+  else if (radius > 32767.0)
     radius = 32767.0;
   if (radius == brush->radius)
     return radius;

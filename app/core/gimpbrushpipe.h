@@ -28,25 +28,26 @@
 typedef struct _GimpBrushPixmap GimpBrushPixmap;
 typedef struct _GimpBrushPipe GimpBrushPipe;
 
-#define GIMP_TYPE_BRUSH_PIXMAP (gimp_brush_pixmap_get_type ())
-#define GIMP_BRUSH_PIXMAP(obj) (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIXMAP, GimpBrushPixmap))
+#define GIMP_TYPE_BRUSH_PIXMAP    (gimp_brush_pixmap_get_type ())
+#define GIMP_BRUSH_PIXMAP(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIXMAP, GimpBrushPixmap))
 #define GIMP_IS_BRUSH_PIXMAP(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIXMAP))
 
-#define GIMP_TYPE_BRUSH_PIPE (gimp_brush_pipe_get_type ())
-#define GIMP_BRUSH_PIPE(obj) (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
+#define GIMP_TYPE_BRUSH_PIPE    (gimp_brush_pipe_get_type ())
+#define GIMP_BRUSH_PIPE(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
 #define GIMP_IS_BRUSH_PIPE(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIPE))
 
-GtkType gimp_brush_pixmap_get_type (void);
-GtkType gimp_brush_pipe_get_type (void);
+GtkType         gimp_brush_pixmap_get_type (void);
+GtkType         gimp_brush_pipe_get_type   (void);
 
-GimpBrushPipe *gimp_brush_pipe_load (char *filename);
-GimpBrushPipe *gimp_brush_pixmap_load (char *filename);
+GimpBrushPipe * gimp_brush_pipe_load       (gchar *filename);
+GimpBrushPipe * gimp_brush_pixmap_load     (gchar *filename);
 
-TempBuf *gimp_brush_pixmap_pixmap (GimpBrushPixmap *);
+TempBuf       * gimp_brush_pixmap_pixmap   (GimpBrushPixmap *brush);
 
-/* appearantly GIMP_IS_BRUSH_PIPE () returning TRUE is no indication that you really
-   have a brush_pipe in front of you, so here we introduce a macro that works:        */
+/* appearantly GIMP_IS_BRUSH_PIPE () returning TRUE is no indication
+ * that you really have a brush_pipe in front of you, so here we introduce
+ * a macro that works:
+ */
 #define GIMP_IS_REALLY_A_BRUSH_PIPE(obj) (GIMP_IS_BRUSH_PIPE (obj) && GIMP_BRUSH_PIPE (obj)->nbrushes > 1)
-
 
 #endif  /* __GIMPBRUSHPIPE_H__ */

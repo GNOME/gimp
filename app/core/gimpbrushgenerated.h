@@ -26,10 +26,10 @@ typedef struct _GimpBrushGenerated
 {
   GimpBrush gbrush;
 
-  gfloat     radius;
-  gfloat     hardness;     /* 0.0 - 1.0  */
-  gfloat     angle;        /* in degrees */
-  gfloat     aspect_ratio; /* y/x        */
+  gfloat    radius;
+  gfloat    hardness;     /* 0.0 - 1.0  */
+  gfloat    angle;        /* in degrees */
+  gfloat    aspect_ratio; /* y/x        */
 
   gint      freeze;
 
@@ -39,7 +39,7 @@ typedef struct _GimpBrushGenerated
 typedef struct _GimpBrushGeneratedClass
 {
   GimpBrushClass parent_class;
-  
+
   void (* generate) (GimpBrushGenerated *brush);
 } GimpBrushGeneratedClass;
 
