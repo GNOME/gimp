@@ -38,9 +38,6 @@
 #include "libgimp/gimpintl.h"
 
 
-#define TEXT_WIDTH  35
-
-
 typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
@@ -64,12 +61,8 @@ struct _ResizePrivate
   GtkWidget *resolution_se;
   GtkWidget *equal_res;
 
-  gdouble ratio;
-  gint    old_width, old_height;
-  gdouble old_res_x, old_res_y;
-  gint    area_width, area_height;
-  gint    start_x, start_y;
-  gint    orig_x, orig_y;
+  gint       old_width, old_height;
+  gdouble    old_res_x, old_res_y;
 };
 
 static void  unit_update                 (GtkWidget *widget,
