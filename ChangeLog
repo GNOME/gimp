@@ -5,9 +5,6 @@ Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
 	defines M_PI
 	* app/app_procs.c: applied gimp-quinet-980414-2; adds more 
 	information to the startup screen
-	* app/gradient.c: applied gradient-041398-seth; fixes the 
-	behavior that the gradient editor would become insensitive 
-	forever if the color selection dialog were close
 	* app/regex.c
 	* plugins/script-fu/regex.c: partially applied
 	gimp-jbuhler-980412-0; adds braces to nested if/else

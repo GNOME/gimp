@@ -4040,9 +4040,6 @@ cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 	cpopup_set_color_selection_color(cs, r, g, b, a);
 	cpopup_set_color_selection_color(cs, r, g, b, a);
 
-	gtk_signal_connect(GTK_OBJECT(csd), "destroy",
-			   cancel_callback, window);
-
 	gtk_signal_connect(GTK_OBJECT(cs), "color_changed",
 			   color_changed_callback, window);
 
