@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpVectors Import
+ * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,9 +23,10 @@
 #define __GIMP_VECTORS_IMPORT_H__
 
 
-GimpVectors * gimp_vectors_import (GimpImage    *image,
-                                   const gchar  *filename,
-                                   GError      **error);
+gboolean  gimp_vectors_import (GimpImage    *image,
+                               const gchar  *filename,
+                               gboolean      merge,
+                               GError      **error);
 
 
 #endif /* __GIMP_VECTORS_IMPORT_H__ */

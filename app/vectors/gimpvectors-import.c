@@ -1,6 +1,12 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpVectors Import
+ * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ *
+ * Some code here is based on code from librsvg that was originally
+ * written by Raph Levien <raph@artofcode.com> for Gill.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -57,6 +63,8 @@ typedef struct
   ParserState   state;
   ParserState   last_known_state;
   gint          unknown_depth;
+  GimpImage    *image;
+  gboolean      merge;
   GimpVectors  *vectors;
   Rectangle     viewbox;
 } VectorsParser;
@@ -78,8 +86,10 @@ static void  parser_end_unknown   (VectorsParser        *parser);
 
 static void  parse_svg_viewbox    (VectorsParser        *parser,
                                    const gchar          *value);
-static void  parse_path_data      (VectorsParser        *parser,
+static void  parse_path_data      (GimpVectors          *vectors,
                                    const gchar          *data);
+static void  parser_add_vectors   (VectorsParser        *parser,
+                                   GimpVectors          *vectors);
 
 
 static const GMarkupParser markup_parser =
@@ -92,20 +102,34 @@ static const GMarkupParser markup_parser =
 };
 
 
-GimpVectors *
+/**
+ * gimp_vectors_import:
+ * @image: the #GimpImage to add the paths to
+ * @filename: name of a SVG file
+ * @merge: if multiple paths should be merged into a single #GimpVectors
+ *         object
+ * @error: location to store possible errors
+ *
+ * Imports one or more paths from a SVG file.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occured
+ **/
+gboolean
 gimp_vectors_import (GimpImage    *image,
                      const gchar  *filename,
+                     gboolean      merge,
                      GError      **error)
 {
   GMarkupParseContext *context;
   FILE                *file;
   VectorsParser        parser;
+  gboolean             success = TRUE;
   gsize                bytes;
   gchar                buf[4096];
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   file = fopen (filename, "r");
   if (!file)
@@ -113,45 +137,31 @@ gimp_vectors_import (GimpImage    *image,
       g_set_error (error, 0, 0,
                    _("Failed to open file: '%s': %s"),
                    filename, g_strerror (errno));
-      return NULL;
+      return FALSE;
     }
 
   memset (&parser, 0, sizeof (VectorsParser));
 
-  parser.state   = PARSER_START;
-  parser.vectors = gimp_vectors_new (image, _("Imported Path"));
+  parser.state = PARSER_START;
+  parser.image = image;
+  parser.merge = merge;
 
   context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
 
-  while ((bytes = fread (buf, sizeof (gchar), sizeof (buf), file)) > 0 &&
-         g_markup_parse_context_parse (context, buf, bytes, error))
-    ;
+  while (success &&
+         (bytes = fread (buf, sizeof (gchar), sizeof (buf), file)) > 0)
+    success = g_markup_parse_context_parse (context, buf, bytes, error);
 
-  if (error == NULL || *error == NULL)
+  if (success)
     g_markup_parse_context_end_parse (context, error);
 
   fclose (file);
   g_markup_parse_context_free (context);
 
-  if (parser.viewbox.w && parser.viewbox.h)
-    {
-      GList   *list;
-      gdouble  scale_x, scale_y;
+  if (merge && parser.vectors)
+    parser_add_vectors (&parser, parser.vectors);
 
-      scale_x = (gdouble) image->width  / (gdouble) parser.viewbox.w;
-      scale_y = (gdouble) image->height / (gdouble) parser.viewbox.h;
-
-      for (list = parser.vectors->strokes; list; list = list->next)
-        {
-          GimpStroke *stroke = (GimpStroke *) list->data;
-
-          gimp_stroke_scale (stroke,
-                             scale_x, scale_y,
-                             - parser.viewbox.x, - parser.viewbox.y);
-        }
-    }
-
-  return parser.vectors;
+  return success;
 }
 
 static void
@@ -203,11 +213,28 @@ parser_start_element (GMarkupParseContext *context,
       while (*attribute_names)
         {
           if (strcmp (*attribute_names, "d") == 0)
-            parse_path_data (parser, *attribute_values);
+            {
+              GimpVectors *vectors = NULL;
+
+              if (parser->merge)
+                vectors = parser->vectors;
+
+              if (! vectors)
+                vectors = gimp_vectors_new (parser->image,
+                                            _("Imported Path"));
+
+              parse_path_data (vectors, *attribute_values);
+
+              if (! parser->merge)
+                parser_add_vectors (parser, vectors);
+
+              parser->vectors = vectors;
+            }
 
           attribute_names++;
           attribute_values++;
         }
+
       break;
 
     default:
@@ -265,12 +292,36 @@ parser_end_unknown (VectorsParser *parser)
     parser->state = parser->last_known_state;
 }
 
+static void
+parser_add_vectors (VectorsParser *parser,
+                    GimpVectors   *vectors)
+{
+  if (parser->viewbox.w && parser->viewbox.h)
+    {
+      GList   *list;
+      gdouble  scale_x, scale_y;
+
+      scale_x = (gdouble) parser->image->width  / (gdouble) parser->viewbox.w;
+      scale_y = (gdouble) parser->image->height / (gdouble) parser->viewbox.h;
+
+      for (list = vectors->strokes; list; list = list->next)
+        {
+          gimp_stroke_scale ((GimpStroke *) list->data,
+                             scale_x,
+                             scale_y,
+                             - parser->viewbox.x,
+                             - parser->viewbox.y);
+        }
+    }
+
+  gimp_image_add_vectors (parser->image, vectors, -1);
+}
 
 
 /**********************************************************/
 /*  Below is the code that parses the actual path data.   */
 /*                                                        */
-/*  This code is taken from libsrvg and was originally    */
+/*  This code is taken from librsvg and was originally    */
 /*  written by Raph Levien <raph@artofcode.com> for Gill. */
 /**********************************************************/
 
@@ -338,8 +389,8 @@ parse_svg_viewbox (VectorsParser *parser,
 }
 
 static void
-parse_path_data (VectorsParser *parser,
-                 const gchar   *data)
+parse_path_data (GimpVectors *vectors,
+                 const gchar *data)
 {
   ParsePathContext ctx;
 
@@ -355,7 +406,7 @@ parse_path_data (VectorsParser *parser,
   gdouble  frac     = 0.0;
   gint     i;
 
-  ctx.vectors = parser->vectors;
+  ctx.vectors = vectors;
   ctx.stroke  = NULL;
   ctx.cpx     = 0.0;
   ctx.cpy     = 0.0;

@@ -1,3 +1,10 @@
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-import.[ch]	
+	* app/gui/vectors-commands.c: allow to optionally create a
+	GimpVectors object per <path> element. Made this the default until
+	there's a GUI for this.
+
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: added lots more "GimpFooFunc gui_foo_func"
@@ -29,7 +36,7 @@
 2003-09-10  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: AC_SUBST the GDK_PIXBUF vars, to workaround automake
-	1.6 brokedness.
+	1.6 brokenness.
 
 2003-09-10  Sven Neumann  <sven@gimp.org>
 
