@@ -3,6 +3,7 @@
 
 app/app_procs.c
 app/main.c
+app/sanity.c
 
 app/actions/actions.c
 app/actions/brushes-actions.c

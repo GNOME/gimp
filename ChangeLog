@@ -1,5 +1,12 @@
 2004-08-26  Sven Neumann  <sven@gimp.org>
 
+	* app/sanity.c (sanity_check_filename_encoding): try to convert
+	the result of gimp_directory() to UTF-8 and bail out with a
+	moderately helpful error message if this conversion fails. Works
+	around bug #150917. Also marked these strings for translation.
+
+2004-08-26  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimp-tools.c (gimp_tools_register): set the paintbrush
 	as the default tool as suggested in bug #151091.
 
