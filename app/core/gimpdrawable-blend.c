@@ -771,7 +771,13 @@ gradient_render_pixel (double    x,
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
       if (rbd->blend_mode == GIMP_FG_BG_HSV_MODE)
-	gimp_hsv_to_rgb_double (&color->r, &color->g, &color->b);
+        {
+          GimpHSV hsv;
+
+          hsv = *((GimpHSV *) color);
+
+          gimp_hsv_to_rgb (&hsv, color);
+        }
     }
 }
 
@@ -861,10 +867,16 @@ gradient_fill_region (GimpImage        *gimage,
 
     case GIMP_FG_BG_HSV_MODE:
       /* Convert to HSV */
+      {
+        GimpHSV fg_hsv;
+        GimpHSV bg_hsv;
 
-      gimp_rgb_to_hsv_double (&rbd.fg.r, &rbd.fg.g, &rbd.fg.b);
-      gimp_rgb_to_hsv_double (&rbd.bg.r, &rbd.bg.g, &rbd.bg.b);
+        gimp_rgb_to_hsv (&rbd.fg, &fg_hsv);
+        gimp_rgb_to_hsv (&rbd.bg, &bg_hsv);
 
+        rbd.fg = *((GimpRGB *) &fg_hsv);
+        rbd.bg = *((GimpRGB *) &bg_hsv);
+      }
       break;
 
     case GIMP_FG_TRANSPARENT_MODE:
@@ -872,7 +884,6 @@ gradient_fill_region (GimpImage        *gimage,
 
       rbd.bg   = rbd.fg;
       rbd.bg.a = 0.0; /* transparent */
-
       break;
 
     case GIMP_CUSTOM_MODE:

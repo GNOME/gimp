@@ -1,5 +1,17 @@
 2003-05-20  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpcolor/gimpcolorspace.[ch]: removed redundant functions
+	gimp_rgb_to_hsv_double() and gimp_hsv_to_rgb_double().
+
+	* app/core/gimpdrawable-blend.c: use gimp_rgb_to_hsv() and
+	gimp_hsv_to_rgb() instead.
+
+	* plug-ins/fp/fp.[ch]
+	* plug-ins/fp/fp_misc.c: ditto. Deuglyfied the changed functions'
+	coding style a lot.
+
+2003-05-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-undo-push.c (undo_pop_layer_mod): call
 	gimp_layer_invalidate_boundary() because the layer extents may
 	change.

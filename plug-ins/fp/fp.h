@@ -17,13 +17,11 @@ typedef struct {
   gint run;
 } fpInterface;
 
-typedef double hsv;
-
 typedef struct {
   gint      width;
   gint      height;
   guchar    *rgb;
-  hsv       *hsv;
+  gdouble   *hsv;
   guchar    *mask;
 } ReducedImage;
 

@@ -50,97 +50,106 @@ ReducedImage *Reduce_The_Image(GimpDrawable *drawable,
 			       gint LongerSize, 
 			       gint Slctn)
 {
-  gint RH, RW, width, height, bytes=drawable->bpp;  
-  ReducedImage *temp=(ReducedImage *)malloc(sizeof(ReducedImage));
-  guchar *tempRGB, *src_row, *tempmask, *src_mask_row,R,G,B;
-  gint i, j, whichcol, whichrow, x1, x2, y1, y2;
-  GimpPixelRgn srcPR, srcMask;
-  gint NoSelectionMade=TRUE;
-  hsv *tempHSV, H, S, V;
+  gint          RH, RW, width, height, bytes=drawable->bpp;  
+  ReducedImage *temp = (ReducedImage *) malloc (sizeof (ReducedImage));
+  guchar       *tempRGB, *src_row, *tempmask, *src_mask_row, R, G, B;
+  gint          i, j, whichcol, whichrow, x1, x2, y1, y2;
+  GimpPixelRgn  srcPR, srcMask;
+  gboolean      NoSelectionMade=TRUE;
+  gdouble      *tempHSV;
+  GimpRGB       rgb;
+  GimpHSV       hsv;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width  = x2-x1;
-  height = y2-y1;
+  width  = x2 - x1;
+  height = y2 - y1;
 
   if (width != drawable->width && height != drawable->height) 
-    NoSelectionMade=FALSE;
+    NoSelectionMade = FALSE;
 
-  if (Slctn==0) {
-    x1=0;
-    x2=drawable->width;
-    y1=0;
-    y2=drawable->height;
-  }  
+  if (Slctn == 0)
+    {
+      x1 = 0;
+      x2 = drawable->width;
+      y1 = 0;
+      y2 = drawable->height;
+    }
 
-  if (Slctn==2) {
-    x1=MAX(0,                x1-width/2.0);
-    x2=MIN(drawable->width,  x2+width/2.0);
-    y1=MAX(0,                y1-height/2.0);
-    y2=MIN(drawable->height, y2+height/2.0);
-  }  
+  if (Slctn == 2)
+    {
+      x1 = MAX (0,                x1 - width  / 2.0);
+      x2 = MIN (drawable->width,  x2 + width  / 2.0);
+      y1 = MAX (0,                y1 - height / 2.0);
+      y2 = MIN (drawable->height, y2 + height / 2.0);
+    }
 
-  width  = x2-x1;
-  height = y2-y1;
+  width  = x2 - x1;
+  height = y2 - y1;
 
-  if (width>height) {
-    RW=LongerSize;
-    RH=(float) height * (float) LongerSize/ (float) width;
-  }
-  else {
-    RH=LongerSize;
-    RW=(float)width * (float) LongerSize/ (float) height;
-  }
+  if (width > height)
+    {
+      RW = LongerSize;
+      RH = (gfloat) height * (gfloat) LongerSize / (gfloat) width;
+    }
+  else
+    {
+      RH = LongerSize;
+      RW = (gfloat) width * (gfloat) LongerSize / (gfloat) height;
+    }
   
-  tempRGB   = (guchar *) malloc(RW*RH*bytes);
-  tempHSV   = (hsv *)    malloc(RW*RH*bytes*sizeof(hsv));
-  tempmask  = (guchar *) malloc(RW*RH);
+  tempRGB  = (guchar *)  malloc (RW * RH * bytes);
+  tempHSV  = (gdouble *) malloc (RW * RH * bytes * sizeof (gdouble));
+  tempmask = (guchar *)  malloc (RW * RH);
 
   gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&srcMask, mask, x1, y1, width, height, FALSE, FALSE);
-  
-  src_row = (guchar *) malloc (width*bytes);
-  src_mask_row = (guchar *) malloc (width*bytes);
 
-  for (i=0; i<RH; i++) {
-    whichrow=(float)i*(float)height/(float)RH;
-    gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1+whichrow, width);   
-    gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x1, y1+whichrow, width);
+  src_row      = (guchar *) malloc (width * bytes);
+  src_mask_row = (guchar *) malloc (width * bytes);
+
+  for (i = 0; i < RH; i++)
+    {
+      whichrow = (gfloat) i * (gfloat) height / (gfloat) RH;
+
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);   
+      gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x1, y1 + whichrow, width);
    
-    for (j=0; j<RW; j++) {
-      whichcol=(float)j*(float)width/(float)RW;
+      for (j = 0; j < RW; j++)
+        {
+          whichcol = (gfloat) j * (gfloat) width / (gfloat) RW;
 
-      if (NoSelectionMade)
-	tempmask[i*RW+j]=255;
-      else
-	tempmask[i*RW+j]=src_mask_row[whichcol];
+          if (NoSelectionMade)
+            tempmask[i * RW + j] = 255;
+          else
+            tempmask[i * RW + j] = src_mask_row[whichcol];
 
-      R=src_row[whichcol*bytes+0];
-      G=src_row[whichcol*bytes+1];
-      B=src_row[whichcol*bytes+2];
-      
-      H = R/255.0;
-      S = G/255.0;
-      V = B/255.0;
-      gimp_rgb_to_hsv_double(&H,&S,&V);
+          R = src_row[whichcol * bytes + 0];
+          G = src_row[whichcol * bytes + 1];
+          B = src_row[whichcol * bytes + 2];
 
-      tempRGB[i*RW*bytes+j*bytes+0]=R;
-      tempRGB[i*RW*bytes+j*bytes+1]=G;
-      tempRGB[i*RW*bytes+j*bytes+2]=B;
+          gimp_rgb_set_uchar (&rgb, R, G, B);
+          gimp_rgb_to_hsv (&rgb, &hsv);
 
-      tempHSV[i*RW*bytes+j*bytes+0]=H;
-      tempHSV[i*RW*bytes+j*bytes+1]=S;
-      tempHSV[i*RW*bytes+j*bytes+2]=V;
+          tempRGB[i * RW * bytes + j * bytes + 0] = R;
+          tempRGB[i * RW * bytes + j * bytes + 1] = G;
+          tempRGB[i * RW * bytes + j * bytes + 2] = B;
 
-      if (bytes==4)
-	tempRGB[i*RW*bytes+j*bytes+3]=src_row[whichcol*bytes+3];
-	     
+          tempHSV[i * RW * bytes + j * bytes + 0] = hsv.h;
+          tempHSV[i * RW * bytes + j * bytes + 1] = hsv.s;
+          tempHSV[i * RW * bytes + j * bytes + 2] = hsv.v;
+
+          if (bytes == 4)
+            tempRGB[i * RW * bytes + j * bytes + 3] =
+              src_row[whichcol * bytes + 3];
+        }
     }
-  }
-  temp->width=RW;
-  temp->height=RH;
-  temp->rgb=tempRGB;
-  temp->hsv=tempHSV;
-  temp->mask=tempmask;  
+
+  temp->width  = RW;
+  temp->height = RH;
+  temp->rgb    = tempRGB;
+  temp->hsv    = tempHSV;
+  temp->mask   = tempmask;
+
   return temp;
 }
 
@@ -341,47 +350,64 @@ fp_create_smoothness_graph        (GtkWidget *preview)
 }
 
 void
-fp_range_preview_spill(GtkWidget *preview, int type)
+fp_range_preview_spill (GtkWidget *preview,
+                        gint       type)
 {
-  guchar data[256*3];
-  int i, j;
-  hsv R,G,B;
-  
-  for (i=0; i<RANGE_HEIGHT; i++) {
-    for (j=0; j<256; j++)
-      if  (!((j+1)%32)) {
-	data[3*j+0]=255;
-	data[3*j+1]=128;
-	data[3*j+2]=128;
-      }
-      else
-	switch (type) {
-	case BY_VAL:
-	  data[3*j+0]=j-Current.Offset;
-	  data[3*j+1]=j-Current.Offset;
-	  data[3*j+2]=j-Current.Offset;
-	  break;
-	case BY_HUE:
-	  R = (hsv)((j-Current.Offset+256)%256)/255.0;
-	  G = 1.0;
-	  B = .5;
-	  gimp_hsv_to_rgb_double(&R, &G, &B);
-	  data[3*j+0]=R*255;
-	  data[3*j+1]=G*255;
-	  data[3*j+2]=B*255;
-	  break;
-	case BY_SAT:
-	  R = .5;
-	  G = (hsv)((j-(gint)Current.Offset+256)%256)/255.0;
-	  B = .5;
-	  gimp_hsv_to_rgb_double(&R,&G,&B);
-	  data[3*j+0]=R*255;
-	  data[3*j+1]=G*255;
-	  data[3*j+2]=B*255;
-	  break;
-	}
-    gtk_preview_draw_row( GTK_PREVIEW(preview),data,0,i,256);
-  }
+  guchar  data[256 * 3];
+  gint    i, j;
+  GimpRGB rgb;
+  GimpHSV hsv;
+
+  for (i = 0; i < RANGE_HEIGHT; i++)
+    {
+      for (j = 0; j < 256; j++)
+        {
+          if (! ((j + 1) % 32))
+            {
+              data[3 * j + 0] = 255;
+              data[3 * j + 1] = 128;
+              data[3 * j + 2] = 128;
+            }
+          else
+            {
+              switch (type)
+                {
+                case BY_VAL:
+                  data[3 * j + 0] = j - Current.Offset;
+                  data[3 * j + 1] = j - Current.Offset;
+                  data[3 * j + 2] = j - Current.Offset;
+                  break;
+
+                case BY_HUE:
+                  gimp_hsv_set (&hsv,
+                                ((j - Current.Offset + 256) % 256) / 255.0,
+                                1.0,
+                                0.5);
+                  gimp_hsv_to_rgb (&hsv, &rgb);
+                  gimp_rgb_get_uchar (&rgb,
+                                      &data[3 * j + 0],
+                                      &data[3 * j + 1],
+                                      &data[3 * j + 2]);
+                  break;
+
+                case BY_SAT:
+                  gimp_hsv_set (&hsv,
+                                0.5,
+                                ((j-(gint)Current.Offset+256)%256) / 255.0,
+                                0.5);
+                  gimp_hsv_to_rgb (&hsv, &rgb);
+                  gimp_rgb_get_uchar (&rgb,
+                                      &data[3 * j + 0],
+                                      &data[3 * j + 1],
+                                      &data[3 * j + 2]);
+                  break;
+                }
+
+              gtk_preview_draw_row (GTK_PREVIEW (preview), data, 0, i, 256);
+            }
+        }
+    }
+
   gtk_widget_queue_draw (preview);
 }
 

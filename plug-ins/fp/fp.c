@@ -150,72 +150,78 @@ fp_row (const guchar *src_row,
 	gint         row_width,
 	gint         bytes)
 {
-  gint col, bytenum, k;
-  int JudgeBy, Intensity=0, P[3], backupP[3];
-  hsv H,S,V;
-  gint M, m, middle;
+  gint    col, bytenum, k;
+  gint    JudgeBy, Intensity=0, P[3], backupP[3];
+  GimpRGB rgb;
+  GimpHSV hsv;
+  gint    M, m, middle;
 
   for (col = 0; col < row_width ; col++)
     {
       
-      backupP[0] = P[0] = src_row[col*bytes+0];
-      backupP[0] = P[1] = src_row[col*bytes+1];
-      backupP[0] = P[2] = src_row[col*bytes+2];
+      backupP[0] = P[0] = src_row[col * bytes + 0];
+      backupP[0] = P[1] = src_row[col * bytes + 1];
+      backupP[0] = P[2] = src_row[col * bytes + 2];
 
-      H = P[0]/255.0;
-      S = P[1]/255.0;
-      V = P[2]/255.0;
-      gimp_rgb_to_hsv_double(&H, &S, &V);
+      gimp_rgb_set_uchar (&rgb, (guchar) P[0], (guchar) P[1], (guchar) P[2]);
+      gimp_rgb_to_hsv (&rgb, &hsv);
+
+      for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+        {
+          if (! Current.Touched[JudgeBy])
+            continue;
+
+          switch (JudgeBy)
+            {
+            case BY_HUE:
+              Intensity = 255 * hsv.h;
+              break;
+
+            case BY_SAT:
+              Intensity = 255 * hsv.s;
+              break;
+
+            case BY_VAL:
+              Intensity = 255 * hsv.v;
+              break;
+            }
+
+
+          /* It's important to take care of Saturation first!!! */
       
-      for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++) {
-	if (!Current.Touched[JudgeBy]) continue;
-	
-	switch (JudgeBy) {
-	case BY_HUE:
-	  Intensity=255*H;
-	  break;
-	case BY_SAT:
-	  Intensity=255*S;
-	  break;
-	case BY_VAL:
-	  Intensity=255*V;
-	  break;
-	}
+          m = MIN (MIN (P[0], P[1]), P[2]);
+          M = MAX (MAX (P[0], P[1]), P[2]);
+          middle = (M + m) / 2;
 
-
-	/* It's important to take care of Saturation first!!! */
+          for (k = 0; k < 3; k++)
+            if (P[k] != m && P[k] != M)
+              middle = P[k];
       
-      m = MIN(MIN(P[0],P[1]),P[2]);
-      M = MAX(MAX(P[0],P[1]),P[2]);
-      middle=(M+m)/2;
+          for (k = 0; k < 3; k++) 
+            if (M != m)
+              {
+                if (P[k] == M)
+                  P[k] = MAX (P[k] + Current.satAdj[JudgeBy][Intensity], middle);
+                else if (P[k] == m)
+                  P[k] = MIN (P[k] - Current.satAdj[JudgeBy][Intensity], middle); 
+              }
 
-      for (k=0; k<3; k++)
-	if (P[k]!=m && P[k]!=M) middle=P[k];
-      
-	for (k=0; k<3; k++) 
-	  if (M!=m) {
-	    if (P[k] == M)
-	      P[k] = MAX(P[k]+Current.satAdj[JudgeBy][Intensity],middle);
-	    else if (P[k] == m)
-	      P[k] = MIN(P[k]-Current.satAdj[JudgeBy][Intensity],middle); 
-	  }
+          P[0] += Current.redAdj[JudgeBy][Intensity];
+          P[1] += Current.greenAdj[JudgeBy][Intensity];
+          P[2] += Current.blueAdj[JudgeBy][Intensity];
 
-	
-	P[0] += Current.redAdj[JudgeBy][Intensity];
-	P[1] += Current.greenAdj[JudgeBy][Intensity];
-	P[2] += Current.blueAdj[JudgeBy][Intensity];
-       
-	P[0]  =  MAX(0,MIN(255, P[0]));
-	P[1]  =  MAX(0,MIN(255, P[1]));
-	P[2]  =  MAX(0,MIN(255, P[2]));
-      }
-      dest_row[col*bytes + 0] = P[0];
-      dest_row[col*bytes + 1] = P[1];
-      dest_row[col*bytes + 2] = P[2];
-      
-      if (bytes>3)
-	for (bytenum = 3; bytenum<bytes; bytenum++)
-	  dest_row[col*bytes+bytenum] = src_row[col*bytes+bytenum];
+          P[0]  =  MAX (0, MIN (255, P[0]));
+          P[1]  =  MAX (0, MIN (255, P[1]));
+          P[2]  =  MAX (0, MIN (255, P[2]));
+        }
+
+      dest_row[col * bytes + 0] = P[0];
+      dest_row[col * bytes + 1] = P[1];
+      dest_row[col * bytes + 2] = P[2];
+
+      if (bytes > 3)
+	for (bytenum = 3; bytenum < bytes; bytenum++)
+	  dest_row[col * bytes + bytenum] = src_row[col * bytes + bytenum];
     }
 }
 
