@@ -32,11 +32,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -673,7 +668,6 @@ sinus_dialog (void)
   gtk_widget_show (vbox);
 
   preview = mw_preview_new (vbox, thePreview);
-  sinus_do_preview (preview);
 
   /* Create the notebook */
   /* =================== */
@@ -935,6 +929,8 @@ sinus_dialog (void)
 
   gtk_widget_show (dlg);
 
+  sinus_do_preview (preview);
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -950,9 +946,9 @@ void
 sinus_do_preview (GtkWidget *widget)
 {
   static GtkWidget *theWidget = NULL;
-  gint y,rowsize;
-  guchar *buf, *savbuf;
-  params p;
+  gint              rowsize;
+  guchar           *buf;
+  params            p;
 
   if (!do_preview)
     return;
@@ -963,15 +959,14 @@ sinus_do_preview (GtkWidget *widget)
     }
 
   rowsize = thePreview->width * thePreview->bpp;
-  savbuf = buf = g_new (guchar,
-                        thePreview->width*thePreview->height*thePreview->bpp);
+  buf = g_new (guchar, thePreview->width*thePreview->height*thePreview->bpp);
 
   p.height = thePreview->height;
   p.width = thePreview->width;
 
   prepare_coef (&p);
 
-  if (thePreview->bpp == 3)
+  if (thePreview->bpp == 3) /* [dindinx]: it looks to me that this is always true... */
     compute_block_x (buf, rowsize, 0, 0, thePreview->width, thePreview->height,
                      3, assign_block_3, &p);
   else if (thePreview->bpp == 1)
@@ -980,15 +975,12 @@ sinus_do_preview (GtkWidget *widget)
                        thePreview->height, 1, assign_block_1, &p);
     }
 
-  for (y = 0; y < thePreview->height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-                            buf, 0, y, thePreview->width);
-      buf += rowsize;
-    }
-  g_free (savbuf);
-
-  gtk_widget_queue_draw (theWidget);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (theWidget),
+                          0, 0, thePreview->width, thePreview->height,
+                          GIMP_RGB_IMAGE,
+                          buf,
+                          rowsize);
+  g_free (buf);
 }
 
 static void
@@ -1038,13 +1030,13 @@ mw_preview_new (GtkWidget *parent,
   gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (NULL);
+  frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, mwp->width, mwp->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
