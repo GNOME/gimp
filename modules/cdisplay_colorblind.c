@@ -201,20 +201,11 @@ cdisplay_colorblind_get_type (GTypeModule *module)
         (GInstanceInitFunc) cdisplay_colorblind_init,
       };
 
-      static const GInterfaceInfo display_iface_info =
-      {
-        NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
-
       cdisplay_colorblind_type =
         g_type_module_register_type (module,
                                      GIMP_TYPE_COLOR_DISPLAY,
                                      "CdisplayColorblind",
                                      &display_info, 0);
-      g_type_add_interface_static (cdisplay_colorblind_type,
-                                   GIMP_TYPE_CONFIG, &display_iface_info);
     }
 
   return cdisplay_colorblind_type;

@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -80,9 +81,19 @@ gimp_color_display_get_type (void)
 	NULL            /* instance_init  */
       };
 
+      static const GInterfaceInfo display_iface_info =
+      {
+        NULL,           /* iface_init     */
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       display_type = g_type_register_static (G_TYPE_OBJECT,
                                              "GimpColorDisplay",
                                              &display_info, 0);
+
+      g_type_add_interface_static (display_type,
+                                   GIMP_TYPE_CONFIG, &display_iface_info);
     }
 
   return display_type;
