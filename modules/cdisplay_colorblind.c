@@ -353,24 +353,29 @@ lut_lookup (gfloat        value,
             const gfloat *lut)
 {
   guchar offset = 128;
+  gint   step   = 64;
 
-  while (TRUE)
+  while (step)
     {
       if (lut[offset] < value)
         {
           if (offset == 255 || lut[offset + 1] >= value)
-            return offset;
+            break;
 
-          offset++;
+          offset += step;
         }
       else
         {
           if (offset == 0 || lut[offset - 1] < value)
-            return offset;
+            break;
 
-          offset--;
+          offset -= step;
         }
+
+      step /= 2;
     }
+
+  return offset;
 }
 
 static void

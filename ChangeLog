@@ -1,5 +1,10 @@
 2005-03-26  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c (lut_lookup): actually do a binary
+	search, not a linear search starting in the middle.
+
+2005-03-26  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c
 	(gimp_display_shell_close_dialog): added an icon to the "Don't Save"
 	button.
