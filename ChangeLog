@@ -1,3 +1,21 @@
+2003-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphistogramview.[ch]: applied (modified) patch
+	from Ed Halley which adds "quintile marks". Fixes bug #129050.
+	Render the histogram on a base_gc background and use text_gc and
+	text_aa_gc for rendering the histogram and the helper lines.
+	Fixed rendering of the 1px border around the histogram. Removed
+	separate drawing of baseline, left and right helper lines and draw
+	a rectangle which marks the entire area of possible values. Fixed
+	size_request calculation. Added missing getters. Cleanup.
+
+	* app/tools/gimpcurvestool.c: use the same color scheme as the
+	histogram.
+
+	* app/tools/gimpcurvestool.c (curves_load,save_callback)
+	* app/tools/gimplevelstool.c (levels_load,save_callback):
+	gtk_window_present() the file dialog if it is already visible.
+
 2003-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c (gimp_display_shell_events):

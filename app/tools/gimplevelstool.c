@@ -1405,8 +1405,12 @@ levels_load_callback (GtkWidget      *widget,
 {
   if (! l_tool->file_dialog)
     file_dialog_create (l_tool);
-  else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
-    return;
+
+  if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
+    {
+      gtk_window_present (GTK_WINDOW (l_tool->file_dialog));
+      return;
+    }
 
   l_tool->is_save = FALSE;
 
@@ -1420,8 +1424,12 @@ levels_save_callback (GtkWidget      *widget,
 {
   if (! l_tool->file_dialog)
     file_dialog_create (l_tool);
-  else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
-    return;
+
+  if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
+    {
+      gtk_window_present (GTK_WINDOW (l_tool->file_dialog));
+      return;
+    }
 
   l_tool->is_save = TRUE;
 

@@ -1047,10 +1047,8 @@ curve_print_loc (GimpCurvesTool *c_tool)
   gint  x, y;
   gint  w, h;
 
-  if (c_tool->cursor_x < 0 || c_tool->cursor_x > 255)
-    return;
-
-  if (c_tool->cursor_y < 0 || c_tool->cursor_y > 255)
+  if (c_tool->cursor_x < 0 || c_tool->cursor_x > 255 ||
+      c_tool->cursor_y < 0 || c_tool->cursor_y > 255)
     return;
 
   if (! c_tool->cursor_layout)
@@ -1067,11 +1065,11 @@ curve_print_loc (GimpCurvesTool *c_tool)
   h = c_tool->cursor_rect.height + 4;
 
   gdk_draw_rectangle (c_tool->graph->window,
-                      c_tool->graph->style->bg_gc[GTK_STATE_ACTIVE],
+                      c_tool->graph->style->base_gc[GTK_STATE_ACTIVE],
                       TRUE,
                       x, y, w + 1, h + 1);
   gdk_draw_rectangle (c_tool->graph->window,
-                      c_tool->graph->style->black_gc,
+                      c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                       FALSE,
                       x, y, w, h);
 
@@ -1080,7 +1078,7 @@ curve_print_loc (GimpCurvesTool *c_tool)
   pango_layout_set_text (c_tool->cursor_layout, buf, 11);
 
   gdk_draw_layout (c_tool->graph->window,
-                   c_tool->graph->style->black_gc,
+                   c_tool->graph->style->text_gc[GTK_STATE_ACTIVE],
                    x + 2, y + 2,
                    c_tool->cursor_layout);
 }
@@ -1110,15 +1108,22 @@ curves_graph_expose (GtkWidget      *widget,
         sel_channel = GIMP_HISTOGRAM_VALUE;
     }
 
+  /*  Draw the background  */
+  gdk_draw_rectangle (widget->window,
+                      widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
+                      0, 0,
+                      widget->allocation.width,
+                      widget->allocation.height);
+
   /*  Draw the grid lines  */
   for (i = 0; i < 5; i++)
     {
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
+                     c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
                      RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS,
                      GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
+                     c_tool->graph->style->text_aa_gc[GTK_STATE_NORMAL],
                      i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS,
                      i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
     }
@@ -1133,13 +1138,13 @@ curves_graph_expose (GtkWidget      *widget,
   if (c_tool->curves->curve_type[c_tool->channel] == GIMP_CURVE_FREE)
     {
       gdk_draw_points (widget->window,
-                       c_tool->graph->style->black_gc,
+                       c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                        points, 256);
     }
   else
     {
       gdk_draw_lines (widget->window,
-                      c_tool->graph->style->black_gc,
+                      c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                       points, 256);
 
       /*  Draw the points  */
@@ -1147,7 +1152,7 @@ curves_graph_expose (GtkWidget      *widget,
         {
           if (c_tool->curves->points[c_tool->channel][i][0] != -1)
             gdk_draw_arc (widget->window,
-                          c_tool->graph->style->black_gc,
+                          c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                           TRUE,
                           c_tool->curves->points[c_tool->channel][i][0],
                           255 - c_tool->curves->points[c_tool->channel][i][1],
@@ -1159,7 +1164,7 @@ curves_graph_expose (GtkWidget      *widget,
     {
       /* draw the color line */
       gdk_draw_line (widget->window,
-                     c_tool->graph->style->black_gc,
+                     c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                      c_tool->col_value[sel_channel] + RADIUS,
                      RADIUS,
                      c_tool->col_value[sel_channel] + RADIUS,
@@ -1183,7 +1188,7 @@ curves_graph_expose (GtkWidget      *widget,
         offset = - (offset + 2);
 
       gdk_draw_layout (widget->window,
-                       c_tool->graph->style->black_gc,
+                       c_tool->graph->style->text_gc[GTK_STATE_NORMAL],
                        c_tool->col_value[sel_channel] + offset,
                        GRAPH_HEIGHT - height - 2,
                        c_tool->xpos_layout);
@@ -1199,8 +1204,12 @@ curves_load_callback (GtkWidget      *widget,
 {
   if (! c_tool->file_dialog)
     file_dialog_create (c_tool);
-  else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
-    return;
+
+  if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
+    {
+      gtk_window_present (GTK_WINDOW (c_tool->file_dialog));
+      return;
+    }
 
   c_tool->is_save = FALSE;
 
@@ -1214,8 +1223,12 @@ curves_save_callback (GtkWidget      *widget,
 {
   if (! c_tool->file_dialog)
     file_dialog_create (c_tool);
-  else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
-    return;
+
+  if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
+    {
+      gtk_window_present (GTK_WINDOW (c_tool->file_dialog));
+      return;
+    }
 
   c_tool->is_save = TRUE;
 
