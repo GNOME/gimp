@@ -403,10 +403,6 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       tool->drawable = NULL;
       break;
     }
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
 }
 
 static void
