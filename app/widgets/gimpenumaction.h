@@ -58,7 +58,8 @@ GimpEnumAction * gimp_enum_action_new      (const gchar    *name,
                                             const gchar    *tooltip,
                                             const gchar    *stock_id,
                                             gint            value);
-void             gimp_enum_action_selected (GimpEnumAction *action);
+void             gimp_enum_action_selected (GimpEnumAction *action,
+                                            gint            value);
 
 
 #endif  /* __GIMP_ENUM_ACTION_H__ */

@@ -185,13 +185,14 @@ gimp_enum_action_activate (GtkAction *action)
 {
   GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
 
-  gimp_enum_action_selected (enum_action);
+  gimp_enum_action_selected (enum_action, enum_action->value);
 }
 
 void
-gimp_enum_action_selected (GimpEnumAction *action)
+gimp_enum_action_selected (GimpEnumAction *action,
+                           gint            value)
 {
   g_return_if_fail (GIMP_IS_ENUM_ACTION (action));
 
-  g_signal_emit (action, action_signals[SELECTED], 0, action->value);
+  g_signal_emit (action, action_signals[SELECTED], 0, value);
 }

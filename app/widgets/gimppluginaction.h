@@ -58,7 +58,8 @@ GimpPlugInAction * gimp_plug_in_action_new      (const gchar      *name,
                                                  const gchar      *tooltip,
                                                  const gchar      *stock_id,
                                                  PlugInProcDef    *proc_def);
-void               gimp_plug_in_action_selected (GimpPlugInAction *action);
+void               gimp_plug_in_action_selected (GimpPlugInAction *action,
+                                                 PlugInProcDef    *proc_def);
 
 
 #endif  /* __GIMP_PLUG_IN_ACTION_H__ */

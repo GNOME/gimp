@@ -448,7 +448,7 @@ gimp_controller_info_event (GimpController            *controller,
 
   if (! info->enabled)
     {
-      g_print ("    ignoring because controller is disabled\n");
+      g_print ("    ignoring because controller is disabled\n\n");
 
       return FALSE;
     }

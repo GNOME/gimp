@@ -311,19 +311,14 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
               if (G_VALUE_HOLDS_DOUBLE (&event->value.value) &&
                   GIMP_IS_ENUM_ACTION (action))
                 {
-                  gdouble value;
-                  gint    save = GIMP_ENUM_ACTION (action)->value;
+                  gdouble value = g_value_get_double (&event->value.value);
 
-                  value = g_value_get_double (&event->value.value);
-
-                  GIMP_ENUM_ACTION (action)->value = value * 1000;
-
-                  gtk_action_activate (action);
-
-                  GIMP_ENUM_ACTION (action)->value = save;
+                  gimp_enum_action_selected (GIMP_ENUM_ACTION (action),
+                                             value * 1000);
 
                   break;
                 }
+              /* else fallthru */
 
             case GIMP_CONTROLLER_EVENT_TRIGGER:
             default:

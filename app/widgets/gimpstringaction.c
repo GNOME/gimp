@@ -202,13 +202,14 @@ gimp_string_action_activate (GtkAction *action)
 {
   GimpStringAction *string_action = GIMP_STRING_ACTION (action);
 
-  gimp_string_action_selected (string_action);
+  gimp_string_action_selected (string_action, string_action->value);
 }
 
 void
-gimp_string_action_selected (GimpStringAction *action)
+gimp_string_action_selected (GimpStringAction *action,
+                             const gchar      *value)
 {
   g_return_if_fail (GIMP_IS_STRING_ACTION (action));
 
-  g_signal_emit (action, action_signals[SELECTED], 0, action->value);
+  g_signal_emit (action, action_signals[SELECTED], 0, value);
 }

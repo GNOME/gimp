@@ -173,7 +173,7 @@ gimp_plug_in_action_activate (GtkAction *action)
 {
   GimpPlugInAction *plug_in_action = GIMP_PLUG_IN_ACTION (action);
 
-  gimp_plug_in_action_selected (plug_in_action);
+  gimp_plug_in_action_selected (plug_in_action, plug_in_action->proc_def);
 }
 
 static void
@@ -239,9 +239,10 @@ gimp_plug_in_action_new (const gchar   *name,
 }
 
 void
-gimp_plug_in_action_selected (GimpPlugInAction *action)
+gimp_plug_in_action_selected (GimpPlugInAction *action,
+                              PlugInProcDef    *proc_def)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_ACTION (action));
 
-  g_signal_emit (action, action_signals[SELECTED], 0, action->proc_def);
+  g_signal_emit (action, action_signals[SELECTED], 0, proc_def);
 }

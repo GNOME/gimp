@@ -1,5 +1,21 @@
 2004-06-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpenumaction.[ch]
+	* app/widgets/gimppluginaction.[ch]
+	* app/widgets/gimpstringaction.[ch]: added parameters to the
+	gimp_*_action_selected() function so the "selected" signal can be
+	emitted with value != action->value. Changed GtkAction::activate()
+	implementations accordingly (pass action->value).
+
+	* app/widgets/gimpcontrollers.c: call gimp_enum_action_selected()
+	and pass the value of the GimpControllerEventValue instead of
+	temporarily replacing action->value and calling
+	gtk_action_activate().
+
+	* app/widgets/gimpcontrollerinfo.c: fixed debugging output.
+
+2004-06-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.[ch]: added signal "set-brush" which is
 	G_SIGNAL_RUN_LAST so we can connect before and after the default
 	implementation. Moved the brush setting and outline invalidation
