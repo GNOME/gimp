@@ -2,10 +2,10 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = gifload
+pluginlib_PROGRAMS = gif
 
-gifload_SOURCES = \
-	gifload.c   
+gif_SOURCES = \
+	gif.c   
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -19,7 +19,7 @@ LDADD = \
 DEPS = \
 	$(top_builddir)/libgimp/libgimp.la	
 
-gifload_DEPENDENCIES = $(DEPS)
+gif_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 
