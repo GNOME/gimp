@@ -53,7 +53,6 @@ fi
 case $CC in
 *xlc | *xlc\ * | *lcc | *lcc\ *) am_opt=--include-deps;;
 esac
-am_opt=--include-deps
 
 if test -z "$ACLOCAL_FLAGS"; then
 
