@@ -1,3 +1,9 @@
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: commented out generation of some files in
+	plug-ins/ so config.status doesn't warn about non-existing
+	directories.
+
 2001-11-12  Michael Natterer  <mitch@gimp.org>
 
 	* HACKING: small fix.

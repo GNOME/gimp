@@ -863,7 +863,7 @@ app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
 plug-ins/makefile.mingw
-plug-ins/perl/config.pl
+dnl plug-ins/perl/config.pl
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
@@ -881,8 +881,8 @@ plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
 plug-ins/fp/Makefile
-plug-ins/gap/Makefile
-plug-ins/gdyntext/Makefile
+dnl plug-ins/gap/Makefile
+dnl plug-ins/gdyntext/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gflare/Makefile
@@ -892,7 +892,7 @@ plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
-plug-ins/helpbrowser/Makefile
+dnl plug-ins/helpbrowser/Makefile
 plug-ins/ifscompose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/maze/Makefile
@@ -934,7 +934,7 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-plug-ins/perl/po/Makefile.in
+dnl plug-ins/perl/po/Makefile.in
 ],[
    chmod +x gimptool-1.4
 
@@ -942,7 +942,7 @@ plug-ins/perl/po/Makefile.in
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
 
-   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
+#   sed -e "/POTFILES =/r plug-ins/perl/po/POTFILES" plug-ins/perl/po/Makefile.in > plug-ins/perl/po/Makefile
 
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
