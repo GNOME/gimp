@@ -271,6 +271,8 @@ EXPORTS
 	gimp_paintbrush_default
 	gimp_palette_get_background
 	gimp_palette_get_foreground
+	gimp_palette_select_destroy
+	gimp_palette_select_new
 	gimp_palette_set_background
 	gimp_palette_set_default_colors
 	gimp_palette_set_foreground

@@ -1,3 +1,8 @@
+2004-07-29  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimp/gimp.def
+	* libgimp/gimpui.def: added some missing symbols
+
 2004-07-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbase.def: added new symbols.

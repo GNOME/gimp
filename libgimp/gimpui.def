@@ -19,6 +19,9 @@ EXPORTS
 	gimp_image_menu_new
 	gimp_layer_combo_box_new
 	gimp_layer_menu_new
+	gimp_palette_select_widget_close
+	gimp_palette_select_widget_new
+	gimp_palette_select_widget_set
 	gimp_pattern_select_widget_close
 	gimp_pattern_select_widget_new
 	gimp_pattern_select_widget_set
