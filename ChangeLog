@@ -1,3 +1,11 @@
+2002-11-28  Sven Neumann  <sven@gimp.org>
+	
+	* app/config/Makefile.am
+	* app/config/gimpconfig-dump.c: added the basic infrastructure for
+	a utitily that dumps the GimpRc object.
+
+	* app/config/gimpconfig-serialize.c: dump object blurbs as comments.
+
 2002-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpairbrush.[ch]

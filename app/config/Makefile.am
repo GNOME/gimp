@@ -44,15 +44,7 @@ INCLUDES = \
 	-I$(includedir)
 
 
-#
-# test programs, not to be built by default and never installed
-#
-
-TESTS = test-config
-
-EXTRA_PROGRAMS = test-config
-
-test_config_DEPENDENCIES = \
+gimpconfig_libs = \
 	libappconfig.a							\
         ../base/libappbase.a						\
         ../core/libappcore.a						\
@@ -61,6 +53,19 @@ test_config_DEPENDENCIES = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
 
-test_config_LDADD = \
-	$(GLIB_LIBS) 			\
-	$(test_config_DEPENDENCIES)
+
+#
+# extra programs, not to be built by default and never installed
+#
+
+EXTRA_PROGRAMS = gimpconfig-dump test-config
+
+gimpconfig_dump_SOURCES = gimpconfig-dump.c
+
+gimpconfig_dump_LDADD = $(GLIB_LIBS) $(gimpconfig_libs)
+
+TESTS = test-config
+
+test_config_DEPENDENCIES = $(gimpconfig_dependencies)
+
+test_config_LDADD =  $(GLIB_LIBS) $(gimpconfig_libs)

@@ -60,9 +60,9 @@ static void       serialize_unknown_token        (const gchar  *key,
  * This function writes all object properties to the file descriptor @fd.
  **/
 gboolean
-gimp_config_serialize_properties (GObject *object,
-                                  gint     fd,
-                                  gint     indent_level)
+gimp_config_serialize_properties (GObject  *object,
+                                  gint      fd,
+                                  gint      indent_level)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -84,7 +84,8 @@ gimp_config_serialize_properties (GObject *object,
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec *prop_spec;
+      GParamSpec  *prop_spec;
+      const gchar *blurb;
 
       prop_spec = property_specs[i];
 
@@ -95,6 +96,9 @@ gimp_config_serialize_properties (GObject *object,
         g_string_assign (str, "\n");
       else
         g_string_assign (str, "");
+
+      if ((blurb = g_param_spec_get_blurb (prop_spec)) != NULL)
+        g_string_append_printf (str, "# %s\n", blurb);
 
       gimp_config_string_indent (str, indent_level);
 

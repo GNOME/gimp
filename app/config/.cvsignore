@@ -3,6 +3,7 @@ Makefile.in
 .deps
 .libs
 *.lo
+foorc
+gimpconfig-dump
 libappconfig.la
 test-config
-foorc
