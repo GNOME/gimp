@@ -1,3 +1,7 @@
+2005-01-27  Manish Singh  <yosh@gimp.org>
+
+	* README: update ancient IRC info.
+
 2005-01-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpgrid.c: changed default grid distance to 32 as
