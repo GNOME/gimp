@@ -29,12 +29,12 @@
 #include "text-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer-floating-sel.h"
 
@@ -114,8 +114,8 @@ text_render (GimpImage    *gimage,
    *  this might not always be desired, but in general,
    *  it seems like the correct behavior.
    */
-  if (! gimp_image_mask_is_empty (gimage))
-    gimp_image_mask_clear (gimage, NULL);
+  if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
+    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
   
   /*  If the drawable is NULL, create a new layer  */
   if (drawable == NULL)
