@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-12 04:18+0200\n"
-"PO-Revision-Date: 2003-07-12 14:24+0200\n"
+"POT-Creation-Date: 2003-07-15 12:29+0200\n"
+"PO-Revision-Date: 2003-07-15 21:04+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1018,6 +1018,7 @@ msgid "QuickMask"
 msgstr "Rychlá maska"
 
 #: app/core/core-enums.c:480 app/core/core-enums.c:508
+#: app/core/gimpimage-grid.c:63
 msgid "Grid"
 msgstr "Mřížka"
 
@@ -1098,7 +1099,7 @@ msgid "Transform"
 msgstr "Transformace"
 
 #: app/core/core-enums.c:498 app/core/core-enums.c:538
-#: app/paint/gimppaintcore.c:447
+#: app/paint/gimppaintcore.c:455
 msgid "Paint"
 msgstr "Kreslení"
 
@@ -2170,11 +2171,11 @@ msgstr "Neznámá verze č. %d formátu vzorku v '%s'."
 msgid ""
 "Unsupported pattern depth %d\n"
 "in file '%s'.\n"
-"GIMP Patterns must be GRAY or RGB.\n"
+"GIMP Patterns must be GRAY or RGB."
 msgstr ""
 "Nepodporovaná hloubka vzorku %d\n"
 "v souboru '%s'.\n"
-"Vzorky pro GIMP musí být typu GRAY nebo RGB.\n"
+"Vzorky pro GIMP musí být typu GRAY nebo RGB."
 
 #: app/core/gimppattern.c:395
 #, c-format
@@ -5710,7 +5711,7 @@ msgid "Scale Layer Options"
 msgstr "Volby škálování vrstvy"
 
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
-#: app/tools/gimppaintoptions-gui.c:306
+#: app/tools/gimppaintoptions-gui.c:308
 msgid "Size"
 msgstr "Velikost"
 
@@ -6406,7 +6407,9 @@ msgstr "Klepnutím na \"Pokračovat\" přijmete výše uvedená nastavení."
 #: app/gui/user-install-dialog.c:941
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
-msgstr "<b>K optimálnímu výkonu GIMPu možná bude potřeba upravit některá nastavení.</b>"
+msgstr ""
+"<b>K optimálnímu výkonu GIMPu možná bude potřeba upravit některá nastavení.</"
+"b>"
 
 #: app/gui/user-install-dialog.c:946
 msgid "Monitor Resolution"
@@ -6420,7 +6423,9 @@ msgstr "Klepnutím na \"Pokračovat\" spustíte program GIMP."
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
-msgstr "<b>Aby byly obrázky zobrazeny ve své skutečné velikosti, musí GIMP znát rozlišení vašeho monitoru.</b>"
+msgstr ""
+"<b>Aby byly obrázky zobrazeny ve své skutečné velikosti, musí GIMP znát "
+"rozlišení vašeho monitoru.</b>"
 
 #: app/gui/user-install-dialog.c:956
 msgid "Aborting Installation..."
@@ -6640,11 +6645,11 @@ msgstr "Guma"
 msgid "Paintbrush"
 msgstr "Štětec"
 
-#: app/paint/gimppaintcore.c:380
+#: app/paint/gimppaintcore.c:388
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné žádné stopy pro použití s tímto nástrojem."
 
-#: app/paint/gimppencil.c:66 app/tools/gimppenciltool.c:55
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:55
 msgid "Pencil"
 msgstr "Tužka"
 
@@ -6710,7 +6715,7 @@ msgstr "Zaostření"
 msgid "Constant"
 msgstr "Pevný"
 
-#: app/paint/paint-enums.c:132 app/tools/gimppaintoptions-gui.c:188
+#: app/paint/paint-enums.c:132 app/tools/gimppaintoptions-gui.c:190
 msgid "Incremental"
 msgstr "Postupný"
 
@@ -6759,7 +6764,7 @@ msgstr "Vnitřní procedury"
 msgid "Brush UI"
 msgstr "Rozhraní stop"
 
-#: app/pdb/internal_procs.c:89 app/tools/gimppaintoptions-gui.c:317
+#: app/pdb/internal_procs.c:89 app/tools/gimppaintoptions-gui.c:319
 #: app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
@@ -7953,43 +7958,43 @@ msgstr "Otevřít dialog výběru vzorku"
 msgid "Pattern:"
 msgstr "Vzorek:"
 
-#: app/tools/gimppaintoptions-gui.c:169
+#: app/tools/gimppaintoptions-gui.c:171
 msgid "Open the gradient selection dialog"
 msgstr "Otevřít dialog výběru přechodu"
 
-#: app/tools/gimppaintoptions-gui.c:175
+#: app/tools/gimppaintoptions-gui.c:177
 msgid "Gradient:"
 msgstr "Přechod:"
 
-#: app/tools/gimppaintoptions-gui.c:250
+#: app/tools/gimppaintoptions-gui.c:252
 msgid "Pressure Sensitivity"
 msgstr "Citlivost na tlak"
 
-#: app/tools/gimppaintoptions-gui.c:266
+#: app/tools/gimppaintoptions-gui.c:268
 msgid "Opacity"
 msgstr "Krytí"
 
-#: app/tools/gimppaintoptions-gui.c:280
+#: app/tools/gimppaintoptions-gui.c:282
 msgid "Hardness"
 msgstr "Tvrdost"
 
-#: app/tools/gimppaintoptions-gui.c:291
+#: app/tools/gimppaintoptions-gui.c:293
 msgid "Rate"
 msgstr "Přeběh"
 
-#: app/tools/gimppaintoptions-gui.c:350
+#: app/tools/gimppaintoptions-gui.c:353
 msgid "Fade Out"
 msgstr "Doběh"
 
-#: app/tools/gimppaintoptions-gui.c:363 app/tools/gimppaintoptions-gui.c:421
+#: app/tools/gimppaintoptions-gui.c:366 app/tools/gimppaintoptions-gui.c:425
 msgid "Length:"
 msgstr "Délka:"
 
-#: app/tools/gimppaintoptions-gui.c:406
+#: app/tools/gimppaintoptions-gui.c:410
 msgid "Use Color from Gradient"
 msgstr "Použít barvu z přechodu"
 
-#: app/tools/gimppaintoptions-gui.c:436
+#: app/tools/gimppaintoptions-gui.c:440
 msgid "Type:"
 msgstr "Typ:"
 
