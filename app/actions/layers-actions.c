@@ -119,7 +119,7 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_LOWER_TO_BOTTOM },
 
   { "layers-anchor", GIMP_STOCK_ANCHOR,
-    N_("_Anchor Layer"), NULL,
+    N_("_Anchor Layer"), "<control>H",
     N_("Anchor floating layer"),
     G_CALLBACK (layers_anchor_cmd_callback),
     GIMP_HELP_LAYER_ANCHOR },
