@@ -1,3 +1,8 @@
+Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* updated iwarp to the version on the registry and reapplied
+	(hopefully) all portability-patches that were applied in between
+
 Wed Apr  1 11:10:15 EST 1998 Matthew Wilson <msw@gimp.org
 	
 	* app/brightness_contrast.c

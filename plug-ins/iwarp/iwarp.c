@@ -32,6 +32,10 @@
     animation of non-alpha layers (background) creates now layers with 
     alpha channel. (thanks to Adrian Likins for reporting this bug)
 
+  v0.12 
+    fixes a very bad bug. 
+     (thanks to Arthur Hagen for reporting it)
+    
 */
 
 #include <stdlib.h>
@@ -1200,7 +1204,7 @@ iwarp_deform(int x, int y, gfloat vx, gfloat vy)
 {
  int xi,yi,ptr,fptr,x0,x1,y0,y1,radius2,length2;
  gfloat deform_value,xn,yn,nvx=0,nvy=0,emh,em,edge_width,xv,yv,alpha;
- guchar color[3];
+ guchar color[4];
  
  if (x - iwarp_vals.deform_area_radius <0) x0 = -x; else x0 = -iwarp_vals.deform_area_radius;
  if (x + iwarp_vals.deform_area_radius >= preview_width) x1 = preview_width-x-1; else x1 = iwarp_vals.deform_area_radius;
@@ -1365,22 +1369,22 @@ iwarp_motion_callback(GtkWidget *widget,
       lasty = mb->y;
    break;
    case GDK_BUTTON_RELEASE:
-      if (mb->state & GDK_BUTTON1_MASK) {
+     if (mb->state & GDK_BUTTON1_MASK) {
        x = mb->x;
        y = mb->y;
        if (iwarp_vals.do_move) iwarp_move(x,y,lastx,lasty);
        else iwarp_deform(x, y,0.0,0.0);
-      }
+     }
    break; 
    case GDK_MOTION_NOTIFY :
      if (mb->state & GDK_BUTTON1_MASK) { 
-      x = mb->x;
-      y = mb->y;
-      if (iwarp_vals.do_move) iwarp_move(x,y,lastx,lasty);
-      else iwarp_deform(x, y,0.0,0.0);
-      lastx = x;
-      lasty = y;
-      gtk_widget_get_pointer(widget,NULL,NULL); 
+       x = mb->x;
+       y = mb->y;
+       if (iwarp_vals.do_move) iwarp_move(x,y,lastx,lasty);
+       else iwarp_deform(x, y,0.0,0.0);
+       lastx = x;
+       lasty = y;
+       gtk_widget_get_pointer(widget,NULL,NULL); 
      }
    break;
    default:
