@@ -1,3 +1,8 @@
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb-parse.c (gimp_rgba_parse_css): added support 
+	for the "transparent" color name.
+
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb-parse.c

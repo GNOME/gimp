@@ -199,7 +199,15 @@ gimp_rgba_parse_css (GimpRGB     *rgba,
 
   tmp = gimp_rgb_parse_strip (css, len);
 
-  result = gimp_rgba_parse_css_internal (rgba, tmp);
+  if (strcmp (tmp, "transparent") == 0)
+    {
+      gimp_rgba_set (rgba, 0.0, 0.0, 0.0, 0.0);
+      result = TRUE;
+    }
+  else
+    {
+      result = gimp_rgba_parse_css_internal (rgba, tmp);
+    }
 
   g_free (tmp);
 
