@@ -214,6 +214,7 @@ load_image (gchar             *filename,
 	{
 	  FILE     *input;
 	  gchar     buf[BUFSIZE];
+	  gboolean  seen_resolve = FALSE;
 	  gboolean  connected = FALSE;
 	  gboolean  file_found = FALSE;
 	  gchar     sizestr[32];
@@ -261,6 +262,7 @@ load_image (gchar             *filename,
 	  gimp_progress_init ("Connecting to server... "
 			      "(timeout is "TIMEOUT" seconds)");
 
+read_connect:
 	  if (fgets (buf, BUFSIZE, input) == NULL)
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
@@ -271,6 +273,12 @@ load_image (gchar             *filename,
 	  else if (strstr (buf, "connected"))
 	    {
 	      connected = TRUE;
+	    }
+	  /* newer wgets have a "Resolving foo" line, so eat it */
+	  else if (!seen_resolve && strstr (buf, "Resolving"))
+	    {
+	      seen_resolve = TRUE;
+	      goto read_connect;
 	    }
 
 	  DEBUG (buf);
