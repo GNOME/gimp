@@ -99,8 +99,8 @@ make
 mkdir -p $RPM_BUILD_ROOT/%{prefix}/info $RPM_BUILD_ROOT/%{prefix}/include \
 	$RPM_BUILD_ROOT/%{prefix}/lib $RPM_BUILD_ROOT/%{prefix}/bin \
 	$RPM_BUILD_ROOT/%{desktopdir}/applications \
-	$RPM_BUILD_ROOT/%{desktopdir}/share/application-registry \
-	$RPM_BUILD_ROOT/%{desktopdir}/share/mime-info 
+	$RPM_BUILD_ROOT/%{desktopdir}/application-registry \
+	$RPM_BUILD_ROOT/%{desktopdir}/mime-info 
 make destdir=$RPM_BUILD_ROOT DESTDIR=$RPM_BUILD_ROOT install
 
 #

@@ -1,3 +1,7 @@
+2003-11-24  Ville Pätsi  <drc@gimp.org>
+
+	* gimp.spec.in: Fixed path creation typo.
+
 2003-11-24  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_destroy):
