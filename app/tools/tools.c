@@ -56,7 +56,8 @@
 #include "threshold.h"
 #include "tools.h"
 #include "transform_tool.h"
-#include "pixmaps.h"
+
+#include "pixmaps2.h"
 
 /* Global Data */
 

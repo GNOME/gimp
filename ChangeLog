@@ -1,3 +1,8 @@
+Mon Jul  6 13:18:12 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* pixmaps.h pixmaps2.h tools.c: splits pixmaps up into two headers
+	* tile.c: fixed a doublelock deadlock
+
 Sun Jul  5 15:49:02 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	* applied a patch from Adam D. Moss <adam@gimp.org>

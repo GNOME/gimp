@@ -439,6 +439,10 @@ tile_ref2 (Tile *tile, int dirty)
     }
 
 
+#if USE_PTHREADS
+  pthread_mutex_unlock(&(tile->mutex));
+#endif
+
   /* Read/write attachment to a mirrored/ing tile - must be
    *  thoughtful.
    */
@@ -463,10 +467,6 @@ tile_ref2 (Tile *tile, int dirty)
   /* Mark the tile as dirty if it's being ref'd as dirtyable.
    */
   tile->dirty |= dirty;
-
-#if USE_PTHREADS
-  pthread_mutex_unlock(&(tile->mutex));
-#endif
 
   /* Call 'tile_manager_validate' if the tile was invalid.
    */
