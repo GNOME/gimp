@@ -1,5 +1,12 @@
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/global_edit.c: default to "(Unnamed Buffer)" instead of
+	inserting buffers with no name at all into the named_buffers
+	list (partly fixes #62592). The unique name stuff is something
+	for 1.3 however...
+
+2002-02-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/resize.c: fixed insane ratio spinbutton acceleration
 	(#63741) by setting the spinbutton's climb_rate to a small value
 	(not by changing the adjustment's page_size as suggested).

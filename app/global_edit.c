@@ -852,7 +852,10 @@ new_named_buffer (TileManager *tiles,
   pixel_region_init (&destPR, nb->buf, 0, 0, tiles->width, tiles->height, TRUE);
   copy_region (&srcPR, &destPR);
 
-  nb->name = g_strdup ((char *) name);
+  if (! (name && strlen (name)))
+    name = _("(Unnamed Buffer)");
+
+  nb->name = g_strdup (name);
   named_buffers = g_slist_append (named_buffers, (void *) nb);
 }
 
@@ -865,7 +868,7 @@ cut_named_buffer_callback (GtkWidget *widget,
   GDisplay    *gdisp;
 
   gdisp = (GDisplay *) data;
-  
+
   new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
   if (new_tiles) 
     new_named_buffer (new_tiles, name);
