@@ -1,7 +1,7 @@
 # Japanese gimp-perl translation table
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
-# Iccii <iccii@hotmail.com>, 2000.
+# Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000.
 #
 msgid ""
 msgstr ""

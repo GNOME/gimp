@@ -1,12 +1,13 @@
 # GIMP Script-Fu Japanese message catalog
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
+# Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.24\n"
-"POT-Creation-Date: 2000-10-30 21:58-0800\n"
-"PO-Revision-Date: 2000-06-17 19:23+09:00\n"
+"Project-Id-Version: gimp 1.2.0\n"
+"POT-Creation-Date: 2000-12-07 00:08+0900\n"
+"PO-Revision-Date: 2000-12-07 00:14+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +24,7 @@ msgstr "Script-Fu コンソール"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
 msgstr "閉じる"
 
@@ -53,81 +54,71 @@ msgstr "SIOD 出力パイプ上のストリームが開けません"
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1113
-#, c-format
-msgid ""
-"Script-Fu Error\n"
-"%s"
-msgstr ""
-"Script-Fu エラー\n"
-"%s"
-
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1162
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1206
+#: plug-ins/script-fu/script-fu-scripts.c:1209
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1208
+#: plug-ins/script-fu/script-fu-scripts.c:1211
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1191
+#: plug-ins/script-fu/script-fu-scripts.c:1234
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
-#. we add a colon after the label; some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1214
+#: plug-ins/script-fu/script-fu-scripts.c:1257
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1256
+#: plug-ins/script-fu/script-fu-scripts.c:1304
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1358
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1365
+#: plug-ins/script-fu/script-fu-scripts.c:1413
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1373
+#: plug-ins/script-fu/script-fu-scripts.c:1421
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1467
 msgid "Reset to Defaults"
 msgstr "初期値に戻す"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1442
+#: plug-ins/script-fu/script-fu-scripts.c:1493
 msgid "About"
 msgstr "このプラグインについて"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1456
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "了解"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1465
+#: plug-ins/script-fu/script-fu-scripts.c:1516
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "取消"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1579
+#: plug-ins/script-fu/script-fu-scripts.c:1682
 msgid "NOT SET"
 msgstr "未指定"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1648
+#: plug-ins/script-fu/script-fu-scripts.c:1711
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -135,25 +126,36 @@ msgstr ""
 "少なくとも選択したフォント中に一つ以上\n"
 "不正なものがあります.設定を確認して下さい.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1933
+#: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1939
+#: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1945
+#: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1953
+#: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2106
+#: plug-ins/script-fu/script-fu-scripts.c:2189
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:2256
+#, c-format
+msgid ""
+"Script-Fu Error while executing\n"
+" %s\n"
+"%s"
+msgstr ""
+"%s\n"
+"実行中に Script-Fu エラー発生\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -167,19 +169,19 @@ msgstr "サーバポート:"
 msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
-#: plug-ins/script-fu/script-fu.c:164
+#: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/拡張/Script-Fu/コンソール..."
 
-#: plug-ins/script-fu/script-fu.c:177
+#: plug-ins/script-fu/script-fu.c:178
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/拡張/Script-Fu/サーバ..."
 
-#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
+#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
 msgid "Re-read all available scripts"
 msgstr "全てのスクリプトを再読み込み"
 
-#: plug-ins/script-fu/script-fu.c:1027
+#: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"
 
@@ -738,7 +740,7 @@ msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
-msgstr "背景を付ける"
+msgstr "背景追加"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Drop-Shadow"
@@ -830,62 +832,62 @@ msgstr "背景画像"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
-msgstr ""
+msgstr "棒の高さ"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Length"
-msgstr ""
+msgstr "棒の長さ"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Base Color"
-msgstr ""
+msgstr "基本色"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixel)"
-msgstr ""
+msgstr "基本半径 (ピクセル)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Behaviour"
-msgstr ""
+msgstr "振るまい"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
-msgstr ""
+msgstr "ベベルの高さ (鋭さ)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Bevel Width"
-msgstr ""
+msgstr "ベベル幅"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "ブレンドグラデーション (輪郭)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "ブレンドグラデーション (文字)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
-msgstr ""
+msgstr "ブレンドモード"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Block Size"
-msgstr ""
+msgstr "ブロックサイズ"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Blur Amount"
-msgstr ""
+msgstr "ぼかす量"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Blur Border"
-msgstr ""
+msgstr "枠をぼかす"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Horizontally"
-msgstr ""
+msgstr "水平ぼかし"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/news-text.scm:0
@@ -893,7 +895,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Blur Radius"
-msgstr ""
+msgstr "ぼかし半径"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Type"
@@ -901,7 +903,7 @@ msgstr "ぼかしタイプ"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
-msgstr ""
+msgstr "垂直ぼかし"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
@@ -913,55 +915,55 @@ msgstr "ぼかし Y"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
-msgstr ""
+msgstr "枠の色"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Border Size (pixels)"
-msgstr "縁サイズ (ピクセル)"
+msgstr "枠の大きさ (ピクセル)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Border Size"
-msgstr ""
+msgstr "枠の大きさ"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
-msgstr ""
+msgstr "枠 X サイズ"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Y Size"
-msgstr ""
+msgstr "枠 Y サイズ"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr ""
+msgstr "枠"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "バッファ量 (% 文字の高さ)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "バンプマップ (アルファレイヤーの) ぼかし半径"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr ""
+msgstr "爆発色"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "文字を浮き彫りにして彫刻化"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Carve White Areas"
-msgstr ""
+msgstr "白い部分を彫刻化"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
-msgstr ""
+msgstr "セルサイズ (ピクセル)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "Chalk Color"
@@ -969,40 +971,40 @@ msgstr "チョークの色"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
-msgstr ""
+msgstr "切り欠け量"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Balance"
-msgstr ""
+msgstr "クロームバランス"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Factor"
-msgstr ""
+msgstr "クローム率"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Lightness"
-msgstr ""
+msgstr "クローム明度"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Saturation"
-msgstr ""
+msgstr "クローム色相"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "白い部分をクローム化"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr ""
+msgstr "回路種"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
-msgstr ""
+msgstr "非選択マスク領域を消去する"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
@@ -1024,15 +1026,15 @@ msgstr "色"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
-msgstr ""
+msgstr "新規画像を作成"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "Create Shadow"
-msgstr ""
+msgstr "影を作成"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Custom Gradient"
@@ -1040,36 +1042,38 @@ msgstr "カスタムグラデーション"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "Dark Color"
-msgstr ""
+msgstr "ダーク色"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"暗いところのみ\n"
+"(画像に白い部分がたくさんある場合のみ, 好ましい)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "標準のバンプマップ設定"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
-msgstr ""
+msgstr "ピンぼけ"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Delta Value on Color"
-msgstr ""
+msgstr "色の三角値"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Density (%)"
-msgstr ""
+msgstr "密度 (%)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Depth"
-msgstr ""
+msgstr "深さ"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1079,60 +1083,60 @@ msgstr "説明"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
-msgstr ""
+msgstr "詳細度"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
-msgstr ""
+msgstr "中央を詳しく"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
-msgstr ""
+msgstr "直径"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Down"
-msgstr ""
+msgstr "下"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "ドロップシャドウぼかし半径"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
-msgstr ""
+msgstr "ドロップシャドウ色"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "ドロップシャドウ不透明度"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "ドロップシャドウ X オフセット"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "ドロップシャドウ Y オフセット"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Drop Shadow"
-msgstr ""
+msgstr "ドロップシャドウ"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
-msgstr ""
+msgstr "エッジ量"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Only"
-msgstr ""
+msgstr "縁だけ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Edge Radius"
-msgstr ""
+msgstr "縁どり半径"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Width"
-msgstr ""
+msgstr "縁の幅"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "Effect Size (pixels * 3)"
@@ -1158,70 +1162,70 @@ msgstr "効果サイズ (ピクセル)"
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Elevation"
-msgstr ""
+msgstr "高度"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "End Blend"
-msgstr ""
+msgstr "ブレンド終了色"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
-msgstr ""
+msgstr "終了 X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End Y"
-msgstr ""
+msgstr "終了 Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
-msgstr ""
+msgstr "ブレンド終了色"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr ""
+msgstr "環境マップ"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
-msgstr ""
+msgstr "描く前に消去する"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
-msgstr ""
+msgstr "偶数"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even/Odd"
-msgstr ""
+msgstr "偶数/奇数"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
-msgstr ""
+msgstr "前景色-背景色-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-RGB"
-msgstr ""
+msgstr "前景色-背景色-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-Transparent"
-msgstr "前景-透明"
+msgstr "前景色-透明"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
-msgstr ""
+msgstr "次第にぼかす"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade From %"
-msgstr ""
+msgstr "フェード開始 %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
-msgstr ""
+msgstr "フェード終了 %"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
-msgstr ""
+msgstr "ぼかし"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1230,15 +1234,15 @@ msgstr "ファイル名"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Fill Angle"
-msgstr ""
+msgstr "充てん角度"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "背景をパターンで塗りつぶす"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Fill with BG Color"
-msgstr ""
+msgstr "背景色で塗りつぶす"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1247,7 +1251,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Flatten Image"
-msgstr ""
+msgstr "画像統合"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
@@ -1345,19 +1349,19 @@ msgstr "前景色"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
-msgstr "フレーム色"
+msgstr "枠の色"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Size"
-msgstr "フレームサイズ"
+msgstr "枠サイズ"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
-msgstr "フレーム"
+msgstr "コマ数"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "左上から右下へ"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1368,11 +1372,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr ""
+msgstr "発光色"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr ""
+msgstr "発光半径"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
@@ -1389,16 +1393,16 @@ msgstr "グラデーション"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "粒状度 (1 が最低)"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
-msgstr ""
+msgstr "粒状度"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
-msgstr ""
+msgstr "グラフ寸法"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
@@ -1419,36 +1423,36 @@ msgstr "高さ"
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
-msgstr ""
+msgstr "ハイライトバランス"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Color"
-msgstr ""
+msgstr "ハイライト色"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "ハイライト不透明度"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "ハイライト X オフセット"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "ハイライト Y オフセット"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr ""
+msgstr "ヒット率"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr ""
+msgstr "色相変化率"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1467,24 +1471,24 @@ msgstr "画像幅"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Image to Carve"
-msgstr ""
+msgstr "彫刻化する画像"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Index Image"
-msgstr ""
+msgstr "インデックス画像"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "n 色にインデックス化 (0 = RGB のまま)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "レイヤー名の挿入"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
-msgstr ""
+msgstr "中間生成フレーム"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
@@ -1492,7 +1496,7 @@ msgstr "補間"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr ""
+msgstr "方向を反転"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
@@ -1500,52 +1504,52 @@ msgstr "反転"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr ""
+msgstr "背景を残す"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "バンプマップ画像を残す"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Keep Selection"
-msgstr ""
+msgstr "選択領域を残す"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Land Height"
-msgstr ""
+msgstr "島の高さ"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "照明 (角度)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
-msgstr ""
+msgstr "ループ化"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "下の色 (アクティブ)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color"
-msgstr ""
+msgstr "下の色"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr ""
+msgstr "右下の色"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
-msgstr ""
+msgstr "新規背景を作成"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Opacity"
@@ -1557,45 +1561,45 @@ msgstr "マスクサイズ"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "最大ぼかし半径"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "モザイクタイル型"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
-msgstr ""
+msgstr "まだら状"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "背景なし (レイヤーを分けるだけ)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "押さない時 (アクティブ)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
-msgstr ""
+msgstr "押さない時"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
-msgstr ""
+msgstr "帯数"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
+msgstr "色数"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Number of Copies"
-msgstr ""
+msgstr "コピー回数"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
-msgstr ""
+msgstr "コマ数"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Number of Lines"
@@ -1603,25 +1607,25 @@ msgstr "線数"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
-msgstr ""
+msgstr "回転数"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "X タイルの数"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Y タイルの数"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "数"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
-msgstr ""
+msgstr "奇数"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Offset (pixels)"
@@ -1629,7 +1633,7 @@ msgstr "オフセット (ピクセル)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Offset Radius"
-msgstr ""
+msgstr "オフセット半径"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1647,7 +1651,7 @@ msgstr "オフセット (ピクセル * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "油絵化マスクサイズ"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -1657,65 +1661,65 @@ msgstr "不透明度"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Orientation"
-msgstr ""
+msgstr "方向"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
-msgstr ""
+msgstr "外枠"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "輪郭ぼかし半径"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr ""
+msgstr "輪郭色"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Outline Size"
-msgstr ""
+msgstr "輪郭サイズ"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
-msgstr ""
+msgstr "空間の色"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity"
-msgstr ""
+msgstr "空間の不透明度"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Padding Around Text"
-msgstr ""
+msgstr "文字周りの空間"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding X"
-msgstr ""
+msgstr "空間 X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding Y"
-msgstr ""
+msgstr "空間 Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "透明な領域のための空間"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Padding"
-msgstr ""
+msgstr "空間"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "パターン (輪郭)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
-msgstr ""
+msgstr "パターン (オーバーレイ)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "パターン (文字)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1730,113 +1734,113 @@ msgstr "パターン"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "囲い率 / 輪っか率 [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr ""
+msgstr "ピクセル量"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
-msgstr ""
+msgstr "ピクセル化"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Pressed"
-msgstr ""
+msgstr "押した時"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
-msgstr ""
+msgstr "4 分の 1 サイズ"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "半径 (ピクセル)"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Radius"
-msgstr "角度"
+msgstr "半径"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Random Seed"
-msgstr ""
+msgstr "ランダム種"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
-msgstr ""
+msgstr "複雑度"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
-msgstr ""
+msgstr "地平線の相対的な距離"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Length of Shadow"
-msgstr ""
+msgstr "影の相対的な長さ"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "Relative Radius"
-msgstr ""
+msgstr "相対的な半径"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Remove Background"
-msgstr ""
+msgstr "背景消去"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
-msgstr ""
+msgstr "帯間隔"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Width"
-msgstr ""
+msgstr "帯幅"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr ""
+msgstr "右"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
-msgstr ""
+msgstr "波状強度"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Roughness"
-msgstr ""
+msgstr "荒さ"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
-msgstr ""
+msgstr "円形比率"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "行"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
-msgstr ""
+msgstr "行/列"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale X"
-msgstr ""
+msgstr "X 拡大縮小"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
-msgstr ""
+msgstr "Y 拡大縮小"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr ""
+msgstr "種"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1847,15 +1851,15 @@ msgstr "色による選択の閾値"
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Separate Layer"
-msgstr ""
+msgstr "レイヤーに分ける"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
-msgstr ""
+msgstr "セピア色"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "影ぼかし半径"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1864,15 +1868,15 @@ msgstr "影の色"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Darkness"
-msgstr ""
+msgstr "影の暗さ"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Depth"
-msgstr ""
+msgstr "影の深さ"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "影の幅 (%)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -1893,11 +1897,11 @@ msgstr "影"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "鋭さ (角度)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Shear Length"
-msgstr ""
+msgstr "刈り取る長さ"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1907,78 +1911,78 @@ msgstr "サイズ"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr ""
+msgstr "水平に滑らか"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr ""
+msgstr "垂直に滑らか"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr ""
+msgstr "滑らか"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
-msgstr ""
+msgstr "レイヤー間の間隔"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Spacing"
-msgstr ""
+msgstr "間隔"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
-msgstr ""
+msgstr "球体色"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density X"
-msgstr ""
+msgstr "斑点密度 X"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density Y"
-msgstr ""
+msgstr "斑点密度 Y"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
-msgstr ""
+msgstr "拡散"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Squares"
-msgstr ""
+msgstr "四角形"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
-msgstr ""
+msgstr "しみ数"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Start Angle"
-msgstr ""
+msgstr "開始角度"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Start Blend"
-msgstr ""
+msgstr "ブレンド開始色"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start X"
-msgstr ""
+msgstr "開始 X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start Y"
-msgstr ""
+msgstr "開始 Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"
-msgstr ""
+msgstr "ブレンド開始色"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr ""
+msgstr "スーパーサンプル"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
-msgstr ""
+msgstr "文字色 (アクティブ)"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2038,33 +2042,33 @@ msgstr "文字パターン"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Thickness"
-msgstr ""
+msgstr "厚さ"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Density"
-msgstr ""
+msgstr "糸密度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Intensity"
-msgstr ""
+msgstr "糸強度"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Length"
-msgstr ""
+msgstr "糸の長さ"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr ""
+msgstr "閾値 (大きい 1<-->255 小さい)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
-msgstr ""
+msgstr "タイル状"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
@@ -2075,52 +2079,52 @@ msgstr "透過背景"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "左から右に回転"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr ""
+msgstr "上"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "上の色 (アクティブ)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color"
-msgstr ""
+msgstr "上の色"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
-msgstr ""
+msgstr "左上色"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
-msgstr ""
+msgstr "使用するブラシ"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Use Current Gradient"
-msgstr ""
+msgstr "カレントグラデーションを使う"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Use Growing Selection"
-msgstr ""
+msgstr "拡大した選択領域の使用"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "パターンをオーバーレイで使う"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "グラデーションの代わりにパターンを輪郭に使う"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "グラデーションの代わりにパターンを文字に使う"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr ""
+msgstr "以下の設定ではなく選択領域を使用する"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
@@ -2128,23 +2132,23 @@ msgstr "波長"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr ""
+msgstr "輪半径 (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
-msgstr ""
+msgstr "回転量"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Whirl Angle"
-msgstr ""
+msgstr "回転角"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"
-msgstr ""
+msgstr "帯幅"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"
-msgstr ""
+msgstr "隙間幅"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
@@ -2160,4 +2164,4 @@ msgstr "幅"
 #: plug-ins/script-fu/scripts/slide.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
-msgstr ""
+msgstr "コピーで作業する"
