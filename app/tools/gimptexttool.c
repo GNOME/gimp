@@ -447,9 +447,7 @@ text_render (GimpImage    *gimage,
 
       bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
       
-      pango_ft2_render_layout (&bitmap, layout, 
-                               - ink.x,
-                               - ink.height - ink.y);
+      pango_ft2_render_layout (&bitmap, layout, - ink.x, - ink.y);
      
       width  = ink.width  + 2 * border;
       height = ink.height + 2 * border;
