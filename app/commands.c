@@ -1340,7 +1340,7 @@ gimage_mask_border_callback (GtkWidget *widget,
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
-  radius_x = radius_y = selection_feather_radius;
+  radius_x = radius_y = selection_border_radius;
 
   if (unit != UNIT_PIXEL)
     {

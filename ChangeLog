@@ -1,3 +1,7 @@
+Tue Sep  7 12:59:18 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/commands.c: correct the bug that Garry R. Osgood reported.
+
 Tue Sep  7 03:15:20 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 
 	* app/airbrush_blob.[ch] new file
