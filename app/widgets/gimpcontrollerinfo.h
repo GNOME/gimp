@@ -42,6 +42,7 @@ struct _GimpControllerInfo
   GimpObject      parent_instance;
 
   gboolean        enabled;
+  gboolean        debug_events;
 
   GimpController *controller;
   GHashTable     *mapping;

@@ -48,6 +48,7 @@ enum
 {
   PROP_0,
   PROP_ENABLED,
+  PROP_DEBUG_EVENTS,
   PROP_CONTROLLER,
   PROP_MAPPING
 };
@@ -148,6 +149,10 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
                                     "enabled", NULL,
                                     TRUE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEBUG_EVENTS,
+                                    "debug-events", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONTROLLER,
                                    "controller", NULL,
                                    GIMP_TYPE_CONTROLLER,
@@ -210,6 +215,9 @@ gimp_controller_info_set_property (GObject      *object,
     case PROP_ENABLED:
       info->enabled = g_value_get_boolean (value);
       break;
+    case PROP_DEBUG_EVENTS:
+      info->debug_events = g_value_get_boolean (value);
+      break;
     case PROP_CONTROLLER:
       if (info->controller)
         {
@@ -253,6 +261,9 @@ gimp_controller_info_get_property (GObject    *object,
     {
     case PROP_ENABLED:
       g_value_set_boolean (value, info->enabled);
+      break;
+    case PROP_DEBUG_EVENTS:
+      g_value_set_boolean (value, info->debug_events);
       break;
     case PROP_CONTROLLER:
       g_value_set_object (value, info->controller);
@@ -423,32 +434,36 @@ gimp_controller_info_event (GimpController            *controller,
   event_name = gimp_controller_get_event_name (controller, event->any.event_id);
   event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
 
-  g_print ("Received '%s' (class '%s')\n"
-           "    controller event '%s (%s)'\n",
-           controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
-           event_name, event_blurb);
+  if (info->debug_events)
+    g_print ("Received '%s' (class '%s')\n"
+             "    controller event '%s (%s)'\n",
+             controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
+             event_name, event_blurb);
 
   switch (event->any.type)
     {
     case GIMP_CONTROLLER_EVENT_TRIGGER:
-      g_print ("    (trigger event)\n");
+      if (info->debug_events)
+        g_print ("    (trigger event)\n");
       break;
 
     case GIMP_CONTROLLER_EVENT_VALUE:
-      {
-        if (G_VALUE_HOLDS_DOUBLE (&event->value.value))
-          g_print ("    (value event, value = %f)\n",
-                   g_value_get_double (&event->value.value));
-        else
-          g_print ("    (value event, unhandled type '%s')\n",
-                   g_type_name (event->value.value.g_type));
-      }
+      if (info->debug_events)
+        {
+          if (G_VALUE_HOLDS_DOUBLE (&event->value.value))
+            g_print ("    (value event, value = %f)\n",
+                     g_value_get_double (&event->value.value));
+          else
+            g_print ("    (value event, unhandled type '%s')\n",
+                     g_type_name (event->value.value.g_type));
+        }
       break;
     }
 
   if (! info->enabled)
     {
-      g_print ("    ignoring because controller is disabled\n\n");
+      if (info->debug_events)
+        g_print ("    ignoring because controller is disabled\n\n");
 
       return FALSE;
     }
@@ -460,21 +475,26 @@ gimp_controller_info_event (GimpController            *controller,
     {
       gboolean retval = FALSE;
 
-      g_print ("    maps to action '%s'\n", action_name);
+      if (info->debug_events)
+        g_print ("    maps to action '%s'\n", action_name);
 
       g_signal_emit (info, info_signals[EVENT_MAPPED], 0,
                      controller, event, action_name, &retval);
 
-      if (retval)
-        g_print ("    action was found\n\n");
-      else
-        g_print ("    action NOT found\n\n");
+      if (info->debug_events)
+        {
+          if (retval)
+            g_print ("    action was found\n\n");
+          else
+            g_print ("    action NOT found\n\n");
+        }
 
       return retval;
     }
   else
     {
-      g_print ("    doesn't map to action\n\n");
+      if (info->debug_events)
+        g_print ("    doesn't map to action\n\n");
     }
 
   return FALSE;

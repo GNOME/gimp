@@ -893,7 +893,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox));
 
   prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
-                            _("Canvas Padding Mode:"), GTK_TABLE (table), 0,
+                            _("Canvas padding mode:"), GTK_TABLE (table), 0,
                             NULL);
 
   button = prefs_color_button_add (object, "padding-color",
@@ -1167,21 +1167,21 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "can-change-accels",
-                          _("Use Dynamic _keyboard shortcuts"),
+                          _("Use dynamic _keyboard shortcuts"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "save-accels",
                           _("Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,
-                             _("Save keyboard shortcuts now"),
+                             _("Save Keyboard Shortcuts Now"),
                              GTK_BOX (vbox2));
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (menus_save),
                             gimp);
 
   button = prefs_button_add (GTK_STOCK_CLEAR,
-                             _("Clear saved keyboard shortcuts now"),
+                             _("Clear Saved Keyboard Shortcuts Now"),
                              GTK_BOX (vbox2));
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (menus_clear),
@@ -1303,10 +1303,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "show-tool-tips",
-                          _("Show Tool _Tips"),
+                          _("Show tool _tips"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "show-tips",
-                          _("Show Tips on _Startup"),
+                          _("Show tips on _startup"),
                           GTK_BOX (vbox2));
 
   /*  Help Browser  */
@@ -1314,7 +1314,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "help-browser", 0, 0,
-                            _("Help _Browser to Use:"),
+                            _("Help _browser to use:"),
                             GTK_TABLE (table), 0, size_group);
 
   /*  Web Browser  (unused on win32)  */
@@ -1373,7 +1373,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "interpolation-type", 0, 0,
-                            _("Default _Interpolation:"),
+                            _("Default _interpolation:"),
                             GTK_TABLE (table), 0, size_group);
 
   /*  Global Brush, Pattern, ...  */
@@ -1474,8 +1474,8 @@ prefs_dialog_new (Gimp       *gimp,
                                _("Initial zoom ratio:"),
                                GTK_TABLE (table), 0, size_group);
 
-  /*  Pointer Movement Feedback  */
-  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
+  /*  Mouse Cursors  */
+  vbox2 = prefs_frame_new (_("Mouse Cursors"),
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "show-brush-outline",
@@ -1488,10 +1488,10 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
-                            _("Cursor M_ode:"),
+                            _("Cursor m_ode:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "cursor-format", 0, 0,
-                            _("Cursor Re_ndering:"),
+                            _("Cursor re_ndering:"),
                             GTK_TABLE (table), 1, size_group);
 
   g_object_unref (size_group);
@@ -1795,7 +1795,7 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
   prefs_check_button_add (object, "save-device-status",
-                          _("Save Input Device Settings on Exit"),
+                          _("Save input device settings on exit"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,
@@ -1827,10 +1827,6 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
-  /*  Controllers  */
-  vbox2 = prefs_frame_new (_("Additional Controllers"),
-                           GTK_CONTAINER (vbox), TRUE);
-
   enum
   {
     COLUMN_EVENT,
@@ -1846,41 +1842,96 @@ prefs_dialog_new (Gimp       *gimp,
     controllers = gimp_controllers_get_list (gimp);
 
     notebook = gtk_notebook_new ();
-    gtk_box_pack_start (GTK_BOX (vbox2), notebook, TRUE, TRUE, 0);
+    gtk_notebook_set_scrollable (GTK_NOTEBOOK (notebook), TRUE);
+    gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook));
+    gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show (notebook);
 
     for (list = GIMP_LIST (controllers)->list;
          list;
          list = g_list_next (list))
       {
-        GimpControllerInfo *info = list->data;
-        GtkListStore       *store;
-        GtkWidget          *vbox3;
-        GtkWidget          *tv;
-        GtkWidget          *sw;
-        gint                n_events;
-        gint                i;
+        GimpControllerInfo   *info       = list->data;
+        GimpController       *controller = info->controller;
+        GimpControllerClass  *controller_class;
+        GtkListStore         *store;
+        GtkWidget            *vbox3;
+        GtkWidget            *vbox4;
+        GtkWidget            *tv;
+        GtkWidget            *sw;
+        GtkWidget            *entry;
+        GParamSpec          **property_specs;
+        guint                 n_property_specs;
+        gint                  n_events;
+        gint                  row;
+        gint                  i;
+
+        controller_class = GIMP_CONTROLLER_GET_CLASS (controller);
 
         vbox3 = gtk_vbox_new (FALSE, 4);
         gtk_container_set_border_width (GTK_CONTAINER (vbox3), 4);
         gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox3,
-                                  gtk_label_new (GIMP_OBJECT (info)->name));
+                                  gimp_prop_label_new (G_OBJECT (info),
+                                                       "name"));
         gtk_widget_show (vbox3);
 
-        table = prefs_table_new (2, GTK_CONTAINER (vbox3));
+        vbox4 = prefs_frame_new (controller_class->name,
+                                 GTK_CONTAINER (vbox3), FALSE);
 
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                   _("Controller Class:"), 0.0, 0.5,
-                                   gtk_label_new (GIMP_CONTROLLER_GET_CLASS (info->controller)->name),
-                                   1, TRUE);
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                   _("Controller Instance:"), 0.0, 0.5,
-                                   gtk_label_new (info->controller->name),
-                                   1, TRUE);
+        entry = gimp_prop_entry_new (G_OBJECT (info), "name", -1);
+        gtk_box_pack_start (GTK_BOX (vbox4), entry, FALSE, FALSE, 0);
+        gtk_widget_show (entry);
 
+        prefs_check_button_add (G_OBJECT (info), "debug-events",
+                                _("Dump events from this controller"),
+                                GTK_BOX (vbox4));
         prefs_check_button_add (G_OBJECT (info), "enabled",
-                                _("Enable this Controller"),
-                                GTK_BOX (vbox3));
+                                _("Enable this controller"),
+                                GTK_BOX (vbox4));
+
+        vbox4 = prefs_frame_new (_("Controller Specific Settings"),
+                                 GTK_CONTAINER (vbox3), TRUE);
+
+        property_specs =
+          g_object_class_list_properties (G_OBJECT_CLASS (controller_class),
+                                          &n_property_specs);
+
+        table = prefs_table_new (1, GTK_CONTAINER (vbox4));
+        row   = 0;
+
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                   _("Name:"), 0.0, 0.5,
+                                   gimp_prop_label_new (G_OBJECT (controller),
+                                                        "name"),
+                                   1, TRUE);
+
+        for (i = 0; i < n_property_specs; i++)
+          {
+            GParamSpec *prop_spec = property_specs[i];
+            GtkWidget  *widget    = NULL;
+
+            if (prop_spec->owner_type == GIMP_TYPE_CONTROLLER)
+              continue;
+
+            if (G_IS_PARAM_SPEC_STRING (prop_spec))
+              {
+                if (prop_spec->flags & G_PARAM_WRITABLE)
+                  widget = gimp_prop_entry_new (G_OBJECT (controller),
+                                                prop_spec->name, -1);
+                else
+                  widget = gimp_prop_label_new (G_OBJECT (controller),
+                                                prop_spec->name);
+              }
+
+            if (widget)
+              gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                         g_param_spec_get_nick (prop_spec),
+                                         0.0, 0.5,
+                                         widget,
+                                         1, FALSE);
+          }
+
+        g_free (property_specs);
 
         store = gtk_list_store_new (NUM_COLUMNS,
                                     G_TYPE_STRING, G_TYPE_STRING);
@@ -1893,10 +1944,10 @@ prefs_dialog_new (Gimp       *gimp,
         gtk_container_add (GTK_CONTAINER (sw), tv);
         gtk_widget_show (tv);
 
-        gtk_container_add (GTK_CONTAINER (vbox3), sw);
+        gtk_container_add (GTK_CONTAINER (vbox4), sw);
         gtk_widget_show (sw);
 
-        n_events = gimp_controller_get_n_events (info->controller);
+        n_events = gimp_controller_get_n_events (controller);
 
         for (i = 0; i < n_events; i++)
           {
@@ -1905,13 +1956,12 @@ prefs_dialog_new (Gimp       *gimp,
             const gchar *event_blurb;
             const gchar *event_action;
 
-            gtk_list_store_append (store, &iter);
-
-            event_name  = gimp_controller_get_event_name  (info->controller, i);
-            event_blurb = gimp_controller_get_event_blurb (info->controller, i);
+            event_name  = gimp_controller_get_event_name  (controller, i);
+            event_blurb = gimp_controller_get_event_blurb (controller, i);
 
             event_action = g_hash_table_lookup (info->mapping, event_name);
 
+            gtk_list_store_append (store, &iter);
             gtk_list_store_set (store, &iter,
                                 COLUMN_EVENT,  event_blurb,
                                 COLUMN_ACTION, event_action,
@@ -2072,8 +2122,8 @@ prefs_dialog_new (Gimp       *gimp,
     }
     dirs[] =
     {
-      { N_("Temp dir:"), N_("Select Temp Dir"), "temp-path" },
-      { N_("Swap dir:"), N_("Select Swap Dir"), "swap-path" },
+      { N_("Temp folder:"), N_("Select Temp Folder"), "temp-path" },
+      { N_("Swap folder:"), N_("Select Swap Folder"), "swap-path" },
     };
 
     table = prefs_table_new (G_N_ELEMENTS (dirs) + 1, GTK_CONTAINER (vbox));

@@ -1,5 +1,18 @@
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontrollerinfo.[ch]: added a boolean property
+	"debug-events" and honor it when printing debugging output.
+	Should add an event console window so the user doesn't need to
+	have a terminal to inspect input module output.
+
+	* app/gui/prefereces-dialog.c: HIGified some forgotten labels.
+	Renamed the "Pointer Movement Feedback" frame to "Mouse Cursors".
+	Replaced some forgotten "Dir" with "Folder".
+	Made more GimpControllerInfo and GimpController properties
+	editable and cleaned up the controller page.
+
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_label_new().
 
 	* app/widgets/gimpgrideditor.c: HIGified capitalization.
