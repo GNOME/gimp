@@ -1363,6 +1363,8 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
   PATHIMAGELISTP plp;
   gboolean new_sz;
   gint row = paths_dialog->selected_row_num;
+  BezierSelect *bsel  = NULL;
+  GDisplay     *gdisp = NULL;
 
   g_return_if_fail(paths_dialog->current_path_list != NULL);
 
@@ -1391,8 +1393,20 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
     {
       gtk_signal_disconnect(GTK_OBJECT (plp->gimage),
 			    plp->sig_id);
+
       gimp_image_set_paths(plp->gimage,NULL);
       pathimagelist_free(plp);
+
+      /* Paste an empty BezierSelect to the current display to emulate an empty path list */
+
+      bsel  =   (g_new0 (BezierSelect,1));
+      bezier_select_reset(bsel);
+      gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
+				paths_dialog->gimage);
+
+      bezier_paste_bezierselect_to_current(gdisp,bsel);
+      beziersel_free(bsel);
+
       paths_dialog->current_path_list = NULL;
     }
 

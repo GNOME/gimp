@@ -1,3 +1,10 @@
+Fri Sep 24 23:54:26 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/paths_dialog.c
+
+	Applied patch from Garry R. Osgood. Fixes bug #2253.
+	Thank for the patch!
+
 Fri Sep 24 22:22:43 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/fileops.c
