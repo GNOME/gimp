@@ -25,8 +25,6 @@
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
-
 #include "gimphistogramoptions.h"
 #include "gimpcoloroptions.h"
 #include "gimptooloptions-gui.h"

@@ -33,7 +33,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
 

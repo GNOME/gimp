@@ -46,7 +46,6 @@
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 

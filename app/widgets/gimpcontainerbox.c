@@ -36,9 +36,9 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
+#include "gimppropwidgets.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
-#include "gimppropwidgets.h"
 
 
 static void   gimp_container_box_class_init      (GimpContainerBoxClass *klass);

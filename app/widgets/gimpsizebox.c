@@ -29,7 +29,6 @@
 
 #include "widgets-types.h"
 
-#include "gimppropwidgets.h"
 #include "gimpsizebox.h"
 
 #include "gimp-intl.h"

@@ -31,8 +31,8 @@
 #include "core/gimpgrid.h"
 #include "core/gimpmarshal.h"
 
-#include "gimppropwidgets.h"
 #include "gimpgrideditor.h"
+#include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
 

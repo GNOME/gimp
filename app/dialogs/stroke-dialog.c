@@ -37,7 +37,6 @@
 
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpstrokeeditor.h"
 

@@ -29,7 +29,6 @@
 #include "paint/gimpairbrushoptions.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "gimpairbrushtool.h"
 #include "gimppaintoptions-gui.h"

@@ -21,13 +21,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "config/gimpconfig-utils.h"
 
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "gimphistogramoptions.h"
 #include "gimptooloptions-gui.h"

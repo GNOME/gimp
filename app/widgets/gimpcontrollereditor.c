@@ -37,7 +37,6 @@
 #include "gimpcontrollerinfo.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
-#include "gimppropwidgets.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"

@@ -29,7 +29,6 @@
 #include "paint/gimpconvolveoptions.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpconvolvetool.h"

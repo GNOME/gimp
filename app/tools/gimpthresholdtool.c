@@ -39,7 +39,6 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 

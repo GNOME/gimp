@@ -30,7 +30,6 @@
 #include "core/gimp.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "tips-dialog.h"
 #include "tips-parser.h"

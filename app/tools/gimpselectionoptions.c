@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbycolorselecttool.h"

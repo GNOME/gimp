@@ -41,8 +41,8 @@
 #include "gimpdevices.h"
 #include "gimpdevicestatus.h"
 #include "gimpdialogfactory.h"
-#include "gimpview.h"
 #include "gimppropwidgets.h"
+#include "gimpview.h"
 
 #include "gimp-intl.h"
 

@@ -1,5 +1,55 @@
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimppropwidgets.[ch]: magic-copied from app/widgets
+	and un-movable things then removed.
+	
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h: corresponding changes
+
+	* app/widgets/gimppropwidgets.[ch]: remove functions that were
+	moved.
+
+	* app/dialogs/stroke-dialog.c
+	* app/dialogs/tips-dialog.c
+	* app/dialogs/user-install-dialog.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpcolorpickeroptions.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpflipoptions.c
+	* app/tools/gimphistogramoptions.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpinkoptions-gui.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifyoptions.c
+	* app/tools/gimpmeasureoptions.c
+	* app/tools/gimpmoveoptions.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformoptions.c
+	* app/tools/gimpvectoroptions.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontrollereditor.c
+	* app/widgets/gimpdevicestatus.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimpsizebox.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptooloptionseditor.c: fix includes
+
+2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/jpeg/jpeg-exif.c: check validity of orientation
 	value before using, see bug #166248.
 	

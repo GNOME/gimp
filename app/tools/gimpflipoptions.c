@@ -27,7 +27,6 @@
 
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpflipoptions.h"

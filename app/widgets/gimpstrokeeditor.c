@@ -28,7 +28,6 @@
 #include "core/gimpstrokeoptions.h"
 
 #include "gimpdasheditor.h"
-#include "gimppropwidgets.h"
 #include "gimpstrokeeditor.h"
 
 #include "gimp-intl.h"

@@ -31,7 +31,6 @@
 #include "gimpcolorbar.h"
 #include "gimphistogrambox.h"
 #include "gimphistogramview.h"
-#include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
 

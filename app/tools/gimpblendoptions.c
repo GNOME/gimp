@@ -29,7 +29,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpblendoptions.h"

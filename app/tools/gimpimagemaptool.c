@@ -39,7 +39,6 @@
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"

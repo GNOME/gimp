@@ -45,7 +45,6 @@
 
 #include "core/gimp-templates.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "user-install-dialog.h"

@@ -25,7 +25,6 @@
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcropoptions.h"

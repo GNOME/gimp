@@ -29,7 +29,6 @@
 #include "paint/gimpinkoptions.h"
 
 #include "widgets/gimpblobeditor.h"
-#include "widgets/gimppropwidgets.h"
 
 #include "gimpinkoptions-gui.h"
 #include "gimppaintoptions-gui.h"
