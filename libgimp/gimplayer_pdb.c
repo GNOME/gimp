@@ -454,6 +454,39 @@ gimp_layer_get_mask (gint32 layer_ID)
 }
 
 /**
+ * gimp_layer_from_mask:
+ * @mask_ID: Mask for which to return the layer.
+ *
+ * Get the specified mask's layer.
+ *
+ * This procedure returns the specified mask's layer , or -1 if none
+ * exists.
+ *
+ * Returns: The mask's layer.
+ *
+ * Since: GIMP 2.2
+ */
+gint32
+gimp_layer_from_mask (gint32 mask_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_layer_from_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_CHANNEL, mask_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
+}
+
+/**
  * gimp_layer_add_mask:
  * @layer_ID: The layer to receive the mask.
  * @mask_ID: The mask to add to the layer.

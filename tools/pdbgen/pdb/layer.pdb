@@ -454,6 +454,38 @@ HELP
     );
 }
 
+sub layer_from_mask {
+    $blurb = "Get the specified mask's layer.";
+
+    $help = <<'HELP';
+This procedure returns the specified mask's layer , or -1 if none exists.
+HELP
+
+    $author = $copyright = 'Geert Jordaens';
+    $date = '2004';
+
+    $since = '2.2';
+
+    @inargs = (
+        { name => 'mask', type => 'layer_mask',
+          desc => 'Mask for which to return the layer' }
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer', init => 1,
+          desc => 'The mask\'s layer',
+	  return_fail => -1 }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  layer = gimp_layer_mask_get_layer (mask);
+}
+CODE
+    );
+}
+
 sub layer_is_floating_sel {
     $blurb = 'Is the specified layer a floating selection?';
 
@@ -464,7 +496,7 @@ drawable.
 HELP
 
     &std_pdb_misc;
-    
+
     @inargs = ( &layer_arg );
 
     @outargs = (
@@ -486,7 +518,7 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = ( 
+    @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The source drawable from where the new layer is copied' },
 	{ name => 'dest_image', type => 'image',
@@ -578,10 +610,10 @@ CODE2
               "core/gimpitem-linked.h" "pdb_glue.h" "gimp-intl.h");
 
 unshift @procs, qw(layer_new layer_new_from_drawable layer_copy
-                   layer_add_alpha 
+                   layer_add_alpha
                    layer_scale layer_resize layer_resize_to_image_size
 		   layer_translate layer_set_offsets
-                   layer_create_mask layer_get_mask
+                   layer_create_mask layer_get_mask layer_from_mask
                    layer_add_mask layer_remove_mask
 		   layer_is_floating_sel);
 %exports = (app => [@procs], lib => [@procs]);

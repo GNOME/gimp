@@ -1,5 +1,17 @@
 2004-11-08  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/layer.pdb: applied modified patch from Geert
+	Jordaens which adds the missing gimp_layer_from_mask() API.
+	Addresses bug #138662.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]. regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
+2004-11-08  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/selection-round.scm: removed garbage
 	from beginning of file. Removed DOS line breaks.
 
