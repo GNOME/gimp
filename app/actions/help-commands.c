@@ -22,7 +22,6 @@
 #include "about_dialog.h"
 #include "actionarea.h"
 #include "app_procs.h"
-#include "batch_convert.h"
 #include "brightness_contrast.h"
 #include "gimpbrushlist.h"
 #include "by_color_select.h"
