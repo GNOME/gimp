@@ -1,3 +1,12 @@
+2004-01-15  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/helpbrowser/domain.c: Modify error messages shown when 
+	help files cannot be opened. For the main GIMP help domain, the 
+	error message is now "Failed to open help files:\nTheGIMP help files 
+	are not installed." and in the general case "Failed to open help 
+	files:\nThe requested help file %s could not be opened.\nPlease check 
+	your installation." This fixes bug #128112.
+
 2004-01-15  Sven Neumann  <sven@gimp.org>
 
 	* data/misc/Makefile.am: added a "validate" rule that attempts to

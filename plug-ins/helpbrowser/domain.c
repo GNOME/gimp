@@ -106,9 +106,9 @@ domain_map (HelpDomain  *domain,
       if (! domain_parse (domain, &error) || error)
         {
           if (! domain->help_id_mapping)
-            g_message ("Failed to open help domain:\n\n%s", error->message);
+            g_message ("Failed to open help files:\n%s", error->message);
           else
-            g_message ("Parse error in help domain:\n\n%s\n\n"
+            g_message ("Parse error in help domain:\n%s\n\n"
                        "(Added entires before error anyway)", error->message);
 
           if (error)
@@ -241,9 +241,18 @@ domain_parse (HelpDomain  *domain,
   fp = fopen (filename, "r");
   if (! fp)
     {
-      g_set_error (error, 0, 0,
-                   "Could not open gimp-help.xml mapping file from '%s': %s",
-                   domain->help_uri, g_strerror (errno));
+      if (strcmp (domain->help_uri, 
+		  "file:///usr/local/share/gimp/1.3/help") == 0)
+        {
+          g_set_error (error, 0, 0,
+                       "The GIMP help files are not installed.");
+	}
+      else
+        {
+          g_set_error (error, 0, 0,
+                       "The requested help file %s could not be opened.\n"
+		       "Please check your installation.", filename);
+        }
       g_free (filename);
       return FALSE;
     }
