@@ -8,7 +8,7 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 PKG_LINK = \
-	..\base\appbase-$(PKG_VER).lib \
+#	..\base\appbase-$(PKG_VER).lib \
 #	..\core\appcore-$(PKG_VER).lib \
 	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \

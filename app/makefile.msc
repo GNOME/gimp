@@ -47,6 +47,7 @@ PKG_LINK = \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
+	$(top_builddir)/libgimpmodule/gimpmodule-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
 	$(GLIB_LIBS) \
 	$(GTK2_LIBS) \
@@ -74,8 +75,6 @@ mmx_sources = \
 OBJECTS = \
 	ops_buttons.obj \
 	undo_history.obj \
-	general.obj \
-	gimprc.obj \
 	path.obj \
 	path_curves.obj \
 	path_bezier.obj \
@@ -86,9 +85,6 @@ OBJECTS = \
 	errors.obj \
 	libgimp_glue.obj \
 
-
-regexrepl.obj : regexrepl.c regexrepl.h
-	$(CC) $(CFLAGS) -GD -c -DREGEX_MALLOC -DHAVE_STRING_H $(PKG_CFLAGS) regexrepl.c
 
 EXTRA_DIST = \
 	makefile.mingw \

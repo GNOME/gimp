@@ -30,6 +30,7 @@ OBJECTS = \
 	gimpbufferview.obj \
 	gimpchannellistitem.obj \
 	gimpchannellistview.obj \
+	gimpcoloreditor.obj \
 	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
 	gimpcomponentlistitem.obj \
@@ -61,6 +62,7 @@ OBJECTS = \
 	gimpgradienteditor.obj \
 	gimpgradientpreview.obj \
 	gimphelp.obj \
+	gimphistogrambox.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimagefilepreview.obj \
@@ -79,6 +81,7 @@ OBJECTS = \
 	gimppatternpreview.obj \
 	gimppreview.obj \
 	gimppreview-utils.obj \
+	gimppropwidgets.obj \
 	gimpselectioneditor.obj \
 	gimptoolbox.obj \
 	gimptoolbox-color-area.obj \

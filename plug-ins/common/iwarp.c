@@ -743,7 +743,8 @@ iwarp (void)
       for (i = 0; i < animate_num_frames; i++)
 	{
 	  st = g_strdup_printf (_("Frame %d"), i);
-	  animlayers[i] = _gimp_layer_copy (layerID, TRUE);
+	  animlayers[i] = gimp_layer_copy (layerID);
+	  gimp_layer_add_alpha (animlayers[i]);
 	  gimp_layer_set_name (animlayers[i], st);
 	  g_free (st);
 	  destdrawable = gimp_drawable_get (animlayers[i]);
@@ -764,8 +765,8 @@ iwarp (void)
 	  for (i = 0; i < animate_num_frames; i++)
 	    {
 	      gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
-	      layerID = _gimp_layer_copy (animlayers[animate_num_frames-i-1],
-					  TRUE); 
+	      layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]); 
+	      gimp_layer_add_alpha (layerID);
 	      st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
 	      gimp_layer_set_name (layerID, st);
 	      g_free (st);

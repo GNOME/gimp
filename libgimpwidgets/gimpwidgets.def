@@ -18,6 +18,33 @@ EXPORTS
 	gimp_color_button_new
 	gimp_color_button_set_color
 	gimp_color_button_set_type
+	gimp_color_display_changed
+	gimp_color_display_clone
+	gimp_color_display_configure
+	gimp_color_display_configure_reset
+	gimp_color_display_convert
+	gimp_color_display_get_type
+	gimp_color_display_load_state
+	gimp_color_display_new
+	gimp_color_display_save_state
+	gimp_color_notebook_get_type
+	gimp_color_notebook_set_has_page
+	gimp_color_scale_entry_new
+	gimp_color_scale_get_type
+	gimp_color_scale_new
+	gimp_color_scale_set_channel
+	gimp_color_scale_set_color
+	gimp_color_scales_get_type
+	gimp_color_select_get_type
+	gimp_color_selector_channel_changed
+	gimp_color_selector_color_changed
+	gimp_color_selector_get_type
+	gimp_color_selector_new
+	gimp_color_selector_set_channel
+	gimp_color_selector_set_color
+	gimp_color_selector_set_show_alpha
+	gimp_color_selector_set_toggles_sensitive
+	gimp_color_selector_set_toggles_visible
 	gimp_context_help
 	gimp_coordinates_new
 	gimp_dialog_create_action_area
@@ -25,7 +52,6 @@ EXPORTS
 	gimp_dialog_get_type
 	gimp_dialog_new
 	gimp_dialog_newv
-;	gimp_dialog_set_icon
 	gimp_double_adjustment_update
 	gimp_file_selection_get_filename
 	gimp_file_selection_get_type
@@ -39,7 +65,7 @@ EXPORTS
 	gimp_help_init
 	gimp_help_set_help_data
 	gimp_int_adjustment_update
-	gimp_mem_size_entry_new
+	gimp_memsize_entry_new
 	gimp_menu_item_update
 	gimp_offset_area_get_type
 	gimp_offset_area_new
@@ -54,6 +80,9 @@ EXPORTS
 	gimp_path_editor_get_path
 	gimp_path_editor_get_type
 	gimp_path_editor_new
+	gimp_path_editor_set_path
+	gimp_pick_button_get_type
+	gimp_pick_button_new
 	gimp_pixmap_button_new
 	gimp_pixmap_get_type
 	gimp_pixmap_new
@@ -69,6 +98,8 @@ EXPORTS
 	gimp_radio_group_set_active
 	gimp_random_seed_new
 	gimp_scale_entry_new
+	gimp_scale_entry_new_internal
+	gimp_scale_entry_set_sensitive
 	gimp_size_entry_add_field
 	gimp_size_entry_attach_label
 	gimp_size_entry_get_refval
@@ -106,4 +137,3 @@ EXPORTS
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
 	gimp_widgets_init
-

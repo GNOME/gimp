@@ -97,6 +97,7 @@ gimp_OBJECTS = \
 	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
+	gimpmisc.obj \
 	gimppixelrgn.obj \
 	gimpproceduraldb.obj \
 	gimpselection.obj \

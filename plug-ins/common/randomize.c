@@ -137,8 +137,7 @@ static RandomizeVals pivals =
 {
   50.0,
   1.0,
-  SEED_DEFAULT,
-  0,
+  SEED_DEFAULT
 };
 
 typedef struct

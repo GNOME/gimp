@@ -1,28 +1,4 @@
 EXPORTS
-	_gimp_channel_new
-	_gimp_drawable_thumbnail
-	_gimp_gradients_get_gradient_data
-	_gimp_image_get_cmap
-	_gimp_image_set_cmap
-	_gimp_image_thumbnail
-	_gimp_layer_copy
-	_gimp_layer_new
-	_gimp_procedural_db_get_data
-	_gimp_procedural_db_proc_info
-	_gimp_procedural_db_set_data
-	_gimp_selection_float
-	_gimp_unit_get_abbreviation
-	_gimp_unit_get_deletion_flag
-	_gimp_unit_get_digits
-	_gimp_unit_get_factor
-	_gimp_unit_get_identifier
-	_gimp_unit_get_number_of_built_in_units
-	_gimp_unit_get_number_of_units
-	_gimp_unit_get_plural
-	_gimp_unit_get_singular
-	_gimp_unit_get_symbol
-	_gimp_unit_new
-	_gimp_unit_set_deletion_flag
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
@@ -41,6 +17,7 @@ EXPORTS
 	gimp_channel_get_show_masked
 	gimp_channel_get_tattoo
 	gimp_channel_get_visible
+	gimp_channel_new
 	gimp_channel_new
 	gimp_channel_set_color
 	gimp_channel_set_name
@@ -122,6 +99,7 @@ EXPORTS
 	gimp_free_select
 	gimp_fuzzy_select
 	gimp_gamma
+	gimp_get_bg_guchar
 	gimp_get_default_comment
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo
@@ -130,6 +108,7 @@ EXPORTS
 	gimp_gimprc_set
 	gimp_gradients_close_popup
 	gimp_gradients_get_gradient
+	gimp_gradients_get_gradient_data
 	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
 	gimp_gradients_sample_custom
@@ -159,6 +138,7 @@ EXPORTS
 	gimp_image_get_active_layer
 	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channels
+	gimp_image_get_cmap
 	gimp_image_get_cmap
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
@@ -197,6 +177,7 @@ EXPORTS
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
 	gimp_image_set_cmap
+	gimp_image_set_cmap
 	gimp_image_set_component_active
 	gimp_image_set_component_visible
 	gimp_image_set_filename
@@ -216,6 +197,7 @@ EXPORTS
 	gimp_invert
 	gimp_layer_add_alpha
 	gimp_layer_copy
+	gimp_layer_copy
 	gimp_layer_create_mask
 	gimp_layer_delete
 	gimp_layer_get_apply_mask
@@ -230,6 +212,7 @@ EXPORTS
 	gimp_layer_get_visible
 	gimp_layer_is_floating_sel
 	gimp_layer_mask
+	gimp_layer_new
 	gimp_layer_new
 	gimp_layer_resize
 	gimp_layer_scale
@@ -278,6 +261,11 @@ EXPORTS
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_perspective
+	gimp_pixel_fetcher_destroy
+	gimp_pixel_fetcher_get_pixel
+	gimp_pixel_fetcher_get_pixel2
+	gimp_pixel_fetcher_new
+	gimp_pixel_fetcher_set_bg_color
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect
@@ -294,9 +282,12 @@ EXPORTS
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
 	gimp_procedural_db_get_data
+	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
 	gimp_procedural_db_proc_info
+	gimp_procedural_db_proc_info
 	gimp_procedural_db_query
+	gimp_procedural_db_set_data
 	gimp_procedural_db_set_data
 	gimp_progress_init
 	gimp_progress_update
@@ -305,6 +296,8 @@ EXPORTS
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
+	gimp_rgn_iterate1
+	gimp_rgn_iterate2
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
@@ -312,6 +305,7 @@ EXPORTS
 	gimp_scale
 	gimp_selection_bounds
 	gimp_selection_clear
+	gimp_selection_float
 	gimp_selection_float
 	gimp_selection_is_empty
 	gimp_selection_load
@@ -338,7 +332,21 @@ EXPORTS
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
+	gimp_unit_get_abbreviation
+	gimp_unit_get_deletion_flag
+	gimp_unit_get_digits
 	gimp_unit_get_factor
+	gimp_unit_get_factor
+	gimp_unit_get_identifier
+	gimp_unit_get_number_of_built_in_units
+	gimp_unit_get_number_of_units
+	gimp_unit_get_plural
+	gimp_unit_get_singular
+	gimp_unit_get_symbol
+	gimp_unit_new
+	gimp_unit_set_deletion_flag
 	gimp_version
 	set_gimp_PLUG_IN_INFO_PTR
+
+
 

@@ -1,3 +1,45 @@
+2002-11-30  Hans Breuer  <hans@breuer.org>
+
+	* */makefile.msc */*/makefile.msc : updated
+
+	* themes/Default/images/makefile.msc : new file
+	* themes/Default/makefile.msc : removed
+
+	* libgimpwidgets/gimpwidgets.def : updated
+
+	* app/core/core-types.h : renamed PIXELS and POINTS
+	to SIZE_* to avoid clashes with system headers
+	* app/pdb/text_tool_cmds.c : updated ...
+	* tools/pdbgen/enums.py : ... by renaming here too.
+
+	* app/widgets/gimphistogrambox.c : <string.h> for memcpy()
+	* app/widgets/gimppropwidgets.c : <string.h> for strlen()
+
+	* app/config/gimpconfig.c : on win32 rename always fails
+	if the destination file exists. Delete it first.
+
+	* libgimp/gimp.def : removed all '_'-prefixed exports
+	* plug-ins/common/iwarp.c : replace _gimp_layer_copy()
+	with gimp_layer_copy(), gimp_layer_add_alpha()
+
+	* libgimp/gimpmisc.c : ported gimp_timer funcs to use
+	g_timer to be more portable
+
+	* libgimpbase/gimpdatafiles.c : there are no symlinks on 
+	win32, inverted to #ifndef G_OS_WIN32 as it was meant.
+
+	* libgimpbase/gimpbase.def libgimpmodule/gimpmodule.def 
+	  libgimpwidgets/gimpwidgets.def : updated externals
+
+	* plug-ins/common/randomize.c plug-ins/common/sinus.c :
+	don't initialize more than the defined struct size
+
+	* plug-ins/common/warp.c : removed unneeded unistd.h and
+	signal.h include
+
+	* regexrepl/regexrepl.def : (new file) needed to build 
+	as DLL
+
 2002-12-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: added "gboolean use_shm" to the Gimp struct

@@ -24,7 +24,8 @@
  */
 
 #include <stdio.h>
-#include <sys/time.h> /* Used by gimp_timer_start/stop */
+
+#include <glib.h>
 
 #include "config.h"
 
@@ -246,31 +247,29 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
     }
 }
 
-static struct timeval time_start;
+GTimer* _timer = NULL;
 
 void 
 gimp_timer_start(void)
 {
-  gettimeofday (&time_start, NULL);
+  g_return_if_fail (!_timer);
+
+  _timer = g_timer_new ();
 }
 
 void
 gimp_timer_stop(void)
 {
-  struct timeval time_stop;
-  long sec, usec;
+  double elapsed;
 
-  gettimeofday(&time_stop, NULL);
-  sec = time_stop.tv_sec  - time_start.tv_sec;
-  usec = time_stop.tv_usec - time_start.tv_usec;
-	
-  if (usec < 0)
-    {
-      sec--;
-      usec += 1000000;
-    }
-	
-  fprintf (stderr, "%ld.%ld seconds\n", sec, usec);
+  g_return_if_fail (_timer != NULL);
+
+  g_timer_stop (_timer);
+  elapsed = g_timer_elapsed (_timer, NULL);
+  g_timer_destroy (_timer);
+  _timer = NULL;
+
+  g_print ("%ld seconds\n", elapsed);
 }
 
 static void

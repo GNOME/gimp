@@ -1052,8 +1052,7 @@ static SinusVals svals =
   LINEAR, 
   USE_COLORS,
   { 1.0, 1.0, 0.0, 1.0 },
-  { 0.0, 0.0, 1.0, 1.0 },
-  TRUE
+  { 0.0, 0.0, 1.0, 1.0 }
 };
 
 typedef struct

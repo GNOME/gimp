@@ -187,7 +187,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 		    {
 		      (* loader_func) (&file_data);
 		    }
-#ifdef G_OS_WIN32
+#ifndef G_OS_WIN32
 		  else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
                            S_ISLINK (filestat.st_mode))
 		    {

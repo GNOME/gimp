@@ -23,11 +23,11 @@ INCLUDES = -I..
 DEPCFLAGS = \
 	-FImsvc_recommended_pragmas.h \
 	$(GLIB_CFLAGS) $(GTK2_CFLAGS) $(INTL_CFLAGS)
-DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
-		$(GTK2)\gdk-pixbuf\gdk_pixbuf-$(GTK_VER).lib 
+DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS)
 
 all : \
 	..\config.h \
+	gimpwidgetsmarshal.c \
 	gimpwidgets-$(GIMP_VER).dll
 
 ..\config.h : ..\config.h.win32
@@ -41,11 +41,18 @@ OBJECTS = \
 	gimpchainbutton.obj \
 	gimpcolorarea.obj \
 	gimpcolorbutton.obj \
+	gimpcolordisplay.obj \
+	gimpcolornotebook.obj \
+	gimpcolorscale.obj \
+	gimpcolorscales.obj \
+	gimpcolorselect.obj \
+	gimpcolorselector.obj \
 	gimpdialog.obj \
 	gimpfileselection.obj \
 	gimphelpui.obj \
 	gimpoffsetarea.obj \
 	gimppatheditor.obj \
+	gimppickbutton.obj \
 	gimppixmap.obj \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \

@@ -261,6 +261,12 @@ gimp_config_serialize (GObject      *object,
 
   close (fd);
 
+#ifdef G_OS_WIN32
+  /* win32 rename can't overwrite */
+  if (success)
+    unlink (filename);
+#endif
+
   if (success && rename (tmpname, filename) == -1)
     {
       g_set_error (error, 

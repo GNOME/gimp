@@ -362,9 +362,9 @@ package Gimp::CodeGen::enums;
     SizeType =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
-	  symbols => [ qw(PIXELS POINTS) ],
-	  mapping => { PIXELS => '0',
-		       POINTS => '1' }
+	  symbols => [ qw(SIZE_PIXELS SIZE_POINTS) ],
+	  mapping => { SIZE_PIXELS => '0',
+		       SIZE_POINTS => '1' }
 	},
     GimpCloneType =>
 	{ contig => 1,

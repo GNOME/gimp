@@ -31,8 +31,8 @@ OBJECTS = \
 	buffers-commands.obj \
 	channels-commands.obj \
 	colormap-editor-commands.obj \
+	color-history.obj \
 	color-notebook.obj \
-	color-select.obj \
 	convert-dialog.obj \
 	data-commands.obj \
 	device-status-dialog.obj \
