@@ -814,8 +814,7 @@ gimp_text_buffer_save (GtkTextBuffer  *buffer,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  fd = g_open (filename,
-               O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR, 0600);
+  fd = g_open (filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 
   if (fd == -1)
     {
