@@ -36,14 +36,17 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_VERSION "0.10"
 
 #define SCALE_WIDTH   150
 #define ENTRY_WIDTH     4
 
-/* uncomment this line to get a rough feel of how long the
-   plug-in takes to run */
+/* Uncomment this line to get a rough estimate of
+ * how long the plug-in takes to run.
+ */
 /* #define TIMER */
+
 
 typedef struct
 {
@@ -116,7 +119,6 @@ GimpPlugInInfo PLUG_IN_INFO =
     run,   /* run_proc   */
   };
 
-static  GimpRunMode   run_mode;
 
 MAIN ()
 
@@ -164,8 +166,9 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
 #ifdef TIMER
-  GTimer *timer = g_timer_new ();
+  GTimer            *timer = g_timer_new ();
 #endif
 
   run_mode = param[0].data.d_int32;
