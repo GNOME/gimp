@@ -20,12 +20,12 @@
 #define __TOOLS_ENUMS_H__
 
 #if 0
-   This file is parsed by two scripts, enumgen.pl in tools/pdbgen
-   and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
-   are exported to libgimp and the PDB. Enums that are not marked with
-   /*< skip >*/ are registered with the GType system. If you want the
-   enum to be skipped by both scripts, you have to use /*< pdb-skip >*/
-   _before_ /*< skip >*/. 
+   This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
+   and gimp-mkenums. All enums that are not marked with 
+   /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
+   not marked with /*< skip >*/ are registered with the GType system. 
+   If you want the enum to be skipped by both scripts, you have to use 
+   /*< pdb-skip, skip >*/. 
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.
@@ -51,7 +51,7 @@ typedef enum /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
-typedef enum /*< pdb-skip >*/ /*< skip >*/
+typedef enum /*< pdb-skip, skip >*/
 {
   SELECTION_ADD       = GIMP_CHANNEL_OP_ADD,
   SELECTION_SUBTRACT  = GIMP_CHANNEL_OP_SUBTRACT,
@@ -64,7 +64,7 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 } SelectOps;
 
 /*  Tool control actions  */
-typedef enum /*< pdb-skip >*/ /*< skip >*/
+typedef enum /*< pdb-skip, skip >*/
 {
   PAUSE,
   RESUME,
@@ -72,7 +72,7 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 } GimpToolAction;
 
 /*  Motion event report modes  */
-typedef enum /*< pdb-skip >*/ /*< skip >*/
+typedef enum /*< pdb-skip, skip >*/
 {
   GIMP_MOTION_MODE_EXACT,
   GIMP_MOTION_MODE_HINT,
@@ -117,7 +117,7 @@ typedef enum /*< pdb-skip >*/
 
 
 /*  Possible transform functions  */
-typedef enum /*< pdb-skip >*/ /*< skip >*/
+typedef enum /*< pdb-skip, skip >*/
 {
   TRANSFORM_CREATING,
   TRANSFORM_HANDLE_1,

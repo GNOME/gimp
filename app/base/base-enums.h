@@ -20,12 +20,12 @@
 #define __BASE_ENUMS_H__
 
 #if 0
-   This file is parsed by two scripts, enumgen.pl in tools/pdbgen
-   and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
-   are exported to libgimp and the PDB. Enums that are not marked with
-   /*< skip >*/ are registered with the GType system. If you want the
-   enum to be skipped by both scripts, you have to use /*< pdb-skip >*/
-   _before_ /*< skip >*/. 
+   This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
+   and gimp-mkenums. All enums that are not marked with 
+   /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
+   not marked with /*< skip >*/ are registered with the GType system. 
+   If you want the enum to be skipped by both scripts, you have to use 
+   /*< pdb-skip, skip >*/. 
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.

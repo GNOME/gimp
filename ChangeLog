@@ -1,3 +1,12 @@
+2003-07-01  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base-enums.h
+	* app/paint/paint-enums.h
+	* app/tools/tools-enums.h: use /*< pdb-skip, skip >*/, updated the
+	comment that explains how to use the trigraph sequences.
+
+	* app/tools/tools-enums.c: regenerated.
+	
 2003-06-30  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/dialogs.c
