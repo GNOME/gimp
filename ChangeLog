@@ -1,3 +1,8 @@
+Tue Jan 27 10:21:00 PST 1998 Raph Levien <raph@acm.org>
+
+	* app/gimage.c: fixed bug in image display with all channels
+	turned off
+	
 Tue Jan 27 00:18:28 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/xcf.c: fixes an off by one error in xcf_tile_save_rle()

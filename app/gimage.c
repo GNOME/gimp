@@ -1003,6 +1003,17 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
   if ((layer = gimage_floating_sel (gimage)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
+  /* Note added by Raph Levien, 27 Jan 1998
+
+     This looks it was intended as an optimization, but it seems to
+     have correctness problems. In particular, if all channels are
+     turned off, the screen simply does not update the projected
+     image. It should be black. Turning off this optimization seems to
+     restore correct behavior. At some future point, it may be
+     desirable to turn the optimization back on.
+
+     */
+#if 0
   /*  If all channels are not visible, simply return  */
   switch (gimage_base_type (gimage))
     {
@@ -1021,6 +1032,7 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 	return;
       break;
     }
+#endif
 
   while (list)
     {
