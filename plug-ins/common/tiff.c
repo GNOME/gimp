@@ -864,6 +864,10 @@ read_16bit (guchar       *source,
                           startcol, startrow, cols, rows, TRUE, FALSE);
   }
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+  source++; /* offset source once, to look at the high byte */
+#endif
+
   for (row = 0; row < rows; ++row) {
     dest= channel[0].pixels + row * cols * channel[0].drawable->bpp;
 

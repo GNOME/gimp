@@ -1,3 +1,8 @@
+2000-11-19  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Little-endian fix for 16bit TIFF
+	* plug-ins/common/pcx.c: Use same endian-detect as other plug-ins
+
 2000-11-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpenv.c: a missing newline confused gtk-doc. Minor doc fixes.

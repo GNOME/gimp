@@ -37,7 +37,7 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GimpParam **return_vals);
 
-#if defined(_BIG_ENDIAN) || defined(sparc) || defined (__sgi)
+#if G_BYTE_ORDER == G_BIG_ENDIAN
 #define qtohl(x) \
         ((unsigned long int)((((unsigned long int)(x) & 0x000000ffU) << 24) | \
                              (((unsigned long int)(x) & 0x0000ff00U) <<  8) | \
