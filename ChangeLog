@@ -1,3 +1,25 @@
+2001-11-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpbutton.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpoffsetarea.c: fixed button_press event handling,
+	removed double g_return_if_fail()s, misc. cleanup.
+
+	* app/display/gimpdisplayshell.c: removed the SET_COLOR() stuff
+	here...
+
+	* app/gui/menus.c: ...and added it here so it actually works.
+
+	* app/widgets/gimpcolorpanel.c: add color previews to the
+	item_factory.
+
+	* app/widgets/gimpdockbook.c: use the item_factory functions now
+	that they are in widgets/.
+
+	* app/widgets/gimpitemfactory.[ch]: nothing, we just want to keep
+	the RCS hirtory.
+
 2001-11-27  Daniel Egger  <degger@fhm.edu>
 
 	* app/paint-funcs/paint-funcs-generic.h

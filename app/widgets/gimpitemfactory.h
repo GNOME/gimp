@@ -16,13 +16,88 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MENUS_H__
-#define __MENUS_H__
+#ifndef __GIMP_ITEM_FACTORY_H__
+#define __GIMP_ITEM_FACTORY_H__
+
+G_BEGIN_DECLS
 
 
-void   menus_init    (Gimp *gimp);
-void   menus_exit    (Gimp *gimp);
-void   menus_restore (Gimp *gimp);
+typedef struct _GimpItemFactoryEntry GimpItemFactoryEntry;
+
+struct _GimpItemFactoryEntry
+{
+  GtkItemFactoryEntry  entry;
+
+  const gchar *quark_string;
+
+  const gchar *help_page;
+  const gchar *description;
+};
 
 
-#endif /* __MENUS_H__ */
+GtkItemFactory * gimp_item_factory_new (GType                  container_type,
+                                        const gchar           *path,
+                                        const gchar           *factory_path,
+                                        guint                  n_entries,
+                                        GimpItemFactoryEntry  *entries,
+                                        gpointer               callback_data,
+                                        gboolean               create_tearoff);
+
+void   gimp_item_factory_create_item   (GtkItemFactory        *item_factory,
+                                        GimpItemFactoryEntry  *entry,
+                                        gpointer               callback_data,
+                                        guint                  callback_type,
+                                        gboolean               create_tearoff,
+                                        gboolean               static_entry);
+void   gimp_item_factory_create_items  (GtkItemFactory        *item_factory,
+                                        guint                  n_entries,
+                                        GimpItemFactoryEntry  *entries,
+                                        gpointer               callback_data,
+                                        guint                  callback_type,
+                                        gboolean               create_tearoff,
+                                        gboolean               static_entries);
+
+void   gimp_item_factory_set_active    (GtkItemFactory        *factory,
+                                        gchar                 *path,
+                                        gboolean               state);
+void   gimp_item_factory_set_color     (GtkItemFactory        *factory,
+                                        gchar                 *path,
+                                        const GimpRGB         *color,
+                                        gboolean               set_label);
+void   gimp_item_factory_set_label     (GtkItemFactory        *factory,
+                                        gchar                 *path,
+                                        const gchar           *label);
+void   gimp_item_factory_set_sensitive (GtkItemFactory        *factory,
+                                        gchar                 *path,
+                                        gboolean               sensitive);
+void   gimp_item_factory_set_visible   (GtkItemFactory        *factory,
+                                        gchar                 *path,
+                                        gboolean               visible);
+
+
+void   gimp_item_factory_tearoff_callback (GtkWidget          *widget,
+					   gpointer            data,
+					   guint               action);
+
+
+void   gimp_menu_item_create           (GimpItemFactoryEntry  *entry,
+                                        gchar                 *domain_name,
+                                        gpointer               callback_data);
+void   gimp_menu_item_destroy          (gchar                 *path);
+
+void   gimp_menu_item_set_active       (gchar                 *path,
+                                        gboolean               state);
+void   gimp_menu_item_set_color        (gchar                 *path,
+                                       const GimpRGB         *color,
+                                        gboolean               set_label);
+void   gimp_menu_item_set_label        (gchar                 *path,
+                                        const gchar           *label);
+void   gimp_menu_item_set_sensitive    (gchar                 *path,
+                                        gboolean               sensitive);
+void   gimp_menu_item_set_visible      (gchar                 *path,
+                                        gboolean               visible);
+
+
+G_END_DECLS
+
+#endif /* __GIMP_ITEM_FACTORY_H__ */

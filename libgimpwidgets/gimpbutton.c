@@ -166,7 +166,7 @@ gimp_button_button_press (GtkWidget      *widget,
   if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
     return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
-  return TRUE;
+  return FALSE;
 }
 
 static gboolean

@@ -962,8 +962,6 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 
 #define SET_ACTIVE(menu,condition) \
         gimp_menu_item_set_active ("<Image>/" menu, (condition) != 0)
-#define SET_COLOR(menu,color) \
-        gimp_menu_item_set_color ("<Image>/" menu, (color), FALSE)
 #define SET_SENSITIVE(menu,condition) \
         gimp_menu_item_set_sensitive ("<Image>/" menu, (condition) != 0)
 
@@ -1000,9 +998,6 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
       SET_SENSITIVE ("Edit/Fill with FG Color", lp);
       SET_SENSITIVE ("Edit/Fill with BG Color", lp);
       SET_SENSITIVE ("Edit/Stroke", lp);
-
-      SET_COLOR ("Edit/Fill with FG Color", &fg);
-      SET_COLOR ("Edit/Fill with BG Color", &bg);
     }
 
   SET_SENSITIVE ("Select", gdisp && lp);
@@ -1088,7 +1083,6 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Script-Fu", gdisp && lp);
 
 #undef SET_ACTIVE
-#undef SET_COLOR
 #undef SET_SENSITIVE
 
   plug_in_set_menu_sensitivity (type);

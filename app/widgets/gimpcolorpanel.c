@@ -22,12 +22,20 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "widgets-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "gui/gui-types.h"
 #include "gui/color-notebook.h"
 
 #include "gimpcolorpanel.h"
+#include "gimpitemfactory.h"
+
+#include "app_procs.h"
 
 
 struct _GimpColorPanel
@@ -40,17 +48,20 @@ struct _GimpColorPanel
 
 
 /*  local function prototypes  */
-static void   gimp_color_panel_class_init      (GimpColorPanelClass *klass);
-static void   gimp_color_panel_init            (GimpColorPanel      *panel);
 
-static void   gimp_color_panel_destroy         (GtkObject           *object);
-static void   gimp_color_panel_color_changed   (GimpColorButton     *button);
-static void   gimp_color_panel_clicked         (GtkButton           *button);
+static void       gimp_color_panel_class_init      (GimpColorPanelClass *klass);
+static void       gimp_color_panel_init            (GimpColorPanel      *panel);
 
-static void   gimp_color_panel_select_callback (ColorNotebook       *notebook,
-						const GimpRGB       *color,
-						ColorNotebookState   state,
-						gpointer             data);
+static void       gimp_color_panel_destroy         (GtkObject           *object);
+static gboolean   gimp_color_panel_button_press    (GtkWidget           *widget,
+                                                    GdkEventButton      *bevent);
+static void       gimp_color_panel_color_changed   (GimpColorButton     *button);
+static void       gimp_color_panel_clicked         (GtkButton           *button);
+
+static void       gimp_color_panel_select_callback (ColorNotebook       *notebook,
+                                                    const GimpRGB       *color,
+                                                    ColorNotebookState   state,
+                                                    gpointer             data);
 
 
 static GimpColorButtonClass *parent_class = NULL;
@@ -88,16 +99,19 @@ static void
 gimp_color_panel_class_init (GimpColorPanelClass *klass)
 {
   GtkObjectClass       *object_class;
+  GtkWidgetClass       *widget_class;
   GtkButtonClass       *button_class;
   GimpColorButtonClass *color_button_class;
 
   object_class       = GTK_OBJECT_CLASS (klass);
+  widget_class       = GTK_WIDGET_CLASS (klass);
   button_class       = GTK_BUTTON_CLASS (klass);
   color_button_class = GIMP_COLOR_BUTTON_CLASS (klass);
   
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy             = gimp_color_panel_destroy;
+  widget_class->button_press_event  = gimp_color_panel_button_press;
   button_class->clicked             = gimp_color_panel_clicked;
   color_button_class->color_changed = gimp_color_panel_color_changed;
 }
@@ -125,8 +139,39 @@ gimp_color_panel_destroy (GtkObject *object)
       panel->color_notebook = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static gboolean
+gimp_color_panel_button_press (GtkWidget      *widget,
+                               GdkEventButton *bevent)
+{
+  if (bevent->button == 3)
+    {
+      GimpColorButton *color_button;
+      GimpRGB          fg, bg, black, white;
+
+      color_button = GIMP_COLOR_BUTTON (widget);
+
+      gimp_context_get_foreground (gimp_get_user_context (the_gimp), &fg);
+      gimp_context_get_background (gimp_get_user_context (the_gimp), &bg);
+      gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
+      gimp_rgba_set (&white, 1.0, 1.0, 1.0, 1.0);
+
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/Foreground Color", &fg, FALSE);
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/Background Color", &bg, FALSE);
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/Black", &black, FALSE);
+      gimp_item_factory_set_color (color_button->item_factory,
+                                   "/White", &white, FALSE);
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
+    return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
+
+  return FALSE;
 }
 
 GtkWidget *

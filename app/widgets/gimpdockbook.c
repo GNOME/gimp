@@ -34,6 +34,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpimagedock.h"
+#include "gimpitemfactory.h"
 
 /* EEK, see below  */
 #include "gimpcontainerview.h"
@@ -449,13 +450,8 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
       {
         GimpDialogFactoryEntry *entry;
         GimpContainerView      *view;
-        GtkWidget              *list_widget;
-        GtkWidget              *grid_widget;
-        GtkWidget              *size_widget;
-        GtkWidget              *toggle_widget;
-        GtkWidget              *auto_widget;
         gboolean                is_grid      = FALSE;
-        gint                    preview_size = 16;
+        GimpPreviewSize         preview_size = GIMP_PREVIEW_SIZE_NONE;
 
         entry = g_object_get_data (G_OBJECT (dockable),
                                    "gimp-dialog-factory-entry");
@@ -473,81 +469,61 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
             preview_size = view->preview_size;
           }
 
-        list_widget = gtk_item_factory_get_widget (ifactory, "/View as List");
-        grid_widget = gtk_item_factory_get_widget (ifactory, "/View as Grid");
-        toggle_widget = gtk_item_factory_get_widget (ifactory,
-                                                     "/Show Image Menu");
-        auto_widget = gtk_item_factory_get_widget (ifactory, 
-						   "/Auto Follow Active Image");
+#define SET_ACTIVE(path,active) \
+        gimp_item_factory_set_active (ifactory, (path), (active))
 
-        /*  yes, this is insane  */
         if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Gigantic");
+            SET_ACTIVE ("/Preview Size/Gigantic", TRUE);
           }
-        if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
+        else if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Enormous");
+            SET_ACTIVE ("/Preview Size/Enormous", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Huge");
+            SET_ACTIVE ("/Preview Size/Huge", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Extra Large");
+            SET_ACTIVE ("/Preview Size/Extra Large", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Large");
+            SET_ACTIVE ("/Preview Size/Large", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Medium");
+            SET_ACTIVE ("/Preview Size/Medium", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Small");
+            SET_ACTIVE ("/Preview Size/Small", TRUE);
           }
         else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Extra Small");
+            SET_ACTIVE ("/Preview Size/Extra Small", TRUE);
           }
         else
           {
-            size_widget = gtk_item_factory_get_widget (ifactory,
-                                                       "/Preview Size/Tiny");
+            SET_ACTIVE ("/Preview Size/Tiny", TRUE);
           }
-
-        gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (size_widget),
-                                        TRUE);
 
         if (is_grid)
           {
-            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (grid_widget),
-                                            TRUE);
+            SET_ACTIVE ("/View as Grid", TRUE);
           }
         else
           {
-            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (list_widget),
-                                            TRUE);
+            SET_ACTIVE ("/View as List", TRUE);
           }
 
-        gtk_check_menu_item_set_active
-          (GTK_CHECK_MENU_ITEM (toggle_widget),
-           GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+        SET_ACTIVE ("/Show Image Menu",
+                    GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+        SET_ACTIVE ("/Auto Follow Active Image",
+                    GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
 
-        gtk_check_menu_item_set_active
-          (GTK_CHECK_MENU_ITEM (auto_widget),
-           GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+#undef SET_ACTIVE
       }
 
       /*  do evil things  */

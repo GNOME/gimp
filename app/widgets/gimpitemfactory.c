@@ -18,53 +18,17 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "string.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "gui-types.h"
+#include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimptoolinfo.h"
-
-#include "widgets/gimpitemfactory.h"
-
-#include "display/gimpdisplay.h"
-
-#include "tools/gimpbrightnesscontrasttool.h"
-#include "tools/gimpcolorbalancetool.h"
-#include "tools/gimpcurvestool.h"
-#include "tools/gimphuesaturationtool.h"
-#include "tools/gimplevelstool.h"
-#include "tools/gimpposterizetool.h"
-#include "tools/gimpthresholdtool.h"
-#include "tools/tool_manager.h"
-
-#include "buffers-commands.h"
-#include "channels-commands.h"
-#include "commands.h"
-#include "data-commands.h"
-#include "dialogs-commands.h"
-#include "documents-commands.h"
-#include "edit-commands.h"
-#include "file-commands.h"
-#include "gradient-editor-commands.h"
-#include "gradients-commands.h"
-#include "image-commands.h"
-#include "layers-commands.h"
-#include "menus.h"
-#include "palettes-commands.h"
-#include "paths-dialog.h"
-#include "select-commands.h"
-#include "test-commands.h"
-#include "tools-commands.h"
-#include "view-commands.h"
+#include "gimpitemfactory.h"
 
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -74,2213 +38,609 @@
 
 /*  local function prototypes  */
 
-static void    menus_filters_subdirs_to_top    (GtkMenu              *menu);
-static void    menus_tools_create              (GimpToolInfo         *tool_info);
-static void    menus_last_opened_update_labels (GimpContainer        *container,
-                                                GimpImagefile        *unused,
-                                                Gimp                 *gimp);
-#ifdef ENABLE_DEBUG_ENTRY
-static void    menus_debug_recurse_menu   (GtkWidget            *menu,
-					   gint                  depth,
-					   gchar                *path);
-static void    menus_debug_cmd_callback   (GtkWidget            *widget,
-					   gpointer              data,
-					   guint                 action);
-#endif  /*  ENABLE_DEBUG_ENTRY  */
-
-
-#define SEPARATOR(path) \
-        { { (path), NULL, NULL, 0, "<Separator>" }, NULL, NULL, NULL }
-
-#define BRANCH(path) \
-        { { (path), NULL, NULL, 0, "<Branch>" }, NULL, NULL, NULL }
-
-
-/*****  <Toolbox>  *****/
-
-static GimpItemFactoryEntry toolbox_entries[] =
-{
-  /*  <Toolbox>/File  */
-
-  BRANCH (N_("/_File")),
-
-  { { N_("/File/New..."), "<control>N",
-      file_new_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    "file/dialogs/file_new.html", NULL },
-  { { N_("/File/Open..."), "<control>O",
-      file_open_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    "file/dialogs/file_open.html", NULL },
-
-  /*  <Toolbox>/File/Acquire  */
-
-  SEPARATOR ("/File/---"),
-
-  BRANCH (N_("/File/Acquire")),
-
-  SEPARATOR ("/File/---"),
-
-  { { N_("/File/Preferences..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_PREFERENCES },
-    "gimp:preferences-dialog",
-    "file/dialogs/preferences/preferences.html", NULL },
-
-  /*  <Toolbox>/File/Dialogs  */
-
-  SEPARATOR ("/File/---"),
-
-  { { N_("/File/Dialogs/Layers, Channels & Paths..."), "<control>L",
-      dialogs_create_lc_cmd_callback, 0 },
-    NULL,
-    "file/dialogs/layers_and_channels.html", NULL },
-  { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T",
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:tool-options-dialog",
-    "file/dialogs/tool_options.html", NULL },
-
-  SEPARATOR ("/File/Dialogs/---"),
-
-  { { "/File/Dialogs/Old + Testing/Brushes...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:brush-select-dialog",
-    "file/dialogs/brush_selection.html", NULL },
-  { { "/File/Dialogs/Old + Testing/Patterns...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:pattern-select-dialog",
-    "file/dialogs/pattern_selection.html", NULL },
-  { { "/File/Dialogs/Old + Testing/Gradients...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:gradient-select-dialog",
-    "file/dialogs/gradient_selection.html", NULL },
-  { { "/File/Dialogs/Old + Testing/Palette...", NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:palette-select-dialog",
-    "file/dialogs/palette_selection.html", NULL },
-
-  SEPARATOR ("/File/Dialogs/Old + Testing/---"),
-
-  { { "/File/Dialogs/Old + Testing/Multi List...", NULL,
-      test_multi_container_list_view_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/File/Dialogs/Old + Testing/Multi Grid...", NULL,
-      test_multi_container_grid_view_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-  { { N_("/File/Dialogs/Brushes..."), "<control><shift>B",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:brush-grid",
-    "file/dialogs/brush_selection.html", NULL },
-  { { N_("/File/Dialogs/Patterns..."), "<control><shift>P",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:pattern-grid",
-    "file/dialogs/pattern_selection.html", NULL },
-  { { N_("/File/Dialogs/Gradients..."), "<control>G",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:gradient-list",
-    "file/dialogs/gradient_selection.html", NULL },
-  { { N_("/File/Dialogs/Palettes..."), "<control>P",
-      dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:palette-list",
-    "file/dialogs/palette_selection.html", NULL },
-  { { N_("/File/Dialogs/Indexed Palette..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:indexed-palette",
-    "file/dialogs/indexed_palette.html", NULL },
-  { { N_("/File/Dialogs/Buffers..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
-    NULL, NULL },
-  { { N_("/File/Dialogs/Images..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:image-list",
-    NULL, NULL },
-
-  SEPARATOR ("/File/Dialogs/---"),
-
-  { { N_("/File/Dialogs/Input Devices..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:input-devices-dialog",
-    "file/dialogs/input_devices.html", NULL },
-  { { N_("/File/Dialogs/Device Status..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
-    "file/dialogs/device_status.html", NULL },
-
-  SEPARATOR ("/File/Dialogs/---"),
-
-  { { N_("/File/Dialogs/Document History..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:document-history",
-    "file/dialogs/document_index.html", NULL },
-  { { N_("/File/Dialogs/Error Console..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:error-console",
-    "file/dialogs/error_console.html", NULL },
-#ifdef DISPLAY_FILTERS
-  { { N_("/File/Dialogs/Display Filters..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:display-filters-dialog",
-    "file/dialogs/display_filters/display_filters.html", NULL },
-#endif /* DISPLAY_FILTERS */
-
-  SEPARATOR ("/File/---"),
-
-  /*  MRU entries are inserted here  */
-
-  SEPARATOR ("/File/---MRU"),
-
-  { { N_("/File/Quit"), "<control>Q",
-      file_quit_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_QUIT },
-    NULL,
-    "file/quit.html", NULL },
-
-  /*  <Toolbox>/Xtns  */
-
-  BRANCH (N_("/_Xtns")),
-
-  { { N_("/Xtns/Module Browser..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:module-browser-dialog",
-    "dialogs/module_browser.html", NULL },
-
-  SEPARATOR ("/Xtns/---"),
-
-  /*  <Toolbox>/Help  */
-
-  BRANCH (N_("/_Help")),
-
-  { { N_("/Help/Help..."), "F1",
-      help_help_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_HELP },
-    NULL,
-    "help/dialogs/help.html", NULL },
-  { { N_("/Help/Context Help..."), "<shift>F1",
-      help_context_help_cmd_callback, 0 },
-    NULL,
-    "help/context_help.html", NULL },
-  { { N_("/Help/Tip of the Day..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:tips-dialog",
-    "help/dialogs/tip_of_the_day.html", NULL },
-  { { N_("/Help/About..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:about-dialog",
-    "help/dialogs/about.html", NULL },
-
-  SEPARATOR ("/Help/---"),
-
-  { { N_("/Help/Mem Profile"), NULL,
-      mem_profile_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-#ifdef ENABLE_DEBUG_ENTRY
-  { { "/Help/Dump Items (Debug)", NULL,
-      menus_debug_cmd_callback, 0 },
-    NULL,
-    NULL, NULL }
+static void     gimp_item_factory_create_branches (GtkItemFactory       *factory,
+                                                   GimpItemFactoryEntry *entry);
+static void     gimp_item_factory_item_realize    (GtkWidget            *widget,
+                                                   gpointer              data);
+static gboolean gimp_item_factory_item_key_press  (GtkWidget            *widget,
+                                                   GdkEventKey          *kevent,
+                                                   gpointer              data);
+#ifdef ENABLE_NLS
+static gchar *  gimp_item_factory_translate_func  (const gchar          *path,
+                                                   gpointer              data);
+#else
+#define         gimp_item_factory_translate_func  (NULL)
 #endif
-};
-
-
-/*****  <Image>  *****/
-
-static GimpItemFactoryEntry image_entries[] =
-{
-  { { "/tearoff1", NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
-    NULL,
-    NULL, NULL },
-
-  /*  <Image>/File  */
-
-  { { N_("/File/New..."), "<control>N",
-      file_new_cmd_callback, 1,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    "file/dialogs/file_new.html", NULL },
-  { { N_("/File/Open..."), "<control>O",
-      file_open_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    "file/dialogs/file_open.html", NULL },
-  { { N_("/File/Save"), "<control>S",
-      file_save_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE },
-    NULL,
-    "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Save as..."), NULL,
-      file_save_as_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL,
-    "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Save a Copy as..."), NULL,
-      file_save_a_copy_as_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL,
-    "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Revert..."), NULL,
-      file_revert_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_REVERT_TO_SAVED },
-    NULL,
-    "file/revert.html", NULL },
-
-  SEPARATOR ("/File/---"),
-
-  { { N_( "/File/Close"), "<control>W",
-      file_close_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CLOSE },
-    NULL,
-    "file/close.html", NULL },
-  { { N_("/File/Quit"), "<control>Q",
-      file_quit_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_QUIT },
-    NULL,
-    "file/quit.html", NULL },
-
-  SEPARATOR ("/File/---moved"),
-
-  /*  <Image>/Edit  */
-
-  { { N_("/Edit/Undo"), "<control>Z",
-      edit_undo_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_UNDO },
-    NULL,
-    "edit/undo.html", NULL },
-  { { N_("/Edit/Redo"), "<control>R",
-      edit_redo_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_REDO },
-    NULL,
-    "edit/redo.html", NULL },
-
-  SEPARATOR ("/Edit/---"),
-
-  { { N_("/Edit/Cut"), "<control>X",
-      edit_cut_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CUT },
-    NULL,
-    "edit/cut.html", NULL },
-  { { N_("/Edit/Copy"), "<control>C",
-      edit_copy_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_COPY },
-    NULL,
-    "edit/copy.html", NULL },
-  { { N_("/Edit/Paste"), "<control>V",
-      edit_paste_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_PASTE },
-    NULL,
-    "edit/paste.html", NULL },
-  { { N_("/Edit/Paste Into"), NULL,
-      edit_paste_into_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_PASTE },
-    NULL,
-    "edit/paste_into.html", NULL },
-  { { N_("/Edit/Paste as New"), NULL,
-      edit_paste_as_new_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_PASTE },
-    NULL,
-    "edit/paste_as_new.html", NULL },
-
-  /*  <Image>/Edit/Buffer  */
-
-  { { N_("/Edit/Buffer/Cut Named..."), "<control><shift>X",
-      edit_named_cut_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CUT },
-    NULL,
-    "edit/dialogs/cut_named.html", NULL },
-  { { N_("/Edit/Buffer/Copy Named..."), "<control><shift>C",
-      edit_named_copy_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_COPY },
-    NULL,
-    "edit/dialogs/copy_named.html", NULL },
-  { { N_("/Edit/Buffer/Paste Named..."), "<control><shift>V",
-      edit_named_paste_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_PASTE },
-    NULL,
-    "edit/dialogs/paste_named.html", NULL },
-
-  SEPARATOR ("/Edit/---"),
-
-  { { N_("/Edit/Clear"), "<control>K",
-      edit_clear_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CLEAR },
-    NULL,
-    "edit/clear.html", NULL },
-  { { N_("/Edit/Fill with FG Color"), "<control>comma",
-      edit_fill_cmd_callback, (guint) FOREGROUND_FILL,
-      "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
-    NULL,
-    "edit/fill.html", NULL },
-  { { N_("/Edit/Fill with BG Color"), "<control>period",
-      edit_fill_cmd_callback, (guint) BACKGROUND_FILL,
-      "<StockItem>", GIMP_STOCK_TOOL_BUCKET_FILL },
-    NULL,
-    "edit/fill.html", NULL },
-  { { N_("/Edit/Stroke"), NULL,
-      edit_stroke_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_STROKE },
-    NULL,
-    "edit/stroke.html", NULL },
-
-  SEPARATOR ("/Edit/---"),
-
-  /*  <Image>/Select  */
-  
-  { { N_("/Select/Invert"), "<control>I",
-      select_invert_cmd_callback, 0 },
-    NULL,
-    "select/invert.html", NULL },
-  { { N_("/Select/All"), "<control>A",
-      select_all_cmd_callback, 0 },
-    NULL,
-    "select/all.html", NULL },
-  { { N_("/Select/None"), "<control><shift>A",
-      select_none_cmd_callback, 0 },
-    NULL,
-    "select/none.html", NULL },
-  { { N_("/Select/Float"), "<control><shift>L",
-      select_float_cmd_callback, 0 },
-    NULL,
-    "select/float.html", NULL },
-
-  SEPARATOR ("/Select/---"),
-
-  { { N_("/Select/Feather..."), "<control><shift>F",
-      select_feather_cmd_callback, 0 },
-    NULL,
-    "select/dialogs/feather_selection.html", NULL },
-  { { N_("/Select/Sharpen"), "<control><shift>H",
-      select_sharpen_cmd_callback, 0 },
-    NULL,
-    "select/sharpen.html", NULL },
-  { { N_("/Select/Shrink..."), NULL,
-      select_shrink_cmd_callback, 0 },
-    NULL,
-    "select/dialogs/shrink_selection.html", NULL },
-  { { N_("/Select/Grow..."), NULL,
-      select_grow_cmd_callback, 0 },
-    NULL,
-    "select/dialogs/grow_selection.html", NULL },
-  { { N_("/Select/Border..."), "<control><shift>B",
-      select_border_cmd_callback, 0 },
-    NULL,
-    "select/dialogs/border_selection.html", NULL },
-
-  SEPARATOR ("/Select/---"),
-
-  { { N_("/Select/Save to Channel"), NULL,
-      select_save_cmd_callback, 0 },
-    NULL,
-    "select/save_to_channel.html", NULL },
-
-  /*  <Image>/View  */
-
-  { { N_("/View/Zoom In"), "equal",
-      view_zoom_in_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom Out"), "minus",
-      view_zoom_out_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom to Fit Window"), NULL,
-      view_zoom_fit_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_ZOOM_FIT },
-    NULL,
-    "view/zoom.html", NULL },
-
-  /*  <Image>/View/Zoom  */
-
-  { { N_("/View/Zoom/16:1"), NULL,
-      view_zoom_cmd_callback, 1601,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/8:1"), NULL,
-      view_zoom_cmd_callback, 801,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/4:1"), NULL,
-      view_zoom_cmd_callback, 401,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/2:1"), NULL,
-      view_zoom_cmd_callback, 201,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:1"), "1",
-      view_zoom_cmd_callback, 101,
-      "<StockItem>", GTK_STOCK_ZOOM_100 },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:2"), NULL,
-      view_zoom_cmd_callback, 102,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:4"), NULL,
-      view_zoom_cmd_callback, 104,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:8"), NULL,
-      view_zoom_cmd_callback, 108,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL,
-    "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:16"), NULL,
-      view_zoom_cmd_callback, 116,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
-    NULL,
-    "view/zoom.html", NULL },
-
-  { { N_("/View/Dot for Dot"), NULL,
-      view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/dot_for_dot.html", NULL },
-
-  SEPARATOR ("/View/---"),
-
-  { { N_("/View/Info Window..."), "<control><shift>I",
-      view_info_window_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_HELP },
-    NULL,
-    "view/dialogs/info_window.html", NULL },
-  { { N_("/View/Nav. Window..."), "<control><shift>N",
-      view_nav_window_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_MOVE },
-    NULL,
-    "view/dialogs/navigation_window.html", NULL },
-
-  SEPARATOR ("/View/---"),
-
-  { { N_("/View/Toggle Selection"), "<control>T",
-      view_toggle_selection_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/toggle_selection.html", NULL },
-  { { N_("/View/Toggle Layer Boundary"), NULL,
-      view_toggle_layer_boundary_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/toggle_selection.html", NULL },
-  { { N_("/View/Toggle Guides"), "<control><shift>T",
-      view_toggle_guides_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/toggle_guides.html", NULL },
-  { { N_("/View/Snap to Guides"), NULL,
-      view_snap_to_guides_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/snap_to_guides.html", NULL },
-
-  SEPARATOR ("/View/---"),
-
-  { { N_("/View/Toggle Rulers"), "<control><shift>R",
-      view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/toggle_rulers.html", NULL },
-  { { N_("/View/Toggle Statusbar"), "<control><shift>S",
-      view_toggle_statusbar_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    "view/toggle_statusbar.html", NULL },
-
-  SEPARATOR ("/View/---"),
-
-  { { N_("/View/New View"), NULL,
-      view_new_view_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    "view/new_view.html", NULL },
-  { { N_("/View/Shrink Wrap"), "<control>E",
-      view_shrink_wrap_cmd_callback, 0 },
-    NULL,
-    "view/shrink_wrap.html", NULL },
-
-  /*  <Image>/Image/Mode  */
-
-  { { N_("/Image/Mode/RGB"), "<alt>R",
-      image_convert_rgb_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CONVERT },
-    NULL,
-    "image/mode/convert_to_rgb.html", NULL },
-  { { N_("/Image/Mode/Grayscale"), "<alt>G",
-      image_convert_grayscale_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CONVERT },
-    NULL,
-    "image/mode/convert_to_grayscale.html", NULL },
-  { { N_("/Image/Mode/Indexed..."), "<alt>I",
-      image_convert_indexed_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CONVERT },
-    NULL,
-    "image/mode/dialogs/convert_to_indexed.html", NULL },
-
-  SEPARATOR ("/Image/Mode/---"),
-
-  /*  <Image>/Image/Colors  */
-
-  { { N_("/Image/Colors/Desaturate"), NULL,
-      image_desaturate_cmd_callback, 0 },
-    NULL,
-    "image/colors/desaturate.html", NULL },
-  { { N_("/Image/Colors/Invert"), NULL,
-      image_invert_cmd_callback, 0 },
-    NULL,
-    "image/colors/invert.html", NULL },
-
-  SEPARATOR ("/Image/Colors/---"),
-
-  /*  <Image>/Image/Colors/Auto  */
-
-  { { N_("/Image/Colors/Auto/Equalize"), NULL,
-      image_equalize_cmd_callback, 0 },
-    NULL,
-    "image/colors/auto/equalize.html", NULL },
-
-  SEPARATOR ("/Image/Colors/---"),
-
-  /*  <Image>/Image/Alpha  */
-
-  { { N_("/Image/Alpha/Add Alpha Channel"), NULL,
-      layers_add_alpha_channel_cmd_callback, 0 },
-    NULL,
-    "layers/add_alpha_channel.html", NULL },
-
-  /*  <Image>/Image/Transforms  */
-
-  { { N_("/Image/Transforms/Offset..."), "<control><shift>O",
-      image_offset_cmd_callback, 0 },
-    NULL,
-    "image/transforms/dialogs/offset.html", NULL },
-
-  BRANCH (N_("/Image/Transforms/Rotate")),
-
-  SEPARATOR ("/Image/Transforms/---"),
-
-  SEPARATOR ("/Image/---"),
-
-  { { N_("/Image/Canvas Size..."), NULL,
-      image_resize_cmd_callback, 0 },
-    NULL,
-    "image/dialogs/set_canvas_size.html", NULL },
-  { { N_("/Image/Scale Image..."), NULL,
-      image_scale_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_SCALE },
-    NULL,
-    "image/dialogs/scale_image.html", NULL },
-  { { N_("/Image/Duplicate"), "<control>D",
-      image_duplicate_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    "image/duplicate.html", NULL },
-
-  SEPARATOR ("/Image/---"),
-
-  /*  <Image>/Layers  */
-
-  { { N_("/Layers/Layers, Channels & Paths..."), "<control>L",
-      dialogs_create_lc_cmd_callback, 0 },
-    NULL,
-    "dialogs/layers_and_channels.html", NULL },
-
-  SEPARATOR ("/Layers/---"),
-
-  { { N_("/Layers/Layer to Imagesize"), NULL,
-      layers_resize_to_image_cmd_callback, 0 },
-    NULL,
-    "layers/layer_to_image_size.html", NULL },
-
-  /*  <Image>/Layers/Stack  */
-
-  { { N_("/Layers/Stack/Previous Layer"), "Prior",
-      layers_previous_cmd_callback, 0 },
-    NULL,
-    "layers/stack/stack.html#previous_layer", NULL },
-  { { N_("/Layers/Stack/Next Layer"), "Next",
-      layers_next_cmd_callback, 0 },
-    NULL,
-    "layers/stack/stack.html#next_layer", NULL },
-  { { N_("/Layers/Stack/Raise Layer"), "<shift>Prior",
-      layers_raise_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
-    NULL,
-    "layers/stack/stack.html#raise_layer", NULL },
-  { { N_("/Layers/Stack/Lower Layer"), "<shift>Next",
-      layers_lower_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "layers/stack/stack.html#lower_layer", NULL },
-  { { N_("/Layers/Stack/Layer to Top"), "<control>Prior",
-      layers_raise_to_top_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
-    NULL,
-    "layers/stack/stack.html#layer_to_top", NULL },
-  { { N_("/Layers/Stack/Layer to Bottom"), "<control>Next",
-      layers_lower_to_bottom_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "layers/stack/stack.html#layer_to_bottom", NULL },
-
-  SEPARATOR ("/Layers/Stack/---"),
-
-  /*  <Image>/Layers/Rotate  */
-
-  BRANCH (N_("/Layers/Rotate")),
-
-  SEPARATOR ("/Layers/---"),
-
-  { { N_("/Layers/Anchor Layer"), "<control>H",
-      layers_anchor_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_ANCHOR },
-    NULL,
-    "layers/anchor_layer.html", NULL },
-  { { N_("/Layers/Merge Visible Layers..."), "<control>M",
-      layers_merge_layers_cmd_callback, 0 },
-    NULL,
-    "layers/dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Layers/Flatten Image"), NULL,
-      layers_flatten_image_cmd_callback, 0 },
-    NULL,
-    "layers/flatten_image.html", NULL },
-
-  SEPARATOR ("/Layers/---"),
-
-  { { N_("/Layers/Mask to Selection"), NULL,
-      layers_mask_select_cmd_callback, 0 },
-    NULL,
-    "layers/mask_to_selection.html", NULL },
-
-  SEPARATOR ("/Layers/---"),
-
-  { { N_("/Layers/Add Alpha Channel"), NULL,
-      layers_add_alpha_channel_cmd_callback, 0 },
-    NULL,
-    "layers/add_alpha_channel.html", NULL },
-  { { N_("/Layers/Alpha to Selection"), NULL,
-      layers_alpha_select_cmd_callback, 0 },
-    NULL,
-    "layers/alpha_to_selection.html", NULL },
-
-  SEPARATOR ("/Layers/---"),
-
-  /*  <Image>/Tools  */
-
-  { { N_("/Tools/Toolbox"), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:toolbox",
-    "toolbox/toolbox.html", NULL },
-  { { N_("/Tools/Default Colors"), "D",
-      tools_default_colors_cmd_callback, 0 },
-    NULL,
-    "toolbox/toolbox.html#default_colors", NULL },
-  { { N_("/Tools/Swap Colors"), "X",
-      tools_swap_colors_cmd_callback, 0 },
-    NULL,
-    "toolbox/toolbox.html#swap_colors", NULL },
-  { { N_("/Tools/Swap Contexts"), "<shift>X",
-      tools_swap_contexts_cmd_callback, 0 },
-    NULL,
-    "toolbox/toolbox.html#swap_colors", NULL },
-
-  SEPARATOR ("/Tools/---"),
-
-  BRANCH (N_("/Tools/Selection Tools")),
-  BRANCH (N_("/Tools/Paint Tools")),
-  BRANCH (N_("/Tools/Transform Tools")),
-
-  /*  <Image>/Dialogs  */
-
-  { { N_("/Dialogs/Layers, Channels & Paths..."), "<control>L",
-      dialogs_create_lc_cmd_callback, 0 },
-    NULL,
-    "dialogs/layers_and_channels.html", NULL },
-  { { N_("/Dialogs/Tool Options..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:tool-options-dialog",
-    "dialogs/tool_options.html", NULL },
-
-  SEPARATOR ("/Dialogs/---"),
-
-  { { N_("/Dialogs/Brushes..."), "<control><shift>B",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:brush-grid",
-    "dialogs/brush_selection.html", NULL },
-  { { N_("/Dialogs/Patterns..."), "<control><shift>P",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:pattern-grid",
-    "dialogs/pattern_selection.html", NULL },
-  { { N_("/Dialogs/Gradients..."), "<control>G",
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:gradient-list",
-    "dialogs/gradient_selection.html", NULL },
-  { { N_("/Dialogs/Palettes..."), "<control>P",
-      dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:palette-list",
-    "dialogs/palette_selection.html", NULL },
-  { { N_("/Dialogs/Indexed Palette..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:indexed-palette",
-    "dialogs/indexed_palette.html", NULL },
-  { { N_("/Dialogs/Buffers..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
-    NULL, NULL },
-  { { N_("/Dialogs/Images..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
-    NULL, NULL },
-
-  SEPARATOR ("/Dialogs/---"),
-
-  { { N_("/Dialogs/Input Devices..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:input-devices-dialog",
-    "dialogs/input_devices.html", NULL },
-  { { N_("/Dialogs/Device Status..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
-    "dialogs/device_status.html", NULL },
-
-  SEPARATOR ("/Dialogs/---"),
-
-  { { N_("/Dialogs/Document History..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:document-history",
-    "dialogs/document_index.html", NULL },
-  { { N_("/Dialogs/Error Console..."), NULL,
-      dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:error-console",
-    "dialogs/error_console.html", NULL },
-#ifdef DISPLAY_FILTERS
-  { { N_("/Dialogs/Display Filters..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:display-filters-dialogs",
-    "dialogs/display_filters/display_filters.html", NULL },
-#endif /* DISPLAY_FILTERS */
-  { { N_("/Dialogs/Undo History..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:undo-history-dialog",
-    "dialogs/undo_history.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  /*  <Image>/Filters  */
-
-  { { N_("/Filters/Repeat Last"), "<alt>F",
-      filters_repeat_cmd_callback, (guint) FALSE,
-      "<StockItem>", GTK_STOCK_EXECUTE },
-    NULL,
-    "filters/repeat_last.html", NULL },
-  { { N_("/Filters/Re-Show Last"), "<alt><shift>F",
-      filters_repeat_cmd_callback, (guint) TRUE,
-      "<StockItem>", GTK_STOCK_EXECUTE },
-    NULL,
-    "filters/reshow_last.html", NULL },
-
-  SEPARATOR ("/Filters/---"),
-
-  BRANCH (N_("/Filters/Blur")),
-  BRANCH (N_("/Filters/Colors")),
-  BRANCH (N_("/Filters/Noise")),
-  BRANCH (N_("/Filters/Edge-Detect")),
-  BRANCH (N_("/Filters/Enhance")),
-  BRANCH (N_("/Filters/Generic")),
-
-  SEPARATOR ("/Filters/---"),
-
-  BRANCH (N_("/Filters/Glass Effects")),
-  BRANCH (N_("/Filters/Light Effects")),
-  BRANCH (N_("/Filters/Distorts")),
-  BRANCH (N_("/Filters/Artistic")),
-  BRANCH (N_("/Filters/Map")),
-  BRANCH (N_("/Filters/Render")),
-  BRANCH (N_("/Filters/Text")),
-  BRANCH (N_("/Filters/Web")),
-
-  SEPARATOR ("/Filters/---INSERT"),
-
-  BRANCH (N_("/Filters/Animation")),
-  BRANCH (N_("/Filters/Combine")),
-
-  SEPARATOR ("/Filters/---"),
-
-  BRANCH (N_("/Filters/Toys"))
-};
-
-
-/*****  <Load>  *****/
-
-static GimpItemFactoryEntry load_entries[] =
-{
-  { { N_("/Automatic"), NULL,
-      file_open_by_extension_cmd_callback, 0 },
-    NULL,
-    "open_by_extension.html", NULL },
-
-  SEPARATOR ("/---")
-};
-
-  
-/*****  <Save>  *****/
-
-static GimpItemFactoryEntry save_entries[] =
-{
-  { { N_("/By Extension"), NULL,
-      file_save_by_extension_cmd_callback, 0 },
-    NULL,
-    "save_by_extension.html", NULL },
-
-  SEPARATOR ("/---")
-};
-
-
-/*****  <Layers>  *****/
-
-static GimpItemFactoryEntry layers_entries[] =
-{
-  { { N_("/New Layer..."), "<control>N",
-      layers_new_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    "dialogs/new_layer.html", NULL },
-
-  /*  <Layers>/Stack  */
-
-  { { N_("/Stack/Raise Layer"), "<control>F",
-      layers_raise_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
-    NULL,
-    "stack/stack.html#raise_layer", NULL },
-  { { N_("/Stack/Lower Layer"), "<control>B",
-      layers_lower_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "stack/stack.html#lower_layer", NULL },
-  { { N_("/Stack/Layer to Top"), "<shift><control>F",
-      layers_raise_to_top_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
-    NULL,
-    "stack/stack.html#later_to_top", NULL },
-  { { N_("/Stack/Layer to Bottom"), "<shift><control>B",
-      layers_lower_to_bottom_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "stack/stack.html#layer_to_bottom", NULL },
-
-  { { N_("/Duplicate Layer"), "<control>C",
-      layers_duplicate_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    "duplicate_layer.html", NULL },
-  { { N_("/Anchor Layer"), "<control>H",
-      layers_anchor_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_ANCHOR },
-    NULL,
-    "anchor_layer.html", NULL },
-  { { N_("/Delete Layer"), "<control>X",
-      layers_delete_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    "delete_layer.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Layer Boundary Size..."), "<control>R",
-      layers_resize_cmd_callback, 0 },
-    NULL,
-    "dialogs/layer_boundary_size.html", NULL },
-  { { N_("/Layer to Imagesize"), NULL,
-      layers_resize_to_image_cmd_callback, 0 },
-    NULL,
-    "layer_to_image_size.html", NULL },
-  { { N_("/Scale Layer..."), "<control>S",
-      layers_scale_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TOOL_SCALE },
-    NULL,
-    "dialogs/scale_layer.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Merge Visible Layers..."), "<control>M",
-      layers_merge_layers_cmd_callback, 0 },
-    NULL,
-    "dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Merge Down"), "<control><shift>M",
-      layers_merge_down_cmd_callback, 0 },
-    NULL,
-    "merge_down.html", NULL },
-  { { N_("/Flatten Image"), NULL,
-      layers_flatten_image_cmd_callback, 0 },
-    NULL,
-    "flatten_image.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Add Layer Mask..."), NULL,
-      layers_add_layer_mask_cmd_callback, 0 },
-    NULL,
-    "dialogs/add_layer_mask.html", NULL },
-  { { N_("/Apply Layer Mask"), NULL,
-      layers_apply_layer_mask_cmd_callback, 0 },
-    NULL,
-    "apply_mask.html", NULL },
-  { { N_("/Delete Layer Mask"), NULL,
-      layers_delete_layer_mask_cmd_callback, 0 },
-    NULL,
-    "delete_mask.html", NULL },
-  { { N_("/Mask to Selection"), NULL,
-      layers_mask_select_cmd_callback, 0 },
-    NULL,
-    "mask_to_selection.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Add Alpha Channel"), NULL,
-      layers_add_alpha_channel_cmd_callback, 0 },
-    NULL,
-    "add_alpha_channel.html", NULL },
-  { { N_("/Alpha to Selection"), NULL,
-      layers_alpha_select_cmd_callback, 0 },
-    NULL,
-    "alpha_to_selection.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Edit Layer Attributes..."), NULL,
-      layers_edit_attributes_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    "dialogs/edit_layer_attributes.html", NULL }
-};
-
-
-/*****  <Channels>  *****/
-
-static GimpItemFactoryEntry channels_entries[] =
-{
-  { { N_("/New Channel..."), "<control>N",
-      channels_new_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    "dialogs/new_channel.html", NULL },
-  { { N_("/Raise Channel"), "<control>F",
-      channels_raise_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RAISE },
-    NULL,
-    "raise_channel.html", NULL },
-  { { N_("/Lower Channel"), "<control>B",
-      channels_lower_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_LOWER },
-    NULL,
-    "lower_channel.html", NULL },
-  { { N_("/Duplicate Channel"), "<control>C",
-      channels_duplicate_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    "duplicate_channel.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Channel to Selection"), "<control>S",
-      channels_channel_to_sel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_SELECTION },
-    NULL,
-    "channel_to_selection.html", NULL },
-  { { N_("/Add to Selection"), NULL,
-      channels_add_channel_to_sel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_SELECTION },
-    NULL,
-    "channel_to_selection.html#add", NULL },
-  { { N_("/Subtract from Selection"), NULL,
-      channels_sub_channel_from_sel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_SELECTION },
-    NULL,
-    "channel_to_selection.html#subtract", NULL },
-  { { N_("/Intersect with Selection"), NULL,
-      channels_intersect_channel_with_sel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_SELECTION },
-    NULL,
-    "channel_to_selection.html#intersect", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Delete Channel"), "<control>X",
-      channels_delete_channel_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    "delete_channel.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Edit Channel Attributes..."), NULL,
-      channels_edit_channel_attributes_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    "dialogs/edit_channel_attributes.html", NULL }
-};
-
-
-/*****  <Paths>  *****/
-
-static GimpItemFactoryEntry paths_entries[] =
-{
-  { { N_("/New Path"), "<control>N",
-      paths_dialog_new_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    "new_path.html", NULL },
-  { { N_("/Duplicate Path"), "<control>U",
-      paths_dialog_dup_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    "duplicate_path.html", NULL },
-  { { N_("/Path to Selection"), "<control>S",
-      paths_dialog_path_to_sel_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_SELECTION },
-    NULL,
-    "path_to_selection.html", NULL },
-  { { N_("/Selection to Path"), "<control>P",
-      paths_dialog_sel_to_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_TO_PATH },
-    NULL,
-    "filters/sel2path.html", NULL },
-  { { N_("/Stroke Path"), "<control>T",
-      paths_dialog_stroke_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_STROKE },
-    NULL,
-    "stroke_path.html", NULL },
-  { { N_("/Delete Path"), "<control>X",
-      paths_dialog_delete_path_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    "delete_path.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Copy Path"), "<control>C",
-      paths_dialog_copy_path_callback, 0,
-      "<StockItem>", GTK_STOCK_COPY },
-    NULL,
-    "copy_path.html", NULL },
-  { { N_("/Paste Path"), "<control>V",
-      paths_dialog_paste_path_callback, 0,
-      "<StockItem>", GTK_STOCK_PASTE },
-    NULL,
-    "paste_path.html", NULL },
-  { { N_("/Import Path..."), "<control>I",
-      paths_dialog_import_path_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    "dialogs/import_path.html", NULL },
-  { { N_("/Export Path..."), "<control>E",
-      paths_dialog_export_path_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE },
-    NULL,
-    "dialogs/export_path.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Edit Path Attributes..."), NULL,
-      paths_dialog_edit_path_attributes_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    "dialogs/edit_path_attributes.html", NULL }
-};
-
-
-/*****  <Dialogs>  *****/
-
-#define ADD_TAB(path,id,type,stock_id) \
-  { { (path), NULL, dialogs_add_tab_cmd_callback, 0, (type), (stock_id) }, \
-    (id), NULL, NULL }
-#define PREVIEW_SIZE(path,size) \
-  { { (path), NULL, dialogs_preview_size_cmd_callback, \
-      (size), "/Preview Size/Tiny" }, NULL, NULL, NULL }
-
-static GimpItemFactoryEntry dialogs_entries[] =
-{
-  { { N_("/Select Tab"), NULL, NULL, 0 },
-    NULL,
-    NULL, NULL },
-
-
-  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp:layer-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp:channel-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp:path-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Document History..."), "gimp:document-history", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp:error-console", NULL, NULL),
-
-  SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Brushes..."),         "gimp:brush-grid", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Patterns..."),        "gimp:pattern-grid", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Gradients..."),       "gimp:gradient-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Palettes..."),        "gimp:palette-list",
-           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Indexed Palette..."), "gimp:indexed-palette",
-           "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp:buffer-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Images..."),          "gimp:image-list", NULL, NULL),
-
-  SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Tools..."), "gimp:tool-list", NULL, NULL),
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Remove Tab"), NULL,
-      dialogs_remove_tab_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-  { { N_("/Preview Size/Tiny"), NULL,
-      dialogs_preview_size_cmd_callback,
-      GIMP_PREVIEW_SIZE_TINY, "<RadioItem>" },
-    NULL,
-    NULL, NULL },
-
-  PREVIEW_SIZE (N_("/Preview Size/Extra Small"), GIMP_PREVIEW_SIZE_EXTRA_SMALL),
-  PREVIEW_SIZE (N_("/Preview Size/Small"),       GIMP_PREVIEW_SIZE_SMALL),
-  PREVIEW_SIZE (N_("/Preview Size/Medium"),      GIMP_PREVIEW_SIZE_MEDIUM),
-  PREVIEW_SIZE (N_("/Preview Size/Large"),       GIMP_PREVIEW_SIZE_LARGE),
-  PREVIEW_SIZE (N_("/Preview Size/Extra Large"), GIMP_PREVIEW_SIZE_EXTRA_LARGE),
-  PREVIEW_SIZE (N_("/Preview Size/Huge"),        GIMP_PREVIEW_SIZE_HUGE),
-  PREVIEW_SIZE (N_("/Preview Size/Enormous"),    GIMP_PREVIEW_SIZE_ENORMOUS),
-  PREVIEW_SIZE (N_("/Preview Size/Gigantic"),    GIMP_PREVIEW_SIZE_GIGANTIC),
-
-  { { N_("/View as List"), NULL,
-      dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
-    NULL,
-    NULL, NULL },
-  { { N_("/View as Grid"), NULL,
-      dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_GRID, "/View as List" },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Show Image Menu"), NULL,
-      dialogs_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    NULL, NULL },
-  { { N_("/Auto Follow Active Image"), NULL,
-      dialogs_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
-    NULL,
-    NULL, NULL }
-
-};
-
-#undef ADD_TAB
-#undef PREVIEW_SIZE
-
-
-/*****  <Brushes>  *****/
-
-static GimpItemFactoryEntry brushes_entries[] =
-{
-  { { N_("/New Brush"), NULL,
-      data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Duplicate Brush"), NULL,
-      data_duplicate_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    NULL, NULL },
-  { { N_("/Edit Brush..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Brush..."), NULL,
-      data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Refresh Brushes"), NULL,
-      data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
-    NULL,
-    NULL, NULL }
-};
-
-
-/*****  <Patterns>  *****/
-
-static GimpItemFactoryEntry patterns_entries[] =
-{
-  { { N_("/New Pattern"), NULL,
-      data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Duplicate Pattern"), NULL,
-      data_duplicate_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    NULL, NULL },
-  { { N_("/Edit Pattern..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Pattern..."), NULL,
-      data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Refresh Patterns"), NULL,
-      data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
-    NULL,
-    NULL, NULL }
-};
-
-
-/*****  <GradientEditor>  *****/
-
-#define LOAD_LEFT_FROM(num,magic) \
-  { { "/Load Left Color From/" num, NULL, \
-      gradient_editor_load_left_cmd_callback, (magic) }, NULL, NULL, NULL }
-#define SAVE_LEFT_TO(num,magic) \
-  { { "/Save Left Color To/" num, NULL, \
-      gradient_editor_save_left_cmd_callback, (magic) }, NULL, NULL, NULL }
-#define LOAD_RIGHT_FROM(num,magic) \
-  { { "/Load Right Color From/" num, NULL, \
-      gradient_editor_load_right_cmd_callback, (magic) }, NULL, NULL, NULL }
-#define SAVE_RIGHT_TO(num,magic) \
-  { { "/Save Right Color To/" num, NULL, \
-      gradient_editor_save_right_cmd_callback, (magic) }, NULL, NULL, NULL }
-
-static GimpItemFactoryEntry gradient_editor_entries[] =
-{
-  { { N_("/Left Endpoint's Color..."), NULL,
-      gradient_editor_left_color_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-  { { N_("/Load Left Color From/Left Neighbor's Right Endpoint"), NULL,
-      gradient_editor_load_left_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Left Color From/Right Endpoint"), NULL,
-      gradient_editor_load_left_cmd_callback, 1 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Left Color From/FG Color"), NULL,
-      gradient_editor_load_left_cmd_callback, 2 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Left Color From/BG Color"), NULL,
-      gradient_editor_load_left_cmd_callback, 3 },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/Load Left Color From/---"),
-
-  LOAD_LEFT_FROM ("01", 4),
-  LOAD_LEFT_FROM ("02", 5),
-  LOAD_LEFT_FROM ("03", 6),
-  LOAD_LEFT_FROM ("04", 7),
-  LOAD_LEFT_FROM ("05", 8),
-  LOAD_LEFT_FROM ("06", 9),
-  LOAD_LEFT_FROM ("07", 10),
-  LOAD_LEFT_FROM ("08", 11),
-  LOAD_LEFT_FROM ("09", 12),
-  LOAD_LEFT_FROM ("10", 13),
-
-  BRANCH (N_("/Save Left Color To")),
-
-  SAVE_LEFT_TO ("01", 0),
-  SAVE_LEFT_TO ("02", 1),
-  SAVE_LEFT_TO ("03", 2),
-  SAVE_LEFT_TO ("04", 3),
-  SAVE_LEFT_TO ("05", 4),
-  SAVE_LEFT_TO ("06", 5),
-  SAVE_LEFT_TO ("07", 6),
-  SAVE_LEFT_TO ("08", 7),
-  SAVE_LEFT_TO ("09", 8),
-  SAVE_LEFT_TO ("10", 9),
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Right Endpoint's Color..."), NULL,
-      gradient_editor_right_color_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-  { { N_("/Load Right Color From/Right Neighbor's Left Endpoint"), NULL,
-      gradient_editor_load_right_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Right Color From/Left Endpoint"), NULL,
-      gradient_editor_load_right_cmd_callback, 1 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Right Color From/FG Color"), NULL,
-      gradient_editor_load_right_cmd_callback, 2 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Load Right Color From/BG Color"), NULL,
-      gradient_editor_load_right_cmd_callback, 3 },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/Load Right Color From/---"),
-
-  LOAD_RIGHT_FROM ("01", 4),
-  LOAD_RIGHT_FROM ("02", 5),
-  LOAD_RIGHT_FROM ("03", 6),
-  LOAD_RIGHT_FROM ("04", 7),
-  LOAD_RIGHT_FROM ("05", 8),
-  LOAD_RIGHT_FROM ("06", 9),
-  LOAD_RIGHT_FROM ("07", 10),
-  LOAD_RIGHT_FROM ("08", 11),
-  LOAD_RIGHT_FROM ("09", 12),
-  LOAD_RIGHT_FROM ("10", 13),
-
-  BRANCH (N_("/Save Right Color To")),
-
-  SAVE_RIGHT_TO ("01", 0),
-  SAVE_RIGHT_TO ("02", 1),
-  SAVE_RIGHT_TO ("03", 2),
-  SAVE_RIGHT_TO ("04", 3),
-  SAVE_RIGHT_TO ("05", 4),
-  SAVE_RIGHT_TO ("06", 5),
-  SAVE_RIGHT_TO ("07", 6),
-  SAVE_RIGHT_TO ("08", 7),
-  SAVE_RIGHT_TO ("09", 8),
-  SAVE_RIGHT_TO ("10", 9),
-
-  SEPARATOR ("/---"),
-
-  { { N_("/blendingfunction/Linear"), NULL,
-      gradient_editor_blending_func_cmd_callback,
-      GRAD_LINEAR, "<RadioItem>" },
-    NULL,
-    NULL, NULL },
-  { { N_("/blendingfunction/Curved"), NULL,
-      gradient_editor_blending_func_cmd_callback,
-      GRAD_CURVED, "/blendingfunction/Linear" },
-    NULL,
-    NULL, NULL },
-  { { N_("/blendingfunction/Sinusodial"), NULL,
-      gradient_editor_blending_func_cmd_callback,
-      GRAD_SINE, "/blendingfunction/Linear" },
-    NULL,
-    NULL, NULL },
-  { { N_("/blendingfunction/Spherical (increasing)"), NULL,
-      gradient_editor_blending_func_cmd_callback,
-      GRAD_SPHERE_INCREASING, "/blendingfunction/Linear" },
-    NULL,
-    NULL, NULL },
-  { { N_("/blendingfunction/Spherical (decreasing)"), NULL,
-      gradient_editor_blending_func_cmd_callback,
-      GRAD_SPHERE_DECREASING, "/blendingfunction/Linear" },
-    NULL,
-    NULL, NULL },
-  { { N_("/blendingfunction/(Varies)"), NULL, NULL,
-      0, "/blendingfunction/Linear" },
-    NULL,
-    NULL, NULL },
-
-  { { N_("/coloringtype/RGB"), NULL,
-      gradient_editor_coloring_type_cmd_callback,
-      GRAD_RGB, "<RadioItem>" },
-    NULL,
-    NULL, NULL },
-  { { N_("/coloringtype/HSV (counter-clockwise hue)"), NULL,
-      gradient_editor_coloring_type_cmd_callback,
-      GRAD_HSV_CCW, "/coloringtype/RGB" },
-    NULL,
-    NULL, NULL },
-  { { N_("/coloringtype/HSV (clockwise hue)"), NULL,
-      gradient_editor_coloring_type_cmd_callback,
-      GRAD_HSV_CW, "/coloringtype/RGB" },
-    NULL,
-    NULL, NULL },
-  { { N_("/coloringtype/(Varies)"), NULL, NULL,
-      0, "/coloringtype/RGB" },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { "/flip", "F",
-      gradient_editor_flip_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/replicate", "R",
-      gradient_editor_replicate_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/splitmidpoint", "S",
-      gradient_editor_split_midpoint_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/splituniformly", "U",
-      gradient_editor_split_uniformly_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/delete", "D",
-      gradient_editor_delete_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/recenter", "C",
-      gradient_editor_recenter_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { "/redistribute", "<control>C",
-      gradient_editor_redistribute_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Blend Endpoints' Colors"), "B",
-      gradient_editor_blend_color_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-  { { N_("/Blend Endpoints' Opacity"), "<control>B",
-      gradient_editor_blend_opacity_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
-};
-
-#undef LOAD_LEFT_FROM
-#undef SAVE_LEFT_TO
-#undef LOAD_RIGHT_FROM
-#undef SAVE_RIGHT_TO
-
-
-/*****  <Gradients>  *****/
-
-static GimpItemFactoryEntry gradients_entries[] =
-{
-  { { N_("/New Gradient"), NULL,
-      data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Duplicate Gradient"), NULL,
-      data_duplicate_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    NULL, NULL },
-  { { N_("/Edit Gradient..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Gradient..."), NULL,
-      data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Refresh Gradients"), NULL,
-      data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Save as POV-Ray..."), NULL,
-      gradients_save_as_pov_ray_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL,
-    NULL, NULL }
-};
-
-
-/*****  <Palettes>  *****/
-
-static GimpItemFactoryEntry palettes_entries[] =
-{
-  { { N_("/New Palette"), NULL,
-      data_new_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Duplicate Palette"), NULL,
-      data_duplicate_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DUPLICATE },
-    NULL,
-    NULL, NULL },
-  { { N_("/Edit Palette..."), NULL,
-      data_edit_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_EDIT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Palette..."), NULL,
-      data_delete_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Refresh Palettes"), NULL,
-      data_refresh_data_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Import Palette..."), NULL,
-      palettes_import_palette_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_CONVERT },
-    NULL,
-    NULL, NULL },
-  { { N_("/Merge Palettes..."), NULL,
-      palettes_merge_palettes_cmd_callback, 0 },
-    NULL,
-    NULL, NULL }
-};
-
-
-/*****  <Buffers>  *****/
-
-static GimpItemFactoryEntry buffers_entries[] =
-{
-  { { N_("/Paste Buffer"), NULL,
-      buffers_paste_buffer_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_PASTE },
-    NULL,
-    NULL, NULL },
-  { { N_("/Paste Buffer Into"), NULL,
-      buffers_paste_buffer_into_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_PASTE_INTO },
-    NULL,
-    NULL, NULL },
-  { { N_("/Paste Buffer as New"), NULL,
-      buffers_paste_buffer_as_new_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_PASTE_AS_NEW },
-    NULL,
-    NULL, NULL },
-  { { N_("/Delete Buffer"), NULL,
-      buffers_delete_buffer_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL }
-};
-
-
-/*****  <Documents>  *****/
-
-static GimpItemFactoryEntry documents_entries[] =
-{
-  { { N_("/Open Image"), NULL,
-      documents_open_document_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    NULL, NULL },
-  { { N_("/Raise or Open Image"), NULL,
-      documents_raise_or_open_document_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    NULL, NULL },
-  { { N_("/File Open Dialog..."), NULL,
-      documents_file_open_dialog_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_OPEN },
-    NULL,
-    NULL, NULL },
-  { { N_("/Remove Entry"), NULL,
-      documents_delete_document_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_DELETE },
-    NULL,
-    NULL, NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Refresh History"), NULL,
-      documents_refresh_documents_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_REFRESH },
-    NULL,
-    NULL, NULL }
-};
-
-
-static gboolean menus_initialized = FALSE;
-
-
-static GtkItemFactory *toolbox_factory         = NULL;
-static GtkItemFactory *image_factory           = NULL;
-static GtkItemFactory *load_factory            = NULL;
-static GtkItemFactory *save_factory            = NULL;
-static GtkItemFactory *layers_factory          = NULL;
-static GtkItemFactory *channels_factory        = NULL;
-static GtkItemFactory *paths_factory           = NULL;
-static GtkItemFactory *dialogs_factory         = NULL;
-static GtkItemFactory *brushes_factory         = NULL;
-static GtkItemFactory *patterns_factory        = NULL;
-static GtkItemFactory *gradient_editor_factory = NULL;
-static GtkItemFactory *gradients_factory       = NULL;
-static GtkItemFactory *palettes_factory        = NULL;
-static GtkItemFactory *buffers_factory         = NULL;
-static GtkItemFactory *documents_factory       = NULL;
 
 
 /*  public functions  */
 
 void
-menus_init (Gimp *gimp)
+gimp_menu_item_create (GimpItemFactoryEntry *entry,
+                       gchar                *domain_name,
+                       gpointer              callback_data)
 {
-  GtkWidget    *menu_item;
-  gchar        *filename;
-  GList        *list;
-  GimpToolInfo *tool_info;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (menus_initialized == FALSE);
-
-  menus_initialized = TRUE;
-
-  /*  the toolbox factory  */
-  {
-    GimpItemFactoryEntry *last_opened_entries;
-    GtkWidget            *menu_item;
-    gint                  i;
-
-    toolbox_factory = gimp_item_factory_new (GTK_TYPE_MENU_BAR,
-                                             "<Toolbox>", "toolbox",
-                                             G_N_ELEMENTS (toolbox_entries),
-                                             toolbox_entries,
-                                             gimp,
-                                             TRUE);
-
-    last_opened_entries = g_new (GimpItemFactoryEntry,
-                                 gimprc.last_opened_size);
-
-    for (i = 0; i < gimprc.last_opened_size; i++)
-      {
-        last_opened_entries[i].entry.path = 
-          g_strdup_printf ("/File/MRU%02d", i + 1);
-
-        if (i < 9)
-          last_opened_entries[i].entry.accelerator =
-            g_strdup_printf ("<control>%d", i + 1);
-        else
-          last_opened_entries[i].entry.accelerator = NULL;
-
-        last_opened_entries[i].entry.callback        = file_last_opened_cmd_callback;
-        last_opened_entries[i].entry.callback_action = i;
-        last_opened_entries[i].entry.item_type       = "<StockItem>";
-        last_opened_entries[i].entry.extra_data      = GTK_STOCK_OPEN;
-        last_opened_entries[i].quark_string          = NULL;
-        last_opened_entries[i].help_page             = "file/last_opened.html";
-        last_opened_entries[i].description           = NULL;
-      }
-
-    gimp_item_factory_create_items (toolbox_factory,
-                                    gimprc.last_opened_size, last_opened_entries,
-                                    gimp, 2, TRUE, FALSE);
-
-    for (i = 0; i < gimprc.last_opened_size; i++)
-      {
-        menu_item =
-          gtk_item_factory_get_widget (toolbox_factory,
-                                       last_opened_entries[i].entry.path);
-        gtk_widget_hide (menu_item);
-      }
-
-    menu_item = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
-    if (menu_item && menu_item->parent)
-      gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-    gtk_widget_hide (menu_item);
-
-    menu_item = gtk_item_factory_get_widget (toolbox_factory, "/File/Quit");
-    if (menu_item && menu_item->parent)
-      gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-
-    for (i = 0; i < gimprc.last_opened_size; i++)
-      {
-        g_free (last_opened_entries[i].entry.path);
-        g_free (last_opened_entries[i].entry.accelerator);
-      }
-
-    g_free (last_opened_entries);
-  }
-
-  image_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                         "<Image>", "image",
-                                         G_N_ELEMENTS (image_entries),
-                                         image_entries,
-                                         gimp,
-                                         TRUE);
-
-  load_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                        "<Load>", "open",
-                                        G_N_ELEMENTS (load_entries),
-                                        load_entries,
-                                        gimp,
-                                        FALSE);
-
-  save_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                        "<Save>", "save",
-                                        G_N_ELEMENTS (save_entries),
-                                        save_entries,
-                                        gimp,
-                                        FALSE);
-
-  layers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                          "<Layers>", "layers",
-                                          G_N_ELEMENTS (layers_entries),
-                                          layers_entries,
-                                          gimp,
-                                          FALSE);
-
-  channels_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                            "<Channels>", "channels",
-                                            G_N_ELEMENTS (channels_entries),
-                                            channels_entries,
-                                            gimp,
-                                            FALSE);
-
-  paths_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                         "<Paths>", "paths",
-                                         G_N_ELEMENTS (paths_entries),
-                                         paths_entries,
-                                         gimp,
-                                         FALSE);
-
-  dialogs_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                           "<Dialogs>", "dialogs",
-                                           G_N_ELEMENTS (dialogs_entries),
-                                           dialogs_entries,
-                                           gimp,
-                                           FALSE);
-
-  brushes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                           "<Brushes>", "brushes",
-                                           G_N_ELEMENTS (brushes_entries),
-                                           brushes_entries,
-                                           gimp,
-                                           FALSE);
-
-  patterns_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                            "<Patterns>", "patterns",
-                                            G_N_ELEMENTS (patterns_entries),
-                                            patterns_entries,
-                                            gimp,
-                                            FALSE);
-
-  gradient_editor_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                                   "<GradientEditor>", "gradient_editor",
-                                                   G_N_ELEMENTS (gradient_editor_entries),
-                                                   gradient_editor_entries,
-                                                   gimp,
-                                                   FALSE);
-
-  gradients_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                             "<Gradients>", "gradients",
-                                             G_N_ELEMENTS (gradients_entries),
-                                             gradients_entries,
-                                             gimp,
-                                             FALSE);
-
-  palettes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                            "<Palettes>", "palettes",
-                                            G_N_ELEMENTS (palettes_entries),
-                                            palettes_entries,
-                                            gimp,
-                                            FALSE);
-
-  buffers_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                           "<Buffers>", "buffers",
-                                           G_N_ELEMENTS (buffers_entries),
-                                           buffers_entries,
-                                           gimp,
-                                           FALSE);
-
-  documents_factory = gimp_item_factory_new (GTK_TYPE_MENU,
-                                             "<Documents>", "documents",
-                                             G_N_ELEMENTS (documents_entries),
-                                             documents_entries,
-                                             gimp,
-                                             FALSE);
-
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      menus_tools_create (GIMP_TOOL_INFO (list->data));
-    }
-
-  /*  reorder <Image>/Image/Colors  */
-  tool_info = tool_manager_get_info_by_type (gimp, GIMP_TYPE_POSTERIZE_TOOL);
-
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   tool_info->menu_path);
-  if (menu_item && menu_item->parent)
-    gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
-
-  {
-    GtkType color_tools[] = { GIMP_TYPE_COLOR_BALANCE_TOOL,
-			      GIMP_TYPE_HUE_SATURATION_TOOL,
-			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-			      GIMP_TYPE_THRESHOLD_TOOL,
-			      GIMP_TYPE_LEVELS_TOOL,
-			      GIMP_TYPE_CURVES_TOOL };
-    static gint n_color_tools = (sizeof (color_tools) /
-				 sizeof (color_tools[0]));
-    GtkWidget *separator;
-    gint       i, pos;
-
-    pos = 1;
-
-    for (i = 0; i < n_color_tools; i++)
-      {
-	tool_info = tool_manager_get_info_by_type (gimp, color_tools[i]);
-
-	menu_item = gtk_item_factory_get_widget (image_factory,
-						 tool_info->menu_path);
-	if (menu_item && menu_item->parent)
-	  {
-	    gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				    menu_item, pos);
-	    pos++;
-	  }
-      }
-
-    if (menu_item && menu_item->parent)
-      {
-	separator = gtk_menu_item_new ();
-	gtk_menu_shell_insert (GTK_MENU_SHELL (menu_item->parent), separator, pos);
-	gtk_widget_show (separator);
-      }
-  }
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_accel_map_load (filename);
-  g_free (filename);
-
-  g_signal_connect (G_OBJECT (gimp->documents), "add",
-                    G_CALLBACK (menus_last_opened_update_labels),
-                    gimp);
-  g_signal_connect (G_OBJECT (gimp->documents), "remove",
-                    G_CALLBACK (menus_last_opened_update_labels),
-                    gimp);
-  g_signal_connect (G_OBJECT (gimp->documents), "reorder",
-                    G_CALLBACK (menus_last_opened_update_labels),
-                    gimp);
-
-  menus_last_opened_update_labels (gimp->documents, NULL, gimp);
-}
-
-void
-menus_exit (Gimp *gimp)
-{
-  gchar *filename;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
-                                        menus_last_opened_update_labels,
-                                        gimp);
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_accel_map_save (filename);
-  g_free (filename);
-
-  if (toolbox_factory)
-    {
-      g_object_unref (G_OBJECT (toolbox_factory));
-      toolbox_factory = NULL;
-    }
-
-  if (image_factory)
-    {
-      g_object_unref (G_OBJECT (image_factory));
-      image_factory = NULL;
-    }
-
-  if (load_factory)
-    {
-      g_object_unref (G_OBJECT (load_factory));
-      load_factory = NULL;
-    }
-
-  if (save_factory)
-    {
-      g_object_unref (G_OBJECT (save_factory));
-      save_factory = NULL;
-    }
-
-  if (layers_factory)
-    {
-      g_object_unref (G_OBJECT (layers_factory));
-      layers_factory = NULL;
-    }
-
-  if (channels_factory)
-    {
-      g_object_unref (G_OBJECT (channels_factory));
-      channels_factory = NULL;
-    }
-
-  if (paths_factory)
-    {
-      g_object_unref (G_OBJECT (paths_factory));
-      paths_factory = NULL;
-    }
-
-  if (dialogs_factory)
-    {
-      g_object_unref (G_OBJECT (dialogs_factory));
-      dialogs_factory = NULL;
-    }
-
-  if (brushes_factory)
-    {
-      g_object_unref (G_OBJECT (brushes_factory));
-      brushes_factory = NULL;
-    }
-
-  if (patterns_factory)
-    {
-      g_object_unref (G_OBJECT (patterns_factory));
-      patterns_factory = NULL;
-    }
-
-  if (gradient_editor_factory)
-    {
-      g_object_unref (G_OBJECT (gradient_editor_factory));
-      gradient_editor_factory = NULL;
-    }
-
-  if (gradients_factory)
-    {
-      g_object_unref (G_OBJECT (gradients_factory));
-      gradients_factory = NULL;
-    }
-
-  if (palettes_factory)
-    {
-      g_object_unref (G_OBJECT (palettes_factory));
-      palettes_factory = NULL;
-    }
-
-  if (buffers_factory)
-    {
-      g_object_unref (G_OBJECT (buffers_factory));
-      buffers_factory = NULL;
-    }
-
-  if (documents_factory)
-    {
-      g_object_unref (G_OBJECT (documents_factory));
-      documents_factory = NULL;
-    }
-}
-
-void
-menus_restore (Gimp *gimp)
-{
-  static gchar *rotate_plugins[]      = { "90 degrees",
-                                          "180 degrees",
-                                          "270 degrees" };
-  static gchar *image_file_entries[]  = { "---moved",
-                                          "Close",
-                                          "Quit" };
-  static gchar *reorder_submenus[]    = { "<Image>/Video",
-                                          "<Image>/Script-Fu" };
-  static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
-					  "<Toolbox>/Xtns" };
-
   GtkItemFactory *item_factory;
+  gchar          *path;
+
+  g_return_if_fail (entry != NULL);
+
+  path = entry->entry.path;
+
+  if (!path)
+    return;
+
+  item_factory = gtk_item_factory_from_path (path);
+
+  if (!item_factory)
+    {
+      g_warning ("entry refers to unknown item factory: \"%s\"", path);
+      return;
+    }
+
+  g_object_set_data (G_OBJECT (item_factory), "textdomain", domain_name);
+
+  while (*path != '>')
+    path++;
+  path++;
+
+  entry->entry.path = path;
+
+  gimp_item_factory_create_item (item_factory,
+                                 entry,
+                                 callback_data, 2,
+                                 TRUE, FALSE);
+}
+
+void
+gimp_menu_item_destroy (gchar *path)
+{
+  g_return_if_fail (path != NULL);
+
+  gtk_item_factories_path_delete (NULL, path);
+}
+
+void
+gimp_menu_item_set_active (gchar    *path,
+                           gboolean  active)
+{
+  GtkItemFactory *factory;
+
+  g_return_if_fail (path != NULL);
+
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gimp_item_factory_set_active (factory, path, active);
+    }
+  else if (! strstr (path, "Script-Fu"))
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
+}
+
+void
+gimp_menu_item_set_color (gchar         *path,
+                          const GimpRGB *color,
+                          gboolean       set_label)
+{
+  GtkItemFactory *factory;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (color != NULL);
+
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gimp_item_factory_set_color (factory, path, color, set_label);
+    }
+  else
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
+}
+
+void
+gimp_menu_item_set_label (gchar       *path,
+                          const gchar *label)
+{
+  GtkItemFactory *factory;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (label != NULL);
+
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gimp_item_factory_set_label (factory, path, label);
+    }
+  else
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
+}
+
+void
+gimp_menu_item_set_sensitive (gchar    *path,
+                              gboolean  sensitive)
+{
+  GtkItemFactory *factory;
+
+  g_return_if_fail (path != NULL);
+
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gimp_item_factory_set_sensitive (factory, path, sensitive);
+    }
+  else if (! strstr (path, "Script-Fu"))
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
+}
+
+void
+gimp_menu_item_set_visible (gchar    *path,
+                            gboolean  visible)
+{
+  GtkItemFactory *factory;
+
+  g_return_if_fail (path != NULL);
+
+  factory = gtk_item_factory_from_path (path);
+
+  if (factory)
+    {
+      gimp_item_factory_set_visible (factory, path, visible);
+    }
+  else
+    {
+      g_warning ("%s: Could not find item factory for path \"%s\"",
+                 G_STRLOC, path);
+    }
+}
+
+
+GtkItemFactory *
+gimp_item_factory_new (GType                 container_type,
+                       const gchar          *path,
+                       const gchar          *factory_path,
+                       guint                 n_entries,
+                       GimpItemFactoryEntry *entries,
+                       gpointer              callback_data,
+                       gboolean              create_tearoff)
+{
+  GtkItemFactory *factory;
+
+  factory = gtk_item_factory_new (container_type, path, NULL);
+
+  gtk_item_factory_set_translate_func (factory,
+				       gimp_item_factory_translate_func,
+				       (gpointer) path,
+				       NULL);
+
+  g_object_set_data (G_OBJECT (factory), "factory_path",
+                     (gpointer) factory_path);
+
+  gimp_item_factory_create_items (factory,
+                                  n_entries,
+                                  entries,
+                                  callback_data,
+                                  2,
+                                  create_tearoff,
+                                  TRUE);
+
+  return factory;
+}
+
+void
+gimp_item_factory_create_item (GtkItemFactory        *item_factory,
+                               GimpItemFactoryEntry  *entry,
+                               gpointer               callback_data,
+                               guint                  callback_type,
+                               gboolean               create_tearoff,
+                               gboolean               static_entry)
+{
   GtkWidget *menu_item;
-  GtkWidget *menu;
-  GList     *list;
-  gchar     *path;
-  gint      i, pos;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (item_factory));
+  g_return_if_fail (entry != NULL);
 
-  /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
-   *  separators to the top of the menu
-   */
-  pos = 1;
-  menu_item = gtk_item_factory_get_widget (toolbox_factory,
-					   "/Xtns/Module Browser...");
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+  if (! (strstr (entry->entry.path, "tearoff1")))
     {
-      menu = menu_item->parent;
-
-      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
-	   list = g_list_next (list))
+      if (! gimprc.disable_tearoff_menus && create_tearoff)
 	{
-	  menu_item = GTK_WIDGET (list->data);
-
-	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
-	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
-	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				      menu_item, pos);
-	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
-	      pos++;
-	    }
+	  gimp_item_factory_create_branches (item_factory, entry);
 	}
     }
-
-  /*  Move all menu items under "<Image>/Filters" which are not submenus or
-   *  separators to the top of the menu
-   */
-  pos = 3;
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   "/Filters/Filter all Layers...");
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+  else if (gimprc.disable_tearoff_menus || ! create_tearoff)
     {
-      menu = menu_item->parent;
-
-      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
-	   list = g_list_next (list))
-	{
-	  menu_item = GTK_WIDGET (list->data);
-
-	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
-	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
-	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				      menu_item, pos);
-	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
-	      pos++;
-	    }
-	}
+      return;
     }
 
-  /*  Reorder Rotate plugin menu entries */
-  pos = 2;
-  for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
+  if (entry->quark_string)
     {
-      path = g_strconcat ("/Image/Transforms/Rotate/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
+      GQuark quark;
 
-      if (menu_item && menu_item->parent)
+      if (static_entry)
+	quark = g_quark_from_static_string (entry->quark_string);
+      else
+	quark = g_quark_from_string (entry->quark_string);
+
+      entry->entry.callback_action = (guint) quark;
+    }
+
+  gtk_item_factory_create_item (item_factory,
+				(GtkItemFactoryEntry *) entry,
+				callback_data,
+				callback_type);
+
+  menu_item = gtk_item_factory_get_item (item_factory,
+					 ((GtkItemFactoryEntry *) entry)->path);
+
+  if (menu_item)
+    {
+      g_signal_connect_after (G_OBJECT (menu_item), "realize",
+			      G_CALLBACK (gimp_item_factory_item_realize),
+			      item_factory);
+
+      g_object_set_data (G_OBJECT (menu_item), "help_page",
+			 (gpointer) entry->help_page);
+    }
+}
+
+void
+gimp_item_factory_create_items (GtkItemFactory       *item_factory,
+                                guint                 n_entries,
+                                GimpItemFactoryEntry *entries,
+                                gpointer              callback_data,
+                                guint                 callback_type,
+                                gboolean              create_tearoff,
+                                gboolean              static_entries)
+{
+  gint i;
+
+  for (i = 0; i < n_entries; i++)
+    {
+      gimp_item_factory_create_item (item_factory,
+                                     entries + i,
+                                     callback_data,
+                                     callback_type,
+                                     create_tearoff,
+                                     static_entries);
+    }
+}
+
+void
+gimp_item_factory_set_active (GtkItemFactory *factory,
+                              gchar          *path,
+                              gboolean        active)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
+  g_return_if_fail (path != NULL);
+
+  widget = gtk_item_factory_get_widget (factory, path);
+
+  if (widget)
+    {
+      if (GTK_IS_CHECK_MENU_ITEM (widget))
         {
-          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
-          pos++;
+          gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), active);
+        }
+      else
+        {
         }
     }
-
-  pos = 2;
-  for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
+  else if (! strstr (path, "Script-Fu"))
     {
-      path = g_strconcat ("/Layers/Rotate/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
+      g_warning ("%s: Unable to set \"active\" for menu item "
+                 "which doesn't exist:\n%s",
+                 G_STRLOC, path);
+    }
+}
 
-      if (menu_item && menu_item->parent)
+void
+gimp_item_factory_set_color (GtkItemFactory *factory,
+                             gchar          *path,
+                             const GimpRGB  *color,
+                             gboolean        set_label)
+{
+  GtkWidget *widget;
+  GtkWidget *preview = NULL;
+  GtkWidget *label   = NULL;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (color != NULL);
+
+  widget = gtk_item_factory_get_widget (factory, path);
+
+  if (! widget)
+    {
+      g_warning ("%s: Unable to set color of menu item "
+                 "which doesn't exist:\n%s",
+                 G_STRLOC, path);
+      return;
+    }
+
+#define COLOR_BOX_WIDTH  16
+#define COLOR_BOX_HEIGHT 16
+
+  if (GTK_IS_HBOX (GTK_BIN (widget)->child))
+    {
+      preview = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                   "preview");
+      label = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                 "label");
+    }
+  else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+    {
+      GtkWidget *hbox;
+
+      label = GTK_BIN (widget)->child;
+
+      g_object_ref (G_OBJECT (label));
+
+      gtk_container_remove (GTK_CONTAINER (widget), label);
+
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_container_add (GTK_CONTAINER (widget), hbox);
+      gtk_widget_show (hbox);
+
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      gtk_preview_size (GTK_PREVIEW (preview),
+                        COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
+      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+      gtk_widget_show (preview);
+
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      g_object_unref (G_OBJECT (label));
+
+      g_object_set_data (G_OBJECT (hbox), "preview", preview);
+      g_object_set_data (G_OBJECT (hbox), "label",   label);
+    }
+
+  if (preview)
+    {
+      guchar  rows[3][COLOR_BOX_WIDTH * 3];
+      gint    x, y;
+      gint    r0, g0, b0;
+      gint    r1, g1, b1;
+      guchar *p0, *p1, *p2;
+
+      /* Fill rows */
+
+      r0 = (GIMP_CHECK_DARK + (color->r - GIMP_CHECK_DARK) * color->a) * 255.0;
+      r1 = (GIMP_CHECK_LIGHT + (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      g0 = (GIMP_CHECK_DARK + (color->g - GIMP_CHECK_DARK) * color->a) * 255.0;
+      g1 = (GIMP_CHECK_LIGHT + (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      b0 = (GIMP_CHECK_DARK + (color->b - GIMP_CHECK_DARK) * color->a) * 255.0;
+      b1 = (GIMP_CHECK_LIGHT + (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.0;
+
+      p0 = rows[0];
+      p1 = rows[1];
+      p2 = rows[2];
+
+      for (x = 0; x < COLOR_BOX_WIDTH; x++)
         {
-          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
-          pos++;
+          if ((x == 0) || (x == (COLOR_BOX_WIDTH - 1)))
+            {
+              *p0++ = 0;
+              *p0++ = 0;
+              *p0++ = 0;
+
+              *p1++ = 0;
+              *p1++ = 0;
+              *p1++ = 0;
+            }
+          else if ((x / GIMP_CHECK_SIZE) & 1)
+            {
+              *p0++ = r1;
+              *p0++ = g1;
+              *p0++ = b1;
+
+              *p1++ = r0;
+              *p1++ = g0;
+              *p1++ = b0;
+            }
+          else
+            {
+              *p0++ = r0;
+              *p0++ = g0;
+              *p0++ = b0;
+
+              *p1++ = r1;
+              *p1++ = g1;
+              *p1++ = b1;
+            }
+
+          *p2++ = 0;
+          *p2++ = 0;
+          *p2++ = 0;
+        }
+
+      /* Fill preview */
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
+                            0, 0, COLOR_BOX_WIDTH);
+
+      for (y = 1; y < (COLOR_BOX_HEIGHT - 1); y++)
+        if ((y / GIMP_CHECK_SIZE) & 1)
+          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[1],
+                                0, y, COLOR_BOX_WIDTH);
+        else
+          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[0],
+                                0, y, COLOR_BOX_WIDTH);
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
+                            0, y, COLOR_BOX_WIDTH);
+
+      gtk_widget_queue_draw (preview);
+    }
+
+  if (label && set_label)
+    {
+      gchar *str;
+
+      str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
+                             color->r, color->g, color->b, color->a);
+
+      gtk_label_set_text (GTK_LABEL (label), str);
+
+      g_free (str);
+    }
+
+#undef COLOR_BOX_WIDTH
+#undef COLOR_BOX_HEIGHT
+}
+
+void
+gimp_item_factory_set_label (GtkItemFactory *factory,
+                             gchar          *path,
+                             const gchar    *label)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (label != NULL);
+
+  widget = gtk_item_factory_get_widget (factory, path);
+
+  if (widget)
+    {
+      if (GTK_IS_MENU (widget))
+        {
+          widget = gtk_menu_get_attach_widget (GTK_MENU (widget));
+        }
+
+      if (GTK_IS_LABEL (GTK_BIN (widget)->child))
+        {
+          gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), label);
         }
     }
-
-  /*  Reorder "<Image>/File"  */
-  for (i = 0; i < G_N_ELEMENTS (image_file_entries); i++)
+  else
     {
-      path = g_strconcat ("/File/", image_file_entries[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
-
-      if (menu_item && menu_item->parent)
-	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+      g_warning ("%s: Unable to set label of menu item "
+                 "which doesn't exist:\n%s",
+                 G_STRLOC, path);
     }
+}
 
-  /*  Reorder menus where plugins registered submenus  */
-  for (i = 0; i < G_N_ELEMENTS (reorder_submenus); i++)
+void
+gimp_item_factory_set_sensitive (GtkItemFactory *factory,
+                                 gchar          *path,
+                                 gboolean        sensitive)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
+  g_return_if_fail (path != NULL);
+
+  widget = gtk_item_factory_get_widget (factory, path);
+
+  if (widget)
     {
-      item_factory = gtk_item_factory_from_path (reorder_submenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
-					  reorder_submenus[i]);
-
-      if (menu && GTK_IS_MENU (menu))
-	{
-	  menus_filters_subdirs_to_top (GTK_MENU (menu));
-	}
+      gtk_widget_set_sensitive (widget, sensitive);
     }
-
-  for (i = 0; i < G_N_ELEMENTS (reorder_subsubmenus); i++)
+  else if (! strstr (path, "Script-Fu"))
     {
-      item_factory = gtk_item_factory_from_path (reorder_subsubmenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
-					  reorder_subsubmenus[i]);
+      g_warning ("%s: Unable to set sensitivity of menu item"
+                 "which doesn't exist:\n%s",
+                 G_STRLOC, path);
+    }
+}
 
-      if (menu && GTK_IS_MENU (menu))
+void
+gimp_item_factory_set_visible (GtkItemFactory *factory,
+                               gchar          *path,
+                               gboolean        visible)
+{
+  GtkWidget *widget;
+
+  g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
+  g_return_if_fail (path != NULL);
+
+  widget = gtk_item_factory_get_widget (factory, path);
+
+  if (widget)
+    {
+      if (visible)
+        gtk_widget_show (widget);
+      else
+        gtk_widget_hide (widget);
+    }
+  else
+    {
+      g_warning ("%s: Unable to set visibility of menu item"
+                 "which doesn't exist:\n%s",
+                 G_STRLOC, path);
+    }
+}
+
+
+void
+gimp_item_factory_tearoff_callback (GtkWidget *widget,
+                                    gpointer   data,
+                                    guint      action)
+{
+  if (GTK_IS_TEAROFF_MENU_ITEM (widget))
+    {
+      GtkTearoffMenuItem *tomi = (GtkTearoffMenuItem *) widget;
+
+      if (tomi->torn_off)
 	{
-	  for (list = GTK_MENU_SHELL (menu)->children; list;
-	       list = g_list_next (list))
+	  GtkWidget *toplevel;
+
+	  toplevel = gtk_widget_get_toplevel (widget);
+
+	  if (! GTK_IS_WINDOW (toplevel))
 	    {
-	      GtkMenuItem *menu_item;
+	      g_warning ("%s: tearoff menu not in top level window",
+                         G_STRLOC);
+	    }
+	  else
+	    {
+#ifdef __GNUC__
+#warning FIXME: register tearoffs
+#endif
+	      g_object_set_data (G_OBJECT (widget), "tearoff-menu-toplevel",
+                                 toplevel);
 
-	      menu_item = GTK_MENU_ITEM (list->data);
-
-	      if (menu_item->submenu)
-		menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+	      gimp_dialog_set_icon (GTK_WINDOW (toplevel));
 	    }
 	}
-    }
-
-  /*  Move all submenus which registered after "<Image>/Filters/Toys"
-   *  before the separator after "<Image>/Filters/Web"
-   */
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   "/Filters/---INSERT");
-
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
-    {
-      menu = menu_item->parent;
-      pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
-
-      menu_item = gtk_item_factory_get_widget (image_factory,
-					       "/Filters/Toys");
-
-      if (menu_item && GTK_IS_MENU (menu_item))
+      else
 	{
-	  GList *list;
-	  gint index = 1;
+	  GtkWidget *toplevel;
 
-	  for (list = GTK_MENU_SHELL (menu)->children; list;
-	       list = g_list_next (list))
+	  toplevel = (GtkWidget *) g_object_get_data (G_OBJECT (widget),
+                                                      "tearoff-menu-toplevel");
+
+	  if (! toplevel)
 	    {
-	      if (GTK_MENU_ITEM (list->data)->submenu == menu_item)
-		break;
-
-	      index++;
+	      g_warning ("%s: can't unregister tearoff menu top level window",
+                         G_STRLOC);
 	    }
-
-	  while ((menu_item = g_list_nth_data (GTK_MENU_SHELL (menu)->children,
-					       index)))
+	  else
 	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu), menu_item, pos);
-
-	      pos++;
-	      index++;
+#ifdef __GNUC__
+#warning FIXME: unregister tearoffs
+#endif
 	    }
 	}
     }
@@ -2290,286 +650,317 @@ menus_restore (Gimp *gimp)
 /*  private functions  */
 
 static void
-menus_filters_subdirs_to_top (GtkMenu *menu)
+gimp_item_factory_create_branches (GtkItemFactory       *factory,
+                                   GimpItemFactoryEntry *entry)
 {
-  GtkMenuItem *menu_item;
-  GList       *list;
-  gboolean     submenus_passed = FALSE;
-  gint         pos;
-  gint         items;
+  GString *tearoff_path;
+  gint     factory_length;
+  gchar   *p;
+  gchar   *path;
 
-  pos   = 1;
-  items = 0;
-
-  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
-    {
-      menu_item = GTK_MENU_ITEM (list->data);
-      items++;
-      
-      if (menu_item->submenu)
-	{
-	  if (submenus_passed)
-	    {
-	      menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
-	      gtk_menu_reorder_child (menu, GTK_WIDGET (menu_item), pos++);
-	    }
-	}
-      else
-	{
-	  submenus_passed = TRUE;
-	}
-    }
-
-  if (pos > 1 && items > pos)
-    {
-      GtkWidget *separator;
-
-      separator = gtk_menu_item_new ();
-      gtk_menu_shell_insert (GTK_MENU_SHELL (menu), separator, pos);
-      gtk_widget_show (separator);
-    }
-}
-
-static void
-menus_tools_create (GimpToolInfo *tool_info)
-{
-  GimpItemFactoryEntry  entry;
-
-  if (tool_info->menu_path == NULL)
+  if (! entry->entry.path)
     return;
 
-  entry.entry.path            = tool_info->menu_path;
-  entry.entry.accelerator     = tool_info->menu_accel;
-  entry.entry.callback        = tools_select_cmd_callback;
-  entry.entry.callback_action = 0;
-  entry.entry.item_type       = "<StockItem>";
-  entry.entry.extra_data      = tool_info->stock_id;
-  entry.quark_string          = NULL;
-  entry.help_page             = tool_info->help_data;
-  entry.description           = NULL;
+  tearoff_path = g_string_new ("");
 
-  gimp_item_factory_create_item (image_factory,
-                                 &entry,
-                                 tool_info,
-                                 2,
-                                 TRUE, FALSE);
+  path = entry->entry.path;
+  p = strchr (path, '/');
+  factory_length = p - path;
+
+  /*  skip the first slash  */
+  if (p)
+    p = strchr (p + 1, '/');
+
+  while (p)
+    {
+      g_string_assign (tearoff_path, path + factory_length);
+      g_string_truncate (tearoff_path, p - path - factory_length);
+
+      if (!gtk_item_factory_get_widget (factory, tearoff_path->str))
+	{
+	  GimpItemFactoryEntry branch_entry =
+	  {
+	    { NULL, NULL, NULL, 0, "<Branch>" },
+	    NULL,
+	    NULL
+	  };
+
+	  branch_entry.entry.path = tearoff_path->str;
+	  g_object_set_data (G_OBJECT (factory), "complete", path);
+
+	  gimp_item_factory_create_item (factory,
+                                         &branch_entry,
+                                         NULL, 2, TRUE, FALSE);
+
+	  g_object_set_data (G_OBJECT (factory), "complete", NULL);
+	}
+
+      g_string_append (tearoff_path, "/tearoff1");
+
+      if (! gtk_item_factory_get_widget (factory, tearoff_path->str))
+	{
+	  GimpItemFactoryEntry tearoff_entry =
+	  {
+	    { NULL, NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
+	    NULL,
+	    NULL, NULL
+	  };
+
+	  tearoff_entry.entry.path = tearoff_path->str;
+
+	  gimp_item_factory_create_item (factory,
+                                         &tearoff_entry,
+                                         NULL, 2, TRUE, FALSE);
+	}
+
+      p = strchr (p + 1, '/');
+    }
+
+  g_string_free (tearoff_path, TRUE);
 }
 
 static void
-menus_last_opened_update_labels (GimpContainer *container,
-                                 GimpImagefile *unused,
-                                 Gimp          *gimp)
+gimp_item_factory_item_realize (GtkWidget *widget,
+                                gpointer   data)
 {
-  GtkWidget *widget;
-  gint       num_documents;
-  gint       i;
-
-  num_documents = gimp_container_num_children (container);
-
-  widget = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
-
-  if (num_documents > 0)
-    gtk_widget_show (widget);
-  else
-    gtk_widget_hide (widget);
-
-  for (i = 0; i < gimprc.last_opened_size; i++)
+  if (GTK_IS_MENU_SHELL (widget->parent))
     {
-      gchar *path_str;
+      if (! g_object_get_data (G_OBJECT (widget->parent),
+                               "menus_key_press_connected"))
+	{
+	  g_signal_connect (G_OBJECT (widget->parent), "key_press_event",
+                            G_CALLBACK (gimp_item_factory_item_key_press),
+                            data);
 
-      path_str = g_strdup_printf ("/File/MRU%02d", i + 1);
-
-      widget = gtk_item_factory_get_widget (toolbox_factory, path_str);
-
-      g_free (path_str);
-
-      if (i < num_documents)
-        {
-          GimpImagefile *imagefile;
-
-          imagefile = (GimpImagefile *)
-            gimp_container_get_child_by_index (container, i);
-
-          if (g_object_get_data (G_OBJECT (widget), "gimp-imagefile") !=
-              (gpointer) imagefile)
-            {
-              gchar *basename;
-
-              basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
-
-              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
-                                  basename);
-
-              g_free (basename);
-
-              gimp_help_set_help_data (widget,
-                                       GIMP_OBJECT (imagefile)->name,
-                                       NULL);
-
-              g_object_set_data (G_OBJECT (widget), "gimp-imagefile", imagefile);
-              gtk_widget_show (widget);
-            }
-        }
-      else
-        {
-          g_object_set_data (G_OBJECT (widget), "gimp-imagefile", NULL);
-          gtk_widget_hide (widget);
-        }
+	  g_object_set_data (G_OBJECT (widget->parent),
+                             "menus_key_press_connected",
+                             (gpointer) TRUE);
+	}
     }
 }
 
-
-#ifdef ENABLE_DEBUG_ENTRY
-
-#include <unistd.h>
-
-static void
-menus_debug_recurse_menu (GtkWidget *menu,
-			  gint       depth,
-			  gchar     *path)
+static gboolean
+gimp_item_factory_item_key_press (GtkWidget   *widget,
+                                  GdkEventKey *kevent,
+                                  gpointer     data)
 {
-  GtkItemFactory      *item_factory;
-  GtkItemFactoryItem  *item;
-  GtkItemFactoryClass *class;
-  GtkWidget           *menu_item;
-  GList   *list;
-  gchar   *label;
-  gchar   *help_page;
-  gchar   *help_path;
-  gchar   *factory_path;
-  gchar   *hash;
-  gchar   *full_path;
-  gchar   *accel;
-  gchar   *format_str;
+  GtkItemFactory *item_factory     = NULL;
+  GtkWidget      *active_menu_item = NULL;
+  gchar          *factory_path     = NULL;
+  gchar          *help_path        = NULL;
+  gchar          *help_page        = NULL;
 
-  for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
+  item_factory     = (GtkItemFactory *) data;
+  active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+
+  /*  first, get the help page from the item
+   */
+  if (active_menu_item)
     {
-      menu_item = GTK_WIDGET (list->data);
-      
-      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+      help_page = (gchar *) g_object_get_data (G_OBJECT (active_menu_item),
+                                               "help_page");
+    }
+
+  /*  For any key except F1, continue with the standard
+   *  GtkItemFactory callback and assign a new shortcut, but don't
+   *  assign a shortcut to the help menu entries...
+   */
+  if (kevent->keyval != GDK_F1)
+    {
+      if (help_page &&
+	  *help_page &&
+	  item_factory == gtk_item_factory_from_path ("<Toolbox>") &&
+	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
+	   strcmp (help_page, "help/context_help.html") == 0))
 	{
-	  gtk_label_get (GTK_LABEL (GTK_BIN (menu_item)->child), &label);
-	  full_path = g_strconcat (path, "/", label, NULL);
-	  class = gtk_type_class (GTK_TYPE_ITEM_FACTORY);
-	  item = g_hash_table_lookup (class->item_ht, full_path);
-	  if (item)
+	  return TRUE;
+	}
+      else
+	{
+	  return FALSE;
+	}
+    }
+
+  /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
+
+  factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
+                                              "factory_path");
+
+  if (! help_page ||
+      ! *help_page)
+    help_page = "index.html";
+
+  if (factory_path && help_page)
+    {
+      gchar *help_string;
+      gchar *at;
+
+      help_page = g_strdup (help_page);
+
+      at = strchr (help_page, '@');  /* HACK: locale subdir */
+
+      if (at)
+	{
+	  *at = '\0';
+	  help_path   = g_strdup (help_page);
+	  help_string = g_strdup (at + 1);
+	}
+      else
+	{
+	  help_string = g_strdup_printf ("%s/%s", factory_path, help_page);
+	}
+
+      gimp_help (help_path, help_string);
+
+      g_free (help_string);
+      g_free (help_page);
+    }
+  else
+    {
+      gimp_standard_help_func (NULL);
+    }
+
+  return TRUE;
+}
+
+#ifdef ENABLE_NLS
+
+static gchar *
+gimp_item_factory_translate_func (const gchar *path,
+                                  gpointer     data)
+{
+  static gchar   *menupath = NULL;
+
+  GtkItemFactory *item_factory = NULL;
+  gchar          *retval;
+  gchar          *factory;
+  gchar          *translation;
+  gchar          *domain = NULL;
+  gchar          *complete = NULL;
+  gchar          *p, *t;
+
+  factory = (gchar *) data;
+
+  if (menupath)
+    g_free (menupath);
+
+  retval = menupath = g_strdup (path);
+
+  if ((strstr (path, "/tearoff1") != NULL) ||
+      (strstr (path, "/---") != NULL) ||
+      (strstr (path, "/MRU") != NULL))
+    return retval;
+
+  if (factory)
+    item_factory = gtk_item_factory_from_path (factory);
+  if (item_factory)
+    {
+      domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
+      complete = g_object_get_data (G_OBJECT (item_factory), "complete");
+    }
+  
+  if (domain)   /*  use the plugin textdomain  */
+    {
+      g_free (menupath);
+      menupath = g_strconcat (factory, path, NULL);
+
+      if (complete)
+	{
+	  /*  
+           *  This is a branch, use the complete path for translation, 
+	   *  then strip off entries from the end until it matches. 
+	   */
+	  complete = g_strconcat (factory, complete, NULL);
+	  translation = g_strdup (dgettext (domain, complete));
+
+	  while (complete && *complete && 
+		 translation && *translation && 
+		 strcmp (complete, menupath))
 	    {
-	      accel = gtk_accelerator_name (item->accelerator_key, 
-					    item->accelerator_mods);
-	    }
-	  else
-	    {
-	      accel = NULL;
-	    }
-
-	  item_factory = gtk_item_factory_from_path (path);
-          help_page    = (gchar *) g_object_get_data (G_OBJECT (menu_item), 
-                                                      "help_page");
-
-	  if (item_factory)
-	    {
-	      factory_path = 
-                (gchar *) g_object_get_data (G_OBJECT (item_factory),
-                                             "factory_path");
-
-              if (factory_path)
-                {
-                  help_page = g_build_filename (factory_path, help_page, NULL);
-                }
-              else
-                {
-                  help_page = g_strdup (help_page);
-                }
-	    }
-	  else
-	    {
-	      help_page = g_strdup (help_page);
-	    }
-
-	  if (help_page)
-	    {
-	      help_path = g_build_filename (gimp_data_directory (),
-                                            "help", "C", help_page, NULL);
-
-	      if ((hash = strchr (help_path, '#')) != NULL)
-		*hash = '\0';
-
-	      if (access (help_path, R_OK))
+	      p = strrchr (complete, '/');
+	      t = strrchr (translation, '/');
+	      if (p && t)
 		{
-		  g_free (help_path);
-		  help_path = g_strconcat ("! ", help_page, NULL);
-		  g_free (help_page);
-		  help_page = help_path;
+		  *p = '\0';
+		  *t = '\0';
 		}
 	      else
-		{
-		  g_free (help_path);
-		}
+		break;
 	    }
 
-	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", 
-					depth * 2, depth * 2 - 40);
-	  g_print (format_str, 
-		   "", label, accel ? accel : "", help_page ? help_page : "");
-	  g_free (format_str);
-	  g_free (help_page);
+	  g_free (complete);
+	}
+      else
+	{
+	  translation = dgettext (domain, menupath);
+	}
 
-	  if (GTK_MENU_ITEM (menu_item)->submenu)
-	    menus_debug_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, 
-				      depth + 1, full_path);
-
-	  g_free (full_path);
-	}			      
+      /* 
+       * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
+       */
+      if (strncmp (factory, translation, strlen (factory)) == 0)
+	{
+	  retval = translation + strlen (factory);
+	  if (complete)
+	    {
+	      g_free (menupath);
+	      menupath = translation;
+	    }
+	}
+      else
+	{
+	  g_warning ("bad translation for menupath: %s", menupath);
+	  retval = menupath + strlen (factory);
+	  if (complete)
+	    g_free (translation);
+	}
     }
-}
-
-static void
-menus_debug_cmd_callback (GtkWidget *widget,
-			  gpointer   data,
-			  guint      action)
-{
-  gint                  n_factories = 7;
-  GtkItemFactory       *factories[7];
-  GimpItemFactoryEntry *entries[7];
-
-  GtkWidget *menu_item;
-  gint       i;
-
-  factories[0] = toolbox_factory;
-  factories[1] = image_factory;
-  factories[2] = layers_factory;
-  factories[3] = channels_factory;
-  factories[4] = paths_factory;
-  factories[5] = load_factory;
-  factories[6] = save_factory;
-
-  entries[0] = toolbox_entries;
-  entries[1] = image_entries;
-  entries[2] = layers_entries;
-  entries[3] = channels_entries;
-  entries[4] = paths_entries;
-  entries[5] = load_entries;
-  entries[6] = save_entries;
-  
-  /*  toolbox needs special treatment  */
-  g_print ("%s\n", factories[0]->path);
-
-  menu_item = gtk_item_factory_get_item (factories[0], "/File");
-  if (menu_item && menu_item->parent && GTK_IS_MENU_BAR (menu_item->parent))
-    menus_debug_recurse_menu (menu_item->parent, 1, factories[0]->path);
-
-  g_print ("\n");
-
-  for (i = 1; i < n_factories; i++)
+  else   /*  use the gimp textdomain  */
     {
-      g_print ("%s\n", factories[i]->path);
+      if (complete)
+	{
+	  /*  
+           *  This is a branch, use the complete path for translation, 
+	   *  then strip off entries from the end until it matches. 
+	   */
+	  complete = g_strdup (complete);
+	  translation = g_strdup (gettext (complete));
+	  
+	  while (*complete && *translation && strcmp (complete, menupath))
+	    {
+	      p = strrchr (complete, '/');
+	      t = strrchr (translation, '/');
+	      if (p && t)
+		{
+		  *p = '\0';
+		  *t = '\0';
+		}
+	      else
+		break;
+	    }
+	  g_free (complete);
+	}
+      else
+	translation = gettext (menupath);
 
-      menu_item = gtk_item_factory_get_item (factories[i], entries[i][0].entry.path);
-      if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
-	menus_debug_recurse_menu (menu_item->parent, 1, factories[i]->path);
-
-      g_print ("\n");
+      if (*translation == '/')
+	{
+	  retval = translation;
+	  if (complete)
+	    {
+	      g_free (menupath);
+	      menupath = translation;
+	    }
+	}
+      else
+	{
+	  g_warning ("bad translation for menupath: %s", menupath);
+	  if (complete)
+	    g_free (translation);
+	}
     }
+  
+  return retval;
 }
 
-#endif  /*  ENABLE_DEBUG_ENTRY  */
+#endif  /*  ENABLE_NLS  */

@@ -170,7 +170,6 @@ gimp_offset_area_set_size (GimpOffsetArea *offset_area,
   gint offset_x;
   gint offset_y;
 
-  g_return_if_fail (offset_area != NULL);
   g_return_if_fail (GIMP_IS_OFFSET_AREA (offset_area));
   
   g_return_if_fail (width > 0 && height > 0);
@@ -225,7 +224,6 @@ gimp_offset_area_set_offsets (GimpOffsetArea *offset_area,
                               gint            offset_x,
                               gint            offset_y)
 {
-  g_return_if_fail (offset_area != NULL);
   g_return_if_fail (GIMP_IS_OFFSET_AREA (offset_area));
   
   if (offset_area->offset_x != offset_x || offset_area->offset_y != offset_y)

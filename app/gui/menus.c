@@ -30,6 +30,7 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
@@ -79,19 +80,21 @@ static void    menus_tools_create              (GimpToolInfo         *tool_info)
 static void    menus_last_opened_update_labels (GimpContainer        *container,
                                                 GimpImagefile        *unused,
                                                 Gimp                 *gimp);
+static void    menus_color_changed             (GimpContext          *context,
+                                                const GimpRGB        *unused,
+                                                Gimp                 *gimp);
 #ifdef ENABLE_DEBUG_ENTRY
-static void    menus_debug_recurse_menu   (GtkWidget            *menu,
-					   gint                  depth,
-					   gchar                *path);
-static void    menus_debug_cmd_callback   (GtkWidget            *widget,
-					   gpointer              data,
-					   guint                 action);
+static void    menus_debug_recurse_menu        (GtkWidget            *menu,
+                                                gint                  depth,
+                                                gchar                *path);
+static void    menus_debug_cmd_callback        (GtkWidget            *widget,
+                                                gpointer              data,
+                                                guint                 action);
 #endif  /*  ENABLE_DEBUG_ENTRY  */
 
 
 #define SEPARATOR(path) \
         { { (path), NULL, NULL, 0, "<Separator>" }, NULL, NULL, NULL }
-
 #define BRANCH(path) \
         { { (path), NULL, NULL, 0, "<Branch>" }, NULL, NULL, NULL }
 
@@ -280,14 +283,12 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { N_("/Help/Mem Profile"), NULL,
       mem_profile_cmd_callback, 0 },
-    NULL,
-    NULL, NULL },
+    NULL, NULL, NULL }
 
 #ifdef ENABLE_DEBUG_ENTRY
-  { { "/Help/Dump Items (Debug)", NULL,
-      menus_debug_cmd_callback, 0 },
-    NULL,
-    NULL, NULL }
+  , { { "/Help/Dump Items (Debug)", NULL,
+        menus_debug_cmd_callback, 0 },
+      NULL, NULL, NULL }
 #endif
 };
 
@@ -297,8 +298,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 static GimpItemFactoryEntry image_entries[] =
 {
   { { "/tearoff1", NULL, gimp_item_factory_tearoff_callback, 0, "<Tearoff>" },
-    NULL,
-    NULL, NULL },
+    NULL, NULL, NULL },
 
   /*  <Image>/File  */
 
@@ -1989,6 +1989,17 @@ menus_init (Gimp *gimp)
                     gimp);
 
   menus_last_opened_update_labels (gimp->documents, NULL, gimp);
+
+  g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)),
+                    "foreground_changed",
+                    G_CALLBACK (menus_color_changed),
+                    gimp);
+  g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)),
+                    "background_changed",
+                    G_CALLBACK (menus_color_changed),
+                    gimp);
+
+  menus_color_changed (gimp_get_user_context (gimp), NULL, gimp);
 }
 
 void
@@ -2416,6 +2427,21 @@ menus_last_opened_update_labels (GimpContainer *container,
           gtk_widget_hide (widget);
         }
     }
+}
+
+static void
+menus_color_changed (GimpContext   *context,
+                     const GimpRGB *unused,
+                     Gimp          *gimp)
+{
+  GimpRGB fg;
+  GimpRGB bg;
+
+  gimp_context_get_foreground (context, &fg);
+  gimp_context_get_background (context, &bg);
+
+  gimp_menu_item_set_color ("<Image>/Edit/Fill with FG Color", &fg, FALSE);
+  gimp_menu_item_set_color ("<Image>/Edit/Fill with BG Color", &bg, FALSE);
 }
 
 
