@@ -197,6 +197,10 @@ static void layers_dialog_scale_layer_query (Layer *);
 static void layers_dialog_resize_layer_query (Layer *);
 void        layers_dialog_layer_merge_query (GImage *, int);
 
+/* Idle rerendering of altered areas. */
+static void reinit_layer_idlerender (GimpImage *, Layer *);
+static void idlerender_gimage_destroy_handler (GimpImage *);
+
 
 /*
  *  Shared data
@@ -218,6 +222,17 @@ static GdkPixmap *layer_pixmap[3] = {NULL, NULL, NULL};
 static GdkPixmap *mask_pixmap[3] = {NULL, NULL, NULL};
 
 static int suspend_gimage_notify = 0;
+
+GimpImage* idlerender_gimage;
+int idlerender_width;
+int idlerender_height;
+int idlerender_x;
+int idlerender_y;
+int idlerender_basex;
+int idlerender_basey;
+guint idlerender_idleid = 0;
+guint idlerender_handlerid = 0;
+gboolean idle_active = 0;
 
 static MenuItem layers_ops[] =
 {
@@ -702,7 +717,8 @@ layers_dialog_create ()
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       layersD->opacity_data = GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
       slider = gtk_hscale_new (layersD->opacity_data);
-      gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+      gtk_range_set_update_policy (GTK_RANGE (slider),
+				   GTK_UPDATE_CONTINUOUS);
       gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_RIGHT);
       gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
       gtk_signal_connect (GTK_OBJECT (layersD->opacity_data), "value_changed",
@@ -1446,8 +1462,7 @@ paint_mode_menu_callback (GtkWidget *w,
 	{
 	  layer->mode = mode;
 
-	  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-	  gdisplays_flush ();
+	  reinit_layer_idlerender(gimage, layer);
 	}
     }
 }
@@ -1485,8 +1500,7 @@ opacity_scale_update (GtkAdjustment *adjustment,
     {
       layer->opacity = opacity;
 
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-      gdisplays_flush ();
+      reinit_layer_idlerender (gimage, layer);
     }
 }
 
@@ -2135,6 +2149,146 @@ layer_widget_select_update (GtkWidget *w,
 }
 
 
+/* FIXME: idlerender stuff only knows about one gimage at
+   a time... shouldn't be hard to fix... get rid of those stupid
+   globals for one.  [Adam] */
+static void idlerender_gimage_destroy_handler (GimpImage *gimage)
+{
+  printf("Destroyed gimage at %p which idlerender was interested in...\n",
+	 gimage); fflush(stdout);
+  if (idle_active)
+    {
+      printf("Idlerender stops now!\n"); fflush(stdout);
+      gtk_idle_remove (idlerender_idleid);
+    }
+  printf("Destroy handler finished.\n"); fflush(stdout);
+}
+
+
+static int
+idlerender_callback (void* unused)
+{
+  const int CHUNK_WIDTH = 128;
+  const int CHUNK_HEIGHT = 128;
+  int workx, worky, workw, workh;
+
+  workw = CHUNK_WIDTH;
+  workh = CHUNK_HEIGHT;
+  workx = idlerender_x;
+  worky = idlerender_y;
+
+  if (workx+workw > idlerender_basex+idlerender_width)
+    {
+      workw = idlerender_basex+idlerender_width-workx;
+    }
+
+  if (worky+workh > idlerender_basey+idlerender_height)
+    {
+      workh = idlerender_basey+idlerender_height-worky;
+    }
+  
+  gdisplays_update_area (idlerender_gimage,
+			 workx, worky, workw, workh);
+  gdisplays_flush ();
+
+  idlerender_x += CHUNK_WIDTH;
+  if (idlerender_x >= idlerender_basex+idlerender_width)
+    {
+      idlerender_x = idlerender_basex;
+      idlerender_y += CHUNK_HEIGHT;
+      if (idlerender_y >= idlerender_basey+idlerender_height)
+	{
+	  idle_active = 0;
+
+	  /* Disconnect signal handler which cared about whether
+	     a gimage was destroyed in mid-render */
+	  gtk_signal_disconnect (GTK_OBJECT (idlerender_gimage),
+				 idlerender_handlerid);
+
+	  return (0); /* FINISHED! */
+	}
+    }
+
+  return (1);
+}
+
+
+/* ADAM: Unify the desired and current (if any) bounding rectangles
+   of areas being idle-redrawn, and restart the idle thread if needed. */
+static void
+unify_and_start_idlerender (GimpImage* gimage, int basex, int basey,
+			    int width, int height)
+{
+  idlerender_gimage = gimage;
+
+  if (idle_active)
+    {
+      int left, right, top, bottom;
+
+      printf("(%d,%d) @ Region (%d,%d %dx%d) | (%d,%d %dx%d)\n",
+	     idlerender_x, idlerender_y,
+	     idlerender_basex, idlerender_basey,
+	     idlerender_width, idlerender_height,
+
+	     basex, basey,
+	     width, height);
+
+      top = (basey < idlerender_y) ? basey : idlerender_y;
+      left = (basex < idlerender_basex) ? basex : idlerender_basex;
+      bottom = (basey+height > idlerender_basey+idlerender_height) ?
+	basey+height : idlerender_basey+idlerender_height;
+      right = (basex+width > idlerender_basex+idlerender_width) ?
+	basex+width : idlerender_basex+idlerender_width;
+
+      idlerender_x = idlerender_basex = left;
+      idlerender_y = idlerender_basey = top;
+      idlerender_width = right-left;
+      idlerender_height = bottom-top;
+
+      printf(" --> (%d,%d) @ (%d,%d %dx%d)\n",
+	     idlerender_x, idlerender_y,
+	     idlerender_basex, idlerender_basey,
+	     idlerender_width, idlerender_height);
+    }
+  else
+    {
+      idlerender_x = idlerender_basex = basex;
+      idlerender_y = idlerender_basey = basey;
+      idlerender_width = width;
+      idlerender_height = height;
+
+      idle_active = 1;
+      /* Catch a signal to stop the idlerender thread if the corresponding
+	 gimage is destroyed in mid-render */
+      idlerender_handlerid =
+	gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
+			    GTK_SIGNAL_FUNC(idlerender_gimage_destroy_handler),
+			    NULL);
+      idlerender_idleid =
+	gtk_idle_add_priority (GTK_PRIORITY_LOW, idlerender_callback, NULL);
+    }
+}
+
+
+static void
+reinit_layer_idlerender (GimpImage* gimage, Layer *layer)
+{
+  int ibasex, ibasey;
+
+  gimp_drawable_offsets (GIMP_DRAWABLE(layer),
+			 &ibasex, &ibasey);
+  unify_and_start_idlerender (gimage, ibasex, ibasey,
+			      GIMP_DRAWABLE(layer)->width,
+			      GIMP_DRAWABLE(layer)->height);
+}
+
+
+static void reinit_gimage_idlerender (GimpImage* gimage)
+{
+  unify_and_start_idlerender (gimage, 0, 0, gimage->width, gimage->height);
+}
+
+
 static gint
 layer_widget_button_events (GtkWidget *widget,
 			    GdkEvent  *event)
@@ -2211,19 +2365,15 @@ layer_widget_button_events (GtkWidget *widget,
 	{
 	  if (exclusive)
        	    {
+	      printf("Case 1, kick-ass!\n");fflush(stdout);
 	      gimage_invalidate_preview (layer_widget->gimage);
-	      gdisplays_update_area (layer_widget->gimage, 0, 0,
-				     layer_widget->gimage->width,
-				     layer_widget->gimage->height);
-	      gdisplays_flush ();
+	      reinit_gimage_idlerender (layer_widget->gimage);
 	    }
 	  else if (old_state != GIMP_DRAWABLE(layer_widget->layer)->visible)
 	    {
-	      /*  Invalidate the gimage preview  */
-	      drawable_update (GIMP_DRAWABLE(layer_widget->layer), 0, 0,
-			       GIMP_DRAWABLE(layer_widget->layer)->width,
-			       GIMP_DRAWABLE(layer_widget->layer)->height);
-	      gdisplays_flush ();
+	      printf("Case 2, what incredible irony!\n");fflush(stdout);
+	      reinit_layer_idlerender (layer_widget->gimage,
+				       layer_widget->layer);
 	    }
 	}
       else if ((widget == layer_widget->linked_widget) &&
