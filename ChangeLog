@@ -1,3 +1,13 @@
+2001-06-26  Sven Neumann  <sven@gimp.org>
+
+	* gimptool.1.in: fixed gimptool manpage which was still refering to 
+	directories we used to use with GIMP version 1.0.
+	
+	* app/image_cmds.c
+	* tools/pdbgen/pdb/image.pdb: always allocate a full colormap for
+	indexed images, even if someone sets the number of colors to zero.
+	Fixes bug #56561.
+
 2001-06-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmath.h: do not include math.h conditionally since this
