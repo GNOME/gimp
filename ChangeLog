@@ -4,7 +4,8 @@ Wed Oct 14 17:46:15 EDT 1998 Adrian Likins <adrian@gimp.org>
 	Lots of ii8n stuff here and some additions to the de.po.
 	Applied gimp-egger-981005-1 ,gimp-egger-981006-1,
 	gimp-egger-981007-1, gimp-egger-981008-1, 
- 	gimp-egger-981009-1.patch, gimp-egger-981010-1.patch      
+ 	gimp-egger-981009-1.patch, gimp-egger-981010-1.patch.
+	Patches provided by Daniel Egger <Daniel.Egger@t-online.de>     
 
 	* plug-in/guillotine/guillotine.c: added the coordinates
 	of the split images from the original image to the title.
