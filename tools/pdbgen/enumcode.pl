@@ -59,7 +59,7 @@ print ENUMFILE <<'GPL';
 GPL
 
 print ENUMFILE <<CODE;
-#include "siod.h"
+#include "siod/siod.h"
 
 void
 init_generated_constants (void)

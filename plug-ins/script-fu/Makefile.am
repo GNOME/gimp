@@ -6,17 +6,13 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = scripts
+SUBDIRS = siod scripts
 
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
-	interp_regex.c		\
-	interp_slib.c		\
-	interp_sliba.c		\
-	interp_trace.c		\
 	script-fu.c		\
 	script-fu-console.c	\
 	script-fu-console.h	\
@@ -30,8 +26,6 @@ script_fu_SOURCES = \
 	script-fu-server.c	\
 	script-fu-server.h	\
 	script-fu-enums.h	\
-	siod.h			\
-	siodp.h			\
 	siod-wrapper.c		\
 	siod-wrapper.h
 
@@ -53,6 +47,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	siod/libsiod.a							\
 	$(GTK_LIBS)							\
 	$(SOCKET_LIBS)							\
 	$(INTLLIBS)							\

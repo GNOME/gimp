@@ -1400,6 +1400,7 @@ plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
+plug-ins/script-fu/siod/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/xjt/Makefile

@@ -20,7 +20,6 @@
 #define __SCRIPT_FU_SCRIPTS_H__
 
 #include "script-fu-enums.h"
-#include "siod.h"
 
 void  script_fu_find_scripts  (void);
 LISP  script_fu_add_script    (LISP    a);

@@ -28,6 +28,8 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
+#include "siod/siod.h"
+
 #include "siod-wrapper.h"
 #include "script-fu-console.h"
 #include "script-fu-constants.h"

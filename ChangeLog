@@ -1,3 +1,34 @@
+2003-11-26  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* plug-ins/script-fu/siod/Makefile.am
+	* plug-ins/script-fu/siod/.cvsignore
+	* plug-ins/script-fu/siod/regex.c
+	* plug-ins/script-fu/siod/slib.c
+	* plug-ins/script-fu/siod/sliba.c
+	* plug-ins/script-fu/siod/trace.c
+	* plug-ins/script-fu/siod/siod.h
+	* plug-ins/script-fu/siod/siodp.h: added new directory for siod.
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/interp_regex.c
+	* plug-ins/script-fu/interp_slib.c
+	* plug-ins/script-fu/interp_sliba.c
+	* plug-ins/script-fu/interp_trace.c
+	* plug-ins/script-fu/siod.h
+	* plug-ins/script-fu/siodp.h: removed siod from here.
+
+	* plug-ins/script-fu/script-fu-scripts.[ch]
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/siod-wrapper.c
+	* tools/pdbgen/enumcode.pl: changed #includes accordingly.
+
+	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+	
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_error_msg):
+	use siod-wrapper.c siod_get_error_msg() instead of accessing
+	siod's global siod_err_msg variable directly.
+
 2003-11-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/Makefile.am

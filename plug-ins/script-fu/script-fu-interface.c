@@ -37,8 +37,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "siod.h"
+#include "siod/siod.h"
+
 #include "script-fu-scripts.h"
+#include "siod-wrapper.h"
 
 #include "script-fu-intl.h"
 
@@ -210,7 +212,6 @@ static GTree       *script_list  = NULL;
 static SFInterface *sf_interface = NULL;  /*  there can only be at most one
 					      interactive interface  */
 
-extern gchar        siod_err_msg[];
 
 /*
  *  Function definitions
@@ -1993,5 +1994,5 @@ static void
 script_fu_error_msg (const gchar *command)
 {
   g_message (_("Error while executing\n%s\n%s"),
-	     command, siod_err_msg);
+	     command, siod_get_error_msg ());
 }

@@ -24,12 +24,13 @@
 
 #include "libgimp/gimp.h"
 
+#include "siod/siod.h"
+
 #include "script-fu-constants.h"
 #include "script-fu-enums.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
-#include "siod.h"
 #include "siod-wrapper.h"
 
 
