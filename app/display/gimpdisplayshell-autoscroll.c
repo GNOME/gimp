@@ -33,6 +33,8 @@
 
 #include "tools/tools-types.h"
 #include "tools/tool_manager.h"
+#include "tools/gimptool.h"
+#include "tools/gimptoolcontrol.h"
 
 
 #define AUTOSCROLL_DT  20
@@ -130,7 +132,8 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
   if (dx || dy)
     {
-      GimpDisplay *gdisp = shell->gdisp;
+      GimpDisplay *gdisp       = shell->gdisp;
+      GimpTool    *active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
       info->time += AUTOSCROLL_DT;
 
@@ -139,7 +142,21 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
                                  AUTOSCROLL_DX * (gdouble) dy);
 
       gimp_display_shell_untransform_coords (shell,
-                                             &device_coords, &image_coords);
+                                             &device_coords,
+                                             &image_coords);
+
+      if (gimp_tool_control_auto_snap_to (active_tool->control))
+        {
+          gint x, y, width, height;
+
+          gimp_tool_control_snap_offsets (active_tool->control,
+                                          &x, &y, &width, &height);
+
+          gimp_display_shell_snap_coords (shell,
+                                          &image_coords,
+                                          &image_coords,
+                                          x, y, width, height);
+        }
 
       tool_manager_motion_active (gdisp->gimage->gimp,
                                   &image_coords,
