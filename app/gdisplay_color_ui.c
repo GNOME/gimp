@@ -99,10 +99,10 @@ make_dialog (void)
 
   static ButtonInfo buttons[] = 
   {
-    { N_("Add"), color_display_add_callback },
-    { N_("Remove"), color_display_remove_callback },
-    { N_("Up"), color_display_up_callback },
-    { N_("Down"), color_display_down_callback },
+    { N_("Add"),       color_display_add_callback       },
+    { N_("Remove"),    color_display_remove_callback    },
+    { N_("Up"),        color_display_up_callback        },
+    { N_("Down"),      color_display_down_callback      },
     { N_("Configure"), color_display_configure_callback }
   };
 
@@ -187,7 +187,7 @@ color_display_ok_callback (GtkWidget *widget,
 
   gtk_widget_hide (GTK_WIDGET (data));
 
-  if (cdd.modified)
+  if (cdd.modified && cdd.gdisp != NULL)
     {
       list = cdd.old_nodes;
 
@@ -200,10 +200,10 @@ color_display_ok_callback (GtkWidget *widget,
 	}
 
       g_list_free (cdd.old_nodes);
-    }
 
-  gdisplay_expose_full (cdd.gdisp);
-  gdisplay_flush (cdd.gdisp);
+      gdisplay_expose_full (cdd.gdisp);
+      gdisplay_flush (cdd.gdisp);
+    }
 }
 
 static void
@@ -215,7 +215,7 @@ color_display_cancel_callback (GtkWidget *widget,
 
   gtk_widget_hide (GTK_WIDGET (data));
   
-  if (cdd.modified)
+  if (cdd.modified && cdd.gdisp != NULL)
     {
       list = cdd.gdisp->cd_list;
       cdd.gdisp->cd_list = cdd.old_nodes;
@@ -229,10 +229,10 @@ color_display_cancel_callback (GtkWidget *widget,
 
 	  list = next;
 	}
-    }
 
-  gdisplay_expose_full (cdd.gdisp);
-  gdisplay_flush (cdd.gdisp);
+      gdisplay_expose_full (cdd.gdisp);
+      gdisplay_flush (cdd.gdisp);
+    }
 }
 
 static void
@@ -243,7 +243,7 @@ color_display_add_callback (GtkWidget *widget,
   ColorDisplayNode *node;
   gint row;
 
-  if (cdd.src_row < 0)
+  if (cdd.src_row < 0 || cdd.gdisp == NULL)
     return;
 
   gtk_clist_get_text (GTK_CLIST (cdd.src), cdd.src_row, 0, &name);
@@ -268,7 +268,7 @@ color_display_remove_callback (GtkWidget *widget,
 {
   ColorDisplayNode *node;
 
-  if (cdd.dest_row < 0)
+  if (cdd.dest_row < 0 || cdd.gdisp == NULL)
     return;
   
   node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),
@@ -293,7 +293,7 @@ color_display_up_callback (GtkWidget *widget,
 {
   ColorDisplayNode *node;
 
-  if (cdd.dest_row < 0)
+  if (cdd.dest_row < 0 || cdd.gdisp == NULL)
     return;
 
   node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),
@@ -314,7 +314,7 @@ color_display_down_callback (GtkWidget *widget,
 {
   ColorDisplayNode *node;
 
-  if (cdd.dest_row < 0)
+  if (cdd.dest_row < 0 || cdd.gdisp == NULL)
     return;
 
   node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),

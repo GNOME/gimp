@@ -1,3 +1,11 @@
+Don Dez 23 14:27:14 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay_color.c
+	* app/gdisplay_color_ui.c: try not to crash when there's no
+	gdisplay. Yosh, could you please check that I've fixed it the
+	right way?! And while you are on it, wouldn't it be nice if it
+	would do something useful??
+
 Wed Dec 22 23:18:48 EST 1999 Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: More portable perl handling.

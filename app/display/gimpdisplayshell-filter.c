@@ -154,6 +154,8 @@ gdisplay_color_attach (GDisplay   *gdisp,
   ColorDisplayInfo *info;
   ColorDisplayNode *node;
 
+  g_return_if_fail (gdisp != NULL);
+
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {
       node = g_new (ColorDisplayNode, 1);
@@ -185,6 +187,8 @@ void
 gdisplay_color_detach (GDisplay         *gdisp,
 		       ColorDisplayNode *node)
 {
+  g_return_if_fail (gdisp != NULL);
+
   gdisp->cd_list = g_list_remove (gdisp->cd_list, node);
 }
 
@@ -192,6 +196,8 @@ void
 gdisplay_color_detach_destroy (GDisplay         *gdisp,
 			       ColorDisplayNode *node)
 {
+  g_return_if_fail (gdisp != NULL);
+
   gdisplay_color_detach_real (gdisp, node, TRUE);
   gdisp->cd_list = g_list_remove (gdisp->cd_list, node);
 }
@@ -200,6 +206,8 @@ void
 gdisplay_color_detach_all (GDisplay *gdisp)
 {
   GList *list = gdisp->cd_list;
+
+  g_return_if_fail (gdisp != NULL);
 
   while (list)
     {
@@ -217,6 +225,8 @@ gdisplay_color_detach_real (GDisplay         *gdisp,
 			    gboolean          unref)
 {
   ColorDisplayInfo *info;
+
+  g_return_if_fail (gdisp != NULL);
 
   if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
     {
@@ -255,6 +265,8 @@ gdisplay_color_reorder_down (GDisplay         *gdisp,
 {
   GList *node_list;
 
+  g_return_if_fail (gdisp != NULL);
+
   node_list = g_list_find (gdisp->cd_list, node);
 
   if (node_list->next)
@@ -270,3 +282,5 @@ node_name_compare (ColorDisplayNode *node,
 {
   return strcmp (node->cd_name, name);
 }
+
+
