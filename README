@@ -90,9 +90,11 @@ your choice by editing ~/.gimp-1.2/menurc.
 5. Bugs
 =======
 
-We sincerely hope you enjoy the program.  Please report problems to
-bugs@gimp.org.  Before reporting a problem, you may want to see if someone
-else did already - check http://bugs.gnome.org/db/pa/lgimp.html for this.
+We sincerely hope you enjoy the program.  Please report problems using
+Bugzilla (http://bugzilla.gnome.org/) or send email to bugs@gimp.org.  
+Before reporting a problem, you may want to see if someone else did 
+already - check http://bugzilla.gnome.org/buglist.cgi?product=GIMP
+
 
 Have fun,
 

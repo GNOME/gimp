@@ -1,3 +1,8 @@
+2001-10-28  Sven Neumann  <sven@gimp.org>
+
+	* README
+	* plug-ins/webbrowser/web-browser.scm: updated some links.
+
 2001-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/temp_buf.c (temp_buf_to_gray): rewrote so gcc-3.0 doesn't 
