@@ -1,3 +1,11 @@
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD:
+
+	* app/config/gimpconfig.c (gimp_config_iface_duplicate): set
+	construct_param->foo, not construct_param*s*->foo, so we don't set
+	the first construct param again and crash.
+
 2004-08-29  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD:

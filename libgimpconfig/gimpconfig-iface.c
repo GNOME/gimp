@@ -150,9 +150,9 @@ gimp_config_iface_duplicate (GimpConfig *config)
 
           construct_param = &construct_params[n_construct_params++];
 
-          construct_params->name = prop_spec->name;
+          construct_param->name = prop_spec->name;
 
-          g_value_init (&construct_params->value, prop_spec->value_type);
+          g_value_init (&construct_param->value, prop_spec->value_type);
           g_object_get_property (G_OBJECT (config), prop_spec->name,
                                  &construct_param->value);
         }
