@@ -1,3 +1,9 @@
+2001-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/display/Makefile.am: nicer output of glib-mkenums.
+
 2001-12-29  Sven Neumann  <sven@gimp.org>
 
 	* data/brushes/Makefile.am (brushdata_DATA): added missing brush
