@@ -49,6 +49,7 @@ m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([gtkhtml2_required_version], [2.0.0])
 m4_define([gimpprint_required_version], [4.2.0])
+m4_define([gimpprint_suggested_version], [4.2.6])
 m4_define([gimpprint_toonew_version], [4.3.0])
 m4_define([rsvg_required_version], [2.2.0])
 m4_define([wmf_required_version], [0.2.8])
@@ -1104,6 +1105,12 @@ if test "x$enable_print" != "xno"; then
 *** You need a version before gimpprint_toonew_version.])
       else
         have_gimp_print=yes
+dnl sanity check to avoid bug #125283
+        if expr $print_version \< gimpprint_suggested_version >/dev/null; then
+          AC_MSG_WARN([
+*** libgimpprint version $print_version causes problems under certain locales.
+*** We strongly suggest you upgrade to version gimpprint_suggested_version.])
+        fi
       fi
     ])
 fi
