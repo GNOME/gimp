@@ -13,8 +13,8 @@ EXTRA_DIST = \
 
 printed: pygimp.ps pygimp.pdf
 
-clean:
-	rm -f *.html pygimp.ps pygimp.pdf
+#clean:
+#	rm -f *.html pygimp.ps pygimp.pdf
 
 
 pygimp.ps: pygimp.sgml
@@ -28,5 +28,5 @@ pygimp.html: pygimp.sgml
 	cd $(srcdir) && mv pygimp/*.html .
 	rm -rf $(srcdir)/pygimp
 
-.PHONY: printed clean
+.PHONY: printed #clean
 

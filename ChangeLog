@@ -1,5 +1,10 @@
 2003-02-27  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/doc/Makefile.am: make clean shouldn't clean disted
+	files
+
+2003-02-27  Manish Singh  <yosh@gimp.org>
+
 	* app/tools/gimpbucketfilltool.c
 	* app/tools/gimpconvolvetool.c
 	* app/tools/gimpcroptool.c
