@@ -169,7 +169,7 @@ script_fu_console_run (char     *name,
 }
 
 static void
-script_fu_console_interface ()
+script_fu_console_interface (void)
 {
   GtkWidget *dlg;
   GtkWidget *button;
@@ -344,37 +344,42 @@ script_fu_close_callback (GtkWidget *widget,
   gtk_main_quit ();
 }
 
-void apply_callback( gchar *proc_name,
-			   gchar *scheme_proc_name,
-			   gchar *proc_blurb,
-			   gchar *proc_help,
-			   gchar *proc_author,
-			   gchar *proc_copyright,
-			   gchar *proc_date,
-			   int proc_type,
-			   int nparams,
-			   int nreturn_vals,
-			   GParamDef *params,
-			   GParamDef *return_vals )
+void 
+apply_callback (gchar     *proc_name,
+		gchar     *scheme_proc_name,
+		gchar     *proc_blurb,
+		gchar     *proc_help,
+		gchar     *proc_author,
+		gchar     *proc_copyright,
+		gchar     *proc_date,
+		int        proc_type,
+		int        nparams,
+		int        nreturn_vals,
+		GParamDef *params,
+		GParamDef *return_vals )
 {
   gint i;
+  GString *text;
 
-  if (proc_name==NULL) return;
-  gtk_widget_hide(cint.cc);
-  gtk_entry_set_text( GTK_ENTRY(cint.cc), "(" );
-  gtk_entry_append_text( GTK_ENTRY(cint.cc), scheme_proc_name );
-  if ((nparams==0) || (params==NULL)) return;
-  for (i=0;i<nparams;i++) {
-    gtk_entry_append_text( GTK_ENTRY(cint.cc), " " );
-    gtk_entry_append_text( GTK_ENTRY(cint.cc), params[i].name);
-  }
-  gtk_entry_append_text( GTK_ENTRY(cint.cc), ")" );
-  gtk_widget_show(cint.cc);
+  if (proc_name == NULL) 
+    return;
+  
+  text = g_string_new ("(");
+  text = g_string_append (text, scheme_proc_name);
+  for (i=0; i<nparams; i++) 
+    {
+      text = g_string_append_c (text, ' ');
+      text = g_string_append (text, params[i].name);
+    }
+  text = g_string_append_c (text, ')');
+
+  gtk_entry_set_text (GTK_ENTRY (cint.cc), text->str);
+  g_string_free (text, TRUE);
 }
 
 static void
-script_fu_browse_callback(GtkWidget *widget,
-			  gpointer   data)
+script_fu_browse_callback (GtkWidget *widget,
+			   gpointer   data)
 {
   gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (apply_callback));
 }
@@ -430,7 +435,7 @@ script_fu_siod_read (gpointer          data,
 }
 
 static gint
-script_fu_cc_is_empty ()
+script_fu_cc_is_empty (void)
 {
   char *str;
 
