@@ -54,7 +54,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.6 - 17 May 1998"
+#define PLUG_IN_VERSION		"1.1.8 - 8 Sep 1999"
 #define SCALE_WIDTH		125
 
 #define DEFAULT_GAMMA		2.20
@@ -298,7 +298,7 @@ load_image(char *filename)	/* I - File to load */
 		end,		/* Ending tile row */
 		num;		/* Number of rows to load */
   FILE		*fp;		/* File pointer */
-  gint32	image,		/* Image */
+  gint32	image = -1,	/* Image */
 		layer;		/* Layer */
   GDrawable	*drawable;	/* Drawable for layer */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
@@ -331,13 +331,22 @@ load_image(char *filename)	/* I - File to load */
   info = (png_infop)calloc(sizeof(png_info), 1);
 #endif /* PNG_LIBPNG_VER > 88 */
 
+  if (setjmp(pp->jmpbuf))
+  {
+    g_message("%s\nPNG error. File corrupted?", filename);
+    return image;
+  }
+
  /*
   * Open the file and initialize the PNG read "engine"...
   */
 
   fp = fopen(filename, "rb");
-  if (fp == NULL)
-    return (-1);
+
+  if (fp == NULL) {
+    g_message("%s\nis not present or is unreadable", filename);
+    gimp_quit();
+  }
 
   png_init_io(pp, fp);
 
@@ -355,19 +364,15 @@ load_image(char *filename)	/* I - File to load */
   png_read_info(pp, info);
 
  /*
-  * I have no idea why this used to be the way it was, luckily
-  * most people don't use 2bit or 4bit indexed images with PNG
+  * Hopefully this is now fixed once and for all, please tell me if you
+  * have any problems with <8-bit images -- njl195@zepler.org.uk
   */
 
   if (info->bit_depth < 8) 
   {
     png_set_packing(pp);
-    if (info->color_type != PNG_COLOR_TYPE_PALETTE) {
+    if (info->color_type != PNG_COLOR_TYPE_PALETTE)
       png_set_expand(pp);
-
-      if (info->valid & PNG_INFO_sBIT)
-        png_set_shift(pp, &(info->sig_bit));
-    }
   }
   else if (info->bit_depth == 16)
     png_set_strip_16(pp);
@@ -380,6 +385,12 @@ load_image(char *filename)	/* I - File to load */
     num_passes = png_set_interlace_handling(pp);
   else
     num_passes = 1;
+
+ /*
+  * Update the info structures after the transformations take effect
+  */
+
+  png_read_update_info(pp, info);
   
   switch (info->color_type)
   {
@@ -417,7 +428,7 @@ load_image(char *filename)	/* I - File to load */
   image = gimp_image_new(info->width, info->height, image_type);
   if (image == -1)
   {
-    g_print("can't allocate new image\n");
+    g_message("Can't allocate new image\n%s", filename);
     gimp_quit();
   };
 
