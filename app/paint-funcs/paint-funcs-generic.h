@@ -24,42 +24,6 @@
 #ifndef __PAINT_FUNCS_GENERIC_H__
 #define __PAINT_FUNCS_GENERIC_H__
 
-/* FIXME: Still ugly as butt but working and the MMX code doesn't 
- * belong here!! */
-
-#ifdef HAVE_ASM_MMX
-
-#define MMX_PIXEL_OP(x) \
-void \
-x( \
-  const unsigned char *src1, \
-  const unsigned char *src2, \
-  unsigned count, \
-  unsigned char *dst) __attribute((regparm(3)));
-
-#define MMX_PIXEL_OP_3A_1A(op) \
-  MMX_PIXEL_OP(op##_pixels_3a_3a) \
-  MMX_PIXEL_OP(op##_pixels_1a_1a)
-
-#define USE_MMX_PIXEL_OP_3A_1A(op) \
-  if (use_mmx && has_alpha1 && has_alpha2) \
-    { \
-      if (bytes1==2 && bytes2==2) \
-	return op##_pixels_1a_1a(src1, src2, length, dest); \
-      if (bytes1==4 && bytes2==4) \
-	return op##_pixels_3a_3a(src1, src2, length, dest); \
-    } \
-  /*fprintf(stderr, "non-MMX: %s(%d, %d, %d, %d)\n", #op, \
-    bytes1, bytes2, has_alpha1, has_alpha2);*/
-
-#else /* ! HAVE_ASM_MMX */
-
-#define MMX_PIXEL_OP_3A_1A(op)
-#define USE_MMX_PIXEL_OP_3A_1A(op)
-
-#endif /* HAVE_ASM_MMX */
-
-
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 
@@ -82,8 +46,10 @@ x( \
  * aka GRAYA and RGBA and thus the macro below works. This will have
  * to change if we support bigger formats. We'll do it so for now because
  * masking is always cheaper than passing parameters over the stack.      */
+/* FIXME: Move to a global place */
 #define HAS_ALPHA(bytes) (~##bytes & 1)
   
+/* FIXME: Move to a more global place */
 struct apply_layer_mode_struct
 {
   guchar             bytes1 : 3; 
@@ -278,7 +244,7 @@ extract_alpha_pixels (const guchar *src,
     }
 }
 
-MMX_PIXEL_OP_3A_1A(darken)
+
 static inline void
 darken_pixels (const guchar *src1,
 	       const guchar *src2,
@@ -292,8 +258,6 @@ darken_pixels (const guchar *src1,
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b;
   guchar s1, s2;
-
-  USE_MMX_PIXEL_OP_3A_1A(darken)
 
   while (length--)
     {
@@ -315,7 +279,7 @@ darken_pixels (const guchar *src1,
     }
 }
 
-MMX_PIXEL_OP_3A_1A(lighten)
+
 static inline void
 lighten_pixels (const guchar *src1,
 		const guchar *src2,
@@ -329,8 +293,6 @@ lighten_pixels (const guchar *src1,
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b;
   guchar s1, s2;
-
-  USE_MMX_PIXEL_OP_3A_1A(lighten)
 
   while (length--)
     {
@@ -392,6 +354,7 @@ hue_only_pixels (const guchar *src1,
     }
 }
 
+
 static inline void
 saturation_only_pixels (const guchar *src1,
 		        const guchar *src2,
@@ -431,6 +394,7 @@ saturation_only_pixels (const guchar *src1,
     }
 }
 
+
 static inline void
 value_only_pixels (const guchar *src1,
 		   const guchar *src2,
@@ -469,6 +433,7 @@ value_only_pixels (const guchar *src1,
       dest += bytes2;
     }
 }
+
 
 static inline void
 color_only_pixels (const guchar *src1,
@@ -511,7 +476,7 @@ color_only_pixels (const guchar *src1,
     }
 }
 
-MMX_PIXEL_OP_3A_1A(multiply)
+
 static inline void
 multiply_pixels (const guchar *src1,
 		 const guchar *src2,
@@ -525,8 +490,6 @@ multiply_pixels (const guchar *src1,
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b, tmp;
 
-  USE_MMX_PIXEL_OP_3A_1A(multiply)
-    
   if (has_alpha1 && has_alpha2)
     {
       while (length --)
@@ -603,7 +566,6 @@ divide_pixels (const guchar *src1,
 }
 
 
-MMX_PIXEL_OP_3A_1A(screen)
 static inline void
 screen_pixels (const guchar *src1,
 	       const guchar *src2,
@@ -616,8 +578,6 @@ screen_pixels (const guchar *src1,
   const guint has_alpha2 = HAS_ALPHA (bytes2);
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b, tmp;
-
-  USE_MMX_PIXEL_OP_3A_1A(screen)
 
   while (length --)
     {
@@ -635,8 +595,6 @@ screen_pixels (const guchar *src1,
     }
 }
 
-
-MMX_PIXEL_OP_3A_1A(overlay)
 
 static inline void
 overlay_pixels (const guchar *src1,
@@ -670,7 +628,6 @@ overlay_pixels (const guchar *src1,
       dest += bytes2;
     }
 }
-
 
 
 static inline void
@@ -782,8 +739,6 @@ hardlight_pixels (const guchar *src1,
 }
 
 
-MMX_PIXEL_OP_3A_1A(add)
-
 static inline void
 add_pixels (const guchar *src1,
 	    const guchar *src2,
@@ -796,8 +751,6 @@ add_pixels (const guchar *src1,
   const guint has_alpha2 = HAS_ALPHA (bytes2);
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b;
-
-  USE_MMX_PIXEL_OP_3A_1A(add)
 
   while (length --)
     {
@@ -819,8 +772,6 @@ add_pixels (const guchar *src1,
 }
 
 
-MMX_PIXEL_OP_3A_1A(substract)
-
 static inline void
 subtract_pixels (const guchar *src1,
 		 const guchar *src2,
@@ -834,8 +785,6 @@ subtract_pixels (const guchar *src1,
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b;
   gint diff;
-
-  USE_MMX_PIXEL_OP_3A_1A(substract)
 
   while (length --)
     {
@@ -857,8 +806,6 @@ subtract_pixels (const guchar *src1,
 }
 
 
-MMX_PIXEL_OP_3A_1A(difference)
-
 static inline void
 difference_pixels (const guchar *src1,
 		   const guchar *src2,
@@ -872,8 +819,6 @@ difference_pixels (const guchar *src1,
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1; 
   guint b;
   gint diff;
-
-  USE_MMX_PIXEL_OP_3A_1A(difference)
 
   while (length --)
     {

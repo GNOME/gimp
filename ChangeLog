@@ -1,3 +1,17 @@
+2001-11-19  Daniel Egger  <degger@fhm.edu>
+	
+	* app/paint-funcs/paint-funcs-mmx.h: New file. Added glue code
+	for the assembly MMX functions.
+
+	* app/paint-funcs/paint-funcs-generic.h: Moved MMX code from here ...
+	* app/paint-funcs/paint-funcs-mmx.h: ... to here. Cleaned up a bit
+	and don't check for use_mmx on every single call but ...
+	* app/paint-funcs/paint-funcs.c: (paint_funcs_setup): ... here and
+	register MMX functions if CPU has those capabilities.
+
+	Code is untested for the MMX case due no available Intel-Machine
+	right now but should't be to far away from a working state. 
+
 2001-11-19  Sven Neumann  <sven@gimp.org>
 
 	* RELEASE-TO-CVS.patch: changes to the text tool to make it compile 

@@ -37,6 +37,7 @@
 
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
+#include "paint-funcs-mmx.h"
 
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001
@@ -450,6 +451,20 @@ paint_funcs_setup (void)
 	  add_lut[j][k] = tmp_sum; 
 	}
     }
+
+#ifdef HAVE_ASM_MMX
+  if (use_mmx)
+  {
+    layer_mode_funcs[DIFFERENCE_MODE] = layer_difference_mode_mmx;
+    layer_mode_funcs[ADD_MODE] = layer_add_mode_mmx;
+    layer_mode_funcs[SUBSTRACT_MODE] = layer_substract_mode_mmx;
+    layer_mode_funcs[OVERLAY_MODE] = layer_overlay_mode_mmx;
+    layer_mode_funcs[SCREEN_MODE] = layer_screen_mode_mmx;
+    layer_mode_funcs[MULTIPLY_MODE] = layer_multiply_mode_mmx;
+    layer_mode_funcs[DARKEN_ONLY_MODE] = layer_darken_only_mode_mmx;
+    layer_mode_funcs[LIGHTEN_ONLY_MODE] = layer_lighten_only_mode_mmx;
+  }
+#endif /* HAVE_ASM_MMX */
 }
 
 void
