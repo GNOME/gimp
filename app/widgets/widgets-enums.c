@@ -49,7 +49,7 @@ gimp_aspect_type_get_type (void)
 
 static const GEnumValue gimp_color_frame_mode_enum_values[] =
 {
-  { GIMP_COLOR_FRAME_MODE_PIXEL, N_("Pixel Values"), "pixel" },
+  { GIMP_COLOR_FRAME_MODE_PIXEL, N_("Pixel values"), "pixel" },
   { GIMP_COLOR_FRAME_MODE_RGB, N_("RGB"), "rgb" },
   { GIMP_COLOR_FRAME_MODE_HSV, N_("HSV"), "hsv" },
   { GIMP_COLOR_FRAME_MODE_CMYK, N_("CMYK"), "cmyk" },
@@ -89,7 +89,7 @@ gimp_color_pick_state_get_type (void)
 
 static const GEnumValue gimp_cursor_format_enum_values[] =
 {
-  { GIMP_CURSOR_FORMAT_BITMAP, N_("Black & White"), "bitmap" },
+  { GIMP_CURSOR_FORMAT_BITMAP, N_("Black & white"), "bitmap" },
   { GIMP_CURSOR_FORMAT_PIXBUF, N_("Fancy"), "pixbuf" },
   { 0, NULL, NULL }
 };
@@ -109,7 +109,7 @@ gimp_cursor_format_get_type (void)
 static const GEnumValue gimp_help_browser_type_enum_values[] =
 {
   { GIMP_HELP_BROWSER_GIMP, N_("Internal"), "gimp" },
-  { GIMP_HELP_BROWSER_WEB_BROWSER, N_("Web Browser"), "web-browser" },
+  { GIMP_HELP_BROWSER_WEB_BROWSER, N_("Web browser"), "web-browser" },
   { 0, NULL, NULL }
 };
 
@@ -147,13 +147,13 @@ gimp_histogram_scale_get_type (void)
 static const GEnumValue gimp_tab_style_enum_values[] =
 {
   { GIMP_TAB_STYLE_ICON, N_("Icon"), "icon" },
-  { GIMP_TAB_STYLE_PREVIEW, N_("Current Status"), "preview" },
+  { GIMP_TAB_STYLE_PREVIEW, N_("Current status"), "preview" },
   { GIMP_TAB_STYLE_NAME, N_("Text"), "name" },
   { GIMP_TAB_STYLE_BLURB, N_("Description"), "blurb" },
-  { GIMP_TAB_STYLE_ICON_NAME, N_("Icon & Text"), "icon-name" },
-  { GIMP_TAB_STYLE_ICON_BLURB, N_("Icon & Desc"), "icon-blurb" },
-  { GIMP_TAB_STYLE_PREVIEW_NAME, N_("Status & Text"), "preview-name" },
-  { GIMP_TAB_STYLE_PREVIEW_BLURB, N_("Status & Desc"), "preview-blurb" },
+  { GIMP_TAB_STYLE_ICON_NAME, N_("Icon & text"), "icon-name" },
+  { GIMP_TAB_STYLE_ICON_BLURB, N_("Icon & desc"), "icon-blurb" },
+  { GIMP_TAB_STYLE_PREVIEW_NAME, N_("Status & text"), "preview-name" },
+  { GIMP_TAB_STYLE_PREVIEW_BLURB, N_("Status & desc"), "preview-blurb" },
   { 0, NULL, NULL }
 };
 
@@ -171,8 +171,8 @@ gimp_tab_style_get_type (void)
 
 static const GEnumValue gimp_view_type_enum_values[] =
 {
-  { GIMP_VIEW_TYPE_LIST, N_("View as List"), "list" },
-  { GIMP_VIEW_TYPE_GRID, N_("View as Grid"), "grid" },
+  { GIMP_VIEW_TYPE_LIST, N_("View as list"), "list" },
+  { GIMP_VIEW_TYPE_GRID, N_("View as grid"), "grid" },
   { 0, NULL, NULL }
 };
 
@@ -190,9 +190,9 @@ gimp_view_type_get_type (void)
 
 static const GEnumValue gimp_window_hint_enum_values[] =
 {
-  { GIMP_WINDOW_HINT_NORMAL, N_("Normal Window"), "normal" },
-  { GIMP_WINDOW_HINT_UTILITY, N_("Utility Window"), "utility" },
-  { GIMP_WINDOW_HINT_KEEP_ABOVE, N_("Keep Above"), "keep-above" },
+  { GIMP_WINDOW_HINT_NORMAL, N_("Normal window"), "normal" },
+  { GIMP_WINDOW_HINT_UTILITY, N_("Utility window"), "utility" },
+  { GIMP_WINDOW_HINT_KEEP_ABOVE, N_("Keep above"), "keep-above" },
   { 0, NULL, NULL }
 };
 

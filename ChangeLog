@@ -1,3 +1,11 @@
+2004-06-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.c
+	* app/display/display-enums.c
+	* app/paint/paint-enums.c
+	* app/text/text-enums.c
+	* app/widgets/widgets-enums.c: regenerated.
+
 2004-06-30  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/file-commands.c: revert previous change that was

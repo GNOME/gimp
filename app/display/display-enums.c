@@ -10,8 +10,8 @@
 
 static const GEnumValue gimp_cursor_mode_enum_values[] =
 {
-  { GIMP_CURSOR_MODE_TOOL_ICON, N_("Tool Icon"), "tool-icon" },
-  { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, N_("Tool Icon with Crosshair"), "tool-crosshair" },
+  { GIMP_CURSOR_MODE_TOOL_ICON, N_("Tool icon"), "tool-icon" },
+  { GIMP_CURSOR_MODE_TOOL_CROSSHAIR, N_("Tool icon with crosshair"), "tool-crosshair" },
   { GIMP_CURSOR_MODE_CROSSHAIR, N_("Crosshair only"), "crosshair" },
   { 0, NULL, NULL }
 };
@@ -30,10 +30,10 @@ gimp_cursor_mode_get_type (void)
 
 static const GEnumValue gimp_canvas_padding_mode_enum_values[] =
 {
-  { GIMP_CANVAS_PADDING_MODE_DEFAULT, N_("From Theme"), "default" },
-  { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, N_("Light Check Color"), "light-check" },
-  { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, N_("Dark Check Color"), "dark-check" },
-  { GIMP_CANVAS_PADDING_MODE_CUSTOM, N_("Custom Color"), "custom" },
+  { GIMP_CANVAS_PADDING_MODE_DEFAULT, N_("From theme"), "default" },
+  { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, N_("Light check color"), "light-check" },
+  { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, N_("Dark check color"), "dark-check" },
+  { GIMP_CANVAS_PADDING_MODE_CUSTOM, N_("Custom color"), "custom" },
   { 0, NULL, NULL }
 };
 

@@ -10,8 +10,8 @@
 
 static const GEnumValue gimp_clone_type_enum_values[] =
 {
-  { GIMP_IMAGE_CLONE, N_("Image Source"), "image-clone" },
-  { GIMP_PATTERN_CLONE, N_("Pattern Source"), "pattern-clone" },
+  { GIMP_IMAGE_CLONE, N_("Image source"), "image-clone" },
+  { GIMP_PATTERN_CLONE, N_("Pattern source"), "pattern-clone" },
   { 0, NULL, NULL }
 };
 
@@ -29,7 +29,7 @@ gimp_clone_type_get_type (void)
 
 static const GEnumValue gimp_clone_align_mode_enum_values[] =
 {
-  { GIMP_CLONE_ALIGN_NO, N_("Non Aligned"), "no" },
+  { GIMP_CLONE_ALIGN_NO, N_("Non-aligned"), "no" },
   { GIMP_CLONE_ALIGN_YES, N_("Aligned"), "yes" },
   { GIMP_CLONE_ALIGN_REGISTERED, N_("Registered"), "registered" },
   { 0, NULL, NULL }

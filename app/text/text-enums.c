@@ -29,8 +29,8 @@ gimp_text_box_mode_get_type (void)
 
 static const GEnumValue gimp_text_direction_enum_values[] =
 {
-  { GIMP_TEXT_DIRECTION_LTR, N_("From Left to Right"), "ltr" },
-  { GIMP_TEXT_DIRECTION_RTL, N_("From Right to Left"), "rtl" },
+  { GIMP_TEXT_DIRECTION_LTR, N_("From left to right"), "ltr" },
+  { GIMP_TEXT_DIRECTION_RTL, N_("From right to left"), "rtl" },
   { 0, NULL, NULL }
 };
 
@@ -48,8 +48,8 @@ gimp_text_direction_get_type (void)
 
 static const GEnumValue gimp_text_justification_enum_values[] =
 {
-  { GIMP_TEXT_JUSTIFY_LEFT, N_("Left Justified"), "left" },
-  { GIMP_TEXT_JUSTIFY_RIGHT, N_("Right Justified"), "right" },
+  { GIMP_TEXT_JUSTIFY_LEFT, N_("Left justified"), "left" },
+  { GIMP_TEXT_JUSTIFY_RIGHT, N_("Right justified"), "right" },
   { GIMP_TEXT_JUSTIFY_CENTER, N_("Centered"), "center" },
   { GIMP_TEXT_JUSTIFY_FILL, N_("Filled"), "fill" },
   { 0, NULL, NULL }
