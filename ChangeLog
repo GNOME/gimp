@@ -9,7 +9,6 @@
 
 	* plug-ins/script-fu/siod-wrapper.c (init_constants): removed
 	debugging output i forgot.
-	(marshall_proc_db_call): 
 
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
