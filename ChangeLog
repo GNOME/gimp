@@ -1,3 +1,9 @@
+1999-03-10  Jay Cox  <jaycox@earthlink.net>
+
+	* plug-ins/wind/wind.c, plug-ins/bumpmap/bumpmap.c: Set
+ 	appropriate values for the tile cache.  This makes a large speed
+ 	difference.
+
 1999-03-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/devices.c: don't let session management set the size of the

@@ -169,7 +169,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
-  gimp_tile_cache_ntiles(drawable->width / gimp_tile_width() + 1);
+  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
   switch (run_mode)
     {
     case RUN_NONINTERACTIVE:
