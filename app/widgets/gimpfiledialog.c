@@ -380,6 +380,8 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
 
   if (uri)
     gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog), uri);
+  else
+    gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
 
   gimp_ui_manager_update (dialog->manager,
                           gimp_image_active_drawable (gimage));
@@ -392,20 +394,8 @@ static void
 gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
                                     GimpFileDialog *dialog)
 {
-  GSList *uris = gtk_file_chooser_get_uris (chooser);
-
-#ifdef __GNUC__
-#warning FIXME: remove version check as soon as we depend on GTK+ 2.4.1
-#endif
-  if (gtk_check_version (2, 4, 1))
-    {
-      if (uris)
-        gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uris->data);
-      else
-        gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), NULL);
-    }
-
-  gimp_thumb_box_set_uris (GIMP_THUMB_BOX (dialog->thumb_box), uris);
+  gimp_thumb_box_take_uris (GIMP_THUMB_BOX (dialog->thumb_box),
+                            gtk_file_chooser_get_uris (chooser));
 }
 
 static void

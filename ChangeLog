@@ -1,5 +1,20 @@
 2004-06-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): unset
+	the filename if the image is unnamed.
+
+	* configure.in
+	* app/sanity.c: depend on gtk+ >= 2.4.1.
+
+	* app/widgets/gimpthumbbox.[ch]: changed gimp_thumb_box_set_uris()
+	to gimp_thumb_box_take_uris() since the function takes ownership
+	of the list,
+	
+	* app/widgets/gimpfiledialog.c: changed accordingly. Removed code
+	that worked around a problem in gtk+ < 2.4.1.
+
+2004-06-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_set_color): use
 	gimp_rgb_distance() for flat color areas. Fixes bug #144786.
 

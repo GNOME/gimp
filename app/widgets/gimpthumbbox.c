@@ -124,7 +124,7 @@ gimp_thumb_box_finalize (GObject *object)
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (object);
 
-  gimp_thumb_box_set_uris (box, NULL);
+  gimp_thumb_box_take_uris (box, NULL);
 
   if (box->imagefile)
     {
@@ -304,8 +304,8 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
 }
 
 void
-gimp_thumb_box_set_uris (GimpThumbBox *box,
-                         GSList       *uris)
+gimp_thumb_box_take_uris (GimpThumbBox *box,
+                          GSList       *uris)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
 
