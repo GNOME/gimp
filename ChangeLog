@@ -1,3 +1,15 @@
+2004-06-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontrollers.c: bug fix.
+
+	* configure.in: check for linux/input.h.
+
+	* modules/Makefile.am
+	* modules/controller_linux_input.c: added a prototype controller
+	module using the linux input event interface.
+
+	* etc/controllerrc: added example config for linux input device.
+
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollers.c: load the controller's
