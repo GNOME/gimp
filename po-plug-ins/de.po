@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-11-25 10:23+0100\n"
+"POT-Creation-Date: 1999-11-25 12:08-0800\n"
 "PO-Revision-Date: 1999-11-22 23:17+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -149,7 +149,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:813 plug-ins/mosaic/mosaic.c:572
-#: plug-ins/print/print.c:1147 plug-ins/script-fu/script-fu-scripts.c:1355
+#: plug-ins/print/print.c:1147 plug-ins/script-fu/script-fu-scripts.c:1353
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
 #: plug-ins/struc/struc.c:247
 msgid "OK"
@@ -189,7 +189,7 @@ msgstr "Einstellungen annehmen und Filter anwenden"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:822 plug-ins/mosaic/mosaic.c:581
 #: plug-ins/print/print.c:1044 plug-ins/print/print.c:1155
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1362
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
 #: plug-ins/struc/struc.c:256
 msgid "Cancel"
@@ -1341,7 +1341,7 @@ msgstr "Animation abspielen: "
 #: plug-ins/helpbrowser/helpbrowser.c:787
 #: plug-ins/ifscompose/ifscompose.c:1249
 #: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1855
+#: plug-ins/script-fu/script-fu-scripts.c:1853
 msgid "Close"
 msgstr "Schliessen"
 
@@ -7196,7 +7196,7 @@ msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_about.c:33
-#: plug-ins/script-fu/script-fu-scripts.c:1372
+#: plug-ins/script-fu/script-fu-scripts.c:1370
 msgid "About"
 msgstr "Über"
 
@@ -8087,43 +8087,43 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Skript-Fu's Auswerten-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1137
+#: plug-ins/script-fu/script-fu-scripts.c:1135
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1198
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1207
+#: plug-ins/script-fu/script-fu-scripts.c:1205
 msgid "Script Toggle"
 msgstr "Skript An/Aus"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1260
+#: plug-ins/script-fu/script-fu-scripts.c:1258
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1289
+#: plug-ins/script-fu/script-fu-scripts.c:1287
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1295
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Gradientenauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1303
+#: plug-ins/script-fu/script-fu-scripts.c:1301
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1338
+#: plug-ins/script-fu/script-fu-scripts.c:1336
 msgid " Reset to Defaults "
 msgstr "Auf Standardwerte zurücksetzen"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1472
+#: plug-ins/script-fu/script-fu-scripts.c:1470
 msgid "NOT SET"
 msgstr "NICHT EINGESTELLT"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1543
+#: plug-ins/script-fu/script-fu-scripts.c:1541
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -8131,24 +8131,24 @@ msgstr ""
 "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1808
+#: plug-ins/script-fu/script-fu-scripts.c:1806
 msgid "Author: "
 msgstr "Author: "
 
 # Urheberrecht ?
-#: plug-ins/script-fu/script-fu-scripts.c:1818
+#: plug-ins/script-fu/script-fu-scripts.c:1816
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1828
+#: plug-ins/script-fu/script-fu-scripts.c:1826
 msgid "Date: "
 msgstr "Datum: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1840
+#: plug-ins/script-fu/script-fu-scripts.c:1838
 msgid "Image types: "
 msgstr "Bild-Typen: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1996
+#: plug-ins/script-fu/script-fu-scripts.c:1994
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
