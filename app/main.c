@@ -81,13 +81,16 @@ static gboolean gimp_option_stack_trace_mode (const gchar  *option_name,
                                               const gchar  *value,
                                               gpointer      data,
                                               GError      **error);
-static gboolean gimp_option_pdb_compat_mode (const gchar   *option_name,
-                                             const gchar   *value,
-                                             gpointer       data,
-                                             GError       **error);
+static gboolean gimp_option_pdb_compat_mode  (const gchar  *option_name,
+                                              const gchar  *value,
+                                              gpointer      data,
+                                              GError      **error);
+static gboolean gimp_option_dump_gimprc      (const gchar  *option_name,
+                                              const gchar  *value,
+                                              gpointer      data,
+                                              GError      **error);
 
 static void     gimp_show_version            (void);
-static void     gimp_show_help               (const gchar  *progname);
 
 
 /*
@@ -116,7 +119,6 @@ main (int    argc,
 {
   GOptionContext  *context;
   const gchar     *abort_message      = NULL;
-  const gchar     *full_prog_name     = NULL;
   const gchar     *system_gimprc      = NULL;
   const gchar     *user_gimprc        = NULL;
   const gchar     *session_name       = NULL;
@@ -128,94 +130,102 @@ main (int    argc,
   gboolean         no_fonts           = FALSE;
   gboolean         no_splash          = FALSE;
   gboolean         be_verbose         = FALSE;
+#if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
+  gboolean         use_shm            = TRUE;
+#else
   gboolean         use_shm            = FALSE;
+#endif
   gboolean         use_cpu_accel      = TRUE;
   gboolean         console_messages   = FALSE;
   gboolean         use_debug_handler  = FALSE;
   GError          *error              = NULL;
-  gint             i;
 
-  const GOptionEntry entries[] =
+  const GOptionEntry main_entries[] =
     {
+      { "version", 'v', 0,
+        G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version,
+        N_("Show version information and exit."), NULL
+      },
       {
         "verbose", 0, 0,
         G_OPTION_ARG_NONE, &be_verbose,
-        "Be more verbose.", NULL
+        N_("Be more verbose."), NULL
       },
       {
         "no-interface", 'i', 0,
         G_OPTION_ARG_NONE, &no_interface,
-        "Run without a user interface.", NULL
+        N_("Run without a user interface."), NULL
       },
       {
         "no-data", 'd', 0,
         G_OPTION_ARG_NONE, &no_data,
-        "Do not load brushes, gradients, palettes, patterns.", NULL
+        N_("Do not load brushes, gradients, palettes, patterns."), NULL
       },
       {
         "no-fonts", 'f', 0,
         G_OPTION_ARG_NONE, &no_fonts,
-        "Do not load any fonts.", NULL
+        N_("Do not load any fonts."), NULL
       },
       {
         "no-splash", 's', 0,
         G_OPTION_ARG_NONE, &no_splash,
-        "Do not show a startup window.", NULL
+        N_("Do not show a startup window."), NULL
       },
       {
         "no-shm", 0, G_OPTION_FLAG_REVERSE,
         G_OPTION_ARG_NONE, &use_shm,
-        "Do not use shared memory between GIMP and plugins.", NULL
+        N_("Do not use shared memory between GIMP and plugins."), NULL
       },
       {
         "no-cpu-accel", 0, G_OPTION_FLAG_REVERSE,
         G_OPTION_ARG_NONE, &use_cpu_accel,
-        "Do not use special CPU acceleration functions.", NULL
+        N_("Do not use special CPU acceleration functions."), NULL
       },
       {
         "session", 0, 0,
         G_OPTION_ARG_FILENAME, &session_name,
-        "Use an alternate sessionrc file.", "name"
+        N_("Use an alternate sessionrc file."), "<name>"
       },
       {
         "gimprc", 0, 0,
         G_OPTION_ARG_FILENAME, &user_gimprc,
-        "Use an alternate user gimprc file.", "filename"
+        N_("Use an alternate user gimprc file."), "<filename>"
       },
       {
         "system-gimprc", 0, 0,
         G_OPTION_ARG_FILENAME, &system_gimprc,
-        "Use an alternate system gimprc file.", "filename"
+        N_("Use an alternate system gimprc file."), "<filename>"
       },
       {
         "batch", 'b', 0,
         G_OPTION_ARG_STRING_ARRAY, &batch_commands,
-        "Batch command to run (can be used multiple times).", "command"
+        N_("Batch command to run (can be used multiple times)."), "<command>"
       },
       {
         "batch-interpreter", 0, 0,
         G_OPTION_ARG_STRING, &batch_interpreter,
-        "The procedure to process batch commands with.", "procedure"
+        N_("The procedure to process batch commands with."), "<procedure>"
       },
       {
         "console-messages", 0, 0,
         G_OPTION_ARG_NONE, &console_messages,
-        "Send messages to console instead of using a dialog box.", NULL
+        N_("Send messages to console instead of using a dialog box."), NULL
       },
       {
         "pdb-compat-mode", 0, 0,
         G_OPTION_ARG_CALLBACK, gimp_option_pdb_compat_mode,
-        "Procedural Database compatibility mode.", "never | query | always"
+        N_("Procedural Database compatibility mode."),
+        "<never | query | always>"
       },
       {
         "stack-trace-mode", 0, 0,
         G_OPTION_ARG_CALLBACK, gimp_option_stack_trace_mode,
-        "Debugging mode for fatal signals.", NULL
+        N_("Debugging mode for fatal signals."), NULL
       },
       {
         "debug-handlers", 0, 0,
         G_OPTION_ARG_NONE, &use_debug_handler,
-        "Enable non-fatal debugging signal handlers.", NULL
+        N_("Enable non-fatal debugging signal handlers."), NULL
       },
       /*  GTK+ also looks for --g-fatal-warnings, but we want it for
        *  non-interactive use also.
@@ -223,6 +233,28 @@ main (int    argc,
       { "g-fatal-warnings", 0, G_OPTION_FLAG_HIDDEN,
         G_OPTION_ARG_NONE, &fatal_warnings,
         NULL, NULL
+      },
+      { "dump-gimprc", 0, 0,
+        G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+        N_("Output a gimprc file with default settings."), NULL
+      },
+      { "dump-gimprc-system", 0, G_OPTION_FLAG_HIDDEN,
+        G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+        NULL, NULL
+      },
+      { "dump-gimprc-manpage", 0, G_OPTION_FLAG_HIDDEN,
+        G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+        NULL, NULL
+      },
+      { NULL }
+    };
+
+  const GOptionEntry pre_entries[] =
+    {
+      {
+        "no-interface", 'i', 0,
+        G_OPTION_ARG_NONE, &no_interface,
+        N_("Run without a user interface."), NULL
       },
       { NULL }
     };
@@ -233,12 +265,14 @@ main (int    argc,
   g_atexit (g_mem_profile);
 #endif
 
-  /* Initialize variables */
-
-  full_prog_name = argv[0];
+#ifdef __GLIBC__
+  /* Tweak memory allocation so that memory allocated in chunks >= 4k
+   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
+   */
+  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
+#endif
 
   /* Initialize i18n support */
-
   setlocale (LC_ALL, "");
 
   bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
@@ -253,65 +287,18 @@ main (int    argc,
 
   textdomain (GETTEXT_PACKAGE);
 
-  /* Check argv[] for "--no-interface" before trying to initialize gtk+.
-   * We also check for "--help" or "--version" here since those shouldn't
-   * require gui libs either.
-   */
-  for (i = 1; i < argc; i++)
-    {
-      const gchar *arg = argv[i];
+  /* set the application name */
+  g_set_application_name (_("The GIMP"));
 
-      if (arg[0] != '-')
-        continue;
+  /* Check argv[] for "--no-interface" before trying to initialize gtk+. */
+  context = g_option_context_new ("[FILE ...]");
+  g_option_context_add_main_entries (context, pre_entries, GETTEXT_PACKAGE);
+  g_option_context_set_help_enabled (context, FALSE);
+  g_option_context_set_ignore_unknown_options (context, TRUE);
+  g_option_context_parse (context, &argc, &argv, NULL);
+  g_option_context_free (context);
 
-      if ((strcmp (arg, "--no-interface") == 0) ||
-	  (strcmp (arg, "-i") == 0))
-	{
-	  no_interface = TRUE;
-	}
-      else if ((strcmp (arg, "--version") == 0) ||
-               (strcmp (arg, "-v") == 0))
-	{
-	  gimp_show_version ();
-	  app_exit (EXIT_SUCCESS);
-	}
-      else if ((strcmp (arg, "--help") == 0) ||
-	       (strcmp (arg, "-h") == 0))
-	{
-	  gimp_show_help (full_prog_name);
-	  app_exit (EXIT_SUCCESS);
-	}
-      else if (strncmp (arg, "--dump-gimprc", 13) == 0)
-        {
-          GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
-
-          if (strcmp (arg, "--dump-gimprc") == 0)
-            format = GIMP_CONFIG_DUMP_GIMPRC;
-          if (strcmp (arg, "--dump-gimprc-system") == 0)
-            format = GIMP_CONFIG_DUMP_GIMPRC_SYSTEM;
-          else if (strcmp (arg, "--dump-gimprc-manpage") == 0)
-            format = GIMP_CONFIG_DUMP_GIMPRC_MANPAGE;
-
-          if (format)
-            {
-              Gimp     *gimp;
-              gboolean  success;
-
-              g_type_init ();
-
-              gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
-
-              units_init (gimp);
-
-              success = gimp_config_dump (format);
-
-              g_object_unref (gimp);
-
-              app_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
-            }
-        }
-    }
-
+  /* initialize some libraries (depending on the --no-interface option) */
   if (! app_libs_init (&no_interface, &argc, &argv))
     {
       const gchar *msg;
@@ -323,28 +310,17 @@ main (int    argc,
       app_exit (EXIT_FAILURE);
     }
 
+  /* do some sanity checks */
   abort_message = sanity_check ();
   if (abort_message)
     app_abort (no_interface, abort_message);
 
-  g_set_application_name (_("The GIMP"));
-
-#if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
-  use_shm = TRUE;
-#endif
-
-#ifdef __GLIBC__
-  /* Tweak memory allocation so that memory allocated in chunks >= 4k
-   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
-   */
-  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
-#endif
-
-  context = g_option_context_new (NULL);
-  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
+  /* parse the command-line options */
+  context = g_option_context_new ("[FILE ...]");
+  g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
 #ifdef __GNUC__
-#warning FIXME: add this code as soon as we depend on gtk+
+#warning FIXME: add this code as soon as we depend on gtk+-2.6
 #endif
   /* g_option_context_add_group (context, gtk_get_option_group (TRUE));
    */
@@ -355,15 +331,6 @@ main (int    argc,
       g_error_free (error);
 
       app_exit (EXIT_FAILURE);
-    }
-
-  if (fatal_warnings)
-    {
-      GLogLevelFlags fatal_mask;
-
-      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-      g_log_set_always_fatal (fatal_mask);
     }
 
 #ifndef G_OS_WIN32
@@ -402,11 +369,20 @@ main (int    argc,
 
 #endif /* G_OS_WIN32 */
 
-  gimp_errors_init (full_prog_name,
+  if (fatal_warnings)
+    {
+      GLogLevelFlags fatal_mask;
+
+      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+      g_log_set_always_fatal (fatal_mask);
+    }
+
+  gimp_errors_init (argv[0],
                     use_debug_handler,
                     stack_trace_mode);
 
-  app_run (full_prog_name,
+  app_run (argv[0],
            argc - 1,
            argv + 1,
            system_gimprc,
@@ -424,6 +400,8 @@ main (int    argc,
            console_messages,
            stack_trace_mode,
            pdb_compat_mode);
+
+  g_option_context_free (context);
 
   return EXIT_SUCCESS;
 }
@@ -464,44 +442,47 @@ gimp_option_pdb_compat_mode (const gchar  *option_name,
   return TRUE;
 }
 
-static void
-gimp_show_version (void)
+static gboolean
+gimp_option_dump_gimprc (const gchar  *option_name,
+                         const gchar  *value,
+                         gpointer      data,
+                         GError      **error)
 {
-  g_print ("%s %s\n", _("GIMP version"), GIMP_VERSION);
+  GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
+
+  if (strcmp (option_name, "--dump-gimprc") == 0)
+    format = GIMP_CONFIG_DUMP_GIMPRC;
+  if (strcmp (option_name, "--dump-gimprc-system") == 0)
+    format = GIMP_CONFIG_DUMP_GIMPRC_SYSTEM;
+  else if (strcmp (option_name, "--dump-gimprc-manpage") == 0)
+    format = GIMP_CONFIG_DUMP_GIMPRC_MANPAGE;
+
+  if (format)
+    {
+      Gimp     *gimp;
+      gboolean  success;
+
+      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+
+      units_init (gimp);
+
+      success = gimp_config_dump (format);
+
+      g_object_unref (gimp);
+
+      app_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
+    }
+
+  return FALSE;
 }
 
 static void
-gimp_show_help (const gchar *progname)
+gimp_show_version (void)
 {
-  gimp_show_version ();
-
-  g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"),
-           gimp_filename_to_utf8 (progname));
-  g_print (_("Options:\n"));
-  g_print (_("  -h, --help               Output this help.\n"));
-  g_print (_("  -v, --version            Output version information.\n"));
-  g_print (_("  --verbose                Show startup messages.\n"));
-  g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
-  g_print (_("  --no-cpu-accel           Do not use special CPU accelerations.\n"));
-  g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
-  g_print (_("  -f, --no-fonts           Do not load any fonts.\n"));
-  g_print (_("  -i, --no-interface       Run without a user interface.\n"));
-  g_print (_("  --display <display>      Use the designated X display.\n"));
-  g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
-  g_print (_("  --session <name>         Use an alternate sessionrc file.\n"));
-  g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
-  g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
-  g_print (_("  --dump-gimprc            Output a gimprc file with default settings.\n"));
-  g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
-  g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
-  g_print (_("  --stack-trace-mode <never | query | always>\n"
-             "                           Debugging mode for fatal signals.\n"));
-  g_print (_("  --pdb-compat-mode <off | on | warn>\n"
-             "                           Procedural Database compatibility mode.\n"));
-  g_print (_("  --batch-interpreter <procedure>\n"
-             "                           The procedure to process batch commands with.\n"));
-  g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
+  g_print (_("GIMP version %s"), GIMP_VERSION);
   g_print ("\n");
+
+  app_exit (EXIT_SUCCESS);
 }
 
 
