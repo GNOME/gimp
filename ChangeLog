@@ -1,3 +1,30 @@
+2003-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptoolcontrol.c (gimp_tool_control_halt): don't
+	set paused_count to 0.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/tools/tool_manager.c: removed comments about doing so.
+
 2003-01-02  Manish Singh  <yosh@gimp.org>
 
 	* app/base/base.c (base_init): terminate g_object_set args with NULL.
