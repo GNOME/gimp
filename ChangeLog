@@ -1,3 +1,14 @@
+2003-12-08  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/core-enums.h:
+	* app/core/gimpimage-scale.[ch]: Added the GimpImageScaleCheckType 
+	enum and used it in gimp_image_scale_check() which used to be
+	gimp_image_check_scaling().
+
+	* app/gui/image_commands.c: Used the above when checking 
+	scaling parameters to display a message if the image is too big 
+	or too small after scaling. Closes bug #21028.
+
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: renamed PDB function
