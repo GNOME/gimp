@@ -1,3 +1,7 @@
+2003-12-19  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp_logo.png: it's here! soon!
+
 2003-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcroptool.c: update the crop dialog in
