@@ -125,7 +125,16 @@ gimp_color_display_clone (GimpColorDisplay *display)
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
 
   if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone)
-    return GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone (display);
+    {
+      GimpColorDisplay *clone = NULL;
+
+      clone = GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone (display);
+
+      if (clone)
+        clone->enabled = display->enabled;
+
+      return clone;
+    }
 
   return NULL;
 }

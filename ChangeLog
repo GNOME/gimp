@@ -1,3 +1,13 @@
+2003-11-23  Michael Natterer  <mitch@convergence.de>
+
+	* libgimpwidgets/gimpcolordisplay.c (gimp_color_display_clone):
+	also clone the "enabled" property.
+
+	* app/widgets/gimpcolordisplayeditor.c
+	(gimp_color_display_editor_init): put the "enabled" toggle
+	renderer to its own column so selecting a row doesn't always
+	toggle "enabled".
+
 2003-11-23  Raphaël Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/animoptimize.c: Allow the plug-in to register

@@ -269,26 +269,27 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
 
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Active Filters"));
-  gtk_tree_view_insert_column (GTK_TREE_VIEW (tv), column, 0);
-
   rend = gtk_cell_renderer_toggle_new ();
-  gtk_tree_view_column_pack_start (column, rend, FALSE);
-  gtk_tree_view_column_set_attributes (column, rend,
-                                       "active", DEST_COLUMN_ENABLED,
-                                       NULL);
 
   g_signal_connect (rend, "toggled",
                     G_CALLBACK (gimp_color_display_editor_enable_toggled),
                     editor);
 
-  rend = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, rend, FALSE);
-  gtk_tree_view_column_set_attributes (column, rend,
-                                       "text", DEST_COLUMN_NAME,
-                                       NULL);
+  column = gtk_tree_view_column_new_with_attributes (NULL, rend,
+                                                     "active",
+                                                     DEST_COLUMN_ENABLED,
+                                                     NULL);
+  gtk_tree_view_insert_column (GTK_TREE_VIEW (tv), column, 0);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_VISIBLE, GTK_ICON_SIZE_MENU);
+  gtk_tree_view_column_set_widget (column, image);
+  gtk_widget_show (image);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
+                                               1, _("Active Filters"),
+                                               gtk_cell_renderer_text_new (),
+                                               "text", DEST_COLUMN_NAME,
+                                               NULL);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
@@ -641,8 +642,6 @@ gimp_color_display_editor_reordered (GimpColorDisplayStack  *stack,
   GtkTreeIter iter;
   gboolean    iter_valid;
 
-  g_print ("reorder to %d\n", position);
-
   for (iter_valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (editor->dest),
                                                    &iter);
        iter_valid;
@@ -755,6 +754,8 @@ gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
                           -1);
 
       gimp_color_display_set_enabled (display, ! enabled);
+
+      g_object_unref (display);
     }
 
   gtk_tree_path_free (path);
