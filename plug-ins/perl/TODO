@@ -3,7 +3,7 @@ up-to-date and may not even be readable ;)
 
 shortcuts (don't ask)
 
-  gimp pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
+gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
 
 bugs
 

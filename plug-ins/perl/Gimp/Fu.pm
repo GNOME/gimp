@@ -749,7 +749,8 @@ sub register($$$$$$$$$;@) {
          return unless $res;
       } elsif ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
       } elsif ($run_mode == &Gimp::RUN_WITH_LAST_VALS) {
-         @_=@defaults;	# FIXME
+         my $VAR1; # Data::Dumper is braindamaged
+         @_=@{eval $Gimp::Data{"$function/_fu_data"}};
       } else {
          die "run_mode must be INTERACTIVE, NONINTERACTIVE or WITH_LAST_VALS\n";
       }

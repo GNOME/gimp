@@ -11,7 +11,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
 require DynaLoader;
 
 @ISA = qw(DynaLoader);
-$VERSION = 1.044;
+$VERSION = 1.0441;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -291,11 +291,11 @@ sub _pseudoclass {
   push(@{"${class}::PREFIXES"}		, @prefixes); @prefixes=@{"${class}::PREFIXES"};
 }
 
-_pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_image_ gimp_);
+_pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_floating_sel_ gimp_image_ gimp_);
 _pseudoclass qw(Image		gimp_image_ gimp_drawable_ gimp_);
 _pseudoclass qw(Drawable	gimp_drawable_ gimp_layer_ gimp_image_ gimp_);
 _pseudoclass qw(Selection 	gimp_selection_);
-_pseudoclass qw(Channel		gimp_channel_ gimp_drawable_ gimp_image_ gimp_);
+_pseudoclass qw(Channel		gimp_channel_ gimp_drawable_ gimp_selection_ gimp_image_ gimp_);
 _pseudoclass qw(Display		gimp_display_ gimp_);
 _pseudoclass qw(Plugin		plug_in_);
 _pseudoclass qw(Gradients	gimp_gradients_);

@@ -3,7 +3,10 @@
 $CPPFLAGS	= q[@CPPFLAGS@];
 $CFLAGS		= q[@CFLAGS@];
 $LDFLAGS	= q[@LDFLAGS@];
+
 $prefix		= q[@prefix@];
+$exec_prefix	= q[@exec_prefix@];
+$libdir		= q[@libdir@];
 
 $IN_GIMP	= q[@IN_GIMP@];
 

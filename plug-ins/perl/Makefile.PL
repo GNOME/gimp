@@ -96,7 +96,6 @@ WARNING: Parse::RecDescent is not installed (correctly) on your system. This
 EOF
 
 ($major,$minor,$patch)=split /[._]/,$Gtk::VERSION;
-print "using gtk version $Gtk::VERSION\n";
 
 unless ($major > 0
         || ($major == 0 && $minor >  3)
@@ -118,6 +117,7 @@ sub MY::postamble {
 maintainer-clean :: realclean
 objclean :: realclean
 distclean :: realclean
+check :: test
 
 install :: install-plugins
 
@@ -157,9 +157,8 @@ WriteMakefile(
     'LIBS'	=> [''],
     'INC'	=> "$CPPFLAGS $CFLAGS $GIMP_INC_NOUI $DEFS",
     'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP" : ""),
-    'realclean'	=> { FILES => "config.status" },
-    'clean'	=> { FILES => "config.log config.h pcfg config.cache config.pl Makefile.old ".
-                              "etc/config.pl etc/config.status etc/config.cache etc/config.h etc/config.log" },
+    'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
+    'clean'	=> { FILES => "Makefile.old config.pl" },
 );
 
 $IN_GIMP or print <<EOF;

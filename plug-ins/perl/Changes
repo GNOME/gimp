@@ -1,7 +1,15 @@
 Revision history for Gimp-Perl extension.
 
+	- more configuration cleanups
+	- fixed Gimp::Fu to respect RUN_WITH_LAST_VALS again
+	- added more oo-prefixes to channels and layers (see Gimp::OO)
+
+1.0441 Sat Oct 24 22:52:05 CEST 1998
 	- t/run.t does much less when no tests are requested
 	- cleaned up Gimp::UI learned much about Gtk (but still not much)
+	- an occurence of PARAM_PARASITE wasn't wrapped into an #if-clause.
+	  this is just one of the countless braindead bugs being found
+	  by schinder@pobox.com and the cpan-testers! Thanks!
 
 1.044 Sat Oct 24 03:54:47 CEST 1998
 	- allow PF_PATTERN etc. to be usable as commandline arguments

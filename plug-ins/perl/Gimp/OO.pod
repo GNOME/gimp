@@ -94,6 +94,7 @@ that are checked are shown as well (the null prefix "" is implicit).
 
  gimp_layer_
  gimp_drawable_
+ gimp_floating_sel_
  gimp_image_
  gimp_
 
@@ -118,6 +119,7 @@ that are checked are shown as well (the null prefix "" is implicit).
 
  gimp_channel_
  gimp_drawable_
+ gimp_selection_
  gimp_image_
  gimp_
 

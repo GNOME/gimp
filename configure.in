@@ -476,7 +476,7 @@ if eval "test x$enable_perl != xno"; then
       dnl these are gross hacks
       GIMP_CFLAGS="$CFLAGS -I$srcdir -I\$topdir/../.. $GTK_CFLAGS"
       GIMP_CFLAGS_NOUI="$GIMP_CFLAGS"
-      GIMP_LIBS="$LIBS -L\$topdir/../../libgimp -L\$topdir/../../libgimp/.libs -lgimp"
+      GIMP_LIBS="$LIBS -L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp"
       GIMP_LIBS_NOUI="$GIMP_LIBS"
       GIMPTOOL="../../gimptool"
       IN_GIMP=1
@@ -517,8 +517,10 @@ if eval "test x$enable_perl != xno"; then
       AC_SUBST(GIMP_LIBS)
 
       dnl we ignore prefix
-      echo "echo invoking perl for configuration..." >plug-ins/perl/config.status
-      echo "$PERL Makefile.PL --writemakefile" >>plug-ins/perl/config.status
+      cat >plug-ins/perl/config.status <<EOF
+      echo invoking perl for configuration...
+      $PERL Makefile.PL --writemakefile
+EOF
       GIMP_PERL=perl
    else
       GIMP_PERL=

@@ -296,7 +296,8 @@ dump_params (int nparams, GParam *args, GParamDef *params)
                           args[i].data.d_color.green,
                           args[i].data.d_color.blue);
             break;
-          
+
+#if GIMP_PARASITE
           case PARAM_PARASITE:
             {
               gint32 found = 0;
@@ -318,6 +319,7 @@ dump_params (int nparams, GParam *args, GParamDef *params)
               trace_printf (", %d bytes data]", args[i].data.d_parasite.size);
             }
             break;
+#endif
             
           default:
             trace_printf ("(?%d?)", args[i].type);
