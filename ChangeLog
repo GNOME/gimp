@@ -1,5 +1,10 @@
 1999-12-03  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpunitmenu.c: Set the clist columns to their
+	optimal size.
+
+1999-12-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialog_handler.c
 	* app/ops_buttons.h: Removed trailing comma from enums to avoid
 	compiler warnings with Irix CC. Fixes bugs #3994 and #3995.
