@@ -50,17 +50,17 @@ Run quietly without echoing any of the build commands.
 Run silently without echoing any of the build commands. Same as \-\-quiet.
 .TP 8
 .B \-n
-Test mode. Print the commands but dont actually execute them. Useful for
+Test mode. Print the commands but don't actually execute them. Useful for
 making dry runs for testing.
 .TP 8
 .B \-\-just-print
-Test mode. Print the commands but dont actually execute them. Same as \-n.
+Test mode. Print the commands but don't actually execute them. Same as \-n.
 .TP 8
 .B \-\-dry-run
-Test mode. Print the commands but dont actually execute them. Same as \-n.
+Test mode. Print the commands but don't actually execute them. Same as \-n.
 .TP 8
 .B \-\-recon
-Test mode. Print the commands but dont actually execute them. Same as \-n.
+Test mode. Print the commands but don't actually execute them. Same as \-n.
 .TP 8
 .B \-\-bindir
 Outputs the bindir used to install the \fIGIMP\fP.

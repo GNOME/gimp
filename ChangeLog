@@ -1,3 +1,10 @@
+2004-04-03  Manish Singh  <yosh@gimp.org>
+
+	* gimptool-2.0.in: Create any directories in the install path that do
+	not already exist. Fixes bug #138980.
+
+	* docs/gimptool.1.in: s/dont/don't/g
+
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c (gimp_image_map_apply): do nothing if the

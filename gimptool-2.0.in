@@ -263,6 +263,9 @@ while test $# -gt 0; do
           shift
           if test "x$1" != "x"; then
             if test -r "$1"; then
+              cmd="@INSTALL_PROGRAM@ -d $DESTDIR$install_dir"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || $cmd
               dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#'`
               cmd="$install_cmd $1 $DESTDIR$install_dir/$dest"
               test $quiet = "yes" || echo $cmd
@@ -311,6 +314,11 @@ while test $# -gt 0; do
       shift
       if test "x$1" != "x"; then
         if test -r "$1"; then
+          if test "$install_dir" != "."; then
+            cmd="@INSTALL_PROGRAM@ -d $DESTDIR$install_dir"
+            test $quiet = "yes" || echo $cmd
+            test $donothing = "yes" || $cmd
+          fi
           dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#' -e 's/\.[^.]*$//'`
           cmd="$cc $cflags $gimp_cflags -o $install_dir/$dest $1 $ldflags $gimp_libs $libs"
           test $quiet = "yes" || echo $cmd
