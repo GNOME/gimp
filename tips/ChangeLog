@@ -1,3 +1,10 @@
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added more missing files.
+
+	* gimp-tips.dtd: use CDATA for language identifiers since sr@Latn
+	is not a valid XML name token (NMTOKEN).
+
 2003-09-02  Danilo Šegan  <dsegan@gmx.net>
 
 	* Makefile.am: Added "sr.po" and "sr@Latn.po" to tips_POFILES.

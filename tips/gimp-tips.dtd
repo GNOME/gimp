@@ -12,7 +12,7 @@
 <!ELEMENT tt %markup;>
 
 <!ELEMENT welcome %markup;>
-<!ATTLIST welcome xml:lang NMTOKEN #IMPLIED>
+<!ATTLIST welcome xml:lang CDATA #IMPLIED>
 
 <!ELEMENT thetip %markup;>
-<!ATTLIST thetip xml:lang NMTOKEN #IMPLIED>
+<!ATTLIST thetip xml:lang CDATA #IMPLIED>
