@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-09-05 20:17+0200\n"
-"PO-Revision-Date: 2002-09-05 20:17+0100\n"
+"POT-Creation-Date: 2002-09-07 18:51+0200\n"
+"PO-Revision-Date: 2002-09-07 18:50+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -477,19 +477,19 @@ msgid "Value"
 msgstr "Wert"
 
 #: app/base/base-enums.c:114 app/gui/color-notebook.c:297
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/tools/gimpcolorbalancetool.c:312
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Rot"
 
 #: app/base/base-enums.c:115 app/gui/color-notebook.c:298
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/tools/gimpcolorbalancetool.c:319
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grün"
 
 #: app/base/base-enums.c:116 app/gui/color-notebook.c:299
-#: app/tools/gimpcolorbalancetool.c:327
+#: app/tools/gimpcolorbalancetool.c:326
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blau"
@@ -527,12 +527,12 @@ msgstr "ungültiger Wert »%s« für Symbol %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Wert für Symbol %s ist keine gültige UTF-8-Zeichenkette"
 
-#: app/config/gimpconfig.c:217
+#: app/config/gimpconfig.c:221
 #, c-format
 msgid "Failed to create temporary file for '%s': %s"
 msgstr "Kann temporäre Datei für '%s' nicht anlegen: %s"
 
-#: app/config/gimpconfig.c:241
+#: app/config/gimpconfig.c:245
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -541,7 +541,7 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für '%s': %s\n"
 "Die Originaldatei wurde nicht geändert."
 
-#: app/config/gimpconfig.c:247
+#: app/config/gimpconfig.c:251
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -550,30 +550,30 @@ msgstr ""
 "Fehler beim Schreiben in temporäre Datei für '%s': %s\n"
 "Es wurde keine Datei angelegt."
 
-#: app/config/gimpconfig.c:263
+#: app/config/gimpconfig.c:267
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr "Kann Datei '%s' nicht anlegen: %s"
 
-#: app/config/gimpconfig.c:337 app/config/gimpconfig.c:350
-#: app/config/gimpscanner.c:306 app/config/gimpscanner.c:369
-#: app/core/gimpunits.c:158 app/gui/session.c:166 app/plug-in/plug-in-rc.c:131
+#: app/config/gimpconfig.c:341 app/config/gimpconfig.c:354
+#: app/config/gimpscanner.c:307 app/config/gimpscanner.c:370
+#: app/core/gimpunits.c:158 app/gui/session.c:167 app/plug-in/plug-in-rc.c:131
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler beim Interpretieren"
 
-#: app/config/gimpscanner.c:73 app/core/gimpbrushpipe.c:308
+#: app/config/gimpscanner.c:74 app/core/gimpbrushpipe.c:308
 #: app/gui/paths-dialog.c:1886 app/gui/paths-dialog.c:2011
 #: app/tools/gimpcurvestool.c:1404 app/tools/gimpcurvestool.c:1420
-#: app/tools/gimplevelstool.c:1322 app/tools/gimplevelstool.c:1338
+#: app/tools/gimplevelstool.c:1317 app/tools/gimplevelstool.c:1333
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Kann Datei '%s' nicht öffnen: %s"
 
-#: app/config/gimpscanner.c:145
+#: app/config/gimpscanner.c:146
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8 Text"
 
-#: app/config/gimpscanner.c:394
+#: app/config/gimpscanner.c:395
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -1607,7 +1607,7 @@ msgid "Opacity:"
 msgstr "Deckkraft:"
 
 #: app/gui/brush-select.c:227 app/tools/paint_options.c:147
-#: app/tools/selection_options.c:131 app/widgets/gimplayerlistview.c:172
+#: app/tools/selection_options.c:128 app/widgets/gimplayerlistview.c:172
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -1742,8 +1742,8 @@ msgid "Generate Optimum Palette:"
 msgstr "Erstelle optimale Palette:"
 
 #: app/gui/convert-dialog.c:191
-msgid "Number of Colors:"
-msgstr "Anzahl Farben:"
+msgid "Max. Number of Colors:"
+msgstr "Max Anzahl Farben:"
 
 #: app/gui/convert-dialog.c:214
 msgid "Use WWW-Optimized Palette"
@@ -1786,7 +1786,7 @@ msgstr ""
 "Sie beabsichtigen aus diesem Bild eine transparente oder animierte GIF-Datei "
 "zu erstellen."
 
-#: app/gui/convert-dialog.c:538
+#: app/gui/convert-dialog.c:533
 msgid "Select Custom Palette"
 msgstr "Wählen sie eine Palette"
 
@@ -2079,7 +2079,7 @@ msgstr "Ein neues Bild erstellen"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:160 app/gui/file-new-dialog.c:178
-#: app/tools/gimpcroptool.c:1014 app/tools/selection_options.c:403
+#: app/tools/gimpcroptool.c:1014 app/tools/selection_options.c:400
 msgid "Width:"
 msgstr "Breite:"
 
@@ -2087,7 +2087,7 @@ msgstr "Breite:"
 #: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:293
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:560
 #: app/tools/gimpcroptool.c:1017 app/tools/gimpscaletool.c:192
-#: app/tools/gimpscaletool.c:201 app/tools/selection_options.c:416
+#: app/tools/gimpscaletool.c:201 app/tools/selection_options.c:413
 msgid "Height:"
 msgstr "Höhe:"
 
@@ -5773,7 +5773,7 @@ msgid "Max Depth:"
 msgstr "Maximale Tiefe:"
 
 #: app/tools/gimpblendtool.c:592 app/tools/gimpbucketfilltool.c:415
-#: app/tools/gimpmagnifytool.c:481 app/tools/selection_options.c:316
+#: app/tools/gimpmagnifytool.c:481 app/tools/selection_options.c:313
 msgid "Threshold:"
 msgstr "Schwellwert:"
 
@@ -5801,7 +5801,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 msgid "_Brightness:"
 msgstr "_Helligkeit:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:258
+#: app/tools/gimpbrightnesscontrasttool.c:257
 msgid "Con_trast:"
 msgstr "Kon_trast:"
 
@@ -5821,7 +5821,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Füllen"
 msgid "Fill Type (<Ctrl>)"
 msgstr "Füllart (<Strg>)"
 
-#: app/tools/gimpbucketfilltool.c:368 app/tools/selection_options.c:266
+#: app/tools/gimpbucketfilltool.c:368 app/tools/selection_options.c:263
 msgid "Finding Similar Colors"
 msgstr "Ähnliche Farben finden"
 
@@ -5834,7 +5834,7 @@ msgid "Allow completely transparent regions to be filled"
 msgstr "Füllen von vollständig transparenten Bereichen zulassen"
 
 #: app/tools/gimpbucketfilltool.c:396 app/tools/gimpcolorpickertool.c:721
-#: app/tools/selection_options.c:294 app/tools/selection_options.c:362
+#: app/tools/selection_options.c:291 app/tools/selection_options.c:359
 msgid "Sample Merged"
 msgstr "Vereinigung abtasten"
 
@@ -5842,7 +5842,7 @@ msgstr "Vereinigung abtasten"
 msgid "Base filled area on all visible layers"
 msgstr "Gefüllten Bereich auf alle sichtbaren Bereiche stützen"
 
-#: app/tools/gimpbucketfilltool.c:419 app/tools/selection_options.c:320
+#: app/tools/gimpbucketfilltool.c:419 app/tools/selection_options.c:317
 msgid "Maximum color difference"
 msgstr "Maximale Farbdifferenz"
 
@@ -5898,31 +5898,31 @@ msgstr "Farbausgleich anpassen"
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Farbausgleich funktioniert nur bei RGB Bildern."
 
-#: app/tools/gimpcolorbalancetool.c:286
+#: app/tools/gimpcolorbalancetool.c:285
 msgid "Select Range to Modify"
 msgstr "Den zu bearbeitenden Bereich wählen"
 
-#: app/tools/gimpcolorbalancetool.c:295
+#: app/tools/gimpcolorbalancetool.c:294
 msgid "Modify Selected Range's Color Levels"
 msgstr "Farbwerte des gewählten Bereichs bearbeiten"
 
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/tools/gimpcolorbalancetool.c:312
 msgid "Cyan"
 msgstr "Cyan"
 
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/tools/gimpcolorbalancetool.c:319
 msgid "Magenta"
 msgstr "Magenta"
 
-#: app/tools/gimpcolorbalancetool.c:327
+#: app/tools/gimpcolorbalancetool.c:326
 msgid "Yellow"
 msgstr "Gelb"
 
-#: app/tools/gimpcolorbalancetool.c:337
+#: app/tools/gimpcolorbalancetool.c:336
 msgid "R_eset Range"
 msgstr "Bereich _zurücksetzen"
 
-#: app/tools/gimpcolorbalancetool.c:346
+#: app/tools/gimpcolorbalancetool.c:345
 msgid "Preserve _Luminosity"
 msgstr "_Helligkeit erhalten"
 
@@ -5975,7 +5975,7 @@ msgstr "Hex Triplet"
 msgid "Sample Average"
 msgstr "Abtastgröße"
 
-#: app/tools/gimpcolorpickertool.c:760 app/tools/selection_options.c:211
+#: app/tools/gimpcolorpickertool.c:760 app/tools/selection_options.c:208
 #: app/widgets/gimpbrusheditor.c:149
 msgid "Radius:"
 msgstr "Radius:"
@@ -6093,7 +6093,7 @@ msgid "Curve Type:"
 msgstr "Kurventyp:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:674 app/tools/gimplevelstool.c:576
+#: app/tools/gimpcurvestool.c:674 app/tools/gimplevelstool.c:571
 msgid "All Channels"
 msgstr "Alle Kanäle"
 
@@ -6430,37 +6430,37 @@ msgstr "Verändere Werte für Kanal:"
 msgid "Input Levels"
 msgstr "Quellwerte"
 
-#: app/tools/gimplevelstool.c:472 modules/cdisplay_gamma.c:35
+#: app/tools/gimplevelstool.c:470 modules/cdisplay_gamma.c:35
 #: modules/cdisplay_gamma.c:331
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:495
+#: app/tools/gimplevelstool.c:492
 msgid "Output Levels"
 msgstr "Zielwerte"
 
-#: app/tools/gimplevelstool.c:587
+#: app/tools/gimplevelstool.c:582
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:590
+#: app/tools/gimplevelstool.c:585
 msgid "Adjust levels automatically"
 msgstr "Werte automatisch anpassen"
 
-#: app/tools/gimplevelstool.c:600
+#: app/tools/gimplevelstool.c:595
 msgid "Read levels settings from file"
 msgstr "Einstellungen aus Datei lesen"
 
-#: app/tools/gimplevelstool.c:610
+#: app/tools/gimplevelstool.c:605
 msgid "Save levels settings to file"
 msgstr "Aktuelle Einstellungen in Datei speichern"
 
-#: app/tools/gimplevelstool.c:1246
+#: app/tools/gimplevelstool.c:1241
 msgid "Load Levels"
 msgstr "Werte öffnen"
 
-#: app/tools/gimplevelstool.c:1265
+#: app/tools/gimplevelstool.c:1260
 msgid "Save Levels"
 msgstr "Werte speichern"
 
@@ -6782,7 +6782,7 @@ msgstr "Schrift:"
 msgid "Border:"
 msgstr "Rand:"
 
-#: app/tools/gimptexttool.c:644 app/tools/selection_options.c:431
+#: app/tools/gimptexttool.c:644 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Einheit:"
 
@@ -6858,72 +6858,72 @@ msgstr "Rate"
 msgid "Fade Out"
 msgstr "Verblassen"
 
-#: app/tools/paint_options.c:479 app/tools/paint_options.c:540
+#: app/tools/paint_options.c:476 app/tools/paint_options.c:534
 msgid "Length:"
 msgstr "Länge:"
 
-#: app/tools/paint_options.c:513
+#: app/tools/paint_options.c:510
 msgid "Use Color from Gradient"
 msgstr "Farbe aus Farbverlauf"
 
-#: app/tools/paint_options.c:570
+#: app/tools/paint_options.c:564
 msgid "Type:"
 msgstr "Typ:"
 
-#: app/tools/selection_options.c:115
+#: app/tools/selection_options.c:112
 msgid "Replace the current selection"
 msgstr "Auswahl ersetzen"
 
-#: app/tools/selection_options.c:116
+#: app/tools/selection_options.c:113
 msgid "Add to the current selection"
 msgstr "Zur Auswahl hinzufügen"
 
-#: app/tools/selection_options.c:117
+#: app/tools/selection_options.c:114
 msgid "Subtract from the current selection"
 msgstr "Von Auswahl abziehen"
 
-#: app/tools/selection_options.c:118
+#: app/tools/selection_options.c:115
 msgid "Intersect with the current selection"
 msgstr "Mit Auswahl schneiden"
 
 #. the antialias toggle button
-#: app/tools/selection_options.c:165
+#: app/tools/selection_options.c:162
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
-#: app/tools/selection_options.c:171
+#: app/tools/selection_options.c:168
 msgid "Smooth edges"
 msgstr "Kanten glätten"
 
-#: app/tools/selection_options.c:193
+#: app/tools/selection_options.c:190
 msgid "Feather Edges"
 msgstr "Kanten ausblenden"
 
-#: app/tools/selection_options.c:246
+#: app/tools/selection_options.c:243
 msgid "Show Interactive Boundary"
 msgstr "Interaktive Begrenzung anzeigen"
 
-#: app/tools/selection_options.c:277
+#: app/tools/selection_options.c:274
 msgid "Select Transparent Areas"
 msgstr "Transparente Bereiche auswählen"
 
-#: app/tools/selection_options.c:285
+#: app/tools/selection_options.c:282
 msgid "Allow completely transparent regions to be selected"
 msgstr "Markierung vollständig transparenter Bereiche erlauben"
 
-#: app/tools/selection_options.c:302
+#: app/tools/selection_options.c:299
 msgid "Base selection on all visible layers"
 msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 
-#: app/tools/selection_options.c:347
+#: app/tools/selection_options.c:344
 msgid "Auto Shrink Selection"
 msgstr "Auswahl automatisch verkleinern"
 
-#: app/tools/selection_options.c:370
+#: app/tools/selection_options.c:367
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
-#: app/tools/selection_options.c:382
+#: app/tools/selection_options.c:379
 msgid "Fixed Size / Aspect Ratio"
 msgstr "Feste Größe / Seitenverhältnis"
 
@@ -7074,7 +7074,7 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Datenobjekt löschen"
 
-#: app/widgets/gimpdocumentview.c:162
+#: app/widgets/gimpdocumentview.c:164
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -7084,11 +7084,11 @@ msgstr ""
 "<Shift> Fenster anheben wenn bereits geöffnet\n"
 "<Strg> Bild Öffnen-Dialog"
 
-#: app/widgets/gimpdocumentview.c:173
+#: app/widgets/gimpdocumentview.c:175
 msgid "Remove selected entry"
 msgstr "Gewählten Eintrag entfernen"
 
-#: app/widgets/gimpdocumentview.c:181
+#: app/widgets/gimpdocumentview.c:183
 msgid ""
 "Recreate preview\n"
 "<Shift> Reload all previews\n"
@@ -7110,15 +7110,15 @@ msgstr "_Familie:"
 msgid "_Style:"
 msgstr "_Stil:"
 
-#: app/widgets/gimpgradienteditor.c:384 app/widgets/gimppaletteeditor.c:270
+#: app/widgets/gimpgradienteditor.c:384 app/widgets/gimppaletteeditor.c:269
 msgid "Zoom All"
 msgstr "Alles zeigen"
 
-#: app/widgets/gimpgradienteditor.c:391 app/widgets/gimppaletteeditor.c:277
+#: app/widgets/gimpgradienteditor.c:391 app/widgets/gimppaletteeditor.c:276
 msgid "Zoom In"
 msgstr "Hineinzoomen"
 
-#: app/widgets/gimpgradienteditor.c:398 app/widgets/gimppaletteeditor.c:284
+#: app/widgets/gimpgradienteditor.c:398 app/widgets/gimppaletteeditor.c:283
 msgid "Zoom Out"
 msgstr "Herauszoomen"
 
@@ -7218,12 +7218,12 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Stattdessen Netscape verwenden"
 
-#: app/widgets/gimpimagedock.c:162
+#: app/widgets/gimpimagedock.c:164
 msgid "Auto"
 msgstr "Auto"
 
 # CHECK
-#: app/widgets/gimpimagedock.c:261
+#: app/widgets/gimpimagedock.c:263
 #, c-format
 msgid "Gimp Dock #%d"
 msgstr "GIMP Dock %d"
@@ -7273,7 +7273,7 @@ msgstr "Transparenz erhalten"
 msgid "Anchor"
 msgstr "Verankern"
 
-#: app/widgets/gimppaletteeditor.c:244 app/widgets/gimppaletteeditor.c:354
+#: app/widgets/gimppaletteeditor.c:244 app/widgets/gimppaletteeditor.c:353
 msgid "Undefined"
 msgstr "Nicht definiert"
 
