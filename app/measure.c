@@ -420,7 +420,7 @@ measure_tool_motion (Tool           *tool,
     }
   else
     {
-      bx = ax < 0 ? -1 : 1;
+      bx = 0;
       by = 0;
     }
 

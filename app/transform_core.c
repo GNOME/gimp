@@ -123,7 +123,7 @@ pixel_surround_init (PixelSurround *ps,
 
 /* return a pointer to a buffer which contains all the surrounding pixels */
 /* strategy: if we are in the middle of a tile, use the tile storage */
-/* otherwise just copy into out own malloced buffer and return that */
+/* otherwise just copy into our own malloced buffer and return that */
 
 static guchar *
 pixel_surround_lock (PixelSurround *ps,
@@ -739,13 +739,13 @@ transform_core_draw (Tool *tool)
   transform_core = (TransformCore *) tool->private;
 
   gdisplay_transform_coords (gdisp, transform_core->tx1, transform_core->ty1,
-			     &transform_core->sx1, &transform_core->sy1, 0);
+			     &transform_core->sx1, &transform_core->sy1, FALSE);
   gdisplay_transform_coords (gdisp, transform_core->tx2, transform_core->ty2,
-			     &transform_core->sx2, &transform_core->sy2, 0);
+			     &transform_core->sx2, &transform_core->sy2, FALSE);
   gdisplay_transform_coords (gdisp, transform_core->tx3, transform_core->ty3,
-			     &transform_core->sx3, &transform_core->sy3, 0);
+			     &transform_core->sx3, &transform_core->sy3, FALSE);
   gdisplay_transform_coords (gdisp, transform_core->tx4, transform_core->ty4,
-			     &transform_core->sx4, &transform_core->sy4, 0);
+			     &transform_core->sx4, &transform_core->sy4, FALSE);
 
   x1 = transform_core->sx1;  y1 = transform_core->sy1;
   x2 = transform_core->sx2;  y2 = transform_core->sy2;
@@ -781,10 +781,10 @@ transform_core_draw (Tool *tool)
 	{
 	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci],
 				     transform_core->tgrid_coords[gci+1],
-				     &xa, &ya, 0);
+				     &xa, &ya, FALSE);
 	  gdisplay_transform_coords (gdisp, transform_core->tgrid_coords[gci+2],
 				     transform_core->tgrid_coords[gci+3],
-				     &xb, &yb, 0);
+				     &xb, &yb, FALSE);
       
 	  gdk_draw_line (transform_core->core->win, transform_core->core->gc,
 			 xa, ya, xb, yb);
@@ -806,7 +806,7 @@ transform_core_draw (Tool *tool)
   if (tool->type == ROTATE)
     {
       gdisplay_transform_coords (gdisp, transform_core->tcx, transform_core->tcy,
-				 &transform_core->scx, &transform_core->scy, 0);
+				 &transform_core->scx, &transform_core->scy, FALSE);
 
       gdk_draw_arc (transform_core->core->win, transform_core->core->gc, 1,
 		    transform_core->scx - (srw >> 1),
@@ -1502,8 +1502,8 @@ transform_core_do (GImage          *gimage,
 	    }
           else  /*  no interpolation  */
             {
-              itx = RINT (ttx);
-              ity = RINT (tty);
+              itx = floor (ttx);
+              ity = floor (tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )

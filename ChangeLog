@@ -1,3 +1,10 @@
+Mon Feb 28 23:52:56 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: fixed off-by-one error for the x coordinate
+	
+	* app/transform_core.c: fixed scaling without interpolation
+	(bug #6681) 
+
 Mon Feb 28 19:11:39 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* app/cursorutil.c app/cursorutil.h:
