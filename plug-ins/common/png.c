@@ -60,7 +60,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.3.3 - 30 June 2000"
+#define PLUG_IN_VERSION  "1.3.4 - 03 September 2002"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -321,6 +321,14 @@ run (gchar * name,
            * Possibly retrieve data...
            */
           gimp_get_data ("file_png_save", &pngvals);
+
+	  /*
+	   * If the image has no transparency, then there is usually
+	   * no need to save a bKGD chunk.  For more information, see:
+	   * http://bugzilla.gnome.org/show_bug.cgi?id=92395
+	   */
+	  if (! gimp_drawable_has_alpha (drawable_ID))
+	    pngvals.bkgd = FALSE;
 
           /*
            * Then acquire information with a dialog...

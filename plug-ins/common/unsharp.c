@@ -237,7 +237,7 @@ run (gchar      *name,
 
 	  /* make sure there are legal values */
 	  if ((unsharp_params.radius < 0.0) ||
-	      (unsharp_params.amount<0.0))
+	      (unsharp_params.amount < 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
@@ -812,7 +812,7 @@ unsharp_mask_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      unsharp_params.radius, 0.1, 25.0, 0.1, 1.0, 1,
+			      unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   g_signal_connect (G_OBJECT (adj), "value_changed",
