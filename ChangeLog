@@ -1,3 +1,8 @@
+Thu Apr  2 20:09:06 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c: the impossibility of duplicating a
+	non-auxillary channel is now reflected by the menu-sensitivity 
+
 Thu Apr  2 15:34:22 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* updated iwarp to the version on the registry and reapplied

@@ -518,7 +518,7 @@ channels_dialog_set_menu_sensitivity ()
   /* lower channel */
   gtk_widget_set_sensitive (channels_ops[2].widget, !fs_sensitive && aux_sensitive);
   /* duplicate channel */
-  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive );
+  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive && aux_sensitive);
   /* delete channel */
   gtk_widget_set_sensitive (channels_ops[4].widget, !fs_sensitive && aux_sensitive);
   /* channel to selection */
