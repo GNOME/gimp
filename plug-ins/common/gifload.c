@@ -844,6 +844,13 @@ ReadImage (FILE        *fd,
 
   if (frame_number == 1 )
     {
+      /* Guard against bogus logical screen size values */
+      if (screenwidth == 0)
+	screenwidth = len;
+
+      if (screenheight == 0)
+	screenheight = height;
+
       image_ID = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
       gimp_image_set_filename (image_ID, filename);
 
