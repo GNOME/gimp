@@ -1,3 +1,7 @@
+2003-07-22  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp_splash.png: special Gimpcon splash
+
 2003-07-22  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for freetype-config and set FREETYPE_LIBS.
