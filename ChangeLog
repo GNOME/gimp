@@ -1,3 +1,17 @@
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/gui/image-menu.c
+	* app/gui/view-commands.[ch]: added a fullscreen mode for the
+	image display by means of gtk_window_fullscreen/unfullscreen.
+	Depends on the window manager implementing _NET_WM_STATE_FULLSCREEN.
+
+	* app/tools/gimpcroptool.c: made gimp_crop_tool_draw() static.
+
+	* app/tools/gimptexttool.[ch]: derive from GimpDrawTool, no real
+	changes yet.
+
 2003-03-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/xpm.c: don't add a transparent color entry for

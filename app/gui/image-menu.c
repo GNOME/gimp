@@ -355,6 +355,11 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "view/dot_for_dot.html", NULL },
 
+  { { N_("/View/Fullscreen"), "F11",
+      view_fullscreen_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/fullscreen.html", NULL },
+
   MENU_SEPARATOR ("/View/---"),
 
   { { N_("/View/Info Window..."), "<control><shift>I",
@@ -1254,6 +1259,10 @@ image_menu_update (GtkItemFactory *item_factory,
 
   SET_SENSITIVE ("/View/Dot for Dot", gdisp);
   SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
+
+  SET_SENSITIVE ("/View/Fullscreen", gdisp);
+  SET_ACTIVE    ("/View/Fullscreen",
+		 gdisp && (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN));
 
   SET_SENSITIVE ("/View/Info Window...",       gdisp);
   SET_SENSITIVE ("/View/Navigation Window...", gdisp);

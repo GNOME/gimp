@@ -741,7 +741,7 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
-void
+static void
 gimp_crop_tool_draw (GimpDrawTool *draw)
 {
   GimpCropTool     *crop;

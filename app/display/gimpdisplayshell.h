@@ -147,6 +147,8 @@ struct _GimpDisplayShell
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean          space_pressed;
   gboolean          space_release_pending;
+
+  GdkWindowState    window_state;      /* for fullscreen display              */
 };
 
 struct _GimpDisplayShellClass
@@ -231,6 +233,7 @@ void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
                                                       GimpSelectionControl  control);
+void        gimp_display_shell_toggle_fullscreen     (GimpDisplayShell *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

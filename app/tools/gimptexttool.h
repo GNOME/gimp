@@ -20,7 +20,7 @@
 #define __GIMP_TEXT_TOOL_H__
 
 
-#include "libgimptool/gimptool.h"
+#include "gimpdrawtool.h"
 
 
 #define GIMP_TYPE_TEXT_TOOL            (gimp_text_tool_get_type ())
@@ -34,10 +34,10 @@ typedef struct _GimpTextToolClass GimpTextToolClass;
 
 struct _GimpTextTool
 {
-  GimpTool       parent_instance;
+  GimpDrawTool   parent_instance;
 
-  gint           click_x;
-  gint           click_y;
+  gint           x1, y1;
+  gint           x2, y2;
 
   GimpDisplay   *gdisp;
   GimpText      *text;
@@ -47,7 +47,7 @@ struct _GimpTextTool
 
 struct _GimpTextToolClass
 {
-  GimpToolClass  parent_class;
+  GimpDrawToolClass   parent_class;
 };
 
 

@@ -122,6 +122,29 @@ view_dot_for_dot_cmd_callback (GtkWidget *widget,
 }
 
 void
+view_fullscreen_cmd_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          fullscreen;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_toggle_fullscreen (shell);
+
+  fullscreen = shell->window_state & GDK_WINDOW_STATE_FULLSCREEN;
+
+  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+				"/View/Fullscreen",
+				fullscreen);
+  gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+				"/View/Fullscreen",
+				fullscreen);
+}
+
+void
 view_info_window_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {

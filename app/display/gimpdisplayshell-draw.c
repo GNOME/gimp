@@ -252,6 +252,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->space_pressed         = FALSE;
   shell->space_release_pending = FALSE;
 
+  shell->window_state          = 0;
+
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
@@ -269,6 +271,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
   g_signal_connect (shell, "key_press_event",
+		    G_CALLBACK (gimp_display_shell_events),
+		    shell);
+  g_signal_connect (shell, "window_state_event",
 		    G_CALLBACK (gimp_display_shell_events),
 		    shell);
 
@@ -1396,98 +1401,6 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
-{
-  gint     disp_width, disp_height;
-  gint     width, height;
-  gint     shell_width, shell_height;
-  gint     max_auto_width, max_auto_height;
-  gint     border_x, border_y;
-  gint     s_width, s_height;
-  gboolean resize = FALSE;
-
-  s_width  = gdk_screen_width ();
-  s_height = gdk_screen_height ();
-
-  width  = SCALEX (shell, shell->gdisp->gimage->width);
-  height = SCALEY (shell, shell->gdisp->gimage->height);
-
-  disp_width  = shell->disp_width;
-  disp_height = shell->disp_height;
-
-  shell_width  = GTK_WIDGET (shell)->allocation.width;
-  shell_height = GTK_WIDGET (shell)->allocation.height;
-
-  border_x = shell_width  - disp_width;
-  border_y = shell_height - disp_height;
-
-  max_auto_width  = (s_width  - border_x) * 0.75;
-  max_auto_height = (s_height - border_y) * 0.75;
-
-  /* If one of the display dimensions has changed and one of the
-   * dimensions fits inside the screen
-   */
-  if (((width + border_x) < s_width || (height + border_y) < s_height) &&
-      (width != disp_width || height != disp_height))
-    {
-      width  = ((width  + border_x) < s_width)  ? width  : max_auto_width;
-      height = ((height + border_y) < s_height) ? height : max_auto_height;
-
-      resize = TRUE;
-    }
-  /*  If the projected dimension is greater than current, but less than
-   *  3/4 of the screen size, expand automagically
-   */
-  else if ((width > disp_width || height > disp_height) &&
-	   (disp_width < max_auto_width || disp_height < max_auto_height))
-    {
-      width  = MIN (max_auto_width,  width);
-      height = MIN (max_auto_height, height);
-
-      resize = TRUE;
-    }
-
-  if (resize)
-    {
-      if (width < shell->statusbar->requisition.width) 
-        width = shell->statusbar->requisition.width; 
-
-      gtk_window_resize (GTK_WINDOW (shell),
-                         width  + border_x,
-                         height + border_y);
-    }
-}
-
-void
-gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
-                                         GimpSelectionControl  control)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->select)
-    {
-      switch (control)
-	{
-	case GIMP_SELECTION_OFF:
-	  gimp_display_shell_selection_invis (shell->select);
-	  break;
-	case GIMP_SELECTION_LAYER_OFF:
-	  gimp_display_shell_selection_layer_invis (shell->select);
-	  break;
-	case GIMP_SELECTION_ON:
-	  gimp_display_shell_selection_start (shell->select, TRUE);
-	  break;
-	case GIMP_SELECTION_PAUSE:
-	  gimp_display_shell_selection_pause (shell->select);
-	  break;
-	case GIMP_SELECTION_RESUME:
-	  gimp_display_shell_selection_resume (shell->select);
-	  break;
-	}
-    }
-}
-
-void
 gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              x,
                               gint              y,
@@ -1620,6 +1533,107 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
   gdk_draw_line (shell->canvas->window,
 		 shell->canvas->style->white_gc,
 		 x+1, y - 7, x+1, y + 7);
+}
+
+void
+gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
+{
+  gint     disp_width, disp_height;
+  gint     width, height;
+  gint     shell_width, shell_height;
+  gint     max_auto_width, max_auto_height;
+  gint     border_x, border_y;
+  gint     s_width, s_height;
+  gboolean resize = FALSE;
+
+  s_width  = gdk_screen_width ();
+  s_height = gdk_screen_height ();
+
+  width  = SCALEX (shell, shell->gdisp->gimage->width);
+  height = SCALEY (shell, shell->gdisp->gimage->height);
+
+  disp_width  = shell->disp_width;
+  disp_height = shell->disp_height;
+
+  shell_width  = GTK_WIDGET (shell)->allocation.width;
+  shell_height = GTK_WIDGET (shell)->allocation.height;
+
+  border_x = shell_width  - disp_width;
+  border_y = shell_height - disp_height;
+
+  max_auto_width  = (s_width  - border_x) * 0.75;
+  max_auto_height = (s_height - border_y) * 0.75;
+
+  /* If one of the display dimensions has changed and one of the
+   * dimensions fits inside the screen
+   */
+  if (((width + border_x) < s_width || (height + border_y) < s_height) &&
+      (width != disp_width || height != disp_height))
+    {
+      width  = ((width  + border_x) < s_width)  ? width  : max_auto_width;
+      height = ((height + border_y) < s_height) ? height : max_auto_height;
+
+      resize = TRUE;
+    }
+  /*  If the projected dimension is greater than current, but less than
+   *  3/4 of the screen size, expand automagically
+   */
+  else if ((width > disp_width || height > disp_height) &&
+	   (disp_width < max_auto_width || disp_height < max_auto_height))
+    {
+      width  = MIN (max_auto_width,  width);
+      height = MIN (max_auto_height, height);
+
+      resize = TRUE;
+    }
+
+  if (resize)
+    {
+      if (width < shell->statusbar->requisition.width) 
+        width = shell->statusbar->requisition.width; 
+
+      gtk_window_resize (GTK_WINDOW (shell),
+                         width  + border_x,
+                         height + border_y);
+    }
+}
+
+void
+gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
+                                         GimpSelectionControl  control)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->select)
+    {
+      switch (control)
+	{
+	case GIMP_SELECTION_OFF:
+	  gimp_display_shell_selection_invis (shell->select);
+	  break;
+	case GIMP_SELECTION_LAYER_OFF:
+	  gimp_display_shell_selection_layer_invis (shell->select);
+	  break;
+	case GIMP_SELECTION_ON:
+	  gimp_display_shell_selection_start (shell->select, TRUE);
+	  break;
+	case GIMP_SELECTION_PAUSE:
+	  gimp_display_shell_selection_pause (shell->select);
+	  break;
+	case GIMP_SELECTION_RESUME:
+	  gimp_display_shell_selection_resume (shell->select);
+	  break;
+	}
+    }
+}
+
+void
+gimp_display_shell_toggle_fullscreen (GimpDisplayShell *shell)
+{
+  if (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN)
+    gtk_window_unfullscreen (GTK_WINDOW (shell));
+  else
+    gtk_window_fullscreen (GTK_WINDOW (shell));
 }
 
 
