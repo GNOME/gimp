@@ -325,7 +325,7 @@ WriteMakefile(
     		    'Gimp/Module.pm'	=> '$(INST_LIBDIR)/Gimp/Module.pm',
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
-    'LDFROM'	=> expand("\$(OBJECT) $LIBS $INTLLIBS"),
+    'LDFROM'	=> expand("\$(OBJECT) $LIBS"), # $INTLLIBS
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],

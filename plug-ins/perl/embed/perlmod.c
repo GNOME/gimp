@@ -5,7 +5,7 @@
 
 #include <libgimp/gimpmodule.h>
 
-#include "../ppport.h"
+#include "../gppport.h"
 
 static GimpModuleInfo info = {
     NULL,

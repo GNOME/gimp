@@ -805,7 +805,9 @@ IMAGETYPE is one of GIF, JPG, JPEG, PNM or PNG, options include
 
  options for PNG images
  -Cn	use compression level n
-
+ -E	Do not skip ancillary chunks (default)
+ +E	Skip ancillary chunks
+ 
  options for JPEG images
  -Qn	use quality "n" to save file (JPEG only)
  -S	do not smooth (default)
@@ -834,6 +836,7 @@ sub save_image($$) {
    $loop=0;
    $delay=0;
    $dispose=0;
+   $noextra=0;
 
    $_=$path=~s/^([^:]+):// ? $1 : "";
    $type=uc($1) if $path=~/\.([^.]+)$/;
@@ -841,6 +844,7 @@ sub save_image($$) {
    while($_ ne "") {
       $interlace=$1 eq "+", 	next if s/^([-+])[iI]//;
       $flatten=$1 eq "+", 	next if s/^([-+])[fF]//;
+      $noextra=$1 eq "+",	next if s/^([-+])[eE]//;
       $smooth=$1 eq "+", 	next if s/^([-+])[sS]//;
       $quality=$1*0.01,		next if s/^-[qQ](\d+)//;
       $compress=$1,		next if s/^-[cC](\d+)//;
@@ -866,7 +870,7 @@ sub save_image($$) {
       }
       $layer->file_gif_save($path,$path,$interlace,$loop,$delay,$dispose);
    } elsif ($type eq "PNG") {
-      $layer->file_png_save($path,$path,$interlace,$compress);
+      $layer->file_png_save($path,$path,$interlace,$noextra,$compress);
    } elsif ($type eq "PNM") {
       $layer->file_pnm_save($path,$path,1);
    } else {

@@ -210,8 +210,8 @@ sub extension_perl_server {
         $port=$Gimp::Net::default_tcp_port unless $port;
         $tcp = local *FH;
         socket($tcp,PF_INET,SOCK_STREAM,scalar getprotobyname('tcp') || 6)
-           && bind($tcp,sockaddr_in $port,INADDR_ANY)
            && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
+           && bind($tcp,sockaddr_in $port,INADDR_ANY)
            && listen($tcp,5)
              or die __"unable to create listening tcp socket: $!\n";
         slog __"accepting connections on port $port";
@@ -233,8 +233,8 @@ sub extension_perl_server {
      if ($use_tcp && $auth) {
         $tcp = local *FH;
         socket($tcp,PF_INET,SOCK_STREAM,scalar getprotobyname('tcp') || 6)
-           && bind($tcp,sockaddr_in $Gimp::Net::default_tcp_port,INADDR_ANY)
            && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
+           && bind($tcp,sockaddr_in $Gimp::Net::default_tcp_port,INADDR_ANY)
            && listen($tcp,5)
              or die __"unable to create listening tcp socket: $!\n";
         slog __"accepting connections on port $Gimp::Net::default_tcp_port";
