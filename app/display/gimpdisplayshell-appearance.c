@@ -287,7 +287,7 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   options = GET_OPTIONS (shell);
 
-  g_object_set (options, "show-active-layer", show, NULL);
+  g_object_set (options, "show-layer-boundary", show, NULL);
 
   if (shell->select)
     gimp_display_shell_selection_layer_set_hidden (shell->select, ! show);
@@ -303,7 +303,7 @@ gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
-  return GET_OPTIONS (shell)->show_active_layer;
+  return GET_OPTIONS (shell)->show_layer_boundary;
 }
 
 void

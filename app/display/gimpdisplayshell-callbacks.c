@@ -212,7 +212,7 @@ gimp_display_shell_events (GtkWidget        *widget,
         gimp_display_shell_set_show_selection  (shell,
                                                 options->show_selection);
         gimp_display_shell_set_show_layer      (shell,
-                                                options->show_active_layer);
+                                                options->show_layer_boundary);
         gimp_display_shell_set_show_guides     (shell,
                                                 options->show_guides);
         gimp_display_shell_set_show_grid       (shell,

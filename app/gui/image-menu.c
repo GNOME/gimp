@@ -1491,7 +1491,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
   SET_ACTIVE    ("/View/Show Selection",      gdisp && options->show_selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && options->show_active_layer);
+  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && options->show_layer_boundary);
   SET_ACTIVE    ("/View/Show Guides",         gdisp && options->show_guides);
   SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
   SET_ACTIVE    ("/View/Show Grid",           gdisp && options->show_grid);

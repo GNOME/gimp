@@ -47,7 +47,7 @@ struct _GimpDisplayOptions
 
   /*  GimpCanvas options  */
   gboolean               show_selection;
-  gboolean               show_active_layer;
+  gboolean               show_layer_boundary;
   gboolean               show_guides;
   gboolean               show_grid;
   GimpCanvasPaddingMode  padding_mode;

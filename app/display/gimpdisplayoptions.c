@@ -48,7 +48,7 @@ enum
   PROP_SHOW_SCROLLBARS,
   PROP_SHOW_STATUSBAR,
   PROP_SHOW_SELECTION,
-  PROP_SHOW_ACTIVE_LAYER,
+  PROP_SHOW_LAYER_BOUNDARY,
   PROP_SHOW_GUIDES,
   PROP_SHOW_GRID,
   PROP_PADDING_MODE,
@@ -175,8 +175,8 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
                                     "show-selection", NULL,
                                     TRUE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_ACTIVE_LAYER,
-                                    "show-active-layer", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+                                    "show-layer-boundary", NULL,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
@@ -229,8 +229,8 @@ gimp_display_options_fs_class_init (GimpDisplayOptionsClass *klass)
                                     "show-selection", NULL,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_ACTIVE_LAYER,
-                                    "show-active-layer", NULL,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+                                    "show-layer-boundary", NULL,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
@@ -260,9 +260,9 @@ gimp_display_options_init (GimpDisplayOptions *options)
 
 static void
 gimp_display_options_set_property (GObject      *object,
-                                      guint         property_id,
-                                      const GValue *value,
-                                      GParamSpec   *pspec)
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
 {
   GimpDisplayOptions *options = GIMP_DISPLAY_OPTIONS (object);
 
@@ -283,8 +283,8 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_SHOW_SELECTION:
       options->show_selection = g_value_get_boolean (value);
       break;
-    case PROP_SHOW_ACTIVE_LAYER:
-      options->show_active_layer = g_value_get_boolean (value);
+    case PROP_SHOW_LAYER_BOUNDARY:
+      options->show_layer_boundary = g_value_get_boolean (value);
       break;
     case PROP_SHOW_GUIDES:
       options->show_guides = g_value_get_boolean (value);
@@ -330,8 +330,8 @@ gimp_display_options_get_property (GObject    *object,
     case PROP_SHOW_SELECTION:
       g_value_set_boolean (value, options->show_selection);
       break;
-    case PROP_SHOW_ACTIVE_LAYER:
-      g_value_set_boolean (value, options->show_active_layer);
+    case PROP_SHOW_LAYER_BOUNDARY:
+      g_value_set_boolean (value, options->show_layer_boundary);
       break;
     case PROP_SHOW_GUIDES:
       g_value_set_boolean (value, options->show_guides);

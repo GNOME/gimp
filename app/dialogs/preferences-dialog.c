@@ -870,7 +870,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
                           "show-selection",    _("Show S_election"),
                           GTK_BOX (checks_vbox));
   prefs_check_button_add (object,
-                          "show-active_layer", _("Show _Active Layer"),
+                          "show-layer-boundary", _("Show _Layer Boundary"),
                           GTK_BOX (checks_vbox));
   prefs_check_button_add (object,
                           "show-guides",       _("Show _Guides"),

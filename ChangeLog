@@ -1,3 +1,14 @@
+2003-10-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	* gimp/app/display/gimpdisplayoptions.[ch]: changed
+	PROP_SHOW_ACTIVE_LAYER to PROP_SHOW_LAYER_BOUNDARY to be
+	consistent with the user interface
+
+	* gimp/app/display/gimpdisplayshell-appearance.c
+	* gimp/app/display/gimpdisplayshell-callbacks.c
+	* gimp/app/gui/preferences-dialog.c
+	* gimp/app/gui/image-menu.c: changed accordingly
+
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): fixed
