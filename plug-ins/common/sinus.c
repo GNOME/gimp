@@ -31,6 +31,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>   /* For random seeding. */
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1038,6 +1039,7 @@ typedef struct
   glong     colors;
   GimpRGB   col1;
   GimpRGB   col2;
+  gint      seed_is_time;
 } SinusVals;
 
 static SinusVals svals = 
@@ -1052,7 +1054,8 @@ static SinusVals svals =
   LINEAR, 
   USE_COLORS,
   { 1.0, 1.0, 0.0, 1.0 },
-  { 0.0, 0.0, 1.0, 1.0 }
+  { 0.0, 0.0, 1.0, 1.0 },
+  TRUE
 };
 
 typedef struct
@@ -1145,7 +1148,8 @@ query (void)
     { GIMP_PDB_FLOAT,    "alpha1", "alpha for the first color (used if the drawable has an alpha chanel)" },
     { GIMP_PDB_FLOAT,    "alpha2", "alpha for the second color (used if the drawable has an alpha chanel)" },
     { GIMP_PDB_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
-    { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" }
+    { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" },
+    { GIMP_PDB_INT32,    "seed_is_time", "If set, random number generator is seeded with current time" }
   };
 
   INIT_I18N ();
@@ -1205,7 +1209,7 @@ run (gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 16)
+      if (nparams != 17)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
@@ -1224,6 +1228,7 @@ run (gchar      *name,
 	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
 	  svals.blend_power  = param[15].data.d_float;
+          svals.seed_is_time = param[16].data.d_int32;
 	}
       break;
 
@@ -1637,20 +1642,22 @@ sinus_radio_button_update (GtkWidget *widget,
 }
 
 static void
-sinus_int_adjustment_update (GtkAdjustment *adjustment,
-			     gpointer       data)
+sinus_double_adjustment_update (GtkAdjustment *adjustment,
+				gpointer       data)
 {
-  gimp_int_adjustment_update (adjustment, data);
+  gimp_double_adjustment_update (adjustment, data);
 
   if (do_preview)
     sinus_do_preview (NULL);
 }
 
 static void
-sinus_double_adjustment_update (GtkAdjustment *adjustment,
-				gpointer       data)
+sinus_random_update (GObject   *unused,
+		     GtkWidget *random)
 {
-  gimp_double_adjustment_update (adjustment, data);
+  if (random)
+    gtk_spin_button_set_value(GIMP_RANDOM_SEED_SPINBUTTON(random),
+			      (double) svals.seed);
 
   if (do_preview)
     sinus_do_preview (NULL);
@@ -1677,7 +1684,6 @@ sinus_dialog (void)
   GtkWidget *toggle;
   GtkWidget *push_col1 = NULL;
   GtkWidget *push_col2 = NULL;
-  GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *logo;
   gchar      buf[3 * 100];
@@ -1703,6 +1709,8 @@ sinus_dialog (void)
   g_signal_connect (G_OBJECT (dlg), "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  gimp_help_init ();
 
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -1796,24 +1804,22 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  table = gtk_table_new(3, 1, FALSE);
+  gtk_table_set_col_spacings(GTK_TABLE(table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  hbox = gimp_random_seed_new (&svals.seed, &svals.seed_is_time,
+			       TRUE, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+				     _("_Random Seed:"), 1.0, 0.5,
+				     hbox, 1, TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+				 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
 
-  label = gtk_label_new_with_mnemonic (_("_Random Seed:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_spin_button_new (&adj, svals.seed,
-				     -10000000000.0, 1000000000.0, 1.0, 10.0,
-				     0.0, 0.0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_signal_connect (G_OBJECT (adj), "value_changed",
-                    G_CALLBACK (sinus_int_adjustment_update),
-                    &svals.seed);
+  g_signal_connect(G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (hbox)),
+		   "value_changed", G_CALLBACK (sinus_random_update), NULL);
+  g_signal_connect(G_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (hbox)),
+		   "toggled", G_CALLBACK (sinus_random_update), hbox);
+  gtk_widget_show(table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Force Tiling?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
@@ -2013,6 +2019,7 @@ sinus_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
+  gimp_help_free ();
   gdk_flush ();
 
   return run_flag;
@@ -2041,6 +2048,10 @@ sinus_do_preview (GtkWidget *widget)
 
   p.height = thePreview->height;
   p.width = thePreview->width;
+
+  if (svals.seed_is_time)
+    svals.seed = time(NULL);
+
   prepare_coef (&p);
 
   if (thePreview->bpp == 3)
