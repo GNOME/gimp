@@ -1,5 +1,14 @@
 2004-11-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus/plug-in-menus.c (plug_in_menus_add_proc): create
+	dynamic sub-menus using a separate, ui-manager-global merge_id
+	instead of the procedure's merge_id. Has the effect that the ui
+	manager keeps around these sub-menus forever, even if the
+	procedure that initially registered them is unregistered.
+	Fixes menu ordering after Script-Fu->Refresh.
+
+2004-11-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpparasitelist.c: cosmetics, untabified.
 
 	* libgimpbase/gimpparasiteio.[ch]: added g_return_if_fail()'s

@@ -217,6 +217,7 @@ plug_in_menus_add_proc (GimpUIManager *manager,
   gchar *merge_key;
   gchar *action_path;
   guint  merge_id;
+  guint  menu_merge_id;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
@@ -251,7 +252,17 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
   g_free (merge_key);
 
-  action_path = plug_in_menus_build_path (manager, ui_path, merge_id,
+  menu_merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
+                                                       "plug-in-menu-merge-id"));
+
+  if (! menu_merge_id)
+    {
+      menu_merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+      g_object_set_data (G_OBJECT (manager), "plug-in-menu-merge-id",
+                         GUINT_TO_POINTER (menu_merge_id));
+    }
+
+  action_path = plug_in_menus_build_path (manager, ui_path, menu_merge_id,
                                           path, FALSE);
 
   if (! action_path)
