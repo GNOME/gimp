@@ -1,11 +1,11 @@
 # Japanese message table for GIMP 1.2
-# Copyright (C) 1998-2000 Free Software Foundation, Inc.
-# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2000.
+# Copyright (C) 1998-2001 Free Software Foundation, Inc.
+# SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1998-2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2001-04-01 22:01+0900\n"
+"POT-Creation-Date: 2001-06-17 17:58+0900\n"
 "PO-Revision-Date: 2001-04-01 22:09+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -322,7 +322,7 @@ msgstr "ブラシエディタ"
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:288 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -554,17 +554,17 @@ msgid "Empty Channel Copy"
 msgstr "空チャンネルコピー"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:316 app/levels.c:379
 msgid "Red"
 msgstr "赤"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
 msgid "Green"
 msgstr "緑"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
 msgid "Blue"
 msgstr "青"
 
@@ -720,7 +720,7 @@ msgstr "インデックス:"
 msgid "Hex Triplet"
 msgstr "16進3つ"
 
-#: app/color_picker.c:278 app/histogram_tool.c:265
+#: app/color_picker.c:278 app/histogram_tool.c:272
 msgid "Intensity:"
 msgstr "強度:"
 
@@ -768,7 +768,7 @@ msgstr "色相"
 msgid "Saturation"
 msgstr "彩度"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:315
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -1445,27 +1445,27 @@ msgstr ""
 "レイヤーマスクやチャンネルに属しているので\n"
 "フローティング選択から新しいレイヤーは作成できません."
 
-#: app/gdisplay.c:237
+#: app/gdisplay.c:239
 msgid "RGB-empty"
 msgstr "RGB-未描画"
 
-#: app/gdisplay.c:237 app/image_new.c:64 app/preferences_dialog.c:1653
+#: app/gdisplay.c:239 app/image_new.c:64 app/preferences_dialog.c:1653
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gdisplay.c:240
+#: app/gdisplay.c:242
 msgid "grayscale-empty"
 msgstr "グレースケール-未描画"
 
-#: app/gdisplay.c:240
+#: app/gdisplay.c:242
 msgid "grayscale"
 msgstr "グレースケール"
 
-#: app/gdisplay.c:243
+#: app/gdisplay.c:245
 msgid "indexed-empty"
 msgstr "インデックス-未描画"
 
-#: app/gdisplay.c:243
+#: app/gdisplay.c:245
 msgid "indexed"
 msgstr "インデックス"
 
@@ -1512,27 +1512,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "ストローク描画する領域が選択されていません."
 
-#: app/gimpbrush.c:295
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr ""
-"不明なブラシファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
+msgstr "不明なブラシファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
-#: app/gimpbrush.c:315
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "GIMP ブラシファイル \"%s\" 中に問題があります."
 
-#: app/gimpbrush.c:322 app/patterns.c:236
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "名前なし"
 
-#: app/gimpbrush.c:335 app/gimpbrush.c:380
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP ブラシファイルが切り縮められているようです: \"%s\""
 
-#: app/gimpbrush.c:360
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP ブラシファイルが破損しているようです: \"%s\"."
@@ -1555,7 +1554,7 @@ msgstr ""
 "警告: ブラシパイプ読み込み失敗\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:293
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1564,7 +1563,7 @@ msgstr ""
 "ブラシパイプは一つ以上のブラシを持たなければなりません:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:384
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -1674,8 +1673,7 @@ msgstr ""
 
 #: app/gimpimage.c:3094
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr ""
-"指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
+msgstr "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
 
 #: app/gimpimage.c:3202
 msgid "Channel cannot be raised any further"
@@ -1967,9 +1965,7 @@ msgstr "拡大倍率: %d:1    表示 [%0.6f, %0.6f]"
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
-msgstr ""
-"位置: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
-"不透明度: %0.3f"
+msgstr "位置: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    不透明度: %0.3f"
 
 #: app/gradient.c:2383
 #, c-format
@@ -1997,9 +1993,7 @@ msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動"
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
-msgstr ""
-"クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    "
-"Shift+ドラッグ: 移動 & 圧縮"
+msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    Shift+ドラッグ: 移動 & 圧縮"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
@@ -2180,7 +2174,7 @@ msgid "Gradient Selection"
 msgstr "グラデーション選択"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
 msgid "Histogram"
 msgstr "ヒストグラム"
 
@@ -2188,31 +2182,31 @@ msgstr "ヒストグラム"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "インデックス画像に対してはヒストグラム表示はできません."
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:268
 msgid "Mean:"
 msgstr "平均:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:269
 msgid "Std Dev:"
 msgstr "標準偏差:"
 
-#: app/histogram_tool.c:263
+#: app/histogram_tool.c:270
 msgid "Median:"
 msgstr "中心値:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:271
 msgid "Pixels:"
 msgstr "ピクセル:"
 
-#: app/histogram_tool.c:266
+#: app/histogram_tool.c:273
 msgid "Count:"
 msgstr "カウント:"
 
-#: app/histogram_tool.c:267
+#: app/histogram_tool.c:274
 msgid "Percentile:"
 msgstr "パーセント:"
 
-#: app/histogram_tool.c:300
+#: app/histogram_tool.c:307
 msgid "Information on Channel:"
 msgstr "チャンネル情報:"
 
@@ -2315,24 +2309,19 @@ msgstr "%.1f MB"
 msgid ""
 "The active brush.\n"
 "Click to open the Brushes Dialog."
-msgstr ""
-"アクティブになっているブラシです. クリックするとブラシダイアログを表示します."
+msgstr "アクティブになっているブラシです. クリックするとブラシダイアログを表示します."
 
 #: app/indicator_area.c:161
 msgid ""
 "The active pattern.\n"
 "Click to open the Patterns Dialog."
-msgstr ""
-"アクティブになっているパターンです. "
-"クリックするとパターンダイアログを表示します."
+msgstr "アクティブになっているパターンです. クリックするとパターンダイアログを表示します."
 
 #: app/indicator_area.c:180
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradients Dialog."
-msgstr ""
-"アクティブになっているグラデーションです. "
-"クリックするとグラデーションダイアログを表示します."
+msgstr "アクティブになっているグラデーションです. クリックするとグラデーションダイアログを表示します."
 
 #: app/info_dialog.c:189 app/preferences_dialog.c:1814
 #: app/preferences_dialog.c:1920
@@ -2464,9 +2453,7 @@ msgstr "形状"
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
-msgstr ""
-"前景色と背景色です. 黒と白の四角で色を初期化できます.  "
-"矢印は前景色と背景色を交換します. クリックすると色を選択できます."
+msgstr "前景色と背景色です. 黒と白の四角で色を初期化できます.  矢印は前景色と背景色を交換します. クリックすると色を選択できます."
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2881,16 +2868,13 @@ msgstr "  -b, --batch <コマンド>   バッチモードで起動。\n"
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr ""
-"  -c, --console-messages   警告はダイアログでなく、コンソールに出力する。\n"
+msgstr "  -c, --console-messages   警告はダイアログでなく、コンソールに出力する。\n"
 
 #: app/main.c:313
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr ""
-"  -d, --no-data            "
-"パターン、グラデーション、パレット、ブラシを読み込まない\n"
+msgstr "  -d, --no-data            パターン、グラデーション、パレット、ブラシを読み込まない\n"
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2928,8 +2912,7 @@ msgstr "  --verbose                詳細起動メッセージを表示する。\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
+msgstr "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -2938,9 +2921,7 @@ msgstr "  --no-xshm                X 共有メモリ拡張機能を使用しない。\n"
 #: app/main.c:324
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr ""
-"  --debug-handlers         "
-"致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする。\n"
+msgstr "  --debug-handlers         致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする。\n"
 
 #: app/main.c:325
 msgid "  --display <display>      Use the designated X display.\n"
@@ -3782,39 +3763,39 @@ msgstr "メモリー中のみ"
 msgid "nowhere (click 'refresh')"
 msgstr "非存在 ('再読み込み' をクリック)"
 
-#: app/module_db.c:883
+#: app/module_db.c:879 app/module_db.c:884
 msgid "Unload"
 msgstr "アンロード"
 
-#: app/module_db.c:899
+#: app/module_db.c:900
 msgid "Purpose:"
 msgstr "目的:"
 
-#: app/module_db.c:900
+#: app/module_db.c:901
 msgid "Author:"
 msgstr "作者:"
 
-#: app/module_db.c:901
+#: app/module_db.c:902
 msgid "Version:"
 msgstr "バージョン:"
 
-#: app/module_db.c:902
+#: app/module_db.c:903
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: app/module_db.c:903
+#: app/module_db.c:904
 msgid "Date:"
 msgstr "日付:"
 
-#: app/module_db.c:904
+#: app/module_db.c:905
 msgid "Location:"
 msgstr "場所:"
 
-#: app/module_db.c:905
+#: app/module_db.c:906
 msgid "State:"
 msgstr "状態:"
 
-#: app/module_db.c:924
+#: app/module_db.c:925
 msgid "Autoload during startup"
 msgstr "起動時に自動読み込み"
 
@@ -4142,8 +4123,7 @@ msgstr "利用可能なパターンがありません"
 #: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr ""
-"不明なパターンファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
+msgstr "不明なパターンファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
 #: app/patterns.c:229
 #, c-format
@@ -4215,13 +4195,13 @@ msgstr ""
 "念のため, 作業中の画像を一旦保存して GIMP を再起動することを\n"
 "お勧めします."
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "ポスター化"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "インデックス画像に対してはポスター化の操作はできません."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "ポスター化"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
@@ -4940,9 +4920,7 @@ msgstr "モニタ解像度測定"
 
 #: app/resolution_calibrate.c:221
 msgid "Measure the rulers and enter their lengths below."
-msgstr ""
-"画面に物差しをあててスケールの長さを実際に測り, "
-"その結果を下の枠に入力してください."
+msgstr "画面に物差しをあててスケールの長さを実際に測り, その結果を下の枠に入力してください."
 
 #: app/resolution_calibrate.c:241
 msgid "Horizontal:"
@@ -5026,8 +5004,7 @@ msgid ""
 "options."
 msgstr ""
 "\n"
-"スケラーブルフォントを持っていない場合には, "
-"ツールオプション中のアンチエイリアシングをオフにしてみてください."
+"スケラーブルフォントを持っていない場合には, ツールオプション中のアンチエイリアシングをオフにしてみてください."
 
 #: app/text_tool.c:751
 msgid "Text Layer"
@@ -5805,16 +5782,12 @@ msgstr "ユーザに対して GIMP は正常にインストールされていません\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr ""
-"'--nointerface' "
-"フラグ付きで起動されたため、ユーザーインストールは実行されません\n"
+msgstr "'--nointerface' フラグ付きで起動されたため、ユーザーインストールは実行されません\n"
 
 #: app/user_install.c:106
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr ""
-"ユーザーインストールを行うには、'--nointerface' フラグを付けずに GIMP "
-"を起動して下さい\n"
+msgstr "ユーザーインストールを行うには、'--nointerface' フラグを付けずに GIMP を起動して下さい\n"
 
 #: app/user_install.c:155
 msgid ""
@@ -6110,8 +6083,8 @@ msgstr "次へ"
 #: app/user_install.c:591
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr ""
-"-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,-jis-fixed-medium-r-normal-*-*"
-"-230-*-*-*-*-*-*,*"
+"-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,-jis-fixed-medium-r-normal-*-"
+"*-230-*-*-*-*-*-*,*"
 
 #: app/user_install.c:688
 msgid ""
@@ -6213,8 +6186,7 @@ msgstr "上の設定でよければ「次へ」をクリックして下さい."
 
 #: app/user_install.c:859
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
-"最良の GIMP パフォーマンスを得るために, 幾つかの設定を調整する必要があります."
+msgstr "最良の GIMP パフォーマンスを得るために, 幾つかの設定を調整する必要があります."
 
 #: app/user_install.c:868
 msgid "Monitor Resolution"
@@ -6277,8 +6249,7 @@ msgid ""
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP "
-"は「タイルキャッシュ」という一定量のメモリを使用して画像を取り扱います.\n"
+"GIMP は「タイルキャッシュ」という一定量のメモリを使用して画像を取り扱います.\n"
 "他の実行中のプロセス等のことも考えつつ, 実メモリ量に基づいて適切に設定して\n"
 "やる必要があります."
 
