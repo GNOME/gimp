@@ -413,6 +413,8 @@ load_rsvg_pixbuf (const gchar  *filename,
   return pixbuf;
 }
 
+static GtkWidget *size_label = NULL;
+
 /*  This is the callback used from load_rsvg_size().  */
 static void
 load_get_size_callback (gint     *width,
@@ -425,6 +427,20 @@ load_get_size_callback (gint     *width,
     {
       *width  = SVG_DEFAULT_SIZE;
       *height = SVG_DEFAULT_SIZE;
+
+      if (size_label)
+        gtk_label_set_text (GTK_LABEL (size_label),
+                            _("SVG file does not\nspecify a size!"));
+    }
+  else
+    {
+      if (size_label)
+        {
+          gchar *text = g_strdup_printf (_("%d x %d"), *width, *height);
+
+          gtk_label_set_text (GTK_LABEL (size_label), text);
+          g_free (text);
+        }
     }
 
   vals->width  = *width;
@@ -486,6 +502,9 @@ load_rsvg_size (const gchar  *filename,
   g_io_channel_unref (io);
   rsvg_handle_free (handle);
 
+  if (vals->width  < 1)  vals->width  = 1;
+  if (vals->height < 1)  vals->height = 1;
+
   return success;
 }
 
@@ -510,8 +529,8 @@ load_dialog_ok_callback (GtkWidget *widget,
                          gpointer   data)
 
 {
-  load_vals.width  = gimp_size_entry_get_refval (size, 0);
-  load_vals.height = gimp_size_entry_get_refval (size, 1);
+  load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
+  load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
 
   load_interface.run = TRUE;
 
@@ -567,8 +586,8 @@ load_dialog_resolution_callback (GimpSizeEntry *res,
   if (!load_rsvg_size (filename, &vals, NULL))
     return;
 
-  svg_width  = MAX (vals.width,  1);
-  svg_height = MAX (vals.height, 1);
+  svg_width  = vals.width;
+  svg_height = vals.height;
 
   load_dialog_set_ratio (ratio_x, ratio_y);
 }
@@ -603,6 +622,7 @@ load_dialog (const gchar *filename)
   GtkWidget *dialog;
   GtkWidget *frame;
   GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *image;
   GdkPixbuf *preview;
   GtkWidget *table;
@@ -629,15 +649,6 @@ load_dialog (const gchar *filename)
                  filename, error ? error->message : "unknown reason");
       return FALSE;
     }
-
-  /*  query the initial size  */
-  vals.resolution = load_vals.resolution;
-
-  load_rsvg_size (filename, &vals, NULL);
-
-  svg_width = MAX (vals.width,  1);
-  svg_height = MAX (vals.height, 1);
-
 
   gimp_ui_init ("svg", FALSE);
 
@@ -666,14 +677,18 @@ load_dialog (const gchar *filename)
 		      TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   /*  The SVG preview  */
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
   frame = gtk_frame_new (NULL);
@@ -684,6 +699,20 @@ load_dialog (const gchar *filename)
   image = gtk_image_new_from_pixbuf (preview);
   gtk_container_add (GTK_CONTAINER (frame), image);
   gtk_widget_show (image);
+
+  size_label = gtk_label_new (NULL);
+  gtk_label_set_justify (GTK_LABEL (size_label), GTK_JUSTIFY_CENTER);
+  gtk_misc_set_alignment (GTK_MISC (size_label), 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), size_label, TRUE, TRUE, 4);
+  gtk_widget_show (size_label);
+
+  /*  query the initial size after the size label is created  */
+  vals.resolution = load_vals.resolution;
+
+  load_rsvg_size (filename, &vals, NULL);
+
+  svg_width  = vals.width;
+  svg_height = vals.height;
 
   table = gtk_table_new (7, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
