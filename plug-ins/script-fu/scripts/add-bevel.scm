@@ -1,8 +1,8 @@
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
-; add-bevel.scm version 1.00
-; Time-stamp: <97/09/05 14:31:31 ard>
+; add-bevel.scm version 1.03
+; Time-stamp: <1997-12-16 09:17:24 ard>
 ; 
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ; Contains code from add-shadow.scm by Sven Neumann
 ; (neumanns@uni-duesseldorf.de) (thanks Sven).
 ;  
-; Adds a bevel to an image.
+; Adds a bevel to an image.  See http://www.cs.waikato.ac.nz/~ard/gimp/
 ;
 ; If there is a selection, it is bevelled.
 ; Otherwise if there is an alpha channel, the selection is taken from it
@@ -34,14 +34,28 @@
 ; floating-bumpmapped-texture cliche.
 
 ;
+; 1.01: now works on offset layers.
+; 1.02: has crop-pixel-border option to trim one pixel off each edge of the
+;       bevelled image.  Bumpmapping leaves edge pixels unchanged, which
+;       looks bad.  Oddly, this is not apparant in the GIMP - you have to
+;       save the image and load it into another viewer.  First noticed in
+;       Nutscrape.
+;       Changed path (removed "filters/").
+; 1.03: adds one-pixel border before bumpmapping, and removes it after.
+;	Got rid of the crop-pixel-border option (no longer reqd).
+;
+
+;
 ; BUMPMAP NOTES:
 ;
 ; Bumpmap changed arguments from version 2.02 to 2.03.  If you use the
 ; wrong bumpmap.c this script will either bomb (good) or produce a
 ; naff image (bad).
 ;
-; As distributed this script expects bumpmap 2.03 or later.
+; As distributed this script expects bumpmap 2.03 (shipped with Gimp 0.99.11)
+; or later.
 
+;
 ; BUGS
 ;
 ; Doesn't allow undoing the operation.  Why not?
@@ -57,12 +71,14 @@
 			     keep-bump-layer)
 
   (let* ((index 0)
+	 (bevelling-whole-image FALSE)
 	 (greyness 0)
 	 (thickness (abs thickness))
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image (if (= work-on-copy TRUE) (car (gimp-channel-ops-duplicate img)) img))
-	 (width (car (gimp-image-width image)))
-	 (height (car (gimp-image-height image)))
+	 (pic-layer (car (gimp-image-active-drawable image)))
+	 (width (car (gimp-drawable-width pic-layer)))
+	 (height (car (gimp-drawable-height pic-layer)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (bump-layer (car (gimp-layer-new image 
 					  width 
@@ -72,6 +88,12 @@
 					  100
 					  NORMAL)))
 	 )
+    ;
+    ; If the layer we're bevelling is offset from the image's origin, we
+    ; have to do the same to the bumpmap
+    (let ((offsets (gimp-drawable-offsets pic-layer)))
+      (gimp-layer-set-offsets bump-layer (car offsets) (cadr offsets))
+      )
 
     (gimp-image-disable-undo image)
 
@@ -79,12 +101,17 @@
     ;
     ; Set the selection to the area we want to bevel.
     ;
-    (set! pic-layer (car (gimp-image-active-drawable image)))
     (if (eq? 0 (car (gimp-selection-bounds image)))
-	(if (not (eq? 0 (car (gimp-drawable-has-alpha pic-layer))))	; Wish I knew Scheme
-	    (gimp-selection-layer-alpha image pic-layer)
-	    (gimp-selection-all image)
-	    )
+	(begin
+	  (set! bevelling-whole-image TRUE) ; ...so we can restore things properly, and crop.
+	  (gimp-image-resize image (+ width 2) (+ height 2) 1 1)
+	  (if (not (eq? 0 (car (gimp-drawable-has-alpha pic-layer))))	; Wish I knew Scheme
+	      (gimp-selection-layer-alpha image pic-layer)
+	      (begin
+		(gimp-selection-all image)
+		)
+	      )
+	  )
 	)
 
     ; Store it for later.
@@ -134,6 +161,13 @@
 ;   (plug-in-bump-map 1 image pic-layer bump-layer 125 45 3 0 0     TRUE FALSE 1)
     (plug-in-bump-map 1 image pic-layer bump-layer 125 45 3 0 0 0 0 TRUE FALSE 1)
 
+    ;
+    ; Shave one pixel off each edge
+    ;
+    (if (= bevelling-whole-image TRUE)
+	  (gimp-crop image width height 1 1)
+	  )
+
     (if (= work-on-copy FALSE) (gimp-image-disable-undo image))
 
     ;------------------------------------------------------------
@@ -141,12 +175,15 @@
     ; Restore things
     ;
     (gimp-palette-set-background old-bg)
-    (gimp-selection-load image select)
-    ; they can Select->Invert then Edit->Clear for a cutout.
+    (if (= bevelling-whole-image TRUE)
+	(gimp-selection-none image)	; No selection to start with
+	(gimp-selection-load image select)
+	)
+    ; If they started with a selection, they can Select->Invert then
+    ; Edit->Clear for a cutout.
 
     ; clean up
     (gimp-image-remove-channel image select)
-    (gimp-image-set-active-layer image pic-layer)
     (if (= keep-bump-layer TRUE)
 	(begin
 	  (gimp-image-add-layer image bump-layer 1)
@@ -169,7 +206,7 @@
 		    "Add a bevel to an image."
 		    "Andrew Donkin (ard@cs.waikato.ac.nz)"
 		    "Andrew Donkin"
-		    "1997/07/17"
+		    "1997/11/06"
 		    "RGB RGBA GRAY GRAYA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0

@@ -1,3 +1,10 @@
+Mon Dec 15 19:03:59 EST 1997 Adrian Likins <adrian@gimp.org>
+
+	* fixed a few broken tips in gimp_tips.txt
+
+	* updated add-bevel.scm
+
+
 Sun Dec 14 19:47:59 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Configured in the flame plugin by default

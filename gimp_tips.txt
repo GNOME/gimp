@@ -44,7 +44,9 @@ You can change the name of a layer by double-clicking on its name in
 the Layers dialog box.
 
 The layer named "Background" is special.  You can't add transparency 
-or a layer mask to it.  To add transparency, you must first "Add alpha" to the layer by right-clicking in the layers dialog and selecting "Add alpha to layer". 
+or a layer mask to it.  To add transparency, you must first 
+"Add alpha" to the layer by right-clicking in the layers dialog
+ and selecting "Add alpha to layer". 
 
 When using a drawing tool (Paintbrush, Airbrush, or Pencil), Shift-click
 will draw a straight line from your last drawing point to your current
@@ -69,8 +71,6 @@ All the old channel operations have been replaced with the more
 powerful and flexible Layer and Layer Mode operations.  They may take
 getting used to, but they are simply a better way to operate.
 
-Brushes and patterns are viewed in small sections.  You can drag them
-around inside their little cells to view the whole brush or pattern.
 
 You can use the middle mouse button to pan around the image, if it's
 larger than its display window.
