@@ -1,3 +1,11 @@
+1999-11-24  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* plug-ins/perl/examples/perlotine: Fixed some changed stuff, 
+	mostly gimp_image_get_guide_orientation()'s types (from 
+	GUIDE_HORIZONTAL to HORIZONTAL (and vertical respectively). Also
+	changed the image->convert_indexed() call and parameters that were 
+	wrong.
+
 Wed Nov 24 01:23:34 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: be more instructive about the
