@@ -1,3 +1,8 @@
+1999-09-04  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/main.c: setlocale (LC_NUMERIC, "C")  after gtk_init because
+	  gtk_init zaps previous settings
+
 Fri Sep  3 17:33:37 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: add plug-ins/AlienMap2/Makefile to AC_OUTPUT

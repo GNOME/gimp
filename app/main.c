@@ -139,6 +139,8 @@ main (int argc, char **argv)
 
   gtk_init (&argc, &argv);
 
+  setlocale(LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
+
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
   display_env = g_new (gchar, strlen (display_name) + 9);
