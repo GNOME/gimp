@@ -1,5 +1,23 @@
 2003-07-09  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/tester.c: removed ...
+	* app/composite/test-composite.c: ... and readded under a new name.
+
+	* app/composite/Makefile.am: added a check target that builds and
+	runs the test program.
+
+	* app/composite/gimp-composite-generic.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-util.h
+	* app/composite/gimp-composite.[ch]
+	* app/composite/make-gimp-composite-dispatch.py: made it fit
+	better into the GIMP source tree:
+	- do not include any files from headers
+	- don't use types from <sys/types.h> but use what glib provides
+	- coding style ...
+
+2003-07-09  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am
 	* app/composite/Makefile.am: some Makefile fixes, more to come.
 

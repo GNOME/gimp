@@ -3,7 +3,6 @@
  *
  * Gimp Image Compositing
  * Copyright (C) 2003  Helvetix Victorinox, a pseudonym, <helvetix@gimp.org>
- * $Id$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,19 +19,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef gimp_composite_h
-#define gimp_composite_h
+#ifndef __GIMP_COMPOSITE_H__
+#define __GIMP_COMPOSITE_H__
 
-#include <sys/types.h>
-#include <glib-object.h>
-#include "base/base-enums.h"
-#include "paint-funcs/paint-funcs-types.h"
 
-#ifndef NULL
-#define NULL ((void) 0)
-#endif
-
-typedef enum {
+typedef enum
+{
   GIMP_PIXELFORMAT_V8,
   GIMP_PIXELFORMAT_VA8,
   GIMP_PIXELFORMAT_RGB8,
@@ -47,58 +39,73 @@ typedef enum {
   GIMP_PIXELFORMAT_N
 } GimpPixelFormat;
 
-typedef struct {
-  u_int8_t v;
+typedef struct
+{
+  guint8  v;
 } gimp_v8_t;
 
-typedef struct {
-  u_int8_t v;
-  u_int8_t a;
+typedef struct
+{
+  guint8  v;
+  guint8  a;
 } gimp_va8_t;
 
-typedef struct {
-  u_int8_t r;
-  u_int8_t g;
-  u_int8_t b;
+typedef struct
+{
+  guint8  r;
+  guint8  g;
+  guint8  b;
 } gimp_rgb8_t;
 
-typedef struct {
-  u_int8_t r;
-  u_int8_t g;
-  u_int8_t b;
-  u_int8_t a;
+typedef struct
+{
+  guint8  r;
+  guint8  g;
+  guint8  b;
+  guint8  a;
 } gimp_rgba8_t;
 
 #ifdef GIMP_16BITCOLOUR
-typedef struct {
-  u_int16_t v;
+typedef struct
+{
+  guint16  v;
 } gimp_v16_t;
 
-typedef struct {
-  u_int16_t v;
-  u_int16_t a;
+typedef struct
+{
+  guint16  v;
+  guint16  a;
 } gimp_va16_t;
 
-typedef struct {
-  u_int16_t r;
-  u_int16_t g;
-  u_int16_t b;
+typedef struct
+{
+  guint16  r;
+  guint16  g;
+  guint16  b;
 } gimp_rgb16_t;
 
-typedef struct {
-  u_int16_t r;
-  u_int16_t g;
-  u_int16_t b;
-  u_int16_t a;
+typedef struct
+{
+  guint16  r;
+  guint16  g;
+  guint16  b;
+  guint16  a;
 } gimp_rgba16_t;
 #endif
 
-extern unsigned char gimp_composite_pixel_bpp[]; /* bytes per-pixel for each of the pixel formats */
-extern unsigned char gimp_composite_pixel_alphap[]; /* does pixel format have alpha? */
-extern GimpPixelFormat gimp_composite_pixel_alpha[]; /* converter between alpha and non-alpha pixel formats */
+/* bytes per-pixel for each of the pixel formats */
+extern const guchar gimp_composite_pixel_bpp[];
 
-#define GIMP_COMPOSITE_ALPHA_OPAQUE (-1)
+/* does pixel format have alpha? */
+extern const guchar gimp_composite_pixel_alphap[];
+
+/* converter between alpha and non-alpha pixel formats */
+extern const GimpPixelFormat gimp_composite_pixel_alpha[];
+
+
+#define GIMP_COMPOSITE_ALPHA_OPAQUE      (-1)
 #define GIMP_COMPOSITE_ALPHA_TRANSPARENT (0)
+
 /*
  * This is the enumeration of all the supported compositing
  * operations.  Many of them are taken from the GimpLayerModeEffect
@@ -107,7 +114,8 @@ extern GimpPixelFormat gimp_composite_pixel_alpha[]; /* converter between alpha 
  *
  * Nota Bene: Unfortunately, the order here is important!
  */
-typedef enum {
+typedef enum
+{
   GIMP_COMPOSITE_NORMAL        = GIMP_NORMAL_MODE,
   GIMP_COMPOSITE_DISSOLVE      = GIMP_DISSOLVE_MODE,
   GIMP_COMPOSITE_BEHIND        = GIMP_BEHIND_MODE,
@@ -142,10 +150,11 @@ typedef enum {
   GIMP_COMPOSITE_N
 } GimpCompositeOperation;
 
-struct GimpCompositeOperationEffects {
-  unsigned char affect_opacity;
-  unsigned char increase_opacity;
-  unsigned char decrease_opacity;
+struct GimpCompositeOperationEffects
+{
+  guchar affect_opacity;
+  guchar increase_opacity;
+  guchar decrease_opacity;
 };
 
 extern struct GimpCompositeOperationEffects gimp_composite_operation_effects[];
@@ -154,24 +163,25 @@ extern struct GimpCompositeOperationEffects gimp_composite_operation_effects[];
  * This is structure for communicating all that is necessary to a
  * compositing operation.
  */
-typedef struct {
-  unsigned char *A;             /* Source A */
-  unsigned char *B;             /* Source B */
-  unsigned char *D;             /* Destination */
-  unsigned char *M;             /* Mask */
-  unsigned long n_pixels;
+typedef struct
+{
+  guchar *A;             /* Source A    */
+  guchar *B;             /* Source B    */
+  guchar *D;             /* Destination */
+  guchar *M;             /* Mask        */
+  gulong  n_pixels;
 
   GimpPixelFormat pixelformat_A;
   GimpPixelFormat pixelformat_B;
   GimpPixelFormat pixelformat_D;
   GimpPixelFormat pixelformat_M;
 
-  struct { int opacity; char affect;  } replace;
-  struct { int scale;                 } scale;
-  struct { int blend;                 } blend;
-  struct { int x; int y; int opacity; } dissolve;
+  struct { gint opacity; gchar affect;   } replace;
+  struct { gint scale;                   } scale;
+  struct { gint blend;                   } blend;
+  struct { gint x; gint y; gint opacity; } dissolve;
 
-  CombinationMode combine;
+  CombinationMode        combine;
   GimpCompositeOperation op;
 } GimpCompositeContext;
 
@@ -179,4 +189,6 @@ typedef struct {
 extern void gimp_composite_dispatch(GimpCompositeContext *);
 extern void gimp_composite_init();
 extern void gimp_composite_context_print(GimpCompositeContext *);
-#endif
+
+
+#endif  /* __GIMP_COMPOSITE_H__  */

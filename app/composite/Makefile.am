@@ -31,9 +31,32 @@ libappcomposite_a_built_sources = gimp-composite-dispatch.c
 
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
-EXTRA_DIST = make-gimp-composite-dispatch.py
 
 gimp-composite.c: gimp-composite-dispatch.c
 
 gimp-composite-dispatch.c: gimp-composite-generic.o make-gimp-composite-dispatch.py
 	./make-gimp-composite-dispatch.py gimp-composite-generic.o > gimp-composite-dispatch.c
+
+
+EXTRA_DIST = \
+	make-gimp-composite-dispatch.py	\
+	ns
+
+EXTRA_PROGRAMS = test-composite
+
+
+#
+# unit tests for GimpComposite
+#
+
+TESTS = test-composite
+
+test_composite_DEPENDENCIES = $(gimpcomposite_dependencies)
+
+test_composite_LDADD = \
+	libappcomposite.a						\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(GLIB_LIBS)
+
+
+CLEANFILES = $(EXTRA_PROGRAMS)

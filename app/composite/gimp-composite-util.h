@@ -1,30 +1,33 @@
-#ifndef gimp_composite_util
-#define gimp_composite_util
-/*
- *
- */
 
-typedef struct {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-  unsigned char a;
+#ifndef __GIMP_COMPOSITE_UTIL_H__
+#define __GIMP_COMPOSITE_UTIL_H__
+
+typedef struct
+{
+  guchar  r;
+  guchar  g;
+  guchar  b;
+  guchar  a;
 } rgba8_t;
 
-typedef struct {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
+typedef struct
+{
+  guchar  r;
+  guchar  g;
+  guchar  b;
 } rgb8_t;
 
-typedef struct {
-  unsigned char v;
+typedef struct
+{
+  guchar  v;
 } v8_t;
 
-typedef struct {
-  unsigned char v;
-  unsigned char a;
+typedef struct
+{
+  guchar  v;
+  guchar  a;
 } va8_t;
 
 extern int gimp_composite_bpp[];
-#endif
+
+#endif  /* __GIMP_COMPOSITE_UTIL_H__ */

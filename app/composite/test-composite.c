@@ -1,17 +1,139 @@
+#include "config.h"
+
 #include <stdio.h>
-#include <sys/types.h>
+#include <stdlib.h>
+
 #include <sys/time.h>
+
+#include <glib-object.h>
+
+#include "base/base-types.h"
 
 #include "gimp-composite.h"
 #include "gimp-composite-util.h"
+
 
 #undef use_oldmmx
 
 extern void xxx_3a(rgba8_t *, rgba8_t *, rgba8_t *, u_long);
 
-main(int argc, char *argv[])
+
+static void
+print_rgba8(rgba8_t *p)
 {
-  double f;
+  printf("#%02x%02x%02x,%02X", p->r, p->g, p->b, p->a);
+  fflush(stdout);
+}
+
+static void
+print_va8(va8_t *va8)
+{
+  printf("#%02x,%02X", va8->v, va8->a);
+  fflush(stdout);
+}
+
+static int
+comp_rgba8(char *str, rgba8_t *rgba8A, rgba8_t *rgba8B, rgba8_t *expected, rgba8_t *got, u_long length)
+{
+  int i;
+  int failed;
+  int fail_count;
+
+  fail_count = 0;
+
+  for (i = 0; i < length; i++) {
+    failed = 0;
+
+    if (expected[i].r != got[i].r) { failed = 1; }
+    if (expected[i].g != got[i].g) { failed = 1; }
+    if (expected[i].b != got[i].b) { failed = 1; }
+    if (expected[i].a != got[i].a) { failed = 1; }
+    if (failed) {
+      fail_count++;
+      printf("%s %8d A=", str, i); print_rgba8(&rgba8A[i]);
+      if (rgba8B != (rgba8_t *) 0) {
+        printf(" B="); print_rgba8(&rgba8B[i]);
+      }
+      printf("   ");
+      printf("exp=");
+      print_rgba8(&expected[i]);
+      printf(" got=");
+      print_rgba8(&got[i]);
+      printf("\n");
+    }
+    if (fail_count > 5)
+      break;
+  }
+
+  return fail_count;
+}
+
+static int
+comp_va8(char *str, va8_t *va8A, va8_t *va8B, va8_t *expected, va8_t *got, u_long length)
+{
+  int i;
+  int failed;
+  int fail_count;
+
+  fail_count = 0;
+
+  for (i = 0; i < length; i++) {
+    failed = 0;
+
+    if (expected[i].v != got[i].v) { failed = 1; }
+    if (expected[i].a != got[i].a) { failed = 1; }
+    if (failed) {
+      fail_count++;
+      printf("%s %8d A=", str, i); print_va8(&va8A[i]);
+      if (va8B != (va8_t *) 0) { printf(" B="); print_va8(&va8B[i]); }
+      printf("   ");
+      printf("exp=");
+      print_va8(&expected[i]);
+      printf(" got=");
+      print_va8(&got[i]);
+      printf("\n");
+    }
+    if (fail_count > 5)
+      break;
+  }
+
+  return fail_count;
+}
+
+static void
+dump_rgba8(char *str, rgba8_t *rgba, u_long length)
+{
+  int i;
+
+  printf("%s\n", str);
+
+  for (i = 0; i < length; i++) {
+    printf("%5d: ", i);
+    print_rgba8(&rgba[i]);
+    printf("\n");
+  }
+}
+
+void
+xxx_3a(rgba8_t *a, rgba8_t *b, rgba8_t *c, u_long length)
+{
+  int i;
+
+  for (i = 0; i < length; i++) {
+    printf("%5d: ", i);
+    print_rgba8(&a[i]);
+    printf(" ");
+    print_rgba8(&b[i]);
+    printf(" ");
+    print_rgba8(&c[i]);
+    printf("\n");
+  }
+}
+
+
+int
+main (int argc, char *argv[])
+{
   GimpCompositeContext ctx;
   GimpCompositeContext ctx_generic;
   GimpCompositeContext ctx_va8;
@@ -310,7 +432,7 @@ main(int argc, char *argv[])
   comp_rgba8("multiply", ctx.A, ctx.B, ctx_generic.D, ctx.D, ctx.n_pixels);
   timer_report("multiply",  old_elapsed, new_elapsed);
 #endif
-  
+
 #ifdef do_subtract
   gettimeofday(&t0, NULL);
   ctx.op = GIMP_COMPOSITE_SUBTRACT;
@@ -354,113 +476,5 @@ main(int argc, char *argv[])
   timer_report("swap",  old_elapsed, new_elapsed);
 #endif
 
-  return (0);
-}
-
-print_rgba8(rgba8_t *p)
-{
-  printf("#%02x%02x%02x,%02X", p->r, p->g, p->b, p->a);
-  fflush(stdout);
-}
-
-print_va8(va8_t *va8)
-{
-  printf("#%02x,%02X", va8->v, va8->a);
-  fflush(stdout);
-}
-
-comp_rgba8(char *str, rgba8_t *rgba8A, rgba8_t *rgba8B, rgba8_t *expected, rgba8_t *got, u_long length)
-{
-  int i;
-  int failed;
-  int fail_count;
-
-  fail_count = 0;
-
-  for (i = 0; i < length; i++) {
-    failed = 0;
-    
-    if (expected[i].r != got[i].r) { failed = 1; }
-    if (expected[i].g != got[i].g) { failed = 1; }
-    if (expected[i].b != got[i].b) { failed = 1; }
-    if (expected[i].a != got[i].a) { failed = 1; }
-    if (failed) {
-      fail_count++;
-      printf("%s %8d A=", str, i); print_rgba8(&rgba8A[i]);
-      if (rgba8B != (rgba8_t *) 0) {
-        printf(" B="); print_rgba8(&rgba8B[i]);
-      }
-      printf("   ");
-      printf("exp=");
-      print_rgba8(&expected[i]);
-      printf(" got=");
-      print_rgba8(&got[i]);
-      printf("\n");
-    }
-    if (fail_count > 5)
-      break;
-  }
-
-  return (fail_count);
-}
-
-comp_va8(char *str, va8_t *va8A, va8_t *va8B, va8_t *expected, va8_t *got, u_long length)
-{
-  int i;
-  int failed;
-  int fail_count;
-
-  fail_count = 0;
-
-  for (i = 0; i < length; i++) {
-    failed = 0;
-    
-    if (expected[i].v != got[i].v) { failed = 1; }
-    if (expected[i].a != got[i].a) { failed = 1; }
-    if (failed) {
-      fail_count++;
-      printf("%s %8d A=", str, i); print_va8(&va8A[i]);
-      if (va8B != (va8_t *) 0) { printf(" B="); print_va8(&va8B[i]); }
-      printf("   ");
-      printf("exp=");
-      print_va8(&expected[i]);
-      printf(" got=");
-      print_va8(&got[i]);
-      printf("\n");
-    }
-    if (fail_count > 5)
-      break;
-  }
-
-  return (fail_count);
-}
-
-
-dump_rgba8(char *str, rgba8_t *rgba, u_long length)
-{
-  int i;
-
-  printf("%s\n", str);
-
-  for (i = 0; i < length; i++) {
-    printf("%5d: ", i);
-    print_rgba8(&rgba[i]);
-    printf("\n");
-  }
-}
-
-void
-xxx_3a(rgba8_t *a, rgba8_t *b, rgba8_t *c, u_long length)
-{
-  int i;
-
-  for (i = 0; i < length; i++) {
-    printf("%5d: ", i);
-    print_rgba8(&a[i]);
-    printf(" ");
-    print_rgba8(&b[i]);
-    printf(" ");
-    print_rgba8(&c[i]);
-    printf("\n");
-  }
+  return EXIT_SUCCESS;
 }

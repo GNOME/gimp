@@ -24,18 +24,22 @@
  * of the pixelfiddeling paint-functions. 
  */
 
+#include "config.h"
+
 #include <string.h>
 
-#include "glib/grand.h"
-#include "glib/gtypes.h"
+#include <glib-object.h>
 
-#include "libgimpcolor/gimpcolortypes.h"
-#include "libgimpcolor/gimpcolorspace.h"
+#include "base/base-types.h"
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimp-composite.h"
 
-#define OPAQUE_OPACITY 255
-#define TRANSPARENT_OPACITY 0
+
+#define OPAQUE_OPACITY       255
+#define TRANSPARENT_OPACITY  0
+
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 

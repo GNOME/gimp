@@ -18,10 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-/*
- * $Id$
- */
+
+#include "config.h"
+
 #include <stdio.h>
+
+#include <glib-object.h>
+
+#include "base/base-types.h"
 
 #include "gimp-composite.h"
 
@@ -32,7 +36,8 @@
 /*
  * Report on the number of bytes a particular pixel format consumes per pixel.
  */
-unsigned char gimp_composite_pixel_bpp[] = {
+const guchar gimp_composite_pixel_bpp[] =
+{
   1, /* GIMP_PIXELFORMAT_V8      */
   2, /* GIMP_PIXELFORMAT_VA8     */
   3, /* GIMP_PIXELFORMAT_RGB8    */
@@ -46,7 +51,8 @@ unsigned char gimp_composite_pixel_bpp[] = {
   0, /* GIMP_PIXELFORMAT_ANY */
 };
 
-char *gimp_composite_pixel_name[] = {
+const gchar *gimp_composite_pixel_name[] =
+{
   "GIMP_PIXELFORMAT_V8",
   "GIMP_PIXELFORMAT_VA8",
   "GIMP_PIXELFORMAT_RGB8",
@@ -59,10 +65,12 @@ char *gimp_composite_pixel_name[] = {
 #endif
   "GIMP_PIXELFORMAT_ANY",
 };
+
 /*
  * Report true (non-zero) if a pixel format has alpha.
  */
-unsigned char gimp_composite_pixel_alphap[] = {
+const guchar gimp_composite_pixel_alphap[] =
+{
   0, /* GIMP_PIXELFORMAT_V8      */
   1, /* GIMP_PIXELFORMAT_VA8     */
   0, /* GIMP_PIXELFORMAT_RGB8    */
@@ -79,7 +87,8 @@ unsigned char gimp_composite_pixel_alphap[] = {
 /*
  * Convert to/from pixel formats with/without alpha.
  */
-GimpPixelFormat gimp_composite_pixel_alpha[] = {
+const GimpPixelFormat gimp_composite_pixel_alpha[] =
+{
   GIMP_PIXELFORMAT_VA8,         /* GIMP_PIXELFORMAT_V8      */
   GIMP_PIXELFORMAT_V8,          /* GIMP_PIXELFORMAT_VA8     */
   GIMP_PIXELFORMAT_RGBA8,       /* GIMP_PIXELFORMAT_RGB8    */
@@ -98,7 +107,8 @@ GimpPixelFormat gimp_composite_pixel_alpha[] = {
  * XXX I don't like to put this here.  I think this information,
  * specific to the functions, ought to be with the function.
  */
-struct GimpCompositeOperationEffects gimp_composite_operation_effects[] = {
+struct GimpCompositeOperationEffects gimp_composite_operation_effects[] =
+{
   { TRUE,  TRUE,  FALSE, },     /*  GIMP_NORMAL_MODE        */
   { TRUE,  TRUE,  FALSE, },     /*  GIMP_DISSOLVE_MODE      */
   { TRUE,  TRUE,  FALSE, },     /*  GIMP_BEHIND_MODE        */
