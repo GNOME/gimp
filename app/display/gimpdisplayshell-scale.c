@@ -75,7 +75,7 @@ gimp_display_shell_scale_zoom_step (GimpZoomType zoom_type,
                                     gdouble      scale)
 {
   gint    i, n_presets;
-  gdouble new_scale;
+  gdouble new_scale = 1.0;
 
   /* This table is constructed to have fractions, that approximate
    * sqrt(2)^k. This gives a smooth feeling regardless of the starting

@@ -1,3 +1,8 @@
+2004-02-01  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c: initialize variable
+	to avoid stupid compiler warning.
+
 2004-02-01  Dave Neary  <bolsh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c
