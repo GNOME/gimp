@@ -1,3 +1,7 @@
+2004-11-27  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2004-11-26  Sven Neumann  <sven@gimp.org>
 
 	* sk.po: reverted last commit, it only contained binary gibberish.
