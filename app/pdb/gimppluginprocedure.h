@@ -47,7 +47,8 @@ void            plug_in_proc_def_free         (PlugInProcDef *proc_def);
 
 ProcRecord    * plug_in_proc_def_get_proc     (PlugInProcDef *proc_def);
 const gchar   * plug_in_proc_def_get_progname (PlugInProcDef *proc_def);
-gchar         * plug_in_proc_def_get_help_id  (PlugInProcDef *proc_def);
+gchar         * plug_in_proc_def_get_help_id  (PlugInProcDef *proc_def,
+                                               const gchar   *help_path);
 
 
 #endif /* __PLUG_IN_PROC_H__ */

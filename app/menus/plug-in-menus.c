@@ -170,20 +170,12 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
 {
   GimpItemFactoryEntry  entry;
   gchar                *help_id;
-  gchar                *help_page;
 
   g_return_if_fail (item_factory == NULL ||
                     GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (proc_def != NULL);
 
-  help_id = plug_in_proc_def_get_help_id (proc_def);
-
-  if (help_path)
-    help_page = g_strconcat (help_path, ":", help_id, NULL);
-  else
-    help_page = g_strconcat ("filters/", help_id, NULL);
-
-  g_free (help_id);
+  help_id = plug_in_proc_def_get_help_id (proc_def, help_path);
 
   entry.entry.path            = strstr (proc_def->menu_path, "/");
   entry.entry.accelerator     = proc_def->accelerator;
@@ -191,7 +183,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
   entry.entry.callback_action = 0;
   entry.entry.item_type       = NULL;
   entry.quark_string          = NULL;
-  entry.help_id               = help_page;
+  entry.help_id               = help_id;
   entry.description           = NULL;
 
   if (item_factory)
@@ -228,7 +220,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
         }
     }
 
-  g_free (help_page);
+  g_free (help_id);
 }
 
 void

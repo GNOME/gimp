@@ -119,9 +119,11 @@ file_dialog_new (Gimp              *gimp,
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
                               GTK_ITEM_FACTORY (item_factory)->widget);
 
-    label = gtk_label_new (_("Determine File Type:"));
+    label = gtk_label_new_with_mnemonic (_("Determine File _Type:"));
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
+
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
   }
 
   gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier, filesel);

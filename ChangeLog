@@ -1,3 +1,29 @@
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
+	Bye bye, "crappy/foo.html":
+
+	* app/widgets/gimphelp-ids.h: replaced "crappy/foo.html" by
+	"gimp-proper-identifier".
+
+	* app/plug-in/plug-in-proc.[ch] (plug_in_proc_def_get_help_id):
+	added "const gchar *help_path" parameter and return a help ID
+	ready for attaching to a menu item.
+
+	The help ID is no longer constructed from the plug-in's executable
+	name but from the *procedure* name with '_' replaced by '-'. This
+	means we can now have help for each script-fu script and for each
+	of a plug-in's individual procedures.
+
+	* app/gui/plug-in-menus.c: removed even more duplicated wrong code
+	since plug_in_proc_def_get_help_id() is implemented correctly now.
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c: ditto. Reorder the "XCF" menu item
+	before the separator and added GIMP_STOCK_WILBER.
+
+	* app/gui/file-dialog-utils.c: added a mnemonic to the
+	"Determine File Type:" label.
+
 2003-08-26  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpanchor.h: Intruduce casting macro GIMP_ANCHOR.

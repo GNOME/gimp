@@ -63,36 +63,44 @@ file_save_menu_setup (GimpItemFactory *factory)
   for (list = factory->gimp->save_procs; list; list = g_slist_next (list))
     {
       PlugInProcDef        *file_proc;
-      const gchar          *progname;
-      const gchar          *locale_domain;
-      const gchar          *help_path;
       GimpItemFactoryEntry  entry;
+      const gchar          *locale_domain = NULL;
+      const gchar          *item_type     = NULL;
+      const gchar          *stock_id      = NULL;
       gchar                *help_id;
-      gchar                *help_page;
+      gboolean              is_xcf;
 
       file_proc = (PlugInProcDef *) list->data;
 
-      progname = plug_in_proc_def_get_progname (file_proc);
+      is_xcf = (strcmp (file_proc->db_info.name, "gimp_xcf_save") == 0);
 
-      locale_domain = plug_ins_locale_domain (factory->gimp, progname, NULL);
-      help_path     = plug_ins_help_path (factory->gimp, progname);
-
-      help_id = plug_in_proc_def_get_help_id (file_proc);
-
-      if (help_path)
-        help_page = g_strconcat (help_path, ":", help_id, NULL);
+      if (is_xcf)
+        {
+          item_type = "<StockItem>";
+          stock_id  = GIMP_STOCK_WILBER;
+          help_id   = g_strdup (GIMP_HELP_FILE_SAVE_XCF);
+        }
       else
-        help_page = g_strconcat ("filters/", help_id, NULL);
+        {
+          const gchar *progname;
+          const gchar *help_path;
 
-      g_free (help_id);
+          progname = plug_in_proc_def_get_progname (file_proc);
+
+          locale_domain = plug_ins_locale_domain (factory->gimp, progname, NULL);
+          help_path     = plug_ins_help_path (factory->gimp, progname);
+
+          help_id = plug_in_proc_def_get_help_id (file_proc, help_path);
+        }
 
       entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
       entry.entry.callback        = file_save_type_cmd_callback;
       entry.entry.callback_action = 0;
-      entry.entry.item_type       = NULL;
+      entry.entry.item_type       = item_type;
+      entry.entry.extra_data      = stock_id;
       entry.quark_string          = NULL;
-      entry.help_id               = help_page;
+      entry.help_id               = help_id;
       entry.description           = NULL;
 
       gimp_item_factory_create_item (factory,
@@ -101,7 +109,19 @@ file_save_menu_setup (GimpItemFactory *factory)
                                      file_proc, 2,
                                      TRUE, FALSE);
 
-      g_free (help_page);
+      if (is_xcf)
+        {
+          GtkWidget *menu_item;
+
+          menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
+                                                   entry.entry.path);
+
+          if (menu_item)
+            gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+                                    menu_item, 1);
+        }
+
+      g_free (help_id);
     }
 }
 

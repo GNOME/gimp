@@ -106,27 +106,29 @@ plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
 }
 
 gchar *
-plug_in_proc_def_get_help_id (PlugInProcDef *proc_def)
+plug_in_proc_def_get_help_id (PlugInProcDef *proc_def,
+                              const gchar   *help_path)
 {
-  const gchar *progname;
-  gchar       *basename;
-  gchar       *lowercase_basename;
-  gchar       *help_id;
+  gchar *help_id;
+  gchar *p;
 
   g_return_val_if_fail (proc_def != NULL, NULL);
 
-  progname = plug_in_proc_def_get_progname (proc_def);
+  help_id = g_strdup (proc_def->db_info.name);
 
-  basename = g_path_get_basename (progname);
-  lowercase_basename = g_ascii_strdown (basename, -1);
-  g_free (basename);
+  for (p = help_id; p && *p; p++)
+    if (*p == '_')
+      *p = '-';
 
-#ifdef __GNUC__
-#warning FIXME: fix plug-in menu item help
-#endif
-  help_id = g_strconcat (lowercase_basename, ".html", NULL);
+  if (help_path)
+    {
+      gchar *path_and_id;
 
-  g_free (lowercase_basename);
+      path_and_id = g_strconcat (help_path, ":", help_id, NULL);
+      g_free (help_id);
+
+      return path_and_id;
+    }
 
   return help_id;
 }
