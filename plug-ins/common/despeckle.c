@@ -99,11 +99,11 @@ static void      preview_update            (GtkWidget     *preview);
 static gint      quick_median_select       (guchar       **p,
                                             guchar        *i,
                                             gint           n);
-static guchar    pixel_intensity           (const guchar  *p,
+static inline guchar  pixel_intensity      (const guchar  *p,
                                             gint           bpp);
-static void      pixel_copy                (guchar        *dest,
+static inline void    pixel_copy           (guchar        *dest,
                                             const guchar  *src,
-                                            gint           n);
+                                            gint           bpp);
 
 /*
  * Globals...
@@ -662,7 +662,7 @@ despeckle_median (guchar   *src,
               /* Make sure Svm is ininialized to a sufficient large value */
               med = -1;
 
-              for (jh = x-radius; jh <= x+radius; jh++)
+              for (jh = x - radius; jh <= x + radius; jh++)
                 {
                   for (jv = y-radius, pos1 = 0; jv <= y+radius; jv++)
                     {
@@ -686,7 +686,7 @@ despeckle_median (guchar   *src,
 
               if (med < 1)
                 {
-                  pos1 = (x + ( y * width)) * bpp;
+                  pos1 = (x + (y * width)) * bpp;
                   pixel_copy (dst + pos1, src + pos1, bpp);
                 }
               else
@@ -737,29 +737,28 @@ despeckle_median (guchar   *src,
   g_free (ibuf);
 }
 
-/* * This Quickselect routine is based on the algorithm described in
-* "Numerical recipes in C", Second Edition,
-* Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
-* This code by Nicolas Devillard - 1998. Public domain.
-*
-* modified to swap pointers: swap is done by comparing intensity value
-* for the pointer to RGB
-*/
+/*
+ * This Quickselect routine is based on the algorithm described in
+ * "Numerical recipes in C", Second Edition,
+ * Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
+ * This code by Nicolas Devillard - 1998. Public domain.
+ *
+ * Modified to swap pointers: swap is done by comparing intensity
+ * value for the pointer to RGB.
+ */
 static gint
 quick_median_select (guchar **p,
                      guchar  *i,
                      gint     n)
 {
-  gint low, high ;
-  gint median;
-  gint middle, ll, hh;
+  gint low    = 0;
+  gint high   = n - 1;
+  gint median = (low + high) / 2;
 
-  low = 0 ;
-  high = n-1 ;
-  median = (low + high) / 2;
-
-  for (;;)
+  while (TRUE)
     {
+      gint middle, ll, hh;
+
       if (high <= low) /* One element only */
         return median;
 
@@ -768,8 +767,8 @@ quick_median_select (guchar **p,
           /* Two elements only */
           if (i[low] > i[high])
             {
-               VALUE_SWAP (i[low], i[high]) ;
-               POINTER_SWAP (p[low], p[high]) ;
+               VALUE_SWAP (i[low], i[high]);
+               POINTER_SWAP (p[low], p[high]);
             }
 
           return median;
@@ -780,31 +779,31 @@ quick_median_select (guchar **p,
 
       if (i[middle] > i[high])
         {
-           VALUE_SWAP (i[middle], i[high]) ;
-           POINTER_SWAP (p[middle], p[high]) ;
+           VALUE_SWAP (i[middle], i[high]);
+           POINTER_SWAP (p[middle], p[high]);
         }
 
       if (i[low] > i[high])
         {
-           VALUE_SWAP (i[low], i[high]) ;
-           POINTER_SWAP (p[low], p[high]) ;
+           VALUE_SWAP (i[low], i[high]);
+           POINTER_SWAP (p[low], p[high]);
         }
 
       if (i[middle] > i[low])
         {
-          VALUE_SWAP (i[middle], i[low]) ;
-          POINTER_SWAP (p[middle], p[low]) ;
+          VALUE_SWAP (i[middle], i[low]);
+          POINTER_SWAP (p[middle], p[low]);
         }
 
       /* Swap low item (now in position middle) into position (low+1) */
-      VALUE_SWAP (i[middle], i[low+1]) ;
-      POINTER_SWAP (p[middle], p[low+1])
+      VALUE_SWAP (i[middle], i[low+1]);
+      POINTER_SWAP (p[middle], p[low+1]);
 
       /* Nibble from each end towards middle, swapping items when stuck */
       ll = low + 1;
       hh = high;
 
-      for (;;)
+      while (TRUE)
         {
            do ll++;
            while (i[low] > i[ll]);
@@ -813,7 +812,7 @@ quick_median_select (guchar **p,
            while (i[hh]  > i[low]);
 
            if (hh < ll)
-              break;
+             break;
 
            VALUE_SWAP (i[ll], i[hh]);
            POINTER_SWAP (p[ll], p[hh]);
@@ -833,19 +832,28 @@ quick_median_select (guchar **p,
 
 static guchar
 pixel_intensity (const guchar *p,
-                 gint          n)
+                 gint          bpp)
 {
-  if (n != 3)
-    return p[0];
+  switch (bpp)
+    {
+    case 1:
+    case 2:
+      return p[0];
 
-  return GIMP_RGB_INTENSITY (p[0], p[1], p[2]);
+    case 3:
+    case 4:
+      return GIMP_RGB_INTENSITY (p[0], p[1], p[2]);
+
+    default:
+      return 0; /* should not be reached */
+    }
 }
 
-static void
+static inline void
 pixel_copy (guchar       *dest,
             const guchar *src,
-            gint          n)
+            gint          bpp)
 {
-  for (; n > 0; n--, dest++, src++)
+  for (; bpp > 0; bpp--, dest++, src++)
     *dest = *src;
 }
