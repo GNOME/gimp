@@ -468,7 +468,7 @@ ToolInfo tool_info[] =
     NULL,
     "By Color Select",
     22,
-    "/Select/By Color",
+    "/Select/By Color...",
     NULL,
     NULL,
     NULL,
