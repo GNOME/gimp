@@ -159,16 +159,18 @@ sub interact($$$@) {
    my($help)=shift;
    my(@types)=@{shift()};
    my(@getvals,@setvals,@lastvals,@defaults);
-   my($w,$t,$button,$box,$bot,$g);
+   my($button,$box,$bot,$g);
    my $res=0;
+
+   my $gimp_10 = Gimp->major_version==1 && Gimp->minor_version==0;
    
    init Gtk;
    parse Gtk::Rc Gimp->gtkrc;
    
    for(;;) {
-     $t = new Gtk::Tooltips;
-     
-     $w = new Gtk::Dialog;
+     my $t = new Gtk::Tooltips;
+     my $w = new Gtk::Dialog;
+
      set_title $w $0;
      
      my $h = new Gtk::HBox 0,2;
@@ -187,6 +189,14 @@ sub interact($$$@) {
         my($type,$name,$desc,$default,$extra)=@$_;
         my($value)=shift;
         
+        local *new_PF_STRING = sub {
+           $a=new Gtk::Entry;
+           set_usize $a 0,25;
+           push(@setvals,sub{set_text $a defined $_[0] ? $_[0] : ""});
+           #select_region $a 0,1;
+           push(@getvals,sub{get_text $a});
+        };
+
         if($type == PF_ADJUSTMENT) { # support for scm2perl
            my(@x)=@$default;
            $default=shift @x;
@@ -202,11 +212,7 @@ sub interact($$$@) {
         || $type == PF_INT32		# into the scalar
         || $type == PF_FLOAT		# domain.
         || $type == PF_STRING) {	# I love it
-           $a=new Gtk::Entry;
-           set_usize $a 0,25;
-           push(@setvals,sub{set_text $a defined $_[0] ? $_[0] : ""});
-           #select_region $a 0,1;
-           push(@getvals,sub{get_text $a});
+           &new_PF_STRING;
            
         } elsif($type == PF_FONT) {
            my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
@@ -316,19 +322,31 @@ sub interact($$$@) {
            push(@getvals,sub{$res});
            
         } elsif($type == PF_PATTERN) {
-           $a=new Gimp::UI::PatternSelect -active => $default;
-           push(@setvals,sub{$a->set('active',$default)});
-           push(@getvals,sub{$a->get('active')});
+           if ($gimp_10) {
+              &new_PF_STRING;
+           } else {
+              $a=new Gimp::UI::PatternSelect -active => $default;
+              push(@setvals,sub{$a->set('active',$default)});
+              push(@getvals,sub{$a->get('active')});
+           }
            
         } elsif($type == PF_BRUSH) {
-           $a=new Gimp::UI::BrushSelect -active => $default;
-           push(@setvals,sub{$a->set('active',$default)});
-           push(@getvals,sub{$a->get('active')});
+           if ($gimp_10) {
+              &new_PF_STRING;
+           } else {
+              $a=new Gimp::UI::BrushSelect -active => $default;
+              push(@setvals,sub{$a->set('active',$default)});
+              push(@getvals,sub{$a->get('active')});
+           }
            
         } elsif($type == PF_GRADIENT) {
-           $a=new Gimp::UI::GradientSelect -active => $default;
-           push(@setvals,sub{$a->set('active',$default)});
-           push(@getvals,sub{$a->get('active')});
+           if ($gimp_10) {
+              &new_PF_STRING;
+           } else {
+              $a=new Gimp::UI::GradientSelect -active => $default;
+              push(@setvals,sub{$a->set('active',$default)});
+              push(@getvals,sub{$a->get('active')});
+           }
            
         } else {
            $label="Unsupported argumenttype $type";
@@ -401,7 +419,7 @@ sub interact($$$@) {
      
      show_all $w;
      main Gtk;
-     $w->destroy;
+     #$w->destroy; # buggy in gtk-1.1 (?)
      
      return undef if $res == 0;
      @_ = map {&$_} @getvals;
@@ -932,6 +950,14 @@ EOF
 };
 
 sub logo {
+   if ($Gimp::UI::gtk_10) {
+      new Gtk::Label "Gimp-Perl";
+   } else {
+      &logo_xpm;
+   }
+}
+
+sub logo_xpm {
    new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($_[0]->window,$_[0]->style->black,
       #%XPM:logo%
       '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',

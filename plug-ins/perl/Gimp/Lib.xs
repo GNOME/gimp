@@ -8,6 +8,11 @@
 #include <libgimp/gimpui.h>
 #endif
 
+#if GIMP_MAJOR_VERSION>1 || (GIMP_MAJOR_VERSION==1 && GIMP_MINOR_VERSION>=1)
+#define GIMP11 1
+#define GIMP_PARASITE 1
+#endif
+
 /* FIXME */
 /* sys/param.h is redefining these! */
 #undef MIN
@@ -25,20 +30,16 @@
 # define ERRSV perl_get_sv("@",FALSE)
 #endif
 /* And also for newer perls... */
-#ifndef na
-# define na PL_na
+#ifndef dTHR
+#define dTHR
 #endif
 
-/* FIXME */
-/* dirty is used in gimp.h.  */
+/* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
+#ifdef dirty
 #undef dirty
+#endif
 
 #include "extradefs.h"
-
-#if GIMP_MAJOR_VERSION>1 || (GIMP_MAJOR_VERSION==1 && GIMP_MINOR_VERSION>=1)
-#define GIMP11 1
-#define GIMP_PARASITE 1
-#endif
 
 #define GIMP_PKG	"Gimp::"	/* the package name */
 
@@ -133,11 +134,14 @@ GTile *old_tile (SV *sv)
 
 GPixelRgn *old_pixelrgn (SV *sv)
 {
+  dTHR;
+  STRLEN dc;
+  
   if (!sv_derived_from (sv, PKG_PIXELRGN))
     croak ("argument is not of type " PKG_PIXELRGN);
   
   /* the next line lacks any type of checking.  */
-  return (GPixelRgn *)SvPV(*(hv_fetch ((HV*)SvRV(sv), "_rgn", 4, 0)),na);
+  return (GPixelRgn *)SvPV(*(hv_fetch ((HV*)SvRV(sv), "_rgn", 4, 0)), dc);
 }
 
 /* tracing stuff.  */
@@ -307,10 +311,10 @@ dump_params (int nparams, GParam *args, GParamDef *params)
               gint32 found = 0;
               
               trace_printf ("[%s, ", args[i].data.d_parasite.name);
-              if (args[i].data.d_parasite.flags & PARASITE_PERSISTANT)
+              if (args[i].data.d_parasite.flags & PARASITE_PERSISTENT)
                 {
-                  trace_printf ("PARASITE_PERSISTANT");
-                  found |= PARASITE_PERSISTANT;
+                  trace_printf ("PARASITE_PERSISTENT");
+                  found |= PARASITE_PERSISTENT;
                 }
               
               if (args[i].data.d_parasite.flags & ~found)
@@ -342,6 +346,8 @@ dump_params (int nparams, GParam *args, GParamDef *params)
 static int
 convert_array2paramdef (AV *av, GParamDef **res)
 {
+  dTHR;
+  STRLEN dc;
   int count = 0;
   GParamDef *def = 0;
   
@@ -382,8 +388,8 @@ convert_array2paramdef (AV *av, GParamDef **res)
                       }
                     
                     def->type = SvIV (type);
-                    def->name = name ? SvPV (name, na) : 0;
-                    def->description = help ? SvPV (help, na) : 0;
+                    def->name = name ? SvPV (name, dc) : 0;
+                    def->description = help ? SvPV (help, dc) : 0;
                     def++;
                   }
                 else
@@ -596,7 +602,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
   PUTBACK;
 }
 
-#define SvPv(sv) SvPV((sv), na)
+#define SvPv(sv) SvPV((sv), dc)
 #define Sv32(sv) unbless ((sv), PKG_ANY, croak_str)
 
 #define av2gimp(arg,sv,datatype,type,svxv) { \
@@ -628,6 +634,9 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 static int
 convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
 {
+  dTHR;
+  STRLEN dc;
+  
   switch (arg->type)
     {
       case PARAM_INT32:      	arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
@@ -765,6 +774,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   static int nreturn_vals;
   
   dSP;
+  STRLEN dc;
   int i, count;
   GParamDef *return_defs;
   char *err_msg = 0;
@@ -828,7 +838,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
         }
       
       if (SvTRUE (ERRSV))
-        err_msg = g_strdup (SvPV (ERRSV, na));
+        err_msg = g_strdup (SvPV (ERRSV, dc));
       else
         {
           int i;
@@ -954,6 +964,7 @@ int
 gimp_main(...)
 	PREINIT:
 	CODE:
+		STRLEN dc;
 		SV *sv;
 		
 		if ((sv = perl_get_sv ("Gimp::help", FALSE)) && SvTRUE (sv))
@@ -967,11 +978,11 @@ gimp_main(...)
 		      {
 		        AV *av = perl_get_av ("ARGV", FALSE);
 		        
-		        argv [argc++] = SvPV (perl_get_sv ("0", FALSE), na);
+		        argv [argc++] = SvPV (perl_get_sv ("0", FALSE), dc);
 		        if (av && av_len (av) < 10-1)
 		          {
 		            while (argc-1 <= av_len (av))
-		              argv [argc] = SvPV (*av_fetch (av, argc-1, 0), na),
+		              argv [argc] = SvPV (*av_fetch (av, argc-1, 0), dc),
 		              argc++;
 		          }
 		        else
@@ -986,6 +997,27 @@ gimp_main(...)
 	RETVAL
 
 PROTOTYPES: ENABLE
+
+int
+gimp_major_version()
+   	CODE:
+        RETVAL = gimp_major_version;
+	OUTPUT:
+	RETVAL
+
+int
+gimp_minor_version()
+   	CODE:
+        RETVAL = gimp_minor_version;
+	OUTPUT:
+	RETVAL
+
+int
+gimp_micro_version()
+   	CODE:
+        RETVAL = gimp_micro_version;
+	OUTPUT:
+	RETVAL
 
 # checks wether a gimp procedure exists
 int
@@ -1239,19 +1271,20 @@ gimp_set_data(id, data)
 	{
 		STRLEN dlen;
 		STRLEN len;
+		STRLEN dc;
 		void *dta;
 		
 		dta = SvPV (data, dlen);
 
 		/* do not remove this comment */
 #ifdef HAVE_GET_DATA_SIZE
-		gimp_set_data (SvPV (id, na), dta, dlen);
+		gimp_set_data (SvPV (id, dc), dta, dlen);
 #else
 		{
 		  char str[1024]; /* hack */
 		  SvUPGRADE (id, SVt_PV);
 		  len = SvCUR (id);
-		  Copy (SvPV (id, na), str, len, char);
+		  Copy (SvPV (id, dc), str, len, char);
 		  str[len+1] = 0;
 		  str[len] = 'S'; gimp_set_data (str, &dlen, sizeof (STRLEN));
 		  str[len] = 'C'; gimp_set_data (str, dta, dlen);
@@ -1267,22 +1300,23 @@ gimp_get_data(id)
 		SV *data;
 		STRLEN dlen;
 		STRLEN len;
+		STRLEN dc;
 		
 		/* do not remove this comment */
 #ifdef HAVE_GET_DATA_SIZE
-		dlen = gimp_get_data_size (SvPV (id, na));
+		dlen = gimp_get_data_size (SvPV (id, dc));
 		/* I count on dlen being zero if "id" doesn't exist.  */
 		data = newSVpv ("", 0);
-		gimp_get_data (SvPV (id, na), SvGROW (data, dlen+1));
+		gimp_get_data (SvPV (id, dc), SvGROW (data, dlen+1));
 		SvCUR_set (data, dlen);
-		*((char *)SvPV (data, na) + dlen) = 0;
+		*((char *)SvPV (data, dc) + dlen) = 0;
 		RETVAL = data;
 #else
 		{
 		  char str[1024]; /* hack */
 		  SvUPGRADE (id, SVt_PV);
 		  len = SvCUR (id);
-		  Copy (SvPV (id, na), str, len, char);
+		  Copy (SvPV (id, dc), str, len, char);
 		  
 		  str[len+1] = 0;
 		  dlen = (STRLEN) -1;
@@ -1293,7 +1327,7 @@ gimp_get_data(id)
 		      data = newSVpv ("", 0);
 		      str[len] = 'C'; gimp_get_data (str, SvGROW (data, dlen+1));
 		      SvCUR_set (data, dlen);
-		      *((char *)SvPV (data, na) + dlen) = 0;
+		      *((char *)SvPV (data, dc) + dlen) = 0;
 		      RETVAL = data;
 		    }
 		  else
@@ -1437,7 +1471,8 @@ gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
 		static HV *stash;
 		HV *hv = newHV ();
 		SV *sv = newSVn (sizeof(GPixelRgn));
-		GPixelRgn *pr = (GPixelRgn *)SvPV (sv,na);
+		STRLEN dc;
+		GPixelRgn *pr = (GPixelRgn *)SvPV (sv, dc);
 		
 		gimp_pixel_rgn_init (pr, old_gdrawable (gdrawable), x, y, width, height, dirty, shadow);
 		
@@ -1487,8 +1522,10 @@ gimp_pixel_rgn_get_pixel(pr, x, y)
 	int	x
 	int	y
 	CODE:
+	STRLEN dc;
+	
 	RETVAL = newSVn (pr->bpp);
-	gimp_pixel_rgn_get_pixel (pr, SvPV(RETVAL,na), x, y);
+	gimp_pixel_rgn_get_pixel (pr, SvPV(RETVAL, dc), x, y);
 	OUTPUT:
 	RETVAL
 
@@ -1499,8 +1536,10 @@ gimp_pixel_rgn_get_row(pr, x, y, width)
 	int	y
 	int	width
 	CODE:
+	STRLEN dc;
+	
 	RETVAL = newSVn (pr->bpp * width);
-	gimp_pixel_rgn_get_row (pr, SvPV(RETVAL,na), x, y, width);
+	gimp_pixel_rgn_get_row (pr, SvPV(RETVAL, dc), x, y, width);
 	OUTPUT:
 	RETVAL
 
@@ -1511,8 +1550,10 @@ gimp_pixel_rgn_get_col(pr, x, y, height)
 	int	y
 	int	height
 	CODE:
+	STRLEN dc;
+	
 	RETVAL = newSVn (pr->bpp * height);
-	gimp_pixel_rgn_get_col (pr, SvPV(RETVAL,na), x, y, height);
+	gimp_pixel_rgn_get_col (pr, SvPV(RETVAL, dc), x, y, height);
 	OUTPUT:
 	RETVAL
 
@@ -1524,8 +1565,10 @@ gimp_pixel_rgn_get_rect(pr, x, y, width, height)
 	int	width
 	int	height
 	CODE:
+	STRLEN dc;
+	
 	RETVAL = newSVn (pr->bpp * width * height);
-	gimp_pixel_rgn_get_rect (pr, SvPV(RETVAL,na), x, y, width, height);
+	gimp_pixel_rgn_get_rect (pr, SvPV(RETVAL, dc), x, y, width, height);
 	OUTPUT:
 	RETVAL
 
@@ -1536,9 +1579,11 @@ gimp_pixel_rgn_set_pixel(pr, data, x, y)
 	int	x
 	int	y
 	CODE:
+	STRLEN dc;
+	
 	if (SvCUR (data) != pr->bpp)
 	  croak ("gimp_pixel_rgn_set_pixel called with incorrect datasize");
-	gimp_pixel_rgn_set_pixel (pr, SvPV(data,na), x, y);
+	gimp_pixel_rgn_set_pixel (pr, SvPV(data, dc), x, y);
 
 void
 gimp_pixel_rgn_set_row(pr, data, x, y)
@@ -1547,9 +1592,11 @@ gimp_pixel_rgn_set_row(pr, data, x, y)
 	int	x
 	int	y
 	CODE:
+	STRLEN dc;
+	
 	if (SvCUR (data) % pr->bpp)
 	  croak ("gimp_pixel_rgn_set_row called with incorrect datasize");
-	gimp_pixel_rgn_set_row (pr, SvPV(data,na), x, y, SvCUR (data) / pr->bpp);
+	gimp_pixel_rgn_set_row (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
 gimp_pixel_rgn_set_col(pr, data, x, y)
@@ -1558,9 +1605,11 @@ gimp_pixel_rgn_set_col(pr, data, x, y)
 	int	x
 	int	y
 	CODE:
+	STRLEN dc;
+	
 	if (SvCUR (data) % pr->bpp)
 	  croak ("gimp_pixel_rgn_set_col called with incorrect datasize");
-	gimp_pixel_rgn_set_col (pr, SvPV(data,na), x, y, SvCUR (data) / pr->bpp);
+	gimp_pixel_rgn_set_col (pr, SvPV(data, dc), x, y, SvCUR (data) / pr->bpp);
 
 void
 gimp_pixel_rgn_set_rect(pr, data, x, y, width)
@@ -1570,9 +1619,11 @@ gimp_pixel_rgn_set_rect(pr, data, x, y, width)
 	int	y
 	int	width
 	CODE:
+	STRLEN dc;
+	
 	if (SvCUR (data) % (pr->bpp * width))
 	  croak ("gimp_pixel_rgn_set_rect called with incorrect datasize");
-	gimp_pixel_rgn_set_rect (pr, SvPV(data,na), x, y, width, SvCUR (data) / (pr->bpp * width));
+	gimp_pixel_rgn_set_rect (pr, SvPV(data, dc), x, y, width, SvCUR (data) / (pr->bpp * width));
 
 # ??? any possibility to implement these in perl? maybe replacement functions in Gimp.pm?
 
@@ -1604,11 +1655,13 @@ set_data(tile, data)
 	GTile *	tile
 	SV *	data
 	CODE:
+	STRLEN dc;
+	
 	if (SvCUR (data) != gimp_tile_width() * gimp_tile_height() * tile->bpp)
 	  croak ("set_data called with incorrect datasize");
 	
 	gimp_tile_ref_zero (tile);
-	memcpy (tile->data, SvPV (data, na), SvCUR (data));
+	memcpy (tile->data, SvPV (data, dc), SvCUR (data));
 	gimp_tile_unref (tile, 1);
 
 BOOT:
@@ -1623,12 +1676,13 @@ gimp_patterns_get_pattern_data(name)
 	SV *	name
 	PPCODE:
 	{
+		STRLEN dc;
 		GParam *return_vals;
 		int nreturn_vals;
 		
 		return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
 		                                  &nreturn_vals,
-		                                  PARAM_STRING, SvPV (name, na),
+		                                  PARAM_STRING, SvPV (name, dc),
 		                                  PARAM_END);
 		
 		if (nreturn_vals == 7

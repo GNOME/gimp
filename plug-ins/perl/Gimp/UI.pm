@@ -4,6 +4,8 @@ use Carp;
 use Gimp;
 use Gtk;
 
+$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
+
 $VERSION = $Gimp::VERSION;
 
 =head1 NAME
@@ -85,7 +87,16 @@ package Gimp::UI::PreviewSelect;
 use Gtk;
 use base 'Gtk::Button';
 
-register_type Gimp::UI::PreviewSelect;
+# this is an utter HACK for the braindamanged gtk (NOT Gtk!)
+sub register_types {
+   unless ($once) {
+      $once=1;
+      register_type Gimp::UI::PreviewSelect;
+      register_type Gimp::UI::PatternSelect;
+      register_type Gimp::UI::BrushSelect;
+      register_type Gimp::UI::GradientSelect;
+   }
+}
 
 sub GTK_CLASS_INIT {
    my $class = shift;
@@ -150,7 +161,7 @@ sub GTK_OBJECT_INIT {
       $l->selection and
          $self->set_preview($l->selection->children->get);
    });
-   $s->add ($l);
+   $gtk_10 ? $s->add ($l) : $s->add_with_viewport ($l);
    
    my $button = new Gtk::Button "OK";
    signal_connect $button "clicked", sub {
@@ -177,8 +188,6 @@ package Gimp::UI::PatternSelect;
 
 use Gtk;
 use base 'Gimp::UI::PreviewSelect';
-
-register_type Gimp::UI::PatternSelect;
 
 sub get_title { "Pattern Selection Dialog" }
 sub get_list { Gimp->patterns_list }
@@ -219,6 +228,7 @@ sub set_preview {
 }
 
 sub new {
+   Gimp::UI::PreviewSelect::register_types;
    new Gtk::Widget @_;
 }
 
@@ -226,8 +236,6 @@ package Gimp::UI::BrushSelect;
 
 use Gtk;
 use base 'Gimp::UI::PreviewSelect';
-
-register_type Gimp::UI::BrushSelect;
 
 sub get_title { "Brush Selection Dialog" }
 sub get_list { Gimp->brushes_list }
@@ -263,6 +271,7 @@ sub set_preview {
 }
 
 sub new {
+   Gimp::UI::PreviewSelect::register_types;
    new Gtk::Widget @_;
 }
 
@@ -270,8 +279,6 @@ package Gimp::UI::GradientSelect;
 
 use Gtk;
 use base 'Gimp::UI::PreviewSelect';
-
-register_type Gimp::UI::GradientSelect;
 
 sub get_title { "Gradient Selection Dialog" }
 sub get_list { keys %gradients }
@@ -288,6 +295,7 @@ sub set_preview {
 }
 
 sub new {
+   Gimp::UI::PreviewSelect::register_types;
    unless (defined %gradients) {
       undef @gradients{Gimp->gradients_get_list};
    }

@@ -1,5 +1,13 @@
 Revision history for Gimp-Perl extension.
 
+1.05  Fri Dec 18 22:05:25 CET 1998
+	- some 5.006 compatibility fixes
+        - disabled some functionality for poor gtk-1.0 which
+          is borken to no end
+        - fixed PARASITE_PERSISTENT typoe
+        - new functions: gimp_{major,minor,micro}_version
+        - PF_BRUSH, PATTERN and GRADIENT widgets are "emulated" in gimp-1.0
+
 1.049 Mon Nov 23 20:54:41 CET 1998
 	- updated configure to require 1.0.2
 	- added some more scripts to the dist

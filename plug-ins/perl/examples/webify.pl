@@ -35,7 +35,7 @@ register "webify",
       $drawable->by_color_select($bg,$thresh,SELECTION_REPLACE,1,0,0,0);
       $drawable->edit_cut if $img->selection_bounds;
    }
-   Plugin->autocrop(RUN_NONINTERACTIVE,$img,$drawable) if $autocrop;
+   Plugin->autocrop($drawable) if $autocrop;
    $img->convert_indexed (1, $colours) if $colours;
    
    eval { $img->undo_group_end };
