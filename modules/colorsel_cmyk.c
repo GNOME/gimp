@@ -1,4 +1,4 @@
-/* CMYK GimpColorSelector
+/* GIMP CMYK ColorSelector
  * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,13 +18,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -57,15 +53,15 @@ struct _ColorselCmykClass
 };
 
 
-static GType      colorsel_cmyk_get_type   (GTypeModule       *module);
-static void       colorsel_cmyk_class_init (ColorselCmykClass *klass);
-static void       colorsel_cmyk_init       (ColorselCmyk      *cmyk);
+static GType  colorsel_cmyk_get_type   (GTypeModule       *module);
+static void   colorsel_cmyk_class_init (ColorselCmykClass *klass);
+static void   colorsel_cmyk_init       (ColorselCmyk      *cmyk);
 
-static void       colorsel_cmyk_set_color  (GimpColorSelector *selector,
-					    const GimpRGB     *rgb,
-					    const GimpHSV     *hsv);
-static void       colorsel_cmyk_adj_update (GtkAdjustment     *adj,
-					    ColorselCmyk      *module);
+static void   colorsel_cmyk_set_color  (GimpColorSelector *selector,
+                                        const GimpRGB     *rgb,
+                                        const GimpHSV     *hsv);
+static void   colorsel_cmyk_adj_update (GtkAdjustment     *adj,
+                                        ColorselCmyk      *module);
 
 
 static const GimpModuleInfo colorsel_cmyk_info =
@@ -78,8 +74,7 @@ static const GimpModuleInfo colorsel_cmyk_info =
   "July 2003"
 };
 
-static GType                   colorsel_cmyk_type = 0;
-static GimpColorSelectorClass *parent_class       = NULL;
+static GType colorsel_cmyk_type = 0;
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -131,8 +126,6 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
 
   selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   selector_class->name        = _("_CMYK");
   selector_class->help_page   = "cmyk.html";
   selector_class->stock_id    = GTK_STOCK_PRINT;  /* FIXME */
@@ -145,14 +138,14 @@ colorsel_cmyk_init (ColorselCmyk *module)
   GtkWidget *table;
   gint       i;
 
-  static const gchar *cmyk_labels[] = 
-  { 
+  static const gchar *cmyk_labels[] =
+  {
     N_("_C"),
     N_("_M"),
     N_("_Y"),
     N_("_K")
   };
-  static const gchar *cmyk_tips[] = 
+  static const gchar *cmyk_tips[] =
   {
     N_("Cyan"),
     N_("Magenta"),
@@ -163,7 +156,6 @@ colorsel_cmyk_init (ColorselCmyk *module)
   table = gtk_table_new (4, 4, FALSE);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_box_pack_start (GTK_BOX (module), table, TRUE, FALSE, 0);
@@ -173,11 +165,11 @@ colorsel_cmyk_init (ColorselCmyk *module)
       GtkObject *adj;
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
-				  gettext (cmyk_labels[i]), 
+				  gettext (cmyk_labels[i]),
 				  80, -1,
 				  0.0,
-				  0.0, 255.0,
-				  1.0, 16.0,
+				  0.0, 100.0,
+				  1.0, 10.0,
 				  0,
 				  TRUE, 0.0, 0.0,
 				  gettext (cmyk_tips[i]),
@@ -199,18 +191,15 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 			 const GimpHSV     *hsv)
 {
   ColorselCmyk *module;
-  guchar        c, m, y, k;
 
   module = COLORSEL_CMYK (selector);
 
   gimp_rgb_to_cmyk (rgb, &module->cmyk);
 
-  gimp_cmyk_get_uchar (&module->cmyk, &c, &m, &y, &k);
-
-  gtk_adjustment_set_value (module->adj[0], c);
-  gtk_adjustment_set_value (module->adj[1], m);
-  gtk_adjustment_set_value (module->adj[2], y);
-  gtk_adjustment_set_value (module->adj[3], k);
+  gtk_adjustment_set_value (module->adj[0], module->cmyk.c * 100.0);
+  gtk_adjustment_set_value (module->adj[1], module->cmyk.m * 100.0);
+  gtk_adjustment_set_value (module->adj[2], module->cmyk.y * 100.0);
+  gtk_adjustment_set_value (module->adj[3], module->cmyk.k * 100.0);
 }
 
 static void
@@ -218,10 +207,7 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
 			  ColorselCmyk  *module)
 {
   GimpColorSelector *selector;
-  gdouble            value;
   gint               i;
-
-  value = adj->value / 255.0;
 
   for (i = 0; i < 4; i++)
     if (module->adj[i] == adj)
@@ -230,16 +216,16 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
   switch (i)
     {
     case 0:
-      module->cmyk.c = value;
+      module->cmyk.c = adj->value / 100.0;
       break;
     case 1:
-      module->cmyk.m = value;
+      module->cmyk.m = adj->value / 100.0;
       break;
     case 2:
-      module->cmyk.y = value;
+      module->cmyk.y = adj->value / 100.0;
       break;
     case 3:
-      module->cmyk.k = value;
+      module->cmyk.k = adj->value / 100.0;
       break;
     default:
       return;
