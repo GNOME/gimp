@@ -385,6 +385,28 @@ gimp_table_attach_aligned
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolordisplay</FILE>
+<TITLE>GimpColorDisplay</TITLE>
+GimpColorDisplay
+gimp_color_display_new
+gimp_color_display_clone
+gimp_color_display_convert
+gimp_color_display_load_state
+gimp_color_display_save_state
+gimp_color_display_configure
+gimp_color_display_configure_reset
+gimp_color_display_changed
+<SUBSECTION Standard>
+GIMP_COLOR_DISPLAY
+GIMP_IS_COLOR_DISPLAY
+GIMP_TYPE_COLOR_DISPLAY
+gimp_color_display_get_type
+GIMP_COLOR_DISPLAY_CLASS
+GIMP_IS_COLOR_DISPLAY_CLASS
+GIMP_COLOR_DISPLAY_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcolorselector</FILE>
 <TITLE>GimpColorSelector</TITLE>
 GimpColorSelector
@@ -408,47 +430,9 @@ GIMP_COLOR_SELECTOR_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpcolorselect</FILE>
-<TITLE>GimpColorSelect</TITLE>
-GimpColorSelect
-<SUBSECTION Standard>
-GIMP_COLOR_SELECT
-GIMP_IS_COLOR_SELECT
-GIMP_TYPE_COLOR_SELECT
-gimp_color_select_get_type
-</SECTION>
-
-<SECTION>
-<FILE>gimpcolordisplay</FILE>
-<TITLE>GimpColorDisplay</TITLE>
-GimpColorDisplay
-gimp_color_display_new
-gimp_color_display_clone
-gimp_color_display_convert
-gimp_color_display_load_state
-gimp_color_display_save_state
-gimp_color_display_configure
-gimp_color_display_configure_reset
-gimp_color_display_changed
-<SUBSECTION Standard>
-GIMP_COLOR_DISPLAY
-GIMP_IS_COLOR_DISPLAY
-GIMP_TYPE_COLOR_DISPLAY
-gimp_color_display_get_type
-GIMP_COLOR_DISPLAY_CLASS
-GIMP_IS_COLOR_DISPLAY_CLASS
-GIMP_COLOR_DISPLAY_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpcolornotebook</FILE>
 <TITLE>GimpColorNotebook</TITLE>
 GimpColorNotebook
-gimp_color_notebook_new
-gimp_color_notebook_set_color
-gimp_color_notebook_get_color
-gimp_color_notebook_color_changed
-gimp_color_notebook_set_channel
 <SUBSECTION Standard>
 GIMP_COLOR_NOTEBOOK
 GIMP_IS_COLOR_NOTEBOOK
@@ -469,3 +453,15 @@ GIMP_IS_COLOR_SCALES
 GIMP_TYPE_COLOR_SCALES
 gimp_color_scales_get_type
 </SECTION>
+
+<SECTION>
+<FILE>gimpcolorselect</FILE>
+<TITLE>GimpColorSelect</TITLE>
+GimpColorSelect
+<SUBSECTION Standard>
+GIMP_COLOR_SELECT
+GIMP_IS_COLOR_SELECT
+GIMP_TYPE_COLOR_SELECT
+gimp_color_select_get_type
+</SECTION>
+

@@ -24,27 +24,38 @@
     <title>GIMP Widgets Library Reference Manual</title>
   </bookinfo>
 
-  <chapter id="libgimpwidgets">
-    <title>GIMP Widgets Library</title>
+  <part id="libgimpwidgets-widgets">
+    <title>GIMP Widgets</title>
     &GimpButton;
     &GimpChainButton;
     &GimpColorArea;
     &GimpColorButton;
-    &GimpColorNotebook;
     &GimpFileSelection;
     &GimpPathEditor;
     &GimpPixmap;
     &GimpSizeEntry;
     &GimpUnitMenu;
     &GimpDialog;
+
+    <chapter id="libgimpwidgets-colordisplay">
+      <title>Display Filters</title>
+      &GimpColorDisplay;
+    </chapter>
+
+    <chapter id="libgimpwidgets-colorselector">
+      <title>Color Selectors</title>
+      &GimpColorSelector;
+      &GimpColorNotebook;
+      &GimpColorScales;
+      &GimpColorSelect;
+    </chapter>
+  </part>
+
+  <part id="libgimpwidgets-utils">
+    <title>GIMP Widgets Utilities</title>
     &GimpHelpUI;
     &GimpQueryBox;
     &GimpWidgets;
     &GimpStock;
-
-    &GimpColorDisplay;
-    &GimpColorSelector;
-    &GimpColorSelect;
-    &GimpColorScales;
-  </chapter>
+  </part>
 </book>
