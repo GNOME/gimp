@@ -26,6 +26,8 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdatafactoryview.h"
+
 #include "appenv.h"
 #include "context_manager.h"
 #include "brush_edit.h"
@@ -33,7 +35,6 @@
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
 #include "gimpcontainer.h"
-#include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"

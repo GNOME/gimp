@@ -63,13 +63,14 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpcontainerlistview.h"
+
 #include "color_notebook.h"
 #include "context_manager.h"
 #include "cursorutil.h"
 #include "datafiles.h"
 #include "errors.h"
 #include "gimpcontainer.h"
-#include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
 #include "gimpdnd.h"

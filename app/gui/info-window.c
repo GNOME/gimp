@@ -28,13 +28,14 @@
 #include "tools/gimpcolorpickertool.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimppreview.h"
+
 #include "context_manager.h"
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimppreview.h"
 #include "info_dialog.h"
 #include "info_window.h"
 

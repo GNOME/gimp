@@ -26,12 +26,13 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpdatafactoryview.h"
+
 #include "appenv.h"
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimpdatafactoryview.h"
 #include "gimpdatafactory.h"
 #include "gimppattern.h"
 #include "pattern_select.h"

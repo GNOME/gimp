@@ -5,6 +5,8 @@ noinst_LTLIBRARIES = libappwidgets.la
 libappwidgets_la_SOURCES = \
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\
+	gimpcolorpanel.c		\
+	gimpcolorpanel.h		\
 	gimpcontainergridview.h		\
 	gimpcontainergridview.c		\
 	gimpcontainerlistview.h		\

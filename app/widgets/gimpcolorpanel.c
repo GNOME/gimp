@@ -24,8 +24,9 @@
 
 #include "apptypes.h"
 
+#include "gimpcolorpanel.h"
+
 #include "appenv.h"
-#include "color_panel.h"
 #include "color_notebook.h"
 
 

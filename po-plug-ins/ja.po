@@ -5373,10 +5373,7 @@ msgstr "еве╣е┌епе╚╚цдЄ╩▌д─"
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
-msgstr ""
-"е┴езе├епдЄ╞■дьдыд╚, "
-"▓ш┴№д╧еве╣е┌епе╚еы╚цдЄ╩╤╣╣д╗д║д╦═┐дидщдьд┐е╡еде║д╦╣чдждшджд╦─┤└░д╡дьд╞╜╨╬╧д╡д"
-"ьд▐д╣."
+msgstr "е┴езе├епдЄ╞■дьдыд╚, ▓ш┴№д╧еве╣е┌епе╚еы╚цдЄ╩╤╣╣д╗д║д╦═┐дидщдьд┐е╡еде║д╦╣чдждшджд╦─┤└░д╡дьд╞╜╨╬╧д╡дьд▐д╣."
 
 #. Unit
 #: plug-ins/common/ps.c:2883
@@ -11605,13 +11602,7 @@ msgid ""
 "this topic has not been written yet or that something is wrong with your "
 "installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
-msgstr ""
-"<html><head><title>е╟егеьепе╚еъдм╕л╔╒длдъд▐д╗дє</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>е╟егеьепе╚еъ</h3><tt>%s</tt><h3>д╦╩╤дидщ"
-"дьд▐д╗дє.</h3><h3>д│дьд╧е╒ебедеы</h3><tt>%s</tt><h3>д╦евепе╗е╣д╖дшджд╚д╖д╞╚п└"
-"╕д╖д▐д╖д┐</h3></center><p><small>д│д╬╧├┬ъд╬д┐дсд╬е╪еые╫дмд▐д└╜ёдлдьд╞ддд╩дддл"
-"двд╩д┐д╬едеєе╣е╚б╝еыд╬д╔д│длдм┤╓░уд├д╞ддд▐д╣. "
-"двд╩д┐дмд│дьдЄе╨е░д╚д╖д╞╩є╣Ёд╣ды┴░д╦┐╡╜┼д╦─┤д┘д╞▓╝д╡дд</small></body></html>"
+msgstr "<html><head><title>е╟егеьепе╚еъдм╕л╔╒длдъд▐д╗дє</title></head><body bgcolor=\"#ffffff\"><center><p>%s<h3>е╟егеьепе╚еъ</h3><tt>%s</tt><h3>д╦╩╤дидщдьд▐д╗дє.</h3><h3>д│дьд╧е╒ебедеы</h3><tt>%s</tt><h3>д╦евепе╗е╣д╖дшджд╚д╖д╞╚п└╕д╖д▐д╖д┐</h3></center><p><small>д│д╬╧├┬ъд╬д┐дсд╬е╪еые╫дмд▐д└╜ёдлдьд╞ддд╩дддлдвд╩д┐д╬едеєе╣е╚б╝еыд╬д╔д│длдм┤╓░уд├д╞ддд▐д╣. двд╩д┐дмд│дьдЄе╨е░д╚д╖д╞╩є╣Ёд╣ды┴░д╦┐╡╜┼д╦─┤д┘д╞▓╝д╡дд</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"

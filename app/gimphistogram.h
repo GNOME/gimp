@@ -22,16 +22,6 @@
 #define __GIMP_HISTOGRAM_H__
 
 
-typedef enum
-{
-  GIMP_HISTOGRAM_VALUE = 0,
-  GIMP_HISTOGRAM_RED   = 1,
-  GIMP_HISTOGRAM_GREEN = 2,
-  GIMP_HISTOGRAM_BLUE  = 3,
-  GIMP_HISTOGRAM_ALPHA = 4
-} GimpHistogramChannel;
-
-
 GimpHistogram * gimp_histogram_new             (void);
 void            gimp_histogram_free            (GimpHistogram        *histogram);
 void            gimp_histogram_calculate       (GimpHistogram        *historgam, 

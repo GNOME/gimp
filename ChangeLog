@@ -1,3 +1,59 @@
+2001-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/widgets/*: new directory containing all widgets. Some of them
+	will go to libgimpwidgets.
+
+	* app/color_panel.[ch]
+	* app/gimpbrushpreview.[ch]
+	* app/gimpconstrainedhwrapbox.[ch]
+	* app/gimpcontainergridview.[ch]
+	* app/gimpcontainerlistview.[ch]
+	* app/gimpcontainerview.[ch]
+	* app/gimpdatafactoryview.[ch]
+	* app/gimpdock.[ch]
+	* app/gimpdockable.[ch]
+	* app/gimpdockbook.[ch]
+	* app/gimpdrawablelistitem.[ch]
+	* app/gimpdrawablelistview.[ch]
+	* app/gimpdrawablepreview.[ch]
+	* app/gimpgradientpreview.[ch]
+	* app/gimpimagepreview.[ch]
+	* app/gimplayerlistitem.[ch]
+	* app/gimplayerlistview.{ch]
+	* app/gimplistitem.[ch]
+	* app/gimppalettepreview.[ch]
+	* app/gimppatternpreview.[ch]
+	* app/gimppreview.[ch]
+	* app/gimptoolinfopreview.[ch]
+	* app/gtkhwrapbox.[ch]
+	* app/gtkvwrapbox.[ch]
+	* app/gtkwrapbox.[ch]
+	* app/histogramwidget.[ch]: removed from here.
+
+	* app/Makefile.am
+	* app/appenums.h
+	* app/brush_select.c
+	* app/channels_dialog.c
+	* app/devices.c
+	* app/gimpdnd.c
+	* app/gimpdrawable-preview.c
+	* app/gimphistogram.h
+	* app/gradient_editor.c
+	* app/gradient_select.c
+	* app/indicator_area.c
+	* app/info_window.c
+	* app/palette.c
+	* app/palette_select.c
+	* app/pattern_select.c
+	* app/qmask.c
+	* app/test_commands.c
+	* app/toolbox.c
+	* app/pdb/color_cmds.c
+	* app/tools/paint_options.c
+	* app/tools/tool_options_dialog.c
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
 2001-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdock.c: started to add some more separator event handling.

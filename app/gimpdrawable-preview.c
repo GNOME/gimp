@@ -28,10 +28,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "widgets/gimpdrawablepreview.h"
+
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
-#include "gimpdrawablepreview.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
 #include "pixel_region.h"

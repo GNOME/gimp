@@ -761,7 +761,7 @@ CODE
     );
 }
 
-@headers = qw("histogramwidget.h" "gimpimage.h" "gimpdrawable.h" "gimphistogram.h" "gimplut.h"
+@headers = qw("widgets/gimphistogramview.h" "gimpimage.h" "gimpdrawable.h" "gimphistogram.h" "gimplut.h"
 	      "lut_funcs.h" "pixel_region.h" "pixel_processor.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert

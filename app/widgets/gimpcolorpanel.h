@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLOR_PANEL_H__
-#define __COLOR_PANEL_H__
+#ifndef __GIMP_COLOR_PANEL_H__
+#define __GIMP_COLOR_PANEL_H__
 
 
 #include "libgimpwidgets/gimpcolorbutton.h"
@@ -28,6 +28,7 @@
 #define GIMP_COLOR_PANEL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
 #define GIMP_IS_COLOR_PANEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_PANEL))
 #define GIMP_IS_COLOR_PANEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PANEL))
+
 
 typedef struct _GimpColorPanel       GimpColorPanel;
 typedef struct _GimpColorPanelClass  GimpColorPanelClass;
@@ -45,4 +46,4 @@ GtkWidget * gimp_color_panel_new       (const gchar       *title,
 					gint               height);
 
 
-#endif  /*  __COLOR_PANEL_H__  */
+#endif  /*  __GIMP_COLOR_PANEL_H__  */

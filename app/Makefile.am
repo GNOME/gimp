@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs pdb tools
+SUBDIRS = paint-funcs pdb tools widgets
 
 scriptdata =
 
@@ -51,8 +51,6 @@ gimp_SOURCES = \
 	color_area.h		\
 	color_notebook.c	\
 	color_notebook.h	\
-	color_panel.c		\
-	color_panel.h		\
 	color_select.c		\
 	color_select.h		\
 	color_transfer.c	\
@@ -305,57 +303,6 @@ gimp_SOURCES = \
 	tile_swap.c		\
 	tile_swap.h		\
 	\
-	gimpbrushpreview.c		\
-	gimpbrushpreview.h		\
-	gimpcontainergridview.h		\
-	gimpcontainergridview.c		\
-	gimpcontainerlistview.h		\
-	gimpcontainerlistview.c		\
-	gimpcontainerview.h		\
-	gimpcontainerview.c		\
-	gimpdatafactoryview.h		\
-	gimpdatafactoryview.c		\
-	gimpdock.c			\
-	gimpdock.h			\
-	gimpdockable.c			\
-	gimpdockable.h			\
-	gimpdockbook.c			\
-	gimpdockbook.h			\
-	gimpdrawablelistitem.c		\
-	gimpdrawablelistitem.h		\
-	gimpdrawablelistview.c		\
-	gimpdrawablelistview.h		\
-	gimpdrawablepreview.c		\
-	gimpdrawablepreview.h		\
-	gimpgradientpreview.h		\
-	gimpgradientpreview.c		\
-	gimpimagepreview.h		\
-	gimpimagepreview.c		\
-	gimplayerlistitem.h		\
-	gimplayerlistitem.c		\
-	gimplayerlistview.h		\
-	gimplayerlistview.c		\
-	gimplistitem.h			\
-	gimplistitem.c			\
-	gimppalettepreview.h		\
-	gimppalettepreview.c		\
-	gimppatternpreview.h		\
-	gimppatternpreview.c		\
-	gimppreview.h			\
-	gimppreview.c			\
-	gimptoolinfopreview.h		\
-	gimptoolinfopreview.c		\
-	gtkwrapbox.c			\
-	gtkwrapbox.h			\
-	gtkhwrapbox.c			\
-	gtkhwrapbox.h			\
-	gtkvwrapbox.c			\
-	gtkvwrapbox.h			\
-	gimpconstrainedhwrapbox.c	\
-	gimpconstrainedhwrapbox.h	\
-	histogramwidget.c		\
-	histogramwidget.h		\
-	\
 	marching_ants.h			\
 	pixmaps2.h
 
@@ -390,6 +337,7 @@ gimp_LDADD = \
 	paint-funcs/libapppaint-funcs.la				\
 	pdb/libapppdb.la						\
 	tools/libapptools.la						\
+	widgets/libappwidgets.la					\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\

@@ -32,6 +32,8 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimppreview.h"
+
 #include "context_manager.h"
 #include "file-open.h"
 #include "gimpimage.h"
@@ -46,7 +48,6 @@
 #include "gimplayermask.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
-#include "gimppreview.h"
 #include "gimprc.h"
 #include "temp_buf.h"
 

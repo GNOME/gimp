@@ -27,12 +27,13 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimppreview.h"
+
 #include "brush_select.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpgradient.h"
 #include "gimppattern.h"
-#include "gimppreview.h"
 #include "gimpdnd.h"
 #include "gradient_select.h"
 #include "indicator_area.h"

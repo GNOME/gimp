@@ -785,6 +785,7 @@ app/makefile.mingw
 app/paint-funcs/Makefile
 app/pdb/Makefile
 app/tools/Makefile
+app/widgets/Makefile
 plug-ins/Makefile
 plug-ins/makefile.mingw
 plug-ins/perl/config.pl

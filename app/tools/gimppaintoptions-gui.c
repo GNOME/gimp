@@ -24,9 +24,10 @@
 
 #include "apptypes.h"
 
+#include "widgets/gtkhwrapbox.h"
+
 #include "gimpcontext.h"
 #include "gimprc.h"
-#include "gtkhwrapbox.h"
 
 #include "gimptool.h"
 #include "gimptoolinfo.h"

@@ -29,9 +29,10 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "widgets/gimpcolorpanel.h"
+
 #include "appenv.h"
 #include "channels_dialog.h"
-#include "color_panel.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"

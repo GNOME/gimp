@@ -29,7 +29,8 @@
 
 #include "apptypes.h"
 
-#include "color_panel.h"
+#include "widgets/gimpcolorpanel.h"
+
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"

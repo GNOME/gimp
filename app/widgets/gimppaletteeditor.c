@@ -25,19 +25,20 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimpcontainerlistview.h"
+#include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimppreview.h"
+
 #include "color_area.h"
 #include "color_notebook.h"
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimage.h"
-#include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimpdatafactoryview.h"
 #include "gimpdatalist.h"
 #include "gimpdnd.h"
 #include "gimppalette.h"
-#include "gimppreview.h"
 #include "gimprc.h"
 #include "palette.h"
 #include "palette_import.h"

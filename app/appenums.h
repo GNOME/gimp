@@ -265,6 +265,16 @@ typedef enum /*< skip >*/
 
 typedef enum /*< skip >*/
 {
+  GIMP_HISTOGRAM_VALUE = 0,
+  GIMP_HISTOGRAM_RED   = 1,
+  GIMP_HISTOGRAM_GREEN = 2,
+  GIMP_HISTOGRAM_BLUE  = 3,
+  GIMP_HISTOGRAM_ALPHA = 4
+} GimpHistogramChannel;
+
+
+typedef enum /*< skip >*/
+{
   GIMP_TOOL_CURSOR_NONE,
   GIMP_RECT_SELECT_TOOL_CURSOR,
   GIMP_ELLIPSE_SELECT_TOOL_CURSOR,

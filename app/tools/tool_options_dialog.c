@@ -24,11 +24,12 @@
 
 #include "apptypes.h"
 
+#include "widgets/gimppreview.h"
+
 #include "dialog_handler.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimplist.h"
-#include "gimppreview.h"
 #include "gimpui.h"
 #include "session.h"
 

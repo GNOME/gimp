@@ -32,6 +32,9 @@
 #include "tools/tool_options_dialog.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimppreview.h"
+#include "widgets/gtkhwrapbox.h"
+
 #include "app_procs.h"
 #include "color_area.h"
 #include "devices.h"
@@ -42,9 +45,7 @@
 #include "gimpdnd.h"
 #include "gimplayer.h"
 #include "gimplist.h"
-#include "gimppreview.h"
 #include "gimprc.h"
-#include "gtkhwrapbox.h"
 #include "indicator_area.h"
 #include "menus.h"
 #include "session.h"

@@ -33,7 +33,6 @@
 #include "gimphistogram.h"
 #include "gimpimage.h"
 #include "gimplut.h"
-#include "histogramwidget.h"
 #include "invert.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
@@ -43,6 +42,7 @@
 #include "tools/histogram_tool.h"
 #include "tools/hue_saturation.h"
 #include "tools/threshold.h"
+#include "widgets/gimphistogramview.h"
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
