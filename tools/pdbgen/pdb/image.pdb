@@ -775,7 +775,8 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
+  if (! gimp_item_is_floating (GIMP_ITEM (layer)) ||
+      GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
       gimp_image_base_type (gimage))
     {
       success = FALSE;
@@ -872,7 +873,12 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+{
+  success = gimp_item_is_floating (GIMP_ITEM (channel));
+
+  if (success)
+    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+}
 CODE
     );
 }

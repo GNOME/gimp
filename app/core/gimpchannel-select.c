@@ -51,6 +51,7 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
                                gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   gimp_channel_push_undo (channel, _("Rect Select"));
 
@@ -101,6 +102,7 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
                              gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   gimp_channel_push_undo (channel, _("Ellipse Select"));
 
@@ -158,6 +160,7 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   GimpChannel *add_on;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (scan_convert != NULL);
 
@@ -200,6 +203,7 @@ gimp_channel_select_polygon (GimpChannel    *channel,
   GimpScanConvert *scan_convert;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
 
   scan_convert = gimp_scan_convert_new ();
@@ -228,6 +232,7 @@ gimp_channel_select_vectors (GimpChannel    *channel,
   gboolean         coords_added = FALSE;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
@@ -288,6 +293,7 @@ gimp_channel_select_channel (GimpChannel    *channel,
                              gdouble         feather_radius_y)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
@@ -299,10 +305,8 @@ gimp_channel_select_channel (GimpChannel    *channel,
 
   if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {
-      GimpItem    *item;
+      GimpItem    *item = GIMP_ITEM (channel);
       GimpChannel *add_on2;
-
-      item = GIMP_ITEM (channel);
 
       add_on2 = gimp_channel_new_mask (gimp_item_get_image (item),
                                        gimp_item_width (item),
@@ -339,6 +343,7 @@ gimp_channel_select_alpha (GimpChannel    *channel,
   gint         off_x, off_y;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   item = GIMP_ITEM (channel);
@@ -388,6 +393,7 @@ gimp_channel_select_component (GimpChannel     *channel,
   gchar       *undo_desc;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
 
@@ -435,6 +441,7 @@ gimp_channel_select_fuzzy (GimpChannel    *channel,
   gint         add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   item = GIMP_ITEM (channel);
@@ -478,6 +485,7 @@ gimp_channel_select_by_color (GimpChannel    *channel,
   gint         add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (color != NULL);
 

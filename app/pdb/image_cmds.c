@@ -1706,7 +1706,8 @@ image_add_layer_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
+      if (! gimp_item_is_floating (GIMP_ITEM (layer)) ||
+          GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
           gimp_image_base_type (gimage))
         {
           success = FALSE;
@@ -2053,7 +2054,12 @@ image_add_channel_invoker (Gimp         *gimp,
   position = args[2].value.pdb_int;
 
   if (success)
-    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+    {
+      success = gimp_item_is_floating (GIMP_ITEM (channel));
+
+      if (success)
+        success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+    }
 
   return procedural_db_return_args (&image_add_channel_proc, success);
 }

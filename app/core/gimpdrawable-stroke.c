@@ -76,6 +76,7 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   gint             i;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
 
   if (n_bound_segs == 0)
@@ -148,6 +149,7 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
   gint             num_coords = 0;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 

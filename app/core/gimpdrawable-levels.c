@@ -58,6 +58,8 @@ gimp_drawable_levels (GimpDrawable   *drawable,
 
   /* parameter checking */
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                     channel <= GIMP_HISTOGRAM_ALPHA);
   g_return_if_fail (low_input   >= 0   && low_input   <= 255);
@@ -66,8 +68,6 @@ gimp_drawable_levels (GimpDrawable   *drawable,
   g_return_if_fail (low_output  >= 0   && low_output  <= 255);
   g_return_if_fail (high_output >= 0   && high_output <= 255);
 
-  g_return_if_fail (!gimp_drawable_is_indexed (drawable));
-
   if (channel == GIMP_HISTOGRAM_ALPHA)
     g_return_if_fail (gimp_drawable_has_alpha (drawable));
 
@@ -75,7 +75,7 @@ gimp_drawable_levels (GimpDrawable   *drawable,
     g_return_if_fail (channel == GIMP_HISTOGRAM_VALUE ||
                       channel == GIMP_HISTOGRAM_ALPHA);
 
-  if (!gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 
   /* FIXME: hack */
@@ -115,8 +115,8 @@ gimp_drawable_levels (GimpDrawable   *drawable,
 
 
 void
-gimp_drawable_levels_stretch (GimpDrawable   *drawable,
-                              GimpContext    *context)
+gimp_drawable_levels_stretch (GimpDrawable *drawable,
+                              GimpContext  *context)
 {
   gint           x, y, width, height;
   PixelRegion    srcPR, destPR;
@@ -124,14 +124,12 @@ gimp_drawable_levels_stretch (GimpDrawable   *drawable,
   GimpLut       *lut;
   GimpHistogram *hist;
 
-  /* parameter checking */
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_CONTEXT  (context));
 
-  if (gimp_drawable_is_indexed (drawable))
-    return;
-
-  if (!gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 
   /* Build the histogram */

@@ -455,7 +455,12 @@ layer_scale_invoker (Gimp         *gimp,
   local_origin = args[3].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, local_origin);
+    {
+      success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+      if (success)
+        gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, local_origin);
+    }
 
   return procedural_db_return_args (&layer_scale_proc, success);
 }
@@ -531,7 +536,12 @@ layer_resize_invoker (Gimp         *gimp,
   offy = args[4].value.pdb_int;
 
   if (success)
-    gimp_item_resize (GIMP_ITEM (layer), context, new_width, new_height, offx, offy);
+    {
+      success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+      if (success)
+        gimp_item_resize (GIMP_ITEM (layer), context, new_width, new_height, offx, offy);
+    }
 
   return procedural_db_return_args (&layer_resize_proc, success);
 }
@@ -597,10 +607,10 @@ layer_resize_to_image_size_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_item_get_image (GIMP_ITEM (layer)))
+      success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+      if (success)
         gimp_layer_resize_to_image (layer, context);
-      else
-        success = FALSE;
     }
 
   return procedural_db_return_args (&layer_resize_to_image_size_proc, success);
@@ -658,16 +668,10 @@ layer_translate_invoker (Gimp         *gimp,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
-      gimp_item_translate (GIMP_ITEM (layer),
-                           offx,
-                           offy,
-                           TRUE);
+      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer),
-                                    offx,
-                                    offy,
-                                    TRUE);
+        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
       gimp_image_undo_group_end (gimage);
     }
@@ -737,16 +741,10 @@ layer_set_offsets_invoker (Gimp         *gimp,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    _("Move Layer"));
 
-      gimp_item_translate (GIMP_ITEM (layer),
-                           offx - GIMP_ITEM (layer)->offset_x,
-                           offy - GIMP_ITEM (layer)->offset_y,
-                           TRUE);
+      gimp_item_translate (GIMP_ITEM (layer), offx - GIMP_ITEM (layer)->offset_x, offy - GIMP_ITEM (layer)->offset_y, TRUE);
 
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer),
-                                    offx,
-                                    offy,
-                                    TRUE);
+        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
       gimp_image_undo_group_end (gimage);
     }
@@ -1001,7 +999,10 @@ layer_add_mask_invoker (Gimp         *gimp,
 
   if (success)
     {
-      success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+      success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+      if (success)
+        gimp_layer_add_mask (layer, mask, TRUE);
     }
 
   return procedural_db_return_args (&layer_add_mask_proc, success);
@@ -1057,7 +1058,12 @@ layer_remove_mask_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_layer_apply_mask (layer, mode, TRUE);
+    {
+      success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+      if (success)
+        gimp_layer_apply_mask (layer, mode, TRUE);
+    }
 
   return procedural_db_return_args (&layer_remove_mask_proc, success);
 }

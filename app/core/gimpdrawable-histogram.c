@@ -41,6 +41,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   gboolean    have_mask;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (histogram != NULL);
 
   have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);

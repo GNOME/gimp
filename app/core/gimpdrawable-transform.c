@@ -145,14 +145,13 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   guchar       bg_color[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   m   = *matrix;
   inv = *matrix;
@@ -479,12 +478,11 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   gint         i;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
@@ -642,12 +640,11 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   gint         i, j, k;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
@@ -858,8 +855,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (matrix != NULL, FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
@@ -922,8 +919,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -1003,8 +1000,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -1068,12 +1065,11 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
   TileManager *tiles;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /*  extract the selected mask if there is a selection  */
   if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))

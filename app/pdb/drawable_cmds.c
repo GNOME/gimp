@@ -126,10 +126,10 @@ drawable_delete_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_item_is_floating (GIMP_ITEM (drawable)))
+      success = gimp_item_is_floating (GIMP_ITEM (drawable));
+
+      if (success)
         gimp_item_sink (GIMP_ITEM (drawable));
-      else
-        success = FALSE;
     }
 
   return procedural_db_return_args (&drawable_delete_proc, success);
@@ -995,7 +995,12 @@ drawable_set_image_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
+    {
+      success = gimp_item_is_floating (GIMP_ITEM (drawable));
+
+      if (success)
+        gimp_item_set_image (GIMP_ITEM (drawable), gimage);
+    }
 
   return procedural_db_return_args (&drawable_set_image_proc, success);
 }
@@ -1666,7 +1671,6 @@ drawable_merge_shadow_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gboolean undo;
-  gchar *undo_desc = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
@@ -1676,15 +1680,22 @@ drawable_merge_shadow_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp->current_plug_in)
-        undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-      if (! undo_desc)
-        undo_desc = g_strdup (_("Plug-In"));
+      if (success)
+        {
+          gchar *undo_desc = NULL;
 
-      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+          if (gimp->current_plug_in)
+            undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
-      g_free (undo_desc);
+          if (! undo_desc)
+            undo_desc = g_strdup (_("Plug-In"));
+
+          gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+
+          g_free (undo_desc);
+        }
     }
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
@@ -2099,8 +2110,11 @@ drawable_offset_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gimp_drawable_offset (drawable, context, wrap_around, fill_type,
-                            offset_x, offset_y);
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        gimp_drawable_offset (drawable, context, wrap_around, fill_type,
+                              offset_x, offset_y);
     }
 
   return procedural_db_return_args (&drawable_offset_proc, success);

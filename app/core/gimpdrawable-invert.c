@@ -40,6 +40,9 @@ gimp_drawable_invert (GimpDrawable *drawable)
   gint         x, y, width, height;
   GimpLut     *lut;
 
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 

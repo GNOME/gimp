@@ -38,18 +38,15 @@ gimp_item_linked_translate (GimpItem *item,
                             gint      offset_y,
                             gboolean  push_undo)
 {
-  GimpImage *gimage;
-  GList     *linked_list;
-  GList     *list;
+  GList *linked_list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+  g_return_if_fail (gimp_item_is_attached (item));
 
-  gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (gimp_item_get_image (item),
+                                           item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_translate (GIMP_ITEM (list->data),
@@ -65,19 +62,16 @@ gimp_item_linked_flip (GimpItem            *item,
                        gdouble              axis,
                        gboolean             clip_result)
 {
-  GimpImage *gimage;
-  GList     *linked_list;
-  GList     *list;
+  GList *linked_list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+  g_return_if_fail (gimp_item_is_attached (item));
 
-  gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (gimp_item_get_image (item),
+                                           item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_flip (GIMP_ITEM (list->data), context,
@@ -94,19 +88,16 @@ gimp_item_linked_rotate (GimpItem         *item,
                          gdouble           center_y,
                          gboolean          clip_result)
 {
-  GimpImage *gimage;
-  GList     *linked_list;
-  GList     *list;
+  GList *linked_list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+  g_return_if_fail (gimp_item_is_attached (item));
 
-  gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  linked_list = gimp_item_linked_get_list (gimage, item,
+  linked_list = gimp_item_linked_get_list (gimp_item_get_image (item),
+                                           item,
                                            GIMP_ITEM_LINKED_LAYERS |
                                            GIMP_ITEM_LINKED_VECTORS);
 
@@ -116,8 +107,8 @@ gimp_item_linked_rotate (GimpItem         *item,
 
   g_list_free (linked_list);
 
-  linked_list = gimp_item_linked_get_list (gimage, item,
-                                           GIMP_ITEM_LINKED_CHANNELS);
+  linked_list = gimp_item_linked_get_list (gimp_item_get_image (item),
+                                           item, GIMP_ITEM_LINKED_CHANNELS);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_rotate (GIMP_ITEM (list->data), context,
@@ -137,20 +128,17 @@ gimp_item_linked_transform (GimpItem               *item,
                             gboolean                clip_result,
                             GimpProgress           *progress)
 {
-  GimpImage *gimage;
-  GList     *linked_list;
-  GList     *list;
+  GList *linked_list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
+  linked_list = gimp_item_linked_get_list (gimp_item_get_image (item),
+                                           item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
     gimp_item_transform (GIMP_ITEM (list->data), context,
@@ -186,6 +174,7 @@ gimp_item_linked_get_list (GimpImage          *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (gimp_item_get_linked (item) == TRUE, NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
   if (which & GIMP_ITEM_LINKED_LAYERS)
     {

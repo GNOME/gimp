@@ -324,8 +324,6 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
   GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpLayer *layer;
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
   /*  Turn the current selection off  */
   gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
 
@@ -358,11 +356,9 @@ gimp_selection_boundary (GimpChannel     *channel,
                          gint             unused3,
                          gint             unused4)
 {
-  GimpImage    *gimage;
+  GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (channel));
   GimpDrawable *drawable;
   GimpLayer    *layer;
-
-  gimage = gimp_item_get_image (GIMP_ITEM (channel));
 
   if ((layer = gimp_image_floating_sel (gimage)))
     {
@@ -623,8 +619,6 @@ gimp_selection_save (GimpChannel *selection)
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
   new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
                                                    GIMP_TYPE_CHANNEL,
                                                    FALSE));
@@ -657,6 +651,7 @@ gimp_selection_extract (GimpChannel  *selection,
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
@@ -808,8 +803,8 @@ gimp_selection_float (GimpChannel  *selection,
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
 

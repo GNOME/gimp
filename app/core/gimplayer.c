@@ -1045,6 +1045,9 @@ gimp_layer_add_mask (GimpLayer     *layer,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
 
+  if (! gimp_item_is_attached (GIMP_ITEM (layer)))
+    push_undo = FALSE;
+
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   if (! gimage)
@@ -1078,6 +1081,10 @@ gimp_layer_add_mask (GimpLayer     *layer,
       return NULL;
     }
 
+  if (push_undo)
+    gimp_image_undo_push_layer_mask_add (gimage, _("Add Layer Mask"),
+                                         layer, mask);
+
   layer->mask = g_object_ref (mask);
   gimp_item_sink (GIMP_ITEM (layer->mask));
 
@@ -1094,10 +1101,6 @@ gimp_layer_add_mask (GimpLayer     *layer,
   g_signal_connect (mask, "update",
                     G_CALLBACK (gimp_layer_layer_mask_update),
                     layer);
-
-  if (push_undo)
-    gimp_image_undo_push_layer_mask_add (gimage, _("Add Layer Mask"),
-                                         layer, mask);
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 
@@ -1408,13 +1411,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  new_type;
-  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  gimage = gimp_item_get_image (GIMP_ITEM (layer));
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
@@ -1443,7 +1441,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   /*  Set the new tiles  */
   gimp_drawable_set_tiles_full (GIMP_DRAWABLE (layer),
-                                TRUE, _("Add Alpha Channel"),
+                                gimp_item_is_attached (GIMP_ITEM (layer)),
+                                _("Add Alpha Channel"),
                                 new_tiles, new_type,
                                 GIMP_ITEM (layer)->offset_x,
                                 GIMP_ITEM (layer)->offset_y);
@@ -1459,10 +1458,10 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
   gint       offset_y;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
+  gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Layer to Image Size"));
@@ -1626,7 +1625,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
   if (layer->opacity != opacity)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -1662,7 +1661,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
   if (layer->mode != mode)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -1698,7 +1697,7 @@ gimp_layer_set_preserve_trans (GimpLayer *layer,
 
   if (layer->preserve_trans != preserve)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 

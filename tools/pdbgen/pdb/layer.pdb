@@ -47,16 +47,26 @@ HELP
     push @inargs, @args;
 
     my $args = "";
+    my $call;
     foreach (@args) {
 	$args .= ', ' if $args;
 	$args .= $_->{name};
     }
 
     if ($op eq 'scale') {
-        $invoke{code} = "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, $args);";
+        $call = "gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height, gimp->config->interpolation_type, NULL, $args);";
     } else {
-        $invoke{code} = "gimp_item_resize (GIMP_ITEM (layer), context, new_width, new_height, $args);";
+        $call = "gimp_item_resize (GIMP_ITEM (layer), context, new_width, new_height, $args);";
     }
+
+    $invoke{code} = <<"CODE";
+{
+  success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+  if (success)
+    $call
+}
+CODE
 }
 
 sub layer_get_prop_proc {
@@ -282,7 +292,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+  success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+  if (success)
+    gimp_layer_add_mask (layer, mask, TRUE);
 }
 CODE
     );
@@ -305,7 +318,15 @@ HELP
     );
     $inargs[0]->{desc} .= ' from which to remove mask';
 
-    %invoke = ( code => 'gimp_layer_apply_mask (layer, mode, TRUE);' );
+    %invoke = ( code => <<'CODE'
+{
+  success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+  if (success)
+    gimp_layer_apply_mask (layer, mode, TRUE);
+}
+CODE
+    );
 }
 
 sub layer_scale {
@@ -348,10 +369,10 @@ HELP
 
     %invoke = ( code => <<'CODE' );
 {
-  if (gimp_item_get_image (GIMP_ITEM (layer)))
+  success = gimp_item_is_attached (GIMP_ITEM (layer));
+
+  if (success)
     gimp_layer_resize_to_image (layer, context);
-  else
-    success = FALSE;
 }
 CODE
 }
@@ -382,16 +403,10 @@ HELP
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                _("Move Layer"));
 
-  gimp_item_translate (GIMP_ITEM (layer),
-                       offx,
-                       offy,
-                       TRUE);
+  gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
   if (gimp_item_get_linked (GIMP_ITEM (layer)))
-    gimp_item_linked_translate (GIMP_ITEM (layer),
-                                offx,
-                                offy,
-                                TRUE);
+    gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
 
   gimp_image_undo_group_end (gimage);
 }

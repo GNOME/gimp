@@ -181,18 +181,24 @@ HELP
     );
 
     %invoke = ( headers => [ qw("plug-in/plug-in.h") ],
-                vars => [ 'gchar *undo_desc = NULL' ],
                 code => <<CODE
 {
-  if (gimp->current_plug_in)
-    undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
-  if (! undo_desc)
-    undo_desc = g_strdup (_("Plug-In"));
+  if (success)
+    {
+      gchar *undo_desc = NULL;
 
-  gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+      if (gimp->current_plug_in)
+        undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
 
-  g_free (undo_desc);
+      if (! undo_desc)
+        undo_desc = g_strdup (_("Plug-In"));
+
+      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+
+      g_free (undo_desc);
+    }
 }
 CODE
     );
@@ -595,7 +601,15 @@ HELP
 	&std_image_arg
     );
 
-    %invoke = ( code => 'gimp_item_set_image (GIMP_ITEM (drawable), gimage);' );
+    %invoke = ( code =><<'CODE'
+{
+  success = gimp_item_is_floating (GIMP_ITEM (drawable));
+
+  if (success)
+    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
+}
+CODE
+    );
 }
 
 
@@ -715,8 +729,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_drawable_offset (drawable, context, wrap_around, fill_type,
-                        offset_x, offset_y);
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success)
+    gimp_drawable_offset (drawable, context, wrap_around, fill_type,
+                          offset_x, offset_y);
 }
 CODE
     );
@@ -740,10 +757,10 @@ HELP
 
     %invoke = ( code => <<'CODE' );
 {
-  if (gimp_item_is_floating (GIMP_ITEM (drawable)))
+  success = gimp_item_is_floating (GIMP_ITEM (drawable));
+
+  if (success)
     gimp_item_sink (GIMP_ITEM (drawable));
-  else
-    success = FALSE;
 }
 CODE
 }

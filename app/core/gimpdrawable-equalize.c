@@ -51,6 +51,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
   bytes  = gimp_drawable_bytes (drawable);

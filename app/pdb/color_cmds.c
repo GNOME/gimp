@@ -109,7 +109,8 @@ brightness_contrast_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -226,7 +227,8 @@ levels_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable) ||
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable) ||
           (! gimp_drawable_has_alpha (drawable) &&
            channel == GIMP_HISTOGRAM_ALPHA) ||
           (gimp_drawable_is_gray (drawable) &&
@@ -317,7 +319,8 @@ levels_auto_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -368,7 +371,8 @@ levels_stretch_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -424,7 +428,8 @@ posterize_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -504,10 +509,12 @@ desaturate_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_rgb (drawable))
-        gimp_drawable_desaturate (drawable);
-      else
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          ! gimp_drawable_is_rgb (drawable))
         success = FALSE;
+
+      if (success)
+        gimp_drawable_desaturate (drawable);
     }
 
   return procedural_db_return_args (&desaturate_proc, success);
@@ -557,10 +564,12 @@ equalize_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (! gimp_drawable_is_indexed (drawable))
-        gimp_drawable_equalize (drawable, mask_only);
-      else
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
+
+      if (success)
+        gimp_drawable_equalize (drawable, mask_only);
     }
 
   return procedural_db_return_args (&equalize_proc, success);
@@ -612,10 +621,12 @@ invert_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (! gimp_drawable_is_indexed (drawable))
-        gimp_drawable_invert (drawable);
-      else
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
+
+      if (success)
+        gimp_drawable_invert (drawable);
     }
 
   return procedural_db_return_args (&invert_proc, success);
@@ -675,7 +686,8 @@ curves_spline_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
           (! gimp_drawable_has_alpha (drawable) &&
            channel == GIMP_HISTOGRAM_ALPHA) ||
           (gimp_drawable_is_gray (drawable) &&
@@ -808,7 +820,8 @@ curves_explicit_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
           (! gimp_drawable_has_alpha (drawable) &&
            channel == GIMP_HISTOGRAM_ALPHA) ||
           (gimp_drawable_is_gray (drawable) &&
@@ -942,7 +955,8 @@ color_balance_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -1068,7 +1082,8 @@ colorize_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (! gimp_drawable_is_rgb (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          ! gimp_drawable_is_rgb (drawable))
         success = FALSE;
 
       if (success)
@@ -1189,7 +1204,8 @@ histogram_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable) ||
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable) ||
           (! gimp_drawable_has_alpha (drawable) &&
            channel == GIMP_HISTOGRAM_ALPHA) ||
           (gimp_drawable_is_gray (drawable) &&
@@ -1344,7 +1360,8 @@ hue_saturation_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable))
         success = FALSE;
 
       if (success)
@@ -1459,7 +1476,9 @@ threshold_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (gimp_drawable_is_indexed (drawable) || (low_threshold >= high_threshold))
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          gimp_drawable_is_indexed (drawable) ||
+          (low_threshold >= high_threshold))
         success = FALSE;
 
       if (success)

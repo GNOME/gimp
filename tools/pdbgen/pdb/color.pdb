@@ -50,7 +50,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -125,7 +126,8 @@ HELP
                         "core/gimpdrawable-levels.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable) ||
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
@@ -168,7 +170,8 @@ HELP
                         "core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -192,7 +195,8 @@ sub levels_auto {
                         "core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -222,7 +226,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -272,10 +277,12 @@ HELP
 	headers => [ qw("core/gimpdrawable-desaturate.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_rgb (drawable))
-    gimp_drawable_desaturate (drawable);
-  else
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
+
+  if (success)
+    gimp_drawable_desaturate (drawable);
 }
 CODE
     );
@@ -306,10 +313,12 @@ HELP
 	headers => [ qw("core/gimpdrawable-equalize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_is_indexed (drawable))
-    gimp_drawable_equalize (drawable, mask_only);
-  else
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
+
+  if (success)
+    gimp_drawable_equalize (drawable, mask_only);
 }
 CODE
     );
@@ -332,10 +341,12 @@ HELP
 	headers => [ qw("core/gimpdrawable-invert.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_is_indexed (drawable))
-    gimp_drawable_invert (drawable);
-  else
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
+
+  if (success)
+    gimp_drawable_invert (drawable);
 }
 CODE
     );
@@ -370,7 +381,8 @@ HELP
 	headers => [ qw("base/curves.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
@@ -462,7 +474,8 @@ HELP
 	headers => [ qw("base/curves.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
@@ -552,7 +565,8 @@ HELP
 	headers => [ qw("base/color-balance.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -624,7 +638,8 @@ HELP
 	headers => [ qw("base/colorize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_is_rgb (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
 
   if (success)
@@ -722,7 +737,8 @@ HELP
                         "core/gimpdrawable-histogram.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable) ||
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
@@ -786,7 +802,8 @@ HELP
 	headers => [ qw("base/hue-saturation.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable))
     success = FALSE;
 
   if (success)
@@ -852,7 +869,9 @@ HELP
 	headers => [ qw("base/threshold.h") ],
 	code => <<'CODE'
 {
-  if (gimp_drawable_is_indexed (drawable) || (low_threshold >= high_threshold))
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      gimp_drawable_is_indexed (drawable) ||
+      (low_threshold >= high_threshold))
     success = FALSE;
 
   if (success)

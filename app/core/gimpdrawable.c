@@ -608,14 +608,10 @@ gimp_drawable_get_color_at (GimpPickable *pickable,
                             gint          y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
-  GimpImage    *gimage;
+  GimpImage    *gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
   Tile         *tile;
   guchar       *src;
   guchar       *dest;
-
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /* do not make this a g_return_if_fail() */
   if (x < 0 || x >= GIMP_ITEM (drawable)->width ||
@@ -892,6 +888,7 @@ gimp_drawable_apply_region (GimpDrawable         *drawable,
                             gint                  y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (src2PR != NULL);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable, src2PR,
@@ -912,6 +909,7 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
                               gint          y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (src2PR != NULL);
   g_return_if_fail (maskPR != NULL);
 
@@ -931,6 +929,9 @@ gimp_drawable_set_tiles (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
+
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
+    push_undo = FALSE;
 
   gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
@@ -955,9 +956,11 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
   g_return_if_fail (tiles != NULL);
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
 
-  item = GIMP_ITEM (drawable);
-
+  item   = GIMP_ITEM (drawable);
   gimage = gimp_item_get_image (item);
+
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
+    push_undo = FALSE;
 
   if (item->width    != tile_manager_width (tiles)  ||
       item->height   != tile_manager_height (tiles) ||
@@ -1016,6 +1019,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 
   item = GIMP_ITEM (drawable);
 
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (sparse == FALSE ||
                     tile_manager_width (tiles) == gimp_item_width (item));
   g_return_if_fail (sparse == FALSE ||
@@ -1045,17 +1049,16 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 TileManager *
 gimp_drawable_shadow (GimpDrawable *drawable)
 {
-  GimpItem  *item;
-  GimpImage *gimage;
+  GimpItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  item   = GIMP_ITEM (drawable);
-  gimage = gimp_item_get_image (item);
+  item = GIMP_ITEM (drawable);
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
-  return gimp_image_shadow (gimage, item->width, item->height,
+  return gimp_image_shadow (gimp_item_get_image (item),
+                            item->width, item->height,
                             drawable->bytes);
 }
 
@@ -1064,14 +1067,14 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
                             gboolean      push_undo,
                             const gchar  *undo_desc)
 {
-  GimpImage   *gimage;
-  gint         x, y, width, height;
+  GimpImage *gimage;
+  gint       x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (gimage->shadow != NULL);
 
   /*  A useful optimization here is to limit the update to the
@@ -1107,8 +1110,6 @@ gimp_drawable_fill (GimpDrawable      *drawable,
 
   item   = GIMP_ITEM (drawable);
   gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (gimage != NULL);
 
   drawable_type = gimp_drawable_type (drawable);
 
@@ -1296,8 +1297,8 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
                                        width, height);
     }
 
-  *x = 0;
-  *y = 0;
+  *x      = 0;
+  *y      = 0;
   *width  = gimp_item_width  (item);
   *height = gimp_item_height (item);
 

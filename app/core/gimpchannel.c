@@ -1520,13 +1520,12 @@ gimp_channel_set_color (GimpChannel   *channel,
 
   if (gimp_rgba_distance (&channel->color, color) > 0.0001)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (channel));
 
-          if (gimage)
-            gimp_image_undo_push_channel_color (gimage, _("Set Channel Color"),
-                                                channel);
+          gimp_image_undo_push_channel_color (gimage, _("Set Channel Color"),
+                                              channel);
         }
 
       channel->color = *color;
@@ -1569,13 +1568,12 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
   if (channel->color.a != opacity)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (channel));
 
-          if (gimage)
-            gimp_image_undo_push_channel_color (gimage, _("Set Channel Opacity"),
-                                                channel);
+          gimp_image_undo_push_channel_color (gimage, _("Set Channel Opacity"),
+                                              channel);
         }
 
       channel->color.a = opacity;
@@ -1618,15 +1616,11 @@ void
 gimp_channel_push_undo (GimpChannel *channel,
                         const gchar *undo_desc)
 {
-  GimpImage *gimage;
-
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
-  gimage = gimp_item_get_image (GIMP_ITEM (channel));
-
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_image_undo_push_mask (gimage, undo_desc, channel);
+  gimp_image_undo_push_mask (gimp_item_get_image (GIMP_ITEM (channel)),
+                             undo_desc, channel);
 
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 }
@@ -1721,6 +1715,9 @@ gimp_channel_feather (GimpChannel *channel,
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
+
   GIMP_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
                                              push_undo);
 }
@@ -1730,6 +1727,9 @@ gimp_channel_sharpen (GimpChannel *channel,
                       gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->sharpen (channel, push_undo);
 }
@@ -1741,6 +1741,9 @@ gimp_channel_clear (GimpChannel *channel,
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
+
   GIMP_CHANNEL_GET_CLASS (channel)->clear (channel, undo_desc, push_undo);
 }
 
@@ -1750,6 +1753,9 @@ gimp_channel_all (GimpChannel *channel,
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
+
   GIMP_CHANNEL_GET_CLASS (channel)->all (channel, push_undo);
 }
 
@@ -1758,6 +1764,9 @@ gimp_channel_invert (GimpChannel *channel,
                      gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->invert (channel, push_undo);
 }
@@ -1769,6 +1778,9 @@ gimp_channel_border (GimpChannel *channel,
                      gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->border (channel, radius_x, radius_y,
                                             push_undo);
@@ -1782,6 +1794,9 @@ gimp_channel_grow (GimpChannel *channel,
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
+
   GIMP_CHANNEL_GET_CLASS (channel)->grow (channel, radius_x, radius_y,
                                           push_undo);
 }
@@ -1794,6 +1809,9 @@ gimp_channel_shrink (GimpChannel  *channel,
                      gboolean      push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (channel)))
+    push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
                                             edge_lock, push_undo);

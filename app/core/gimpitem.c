@@ -647,6 +647,9 @@ gimp_item_translate (GimpItem *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
 
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
   if (push_undo)
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                  item_class->translate_desc);
@@ -704,6 +707,7 @@ gimp_item_scale (GimpItem              *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (new_width < 1 || new_height < 1)
@@ -762,6 +766,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
   gint new_offset_x, new_offset_y;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (w_factor == 0.0 || h_factor == 0.0)
@@ -826,6 +831,7 @@ gimp_item_scale_by_origin (GimpItem              *item,
   gint new_offset_x, new_offset_y;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (new_width == 0 || new_height == 0)
@@ -868,6 +874,7 @@ gimp_item_resize (GimpItem    *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (new_width < 1 || new_height < 1)
@@ -895,6 +902,7 @@ gimp_item_flip (GimpItem            *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
@@ -920,6 +928,7 @@ gimp_item_rotate (GimpItem         *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
@@ -949,6 +958,7 @@ gimp_item_transform (GimpItem               *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (matrix != NULL);
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -1055,6 +1065,7 @@ gimp_item_set_image (GimpItem  *item,
                      GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_floating (item));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
   if (gimage == NULL)
@@ -1199,7 +1210,7 @@ gimp_item_set_visible (GimpItem *item,
 
   if (item->visible != visible)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (item))
         {
           GimpImage *gimage = gimp_item_get_image (item);
 
@@ -1222,7 +1233,7 @@ gimp_item_set_linked (GimpItem *item,
 
   if (item->linked != linked)
     {
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (item))
         {
           GimpImage *gimage = gimp_item_get_image (item);
 
