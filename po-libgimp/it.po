@@ -1,12 +1,12 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000
-# Marco Ciampa <ciampix@libero.it>, 2003
+# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2003-12-07 17:56+0100\n"
-"PO-Revision-Date: 2003-09-19 17:23+0200\n"
+"POT-Creation-Date: 2004-01-05 22:55+0100\n"
+"PO-Revision-Date: 2004-01-05 22:57+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "Converti in scala di grigi"
 #: libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "è possibile gestire solo immagini indicizzate"
+msgstr "%s può gestire solo immagini indicizzate"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
@@ -198,27 +198,6 @@ msgstr "Selezione gradiente"
 msgid "None"
 msgstr "Nessuno"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Anteprima"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Non c'è %s in gimprc:\n"
-"E' necessario aggiungere una voce simile a\n"
-"(%s \"%s\")\n"
-"al file %s."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Impostazione parametri"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Selezione pattern"
@@ -314,6 +293,11 @@ msgstr "Caricamento fallito"
 msgid "Not loaded"
 msgstr "Non caricato"
 
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Fallita la creazione della cartella miniature '%s'."
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
 msgstr "/Colore _primo piano"
@@ -407,11 +391,11 @@ msgstr "Corrente:"
 msgid "Old:"
 msgstr "Vecchio:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Seleziona cartella"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Seleziona file"
 
@@ -499,23 +483,23 @@ msgstr "_Ruota"
 msgid "_Shear"
 msgstr "_Cesoie"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Altri..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Unità"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Fattore"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -524,11 +508,11 @@ msgstr ""
 "permette \n"
 "di ripetere una data operazione \"casuale\""
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "_Casualizza"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Generatore del seme di casualità con un numero generato casualmente"
 
@@ -679,3 +663,20 @@ msgstr "Acquerelli"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressione"
+
+#~ msgid "Preview"
+#~ msgstr "Anteprima"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Non c'è %s in gimprc:\n"
+#~ "E' necessario aggiungere una voce simile a\n"
+#~ "(%s \"%s\")\n"
+#~ "al file %s."
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Impostazione parametri"

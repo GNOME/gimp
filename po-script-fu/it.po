@@ -1,18 +1,18 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000
-# Marco Ciampa <ciampix@libero.it>, 2003
+# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-22 22:31+0100\n"
+"POT-Creation-Date: 2004-01-05 23:03+0100\n"
 "PO-Revision-Date: 2003-11-19 18:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:144
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -51,80 +51,80 @@ msgstr ""
 "interattive"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1118
-#: plug-ins/script-fu/script-fu-scripts.c:1120
+#: plug-ins/script-fu/script-fu-scripts.c:1119
+#: plug-ins/script-fu/script-fu-scripts.c:1121
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1132
+#: plug-ins/script-fu/script-fu-scripts.c:1133
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1167
+#: plug-ins/script-fu/script-fu-scripts.c:1168
 msgid "About"
 msgstr "Informazioni"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1177
+#: plug-ins/script-fu/script-fu-scripts.c:1178
 msgid "Script Arguments"
 msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1205
+#: plug-ins/script-fu/script-fu-scripts.c:1206
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1249
+#: plug-ins/script-fu/script-fu-scripts.c:1250
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1322
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1327
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1347
+#: plug-ins/script-fu/script-fu-scripts.c:1348
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione modello Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1946
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
+#: plug-ins/script-fu/script-fu-scripts.c:1947
 msgid "Author:"
 msgstr "Autore:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1952
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
+#: plug-ins/script-fu/script-fu-scripts.c:1953
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1958
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
+#: plug-ins/script-fu/script-fu-scripts.c:1959
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1995
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -147,19 +147,19 @@ msgstr "Porta server:"
 msgid "Server Logfile:"
 msgstr "File di log server:"
 
-#: plug-ins/script-fu/script-fu.c:120
+#: plug-ins/script-fu/script-fu.c:122
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Xtns/Script-Fu/_Console Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:145
+#: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/E_segui server..."
 
-#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Ri-leggi script disponibili"
 
-#: plug-ins/script-fu/script-fu.c:274
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/Aggio_rna gli script"
 
@@ -588,11 +588,12 @@ msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
 msgstr ""
+"\n"
+"\t\t    IMPOSTAZIONE-SF _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Alien Glow/Bottone..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Alien Glow/B_ottone..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -625,6 +626,8 @@ msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
 msgstr ""
+"\n"
+"\t\t    COLORE-SF     _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 #, fuzzy
@@ -881,7 +884,7 @@ msgstr "Aggiungi incandescenza"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
-msgstr ""
+msgstr "Post-incandescenza"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
@@ -1780,6 +1783,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (nomefile (stringa-in-append dati-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1787,6 +1793,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (nomefile (stringa-in-append dati-dir\n"
+"               "  
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1794,26 +1803,25 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (nomefile (stringa-in-append dati-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Ellittico, Piumato..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Ellittico, _piumato..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Rettangolare, Piumato..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Rettan_golare, piumato..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Ellittico..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/_Ellittico..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Rettangolare..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/_Rettangolare..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
@@ -1999,18 +2007,16 @@ msgid "Rippling Strength"
 msgstr "Livello increspatura"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-#, fuzzy
 msgid "Smear"
-msgstr "Seppia"
+msgstr "Macchia"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Lega"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-msgstr "<Image>/Script-Fu/Decorazioni/Angoli arrotondati..."
+msgstr "<Image>/Script-Fu/Decorazioni/Angoli a_rrotondati..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
 msgid "Add Background"
@@ -2035,9 +2041,8 @@ msgstr ""
 "\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr "<Image>/Script-Fu/Selezione/A pennello..."
+msgstr "<Image>/Script-Fu/Selezione/A _pennello..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "Brush Name"
@@ -2108,9 +2113,8 @@ msgid "Turn from Left to Right"
 msgstr "Gira da sinistra a destra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Script-Fu/Render/Circuiti..."
+msgstr "<Image>/Script-Fu/Render/_Spirogimp..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2129,19 +2133,16 @@ msgid "Color Method"
 msgstr "Metodo colore"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
-"Disegna spirograph, epitrochoid e figure di Lissajous. Ulteriori "
-"informazioni\n"
+"Disegna spirografi, epitrocoidi e figure di Lissajous. Ulteriori informazioni\n"
 "su http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
-#, fuzzy
 msgid "Epitrochoid"
-msgstr "Epitrochoid"
+msgstr "Epitrocoidi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
@@ -2212,9 +2213,8 @@ msgid "Solid Color"
 msgstr "Colore pieno"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
-#, fuzzy
 msgid "Spyrograph"
-msgstr "Spyrograph"
+msgstr "Spirografi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
@@ -2268,7 +2268,7 @@ msgstr "Dimensione effetto (punti * 4)"
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/Swirl-Tile..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Modelli/Swirl-Tile..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
@@ -2277,7 +2277,7 @@ msgstr "Ammontare della rotazione"
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Pattern/Swirl-Tile..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Modelli/_Swirly..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2294,12 +2294,12 @@ msgstr "Angolo di rotazione"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-msgstr "<Image>/Script-Fu/Alpha a logo/Particle Trace..."
+msgstr "<Image>/Script-Fu/Alfa a logo/Tracce _particelle..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Particle Trace..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Tracce _particelle..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
