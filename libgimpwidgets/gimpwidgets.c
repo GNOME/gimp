@@ -970,6 +970,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                const gchar *help_id)
 {
   GtkWidget *label;
+  GtkWidget *ebox;
   GtkWidget *scale;
   GtkWidget *spinbutton;
   GtkObject *adjustment;
@@ -977,9 +978,25 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   label = gtk_label_new_with_mnemonic (text);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label,
-                    column, column + 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+
+  if (tooltip)
+    {
+      ebox = gtk_event_box_new ();
+      gtk_table_attach (GTK_TABLE (table), ebox,
+                        column, column + 1, row, row + 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (ebox);
+
+      gtk_container_add (GTK_CONTAINER (ebox), label);
+    }
+  else
+    {
+      ebox = NULL;
+      gtk_table_attach (GTK_TABLE (table), label,
+                        column, column + 1, row, row + 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+    }
+
   gtk_widget_show (label);
 
   if (! constrain &&
@@ -1060,12 +1077,15 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   if (tooltip || help_id)
     {
+      if (ebox)
+        gimp_help_set_help_data (ebox, tooltip, help_id);
+
       gimp_help_set_help_data (scale, tooltip, help_id);
       gimp_help_set_help_data (spinbutton, tooltip, help_id);
     }
 
-  g_object_set_data (G_OBJECT (return_adj), "label", label);
-  g_object_set_data (G_OBJECT (return_adj), "scale", scale);
+  g_object_set_data (G_OBJECT (return_adj), "label",      label);
+  g_object_set_data (G_OBJECT (return_adj), "scale",      scale);
   g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
 
   return return_adj;
