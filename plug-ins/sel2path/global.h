@@ -152,24 +152,24 @@ extern void safe_free (address *p);
    `scaled_num', so more precision than this will be lost when we
    output, anyway.  */
 #define REAL_EPSILON 0.00001
-extern const boolean epsilon_equal (real v1, real v2);
+extern boolean epsilon_equal (real v1, real v2);
 
 /* Arc cosine, in degrees.  */
-extern const real my_acosd (real);
+extern real my_acosd (real);
 
 /* Return the Euclidean distance between the two points.  */
-extern const real distance (real_coordinate_type, real_coordinate_type);
-extern const real int_distance (coordinate_type, coordinate_type);
+extern real distance (real_coordinate_type, real_coordinate_type);
+extern real int_distance (coordinate_type, coordinate_type);
 
 /* Slope between two points (delta y per unit x).  */
-extern const real slope (real_coordinate_type, real_coordinate_type);
+extern real slope (real_coordinate_type, real_coordinate_type);
 
 /* Make a real coordinate from an integer one, and vice versa.  */
-extern const real_coordinate_type int_to_real_coord (coordinate_type);
-extern const coordinate_type real_to_int_coord (real_coordinate_type);
+extern real_coordinate_type int_to_real_coord (coordinate_type);
+extern coordinate_type real_to_int_coord (real_coordinate_type);
 
 /* Test if two integer points are adjacent.  */
-extern const boolean points_adjacent_p (int row1, int col1, int r2, int c2);
+extern boolean points_adjacent_p (int row1, int col1, int r2, int c2);
 
 /* Find the largest and smallest elements of an array.  */
 extern void find_bounds (real values[], unsigned value_count,

@@ -53,7 +53,7 @@
  * version 0.95.00; 1998.05.12  hof: added rotatation capabilities
  * version 0.94.00; 1998.04.25  hof: use only one point as default
  *                                   bugfix: initial value for src_paintmode
- *                                           fixes the problem reported in p_my_layer_copy (cant get new layer)
+ *                                           fixes the problem reported in p_my_layer_copy (can't get new layer)
  * version 0.90.00; 1997.12.14  hof: 1.st (pre) release
  */
 
@@ -335,7 +335,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   path_ptr = g_new( t_mov_path_preview, 1 );
   if(path_ptr == NULL)
   {
-    printf("error cant alloc path_preview structure\n");
+    printf("error can't alloc path_preview structure\n");
     return -1;
   }
   path_ptr->show_path = TRUE;
@@ -500,7 +500,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		      path_ptr);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gimp_help_set_help_data(button,
-                       _("Show PreviewFrame with Selected       \nSrcLayer at current Controlpoint")
+                       _("Show PreviewFrame with Selected SrcLayer at current Controlpoint")
                        , NULL);
   gtk_widget_show (button);
 
@@ -511,7 +511,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		      path_ptr);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gimp_help_set_help_data(button,
-                       _("Generate Animated Preview\nas multilayer image")
+                       _("Generate Animated Preview as multilayer image")
                        , NULL);
   gtk_widget_show (button);
 
@@ -565,7 +565,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 			  0,                                  /* digits */
 			  TRUE,                               /* constrain */
 			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
-			  _("first handled frame"), NULL);    /* tooltip privatetip */
+			  _("First handled frame"), NULL);    /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals->dst_range_start);
@@ -580,7 +580,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 			  0,                                  /* digits */
 			  TRUE,                               /* constrain */
 			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
-			  _("last handled frame"), NULL);     /* tooltip privatetip */
+			  _("Last handled frame"), NULL);     /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals->dst_range_end);
@@ -595,7 +595,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 			  0,                                  /* digits */
 			  TRUE,                               /* constrain */
 			  (gfloat)first_nr, (gfloat)last_nr,  /* lower, upper (unconstrained) */
-			  _("frame to show when UpdPreview\nbutton is pressed"),
+			  _("Frame to show when UpdPreview button is pressed"),
 			  NULL);                              /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -611,7 +611,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 			  0,                                  /* digits */
 			  FALSE,                              /* constrain */
 			  0.0, 999999.0,                      /* lower, upper (unconstrained) */
-			  _("How to insert SrcLayer into the\nDst. Frame's Layerstack\n0 means on top i.e. in front"),
+			  _("How to insert SrcLayer into the Dst. Frame's Layerstack\n0 means on top i.e. in front"),
 			  NULL);                              /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -641,7 +641,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
                        &pvals->clip_to_img);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->clip_to_img);
   gimp_help_set_help_data(check_button,
-                       _("Clip all copied Src-Layers\nat Frame Boundaries")
+                       _("Clip all copied Src-Layers at Frame Boundaries")
                        , NULL);
   gtk_widget_show (check_button);
   gtk_box_pack_start (GTK_BOX (vcbox), check_button, TRUE, TRUE, 0);
@@ -809,7 +809,7 @@ mov_apv_callback (GtkWidget *widget,
 
   apv_locked = TRUE;
 
-  if(gap_debug) printf("mov_apv_callback preview_frame_nr: %d \n",
+  if(gap_debug) printf("mov_apv_callback preview_frame_nr: %d\n",
          (int)path_ptr->preview_frame_nr);
 
 
@@ -1996,7 +1996,7 @@ mov_src_sel_create()
   menu = p_buildmenu (option_step_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gimp_help_set_help_data(option_menu,
-                       _("How to fetch the next SrcLayer   \nat the next handled frame")
+                       _("How to fetch the next SrcLayer at the next handled frame")
                        , NULL);
   gtk_widget_show(option_menu);
 
@@ -2020,7 +2020,7 @@ mov_src_sel_create()
   menu = p_buildmenu (option_handle_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gimp_help_set_help_data(option_menu,
-                       _("How to place the SrcLayer at   \nControlpoint Coordinates")
+                       _("How to place the SrcLayer at Controlpoint Coordinates")
                        , NULL);
   gtk_widget_show(option_menu);
 
@@ -2158,7 +2158,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
 			  0,                                  /* digits */
 			  FALSE,                              /* constrain */
 			  (gfloat)1, (gfloat)1000,            /* lower, upper (unconstrained) */
-			  _("Scale SrcLayer's Height\nin percent"),
+			  _("Scale SrcLayer's Height in percent"),
 			  NULL);    /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -2175,7 +2175,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
 			  0,                                  /* digits */
 			  TRUE,                               /* constrain */
 			  (gfloat)0, (gfloat)100,             /* lower, upper (unconstrained) */
-			  _("SrcLayer's Opacity\nin percent"),
+			  _("SrcLayer's Opacity in percent"),
 			  NULL);    /* tooltip privatetip */
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -2294,7 +2294,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Add Controlpoint at end        \n(the last Point is duplicated)")
+                       _("Add Controlpoint at end\n(the last Point is duplicated)")
                        , NULL);
   gtk_widget_show (button);
 
@@ -2305,8 +2305,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
                        path_ptr);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), path_ptr->show_path);
   gimp_help_set_help_data(check_button,
-                       _("Show Path Lines and enable\n"
-                         "pick/drag with left button\n"
+                       _("Show Path Lines and enable "
+                         "pick/drag with left button "
                          "or move with right button")
                        , NULL);
   gtk_widget_show (check_button);
@@ -2323,7 +2323,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Insert Controlpoint          \n(the current Point is duplicated)")
+                       _("Insert Controlpoint\n(the current Point is duplicated)")
                        , NULL);
   gtk_widget_show (button);
 
@@ -2401,7 +2401,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Reset the current Controlpoint\nto default Values")
+                       _("Reset the current Controlpoint to default Values")
                        , NULL);
   gtk_widget_show (button);
 
@@ -2413,7 +2413,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Reset all Controlpoints to default Values\n"
+                       _("Reset all Controlpoints to default Values "
 		         "but dont change the path (X/Y Values)")
                        , NULL);
   gtk_widget_show (button);
@@ -2431,7 +2431,7 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Set Rotation for all Controlpoints\n"
+                       _("Set Rotation for all Controlpoints "
 		         "to follow the shape of the path.\n"
 		         "(Shift: use Rotation of contolpoint 1 as offset)")
                        , NULL);
@@ -3007,7 +3007,7 @@ p_chk_keyframes(t_mov_path_preview *path_ptr)
     {
       keychk_locked = TRUE;
       p_init_arr_arg(&argv[0], WGT_LABEL);
-      argv[0].label_txt = _("Cant operate with current Controlpoint\nor Keyframe settings");
+      argv[0].label_txt = _("Can't operate with current Controlpoint\nor Keyframe settings");
 
       p_init_arr_arg(&argv[1], WGT_LABEL);
       argv[1].label_txt = l_err_lbltext;
@@ -3278,7 +3278,7 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
   if(l_cp_layer_mask_id >= 0)
   {
      /* apply the layermask
-      *   some transitions (especially rotate) cant operate proper on
+      *   some transitions (especially rotate) can't operate proper on
       *   layers with masks !
       *   (tests with gimp-rotate resulted in trashed images,
       *    even if the mask was rotated too)

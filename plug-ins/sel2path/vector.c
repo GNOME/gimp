@@ -29,7 +29,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 /* Given the point COORD, return the corresponding vector.  */
 
-const vector_type
+vector_type
 make_vector (const real_coordinate_type c)
 {
   vector_type v;
@@ -43,7 +43,7 @@ make_vector (const real_coordinate_type c)
 
 /* And the converse: given a vector, return the corresponding point.  */
 
-const real_coordinate_type
+real_coordinate_type
 vector_to_point (const vector_type v)
 {
   real_coordinate_type coord;
@@ -55,14 +55,14 @@ vector_to_point (const vector_type v)
 }
 
 
-const real
+real
 magnitude (const vector_type v)
 {
   return hypot (v.dx, v.dy);
 }
 
 
-const vector_type
+vector_type
 normalize (const vector_type v)
 {
   vector_type new_v;
@@ -77,7 +77,7 @@ normalize (const vector_type v)
 }
 
 
-const vector_type
+vector_type
 Vadd (const vector_type v1, const vector_type v2)
 {
   vector_type new_v;
@@ -89,14 +89,14 @@ Vadd (const vector_type v1, const vector_type v2)
 }
 
 
-const real
+real
 Vdot (const vector_type v1, const vector_type v2)
 {
   return v1.dx * v2.dx + v1.dy * v2.dy;
 }
 
 
-const vector_type
+vector_type
 Vmult_scalar (const vector_type v, const real r)
 {
   vector_type new_v;
@@ -111,7 +111,7 @@ Vmult_scalar (const vector_type v, const real r)
 /* Given the IN_VECTOR and OUT_VECTOR, return the angle between them in
    degrees, in the range zero to 180.  */
    
-const real
+real
 Vangle (const vector_type in_vector, const vector_type out_vector)
 {
   vector_type v1 = normalize (in_vector);
@@ -121,7 +121,7 @@ Vangle (const vector_type in_vector, const vector_type out_vector)
 }
 
 
-const real_coordinate_type
+real_coordinate_type
 Vadd_point (const real_coordinate_type c, const vector_type v)
 {
   real_coordinate_type new_c;
@@ -132,7 +132,7 @@ Vadd_point (const real_coordinate_type c, const vector_type v)
 }
 
 
-const real_coordinate_type
+real_coordinate_type
 Vsubtract_point (const real_coordinate_type c, const vector_type v)
 {
   real_coordinate_type new_c;
@@ -143,7 +143,7 @@ Vsubtract_point (const real_coordinate_type c, const vector_type v)
 }
 
 
-const coordinate_type
+coordinate_type
 Vadd_int_point (const coordinate_type c, const vector_type v)
 {
   coordinate_type a;
@@ -154,7 +154,7 @@ Vadd_int_point (const coordinate_type c, const vector_type v)
 }
 
 
-const vector_type
+vector_type
 Vabs (const vector_type v)
 {
   vector_type new_v;
@@ -167,7 +167,7 @@ Vabs (const vector_type v)
 
 /* Operations on points.  */
 
-const vector_type
+vector_type
 Psubtract (const real_coordinate_type c1, const real_coordinate_type c2)
 {
   vector_type v;
@@ -180,7 +180,7 @@ Psubtract (const real_coordinate_type c1, const real_coordinate_type c2)
 
 /* Operations on integer points.  */
 
-const vector_type
+vector_type
 IPsubtract (const coordinate_type coord1, const coordinate_type coord2)
 {
   vector_type v;
@@ -192,7 +192,7 @@ IPsubtract (const coordinate_type coord1, const coordinate_type coord2)
 }
 
 
-const coordinate_type
+coordinate_type
 IPsubtractP (const coordinate_type c1, const coordinate_type c2)
 {
   coordinate_type c;
@@ -204,7 +204,7 @@ IPsubtractP (const coordinate_type c1, const coordinate_type c2)
 }
 
 
-const coordinate_type
+coordinate_type
 IPadd (const coordinate_type c1, const coordinate_type c2)
 {
   coordinate_type c;
@@ -216,7 +216,7 @@ IPadd (const coordinate_type c1, const coordinate_type c2)
 }
 
 
-const coordinate_type
+coordinate_type
 IPmult_scalar (const coordinate_type c, const int i)
 {
   coordinate_type a;
@@ -228,7 +228,7 @@ IPmult_scalar (const coordinate_type c, const int i)
 }
 
 
-const real_coordinate_type
+real_coordinate_type
 IPmult_real (const coordinate_type c, const real r)
 {
   real_coordinate_type a;
@@ -240,7 +240,7 @@ IPmult_real (const coordinate_type c, const real r)
 }
 
 
-const boolean
+boolean
 IPequal (const coordinate_type c1, const coordinate_type c2)
 {
   return c1.x == c2.x && c1.y == c2.y;

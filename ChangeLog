@@ -1,3 +1,24 @@
+Sun Jul 30 12:52:16 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gap/gap_mov_dialog.c: Removed embedded EOLs and spaces from
+	tooltips, few typos.
+
+Sun Jul 30 12:52:16 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	On request of Martin Weber <martweb@gmx.net>:
+	* plug-ins/sel2path/bitmap.h
+	* plug-ins/sel2path/bounding-box.h
+	* plug-ins/sel2path/global.h
+	* plug-ins/sel2path/math.c
+	* plug-ins/sel2path/vector.c
+	* plug-ins/sel2path/vector.h
+	plug-ins/sel2path has a number of functions that are declared as
+	returning a `const' return value.  The ANSI spec is a bit vague on it,
+	but my reading of the spec indicates that the intent is that this is
+	not legal.  In any case, at least one compiler (the compiler on AIX and
+	on IRIX and lcc) objects to functions that are declared/defined to
+	return a const value.
+
 2000-07-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/errors.[ch]

@@ -51,8 +51,8 @@ typedef struct
 
 /* Convert a dimensions structure to an integer bounding box, and vice
    versa.  */
-extern const bounding_box_type dimensions_to_bb (dimensions_type);
-extern const dimensions_type bb_to_dimensions (bounding_box_type);
+extern bounding_box_type dimensions_to_bb (dimensions_type);
+extern dimensions_type bb_to_dimensions (bounding_box_type);
 
 
 /* Update the bounding box BB from the point P.  */

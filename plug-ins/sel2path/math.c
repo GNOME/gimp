@@ -34,7 +34,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
    larger or smaller than its true value.  When it matters, we need to
    compare with some tolerance, REAL_EPSILON, defined in kbase.h.  */
 
-const boolean
+boolean
 epsilon_equal (real v1, real v2)
 {
   return
@@ -45,7 +45,7 @@ epsilon_equal (real v1, real v2)
 
 /* Return the Euclidean distance between P1 and P2.  */
 
-const real
+real
 distance (real_coordinate_type p1, real_coordinate_type p2)
 {
   return hypot (p1.x - p2.x, p1.y - p2.y);
@@ -53,7 +53,7 @@ distance (real_coordinate_type p1, real_coordinate_type p2)
 
 
 /* Same thing, for integer points.  */
-const real
+real
 int_distance (coordinate_type p1, coordinate_type p2)
 {
   return hypot ((double) p1.x - p2.x, (double) p1.y - p2.y);
@@ -63,7 +63,7 @@ int_distance (coordinate_type p1, coordinate_type p2)
 /* Return the arc cosine of V, in degrees in the range zero to 180.  V
    is taken to be in radians.  */
 
-const real
+real
 my_acosd (real v)
 {
   real a;
@@ -84,7 +84,7 @@ my_acosd (real v)
 
 /* The slope of the line defined by COORD1 and COORD2.  */
 
-const real
+real
 slope (real_coordinate_type coord1, real_coordinate_type coord2)
 {
   assert (coord2.x - coord1.x != 0);
@@ -95,7 +95,7 @@ slope (real_coordinate_type coord1, real_coordinate_type coord2)
 
 /* Turn an integer point into a real one, and vice versa.  */
 
-const real_coordinate_type
+real_coordinate_type
 int_to_real_coord (coordinate_type int_coord)
 {
   real_coordinate_type real_coord;
@@ -107,7 +107,7 @@ int_to_real_coord (coordinate_type int_coord)
 }
 
 
-const coordinate_type
+coordinate_type
 real_to_int_coord (real_coordinate_type real_coord)
 {
   coordinate_type int_coord;
@@ -121,7 +121,7 @@ real_to_int_coord (real_coordinate_type real_coord)
 
 /* See if two points (described by their row and column) are adjacent.  */
 
-const boolean
+boolean
 points_adjacent_p (int row1, int col1, int row2, int col2)
 {
   int row_diff = abs (row1 - row2);

@@ -95,7 +95,7 @@ extern bitmap_type extract_subbitmap (bitmap_type b, bounding_box_type bb);
    refers to pixels, rather than edges.  Specifically, this means that
    the maximum column is one less than results from `dimensions_to_bb
    (BITMAP_DIMENSIONS ())'.  */
-extern const bounding_box_type bitmap_to_bb (const bitmap_type);
+extern bounding_box_type bitmap_to_bb (const bitmap_type);
 
 /* Return a vector of zero-based column numbers marking transitions from
    black to white or white to black in ROW, which is of length WIDTH.
