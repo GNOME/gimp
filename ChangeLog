@@ -1,3 +1,11 @@
+Wed Sep 20 22:40:25 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/gfig/gfig.c
+	
+	Fixed problems since the interface to gimp-drawable-fill() has 
+	changed. Also fixed some GTK warnings when GFig objects were
+	loaded.
+
 2000-09-20  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	* plug-ins/pygimp/plug-ins/pdbbrowse.py (pars): Oops.  When we did

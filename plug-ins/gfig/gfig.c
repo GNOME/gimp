@@ -260,8 +260,8 @@ typedef enum
 
 typedef enum
 {
-  SINGLE_LAYER = 0,
-  ORIGINAL_LAYER,
+  ORIGINAL_LAYER = 0,
+  SINGLE_LAYER,
   MULTI_LAYER
 } DrawonLayers;
 
@@ -269,6 +269,7 @@ typedef enum
 {
   LAYER_TRANS_BG = 0,
   LAYER_BG_BG,
+  LAYER_FG_BG,
   LAYER_WHITE_BG,
   LAYER_COPY_BG
 } LayersBGType;
@@ -2764,6 +2765,7 @@ paint_page (void)
 			   _("Multiple"), (gpointer) MULTI_LAYER, NULL,
 
 			   NULL);
+
   gimp_help_set_help_data (page_menu_layers,
 			_("Draw all objects on one layer (original or new) "
 			  "or one object per layer"), NULL);
@@ -2821,6 +2823,7 @@ paint_page (void)
 
 			   _("Transparent"), (gpointer) LAYER_TRANS_BG, NULL,
 			   _("Background"),  (gpointer) LAYER_BG_BG, NULL,
+			   _("Foreground"),  (gpointer) LAYER_FG_BG, NULL,
 			   _("White"),       (gpointer) LAYER_WHITE_BG, NULL,
 			   _("Copy"),        (gpointer) LAYER_COPY_BG, NULL,
 
@@ -3275,6 +3278,8 @@ options_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Grid Type:"), 1.0, 0.5,
 			     menu, 1, TRUE);
+
+  gfig_opt_widget.gridtypemenu = menu;
 
   menu =
     gimp_option_menu_new2 (FALSE, gridtype_menu_callback,
@@ -4629,13 +4634,16 @@ paint_layer_new (gchar *new_name)
   switch (selvals.onlayerbg)
     {
     case LAYER_TRANS_BG:
-      fill_type = 2;
+      fill_type = 3;
       break;
     case LAYER_BG_BG:
+      fill_type = 1;
+      break;
+    case LAYER_FG_BG:
       fill_type = 0;
       break;
     case LAYER_WHITE_BG:
-      fill_type = 1;
+      fill_type = 2;
       break;
     case LAYER_COPY_BG:
     default:
