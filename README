@@ -1,11 +1,11 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is version 1.3, the developers version of The GIMP. Only use
-it if you are brave and curious and want to participate development
-towards the next stable release version 1.4. Please do not yet report
-bugs in this version. This is a developers version. We know it has 
-bugs and it might not even compile. You have been warned!
+This is version 1.3, the developers version of The GIMP. Only use it
+if you are brave and curious and want to participate development
+towards the next stable release version 1.4. This is a developers
+version. We know it has bugs and it might not even compile. You have
+been warned!
 
 Some features that were present in GIMP 1.2 are disabled or not even 
 included in this release. This includes the Perl extension and thus 

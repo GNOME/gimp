@@ -1,3 +1,15 @@
+2002-05-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped our version number to 1.3.6. Added check
+	for libgtkhtml-2.0.
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/helpbrowser.c: started to port the help browser
+	to GtkHtml2. Not all features are working yet.
+
+	* plug-ins/helpbrowser/back.xpm
+	* plug-ins/helpbrowser/forward.xpm: removed.
+
 2002-05-04  Sven Neumann  <sven@gimp.org>
 
 	* README: updated Bugs section. Mention gdkxft to avoid more
