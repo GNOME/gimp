@@ -1,5 +1,10 @@
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpairbrush.c (gimp_airbrush_paint): removed a
+	leftover warning (bug #97214).
+
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc-blurbs.h: improved a few blurbs.
 
 2003-03-11  Michael Natterer  <mitch@gimp.org>

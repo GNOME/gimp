@@ -163,7 +163,6 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
     case INIT_PAINT:
       if (timeout_id)
 	{
-	  g_warning ("killing stray timer, please report to lewing@gimp.org");
 	  g_source_remove (timeout_id);
 	  timeout_id = 0;
 	}
