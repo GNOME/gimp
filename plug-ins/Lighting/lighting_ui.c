@@ -18,11 +18,13 @@
  */
 
 #include "config.h"
+
+#include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <glib/gprintf.h>
 
 #include "lighting_ui.h"
 #include "lighting_main.h"
@@ -342,9 +344,10 @@ create_light_page (void)
 
   for (k = 0; k < NUM_LIGHTS; k++)
     {
-      g_sprintf (label_text, "Light %d", k + 1);
+      g_snprintf (label_text, sizeof (label_text), "Light %d", k + 1);
       label = gtk_label_new (label_text);
-      gtk_table_attach_defaults (GTK_TABLE (table), label, 2*k + 1, 2*k + 2, 0, 1);
+      gtk_table_attach_defaults (GTK_TABLE (table),
+                                 label, 2*k + 1, 2*k + 2, 0, 1);
       gtk_widget_show (label);
 
       light_type_combo[k] = gimp_int_combo_box_new (_("None"),        NO_LIGHT,
@@ -363,7 +366,7 @@ create_light_page (void)
       gtk_table_attach_defaults (GTK_TABLE (table), ebox, 2*k + 1, 2*k + 2, 1, 2);
       gtk_widget_show (light_type_combo[k]);
       gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
-      
+
       colorbutton[k] = gimp_color_button_new (_("Select lightsource color"),
                                            64, 16,
                                            &mapvals.lightsource[k].color,
@@ -404,7 +407,7 @@ create_light_page (void)
                         NULL);
       gimp_help_set_help_data (spin_pos_x[k],
                                _("Light source X position in XYZ space"), NULL);
-      
+
       spin_pos_y[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].position.y,
                                             -100.0, 100.0,
                                             0.1, 1.0, 1.0, 0.0, 2);
@@ -445,7 +448,7 @@ create_light_page (void)
       gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
       gtk_container_add (GTK_CONTAINER (dirlightwid[k]), table2);
       gtk_table_attach_defaults (GTK_TABLE (table), dirlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
-      
+
       spin_dir_x[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.x,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 0,
@@ -459,7 +462,7 @@ create_light_page (void)
                         NULL);
       gimp_help_set_help_data (spin_dir_x[k],
                                _("Light source X direction in XYZ space"), NULL);
-      
+
       spin_dir_y[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.y,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 1,
@@ -473,7 +476,7 @@ create_light_page (void)
                         NULL);
       gimp_help_set_help_data (spin_dir_y[k],
                                _("Light source Y direction in XYZ space"), NULL);
-      
+
       spin_dir_z[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.z,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 2,
@@ -1056,9 +1059,8 @@ save_lighting_preset (GtkWidget *widget,
     }
   else
     {
-      const gchar *tmp = g_get_tmp_dir ();
-
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window),
+                                           g_get_tmp_dir ());
     }
 
 
@@ -1082,13 +1084,15 @@ file_chooser_response (GtkFileChooser *chooser,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar   *filename;
-
-      filename = gtk_file_chooser_get_filename (chooser);
+      gchar *filename = gtk_file_chooser_get_filename (chooser);
 
       fp = fopen (filename, "w");
+
       if (!fp)
-          g_message ("Cannot open file '%s' for saving", filename);
+        {
+          g_message (_("Could not open '%s' for writing: %s"),
+                     filename, g_strerror (errno));
+        }
       else
         {
           for (k = 0; k < NUM_LIGHTS; k++)
@@ -1114,7 +1118,8 @@ file_chooser_response (GtkFileChooser *chooser,
                     fprintf (fp, "Type: Spot\n");
                     break;
                   default:
-                    g_message ("Unknown light type: %d", mapvals.lightsource[k].type);
+                    g_warning ("Unknown light type: %d",
+                               mapvals.lightsource[k].type);
                     continue;
                   }
 
@@ -1133,10 +1138,10 @@ file_chooser_response (GtkFileChooser *chooser,
                          g_ascii_dtostr (buffer2, blen, source->color.g),
                          g_ascii_dtostr (buffer3, blen, source->color.b));
 
-                fprintf (fp, "Intensity: %s\n", 
+                fprintf (fp, "Intensity: %s\n",
                          g_ascii_dtostr (buffer1, blen, source->intensity));
               }
-          
+
           fclose (fp);
         }
     }
@@ -1190,9 +1195,8 @@ load_lighting_preset (GtkWidget *widget,
     }
   else
     {
-      const gchar *tmp = g_get_tmp_dir ();
-
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window),
+                                           g_get_tmp_dir ());
     }
 
 
@@ -1218,13 +1222,15 @@ load_file_chooser_response (GtkFileChooser *chooser,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar   *filename;
-
-      filename = gtk_file_chooser_get_filename (chooser);
+      gchar *filename = gtk_file_chooser_get_filename (chooser);
 
       fp = fopen (filename, "r");
+
       if (!fp)
-          g_message ("Cannot open file '%s' for reading", filename);
+        {
+          g_message (_("Could not open '%s' for reading: %s"),
+                     filename, g_strerror (errno));
+        }
       else
         {
           fscanf (fp, "Number of lights: %d", &num_lights);
@@ -1243,7 +1249,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
                 source->type = SPOT_LIGHT;
               else
                 {
-                  g_message ("Unknown light type: %s", type_label);
+                  g_warning ("Unknown light type: %s", type_label);
                   fclose (fp);
                   return;
                 }
@@ -1276,7 +1282,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
           fclose (fp);
         }
     }
-  
+
   gtk_widget_destroy (GTK_WIDGET (chooser));
   interactive_preview_callback (GTK_WIDGET (chooser));
 }
