@@ -1,3 +1,17 @@
+Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/paint_funcs.c:
+	Fixed copy-on-write path of copy_region which was sometimes
+	crashing with Scott's new tile scheme.
+
+	* app/tile_manager.c:
+	Added some sanity warnings.
+
+	* app/xcf.c:
+	Fixed copy-on-write tile loading which was causing crashes
+	with Scott's new tile scheme.  Ref balance count seems funny
+	still.
+
 1998-07-10  Chris Lahey  <clahey@umich.edu>
 
 	* app/docindexif.c: New file.

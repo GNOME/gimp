@@ -1922,9 +1922,11 @@ xcf_load_level (XcfInfo     *info,
 	  break;
 	case COMPRESS_ZLIB:
 	  g_error ("xcf: zlib compression unimplemented");
+	  fail = TRUE;
 	  break;
 	case COMPRESS_FRACTAL:
 	  g_error ("xcf: fractal compression unimplemented");
+	  fail = TRUE;
 	  break;
 	}
 
@@ -1948,14 +1950,22 @@ xcf_load_level (XcfInfo     *info,
 	    {
 	      tile_release (tile, TRUE);
 	      tile_manager_map (tiles, i, level_num, previous);
+
+	      putchar('M');
 	    }
 	  else
 	    {
 	      tile_release (tile, TRUE);
+	      previous = tile;
+
+	      putchar('.');
 	    }
 	  tile_release (previous, FALSE);
 	}
-      previous = tile;
+      else
+	{
+	  previous = tile;
+	}
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1965,6 +1975,8 @@ xcf_load_level (XcfInfo     *info,
       /* read in the offset of the next tile */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
     }
+
+  fflush(stdout);
 
   if (offset != 0)
     {

@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <stdio.h>
+
 #include "tile_cache.h"
 #include "tile_manager.h"
 #include "tile_swap.h"
@@ -488,13 +490,22 @@ tile_manager_map_tile (TileManager *tm,
   int tile_col;
   int tile_num;
 
+  /*  printf("#");fflush(stdout); */
+
   if ((level < 0) || (level >= tm->nlevels))
-    return;
+    {
+      g_warning ("tile_manager_map_tile: level out of range.");
+      return;
+    }
 
   tile_level = &tm->levels[level];
+
   if ((xpixel < 0) || (xpixel >= tile_level->width) ||
       (ypixel < 0) || (ypixel >= tile_level->height))
-    return;
+    {
+      g_warning ("tile_manager_map_tile: tile co-ord out of range.");
+      return;
+    }
 
   tile_row = ypixel / TILE_HEIGHT;
   tile_col = xpixel / TILE_WIDTH;
@@ -518,17 +529,27 @@ tile_manager_map (TileManager *tm,
   int bottom_tile;
   int i, j, k;
 
+  /*  printf("@");fflush(stdout);*/
+
   if ((level < 0) || (level >= tm->nlevels))
-    return;
+    {
+      g_warning ("tile_manager_map: level out of range.");
+      return;
+    }
 
   tile_level = &tm->levels[level];
   ntiles = tile_level->ntile_rows * tile_level->ntile_cols;
 
   if ((tile_num < 0) || (tile_num >= ntiles))
-    return;
+    {
+      g_warning ("tile_manager_map: tile out of range.");
+      return;
+    }
 
   if (!tile_level->tiles)
     {
+      /*      g_warning ("tile_manager_map: empty tile level - init'ing.");*/
+
       tile_level->tiles = g_new (Tile*, ntiles);
       tiles = tile_level->tiles;
 
@@ -542,6 +563,8 @@ tile_manager_map (TileManager *tm,
 	{
 	  for (j = 0; j < ncols; j++, k++)
 	    {
+	      /*	      printf(",");fflush(stdout);*/
+
 	      tiles[k] = g_new (Tile, 1);
 	      tile_init (tiles[k], tile_level->bpp);
 	      tile_attach (tiles[k], tm, k);
@@ -553,14 +576,26 @@ tile_manager_map (TileManager *tm,
 		tiles[k]->eheight = bottom_tile;
 	    }
 	}
+
+      /*      g_warning ("tile_manager_map: empty tile level - done.");*/
     }
 
   tile_ptr = &tile_level->tiles[tile_num];
 
+  /*  printf(")");fflush(stdout);*/
+
   TILE_MUTEX_LOCK (*tile_ptr);
   tile_detach (*tile_ptr, tm, tile_num);
+
+  /*  printf(">");fflush(stdout);*/
+
   TILE_MUTEX_LOCK (srctile);
+
+  /*  printf(" [src:%p tm:%p tn:%d] ", srctile, tm, tile_num); fflush(stdout);*/
+
   tile_attach (srctile, tm, tile_num);
   *tile_ptr = srctile;
   TILE_MUTEX_UNLOCK (srctile);
+
+  /*  printf("}");fflush(stdout);*/
 }

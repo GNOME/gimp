@@ -2454,7 +2454,7 @@ copy_region (PixelRegion *src,
 	    {
 	      src_tile = tile_manager_get_tile (src->tiles,
 						xstepper, ystepper,
-						0, FALSE, FALSE);
+						0, TRUE, FALSE);
 
 	      tile_manager_map_tile (dest->tiles,
 				     xstepper, ystepper, 0,
