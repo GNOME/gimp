@@ -261,7 +261,8 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
   GError           *error  = NULL;
   gint              index;
 
-  g_print ("%s: SVG dropped (len = %d)\n", G_STRFUNC, svg_data_len);
+  if (gimage->gimp->be_verbose)
+    g_print ("%s: SVG dropped (len = %d)\n", G_STRFUNC, (gint) svg_data_len);
 
   index = gimp_image_get_vectors_index (gimage, GIMP_VECTORS (dest_viewable));
 
