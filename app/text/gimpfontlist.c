@@ -89,7 +89,6 @@ gimp_font_list_new (gdouble xresolution,
                     gdouble yresolution)
 {
   GimpFontList *list;
-  PangoContext *pango_context;
 
   g_return_val_if_fail (xresolution > 0.0, NULL);
   g_return_val_if_fail (yresolution > 0.0, NULL);
@@ -102,18 +101,14 @@ gimp_font_list_new (gdouble xresolution,
   list->xresolution = xresolution;
   list->yresolution = yresolution;
 
-  pango_context = pango_ft2_get_context (xresolution, yresolution);
-
-  g_object_set_data_full (G_OBJECT (list), "pango-context", pango_context,
-                          (GDestroyNotify) g_object_unref);
-
   return GIMP_CONTAINER (list);
 }
 
 void
 gimp_font_list_restore (GimpFontList *list)
 {
-  PangoContext     *pango_context;
+  PangoFontMap     *fontmap;
+  PangoContext     *context;
   PangoFontFamily **families;
   PangoFontFace   **faces;
   gint              n_families;
@@ -122,11 +117,16 @@ gimp_font_list_restore (GimpFontList *list)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
+  fontmap = pango_ft2_font_map_new (); 
+  pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap),
+                                     list->xresolution, list->yresolution);
+
+  context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
+
+  pango_font_map_list_families (fontmap, &families, &n_families);
+  g_object_unref (fontmap);
+
   gimp_container_freeze (GIMP_CONTAINER (list));
-
-  pango_context = g_object_get_data (G_OBJECT (list), "pango-context");
-
-  pango_context_list_families (pango_context, &families, &n_families);
 
   for (i = 0; i < n_families; i++)
     {
@@ -144,7 +144,7 @@ gimp_font_list_restore (GimpFontList *list)
 
           font = g_object_new (GIMP_TYPE_FONT,
                                "name",          name,
-                               "pango-context", pango_context,
+                               "pango-context", context,
                                NULL);
           g_free (name);
 
@@ -154,6 +154,7 @@ gimp_font_list_restore (GimpFontList *list)
     }
 
   g_free (families);
+  g_object_unref (context);
 
   gimp_list_sort (GIMP_LIST (list), gimp_font_list_font_compare_func);
 

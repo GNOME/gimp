@@ -1,3 +1,10 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: require PangoFT2 >= 1.2.0.
+
+	* app/text/gimpfontlist.c: use the PangoFontMap API to list
+	available fonts.
+
 2003-03-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/channels-commands.c
@@ -12,7 +19,7 @@
 	
 	* app/text/gimpfontlist.c (gimp_font_list_restore): sort the list
 	after all fonts have been added instead of keeping the list in
-	order while inserting 
+	order while inserting fonts.
 
 2003-03-27  Michael Natterer  <mitch@gimp.org>
 
