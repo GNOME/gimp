@@ -561,9 +561,6 @@ gimp_selection_layer_alpha (gint32 layer_ID)
  * Transfer the specified channel to the selection mask.
  *
  * This procedure loads the specified channel into the selection mask.
- * This essentially involves a copy of the channel's content in to the
- * selection mask. Therefore, the channel must have the same width and
- * height of the image, or an error is returned.
  *
  * Returns: TRUE on success.
  */
@@ -626,9 +623,7 @@ gimp_selection_save (gint32 image_ID)
  * Combines the specified channel with the selection mask.
  *
  * This procedure combines the specified channel into the selection
- * mask. It essentially involves a transfer of the channel's content
- * into the selection mask. Therefore, the channel must have the same
- * width and height of the image, or an error is returned.
+ * mask.
  *
  * Returns: TRUE on success.
  */

@@ -1,3 +1,14 @@
+2003-08-21  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/selection.pdb (selection_load,combine): use
+	gimp_image_mask_select_channel() instead of
+	gimp_image_mask_load().  Removes the restriction that the channel
+	to select has to have the same size as the image. Changed help
+	texts accordingly.
+
+	* app/pdb/selection_cmd.c
+	* libgimp/gimpselection_pdb.c: regenerated.
+
 2003-08-21  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]: added _is_empty () that checks

@@ -34,6 +34,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "gimp-intl.h"
 
 static ProcRecord selection_bounds_proc;
 static ProcRecord selection_value_proc;
@@ -897,7 +898,6 @@ selection_load_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpChannel *channel;
-  GimpImage *gimage;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_CHANNEL (channel))
@@ -905,13 +905,16 @@ selection_load_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      GimpImage *gimage;
+      gint       off_x, off_y;
     
-      if (gimp_item_width  (GIMP_ITEM (channel)) == gimage->width &&
-	  gimp_item_height (GIMP_ITEM (channel)) == gimage->height)
-	gimp_image_mask_load (gimage, channel);
-      else
-	success = FALSE;
+      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
+    
+      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
+				      channel, GIMP_CHANNEL_OP_REPLACE,
+				      off_x, off_y,
+				      FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_load_proc, success);
@@ -930,7 +933,7 @@ static ProcRecord selection_load_proc =
 {
   "gimp_selection_load",
   "Transfer the specified channel to the selection mask.",
-  "This procedure loads the specified channel into the selection mask. This essentially involves a copy of the channel's content in to the selection mask. Therefore, the channel must have the same width and height of the image, or an error is returned.",
+  "This procedure loads the specified channel into the selection mask.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1007,8 +1010,6 @@ selection_combine_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpChannel *channel;
   gint32 operation;
-  GimpImage *gimage;
-  GimpChannel *new_channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_CHANNEL (channel))
@@ -1020,23 +1021,16 @@ selection_combine_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      GimpImage *gimage;
+      gint       off_x, off_y;
     
-      if (gimp_item_width  (GIMP_ITEM (channel)) == gimage->width &&
-	  gimp_item_height (GIMP_ITEM (channel)) == gimage->height)
-	{
-	  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
-							   G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-							   FALSE));
-	  gimp_channel_combine_mask (new_channel,
-				     channel,
-				     operation, 
-				     0, 0);  /* off x/y */
-	  gimp_image_mask_load (gimage, new_channel);
-	  g_object_unref (new_channel);
-	}
-      else
-	success = FALSE;
+      gimage = gimp_item_get_image (GIMP_ITEM (channel));
+      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
+    
+      gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
+				      channel, operation,
+				      off_x, off_y,
+				      FALSE, 0.0, 0.0);
     }
 
   return procedural_db_return_args (&selection_combine_proc, success);
@@ -1060,7 +1054,7 @@ static ProcRecord selection_combine_proc =
 {
   "gimp_selection_combine",
   "Combines the specified channel with the selection mask.",
-  "This procedure combines the specified channel into the selection mask. It essentially involves a transfer of the channel's content into the selection mask. Therefore, the channel must have the same width and height of the image, or an error is returned.",
+  "This procedure combines the specified channel into the selection mask.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
