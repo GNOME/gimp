@@ -1,3 +1,19 @@
+Thu Nov 29 14:25:50 PST 2001 Manish Singh <yosh@gimp.org>
+
+	* acinclude.m4: remove libtool and python stuff, stick contents
+	of accompat.m4 here
+
+	* accompat.m4: remove, doesn't seem to work with autoconf 2.13	
+	and automake 1.4
+
+	* configure.in: remove reference to accompat.m4
+
+	* app/Makefile.am
+	* libgimp/Makefile.am
+	* plug-ins/Makefile.am: comment out makefile.mingw references
+
+	* app/errors.c: default to never prompt for stack trace
+
 2001-11-30  Abel Cheung  <maddog@linux.org.hk>
 
 	* plug-ins/common/sinus.c(sinus_dialog): Fix another typo.

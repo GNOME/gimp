@@ -1,6 +1,4 @@
 dnl Process this file with autoconf to produce a configure script.
-builtin(include, accompat.m4)dnl
-
 AC_INIT(gimprc.in)
 
 #

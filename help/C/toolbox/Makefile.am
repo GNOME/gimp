@@ -10,7 +10,7 @@ helpdata_DATA = \
 
 EXTRA_DIST = $(helpdata_DATA)
 
-.PHONY: files install-data-local
+.PHONY: files install-data-hook
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
@@ -23,7 +23,7 @@ files:
 	  done; \
 	done
 
-install-data-local:
+install-data-hook:
 	rm -f $(DESTDIR)$(helpdatadir)/dialogs
 	$(LN_S) ../dialogs $(DESTDIR)$(helpdatadir)/dialogs
 	rm -f $(DESTDIR)$(helpdatadir)/file

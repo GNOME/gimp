@@ -233,7 +233,7 @@ scriptdata =
 gimpinstall:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
 
-install-exec-local:
+install-exec-hook:
 if OS_WIN32
 	$(INSTALL) gimptool-win32.exe $(DESTDIR)$(bindir)/gimptool.exe
 else

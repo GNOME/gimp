@@ -338,8 +338,8 @@ files:
 	  echo $$p; \
 	done
 
-makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimp/makefile.mingw.in
-	cd $(top_builddir) && CONFIG_FILES=libgimp/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimp/makefile.mingw.in
+## 	cd $(top_builddir) && CONFIG_FILES=libgimp/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 install-data-local: install-ms-lib install-libtool-import-lib
 

@@ -42,7 +42,7 @@
 
 extern gchar *prog_name;
 
-StackTraceMode stack_trace_mode = STACK_TRACE_QUERY;
+StackTraceMode stack_trace_mode = STACK_TRACE_NEVER;
 
 void
 gimp_message_func (const gchar    *log_domain,

@@ -482,8 +482,8 @@ files:
 	  echo $$p; \
 	done
 
-makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
-	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
+##  	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 # GCG stuff
 # 
