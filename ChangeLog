@@ -1,5 +1,11 @@
 2004-02-13  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/psd.c (load_image): Initialize dest to NULL,
+	make it so the temp variable use for PANOTOOLS_FIX is only declared
+	when it is enabled.
+
+2004-02-13  Manish Singh  <yosh@gimp.org>
+
 	* app/base/temp-buf.c (temp_buf_get_memsize)
 	* core/gimpviewable.c (gimp_viewable_get_memsize): Add some casts
 	to gsize for ints to prevent overflows.

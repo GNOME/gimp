@@ -1747,7 +1747,7 @@ load_image (const gchar *name)
   gboolean want_aux;
   char *name_buf;
   guchar *cmykbuf;
-  guchar *dest, *temp;
+  guchar *dest = NULL, *temp;
   long channels, nguchars;
   psd_imagetype imagetype;
   gboolean cmyk = FALSE;
@@ -1975,7 +1975,9 @@ load_image (const gchar *name)
 
 		  lm_data = g_malloc(layer->width * layer->height);
 		  {
+#if PANOTOOLS_FIX
                     guchar *tmp;
+#endif
 
 		    seek_to_and_unpack_pixeldata(fd, lnum, iter);
 		    /* PS layer masks can be a different size to
