@@ -23,6 +23,7 @@
  */
 
 /* revision history:
+ * version 1.1.16a; 2000/02/05  hof: path lockedstaus
  * version 1.1.15b; 2000/01/30  hof: image parasites
  * version 1.1.15a; 2000/01/26  hof: pathes
  *                                   removed old gimp 1.0.x PDB Interfaces
@@ -639,7 +640,8 @@ p_gimp_file_save_thumbnail(gint32 image_id, char* filename)
  */
 
 gint
-p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, unsigned char **th_data)
+p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height,
+                           gint32 *th_data_count,  unsigned char **th_data)
 {
    static char     *l_called_proc = "gimp_file_load_thumbnail";
    GParam          *return_vals;
@@ -655,7 +657,8 @@ p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, 
    {
       *th_width = return_vals[1].data.d_int32;
       *th_height = return_vals[2].data.d_int32;
-      *th_data = (unsigned char *)return_vals[3].data.d_int8array;
+      *th_data_count = return_vals[3].data.d_int32;
+      *th_data = (unsigned char *)return_vals[4].data.d_int8array;
       return (0); /* OK */
    }
    printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
@@ -867,6 +870,58 @@ p_gimp_path_set_current(gint32 image_id, char *name)
    return(-1);
 }	/* end p_gimp_path_set_current */
 
+/* ============================================================================
+ * p_gimp_path_get_locked
+ *   
+ * ============================================================================
+ */
+gint32
+p_gimp_path_get_locked(gint32 image_id, gchar *name)
+{
+   static gchar    *l_called_proc = "gimp_path_get_locked";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(return_vals[1].data.d_int32); /* OK */
+   }
+   printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
+   return(FALSE);
+}	/* end p_gimp_path_get_locked */
+
+/* ============================================================================
+ * p_gimp_path_set_locked
+ *   
+ * ============================================================================
+ */
+gint
+p_gimp_path_set_locked(gint32 image_id, gchar *name, gint32 lockstatus)
+{
+   static gchar    *l_called_proc = "gimp_path_set_locked";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_called_proc,
+                                 &nreturn_vals,
+                                 PARAM_IMAGE, image_id,
+                                 PARAM_STRING, name,
+                                 PARAM_INT32, lockstatus,
+                                 PARAM_END);
+
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      return(0); /* OK */
+   }
+   printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
+   return(-1);
+}	/* end p_gimp_path_set_locked */
 
 /* ============================================================================
  * p_gimp_image_parasite_list
@@ -913,10 +968,7 @@ p_alloc_video_info_name(char *basename)
     return(NULL);
   }
 
-  l_len = strlen(basename);
-  l_str = g_malloc(l_len+8);
-  
-  sprintf(l_str, "%svin.gap", basename);
+  l_str = g_strdup_printf("%svin.gap", basename);
   return(l_str);
 }
 

@@ -80,7 +80,10 @@ gimp_idle_help (gpointer help_data)
     help_data = g_strdup ("welcome.html");
 
 #ifdef DEBUG_HELP
-  g_print ("Help Page: %s\n", (gchar *) help_data);
+  if (help_data)
+    g_print ("Help Page: %s\n", (gchar *) help_data);
+  else
+    g_print ("Help Page: NULL\n");
 #endif  /*  DEBUG_HELP  */
 
   switch (help_browser)

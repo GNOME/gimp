@@ -5,7 +5,7 @@
  *
  * basic anim functions:
  *   This Plugin drops the content of the destination
- *   image (all layers,channels & guides)
+ *   image (all layers,channels, paths, parasites & guides)
  *   and then moves (steal) the content of a source image to dst. image
  *
  */
@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.16a  2000/02/05   hof: handle path lockedstaus and image unit
  * 1.1.15b  2000/01/30   hof: handle image specific parasites
  * 1.1.15a  2000/01/25   hof: stopped gimp 1.0.x support (removed p_copy_content)
  *                            handle pathes
@@ -296,6 +297,8 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
 	 {
 	    p_gimp_path_set_points(dst_image_id, l_path_names[l_idx],
 	                           l_path_type, l_num_points, l_path_points);
+            p_gimp_path_set_locked(dst_image_id, l_path_names[l_idx],
+	                           p_gimp_path_get_locked(src_image_id, l_path_names[l_idx]));
  	 }
                   
          if(l_path_points)  g_free(l_path_points);         
@@ -335,7 +338,10 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
      g_free(l_parasite_names[l_idx]);
    }
    g_free(l_parasite_names);
- 
+
+   /* copy the image unit */ 
+   gimp_image_set_unit(dst_image_id, 
+                       gimp_image_get_unit(src_image_id));
 
    l_rc = 0;
    

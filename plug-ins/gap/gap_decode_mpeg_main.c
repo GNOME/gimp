@@ -58,6 +58,7 @@
 /*
  * Changelog:
  *
+ * 2000/02/07 v1.1.16a:  hof: replaced sprintf by g_strdup_printf
  * 2000/01/06 v1.1.14a:  hof: save thumbnails .xvpics p_gimp_file_save_thumbnail
  *                       store framerate in video_info file
  * 1999/11/25 v1.1.11.b: Initial release. [hof] 
@@ -210,7 +211,6 @@ run (char    *name,
   char   l_filename[500];
   int    l_par;
 
-
   image_ID = -1;
   *nreturn_vals = 1;
   *return_vals = values;
@@ -357,6 +357,7 @@ MPEG_frame_period_ms(gint mpeg_rate_code, char *basename)
   
   vin_ptr = p_get_video_info(basename);
   l_rc = 0;
+  l_framerate = 24.0;
   switch(mpeg_rate_code)
   {
     case 1: l_rc = 44; l_framerate = 23.976; break;
@@ -382,10 +383,12 @@ MPEG_frame_period_ms(gint mpeg_rate_code, char *basename)
 }
 
 
-static void
-p_build_gap_framename(char *framename, gint32 frame_nr, char *basename, char *ext)
+static char *
+p_build_gap_framename(gint32 frame_nr, char *basename, char *ext)
 {
-   sprintf(framename, "%s%04d.%s", basename, (int)frame_nr, ext);
+   char *framename;
+   framename = g_strdup_printf("%s%04d.%s", basename, (int)frame_nr, ext);
+   return(framename);
 }
 
 static gint32 
@@ -412,8 +415,8 @@ load_image (char   *filename,
   /* mpeg structure */
   ImageDesc img;
 
-  gchar layername[200];  /* FIXME? */
-  gchar framename[500];
+  gchar *layername = NULL;
+  gchar *framename = NULL;
   first_image_ID = -1;
   l_overwrite_mode = 0;
 
@@ -423,7 +426,7 @@ load_image (char   *filename,
      printf("Error: file %s not found\n", filename);
      return (-1);
   }
-  p_build_gap_framename(framename, first_frame, basename, "xcf");
+  framename = p_build_gap_framename(first_frame, basename, "xcf");
 
   temp = g_malloc (strlen (filename) + 16);
   if (!temp) gimp_quit ();
@@ -481,7 +484,8 @@ load_image (char   *filename,
   framenumber = 1;
   while (moreframes)
   {
-    p_build_gap_framename(framename, framenumber, basename, "xcf");
+    g_free(framename);
+    framename = p_build_gap_framename(framenumber, basename, "xcf");
     if (last_frame > 0)
     {
        gimp_progress_update ((gdouble)framenumber / (gdouble)last_frame );
@@ -525,16 +529,17 @@ load_image (char   *filename,
        }
     
        if (delay > 0)
-         sprintf(layername, "Frame %d (%dms)",
+         layername = g_strdup_printf("Frame %d (%dms)",
                  framenumber, delay);
        else
-         sprintf(layername, "Frame %d",
+         layername = g_strdup_printf("Frame %d",
                  framenumber);
 
        layer_ID = gimp_layer_new (image_ID, layername,
                                   wwidth,
                                   wheight,
                                   RGBA_IMAGE, 100, NORMAL_MODE);
+       g_free(layername);
        gimp_image_add_layer (image_ID, layer_ID, 0);
        gimp_layer_set_visible(layer_ID, l_visible);
        drawable = gimp_drawable_get (layer_ID);

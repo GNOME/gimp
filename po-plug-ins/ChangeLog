@@ -1,3 +1,9 @@
+Mon Feb  7 18:50:25 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* de.po: msgmerge managed to make the translation for a menu
+	path a help text of several lines. This crashed the gimp on
+	startup (bug #5590). Updated while I was on it.
+
 Mon Feb  7 01:18:33 CET 2000  Sven Neumann <sven@gimp.org>
 
         * en_GB.po: removed fuzzy comment from header

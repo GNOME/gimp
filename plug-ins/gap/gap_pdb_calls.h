@@ -21,6 +21,7 @@
  */
 
 /* revision history:
+ * version 1.1.16a; 2000/02/05  hof: path lockedstaus
  * version 1.1.15b; 2000/01/30  hof: image parasites
  * version 1.1.15a; 2000/01/26  hof: pathes, removed gimp 1.0.x support
  * version 1.1.14a; 2000/01/06  hof: thumbnail save/load,
@@ -66,7 +67,7 @@ gint   p_gimp_drawable_set_image(gint32 drawable_id, gint32 image_id);
 char*  p_gimp_gimprc_query(char *key);
 
 gint   p_gimp_file_save_thumbnail(gint32 image_id, char* filename);
-gint   p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, unsigned char **th_data);
+gint   p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, gint32 *th_data_count, unsigned char **th_data);
 
 gint   p_gimp_image_thumbnail(gint32 image_id, gint32 width, gint32 height,
                               gint32 *th_width, gint32 *th_height, gint32 *th_bpp,
@@ -84,6 +85,8 @@ gint     p_gimp_path_delete(gint32 image_id, char *name);
 char   **p_gimp_path_list(gint32 image_id, gint32 *num_paths);
 gint     p_gimp_path_set_current(gint32 image_id, char *name);
 char    *p_gimp_path_get_current(gint32 image_id);
+gint32   p_gimp_path_get_locked(gint32 image_id, gchar *name);
+gint     p_gimp_path_set_locked(gint32 image_id, gchar *name, gint32 lockstatus);
 gchar** p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites);
 
 
