@@ -65,10 +65,9 @@
   <tip level="beginner">
     <_thetip>
     The layer named &quot;Background&quot; is special because it lacks
-    transparency. This prevents you from adding a layer mask or moving
-    the layer up in the stack.  You may add transparency to it by
-    right-clicking in the Layers dialog and selecting
-    &quot;Add Alpha Channel&quot;.
+    transparency. This prevents you from moving the layer up in the
+    stack.  You may add transparency to it by right-clicking in the
+    Layers dialog and selecting &quot;Add Alpha Channel&quot;.
     </_thetip>
   </tip>
   <tip level="beginner">

@@ -1,3 +1,10 @@
+2004-10-28  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: changed a tip which became incorrect with a
+	recent change.
+
+	* de.po: updated.
+
 2004-10-26  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.xml.in: removed obsolete tip, spotted by Joao S. O. Bueno.
