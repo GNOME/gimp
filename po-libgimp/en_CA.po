@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-04-10 20:02-0400\n"
-"Last-Translator: Adam Weinberger <adamw@FreeBSD.org>\n"
+"POT-Creation-Date: 2004-04-22 12:25-0400\n"
+"PO-Revision-Date: 2004-04-22 20:02-0400\n"
+"Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
@@ -193,9 +193,9 @@ msgstr "Font Selection"
 msgid "Gradient Selection"
 msgstr "Gradient Selection"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "None"
+#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+msgid "(Empty)"
+msgstr "(Empty)"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -350,7 +350,7 @@ msgid "Hue"
 msgstr "Hue"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: modules/cdisplay_proof.c:318
 msgid "Saturation"
 msgstr "Saturation"
 
@@ -390,23 +390,23 @@ msgstr "Current:"
 msgid "Old:"
 msgstr "Old:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "Select Folder"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "Select File"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -506,7 +506,7 @@ msgstr "Unit"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:808
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -514,15 +514,15 @@ msgstr ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:812
 msgid "_New Seed"
 msgstr "_New Seed"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:825
 msgid "Seed random number generator with a generated random number"
 msgstr "Seed random number generator with a generated random number"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:829
 msgid "_Randomize"
 msgstr "_Randomize"
 
@@ -538,15 +538,15 @@ msgstr "Colour Deficient Vision"
 msgid "Color _Deficiency Type:"
 msgstr "Colour _Deficiency Type:"
 
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:469
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (insensitivity to red)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:471
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensitivity to green)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:473
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensitivity to blue)"
 
@@ -582,15 +582,15 @@ msgstr "Colour proof filter using ICC colour profile"
 msgid "Color Proof"
 msgstr "Colour Proof"
 
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:314
 msgid "Perceptual"
 msgstr "Perceptual"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:316
 msgid "Relative Colorimetric"
 msgstr "Relative Colourimetric"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:320
 msgid "Absolute Colorimetric"
 msgstr "Absolute Colourimetric"
 
@@ -673,3 +673,4 @@ msgstr "Watercolour"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressure"
+
