@@ -1,7 +1,12 @@
+2004-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-draw.c (gimp_display_shell_draw_grid):
+	fixed handling of grid offsets in the grid drawing routine.
+
 2004-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-enums.[ch]: added enum GimpActiveColor which
-	can be one of { FOREGROUND, BACKGROUND },
+	can be one of { FOREGROUND, BACKGROUND }.
 
 	* app/widgets/Makefile.am
 	* app/widgets/gimpfgbgeditor.[ch]: new widget implementing the

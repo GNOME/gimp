@@ -138,12 +138,15 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       gint        x0, x1, x2, x3;
       gint        y0, y1, y2, y3;
       gint        x_real, y_real;
+      gint        x_offset, y_offset;
       gint        width, height;
       const gint  length = 2;
 
       grid = GIMP_GRID (shell->gdisp->gimage->grid);
       if (! grid)
         return;
+
+      g_return_if_fail (grid->xspacing > 0 && grid->yspacing > 0);
 
       x1 = area->x;
       y1 = area->y;
@@ -153,6 +156,14 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       width  = shell->gdisp->gimage->width;
       height = shell->gdisp->gimage->height;
 
+      x_offset = grid->xoffset;
+      while (x_offset > 0)
+        x_offset -= grid->xspacing;
+
+      y_offset = grid->yoffset;
+      while (y_offset > 0)
+        y_offset -= grid->yspacing;
+
       canvas = GIMP_CANVAS (shell->canvas);
 
       gimp_canvas_set_custom_gc (canvas,
@@ -161,8 +172,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       switch (grid->style)
         {
         case GIMP_GRID_DOTS:
-          for (x = grid->xoffset; x <= width; x += grid->xspacing)
+          for (x = x_offset; x <= width; x += grid->xspacing)
             {
+              if (x < 0)
+                continue;
+
               gimp_display_shell_transform_xy (shell,
                                                x, 0, &x_real, &y_real,
                                                FALSE);
@@ -170,8 +184,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
               if (x_real < x1 || x_real >= x2)
                 continue;
 
-              for (y = grid->yoffset; y <= height; y += grid->yspacing)
+              for (y = y_offset; y <= height; y += grid->yspacing)
                 {
+                  if (y < 0)
+                    continue;
+
                   gimp_display_shell_transform_xy (shell,
                                                    x, y, &x_real, &y_real,
                                                    FALSE);
@@ -185,8 +202,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
           break;
 
         case GIMP_GRID_INTERSECTIONS:
-          for (x = grid->xoffset; x <= width; x += grid->xspacing)
+          for (x = x_offset; x <= width; x += grid->xspacing)
             {
+              if (x < 0)
+                continue;
+
               gimp_display_shell_transform_xy (shell,
                                                x, 0, &x_real, &y_real,
                                                FALSE);
@@ -194,8 +214,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
               if (x_real + length < x1 || x_real - length >= x2)
                 continue;
 
-              for (y = grid->yoffset; y <= height; y += grid->yspacing)
+              for (y = y_offset; y <= height; y += grid->yspacing)
                 {
+                  if (y < 0)
+                    continue;
+
                   gimp_display_shell_transform_xy (shell,
                                                    x, y, &x_real, &y_real,
                                                    FALSE);
@@ -229,8 +252,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
                                            width, height, &x3, &y3,
                                            FALSE);
 
-          for (x = grid->xoffset; x < width; x += grid->xspacing)
+          for (x = x_offset; x < width; x += grid->xspacing)
             {
+              if (x < 0)
+                continue;
+
               gimp_display_shell_transform_xy (shell,
                                                x, 0, &x_real, &y_real,
                                                FALSE);
@@ -240,8 +266,11 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
                                        x_real, y0, x_real, y3 - 1);
             }
 
-          for (y = grid->yoffset; y < height; y += grid->yspacing)
+          for (y = y_offset; y < height; y += grid->yspacing)
             {
+              if (y < 0)
+                continue;
+
               gimp_display_shell_transform_xy (shell,
                                                0, y, &x_real, &y_real,
                                                FALSE);
