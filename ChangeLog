@@ -1,5 +1,10 @@
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/spread.c: don't call g_rand_int_range() with
+	invalid parameters.
+
+2004-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.[ch]: added gimp_text_layer_set(), a
 	function that calls g_object_set() on the text-layer's text object
 	and pushes an undo step.

@@ -88,11 +88,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "spread_amount_x", "Horizontal spread amount (0 <= spread_amount_x <= 200)" },
-    { GIMP_PDB_FLOAT, "spread_amount_y", "Vertical spread amount (0 <= spread_amount_y <= 200)" }
+    { GIMP_PDB_FLOAT,    "spread_amount_x",
+      "Horizontal spread amount (0 <= spread_amount_x <= 200)" },
+    { GIMP_PDB_FLOAT,    "spread_amount_y",
+      "Vertical spread amount (0 <= spread_amount_y <= 200)"   }
   };
 
   gimp_install_procedure ("plug_in_spread",
@@ -243,8 +245,8 @@ spread (GimpDrawable *drawable)
   progress     = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
-  x_amount = spvals.spread_amount_x;
-  y_amount = spvals.spread_amount_y;
+  x_amount = (spvals.spread_amount_x + 1) / 2;
+  y_amount = (spvals.spread_amount_y + 1) / 2;
 
   /* Spread the image.  This is done by going through every pixel
      in the source image and swapping it with some other random
@@ -278,16 +280,16 @@ spread (GimpDrawable *drawable)
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
               /* get random angle, x distance, and y distance */
-              xdist = g_rand_int_range (gr, -(x_amount + 1) / 2, 
-					(x_amount + 1) / 2);
-              ydist = g_rand_int_range (gr, -(y_amount + 1)/2, 
-					(y_amount + 1) / 2);
+              xdist = (x_amount > 0 ?
+                       g_rand_int_range (gr, -x_amount, x_amount) : 0);
+              ydist = (y_amount > 0 ?
+                       g_rand_int_range (gr, -y_amount, y_amount) : 0);
               angle = g_rand_double_range (gr, -G_PI, G_PI);
 
-              xi = x + floor(sin(angle) * xdist);
-              yi = y + floor(cos(angle) * ydist);
+              xi = x + floor (sin (angle) * xdist);
+              yi = y + floor (cos (angle) * ydist);
 
-              /* Only displace the pixel if it's within the bounds of the 
+              /* Only displace the pixel if it's within the bounds of the
 		 image. */
               if ((xi >= 0) && (xi < width) && (yi >= 0) && (yi < height))
 		{
