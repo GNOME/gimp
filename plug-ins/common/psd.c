@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.1
+ * PSD Plugin version 2.0.2
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -9,7 +9,7 @@
  *     about the image you tried to load.  Please don't send big PSD
  *     files to me without asking first.
  *
- *          Copyright (C) 1997-98 Adam D. Moss
+ *          Copyright (C) 1997-99 Adam D. Moss
  *          Copyright (C) 1996    Torsten Martinsen
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,9 @@
 
 /*
  * Revision history:
+ *
+ *  1999.01.18 / v2.0.2 / Adam D. Moss
+ *       Better guess at how PSD files store Guide position precision.
  *
  *  1999.01.10 / v2.0.1 / Adam D. Moss
  *       Greatly reduced memory requirements for layered image loading -
@@ -701,21 +704,21 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	  
 	  if (Size > 0)
 	    {
-	      glong magic1, magic2, magic3;
+	      gshort magic1, magic2, magic3, magic4, magic5, magic6;
 	      glong num_guides;
 
-	      magic1 = getglong(fd, "guide");
-	      (*offset) += 4;
-	      magic2 = getglong(fd, "guide");
-	      (*offset) += 4;
-	      magic3 = getglong(fd, "guide");
-	      (*offset) += 4;
+	      magic1 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic2 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic3 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic4 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic5 = getgshort(fd, "guide"); (*offset) += 2;
+	      magic6 = getgshort(fd, "guide"); (*offset) += 2;
 	      remaining -= 12;
 
-	      IFDBG printf("\t\t\tMagic: %ld %ld %ld\n",
-			   magic1, magic2, magic3);
-	      IFDBG printf("\t\t\tMagic: %lx %lx %lx\n",
-			   magic1, magic2, magic3);
+	      IFDBG printf("\t\t\tMagic: %d %d %d %d %d %d\n",
+			   magic1, magic2, magic3, magic4, magic5, magic6);
+	      IFDBG printf("\t\t\tMagic: 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x 0x%04x\n",
+			   magic1, magic2, magic3, magic4, magic5, magic6);
 
 	      num_guides = getglong(fd, "guide");
 	      (*offset) += 4; remaining -= 4;
@@ -739,12 +742,24 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 	      for (i=0; i<num_guides; i++)
 		{
 		  psd_image.guides[i].position = getglong(fd, "guide");
-		  /* FIXME: not 32 -- magic enum/denom!? */
-		  psd_image.guides[i].position =
-		    rint((double)psd_image.guides[i].position/(double)32.0);
 
 		  psd_image.guides[i].horizontal = (1==getguchar(fd, "guide"));
 		  (*offset) += 5; remaining -= 5;
+
+		  if (psd_image.guides[i].horizontal)
+		    {
+		      psd_image.guides[i].position =
+			rint((double)(psd_image.guides[i].position *
+				      (magic4>>8))
+			     /(double)(magic4&255));
+		    }
+		  else
+		    {
+		      psd_image.guides[i].position =
+			rint((double)(psd_image.guides[i].position *
+				      (magic6>>8))
+			     /(double)(magic6&255));
+		    }
 
 		  IFDBG printf("\t\t\tGuide %d at %d, %s\n", i+1,
 			       psd_image.guides[i].position,
