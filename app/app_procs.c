@@ -151,8 +151,7 @@ app_exit (gint status)
 
 void
 app_run (const gchar         *full_prog_name,
-         gint                 gimp_argc,
-         gchar              **gimp_argv,
+         const gchar        **filenames,
          const gchar         *alternate_system_gimprc,
          const gchar         *alternate_gimprc,
          const gchar         *session_name,
@@ -297,63 +296,58 @@ app_run (const gchar         *full_prog_name,
    */
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
 
-  /*  Parse the rest of the command line arguments as images to load
+  /*  Load the images given on the command-line.
    */
-  if (gimp_argc > 0)
+  if (filenames)
     {
-      gint i;
-
-      for (i = 0; i < gimp_argc; i++)
+      for (i = 0; filenames[i]; i++)
         {
-          if (gimp_argv[i])
+          GError *error = NULL;
+          gchar  *uri;
+
+          /*  first try if we got a file uri  */
+          uri = g_filename_from_uri (filenames[i], NULL, NULL);
+
+          if (uri)
             {
-              GError *error = NULL;
-              gchar  *uri;
+              g_free (uri);
+              uri = g_strdup (filenames[i]);
+            }
+          else
+            {
+              uri = file_utils_filename_to_uri (gimp->load_procs,
+                                                filenames[i], &error);
+            }
 
-              /*  first try if we got a file uri  */
-              uri = g_filename_from_uri (gimp_argv[i], NULL, NULL);
+          if (! uri)
+            {
+              g_printerr ("conversion filename -> uri failed: %s\n",
+                          error->message);
+              g_clear_error (&error);
+            }
+          else
+            {
+              GimpImage         *gimage;
+              GimpPDBStatusType  status;
 
-              if (uri)
-                {
-                  g_free (uri);
-                  uri = g_strdup (gimp_argv[i]);
-                }
-              else
-                {
-                  uri = file_utils_filename_to_uri (gimp->load_procs,
-                                                    gimp_argv[i], &error);
-                }
+              gimage = file_open_with_display (gimp,
+                                               gimp_get_user_context (gimp),
+                                               NULL,
+                                               uri,
+                                               &status, &error);
 
-              if (! uri)
+              if (! gimage && status != GIMP_PDB_CANCEL)
                 {
-                  g_printerr ("conversion filename -> uri failed: %s\n",
-                              error->message);
+                  gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+                  g_message (_("Opening '%s' failed: %s"),
+                             filename, error->message);
                   g_clear_error (&error);
+
+                  g_free (filename);
                 }
-              else
-                {
-                  GimpImage         *gimage;
-                  GimpPDBStatusType  status;
 
-                  gimage = file_open_with_display (gimp,
-                                                   gimp_get_user_context (gimp),
-                                                   NULL,
-                                                   uri,
-                                                   &status, &error);
-
-                  if (! gimage && status != GIMP_PDB_CANCEL)
-                    {
-                      gchar *filename = file_utils_uri_to_utf8_filename (uri);
-
-                      g_message (_("Opening '%s' failed: %s"),
-                                 filename, error->message);
-                      g_clear_error (&error);
-
-                      g_free (filename);
-                   }
-
-                  g_free (uri);
-                }
+              g_free (uri);
             }
         }
     }

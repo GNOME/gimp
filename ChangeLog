@@ -1,5 +1,11 @@
 2005-02-03  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.[ch]
+	* app/main.c: let the GLib command-line parser deal with the
+	remaining arguments and pass a string array to app_run().
+
+2005-02-03  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: more work on the command-line option parser.
 
 2005-02-02  Michael Natterer  <mitch@gimp.org>

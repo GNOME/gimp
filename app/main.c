@@ -124,6 +124,7 @@ main (int    argc,
   const gchar     *session_name       = NULL;
   const gchar     *batch_interpreter  = NULL;
   const gchar    **batch_commands     = NULL;
+  const gchar    **filenames          = NULL;
   gboolean         fatal_warnings     = FALSE;
   gboolean         no_interface       = FALSE;
   gboolean         no_data            = FALSE;
@@ -230,20 +231,29 @@ main (int    argc,
       /*  GTK+ also looks for --g-fatal-warnings, but we want it for
        *  non-interactive use also.
        */
-      { "g-fatal-warnings", 0, G_OPTION_FLAG_HIDDEN,
+      {
+        "g-fatal-warnings", 0, G_OPTION_FLAG_HIDDEN,
         G_OPTION_ARG_NONE, &fatal_warnings,
         NULL, NULL
       },
-      { "dump-gimprc", 0, 0,
+      {
+        "dump-gimprc", 0, 0,
         G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
         N_("Output a gimprc file with default settings."), NULL
       },
-      { "dump-gimprc-system", 0, G_OPTION_FLAG_HIDDEN,
+      {
+        "dump-gimprc-system", 0, G_OPTION_FLAG_HIDDEN,
         G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
         NULL, NULL
       },
-      { "dump-gimprc-manpage", 0, G_OPTION_FLAG_HIDDEN,
+      {
+        "dump-gimprc-manpage", 0, G_OPTION_FLAG_HIDDEN,
         G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
+        NULL, NULL
+      },
+      {
+        G_OPTION_REMAINING, 0, 0,
+        G_OPTION_ARG_FILENAME_ARRAY, &filenames,
         NULL, NULL
       },
       { NULL }
@@ -383,8 +393,7 @@ main (int    argc,
                     stack_trace_mode);
 
   app_run (argv[0],
-           argc - 1,
-           argv + 1,
+           filenames,
            system_gimprc,
            user_gimprc,
            session_name,
