@@ -88,8 +88,6 @@ struct _CropOptions
   GtkWidget   *default_to_crop_w;
 };
 
-typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
-
 /*  the crop tool options  */
 static CropOptions *crop_options = NULL;
 
@@ -126,12 +124,20 @@ static void crop_resize_callback    (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
 /* Crop area-select functions */ 
-static void crop_selection_callback (GtkWidget *, gpointer);
-static void crop_automatic_callback (GtkWidget *, gpointer);
-static int  crop_colors_equal       (guchar *col1, guchar *col2, int bytes);
-static int  crop_guess_bgcolor      (GtkObject *, GetColorFunc,
-				     int width, int height, 
-				     int bytes, guchar *color);
+typedef enum {
+  AUTO_CROP_NOTHING = 0,
+  AUTO_CROP_ALPHA   = 1,
+  AUTO_CROP_COLOR   = 2
+} AutoCropType;
+
+typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
+typedef AutoCropType (*ColorsEqualFunc) (guchar *, guchar *, int);
+
+static void crop_selection_callback    (GtkWidget *, gpointer);
+static void crop_automatic_callback    (GtkWidget *, gpointer);
+static AutoCropType crop_guess_bgcolor (GtkObject *, GetColorFunc, int, int, int, int, guchar *);
+static int crop_colors_equal           (guchar *, guchar *, int);
+static int crop_colors_alpha           (guchar *, guchar *, int);
 
 /*  Crop dialog callback funtions  */
 static void crop_orig_changed       (GtkWidget *, gpointer);
@@ -1240,6 +1246,7 @@ crop_selection_callback (GtkWidget *w,
   draw_core_resume (crop->core, tool);
 }
 
+
 static void
 crop_automatic_callback (GtkWidget *w,
 			 gpointer   client_data)
@@ -1249,13 +1256,15 @@ crop_automatic_callback (GtkWidget *w,
   GDisplay * gdisp;
   GimpDrawable * active_drawable;  
   GetColorFunc get_color_func;
+  ColorsEqualFunc colors_equal_func;
   GtkObject *get_color_obj;
   guchar bgcolor[4] = {0, 0, 0, 0};
+  gint has_alpha = FALSE;
   guchar *color;
   gint width, height, bytes;
   gint x, y, abort;
   gint x1, y1, x2, y2;
- 
+  
   tool = active_tool;
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) tool->gdisp_ptr;
@@ -1270,6 +1279,8 @@ crop_automatic_callback (GtkWidget *w,
       width  = drawable_width  (GIMP_DRAWABLE (active_drawable));
       height = drawable_height (GIMP_DRAWABLE (active_drawable));
       bytes  = drawable_bytes  (GIMP_DRAWABLE (active_drawable));
+      if (drawable_has_alpha (GIMP_DRAWABLE (active_drawable)))
+	has_alpha = TRUE;
       get_color_obj = GTK_OBJECT (active_drawable);
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
       drawable_offsets (GIMP_DRAWABLE (active_drawable), &crop->tx1, &crop->ty1);
@@ -1280,28 +1291,37 @@ crop_automatic_callback (GtkWidget *w,
     {
       width  = gdisp->gimage->width;
       height = gdisp->gimage->height;
-      bytes  = gimp_image_composite_bytes (gdisp->gimage);
       get_color_obj = GTK_OBJECT (gdisp->gimage);
       get_color_func = (GetColorFunc) gimp_image_get_color_at;
+      /* gimp_image_get_color_at always returns an alpha value */       
+      bytes  = 4;
+      has_alpha = TRUE; 
       crop->tx1 = crop->ty1 = 0;
       crop->tx2 = width;
       crop->ty2 = height;
     }
 
-  /* Taken from the autocrop plug-in written by Tim Newsome */
-
-  if ( !crop_guess_bgcolor (get_color_obj, get_color_func, width, height, bytes, bgcolor) )
-    goto FINISH;
+  switch (crop_guess_bgcolor (get_color_obj, get_color_func, width, height, bytes, has_alpha, bgcolor))
+    {
+    case AUTO_CROP_ALPHA:
+      colors_equal_func = (ColorsEqualFunc) crop_colors_alpha;
+      break;
+    case AUTO_CROP_COLOR:
+      colors_equal_func = (ColorsEqualFunc) crop_colors_equal;
+      break;
+    default:
+      goto FINISH;
+    }
 
   x1 = x2 = y1 = y2 = 0;
-  
- /* Check how many of the top lines are uniform. */
-  abort = 0;
+
+ /* Check how many of the top lines are uniform/transparent. */
+  abort = FALSE;
   for (y = 0; y < height && !abort; y++) 
     for (x = 0; x < width && !abort; x++)
       {
 	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !crop_colors_equal (bgcolor, color, bytes);
+	abort = !(colors_equal_func) (bgcolor, color, bytes);
 	g_free (color);
       }
   if (y == height) {
@@ -1309,35 +1329,35 @@ crop_automatic_callback (GtkWidget *w,
   }
   y1 = y - 1;
 
-  /* Check how many of the bottom lines are uniform. */
-  abort = 0;
-  for (y = height - 1; y >= y1 && !abort; y--)
+  /* Check how many of the bottom lines are uniform/transparent. */
+  abort = FALSE;
+  for (y = height - 1; y > y1 && !abort; y--)
     for (x = 0; x < width && !abort; x++)
       { 
 	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !crop_colors_equal (bgcolor, color, bytes);
+	abort = !(colors_equal_func) (bgcolor, color, bytes);
 	g_free (color);
       }
   y2 = y + 1;
 
-  /* Check how many of the left lines are uniform. */
-  abort = 0;
+  /* Check how many of the left lines are uniform/transparent. */
+  abort = FALSE;
   for (x = 0; x < width && !abort; x++)
     for (y = y1; y < width && !abort; y++)
       {
 	color = (*get_color_func) (get_color_obj, x, y);
-	abort = !crop_colors_equal (bgcolor, color, bytes);
+	abort = !(colors_equal_func) (bgcolor, color, bytes);
 	g_free (color);	
       }
   x1 = x - 1;
  
- /* Check how many of the right lines are uniform. */
-  abort = 0;
-  for (x = width - 1; x >= x1 && !abort; x--)
+ /* Check how many of the right lines are uniform/transparent. */
+  abort = FALSE;
+  for (x = width - 1; x > x1 && !abort; x--)
     for (y = y1; y < y2 && !abort; y++)
       {
 	color = (*get_color_func) (get_color_obj, x, y);	
-	abort = !crop_colors_equal (bgcolor, color, bytes);
+	abort = !(colors_equal_func) (bgcolor, color, bytes);
 	g_free (color);	
       }
   x2 = x + 1;
@@ -1355,59 +1375,72 @@ crop_automatic_callback (GtkWidget *w,
   return;
 }
 
-static int
+static AutoCropType
 crop_guess_bgcolor (GtkObject    *get_color_obj,
 		    GetColorFunc  get_color_func,
 		    int width,
 		    int height,		   
 		    int bytes,
+		    int has_alpha,
 		    guchar *color) 
 {
-  guchar *tl, *tr, *bl, *br;
-  
-  /* Taken from the autocrop plug-in written by Tim Newsome */
- 
-  /* Algorithm pinched from pnmcrop.
-   * To guess the background, first see if 3 corners are equal.
-   * Then if two are equal.
-   * Otherwise average the colors.
+  guchar *tl = NULL;
+  guchar *tr = NULL;
+  guchar *bl = NULL;
+  guchar *br = NULL;
+  gint i, alpha;
+
+  for (i=0; i< bytes; i++)
+    color[i] = 0; 
+
+  /* First check if there's transparency to crop. If not, guess the 
+   * background-color to see if at least 2 corners are equal.
    */
 
   if (!(tl = (*get_color_func) (get_color_obj, 0, 0))) 
-    return FALSE;
+    goto ERROR;
   if (!(tr = (*get_color_func) (get_color_obj, width - 1, 0))) 
-    return FALSE;
+    goto ERROR;
   if (!(bl = (*get_color_func) (get_color_obj, 0, height - 1))) 
-    return FALSE;
+    goto ERROR;  
   if (!(br = (*get_color_func) (get_color_obj, width - 1, height - 1))) 
-    return FALSE;
-  
-  if (crop_colors_equal(tr, bl, bytes) && crop_colors_equal(tr, br, bytes))
-    memcpy(color, tr, bytes);
-  else if (crop_colors_equal(tl, bl, bytes) && crop_colors_equal(tl, br, bytes))
-    memcpy(color, tl, bytes);
-  else if (crop_colors_equal(tl, tr, bytes) && crop_colors_equal(tl, br, bytes))
-    memcpy(color, tl, bytes);
-  else if (crop_colors_equal(tl, tr, bytes) && crop_colors_equal(tl, bl, bytes))
-    memcpy(color, tl, bytes);    
-  else if (crop_colors_equal(tl, tr, bytes) || crop_colors_equal(tl, bl, bytes) ||
-	   crop_colors_equal(tl, br, bytes))
-    memcpy(color, tl, bytes);
-  else if (crop_colors_equal(tr, bl, bytes) || crop_colors_equal(tr, bl, bytes))
-    memcpy(color, tr, bytes);
-  else if (crop_colors_equal(br, bl, bytes))
-    memcpy(color, br, bytes);
-  else
-    while (bytes--) {
-      color[bytes] = (tl[bytes] + tr[bytes] + bl[bytes] + br[bytes]) / 4;
+    goto ERROR;
+
+  if (has_alpha)
+    {
+      alpha = bytes - 1;
+      if ((tl[alpha] == 0 && tr[alpha] == 0) ||
+	  (tl[alpha] == 0 && bl[alpha] == 0) ||
+	  (tr[alpha] == 0 && br[alpha] == 0) ||
+	  (bl[alpha] == 0 && br[alpha] == 0))
+	{
+	  g_free (tl); 
+	  g_free (tr); 
+	  g_free (bl); 
+	  g_free (br);
+	  return AUTO_CROP_ALPHA;
+	}
     }
+  
+  if (crop_colors_equal (tl, tr, bytes) || crop_colors_equal (tl, bl, bytes))
+    memcpy (color, tl, bytes);
+  else if (crop_colors_equal (br, bl, bytes) || crop_colors_equal (br, tr, bytes))
+    memcpy (color, br, bytes);
+  else
+    goto ERROR;
 
   g_free (tl); 
   g_free (tr); 
   g_free (bl); 
   g_free (br);
+  return AUTO_CROP_COLOR;
 
-  return TRUE;
+ ERROR:
+  g_free (tl); 
+  g_free (tr); 
+  g_free (bl); 
+  g_free (br);
+  return AUTO_CROP_NOTHING;
 }
 
 static int 
@@ -1415,19 +1448,28 @@ crop_colors_equal (guchar *col1,
 		   guchar *col2, 
 		   int bytes) 
 {
-  int equal = 1;
+  int equal = TRUE;
   int b;
   
-  /* Taken from the autocrop plug-in written by Tim Newsome */
-
   for (b = 0; b < bytes; b++) {
     if (col1[b] != col2[b]) {
-      equal = 0;
+      equal = FALSE;
       break;
     }
   }
   
   return equal;
+}
+
+static int 
+crop_colors_alpha (guchar *dummy, 
+		   guchar *col, 
+		   int bytes) 
+{
+  if (col[bytes-1] == 0)
+    return TRUE;
+  else
+    return FALSE;
 }
 
 static void
