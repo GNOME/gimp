@@ -58,7 +58,7 @@ OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
 ../image_new.o ../nav_window.o ../smudge.o ../dodgeburn.o \
 ../indicator_area.o ../gdisplay_color.o ../gimpcontextpreview.o \
 ../qmask.o ../context_manager.o ../lc_dialog.o ../gimpcontext.o \
-../gimpui.o ../gimphelp.o
+../gimpui.o ../gimphelp.o ../scan_convert.o ../path_curves.o ../path_bezier.o
 
 #testplugin_SOURCES = \
 #	testplugin.c \
