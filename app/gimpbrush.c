@@ -175,6 +175,9 @@ gimp_brush_load (gchar *filename)
 
   close (fd);
 
+  if (!brush)
+    return NULL;
+
   brush->filename = g_strdup (filename);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
@@ -182,7 +185,7 @@ gimp_brush_load (gchar *filename)
     {
       temp_buf_swap (brush->mask);
       if (brush->pixmap)
-	temp_buf_swap (brush->pixmap);
+        temp_buf_swap (brush->pixmap);
     }
 
   return brush;

@@ -1,5 +1,10 @@
 2001-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/gimpbrush.c (gimp_brush_load): don't crash on invalid brush
+	files (fixes bug #61418).
+
+2001-10-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c (script_fu_server_run): 
 	fixed wrong error message.
 
