@@ -23,7 +23,7 @@ pygimp.pdf: pygimp.sgml
 	db2pdf $(srcdir)/pygimp.sgml
 
 pygimp.html: pygimp.sgml
-	cd $(srcdir) && db2html pygimp.sgml
+	cd $(srcdir) && db2html --nochunks pygimp.sgml
 	cd $(srcdir) && mv pygimp/*.html .
 	rm -rf $(srcdir)/pygimp
 

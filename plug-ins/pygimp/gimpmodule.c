@@ -18,9 +18,9 @@
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "Python.h"
-#include "sysmodule.h"
-#include "structmember.h"
+#include <Python.h>
+#include <sysmodule.h>
+#include <structmember.h>
 #include <libgimp/gimp.h>
 
 /* maximum bits per pixel ... */
@@ -29,10 +29,7 @@
 /* part of Hans Breuer's pygimp on win32 patch */
 #if defined(_MSC_VER)
 /* reduce strict checking in glibconfig.h */
-# pragma warning(default:4047)
-# undef PyObject_HEAD_INIT
-# define PyObject_HEAD_INIT(a) \
-  1, NULL, /* must be set in init function */
+#  pragma warning(default:4047)
 #endif
 
 static PyObject *ErrorObject;
@@ -365,10 +362,12 @@ GParam_to_tuple(int nparams, GimpParam *params) {
 	    PyTuple_SetItem(args, i, tmp);
 	    break;
 	case GIMP_PDB_COLOR:
-	    PyTuple_SetItem(args, i, Py_BuildValue("(iii)",
-						   (long) params[i].data.d_color.red,
-						   (long) params[i].data.d_color.green,
-						   (long) params[i].data.d_color.blue));
+	    {
+		guchar r, g, b;
+		gimp_rgb_get_uchar(&params[i].data.d_color, &r, &g, &b);
+		PyTuple_SetItem(args, i, Py_BuildValue("(iii)", (long)r,
+						       (long)g, (long)b));
+	    }
 	    break;
 	case GIMP_PDB_REGION:
 	    PyTuple_SetItem(args, i, Py_BuildValue("(iiii)",
@@ -566,14 +565,13 @@ tuple_to_GParam(PyObject *args, GimpParamDef *ptype, int nparams) {
 	case GIMP_PDB_COLOR:
 	    check(!PySequence_Check(item) ||
 		  PySequence_Length(item) < 3)
-		r = PySequence_GetItem(item, 0);
+	    r = PySequence_GetItem(item, 0);
 	    g = PySequence_GetItem(item, 1);
 	    b = PySequence_GetItem(item, 2);
 	    check(!PyInt_Check(r) || !PyInt_Check(g) ||
 		  !PyInt_Check(b))
-		ret[i].data.d_color.red = PyInt_AsLong(r);
-	    ret[i].data.d_color.green = PyInt_AsLong(g);
-	    ret[i].data.d_color.blue = PyInt_AsLong(b);
+	    gimp_rgb_set_uchar(&ret[i].data.d_color, PyInt_AsLong(r),
+			       PyInt_AsLong(g), PyInt_AsLong(b));
 	    break;
 	case GIMP_PDB_REGION:
 	    check(!PySequence_Check(item) ||
@@ -853,7 +851,7 @@ pdb_getattr(self, name)
 }
 
 static PyTypeObject Pdbtype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "pdb",			/*tp_name*/
     sizeof(pdbobject),		/*tp_basicsize*/
@@ -1084,7 +1082,7 @@ pf_call(self, args, kwargs)
 
 
 static PyTypeObject Pftype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "pdbFunc",			/*tp_name*/
     sizeof(pfobject),		/*tp_basicsize*/
@@ -1833,7 +1831,7 @@ img_cmp(self, other)
 }
 
 static PyTypeObject Imgtype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "Image",			/*tp_name*/
     sizeof(imgobject),		/*tp_basicsize*/
@@ -1908,7 +1906,7 @@ disp_repr(self)
 }
 
 static PyTypeObject Disptype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "Display",			/*tp_name*/
     sizeof(dispobject),		/*tp_basicsize*/
@@ -2122,7 +2120,7 @@ newdrwobject(GimpDrawable *d, gint32 ID)
 	return (drwobject *)Py_None;
     }
     if (d != NULL)
-	ID = d->id;
+	ID = d->drawable_id;
     /* create the appropriate object type */
     if (gimp_drawable_is_layer(ID))
 	self = newlayobject(ID);
@@ -2512,7 +2510,7 @@ lay_cmp(self, other)
 }
 
 static PyTypeObject Laytype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "Layer",			/*tp_name*/
     sizeof(layobject),		/*tp_basicsize*/
@@ -2608,7 +2606,6 @@ chn_getattr(self, name)
      chnobject *self;
      char *name;
 {
-    unsigned char r, g, b;
     gint32 id;
 	
     if (!strcmp(name, "__members__"))
@@ -2624,7 +2621,11 @@ chn_getattr(self, name)
     if (!strcmp(name, "bpp"))
 	return PyInt_FromLong(gimp_drawable_bpp(self->ID));
     if (!strcmp(name, "color") || !strcmp(name, "colour")) {
-	gimp_channel_get_color(self->ID, &r, &g, &b);
+	GimpRGB colour;
+	guchar r, g, b;
+
+	gimp_channel_get_color(self->ID, &colour);
+	gimp_rgb_get_uchar(&colour, &r, &g, &b);
 	return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
     }
     if (!strcmp(name, "has_alpha"))
@@ -2699,12 +2700,14 @@ chn_setattr(self, name, v)
      char *name;
      PyObject *v;
 {
-    PyObject *r, *g, *b;
     if (v == NULL) {
 	PyErr_SetString(PyExc_TypeError, "can not delete attributes.");
 	return -1;
     }
     if (!strcmp(name, "color") || !strcmp(name, "colour")) {
+	PyObject *r, *g, *b;
+	GimpRGB colour;
+
 	if (!PySequence_Check(v) || PySequence_Length(v) < 3) {
 	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	    return -1;
@@ -2717,9 +2720,10 @@ chn_setattr(self, name, v)
 	    Py_DECREF(r); Py_DECREF(g); Py_DECREF(b);
 	    return -1;
 	}
-	gimp_channel_set_color(self->ID, PyInt_AsLong(r),
-			       PyInt_AsLong(g), PyInt_AsLong(b));
+	gimp_rgb_set_uchar(&colour, PyInt_AsLong(r),
+			   PyInt_AsLong(g), PyInt_AsLong(b));
 	Py_DECREF(r); Py_DECREF(g); Py_DECREF(b);
+	gimp_channel_set_color(self->ID, &colour);
 	return 0;
     }
     if (!strcmp(name, "name")) {
@@ -2791,7 +2795,7 @@ chn_cmp(self, other)
 }
 
 static PyTypeObject Chntype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "Channel",			/*tp_name*/
     sizeof(chnobject),		/*tp_basicsize*/
@@ -2915,7 +2919,7 @@ tile_repr(self)
     else
 	s = PyString_FromString("<tile for drawable ");
     PyString_ConcatAndDel(&s, PyString_FromString(gimp_drawable_name(
-								     self->tile->drawable->id)));
+				     self->tile->drawable->drawable_id)));
     PyString_ConcatAndDel(&s, PyString_FromString(">"));
     return s;
 }
@@ -3014,7 +3018,7 @@ static PyMappingMethods tile_as_mapping = {
 };
 
 static PyTypeObject Tiletype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "Tile",			/*tp_name*/
     sizeof(tileobject),		/*tp_basicsize*/
@@ -3381,13 +3385,13 @@ pr_repr(self)
     PyObject *s;
     s = PyString_FromString("<pixel region for drawable ");
     PyString_ConcatAndDel(&s, PyString_FromString(gimp_drawable_name(
-								     self->pr.drawable->id)));
+					self->pr.drawable->drawable_id)));
     PyString_ConcatAndDel(&s, PyString_FromString(">"));
     return s;
 }
 
 static PyTypeObject Prtype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "PixelRegion",			/*tp_name*/
     sizeof(probject),		/*tp_basicsize*/
@@ -3525,7 +3529,7 @@ para_str(self)
 }
 
 static PyTypeObject Paratype = {
-    PyObject_HEAD_INIT(&PyType_Type)
+    PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
     "GimpParasite",			/*tp_name*/
     sizeof(paraobject),		/*tp_basicsize*/
@@ -4000,26 +4004,6 @@ gimp_Install_cmap(self, args)
 }
 
 static PyObject *
-gimp_Use_xshm(self, args)
-     PyObject *self;	/* Not used */
-     PyObject *args;
-{
-    if (!PyArg_ParseTuple(args, ":use_xshm"))
-	return NULL;
-    return PyInt_FromLong(gimp_use_xshm());
-}
-
-static PyObject *
-gimp_Color_cube(self, args)
-     PyObject *self;	/* Not used */
-     PyObject *args;
-{
-    if (!PyArg_ParseTuple(args, ":color_cube"))
-	return NULL;
-    return PyString_FromString(gimp_color_cube());
-}
-
-static PyObject *
 gimp_Gtkrc(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
@@ -4034,10 +4018,12 @@ gimp_Get_background(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
+    GimpRGB colour;
     guchar r, g, b;
     if (!PyArg_ParseTuple(args, ":get_background"))
 	return NULL;
-    gimp_palette_get_background(&r, &g, &b);
+    gimp_palette_get_background(&colour);
+    gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
 }
 
@@ -4046,10 +4032,12 @@ gimp_Get_foreground(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
+    GimpRGB colour;
     guchar r, g, b;
     if (!PyArg_ParseTuple(args, ":get_foreground"))
 	return NULL;
-    gimp_palette_get_foreground(&r, &g, &b);
+    gimp_palette_get_foreground(&colour);
+    gimp_rgb_get_uchar(&colour, &r, &g, &b);
     return Py_BuildValue("(iii)", (int)r, (int)g, (int)b);
 }
 
@@ -4058,13 +4046,15 @@ gimp_Set_background(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
+    GimpRGB colour;
     int r, g, b;
     if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
 	PyErr_Clear();
 	if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b))
 	    return NULL;
     }
-    gimp_palette_set_background(r,g,b);
+    gimp_rgb_set_uchar(&colour, r, g, b);
+    gimp_palette_set_background(&colour);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -4074,13 +4064,15 @@ gimp_Set_foreground(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
+    GimpRGB colour;
     int r, g, b;
     if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
 	PyErr_Clear();
 	if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b))
 	    return NULL;
     }
-    gimp_palette_set_foreground(r,g,b);
+    gimp_rgb_set_uchar(&colour, r, g, b);
+    gimp_palette_set_foreground(&colour);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -4104,24 +4096,24 @@ gimp_Gradients_get_list(self, args)
 }
 
 static PyObject *
-gimp_Gradients_get_active(self, args)
+gimp_Gradients_get_gradient(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
-    if (!PyArg_ParseTuple(args, ":gradients_get_active"))
+    if (!PyArg_ParseTuple(args, ":gradients_get_gradient"))
 	return NULL;
-    return PyString_FromString(gimp_gradients_get_active());
+    return PyString_FromString(gimp_gradients_get_gradient());
 }
 
 static PyObject *
-gimp_Gradients_set_active(self, args)
+gimp_Gradients_set_gradient(self, args)
      PyObject *self;	/* Not used */
      PyObject *args;
 {
     char *actv;
-    if (!PyArg_ParseTuple(args, "s:gradients_set_active", &actv))
+    if (!PyArg_ParseTuple(args, "s:gradients_set_gradient", &actv))
 	return NULL;
-    gimp_gradients_set_active(actv);
+    gimp_gradients_set_gradient(actv);
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -4224,16 +4216,14 @@ gimp_channel(self, args)
     char *name;
     unsigned int width, height, r, g, b;
     double opacity;
-    unsigned char colour[3];
+    GimpRGB colour;
 
     if (!PyArg_ParseTuple(args, "O!siid(iii):channel", &Imgtype, &img,
 			  &name, &width, &height, &opacity, &r, &g, &b))
 	return NULL;
-    colour[0] = r & 0xff;
-    colour[1] = g & 0xff;
-    colour[2] = b & 0xff;
+    gimp_rgb_set_uchar(&colour, r & 0xff, g & 0xff, b & 0xff);
     return (PyObject *)newchnobject(gimp_channel_new(img->ID, name,
-						     width, height, opacity, colour));
+				     width, height, opacity, &colour));
 }
 
 
@@ -4476,17 +4466,14 @@ static struct PyMethodDef gimp_methods[] = {
     {"register_save_handler",	(PyCFunction)gimp_Register_save_handler,	METH_VARARGS},
     {"gamma",	(PyCFunction)gimp_Gamma,	METH_VARARGS},
     {"install_cmap",	(PyCFunction)gimp_Install_cmap,	METH_VARARGS},
-    {"use_xshm",	(PyCFunction)gimp_Use_xshm,	METH_VARARGS},
-    {"color_cube",	(PyCFunction)gimp_Color_cube,	METH_VARARGS},
-    {"colour_cube", (PyCFunction)gimp_Color_cube,  METH_VARARGS},
     {"gtkrc",	(PyCFunction)gimp_Gtkrc,	METH_VARARGS},
     {"get_background",	(PyCFunction)gimp_Get_background,	METH_VARARGS},
     {"get_foreground",	(PyCFunction)gimp_Get_foreground,	METH_VARARGS},
     {"set_background",	(PyCFunction)gimp_Set_background,	METH_VARARGS},
     {"set_foreground",	(PyCFunction)gimp_Set_foreground,	METH_VARARGS},
     {"gradients_get_list",	(PyCFunction)gimp_Gradients_get_list,	METH_VARARGS},
-    {"gradients_get_active",	(PyCFunction)gimp_Gradients_get_active,	METH_VARARGS},
-    {"gradients_set_active",	(PyCFunction)gimp_Gradients_set_active,	METH_VARARGS},
+    {"gradients_get_gradient",	(PyCFunction)gimp_Gradients_get_gradient,	METH_VARARGS},
+    {"gradients_set_gradient",	(PyCFunction)gimp_Gradients_set_gradient,	METH_VARARGS},
     {"gradients_sample_uniform",	(PyCFunction)gimp_Gradients_sample_uniform,	METH_VARARGS},
     {"gradients_sample_custom",	(PyCFunction)gimp_Gradients_sample_custom,	METH_VARARGS},
     {"image", (PyCFunction)gimp_image, METH_VARARGS},
@@ -4526,8 +4513,6 @@ initgimp()
     PyObject *m, *d;
     PyObject *i;
 
-#if defined (_MSC_VER)
-    /* see: Python FAQ 3.24 "Initializer not a constant." */
     Pdbtype.ob_type = &PyType_Type;
     Pftype.ob_type = &PyType_Type;
     Imgtype.ob_type = &PyType_Type;
@@ -4537,7 +4522,6 @@ initgimp()
     Tiletype.ob_type = &PyType_Type;
     Prtype.ob_type = &PyType_Type;
     Paratype.ob_type = &PyType_Type;
-#endif
 
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,
