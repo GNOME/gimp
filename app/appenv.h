@@ -26,7 +26,6 @@
 
 /*  command line options  */
 extern gboolean             use_debug_handler;
-extern gboolean             console_messages;
 extern GimpStackTraceMode   stack_trace_mode;
 
 /*  other global variables  */

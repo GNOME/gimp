@@ -1,3 +1,19 @@
+2003-09-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: added "gboolean console_messages" to the
+	Gimp struct and to gimp_new() since plug-in messages go directly
+	through gimp_message() now and need to honor "console_messages"
+	too.
+
+	* app/app_procs.[ch]: added "gboolean console_messages" to
+	app_init() and pass it to gimp_new().
+
+	* app/appenv.h: removed global variable "console_messages".
+
+	* app/main.c: added it to main()'s scope and pass it to app_init().
+
+	* app/errors.c: changed accordingly.
+
 2003-09-08  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Disable the (pdb interfaces

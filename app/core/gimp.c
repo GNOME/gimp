@@ -536,16 +536,18 @@ gimp_new (gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_interface,
           gboolean           use_shm,
+          gboolean           console_messages,
           GimpStackTraceMode stack_trace_mode)
 {
   Gimp *gimp;
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
-  gimp->be_verbose       = be_verbose   ? TRUE : FALSE;
-  gimp->no_data          = no_data      ? TRUE : FALSE;
-  gimp->no_interface     = no_interface ? TRUE : FALSE;
-  gimp->use_shm          = use_shm      ? TRUE : FALSE;
+  gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
+  gimp->no_data          = no_data          ? TRUE : FALSE;
+  gimp->no_interface     = no_interface     ? TRUE : FALSE;
+  gimp->use_shm          = use_shm          ? TRUE : FALSE;
+  gimp->console_messages = console_messages ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
 
   return gimp;
@@ -909,19 +911,22 @@ gimp_message (Gimp        *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  switch (gimp->message_handler)
+  if (! gimp->console_messages)
     {
-    case GIMP_MESSAGE_BOX:
-    case GIMP_ERROR_CONSOLE:
-      if (gimp->gui_message_func)
+      switch (gimp->message_handler)
         {
-          gimp->gui_message_func (gimp, domain, message);
-          return;
-        }
-      break;
+        case GIMP_MESSAGE_BOX:
+        case GIMP_ERROR_CONSOLE:
+          if (gimp->gui_message_func)
+            {
+              gimp->gui_message_func (gimp, domain, message);
+              return;
+            }
+          break;
 
-    default:
-      break;
+        default:
+          break;
+        }
     }
 
   g_printerr ("%s: %s\n", domain ? domain : GIMP_OBJECT (gimp)->name, message);

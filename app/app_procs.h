@@ -49,6 +49,7 @@ void      app_init          (gint          gimp_argc,
                              gboolean      be_verbose,
                              gboolean      use_shm,
                              gboolean      use_mmx,
+                             gboolean      console_messages,
                              gboolean      restore_session);
 
 

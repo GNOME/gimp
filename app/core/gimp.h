@@ -57,6 +57,7 @@ struct _Gimp
   gboolean                no_interface;
   gboolean                use_shm;
   GimpMessageHandlerType  message_handler;
+  gboolean                console_messages;
   GimpStackTraceMode      stack_trace_mode;
 
   GimpThreadEnterFunc     gui_threads_enter_func;
@@ -164,6 +165,7 @@ Gimp        * gimp_new                  (gboolean            be_verbose,
                                          gboolean            no_data,
                                          gboolean            no_interface,
                                          gboolean            use_shm,
+                                         gboolean            console_messages,
                                          GimpStackTraceMode  stack_trace_mode);
 
 void          gimp_set_config           (Gimp               *gimp,

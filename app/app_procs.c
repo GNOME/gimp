@@ -83,7 +83,6 @@ Gimp *the_gimp = NULL;
 /*  command-line options  */
 
 gboolean             use_debug_handler       = FALSE;
-gboolean             console_messages        = FALSE;
 GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
 
 /*  other global variables  */
@@ -112,6 +111,7 @@ app_init (gint          gimp_argc,
           gboolean      be_verbose,
           gboolean      use_shm,
           gboolean      use_mmx,
+          gboolean      console_messages,
           gboolean      restore_session)
 {
   GimpInitStatusFunc  update_status_func;
@@ -130,6 +130,7 @@ app_init (gint          gimp_argc,
                        no_data,
                        no_interface,
                        use_shm,
+                       console_messages,
                        stack_trace_mode);
 
   gimp_object_set_name (GIMP_OBJECT (the_gimp), prog_name);

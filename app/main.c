@@ -99,6 +99,7 @@ main (int    argc,
   gboolean   be_verbose              = FALSE;
   gboolean   use_shm                 = FALSE;
   gboolean   use_mmx                 = TRUE;
+  gboolean   console_messages        = FALSE;
   gboolean   restore_session         = FALSE;
   gint       i, j;
 
@@ -389,6 +390,7 @@ main (int    argc,
             be_verbose,
             use_shm,
             use_mmx,
+            console_messages,
             restore_session);
 
   return 0;

@@ -56,11 +56,11 @@ gimp_message_log_func (const gchar    *log_domain,
 		       const gchar    *message,
 		       gpointer        data)
 {
-  Gimp *gimp = *((Gimp **) data);
+  Gimp **gimp = (Gimp **) data;
 
-  if (! console_messages && GIMP_IS_GIMP (gimp))
+  if (gimp && GIMP_IS_GIMP (*gimp))
     {
-      gimp_message (gimp, NULL, message);
+      gimp_message (*gimp, NULL, message);
       return;
     }
 
