@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2000-12-09 11:20-0800\n"
-"PO-Revision-Date: 2000-09-04 23:11+02:00\n"
+"POT-Creation-Date: 2000-12-15 15:11+0100\n"
+"PO-Revision-Date: 2000-12-15 15:26+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -146,12 +146,15 @@ msgid "Script-Fu Font Selection"
 msgstr "Script-Fu skrifttypevalg"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Script-Fu Error while executing\n"
 " %s\n"
 "%s"
-msgstr "Script-Fu filvalg"
+msgstr ""
+"Script-Fu feil under kjøring\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:539
 msgid "Script-Fu Server Options"
@@ -534,150 +537,121 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Utvd/Script-Fu/Logoer/Web titteltopptekst..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Lag kost/Elliptisk, fjærkost..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Lag kost/Elliptisk..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Lag kost/Rektangulær, fjærkost..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Lag kost/Rektangulær..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Forskjellig/Sfære..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/3D truchet..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Kamuflasje..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Flatland..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Land..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Render kart..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Swirl-tile..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Swirly (tileable)..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Trochoid..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Mønstre/Truchet..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Verktøy/ASCII til bilde..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvidelser/Script-Fu/Verktøy/Egendefinert gradient..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Verktøy/Skrifttypekart..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Pil..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Kule..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/Knapp..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Alien glow/HRule..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Hevet mønster/Pil..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Hevet mønster/Kule..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Hevet mønster/Knapp..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Hevet mønster/Topptekst..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Hevet mønster/HRule..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Stor topptekst..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Vanlige tubeetiketter..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
+msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Liten topptekst..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
@@ -767,9 +741,8 @@ msgid "Add Background"
 msgstr "Legg til bakgrunn"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr "Legg til skygge"
+msgstr "Legg til drop-shadow"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Add Shadow"
@@ -1172,30 +1145,25 @@ msgid "Edge Width"
 msgstr "Kantbredde"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 3)"
-msgstr "Cellestørrelse (piksler)"
+msgstr "Effektstørrelse (piksler * 3)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 30)"
-msgstr "Cellestørrelse (piksler)"
+msgstr "Effektstørrelse (piksler * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 4)"
-msgstr "Cellestørrelse (piksler)"
+msgstr "Effektstørrelse (piksler * 4)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels * 5)"
-msgstr "Cellestørrelse (piksler)"
+msgstr "Effektstørrelse (piksler * 5)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#, fuzzy
 msgid "Effect Size (pixels)"
-msgstr "Cellestørrelse (piksler)"
+msgstr "Effektstørrelse (piksler)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1204,18 +1172,8 @@ msgstr "Forhøyning"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
 msgid "End Blend"
 msgstr ""
-"Dette er en utviklingsversjon av Evolution.\n"
-"Bruk av e-post klienten på dine e-post filer\n"
-"er ekstremt farefullt.\n"
-"\n"
-"Ikke kjør dette programmet for å lese din e-post,\n"
-"ikke gi det tilgang til din e-post tjener, og ikke\n"
-"send e-post til andre med det.\n"
-"\n"
-"Du er herved advart\n"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
@@ -1548,11 +1506,11 @@ msgstr "Interpoler"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr ""
+msgstr "Invertér retning"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr "Inverter"
+msgstr "Invertér"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
@@ -1561,7 +1519,7 @@ msgstr "Behold bakgrunn"
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Behold \"bump layer\""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
@@ -1738,9 +1696,8 @@ msgid "Outline Size"
 msgstr "Rammestørrelse"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
 msgid "Pad Color"
-msgstr "Mørk farge"
+msgstr "Fyllfarge"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity"
@@ -1772,9 +1729,8 @@ msgid "Pattern (Outline)"
 msgstr "Mønster (omriss)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
 msgid "Pattern (Overlay)"
-msgstr "Mønster (tekst)"
+msgstr "Mønster (overlegg)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
@@ -1871,7 +1827,7 @@ msgstr "Høyre"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
-msgstr ""
+msgstr "Bølgestyrke"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1978,11 +1934,11 @@ msgstr "Størrelse"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr ""
+msgstr "Jevn ut horisontalt"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr ""
+msgstr "Jevn ut vertikalt"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
@@ -2049,7 +2005,7 @@ msgstr "Utgangsvinkel"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr ""
+msgstr "Supersample"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -2123,19 +2079,19 @@ msgstr "Tykkhet"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Density"
-msgstr ""
+msgstr "Tetthet for tråd"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Intensity"
-msgstr ""
+msgstr "Intensitet for tråd"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Length"
-msgstr ""
+msgstr "Lengde på tråd"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr ""
+msgstr "Terskel (Større 1<-->255 mindre)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
@@ -2150,7 +2106,7 @@ msgstr "Gjennomsiktig bakgrunn"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "Snu fra venstre til høyre"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2225,7 +2181,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"
-msgstr ""
+msgstr "Bredde for mellomrom"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
@@ -2242,10 +2198,3 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
-
-#~ msgid ""
-#~ "Script-Fu Error\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Script-Fu feil\n"
-#~ "%s"
