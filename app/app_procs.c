@@ -126,11 +126,6 @@ app_init (gint    gimp_argc,
 	}
     }
 
-  if (! no_interface)
-    {
-      gui_libs_init (&gimp_argc, &gimp_argv);
-    }
-
   /*  The user_install dialog may have parsed unitrc and gimprc, so
    *  check gimprc_init()'s return value
    */
@@ -145,6 +140,8 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
+      gui_libs_init (&gimp_argc, &gimp_argv);
+
       get_standard_colormaps ();
 
       if (! no_splash)

@@ -809,7 +809,7 @@ AC_SUBST(GIMP_THREAD_LIBS)
 AC_SUBST(GIMP_MP_FLAGS)
 AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
-AC_SUBST(GIMP_PERL_PO)	
+AC_SUBST(GIMP_PERL_PO)
 AC_SUBST(GIMPINSTALL)
 AC_SUBST(HELPBROWSER)
 AC_SUBST(GTKXMHTML_CFLAGS)
@@ -835,6 +835,14 @@ gimptool-1.4
 gimptool.1
 gimp-remote.1
 gimp.spec
+Makefile
+build/Makefile
+build/win32/Makefile
+intl/Makefile
+tools/Makefile
+tools/authorsgen/Makefile
+tools/pdbgen/Makefile
+regexrepl/Makefile
 libgimp/Makefile
 libgimp/makefile.mingw
 libgimpbase/gimpversion.h
@@ -901,7 +909,6 @@ plug-ins/sgi/Makefile
 plug-ins/plugin-helper/Makefile
 modules/Makefile
 modules/makefile.mingw
-cursors/Makefile
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
 devel-docs/libgimpbase/Makefile
@@ -909,28 +916,23 @@ devel-docs/libgimpcolor/Makefile
 devel-docs/libgimpmath/Makefile
 devel-docs/libgimpwidgets/Makefile
 docs/Makefile
+tips/Makefile
 pixmaps/Makefile
+cursors/Makefile
 themes/Makefile
 themes/Default/Makefile
+themes/Default/images/Makefile
+themes/Default/images/tools/Makefile
 data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
-Makefile
-build/Makefile
-build/win32/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
-plug-ins/perl/po/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-intl/Makefile
-regexrepl/Makefile
-tools/Makefile
-tools/authorsgen/Makefile
-tools/pdbgen/Makefile
-tips/Makefile],
+plug-ins/perl/po/Makefile.in],
 [
    chmod +x gimptool-1.4
    sed -e "s/^     ..\/..\/..\//     ..\//" plug-ins/perl/po/Makefile > plug-ins/perl/po/Makefile.eek && mv plug-ins/perl/po/Makefile.eek plug-ins/perl/po/Makefile

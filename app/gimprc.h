@@ -64,6 +64,8 @@ struct _GimpRc
   gint               help_browser;
   gint               cursor_mode;
   gboolean           disable_tearoff_menus;
+  gchar             *theme_path;
+  gchar             *theme;
 };
 
 extern GimpRc gimprc;

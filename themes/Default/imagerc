@@ -1,0 +1,310 @@
+# pixmap_path "<dir 1>:<dir 2>:<dir 3>:..."
+#
+# include "rc-file"
+#
+# style <name> [= <name>]
+# {
+#   <option>
+#
+#   stock[<stock_id>] =
+#     {
+#       { <filename> [, <direction> [, <state> [, <size>]]] },
+#       { ... }
+#     }
+# }
+#
+# widget <widget_set> style <style_name>
+# widget_class <widget_class_set> style <style_name>
+
+
+style "gimp-icons"
+{
+  # The GIMP Default theme has stock icons only in "gtk-button" size.
+  #
+  # They are registered with this size so they are not scaled
+  # for buttons. Additionally, they are registered as wildcarded
+  # fallbacks for themselves.
+
+  # General purpose icons
+  #
+  stock["gimp-anchor"] =
+    {
+      { "images/stock-button-anchor.png", *, *, "gtk-button" },
+      { "images/stock-button-anchor.png", *, *, *            }
+    }
+  stock["gimp-delete"] =
+    {
+      { "images/stock-button-delete.png", *, *, "gtk-button" },
+      { "images/stock-button-delete.png", *, *, *            }
+    }
+  stock["gimp-duplicate"] =
+    {
+      { "images/stock-button-duplicate.png", *, *, "gtk-button" },
+      { "images/stock-button-duplicate.png", *, *, *            }
+    }
+  stock["gimp-edit"] =
+    {
+      { "images/stock-button-edit.png", *, *, "gtk-button" },
+      { "images/stock-button-edit.png", *, *, *            }
+    }
+  stock["gimp-linked"] =
+    {
+      { "images/stock-button-linked.png", *, *, "gtk-button" },
+      { "images/stock-button-linked.png", *, *, *            }
+    }
+  stock["gimp-lower"] =
+    {
+      { "images/stock-button-lower.png", *, *, "gtk-button" },
+      { "images/stock-button-lower.png", *, *, *            }
+    }
+  stock["gimp-new"] =
+    {
+      { "images/stock-button-new.png", *, *, "gtk-button" },
+      { "images/stock-button-new.png", *, *, *            }
+    }
+  stock["gimp-paste"] =
+    {
+      { "images/stock-button-paste.png", *, *, "gtk-button" },
+      { "images/stock-button-paste.png", *, *, *            }
+    }
+  stock["gimp-paste-as-new"] =
+    {
+      { "images/stock-button-paste-as-new.png", *, *, "gtk-button" },
+      { "images/stock-button-paste-as-new.png", *, *, *            }
+    }
+  stock["gimp-paste-into"] =
+    {
+      { "images/stock-button-paste-into.png", *, *, "gtk-button" },
+      { "images/stock-button-paste-into.png", *, *, *            }
+    }
+  stock["gimp-raise"] =
+    {
+      { "images/stock-button-raise.png", *, *, "gtk-button" },
+      { "images/stock-button-raise.png", *, *, *            }
+    }
+  stock["gimp-refresh"] =
+    {
+      { "images/stock-button-refresh.png", *, *, "gtk-button" },
+      { "images/stock-button-refresh.png", *, *, *            }
+    }
+  stock["gimp-reset"] =
+    {
+      { "images/stock-button-refresh.png", *, *, "gtk-button" },
+      { "images/stock-button-refresh.png", *, *, *            }
+    }
+  stock["gimp-stroke"] =
+    {
+      { "images/stock-button-stroke.png", *, *, "gtk-button" },
+      { "images/stock-button-stroke.png", *, *, *            }
+    }
+  stock["gimp-to-path"] =
+    {
+      { "images/stock-button-to-path.png", *, *, "gtk-button" },
+      { "images/stock-button-to-path.png", *, *, *            }
+    }
+  stock["gimp-to-selection"] =
+    {
+      { "images/stock-button-to-selection.png", *, *, "gtk-button" },
+      { "images/stock-button-to-selection.png", *, *, *            }
+    }
+  stock["gimp-visible"] =
+    {
+      { "images/stock-button-visible.png", *, *, "gtk-button" },
+      { "images/stock-button-visible.png", *, *, *            }
+    }
+
+  # Tool icons
+  #
+  stock["gimp-tool-airbrush"] =
+    {
+      { "images/tools/stock-tool-button-airbrush.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-airbrush.png", *, *, *            }
+    }
+  stock["gimp-tool-bezier-select"] =
+    {
+      { "images/tools/stock-tool-button-bezier-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-bezier-select.png", *, *, *            }
+    }
+  stock["gimp-tool-blend"] =
+    {
+      { "images/tools/stock-tool-button-blend.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-blend.png", *, *, *            }
+    }
+  stock["gimp-tool-blur"] =
+    {
+      { "images/tools/stock-tool-button-blur.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-blur.png", *, *, *            }
+    }
+  stock["gimp-tool-brightness-contrast"] =
+    {
+      { "images/tools/stock-tool-button-brightness-contrast.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-brightness-contrast.png", *, *, *            }
+    }
+  stock["gimp-tool-bucket-fill"] =
+    {
+      { "images/tools/stock-tool-button-bucket-fill.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-bucket-fill.png", *, *, *            }
+    }
+  stock["gimp-tool-by-color-select"] =
+    {
+      { "images/tools/stock-tool-button-by-color-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-by-color-select.png", *, *, *            }
+    }
+  stock["gimp-tool-clone"] =
+    {
+      { "images/tools/stock-tool-button-clone.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-clone.png", *, *, *            }
+    }
+  stock["gimp-tool-color-balance"] =
+    {
+      { "images/tools/stock-tool-button-color-balance.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-color-balance.png", *, *, *            }
+    }
+  stock["gimp-tool-color-picker"] =
+    {
+      { "images/tools/stock-tool-button-color-picker.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-color-picker.png", *, *, *            }
+    }
+  stock["gimp-tool-crop"] =
+    {
+      { "images/tools/stock-tool-button-crop.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-crop.png", *, *, *            }
+    }
+  stock["gimp-tool-curves"] =
+    {
+      { "images/tools/stock-tool-button-curves.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-curves.png", *, *, *            }
+    }
+  stock["gimp-tool-dodge"] =
+    {
+      { "images/tools/stock-tool-button-dodge.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-dodge.png", *, *, *            }
+    }
+  stock["gimp-tool-ellipse-select"] =
+    {
+      { "images/tools/stock-tool-button-ellipse-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-ellipse-select.png", *, *, *            }
+    }
+  stock["gimp-tool-eraser"] =
+    {
+      { "images/tools/stock-tool-button-eraser.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-eraser.png", *, *, *            }
+    }
+  stock["gimp-tool-flip"] =
+    {
+      { "images/tools/stock-tool-button-flip.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-flip.png", *, *, *            }
+    }
+  stock["gimp-tool-free-select"] =
+    {
+      { "images/tools/stock-tool-button-free-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-free-select.png", *, *, *            }
+    }
+  stock["gimp-tool-fuzzy-select"] =
+    {
+      { "images/tools/stock-tool-button-fuzzy-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-fuzzy-select.png", *, *, *            }
+    }
+  stock["gimp-tool-histogram"] =
+    {
+      { "images/tools/stock-tool-button-histogram.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-histogram.png", *, *, *            }
+    }
+  stock["gimp-tool-hue-saturation"] =
+    {
+      { "images/tools/stock-tool-button-hue-saturation.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-hue-saturation.png", *, *, *            }
+    }
+  stock["gimp-tool-ink"] =
+    {
+      { "images/tools/stock-tool-button-ink.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-ink.png", *, *, *            }
+    }
+  stock["gimp-tool-iscissors"] =
+    {
+      { "images/tools/stock-tool-button-iscissors.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-iscissors.png", *, *, *            }
+    }
+  stock["gimp-tool-levels"] =
+    {
+      { "images/tools/stock-tool-button-levels.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-levels.png", *, *, *            }
+    }
+  stock["gimp-tool-measure"] =
+    {
+      { "images/tools/stock-tool-button-measure.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-measure.png", *, *, *            }
+    }
+  stock["gimp-tool-move"] =
+    {
+      { "images/tools/stock-tool-button-move.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-move.png", *, *, *            }
+    }
+  stock["gimp-tool-paintbrush"] =
+    {
+      { "images/tools/stock-tool-button-paintbrush.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-paintbrush.png", *, *, *            }
+    }
+  stock["gimp-tool-path"] =
+    {
+      { "images/tools/stock-tool-button-path.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-path.png", *, *, *            }
+    }
+  stock["gimp-tool-pencil"] =
+    {
+      { "images/tools/stock-tool-button-pencil.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-pencil.png", *, *, *            }
+    }
+  stock["gimp-tool-perspective"] =
+    {
+      { "images/tools/stock-tool-button-perspective.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-perspective.png", *, *, *            }
+    }
+  stock["gimp-tool-posterize"] =
+    {
+      { "images/tools/stock-tool-button-posterize.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-posterize.png", *, *, *            }
+    }
+  stock["gimp-tool-rect-select"] =
+    {
+      { "images/tools/stock-tool-button-rect-select.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-rect-select.png", *, *, *            }
+    }
+  stock["gimp-tool-rotate"] =
+    {
+      { "images/tools/stock-tool-button-rotate.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-rotate.png", *, *, *            }
+    }
+  stock["gimp-tool-scale"] =
+    {
+      { "images/tools/stock-tool-button-scale.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-scale.png", *, *, *            }
+    }
+  stock["gimp-tool-shear"] =
+    {
+      { "images/tools/stock-tool-button-shear.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-shear.png", *, *, *            }
+    }
+  stock["gimp-tool-smudge"] =
+    {
+      { "images/tools/stock-tool-button-smudge.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-smudge.png", *, *, *            }
+    }
+  stock["gimp-tool-text"] =
+    {
+      { "images/tools/stock-tool-button-text.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-text.png", *, *, *            }
+    }
+  stock["gimp-tool-threshold"] =
+    {
+      { "images/tools/stock-tool-button-threshold.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-threshold.png", *, *, *            }
+    }
+  stock["gimp-tool-zoom"] =
+    {
+      { "images/tools/stock-tool-button-zoom.png", *, *, "gtk-button" },
+      { "images/tools/stock-tool-button-zoom.png", *, *, *            }
+    }
+}
+
+class "GtkImage" style "gimp-icons"

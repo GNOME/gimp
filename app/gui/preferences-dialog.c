@@ -146,6 +146,7 @@ static gchar            * old_brush_path;
 static gchar            * old_pattern_path;
 static gchar            * old_palette_path;
 static gchar            * old_gradient_path;
+static gchar            * old_theme_path;
 static gdouble            old_monitor_xres;
 static gdouble            old_monitor_yres;
 static gboolean           old_using_xserver_resolution;
@@ -182,6 +183,7 @@ static gchar            * edit_brush_path     = NULL;
 static gchar            * edit_pattern_path   = NULL;
 static gchar            * edit_palette_path   = NULL;
 static gchar            * edit_gradient_path  = NULL;
+static gchar            * edit_theme_path     = NULL;
 
 /*  variables which will be changed _after_ closing the dialog  */
 static guint              edit_tile_cache_size;
@@ -358,7 +360,8 @@ prefs_check_settings (void)
       prefs_strcmp (old_brush_path,     edit_brush_path)     ||
       prefs_strcmp (old_pattern_path,   edit_pattern_path)   ||
       prefs_strcmp (old_palette_path,   edit_palette_path)   ||
-      prefs_strcmp (old_gradient_path,  edit_gradient_path))
+      prefs_strcmp (old_gradient_path,  edit_gradient_path)  ||
+      prefs_strcmp (old_theme_path,     edit_theme_path))
     {
       return PREFS_RESTART;
     }
@@ -489,6 +492,7 @@ prefs_save_callback (GtkWidget *widget,
   gchar    *save_pattern_path;
   gchar    *save_palette_path;
   gchar    *save_gradient_path;
+  gchar    *save_theme_path;
 
   state = prefs_check_settings ();
   switch (state)
@@ -539,6 +543,8 @@ prefs_save_callback (GtkWidget *widget,
   save_pattern_path   = the_gimp->config->pattern_path;
   save_palette_path   = the_gimp->config->palette_path;
   save_gradient_path  = the_gimp->config->gradient_path;
+
+  save_theme_path     = gimprc.theme_path;
 
   if (the_gimp->config->levels_of_undo != old_levels_of_undo)
     {
@@ -806,6 +812,11 @@ prefs_save_callback (GtkWidget *widget,
       the_gimp->config->gradient_path = edit_gradient_path;
       update = g_list_append (update, "gradient-path");
     }
+  if (prefs_strcmp (old_theme_path, edit_theme_path))
+    {
+      gimprc.theme_path = edit_theme_path;
+      update = g_list_append (update, "theme-path");
+    }
 
   /*  values which are changed on "OK" or "Save"  */
   if (edit_tile_cache_size != old_tile_cache_size)
@@ -841,6 +852,8 @@ prefs_save_callback (GtkWidget *widget,
   the_gimp->config->pattern_path  = save_pattern_path;
   the_gimp->config->palette_path  = save_palette_path;
   the_gimp->config->gradient_path = save_gradient_path;
+
+  gimprc.theme_path = save_theme_path;
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 
@@ -943,6 +956,8 @@ prefs_cancel_callback (GtkWidget *widget,
   prefs_strset (&edit_pattern_path,   old_pattern_path);
   prefs_strset (&edit_palette_path,   old_palette_path);
   prefs_strset (&edit_gradient_path,  old_gradient_path);
+
+  prefs_strset (&edit_theme_path,     old_theme_path);
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 }
@@ -1444,6 +1459,8 @@ preferences_dialog_create (void)
       edit_pattern_path   = prefs_strdup (the_gimp->config->pattern_path);
       edit_palette_path   = prefs_strdup (the_gimp->config->palette_path);
       edit_gradient_path  = prefs_strdup (the_gimp->config->gradient_path);
+
+      edit_theme_path     = prefs_strdup (gimprc.theme_path);
     }
 
   /*  assign edit variables for values which get changed on "OK" and "Save"
@@ -1515,6 +1532,7 @@ preferences_dialog_create (void)
   prefs_strset (&old_pattern_path,   edit_pattern_path);
   prefs_strset (&old_palette_path,   edit_palette_path);
   prefs_strset (&old_gradient_path,  edit_gradient_path);
+  prefs_strset (&old_theme_path,     edit_theme_path);
 
   /*  values which will be changed on "OK" and "Save"  */
   old_tile_cache_size = edit_tile_cache_size;
@@ -2684,7 +2702,11 @@ preferences_dialog_create (void)
       { N_("Modules"), N_("Modules Directories"),
 	"dialogs/preferences/directories.html#modules",
 	N_("Select Modules Dir"),
-	&edit_module_path }
+	&edit_module_path },
+      { N_("Themes"), N_("Themes Directories"),
+	"dialogs/preferences/directories.html#themes",
+	N_("Select Themes Dir"),
+	&edit_theme_path }
     };
     static gint npaths = sizeof (paths) / sizeof (paths[0]);
 	

@@ -22,6 +22,8 @@ cp $3/unitrc $2/unitrc
 echo "cp $3/gtkrc_user $2/gtkrc"
 cp $3/gtkrc_user $2/gtkrc
 
+echo "mkdir $2/themes"
+mkdir $2/themes
 echo "mkdir $2/brushes"
 mkdir $2/brushes
 echo "mkdir $2/gradients"

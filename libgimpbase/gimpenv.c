@@ -343,10 +343,15 @@ gimp_gtkrc (void)
   if (gimp_gtkrc_filename != NULL)
     return gimp_gtkrc_filename;
   
-  gimp_gtkrc_filename = g_strconcat (gimp_sysconf_directory (),
+  gimp_gtkrc_filename = g_strconcat (gimp_data_directory (),
+				     G_DIR_SEPARATOR_S,
+				     "themes",
+				     G_DIR_SEPARATOR_S,
+				     "Default",
 				     G_DIR_SEPARATOR_S,
 				     "gtkrc",
 				     NULL);
+
   return gimp_gtkrc_filename;
 }
 

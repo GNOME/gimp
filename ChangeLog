@@ -1,3 +1,45 @@
+2001-08-06  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/Makefile.am: some new Makefiles to
+	make it installable.
+
+	* Makefile.am
+	* gtkrc: removed...
+
+	* themes/Default/Makefile.am
+	* themes/Default/gtkrc: ...added here.
+
+	* themes/Default/imagerc: new file (not used, just for
+	documentation) which loads the default theme's images in the same
+	way the inlined pixbufs are registered with the stock system.
+
+	* gimprc.in
+	* gimprc.win32
+	* user_install
+	* user_install.bat
+	* app/gimprc.[ch]: added "theme-path" and "theme" gimprc variables.
+
+	* app/app_procs.c: prase gimprc before initializing the GUI.
+
+	* app/core/gimpdatafiles.[ch]: added support for getting only
+	subdirectories in the callback.
+
+	* libgimpbase/gimpenv.c: as a temp_hack gimp_gtkrc(); returns the
+	default theme's gtkrc.
+
+	* app/gui/gui.c: build a hash of theme directories and select
+	the one configured in gimprc.theme. Use gimp_gtkrc()'s default
+	value if there is no theme installed or configured.
+
+	* app/gui/preferences-dialog.c: Added theme_path to the GUI. No
+	stuff for selection the theme yet.
+
+	* app/gui/menus.c: beautify <Image>/Tools/
+
+	* app/tools/gimpcroptool.c: register in <Image>/Tools/Transform Tools/
+
 2001-08-05  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am

@@ -39,7 +39,6 @@ EXTRA_DIST = \
 	PLUGIN_MAINTAINERS	\
 	MAINTAINERS		\
 	TODO			\
-	gtkrc			\
 	gtkrc_user		\
 	unitrc			\
 	gimp_logo.ppm		\
@@ -59,7 +58,6 @@ gimpdata_DATA = \
 gimpsysconf_DATA = \
 	gimprc			\
 	gimprc_user		\
-	gtkrc			\
 	gtkrc_user		\
 	unitrc			\
 	ps-menurc

@@ -165,6 +165,12 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
+	      if (! strcmp (dir_ent->d_name, ".") ||
+		  ! strcmp (dir_ent->d_name, ".."))
+		{
+		  continue;
+		}
+
 	      filename = g_strdup_printf ("%s%s",
 					  (gchar *) list->data,
 					  dir_ent->d_name);
@@ -172,14 +178,21 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
 
-	      if (!err && S_ISREG (filestat.st_mode) &&
-		  (!(flags & MODE_EXECUTABLE) ||
-		   (filestat.st_mode & S_IXUSR) ||
-		   is_script (filename)))
+	      if (! err)
 		{
 		  filestat_valid = TRUE;
 
-		  (* loader_func) (filename, loader_data);
+		  if (S_ISDIR (filestat.st_mode) && (flags & TYPE_DIRECTORY))
+		    {
+		      (* loader_func) (filename, loader_data);
+		    }
+		  else if (S_ISREG (filestat.st_mode) &&
+			   (!(flags & MODE_EXECUTABLE) ||
+			    (filestat.st_mode & S_IXUSR) ||
+			    is_script (filename)))
+		    {
+		      (* loader_func) (filename, loader_data);
+		    }
 
 		  filestat_valid = FALSE;
 		}

@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafiles.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -119,35 +120,88 @@ static GQuark image_size_changed_handler_id     = 0;
 static GQuark image_alpha_changed_handler_id    = 0;
 static GQuark image_update_handler_id           = 0;
 
+static GHashTable *themes_hash = NULL;
+
 
 /*  public functions  */
+
+static void
+gui_themes_dir_foreach_func (const gchar *filename,
+			     gpointer     loader_data)
+{
+  GHashTable *hash;
+  gchar      *basename;
+
+  hash = (GHashTable *) loader_data;
+
+  basename = g_path_get_basename (filename);
+
+  if (be_verbose)
+    g_print (_("adding theme \"%s\" (%s)\n"), basename, filename);
+
+  g_hash_table_insert (hash,
+		       basename,
+		       g_strdup (filename));
+}
 
 void
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
-  const gchar *gtkrc;
-  gchar       *filename;
+  gchar *theme_dir;
+  gchar *gtkrc;
 
   gimp_stock_init ();
 
-  /*  parse the systemwide gtkrc  */
-  gtkrc = gimp_gtkrc ();
+  themes_hash = g_hash_table_new_full (g_str_hash,
+				       g_str_equal,
+				       g_free,
+				       g_free);
+
+  if (gimprc.theme_path)
+    {
+      gimp_datafiles_read_directories (gimprc.theme_path,
+				       TYPE_DIRECTORY,
+				       gui_themes_dir_foreach_func,
+				       themes_hash);
+    }
+
+  if (gimprc.theme)
+    theme_dir = g_hash_table_lookup (themes_hash, gimprc.theme);
+  else
+    theme_dir = g_hash_table_lookup (themes_hash, "Default");
+
+  if (theme_dir)
+    {
+      gtkrc = g_strconcat (theme_dir,
+			   G_DIR_SEPARATOR_S,
+			   "gtkrc",
+			   NULL);
+    }
+  else
+    {
+      /*  get the hardcoded default theme gtkrc  */
+
+      gtkrc = g_strdup (gimp_gtkrc ());
+    }
 
   if (be_verbose)
     g_print (_("parsing \"%s\"\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
 
+  g_free (gtkrc);
+
   /*  parse the user gtkrc  */
-  filename = gimp_personal_rc_file ("gtkrc");
+
+  gtkrc = gimp_personal_rc_file ("gtkrc");
 
   if (be_verbose)
-    g_print (_("parsing \"%s\"\n"), filename);
+    g_print (_("parsing \"%s\"\n"), gtkrc);
 
-  gtk_rc_parse (filename);
+  gtk_rc_parse (gtkrc);
 
-  g_free (filename);
+  g_free (gtkrc);
 }
 
 void
@@ -321,6 +375,12 @@ gui_exit (Gimp *gimp)
   image_size_changed_handler_id     = 0;
   image_alpha_changed_handler_id    = 0;
   image_update_handler_id           = 0;
+
+  if (themes_hash)
+    {
+      g_hash_table_destroy (themes_hash);
+      themes_hash = NULL;
+    }
 }
 
 void

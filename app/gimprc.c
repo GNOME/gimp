@@ -237,7 +237,9 @@ GimpRc gimprc =
   /* info_window_follows_mouse */  TRUE,
   /* help_browser              */  HELP_BROWSER_GIMP,
   /* cursor_mode               */  CURSOR_MODE_TOOL_ICON,
-  /* disable_tearoff_menus     */  FALSE 
+  /* disable_tearoff_menus     */  FALSE,
+  /* theme_path                */  NULL,
+  /* theme                     */  NULL
 };
 
 static GHashTable *parse_func_hash = NULL;
@@ -358,7 +360,11 @@ static ParseFunc funcs[] =
   { "cursor-mode",               TT_XCURSORMODE,
     &(gimprc.cursor_mode), NULL },
   { "disable-tearoff-menus",     TT_BOOLEAN,
-    &(gimprc.disable_tearoff_menus), NULL }
+    &(gimprc.disable_tearoff_menus), NULL },
+  { "theme-path",                TT_PATH,
+    &(gimprc.theme_path), NULL },
+  { "theme",                     TT_STRING,
+    &(gimprc.theme), NULL }
 };
 static gint n_funcs = (sizeof (funcs) /
 		       sizeof (funcs[0]));

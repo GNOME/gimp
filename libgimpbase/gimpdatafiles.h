@@ -27,8 +27,8 @@
 
 typedef enum
 {
-  INCLUDE_TEMP_DIR = 1 << 0,
-  MODE_EXECUTABLE  = 1 << 1
+  MODE_EXECUTABLE = 1 << 0,
+  TYPE_DIRECTORY  = 1 << 1
 } GimpDataFileFlags;
 
 

@@ -778,6 +778,10 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Tools/---"),
 
+  BRANCH (N_("/Tools/Selection Tools")),
+  BRANCH (N_("/Tools/Paint Tools")),
+  BRANCH (N_("/Tools/Transform Tools")),
+
   /*  <Image>/Dialogs  */
 
   { { N_("/Dialogs/Layers, Channels & Paths..."), "<control>L",

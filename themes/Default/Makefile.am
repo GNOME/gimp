@@ -1,23 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
-STOCK_IMAGES = @STRIP_BEGIN@ \
-	images/stock-button-anchor.png		\
-	images/stock-button-delete.png		\
-	images/stock-button-duplicate.png	\
-	images/stock-button-edit.png		\
-	images/stock-button-eye.png		\
-	images/stock-button-linked.png		\
-	images/stock-button-lower.png		\
-	images/stock-button-new.png		\
-	images/stock-button-paste.png		\
-	images/stock-button-paste-as-new.png	\
-	images/stock-button-paste-into.png	\
-	images/stock-button-stroke.png		\
-	images/stock-button-raise.png		\
-	images/stock-button-refresh.png		\
-	images/stock-button-to-path.png		\
-	images/stock-button-to-selection.png	\
-@STRIP_END@
+SUBDIRS = images
+
+themedatadir = $(gimpdatadir)/themes/Default
+
+themedata_DATA = gtkrc imagerc
+
+EXTRA_DIST = $(themedata_DATA)
 
 STOCK_VARIABLES = @STRIP_BEGIN@ \
 	stock_button_anchor				\
@@ -52,47 +41,6 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-to-path.png	\
 	stock_button_to_selection			\
 	$(srcdir)/images/stock-button-to-selection.png	\
-@STRIP_END@
-
-STOCK_TOOL_IMAGES = @STRIP_BEGIN@ \
-	images/tools/stock-tool-button-airbrush.png		\
-	images/tools/stock-tool-button-bezier-select.png	\
-	images/tools/stock-tool-button-blend.png		\
-	images/tools/stock-tool-button-blur.png			\
-	images/tools/stock-tool-button-brightness-contrast.png	\
-	images/tools/stock-tool-button-bucket-fill.png		\
-	images/tools/stock-tool-button-by-color-select.png	\
-	images/tools/stock-tool-button-clone.png		\
-	images/tools/stock-tool-button-color-balance.png	\
-	images/tools/stock-tool-button-color-picker.png		\
-	images/tools/stock-tool-button-crop.png			\
-	images/tools/stock-tool-button-curves.png		\
-	images/tools/stock-tool-button-dodge.png		\
-	images/tools/stock-tool-button-ellipse-select.png	\
-	images/tools/stock-tool-button-eraser.png		\
-	images/tools/stock-tool-button-flip.png			\
-	images/tools/stock-tool-button-free-select.png		\
-	images/tools/stock-tool-button-fuzzy-select.png		\
-	images/tools/stock-tool-button-histogram.png		\
-	images/tools/stock-tool-button-hue-saturation.png	\
-	images/tools/stock-tool-button-ink.png			\
-	images/tools/stock-tool-button-iscissors.png		\
-	images/tools/stock-tool-button-levels.png		\
-	images/tools/stock-tool-button-measure.png		\
-	images/tools/stock-tool-button-move.png			\
-	images/tools/stock-tool-button-paintbrush.png		\
-	images/tools/stock-tool-button-path.png			\
-	images/tools/stock-tool-button-pencil.png		\
-	images/tools/stock-tool-button-perspective.png		\
-	images/tools/stock-tool-button-posterize.png		\
-	images/tools/stock-tool-button-rect-select.png		\
-	images/tools/stock-tool-button-rotate.png		\
-	images/tools/stock-tool-button-scale.png		\
-	images/tools/stock-tool-button-shear.png		\
-	images/tools/stock-tool-button-smudge.png		\
-	images/tools/stock-tool-button-text.png			\
-	images/tools/stock-tool-button-threshold.png		\
-	images/tools/stock-tool-button-zoom.png			\
 @STRIP_END@
 
 STOCK_TOOL_VARIABLES = @STRIP_BEGIN@ \
@@ -173,8 +121,6 @@ STOCK_TOOL_VARIABLES = @STRIP_BEGIN@ \
 	stock_tool_button_zoom							\
 	$(srcdir)/images/tools/stock-tool-button-zoom.png			\
 @STRIP_END@
-
-EXTRA_DIST = $(STOCK_IMAGES) $(STOCK_TOOL_IMAGES)
 
 noinst_DATA = gimp-stock-pixbufs.h
 CLEANFILES += $(noinst_DATA)

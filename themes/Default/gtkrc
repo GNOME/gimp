@@ -11,6 +11,11 @@
 # widget_class <widget_class_set> style <style_name>
 
 
+# Don't define icons for the Default theme as they are compiled in
+#
+# include "imagerc"
+
+
 style "gimp-global-style"
 {
   GtkDialog::content_area_border = 0

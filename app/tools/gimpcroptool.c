@@ -174,7 +174,7 @@ gimp_crop_tool_register (Gimp *gimp)
                               "gimp:crop_tool",
                               _("Crop Tool"),
                               _("Crop or Resize an image"),
-                              N_("/Tools/Crop Tool"), "<shift>C",
+                              N_("/Tools/Transform Tools/Crop Tool"), "<shift>C",
                               NULL, "tools/crop_tool.html",
                               GIMP_STOCK_TOOL_CROP);
 }
