@@ -13,6 +13,11 @@
 extern int opterr, optind, optopt;
 extern char *optarg;
 extern int getopt(int nargc, char** nargv, char* ostr);
+
+#if defined(__GNUC__)
+#define DONT_USE_POPEN
+#endif
+
 #endif
 
 #ifndef CPP_PROGRAM
@@ -21,6 +26,10 @@ extern int getopt(int nargc, char** nargv, char* ostr);
 
 #ifndef CPP_SEARCH
 #define CPP_SEARCH
+#endif
+
+#ifdef DONT_USE_POPEN
+#define GCGTMP "__gcg.tmp"
 #endif
 
 Id header_root = NULL;
@@ -73,7 +82,7 @@ void open_out(PNode*(*func)(Module*),
 	gchar* str;
 	PNode* guard;
 	FILE* f;
-	g_string_append(s, "/");
+	g_string_append(s, G_DIR_SEPARATOR_S);
 	str = p_to_str(func(current_module), NULL);
 	g_string_append(s, str);
 	g_free(str);
@@ -111,11 +120,21 @@ int main(int argc, char* argv[]){
 	g_string_append(cpp_cmd, " ");
 	g_string_append(cpp_cmd, argv[optind]);
 
-	
+#ifdef DONT_USE_POPEN
+	g_string_append(cpp_cmd, " -o " GCGTMP);
+	system(cpp_cmd->str);
+	yyin=fopen(GCGTMP, "r");
+#else
 	yyin=popen(cpp_cmd->str, "r");
+#endif
 	/*yyin=fopen(argv[optind], "r");*/
 	g_assert(yyin);
 	yyparse();
+#ifdef DONT_USE_POPEN
+	fclose(yyin);
+#else
+	pclose(yyin);
+#endif
 	
 	if(!source_name)
 		source_name = p_to_str(p_fmt("~.c",

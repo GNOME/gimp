@@ -1,0 +1,50 @@
+## Makefile for building gcg with gcc -mno-cygwin
+## Use: make -f makefile.cygwin
+
+################################################################
+
+CC = gcc -mno-cygwin -mpentium
+
+LEX = flex
+YACC = bison -y
+
+INSTALL = install
+
+GLIB_VER = 1.3
+
+GLIB = ../../../glib
+
+CFLAGS = -g -I$(GLIB) -DCPP_PROGRAM="\"$(CC) -E -x c\"" -DYY_NEVER_INTERACTIVE
+
+all: gcg.exe
+
+YFLAGS			= -d -v
+LFLAGS			= -d 
+
+lexer.c : lexer.l
+	$(LEX) $(LFLAGS) -t lexer.l >lexer.c
+
+parser.c parser.h: parser.y
+	$(YACC) $(YFLAGS) parser.y
+	cp y.tab.c parser.c
+	cp y.tab.h parser.h
+
+gcg_OBJECTS = \
+	gcg.o		\
+	getopt.o	\
+	parser.o	\
+	lexer.o	\
+	output.o	\
+	pnode.o	\
+	db.o		\
+	output_enum.o	\
+	output_flags.o\
+	output_object.o\
+	fp.o		\
+	marshall.o	\
+
+gcg.exe : $(gcg_OBJECTS)
+	$(CC) $(CFLAGS) -o gcg.exe $(gcg_OBJECTS) -L $(GLIB) -lglib-$(GLIB_VER) $(LDFLAGS)
+
+clean:
+	-rm parser.[ch] lexer.c *.exe *.o

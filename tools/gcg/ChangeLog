@@ -1,3 +1,11 @@
+1999-07-03  Tor Lillqvist  <tml@iki.fi>
+
+	* gcg.c: When built on Win32 with gcc, don't use popen,
+	as it doesn't seem to work when gcc is itself running under
+	cygwin, but gcg is not.
+
+	* makefile.cygwin: New file.
+
 Sun Jun  6 11:16:56 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am
