@@ -1,3 +1,11 @@
+2004-11-13  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage-merge.c: Return the active layer instead of
+	the bottom layer when just merging down a floating selection.
+	Untabbified.
+
+	Fixes bug #158130.
+
 2004-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c better fix for bug #157971.
