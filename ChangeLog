@@ -1,3 +1,8 @@
+Fri Oct 22 15:56:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/parasite.pdb: sync the names with the last API
+	patch
+
 1999-10-23  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/wmf.c: Fix handling of ExtTextOut. We didn't

@@ -29,16 +29,16 @@
 
 static ProcRecord parasite_new_proc;
 static ProcRecord find_parasite_proc;
-static ProcRecord attach_parasite_proc;
-static ProcRecord detach_parasite_proc;
+static ProcRecord parasite_attach_proc;
+static ProcRecord parasite_detach_proc;
 static ProcRecord parasite_list_proc;
 static ProcRecord drawable_find_parasite_proc;
-static ProcRecord drawable_attach_parasite_proc;
-static ProcRecord drawable_detach_parasite_proc;
+static ProcRecord drawable_parasite_attach_proc;
+static ProcRecord drawable_parasite_detach_proc;
 static ProcRecord drawable_parasite_list_proc;
 static ProcRecord image_find_parasite_proc;
-static ProcRecord image_attach_parasite_proc;
-static ProcRecord image_detach_parasite_proc;
+static ProcRecord image_parasite_attach_proc;
+static ProcRecord image_parasite_detach_proc;
 static ProcRecord image_parasite_list_proc;
 
 void
@@ -46,16 +46,16 @@ register_parasite_procs (void)
 {
   procedural_db_register (&parasite_new_proc);
   procedural_db_register (&find_parasite_proc);
-  procedural_db_register (&attach_parasite_proc);
-  procedural_db_register (&detach_parasite_proc);
+  procedural_db_register (&parasite_attach_proc);
+  procedural_db_register (&parasite_detach_proc);
   procedural_db_register (&parasite_list_proc);
   procedural_db_register (&drawable_find_parasite_proc);
-  procedural_db_register (&drawable_attach_parasite_proc);
-  procedural_db_register (&drawable_detach_parasite_proc);
+  procedural_db_register (&drawable_parasite_attach_proc);
+  procedural_db_register (&drawable_parasite_detach_proc);
   procedural_db_register (&drawable_parasite_list_proc);
   procedural_db_register (&image_find_parasite_proc);
-  procedural_db_register (&image_attach_parasite_proc);
-  procedural_db_register (&image_detach_parasite_proc);
+  procedural_db_register (&image_parasite_attach_proc);
+  procedural_db_register (&image_parasite_detach_proc);
   procedural_db_register (&image_parasite_list_proc);
 }
 
@@ -201,7 +201,7 @@ static ProcRecord find_parasite_proc =
 };
 
 static Argument *
-attach_parasite_invoker (Argument *args)
+parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Parasite *parasite;
@@ -213,10 +213,10 @@ attach_parasite_invoker (Argument *args)
   if (success)
     gimp_parasite_attach (parasite);
 
-  return procedural_db_return_args (&attach_parasite_proc, success);
+  return procedural_db_return_args (&parasite_attach_proc, success);
 }
 
-static ProcArg attach_parasite_inargs[] =
+static ProcArg parasite_attach_inargs[] =
 {
   {
     PDB_PARASITE,
@@ -225,9 +225,9 @@ static ProcArg attach_parasite_inargs[] =
   }
 };
 
-static ProcRecord attach_parasite_proc =
+static ProcRecord parasite_attach_proc =
 {
-  "gimp_attach_parasite",
+  "gimp_parasite_attach",
   "Add a parasite to the gimp.",
   "This procedure attaches a parasite to the gimp. It has no return values.",
   "Jay Cox",
@@ -235,14 +235,14 @@ static ProcRecord attach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   1,
-  attach_parasite_inargs,
+  parasite_attach_inargs,
   0,
   NULL,
-  { { attach_parasite_invoker } }
+  { { parasite_attach_invoker } }
 };
 
 static Argument *
-detach_parasite_invoker (Argument *args)
+parasite_detach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -254,10 +254,10 @@ detach_parasite_invoker (Argument *args)
   if (success)
     gimp_parasite_detach (name);
 
-  return procedural_db_return_args (&detach_parasite_proc, success);
+  return procedural_db_return_args (&parasite_detach_proc, success);
 }
 
-static ProcArg detach_parasite_inargs[] =
+static ProcArg parasite_detach_inargs[] =
 {
   {
     PDB_STRING,
@@ -266,9 +266,9 @@ static ProcArg detach_parasite_inargs[] =
   }
 };
 
-static ProcRecord detach_parasite_proc =
+static ProcRecord parasite_detach_proc =
 {
-  "gimp_detach_parasite",
+  "gimp_parasite_detach",
   "Removes a parasite from the gimp.",
   "This procedure detaches a parasite from the gimp. It has no return values.",
   "Jay Cox",
@@ -276,10 +276,10 @@ static ProcRecord detach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   1,
-  detach_parasite_inargs,
+  parasite_detach_inargs,
   0,
   NULL,
-  { { detach_parasite_invoker } }
+  { { parasite_detach_invoker } }
 };
 
 static Argument *
@@ -398,7 +398,7 @@ static ProcRecord drawable_find_parasite_proc =
 };
 
 static Argument *
-drawable_attach_parasite_invoker (Argument *args)
+drawable_parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -415,10 +415,10 @@ drawable_attach_parasite_invoker (Argument *args)
   if (success)
     gimp_drawable_parasite_attach (drawable, parasite);
 
-  return procedural_db_return_args (&drawable_attach_parasite_proc, success);
+  return procedural_db_return_args (&drawable_parasite_attach_proc, success);
 }
 
-static ProcArg drawable_attach_parasite_inargs[] =
+static ProcArg drawable_parasite_attach_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -432,9 +432,9 @@ static ProcArg drawable_attach_parasite_inargs[] =
   }
 };
 
-static ProcRecord drawable_attach_parasite_proc =
+static ProcRecord drawable_parasite_attach_proc =
 {
-  "gimp_drawable_attach_parasite",
+  "gimp_drawable_parasite_attach",
   "Add a parasite to a drawable.",
   "This procedure attaches a parasite to a drawable. It has no return values.",
   "Jay Cox",
@@ -442,14 +442,14 @@ static ProcRecord drawable_attach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  drawable_attach_parasite_inargs,
+  drawable_parasite_attach_inargs,
   0,
   NULL,
-  { { drawable_attach_parasite_invoker } }
+  { { drawable_parasite_attach_invoker } }
 };
 
 static Argument *
-drawable_detach_parasite_invoker (Argument *args)
+drawable_parasite_detach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -466,10 +466,10 @@ drawable_detach_parasite_invoker (Argument *args)
   if (success)
     gimp_drawable_parasite_detach (drawable, name);
 
-  return procedural_db_return_args (&drawable_detach_parasite_proc, success);
+  return procedural_db_return_args (&drawable_parasite_detach_proc, success);
 }
 
-static ProcArg drawable_detach_parasite_inargs[] =
+static ProcArg drawable_parasite_detach_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -483,9 +483,9 @@ static ProcArg drawable_detach_parasite_inargs[] =
   }
 };
 
-static ProcRecord drawable_detach_parasite_proc =
+static ProcRecord drawable_parasite_detach_proc =
 {
-  "gimp_drawable_detach_parasite",
+  "gimp_drawable_parasite_detach",
   "Removes a parasite from a drawable.",
   "This procedure detaches a parasite from a drawable. It has no return values.",
   "Jay Cox",
@@ -493,10 +493,10 @@ static ProcRecord drawable_detach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  drawable_detach_parasite_inargs,
+  drawable_parasite_detach_inargs,
   0,
   NULL,
-  { { drawable_detach_parasite_invoker } }
+  { { drawable_parasite_detach_invoker } }
 };
 
 static Argument *
@@ -634,7 +634,7 @@ static ProcRecord image_find_parasite_proc =
 };
 
 static Argument *
-image_attach_parasite_invoker (Argument *args)
+image_parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -651,10 +651,10 @@ image_attach_parasite_invoker (Argument *args)
   if (success)
     gimp_image_parasite_attach (gimage, parasite);
 
-  return procedural_db_return_args (&image_attach_parasite_proc, success);
+  return procedural_db_return_args (&image_parasite_attach_proc, success);
 }
 
-static ProcArg image_attach_parasite_inargs[] =
+static ProcArg image_parasite_attach_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -668,9 +668,9 @@ static ProcArg image_attach_parasite_inargs[] =
   }
 };
 
-static ProcRecord image_attach_parasite_proc =
+static ProcRecord image_parasite_attach_proc =
 {
-  "gimp_image_attach_parasite",
+  "gimp_image_parasite_attach",
   "Add a parasite to an image.",
   "This procedure attaches a parasite to an image. It has no return values.",
   "Jay Cox",
@@ -678,14 +678,14 @@ static ProcRecord image_attach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  image_attach_parasite_inargs,
+  image_parasite_attach_inargs,
   0,
   NULL,
-  { { image_attach_parasite_invoker } }
+  { { image_parasite_attach_invoker } }
 };
 
 static Argument *
-image_detach_parasite_invoker (Argument *args)
+image_parasite_detach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -702,10 +702,10 @@ image_detach_parasite_invoker (Argument *args)
   if (success)
     gimp_image_parasite_detach (gimage, name);
 
-  return procedural_db_return_args (&image_detach_parasite_proc, success);
+  return procedural_db_return_args (&image_parasite_detach_proc, success);
 }
 
-static ProcArg image_detach_parasite_inargs[] =
+static ProcArg image_parasite_detach_inargs[] =
 {
   {
     PDB_IMAGE,
@@ -719,9 +719,9 @@ static ProcArg image_detach_parasite_inargs[] =
   }
 };
 
-static ProcRecord image_detach_parasite_proc =
+static ProcRecord image_parasite_detach_proc =
 {
-  "gimp_image_detach_parasite",
+  "gimp_image_parasite_detach",
   "Removes a parasite from an image.",
   "This procedure detaches a parasite from an image. It has no return values.",
   "Jay Cox",
@@ -729,10 +729,10 @@ static ProcRecord image_detach_parasite_proc =
   "1998",
   PDB_INTERNAL,
   2,
-  image_detach_parasite_inargs,
+  image_parasite_detach_inargs,
   0,
   NULL,
-  { { image_detach_parasite_invoker } }
+  { { image_parasite_detach_invoker } }
 };
 
 static Argument *
