@@ -16,25 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-
-#include "menus-types.h"
-
-#include "core/gimp.h"
-
-#include "widgets/gimpuimanager.h"
-
-#include "file-dialog-menu.h"
-#include "file-save-menu.h"
+#ifndef __FILE_MENU_H__
+#define __FILE_MENU_H__
 
 
-void
-file_save_menu_setup (GimpUIManager *manager,
-                      const gchar   *ui_path)
-{
-  file_dialog_menu_setup (manager, ui_path,
-                          manager->gimp->save_procs,
-                          "gimp_xcf_save");
-}
+void   file_menu_setup (GimpUIManager *manager,
+                        const gchar   *ui_path);
+
+
+#endif /* __FILE_MENU_H__ */

@@ -22,8 +22,8 @@
 
 #include "menus-types.h"
 
+#include "file-menu.h"
 #include "image-menu.h"
-#include "menus.h"
 #include "plug-in-menus.h"
 
 
@@ -31,6 +31,6 @@ void
 image_menu_setup (GimpUIManager *manager,
                   const gchar   *ui_path)
 {
-  menus_open_recent_add (manager, ui_path);
+  file_menu_setup (manager, ui_path);
   plug_in_menus_setup (manager, ui_path);
 }

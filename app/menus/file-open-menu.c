@@ -18,18 +18,15 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "menus-types.h"
 
 #include "core/gimp.h"
 
-#include "plug-in/plug-in-proc.h"
-
 #include "widgets/gimpuimanager.h"
 
+#include "file-dialog-menu.h"
 #include "file-open-menu.h"
 
 
@@ -37,28 +34,7 @@ void
 file_open_menu_setup (GimpUIManager *manager,
                       const gchar   *ui_path)
 {
-  GSList *list;
-  guint   merge_id;
-
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
-
-  for (list = manager->gimp->load_procs; list; list = g_slist_next (list))
-    {
-      PlugInProcDef *file_proc = list->data;
-      gchar         *path;
-
-      if (! strcmp (file_proc->db_info.name, "gimp_xcf_load"))
-        path = g_strdup_printf ("%s/%s", ui_path, "Internal");
-      else
-        path = g_strdup (ui_path);
-
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             path,
-                             file_proc->db_info.name,
-                             file_proc->db_info.name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
-
-      g_free (path);
-    }
+  file_dialog_menu_setup (manager, ui_path,
+                          manager->gimp->load_procs,
+                          "gimp_xcf_load");
 }

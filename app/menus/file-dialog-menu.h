@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* The GIMP -- an open manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,25 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-
-#include "menus-types.h"
-
-#include "core/gimp.h"
-
-#include "widgets/gimpuimanager.h"
-
-#include "file-dialog-menu.h"
-#include "file-save-menu.h"
+#ifndef __FILE_DIALOG_MENU_H__
+#define __FILE_DIALOG_MENU_H__
 
 
-void
-file_save_menu_setup (GimpUIManager *manager,
-                      const gchar   *ui_path)
-{
-  file_dialog_menu_setup (manager, ui_path,
-                          manager->gimp->save_procs,
-                          "gimp_xcf_save");
-}
+void   file_dialog_menu_setup (GimpUIManager *manager,
+                               const gchar   *ui_path,
+                               GSList        *file_procs,
+                               const gchar   *xcf_proc_name);
+
+
+#endif /* __FILE_DIALOG_MENU_H__ */

@@ -21,21 +21,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "menus-types.h"
 
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 
-#include "file/file-utils.h"
-
-#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimpuimanager.h"
 
 #include "actions/actions.h"
 
@@ -332,39 +325,6 @@ menus_clear (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_print ("TODO: implement menus_clear()\n");
-}
-
-void
-menus_open_recent_add (GimpUIManager *manager,
-                       const gchar   *ui_path)
-{
-  gint  n_entries;
-  guint merge_id;
-  gint  i;
-
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
-  g_return_if_fail (ui_path != NULL);
-
-  n_entries = GIMP_GUI_CONFIG (manager->gimp->config)->last_opened_size;
-
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
-
-  for (i = 0; i < n_entries; i++)
-    {
-      gchar *action_name;
-      gchar *action_path;
-
-      action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
-      action_path = g_strdup_printf ("%s/File/Open Recent/Files", ui_path);
-
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
-
-      g_free (action_name);
-      g_free (action_path);
-    }
 }
 
 

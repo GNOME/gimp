@@ -23,14 +23,11 @@
 extern GimpMenuFactory *global_menu_factory;
 
 
-void   menus_init            (Gimp          *gimp);
-void   menus_exit            (Gimp          *gimp);
-void   menus_restore         (Gimp          *gimp);
-void   menus_save            (Gimp          *gimp);
-void   menus_clear           (Gimp          *gimp);
-
-void   menus_open_recent_add (GimpUIManager *manager,
-                              const gchar   *ui_path);
+void   menus_init    (Gimp *gimp);
+void   menus_exit    (Gimp *gimp);
+void   menus_restore (Gimp *gimp);
+void   menus_save    (Gimp *gimp);
+void   menus_clear   (Gimp *gimp);
 
 
 #endif /* __MENUS_H__ */
