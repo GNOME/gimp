@@ -1,5 +1,12 @@
 2003-02-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: applied a large patch from
+	David Necas <yeti@physics.muni.cz> that fixes a couple of bugs and
+	adds some additional features. Fixes bugs #82466, #82472 and
+	#82473 and addresses bug #82470.
+
+2003-02-02  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorbutton.c (gimp_color_button_clicked):
 	fixed usage of gtk_color_selection_set_has_opacity_control().
 
