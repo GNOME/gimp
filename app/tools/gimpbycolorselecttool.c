@@ -252,6 +252,19 @@ gimp_by_color_select_tool_select (GimpImage    *gimage,
   gtk_object_unref (GTK_OBJECT (new_mask));
 }
 
+void
+gimp_by_color_select_tool_initialize_by_image (GimpImage *gimage)
+{
+  /*  update the preview window  */
+  if (by_color_dialog)
+    {
+      by_color_dialog->gimage = gimage;
+      gimage->by_color_select = TRUE;
+      by_color_select_render (by_color_dialog, gimage);
+      by_color_select_draw (by_color_dialog, gimage);
+    }
+}
+
 /* private functions */
 
 static void
@@ -760,19 +773,6 @@ by_color_select_control (GimpTool   *tool,
 }
 
 void
-by_color_select_initialize_by_image (GimpImage *gimage)
-{
-  /*  update the preview window  */
-  if (by_color_dialog)
-    {
-      by_color_dialog->gimage = gimage;
-      gimage->by_color_select = TRUE;
-      by_color_select_render (by_color_dialog, gimage);
-      by_color_select_draw (by_color_dialog, gimage);
-    }
-}
-
-void
 by_color_select_initialize (GimpTool *tool, GDisplay *gdisp)
 {
   /*  The "by color" dialog  */
@@ -782,7 +782,7 @@ by_color_select_initialize (GimpTool *tool, GDisplay *gdisp)
     if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
       gtk_widget_show (by_color_dialog->shell);
 
-  by_color_select_initialize_by_image (gdisp->gimage);
+  gimp_by_color_select_tool_initialize_by_image (gdisp->gimage);
 }
 
 /****************************/

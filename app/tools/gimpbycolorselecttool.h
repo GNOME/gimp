@@ -55,10 +55,9 @@ void    gimp_by_color_select_tool_register            (void);
 
 GtkType gimp_by_color_select_tool_get_type            (void);
 
-/*
- * void    gimp_by_color_select_tool_initialize          (GDisplay     *gdisp);
- * void    gimp_by_color_select_tool_initialize_by_image (GimpImage    *gimage);
- */
+void    gimp_by_color_select_tool_initialize_by_image (GimpImage    *gimage);
+/* Should be a private function */
+
 void    gimp_by_color_select_tool_select              (GimpImage    *gimage,
 						       GimpDrawable *drawable,
 						       guchar       *color,

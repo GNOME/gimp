@@ -1115,9 +1115,12 @@ undo_pop_mask (GimpImage *gimage,
 
   /*  if there is a "by color" selection dialog active
    *  for this gimage's mask, send it an update notice
+   *
+   *  This should never happen... we should be using a signal to 
+   *  do this.
    */
   if (gimage->by_color_select)
-    by_color_select_initialize_by_image (gimage);
+    gimp_by_color_select_tool_initialize_by_image (gimage);
 
   return TRUE;
 }

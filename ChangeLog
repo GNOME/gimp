@@ -1,3 +1,11 @@
+2001-05-10  David Neary  <dneary@eircom.net>
+
+        * app/tools/gimpbycolorselecttool.[ch]
+        * app/undo.c: Temporarily fixed an issue with undo when
+        there's a bycolorselect mask on the image - since
+        gimp_by_color_select_tool_initialize_by_image() should be
+        a private function, this needs changing.
+
 2001-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpchannellistview.c: fixed button sensitivity.
