@@ -243,6 +243,10 @@ gimp_OBJECTS = \
 gimpres.o : gimp.rc wilber.ico
 	windres gimp.rc gimpres.o
 
+gimp.def: gimp.sym
+	echo EXPORTS >$@
+	cat $< >>$@
+
 gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
 # This is sickening.
 	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32

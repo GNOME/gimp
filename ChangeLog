@@ -8,8 +8,11 @@ Thu Jul 29 02:42:17 1999  Tor Lillqvist  <tml@iki.fi>
 
 	* app/channel_cmds.c: Corresponding change in generated file.
 
-	* plug-ins/makefile.{cygwin,msc}: Add the new curve_bend and
- 	sample_colorize plug-ins.
+	* plug-ins/winsnap: New Win32-only plug-in: whole display or
+ 	single window screenshot. Thanks to Craig Setera.
+
+	* plug-ins/makefile.{cygwin,msc}: Add the curve_bend,
+ 	sample_colorize and winsnap plug-ins.
 
 Wed Jul 28 16:17:29 PDT 1999 Manish Singh <yosh@gimp.org>
 
