@@ -1,3 +1,8 @@
+2002-01-13  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: I'm dumb, use better sorting.
+	It's all _kris_'s fault.
+
 2002-01-13  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpstock.[ch]: removed stock items which are

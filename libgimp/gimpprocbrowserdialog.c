@@ -54,7 +54,6 @@ typedef struct
   GtkWidget        *descr_table;
 
   GtkListStore     *store;
-  GtkTreeModel     *smodel;
   GtkWidget        *tv;
   GtkTreeSelection *sel;
 
@@ -177,6 +176,8 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   /* list : list in a scrolled_win */
   
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+				       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
@@ -184,15 +185,11 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   gtk_widget_show (scrolled_window);
 
   dbbrowser->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-  dbbrowser->smodel =
-    gtk_tree_model_sort_new_with_model (GTK_TREE_MODEL (dbbrowser->store));
-  g_object_unref (G_OBJECT (dbbrowser->store));
-
   dbbrowser->tv =
-    gtk_tree_view_new_with_model (GTK_TREE_MODEL (dbbrowser->smodel));
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dbbrowser->smodel),
+    gtk_tree_view_new_with_model (GTK_TREE_MODEL (dbbrowser->store));
+  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dbbrowser->store),
 					0, GTK_SORT_ASCENDING);
-  g_object_unref (G_OBJECT (dbbrowser->smodel));
+  g_object_unref (G_OBJECT (dbbrowser->store));
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dbbrowser->tv),
 					       -1, NULL,
@@ -279,7 +276,7 @@ procedure_select_callback (GtkTreeSelection *sel,
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
-      gtk_tree_model_get (dbbrowser->smodel, &iter, 1, &func, -1);
+      gtk_tree_model_get (dbbrowser->store, &iter, 1, &func, -1);
       dialog_select (dbbrowser, func);
       g_free (func);
     }
@@ -626,7 +623,7 @@ dialog_search_callback (GtkWidget   *widget,
 
   if (num_procs > 0)
     {
-      gtk_tree_model_get_iter_root (dbbrowser->smodel, &iter);
+      gtk_tree_model_get_iter_root (dbbrowser->store, &iter);
       gtk_tree_selection_select_iter (dbbrowser->sel, &iter);
     }
 
