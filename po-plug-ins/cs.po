@@ -3781,7 +3781,7 @@ msgstr "_Svisle:"
 
 #: plug-ins/common/gauss.c:525
 msgid "Blur Method"
-msgstr "Medota rozostření"
+msgstr "Metoda rozostření"
 
 #: plug-ins/common/gauss.c:529
 msgid "_IIR"
