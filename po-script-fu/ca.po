@@ -1,14 +1,13 @@
 # gimp-script-fu translation to Catalan.
-# Copyright (C) 2000, 2001, 2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 2000 Free Software Foundation, Inc.
 # Softcatala <linux@softcatala.org>, 2000-2001
-# Xavier Beà <xbea@pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde@eresmas.com>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.0\n"
+"Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-03-26 19:46+0100\n"
+"POT-Creation-Date: 2004-06-08 12:24+0200\n"
+"PO-Revision-Date: 2004-04-29 19:36+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Catalan <xbea@pie.xtec.es>\n"
 "MIME-Version: 1.0\n"
@@ -995,7 +994,7 @@ msgstr "<Image>/Script-Fu/Operacions de plantilla/_Esculpeix..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
-msgstr "Esculpeix les àrees blanques"
+msgstr "Escolpeix les àrees blanques"
 
 #
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
@@ -1015,7 +1014,7 @@ msgstr "Imatge de fons"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
-msgstr "Esculpeix el text aixecat"
+msgstr "Escolpeix el text aixecat"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Padding Around Text"
@@ -1114,7 +1113,7 @@ msgstr "Mapa d'entorn"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight Balance"
-msgstr "Resalta el balanç"
+msgstr "Ressalta el balanç"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
@@ -1200,7 +1199,7 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
-"Només enfosqueja\n"
+"Només enfosqueix\n"
 "(Millor, però només per a imatges amb molt de blanc)"
 
 #
@@ -1513,14 +1512,18 @@ msgstr "Pes de l'ombra (%)"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Capçalera "
 "_gran..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Capçalera "
 "_petita..."
@@ -1572,30 +1575,38 @@ msgid "Shadow Color"
 msgstr "Color de l'ombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Etiq_ueta del "
 "sub-botó del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiqueta del "
 "sub-sub-botó del conducte..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiquetes "
 "generals del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/E_tiqueta del "
 "botó del conducte..."
