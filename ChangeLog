@@ -1,5 +1,10 @@
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptemplateeditor.c: don't show a radio button for
+	GIMP_NO_FILL; makes the dialog a little less tall.
+
+2003-11-08  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render)
 	* app/text/gimptextlayout.c (gimp_text_layout_position): handle
 	the case where the ink rectangle exceeds the logical rectangle.

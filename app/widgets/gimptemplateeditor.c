@@ -468,7 +468,8 @@ gimp_template_editor_constructor (GType                  type,
   frame = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->template),
                                           "fill-type",
                                           _("Fill Type"),
-                                          -1, -1);
+                                          GIMP_FOREGROUND_FILL,
+                                          GIMP_TRANSPARENT_FILL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
