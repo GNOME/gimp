@@ -189,7 +189,6 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *hbox;
   GtkWidget          *table;
   GtkWidget          *table2;
-  GtkWidget          *separator;
   GtkWidget          *label;
   GtkObject          *adjustment;
   GtkWidget          *width_pixels;
@@ -210,10 +209,10 @@ gimp_template_editor_constructor (GType                  type,
 
   g_assert (editor->template != NULL);
 
-  gtk_box_set_spacing (GTK_BOX (editor), 4);
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
   /*  Image size frame  */
-  frame = gtk_frame_new (_("Image Size"));
+  frame = gimp_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -226,7 +225,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 4, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -243,11 +242,6 @@ gimp_template_editor_constructor (GType                  type,
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-
-  /*  a separator after the pixel section  */
-  separator = gtk_hseparator_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), separator, 0, 2, 2, 3);
-  gtk_widget_show (separator);
 
   /*  the unit size labels  */
   label = gtk_label_new (_("Width:"));
@@ -473,7 +467,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   /* frame for Comment */
-  frame = gtk_frame_new (_("Image Comment"));
+  frame = gimp_frame_new (_("Image Comment"));
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 

@@ -198,9 +198,9 @@ gimp_grid_editor_constructor (GType                  type,
 
   g_assert (editor->grid != NULL);
 
-  gtk_box_set_spacing (GTK_BOX (editor), 4);
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
-  frame = gtk_frame_new (_("Appearance"));
+  frame = gimp_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -237,7 +237,7 @@ gimp_grid_editor_constructor (GType                  type,
 
   gtk_widget_show (table);
 
-  frame = gtk_frame_new (_("Spacing"));
+  frame = gimp_frame_new (_("Spacing"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -270,7 +270,7 @@ gimp_grid_editor_constructor (GType                  type,
 
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Offset"));
+  frame = gimp_frame_new (_("Offset"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

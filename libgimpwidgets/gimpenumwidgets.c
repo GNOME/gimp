@@ -145,14 +145,14 @@ gimp_enum_radio_frame_new (GType        enum_type,
                            gpointer     callback_data,
                            GtkWidget  **first_button)
 {
-  GtkWidget  *frame;
-  GtkWidget  *radio_box;
+  GtkWidget *frame;
+  GtkWidget *radio_box;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
   g_return_val_if_fail (label_widget == NULL || GTK_IS_WIDGET (label_widget),
                         NULL);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
 
   if (label_widget)
     {
@@ -181,14 +181,14 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
                                       gpointer     callback_data,
                                       GtkWidget  **first_button)
 {
-  GtkWidget  *frame;
-  GtkWidget  *radio_box;
+  GtkWidget *frame;
+  GtkWidget *radio_box;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
   g_return_val_if_fail (label_widget == NULL || GTK_IS_WIDGET (label_widget),
                         NULL);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
 
   if (label_widget)
     {
