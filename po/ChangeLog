@@ -1,3 +1,8 @@
+2001-10-05  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Fixed a few things in Danish translation and switched to
+	using a Danish tips file.
+
 2001-10-02  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Updated Polish translation.

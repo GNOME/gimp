@@ -15,25 +15,31 @@
 # blend -> blanding
 # blur -> udtvær, blødgør
 # brush -> pensel
+# bounding box -> afgrænsningsboks
 # bucket fill -> spandudfyldning
 # bump map -> højdekort
 # bump -> bule
 # burn -> sværtning
 # colormap -> farvekortlægning
 # convolve -> konturændring (convolve kommer sig af at operationen foregår via en "convolution matrix")
+# cyan -> turkis
 # dialog -> vindue
 # dithering -> farvereducering[skompensering]
 # dodge -> blegning
 # drawable -> tegneobjekt
 # drop shadow -> baggrundsskygge
+# enviroment map -> omgivelsesreflektioner
 # feather -> udvisk
 # FG, BG -> fg., bg. (forgrund og baggrund)
 # flatten image -> fladgør billede
+# frame (i animationer) -> [enkelt]billede
 # fuzzy -> udflydende
 # gradient -> farveovergang
 # guide -> hjælpelinje
 # hue -> glød
 # module, plugin -> [udvidelses]modul, [program]udvidelse (når der mere er tale om modulets funktionalitet)
+# magenta -> lilla
+# merge -> forén
 # opacity -> ugennemsigtighed
 # path -> (til tider) bane, (ellers i forbindelses med mapper/kataloger) sti
 # pixel -> skærmpunkt
@@ -44,6 +50,7 @@
 # shrink -> formindsk
 # smudge -> udtvær
 # stroke -> bestryg (vb.), strøg (n.)
+# (adaptive) supersampling -> adaptiv udjævning
 # The GIMP -> Gimp'en (bemærk: med små bogstaver, modsvarer Gnome)
 # tile -> flise
 # tip -> tip (og ikke tips)
@@ -66,7 +73,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2001-08-29 17:14+0200\n"
+"POT-Creation-Date: 2001-10-05 01:28+0200\n"
 "PO-Revision-Date: 2001-08-24 12:12+02:00\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -1589,26 +1596,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Ingen markering til strøg!"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Ukendt penselformatversion nr. %d i '%s'."
 
-#: app/gimpbrush.c:318
+#: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Fejl i Gimp-penselfilen '%s'."
 
-#: app/gimpbrush.c:325 app/patterns.c:236
+#: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Unavngiven"
 
-#: app/gimpbrush.c:338 app/gimpbrush.c:383
+#: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "Gimp-penselfilen ser ud til at være afkortet: '%s'."
 
-#: app/gimpbrush.c:363
+#: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "Gimp-penselfil ser ud til at være ødelagt: '%s'."
@@ -1719,12 +1726,12 @@ msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"Der er ikke nok synlige lag til en sammenfletning.\n"
+"Der er ikke nok synlige lag til en forening.\n"
 "Det skal være mindst to."
 
 #: app/gimpimage.c:2623
 msgid "There are not enough visible layers for a merge down."
-msgstr "Der er ikke nok synlige lag til en nedadgående sammenfletning."
+msgstr "Der er ikke nok synlige lag til en nedadgående forening."
 
 #: app/gimpimage.c:3073
 msgid ""
@@ -1842,7 +1849,7 @@ msgstr "Gimp-meddelelse"
 msgid "pixel"
 msgstr "billedpunkt"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
 msgid "pixels"
 msgstr "billedpunkter"
 
@@ -2853,11 +2860,11 @@ msgstr ""
 
 #: app/layers_dialog.c:4093
 msgid "Layer Merge Options"
-msgstr "Indstillinger for fletning af lag"
+msgstr "Indstillinger for forening af lag"
 
 #: app/layers_dialog.c:4118
 msgid "Final, Merged Layer should be:"
-msgstr "Det resulterende flettede lag skal:"
+msgstr "Det resulterende forenede lag skal:"
 
 #: app/layers_dialog.c:4119
 msgid "Final, Anchored Layer should be:"
@@ -3153,17 +3160,20 @@ msgstr "/Filer/Vinduer/Vis filtre..."
 msgid "/File/Quit"
 msgstr "/Filer/Afslut"
 
-# lidt langt, men er der noget bedre? 'Ekstra' antyder at funktionerne under menuen ikke er aktiveret endnu.
+# lidt langt, men er der noget bedre? 'Ekstra' antyder at funktionerne
+# under menuen ikke er aktiveret endnu. 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:171
 msgid "/_Xtns"
 msgstr "/_Udvidelser"
 
-# browser svært at oversætte og overflødigt
+# "browser" svært at oversætte og overflødigt, og der er her tale om
+# større udvidelser af programmet, derfor "programudvidelser" i stedet
+# for "udvidelsesmoduler" 
 #: app/menus.c:173
 msgid "/Xtns/Module Browser..."
-msgstr "/Udvidelser/Moduler..."
+msgstr "/Udvidelser/Programudvidelser..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
@@ -3493,7 +3503,7 @@ msgstr "/Lag/Forankr lag"
 
 #: app/menus.c:453
 msgid "/Layers/Merge Visible Layers..."
-msgstr "/Lag/Flet synlige lag..."
+msgstr "/Lag/Forén synlige lag..."
 
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
@@ -3709,11 +3719,11 @@ msgstr "/Skalér lag..."
 
 #: app/menus.c:647
 msgid "/Merge Visible Layers..."
-msgstr "/Flet synlige lag..."
+msgstr "/Forén synlige lag..."
 
 #: app/menus.c:649
 msgid "/Merge Down"
-msgstr "/Sammenflet nedad"
+msgstr "/Forén nedad"
 
 #: app/menus.c:651
 msgid "/Flatten Image"
@@ -3942,7 +3952,7 @@ msgstr "Navigering: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigering: Intet billede"
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr "Ingen pensler tilgængelige til dette værktøj."
 
@@ -4078,11 +4088,11 @@ msgstr "Slet palet"
 
 #: app/palette.c:1899
 msgid "Merge Palette"
-msgstr "Sammenflet palet"
+msgstr "Forén palet"
 
 #: app/palette.c:1902
 msgid "Enter a name for merged palette"
-msgstr "Indtast et navn til den sammenflettede palet"
+msgstr "Indtast et navn til den forenede palet"
 
 #: app/palette.c:2048
 msgid "Color Palette Edit"
@@ -4112,7 +4122,7 @@ msgstr "Importér"
 
 #: app/palette.c:2259
 msgid "Merge"
-msgstr "Sammenflet"
+msgstr "Forén"
 
 #: app/palette.c:3103
 msgid "Import Palette"
@@ -5190,7 +5200,6 @@ msgid "Threshold Range:"
 msgstr "Tærskelinterval:"
 
 #: app/tips_dialog.c:75
-#, fuzzy
 msgid "gimp_tips.txt"
 msgstr "gimp_tips.da.txt"
 
@@ -5894,7 +5903,7 @@ msgstr "anvendelse af lagmaske"
 #. ok
 #: app/undo.c:2937
 msgid "layer merge"
-msgstr "lagfletning"
+msgstr "lagforening"
 
 #: app/undo.c:2938
 msgid "FS anchor"
