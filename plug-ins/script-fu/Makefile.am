@@ -54,8 +54,8 @@ LDADD = \
 	$(libgimpcolor)						\
 	$(libgimpbase)						\
 	siod/libsiod.a						\
+	$(REGEXREPL)						\
 	$(GTK_LIBS)						\
 	$(SOCKET_LIBS)						\
 	$(RT_LIBS)						\
-	$(INTLLIBS)						\
-	$(REGEXREPL)
+	$(INTLLIBS)

@@ -1,5 +1,17 @@
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
+	Applied a bunch of small changes contributed by Tim Mooney that fix
+	stack corruption on Tru64 and Aix (bug #129867).
+
+	* app/Makefile.am
+	* plug-ins/script-fu/Makefile.am: changed the dependency order so
+	that $(REGEXREPL) is linked earlier.
+
+	* regexrepl/regex.[ch]: fixed check for __STDC__, merged upstream
+	fix for re_max_failures value.
+
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: always do the check for perl and use the
 	substituted perl executable name in the call for gimp-mkenums.
 	Fixes the build on platforms where perl is not available as

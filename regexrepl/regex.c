@@ -215,7 +215,7 @@ init_syntax_once ()
    machines, compilers, `char' and `unsigned char' argument types.
    (Per Bothner suggested the basic approach.)  */
 #undef SIGN_EXTEND_CHAR
-#if __STDC__
+#if defined(__STDC__)
 #define SIGN_EXTEND_CHAR(c) ((signed char) (c))
 #else  /* not __STDC__ */
 /* As in Harbison and Steele.  */
@@ -1064,7 +1064,7 @@ typedef struct
 #if defined (MATCH_MAY_ALLOCATE)
 /* 4400 was enough to cause a crash on Alpha OSF/1,
    whose default stack limit is 2mb.  */
-int re_max_failures = 20000;
+int re_max_failures = 4000;
 #else
 int re_max_failures = 2000;
 #endif

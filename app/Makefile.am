@@ -125,6 +125,7 @@ gimp_2_1_LDADD = \
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
 	$(libgimpbase)			\
+	$(REGEXREPL)			\
 	$(GTK_LIBS)			\
 	$(LIBART_LIBS)			\
 	$(PANGOFT2_LIBS)		\
@@ -133,8 +134,7 @@ gimp_2_1_LDADD = \
 	$(GIMP_THREAD_LIBS)		\
 	$(GIMP_MP_LIBS)			\
 	$(RT_LIBS)			\
-	$(INTLLIBS)			\
-	$(REGEXREPL)
+	$(INTLLIBS)
 
 
 if ENABLE_GIMP_CONSOLE
@@ -168,6 +168,7 @@ gimp_console_2_1_LDADD = \
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
 	$(libgimpbase)			\
+	$(REGEXREPL)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(LIBART_LIBS)			\
 	$(PANGOFT2_LIBS)		\
@@ -176,8 +177,7 @@ gimp_console_2_1_LDADD = \
 	$(GIMP_THREAD_LIBS)		\
 	$(GIMP_MP_LIBS)			\
 	$(RT_LIBS)			\
-	$(INTLLIBS)			\
-	$(REGEXREPL)
+	$(INTLLIBS)
 
 endif
 
