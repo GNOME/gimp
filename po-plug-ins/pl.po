@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 1.1.10\n"
+"Project-Id-Version: gimp-plug-ins 1.1.23\n"
 "POT-Creation-Date: 2000-05-26 23:52-0700\n"
-"PO-Revision-Date: 1999-11-06 19:21+0200\n"
+"PO-Revision-Date: 2000-06-06 13:36+02:00\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1158,9 +1158,8 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/Lighting/lighting_ui.c:804
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
-#, fuzzy
 msgid "Diffuse:"
-msgstr "Przesuniêcie:"
+msgstr "Rozproszenie:"
 
 #: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
@@ -1917,9 +1916,8 @@ msgid "Copy Parameters"
 msgstr "Kopiuj parametry"
 
 #: plug-ins/common/CML_explorer.c:1495
-#, fuzzy
 msgid "Selective Load Settings"
-msgstr "Operacje na zaznaczeniu"
+msgstr "Wczytaj ustawienia"
 
 #: plug-ins/common/CML_explorer.c:1510 plug-ins/common/CML_explorer.c:1528
 msgid "NULL"
@@ -2055,7 +2053,7 @@ msgstr "Wczytaj z"
 
 #: plug-ins/common/CML_explorer.c:2410
 msgid "Error: it's not CML parameter file."
-msgstr "B³±d: Nie jest to plik CML"
+msgstr "B³±d:To nie jest plik CML"
 
 #: plug-ins/common/CML_explorer.c:2417
 msgid "Warning: it's an old format file."
@@ -4132,14 +4130,13 @@ msgid "<Image>/Filters/Distorts/IWarp..."
 msgstr "<Image>/Filtry/Zniekszta³cenia/IWarp..."
 
 #: plug-ins/common/iwarp.c:651
-#, fuzzy
 msgid "Warping..."
-msgstr "Falujê..."
+msgstr "Wyginam..."
 
 #: plug-ins/common/iwarp.c:746 plug-ins/common/iwarp.c:757
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame Nr %d ..."
-msgstr "Rysujê flame..."
+msgstr "Wyginam klatke nr %d ..."
 
 #: plug-ins/common/iwarp.c:758 plug-ins/common/iwarp.c:960
 msgid "Ping Pong"
@@ -4217,9 +4214,8 @@ msgid "Settings"
 msgstr "Ustawienia"
 
 #: plug-ins/common/iwarp.c:1136
-#, fuzzy
 msgid "IWarp"
-msgstr "Zawiñ"
+msgstr ""
 
 #: plug-ins/common/jigsaw.c:393
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
@@ -4246,14 +4242,12 @@ msgid "Number of pieces going down"
 msgstr "Liczba puzzli w pionie"
 
 #: plug-ins/common/jigsaw.c:2571
-#, fuzzy
 msgid "Bevel Edges"
-msgstr "Krawêdzie"
+msgstr "Krawêdzie kantów"
 
 #: plug-ins/common/jigsaw.c:2583
-#, fuzzy
 msgid "Bevel Width:"
-msgstr "Szeroko¶æ piksela:"
+msgstr "Szeroko¶æ kantów:"
 
 #: plug-ins/common/jigsaw.c:2587
 msgid "Degree of slope of each piece's edge"
@@ -4416,7 +4410,7 @@ msgstr "Operator efektów"
 
 #: plug-ins/common/lic.c:1071
 msgid "Derivative"
-msgstr ""
+msgstr "Pochodna"
 
 #: plug-ins/common/lic.c:1072 plug-ins/sinus/sinus.c:1028
 msgid "Gradient"
@@ -4436,14 +4430,12 @@ msgid "With Source Image"
 msgstr "Z obrazem ¼ród³owym"
 
 #: plug-ins/common/lic.c:1112
-#, fuzzy
 msgid "Effect Image:"
-msgstr "Kana³ Efektów"
+msgstr "Obraz efektów:"
 
 #: plug-ins/common/lic.c:1128
-#, fuzzy
 msgid "Filter Length:"
-msgstr "D³ugo¶æ szpikulców:"
+msgstr "D³ugo¶æ filtra:"
 
 #: plug-ins/common/lic.c:1137
 msgid "Noise Magnitude:"
@@ -4585,14 +4577,12 @@ msgid "Max RGB"
 msgstr "Max RGB"
 
 #: plug-ins/common/max_rgb.c:382
-#, fuzzy
 msgid "Hold the Maximal Channels"
-msgstr "Kana³y alfa"
+msgstr "Zostaw kana³ maksymalny"
 
 #: plug-ins/common/max_rgb.c:384
-#, fuzzy
 msgid "Hold the Minimal Channels"
-msgstr "Kana³y alfa"
+msgstr "Zostaw kana³ minimalny"
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
@@ -4651,9 +4641,8 @@ msgid "PS Square (Euclidean Dot)"
 msgstr "Punkt Euklidesa"
 
 #: plug-ins/common/newsprint.c:202
-#, fuzzy
 msgid "PS Diamond"
-msgstr "Diamenty"
+msgstr "PS Diamenty"
 
 #: plug-ins/common/newsprint.c:462 plug-ins/common/newsprint.c:1359
 msgid "Intensity"
@@ -5066,20 +5055,26 @@ msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
+"%s\n"
+"PNG nieznany model koloru"
 
 #: plug-ins/common/png.c:739
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "PNG error. Couldn't save image"
-msgstr "Nie mogê zapisaæ pliku:"
+msgstr ""
+"%s\n"
+"b³ad PNG . Nie mogê zapisaæ obrazu"
 
 #: plug-ins/common/png.c:749
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Couldn't create file"
-msgstr "Nie moge odczytaæ pliku:"
+msgstr ""
+"%s\n"
+"Nie moge stworzyæ pliku"
 
 #: plug-ins/common/png.c:1016
 msgid "Save as PNG"
@@ -5169,9 +5164,8 @@ msgid "Circle Depth in Percent:"
 msgstr ""
 
 #: plug-ins/common/polar.c:980
-#, fuzzy
 msgid "Offset Angle:"
-msgstr "Przesuniêcie X:"
+msgstr "K±t przesuniêcie:"
 
 #: plug-ins/common/polar.c:992
 msgid "Map Backwards"
@@ -5184,9 +5178,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/polar.c:1004
-#, fuzzy
 msgid "Map from Top"
-msgstr "Typ mapowania"
+msgstr "Mapuj od góry"
 
 #: plug-ins/common/polar.c:1012
 msgid ""
@@ -5219,9 +5212,8 @@ msgid "PS: can't interprete file"
 msgstr "PS: nie mogê zinterpretowaæ pliku"
 
 #: plug-ins/common/ps.c:973
-#, fuzzy
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr "FITS nie zapisuje obrazków z kana³ami alfa"
+msgstr "Zapis PostScript nie obs³ugujo obrazów z kana³ami alfa"
 
 #: plug-ins/common/ps.c:984
 msgid "PS: cannot operate on unknown image types"
@@ -5457,12 +5449,11 @@ msgstr "<Image>/Warstwy/Transformacjê/Obróæ/270 stopni"
 
 #: plug-ins/common/rotate.c:531
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "Nie morzesz obróciæ ca³ego obrazka, je¶li co¶ zaznaczy³e¶"
+msgstr "Nie mo¿esz obróciæ ca³ego obrazka, je¶li co¶ zaznaczy³e¶."
 
 #: plug-ins/common/rotate.c:537
-#, fuzzy
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "Nie morzesz obróciæ ca³ego obrazka, je¶li co¶ zaznaczy³e¶"
+msgstr "Nie mo¿esz obróciæ ca³ego obrazka, je¶li jest zaznaczenie p³ywaj±ce."
 
 #: plug-ins/common/rotate.c:547
 msgid "Sorry, channels and masks can not be rotated."

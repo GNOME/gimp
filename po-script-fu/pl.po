@@ -1,10 +1,10 @@
-# Polish translation of GIMP plugins 1.1.10 - 1.1.19.
+# Polish translation of GIMP Script-Fu.
 # Copyright (C) 1999,2000 Free Software Foundation, Inc.
 # Artur Polaczyñski <artie@kmfms.com>, 1999.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 1.1.10\n"
+"Project-Id-Version: gimp-script-fu 1.1.23\n"
 "POT-Creation-Date: 2000-05-22 11:33-0700\n"
 "PO-Revision-Date: 1999-11-06 19:21+0200\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "Konsola Script-Fu dopuszcza tylko tryb interaktywny"
 
 #: plug-ins/script-fu/script-fu-console.c:187
 msgid "Script-Fu Console"
@@ -46,9 +46,8 @@ msgid "Unable to open SIOD output pipe"
 msgstr "Nie mogê otworzyæ wyj¶cia SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:575
-#, fuzzy
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Nie mogê otworzyæ wyj¶cia SIOD"
+msgstr "Nie mogê otworzyæ strumienia z wyj¶cia SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:622
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -84,7 +83,7 @@ msgstr "Argumenty skryptu"
 #: plug-ins/script-fu/script-fu-scripts.c:1225
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1267
 msgid "Script-Fu Color Selection"
@@ -187,14 +186,12 @@ msgid "<Image>/Edit/Copy Visible"
 msgstr "<Image>/Edit/Kopiuj widoczne"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
-#, fuzzy
 msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Filtry/Rozmyj/Rozmyj..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Image>/Filtry/Kolory/Koloryzuj..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
@@ -205,37 +202,32 @@ msgid "<Image>/Script-Fu/Alchemy/Predator..."
 msgstr "<Image>/Script-Fu/Alchemy/Predator..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Filtry/Enhance/Unsharp Mask..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Filtry/Zniekszta³cenia/Blinds..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Filtry/Zniekszta³cenia/Ripple..."
+msgstr ""
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Filtry/Animacje/Odtwarzaj..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Filtry/Animacje/Odtwarzaj..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Filtry/Animacja/Fale..."
+msgstr "<Image>/Script-Fu/Animacja/Fale..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
@@ -340,7 +332,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+msgstr "<Image>/Script-Fu/Narzêdzia/Poka¿ strukturê obrazu..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
@@ -516,9 +508,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Serwer..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Serwer..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Ró¿ne/Kula..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #, fuzzy
@@ -526,19 +517,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Serwer..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Wzór/Kamuflarz..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Wzór/P³aski l±d..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Serwer..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Wzór/L±d..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 #, fuzzy
@@ -566,14 +554,13 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Serwer..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Narzêdzia/Tekst do obrazu..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Narzêdzia/W³asny gradient..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #, fuzzy
@@ -598,7 +585,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsola..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Tematy sieciowe/..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 #, fuzzy
@@ -662,7 +649,7 @@ msgstr "<Toolbox>/Xtns/Web Browser/FAQ developerów"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Web Browser/B³êdy GIMPa"
+msgstr "<Toolbox>/Xtns/Web Browser/Lista b³êdów GIMPa"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
@@ -674,7 +661,7 @@ msgstr "<Toolbox>/Xtns/Web Browser/Wiadomo¶ci GIMPa"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
@@ -2162,7 +2149,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Up"
-msgstr ""
+msgstr "Góra"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -2174,19 +2161,16 @@ msgid "Upper Color"
 msgstr "Górny kolor"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
 msgid "Upper-Left color"
-msgstr "Górny"
+msgstr "Górny-lewy kolor"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "Use Brush"
-msgstr "Pêdzel"
+msgstr "U¿yj pêdzela"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
-#, fuzzy
 msgid "Use Current Gradient"
-msgstr "Dowolny gradient"
+msgstr "U¿yj aktywnego gradientu"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #, fuzzy
