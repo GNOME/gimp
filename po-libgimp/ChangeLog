@@ -1,3 +1,10 @@
+2000-04-05  Sven Neumann  <sven@gimp.org>
+
+	* nl.po: reverted Nick's revert and corrected the errors.
+	Actually I was very happy to find someone to take care of 
+	the abandoned dutch translation and we do not want to 
+	discourage him in the very beginning...
+
 2000-04-04  Nick Lamb <njl195@zepler.org.uk>
 
 	* nl.po: revert un-remarked and broken change

@@ -1,108 +1,97 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# libgimp Dutch translation
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Gert Dewit <Gert.Dewit@sos.be>, 2000
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GIMP 1.1.19\n"
 "POT-Creation-Date: 2000-03-15 12:35-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-04-05 00:28+02:00\n"
+"Last-Translator: Gert Dewit <Gert.Dewit@sos.be>\n"
+"Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:116
 msgid "/Use Foreground Color"
-msgstr ""
+msgstr "/Voorgrondkleur gebruiken"
 
 #: libgimp/gimpcolorbutton.c:117
 msgid "/Use Background Color"
-msgstr ""
+msgstr "/Achtergrondkleur gebruiken"
 
 #: libgimp/gimpexport.c:158
 msgid "can't Handle Layers"
-msgstr ""
+msgstr "ondersteunt geen lagen"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
-#, fuzzy
 msgid "Merge Visible Layers"
-msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
+msgstr "Zichtbare lagen samenvoegen"
 
 #: libgimp/gimpexport.c:167
-#, fuzzy
 msgid "can only Handle Layers as Animation Frames"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel lagen voor animatie"
 
 #: libgimp/gimpexport.c:168
-#, fuzzy
 msgid "Save as Animation"
-msgstr "Bewaaropties"
+msgstr "Bewaar als animatie"
 
 #: libgimp/gimpexport.c:176
 msgid "can't Handle Transparency"
-msgstr ""
+msgstr "ondersteunt geen transparantie"
 
 #: libgimp/gimpexport.c:177
-#, fuzzy
 msgid "Flatten Image"
-msgstr "<Beeld>/Lagen/Verhoog Laag"
+msgstr "Beeld vervlakken"
 
 #: libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can only Handle RGB Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel RGB beelden"
 
 #: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
 msgid "Convert to RGB"
-msgstr ""
+msgstr "Converteren naar RGB"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can only Handle Grayscale Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel beelden in grijswaarden"
 
 #: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
-#, fuzzy
 msgid "Convert to Grayscale"
-msgstr "grijswaarden"
+msgstr "Converteren naar grijswaarden"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only Handle Indexed Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel geïndexeerde beelden"
 
 #: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Converteer naar geïndexeerd beeld met de standaard instellingen\n"
+"(Doe het manueel om het resultaat bij te regelen)"
 
 #: libgimp/gimpexport.c:213
-#, fuzzy
 msgid "can only Handle RGB or Grayscale Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel RGB of grijswaarden"
 
 #: libgimp/gimpexport.c:222
-#, fuzzy
 msgid "can only Handle RGB or Indexed Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel RGB of geïndexeerde beelden"
 
 #: libgimp/gimpexport.c:232
-#, fuzzy
 msgid "can only Handle Grayscale or Indexed Images"
-msgstr "Meng: Ongeldig voor geindexeerde beelden."
+msgstr "ondersteunt enkel grijswaarden of geïndexeerde beelden"
 
 #: libgimp/gimpexport.c:243
-#, fuzzy
 msgid "needs an Alpha Channel"
-msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+msgstr "heeft een Alfa kanaal nodig"
 
 #: libgimp/gimpexport.c:244
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+msgstr "Voeg Alfa Kanaal toe"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -110,14 +99,12 @@ msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
 #.
 #. the dialog
 #: libgimp/gimpexport.c:313
-#, fuzzy
 msgid "Export File"
-msgstr "Importeer Palet"
+msgstr "Exporteer Bestand"
 
 #: libgimp/gimpexport.c:318
-#, fuzzy
 msgid "Export"
-msgstr "Bron"
+msgstr "Exporteer"
 
 #: libgimp/gimpexport.c:320
 msgid "Ignore"
@@ -134,120 +121,118 @@ msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
+"Uw beeld moet geëxporteerd worden voordat het bewaard kan worden om de "
+"volgende redenen :"
 
 #. the footline
 #: libgimp/gimpexport.c:400
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "De export zal uw orgineel beeld niet wijzigen."
 
 #: libgimp/gimpfileselection.c:350
-#, fuzzy
 msgid "Select File"
-msgstr "Selectie"
+msgstr "Selecteer Bestand"
 
 #: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
 #: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
 #: libgimp/gimpunitmenu.c:495
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
 msgid "pixel"
-msgstr ""
+msgstr "pixel"
 
 #: libgimp/gimpunit.c:47
 msgid "pixels"
-msgstr ""
+msgstr "pixels"
 
 #. standard units
 #: libgimp/gimpunit.c:50
 msgid "inch"
-msgstr ""
+msgstr "duim"
 
 #: libgimp/gimpunit.c:50
-#, fuzzy
 msgid "inches"
-msgstr "Apperaat Status"
+msgstr "duim"
 
 #: libgimp/gimpunit.c:51
 msgid "millimeter"
-msgstr ""
+msgstr "millimeter"
 
 #: libgimp/gimpunit.c:51
-#, fuzzy
 msgid "millimeters"
-msgstr "<Beeld>/Filters"
+msgstr "millimeter"
 
 #. professional units
 #: libgimp/gimpunit.c:54
-#, fuzzy
 msgid "point"
-msgstr "Splits"
+msgstr "punt"
 
 #: libgimp/gimpunit.c:54
 msgid "points"
-msgstr ""
+msgstr "punt"
 
 #: libgimp/gimpunit.c:55
-#, fuzzy
 msgid "pica"
-msgstr "Repliceer"
+msgstr "pica"
 
 #: libgimp/gimpunit.c:55
 msgid "picas"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:62
-#, fuzzy
 msgid "percent"
-msgstr "Perspectief"
+msgstr "percent"
 
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
-msgstr ""
+msgstr "Meer..."
 
 #: libgimp/gimpunitmenu.c:490
-#, fuzzy
 msgid "Unit Selection"
-msgstr "Selectie"
+msgstr "Selectie van de eenheden"
 
 #: libgimp/gimpunitmenu.c:527
-#, fuzzy
 msgid "Unit"
-msgstr "Ongetiteld"
+msgstr "Eenheid"
 
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
-msgstr ""
+msgstr "Factor"
 
 #: libgimp/gimpwidgets.c:704
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
+"Gebruik deze waarde om de willekeurige nummers te genereren als de "
+"\"Tijd\"-knop niet is ingedrukt "
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: libgimp/gimpwidgets.c:718
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+"Gebruik de tijd om willekeurige waarden te genereren - dit garandeert een "
+"aanvaardbaar resultaat"
 
 #: libgimp/gimpwidgets.c:1030
 msgid "Bytes"
-msgstr ""
+msgstr "Bytes"
 
 #: libgimp/gimpwidgets.c:1031
 msgid "KiloBytes"
-msgstr ""
+msgstr "Kilobytes"
 
 #: libgimp/gimpwidgets.c:1032
 msgid "MegaBytes"
-msgstr ""
+msgstr "Megabytes"
 
 #, fuzzy
 #~ msgid "Select"
