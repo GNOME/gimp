@@ -1,3 +1,9 @@
+2003-03-03  Raphael Quinet  <quinet@gamers.org>
+
+	* plug-ins/common/edge.c (edge): fixed a typo in the kernel for
+	sobel vertical edge detection spotted by Sunil Mohan Adapa (bug
+	#107441).
+
 2003-03-03  Sven Neumann  <sven@gimp.org>
 
 	* app/clone.c (clone_paint_func): don't try to get the offsets
