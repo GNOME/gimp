@@ -20,28 +20,15 @@
 #define __GIMP_EDIT_SELECTION_TOOL_H__
 
 
-typedef enum
-{
-  EDIT_VECTORS_TRANSLATE,
-  EDIT_CHANNEL_TRANSLATE,
-  EDIT_LAYER_MASK_TRANSLATE,
-  EDIT_MASK_TRANSLATE,
-  EDIT_MASK_TO_LAYER_TRANSLATE,
-  EDIT_MASK_COPY_TO_LAYER_TRANSLATE,
-  EDIT_LAYER_TRANSLATE,
-  EDIT_FLOATING_SEL_TRANSLATE
-} EditType;
+void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
+                                               GimpDisplay       *gdisp,
+                                               GimpCoords        *coords,
+                                               GimpTranslateMode  edit_mode);
 
 
-void       init_edit_selection (GimpTool       *tool,
-                                GimpDisplay    *gdisp,
-                                GimpCoords     *coords,
-                                EditType        edit_type);
-
-
-gboolean   gimp_edit_selection_tool_key_press (GimpTool       *tool,
-                                               GdkEventKey    *kevent,
-                                               GimpDisplay    *gdisp);
+gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,
+                                               GdkEventKey       *kevent,
+                                               GimpDisplay       *gdisp);
 
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

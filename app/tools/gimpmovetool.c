@@ -315,12 +315,14 @@ gimp_move_tool_button_press (GimpTool        *tool,
     {
     case GIMP_TRANSFORM_TYPE_PATH:
       if (gimp_image_get_active_vectors (gdisp->gimage))
-        init_edit_selection (tool, gdisp, coords, EDIT_VECTORS_TRANSLATE);
+        gimp_edit_selection_tool_start (tool, gdisp, coords,
+                                        GIMP_TRANSLATE_MODE_VECTORS);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       if (! gimp_channel_is_empty (gimp_image_get_mask (gdisp->gimage)))
-        init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
+        gimp_edit_selection_tool_start (tool, gdisp, coords,
+                                        GIMP_TRANSLATE_MODE_MASK);
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -328,11 +330,14 @@ gimp_move_tool_button_press (GimpTool        *tool,
         GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
 
         if (GIMP_IS_LAYER_MASK (drawable))
-          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
+          gimp_edit_selection_tool_start (tool, gdisp, coords,
+                                          GIMP_TRANSLATE_MODE_LAYER_MASK);
         else if (GIMP_IS_CHANNEL (drawable))
-          init_edit_selection (tool, gdisp, coords, EDIT_CHANNEL_TRANSLATE);
+          gimp_edit_selection_tool_start (tool, gdisp, coords,
+                                          GIMP_TRANSLATE_MODE_CHANNEL);
         else if (GIMP_IS_LAYER (drawable))
-          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
+          gimp_edit_selection_tool_start (tool, gdisp, coords,
+                                          GIMP_TRANSLATE_MODE_LAYER);
       }
       break;
     }

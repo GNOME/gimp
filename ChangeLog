@@ -1,5 +1,26 @@
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpeditselectiontool.[ch]: renamed init_edit_selection()
+	to gimp_edit_selection_tool_start(). Removed enum EditType.
+
+	* app/tools/tools-enums.h: added enum GimpTranslateMode instead.
+
+	* app/tools/gimpmovetool.c: changed accordingly.
+
+	* app/tools/gimpselectiontool.[ch]: added protected utility
+	function gimp_selection_tool_start_edit().
+
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimprectselecttool.c: use the new function instead of
+	duplicating the same code three times, don't include
+	"gimpeditselectiontool.h".
+
+	* app/tools/gimpiscissorstool.c: don't include
+	"gimpeditselectiontool.h".
+
+2004-07-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpeditselectiontool.c: don't freeze()/thaw() the
 	image's undo to prevent live-movement from ending up on the undo
 	stack. Instead, just stop pushing undo steps after the initial

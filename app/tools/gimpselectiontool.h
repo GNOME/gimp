@@ -37,7 +37,7 @@ typedef struct _GimpSelectionToolClass GimpSelectionToolClass;
 struct _GimpSelectionTool
 {
   GimpDrawTool  parent_instance;
-  
+
   SelectOps     op;       /*  selection operation (SELECTION_ADD etc.)  */
   SelectOps     saved_op; /*  saved tool options state                  */
 };
@@ -48,7 +48,11 @@ struct _GimpSelectionToolClass
 };
 
 
-GType   gimp_selection_tool_get_type (void) G_GNUC_CONST;
+GType      gimp_selection_tool_get_type   (void) G_GNUC_CONST;
+
+/*  protected function  */
+gboolean   gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
+                                           GimpCoords        *coords);
 
 
 #endif  /* __GIMP_SELECTION_TOOL_H__ */

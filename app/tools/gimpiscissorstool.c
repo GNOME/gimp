@@ -75,7 +75,6 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpiscissorstool.h"
-#include "gimpeditselectiontool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
 

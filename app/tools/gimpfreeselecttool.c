@@ -39,7 +39,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
@@ -190,20 +189,8 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
-  switch (GIMP_SELECTION_TOOL (tool)->op)
-    {
-    case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      return;
-    case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TO_LAYER_TRANSLATE);
-      return;
-    case SELECTION_MOVE_COPY:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_COPY_TO_LAYER_TRANSLATE);
-      return;
-    default:
-      break;
-    }
+  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (free_sel), coords))
+    return;
 
   free_sel->last_coords = *coords;
   free_sel->num_points  = 0;
@@ -233,18 +220,18 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
   if (! (state & GDK_BUTTON3_MASK))
     {
       if (free_sel->num_points == 1)
-	{
-	  /*  If there is a floating selection, anchor it  */
-	  if (gimp_image_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
-	  /*  Otherwise, clear the selection mask  */
-	  else
-	    gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
+        {
+          /*  If there is a floating selection, anchor it  */
+          if (gimp_image_floating_sel (gdisp->gimage))
+            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          /*  Otherwise, clear the selection mask  */
+          else
+            gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
                                 TRUE);
 
-	  gimp_image_flush (gdisp->gimage);
-	  return;
-	}
+          gimp_image_flush (gdisp->gimage);
+          return;
+        }
 
       gimp_channel_select_polygon (gimp_image_get_mask (gdisp->gimage),
                                    tool->tool_info->blurb,

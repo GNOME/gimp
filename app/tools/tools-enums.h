@@ -130,6 +130,19 @@ typedef enum /*< skip >*/
   HALT
 } GimpToolAction;
 
+/*  Modes of GimpEditSelectionTool  */
+typedef enum /*< skip >*/
+{
+  GIMP_TRANSLATE_MODE_VECTORS,
+  GIMP_TRANSLATE_MODE_CHANNEL,
+  GIMP_TRANSLATE_MODE_LAYER_MASK,
+  GIMP_TRANSLATE_MODE_MASK,
+  GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
+  GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
+  GIMP_TRANSLATE_MODE_LAYER,
+  GIMP_TRANSLATE_MODE_FLOATING_SEL
+} GimpTranslateMode;
+
 /*  Motion event report modes  */
 typedef enum /*< skip >*/
 {

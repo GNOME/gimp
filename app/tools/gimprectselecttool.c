@@ -42,7 +42,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
@@ -216,20 +215,8 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
-  switch (sel_tool->op)
-    {
-    case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      return;
-    case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TO_LAYER_TRANSLATE);
-      return;
-    case SELECTION_MOVE_COPY:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_COPY_TO_LAYER_TRANSLATE);
-      return;
-    default:
-      break;
-    }
+  if (gimp_selection_tool_start_edit (sel_tool, coords))
+    return;
 
   switch (sel_tool->op)
     {

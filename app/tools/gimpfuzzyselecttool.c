@@ -46,7 +46,6 @@
 #include "display/gimpdisplayshell-cursor.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
@@ -200,7 +199,7 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   GimpFuzzySelectTool  *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
 
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   fuzzy_sel->x               = coords->x;
   fuzzy_sel->y               = coords->y;
@@ -211,20 +210,8 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
-  switch (GIMP_SELECTION_TOOL (tool)->op)
-    {
-    case SELECTION_MOVE_MASK:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      return;
-    case SELECTION_MOVE:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_TO_LAYER_TRANSLATE);
-      return;
-    case SELECTION_MOVE_COPY:
-      init_edit_selection (tool, gdisp, coords, EDIT_MASK_COPY_TO_LAYER_TRANSLATE);
-      return;
-    default:
-      break;
-    }
+  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fuzzy_sel), coords))
+    return;
 
   /*  calculate the region boundary  */
   fuzzy_sel->segs = gimp_fuzzy_select_tool_calculate (fuzzy_sel, gdisp,
@@ -255,18 +242,18 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
       gint off_x, off_y;
 
       if (GIMP_SELECTION_TOOL (tool)->op == SELECTION_ANCHOR)
-	{
-	  /*  If there is a floating selection, anchor it  */
-	  if (gimp_image_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
-	  /*  Otherwise, clear the selection mask  */
-	  else
-	    gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
+        {
+          /*  If there is a floating selection, anchor it  */
+          if (gimp_image_floating_sel (gdisp->gimage))
+            floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
+          /*  Otherwise, clear the selection mask  */
+          else
+            gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
                                 TRUE);
 
-	  gimp_image_flush (gdisp->gimage);
-	  return;
-	}
+          gimp_image_flush (gdisp->gimage);
+          return;
+        }
 
       if (options->sample_merged)
         {
@@ -429,10 +416,10 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
    */
   pixel_region_init (&maskPR,
                      gimp_drawable_data (GIMP_DRAWABLE (fuzzy_sel->fuzzy_mask)),
-		     0, 0,
-		     gimp_item_width  (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
-		     gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
-		     FALSE);
+                     0, 0,
+                     gimp_item_width  (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
+                     gimp_item_height (GIMP_ITEM (fuzzy_sel->fuzzy_mask)),
+                     FALSE);
 
   bsegs =
     find_mask_boundary (&maskPR, num_segs, WithinBounds,
