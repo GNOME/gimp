@@ -34,6 +34,7 @@
 #include "libgimp/gimpprotocol.h"
 #include "libgimp/gimpwire.h"
 
+#include "app_procs.h"
 #include "appenv.h"
 #include "drawable.h"
 #include "datafiles.h"
@@ -191,6 +192,7 @@ plug_in_init ()
   GSList *tmp, *tmp2;
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
+  gfloat nplugins, nth;
 
   /* initialize the progress init and update procedure db calls. */
   procedural_db_register (&progress_init_proc);
@@ -233,12 +235,16 @@ plug_in_init ()
 
   /* read the pluginrc file for cached data */
   sprintf (filename, "%s/pluginrc", gimp_directory ());
+  app_init_update_status("Resource configuration", filename, -1);
   parse_gimprc_file (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.
    */
   tmp = plug_in_defs;
+  app_init_update_status("Plug-ins", "", 0);
+  nplugins = g_slist_length(tmp);
+  nth = 0;
   while (tmp)
     {
       plug_in_def = tmp->data;
@@ -250,6 +256,8 @@ plug_in_init ()
 	  g_print ("query plug-in: \"%s\"\n", plug_in_def->prog);
 	  plug_in_query (plug_in_def->prog, plug_in_def);
 	}
+      app_init_update_status(NULL, plug_in_def->prog, nth/nplugins);
+      nth++;
     }
 
   /* insert the proc defs */
@@ -294,6 +302,8 @@ plug_in_init ()
   /* run the available extensions */
   tmp = proc_defs;
   g_print ("Starting extensions: ");
+  app_init_update_status("Extensions", "", 0);
+  nplugins = g_slist_length(tmp); nth = 0;
   while (tmp)
     {
       proc_def = tmp->data;
@@ -304,6 +314,8 @@ plug_in_init ()
 	  (proc_def->db_info.proc_type == PDB_EXTENSION))
 	{
 	  g_print ("%s ", proc_def->db_info.name);
+	  app_init_update_status(NULL, proc_def->db_info.name,
+				 nth/nplugins);
 	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE);
 	}
     }

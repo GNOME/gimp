@@ -53,12 +53,14 @@
 #include "tools.h"
 #include "undo.h"
 #include "xcf.h"
-
+#include <gtk/gtk.h>
 
 /*  Function prototype for affirmation dialog when exiting application  */
 static void      app_exit_finish    (void);
 static void      really_quit_dialog (void);
 static Argument* quit_invoker       (Argument *args);
+static void make_initialization_status_window(void);
+static void destroy_initialization_status_window(void);
 
 
 static ProcArg quit_args[] =
@@ -104,6 +106,97 @@ gimp_init (int    gimp_argc,
   batch_init ();
 }
 
+static GtkWidget *win_initstatus = NULL;
+static GtkWidget *label1 = NULL;
+static GtkWidget *label2 = NULL;
+static GtkWidget *pbar = NULL;
+static gint idle_tag = -1;
+
+static void
+destroy_initialization_status_window(void)
+{
+  if(win_initstatus)
+    {
+      gtk_widget_destroy(win_initstatus);
+      win_initstatus = label1 = label2 = pbar = NULL;
+      gtk_idle_remove(idle_tag);
+    }
+}
+
+static void my_idle_proc(void)
+{
+  /* Do nothing. This is needed to stop the GIMP
+     from blocking in gtk_main_iteration() */
+}
+
+static void
+make_initialization_status_window(void)
+{
+  if(no_interface == FALSE)
+    {
+      GtkWidget *vbox;
+
+      win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+      gtk_window_set_title(GTK_WINDOW(win_initstatus),
+			   "GIMP Startup");
+
+      vbox = gtk_vbox_new(TRUE, 5);
+      gtk_container_add(GTK_CONTAINER(win_initstatus), vbox);
+      
+      label1 = gtk_label_new("");
+      gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
+      label2 = gtk_label_new("");
+      gtk_box_pack_start_defaults(GTK_BOX(vbox), label2);
+      
+      pbar = gtk_progress_bar_new();
+      gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
+      
+      gtk_widget_show(vbox);
+      gtk_widget_show(label1);
+      gtk_widget_show(label2);
+      gtk_widget_show(pbar);
+      
+      gtk_window_position(GTK_WINDOW(win_initstatus),
+			  GTK_WIN_POS_CENTER);
+      
+      gtk_widget_show(win_initstatus);
+    }
+}
+
+void
+app_init_update_status(char *label1val,
+		       char *label2val,
+		       float pct_progress)
+{
+  if(no_interface == FALSE
+     && win_initstatus)
+    {
+      GdkRectangle area = {0, 0, -1, -1};
+      if(label1val
+	 && strcmp(label1val, GTK_LABEL(label1)->label))
+	{
+	  gtk_label_set(GTK_LABEL(label1), label1val);
+	}
+      if(label2val
+	 && strcmp(label2val, GTK_LABEL(label2)->label))
+	{
+	  gtk_label_set(GTK_LABEL(label2), label2val);
+	}
+      if(pct_progress >= 0
+	 && GTK_PROGRESS_BAR(pbar)->percentage != pct_progress)
+	{
+	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
+	}
+      gtk_widget_draw(win_initstatus, &area);
+      idle_tag = gtk_idle_add(my_idle_proc, NULL);
+      gtk_main_iteration();
+      gtk_idle_remove(idle_tag);
+    }
+}
+
+/* #define RESET_BAR() app_init_update_status("", "", 0) */
+#define RESET_BAR()
+
 void
 app_init ()
 {
@@ -111,13 +204,17 @@ app_init ()
   char *gimp_dir;
   char *path;
 
+  make_initialization_status_window();
+
   /*
    *  Initialize the procedural database
    *    We need to do this first because any of the init
    *    procedures might install or query it as needed.
    */
   procedural_db_init ();
+  RESET_BAR();
   internal_procs_init ();
+  RESET_BAR();
   procedural_db_register (&quit_proc);
 
   gimp_dir = gimp_directory ();
@@ -125,20 +222,30 @@ app_init ()
     {
       sprintf (filename, "%s/gtkrc", gimp_dir);
       g_print ("parsing \"%s\"\n", filename);
+      app_init_update_status("Resource configuration", filename, -1);
       gtk_rc_parse (filename);
     }
 
+  RESET_BAR();
   file_ops_pre_init ();    /*  pre-initialize the file types  */
+  RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
+  RESET_BAR();
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
   if (no_data == FALSE)
     {
+      RESET_BAR();
       brushes_init ();         /*  initialize the list of gimp brushes  */
+      RESET_BAR();
       patterns_init ();        /*  initialize the list of gimp patterns  */
+      RESET_BAR();
       palettes_init ();        /*  initialize the list of gimp palettes  */
+      RESET_BAR();
       gradients_init ();       /*  initialize the list of gimp gradients  */
     }
+  RESET_BAR();
   plug_in_init ();         /*  initialize the plug in structures  */
+  RESET_BAR();
   file_ops_post_init ();   /*  post-initialize the file types  */
 
   /* Add the swap file  */
@@ -148,6 +255,8 @@ app_init ()
   sprintf (path, "%s/gimpswap.%ld", swap_path, (long)getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
+
+  destroy_initialization_status_window();
 
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
@@ -166,6 +275,7 @@ app_init ()
   get_active_brush ();
   get_active_pattern ();
   paint_funcs_setup ();
+
 }
 
 static void

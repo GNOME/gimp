@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include "appenv.h"
+#include "app_procs.h"
 #include "general.h"
 #include "gdisplay.h"
 #include "plug_in.h"
@@ -481,6 +482,7 @@ ProcRecord procedural_db_query_proc =
 void
 procedural_db_init ()
 {
+  app_init_update_status("Procedural Database", NULL, -1);
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func,
 				      procedural_db_compare_func);

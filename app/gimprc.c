@@ -22,6 +22,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
+#include "app_procs.h"
 #include "appenv.h"
 #include "errors.h"
 #include "fileops.h"
@@ -291,11 +292,15 @@ parse_gimprc ()
   add_gimp_directory_token (gimp_dir);
 
   sprintf (libfilename, "%s/gimprc", DATADIR);
+  app_init_update_status("Resource configuration", libfilename, -1);
   parse_gimprc_file (libfilename);
 
   sprintf (filename, "%s/gimprc", gimp_dir);
   if (strcmp (filename, libfilename) != 0)
-    parse_gimprc_file (filename);
+    {
+      app_init_update_status(NULL, filename, -1);
+      parse_gimprc_file (filename);
+    }
 }
 
 void

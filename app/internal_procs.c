@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "appenv.h"
+#include "app_procs.h"
 #include "airbrush.h"
 #include "blend.h"
 #include "bucket_fill.h"
@@ -74,242 +75,290 @@
 void
 internal_procs_init ()
 {
+  gfloat pcount = 0;
+  /* grep -c procedural_db_register internal_procs.c */
+  gfloat total_pcount = 204;
+  app_init_update_status("Internal Procedures", "Tool procedures",
+			 pcount/total_pcount);
+
   /*  Tool procedures  */
-  procedural_db_register (&airbrush_proc);
-  procedural_db_register (&blend_proc);
-  procedural_db_register (&bucket_fill_proc);
-  procedural_db_register (&by_color_select_proc);
-  procedural_db_register (&clone_proc);
-  procedural_db_register (&color_picker_proc);
-  procedural_db_register (&convolve_proc);
-  procedural_db_register (&crop_proc);
-  procedural_db_register (&ellipse_select_proc);
-  procedural_db_register (&eraser_proc);
-  procedural_db_register (&flip_proc);
-  procedural_db_register (&free_select_proc);
-  procedural_db_register (&fuzzy_select_proc);
-  procedural_db_register (&paintbrush_proc);
-  procedural_db_register (&pencil_proc);
-  procedural_db_register (&perspective_proc);
-  procedural_db_register (&rect_select_proc);
-  procedural_db_register (&rotate_proc);
-  procedural_db_register (&scale_proc);
-  procedural_db_register (&shear_proc);
-  procedural_db_register (&text_tool_proc);
-  procedural_db_register (&text_tool_get_extents_proc);
+  procedural_db_register (&airbrush_proc); pcount++;
+  procedural_db_register (&blend_proc); pcount++;
+  procedural_db_register (&bucket_fill_proc); pcount++;
+  procedural_db_register (&by_color_select_proc); pcount++;
+  procedural_db_register (&clone_proc); pcount++;
+  procedural_db_register (&color_picker_proc); pcount++;
+  procedural_db_register (&convolve_proc); pcount++;
+  procedural_db_register (&crop_proc); pcount++;
+  procedural_db_register (&ellipse_select_proc); pcount++;
+  procedural_db_register (&eraser_proc); pcount++;
+  procedural_db_register (&flip_proc); pcount++;
+  procedural_db_register (&free_select_proc); pcount++;
+  procedural_db_register (&fuzzy_select_proc); pcount++;
+  procedural_db_register (&paintbrush_proc); pcount++;
+  procedural_db_register (&pencil_proc); pcount++;
+  procedural_db_register (&perspective_proc); pcount++;
+  procedural_db_register (&rect_select_proc); pcount++;
+  procedural_db_register (&rotate_proc); pcount++;
+  procedural_db_register (&scale_proc); pcount++;
+  procedural_db_register (&shear_proc); pcount++;
+  procedural_db_register (&text_tool_proc); pcount++;
+  procedural_db_register (&text_tool_get_extents_proc); pcount++;
+
+  app_init_update_status(NULL, "GDisplay procedures",
+			 pcount/total_pcount);
 
   /*  GDisplay procedures  */
-  procedural_db_register (&gdisplay_new_proc);
-  procedural_db_register (&gdisplay_delete_proc);
-  procedural_db_register (&gdisplays_flush_proc);
+  procedural_db_register (&gdisplay_new_proc); pcount++;
+  procedural_db_register (&gdisplay_delete_proc); pcount++;
+  procedural_db_register (&gdisplays_flush_proc); pcount++;
+
+  app_init_update_status(NULL, "Edit procedures",
+			 pcount/total_pcount);
 
   /*  Edit procedures  */
-  procedural_db_register (&edit_cut_proc);
-  procedural_db_register (&edit_copy_proc);
-  procedural_db_register (&edit_paste_proc);
-  procedural_db_register (&edit_clear_proc);
-  procedural_db_register (&edit_fill_proc);
-  procedural_db_register (&edit_stroke_proc);
+  procedural_db_register (&edit_cut_proc); pcount++;
+  procedural_db_register (&edit_copy_proc); pcount++;
+  procedural_db_register (&edit_paste_proc); pcount++;
+  procedural_db_register (&edit_clear_proc); pcount++;
+  procedural_db_register (&edit_fill_proc); pcount++;
+  procedural_db_register (&edit_stroke_proc); pcount++;
+
+  app_init_update_status(NULL, "GImage procedures",
+			 pcount/total_pcount);
 
   /*  GImage procedures  */
-  procedural_db_register (&gimage_list_images_proc);
-  procedural_db_register (&gimage_new_proc);
-  procedural_db_register (&gimage_resize_proc);
-  procedural_db_register (&gimage_scale_proc);
-  procedural_db_register (&gimage_delete_proc);
-  procedural_db_register (&gimage_free_shadow_proc);
-  procedural_db_register (&gimage_get_layers_proc);
-  procedural_db_register (&gimage_get_channels_proc);
-  procedural_db_register (&gimage_get_active_layer_proc);
-  procedural_db_register (&gimage_get_active_channel_proc);
-  procedural_db_register (&gimage_get_selection_proc);
-  procedural_db_register (&gimage_get_component_active_proc);
-  procedural_db_register (&gimage_get_component_visible_proc);
-  procedural_db_register (&gimage_set_active_layer_proc);
-  procedural_db_register (&gimage_set_active_channel_proc);
-  procedural_db_register (&gimage_unset_active_channel_proc);
-  procedural_db_register (&gimage_set_component_active_proc);
-  procedural_db_register (&gimage_set_component_visible_proc);
-  procedural_db_register (&gimage_pick_correlate_layer_proc);
-  procedural_db_register (&gimage_raise_layer_proc);
-  procedural_db_register (&gimage_lower_layer_proc);
-  procedural_db_register (&gimage_merge_visible_layers_proc);
-  procedural_db_register (&gimage_flatten_proc);
-  procedural_db_register (&gimage_add_layer_proc);
-  procedural_db_register (&gimage_remove_layer_proc);
-  procedural_db_register (&gimage_add_layer_mask_proc);
-  procedural_db_register (&gimage_remove_layer_mask_proc);
-  procedural_db_register (&gimage_raise_channel_proc);
-  procedural_db_register (&gimage_lower_channel_proc);
-  procedural_db_register (&gimage_add_channel_proc);
-  procedural_db_register (&gimage_remove_channel_proc);
-  procedural_db_register (&gimage_active_drawable_proc);
-  procedural_db_register (&gimage_base_type_proc);
-  procedural_db_register (&gimage_get_filename_proc);
-  procedural_db_register (&gimage_set_filename_proc);
-  procedural_db_register (&gimage_width_proc);
-  procedural_db_register (&gimage_height_proc);
-  procedural_db_register (&gimage_get_cmap_proc);
-  procedural_db_register (&gimage_set_cmap_proc);
-  procedural_db_register (&gimage_enable_undo_proc);
-  procedural_db_register (&gimage_disable_undo_proc);
-  procedural_db_register (&gimage_clean_all_proc);
-  procedural_db_register (&gimage_floating_sel_proc);
+  procedural_db_register (&gimage_list_images_proc); pcount++;
+  procedural_db_register (&gimage_new_proc); pcount++;
+  procedural_db_register (&gimage_resize_proc); pcount++;
+  procedural_db_register (&gimage_scale_proc); pcount++;
+  procedural_db_register (&gimage_delete_proc); pcount++;
+  procedural_db_register (&gimage_free_shadow_proc); pcount++;
+  procedural_db_register (&gimage_get_layers_proc); pcount++;
+  procedural_db_register (&gimage_get_channels_proc); pcount++;
+  procedural_db_register (&gimage_get_active_layer_proc); pcount++;
+  procedural_db_register (&gimage_get_active_channel_proc); pcount++;
+  procedural_db_register (&gimage_get_selection_proc); pcount++;
+  procedural_db_register (&gimage_get_component_active_proc); pcount++;
+  procedural_db_register (&gimage_get_component_visible_proc); pcount++;
+  procedural_db_register (&gimage_set_active_layer_proc); pcount++;
+  procedural_db_register (&gimage_set_active_channel_proc); pcount++;
+  procedural_db_register (&gimage_unset_active_channel_proc); pcount++;
+  procedural_db_register (&gimage_set_component_active_proc); pcount++;
+  procedural_db_register (&gimage_set_component_visible_proc); pcount++;
+  procedural_db_register (&gimage_pick_correlate_layer_proc); pcount++;
+  procedural_db_register (&gimage_raise_layer_proc); pcount++;
+  procedural_db_register (&gimage_lower_layer_proc); pcount++;
+  procedural_db_register (&gimage_merge_visible_layers_proc); pcount++;
+  procedural_db_register (&gimage_flatten_proc); pcount++;
+  procedural_db_register (&gimage_add_layer_proc); pcount++;
+  procedural_db_register (&gimage_remove_layer_proc); pcount++;
+  procedural_db_register (&gimage_add_layer_mask_proc); pcount++;
+  procedural_db_register (&gimage_remove_layer_mask_proc); pcount++;
+  procedural_db_register (&gimage_raise_channel_proc); pcount++;
+  procedural_db_register (&gimage_lower_channel_proc); pcount++;
+  procedural_db_register (&gimage_add_channel_proc); pcount++;
+  procedural_db_register (&gimage_remove_channel_proc); pcount++;
+  procedural_db_register (&gimage_active_drawable_proc); pcount++;
+  procedural_db_register (&gimage_base_type_proc); pcount++;
+  procedural_db_register (&gimage_get_filename_proc); pcount++;
+  procedural_db_register (&gimage_set_filename_proc); pcount++;
+  procedural_db_register (&gimage_width_proc); pcount++;
+  procedural_db_register (&gimage_height_proc); pcount++;
+  procedural_db_register (&gimage_get_cmap_proc); pcount++;
+  procedural_db_register (&gimage_set_cmap_proc); pcount++;
+  procedural_db_register (&gimage_enable_undo_proc); pcount++;
+  procedural_db_register (&gimage_disable_undo_proc); pcount++;
+  procedural_db_register (&gimage_clean_all_proc); pcount++;
+  procedural_db_register (&gimage_floating_sel_proc); pcount++;
+
+  app_init_update_status(NULL, "GImage mask procedures",
+			 pcount/total_pcount);
 
   /*  GImage mask procedures  */
-  procedural_db_register (&gimage_mask_bounds_proc);
-  procedural_db_register (&gimage_mask_value_proc);
-  procedural_db_register (&gimage_mask_is_empty_proc);
-  procedural_db_register (&gimage_mask_translate_proc);
-  procedural_db_register (&gimage_mask_float_proc);
-  procedural_db_register (&gimage_mask_clear_proc);
-  procedural_db_register (&gimage_mask_invert_proc);
-  procedural_db_register (&gimage_mask_sharpen_proc);
-  procedural_db_register (&gimage_mask_all_proc);
-  procedural_db_register (&gimage_mask_none_proc);
-  procedural_db_register (&gimage_mask_feather_proc);
-  procedural_db_register (&gimage_mask_border_proc);
-  procedural_db_register (&gimage_mask_grow_proc);
-  procedural_db_register (&gimage_mask_shrink_proc);
-  procedural_db_register (&gimage_mask_layer_alpha_proc);
-  procedural_db_register (&gimage_mask_load_proc);
-  procedural_db_register (&gimage_mask_save_proc);
+  procedural_db_register (&gimage_mask_bounds_proc); pcount++;
+  procedural_db_register (&gimage_mask_value_proc); pcount++;
+  procedural_db_register (&gimage_mask_is_empty_proc); pcount++;
+  procedural_db_register (&gimage_mask_translate_proc); pcount++;
+  procedural_db_register (&gimage_mask_float_proc); pcount++;
+  procedural_db_register (&gimage_mask_clear_proc); pcount++;
+  procedural_db_register (&gimage_mask_invert_proc); pcount++;
+  procedural_db_register (&gimage_mask_sharpen_proc); pcount++;
+  procedural_db_register (&gimage_mask_all_proc); pcount++;
+  procedural_db_register (&gimage_mask_none_proc); pcount++;
+  procedural_db_register (&gimage_mask_feather_proc); pcount++;
+  procedural_db_register (&gimage_mask_border_proc); pcount++;
+  procedural_db_register (&gimage_mask_grow_proc); pcount++;
+  procedural_db_register (&gimage_mask_shrink_proc); pcount++;
+  procedural_db_register (&gimage_mask_layer_alpha_proc); pcount++;
+  procedural_db_register (&gimage_mask_load_proc); pcount++;
+  procedural_db_register (&gimage_mask_save_proc); pcount++;
+
+  app_init_update_status(NULL, "Layer procedures",
+			 pcount/total_pcount);
 
   /*  Layer procedures  */
-  procedural_db_register (&layer_new_proc);
-  procedural_db_register (&layer_copy_proc);
-  procedural_db_register (&layer_create_mask_proc);
-  procedural_db_register (&layer_scale_proc);
-  procedural_db_register (&layer_resize_proc);
-  procedural_db_register (&layer_delete_proc);
-  procedural_db_register (&layer_translate_proc);
-  procedural_db_register (&layer_add_alpha_proc);
-  procedural_db_register (&layer_get_name_proc);
-  procedural_db_register (&layer_set_name_proc);
-  procedural_db_register (&layer_get_visible_proc);
-  procedural_db_register (&layer_set_visible_proc);
-  procedural_db_register (&layer_get_preserve_trans_proc);
-  procedural_db_register (&layer_set_preserve_trans_proc);
-  procedural_db_register (&layer_get_apply_mask_proc);
-  procedural_db_register (&layer_set_apply_mask_proc);
-  procedural_db_register (&layer_get_show_mask_proc);
-  procedural_db_register (&layer_set_show_mask_proc);
-  procedural_db_register (&layer_get_edit_mask_proc);
-  procedural_db_register (&layer_set_edit_mask_proc);
-  procedural_db_register (&layer_get_opacity_proc);
-  procedural_db_register (&layer_set_opacity_proc);
-  procedural_db_register (&layer_get_mode_proc);
-  procedural_db_register (&layer_set_mode_proc);
-  procedural_db_register (&layer_set_offsets_proc);
-  procedural_db_register (&layer_mask_proc);
-  procedural_db_register (&layer_is_floating_sel_proc);
+  procedural_db_register (&layer_new_proc); pcount++;
+  procedural_db_register (&layer_copy_proc); pcount++;
+  procedural_db_register (&layer_create_mask_proc); pcount++;
+  procedural_db_register (&layer_scale_proc); pcount++;
+  procedural_db_register (&layer_resize_proc); pcount++;
+  procedural_db_register (&layer_delete_proc); pcount++;
+  procedural_db_register (&layer_translate_proc); pcount++;
+  procedural_db_register (&layer_add_alpha_proc); pcount++;
+  procedural_db_register (&layer_get_name_proc); pcount++;
+  procedural_db_register (&layer_set_name_proc); pcount++;
+  procedural_db_register (&layer_get_visible_proc); pcount++;
+  procedural_db_register (&layer_set_visible_proc); pcount++;
+  procedural_db_register (&layer_get_preserve_trans_proc); pcount++;
+  procedural_db_register (&layer_set_preserve_trans_proc); pcount++;
+  procedural_db_register (&layer_get_apply_mask_proc); pcount++;
+  procedural_db_register (&layer_set_apply_mask_proc); pcount++;
+  procedural_db_register (&layer_get_show_mask_proc); pcount++;
+  procedural_db_register (&layer_set_show_mask_proc); pcount++;
+  procedural_db_register (&layer_get_edit_mask_proc); pcount++;
+  procedural_db_register (&layer_set_edit_mask_proc); pcount++;
+  procedural_db_register (&layer_get_opacity_proc); pcount++;
+  procedural_db_register (&layer_set_opacity_proc); pcount++;
+  procedural_db_register (&layer_get_mode_proc); pcount++;
+  procedural_db_register (&layer_set_mode_proc); pcount++;
+  procedural_db_register (&layer_set_offsets_proc); pcount++;
+  procedural_db_register (&layer_mask_proc); pcount++;
+  procedural_db_register (&layer_is_floating_sel_proc); pcount++;
+
+  app_init_update_status(NULL, "Channel procedures",
+			 pcount/total_pcount);
 
   /*  Channel procedures  */
-  procedural_db_register (&channel_new_proc);
-  procedural_db_register (&channel_copy_proc);
-  procedural_db_register (&channel_delete_proc);
-  procedural_db_register (&channel_get_name_proc);
-  procedural_db_register (&channel_set_name_proc);
-  procedural_db_register (&channel_get_visible_proc);
-  procedural_db_register (&channel_set_visible_proc);
-  procedural_db_register (&channel_get_show_masked_proc);
-  procedural_db_register (&channel_set_show_masked_proc);
-  procedural_db_register (&channel_get_opacity_proc);
-  procedural_db_register (&channel_set_opacity_proc);
-  procedural_db_register (&channel_get_color_proc);
-  procedural_db_register (&channel_set_color_proc);
+  procedural_db_register (&channel_new_proc); pcount++;
+  procedural_db_register (&channel_copy_proc); pcount++;
+  procedural_db_register (&channel_delete_proc); pcount++;
+  procedural_db_register (&channel_get_name_proc); pcount++;
+  procedural_db_register (&channel_set_name_proc); pcount++;
+  procedural_db_register (&channel_get_visible_proc); pcount++;
+  procedural_db_register (&channel_set_visible_proc); pcount++;
+  procedural_db_register (&channel_get_show_masked_proc); pcount++;
+  procedural_db_register (&channel_set_show_masked_proc); pcount++;
+  procedural_db_register (&channel_get_opacity_proc); pcount++;
+  procedural_db_register (&channel_set_opacity_proc); pcount++;
+  procedural_db_register (&channel_get_color_proc); pcount++;
+  procedural_db_register (&channel_set_color_proc); pcount++;
+
+  app_init_update_status(NULL, "Drawable procedures",
+			 pcount/total_pcount);
 
   /*  Drawable procedures  */
-  procedural_db_register (&drawable_merge_shadow_proc);
-  procedural_db_register (&drawable_fill_proc);
-  procedural_db_register (&drawable_update_proc);
-  procedural_db_register (&drawable_mask_bounds_proc);
-  procedural_db_register (&drawable_gimage_proc);
-  procedural_db_register (&drawable_type_proc);
-  procedural_db_register (&drawable_has_alpha_proc);
-  procedural_db_register (&drawable_type_with_alpha_proc);
-  procedural_db_register (&drawable_color_proc);
-  procedural_db_register (&drawable_gray_proc);
-  procedural_db_register (&drawable_indexed_proc);
-  procedural_db_register (&drawable_bytes_proc);
-  procedural_db_register (&drawable_width_proc);
-  procedural_db_register (&drawable_height_proc);
-  procedural_db_register (&drawable_offsets_proc);
-  procedural_db_register (&drawable_layer_proc);
-  procedural_db_register (&drawable_layer_mask_proc);
-  procedural_db_register (&drawable_channel_proc);
-  procedural_db_register (&drawable_set_pixel_proc);
-  procedural_db_register (&drawable_get_pixel_proc);
+  procedural_db_register (&drawable_merge_shadow_proc); pcount++;
+  procedural_db_register (&drawable_fill_proc); pcount++;
+  procedural_db_register (&drawable_update_proc); pcount++;
+  procedural_db_register (&drawable_mask_bounds_proc); pcount++;
+  procedural_db_register (&drawable_gimage_proc); pcount++;
+  procedural_db_register (&drawable_type_proc); pcount++;
+  procedural_db_register (&drawable_has_alpha_proc); pcount++;
+  procedural_db_register (&drawable_type_with_alpha_proc); pcount++;
+  procedural_db_register (&drawable_color_proc); pcount++;
+  procedural_db_register (&drawable_gray_proc); pcount++;
+  procedural_db_register (&drawable_indexed_proc); pcount++;
+  procedural_db_register (&drawable_bytes_proc); pcount++;
+  procedural_db_register (&drawable_width_proc); pcount++;
+  procedural_db_register (&drawable_height_proc); pcount++;
+  procedural_db_register (&drawable_offsets_proc); pcount++;
+  procedural_db_register (&drawable_layer_proc); pcount++;
+  procedural_db_register (&drawable_layer_mask_proc); pcount++;
+  procedural_db_register (&drawable_channel_proc); pcount++;
+  procedural_db_register (&drawable_set_pixel_proc); pcount++;
+  procedural_db_register (&drawable_get_pixel_proc); pcount++;
+
+  app_init_update_status(NULL, "Floating selections",
+			 pcount/total_pcount);
 
   /*  Floating Selections  */
-  procedural_db_register (&floating_sel_remove_proc);
-  procedural_db_register (&floating_sel_anchor_proc);
-  procedural_db_register (&floating_sel_to_layer_proc);
+  procedural_db_register (&floating_sel_remove_proc); pcount++;
+  procedural_db_register (&floating_sel_anchor_proc); pcount++;
+  procedural_db_register (&floating_sel_to_layer_proc); pcount++;
+
+  app_init_update_status(NULL, "Undo",
+			 pcount/total_pcount);
 
   /*  Undo  */
-  procedural_db_register (&undo_push_group_start_proc);
-  procedural_db_register (&undo_push_group_end_proc);
+  procedural_db_register (&undo_push_group_start_proc); pcount++;
+  procedural_db_register (&undo_push_group_end_proc); pcount++;
+
+  app_init_update_status(NULL, "Palette",
+			 pcount/total_pcount);
 
   /*  Palette  */
-  procedural_db_register (&palette_get_foreground_proc);
-  procedural_db_register (&palette_get_background_proc);
-  procedural_db_register (&palette_set_foreground_proc);
-  procedural_db_register (&palette_set_background_proc);
+  procedural_db_register (&palette_get_foreground_proc); pcount++;
+  procedural_db_register (&palette_get_background_proc); pcount++;
+  procedural_db_register (&palette_set_foreground_proc); pcount++;
+  procedural_db_register (&palette_set_background_proc); pcount++;
+
+  app_init_update_status(NULL, "Interface procedures",
+			 pcount/total_pcount);
 
   /*  Interface procs  */
-  procedural_db_register (&brushes_get_brush_proc);
-  procedural_db_register (&brushes_refresh_brush_proc);
-  procedural_db_register (&brushes_set_brush_proc);
-  procedural_db_register (&brushes_get_opacity_proc);
-  procedural_db_register (&brushes_set_opacity_proc);
-  procedural_db_register (&brushes_get_spacing_proc);
-  procedural_db_register (&brushes_set_spacing_proc);
-  procedural_db_register (&brushes_get_paint_mode_proc);
-  procedural_db_register (&brushes_set_paint_mode_proc);
-  procedural_db_register (&brushes_list_proc);
-  procedural_db_register (&patterns_get_pattern_proc);
-  procedural_db_register (&patterns_set_pattern_proc);
-  procedural_db_register (&patterns_list_proc);
+  procedural_db_register (&brushes_get_brush_proc); pcount++;
+  procedural_db_register (&brushes_refresh_brush_proc); pcount++;
+  procedural_db_register (&brushes_set_brush_proc); pcount++;
+  procedural_db_register (&brushes_get_opacity_proc); pcount++;
+  procedural_db_register (&brushes_set_opacity_proc); pcount++;
+  procedural_db_register (&brushes_get_spacing_proc); pcount++;
+  procedural_db_register (&brushes_set_spacing_proc); pcount++;
+  procedural_db_register (&brushes_get_paint_mode_proc); pcount++;
+  procedural_db_register (&brushes_set_paint_mode_proc); pcount++;
+  procedural_db_register (&brushes_list_proc); pcount++;
+  procedural_db_register (&patterns_get_pattern_proc); pcount++;
+  procedural_db_register (&patterns_set_pattern_proc); pcount++;
+  procedural_db_register (&patterns_list_proc); pcount++;
 
-  procedural_db_register (&gradients_get_list_proc);
-  procedural_db_register (&gradients_get_active_proc);
-  procedural_db_register (&gradients_set_active_proc);
-  procedural_db_register (&gradients_sample_uniform_proc);
-  procedural_db_register (&gradients_sample_custom_proc);
+  procedural_db_register (&gradients_get_list_proc); pcount++;
+  procedural_db_register (&gradients_get_active_proc); pcount++;
+  procedural_db_register (&gradients_set_active_proc); pcount++;
+  procedural_db_register (&gradients_sample_uniform_proc); pcount++;
+  procedural_db_register (&gradients_sample_custom_proc); pcount++;
+
+  app_init_update_status(NULL, "Image procedures",
+			 pcount/total_pcount);
 
   /*  Image procedures  */
-  procedural_db_register (&desaturate_proc);
-  procedural_db_register (&equalize_proc);
-  procedural_db_register (&invert_proc);
+  procedural_db_register (&desaturate_proc); pcount++;
+  procedural_db_register (&equalize_proc); pcount++;
+  procedural_db_register (&invert_proc); pcount++;
 
-  procedural_db_register (&brightness_contrast_proc);
-  procedural_db_register (&curves_spline_proc);
-  procedural_db_register (&curves_explicit_proc);
-  procedural_db_register (&color_balance_proc);
-  procedural_db_register (&histogram_proc);
-  procedural_db_register (&hue_saturation_proc);
-  procedural_db_register (&levels_proc);
-  procedural_db_register (&posterize_proc);
-  procedural_db_register (&threshold_proc);
+  procedural_db_register (&brightness_contrast_proc); pcount++;
+  procedural_db_register (&curves_spline_proc); pcount++;
+  procedural_db_register (&curves_explicit_proc); pcount++;
+  procedural_db_register (&color_balance_proc); pcount++;
+  procedural_db_register (&histogram_proc); pcount++;
+  procedural_db_register (&hue_saturation_proc); pcount++;
+  procedural_db_register (&levels_proc); pcount++;
+  procedural_db_register (&posterize_proc); pcount++;
+  procedural_db_register (&threshold_proc); pcount++;
 
-  procedural_db_register (&convert_rgb_proc);
-  procedural_db_register (&convert_grayscale_proc);
-  procedural_db_register (&convert_indexed_proc);
-  procedural_db_register (&convert_indexed_palette_proc);
+  procedural_db_register (&convert_rgb_proc); pcount++;
+  procedural_db_register (&convert_grayscale_proc); pcount++;
+  procedural_db_register (&convert_indexed_proc); pcount++;
+  procedural_db_register (&convert_indexed_palette_proc); pcount++;
+
+  app_init_update_status(NULL, "Channel ops",
+			 pcount/total_pcount);
 
   /*  Channel Ops procedures  */
-  procedural_db_register (&channel_ops_duplicate_proc);
-  procedural_db_register (&channel_ops_offset_proc);
+  procedural_db_register (&channel_ops_duplicate_proc); pcount++;
+  procedural_db_register (&channel_ops_offset_proc); pcount++;
 
   /*  Gimprc procedures  */
-  procedural_db_register (&gimprc_query_proc);
+  procedural_db_register (&gimprc_query_proc); pcount++;
+
+  app_init_update_status(NULL, "Procedural database",
+			 pcount/total_pcount);
 
   /*  Procedural Database  */
-  procedural_db_register (&procedural_db_dump_proc);
-  procedural_db_register (&procedural_db_query_proc);
-  procedural_db_register (&procedural_db_proc_info_proc);
-  procedural_db_register (&procedural_db_proc_arg_proc);
-  procedural_db_register (&procedural_db_proc_val_proc);
-  procedural_db_register (&procedural_db_get_data_proc);
-  procedural_db_register (&procedural_db_set_data_proc);
+  procedural_db_register (&procedural_db_dump_proc); pcount++;
+  procedural_db_register (&procedural_db_query_proc); pcount++;
+  procedural_db_register (&procedural_db_proc_info_proc); pcount++;
+  procedural_db_register (&procedural_db_proc_arg_proc); pcount++;
+  procedural_db_register (&procedural_db_proc_val_proc); pcount++;
+  procedural_db_register (&procedural_db_get_data_proc); pcount++;
+  procedural_db_register (&procedural_db_set_data_proc); pcount++;
 }
