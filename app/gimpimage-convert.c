@@ -3106,5 +3106,5 @@ convert_indexed_palette_invoker (Argument *args)
 	 }
     if (success)
        convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
-  return procedural_db_return_args (&convert_indexed_proc, success);
+  return procedural_db_return_args (&convert_indexed_palette_proc, success);
 }

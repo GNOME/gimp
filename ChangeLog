@@ -1,6 +1,11 @@
+Wed Jul  1 10:23:07 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: PDB wrapper for convert_indexed_palette should
+	return args associated with it's own proc
+
 Wed Jul  1 09:59:58 PDT 1998 Manish Singh <yosh@gimp.org>
 
-	* fix for properly detecting shared lib support on
+	* ltconfig: fix for properly detecting shared lib support on
 	SunPro cc (taken from libtool 1.2.a)
 
 Sat Jun 27 23:34:00 PDT 1998 Manish Singh <yosh@gimp.org>
