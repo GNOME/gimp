@@ -879,7 +879,7 @@ gimp_image_replace_image (GimpImage    *gimage,
       tempPR.y = 0;
       tempPR.w = x2 - x1;
       tempPR.h = y2 - y1;
-      tempPR.rowstride = mask2PR.rowstride;
+      tempPR.rowstride = tempPR.w * tempPR.bytes;
       temp_data = g_malloc (tempPR.h * tempPR.rowstride);
       tempPR.data = temp_data;
 

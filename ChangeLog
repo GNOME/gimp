@@ -1,3 +1,11 @@
+Sat May 27 04:27:36 EDT 2000 calvinw@mindspring.com
+
+	* app/gimpimage.c
+	--Fixed Fujita Yuji's bug (reported 27May2000 to
+	gimp-developer) -larger than 64x64 brush and
+	selection mask crashes smudge/dodgeburn/convolve
+	This was a rowstrides bug in gimp_image_replace_image.
+
 2000-05-27  Michael Natterer  <mitch@gimp.org>
 
 	Libgimp cleanup part II (with a little help from Yosh
