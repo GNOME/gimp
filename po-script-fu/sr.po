@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-11 12:17+0200\n"
-"PO-Revision-Date: 2003-09-11 12:14+0200\n"
+"POT-Creation-Date: 2003-09-13 05:57+0200\n"
+"PO-Revision-Date: 2003-09-13 05:57+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -860,7 +860,7 @@ msgstr "После сјаја"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Прогори: Неопходно је укупно два слоја!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona Width"
@@ -2015,7 +2015,7 @@ msgstr "Метода боје"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Епитрохоид"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Frame"
@@ -2043,7 +2043,7 @@ msgstr "Унутрашњи зуби"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Lissajous"
-msgstr ""
+msgstr "Лисажос"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Margin (pixels)"

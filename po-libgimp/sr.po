@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
-"PO-Revision-Date: 2003-09-02 16:47+0200\n"
+"POT-Creation-Date: 2003-09-13 05:52+0200\n"
+"PO-Revision-Date: 2003-09-13 05:52+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -429,23 +429,23 @@ msgstr "Размак редова"
 msgid "_Resize"
 msgstr "_Промени величину"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:259
 msgid "_Scale"
 msgstr "_Скала"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:237
 msgid "Crop"
 msgstr "Исеци"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Transform"
 msgstr "_Трансформиши"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:260
 msgid "_Shear"
 msgstr "_Дели"
 
@@ -575,7 +575,7 @@ msgstr "Црна"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Извлачење црне (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
