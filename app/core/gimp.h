@@ -21,71 +21,7 @@
 
 
 #include "gimpobject.h"
-
-
-typedef void           (* GimpThreadEnterFunc)     (Gimp          *gimp);
-typedef void           (* GimpThreadLeaveFunc)     (Gimp          *gimp);
-typedef GimpObject   * (* GimpGetDisplayByIDFunc)  (Gimp          *gimp,
-                                                    gint           ID);
-typedef gint           (* GimpGetDisplayIDFunc)    (GimpObject    *display);
-typedef GimpObject   * (* GimpCreateDisplayFunc)   (GimpImage     *gimage,
-                                                    GimpUnit       unit,
-                                                    gdouble        scale);
-typedef void           (* GimpDeleteDisplayFunc)   (GimpObject    *display);
-typedef void           (* GimpReconnDisplaysFunc)  (Gimp          *gimp,
-                                                    GimpImage     *old_image,
-                                                    GimpImage     *new_image);
-typedef void           (* GimpSetBusyFunc)         (Gimp          *gimp);
-typedef void           (* GimpUnsetBusyFunc)       (Gimp          *gimp);
-typedef void           (* GimpMessageFunc)         (Gimp          *gimp,
-                                                    const gchar   *domain,
-                                                    const gchar   *message);
-typedef void           (* GimpCoreHelpFunc)        (Gimp          *gimp,
-                                                    const gchar   *help_domain,
-                                                    const gchar   *help_id);
-typedef void           (* GimpMenusInitFunc)       (Gimp          *gimp,
-                                                    GSList        *plug_in_defs,
-                                                    const gchar   *std_domain);
-typedef void           (* GimpMenusCreateFunc)     (Gimp          *gimp,
-                                                    PlugInProcDef *proc_def);
-typedef void           (* GimpMenusDeleteFunc)     (Gimp          *gimp,
-                                                    PlugInProcDef *proc_def);
-typedef GimpProgress * (* GimpProgressStartFunc)   (Gimp          *gimp,
-                                                    gint           gdisp_ID,
-                                                    const gchar   *message,
-                                                    GCallback      cancel_cb,
-                                                    gpointer       cancel_data);
-typedef GimpProgress * (* GimpProgressRestartFunc) (Gimp          *gimp,
-                                                    GimpProgress  *progress,
-                                                    const gchar   *message,
-                                                    GCallback      cancel_cb,
-                                                    gpointer       cancel_data);
-typedef void           (* GimpProgressUpdateFunc)  (Gimp          *gimp,
-                                                    GimpProgress  *progress,
-                                                    gdouble        percentage);
-typedef void           (* GimpProgressEndFunc)     (Gimp          *gimp,
-                                                    GimpProgress  *progress);
-typedef const gchar  * (* GimpGetProgramClassFunc) (Gimp          *gimp);
-typedef gchar        * (* GimpGetDisplayNameFunc)  (Gimp          *gimp,
-                                                    gint           gdisp_ID,
-                                                    gint          *monitor_number);
-typedef const gchar  * (* GimpGetThemeDirFunc)     (Gimp          *gimp);
-typedef gboolean       (* GimpPDBDialogNewFunc)    (Gimp          *gimp,
-                                                    GimpContext   *context,
-                                                    GimpContainer *container,
-                                                    const gchar   *title,
-                                                    const gchar   *callback_name,
-                                                    const gchar   *object_name,
-                                                    va_list        args);
-typedef gboolean       (* GimpPDBDialogSetFunc)    (Gimp          *gimp,
-                                                    GimpContainer *container,
-                                                    const gchar   *callback_name,
-                                                    const gchar   *object_name,
-                                                    va_list        args);
-typedef gboolean       (* GimpPDBDialogCloseFunc)  (Gimp          *gimp,
-                                                    GimpContainer *container,
-                                                    const gchar   *callback_name);
-typedef void           (* GimpPDBDialogsCheckFunc) (Gimp          *gimp);
+#include "gimp-gui.h"
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -117,31 +53,7 @@ struct _Gimp
   GimpStackTraceMode      stack_trace_mode;
   GimpPDBCompatMode       pdb_compat_mode;
 
-  GimpThreadEnterFunc     gui_threads_enter_func;
-  GimpThreadLeaveFunc     gui_threads_leave_func;
-  GimpGetDisplayByIDFunc  gui_get_display_by_id_func;
-  GimpGetDisplayIDFunc    gui_get_display_id_func;
-  GimpCreateDisplayFunc   gui_create_display_func;
-  GimpDeleteDisplayFunc   gui_delete_display_func;
-  GimpReconnDisplaysFunc  gui_reconnect_displays_func;
-  GimpSetBusyFunc         gui_set_busy_func;
-  GimpUnsetBusyFunc       gui_unset_busy_func;
-  GimpMessageFunc         gui_message_func;
-  GimpCoreHelpFunc        gui_help_func;
-  GimpMenusInitFunc       gui_menus_init_func;
-  GimpMenusCreateFunc     gui_menus_create_func;
-  GimpMenusDeleteFunc     gui_menus_delete_func;
-  GimpProgressStartFunc   gui_progress_start_func;
-  GimpProgressRestartFunc gui_progress_restart_func;
-  GimpProgressUpdateFunc  gui_progress_update_func;
-  GimpProgressEndFunc     gui_progress_end_func;
-  GimpGetProgramClassFunc gui_get_program_class_func;
-  GimpGetDisplayNameFunc  gui_get_display_name_func;
-  GimpGetThemeDirFunc     gui_get_theme_dir_func;
-  GimpPDBDialogNewFunc    gui_pdb_dialog_new_func;
-  GimpPDBDialogSetFunc    gui_pdb_dialog_set_func;
-  GimpPDBDialogCloseFunc  gui_pdb_dialog_close_func;
-  GimpPDBDialogsCheckFunc gui_pdb_dialogs_check_func;
+  GimpGui                 gui; /* gui vtable */
 
   gint                    busy;
   guint                   busy_idle_id;
@@ -262,77 +174,6 @@ void          gimp_exit                 (Gimp               *gimp,
 
 void          gimp_set_global_buffer    (Gimp               *gimp,
                                          GimpBuffer         *buffer);
-
-void          gimp_threads_enter        (Gimp               *gimp);
-void          gimp_threads_leave        (Gimp               *gimp);
-
-GimpObject  * gimp_get_display_by_ID    (Gimp               *gimp,
-                                         gint                ID);
-gint          gimp_get_display_ID       (Gimp               *gimp,
-                                         GimpObject         *display);
-GimpObject  * gimp_create_display       (Gimp               *gimp,
-                                         GimpImage          *gimage,
-                                         GimpUnit            unit,
-                                         gdouble             scale);
-void          gimp_delete_display       (Gimp               *gimp,
-                                         GimpObject         *display);
-void          gimp_reconnect_displays   (Gimp               *gimp,
-                                         GimpImage          *old_image,
-                                         GimpImage          *new_image);
-
-void          gimp_set_busy             (Gimp               *gimp);
-void          gimp_set_busy_until_idle  (Gimp               *gimp);
-void          gimp_unset_busy           (Gimp               *gimp);
-
-void          gimp_message              (Gimp               *gimp,
-                                         const gchar        *domain,
-                                         const gchar        *message);
-void          gimp_help                 (Gimp               *gimp,
-                                         const gchar        *help_domain,
-                                         const gchar        *help_id);
-void          gimp_menus_init           (Gimp               *gimp,
-                                         GSList             *plug_in_defs,
-                                         const gchar        *std_plugins_domain);
-void          gimp_menus_create_entry   (Gimp               *gimp,
-                                         PlugInProcDef      *proc_def);
-void          gimp_menus_delete_entry   (Gimp               *gimp,
-                                         PlugInProcDef      *proc_def);
-GimpProgress *gimp_start_progress       (Gimp               *gimp,
-                                         gint                gdisp_ID,
-                                         const gchar        *message,
-                                         GCallback           cancel_cb,
-                                         gpointer            cancel_data);
-GimpProgress *gimp_restart_progress     (Gimp               *gimp,
-                                         GimpProgress       *progress,
-                                         const gchar        *message,
-                                         GCallback           cancel_cb,
-                                         gpointer            cancel_data);
-void          gimp_update_progress      (Gimp               *gimp,
-                                         GimpProgress       *progress,
-                                         gdouble             percentage);
-void          gimp_end_progress         (Gimp               *gimp,
-                                         GimpProgress       *progress);
-const gchar * gimp_get_program_class    (Gimp               *gimp);
-gchar       * gimp_get_display_name     (Gimp               *gimp,
-                                         gint                gdisp_ID,
-                                         gint               *monitor_number);
-const gchar * gimp_get_theme_dir        (Gimp               *gimp);
-gboolean      gimp_pdb_dialog_new       (Gimp               *gimp,
-                                         GimpContext        *context,
-                                         GimpContainer      *container,
-                                         const gchar        *title,
-                                         const gchar        *callback_name,
-                                         const gchar        *object_name,
-                                         ...);
-gboolean      gimp_pdb_dialog_set       (Gimp               *gimp,
-                                         GimpContainer      *container,
-                                         const gchar        *callback_name,
-                                         const gchar        *object_name,
-                                         ...);
-gboolean      gimp_pdb_dialog_close     (Gimp               *gimp,
-                                         GimpContainer      *container,
-                                         const gchar        *callback_name);
-void          gimp_pdb_dialogs_check    (Gimp               *gimp);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

@@ -28,6 +28,8 @@ libappcore_a_sources = \
 	gimp-edit.h			\
 	gimp-gradients.c		\
 	gimp-gradients.h		\
+	gimp-gui.c			\
+	gimp-gui.h			\
 	gimp-modules.c			\
 	gimp-modules.h			\
 	gimp-parasites.c		\
