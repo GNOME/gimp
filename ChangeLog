@@ -1,3 +1,17 @@
+2003-08-21  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-regression.[ch]: New function to
+	initialise a GimpCompositeContext
+
+	* Makefile.am: do not generate the test form of
+	gimp-composite-generic.c
+
+	* app/composite/gimp-composite-generic-test.c: unused, removed.
+
+	* app/composite/make-installer.py app/composite/*-test.c: New
+	tests were broken because the byte-for-byte checks checked the
+	same buffer against itself.
+
 2003-08-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c

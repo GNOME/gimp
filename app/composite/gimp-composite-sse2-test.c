@@ -66,27 +66,28 @@ main (int argc, char *argv[])
   int iterations;
   int n_pixels;
 
-  srand(314159);
+  srand (314159);
 
-  putenv("GIMP_COMPOSITE=0x1");
+  putenv ("GIMP_COMPOSITE=0x1");
 
   iterations = 1;
   n_pixels = 1048577;
 
   argv++, argc--;
   while (argc >= 2) {
-    if ((strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0) && argc > 1) {
+    if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0)) {
       iterations = atoi(argv[1]);
       argc -= 2, argv++; argv++;
-    } else if ((strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0) && argc > 1) {
+    } else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0)) {
       n_pixels = atoi (argv[1]);
       argc -= 2, argv++; argv++;
     } else {
+      printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
       argc--, argv++;
     }
   }
 
   gimp_composite_generic_install ();
 
-  return (gimp_composite_sse2_test(iterations, n_pixels));
+  return (gimp_composite_sse2_test (iterations, n_pixels));
 }

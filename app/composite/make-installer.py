@@ -326,38 +326,45 @@ def gimp_composite_regression(fpout, function_tables, options):
           if function_tables.has_key(key):
             #print key
             print >>fpout, ''
-            print >>fpout, '  /* %s */' % (key)
-            print >>fpout, '  memset ((void *) &special_ctx, 0, sizeof(special_ctx));'
-            print >>fpout, '  special_ctx.op = %s;' % (mode)
-            print >>fpout, '  special_ctx.n_pixels = n_pixels;'
-            print >>fpout, '  special_ctx.scale.scale = 2;'
-            print >>fpout, '  special_ctx.pixelformat_A = %s;' % (A)
-            print >>fpout, '  special_ctx.pixelformat_B = %s;' % (B)
-            print >>fpout, '  special_ctx.pixelformat_D = %s;' % (D)
-            print >>fpout, '  special_ctx.pixelformat_M = %s;' % (D)
-            print >>fpout, '  special_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
-            print >>fpout, '  special_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
-            print >>fpout, '  special_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
-            print >>fpout, '  special_ctx.D = (unsigned char *) %sD1;' % (pixel_depth_name(D))
-            print >>fpout, '  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);'
-            
-            print >>fpout, '  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));'
-            print >>fpout, '  generic_ctx.op = %s;' % (mode)
-            print >>fpout, '  generic_ctx.n_pixels = n_pixels;'
-            print >>fpout, '  generic_ctx.scale.scale = 2;'
-            print >>fpout, '  generic_ctx.pixelformat_A = %s;' % (A)
-            print >>fpout, '  generic_ctx.pixelformat_B = %s;' % (B)
-            print >>fpout, '  generic_ctx.pixelformat_D = %s;' % (D)
-            print >>fpout, '  generic_ctx.pixelformat_M = %s;' % (D)
-            print >>fpout, '  generic_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
-            print >>fpout, '  generic_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
-            print >>fpout, '  generic_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
-            print >>fpout, '  generic_ctx.D = (unsigned char *) %sD2;' % (pixel_depth_name(D))
-            print >>fpout, '  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);'
+            if 0:
+              print >>fpout, '  /* %s */' % (key)
+              print >>fpout, '  memset ((void *) &special_ctx, 0, sizeof(special_ctx));'
+              print >>fpout, '  special_ctx.op = %s;' % (mode)
+              print >>fpout, '  special_ctx.n_pixels = n_pixels;'
+              print >>fpout, '  special_ctx.scale.scale = 2;'
+              print >>fpout, '  special_ctx.pixelformat_A = %s;' % (A)
+              print >>fpout, '  special_ctx.pixelformat_B = %s;' % (B)
+              print >>fpout, '  special_ctx.pixelformat_D = %s;' % (D)
+              print >>fpout, '  special_ctx.pixelformat_M = %s;' % (D)
+              print >>fpout, '  special_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
+              print >>fpout, '  special_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
+              print >>fpout, '  special_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
+              print >>fpout, '  special_ctx.D = (unsigned char *) %sD1;' % (pixel_depth_name(D))
+              print >>fpout, '  memset (special_ctx.D, 0, special_ctx.n_pixels * gimp_composite_pixel_bpp[special_ctx.pixelformat_D]);'
+            else:
+              print >>fpout, '  gimp_composite_context_init (&special_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD2);' % (
+                mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
+              pass
 
-            #print >>fpout, '  gimp_composite_context_print(&special_ctx);'
-            #print >>fpout, '  gimp_composite_context_print(&generic_ctx);'
-            
+            if 0:
+              print >>fpout, '  memset ((void *) &generic_ctx, 0, sizeof(special_ctx));'
+              print >>fpout, '  generic_ctx.op = %s;' % (mode)
+              print >>fpout, '  generic_ctx.n_pixels = n_pixels;'
+              print >>fpout, '  generic_ctx.scale.scale = 2;'
+              print >>fpout, '  generic_ctx.pixelformat_A = %s;' % (A)
+              print >>fpout, '  generic_ctx.pixelformat_B = %s;' % (B)
+              print >>fpout, '  generic_ctx.pixelformat_D = %s;' % (D)
+              print >>fpout, '  generic_ctx.pixelformat_M = %s;' % (D)
+              print >>fpout, '  generic_ctx.A = (unsigned char *) %sA;' % (pixel_depth_name(A))
+              print >>fpout, '  generic_ctx.B = (unsigned char *) %sB;' % (pixel_depth_name(B))
+              print >>fpout, '  generic_ctx.M = (unsigned char *) %sB;' % (pixel_depth_name(D))
+              print >>fpout, '  generic_ctx.D = (unsigned char *) %sD2;' % (pixel_depth_name(D))
+              print >>fpout, '  memset (generic_ctx.D, 0, generic_ctx.n_pixels * gimp_composite_pixel_bpp[generic_ctx.pixelformat_D]);'
+            else:
+              print >>fpout, '  gimp_composite_context_init (&generic_ctx, %s, %s, %s, %s, %s, n_pixels, (unsigned char *) %sA, (unsigned char *) %sB, (unsigned char *) %sB, (unsigned char *) %sD1);' % (
+                mode, A, B, D, D, pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D), pixel_depth_name(D))
+              pass
+              
             print >>fpout, '  ft0 = gimp_composite_regression_time_function (iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
             print >>fpout, '  ft1 = gimp_composite_regression_time_function (iterations, %s, &special_ctx);' % (generic_table[key][0])
             print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
@@ -384,29 +391,30 @@ def gimp_composite_regression(fpout, function_tables, options):
   print >>fpout, '  int iterations;'
   print >>fpout, '  int n_pixels;'
   print >>fpout, ''
-  print >>fpout, '  srand(314159);'
+  print >>fpout, '  srand (314159);'
   print >>fpout, ''
-  print >>fpout, '  putenv("GIMP_COMPOSITE=0x1");'
+  print >>fpout, '  putenv ("GIMP_COMPOSITE=0x1");'
   print >>fpout, ''
   print >>fpout, '  iterations = %d;' % options.iterations
   print >>fpout, '  n_pixels = %d;' % options.n_pixels
   print >>fpout, ''
   print >>fpout, '  argv++, argc--;'
   print >>fpout, '  while (argc >= 2) {'
-  print >>fpout, '    if ((strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0) && argc > 1) {'
+  print >>fpout, '    if (argc > 1 && (strcmp (argv[0], "--iterations") == 0 || strcmp (argv[0], "-i") == 0)) {'
   print >>fpout, '      iterations = atoi(argv[1]);'
   print >>fpout, '      argc -= 2, argv++; argv++;'
-  print >>fpout, '    } else if ((strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0) && argc > 1) {'
+  print >>fpout, '    } else if (argc > 1 && (strcmp (argv[0], "--n-pixels") == 0 || strcmp (argv[0], "-n") == 0)) {'
   print >>fpout, '      n_pixels = atoi (argv[1]);'
   print >>fpout, '      argc -= 2, argv++; argv++;'
   print >>fpout, '    } else {'
+  print >>fpout, '      printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");'
   print >>fpout, '      argc--, argv++;'
   print >>fpout, '    }'
   print >>fpout, '  }'
   print >>fpout, ''
   print >>fpout, '  gimp_composite_generic_install ();'
   print >>fpout, ''
-  print >>fpout, '  return (%s_test(iterations, n_pixels));' % (functionnameify(options.file))
+  print >>fpout, '  return (%s_test (iterations, n_pixels));' % (functionnameify(options.file))
   print >>fpout, '}'
 
   return

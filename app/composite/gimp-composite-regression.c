@@ -276,3 +276,33 @@ gimp_composite_regression_fixed_rgba8 (unsigned long n_pixels)
 
   return (rgba8);
 }
+
+GimpCompositeContext *
+gimp_composite_context_init (GimpCompositeContext *ctx,
+																													GimpCompositeOperation op,
+																													GimpPixelFormat a_format,
+																													GimpPixelFormat b_format,
+																													GimpPixelFormat d_format,
+																													GimpPixelFormat m_format,
+																													unsigned long n_pixels,
+																													unsigned char *A,
+																													unsigned char *B,
+																													unsigned char *M,
+																													unsigned char *D)
+{
+		memset ((void *) ctx, 0, sizeof(*ctx));
+		ctx->op = op;
+		ctx->n_pixels = n_pixels;
+		ctx->scale.scale = 2;
+		ctx->pixelformat_A = a_format;
+		ctx->pixelformat_B = b_format;
+		ctx->pixelformat_D = d_format;
+		ctx->pixelformat_M = m_format;
+		ctx->A = (unsigned char *) A;
+		ctx->B = (unsigned char *) B;
+		ctx->M = (unsigned char *) B;
+		ctx->D = (unsigned char *) D;
+		memset (ctx->D, 0, ctx->n_pixels * gimp_composite_pixel_bpp[ctx->pixelformat_D]);
+
+		return (ctx);
+}

@@ -96,4 +96,15 @@ extern void gimp_composite_regression_timer_report (char *, double, double);
 
 extern gimp_rgba8_t *gimp_composite_regression_random_rgba8 (unsigned long);
 extern gimp_rgba8_t *gimp_composite_regression_fixed_rgba8 (unsigned long);
+extern GimpCompositeContext *gimp_composite_context_init (GimpCompositeContext *,
+																																																										GimpCompositeOperation,
+																																																										GimpPixelFormat,
+																																																										GimpPixelFormat,
+																																																										GimpPixelFormat,
+																																																										GimpPixelFormat,
+																																																										unsigned long,
+																																																										unsigned char *,
+																																																										unsigned char *,
+																																																										unsigned char *,
+																																																										unsigned char *);
 #endif
