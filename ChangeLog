@@ -1,5 +1,12 @@
 2000-12-16  Sven Neumann  <sven@gimp.org>
 
+	* app/gimppreviewcache.h
+	* app/channel.c
+	* app/layer.c: put the preview cache priming code back into place, 
+	but disabled it for small images to avoid unnecessary upscaling.
+	
+2000-12-16  Sven Neumann  <sven@gimp.org>
+
 	Last-minute cleanup:
 	
 	* app/gimpdrawableF.h

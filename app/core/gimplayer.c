@@ -63,6 +63,14 @@ static void gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
 static void gimp_layer_mask_init       (GimpLayerMask      *layermask);
 static void gimp_layer_mask_destroy    (GtkObject          *object);
 
+static TempBuf * layer_preview_private      (Layer *layer,
+					     gint   width,
+					     gint   height);
+static TempBuf * layer_mask_preview_private (Layer *layer,
+					     gint   width,
+					     gint   height);
+
+
 static guint layer_signals[LAST_SIGNAL] = { 0 };
 
 /*
@@ -1321,10 +1329,38 @@ layer_linked (Layer *layer)
   return layer->linked;
 }
 
+
 TempBuf *
 layer_preview (Layer *layer,
 	       gint   width,
 	       gint   height)
+{
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if (! GIMP_DRAWABLE (layer)->preview_valid &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH    &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT   &&
+      GIMP_DRAWABLE (layer)->gimage          &&
+      GIMP_DRAWABLE (layer)->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH   &&
+      GIMP_DRAWABLE (layer)->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = layer_preview_private (layer,
+					    PREVIEW_CACHE_PRIME_WIDTH,
+					    PREVIEW_CACHE_PRIME_HEIGHT);
+      
+      /* Save the 2nd call */
+      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
+	  height == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+
+  /* Second call - should NOT visit the tile cache...*/
+  return layer_preview_private (layer, width, height);
+}
+
+static TempBuf *
+layer_preview_private (Layer *layer,
+		       gint   width,
+		       gint   height)
 {
   GImage            *gimage;
   TempBuf           *preview_buf;
@@ -1408,6 +1444,33 @@ TempBuf *
 layer_mask_preview (Layer *layer,
 		    gint   width,
 		    gint   height)
+{
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if (! GIMP_DRAWABLE (layer)->preview_valid &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH    &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT   &&
+      GIMP_DRAWABLE (layer)->gimage          &&
+      GIMP_DRAWABLE (layer)->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH   &&
+      GIMP_DRAWABLE (layer)->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = layer_preview_private (layer,
+					    PREVIEW_CACHE_PRIME_WIDTH,
+					    PREVIEW_CACHE_PRIME_HEIGHT);
+      
+      /* Save the 2nd call */
+      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
+	  height == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+
+  /* Second call - should NOT visit the tile cache...*/
+  return layer_mask_preview_private (layer, width, height);
+}
+
+static TempBuf *
+layer_mask_preview_private (Layer *layer,
+			    gint   width,
+			    gint   height)
 {
   TempBuf     *preview_buf;
   LayerMask   *mask;

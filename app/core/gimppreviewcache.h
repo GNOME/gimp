@@ -23,6 +23,10 @@
 #include "temp_buf.h"
 
 
+#define PREVIEW_CACHE_PRIME_WIDTH  112
+#define PREVIEW_CACHE_PRIME_HEIGHT 112
+
+
 TempBuf * gimp_preview_cache_get        (GSList  **plist, 
 					 gint      width, 
 					 gint      height);

@@ -58,6 +58,10 @@ static void gimp_channel_class_init (GimpChannelClass *klass);
 static void gimp_channel_init       (GimpChannel      *channel);
 static void gimp_channel_destroy    (GtkObject        *object);
 
+static TempBuf * channel_preview_private (Channel *channel,
+					  gint     width,
+					  gint     height);
+
 static guint channel_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
@@ -501,10 +505,38 @@ channel_preview (Channel *channel,
 		 gint     width,
 		 gint     height)
 {
-  MaskBuf * preview_buf;
-  PixelRegion srcPR, destPR;
-  gint subsample;
-  TempBuf *ret_buf;
+  /* Ok prime the cache with a large preview if the cache is invalid */
+  if (! GIMP_DRAWABLE (channel)->preview_valid &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH    &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT   &&
+      GIMP_DRAWABLE (channel)->gimage          &&
+      GIMP_DRAWABLE (channel)->gimage->width  > PREVIEW_CACHE_PRIME_WIDTH   &&
+      GIMP_DRAWABLE (channel)->gimage->height > PREVIEW_CACHE_PRIME_HEIGHT)
+    {
+      TempBuf * tb = channel_preview_private (channel,
+					      PREVIEW_CACHE_PRIME_WIDTH,
+					      PREVIEW_CACHE_PRIME_HEIGHT);
+      
+      /* Save the 2nd call */
+      if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
+	  height == PREVIEW_CACHE_PRIME_HEIGHT)
+	return tb;
+    }
+
+  /* Second call - should NOT visit the tile cache...*/
+  return channel_preview_private (channel, width, height);
+}
+
+static TempBuf *
+channel_preview_private (Channel *channel,
+			 gint     width,
+			 gint     height)
+{
+  MaskBuf     *preview_buf;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+  gint         subsample;
+  TempBuf     *ret_buf;
 
   g_return_val_if_fail (channel != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
