@@ -15,11 +15,11 @@
 
 typedef struct {
   GtkWidget *dlg;
-  GtkWidget *height_entry;
-  GtkWidget *width_entry;
-  GtkWidget *height_units_entry;
-  GtkWidget *width_units_entry;
-  GtkWidget *resolution_entry;
+  GtkWidget *height_spinbutton;
+  GtkWidget *width_spinbutton;
+  GtkWidget *height_units_spinbutton;
+  GtkWidget *width_units_spinbutton;
+  GtkWidget *resolution_spinbutton;
   float resolution;   /* always in dpi */
   float unit;  /* this is a float that is equal to unit/inch, 2.54 for cm for example */
   float res_unit;  /* same as above but for the res unit */
@@ -75,9 +75,11 @@ file_new_ok_callback (GtkWidget *widget,
 
   vals = data;
 
-  vals->width = atoi (gtk_entry_get_text (GTK_ENTRY (vals->width_entry)));
-  vals->height = atoi (gtk_entry_get_text (GTK_ENTRY (vals->height_entry)));
-  vals->resolution = atof (gtk_entry_get_text (GTK_ENTRY (vals->resolution_entry)));
+  vals->width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
+  vals->height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
+  vals->resolution = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->resolution_spinbutton));
+
+
   last_new_image = TRUE;
   gtk_widget_destroy (vals->dlg);
 
@@ -174,15 +176,13 @@ file_new_width_update_callback (GtkWidget *widget,
   char buffer[12];
   
   vals = data;
+  new_width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
   
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
-  new_width = atoi(newvalue);
-
   temp = ((float) new_width / (float) vals->resolution) * vals->unit;
-  sprintf (buffer, "%.2f", temp);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry), vals);
+ 
+   gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton), vals);
+   gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp);
+   gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton), vals);
 
 }
 static void
@@ -197,16 +197,15 @@ file_new_height_update_callback (GtkWidget *widget,
   char buffer[12];
   
   vals = data;
+  new_height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
   
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_entry));
-  new_height = atoi(newvalue);
-
+ 
   temp = ((float) new_height / (float) vals->resolution) * vals->unit;
-  sprintf (buffer, "%.2f", temp);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_entry), vals);
-
+  
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton), vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton), vals);
+ 
 }
 
 static void
@@ -221,16 +220,13 @@ file_new_width_units_update_callback (GtkWidget *widget,
   char buffer[12];
 
   vals = data;
-  
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_units_entry));
-  new_width_units = atof(newvalue);
+  new_width_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_units_spinbutton));
 
   temp = ((((float) new_width_units) * vals->unit) * ((float) vals->resolution));
-  sprintf (buffer,  "%d", (int)temp);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_entry), vals);
-
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_spinbutton), temp);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
+ 
 }
 
 static void
@@ -245,14 +241,13 @@ file_new_height_units_update_callback (GtkWidget *widget,
 
   vals = data;
   
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_units_entry));
-  new_height_units = atof(newvalue);
-
+  new_height_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_units_spinbutton));
+ 
+ 
   temp = ((((float) new_height_units) * vals->unit ) * ((float) vals->resolution));
-  sprintf (buffer,  "%d", (int)temp);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_entry), vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_spinbutton), temp);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
 }
 
 static void
@@ -268,9 +263,8 @@ file_new_resolution_callback (GtkWidget *widget,
   char buffer[12];
   
   vals = data;
-
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->resolution_entry));
-  temp_resolution = atof(newvalue);  /* vals->resolution is always DPI */
+  temp_resolution = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->resolution_spinbutton));
+  
 
   /* a bit of a kludge to keep height/width from going to zero */
   if(temp_resolution <= 1)
@@ -280,23 +274,23 @@ file_new_resolution_callback (GtkWidget *widget,
   vals->resolution = (temp_resolution * vals->res_unit);
 
   /* figure the new height */
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_units_entry));
-  temp_units = atof(newvalue); 
+   temp_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_units_spinbutton)); 
 
   temp_pixels  = (float) vals->resolution * ((float)temp_units / vals->unit) ;
-  sprintf (buffer, "%d", (int) temp_pixels);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_entry), vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_spinbutton), temp_pixels);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_spinbutton), vals);
 
   /* figure the new width */
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_units_entry));
-  temp_units = atof(newvalue);
+
+
+  temp_units = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_units_spinbutton));
   temp_pixels = (float) vals->resolution * ((float) temp_units / vals->unit);
-  sprintf(buffer, "%d", (int) temp_pixels);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_entry), vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_entry), vals);
+ 
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_spinbutton), temp_pixels);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_spinbutton), vals);
+ 
 
 }
 
@@ -317,25 +311,21 @@ file_new_units_inch_menu_callback (GtkWidget *widget ,
   vals = data;
   vals->unit = 1;      /* set fo/inch ratio for conversions */
 
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_entry));
-  temp_pixels_height = atoi(newvalue);
+  temp_pixels_height = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->height_spinbutton));
+  temp_pixels_width = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (vals->width_spinbutton));
 
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
-  temp_pixels_width = atoi(newvalue);
-
+  
   /* remember vals->resoltuion is always in dpi */
   temp_units_height = (float) temp_pixels_height / (((float) vals->resolution) * vals->unit);
   temp_units_width = (float)temp_pixels_width / (((float) vals->resolution) * vals->unit);
 
-  sprintf (buffer, "%.2f", temp_units_height);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_entry),vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp_units_height);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
 
-  sprintf(buffer, "%.2f", temp_units_width);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry),vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp_units_width);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
 
 
 }
@@ -356,11 +346,10 @@ file_new_units_cm_menu_callback (GtkWidget *widget ,
 
   vals = data;
   vals->unit = 2.54;
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_entry));
-  temp_pixels_height = atoi(newvalue);
 
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
-  temp_pixels_width = atoi(newvalue);
+  temp_pixels_height = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->height_spinbutton));
+
+  temp_pixels_width = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (vals->width_spinbutton));
 
   /* remember resoltuion is always in dpi */
   /* convert from inches to centimeters here */
@@ -368,15 +357,13 @@ file_new_units_cm_menu_callback (GtkWidget *widget ,
   temp_units_height = ((float) temp_pixels_height / (((float) vals->resolution)) * vals->unit);
   temp_units_width = ((float)temp_pixels_width / (((float) vals->resolution)) * vals->unit);
 
-  sprintf (buffer, "%.2f", temp_units_height);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_entry),vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->height_units_spinbutton), temp_units_height);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->height_units_spinbutton),vals);
 
-  sprintf(buffer, "%.2f", temp_units_width);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry),vals);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->width_units_spinbutton), temp_units_width);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_spinbutton),vals);
 
 }
 
@@ -393,11 +380,11 @@ static void file_new_res_units_inch_callback (GtkWidget *widget, gpointer data)
   
   /* vals->resoltuion is alwayd DPI */
   temp_resolution = (vals->resolution / vals->res_unit);
-  sprintf (buffer, "%.2f", temp_resolution);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_entry),vals);
 
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->resolution_spinbutton), temp_resolution);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
+ 
 }
   
 static void file_new_res_units_cm_callback (GtkWidget *widget, gpointer data)
@@ -413,10 +400,10 @@ static void file_new_res_units_cm_callback (GtkWidget *widget, gpointer data)
 
   /* vals->resolution is always DPI */
   temp_resolution = (vals->resolution / vals->res_unit);
-  sprintf (buffer, "%.2f", temp_resolution);
-  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_entry),vals);
-  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_entry),vals);
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (vals->resolution_spinbutton), temp_resolution);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_spinbutton),vals);
 
 }
 
@@ -437,6 +424,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   GtkWidget *menu;
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
+  GtkAdjustment *adj;
   GSList *group;
   char buffer[32];
   float temp;
@@ -553,51 +541,58 @@ file_new_cmd_callback (GtkWidget           *widget,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  /* width in pixels entry  */
-  vals->width_entry = gtk_entry_new ();
-  gtk_widget_set_usize (vals->width_entry, 75, 0);
-  sprintf (buffer, "%d", vals->width);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), vals->width_entry, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->width_entry), "changed",
-		      (GtkSignalFunc) file_new_width_update_callback, vals);
-  gtk_widget_show (vals->width_entry);
+  /* width in pixels spinbutton  */
+  adj = (GtkAdjustment *) gtk_adjustment_new (vals->width, 1.0, 32767.0,
+                                              1.0, 50.0, 0.0);
+  vals->width_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->width_spinbutton), GTK_SHADOW_NONE);
+  gtk_widget_set_usize (vals->width_spinbutton, 75, 0);
 
-  /* height in pixels entry */
-  vals->height_entry = gtk_entry_new ();
-  gtk_widget_set_usize (vals->height_entry, 75, 0);
-  sprintf (buffer, "%d", vals->height);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_entry), buffer);
-  gtk_table_attach (GTK_TABLE (table), vals->height_entry, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), vals->width_spinbutton, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->height_entry), "changed",
+    gtk_signal_connect (GTK_OBJECT (vals->width_spinbutton), "changed",
+ 		      (GtkSignalFunc) file_new_width_update_callback, vals);
+  gtk_widget_show (vals->width_spinbutton);
+ 
+  /* height in pixels spinbutton */
+  adj = (GtkAdjustment *) gtk_adjustment_new (vals->height, 1.0, 32767.0,
+                                              1.0, 50.0, 0.0);
+  vals->height_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->height_spinbutton), GTK_SHADOW_NONE);
+  gtk_widget_set_usize (vals->height_spinbutton, 75, 0);
+  gtk_table_attach (GTK_TABLE (table), vals->height_spinbutton, 1, 2, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->height_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_height_update_callback, vals);
-  gtk_widget_show (vals->height_entry);
+  gtk_widget_show (vals->height_spinbutton);
 
-  /* width in units entry */
-  vals->width_units_entry = gtk_entry_new ();
-  gtk_widget_set_usize (vals->width_units_entry, 75, 0);
+  /* width in units spinbutton */
   temp = (float) vals->width / vals->resolution;
-  sprintf (buffer, "%.2f", temp);
-  gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (vals->width_units_entry), "changed",
+  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
+                                              1.0, 5.0, 0.0);
+  vals->width_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_UPDATE_ALWAYS);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->width_units_spinbutton), GTK_SHADOW_NONE);
+  gtk_widget_set_usize (vals->width_units_spinbutton, 75, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->width_units_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_width_units_update_callback, vals);
-  gtk_table_attach (GTK_TABLE (table), vals->width_units_entry , 0, 1, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), vals->width_units_spinbutton , 0, 1, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (vals->width_units_entry);
+  gtk_widget_show (vals->width_units_spinbutton);
 
-  /* height in units entry */
-  vals->height_units_entry = gtk_entry_new ();
-  gtk_widget_set_usize (vals->height_units_entry, 75, 0);
+  /* height in units spinbutton */
   temp = (float) vals->height / vals->resolution; 
-  sprintf (buffer, "%.2f", temp);
-  gtk_entry_set_text (GTK_ENTRY (vals->height_units_entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (vals->height_units_entry), "changed",
+  adj = (GtkAdjustment *) gtk_adjustment_new (temp, 1.0, 32767.0,
+                                              1.0, 5.0, 0.0);
+  vals->height_units_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
+  gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_UPDATE_ALWAYS);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->height_units_spinbutton), GTK_SHADOW_NONE);
+  gtk_widget_set_usize (vals->height_units_spinbutton, 75, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->height_units_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_height_units_update_callback, vals);
-  gtk_table_attach (GTK_TABLE (table), vals->height_units_entry , 1, 2, 2, 3,
+  gtk_table_attach (GTK_TABLE (table), vals->height_units_spinbutton , 1, 2, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (vals->height_units_entry);
+  gtk_widget_show (vals->height_units_spinbutton);
 
   /* Label for right hand side of pixel size boxes */
   label = gtk_label_new ("Pixels");
@@ -630,24 +625,25 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  /* hbox containing the label, the entry, and the optionmenu */
+  /* hbox containing the label, the spinbutton, and the optionmenu */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add(GTK_CONTAINER (frame), hbox);
   gtk_widget_show(hbox);
 
-  /* resoltuion entry   */
-  vals->resolution_entry = gtk_entry_new ();
-  gtk_widget_set_usize (vals->resolution_entry, 76, 0);
-  sprintf(buffer, "%.2f", vals->resolution);
-  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
-  gtk_box_pack_start (GTK_BOX (hbox), vals->resolution_entry , TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (vals->resolution_entry), "changed",
+  /* resoltuion spinbutton  */
+  adj = (GtkAdjustment *) gtk_adjustment_new (vals->resolution, 1.0, 32767.0,
+                                              1.0, 5.0, 0.0);
+  vals->resolution_spinbutton = gtk_spin_button_new (adj, 1.0, 2.0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(vals->resolution_spinbutton), GTK_SHADOW_NONE);
+  gtk_widget_set_usize (vals->resolution_spinbutton, 76, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vals->resolution_spinbutton, TRUE, TRUE, 0);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_spinbutton), "changed",
 		      (GtkSignalFunc) file_new_resolution_callback,
 		      vals);
-  gtk_widget_show (vals->resolution_entry);
+  gtk_widget_show (vals->resolution_spinbutton);
  
-  /* resoltuion lable */
+  /* resolution label */
   label =gtk_label_new (" pixels per  ");
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);

@@ -116,6 +116,7 @@ Text Tool
 	More complete font selection
 	Multiple lines and alignment
 
+=======
 
 big cad style cross-hairs cursor?
 
@@ -125,9 +126,8 @@ more info available to the user in general (current brush, etc)
 some sort of image locking, so we don't munge images by doing >1 ops
 on them at once
 
-
 Suggestion from Ville Hautamaki (CW): 
-Pattern groups
+	Pattern groups
 
 
 Overwork the transform tools UI. It would be nice if the transformation
@@ -149,5 +149,7 @@ selection, not it's content!!).
 Have a possibility to add a text as selection (is this doable with
 Type1-fonts?). If selections would be editable as described above, we'd 
 then have editable vector-text.
+
+option to create New Indexed image (with the choice of pattern foo) ?
 
 
