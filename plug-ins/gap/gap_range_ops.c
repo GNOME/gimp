@@ -32,6 +32,8 @@
  */
 
 /* revision history
+ * 1.1.8    1999/08/31   hof: frames convert: save subsequent frames
+ *                            with rumode RUN_WITH_LAST_VALS 
  * 0.97.00; 1998/10/19   hof: gap_range_to_multilayer: extended layer selection
  * 0.96.03; 1998/08/31   hof: gap_range_to_multilayer: all params available
  *                            in non-interactive runmode
@@ -297,7 +299,7 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
 
   p_init_arr_arg(&argv[3], WGT_FILESEL);
   argv[3].label_txt ="Basename:";
-  argv[3].help_txt  ="basename of the resulting frames       \n(_0001.ext is added)";
+  argv[3].help_txt  ="basename of the resulting frames       \n(0001.ext is added)";
   argv[3].text_buf_len = len_base;
   argv[3].text_buf_ret = basename;
 
@@ -1026,9 +1028,10 @@ p_frames_convert(t_anim_info *ainfo_ptr,
                p_msg_win(ainfo_ptr->run_mode, "Convert Frames: SAVE operation FAILED\n- desired save plugin cant handle type\n- or desired save plugin not available\n");
              }
           }
-       
-          l_run_mode  = RUN_NONINTERACTIVE;  /* for all further calls */
-
+          if(l_run_mode == RUN_INTERACTIVE)
+          {
+            l_run_mode  = RUN_WITH_LAST_VALS;  /* for all further calls */
+          }
           g_free(l_sav_name);
        }
     }
@@ -1500,7 +1503,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
 
       if(l_rc >= 0)
       {
-         /* cut off extension and trailing frame number "_0001" */
+         /* cut off extension and trailing frame number */
          l_basename_ptr = p_alloc_basename(&l_basename[0], &l_number);
          if(l_basename_ptr == NULL)  { l_rc = -1; }
          else

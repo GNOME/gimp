@@ -28,6 +28,16 @@
  */
 
 /* revision history:
+ * 1.1.8a;  1999/08/31   hof: for AnimFrame Filtypes != XCF:
+ *                            p_decide_save_as does save INTERACTIVE at 1.st time
+ *                            and uses RUN_WITH_LAST_VALS for subsequent calls
+ *                            (this enables to set Fileformat specific save-Parameters
+ *                            at least at the 1.st call, using the save dialog
+ *                            of the selected (by gimp_file_save) file_save procedure.
+ *                            in NONINTERACTIVE mode we have no access to
+ *                            the Fileformat specific save-Parameters
+ *          1999/07/22   hof: accept anim framenames without underscore '_'
+ *                            (suggested by Samuel Meder)
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
  * 0.98.00; 1998/11/30   hof: started Port to GIMP 1.1:
  *                               exchange of Images (by next frame) is now handled in the
@@ -76,7 +86,61 @@ static int          p_save_old_frame(t_anim_info *ainfo_ptr);
 static int   p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr);
 static int   p_delete_frame(t_anim_info *ainfo_ptr, long nr);
 static int   p_del(t_anim_info *ainfo_ptr, long cnt);
-static int   p_decide_save_as(gint32 image_id);
+static int   p_decide_save_as(gint32 image_id, char *sav_name);
+
+/* ============================================================================
+ * p_strdup_*_underscore
+ *   duplicate string and if last char is no underscore add one at end.
+ *   duplicate string and delete last char if it is the underscore
+ * ============================================================================
+ */
+char *
+p_strdup_add_underscore(char *name)
+{
+  int   l_len;
+  char *l_str;
+  if(name == NULL)
+  {
+    return(g_strdup("\0"));
+  }
+
+  l_len = strlen(name);
+  l_str = g_malloc(l_len+1);
+  strcpy(l_str, name);
+  if(l_len > 0)
+  {
+    if (name[l_len-1] != '_')
+    {
+       l_str[l_len    ] = '_';
+       l_str[l_len +1 ] = '\0';
+    }
+      
+  }
+  return(l_str);
+}
+
+char *
+p_strdup_del_underscore(char *name)
+{
+  int   l_len;
+  char *l_str;
+  if(name == NULL)
+  {
+    return(g_strdup("\0"));
+  }
+
+  l_len = strlen(name);
+  l_str = g_strdup(name);
+  if(l_len > 0)
+  {
+    if (l_str[l_len-1] == '_')
+    {
+       l_str[l_len -1 ] = '\0';
+    }
+      
+  }
+  return(l_str);
+}
 
 /* ============================================================================
  * p_msg_win
@@ -255,7 +319,7 @@ int p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr)
  * p_alloc_basename
  *
  * build the basename from an images name
- * Extension and trailing "_0000" are cut off.
+ * Extension and trailing digits ("0000.xcf") are cut off.
  * return name or NULL (if malloc fails)
  * Output: number contains the integer representation of the stripped off
  *         number String. (or 0 if there was none)
@@ -286,7 +350,7 @@ char*  p_alloc_basename(char *imagename, long *number)
   }
   if(gap_debug) fprintf(stderr, "DEBUG p_alloc_basename (ext_off): '%s'\n", l_fname);
 
-  /* cut off trailing digits and underscore (_0000) */
+  /* cut off trailing digits (0000) */
   l_ptr = &l_fname[strlen(l_fname)];
   if(l_ptr != l_fname) l_ptr--;
   l_idx = 1;
@@ -301,10 +365,13 @@ char*  p_alloc_basename(char *imagename, long *number)
     }
     else
     {
-       if(*l_ptr == '_')
-       { 
-          *l_ptr = '\0';
-       }
+      /* do not cut off underscore any longer */
+      /*
+       * if(*l_ptr == '_')
+       * { 
+       *    *l_ptr = '\0';
+       * }
+       */
        break;
     }
   }
@@ -369,7 +436,7 @@ char*  p_alloc_fname(char *basename, long nr, char *extension)
   l_fname = (char *)g_malloc(strlen(basename)  + strlen(extension) + 8);
   if(l_fname != NULL)
   {
-    sprintf(l_fname, "%s_%04ld%s", basename, nr, extension);
+    sprintf(l_fname, "%s%04ld%s", basename, nr, extension);
   }
   return(l_fname);
 }    /* end p_alloc_fname */
@@ -530,7 +597,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
            { 
                /* check for files, with equal basename (frames)
                 * (length must be greater than basepart+extension
-                * because of the frame_nr part "_0000")
+                * because of the frame_nr part "0000")
                 */
                if((0 == strcmp(l_ptr, l_dummy))
                && ( strlen(l_dp->d_name) > strlen(l_dummy) + strlen(l_exptr)  ))
@@ -720,7 +787,7 @@ char * p_gzip (char *orig_name, char *new_name, char *zip)
  *           0  ... save the image (may be flattened)
  * ============================================================================
  */
-int p_decide_save_as(gint32 image_id)
+int p_decide_save_as(gint32 image_id, char *sav_name)
 {
   static char *l_msg = 
    "You are using a fileformat != xcf\nSave Operations may result\nin loss of layerinformation";
@@ -729,7 +796,8 @@ int p_decide_save_as(gint32 image_id)
   
   static t_but_arg  l_argv[3];
   int               l_argc;  
-  int               l_save_as_mode;  
+  int               l_save_as_mode;
+  GRunModeType      l_run_mode;  
 
   /* check if there are SAVE_AS_MODE settings (from privious calls within one gimp session) */
   l_save_as_mode = -1;
@@ -755,6 +823,11 @@ int p_decide_save_as(gint32 image_id)
     if(gap_debug) fprintf(stderr, "DEBUG: decide SAVE_AS_MODE %d\n", (int)l_save_as_mode);
     
     if(l_save_as_mode < 0) return -1;
+    l_run_mode = RUN_INTERACTIVE;
+  }
+  else
+  {
+    l_run_mode = RUN_WITH_LAST_VALS;
   }
 
   gimp_set_data (l_save_as_name, &l_save_as_mode, sizeof(l_save_as_mode));
@@ -765,7 +838,7 @@ int p_decide_save_as(gint32 image_id)
       gimp_image_flatten (image_id);
   }
 
-  return 0;
+  return(p_save_named_image(image_id, sav_name, l_run_mode));
 }	/* end p_decide_save_as */
 
 
@@ -806,7 +879,7 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode
 			       PARAM_STRING, sav_name, /* raw name ? */
 			       PARAM_END);
 
-  if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d\n", sav_name, (int)l_nlayers);
+  if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d image=%d drw=%d run_mode=%d\n", sav_name, (int)l_nlayers, (int)image_id, (int)l_drawable->id, (int)run_mode);
 
   g_free (l_layers_list);
   g_free (l_drawable);
@@ -943,11 +1016,7 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
       * To Do: Should warn the user at 1.st attempt to do this.
       */
       
-     l_rc = p_decide_save_as(image_id);
-     if(l_rc >= 0)
-     {
-        l_rc = p_save_named_image(image_id, l_tmpname, RUN_NONINTERACTIVE);
-     }
+     l_rc = p_decide_save_as(image_id, l_tmpname);
   } 
 
   if(l_rc < 0)
@@ -1273,7 +1342,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    /* save current frame  */   
    p_save_named_frame(ainfo_ptr->image_id, l_curr_name);
 
-   /* use a new name (_0001.xcf Konvention) */ 
+   /* use a new name (0001.xcf Konvention) */ 
    gimp_image_set_filename (ainfo_ptr->image_id, l_curr_name);
    g_free(l_curr_name);
 

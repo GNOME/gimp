@@ -1,3 +1,18 @@
+Thu Sep  2 22:31:11 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_lib.[ch]
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_mpege.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/gap/gap_split.c: applied patches from the GAP author
+	Wolfgang Hofer:
+
+	- Simplified naming convention for AnimFrames: under_score isn't
+  	  mandatory anymore.
+	- gimp_file_save is called INTERACTIVE on first call and 
+       	  RUN_WITH_LAST_VALUES later.
+
 Thu Sep  2 11:51:02 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gtkhwrapbox.[ch]

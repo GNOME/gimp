@@ -36,6 +36,7 @@
  */
 
 /* revision history
+ * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
  * 0.96.00; 1998/07/08   hof: first release
  */
@@ -211,6 +212,7 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
   static t_but_arg  b_argv[3];
   gint   l_rc;
   gint   l_idx;
+  char  *l_str;
 
   static char   l_buf[MBUF_SIZE];
   static char   l_startscript[MBUF_SIZE];
@@ -235,10 +237,12 @@ int p_mpege_dialog(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr, t_gap_mpeg_encoder
     b_argv[1].but_val  = 0;
     b_argv[2].but_txt  = "Gen + Encode";
     b_argv[2].but_val  = 1;
-  
-  sprintf (l_outfile, "%s.mpg", ainfo_ptr->basename);
-  sprintf (l_parfile, "%s.par_mpg", ainfo_ptr->basename);
-  sprintf (l_startscript, "%s.sh", ainfo_ptr->basename);
+
+  l_str = p_strdup_del_underscore(ainfo_ptr->basename);
+  sprintf (l_outfile, "%s.mpg", l_str);
+  sprintf (l_parfile, "%s.par_mpg", l_str);
+  sprintf (l_startscript, "%s.sh", l_str);
+  g_free(l_str);
 
   p_init_arr_arg(&argv[0], WGT_LABEL);
   argv[0].label_txt = &l_buf[0];
@@ -539,7 +543,7 @@ int p_mpeg2encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
     fprintf(l_fp, "MPEG-2 stream %s frames/sec\n", mp_ptr->framerate);
   }
   
-  fprintf(l_fp, "%s_%%04d   /* name of source files */\n", ainfo_ptr->basename);
+  fprintf(l_fp, "%s%%04d   /* name of source files */\n", ainfo_ptr->basename);
 
   fprintf(l_fp, "-         /* name of reconstructed images (\"-\": don't store) */\n");
   fprintf(l_fp, "-         /* name of intra quant matrix file     (\"-\": default matrix) */\n");
@@ -630,7 +634,6 @@ int p_mpeg2encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
   fprintf(l_fp, "read DUMMY\n");
   fclose(l_fp);
   
-
   return 0;  
 }
 
@@ -796,7 +799,7 @@ int p_mpeg_encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
   fprintf(l_fp, "#\n");
   fprintf(l_fp, "#\n");
 
-  fprintf(l_fp, "%s_*.%s  [%04d-%04d]\n", l_basename_ptr
+  fprintf(l_fp, "%s*.%s  [%04d-%04d]\n", l_basename_ptr
                                        , mp_ptr->ext
                                        , mp_ptr->from
                                        , mp_ptr->to);
@@ -884,7 +887,6 @@ int p_mpeg_encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
   fprintf(l_fp, "read DUMMY\n");
   fclose(l_fp);
   
-
   return 0;  
 }      /* end p_mpege_gen_parfile */
 

@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * 1.1.8a;  1999/08/31   hof: new: p_strdup_del_underscore and p_strdup_add_underscore
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
  * 0.96.02; 1998/08/05   hof: extended gap_dup (duplicate range instead of singele frame)
  *                            added gap_shift (framesequence shift)
@@ -94,7 +95,8 @@ gint32 p_load_image (char *lod_name);
 gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode);
 char*  p_alloc_fname(char *basename, long nr, char *extension);
 char*  p_gzip (char *orig_name, char *new_name, char *zip);
-
+char*  p_strdup_add_underscore(char *name);
+char*  p_strdup_del_underscore(char *name);
 
 /* animation menu fuctions provided by gap_lib.c */
 

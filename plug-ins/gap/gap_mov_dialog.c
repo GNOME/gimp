@@ -30,7 +30,8 @@
  */
 
 /* revision history:
- * gimp   1.1.15.1; 1999/05/08  hof: call fileselect in gtk+1.2 style 
+ * gimp   1.1.8a;   1999/08/31  hof: accept anim framenames without underscore '_'
+ * gimp   1.1.5a;   1999/05/08  hof: call fileselect in gtk+1.2 style 
  * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (did'nt work with gimp1.1.2)
  * version 0.98.00; 1998.11.28  hof: Port to GIMP 1.1: replaced buildmenu.h, apply layermask (before rotate)
  *                                   mov_imglayer_constrain must check for drawable_id -1
@@ -301,6 +302,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
 {
   GDrawable *l_drawable_ptr;
   gint       l_first, l_last;  
+  char      *l_str;
   t_mov_path_preview *path_ptr;
   static char l_pointfile_name[POINT_FILE_MAXLEN];
 
@@ -308,7 +310,9 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   if(gap_debug) printf("GAP-DEBUG: START p_move_dialog\n");
 
   l_pointfile_name[POINT_FILE_MAXLEN -1 ] = '\0';
-  sprintf(l_pointfile_name, "%s.path_points", mov_ptr->dst_ainfo_ptr->basename);
+  l_str = p_strdup_del_underscore(mov_ptr->dst_ainfo_ptr->basename);
+  sprintf(l_pointfile_name, "%s.path_points", l_str);
+  g_free(l_str);
 
   pvals = mov_ptr->val_ptr;
 

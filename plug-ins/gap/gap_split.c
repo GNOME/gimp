@@ -26,7 +26,8 @@
  */
 
 /* revision history
- * gimp   1.1.15.1;  1999/05/08  hof: bugix (dont mix GDrawableType with GImageType)
+ * 1.1.8a;  1999/08/31   hof: accept anim framenames without underscore '_'
+ * 1.1.5a;  1999/05/08   hof: bugix (dont mix GDrawableType with GImageType)
  * 0.96.00; 1998/07/01   hof: - added scale, resize and crop 
  *                              (affects full range == all anim frames)
  *                            - now using gap_arr_dialog.h
@@ -79,6 +80,7 @@ p_split_image(t_anim_info *ainfo_ptr,
   gint    l_src_offset_x, l_src_offset_y;    /* layeroffsets as they were in src_image */
   gdouble l_percentage, l_percentage_step;
   char   *l_sav_name;
+  char   *l_str;
   gint32  l_rc;
   int     l_idx;
   long    l_layer_idx;
@@ -151,9 +153,11 @@ p_split_image(t_anim_info *ainfo_ptr,
        
        
        /* build the name for output image */
-       l_sav_name = p_alloc_fname(ainfo_ptr->basename,
+       l_str = p_strdup_add_underscore(ainfo_ptr->basename);
+       l_sav_name = p_alloc_fname(l_str,
                                   (l_idx +1),       /* start at 1 (not at 0) */
                                   new_extension);
+       g_free(l_str);
        if(l_sav_name != NULL)
        {
          /* save with selected save procedure
