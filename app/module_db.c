@@ -268,16 +268,16 @@ module_db_browser_new (void)
   gtk_window_set_wmclass (GTK_WINDOW (shell), "module_db_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), _("Module DB"));
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  vbox = gtk_vbox_new (FALSE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   listbox = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (hbox), listbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
   gtk_widget_set_usize (listbox, 125, 100);
   gtk_widget_show (listbox);
 
@@ -291,10 +291,6 @@ module_db_browser_new (void)
   gimp_set_foreach (modules, make_list_item, st);
 
   gtk_widget_show (st->list);
-
-  vbox = gtk_vbox_new (FALSE, 10);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
 
   st->table = gtk_table_new (5, NUM_INFO_LINES + 1, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), st->table, FALSE, FALSE, 0);

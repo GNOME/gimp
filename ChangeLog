@@ -1,5 +1,11 @@
 1999-08-26  Tomas Ogren  <stric@ing.umu.se>
 
+	* app/module_db.c: Put the list above the description instead of
+	to the left in the module browser. Fits much better on the screen and
+	looks better.
+
+1999-08-26  Tomas Ogren  <stric@ing.umu.se>
+
 	* app/info_window.c: i18n fix
 
 Wed Aug 25 12:17:05 PDT 1999 Manish Singh <yosh@gimp.org>
