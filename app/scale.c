@@ -100,7 +100,6 @@ change_scale (GDisplay *gdisp,
 {
   guchar scalesrc, scaledest;
   gdouble offset_x, offset_y;
-  glong sx, sy;
 
   /* user zoom control, so resolution versions not needed -- austin */
   scalesrc = SCALESRC (gdisp);
@@ -147,9 +146,6 @@ change_scale (GDisplay *gdisp,
 	scaledest = 0x10;
       break;
     }
-
-  sx = (gdisp->gimage->width * scaledest) / scalesrc;
-  sy = (gdisp->gimage->height * scaledest) / scalesrc;
 
   gdisp->scale = (scaledest << 8) + scalesrc;
 

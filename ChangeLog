@@ -1,5 +1,14 @@
+2003-01-14  Sven Neumann  <sven@gimp.org>
+
+	* app/scale.c: removed two lines which have become obsolete after
+	my latest change.
+
+	* plug-ins/perl/examples/tex-to-float (tex_string_to_pgm): applied
+	a patch from Yeti <yeti@physics.muni.cz> that makes the plug-in
+	handle the output of newer versions of dvips (fixes #102435).
+
 2003-01-13  Manish Singh  <yosh@gimp.org>
-                                                                                
+
         * configure.in: Partially address #102058 with a --with-shm configure
         option. Defaults to sysv except on OS X, where it is none.
 
