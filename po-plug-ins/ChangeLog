@@ -1,3 +1,8 @@
+2003-11-07  Hasbullah Bin Pit <sebol@ikhlas.com>
+
+	* ms.po: Updated fix for bug #125360 by
+                MIMOS Open Source Development Group <ismas@mimos.my>
+
 2003-11-05  Abel Cheung  <maddog@linux.org.hk>
 
 	* zh_TW.po: Updated traditional Chinese translation.
