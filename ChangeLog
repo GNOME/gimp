@@ -1,3 +1,10 @@
+Wed Mar  8 12:40:53 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/xbm.c: Type of written array should
+	be unsigned, as that's the type of data we're initializing
+	it with.  Cast back to signed for passing to XCreateBitmapFromData()
+	etc.
+
 2000-03-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/disp_callbacks.c: show GIMP_BAD_CURSOR if we have no layers.

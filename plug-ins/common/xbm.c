@@ -1024,7 +1024,7 @@ save_image (gchar  *filename,
     }
 
   fprintf (fp, "static %s %s_bits[] = {\n  ",
-	   xsvals.x10_format ? "short" : "char", prefix);
+	   xsvals.x10_format ? "unsigned short" : "unsigned char", prefix);
 
   /* Allocate a new set of pixels. */
   tileheight = gimp_tile_height ();
