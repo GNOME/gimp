@@ -137,8 +137,7 @@ struct _GImage
   int instance_count;                 /*  number of instances          */
   int ref_count;                      /*  number of references         */
 
-  TileManager *shadow;                /*  shadow buffer tiles          */
-  struct _Canvas *shadow_canvas;
+  struct _Canvas *shadow;                /*  shadow buffer tiles          */
 
   int ID;                             /*  Unique gimage identifier     */
 
@@ -148,10 +147,7 @@ struct _GImage
   int proj_type;                      /*  type of the projection image */
   int proj_bytes;                     /*  bpp in projection image      */
   int proj_level;                     /*  projection level             */
-  TileManager *projection;            /*  The projection--layers &     */
-      
-                                      /*  channels                     */
-  struct _Canvas *projection_canvas;  /*  The projection--layers &     */
+  struct _Canvas *projection;         /*  The projection--layers &     */
                                       /*  channels                     */
 
   GList *guides;                      /*  guides                       */
@@ -194,10 +190,8 @@ void            gimage_resize                 (GImage *, int, int, int, int);
 void            gimage_scale                  (GImage *, int, int);
 GImage *        gimage_get_named              (char *);
 GImage *        gimage_get_ID                 (int);
-TileManager *   gimage_shadow                 (GImage *, int, int, int);
-struct _Canvas *gimage_shadow_canvas          (GImage *, int, int, Tag);
+struct _Canvas *gimage_shadow                 (GImage *, int, int, Tag);
 void            gimage_free_shadow            (GImage *);
-void            gimage_free_shadow_canvas     (GImage *);
 void            gimage_delete                 (GImage *);
 
 void            gimage_apply_image            ();
@@ -260,7 +254,9 @@ Channel *       gimage_add_channel            (GImage *, Channel *, int);
 Channel *       gimage_remove_channel         (GImage *, Channel *);
 void            gimage_construct              (GImage *, int, int, int, int);
 void            gimage_invalidate             (GImage *, int, int, int, int, int, int, int, int);
+#if 0
 void            gimage_validate               (TileManager *, Tile *, int);
+#endif
 void            gimage_inflate                (GImage *);
 void            gimage_deflate                (GImage *);
 
@@ -285,8 +281,7 @@ unsigned char * gimage_cmap                   (GImage *);
 
 /*  projection access functions  */
 
-TileManager *   gimage_projection             (GImage *);
-struct _Canvas *gimage_projection_canvas      (GImage *);
+struct _Canvas *gimage_projection             (GImage *);
 int             gimage_projection_type        (GImage *);
 int             gimage_projection_bytes       (GImage *);
 int             gimage_projection_opacity     (GImage *);
@@ -295,8 +290,7 @@ void            gimage_projection_realloc     (GImage *);
 
 /*  composite access functions  */
 
-TileManager    *gimage_composite              (GImage *);
-struct _Canvas *gimage_composite_canvas       (GImage *);
+struct _Canvas *gimage_composite              (GImage *);
 int             gimage_composite_type         (GImage *);
 int             gimage_composite_bytes        (GImage *);
 TempBuf *       gimage_composite_preview      (GImage *, ChannelType, int, int);

@@ -26,7 +26,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "histogram.h"
-/*#include "tile_manager.h"*/
 
 #define WAITING 0
 #define WORKING 1

@@ -179,10 +179,10 @@ shmbuf_height  (
 
 
 RefRC 
-shmbuf_portion_ref  (
-                      ShmBuf * f,
-                      int x,
-                      int y
+shmbuf_portion_refro  (
+                       ShmBuf * f,
+                       int x,
+                       int y
                       )
 {
   RefRC rc = REFRC_FAIL;

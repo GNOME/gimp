@@ -98,7 +98,7 @@ guint          canvas_portion_alloc     (Canvas *, int x, int y);
 guint          canvas_portion_unalloc   (Canvas *, int x, int y);
 
 /* allocate and/or swap in the backing store for this pixel */
-RefRC          canvas_portion_ref       (Canvas *, int x, int y);
+RefRC          canvas_portion_refro     (Canvas *, int x, int y);
 RefRC          canvas_portion_refrw     (Canvas *, int x, int y);
 RefRC          canvas_portion_unref     (Canvas *, int x, int y);
 

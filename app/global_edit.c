@@ -35,9 +35,10 @@
 #include "tools.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
+#define TileManager Canvas
+#define tile_manager_destroy canvas_delete
 
 /*  The named paste dialog  */
 typedef struct _PasteNamedDlg PasteNamedDlg;
@@ -55,7 +56,6 @@ typedef struct _named_buffer NamedBuffer;
 struct _named_buffer
 {
   TileManager * buf;
-  Canvas *buf_canvas;
   char *        name;
 };
 
@@ -65,16 +65,16 @@ GSList * named_buffers = NULL;
 
 /*  The global edit buffer  */
 TileManager * global_buf = NULL;
-Canvas *global_buf_canvas = NULL;
+
 
 /*  Crop the buffer to the size of pixels with non-zero transparency */
 
-Canvas *
-crop_buffer_16 (Canvas *canvas,
+TileManager *
+crop_buffer (TileManager *tiles,
 	     int          border)
 {
   PixelArea PR;
-  Canvas *new_canvas;
+  TileManager *new_tiles;
   int num_channels, alpha;
   guchar * data;
   int empty;
@@ -83,20 +83,20 @@ crop_buffer_16 (Canvas *canvas,
   int ex, ey;
   int found;
   void * pr;
-  COLOR16_NEW (black_color, canvas_tag(canvas) );
+  COLOR16_NEW (black_color, canvas_tag(tiles) );
   COLOR16_INIT (black_color);
   color16_black (&black_color);
 
-  num_channels = tag_num_channels (canvas_tag (canvas));
+  num_channels = tag_num_channels (canvas_tag (tiles));
   alpha = num_channels - 1;
 
   /*  go through and calculate the bounds  */
-  x1 = canvas_width (canvas);
-  y1 = canvas_height (canvas);
+  x1 = canvas_width (tiles);
+  y1 = canvas_height (tiles);
   x2 = 0;
   y2 = 0;
 
-  pixelarea_init (&PR, canvas, NULL, 
+  pixelarea_init (&PR, tiles, 
 	0, 0, x1, y1, FALSE);
   for (pr = pixelarea_register (1, &PR); 
 	pr != NULL; 
@@ -128,18 +128,18 @@ crop_buffer_16 (Canvas *canvas,
 	}
     }
 
-  x2 = BOUNDS (x2 + 1, 0, canvas_width (canvas));
-  y2 = BOUNDS (y2 + 1, 0, canvas_height (canvas));
+  x2 = BOUNDS (x2 + 1, 0, canvas_width (tiles));
+  y2 = BOUNDS (y2 + 1, 0, canvas_height (tiles));
 
-  empty = (x1 == canvas_width (canvas) && y1 == canvas_height (canvas));
+  empty = (x1 == canvas_width (tiles) && y1 == canvas_height (tiles));
 
   /*  If there are no visible pixels, return NULL */
   if (empty)
-    new_canvas = NULL;
+    new_tiles = NULL;
   /*  If no cropping, return original buffer  */
-  else if (x1 == 0 && y1 == 0 && x2 == canvas_width (canvas) &&
-	   y2 == canvas_height (canvas) && border == 0)
-    new_canvas = canvas;
+  else if (x1 == 0 && y1 == 0 && x2 == canvas_width (tiles) &&
+	   y2 == canvas_height (tiles) && border == 0)
+    new_tiles = tiles;
   /*  Otherwise, crop the original area  */
   else
     {
@@ -148,47 +148,47 @@ crop_buffer_16 (Canvas *canvas,
 
       new_width = (x2 - x1) + border * 2;
       new_height = (y2 - y1) + border * 2;
-      new_canvas = canvas_new (canvas_tag (canvas), new_width, new_height, STORAGE_FLAT);
+      new_tiles = canvas_new (canvas_tag (tiles), new_width, new_height, STORAGE_FLAT);
 
       /*  If there is a border, make sure to clear the new tiles first  */
       if (border)
 	{
-	  pixelarea_init (&destPR, new_canvas, NULL, 
+	  pixelarea_init (&destPR, new_tiles, 
 		0, 0, new_width, border, TRUE);
 	  color_area (&destPR, &black_color);
-	  pixelarea_init (&destPR, new_canvas, NULL, 
+	  pixelarea_init (&destPR, new_tiles, 
 		0, border, border, (y2 - y1), TRUE);
 	  color_area (&destPR, &black_color);
-	  pixelarea_init (&destPR, new_canvas, NULL,
+	  pixelarea_init (&destPR, new_tiles,
 		new_width - border, border, border, (y2 - y1), TRUE);
 	  color_area (&destPR, &black_color);
-	  pixelarea_init (&destPR, new_canvas, NULL,
+	  pixelarea_init (&destPR, new_tiles,
 		0, new_height - border, new_width, border, TRUE);
 	  color_area (&destPR, &black_color);
 	}
 
-      pixelarea_init (&srcPR, canvas, NULL, 
+      pixelarea_init (&srcPR, tiles, 
 		x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&destPR, new_canvas, NULL, 
+      pixelarea_init (&destPR, new_tiles, 
 		border, border, (x2 - x1), (y2 - y1), TRUE);
 
       copy_area (&srcPR, &destPR);
 /*
 	we dont have a way of setting this in canvas....
-      canvas->x = x1;
-      canvas->y = y1;
+      tiles->x = x1;
+      tiles->y = y1;
 */
     }
 
-  return new_canvas;
+  return new_tiles;
 }
 
-Canvas *
-edit_cut_16 (GImage *gimage,
+TileManager *
+edit_cut (GImage *gimage,
 	  GimpDrawable *drawable)
 {
-  Canvas *cut;
-  Canvas *cropped_cut;
+  TileManager *cut;
+  TileManager *cropped_cut;
   int empty;
 
   if (!gimage || drawable == NULL)
@@ -206,10 +206,10 @@ edit_cut_16 (GImage *gimage,
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && empty == FALSE)
     {
-      cropped_cut = crop_buffer_16 (cut, 0);
+      cropped_cut = crop_buffer (cut, 0);
 
       if (cropped_cut != cut)
-	canvas_delete (cut);
+	tile_manager_destroy (cut);
     }
   else if (cut)
     cropped_cut = cut;
@@ -222,10 +222,10 @@ edit_cut_16 (GImage *gimage,
   if (cropped_cut)
     {
       /*  Free the old global edit buffer  */
-      if (global_buf_canvas)
-	canvas_delete(global_buf_canvas);
+      if (global_buf)
+	tile_manager_destroy (global_buf);
       /*  Set the global edit buffer  */
-      global_buf_canvas = cropped_cut;
+      global_buf = cropped_cut;
 
       return cropped_cut;
     }
@@ -233,12 +233,12 @@ edit_cut_16 (GImage *gimage,
     return NULL;
 }
 
-Canvas *
-edit_copy_16 (GImage *gimage,
+TileManager *
+edit_copy (GImage *gimage,
 	   GimpDrawable *drawable)
 {
-  Canvas * copy;
-  Canvas * cropped_copy;
+  TileManager * copy;
+  TileManager * cropped_copy;
   int empty;
 
   if (!gimage || drawable == NULL)
@@ -253,10 +253,10 @@ edit_copy_16 (GImage *gimage,
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && empty == FALSE)
     {
-      cropped_copy = crop_buffer_16 (copy, 0);
+      cropped_copy = crop_buffer (copy, 0);
 
       if (cropped_copy != copy)
-        canvas_delete (copy);
+       tile_manager_destroy (copy);
     }
   else if (copy)
     cropped_copy = copy;
@@ -266,10 +266,10 @@ edit_copy_16 (GImage *gimage,
   if (cropped_copy)
     {
       /*  Free the old global edit buffer  */
-      if (global_buf_canvas)
-	canvas_delete (global_buf_canvas);
+      if (global_buf)
+	tile_manager_destroy (global_buf);
       /*  Set the global edit buffer  */
-      global_buf_canvas = cropped_copy;
+      global_buf = cropped_copy;
 
       return cropped_copy;
     }
@@ -278,9 +278,9 @@ edit_copy_16 (GImage *gimage,
 }
 
 int
-edit_paste_16 (GImage      *gimage,
+edit_paste (GImage      *gimage,
 	    GimpDrawable *drawable,
-	    Canvas       *paste,
+	    TileManager *paste,
 	    int          paste_into)
 {
   Layer * float_layer;
@@ -327,7 +327,7 @@ int
 edit_clear (GImage *gimage,
 	    GimpDrawable *drawable)
 {
-  Canvas *buf_canvas;
+  TileManager *buf_tiles;
   PixelArea bufPR;
   int x1, y1, x2, y2;
   Tag d_tag = drawable_tag (drawable);
@@ -338,21 +338,17 @@ edit_clear (GImage *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-/* This should happen automatically with color_area
-  if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-*/
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return FALSE;
 
-  buf_canvas = canvas_new (d_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
-  pixelarea_init (&bufPR, buf_canvas, NULL, 
+  buf_tiles = canvas_new (d_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+  pixelarea_init (&bufPR, buf_tiles, 
 	0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_area (&bufPR, &background_color);
 
-  pixelarea_init (&bufPR, buf_canvas, NULL, 
+  pixelarea_init (&bufPR, buf_tiles, 
 	0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimage_apply_painthit(gimage, drawable, NULL, 
 			&bufPR, 1, 1.0, 
@@ -361,8 +357,8 @@ edit_clear (GImage *gimage,
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
-  /*  free the temporary canvas  */
-  canvas_delete (buf_canvas);
+  /*  free the temporary tiles  */
+  tile_manager_destroy (buf_tiles);
 
   return TRUE;
 }
@@ -371,7 +367,7 @@ int
 edit_fill (GImage *gimage,
 	   GimpDrawable *drawable)
 {
-  Canvas *buf_canvas;
+  TileManager *buf_tiles;
   PixelArea bufPR;
   int x1, y1, x2, y2;
   Tag d_tag = drawable_tag (drawable);
@@ -382,21 +378,17 @@ edit_fill (GImage *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-/* this should happen automatically if drawable has alpha
-  if (tag_alpha (d_tag) == ALPHA_YES))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-*/
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return FALSE;
 
-  buf_canvas = canvas_new (d_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
-  pixelarea_init (&bufPR, buf_canvas, NULL, 
+  buf_tiles = canvas_new (d_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+  pixelarea_init (&bufPR, buf_tiles, 
 	0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_area (&bufPR, &background_color);
 
-  pixelarea_init (&bufPR, buf_canvas, NULL, 
+  pixelarea_init (&bufPR, buf_tiles, 
 	0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimage_apply_painthit (gimage, drawable, NULL, &bufPR, 1, 
 			1.0, NORMAL_MODE, x1, y1); 
@@ -404,8 +396,8 @@ edit_fill (GImage *gimage,
   /*  update the image  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
-  /*  free the temporary canvas  */
-  canvas_delete (buf_canvas);
+  /*  free the temporary tiles  */
+  tile_manager_destroy (buf_tiles);
 
   return TRUE;
 }
@@ -419,7 +411,7 @@ global_edit_cut (void *gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  if (!edit_cut_16 (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
+  if (!edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
     return FALSE;
   else
     {
@@ -436,7 +428,7 @@ global_edit_copy (void *gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  if (!edit_copy_16 (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
+  if (!edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage)))
     return FALSE;
   else
     return TRUE;
@@ -446,15 +438,13 @@ int
 global_edit_paste (void *gdisp_ptr,
 		   int   paste_into)
 {
-  GDisplay *gdisp = (GDisplay *) gdisp_ptr;
-  GimpDrawable *d = gimage_active_drawable (gdisp->gimage);
+  GDisplay *gdisp;
 
   /*  stop any active tool  */
+  gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  if (!edit_paste_16 (gdisp->gimage, 
-		d, 
-		global_buf_canvas, paste_into))
+  if (!edit_paste (gdisp->gimage, gimage_active_drawable (gdisp->gimage), global_buf, paste_into))
     return FALSE;
   else
     {
@@ -467,9 +457,10 @@ global_edit_paste (void *gdisp_ptr,
 void
 global_edit_free ()
 {
-  if (global_buf_canvas)
-     canvas_delete (global_buf_canvas);
-  global_buf_canvas = NULL;
+  if (global_buf)
+    tile_manager_destroy (global_buf);
+
+  global_buf = NULL;
 }
 
 /*********************************************/
@@ -508,9 +499,9 @@ named_buffer_paste_foreach (GtkWidget *w,
     {
       pn_dlg = (PasteNamedDlg *) client_data;
       nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
-      edit_paste_16 (pn_dlg->gdisp->gimage,
+      edit_paste (pn_dlg->gdisp->gimage,
 		  gimage_active_drawable (pn_dlg->gdisp->gimage),
-		  nb->buf_canvas, pn_dlg->paste_into);
+		  nb->buf, pn_dlg->paste_into);
     }
 }
 
@@ -547,7 +538,7 @@ named_buffer_delete_foreach (GtkWidget *w,
       nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
       named_buffers = g_slist_remove (named_buffers, (void *) nb);
       g_free (nb->name);
-      canvas_delete (nb->buf_canvas);
+      tile_manager_destroy (nb->buf);
       g_free (nb);
     }
 }
@@ -668,78 +659,88 @@ paste_named_buffer (GDisplay *gdisp)
 }
 
 static void
-new_named_buffer_callback (GtkWidget *w,
-			   gpointer   client_data,
-			   gpointer   call_data)
+new_named_buffer (TileManager *tiles,
+                 char        *name)
 {
   PixelArea srcPR, destPR;
-  Canvas *canvas;
   NamedBuffer *nb;
 
-  canvas = (Canvas *) client_data;
+  if (! tiles) return;
+
   nb = (NamedBuffer *) g_malloc (sizeof (NamedBuffer));
 
-  nb->buf_canvas = canvas_new (canvas_tag (canvas), 
-			canvas_width (canvas), canvas_height (canvas), 
+  nb->buf  = canvas_new (canvas_tag (tiles), 
+	 		canvas_width (tiles), canvas_height (tiles), 
 			STORAGE_FLAT);
-  pixelarea_init (&srcPR, canvas, NULL, 
-		0, 0, canvas_width (canvas), canvas_height (canvas), FALSE);
-  pixelarea_init (&destPR, nb->buf_canvas, NULL, 
-		0, 0, canvas_width (canvas), canvas_height (canvas), TRUE);
+  pixelarea_init (&srcPR, tiles, 
+		0, 0, canvas_width (tiles), canvas_height (tiles), FALSE);
+  pixelarea_init (&destPR, nb->buf, 
+		0, 0, canvas_width (tiles), canvas_height (tiles), TRUE);
   copy_area (&srcPR, &destPR);
 
-  nb->name = g_strdup ((char *) call_data);
+  nb->name = g_strdup ((char *) name);
   named_buffers = g_slist_append (named_buffers, (void *) nb);
 }
 
 static void
-new_named_buffer (Canvas *new_canvas)
+cut_named_buffer_callback (GtkWidget *w,
+			   gpointer   client_data,
+			   gpointer   call_data)
 {
-  /*  Create the dialog box to ask for a name  */
-  query_string_box ("Named Buffer", "Enter a name for this buffer", NULL,
-		    new_named_buffer_callback, new_canvas);
+  TileManager *new_tiles;
+  GDisplay *gdisp;
+  char *name;
+
+  gdisp = (GDisplay *) client_data;
+  name = g_strdup ((char *) call_data);
+  
+  new_tiles = edit_cut (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  if (new_tiles) 
+    new_named_buffer (new_tiles, name);
+  gdisplays_flush ();
 }
 
 int
 named_edit_cut (void *gdisp_ptr)
 {
-  Canvas *new_canvas;
   GDisplay *gdisp;
 
   /*  stop any active tool  */
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  new_canvas = edit_cut_16 (gdisp->gimage, 
-	gimage_active_drawable (gdisp->gimage));
+  query_string_box ("Cut Named", "Enter a name for this buffer", NULL,
+		    cut_named_buffer_callback, gdisp);
+  return TRUE;
+}
 
-  if (! new_canvas)
-    return FALSE;
-  else
-    {
-      new_named_buffer (new_canvas);
-      gdisplays_flush ();
-      return TRUE;
-    }
+static void
+copy_named_buffer_callback (GtkWidget *w,
+			    gpointer   client_data,
+			    gpointer   call_data)
+{
+  TileManager *new_tiles;
+  GDisplay *gdisp;
+  char *name;
+
+  gdisp = (GDisplay *) client_data;
+  name = g_strdup ((char *) call_data);
+  
+  new_tiles = edit_copy (gdisp->gimage, gimage_active_drawable (gdisp->gimage));
+  if (new_tiles) 
+    new_named_buffer (new_tiles, name);
 }
 
 int
 named_edit_copy (void *gdisp_ptr)
 {
-  Canvas *new_canvas;
   GDisplay *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  new_canvas = edit_copy_16 (gdisp->gimage, 
-	gimage_active_drawable (gdisp->gimage));
-
-  if (! new_canvas)
-    return FALSE;
-  else
-    {
-      new_named_buffer (new_canvas);
-      return TRUE;
-    }
+  
+  query_string_box ("Copy Named", "Enter a name for this buffer", NULL,
+		    copy_named_buffer_callback, gdisp);
+  return TRUE;
 }
 
 int
@@ -763,7 +764,7 @@ named_buffers_free ()
   while (list)
     {
       nb = (NamedBuffer *) list->data;
-      canvas_delete (nb->buf_canvas);
+      tile_manager_destroy (nb->buf);
       g_free (nb->name);
       g_free (nb);
       list = g_slist_next (list);

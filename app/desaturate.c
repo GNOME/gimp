@@ -90,9 +90,9 @@ desaturate (GimpDrawable *drawable)
     return;
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+  pixelarea_init (&src_area, drawable_data (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+  pixelarea_init (&dest_area, drawable_shadow (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -108,7 +108,7 @@ desaturate (GimpDrawable *drawable)
 	}
     }
 
-  drawable_merge_shadow_canvas (drawable, TRUE);
+  drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 

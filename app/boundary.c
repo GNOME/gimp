@@ -126,7 +126,7 @@ find_empty_segs (PixelArea  *maskPR,
     }
 
   /*get pixelarea for scanline from start to end */
-  pixelarea_init (&area, maskPR->canvas, NULL, start, scanline, end, 1, FALSE);  
+  pixelarea_init (&area, maskPR->canvas, start, scanline, end, 1, FALSE);  
 
   empty_segs[(*num_empty)++] = 0;
   last = -1;
@@ -364,6 +364,7 @@ find_mask_boundary (PixelArea  *maskPR,
 		    int           y2)
 {
   BoundSeg * new_segs = NULL;
+
   /*  The mask paramater can be any PixelRegion.  If the region
    *  has more than 1 bytes/pixel, the last byte of each pixel is
    *  used to determine the boundary outline.
@@ -386,6 +387,7 @@ find_mask_boundary (PixelArea  *maskPR,
   /*  Return the new boundary  */
   return new_segs;
 }
+
 
 /************************/
 /*  Sorting a Boundary  */

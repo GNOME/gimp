@@ -165,11 +165,11 @@ flatbuf_height  (
 
 
 RefRC 
-flatbuf_portion_ref  (
-                      FlatBuf * f,
-                      int x,
-                      int y
-                      )
+flatbuf_portion_refro  (
+                        FlatBuf * f,
+                        int x,
+                        int y
+                        )
 {
   RefRC rc = REFRC_FAIL;
   

@@ -129,8 +129,8 @@ static void            levels_gamma_text_update       (GtkWidget *, gpointer);
 static void            levels_high_input_text_update  (GtkWidget *, gpointer);
 static void            levels_low_output_text_update  (GtkWidget *, gpointer);
 static void            levels_high_output_text_update (GtkWidget *, gpointer);
-static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, LevelsDialog *);
 static gint            levels_input_da_events         (GtkWidget *, GdkEvent *, LevelsDialog *);
+static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, LevelsDialog *);
 static void            levels_free_transfers          (LevelsDialog *);
 static void            levels_calculate_transfers_ui  (LevelsDialog *);
 
@@ -1102,8 +1102,6 @@ levels_calculate_transfers_ui (LevelsDialog *ld)
       {
 	guint8 low_input = (*levels_get_low_input)(ld) * 255;
 	guint8 high_input = (*levels_get_high_input)(ld) * 255;
-	guint8 low_output = (*levels_get_low_output)(ld) * 255;
-	guint8 high_output = (*levels_get_high_output)(ld) * 255;
 	for (i = 0; i < 256; i++)
 	  {
 	    /*  determine input intensity  */
@@ -1152,7 +1150,7 @@ levels_histogram_info (PixelArea     *src_area,
   Tag src_tag = pixelarea_tag (src_area);
   gint src_num_channels = tag_num_channels (src_tag);
   Tag mask_tag;
-  gint mask_num_channels;
+  gint mask_num_channels = 0;
   LevelsDialog *ld;
   guchar *src, *mask;
   guint8 *s, *m;
@@ -1340,15 +1338,15 @@ tools_new_levels ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
   tool->button_press_func = levels_button_press;
   tool->button_release_func = levels_button_release;
   tool->motion_func = levels_motion;
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = levels_cursor_update;
   tool->control_func = levels_control;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -1532,7 +1530,6 @@ levels_new_dialog ()
 
   /*  low input text  */
   ld->low_input_text = gtk_entry_new ();
-/*gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), "0");*/
   gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), ui_strings[LOW_INPUT_STRING]);
   gtk_widget_set_usize (ld->low_input_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->low_input_text, FALSE, FALSE, 0);
@@ -1554,7 +1551,6 @@ levels_new_dialog ()
 
   /* high input text  */
   ld->high_input_text = gtk_entry_new ();
-/*gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), "255");*/
   gtk_entry_set_text (GTK_ENTRY (ld->high_input_text), ui_strings[HIGH_INPUT_STRING]);
   gtk_widget_set_usize (ld->high_input_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->high_input_text, FALSE, FALSE, 0);
@@ -1618,7 +1614,6 @@ levels_new_dialog ()
 
   /*  low output text  */
   ld->low_output_text = gtk_entry_new ();
-/*gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), "0");*/
   gtk_entry_set_text (GTK_ENTRY (ld->low_output_text), ui_strings[LOW_OUTPUT_STRING]);
   gtk_widget_set_usize (ld->low_output_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->low_output_text, FALSE, FALSE, 0);
@@ -1629,7 +1624,6 @@ levels_new_dialog ()
 
   /*  high output text  */
   ld->high_output_text = gtk_entry_new ();
-/*gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), "255");*/
   gtk_entry_set_text (GTK_ENTRY (ld->high_output_text), ui_strings[HIGH_OUTPUT_STRING]);
   gtk_widget_set_usize (ld->high_output_text, TEXT_WIDTH, 25);
   gtk_box_pack_start (GTK_BOX (hbox), ld->high_output_text, FALSE, FALSE, 0);
@@ -1843,7 +1837,9 @@ levels_preview (LevelsDialog *ld)
   if (!ld->image_map)
     g_warning ("No image map");
   (*levels_calculate_transfers) (ld);
+  active_tool->preserve = TRUE;
   image_map_apply_16 (ld->image_map, levels, (void *) ld);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -2047,6 +2043,7 @@ levels_ok_callback (GtkWidget *widget,
   }
 
   active_tool->preserve = FALSE;
+
   ld->image_map = NULL;
 }
 
@@ -2550,9 +2547,9 @@ levels_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+      pixelarea_init (&src_area, drawable_data (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -2560,7 +2557,7 @@ levels_invoker (Argument *args)
 		pr = pixelarea_process (pr))
 	levels (&src_area, &dest_area, (void *) &ld);
 
-      drawable_merge_shadow_canvas (drawable, TRUE);
+      drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 

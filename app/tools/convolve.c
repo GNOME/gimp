@@ -40,7 +40,7 @@ typedef enum
 
 /*  forward function declarations  */
 static void         calculate_matrix     (ConvolveType, double);
-static void         integer_matrix       (float *, int *, int, int);
+static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
 static void        *convolve_non_gui_paint_func (PaintCore *, GimpDrawable *, int);
@@ -233,83 +233,99 @@ tools_free_convolve (Tool *tool)
   paint_core_free (tool);
 }
 
+#define FIXME
+  /* something is hosed here, convolve progressively darkens the area
+     it is working on */
+  
 static void
 convolve_motion (PaintCore *paint_core,
 		 GimpDrawable *drawable)
 {
   GImage *gimage;
   Tag tag = drawable_tag (drawable);
-  Canvas *painthit_canvas; 
+  Canvas * painthit_canvas; 
   PixelArea src_area, painthit_area;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  if ( tag_format (tag) == FORMAT_INDEXED )
+  if (tag_format (tag) == FORMAT_INDEXED )
     return;
   
-  /* Retrieve the painthit_canvas */
   painthit_canvas = paint_core_16_area (paint_core, drawable);
-  pixelarea_init (&painthit_area, painthit_canvas, NULL, 0, 0, 0, 0, TRUE);
 
-  /* Set up src_area with the drawable */ 
-  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
-		   paint_core->x, paint_core->y, paint_core->w, paint_core->h, FALSE);
-
+  /* check if we actually need to convolve */
   if (paint_core->w >= matrix_size && paint_core->h >= matrix_size)
-  {
-    /* Copy the pixels from the drawable to a temp
-       canvas, convolve that and place the result in
-       the painthit_canvas. */
+    {
+      /* the area is large enough to convolve */
+      Canvas * temp_canvas;
+      PixelArea temp_area;
+
+      temp_canvas = canvas_new (tag_set_alpha (tag, ALPHA_YES),
+                                paint_core->w, paint_core->h,
+                                STORAGE_FLAT);
+
+#define FIXME
+      /* this is missing the multiply/separate alpha steps if the
+         source drawable has an alpha channel */
+      
+      /* copy data to a flat buffer since convolve_area doesn;t like
+         tiled buffers */
+      pixelarea_init (&src_area, drawable_data (drawable),
+                      paint_core->x, paint_core->y,
+                      paint_core->w, paint_core->h,
+                      FALSE);
+      pixelarea_init (&temp_area, temp_canvas,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+      copy_area (&src_area, &temp_area);
+
+#define FIXME
+      /* these refs should really be done inside the area function via
+         a pixelarea_process() loop.  the idea with the area funcs is
+         that they handle all the messy details of reffing so that the
+         high level code doesn't need to worry about it */
+      canvas_portion_refro (temp_canvas, 0, 0);
+      canvas_portion_refrw (painthit_canvas, 0, 0);
+
+      /* convolve from temp_area to painthit_area */    
+      pixelarea_init (&temp_area, temp_canvas,
+                      0, 0,
+                      0, 0,
+                      FALSE);  
+      pixelarea_init (&painthit_area, painthit_canvas,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+      convolve_area (&temp_area, &painthit_area,
+                     matrix, matrix_size, matrix_divisor, NORMAL);
+
+      canvas_portion_unref (painthit_canvas, 0, 0);
+      canvas_portion_unref (temp_canvas, 0, 0);
     
-    Canvas *temp_canvas;
-    PixelArea temp_area;
-    Tag temp_tag;
-     
-    temp_tag = tag_set_alpha (tag, ALPHA_YES);
-    temp_canvas = canvas_new ( temp_tag, paint_core->w, paint_core->h, STORAGE_FLAT);
-
-
-    /* these refs should really be done inside the area function via a
-       pixelarea_process() loop.  the idea with the area funcs is that
-       they handle all the messy details of reffing so that the high
-       level code doesn't need to worry about it */
-    canvas_portion_ref ( temp_canvas, 0, 0 );
-    canvas_portion_ref ( painthit_canvas, 0, 0 );
-
-    
-    pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
-    copy_area (&src_area, &temp_area);
-
-    /* setup the temp_area and src_area again */
-    pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
-		   paint_core->x, paint_core->y, paint_core->w, paint_core->h, FALSE);
-    pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
-
-    /* convolve from temp_area to painthit_area */    
-    convolve_area (&temp_area, &painthit_area, matrix, matrix_size,
-		       matrix_divisor, NORMAL);
-
-
-
-    canvas_portion_unref ( painthit_canvas, 0, 0 );
-    canvas_portion_unref ( temp_canvas, 0, 0 );
-
-
-    
-    canvas_delete ( temp_canvas );
-  }
+      canvas_delete ( temp_canvas );
+    }
   else
-  {
-    copy_area (&src_area, &painthit_area);
-  }
+    {
+      /* the area is too small to convolve, so just copy it */
+      pixelarea_init (&src_area, drawable_data (drawable),
+                      paint_core->x, paint_core->y,
+                      paint_core->w, paint_core->h,
+                      FALSE);
+      pixelarea_init (&painthit_area, painthit_canvas,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+      copy_area (&src_area, &painthit_area);
+    }
   
   /* Apply the painthit to the drawable */
   paint_core_16_area_replace (paint_core, drawable, 
-				1.0,
-                                (gfloat) get_brush_opacity (),
-                                SOFT,
-                                INCREMENTAL); 
+                              1.0,
+                              (gfloat) get_brush_opacity (),
+                              SOFT,
+                              INCREMENTAL); 
 }
 
 static void
@@ -327,21 +343,21 @@ calculate_matrix (ConvolveType type,
     case Blur:
       matrix_size = 5;
       blur_matrix [12] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
-      integer_matrix (blur_matrix, matrix, matrix_size, 100);
+      copy_matrix (blur_matrix, custom_matrix, matrix_size);
       break;
 
     case Sharpen:
       matrix_size = 5;
       sharpen_matrix [12] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
-      integer_matrix (sharpen_matrix, matrix, matrix_size, 1);
+      copy_matrix (sharpen_matrix, custom_matrix, matrix_size);
       break;
 
     case Custom:
       matrix_size = 5;
-      integer_matrix (custom_matrix, matrix, matrix_size, 1);
       break;
     }
 
+  integer_matrix (custom_matrix, matrix, matrix_size);
   matrix_divisor = sum_matrix (matrix, matrix_size);
 
   if (!matrix_divisor)
@@ -351,13 +367,14 @@ calculate_matrix (ConvolveType type,
 static void
 integer_matrix (float *source,
 		int   *dest,
-		int    size,
-		int    factor)
+		int    size)
 {
   int i;
 
+#define PRECISION  10000
+
   for (i = 0; i < size*size; i++)
-    *dest++ = (int) (*source ++ * factor);
+    *dest++ = (int) (*source ++ * PRECISION);
 }
 
 static void
@@ -530,7 +547,7 @@ convolve_invoker (Argument *args)
       calculate_matrix (type, pressure);
 
       /*  set the paint core's paint func  */
-      non_gui_paint_core.paint_func = (PaintFunc16)convolve_non_gui_paint_func;
+      non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];

@@ -21,7 +21,6 @@
 
 #include "appenv.h"
 #include "boundary.h"
-#include "clone.h"   /*FIXME: this is just till copy_row finds a home */
 #include "gimprc.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row_u8.h"
@@ -179,12 +178,53 @@ static void      apply_layer_mode_replace  (PixelRow*, PixelRow*, PixelRow*,
 
 
 
+/*  ColorHash structure  */
+typedef struct _ColorHash ColorHash;
+
+struct _ColorHash
+{
+  int pixel;           /*  R << 16 | G << 8 | B  */
+  int index;           /*  colormap index        */
+  int colormap_ID;     /*  colormap ID           */
+};
+
+#define HASH_TABLE_SIZE    1021
+static ColorHash color_hash_table [HASH_TABLE_SIZE];
+static int color_hash_misses;
+static int color_hash_hits;
+
+/* for dissolve mode */
+#define RANDOM_TABLE_SIZE  4096
+#define RANDOM_SEED        314159265
+static int random_table [RANDOM_TABLE_SIZE];
+
+
 void 
 paint_funcs_area_setup  (
                          void
                          )
 {
-  /* FIXME code from paint.c */
+  int i;
+
+  /*  initialize the color hash table--invalidate all entries  */
+  for (i = 0; i < HASH_TABLE_SIZE; i++)
+    color_hash_table[i].colormap_ID = -1;
+  color_hash_misses = 0;
+  color_hash_hits = 0;
+
+  /*  generate a table of random seeds  */
+  srand (RANDOM_SEED);
+  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
+    random_table[i] = rand ();
+
+  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
+    {
+      int tmp;
+      int swap = i + rand () % (RANDOM_TABLE_SIZE - i);
+      tmp = random_table[i];
+      random_table[i] = random_table[swap];
+      random_table[swap] = tmp;
+    }
 }
 
 
@@ -193,8 +233,15 @@ paint_funcs_area_free  (
                         void
                         )
 {
-  /* FIXME code from paint.c */
+  /*  print out the hash table statistics
+      printf ("RGB->indexed hash table lookups: %d\n", color_hash_hits + color_hash_misses);
+      printf ("RGB->indexed hash table hits: %d\n", color_hash_hits);
+      printf ("RGB->indexed hash table misses: %d\n", color_hash_misses);
+      printf ("RGB->indexed hash table hit rate: %f\n",
+      100.0 * color_hash_hits / (color_hash_hits + color_hash_misses));
+      */
 }
+
 
 
 /**************************************************/
@@ -384,6 +431,31 @@ copy_area_funcs (
     return NULL;
   } 
 }
+
+/* FIXME: is this required? */
+void 
+copy_row  (
+           PixelRow * src_row,
+           PixelRow * dest_row
+           )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      copy_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      copy_row_float (src_row, dest_row);
+      break;
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row()");
+      break;	
+    }
+}
+
 
 
 void 
@@ -3735,11 +3807,8 @@ combine_areas  (
   Tag src2_tag = pixelarea_tag (src2_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
-  gint src1_width = pixelarea_width (src1_area);
   gint src1_num_channels = tag_num_channels (src1_tag);
   gint src1_bytes = tag_bytes (src1_tag);
-  gint src1_bytes_per_channel = src1_bytes / src1_num_channels;
-  Precision prec = tag_precision (src1_tag); 
   Tag buf_tag = src2_tag;
   gint src2_width = pixelarea_width (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);

@@ -60,7 +60,7 @@ floating_sel_attach (Layer *layer,
   /*  set the drawable and allocate a backing store  */
   layer->preserve_trans = TRUE;
   layer->fs.drawable = drawable;
-  layer->fs.backing_store_canvas = canvas_new (drawable_tag (drawable),
+  layer->fs.backing_store = canvas_new (drawable_tag (drawable),
 	GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, 
 	STORAGE_FLAT);
 
@@ -229,20 +229,20 @@ floating_sel_store (Layer *layer,
   int offx, offy;
   int x1, y1, x2, y2;
   Tag fs_drawable_tag = drawable_tag (layer->fs.drawable);
-  Tag fs_backing_store_canvas_tag = canvas_tag (layer->fs.backing_store_canvas);  
+  Tag fs_backing_store_tag = canvas_tag (layer->fs.backing_store);  
   
   /*  Check the backing store & make sure it has the correct dimensions  */
-  if (canvas_width (layer->fs.backing_store_canvas) != drawable_width (GIMP_DRAWABLE(layer)) ||
-       canvas_height (layer->fs.backing_store_canvas)!= drawable_height (GIMP_DRAWABLE(layer)) ||
-      !tag_equal (fs_drawable_tag, fs_backing_store_canvas_tag) )
+  if (canvas_width (layer->fs.backing_store) != drawable_width (GIMP_DRAWABLE(layer)) ||
+       canvas_height (layer->fs.backing_store)!= drawable_height (GIMP_DRAWABLE(layer)) ||
+      !tag_equal (fs_drawable_tag, fs_backing_store_tag) )
     {
       /*  free the backing store and allocate anew  */
-      canvas_delete(layer->fs.backing_store_canvas);
+      canvas_delete(layer->fs.backing_store);
 
-      layer->fs.backing_store_canvas = canvas_new ( fs_drawable_tag,
-						GIMP_DRAWABLE(layer)->width,
-						  GIMP_DRAWABLE(layer)->height,
-						  STORAGE_FLAT);
+      layer->fs.backing_store = canvas_new (fs_drawable_tag,
+                                            GIMP_DRAWABLE(layer)->width,
+                                            GIMP_DRAWABLE(layer)->height,
+                                            STORAGE_FLAT);
     }
 
   /*  What this function does is save the specified area of the
@@ -265,9 +265,9 @@ floating_sel_store (Layer *layer,
   if ((x2 - x1) > 0 && (y2 - y1) > 0)
     {
       /*  Copy the area from the drawable to the backing store  */
-      pixelarea_init (&srcPR, drawable_data_canvas (layer->fs.drawable), NULL,
+      pixelarea_init (&srcPR, drawable_data (layer->fs.drawable),
 			 (x1 - offx), (y1 - offy), (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&destPR, layer->fs.backing_store_canvas, NULL,
+      pixelarea_init (&destPR, layer->fs.backing_store,
 		  	(x1 - GIMP_DRAWABLE(layer)->offset_x), 
 			(y1 - GIMP_DRAWABLE(layer)->offset_y), 
 			(x2 - x1), (y2 - y1), TRUE);
@@ -308,11 +308,11 @@ floating_sel_restore (Layer *layer,
   if ((x2 - x1) > 0 && (y2 - y1) > 0)
     {
       /*  Copy the area from the backing store to the drawable  */
-      pixelarea_init (&srcPR, layer->fs.backing_store_canvas, NULL,
+      pixelarea_init (&srcPR, layer->fs.backing_store,
 			 (x1 - GIMP_DRAWABLE(layer)->offset_x), 
 			(y1 - GIMP_DRAWABLE(layer)->offset_y), 
 			(x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&destPR, drawable_data_canvas(layer->fs.drawable), NULL,
+      pixelarea_init (&destPR, drawable_data(layer->fs.drawable),
 			 (x1 - offx), (y1 - offy), 
 			(x2 - x1), (y2 - y1), TRUE);
 
@@ -406,7 +406,7 @@ floating_sel_composite (Layer *layer,
       if ((x2 - x1) > 0 && (y2 - y1) > 0)
 	{
 	  /*  composite the area from the layer to the drawable  */
-	  pixelarea_init (&fsPR, GIMP_DRAWABLE(layer)->canvas, NULL,
+	  pixelarea_init (&fsPR, GIMP_DRAWABLE(layer)->canvas,
 			     	(x1 - GIMP_DRAWABLE(layer)->offset_x), 
 				(y1 - GIMP_DRAWABLE(layer)->offset_y),
 			     	(x2 - x1), (y2 - y1), FALSE);
@@ -467,7 +467,7 @@ floating_sel_boundary (Layer *layer,
 	g_free (layer->fs.segs);
 
       /*  find the segments  */
-      pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->canvas, NULL, 
+      pixelarea_init (&bPR, GIMP_DRAWABLE(layer)->canvas, 
 		0, 0, 
 		GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
       layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,

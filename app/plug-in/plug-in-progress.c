@@ -1337,11 +1337,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       drawable = drawable_get_ID (tile_info->drawable_ID);
       
       if (tile_info->shadow)
-#define PLUG_IN_C_1_cw
-      /*canvas = drawable_shadow_canvas (drawable);*/
-	canvas = NULL; 
+        canvas = drawable_shadow (drawable);
       else
-	canvas = drawable_data_canvas (drawable);
+	canvas = drawable_data (drawable);
 
       if (!canvas)
 	{
@@ -1361,7 +1359,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 			tile_info->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
         
         /* Make sure there is some valid canvas data there on the gimp side */
-       canvas_portion_ref (canvas, x, y);
+       canvas_portion_refrw (canvas, x, y);
        if (!canvas_portion_data( canvas, x, y))
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");
@@ -1382,7 +1380,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  eheight = TILE_HEIGHT;
         
         /* Now copy the data from plugins tile to the gimp's canvas */ 
-	pixelarea_init (&a, canvas, NULL, x, y, ewidth, eheight, TRUE);
+	pixelarea_init (&a, canvas, x, y, ewidth, eheight, TRUE);
 	
 	if (tile_data.use_shm)
 	  plug_in_copyarea (&a, shm_addr, COPY_BUFFER_TO_AREA);  /* shm to gimp */
@@ -1401,12 +1399,10 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
     }
   else
     {
-#define PLUG_IN_C_2_cw
       if (tile_req->shadow)
-      /*canvas = drawable_shadow_canvas (drawable_get_ID (tile_req->drawable_ID));*/
-	canvas = NULL; 
+        canvas = drawable_shadow (drawable_get_ID (tile_req->drawable_ID));
       else
-	canvas = drawable_data_canvas (drawable_get_ID (tile_req->drawable_ID));
+	canvas = drawable_data (drawable_get_ID (tile_req->drawable_ID));
       
       if (!canvas)
 	{
@@ -1427,7 +1423,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       /*printf ("Put tilenum: %d, (i,j)=(%d,%d) (x,y)=(%d,%d) (rows,cols)=(%d,%d)\n",
 			tile_req->tile_num, i, j, x, y, ntile_rows, ntile_cols);*/
       
-      canvas_portion_ref (canvas, x, y);
+      canvas_portion_refro (canvas, x, y);
       if (!canvas_portion_data( canvas, x, y))
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");
@@ -1457,7 +1453,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
       /*printf(" ewidth = %d, eheight = %d \n", ewidth, eheight);*/
-      pixelarea_init (&a, canvas, NULL, x, y, ewidth, eheight, FALSE);
+      pixelarea_init (&a, canvas, x, y, ewidth, eheight, FALSE);
       
       if (tile_data.use_shm)
 	plug_in_copyarea (&a, shm_addr, COPY_AREA_TO_BUFFER);  /* gimp to shm*/

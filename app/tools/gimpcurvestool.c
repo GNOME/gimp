@@ -1488,6 +1488,7 @@ curves_ok_callback (GtkWidget *widget,
   }
 
   active_tool->preserve = FALSE;
+
   cd->image_map = NULL;
 }
 
@@ -1947,9 +1948,9 @@ curves_spline_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+      pixelarea_init (&src_area, drawable_data (drawable),
 			x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -1958,7 +1959,7 @@ curves_spline_invoker (Argument *args)
 	(*curves) (&src_area, &dest_area, (void *) &cd);
 
       curves_free_curves (&cd);
-      drawable_merge_shadow_canvas (drawable, TRUE);
+      drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 
@@ -2110,9 +2111,9 @@ curves_explicit_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixelarea_init (&src_area, drawable_data_canvas (drawable),NULL, 
+      pixelarea_init (&src_area, drawable_data (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable),NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -2121,7 +2122,7 @@ curves_explicit_invoker (Argument *args)
 	(*curves) (&src_area, &dest_area, (void *) &cd);
       
       curves_free_curves (&cd);
-      drawable_merge_shadow_canvas (drawable, TRUE);
+      drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 

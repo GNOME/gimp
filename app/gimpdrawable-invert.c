@@ -68,9 +68,9 @@ invert (drawable)
   invert_row = invert_row_func (drawable_tag (drawable));
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+  pixelarea_init (&src_area, drawable_data (drawable),
 				x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL,
+  pixelarea_init (&dest_area, drawable_shadow (drawable),
 				x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   for (pag = pixelarea_register (2, &src_area, &dest_area);
@@ -86,7 +86,7 @@ invert (drawable)
         }
     }
   
-  drawable_merge_shadow_canvas (drawable, TRUE);
+  drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 

@@ -401,6 +401,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
      int sample_merged;
      double x, y;
 {
+#if 0
   TileManager *buf_tiles;
   PixelRegion bufPR, maskPR;
   Channel * mask = NULL;
@@ -532,6 +533,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 
   if (new_buf)
     temp_buf_free (pat_buf);
+#endif
 }
 
 

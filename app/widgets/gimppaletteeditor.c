@@ -33,6 +33,7 @@
 #include "general.h"
 #include "gimprc.h"
 #include "interface.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 
 #define ENTRY_WIDTH  14
@@ -138,7 +139,6 @@ static MenuItem palette_ops[] =
 
 #include "tag.h"
 #include "pixelrow.h"
-#include "clone.h"
 
 void 
 color16_black  (

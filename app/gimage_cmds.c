@@ -26,7 +26,8 @@
 #include "gimage.h"
 #include "gimage_cmds.h"
 #include "floating_sel.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */
@@ -2471,9 +2472,9 @@ gimage_base_type_invoker (Argument *args)
       {
 #define GIMAGE_CMDS_C_1_cw
 /* base type must be RGB, GRAY, INDEXED, U16_RGB, U16_GRAY, U16_INDEXED etc */
-        if (gimage->projection_canvas)
+        if (gimage->projection)
         {
-          tag = canvas_tag (gimage->projection_canvas);
+          tag = canvas_tag (gimage->projection);
           base_type = tag_to_image_type (tag); 
         }
         else 
@@ -3230,7 +3231,7 @@ ProcRecord gimage_floating_sel_proc =
 static GImage *
 duplicate (GImage *gimage)
 {
-  PixelRegion srcPR, destPR;
+  PixelArea srcPR, destPR;
   GImage *new_gimage;
   Layer *layer, *new_layer;
   Layer *floating_layer;
@@ -3318,9 +3319,9 @@ duplicate (GImage *gimage)
     }
 
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 0, 0, gimage->width, gimage->height, TRUE);
-  copy_region (&srcPR, &destPR);
+  pixelarea_init (&srcPR, drawable_data (GIMP_DRAWABLE(gimage->selection_mask)), 0, 0, gimage->width, gimage->height, FALSE);
+  pixelarea_init (&destPR, drawable_data (GIMP_DRAWABLE(new_gimage->selection_mask)), 0, 0, gimage->width, gimage->height, TRUE);
+  copy_area (&srcPR, &destPR);
   new_gimage->selection_mask->bounds_known = FALSE;
   new_gimage->selection_mask->boundary_known = FALSE;
 

@@ -275,7 +275,7 @@ posterize_control (Tool     *tool,
       if (posterize_dialog)
 	{
 	  active_tool->preserve = TRUE;
-	  image_map_abort (posterize_dialog->image_map);
+	  image_map_abort_16 (posterize_dialog->image_map);
 	  active_tool->preserve = FALSE;
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
@@ -451,7 +451,7 @@ posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
   {
-    g_warning ("No image map");
+    g_message ("posterize_preview(): No image map");
   }
   else
   {
@@ -487,6 +487,7 @@ posterize_ok_callback (GtkWidget *widget,
     image_map_commit_16 (pd->image_map);
 
   active_tool->preserve = FALSE;
+
   pd->image_map = NULL;
 }
 
@@ -650,9 +651,9 @@ posterize_invoker (Argument *args)
 
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+      pixelarea_init (&src_area, drawable_data (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       posterize = posterize_func (pixelarea_tag (&dest_area));

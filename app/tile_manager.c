@@ -24,29 +24,6 @@
 
 static void tile_manager_destroy_level (TileLevel *level);
 
-int
-tm_bytes (
-          TileManager * tm
-          )
-{
-  return tm->levels[0].bpp;
-}
-
-int
-tm_width (
-          TileManager * tm
-          )
-{
-  return tm->levels[0].width;
-}
-
-int
-tm_height (
-           TileManager * tm
-           )
-{
-  return tm->levels[0].height;
-}
 
 TileManager*
 tile_manager_new (int toplevel_width,

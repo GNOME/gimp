@@ -66,8 +66,7 @@ typedef struct _mask_undo MaskUndo;
 
 struct _mask_undo
 {
-  TileManager * tiles; /*  the actual mask  */
-  struct _Canvas * canvas; /*  the actual mask  */
+  struct _Canvas * tiles; /*  the actual mask  */
   int x, y;            /*  offsets          */
 };
 

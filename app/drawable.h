@@ -19,7 +19,7 @@
 #define __DRAWABLE_H__
 
 #include <gtk/gtkdata.h>
-#include "tile_manager.h"
+//#include "tile_manager.h"
 
 #include "tag.h"
 #include "canvas.h"
@@ -42,12 +42,8 @@ guint gimp_drawable_get_type (void);
 int		 drawable_ID		     (GimpDrawable *);
 void             drawable_apply_image        (GimpDrawable *, 
 					      int, int, int, int, 
-					      TileManager *, int);
-void             drawable_apply_image_16     (GimpDrawable *, 
-					      int, int, int, int, 
 					      struct _Canvas *);
 void             drawable_merge_shadow       (GimpDrawable *, int);
-void             drawable_merge_shadow_canvas(GimpDrawable *, int);
 void             drawable_fill               (GimpDrawable *, int);
 void             drawable_update             (GimpDrawable *, 
 					      int, int, int, int);
@@ -62,10 +58,8 @@ int              drawable_type_with_alpha    (GimpDrawable *);
 int              drawable_color              (GimpDrawable *);
 int              drawable_gray               (GimpDrawable *);
 int              drawable_indexed            (GimpDrawable *);
-TileManager *    drawable_data               (GimpDrawable *);
-struct _Canvas * drawable_data_canvas        (GimpDrawable *);
-TileManager *    drawable_shadow             (GimpDrawable *);
-struct _Canvas * drawable_shadow_canvas      (GimpDrawable *);
+struct _Canvas * drawable_data               (GimpDrawable *);
+struct _Canvas * drawable_shadow             (GimpDrawable *);
 int              drawable_bytes              (GimpDrawable *);
 int              drawable_width              (GimpDrawable *);
 int              drawable_height             (GimpDrawable *);

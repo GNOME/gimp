@@ -170,9 +170,9 @@ extern PaintCore16  non_gui_paint_core_16;
   */
 
 /*  Special undo type  */
-typedef struct _PaintUndo16 PaintUndo16;
+typedef struct _PaintUndo PaintUndo;
 
-struct _PaintUndo16
+struct _PaintUndo
 {
   int             tool_ID;
   double          lastx;

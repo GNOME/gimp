@@ -73,6 +73,8 @@ void
 brushes_init (int no_data)
 {
   GSList * list;
+  GBrushP gb_start = NULL;
+  gint gb_count = 0;
 
   if (brush_list)
     brushes_free();
@@ -99,8 +101,10 @@ brushes_init (int no_data)
     active_brush = brush;
     have_default_brush = 1;
   }
-  else
+  else if(!no_data)
     datafiles_read_directories (brush_path, load_brush, 0);
+
+  /*  assign indexes to the loaded brushes  */
 
   list = brush_list;
   
@@ -134,12 +138,41 @@ brushes_init (int no_data)
   }
 #endif
   
-  /*  assign indexes to the loaded brushes  */
   while (list) {
     /*  Set the brush index  */
-    ((GBrush *) list->data)->index = num_brushes++;
-    list = g_slist_next (list);
-  }
+    /* ALT make names unique */
+    GBrushP gb = (GBrushP)list->data;
+    gb->index = num_brushes++;
+    list = g_slist_next(list);
+    if(list) {
+      GBrushP gb2 = (GBrushP)list->data;
+      
+      if(gb_start == NULL) {
+        gb_start = gb;
+      }
+      
+      if(gb_start->name
+	 && gb2->name
+	 && (strcmp(gb_start->name,gb2->name) == 0)) {
+	
+        gint b_digits = 2;
+        gint gb_tmp_cnt = gb_count++;
+	
+        /* Alter gb2... */
+        g_free(gb2->name);
+        while((gb_tmp_cnt /= 10) > 0)
+          b_digits++;
+        /* name str + " #" + digits + null */
+        gb2->name = g_malloc(strlen(gb_start->name)+3+b_digits);
+        sprintf(gb2->name,"%s #%d",gb_start->name,gb_count);
+      }
+      else
+      {
+        gb_start = gb2;
+        gb_count = 0;
+      }
+    }  
+  }                  
 }
 
 
@@ -216,17 +249,16 @@ create_default_brush (gint width, gint height)
 
   brush->filename = NULL;
   brush->name = g_strdup ("Default");
+  brush->mask = canvas_new (brush_tag, width, height, STORAGE_FLAT);
   brush->spacing = 25;
   
   
-  brush->mask_canvas = canvas_new (brush_tag, width, height, STORAGE_FLAT);
-  /* canvas_portion_ref (brush->mask_canvas,0,0); */
   
   /* Fill the default brush canvas with white */
   {
     COLOR16_NEWDATA (init, gfloat,
                      PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
-    COLOR16_NEW (paint, canvas_tag (brush->mask_canvas));
+    COLOR16_NEW (paint, canvas_tag (brush->mask));
 
     /* init the paint with the correctly formatted color */
     COLOR16_INIT (init);
@@ -236,17 +268,14 @@ create_default_brush (gint width, gint height)
     /* fill the area using the paint */
     {
       PixelArea area;
-      pixelarea_init (&area, brush->mask_canvas, NULL,
+      pixelarea_init (&area, brush->mask,
                       0, 0, 0, 0, TRUE);
       color_area (&area, &paint);
     }
   }
   
-  /* canvas_portion_unref (brush->mask_canvas,0,0); */
-  
   return brush; 
 }
-
 
 static void
 load_brush(char *filename)
@@ -264,7 +293,7 @@ load_brush(char *filename)
 
   brush->filename = g_strdup (filename);
   brush->name = NULL;
-  brush->mask_canvas = NULL;
+  brush->mask = NULL;
 
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
@@ -341,10 +370,10 @@ load_brush(char *filename)
  
    
   /*  Get a new brush mask  */
-  brush->mask_canvas = canvas_new ( tag, 
-					header.width,
-					header.height,
-					STORAGE_FLAT );					
+  brush->mask = canvas_new (tag, 
+                            header.width,
+                            header.height,
+                            STORAGE_FLAT );					
   brush->spacing = header.spacing;
 
   /*  Read in the brush name  */
@@ -363,15 +392,15 @@ load_brush(char *filename)
     brush->name = g_strdup ("Unnamed");
   
   /* ref the canvas to allocate memory */
-  canvas_portion_ref( brush->mask_canvas,0,0); 
+  canvas_portion_refrw (brush->mask, 0, 0); 
   
   /*  Read the brush mask data  */
   bytes = tag_bytes (tag); 
-  if ((fread (canvas_portion_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
+  if ((fread (canvas_portion_data (brush->mask,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
     g_message ("GIMP brush file appears to be truncated.");
   
-  canvas_portion_unref (brush->mask_canvas,0,0); 
+  canvas_portion_unref (brush->mask,0,0); 
   
   /*  Clean up  */
   fclose (fp);
@@ -458,8 +487,8 @@ static void
 free_brush (brush)
      GBrushP brush;
 {
-  if (brush->mask_canvas);
-    canvas_delete (brush->mask_canvas);
+  if (brush->mask);
+    canvas_delete (brush->mask);
   if (brush->filename)
     g_free (brush->filename);
   if (brush->name)
@@ -528,8 +557,8 @@ brushes_get_brush_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = g_strdup (brushp->name);
-      return_args[2].value.pdb_int = canvas_width (brushp->mask_canvas);
-      return_args[3].value.pdb_int = canvas_height (brushp->mask_canvas);
+      return_args[2].value.pdb_int = canvas_width (brushp->mask);
+      return_args[3].value.pdb_int = canvas_height (brushp->mask);
       return_args[4].value.pdb_int = brushp->spacing;
     }
 

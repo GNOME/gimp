@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -109,7 +109,8 @@ paint_core_16_new  (
   tool->auto_snap_to = TRUE;
   tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
-
+  tool->preserve = TRUE;
+  
   tool->button_press_func = paint_core_16_button_press;
   tool->button_release_func = paint_core_16_button_release;
   tool->motion_func = paint_core_16_motion;
@@ -168,13 +169,13 @@ paint_core_16_init  (
  
 #define PAINT_CORE_16_C_2_cw 
   paint_core->spacing =
-    (double) MAX (canvas_height (brush->mask_canvas), canvas_width (brush->mask_canvas)) *
+    (double) MAX (canvas_height (brush->mask), canvas_width (brush->mask)) *
     ((double) get_brush_spacing () / 100.0);
 
   if (paint_core->spacing < 1.0)
     paint_core->spacing = 1.0;
   
-  paint_core->brush_mask = brush->mask_canvas;
+  paint_core->brush_mask = brush->mask;
 
   /*  Allocate the undo structure  */
   if (undo_tiles)
@@ -263,7 +264,7 @@ paint_core_16_finish  (
                        )
 {
   GImage *gimage;
-  PaintUndo16 *pu;
+  PaintUndo *pu;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -276,7 +277,7 @@ paint_core_16_finish  (
 
   undo_push_group_start (gimage, PAINT_CORE_UNDO);
 
-  pu = (PaintUndo16 *) g_malloc (sizeof (PaintUndo16));
+  pu = (PaintUndo *) g_malloc (sizeof (PaintUndo));
   pu->tool_ID = tool_id;
   pu->lastx = paint_core->startx;
   pu->lasty = paint_core->starty;
@@ -286,11 +287,11 @@ paint_core_16_finish  (
 
   /*  push an undo  */
   {
-    /* drawable_apply_image  assign ownership of undo_tiles to undo system */
-    drawable_apply_image_16 (drawable,
-                             paint_core->x1, paint_core->y1,
-                             paint_core->x2, paint_core->y2,
-                             undo_tiles);
+    /* assign ownership of undo_tiles to undo system */
+    drawable_apply_image (drawable,
+                          paint_core->x1, paint_core->y1,
+                          paint_core->x2, paint_core->y2,
+                          undo_tiles);
     undo_tiles = NULL;
   }
 
@@ -651,11 +652,11 @@ paint_core_16_area_original  (
   y2 = CLAMP (y2, 0, drawable_height (drawable));
 
   
-  pixelarea_init (&srcPR, drawable_data_canvas (drawable), NULL,
+  pixelarea_init (&srcPR, drawable_data (drawable),
                   x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixelarea_init (&undoPR, undo_tiles, NULL,
+  pixelarea_init (&undoPR, undo_tiles,
                   x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixelarea_init (&destPR, orig_buf, NULL,
+  pixelarea_init (&destPR, orig_buf,
                   0, 0, (x2 - x1), (y2 - y1), TRUE);
 
 
@@ -793,9 +794,9 @@ painthit_init  (
   PixelArea dst;
   void * pag;
 
-  pixelarea_init (&undo, undo_tiles, NULL,
+  pixelarea_init (&undo, undo_tiles,
                   x, y, w, h, TRUE);
-  pixelarea_init (&canvas, drawable_data_canvas (drawable), NULL,
+  pixelarea_init (&canvas, drawable_data (drawable),
                   x, y, w, h, FALSE);
 
   for (pag = pixelarea_register_noref (2, &undo, &canvas);
@@ -816,9 +817,9 @@ painthit_init  (
           canvas_portion_alloc (undo_tiles, x, y);
 
           /* init the undo section from the original image */
-          pixelarea_init (&src, drawable_data_canvas (drawable), NULL,
+          pixelarea_init (&src, drawable_data (drawable),
                           l, t, w, h, FALSE);
-          pixelarea_init (&dst, undo_tiles, NULL,
+          pixelarea_init (&dst, undo_tiles,
                           l, t, w, h, TRUE);
           copy_area (&src, &dst);
         }
@@ -845,11 +846,11 @@ painthit_create_constant (
     xoff = (x < 0) ? -x : 0;
     yoff = (y < 0) ? -y : 0;
     
-    pixelarea_init (&srcPR, canvas_tiles, NULL,
+    pixelarea_init (&srcPR, canvas_tiles,
                     paint_core->x, paint_core->y,
                     canvas_width (canvas_buf), canvas_height (canvas_buf),
                     TRUE);      
-    pixelarea_init (&maskPR, brush_mask, NULL,
+    pixelarea_init (&maskPR, brush_mask,
                     xoff, yoff,
                     canvas_width (brush_mask), canvas_height (brush_mask),
                     TRUE);
@@ -857,11 +858,11 @@ painthit_create_constant (
   }
       
   /*  apply the canvas tiles to the canvas buf  */
-  pixelarea_init (&srcPR, canvas_buf, NULL,
+  pixelarea_init (&srcPR, canvas_buf,
                   0, 0,
                   canvas_width (canvas_buf), canvas_height (canvas_buf),
                   TRUE);
-  pixelarea_init (&maskPR, canvas_tiles, NULL,
+  pixelarea_init (&maskPR, canvas_tiles,
                   paint_core->x, paint_core->y,
                   canvas_width (canvas_buf), canvas_height (canvas_buf),
                   FALSE);      
@@ -879,11 +880,11 @@ painthit_create_incremental (
   PixelArea srcPR, maskPR;
 
   /*  combine the canvas buf and the brush mask to the canvas buf  */
-  pixelarea_init (&srcPR, canvas_buf, NULL,
+  pixelarea_init (&srcPR, canvas_buf,
                   0, 0,
                   canvas_width (canvas_buf), canvas_height (canvas_buf),
                   TRUE);
-  pixelarea_init (&maskPR, brush_mask, NULL,
+  pixelarea_init (&maskPR, brush_mask,
                   0, 0,
                   canvas_width (brush_mask), canvas_height (brush_mask),
                   FALSE);
@@ -903,7 +904,7 @@ painthit_apply (
 {
   GImage * gimage = drawable_gimage (drawable);
   PixelArea canvas_area;
-  pixelarea_init (&canvas_area, canvas_buf, NULL,
+  pixelarea_init (&canvas_area, canvas_buf,
 		   0, 0,
                    canvas_width (canvas_buf), canvas_height(canvas_buf), FALSE);
   gimage_apply_painthit (gimage, drawable,
@@ -1080,7 +1081,7 @@ brush_mask_subsample  (
   dest = kernel_brushes[index2][index1];
 
   /* temp hack */
-  canvas_portion_ref (mask, 0, 0);
+  canvas_portion_refro (mask, 0, 0);
   canvas_portion_refrw (dest, 0, 0);
 
   for (i = 0; i < canvas_height (mask); i++)
@@ -1126,8 +1127,6 @@ brush_mask_solidify  (
   static Canvas * last_brush  = NULL;
   Precision prec = tag_precision (canvas_tag (brush_mask));  
 
-  unsigned char * data, * src;
-
   if (brush_mask == last_brush)
     return solid_brush;
 
@@ -1145,12 +1144,8 @@ brush_mask_solidify  (
                             canvas_height (brush_mask) ,
                             canvas_storage (brush_mask));
 #endif
+  canvas_portion_refro (brush_mask, 0, 0);
   canvas_portion_refrw (solid_brush, 0, 0);
-  canvas_portion_ref (brush_mask, 0, 0);
-  
-  /*  get the data and advance one line into it  */
-  data = canvas_portion_data (solid_brush, 0, 1);
-  src = canvas_portion_data (brush_mask, 0, 0);
   
   (*brush_solidify_mask_funcs [prec-1]) (brush_mask, solid_brush); 
 
@@ -1270,11 +1265,11 @@ brush_mask_enlarge  (
                             canvas_storage (brush_mask));
   {
     PixelArea src, dest;
-    pixelarea_init (&src, brush_mask, NULL,
+    pixelarea_init (&src, brush_mask,
                     0, 0,
                     0, 0,
                     FALSE);
-    pixelarea_init (&dest, solid_brush, NULL,
+    pixelarea_init (&dest, solid_brush,
                     1, 1,
                     canvas_width (brush_mask), canvas_height (brush_mask),
                     TRUE);

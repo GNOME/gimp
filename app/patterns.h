@@ -19,7 +19,7 @@
 #define __PATTERNS_H__
 
 #include <glib.h>
-#include "temp_buf.h"
+//#include "temp_buf.h"
 #include "procedural_db.h"
 
 struct _Canvas;
@@ -30,8 +30,7 @@ struct _GPattern
   char *     filename;     /*  actual filename--pattern's location on disk   */
   char *     name;         /*  pattern's name--for pattern selection dialog  */
   int        index;        /*  pattern's index...                            */
-  TempBuf *  mask;         /*  the actual mask...                            */
-  struct _Canvas *  mask_canvas;  /*  the actual mask as canvas                  */
+  struct _Canvas *  mask;  /*  the actual mask...                            */
 };
 
 /*  function declarations  */

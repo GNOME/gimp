@@ -266,11 +266,11 @@ int ref_fa = 0;
 int ref_uf = 0;
 
 RefRC 
-canvas_portion_ref  (
-                     Canvas * c,
-                     int x,
-                     int y
-                     )
+canvas_portion_refro  (
+                       Canvas * c,
+                       int x,
+                       int y
+                       )
 {
   RefRC rc = REFRC_FAIL;
   
@@ -279,13 +279,13 @@ canvas_portion_ref  (
       switch (c->storage)
         {
         case STORAGE_TILED:
-          rc = tilebuf_portion_ref ((TileBuf *) c->rep, x, y);
+          rc = tilebuf_portion_refro ((TileBuf *) c->rep, x, y);
           break;
         case STORAGE_FLAT:
-          rc = flatbuf_portion_ref ((FlatBuf *) c->rep, x, y);
+          rc = flatbuf_portion_refro ((FlatBuf *) c->rep, x, y);
           break;
         case STORAGE_SHM:
-          rc = shmbuf_portion_ref ((ShmBuf *) c->rep, x, y);
+          rc = shmbuf_portion_refro ((ShmBuf *) c->rep, x, y);
           break;
         default:
           break;

@@ -20,11 +20,7 @@
 
 struct _tool;
 struct _ProcRecord;
-struct _PixelRow;
-void copy_row (struct _PixelRow *, struct _PixelRow *);
-void copy_row_u8 (struct _PixelRow * , struct _PixelRow *);
-void copy_row_u16 (struct _PixelRow * , struct _PixelRow *);
-void copy_row_float (struct _PixelRow * , struct _PixelRow *);
+
 struct _tool *  tools_new_clone   (void);
 void            tools_free_clone  (struct _tool *);
 

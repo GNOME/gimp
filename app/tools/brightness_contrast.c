@@ -63,8 +63,8 @@ struct _BrightnessContrastDialog
   GimpDrawable *drawable;
   ImageMap16   image_map;
 
-  gfloat       brightness;
-  gfloat       contrast;
+  double       brightness;
+  double       contrast;
 
   gint         preview;
 };
@@ -432,13 +432,13 @@ tools_new_brightness_contrast ()
   tool->private = (void *) private;
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
-  tool->preserve = FALSE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
   tool->motion_func = brightness_contrast_motion;
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -489,12 +489,12 @@ brightness_contrast_initialize (void *gdisp_ptr)
   /*  Initialize dialog fields  */
   brightness_contrast_dialog->image_map = NULL;
   brightness_contrast_dialog->brightness = 0.0;
-
   brightness_contrast_dialog->contrast = 0.0;
 
   brightness_contrast_dialog->drawable = drawable;
   brightness_contrast_dialog->image_map = image_map_create_16 (gdisp_ptr,
 							    brightness_contrast_dialog->drawable);
+
   brightness_contrast_update (brightness_contrast_dialog, ALL);
 }
 
@@ -549,7 +549,6 @@ brightness_contrast_new_dialog ()
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
-  /*data = gtk_adjustment_new (0, -127, 127.0, 1.0, 1.0, 0.0);*/
   data = gtk_adjustment_new (0, -.5, .51, .001, .01, .01);
   bcd->brightness_data = GTK_ADJUSTMENT (data);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
@@ -584,7 +583,6 @@ brightness_contrast_new_dialog ()
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
 
-  /*data = gtk_adjustment_new (0, -127.0, 127.0, 1.0, 1.0, 0.0);*/
   data = gtk_adjustment_new (0, -.5, .51, .001, .01, .01);
   bcd->contrast_data = GTK_ADJUSTMENT (data);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
@@ -772,18 +770,18 @@ brightness_contrast_brightness_scale_update (GtkAdjustment *adjustment,
     {
       bcd->brightness = adjustment->value;
       brightness_contrast_update (bcd, BRIGHTNESS_TEXT);
+
       if (bcd->preview)
 	brightness_contrast_preview (bcd);
     }
 }
-
-
 
 static void
 brightness_contrast_contrast_scale_update (GtkAdjustment *adjustment,
 					   gpointer       data)
 {
   BrightnessContrastDialog *bcd;
+
   bcd = (BrightnessContrastDialog *) data;
 
   if (bcd->contrast != adjustment->value)
@@ -977,9 +975,9 @@ brightness_contrast_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
          
-      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL,
+      pixelarea_init (&src_area, drawable_data (drawable),
 			x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 			x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -988,7 +986,7 @@ brightness_contrast_invoker (Argument *args)
 	(*brightness_contrast) (&src_area, &dest_area, (void *) &bcd);
 
       brightness_contrast_free_transfers();
-      drawable_merge_shadow_canvas (drawable, TRUE);
+      drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 

@@ -266,8 +266,8 @@ pattern_popup_open (PatternSelectP psp,
   gdk_window_get_origin (psp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  pattern_width = canvas_width (pattern->mask_canvas);
-  pattern_height = canvas_height (pattern->mask_canvas);
+  pattern_width = canvas_width (pattern->mask);
+  pattern_height = canvas_height (pattern->mask);
   x = x_org + x - pattern_width * 0.5;
   y = y_org + y - pattern_height * 0.5;
   x = (x < 0) ? 0 : x;
@@ -279,13 +279,13 @@ pattern_popup_open (PatternSelectP psp,
 
   /*  Draw the pattern  */
   buf = g_new (gchar, pattern_width * 3);
-  pattern_tag = canvas_tag (pattern->mask_canvas);
+  pattern_tag = canvas_tag (pattern->mask);
   pattern_prec = tag_precision (pattern_tag);
-  src = canvas_portion_data (pattern->mask_canvas,0,0);
-  rowbytes = canvas_portion_rowstride (pattern->mask_canvas,0,0);
+  src = canvas_portion_data (pattern->mask,0,0);
+  rowbytes = canvas_portion_rowstride (pattern->mask,0,0);
   for (y = 0; y < pattern_height; y++)
     {
-      (*display_pattern_get_row_funcs [pattern_prec-1]) (buf, pattern->mask_canvas, y, pattern_width); 
+      (*display_pattern_get_row_funcs [pattern_prec-1]) (buf, pattern->mask, y, pattern_width); 
       gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), buf, 0, y, pattern_width);
     }
   g_free(buf);
@@ -307,7 +307,7 @@ display_pattern (PatternSelectP psp,
 		 int            col,
 		 int            row)
 {
-  Canvas *pattern_buf_canvas = pattern->mask_canvas;
+  Canvas *pattern_buf_canvas = pattern->mask;
   unsigned char * buf;
   int cell_width, cell_height;
   int width, height;
@@ -315,7 +315,7 @@ display_pattern (PatternSelectP psp,
   int yend;
   int ystart;
   int i;
-  Tag pattern_tag = canvas_tag (pattern->mask_canvas);
+  Tag pattern_tag = canvas_tag (pattern->mask);
   Precision pattern_prec = tag_precision (pattern_tag);
   Alpha pattern_alpha = tag_alpha (pattern_tag);
   
@@ -650,7 +650,7 @@ update_active_pattern_field (PatternSelectP psp)
   gtk_label_set (GTK_LABEL (psp->pattern_name), pattern->name);
 
   /*  Set pattern size  */
-  sprintf (buf, "(%d X %d)", canvas_width (pattern->mask_canvas), canvas_height (pattern->mask_canvas));
+  sprintf (buf, "(%d X %d)", canvas_width (pattern->mask), canvas_height (pattern->mask));
   gtk_label_set (GTK_LABEL (psp->pattern_size), buf);
 }
 
@@ -737,8 +737,8 @@ pattern_select_events (GtkWidget      *widget,
 	      /*  Make this pattern the active pattern  */
 	      select_pattern (pattern);
 	      /*  Show the pattern popup window if the pattern is too large  */
-	      if (canvas_width (pattern->mask_canvas) > psp->cell_width ||
-		  canvas_height (pattern->mask_canvas) > psp->cell_height)
+	      if (canvas_width (pattern->mask) > psp->cell_width ||
+		  canvas_height (pattern->mask) > psp->cell_height)
 		pattern_popup_open (psp, bevent->x, bevent->y, pattern);
 	    }
 	}

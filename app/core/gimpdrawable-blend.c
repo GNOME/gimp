@@ -733,24 +733,22 @@ blend_control (Tool     *tool,
 /*****/
 
 /*  The actual blending procedure  */
-static void 
-blend  (
-        GImage * gimage,
-        GimpDrawable * drawable,
-        BlendMode blend_mode,
-        int paint_mode,
-        GradientType gradient_type,
-        double opacity,
-        double offset,
-        RepeatMode repeat,
-        int supersample,
-        int max_depth,
-        double threshold,
-        double startx,
-        double starty,
-        double endx,
-        double endy
-        )
+static void
+blend (GImage       *gimage,
+       GimpDrawable *drawable,
+       BlendMode     blend_mode,
+       int           paint_mode,
+       GradientType  gradient_type,
+       double        opacity,
+       double        offset,
+       RepeatMode    repeat,
+       int           supersample,
+       int           max_depth,
+       double        threshold,
+       double        startx,
+       double        starty,
+       double        endx,
+       double        endy)
 {
   Canvas * buf = NULL;
   PixelArea bufPR;
@@ -759,7 +757,7 @@ blend  (
   (void) drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   /* only needed for x y w h */
-  pixelarea_init (&bufPR, buf, NULL,
+  pixelarea_init (&bufPR, buf,
                   0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   gradient_fill_region (gimage, drawable,
@@ -996,7 +994,7 @@ gradient_calc_shapeburst_angular_factor  (
   float value = 0;
   gfloat * data;
   
-  (void) canvas_portion_ref (distance_canvas, x, y);
+  (void) canvas_portion_refro (distance_canvas, x, y);
   if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
     value = 1.0 - *data;
   canvas_portion_unref (distance_canvas, x, y);
@@ -1012,7 +1010,7 @@ gradient_calc_shapeburst_spherical_factor (double x,
   float value = 0;
   gfloat * data;
   
-  (void) canvas_portion_ref (distance_canvas, x, y);
+  (void) canvas_portion_refro (distance_canvas, x, y);
   if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
     value = 1.0 - sin (0.5 * M_PI * (*data));
   canvas_portion_unref (distance_canvas, x, y);
@@ -1030,7 +1028,7 @@ gradient_calc_shapeburst_dimpled_factor  (
   float value = 0;
   gfloat * data;
   
-  (void) canvas_portion_ref (distance_canvas, x, y);
+  (void) canvas_portion_refro (distance_canvas, x, y);
   if ((data = (gfloat*) canvas_portion_data (distance_canvas, x, y)) != NULL)
     value = cos (0.5 * M_PI * (*data));
   canvas_portion_unref (distance_canvas, x, y);
@@ -1090,7 +1088,7 @@ gradient_precalc_shapeburst  (
   /*  allocate the selection mask copy  */
   tempRbuf = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                          PR->w, PR->h, STORAGE_TILED);
-  pixelarea_init (&tempR, tempRbuf, NULL, 0, 0, PR->w, PR->h, TRUE);
+  pixelarea_init (&tempR, tempRbuf, 0, 0, PR->w, PR->h, TRUE);
 
   /*  If the gimage mask is not empty, use it as the shape burst source  */
   if (! gimage_mask_is_empty (gimage))
@@ -1105,7 +1103,7 @@ gradient_precalc_shapeburst  (
 
       /*  the selection mask  */
       mask = gimage_get_mask (gimage);
-      pixelarea_init (&maskR, drawable_data_canvas (GIMP_DRAWABLE(mask)), NULL, 
+      pixelarea_init (&maskR, drawable_data (GIMP_DRAWABLE(mask)), 
                       x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
@@ -1119,7 +1117,7 @@ gradient_precalc_shapeburst  (
 	{
 	  PixelArea drawableR;
 
-	  pixelarea_init (&drawableR, drawable_data_canvas (drawable), NULL,
+	  pixelarea_init (&drawableR, drawable_data (drawable),
                           PR->x, PR->y, PR->w, PR->h, FALSE);
 
 	  extract_alpha_area (&drawableR, NULL, &tempR);
@@ -1139,9 +1137,9 @@ gradient_precalc_shapeburst  (
     gfloat max_iteration;
     PixelArea distR;
     
-    pixelarea_init (&tempR, tempRbuf, NULL,
+    pixelarea_init (&tempR, tempRbuf,
                     0, 0, PR->w, PR->h, TRUE);
-    pixelarea_init (&distR, distance_canvas, NULL,
+    pixelarea_init (&distR, distance_canvas,
                     0, 0, PR->w, PR->h, TRUE);
 
     max_iteration = shapeburst_area (&tempR, &distR);
@@ -1151,7 +1149,7 @@ gradient_precalc_shapeburst  (
       {
         void * pr;
 
-        pixelarea_init (&distR, distance_canvas, NULL,
+        pixelarea_init (&distR, distance_canvas,
                         0, 0, PR->w, PR->h, TRUE);
 
         for (pr = pixelarea_register (1, &distR);
@@ -1499,7 +1497,7 @@ gradient_fill_region (GImage       *gimage,
             PixelArea PRapply;
             void * pr;
             
-            pixelarea_init (&PRrender, render, NULL, 0, 0, 0, FOO, TRUE);
+            pixelarea_init (&PRrender, render, 0, 0, 0, FOO, TRUE);
         
             for (pr = pixelarea_register(1, &PRrender);
                  pr != NULL;
@@ -1521,11 +1519,11 @@ gradient_fill_region (GImage       *gimage,
                   }
               }
         
-            pixelarea_init (&PRrender, render, NULL, 0, 0, 0, FOO, TRUE);
-            pixelarea_init (&PRapply, apply, NULL, 0, 0, 0, FOO, TRUE);
+            pixelarea_init (&PRrender, render, 0, 0, 0, FOO, TRUE);
+            pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
             copy_area (&PRrender, &PRapply);
             
-            pixelarea_init (&PRapply, apply, NULL, 0, 0, 0, FOO, TRUE);
+            pixelarea_init (&PRapply, apply, 0, 0, 0, FOO, TRUE);
             gimage_apply_painthit (gimage, drawable, NULL, &PRapply,
                                    TRUE, opacity, mode, 0, yy);
           }
@@ -1542,7 +1540,7 @@ gradient_fill_region (GImage       *gimage,
                       pixelarea_width (PR),
                       pixelarea_height (PR),
                       STORAGE_TILED);
-      pixelarea_init (&PR2, c, NULL, 0, 0, 0, 0, TRUE);
+      pixelarea_init (&PR2, c, 0, 0, 0, 0, TRUE);
 
 
       for (pr = pixelarea_register(1, &PR2);
@@ -1564,7 +1562,7 @@ gradient_fill_region (GImage       *gimage,
             }
         }
 
-      pixelarea_init (&PR2, c, NULL, 0, 0, 0, 0, TRUE);
+      pixelarea_init (&PR2, c, 0, 0, 0, 0, TRUE);
       copy_area (&PR2, PR);
       canvas_delete (c);
     }

@@ -21,6 +21,12 @@
 struct _PixelRow;
 
 void
+copy_row_u8  (
+              struct _PixelRow *,
+              struct _PixelRow *
+              );
+
+void
 color_row_u8 (
 	      struct _PixelRow *dest_row,
 	      struct _PixelRow *col

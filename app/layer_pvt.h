@@ -24,7 +24,6 @@
 #include "drawable.h"
 #include "canvas.h" 
 #include "channel.h"
-#include "tile_manager.h"
 
 #include "drawable_pvt.h"
 #include "channel_pvt.h"
@@ -47,8 +46,7 @@ struct _GimpLayer
   /*  Floating selections  */
   struct
   {
-    TileManager *backing_store; /*  for obscured regions         */
-    Canvas *backing_store_canvas; /*  for obscured regions         */
+    Canvas *backing_store;      /*  for obscured regions         */
     GimpDrawable *drawable;     /*  floating sel is attached to  */
     int initial;                /*  is fs composited yet?        */
 

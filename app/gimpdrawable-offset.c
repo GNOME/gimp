@@ -20,14 +20,17 @@
 #include <math.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "channel_ops.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "general.h"
 #include "gdisplay.h"
 #include "interface.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
-#include "paint_funcs.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
 #include "channel_pvt.h"
 
@@ -223,12 +226,12 @@ offset (GImage *gimage,
 	int     offset_x,
 	int     offset_y)
 {
-  PixelRegion srcPR, destPR;
-  TileManager *new_tiles;
+  PixelArea srcPR, destPR;
+  Canvas *new_tiles;
   int width, height;
   int src_x, src_y;
   int dest_x, dest_y;
-  unsigned char fill[MAX_CHANNELS] = { 0 };
+  Tag tag = tag_set_alpha (drawable_tag (drawable), ALPHA_YES);
 
   if (!drawable) 
     return;
@@ -250,7 +253,7 @@ offset (GImage *gimage,
   if (offset_x == 0 && offset_y == 0)
     return;
 
-  new_tiles = tile_manager_new (width, height, drawable_bytes (drawable));
+  new_tiles = canvas_new (tag, width, height, STORAGE_TILED);
   if (offset_x >= 0)
     {
       src_x = 0;
@@ -280,10 +283,10 @@ offset (GImage *gimage,
   /*  Copy the center region  */
   if (width && height)
     {
-      pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y, width, height, FALSE);
-      pixel_region_init (&destPR, new_tiles, dest_x, dest_y, width, height, TRUE);
+      pixelarea_init (&srcPR, drawable_data (drawable), src_x, src_y, width, height, FALSE);
+      pixelarea_init (&destPR, new_tiles, dest_x, dest_y, width, height, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      copy_area (&srcPR, &destPR);
     }
 
   /*  Copy appropriately for wrap around  */
@@ -320,10 +323,10 @@ offset (GImage *gimage,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
 	{
-	  pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y,
+	  pixelarea_init (&srcPR, drawable_data (drawable), src_x, src_y,
 			     ABS (offset_x), ABS (offset_y), FALSE);
-	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
-	  copy_region (&srcPR, &destPR);
+	  pixelarea_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
+	  copy_area (&srcPR, &destPR);
 	}
 
       /*  X offset  */
@@ -331,20 +334,20 @@ offset (GImage *gimage,
 	{
 	  if (offset_y >= 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x, 0,
+	      pixelarea_init (&srcPR, drawable_data (drawable), src_x, 0,
 				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
+	      pixelarea_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
 				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
 	    }
 	  else if (offset_y < 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x, src_y - offset_y,
+	      pixelarea_init (&srcPR, drawable_data (drawable), src_x, src_y - offset_y,
 				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x, 0,
+	      pixelarea_init (&destPR, new_tiles, dest_x, 0,
 				 ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
 	    }
 
-	  copy_region (&srcPR, &destPR);
+	  copy_area (&srcPR, &destPR);
 	}
 
       /*  X offset  */
@@ -352,32 +355,37 @@ offset (GImage *gimage,
 	{
 	  if (offset_x >= 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), 0, src_y,
+	      pixelarea_init (&srcPR, drawable_data (drawable), 0, src_y,
 				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
+	      pixelarea_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
 				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
 	    }
 	  else if (offset_x < 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x - offset_x, src_y,
+	      pixelarea_init (&srcPR, drawable_data (drawable), src_x - offset_x, src_y,
 				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), FALSE);
-	      pixel_region_init (&destPR, new_tiles, 0, dest_y,
+	      pixelarea_init (&destPR, new_tiles, 0, dest_y,
 				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
 	    }
 
-	  copy_region (&srcPR, &destPR);
+	  copy_area (&srcPR, &destPR);
 	}
     }
   /*  Otherwise, fill the vacated regions  */
   else
     {
+      COLOR16_NEW (fill, tag);
+
+      COLOR16_INIT (fill);
       if (fill_type == OFFSET_BACKGROUND)
 	{
-	  palette_get_background (&fill[0], &fill[1], &fill[2]);
-	  if (drawable_has_alpha (drawable))
-	    fill[drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+          color16_background (&fill);
 	}
-
+      else if (fill_type == OFFSET_TRANSPARENT)
+	{
+          color16_transparent (&fill);
+	}
+        
       if (offset_x >= 0 && offset_y >= 0)
 	{
 	  dest_x = 0;
@@ -402,43 +410,43 @@ offset (GImage *gimage,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
 	{
-	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
-	  color_region (&destPR, fill);
+	  pixelarea_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
+	  color_area (&destPR, &fill);
 	}
 
       /*  X offset  */
       if (offset_x != 0)
 	{
 	  if (offset_y >= 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
+	    pixelarea_init (&destPR, new_tiles, dest_x, dest_y + offset_y,
 			       ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
 	  else if (offset_y < 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x, 0,
+	    pixelarea_init (&destPR, new_tiles, dest_x, 0,
 			       ABS (offset_x), drawable_height (drawable) - ABS (offset_y), TRUE);
 
-	  color_region (&destPR, fill);
+	  color_area (&destPR, &fill);
 	}
 
       /*  X offset  */
       if (offset_y != 0)
 	{
 	  if (offset_x >= 0)
-	    pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
+	    pixelarea_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
 			       drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
 	  else if (offset_x < 0)
-	    pixel_region_init (&destPR, new_tiles, 0, dest_y,
+	    pixelarea_init (&destPR, new_tiles, 0, dest_y,
 			       drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
 
-	  color_region (&destPR, fill);
+	  color_area (&destPR, &fill);
 	}
     }
 
   /*  push an undo  */
   drawable_apply_image (drawable, 0, 0, drawable_width (drawable), drawable_height (drawable),
-			drawable_data (drawable), FALSE);
-
+			drawable_data (drawable));
+  
   /*  swap the tiles  */
-  drawable->tiles = new_tiles;
+  drawable->canvas = new_tiles;
 
   /*  update the drawable  */
   drawable_update (drawable, 0, 0, drawable_width (drawable), drawable_height (drawable));

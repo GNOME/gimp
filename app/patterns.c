@@ -233,10 +233,10 @@ load_pattern (char *filename)
      }
   
   /*  Get a new pattern mask  */
-  pattern->mask_canvas = canvas_new ( tag, 
-					header.width,
-					header.height,
-					STORAGE_FLAT );					
+  pattern->mask = canvas_new (tag, 
+                              header.width,
+                              header.height,
+                              STORAGE_FLAT);					
 
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sz_PatternHeader)))
@@ -254,17 +254,17 @@ load_pattern (char *filename)
     pattern->name = g_strdup ("Unnamed");
 
   /* ref the canvas to allocate memory */
-  canvas_portion_ref( pattern->mask_canvas,0,0); 
+  canvas_portion_refrw (pattern->mask, 0, 0); 
   
   /*  Read the pattern mask data  */
 
   /*  Read the brush mask data  */
   bytes = tag_bytes (tag); 
-  if ((fread (canvas_portion_data (pattern->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
+  if ((fread (canvas_portion_data (pattern->mask,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
     g_message ("GIMP pattern file appears to be truncated.");
   
-  canvas_portion_unref (pattern->mask_canvas,0,0); 
+  canvas_portion_unref (pattern->mask,0,0); 
   /*  Clean up  */
   fclose (fp);
 
@@ -334,7 +334,7 @@ free_pattern (pattern)
      GPatternP pattern;
 {
   if (pattern->mask)
-    temp_buf_free (pattern->mask);
+    canvas_delete (pattern->mask);
   if (pattern->filename)
     g_free (pattern->filename);
   if (pattern->name)
@@ -359,8 +359,8 @@ patterns_get_pattern_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = g_strdup (patternp->name);
-      return_args[2].value.pdb_int = patternp->mask->width;
-      return_args[3].value.pdb_int = patternp->mask->height;
+      return_args[2].value.pdb_int = canvas_width (patternp->mask);
+      return_args[3].value.pdb_int = canvas_height (patternp->mask);
     }
 
   return return_args;

@@ -22,6 +22,8 @@
 struct _GImage;
 struct _GimpDrawable;
 
+#define GImage struct _GImage
+#define GimpDrawable struct _GimpDrawable
 
 /*  Undo types  */
 #define      IMAGE_UNDO              1
@@ -62,32 +64,32 @@ struct _GimpDrawable;
 
 /*  Undo interface functions  */
 
-int      undo_push_group_start       (struct _GImage *, int);
-int      undo_push_group_end         (struct _GImage *);
-int      undo_push_image             (struct _GImage *, struct _GimpDrawable *,
-                                      int, int, int, int);
-int      undo_push_image_mod         (struct _GImage *, struct _GimpDrawable *,
-                                      int, int, int, int, void *);
-int      undo_push_mask              (struct _GImage *, void *);
-int      undo_push_layer_displace    (struct _GImage *, int);
-int      undo_push_transform         (struct _GImage *, void *);
-int      undo_push_paint             (struct _GImage *, void *);
-int      undo_push_layer             (struct _GImage *, void *);
-int      undo_push_layer_mod         (struct _GImage *, void *);
-int      undo_push_layer_mask        (struct _GImage *, void *);
-int      undo_push_layer_change      (struct _GImage *, int);
-int      undo_push_layer_position    (struct _GImage *, int);
-int      undo_push_channel           (struct _GImage *, void *);
-int      undo_push_channel_mod       (struct _GImage *, void *);
-int      undo_push_fs_to_layer       (struct _GImage *, void *);
-int      undo_push_fs_rigor          (struct _GImage *, int);
-int      undo_push_fs_relax          (struct _GImage *, int);
-int      undo_push_gimage_mod        (struct _GImage *);
-int      undo_push_guide             (struct _GImage *, void *);
+int      undo_push_group_start       (GImage *, int);
+int      undo_push_group_end         (GImage *);
+int      undo_push_image             (GImage *, GimpDrawable *, int, int, int, int);
+int      undo_push_image_mod         (GImage *, GimpDrawable *, int, int, int, int, void *);
+int      undo_push_mask              (GImage *, void *);
+int      undo_push_layer_displace    (GImage *, int);
+int      undo_push_transform         (GImage *, void *);
+int      undo_push_paint             (GImage *, void *);
+int      undo_push_layer             (GImage *, void *);
+int      undo_push_layer_mod         (GImage *, void *);
+int      undo_push_layer_mask        (GImage *, void *);
+int      undo_push_layer_change      (GImage *, int);
+int      undo_push_layer_position    (GImage *, int);
+int      undo_push_channel           (GImage *, void *);
+int      undo_push_channel_mod       (GImage *, void *);
+int      undo_push_fs_to_layer       (GImage *, void *);
+int      undo_push_fs_rigor          (GImage *, int);
+int      undo_push_fs_relax          (GImage *, int);
+int      undo_push_gimage_mod        (GImage *);
+int      undo_push_guide             (GImage *, void *);
 
-int      undo_pop                    (struct _GImage *);
-int      undo_redo                   (struct _GImage *);
-void     undo_free                   (struct _GImage *);
+int      undo_pop                    (GImage *);
+int      undo_redo                   (GImage *);
+void     undo_free                   (GImage *);
 
+#undef GImage
+#undef GimpDrawable
 
 #endif  /* __UNDO_H__ */

@@ -30,8 +30,7 @@ struct _GBrush
   char *     name;        /*  brush's name--for brush selection dialog   */
   int        spacing;     /*  brush's spacing                            */
   int        index;       /*  brush's index...                           */
-  /*TempBuf *  mask;        /*  the actual mask...                         */
-  struct _Canvas *  mask_canvas;  /*  the actual mask as canvas                  */
+  struct _Canvas *  mask;  /*  the actual mask as canvas                  */
 };
 
 /*  global variables  */

@@ -523,7 +523,7 @@ app_init (void)
   color_transfer_init ();
   get_active_brush ();
   get_active_pattern ();
-  paint_funcs_setup ();
+  paint_funcs_area_setup ();
 
 }
 
@@ -557,7 +557,7 @@ app_exit_finish (void)
   brush_select_dialog_free ();
   pattern_select_dialog_free ();
   palette_free ();
-  paint_funcs_free ();
+  paint_funcs_area_free ();
   procedural_db_free ();
   plug_in_kill ();
   menus_quit ();

@@ -19,6 +19,7 @@
 #include <string.h>
 #include "appenv.h"
 #include "by_color_select.h"
+#include "canvas.h"
 #include "channel.h"
 #include "channels_dialog.h"
 #include "drawable.h"
@@ -32,7 +33,10 @@
 #include "indexed_palette.h"
 #include "layer.h"
 #include "paint_core_16.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "undo.h"
@@ -41,11 +45,6 @@
 #include "layer_pvt.h"
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
-
-#include "canvas.h"
-#include "pixelarea.h"
-#include "pixelrow.h"
-#include "paint_funcs_area.h"
 
 
 typedef int   (* UndoPopFunc)  (GImage *, int, int, void *);
@@ -481,9 +480,9 @@ undo_push_image (GImage *gimage,
        *  degenerate or something else failed, simply return an unsuccessful push.
        */
       tiles = canvas_new (drawable_tag (drawable), (x2 - x1), (y2 - y1), STORAGE_FLAT);
-      pixelarea_init (&srcPR, drawable_data_canvas (drawable), NULL,
+      pixelarea_init (&srcPR, drawable_data (drawable),
                       x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&destPR, tiles, NULL,
+      pixelarea_init (&destPR, tiles,
                       0, 0, (x2 - x1), (y2 - y1), TRUE);
       copy_area (&srcPR, &destPR);
 
@@ -506,16 +505,14 @@ undo_push_image (GImage *gimage,
 }
 
 
-int 
-undo_push_image_mod  (
-                      GImage * gimage,
-                      GimpDrawable * drawable,
-                      int x1,
-                      int y1,
-                      int x2,
-                      int y2,
-                      void * tiles_ptr
-                      )
+int
+undo_push_image_mod (GImage *gimage,
+		     GimpDrawable *drawable,
+		     int     x1,
+		     int     y1,
+		     int     x2,
+		     int     y2,
+		     void   *tiles_ptr)
 {
   long size;
   Undo * new;
@@ -577,7 +574,7 @@ undo_pop_image (GImage *gimage,
 
   image_undo = (ImageUndo *) image_undo_ptr;
   tiles = image_undo->tiles;
-  imagetiles = drawable_data_canvas (image_undo->drawable);
+  imagetiles = drawable_data (image_undo->drawable);
 
   switch (state)
     {
@@ -597,8 +594,8 @@ undo_pop_image (GImage *gimage,
   w = image_undo->x2 - image_undo->x1;
   h = image_undo->y2 - image_undo->y1;
 
-  pixelarea_init (&PR1, tiles, NULL, 0, 0, w, h, TRUE);
-  pixelarea_init (&PR2, imagetiles, NULL, x, y, w, h, TRUE);
+  pixelarea_init (&PR1, tiles, 0, 0, w, h, TRUE);
+  pixelarea_init (&PR2, imagetiles, x, y, w, h, TRUE);
   swap_area (&PR1, &PR2);
   
   drawable_update (image_undo->drawable, x, y, w, h);
@@ -632,8 +629,8 @@ undo_push_mask (GImage *gimage,
   int size;
 
   mask_undo = (MaskUndo *) mask_ptr;
-  if (mask_undo->canvas)
-    size = canvas_width (mask_undo->canvas) * canvas_height (mask_undo->canvas);
+  if (mask_undo->tiles)
+    size = canvas_width (mask_undo->tiles) * canvas_height (mask_undo->tiles);
   else
     size = 0;
 
@@ -647,8 +644,8 @@ undo_push_mask (GImage *gimage,
     }
   else
     {
-      if (mask_undo->canvas)
-	canvas_delete (mask_undo->canvas);
+      if (mask_undo->tiles)
+	canvas_delete (mask_undo->tiles);
       g_free (mask_undo);
       return FALSE;
     }
@@ -662,63 +659,76 @@ undo_pop_mask (GImage *gimage,
 	       void   *mask_ptr)
 {
   MaskUndo *mask_undo;
-  Canvas *new_canvas;
-  Channel *sel_mask = gimage_get_mask (gimage);
-  Canvas *sel_mask_canvas = GIMP_DRAWABLE(sel_mask)->canvas;
+  Canvas *new_tiles;
+  Channel *sel_mask;
+  Canvas *sel_mask_canvas;
   PixelArea srcPR, destPR;
   int selection;
   int x1, y1, x2, y2;
   int width, height;
-  COLOR16_NEW (empty_color, canvas_tag (sel_mask_canvas));
-  COLOR16_INIT (empty_color);
-  color16_black (&empty_color);
-  
 
   width = height = 0;
 
   mask_undo = (MaskUndo *) mask_ptr;
 
   /*  save current selection mask  */
+  sel_mask = gimage_get_mask (gimage);
+  sel_mask_canvas = GIMP_DRAWABLE(sel_mask)->canvas;
   selection = channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
-  pixelarea_init (&srcPR, sel_mask_canvas, NULL, 
-	x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&srcPR, sel_mask_canvas, 
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
 
   if (selection)
     {
-      new_canvas = canvas_new (canvas_tag (sel_mask_canvas), 
-				pixelarea_width (&srcPR), 
-				pixelarea_height (&srcPR), STORAGE_FLAT);
-      pixelarea_init (&destPR, new_canvas, NULL,
-			0, 0, 
-			pixelarea_width (&srcPR), 
-			pixelarea_height (&srcPR), TRUE);
+      COLOR16_NEW (empty_color, canvas_tag (sel_mask_canvas));
+      COLOR16_INIT (empty_color);
+      color16_black (&empty_color);
 
+      new_tiles = canvas_new (canvas_tag (sel_mask_canvas), 
+                              pixelarea_width (&srcPR), 
+                              pixelarea_height (&srcPR), STORAGE_FLAT);
+
+      
+      pixelarea_init (&destPR, new_tiles,
+                      0, 0, 
+                      pixelarea_width (&srcPR), pixelarea_height (&srcPR),
+                      TRUE);
       copy_area (&srcPR, &destPR);
 
-      pixelarea_init (&srcPR, sel_mask_canvas, NULL, 
-		x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      
+      pixelarea_init (&srcPR, sel_mask_canvas, 
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      TRUE);
       color_area (&srcPR, &empty_color);
     }
   else
-    new_canvas = NULL;
+    new_tiles = NULL;
 
-  if (mask_undo->canvas)
+  if (mask_undo->tiles)
     {
-      width = canvas_width (mask_undo->canvas);
-      height = canvas_height (mask_undo->canvas);
-      pixelarea_init (&srcPR, mask_undo->canvas, NULL, 
-		0, 0, width, height, FALSE);
-      pixelarea_init (&destPR, sel_mask_canvas, NULL,
-		mask_undo->x, mask_undo->y, width, height, TRUE);
+      width = canvas_width (mask_undo->tiles);
+      height = canvas_height (mask_undo->tiles);
+
+      pixelarea_init (&srcPR, mask_undo->tiles, 
+                      0, 0,
+                      width, height,
+                      FALSE);
+      pixelarea_init (&destPR, sel_mask_canvas,
+                      mask_undo->x, mask_undo->y,
+                      width, height,
+                      TRUE);
       copy_area (&srcPR, &destPR);
 
-      canvas_delete (mask_undo->canvas);
+      canvas_delete (mask_undo->tiles);
     }
 
   /* invalidate the current bounds and boundary of the mask */
   gimage_mask_invalidate (gimage);
 
-  if (mask_undo->canvas)
+  if (mask_undo->tiles)
     {
       sel_mask->empty = FALSE;
       sel_mask->x1 = mask_undo->x;
@@ -736,7 +746,7 @@ undo_pop_mask (GImage *gimage,
     }
 
   /*  set the new mask undo parameters  */
-  mask_undo->canvas = new_canvas;
+  mask_undo->tiles = new_tiles;
   mask_undo->x = x1;
   mask_undo->y = y1;
 
@@ -760,8 +770,8 @@ undo_free_mask (int   state,
   MaskUndo *mask_undo;
 
   mask_undo = (MaskUndo *) mask_ptr;
-  if (mask_undo->canvas)
-    canvas_delete (mask_undo->canvas);
+  if (mask_undo->tiles)
+    canvas_delete (mask_undo->tiles);
   g_free (mask_undo);
 }
 
@@ -813,15 +823,23 @@ undo_pop_layer_displace (GImage *gimage,
     {
       old_offsets[0] = GIMP_DRAWABLE(layer)->offset_x;
       old_offsets[1] = GIMP_DRAWABLE(layer)->offset_y;
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0,
+		       GIMP_DRAWABLE(layer)->width,
+		       GIMP_DRAWABLE(layer)->height);
 
       GIMP_DRAWABLE(layer)->offset_x = info[1];
       GIMP_DRAWABLE(layer)->offset_y = info[2];
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0,
+		       GIMP_DRAWABLE(layer)->width,
+		       GIMP_DRAWABLE(layer)->height);
+      
       if (layer->mask) 
 	{
 	  GIMP_DRAWABLE(layer->mask)->offset_x = info[1];
 	  GIMP_DRAWABLE(layer->mask)->offset_y = info[2];
+	  drawable_update (GIMP_DRAWABLE(layer->mask), 0, 0,
+			   GIMP_DRAWABLE(layer->mask)->width,
+			   GIMP_DRAWABLE(layer->mask)->height);
 	}
 
 
@@ -949,7 +967,7 @@ undo_push_paint (GImage *gimage,
   Undo * new;
   int size;
 
-  size = sizeof (PaintUndo16);
+  size = sizeof (PaintUndo);
 
   if ((new = undo_push (gimage, size, PAINT_UNDO)))
     {
@@ -974,7 +992,7 @@ undo_pop_paint (GImage *gimage,
 		void   *pu_ptr)
 {
   PaintCore * pc;
-  PaintUndo16 * pu;
+  PaintUndo * pu;
   double tmp;
 
   /* Can't have ANY tool selected - maybe a plugin running */
@@ -982,7 +1000,7 @@ undo_pop_paint (GImage *gimage,
     return TRUE;
 
   pc = (PaintCore *) active_tool->private;
-  pu = (PaintUndo16 *) pu_ptr;
+  pu = (PaintUndo *) pu_ptr;
 
   /*  only pop if the active tool is the tool that pushed this undo  */
   if (pu->tool_ID != active_tool->ID)
@@ -1005,9 +1023,9 @@ void
 undo_free_paint (int   state,
 		 void *pu_ptr)
 {
-  PaintUndo16 * pu;
+  PaintUndo * pu;
 
-  pu = (PaintUndo16 *) pu_ptr;
+  pu = (PaintUndo *) pu_ptr;
   g_free (pu);
 }
 
@@ -1632,7 +1650,7 @@ undo_push_fs_to_layer (GImage *gimage,
     }
   else
     {
-      tile_manager_destroy (fsu->layer->fs.backing_store);
+      canvas_delete (fsu->layer->fs.backing_store);
       g_free (fsu);
       return FALSE;
     }
@@ -1716,7 +1734,7 @@ undo_free_fs_to_layer (int   state,
   fsu = (FStoLayerUndo *) fsu_ptr;
 
   if (state == UNDO)
-    tile_manager_destroy (fsu->layer->fs.backing_store);
+    canvas_delete (fsu->layer->fs.backing_store);
   g_free (fsu);
 }
 

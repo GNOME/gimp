@@ -40,7 +40,9 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
-int tilesx, tilesy; /*should find a better place for these--leftover from tiles*/
+#define FIXME
+/*should find a better place for these--leftover from tiles*/
+int tilesx, tilesy;
 
 /*  feathering variables  */
 double gimage_mask_feather_radius = 5;
@@ -193,7 +195,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
      int cut_gimage;
      int keep_indexed;
 {
-  Canvas * canvas;
+  Canvas * tiles;
   Channel * sel_mask;
   PixelArea srcPR, destPR, maskPR;
   Tag d_tag, canvas_tag;
@@ -216,7 +218,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      message_box ("Unable to cut/copy because the selected\nregion is empty.", NULL, NULL);
+      g_message ("Unable to cut/copy because the selected\nregion is empty.");
       return NULL;
     }
 
@@ -237,26 +239,26 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 
   /*  If a cut was specified, and the selection mask is not empty, push an undo  */
   if (cut_gimage && non_empty)
-    drawable_apply_image_16 (drawable, x1, y1, x2, y2, NULL);
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL);
 
   drawable_offsets (drawable, &off_x, &off_y);
 
   /*  Allocate the temp buffer  */
-  canvas = canvas_new (canvas_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
+  tiles = canvas_new (canvas_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
      
   tilesx = x1 + off_x;
   tilesy = y1 + off_y;
 
   /* configure the pixel areas  */
-  pixelarea_init (&srcPR, drawable_data_canvas (drawable), NULL, 
+  pixelarea_init (&srcPR, drawable_data (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), cut_gimage);
-  pixelarea_init (&destPR, canvas, NULL, 
+  pixelarea_init (&destPR, tiles, 
 		0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   /*  If there is a selection, extract from it  */
   if (non_empty)
     {
-      pixelarea_init (&maskPR, GIMP_DRAWABLE(sel_mask)->canvas, NULL, 
+      pixelarea_init (&maskPR, GIMP_DRAWABLE(sel_mask)->canvas, 
 		(x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1), FALSE);
 
       extract_from_area (&srcPR, &destPR, &maskPR, &bg_color, 
@@ -269,7 +271,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 
 	  /*  Update the region  */
 	  gdisplays_update_area (gimage->ID, tilesx, tilesy,
-				 canvas_width (canvas), canvas_height (canvas));
+				 canvas_width (tiles), canvas_height (tiles));
 
 	  /*  Invalidate the preview  */
 	  drawable_invalidate_preview (drawable);
@@ -303,7 +305,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 	gimage_remove_channel (gimage, GIMP_CHANNEL(drawable));
     }
 
-  return canvas;
+  return tiles;
 }
 
 Layer *
@@ -314,7 +316,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
 {
   Layer *layer;
   Channel *mask = gimage_get_mask (gimage);
-  Canvas* canvas;
+  Canvas* tiles;
   int non_empty;
   int x1, y1, x2, y2;
 
@@ -330,17 +332,17 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   undo_push_group_start (gimage, FLOAT_MASK_UNDO);
 
   /*  Cut the selected region  */
-  canvas = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
+  tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_canvas (gimage, drawable, canvas, "Floated Layer", OPAQUE_OPACITY, NORMAL);
+  layer = layer_from_canvas (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tilesx + off_x;
   GIMP_DRAWABLE(layer)->offset_y = tilesy + off_y;
 
   /*  Free the temp buffer  */
-  canvas_delete (canvas);
+  canvas_delete (tiles);
 
   /*  Add the floating layer to the gimage  */
   floating_sel_attach (layer, drawable);
@@ -611,7 +613,7 @@ gimage_mask_stroke_paint_func (paint_core, drawable, state)
       
   /* Get the working canvas */
   painthit = paint_core_16_area (paint_core, drawable);
-  pixelarea_init (&a, painthit, NULL, 0, 0, 0, 0, TRUE);
+  pixelarea_init (&a, painthit, 0, 0, 0, 0, TRUE);
 
   /* construct the paint hit */
   {

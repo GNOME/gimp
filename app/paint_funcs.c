@@ -99,11 +99,6 @@ static void apply_layer_mode_replace (unsigned char *, unsigned char *,
 				      int, int, int,
 				      int, int, int, int *);
 
-void rgb_to_hsv (int *r, int *g, int *b);
-void hls_to_rgb (int *h, int *l, int *s);
-void rgb_to_hls (int *r, int *g, int *b);
-void hsv_to_rgb (int *h, int *s, int *v);
-
 
 static unsigned char *
 paint_funcs_get_buffer (int size)

@@ -206,7 +206,7 @@ paintbrush_motion (PaintCore *paint_core,
       
       /* Get the working canvas */
       painthit = paint_core_16_area (paint_core, drawable);
-      pixelarea_init (&a, painthit, NULL, 0, 0, 0, 0, TRUE);
+      pixelarea_init (&a, painthit, 0, 0, 0, 0, TRUE);
 
       /* construct the paint hit */
       {

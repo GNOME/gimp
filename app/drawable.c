@@ -148,27 +148,7 @@ drawable_ID (GimpDrawable *drawable)
 void
 drawable_apply_image (GimpDrawable *drawable, 
 		      int x1, int y1, int x2, int y2, 
-		      TileManager *tiles, int sparse)
-{
-  g_warning ("drawable_apply_image() was called");
-
-  if (drawable)
-    if (! tiles)
-      undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
-    else
-      undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2, tiles);
-}
-
-
-void 
-drawable_apply_image_16  (
-                          GimpDrawable * drawable,
-                          int x1,
-                          int y1,
-                          int x2,
-                          int y2,
-                          Canvas * tiles
-                          )
+                      Canvas * tiles)
 {
   if (drawable)
     if (! tiles)
@@ -180,7 +160,7 @@ drawable_apply_image_16  (
 
 
 void
-drawable_merge_shadow_canvas (GimpDrawable *drawable, int undo)
+drawable_merge_shadow (GimpDrawable *drawable, int undo)
 {
   GImage *gimage;
   PixelArea shadow_area;
@@ -197,17 +177,10 @@ drawable_merge_shadow_canvas (GimpDrawable *drawable, int undo)
    *  them.
    */
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixelarea_init (&shadow_area, gimage->shadow_canvas, NULL, 
-		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixelarea_init (&shadow_area, gimage->shadow, 
+                  x1, y1, (x2 - x1), (y2 - y1), FALSE);
   gimage_apply_painthit (gimage, drawable, NULL, &shadow_area, undo, 1.0,
-		      REPLACE_MODE,  x1, y1);
-}
-
-
-void
-drawable_merge_shadow (GimpDrawable *drawable, int undo)
-{
-  g_warning ("drawable_merge_shadow() was called");
+                         REPLACE_MODE,  x1, y1);
 }
 
 
@@ -233,6 +206,9 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
       case BACKGROUND_FILL:
         color16_background (&paint);
         break;
+      case FOREGROUND_FILL:
+        color16_foreground (&paint);
+        break;
       case WHITE_FILL:
         color16_white (&paint);
         break;
@@ -245,7 +221,7 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
       }
 
     /* init the area to be filled */
-    pixelarea_init (&dest_area, drawable_data_canvas(drawable), NULL,
+    pixelarea_init (&dest_area, drawable_data(drawable),
                     0, 0, 0, 0, TRUE);
 
     /* do the fill */
@@ -450,19 +426,8 @@ drawable_indexed (GimpDrawable *drawable)
 }
 
 
-TileManager *
-drawable_data (GimpDrawable *drawable)
-{
-  g_warning ("drawable_data() was called");
-
-  if (drawable) 
-    return drawable->tiles;
-  else
-    return NULL;
-}
-
 Canvas *
-drawable_data_canvas (GimpDrawable *drawable)
+drawable_data (GimpDrawable *drawable)
 {
   if (drawable) 
     return drawable->canvas;
@@ -470,33 +435,16 @@ drawable_data_canvas (GimpDrawable *drawable)
     return NULL;
 }
 
-TileManager *
+Canvas *
 drawable_shadow (GimpDrawable *drawable)
 {
   GImage *gimage;
-
-  g_warning ("drawable_shadow() was called");
 
   if (! (gimage = drawable_gimage (drawable)))
     return NULL;
 
   if (drawable) 
     return gimage_shadow (gimage, drawable->width, drawable->height, 
-			  drawable->bytes);
-  else
-    return NULL;
-}
-
-Canvas *
-drawable_shadow_canvas (GimpDrawable *drawable)
-{
-  GImage *gimage;
-
-  if (! (gimage = drawable_gimage (drawable)))
-    return NULL;
-
-  if (drawable) 
-    return gimage_shadow_canvas (gimage, drawable->width, drawable->height, 
 			  drawable->tag);
   else
     return NULL;

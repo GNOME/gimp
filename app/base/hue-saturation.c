@@ -32,6 +32,7 @@
 #include "pixelarea.h"
 #include "pixelrow.h"
 
+#define FIXME
 /* two temp routines */
 static void calc_rgb_to_hls(gdouble *r, gdouble *g, gdouble *b);
 static void calc_hls_to_rgb(gdouble *r, gdouble *g, gdouble *b);
@@ -607,6 +608,10 @@ hue_saturation_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -652,7 +657,9 @@ hue_saturation_control (Tool     *tool,
     case HALT :
       if (hue_saturation_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort_16 (hue_saturation_dialog->image_map);
+	  active_tool->preserve = FALSE;
           hue_saturation_free_transfers();
 	  hue_saturation_dialog->image_map = NULL;
 	  hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
@@ -717,7 +724,7 @@ hue_saturation_initialize (void *gdisp_ptr)
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Hue-Saturation operates only on RGB color drawables.", NULL, NULL);
+      g_message ("Hue-Saturation operates only on RGB color drawables.");
       return;
     }
 
@@ -753,7 +760,9 @@ hue_saturation_free ()
     {
       if (hue_saturation_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort_16 (hue_saturation_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  hue_saturation_dialog->image_map = NULL;
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
@@ -1023,7 +1032,7 @@ hue_saturation_update (HueSaturationDialog *hsd,
   int i, j;
   unsigned char buf[DA_WIDTH * 3];
   char text[12];
-  
+
   if (update & HUE_SLIDER)
     {
       hsd->hue_data->value = hsd->hue[hsd->hue_partition];
@@ -1093,7 +1102,7 @@ static void
 hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
-    g_warning ("No image map");
+    g_message ("hue_saturation_preview(): No image map");
   active_tool->preserve = TRUE;
   image_map_apply_16 (hsd->image_map, hue_saturation, (void *) hsd);
   active_tool->preserve = FALSE;
@@ -1126,6 +1135,7 @@ hue_saturation_ok_callback (GtkWidget *widget,
   }
 
   active_tool->preserve = FALSE;
+
   hsd->image_map = NULL;
 }
 
@@ -1546,9 +1556,9 @@ hue_saturation_invoker (Argument *args)
       /*  The application should occur only within selection bounds  */
       drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-      pixelarea_init (&src_area, drawable_data_canvas (drawable), NULL, 
+      pixelarea_init (&src_area, drawable_data (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixelarea_init (&dest_area, drawable_shadow_canvas (drawable), NULL, 
+      pixelarea_init (&dest_area, drawable_shadow (drawable), 
 		x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       for (pr = pixelarea_register (2, &src_area, &dest_area); 
@@ -1557,7 +1567,7 @@ hue_saturation_invoker (Argument *args)
 	(*hue_saturation) (&src_area, &dest_area, (void *) &hsd);
 
       hue_saturation_free_transfers ();
-      drawable_merge_shadow_canvas (drawable, TRUE);
+      drawable_merge_shadow (drawable, TRUE);
       drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 

@@ -25,6 +25,8 @@
 struct _PixelArea;
 struct _PixelRow;
 
+/* FIXME */
+void copy_row (struct _PixelRow *, struct _PixelRow *);
 
 /* hack */
 #define OPAQUE_OPACITY 255

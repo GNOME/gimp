@@ -39,17 +39,14 @@
 #include "pixelrow.h"
 #include "plug_in.h"
 #include "tools.h"
-#include "trace.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"		/* ick. */
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
 
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
-static void     gimage_allocate_shadow       (GImage *, int, int, int);
-static void     gimage_allocate_shadow_canvas(GImage *, int, int, Tag);
+static void     gimage_allocate_shadow       (GImage *, int, int, Tag);
 static GImage * gimage_create                (void);
 static void     gimage_allocate_projection   (GImage *);
 static void     gimage_free_layers           (GImage *);
@@ -112,13 +109,11 @@ gimage_create (void)
   gimage->ref_count = 0;
   gimage->instance_count = 0;
   gimage->shadow = NULL;
-  gimage->shadow_canvas = NULL;
   gimage->dirty = 1;
   gimage->undo_on = TRUE;
   gimage->flat = TRUE;
   gimage->construct_flag = -1;
   gimage->projection = NULL;
-  gimage->projection_canvas = NULL;
   gimage->guides = NULL;
   gimage->layers = NULL;
   gimage->channels = NULL;
@@ -150,8 +145,8 @@ gimage_allocate_projection (GImage *gimage)
 {
   Format format;
   Precision precision;
-  Tag projection_canvas_tag;
-  if (gimage->projection_canvas)
+  Tag projection_tag;
+  if (gimage->projection)
     gimage_free_projection (gimage);
 
   /*  Find the number of bytes required for the projection.
@@ -175,39 +170,33 @@ gimage_allocate_projection (GImage *gimage)
     }
   
   precision = tag_precision (gimage_tag(gimage)); 
-  projection_canvas_tag = tag_new (precision, format, ALPHA_YES);
-  gimage->proj_bytes = tag_bytes (projection_canvas_tag);
+  projection_tag = tag_new (precision, format, ALPHA_YES);
+  gimage->proj_bytes = tag_bytes (projection_tag);
 
   /*  allocate the new projection */
-  gimage->projection_canvas = canvas_new (projection_canvas_tag, 
-			gimage->width, gimage->height, STORAGE_FLAT);
+  gimage->projection = canvas_new (projection_tag, 
+                                   gimage->width, gimage->height,
+                                   STORAGE_FLAT);
   /*gimage->projection->user_data = (void *) gimage;*/
+  /*tile_manager_set_validate_proc (gimage->projection, gimage_validate);*/
 }
-
-
 
 static void
 gimage_free_projection (GImage *gimage)
 {
-  if (gimage->projection_canvas)
-    canvas_delete (gimage->projection_canvas);
+  if (gimage->projection)
+    canvas_delete (gimage->projection);
 
-  gimage->projection_canvas = NULL;
+  gimage->projection = NULL;
 }
 
 static void
-gimage_allocate_shadow (GImage *gimage, int width, int height, int bpp)
+gimage_allocate_shadow (GImage *gimage, int width, int height, Tag tag)
 {
   /*  allocate the new projection  */
-  /*gimage->shadow = tile_manager_new (width, height, bpp);*/
-    gimage->shadow = NULL;
+  gimage->shadow = canvas_new (tag, width, height, STORAGE_FLAT);
 }
 
-static void
-gimage_allocate_shadow_canvas (GImage *gimage, int width, int height, Tag tag)
-{
-  gimage->shadow_canvas = canvas_new (tag, width, height, STORAGE_FLAT);
-}
 
 /* function definitions */
 
@@ -250,6 +239,7 @@ gimage_new_tag (int width, int height, Tag tag)
   gimage->filename = NULL;
   gimage->width = width;
   gimage->height = height;
+  
   gimage->base_tag = tag;
 
   switch (tag_format (tag))
@@ -503,43 +493,20 @@ gimage_get_ID (int ID)
 }
 
 
-TileManager *
-gimage_shadow (GImage *gimage, int width, int height, int bpp)
+Canvas *
+gimage_shadow (GImage *gimage, int width, int height, Tag tag)
 {
-#if 0
   if (gimage->shadow &&
-      ((width != gimage->shadow->levels[0].width) ||
-       (height != gimage->shadow->levels[0].height) ||
-       (bpp != gimage->shadow->levels[0].bpp)))
+      ((width != canvas_width (gimage->shadow)) ||
+       (height != canvas_height (gimage->shadow)) ||
+       (!tag_equal (tag ,canvas_tag (gimage->shadow)))))
     gimage_free_shadow (gimage);
   else if (gimage->shadow)
     return gimage->shadow;
 
-  gimage_allocate_shadow (gimage, width, height, bpp);
+  gimage_allocate_shadow (gimage, width, height, tag);
 
   return gimage->shadow;
-#else
-  return NULL;
-#endif
-}
-
-
-Canvas *
-gimage_shadow_canvas (GImage *gimage, int width, int height, Tag tag)
-{
-  if (
-	gimage->shadow_canvas &&
-        ((width != canvas_width (gimage->shadow_canvas)) ||
-        (height != canvas_height (gimage->shadow_canvas)) ||
-        (!tag_equal (tag ,canvas_tag (gimage->shadow_canvas))))
-      )
-    gimage_free_shadow_canvas (gimage);
-  else if (gimage->shadow_canvas)
-    return gimage->shadow_canvas;
-
-  gimage_allocate_shadow_canvas (gimage, width, height, tag);
-
-  return gimage->shadow_canvas;
 }
 
 
@@ -548,20 +515,9 @@ gimage_free_shadow (GImage *gimage)
 {
   /*  Free the shadow buffer from the specified gimage if it exists  */
   if (gimage->shadow)
-    tile_manager_destroy (gimage->shadow);
+    canvas_delete (gimage->shadow);
 
   gimage->shadow = NULL;
-}
-
-
-void
-gimage_free_shadow_canvas (GImage *gimage)
-{
-  /*  Free the shadow buffer from the specified gimage if it exists  */
-  if (gimage->shadow_canvas)
-    canvas_delete (gimage->shadow_canvas);
-
-  gimage->shadow_canvas = NULL;
 }
 
 
@@ -603,6 +559,85 @@ void
 gimage_apply_image ()
 {
   g_warning ("gimage_apply_image() was called");
+#if 0
+  Channel * mask;
+  int x1, y1, x2, y2;
+  int offset_x, offset_y;
+  PixelRegion src1PR, destPR, maskPR;
+  int operation;
+  int active [MAX_CHANNELS];
+
+  /*  get the selection mask if one exists  */
+  mask = (gimage_mask_is_empty (gimage)) ?
+    NULL : gimage_get_mask (gimage);
+
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable, active);
+
+  /*  determine what sort of operation is being attempted and
+   *  if it's actually legal...
+   */
+  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  if (operation == -1)
+    {
+      g_message ("gimage_apply_image sent illegal parameters");
+      return;
+    }
+
+  /*  get the layer offsets  */
+  drawable_offsets (drawable, &offset_x, &offset_y);
+
+  /*  make sure the image application coordinates are within gimage bounds  */
+  x1 = BOUNDS (x, 0, drawable_width (drawable));
+  y1 = BOUNDS (y, 0, drawable_height (drawable));
+  x2 = BOUNDS (x + src2PR->w, 0, drawable_width (drawable));
+  y2 = BOUNDS (y + src2PR->h, 0, drawable_height (drawable));
+
+  if (mask)
+    {
+      /*  make sure coordinates are in mask bounds ...
+       *  we need to add the layer offset to transform coords
+       *  into the mask coordinate system
+       */
+      x1 = BOUNDS (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y1 = BOUNDS (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+      x2 = BOUNDS (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y2 = BOUNDS (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+    }
+
+  /*  If the calling procedure specified an undo step...  */
+  if (undo)
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+
+  /* configure the pixel regions
+   *  If an alternative to using the drawable's data as src1 was provided...
+   */
+  if (src1_tiles)
+    pixel_region_init (&src1PR, src1_tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  else
+    pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+
+  if (mask)
+    {
+      int mx, my;
+
+      /*  configure the mask pixel region
+       *  don't use x1 and y1 because they are in layer
+       *  coordinate system.  Need mask coordinate system
+       */
+      mx = x1 + offset_x;
+      my = y1 + offset_y;
+
+      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
+      combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
+		       opacity, mode, active, operation);
+    }
+  else
+    combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
+		     opacity, mode, active, operation);
+#endif
 }
 
 void 
@@ -641,7 +676,7 @@ gimage_apply_painthit  (
 
     /* init src1 if necessary */
     if (src1 == NULL)
-      src1 = drawable_data_canvas (drawable);
+      src1 = drawable_data (drawable);
     
     {
       int offset_x, offset_y;
@@ -668,10 +703,10 @@ gimage_apply_painthit  (
 
       /* apply the undo if the caller wants one */
       if (undo)
-        drawable_apply_image_16 (drawable, x1, y1, x2, y2, NULL);
+        drawable_apply_image (drawable, x1, y1, x2, y2, NULL);
 
       /* the underlying image */
-      pixelarea_init (&src1PR, src1, NULL,
+      pixelarea_init (&src1PR, src1,
                       x1, y1,
                       (x2 - x1), (y2 - y1),
                       FALSE);
@@ -684,14 +719,14 @@ gimage_apply_painthit  (
                       x2 - x1, y2 - y1,
                       FALSE);
       
-      pixelarea_init (&destPR, drawable_data_canvas (drawable), NULL,
+      pixelarea_init (&destPR, drawable_data (drawable),
                       x1, y1,
                       (x2 - x1), (y2 - y1),
                       TRUE);
 
       if (mask)
         {
-          pixelarea_init (&maskPR, drawable_data_canvas (GIMP_DRAWABLE (mask)), NULL,
+          pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)),
                           x1 + offset_x, y1 + offset_y,
                           (x2 - x1), (y2 - y1),
                           FALSE);
@@ -727,6 +762,113 @@ void
 gimage_replace_image ()
 {
   g_warning ("gimage_replace_image() was called");
+#if 0
+  Channel * mask;
+  int x1, y1, x2, y2;
+  int offset_x, offset_y;
+  PixelRegion src1PR, destPR;
+  PixelRegion mask2PR, tempPR;
+  unsigned char *temp_data;
+  int operation;
+  int active [MAX_CHANNELS];
+
+  /*  get the selection mask if one exists  */
+  mask = (gimage_mask_is_empty (gimage)) ?
+    NULL : gimage_get_mask (gimage);
+
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable, active);
+
+  /*  determine what sort of operation is being attempted and
+   *  if it's actually legal...
+   */
+  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  if (operation == -1)
+    {
+      g_message ("gimage_apply_image sent illegal parameters");
+      return;
+    }
+
+  /*  get the layer offsets  */
+  drawable_offsets (drawable, &offset_x, &offset_y);
+
+  /*  make sure the image application coordinates are within gimage bounds  */
+  x1 = BOUNDS (x, 0, drawable_width (drawable));
+  y1 = BOUNDS (y, 0, drawable_height (drawable));
+  x2 = BOUNDS (x + src2PR->w, 0, drawable_width (drawable));
+  y2 = BOUNDS (y + src2PR->h, 0, drawable_height (drawable));
+
+  if (mask)
+    {
+      /*  make sure coordinates are in mask bounds ...
+       *  we need to add the layer offset to transform coords
+       *  into the mask coordinate system
+       */
+      x1 = BOUNDS (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y1 = BOUNDS (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+      x2 = BOUNDS (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+      y2 = BOUNDS (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+    }
+
+  /*  If the calling procedure specified an undo step...  */
+  if (undo)
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+
+  /* configure the pixel regions
+   *  If an alternative to using the drawable's data as src1 was provided...
+   */
+  pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+
+  if (mask)
+    {
+      int mx, my;
+
+      /*  configure the mask pixel region
+       *  don't use x1 and y1 because they are in layer
+       *  coordinate system.  Need mask coordinate system
+       */
+      mx = x1 + offset_x;
+      my = y1 + offset_y;
+
+      pixel_region_init (&mask2PR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
+
+      tempPR.bytes = 1;
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.rowstride = mask2PR.rowstride;
+      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
+      tempPR.data = temp_data;
+
+      copy_region (&mask2PR, &tempPR);
+
+      /* apparently, region operations can mutate some PR data. */
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
+
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
+		       opacity, active, operation);
+
+      g_free (temp_data);
+    }
+  else
+    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
+		     opacity, active, operation);
+#endif
 }
 
 
@@ -793,7 +935,7 @@ gimage_replace_painthit  (
   
   /*  If the calling procedure specified an undo step...  */
   if (undo)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+    drawable_apply_image (drawable, x1, y1, x2, y2, NULL);
 
   if (mask) /* combine selection and brush masks */  
     {
@@ -814,44 +956,43 @@ gimage_replace_painthit  (
       
       mx = x1 + offset_x;
       my = y1 + offset_y;
-      pixelarea_init (&mask_area, drawable_data_canvas(GIMP_DRAWABLE (mask)), NULL,
+      pixelarea_init (&mask_area, drawable_data(GIMP_DRAWABLE (mask)),
 		    mx, my, 
 		    (x2 - x1), (y2 - y1),
 		    FALSE);
 
-      pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
-      /* canvas_portion_ref ( temp_canvas, 0, 0 ); */
+      pixelarea_init (&temp_area, temp_canvas, 0 , 0 , 0, 0, TRUE);
      
       /* copy selection mask to temp canvas */ 
       copy_area (&mask_area, &temp_area);
 
       /* next initialize mask_area with the brush mask */
-      pixelarea_init (&mask_area, mask_canvas, NULL, 0, 0, 0, 0, FALSE);
-      pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
+      pixelarea_init (&mask_area, mask_canvas, 0, 0, 0, 0, FALSE);
+      pixelarea_init (&temp_area, temp_canvas, 0, 0, 0, 0, TRUE);
       
       /* apply brush mask to temp canvas */
       apply_mask_to_area (&temp_area, &mask_area, opacity);
        
       /* ready the temp_area for combine_areas_replace below */ 
-      pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
+      pixelarea_init (&temp_area, temp_canvas, 0, 0, 0, 0, TRUE);
     }
   else /* just use the brush mask */
-    pixelarea_init (&temp_area, mask_canvas, NULL, 0 , 0 , 0, 0, TRUE);
+    pixelarea_init (&temp_area, mask_canvas, 0 , 0 , 0, 0, TRUE);
    
   /* the underlying image */
-  pixelarea_init (&src1_area, drawable_data_canvas (drawable), NULL,
+  pixelarea_init (&src1_area, drawable_data (drawable),
 		  x1, y1,
 		  (x2 - x1), (y2 - y1),
 		  FALSE);
   
   /* the painthit */
-  pixelarea_init (&src2_area, src2, NULL,
+  pixelarea_init (&src2_area, src2,
                       x1-x, y1-y,
                       (x2 - (x1-x)), (y2 - (y1-y)),
                       FALSE);
  
   /* the destination image */ 
-  pixelarea_init (&dest_area, drawable_data_canvas (drawable), NULL,
+  pixelarea_init (&dest_area, drawable_data (drawable),
 		  x1, y1,
 		  (x2 - x1), (y2 - y1),
 		  TRUE);
@@ -1212,13 +1353,13 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
       y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), y, y + h);
 
       /* configure the pixel regions  */
-      pixelarea_init (&src1PR, gimage_projection_canvas (gimage), NULL, 
+      pixelarea_init (&src1PR, gimage_projection (gimage), 
 	x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       /*  If we're showing the layer mask instead of the layer...  */
       if (layer->mask && layer->show_mask)
 	{
-	  pixelarea_init (&src2PR, drawable_data_canvas (GIMP_DRAWABLE(layer->mask)), NULL,
+	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer->mask)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
@@ -1227,13 +1368,13 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
       /*  Otherwise, normal  */
       else
 	{
-	  pixelarea_init (&src2PR, drawable_data_canvas (GIMP_DRAWABLE(layer)), NULL,
+	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
 	  if (layer->mask && layer->apply_mask)
 	    {
-	      pixelarea_init (&maskPR, drawable_data_canvas (GIMP_DRAWABLE(layer->mask)), NULL,
+	      pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(layer->mask)),
 				 (x1 - off_x), (y1 - off_y),
 				 (x2 - x1), (y2 - y1), FALSE);
 	      mask = &maskPR;
@@ -1295,9 +1436,9 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
       if (drawable_visible (GIMP_DRAWABLE(channel)))
 	{
 	  /* configure the pixel regions  */
-	  pixelarea_init (&src1PR, gimage_projection_canvas (gimage), NULL, 
+	  pixelarea_init (&src1PR, gimage_projection (gimage), 
 		x, y, w, h, TRUE);
-	  pixelarea_init (&src2PR, drawable_data_canvas (GIMP_DRAWABLE(channel)), NULL, 
+	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(channel)), 
 		x, y, w, h, FALSE);
 
 	  project_channel (gimage, channel, &src1PR, &src2PR);
@@ -1346,7 +1487,7 @@ gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
       COLOR16_NEW (black_color, drawable_tag(GIMP_DRAWABLE(layer)) );
       COLOR16_INIT (black_color);
       color16_black (&black_color);
-      pixelarea_init (&PR, gimage_projection_canvas (gimage), NULL, 
+      pixelarea_init (&PR, gimage_projection (gimage), 
 		x, y, w, h, TRUE);
       color_area (&PR, &black_color);
     }
@@ -1447,31 +1588,11 @@ gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
   endx = x + w;
   endy = y + h;
 
+#define FIXME
   /* what should this code do exactly? */
 
   if (! flat && (endx - startx) > 0 && (endy - starty) > 0)
     gimage_construct (gimage, startx, starty, (endx - startx), (endy - starty));
-}
-
-void
-gimage_validate (TileManager *tm, Tile *tile, int level)
-{
-  GImage *gimage;
-  int x, y;
-  int w, h;
-
-  g_warning ("gimage_validate() was called");
-  
-  /*  Get the gimage from the tilemanager  */
-  gimage = (GImage *) tm->user_data;
-
-  /*  Find the coordinates of this tile  */
-  x = TILE_WIDTH * (tile->tile_num % tm->levels[0].ntile_cols);
-  y = TILE_HEIGHT * (tile->tile_num / tm->levels[0].ntile_cols);
-  w = tile->ewidth;
-  h = tile->eheight;
-
-  gimage_construct (gimage, x, y, w, h);
 }
 
 int
@@ -2057,7 +2178,8 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   /*  Start a merge undo group  */
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
-  if (merge_type == FlattenImage)
+  if (merge_type == FlattenImage ||
+      drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
       merge_layer_tag = gimage_tag (gimage);
       merge_layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
@@ -2070,10 +2192,11 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       }
 
       /*  init the pixel region  */
-      pixelarea_init (&src1PR, drawable_data_canvas (GIMP_DRAWABLE(merge_layer)), NULL,
+      pixelarea_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)),
 	0, 0, gimage->width, gimage->height, TRUE);
 
       /*  set the region to the background color  */
+#define FIXME
       /* note: there used to be a transform_color here while getting the background
 	color */
       color16_background (&bg_color);
@@ -2105,7 +2228,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       GIMP_DRAWABLE(merge_layer)->offset_y = y1;
 
       /*  Set the layer to transparent  */
-      pixelarea_init (&src1PR, drawable_data_canvas (GIMP_DRAWABLE(merge_layer)), NULL, 
+      pixelarea_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), 
 		0, 0, (x2 - x1), (y2 - y1), TRUE);
 
       /*  set the region to 0's  */
@@ -2152,14 +2275,14 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       y4 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), y1, y2);
 
       /* configure the pixel regions  */
-      pixelarea_init (&src1PR, drawable_data_canvas (GIMP_DRAWABLE(merge_layer)), NULL, 
+      pixelarea_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), 
 		(x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3), TRUE);
-      pixelarea_init (&src2PR, drawable_data_canvas (GIMP_DRAWABLE(layer)), NULL,
+      pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer)),
 		(x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3), FALSE);
 
       if (layer->mask)
 	{
-	  pixelarea_init (&maskPR, drawable_data_canvas (GIMP_DRAWABLE(layer->mask)), NULL, 
+	  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(layer->mask)), 
 			(x3 - off_x), (y3 - off_y), (x4 - x3), (y4 - y3), FALSE);
 	  mask = &maskPR;
 	}
@@ -2406,7 +2529,7 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
 
   /*  Push the undo--Important to do it here, AFTER the call
    *   to layer_apply_mask, in case the undo push fails and the
-   *   mask is deleted
+   *   mask is delete : NULL)d
    */
   undo_push_layer_mask (gimage, lmu);
 
@@ -2600,7 +2723,6 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 
       return channel;
     }
-
   else
     return NULL;
 }
@@ -2609,6 +2731,7 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 /************************************************************/
 /*  Access functions                                        */
 /************************************************************/
+
 int
 gimage_is_flat (GImage *gimage)
 {
@@ -2801,12 +2924,10 @@ gimage_cmap (GImage *gimage)
 /*  Projection access functions                             */
 /************************************************************/
 
-TileManager *
+Canvas *
 gimage_projection (GImage *gimage)
 {
   Layer * layer;
-
-  g_warning ("gimage_projection() was called");
 
   /*  If the gimage is flat, we simply want the data of the
    *  first layer...Otherwise, we'll pass back the projection
@@ -2820,36 +2941,11 @@ gimage_projection (GImage *gimage)
     }
   else
     {
-      if ((gimage->projection->levels[0].width != gimage->width) ||
-	  (gimage->projection->levels[0].height != gimage->height))
+      if (( canvas_width (gimage->projection) != gimage->width) ||
+	  ( canvas_height (gimage->projection)!= gimage->height))
 	gimage_allocate_projection (gimage);
 
       return gimage->projection;
-    }
-}
-
-Canvas *
-gimage_projection_canvas (GImage *gimage)
-{
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the data of the
-   *  first layer...Otherwise, we'll pass back the projection
-   */
-  if (gimage_is_flat (gimage))
-    {
-      if ((layer = gimage->active_layer))
-	return drawable_data_canvas (GIMP_DRAWABLE(layer));
-      else
-	return NULL;
-    }
-  else
-    {
-      if (( canvas_width (gimage->projection_canvas) != gimage->width) ||
-	  ( canvas_height (gimage->projection_canvas)!= gimage->height))
-	gimage_allocate_projection (gimage);
-
-      return gimage->projection_canvas;
     }
 }
 
@@ -2921,16 +3017,10 @@ gimage_projection_realloc (GImage *gimage)
 /*  Composition access functions                            */
 /************************************************************/
 
-TileManager *
+Canvas *
 gimage_composite (GImage *gimage)
 {
   return gimage_projection (gimage);
-}
-
-Canvas *
-gimage_composite_canvas (GImage *gimage)
-{
-  return gimage_projection_canvas (gimage);
 }
 
 int
@@ -2948,6 +3038,7 @@ gimage_composite_bytes (GImage *gimage)
 static TempBuf *
 gimage_construct_composite_preview (GImage *gimage, int width, int height)
 {
+#define FIXME
 #if 0
   Layer * layer;
   PixelRegion src1PR, src2PR, maskPR;

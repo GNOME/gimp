@@ -53,7 +53,7 @@ guint            tilebuf_portion_alloced   (TileBuf *, int x, int y);
 guint            tilebuf_portion_alloc     (TileBuf *, int x, int y);
 guint            tilebuf_portion_unalloc   (TileBuf *, int x, int y);
 
-RefRC            tilebuf_portion_ref       (TileBuf *, int x, int y);
+RefRC            tilebuf_portion_refro     (TileBuf *, int x, int y);
 RefRC            tilebuf_portion_refrw     (TileBuf *, int x, int y);
 RefRC            tilebuf_portion_unref     (TileBuf *, int x, int y);
 

@@ -24,10 +24,9 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "pixel_region.h"
 #include "scale.h"
-#include "canvas.h"
 #include "tag.h"
+
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -45,7 +44,6 @@ struct _RenderInfo
   int scalesrc;
   int scaledest;
   int src_x, src_y;
-  int src_w, src_h;
   int src_bpp;
   int dest_bpp;
   int dest_bpl;
@@ -167,30 +165,31 @@ render_free (void)
 }
 
 /*  Render Image functions  */
-static void    render_image_indexed_u8_1   (RenderInfo *info);
-static void    render_image_indexed_u8_2   (RenderInfo *info);
-static void    render_image_indexed_u8_3   (RenderInfo *info);
-static void    render_image_indexed_u8_4   (RenderInfo *info);
-static void    render_image_indexed_a_u8_1 (RenderInfo *info);
-static void    render_image_indexed_a_u8_2 (RenderInfo *info);
-static void    render_image_indexed_a_u8_3 (RenderInfo *info);
-static void    render_image_indexed_a_u8_4 (RenderInfo *info);
-static void    render_image_gray_u8_1      (RenderInfo *info);
-static void    render_image_gray_u8_2      (RenderInfo *info);
-static void    render_image_gray_u8_3      (RenderInfo *info);
-static void    render_image_gray_u8_4      (RenderInfo *info);
-static void    render_image_gray_a_u8_1    (RenderInfo *info);
-static void    render_image_gray_a_u8_2    (RenderInfo *info);
-static void    render_image_gray_a_u8_3    (RenderInfo *info);
-static void    render_image_gray_a_u8_4    (RenderInfo *info);
-static void    render_image_rgb_u8_1       (RenderInfo *info);
-static void    render_image_rgb_u8_2       (RenderInfo *info);
-static void    render_image_rgb_u8_3       (RenderInfo *info);
-static void    render_image_rgb_u8_4       (RenderInfo *info);
-static void    render_image_rgb_a_u8_1     (RenderInfo *info);
-static void    render_image_rgb_a_u8_2     (RenderInfo *info);
-static void    render_image_rgb_a_u8_3     (RenderInfo *info);
-static void    render_image_rgb_a_u8_4     (RenderInfo *info);
+
+static void    render_image_indexed_1   (RenderInfo *info);
+static void    render_image_indexed_2   (RenderInfo *info);
+static void    render_image_indexed_3   (RenderInfo *info);
+static void    render_image_indexed_4   (RenderInfo *info);
+static void    render_image_indexed_a_1 (RenderInfo *info);
+static void    render_image_indexed_a_2 (RenderInfo *info);
+static void    render_image_indexed_a_3 (RenderInfo *info);
+static void    render_image_indexed_a_4 (RenderInfo *info);
+static void    render_image_gray_1      (RenderInfo *info);
+static void    render_image_gray_2      (RenderInfo *info);
+static void    render_image_gray_3      (RenderInfo *info);
+static void    render_image_gray_4      (RenderInfo *info);
+static void    render_image_gray_a_1    (RenderInfo *info);
+static void    render_image_gray_a_2    (RenderInfo *info);
+static void    render_image_gray_a_3    (RenderInfo *info);
+static void    render_image_gray_a_4    (RenderInfo *info);
+static void    render_image_rgb_1       (RenderInfo *info);
+static void    render_image_rgb_2       (RenderInfo *info);
+static void    render_image_rgb_3       (RenderInfo *info);
+static void    render_image_rgb_4       (RenderInfo *info);
+static void    render_image_rgb_a_1     (RenderInfo *info);
+static void    render_image_rgb_a_2     (RenderInfo *info);
+static void    render_image_rgb_a_3     (RenderInfo *info);
+static void    render_image_rgb_a_4     (RenderInfo *info);
 
 static void    render_image_gray_u16_1      (RenderInfo *info);
 static void    render_image_gray_u16_2      (RenderInfo *info);
@@ -232,51 +231,52 @@ static void    render_image_init_info          (RenderInfo   *info,
 						int           y,
 						int           w,
 						int           h);
+static guint*  render_image_init_alpha         (int           mult);
 static guchar* render_image_accelerate_scaling (int           width,
 						int           start,
 						int           bpp,
 						int           scalesrc,
 						int           scaledest);
-static guint*  render_image_init_alpha         (int           mult);
-static guchar* render_image_canvas_fault       (RenderInfo *info);
+static guchar* render_image_tile_fault         (RenderInfo   *info);
 
-static RenderFunc render_funcs_u8[6][4] =
+
+static RenderFunc render_funcs[6][4] =
 {
   {
-    render_image_rgb_u8_1,
-    render_image_rgb_u8_2,
-    render_image_rgb_u8_3,
-    render_image_rgb_u8_4,
+    render_image_rgb_1,
+    render_image_rgb_2,
+    render_image_rgb_3,
+    render_image_rgb_4,
   },
   {
-    render_image_rgb_a_u8_1,
-    render_image_rgb_a_u8_2,
-    render_image_rgb_a_u8_3,
-    render_image_rgb_a_u8_4,
+    render_image_rgb_a_1,
+    render_image_rgb_a_2,
+    render_image_rgb_a_3,
+    render_image_rgb_a_4,
   },
   {
-    render_image_gray_u8_1,
-    render_image_gray_u8_2,
-    render_image_gray_u8_3,
-    render_image_gray_u8_4,
+    render_image_gray_1,
+    render_image_gray_2,
+    render_image_gray_3,
+    render_image_gray_4,
   },
   {
-    render_image_gray_a_u8_1,
-    render_image_gray_a_u8_2,
-    render_image_gray_a_u8_3,
-    render_image_gray_a_u8_4,
+    render_image_gray_a_1,
+    render_image_gray_a_2,
+    render_image_gray_a_3,
+    render_image_gray_a_4,
   },
   {
-    render_image_indexed_u8_1,
-    render_image_indexed_u8_2,
-    render_image_indexed_u8_3,
-    render_image_indexed_u8_4,
+    render_image_indexed_1,
+    render_image_indexed_2,
+    render_image_indexed_3,
+    render_image_indexed_4,
   },
   {
-    render_image_indexed_a_u8_1,
-    render_image_indexed_a_u8_2,
-    render_image_indexed_a_u8_3,
-    render_image_indexed_a_u8_4,
+    render_image_indexed_a_1,
+    render_image_indexed_a_2,
+    render_image_indexed_a_3,
+    render_image_indexed_a_4,
   },
 };
 
@@ -374,21 +374,21 @@ render_image (GDisplay *gdisp,
       break;
 
     default:
-      g_warning ("unknown gimage projection type: %d",
+      g_message ("unknown gimage projection type: %d",
 		 gimage_projection_type (gdisp->gimage));
       return;
     }
 
   if ((info.dest_bpp < 1) || (info.dest_bpp > 4))
     {
-      g_warning ("unsupported destination bytes per pixel: %d", info.dest_bpp);
+      g_message ("unsupported destination bytes per pixel: %d", info.dest_bpp);
       return;
     }
   
   switch( tag_precision (canvas_tag (info.src_canvas)))
     {
       case PRECISION_U8:
-        (* render_funcs_u8[image_type][info.dest_bpp-1]) (&info);
+        (* render_funcs[image_type][info.dest_bpp-1]) (&info);
         break;
       case PRECISION_U16:
         (* render_funcs_u16[image_type][info.dest_bpp-1]) (&info);
@@ -408,7 +408,7 @@ render_image (GDisplay *gdisp,
 /*************************/
 
 static void
-render_image_indexed_u8_1 (RenderInfo *info)
+render_image_indexed_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -433,13 +433,17 @@ render_image_indexed_u8_1 (RenderInfo *info)
   y = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-  info->src = render_image_canvas_fault (info);
+
+  info->src = render_image_tile_fault (info);
+
   for (; y < ye; y++)
     {
       src = info->src;
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
+      g_return_if_fail (src != NULL);
+      
       for (x = info->x; x < xe; x++)
 	{
 	  val = *src++ * 3;
@@ -458,13 +462,13 @@ render_image_indexed_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_indexed_u8_2 (RenderInfo *info)
+render_image_indexed_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -489,7 +493,7 @@ render_image_indexed_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -499,6 +503,8 @@ render_image_indexed_u8_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -529,7 +535,7 @@ render_image_indexed_u8_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -537,7 +543,7 @@ render_image_indexed_u8_2 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_u8_3 (RenderInfo *info)
+render_image_indexed_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -562,7 +568,7 @@ render_image_indexed_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -573,6 +579,8 @@ render_image_indexed_u8_3 (RenderInfo *info)
 	  src = info->src;
 	  dest = info->dest;
 
+	  g_return_if_fail (src != NULL);
+	  
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -604,7 +612,7 @@ render_image_indexed_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -612,7 +620,7 @@ render_image_indexed_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_u8_4 (RenderInfo *info)
+render_image_indexed_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -637,7 +645,7 @@ render_image_indexed_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -647,6 +655,8 @@ render_image_indexed_u8_4 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -679,7 +689,7 @@ render_image_indexed_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -688,7 +698,7 @@ render_image_indexed_u8_4 (RenderInfo *info)
 
 
 static void
-render_image_indexed_a_u8_1 (RenderInfo *info)
+render_image_indexed_a_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -718,7 +728,7 @@ render_image_indexed_a_u8_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -727,6 +737,8 @@ render_image_indexed_a_u8_1 (RenderInfo *info)
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -761,13 +773,13 @@ render_image_indexed_a_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_indexed_a_u8_2 (RenderInfo *info)
+render_image_indexed_a_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -797,7 +809,7 @@ render_image_indexed_a_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -810,6 +822,8 @@ render_image_indexed_a_u8_2 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -875,7 +889,7 @@ render_image_indexed_a_u8_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -883,7 +897,7 @@ render_image_indexed_a_u8_2 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_a_u8_3 (RenderInfo *info)
+render_image_indexed_a_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -913,7 +927,7 @@ render_image_indexed_a_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -925,6 +939,8 @@ render_image_indexed_a_u8_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -993,7 +1009,7 @@ render_image_indexed_a_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1001,7 +1017,7 @@ render_image_indexed_a_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_a_u8_4 (RenderInfo *info)
+render_image_indexed_a_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1031,7 +1047,7 @@ render_image_indexed_a_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1044,6 +1060,8 @@ render_image_indexed_a_u8_4 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1111,7 +1129,7 @@ render_image_indexed_a_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1120,7 +1138,7 @@ render_image_indexed_a_u8_4 (RenderInfo *info)
 
 
 static void
-render_image_gray_u8_1 (RenderInfo *info)
+render_image_gray_1 (RenderInfo *info)
 {
   GtkDitherInfo gray;
   GtkDitherInfo *dither_gray;
@@ -1137,13 +1155,15 @@ render_image_gray_u8_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
       src = info->src;
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -1157,13 +1177,13 @@ render_image_gray_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_gray_u8_2 (RenderInfo *info)
+render_image_gray_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1186,7 +1206,7 @@ render_image_gray_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1196,6 +1216,8 @@ render_image_gray_u8_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1224,7 +1246,7 @@ render_image_gray_u8_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1232,7 +1254,7 @@ render_image_gray_u8_2 (RenderInfo *info)
 }
 
 static void
-render_image_gray_u8_3 (RenderInfo *info)
+render_image_gray_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1255,7 +1277,7 @@ render_image_gray_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1265,6 +1287,8 @@ render_image_gray_u8_3 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+	  
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1295,7 +1319,7 @@ render_image_gray_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1303,7 +1327,7 @@ render_image_gray_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_gray_u8_4 (RenderInfo *info)
+render_image_gray_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1326,7 +1350,7 @@ render_image_gray_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1336,6 +1360,8 @@ render_image_gray_u8_4 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1366,7 +1392,7 @@ render_image_gray_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1375,7 +1401,7 @@ render_image_gray_u8_4 (RenderInfo *info)
 
 
 static void
-render_image_gray_a_u8_1 (RenderInfo *info)
+render_image_gray_a_1 (RenderInfo *info)
 {
   GtkDitherInfo gray;
   GtkDitherInfo *dither_gray;
@@ -1396,7 +1422,7 @@ render_image_gray_a_u8_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1405,6 +1431,8 @@ render_image_gray_a_u8_1 (RenderInfo *info)
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -1427,13 +1455,13 @@ render_image_gray_a_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_gray_a_u8_2 (RenderInfo *info)
+render_image_gray_a_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1460,7 +1488,7 @@ render_image_gray_a_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1473,6 +1501,8 @@ render_image_gray_a_u8_2 (RenderInfo *info)
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
+	  g_return_if_fail (src != NULL);
+      
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1516,7 +1546,7 @@ render_image_gray_a_u8_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1524,7 +1554,7 @@ render_image_gray_a_u8_2 (RenderInfo *info)
 }
 
 static void
-render_image_gray_a_u8_3 (RenderInfo *info)
+render_image_gray_a_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1551,7 +1581,7 @@ render_image_gray_a_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1563,6 +1593,8 @@ render_image_gray_a_u8_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1609,7 +1641,7 @@ render_image_gray_a_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1617,7 +1649,7 @@ render_image_gray_a_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_gray_a_u8_4 (RenderInfo *info)
+render_image_gray_a_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1644,7 +1676,7 @@ render_image_gray_a_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1656,6 +1688,8 @@ render_image_gray_a_u8_4 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1702,7 +1736,7 @@ render_image_gray_a_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1711,7 +1745,7 @@ render_image_gray_a_u8_4 (RenderInfo *info)
 
 
 static void
-render_image_rgb_u8_1 (RenderInfo *info)
+render_image_rgb_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -1734,13 +1768,15 @@ render_image_rgb_u8_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
       src = info->src;
       dest = info->dest;
       dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -1760,13 +1796,13 @@ render_image_rgb_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_rgb_u8_2 (RenderInfo *info)
+render_image_rgb_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1789,7 +1825,7 @@ render_image_rgb_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1799,6 +1835,8 @@ render_image_rgb_u8_2 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1823,17 +1861,19 @@ render_image_rgb_u8_2 (RenderInfo *info)
 	}
 
       info->dest += info->dest_bpl;
+
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
+
       initial = FALSE;
     }
 }
 
 static void
-render_image_rgb_u8_3 (RenderInfo *info)
+render_image_rgb_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1856,7 +1896,7 @@ render_image_rgb_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1867,6 +1907,8 @@ render_image_rgb_u8_3 (RenderInfo *info)
 	  src = info->src;
 	  dest = info->dest;
 
+	  g_return_if_fail (src != NULL);
+	  
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
 	      {
@@ -1896,7 +1938,7 @@ render_image_rgb_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1904,7 +1946,7 @@ render_image_rgb_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_u8_4 (RenderInfo *info)
+render_image_rgb_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1927,7 +1969,7 @@ render_image_rgb_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -1937,6 +1979,8 @@ render_image_rgb_u8_4 (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -1967,7 +2011,7 @@ render_image_rgb_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -1976,7 +2020,7 @@ render_image_rgb_u8_4 (RenderInfo *info)
 
 
 static void
-render_image_rgb_a_u8_1 (RenderInfo *info)
+render_image_rgb_a_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -2003,7 +2047,7 @@ render_image_rgb_a_u8_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2012,6 +2056,8 @@ render_image_rgb_a_u8_1 (RenderInfo *info)
       dither_matrix = ordered_dither_matrix[y & 0x7];
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      g_return_if_fail (src != NULL);
 
       for (x = info->x; x < xe; x++)
 	{
@@ -2044,13 +2090,13 @@ render_image_rgb_a_u8_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
 
 static void
-render_image_rgb_a_u8_2 (RenderInfo *info)
+render_image_rgb_a_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2078,7 +2124,7 @@ render_image_rgb_a_u8_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2090,6 +2136,16 @@ render_image_rgb_a_u8_2 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	   
+	  /* this catches the case when ye is too large, and we loop through
+	   * regions where render_image_tile_fault returns NULL.  I don't 
+	   * think this is a long term solution, but better to warn than to
+	   * die.
+	   *
+	   *  --Larry
+	   */
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -2152,7 +2208,7 @@ render_image_rgb_a_u8_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2160,7 +2216,7 @@ render_image_rgb_a_u8_2 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_a_u8_3 (RenderInfo *info)
+render_image_rgb_a_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2188,7 +2244,7 @@ render_image_rgb_a_u8_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2200,6 +2256,8 @@ render_image_rgb_a_u8_3 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -2264,7 +2322,7 @@ render_image_rgb_a_u8_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2272,7 +2330,7 @@ render_image_rgb_a_u8_3 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_a_u8_4 (RenderInfo *info)
+render_image_rgb_a_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2300,7 +2358,7 @@ render_image_rgb_a_u8_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2312,6 +2370,8 @@ render_image_rgb_a_u8_4 (RenderInfo *info)
 	  dest = info->dest;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
 
 	  if (byte_order == GDK_LSB_FIRST)
 	    for (x = info->x; x < xe; x++)
@@ -2376,11 +2436,166 @@ render_image_rgb_a_u8_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
     }
+}
+
+
+static void
+render_image_init_info (RenderInfo *info,
+			GDisplay   *gdisp,
+			int         x,
+			int         y,
+			int         w,
+			int         h)
+{
+  info->gdisp = gdisp;
+  info->x = x + gdisp->offset_x;
+  info->y = y + gdisp->offset_y;
+  info->w = w;
+  info->h = h;
+  info->scalesrc = SCALESRC (gdisp);
+  info->scaledest = SCALEDEST (gdisp);
+  info->src_x = UNSCALE (gdisp, info->x);
+  info->src_y = UNSCALE (gdisp, info->y);
+  info->src_bpp = gimage_projection_bytes (gdisp->gimage);
+  info->dest = gximage_get_data ();
+  info->dest_bpp = gximage_get_bpp ();
+  info->dest_bpl = gximage_get_bpl ();
+  info->dest_width = info->w * info->dest_bpp;
+  info->byte_order = gximage_get_byte_order ();
+
+  info->src_canvas = gimage_projection (gdisp->gimage);
+  info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
+  info->alpha = NULL;
+
+  switch (gimage_projection_type (gdisp->gimage))
+    {
+    case RGBA_GIMAGE:
+    case GRAYA_GIMAGE:
+    case INDEXEDA_GIMAGE:
+      info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
+      break;
+    }
+}
+
+static guint*
+render_image_init_alpha (int mult)
+{
+  static guint *alpha_mult = NULL;
+  static int alpha_val = -1;
+  int i;
+
+  if (alpha_val != mult)
+    {
+      if (!alpha_mult)
+	alpha_mult = g_new (guint, 256);
+
+      alpha_val = mult;
+      for (i = 0; i < 256; i++)
+	alpha_mult[i] = ((mult * i) / 255) << 8;
+    }
+
+  return alpha_mult;
+}
+
+static guchar*
+render_image_accelerate_scaling (int width,
+				 int start,
+				 int  bpp,
+				 int  scalesrc,
+				 int  scaledest)
+{
+  static guchar *scale = NULL;
+  static int swidth = -1;
+  static int sstart = -1;
+  guchar step;
+  int i;
+
+  if ((swidth != width) || (sstart != start))
+    {
+      if (!scale)
+	scale = g_new (guchar, GXIMAGE_WIDTH + 1);
+
+      step = scalesrc * bpp;
+
+      for (i = 0; i <= width; i++)
+	scale[i] = ((i + start + 1) % scaledest) ? 0 : step;
+    }
+
+  return scale;
+}
+
+static guchar*
+render_image_tile_fault (RenderInfo *info)
+{
+  guchar *data;
+  guchar *dest;
+  guchar *scale;
+  int width;
+  int x_portion;
+  int y_portion;
+  int portion_width;
+  int step;
+  int x, b;
+  
+  /* the first portion x and y */
+  x_portion = info->src_x;
+  y_portion = info->src_y;
+  
+  /* fault in the first portion */ 
+  canvas_portion_refro (info->src_canvas, x_portion, y_portion); 
+  data = canvas_portion_data (info->src_canvas, info->src_x, info->src_y);
+  if (!data)
+    {
+      canvas_portion_unref( info->src_canvas, x_portion, y_portion); 
+      return NULL;
+    }
+  scale = info->scale;
+  step = info->scalesrc * info->src_bpp;
+  dest = tile_buf;
+  
+  /* the first portions width */ 
+  portion_width = canvas_portion_width ( info->src_canvas, 
+                                         x_portion,
+                                         y_portion );
+  x = info->src_x;
+  width = info->w;
+
+  while (width--)
+    {
+      for (b = 0; b < info->src_bpp; b++)
+	*dest++ = data[b];
+
+      if (*scale++ != 0)
+	{
+	  x += info->scalesrc;
+	  data += step;
+
+	  if (x >= x_portion + portion_width)
+	    {
+	      canvas_portion_unref (info->src_canvas, x_portion, y_portion);
+              if (x >= canvas_width (info->src_canvas))
+		return tile_buf;
+	      x_portion += portion_width;
+              canvas_portion_refro (info->src_canvas, x_portion, y_portion ); 
+              data = canvas_portion_data (info->src_canvas, x_portion, y_portion );
+              if(!data)
+                {
+                  canvas_portion_unref (info->src_canvas, x_portion, y_portion ); 
+                  return NULL;
+                }
+	      portion_width = canvas_portion_width ( info->src_canvas, 
+                                              x_portion,
+                                              y_portion );
+	    }
+	}
+    }
+  canvas_portion_unref (info->src_canvas, x_portion, y_portion);
+  return tile_buf;
 }
 
 /*************************/
@@ -2406,7 +2621,7 @@ render_image_gray_u16_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2426,7 +2641,7 @@ render_image_gray_u16_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -2455,7 +2670,7 @@ render_image_gray_u16_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2497,7 +2712,7 @@ render_image_gray_u16_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2528,7 +2743,7 @@ render_image_gray_u16_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2572,7 +2787,7 @@ render_image_gray_u16_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2603,7 +2818,7 @@ render_image_gray_u16_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2647,7 +2862,7 @@ render_image_gray_u16_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2677,7 +2892,7 @@ render_image_gray_a_u16_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2708,7 +2923,7 @@ render_image_gray_a_u16_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -2741,7 +2956,7 @@ render_image_gray_a_u16_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2797,7 +3012,7 @@ render_image_gray_a_u16_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2832,7 +3047,7 @@ render_image_gray_a_u16_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2890,7 +3105,7 @@ render_image_gray_a_u16_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -2925,7 +3140,7 @@ render_image_gray_a_u16_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -2983,7 +3198,7 @@ render_image_gray_a_u16_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3015,7 +3230,7 @@ render_image_rgb_u16_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3041,7 +3256,7 @@ render_image_rgb_u16_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -3071,7 +3286,7 @@ render_image_rgb_u16_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3113,7 +3328,7 @@ render_image_rgb_u16_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3144,7 +3359,7 @@ render_image_rgb_u16_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3189,7 +3404,7 @@ render_image_rgb_u16_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3220,7 +3435,7 @@ render_image_rgb_u16_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3264,7 +3479,7 @@ render_image_rgb_u16_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3300,7 +3515,7 @@ render_image_rgb_a_u16_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3341,7 +3556,7 @@ render_image_rgb_a_u16_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -3375,7 +3590,7 @@ render_image_rgb_a_u16_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3449,7 +3664,7 @@ render_image_rgb_a_u16_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3485,7 +3700,7 @@ render_image_rgb_a_u16_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3561,7 +3776,7 @@ render_image_rgb_a_u16_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3597,7 +3812,7 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3673,7 +3888,7 @@ render_image_rgb_a_u16_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3703,7 +3918,7 @@ render_image_gray_float_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3723,7 +3938,7 @@ render_image_gray_float_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -3753,7 +3968,7 @@ render_image_gray_float_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3793,7 +4008,7 @@ render_image_gray_float_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3825,7 +4040,7 @@ render_image_gray_float_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3867,7 +4082,7 @@ render_image_gray_float_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3899,7 +4114,7 @@ render_image_gray_float_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -3941,7 +4156,7 @@ render_image_gray_float_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -3971,7 +4186,7 @@ render_image_gray_a_float_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4002,7 +4217,7 @@ render_image_gray_a_float_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -4035,7 +4250,7 @@ render_image_gray_a_float_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4091,7 +4306,7 @@ render_image_gray_a_float_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4126,7 +4341,7 @@ render_image_gray_a_float_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4184,7 +4399,7 @@ render_image_gray_a_float_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4219,7 +4434,7 @@ render_image_gray_a_float_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4277,7 +4492,7 @@ render_image_gray_a_float_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4309,7 +4524,7 @@ render_image_rgb_float_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4335,7 +4550,7 @@ render_image_rgb_float_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -4365,7 +4580,7 @@ render_image_rgb_float_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4407,7 +4622,7 @@ render_image_rgb_float_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4438,7 +4653,7 @@ render_image_rgb_float_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4482,7 +4697,7 @@ render_image_rgb_float_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4513,7 +4728,7 @@ render_image_rgb_float_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4557,7 +4772,7 @@ render_image_rgb_float_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4593,7 +4808,7 @@ render_image_rgb_a_float_1 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4634,7 +4849,7 @@ render_image_rgb_a_float_1 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
     }
 }
@@ -4668,7 +4883,7 @@ render_image_rgb_a_float_2 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4742,7 +4957,7 @@ render_image_rgb_a_float_2 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4778,7 +4993,7 @@ render_image_rgb_a_float_3 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4855,7 +5070,7 @@ render_image_rgb_a_float_3 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
@@ -4891,7 +5106,7 @@ render_image_rgb_a_float_4 (RenderInfo *info)
 
   initial = TRUE;
   byte_order = info->byte_order;
-  info->src = render_image_canvas_fault (info);
+  info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
@@ -4967,163 +5182,10 @@ render_image_rgb_a_float_4 (RenderInfo *info)
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
-	  info->src = render_image_canvas_fault (info);
+	  info->src = render_image_tile_fault (info);
 	}
 
       initial = FALSE;
     }
 }
 
-static void
-render_image_init_info (RenderInfo *info,
-			GDisplay   *gdisp,
-			int         x,
-			int         y,
-			int         w,
-			int         h)
-{
-  info->gdisp = gdisp;
-  info->x = x + gdisp->offset_x;
-  info->y = y + gdisp->offset_y;
-  info->w = w;
-  info->h = h;
-  info->scalesrc = SCALESRC (gdisp);
-  info->scaledest = SCALEDEST (gdisp);
-  info->src_x = UNSCALE (gdisp, info->x);
-  info->src_y = UNSCALE (gdisp, info->y);
-  info->src_bpp = gimage_projection_bytes (gdisp->gimage);
-  info->dest = gximage_get_data ();
-  info->dest_bpp = gximage_get_bpp ();
-  info->dest_bpl = gximage_get_bpl ();
-  info->dest_width = info->w * info->dest_bpp;
-  info->byte_order = gximage_get_byte_order ();
-
-  info->src_canvas = gimage_projection_canvas (gdisp->gimage);
-  info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
-  info->alpha = NULL;
-
-  switch (gimage_projection_type (gdisp->gimage))
-    {
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
-      info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
-      break;
-    }
-}
-
-static guint*
-render_image_init_alpha (int mult)
-{
-  static guint *alpha_mult = NULL;
-  static int alpha_val = -1;
-  int i;
-
-  if (alpha_val != mult)
-    {
-      if (!alpha_mult)
-	alpha_mult = g_new (int, 256);
-
-      alpha_val = mult;
-      for (i = 0; i < 256; i++)
-	alpha_mult[i] = ((mult * i) / 255) << 8;
-    }
-
-  return alpha_mult;
-}
-
-static guchar*
-render_image_accelerate_scaling (int width,
-				 int start,
-				 int  bpp,
-				 int  scalesrc,
-				 int  scaledest)
-{
-  static guchar *scale = NULL;
-  static int swidth = -1;
-  static int sstart = -1;
-  guchar step;
-  int i;
-
-  if ((swidth != width) || (sstart != start))
-    {
-      if (!scale)
-	scale = g_new (guchar, GXIMAGE_WIDTH + 1);
-
-      step = scalesrc * bpp;
-
-      for (i = 0; i <= width; i++)
-	scale[i] = ((i + start + 1) % scaledest) ? 0 : step;
-    }
-
-  return scale;
-}
-
-static guchar*
-render_image_canvas_fault (RenderInfo *info)
-{
-  guchar *data;
-  guchar *dest;
-  guchar *scale;
-  int width;
-  int x_portion;
-  int y_portion;
-  int portion_width;
-  int step;
-  int x, b;
-  
-  /* the first portion x and y */
-  x_portion = info->src_x;
-  y_portion = info->src_y;
-  
-  /* fault in the first portion */ 
-  canvas_portion_ref( info->src_canvas, x_portion, y_portion); 
-  data = canvas_portion_data (info->src_canvas, info->src_x, info->src_y);
-  if (!data)
-    {
-      canvas_portion_unref( info->src_canvas, x_portion, y_portion); 
-      return NULL;
-    }
-  scale = info->scale;
-  step = info->scalesrc * info->src_bpp;
-  dest = tile_buf;
-  
-  /* the first portions width */ 
-  portion_width = canvas_portion_width ( info->src_canvas, 
-                                         x_portion,
-                                         y_portion );
-  x = info->src_x;
-  width = info->w;
-
-  while (width--)
-    {
-      for (b = 0; b < info->src_bpp; b++)
-	*dest++ = data[b];
-
-      if (*scale++ != 0)
-	{
-	  x += info->scalesrc;
-	  data += step;
-
-	  if (x >= x_portion + portion_width)
-	    {
-	      canvas_portion_unref (info->src_canvas, x_portion, y_portion);
-              if (x >= canvas_width (info->src_canvas))
-		return tile_buf;
-	      x_portion += portion_width;
-              canvas_portion_ref (info->src_canvas, x_portion, y_portion ); 
-              data = canvas_portion_data (info->src_canvas, x_portion, y_portion );
-              if(!data)
-                {
-                  canvas_portion_unref (info->src_canvas, x_portion, y_portion ); 
-                  return NULL;
-                }
-	      portion_width = canvas_portion_width ( info->src_canvas, 
-                                              x_portion,
-                                              y_portion );
-	    }
-	}
-    }
-  canvas_portion_unref (info->src_canvas, x_portion, y_portion);
-  return tile_buf;
-}

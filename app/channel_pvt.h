@@ -21,7 +21,6 @@
 #include "drawable.h"
 
 #include "boundary.h"
-/*#include "tile_manager.h"*/
 
 #include "drawable_pvt.h"
 

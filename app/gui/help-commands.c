@@ -200,6 +200,7 @@ file_new_ok_callback (GtkWidget *widget,
   switch (vals->fill_type)
     {
     case BACKGROUND_FILL:
+    case FOREGROUND_FILL:
     case WHITE_FILL:
     case NO_FILL:
       type = (vals->type == RGB) ? RGB_GIMAGE : GRAY_GIMAGE;

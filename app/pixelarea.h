@@ -48,8 +48,7 @@ struct _PixelArea
 
 
 /*  PixelArea functions  */
-void              pixelarea_init          (PixelArea *,
-                                           struct _Canvas *, struct _Canvas *,
+void              pixelarea_init          (PixelArea *, struct _Canvas *,
                                            int x, int y, int w, int h,
                                            int will_dirty);
 void              pixelarea_resize        (PixelArea *,

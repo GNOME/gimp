@@ -380,8 +380,8 @@ brush_popup_open (BrushSelectP bsp,
   gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  brush_width = canvas_width (brush->mask_canvas);
-  brush_height = canvas_height (brush->mask_canvas);
+  brush_width = canvas_width (brush->mask);
+  brush_height = canvas_height (brush->mask);
 
   x = x_org + x - brush_width * 0.5;
   y = y_org + y - brush_height * 0.5;
@@ -396,11 +396,11 @@ brush_popup_open (BrushSelectP bsp,
   
   /*  Draw the brush  */
   buf = g_new (gchar, brush_width);
-  brush_tag = canvas_tag (brush->mask_canvas);
+  brush_tag = canvas_tag (brush->mask);
   brush_prec = tag_precision (brush_tag);
   for (y = 0; y < brush_height; y++)
     {
-      (*display_brush_get_row_funcs [brush_prec-1]) (buf, brush->mask_canvas, y, brush_width); 
+      (*display_brush_get_row_funcs [brush_prec-1]) (buf, brush->mask, y, brush_width); 
       gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush_width);
     }
   g_free(buf);
@@ -422,14 +422,14 @@ display_brush (BrushSelectP bsp,
 	       int          col,
 	       int          row)
 {
-  Canvas *brush_buf_canvas = brush->mask_canvas;
+  Canvas *brush_buf_canvas = brush->mask;
   unsigned char * buf;
   int width, height;
   int offset_x, offset_y;
   int yend;
   int ystart;
   int i;
-  Tag brush_tag = canvas_tag (brush->mask_canvas);
+  Tag brush_tag = canvas_tag (brush->mask);
   Precision brush_prec = tag_precision (brush_tag);
   Alpha brush_alpha = tag_alpha (brush_tag);
   
@@ -772,7 +772,7 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  sprintf (buf, "(%d X %d)", canvas_width(brush->mask_canvas), canvas_height(brush->mask_canvas));
+  sprintf (buf, "(%d X %d)", canvas_width(brush->mask), canvas_height(brush->mask));
   gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
@@ -816,13 +816,8 @@ brush_select_events (GtkWidget    *widget,
 	      select_brush (brush);
 
 	      /*  Show the brush popup window if the brush is too large  */
-#define BRUSH_SELECT_C_2_cw
-/*	      if (brush->mask->width > bsp->cell_width ||
-		  brush->mask->height > bsp->cell_height)
-		brush_popup_open (bsp, bevent->x, bevent->y, brush);
-*/
-	      if (canvas_width (brush->mask_canvas) > bsp->cell_width ||
-		  canvas_height(brush->mask_canvas) > bsp->cell_height)
+	      if (canvas_width (brush->mask) > bsp->cell_width ||
+		  canvas_height(brush->mask) > bsp->cell_height)
 		brush_popup_open (bsp, bevent->x, bevent->y, brush);
 	    }
 	}

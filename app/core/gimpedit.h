@@ -18,14 +18,17 @@
 #ifndef __GLOBAL_EDIT_H__
 #define __GLOBAL_EDIT_H__
 
-#include "gimage.h"
+struct _GImage;
 struct _Canvas;
 
+#define GImage struct _GImage
+#define TileManager struct _Canvas
+
 /*  The interface functions  */
-struct _Canvas *  crop_buffer_16            (struct _Canvas *, int);
-struct _Canvas *  edit_cut_16               (GImage *, GimpDrawable *);
-struct _Canvas *  edit_copy_16              (GImage *, GimpDrawable *);
-int            edit_paste_16             (GImage *, GimpDrawable *, struct _Canvas *, int);
+TileManager *  crop_buffer            (TileManager *, int);
+TileManager *  edit_cut               (GImage *, GimpDrawable *);
+TileManager *  edit_copy              (GImage *, GimpDrawable *);
+int            edit_paste             (GImage *, GimpDrawable *, TileManager *, int);
 int            edit_clear             (GImage *, GimpDrawable *);
 int            edit_fill              (GImage *, GimpDrawable *);
 
@@ -38,5 +41,8 @@ int            named_edit_cut         (void *);
 int            named_edit_copy        (void *);
 int            named_edit_paste       (void *);
 void           named_buffers_free     (void);
+
+#undef GImage
+#undef TileManager
 
 #endif  /*  __GLOBAL_EDIT_H__  */

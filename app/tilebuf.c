@@ -213,11 +213,11 @@ tilebuf_height  (
 
 
 RefRC 
-tilebuf_portion_ref  (
-                      TileBuf * t,
-                      int x,
-                      int y
-                      )
+tilebuf_portion_refro  (
+                        TileBuf * t,
+                        int x,
+                        int y
+                        )
 {
   RefRC rc = REFRC_FAIL;
 

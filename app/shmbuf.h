@@ -54,7 +54,7 @@ guint          shmbuf_portion_alloced   (ShmBuf *, int x, int y);
 guint          shmbuf_portion_alloc     (ShmBuf *, int x, int y);
 guint          shmbuf_portion_unalloc   (ShmBuf *, int x, int y);
 
-RefRC          shmbuf_portion_ref       (ShmBuf *, int x, int y);
+RefRC          shmbuf_portion_refro       (ShmBuf *, int x, int y);
 RefRC          shmbuf_portion_refrw     (ShmBuf *, int x, int y);
 RefRC          shmbuf_portion_unref     (ShmBuf *, int x, int y);
 

@@ -52,7 +52,7 @@ guint          flatbuf_portion_alloced   (FlatBuf *, int x, int y);
 guint          flatbuf_portion_alloc     (FlatBuf *, int x, int y);
 guint          flatbuf_portion_unalloc   (FlatBuf *, int x, int y);
 
-RefRC          flatbuf_portion_ref       (FlatBuf *, int x, int y);
+RefRC          flatbuf_portion_refro     (FlatBuf *, int x, int y);
 RefRC          flatbuf_portion_refrw     (FlatBuf *, int x, int y);
 RefRC          flatbuf_portion_unref     (FlatBuf *, int x, int y);
 
