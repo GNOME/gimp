@@ -278,12 +278,12 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case BLUR_CONVOLVE:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[SHARPEN_CONVOLVE]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (SHARPEN_CONVOLVE));
           break;
         case SHARPEN_CONVOLVE:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[BLUR_CONVOLVE]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (BLUR_CONVOLVE));
           break;
         default:
           break;
@@ -723,11 +723,15 @@ convolve_options_new (GimpToolInfo *tool_info)
 
   frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type, (gpointer) options->type,
+				 &options->type,
+                                 GINT_TO_POINTER (options->type),
 
-				 _("Blur"), (gpointer) BLUR_CONVOLVE,
+				 _("Blur"),
+                                 GINT_TO_POINTER (BLUR_CONVOLVE),
 				 &options->type_w[0],
-				 _("Sharpen"), (gpointer) SHARPEN_CONVOLVE,
+
+				 _("Sharpen"),
+                                 GINT_TO_POINTER (SHARPEN_CONVOLVE),
 				 &options->type_w[1],
 
 				 NULL);
@@ -749,5 +753,7 @@ convolve_options_reset (GimpToolOptions *tool_options)
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
 			    options->rate_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
 }

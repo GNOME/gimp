@@ -188,10 +188,10 @@ transform_options_reset (GimpToolOptions *tool_options)
 				options->smoothing_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_path_w),
 				options->show_path_d);
-  gtk_toggle_button_set_active (((options->direction_d == GIMP_TRANSFORM_FORWARD) ?
-				 GTK_TOGGLE_BUTTON (options->direction_w[0]) :
-				 GTK_TOGGLE_BUTTON (options->direction_w[1])),
-				TRUE);
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w[0]),
+                               GINT_TO_POINTER (options->direction_d));
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->show_grid_w),
 				options->show_grid_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->grid_size_w),

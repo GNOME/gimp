@@ -827,11 +827,15 @@ clone_options_new (GimpToolInfo *tool_info)
 
   frame = gimp_radio_group_new2 (TRUE, _("Source"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type, (gpointer) options->type,
+				 &options->type,
+                                 GINT_TO_POINTER (options->type),
 
-				 _("Image Source"), (gpointer) IMAGE_CLONE,
+				 _("Image Source"),
+                                 GINT_TO_POINTER (IMAGE_CLONE),
 				 &options->type_w[0],
-				 _("Pattern Source"), (gpointer) PATTERN_CLONE,
+
+				 _("Pattern Source"),
+                                 GINT_TO_POINTER (PATTERN_CLONE),
 				 &options->type_w[1],
 
 				 NULL);
@@ -841,13 +845,19 @@ clone_options_new (GimpToolInfo *tool_info)
 
   frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &options->aligned, (gpointer) options->aligned,
+				 &options->aligned,
+                                 GINT_TO_POINTER (options->aligned),
 
-				 _("Non Aligned"), (gpointer) ALIGN_NO,
+				 _("Non Aligned"),
+                                 GINT_TO_POINTER (ALIGN_NO),
 				 &options->aligned_w[0],
-				 _("Aligned"), (gpointer) ALIGN_YES,
+
+				 _("Aligned"),
+                                 GINT_TO_POINTER (ALIGN_YES),
 				 &options->aligned_w[1],
-				 _("Registered"), (gpointer) ALIGN_REGISTERED,
+
+				 _("Registered"),
+                                 GINT_TO_POINTER (ALIGN_REGISTERED),
 				 &options->aligned_w[2],
 
 				 NULL);
@@ -867,6 +877,8 @@ clone_options_reset (GimpToolOptions *tool_options)
 
   paint_options_reset (tool_options);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->aligned_w[options->aligned_d]), TRUE);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->aligned_w[0]),
+                               GINT_TO_POINTER (options->aligned_d));
 }

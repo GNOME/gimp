@@ -728,12 +728,12 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case CROP_CROP:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[RESIZE_CROP]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (RESIZE_CROP));
           break;
         case RESIZE_CROP:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[CROP_CROP]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (CROP_CROP));
           break;
         default:
           break;
@@ -1416,11 +1416,15 @@ crop_options_new (GimpToolInfo *tool_info)
   /*  tool toggle  */
   frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &options->type, (gpointer) options->type,
+				 &options->type,
+                                 GINT_TO_POINTER (options->type),
 
-				 _("Crop"), (gpointer) CROP_CROP,
+				 _("Crop"),
+                                 GINT_TO_POINTER (CROP_CROP),
 				 &options->type_w[0],
-				 _("Resize"), (gpointer) RESIZE_CROP,
+
+				 _("Resize"),
+                                 GINT_TO_POINTER (RESIZE_CROP),
 				 &options->type_w[1],
 
 				 NULL);
@@ -1442,5 +1446,7 @@ crop_options_reset (GimpToolOptions *tool_options)
 				options->layer_only_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->allow_enlarge_w),
 				options->allow_enlarge_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
 }

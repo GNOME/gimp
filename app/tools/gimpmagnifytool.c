@@ -338,12 +338,12 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_ZOOM_IN:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[GIMP_ZOOM_OUT]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (GIMP_ZOOM_OUT));
           break;
         case GIMP_ZOOM_OUT:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[GIMP_ZOOM_IN]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (GIMP_ZOOM_IN));
           break;
         default:
           break;
@@ -455,28 +455,31 @@ magnify_options_new (GimpToolInfo *tool_info)
   /*  the allow_resize toggle button  */
   options->allow_resize_w =
     gtk_check_button_new_with_label (_("Allow Window Resizing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				gimprc.resize_windows_on_zoom);
+  gtk_box_pack_start (GTK_BOX (vbox),  options->allow_resize_w,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (options->allow_resize_w);
+
   g_signal_connect (G_OBJECT (options->allow_resize_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &(gimprc.resize_windows_on_zoom));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				gimprc.resize_windows_on_zoom);
-  gtk_box_pack_start (GTK_BOX (vbox), 
-                      options->allow_resize_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_resize_w);
 
   /*  tool toggle  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-                           G_CALLBACK (gimp_radio_button_update),
-                           &options->type,
-			   (gpointer) options->type,
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->type,
+                                 GINT_TO_POINTER (options->type),
 
-                           _("Zoom in"),  (gpointer) GIMP_ZOOM_IN,
-                           &options->type_w[0],
-                           _("Zoom out"), (gpointer) GIMP_ZOOM_OUT,
-                           &options->type_w[1],
+                                 _("Zoom in"),
+                                 GINT_TO_POINTER (GIMP_ZOOM_IN),
+                                 &options->type_w[0],
 
-                           NULL);
+                                 _("Zoom out"),
+                                 GINT_TO_POINTER (GIMP_ZOOM_OUT),
+                                 &options->type_w[1],
+
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -494,6 +497,6 @@ magnify_options_reset (GimpToolOptions *tool_options)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				options->allow_resize_d);
 
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
 }

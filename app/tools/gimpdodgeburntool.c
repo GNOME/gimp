@@ -262,12 +262,12 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case DODGE:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[BURN]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (BURN));
           break;
         case BURN:
-          gtk_toggle_button_set_active
-            (GTK_TOGGLE_BUTTON (options->type_w[DODGE]), TRUE);
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                                       GINT_TO_POINTER (DODGE));
           break;
         default:
           break;
@@ -673,11 +673,14 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   frame = gimp_radio_group_new2 (TRUE, _("Type"),
 				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type,
-				 (gpointer) options->type,
+				 GINT_TO_POINTER (options->type),
 
-				 _("Dodge"), (gpointer) DODGE,
+				 _("Dodge"),
+                                 GINT_TO_POINTER (DODGE),
 				 &options->type_w[0],
-				 _("Burn"), (gpointer) BURN,
+
+				 _("Burn"),
+                                 GINT_TO_POINTER (BURN),
 				 &options->type_w[1],
 
 				 NULL);
@@ -686,20 +689,24 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (frame);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Mode"),
-			   G_CALLBACK (gimp_radio_button_update),
-			   &options->mode,
-			   GINT_TO_POINTER (options->mode),
+  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->mode,
+                                 GINT_TO_POINTER (options->mode),
 
-			   _("Highlights"), GINT_TO_POINTER (GIMP_HIGHLIGHTS), 
-			   &options->mode_w[0],
-			   _("Midtones"), GINT_TO_POINTER (GIMP_MIDTONES),
-			   &options->mode_w[1],
-			   _("Shadows"), GINT_TO_POINTER (GIMP_SHADOWS),
-			   &options->mode_w[2],
+                                 _("Highlights"),
+                                 GINT_TO_POINTER (GIMP_HIGHLIGHTS), 
+                                 &options->mode_w[0],
 
-			   NULL);
+                                 _("Midtones"),
+                                 GINT_TO_POINTER (GIMP_MIDTONES),
+                                 &options->mode_w[1],
+
+                                 _("Shadows"),
+                                 GINT_TO_POINTER (GIMP_SHADOWS),
+                                 &options->mode_w[2],
+
+                                 NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -719,9 +726,9 @@ gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
 			    options->exposure_d);
 
-  gtk_toggle_button_set_active 
-    (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+                               GINT_TO_POINTER (options->type_d));
 
-  gtk_toggle_button_set_active 
-    (GTK_TOGGLE_BUTTON (options->mode_w[options->mode_d]), TRUE);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w[0]),
+                               GINT_TO_POINTER (options->mode_d));
 }

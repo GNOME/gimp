@@ -222,12 +222,13 @@ paint_options_init (PaintOptions *options,
 	gtk_check_button_new_with_label (_("Incremental"));
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
 			  options->incremental_w, FALSE, FALSE, 0);
-      g_signal_connect (G_OBJECT (options->incremental_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->incremental);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental_d);
       gtk_widget_show (options->incremental_w);
+
+      g_signal_connect (G_OBJECT (options->incremental_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &options->incremental);
     }
 
   options->pressure_options = paint_pressure_options_new (tool_info->tool_type,
@@ -385,12 +386,13 @@ paint_pressure_options_new (GType         tool_type,
       pressure->opacity_w =
 	gtk_check_button_new_with_label (_("Opacity"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->opacity_w);
-      g_signal_connect (G_OBJECT (pressure->opacity_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &pressure->opacity);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
 				    pressure->opacity_d);
       gtk_widget_show (pressure->opacity_w);
+
+      g_signal_connect (G_OBJECT (pressure->opacity_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->opacity);
     }
 
   /*  the pressure toggle  */
@@ -403,12 +405,13 @@ paint_pressure_options_new (GType         tool_type,
     {
       pressure->pressure_w = gtk_check_button_new_with_label (_("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
-      g_signal_connect (G_OBJECT (pressure->pressure_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &pressure->pressure);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
       gtk_widget_show (pressure->pressure_w);
+
+      g_signal_connect (G_OBJECT (pressure->pressure_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->pressure);
     }
 
   /*  the rate toggle */
@@ -419,12 +422,13 @@ paint_pressure_options_new (GType         tool_type,
       pressure->rate_w =
 	gtk_check_button_new_with_label (_("Rate"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->rate_w);
-      g_signal_connect (G_OBJECT (pressure->rate_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &pressure->rate);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
 				    pressure->rate_d);
       gtk_widget_show (pressure->rate_w);
+
+      g_signal_connect (G_OBJECT (pressure->rate_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->rate);
     }
 
   /*  the size toggle  */
@@ -439,12 +443,13 @@ paint_pressure_options_new (GType         tool_type,
       pressure->size_w =
 	gtk_check_button_new_with_label (_("Size"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->size_w);
-      g_signal_connect (G_OBJECT (pressure->size_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &pressure->size);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
 				    pressure->size_d);
       gtk_widget_show (pressure->size_w);
+
+      g_signal_connect (G_OBJECT (pressure->size_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->size);
     }
 
   /*  the color toggle  */
@@ -455,12 +460,13 @@ paint_pressure_options_new (GType         tool_type,
       pressure->color_w =
 	gtk_check_button_new_with_label (_("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->color_w);
-      g_signal_connect (G_OBJECT (pressure->color_w), "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &pressure->color);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
 				    pressure->color_d);
       gtk_widget_show (pressure->color_w);
+
+      g_signal_connect (G_OBJECT (pressure->color_w), "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &pressure->color);
     }
 
   pressure->frame = frame;

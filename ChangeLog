@@ -1,5 +1,19 @@
 2001-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/paint_options.c
+	* app/tools/transform_options.c: removed the remaining cases of
+	we-rely-on-the-radio-buttons-being-in-the-same-order-as-the-enum
+	and use gimp_radio_group_set_active() instead.
+	Use GINT_TO_POINTER(gint) instead of (gpointer)gint all over
+	the place.
+
+2001-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpstock.c: added stock *items* (not only icons)
 	for all tools so they can be used as action buttons.
 
