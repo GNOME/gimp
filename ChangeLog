@@ -1,3 +1,14 @@
+Thu Jul 16 16:20:47 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: Added --cflags-noui and --libs-noui flags and
+	appropriate sed junk to craft it. Don't call gtk-config unless
+	GTK_CONFIG is set; hard code the info. Strip out redundant
+	stuff from the output
+
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c: make gimp_image_flatten return a value
+	to be consistent with the PDB
+
 Thu Jul 16 13:13:23 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated MapObject again

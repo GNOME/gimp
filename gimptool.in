@@ -7,7 +7,7 @@ plug_in_dir=@gimpplugindir@
 data_dir=@gimpdatadir@
 
 usage="\
-Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c] [--install-bin plug-in] [--install-admin-bin plug-in] [--install-script script.scm] [--install-admin-script script.scm]"
+Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--libs-noui] [--cflags] [--cflags-noui] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c] [--install-bin plug-in] [--install-admin-bin plug-in] [--install-script script.scm] [--install-admin-script script.scm]"
 
 noarg="\
 Error: Need a plug-in source file to build"
@@ -16,26 +16,28 @@ notfound="\
 Error: Couldn't find source file to build"
 
 if test $# -eq 0; then
-      echo "${usage}" 1>&2
-      exit 1
+  echo "${usage}" 1>&2
+  exit 1
 fi
 
 if test x${GTK_CONFIG+set} != xset ; then
-      gtk_config='@GTK_CONFIG@'
+  gtk_cflags='@GTK_CFLAGS@'
+  gtk_libs='@GTK_LIBS@'
 else
-      gtk_config="$GTK_CONFIG"
+  gtk_cflags=`$GTK_CONFIG --cflags`
+  gtk_libs=`$GTK_CONFIG --libs`
 fi
 
 if test x${CC+set} != xset ; then
-      cc='@CC@'
+  cc='@CC@'
 else
-      cc="$CC"
+  cc="$CC"
 fi
 
 if test x${CFLAGS+set} != xset ; then
-      cflags='@CFLAGS@'
+  cflags='@CFLAGS@'
 else
-      cflags="$CFLAGS"
+  cflags="$CFLAGS"
 fi
 
 while test $# -gt 0; do
@@ -64,14 +66,55 @@ while test $# -gt 0; do
     --version)
       echo @GIMP_VERSION@
       ;;
-    --cflags)
+    --cflags | --cflags-noui)
+      case $1 in
+        --cflags)
+          my_gtk_cflags=$gtk_cflags ;;
+        --cflags-noui)
+          my_gtk_cflags=`echo $gtk_cflags | sed 's/^.*\(-I[^ ]*glib[^ ]*  *-I[^ ]*\).*$/\1/'` ;;
+      esac
       if test @includedir@ != /usr/include ; then
         includes=-I@includedir@
+        for i in $my_gtk_cflags ; do
+          if test $i = -I@includedir@ ; then
+             includes=""
+          fi
+        done
       fi
-      echo $includes `$gtk_config --cflags`
+      echo $includes $my_gtk_cflags
       ;;
     --libs)
-      echo -L@libdir@ -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ `$gtk_config --libs`
+      my_gtk_libs=
+      libdirs=-L@libdir@
+      for i in $gtk_libs ; do
+        if test $i != -L@libdir@ ; then
+          if test -z "$my_gtk_libs" ; then
+            my_gtk_libs="$i"
+          else
+            my_gtk_libs="$my_gtk_libs $i"
+          fi
+        fi
+      done
+      echo $libdirs -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ $my_gtk_libs
+      ;;
+    --libs-noui)
+      glib_ldflags=`echo $gtk_libs | sed -e 's/^.*-lgdk[^ ]* *\(-L[^ ]*\).*$/\1/' -e 's/^.* -lgdk[^ ]* .*$//'`
+      if test -z "$glib_ldflags" ; then
+        glib_ldflags=`echo $gtk_libs | sed 's/^ *\(-L[^ ]*\) .*$/\1/'`
+      fi 
+      glib_libs="$glib_ldflags `echo $gtk_libs | sed 's/^.*\(-lglib[^ ]*\).*$/\1/'`"
+      my_glib_libs=
+      libdirs=-L@libdir@
+      for i in $glib_libs ; do
+        if test $i != -L@libdir@ ; then
+          if test -z "$my_glib_libs" ; then
+            my_glib_libs="$i"
+          else
+            my_glib_libs="$my_glib_libs $i"
+          fi
+        fi
+      done
+      echo -L@libdir@ -lgimp-@LT_RELEASE@ $my_glib_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-script | --install-admin-script)
@@ -125,7 +168,7 @@ while test $# -gt 0; do
       shift
       if test "x$1" != "x"; then
         if test -r "$1"; then
-          cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui-@LT_RELEASE@ -lgimp-@LT_RELEASE@ `$gtk_config --libs`"
+          cmd="$cc $cflags `$0 --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 `$0 --libs`"
           echo $cmd
           exec $cmd
         else

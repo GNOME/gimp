@@ -239,18 +239,25 @@ gimp_image_clean_all (gint32 image_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-void
+gint32
 gimp_image_flatten (gint32 image_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
+  gint32 layer_ID;
 
   return_vals = gimp_run_procedure ("gimp_image_flatten",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
 
+  layer_ID = -1;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
 }
 
 void
