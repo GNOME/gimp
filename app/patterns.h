@@ -20,9 +20,10 @@
 
 #include <glib.h>
 #include <stdio.h>
+
 #include "temp_buf.h"
 
-typedef struct _GPattern  GPattern, * GPatternP;
+typedef struct _GPattern GPattern, *GPatternP;
 
 struct _GPattern
 {
@@ -32,25 +33,22 @@ struct _GPattern
   TempBuf * mask;         /*  the actual mask...                            */
 };
 
-/*  function declarations  */
-void       patterns_init              (gboolean   no_data);
-void       patterns_free              (void);
-
-void       select_pattern             (GPatternP  pattern);
-GPatternP  get_pattern_by_index       (gint       index);
-GPatternP  get_active_pattern         (void);
-GPatternP  pattern_list_get_pattern   (GSList    *list,
-				       gchar     *name);
-
-void       create_pattern_dialog      (void);
-void       pattern_select_dialog_free (void);
-/* this is useful for pixmap brushes etc */
-int        load_pattern_pattern       (GPatternP pattern,
-				       FILE* fp,
-				       gchar* filename);
-
 /*  global variables  */
 extern GSList * pattern_list;
 extern gint     num_patterns;
+
+void       patterns_init                     (gboolean   no_data);
+void       patterns_free                     (void);
+GPattern * patterns_get_standard_pattern     (void);
+
+GPattern * pattern_list_get_pattern_by_index (GSList    *list,
+					      gint       index);
+GPattern * pattern_list_get_pattern          (GSList    *list,
+					      gchar     *name);
+
+/*  this is useful for pixmap brushes etc.  */
+gboolean   pattern_load                      (GPattern  *pattern,
+					      FILE      *fp,
+					      gchar     *filename);
 
 #endif  /*  __PATTERNS_H__  */

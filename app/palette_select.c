@@ -18,8 +18,8 @@
  */
 #include "gimpui.h"
 #include "palette_entries.h"
-#include "session.h"
 #include "palette_select.h"
+#include "paletteP.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -30,186 +30,23 @@ static GSList *active_dialogs = NULL;
 static void   palette_select_close_callback (GtkWidget *, gpointer);
 static void   palette_select_edit_callback  (GtkWidget *, gpointer);
 
-void
-palette_select_set_text_all (PaletteEntriesP entries)
-{
-  gint pos = 0;
-  char *num_buf;
-  GSList *aclist = active_dialogs;
-  GSList *plist;
-  PaletteSelectP psp; 
-  PaletteEntriesP p_entries = NULL;
+/*  public functions  */
 
-  plist = palette_entries_list;
-  
-  while (plist)
-    {
-      p_entries = (PaletteEntriesP) plist->data;
-      plist = g_slist_next (plist);
-      
-      if (p_entries == entries)
-	    break;
-      pos++;
-    }
-
-  if(p_entries == NULL)
-    return; /* This is actually and error */
-
-  num_buf = g_strdup_printf("%d",p_entries->n_colors);;
-
-  while(aclist)
-    {
-      char *num_copy = g_strdup(num_buf);
-
-      psp = (PaletteSelectP)aclist->data;
-      gtk_clist_set_text(GTK_CLIST(psp->clist),pos,1,num_copy);
-      aclist = g_slist_next(aclist);
-    }
-}
-
-void
-palette_select_refresh_all ()
-{
-  GSList *list = active_dialogs;
-  PaletteSelectP psp; 
-
-  while(list)
-    {
-      psp = (PaletteSelectP)list->data;
-      gtk_clist_freeze(GTK_CLIST(psp->clist));
-      gtk_clist_clear(GTK_CLIST(psp->clist));
-      palette_clist_init(psp->clist,psp->shell,psp->gc);
-      gtk_clist_thaw(GTK_CLIST(psp->clist));
-      list = g_slist_next(list);
-    }
-}
-
-void
-palette_select_clist_insert_all (PaletteEntriesP p_entries)
-{
-  GSList *aclist = active_dialogs;
-  PaletteEntriesP chk_entries;
-  PaletteSelectP psp; 
-  GSList *plist;
-  gint pos = 0;
-
-  plist = palette_entries_list;
-  
-  while (plist)
-    {
-      chk_entries = (PaletteEntriesP) plist->data;
-      plist = g_slist_next (plist);
-      
-      /*  to make sure we get something!  */
-      if (chk_entries == NULL)
-	{
-	  return;
-	}
-      if (strcmp(p_entries->name, chk_entries->name) == 0)
-	break;
-      pos++;
-    }
-
-  while(aclist)
-    {
-      psp = (PaletteSelectP)aclist->data;
-      gtk_clist_freeze(GTK_CLIST(psp->clist));
-      palette_insert_clist(psp->clist,psp->shell,psp->gc,p_entries,pos);
-      gtk_clist_thaw(GTK_CLIST(psp->clist));
-      aclist = g_slist_next(aclist);
-    }
-
-/*   if(gradient_select_dialog) */
-/*     { */
-/*       gtk_clist_set_text(GTK_CLIST(gradient_select_dialog->clist),n,1,grad->name);   */
-/*     } */
-}
-
-void
-palette_select_free (PaletteSelectP psp)
-{
-  if (psp)
-    {
-/*       if(psp->callback_name) */
-/* 	g_free(gsp->callback_name); */
-
-      /* remove from active list */
-
-      active_dialogs = g_slist_remove(active_dialogs,psp); 
-
-      g_free (psp);
-    }
-}
-
-static void
-palette_select_edit_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  PaletteEntriesP p_entries = NULL;
-  PaletteSelectP psp = (PaletteSelectP)client_data;
-  GList *sel_list;
-
-  sel_list = GTK_CLIST(psp->clist)->selection;
-
-  if(sel_list)
-    {
-      while (sel_list)
-	{
-	  gint row;
-
-	  row = GPOINTER_TO_INT (sel_list->data);
-
-	  p_entries = 
-	    (PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (psp->clist),
-						      row);
-
-	  palette_create_edit (p_entries);
-
-	  /* One only */
-	  return;
-	}
-    }
-}
-
-static void
-palette_select_close_callback (GtkWidget *widget,
-			       gpointer   client_data)
-{
-  PaletteSelectP psp;
-
-  psp = (PaletteSelectP) client_data;
-
-  if (GTK_WIDGET_VISIBLE (psp->shell))
-    gtk_widget_hide (psp->shell);
-
-  gtk_widget_destroy (psp->shell); 
-  palette_select_free (psp); 
-
-  /* Free memory if poping down dialog which is not the main one */
-/*   if(gsp != gradient_select_dialog) */
-/*     { */
-/*       grad_change_callbacks(gsp,1); */
-/*       gtk_widget_destroy(gsp->shell);  */
-/*       grad_select_free(gsp);  */
-/*     } */
-}
-
-PaletteSelectP
+PaletteSelect *
 palette_new_selection (gchar *title,
 		       gchar *initial_palette)
 {
-  PaletteSelectP psp;
-  /* gradient_t *grad = NULL; */
+  PaletteSelect *psp;
   GSList     *list;
   GtkWidget  *vbox;
   GtkWidget  *hbox;
   GtkWidget  *scrolled_win;
   PaletteEntriesP p_entries = NULL;
-  int select_pos;
+  gint select_pos;
 
   palette_select_palette_init ();
 
-  psp = g_new (struct _PaletteSelect, 1);
+  psp = g_new (PaletteSelect, 1);
   psp->callback_name = NULL;
   
   /*  The shell and main vbox  */
@@ -266,15 +103,13 @@ palette_new_selection (gchar *title,
   select_pos = -1;
   if (initial_palette && strlen (initial_palette))
     {
-      list = palette_entries_list;
-      
-      while (list)
+      for (list = palette_entries_list; list; list = g_slist_next (list))
 	{
 	  p_entries = (PaletteEntriesP) list->data;
-	  list = g_slist_next (list);
 	  
 	  if (strcmp (p_entries->name, initial_palette) > 0)
 	    break;
+
 	  select_pos++;
 	}
     }
@@ -299,4 +134,147 @@ palette_new_selection (gchar *title,
   active_dialogs = g_slist_append (active_dialogs, psp);
 
   return psp;
+}
+
+void
+palette_select_clist_insert_all (PaletteEntriesP p_entries)
+{
+  PaletteEntriesP chk_entries;
+  PaletteSelect *psp; 
+  GSList *list;
+  gint pos = 0;
+
+  for (list = palette_entries_list; list; list = g_slist_next (list))
+    {
+      chk_entries = (PaletteEntriesP) list->data;
+      
+      /*  to make sure we get something!  */
+      if (chk_entries == NULL)
+	return;
+
+      if (strcmp (p_entries->name, chk_entries->name) == 0)
+	break;
+
+      pos++;
+    }
+
+  for (list = active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PaletteSelect *) list->data;
+
+      gtk_clist_freeze (GTK_CLIST (psp->clist));
+      palette_clist_insert (psp->clist, psp->shell, psp->gc, p_entries, pos);
+      gtk_clist_thaw (GTK_CLIST (psp->clist));
+    }
+}
+
+void
+palette_select_set_text_all (PaletteEntriesP entries)
+{
+  PaletteEntriesP p_entries = NULL;
+  PaletteSelect *psp; 
+  GSList *list;
+  gchar *num_buf;
+  gint pos = 0;
+
+  for (list = palette_entries_list; list;  list = g_slist_next (list))
+    {
+      p_entries = (PaletteEntriesP) list->data;
+      
+      if (p_entries == entries)
+	break;
+
+      pos++;
+    }
+
+  if (p_entries == NULL)
+    return; /* This is actually an error */
+
+  num_buf = g_strdup_printf ("%d",p_entries->n_colors);;
+
+  for (list = active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PaletteSelect *) list->data;
+
+      gtk_clist_set_text (GTK_CLIST (psp->clist), pos, 1, num_buf);
+    }
+
+  g_free (num_buf);
+}
+
+void
+palette_select_refresh_all ()
+{
+  PaletteSelect *psp; 
+  GSList *list;
+
+  for (list = active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PaletteSelect *) list->data;
+
+      gtk_clist_freeze (GTK_CLIST (psp->clist));
+      gtk_clist_clear (GTK_CLIST (psp->clist));
+      palette_clist_init (psp->clist, psp->shell, psp->gc);
+      gtk_clist_thaw (GTK_CLIST (psp->clist));
+    }
+}
+
+/*  local functions  */
+
+static void
+palette_select_edit_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  PaletteEntriesP p_entries = NULL;
+  PaletteSelect *psp = (PaletteSelect *) data;
+  GList *sel_list;
+
+  sel_list = GTK_CLIST (psp->clist)->selection;
+
+  while (sel_list)
+    {
+      gint row;
+
+      row = GPOINTER_TO_INT (sel_list->data);
+
+      p_entries = 
+	(PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
+
+      palette_create_edit (p_entries);
+
+      /* One only */
+      return;
+    }
+}
+
+static void
+palette_select_free (PaletteSelect *psp)
+{
+  if (psp)
+    {
+      /*
+      if(psp->callback_name)
+	g_free (gsp->callback_name);
+      */
+
+      /* remove from active list */
+      active_dialogs = g_slist_remove (active_dialogs, psp); 
+
+      g_free (psp);
+    }
+}
+
+static void
+palette_select_close_callback (GtkWidget *widget,
+			       gpointer   data)
+{
+  PaletteSelect *psp;
+
+  psp = (PaletteSelect *) data;
+
+  if (GTK_WIDGET_VISIBLE (psp->shell))
+    gtk_widget_hide (psp->shell);
+
+  gtk_widget_destroy (psp->shell); 
+  palette_select_free (psp); 
 }

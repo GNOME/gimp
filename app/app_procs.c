@@ -44,17 +44,18 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "gimpbrushlist.h"
+#include "brush_select.h"
 #include "color_transfer.h"
 #include "curves.h"
+#include "colormaps.h"
+#include "context_manager.h"
 #include "devices.h"
+#include "errorconsole.h"
+#include "fileops.h"
 #include "gdisplay.h"
 #include "gdisplay_color.h"
 #include "gdisplay_ops.h"
-#include "colormaps.h"
-#include "context_manager.h"
-#include "errorconsole.h"
-#include "fileops.h"
+#include "gimpbrushlist.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpset.h"
@@ -71,6 +72,7 @@
 #include "menus.h"
 #include "paint_funcs.h"
 #include "palette.h"
+#include "pattern_select.h"
 #include "patterns.h"
 #include "plug_in.h"
 #include "module_db.h"
@@ -486,6 +488,9 @@ app_init (void)
   /* Create the context of all existing images */
   image_context = gimp_set_new (GIMP_TYPE_IMAGE, TRUE);
 
+  /*  Initialize the context system before loading any data  */
+  context_manager_init ();
+
   /*  Initialize the procedural database
    *    We need to do this first because any of the init
    *    procedures might install or query it as needed.
@@ -498,8 +503,8 @@ app_init (void)
 
   RESET_BAR();
   parse_buffers_init ();
-  parse_unitrc ();         /*  this needs to be done before gimprc loading */
-  parse_gimprc ();         /*  parse the local GIMP configuration file  */
+  parse_unitrc ();         /*  this needs to be done before gimprc loading  */
+  parse_gimprc ();         /*  parse the local GIMP configuration file      */
 
   if (always_restore_session)
     restore_session = TRUE;
@@ -529,21 +534,21 @@ app_init (void)
   xcf_init ();             /*  initialize the xcf file format routines */
 
   app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
-  gimp_init_parasites ();        /*  initialize  the global parasite table */
+  gimp_init_parasites ();          /*  initialize  the global parasite table  */
   app_init_update_status (NULL, _("Brushes"), 0.20);
-  brushes_init (no_data);         /*  initialize the list of gimp brushes  */
+  brushes_init (no_data);          /*  initialize the list of gimp brushes    */
   app_init_update_status (NULL, _("Patterns"), 0.40);
-  patterns_init (no_data);        /*  initialize the list of gimp patterns  */
+  patterns_init (no_data);         /*  initialize the list of gimp patterns   */
   app_init_update_status (NULL, _("Palettes"), 0.60);
-  palettes_init (no_data);        /*  initialize the list of gimp palettes  */
+  palettes_init (no_data);         /*  initialize the list of gimp palettes   */
   app_init_update_status (NULL, _("Gradients"), 0.80);
-  gradients_init (no_data);       /*  initialize the list of gimp gradients  */
+  gradients_init (no_data);        /*  initialize the list of gimp gradients  */
   app_init_update_status (NULL, NULL, 1.00);
 
-  plug_in_init ();         /*  initialize the plug in structures  */
-  module_db_init ();       /*  load any modules we need */
+  plug_in_init ();         /*  initialize the plug in structures   */
+  module_db_init ();       /*  load any modules we need            */
   RESET_BAR();
-  file_ops_post_init ();   /*  post-initialize the file types  */
+  file_ops_post_init ();   /*  post-initialize the file types      */
 
   /* Add the swap file  */
   if (swap_path == NULL)
@@ -554,9 +559,6 @@ app_init (void)
 			  swap_path, (unsigned long) getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
-
-  /* Initialize the context system */
-  context_manager_init ();
 
   destroy_initialization_status_window ();
 
@@ -597,14 +599,23 @@ app_init (void)
       gximage_init ();
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
-      tools_select (RECT_SELECT);
-      /* FIXME: This needs to go in preferences */
+
+      /*  EEK: force signal emission  */
+      if (gimp_context_get_tool (gimp_context_get_user ()) == RECT_SELECT)
+	{
+	  gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
+				   "tool_changed", RECT_SELECT);
+	}
+      else
+	{
+	  gimp_context_set_tool (gimp_context_get_user (), RECT_SELECT);
+	}
+
+      /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;
     }
 
   color_transfer_init ();
-  get_active_brush ();
-  get_active_pattern ();
   paint_funcs_setup ();
 
   /* register internal color selectors */
@@ -612,9 +623,7 @@ app_init (void)
 
   if (no_interface == FALSE)
     {
-      devices_restore (); /* Must be done AFTER get_active_{brush|pattern} 
-			   * because these functions set the brush/pattern.
-			   */
+      devices_restore ();
       session_restore ();
     }
 }
@@ -645,18 +654,23 @@ app_exit_finish (void)
   global_edit_free ();
   named_buffers_free ();
   swapping_free ();
-  context_manager_free ();
-  brush_select_dialog_free ();
+  brush_dialog_free ();
+
+  /*  there may be dialogs still waiting for brush signals  */
+  if (!no_interface)
+    brush_select_freeze_all ();
+
   brushes_free ();
+  pattern_dialog_free ();
   patterns_free ();
+  palette_dialog_free ();
   palettes_free ();
-  gradients_free ();
   grad_free_gradient_editor ();
+  gradients_free ();
+  context_manager_free ();
   hue_saturation_free ();
   curves_free ();
   levels_free ();
-  pattern_select_dialog_free ();
-  palette_free ();
   paint_funcs_free ();
   plug_in_kill ();
   procedural_db_free ();

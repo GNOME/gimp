@@ -15,26 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __ACTIONAREA_H__
-#define __ACTIONAREA_H__
+#ifndef __PALETTE_P_H__
+#define __PALETTE_P_H__
 
 #include <gtk/gtk.h>
 
-typedef void (*ActionCallback) (GtkWidget *, gpointer);
+#include "gimpimageF.h"
+#include "palette_entries.h"
 
-typedef struct _ActionAreaItem ActionAreaItem;
+void   palette_clist_init           (GtkWidget      *clist,
+				     GtkWidget      *shell,
+				     GdkGC          *gc);
+void   palette_clist_insert         (GtkWidget      *clist, 
+				     GtkWidget      *shell,
+				     GdkGC          *gc,
+				     PaletteEntries *entries,
+				     gint            pos);
 
-struct _ActionAreaItem
-{
-  const gchar    *label;
-  ActionCallback  callback;
-  gpointer        user_data;
-  GtkWidget      *widget;
-};
+void   palette_select_palette_init  (void);
+void   palette_create_edit          (PaletteEntries *entries);
 
-void build_action_area (GtkDialog      *dlg,
-			ActionAreaItem *actions,
-			gint            num_actions,
-			gint            default_action);
+void   palette_import_image_renamed (GimpImage      *gimage);
 
-#endif /* __ACTIONAREA_H__ */
+#endif /* __PALETTE_P_H__ */

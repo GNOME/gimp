@@ -23,9 +23,9 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimpcontext.h"
 #include "gimpui.h"
 #include "interface.h"
-#include "palette.h"
 
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
@@ -360,16 +360,21 @@ offset (GimpImage         *gimage,
 	  if (offset_x >= 0)
 	    {
 	      pixel_region_init (&srcPR, drawable_data (drawable), 0, src_y,
-				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), FALSE);
+				 drawable_width (drawable) - ABS (offset_x),
+				 ABS (offset_y), FALSE);
 	      pixel_region_init (&destPR, new_tiles, dest_x + offset_x, dest_y,
-				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
+				 drawable_width (drawable) - ABS (offset_x),
+				 ABS (offset_y), TRUE);
 	    }
 	  else if (offset_x < 0)
 	    {
-	      pixel_region_init (&srcPR, drawable_data (drawable), src_x - offset_x, src_y,
-				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), FALSE);
+	      pixel_region_init (&srcPR, drawable_data (drawable),
+				 src_x - offset_x, src_y,
+				 drawable_width (drawable) - ABS (offset_x),
+				 ABS (offset_y), FALSE);
 	      pixel_region_init (&destPR, new_tiles, 0, dest_y,
-				 drawable_width (drawable) - ABS (offset_x), ABS (offset_y), TRUE);
+				 drawable_width (drawable) - ABS (offset_x),
+				 ABS (offset_y), TRUE);
 	    }
 
 	  copy_region (&srcPR, &destPR);
@@ -380,7 +385,7 @@ offset (GimpImage         *gimage,
     {
       if (fill_type == OFFSET_BACKGROUND)
 	{
-	  palette_get_background (&fill[0], &fill[1], &fill[2]);
+	  gimp_context_get_background (NULL, &fill[0], &fill[1], &fill[2]);
 	  if (drawable_has_alpha (drawable))
 	    fill[drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 	}
@@ -409,7 +414,8 @@ offset (GimpImage         *gimage,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
 	{
-	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y, ABS (offset_x), ABS (offset_y), TRUE);
+	  pixel_region_init (&destPR, new_tiles, dest_x, dest_y,
+			     ABS (offset_x), ABS (offset_y), TRUE);
 	  color_region (&destPR, fill);
 	}
 

@@ -52,7 +52,7 @@ sub brushes_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'BrushSelectP newdialog' ],
+	vars => [ 'ProcRecord *prec', 'BrushSelect *newdialog' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)))
@@ -63,12 +63,8 @@ sub brushes_popup {
       else
 	newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
 
-      /* Add to list of proc to run when brush changes */
-      /* change_callbacks = g_list_append (change_callbacks, g_strdup (name)); */
+      /* The callback procedure to run when brush changes */
       newdialog->callback_name = g_strdup (name);
-
-      /* Add to active brush dialogs list */
-      brush_active_dialogs = g_slist_append (brush_active_dialogs, newdialog);
     }
   else
     success = FALSE;
@@ -90,14 +86,12 @@ sub brushes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'BrushSelectP bsp' ],
+	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
       (bsp = brush_get_brushselect (name)))
     {
-      brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
-
       if (GTK_WIDGET_VISIBLE (bsp->shell))
 	gtk_widget_hide (bsp->shell);
 
@@ -132,35 +126,23 @@ sub brushes_set_popup {
 
     %invoke = (
 	headers => [ qw("gimpbrushlist.h") ],
-	vars => [ 'ProcRecord *prec', 'BrushSelectP bsp' ],
+	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
       (bsp = brush_get_brushselect (name)))
     {
-      GimpBrushP active = gimp_brush_list_get_brush (brush_list, brush_name);
+      GimpBrush *active = gimp_brush_list_get_brush (brush_list, brush_name);
 
       if (active)
 	{
-	  /* Must alter the wigdets on screen as well */
+	  /* Updating the context updates the widgets as well */
 
-	  bsp->brush = active;
-	  brush_select_select (bsp, active);
+	  gimp_context_set_brush (bsp->context, active);
+	  gimp_context_set_opacity (bsp->context, opacity);
+	  gimp_context_set_paint_mode (bsp->context, paint_mode);
 
-	  bsp->opacity_value = opacity;
-	  bsp->spacing_value = spacing;
-	  bsp->paint_mode = paint_mode;
-
-	  bsp->spacing_data->value = bsp->spacing_value;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data),
-				   "value_changed");
-
-	  bsp->opacity_data->value = bsp->opacity_value * 100.0;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data),
-				   "value_changed");
-          
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), bsp->paint_mode);
-
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data), spacing);
 	}
       else
 	success = FALSE;
@@ -175,20 +157,18 @@ CODE
 @headers = qw(<string.h> "brush_select.h");
 
 $extra{app}->{code} = <<'CODE';
-static BrushSelectP
+static BrushSelect *
 brush_get_brushselect (gchar *name)
 {
-  GSList *list = brush_active_dialogs;
-  BrushSelectP bsp;
+  GSList *list;
+  BrushSelect *bsp;
 
-  while (list)
+  for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
-      bsp = (BrushSelectP) list->data;
-      
-      if (!strcmp (name, bsp->callback_name))
-	return bsp;
+      bsp = (BrushSelect *) list->data;
 
-      list = list->next;
+      if (bsp->callback_name && !strcmp (name, bsp->callback_name))
+	return bsp;
     }
 
   return NULL;

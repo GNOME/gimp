@@ -20,7 +20,6 @@
 #include <math.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "general.h"
@@ -367,7 +366,7 @@ hue_saturation_new_dialog ()
     N_("M")
   };
 
-  ActionCallback hue_partition_callbacks[] =
+  GtkSignalFunc hue_partition_callbacks[] =
   {
     hue_saturation_master_callback,
     hue_saturation_R_callback,

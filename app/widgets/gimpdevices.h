@@ -20,49 +20,58 @@
 
 #include "tools.h"
 
-typedef enum {
-  DEVICE_MODE = 1 << 0,
-  DEVICE_AXES = 1 << 1,
-  DEVICE_KEYS = 1 << 2,
-  DEVICE_BRUSH = 1 << 3,
-  DEVICE_TOOL = 1 << 4,
-  DEVICE_FOREGROUND = 1 << 5,
-  DEVICE_PATTERN = 1 << 6
+typedef enum
+{
+  DEVICE_MODE       = 1 << 0,
+  DEVICE_AXES       = 1 << 1,
+  DEVICE_KEYS       = 1 << 2,
+  DEVICE_TOOL       = 1 << 3,
+  DEVICE_FOREGROUND = 1 << 4,
+  DEVICE_BACKGROUND = 1 << 5,
+  DEVICE_BRUSH      = 1 << 6,
+  DEVICE_PATTERN    = 1 << 7,
+  DEVICE_GRADIENT   = 1 << 8
 } DeviceValues;
 
-/* Create device info dialog */
-void create_input_dialog (void);
+/*  Initialize the input devices  */
+void   devices_init         (void);
 
-/* Initialize the input devices */
-void devices_init (void);
+/*  Restores device settings from rc file  */
+void   devices_restore      (void);
 
-/* Returns TRUE, and makes necessary global changes
-   event is not for current_device */
-gint devices_check_change (GdkEvent *event);
+/*  Create device info dialog  */
+void   input_dialog_create  (void);
 
-/* Loads stored device settings (tool, cursor, ...) */
-void select_device (guint32 device);
+/*  Create the device status dialog  */
+void   device_status_create (void);
 
-/* Create the device status dialog */
-void create_device_status (void);
+/*  Returns TRUE, and makes necessary global changes
+ *  event is not for current_device
+ */
+gint   devices_check_change (GdkEvent     *event);
 
-/* Update the device status dialog for a device */
-void device_status_update (guint32 deviceid);
+/*  Loads stored device settings (tool, cursor, ...)  */
+void   select_device        (guint32       device);
 
 /* Add information about one tool from rc file */
-void devices_rc_update (gchar *name, DeviceValues values,
-			GdkInputMode mode, gint num_axes,
-			GdkAxisUse *axes, gint num_keys, GdkDeviceKey *keys,
-			gchar *brush_name, ToolType tool,
-			guchar foreground[],gchar *pattern_name);
+void   devices_rc_update    (gchar        *name,
+			     DeviceValues  values,
+			     GdkInputMode  mode,
+			     gint          num_axes,
+			     GdkAxisUse   *axes,
+			     gint          num_keys,
+			     GdkDeviceKey *keys,
+			     ToolType      tool,
+			     guchar        foreground[],
+			     guchar        background[],
+			     gchar        *brush_name,
+			     gchar        *pattern_name,
+			     gchar        *gradient_name);
 
-/* Free device status (only for session-managment) */
-void device_status_free (void);
+/*  Free device status (only for session-managment)  */
+void   device_status_free   (void);
 
-/* Restores device settings from rc file */
-void devices_restore (void);
-
-/* Current device id */
-extern int current_device;
+/*  Current device id  */
+extern gint current_device;
 
 #endif /* __DEVICES_H__ */

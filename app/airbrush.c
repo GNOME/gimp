@@ -15,24 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdlib.h>
+
 #include "appenv.h"
-#include "gimpbrushlist.h"
-#include "gimpbrushpipe.h"
-#include "gradient.h"
+#include "airbrush.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimpbrushpipe.h"
+#include "gradient.h"
+#include "gimage.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
-#include "palette.h"
-#include "airbrush.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
-#include "gimage.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -49,6 +48,7 @@
 /*  the airbrush structures  */
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
+
 struct _AirbrushTimeout
 {
   PaintCore    *paint_core;
@@ -56,16 +56,17 @@ struct _AirbrushTimeout
 };
 
 typedef struct _AirbrushOptions AirbrushOptions;
+
 struct _AirbrushOptions
 {
   PaintOptions paint_options;
 
-  double       rate;
-  double       rate_d;
+  gdouble      rate;
+  gdouble      rate_d;
   GtkObject   *rate_w;
 
-  double       pressure;
-  double       pressure_d;
+  gdouble      pressure;
+  gdouble      pressure_d;
   GtkObject   *pressure_w;
 };
 
@@ -75,16 +76,17 @@ static AirbrushOptions *airbrush_options = NULL;
 
 /*  local variables  */
 static gint             timer;  /*  timer for successive paint applications  */
-static int              timer_state = OFF;       /*  state of airbrush tool  */
+static gint             timer_state = OFF;       /*  state of airbrush tool  */
 static AirbrushTimeout  airbrush_timeout;
 
-static double           non_gui_pressure;
+static gdouble          non_gui_pressure;
 static gboolean         non_gui_incremental;
 
 /*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, PaintPressureOptions *,
-				       double, PaintApplicationMode);
-static gint         airbrush_time_out (gpointer);
+static void   airbrush_motion   (PaintCore *, GimpDrawable *,
+				 PaintPressureOptions *,
+				 gdouble, PaintApplicationMode);
+static gint   airbrush_time_out (gpointer);
 
 
 /*  functions  */
@@ -109,7 +111,6 @@ airbrush_options_new (void)
 
   GtkWidget *vbox;
   GtkWidget *table;
-  GtkWidget *label;
   GtkWidget *scale;
 
   /*  the new airbrush tool options structure  */
@@ -129,40 +130,30 @@ airbrush_options_new (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Rate:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->rate_w =
     gtk_adjustment_new (options->rate_d, 0.0, 150.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
 		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->rate);
-  gtk_widget_show (scale);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Rate:"), 1.0, 1.0,
+			     scale, FALSE);
 
   /*  the pressure scale  */
-  label = gtk_label_new (_("Pressure:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->pressure_w =
     gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
 		      (GtkSignalFunc) tool_options_double_adjustment_update,
 		      &options->pressure);
-  gtk_widget_show (scale);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Pressure:"), 1.0, 1.0,
+			     scale, FALSE);
 
   gtk_widget_show (table);
 
@@ -202,7 +193,7 @@ airbrush_paint_func (PaintCore    *paint_core,
   if (!drawable) 
     return NULL;
 
-  brush = get_active_brush ();
+  brush = gimp_context_get_brush (NULL);
   switch (state)
     {
     case INIT_PAINT :
@@ -320,7 +311,8 @@ airbrush_motion (PaintCore	      *paint_core,
 	{
 	  gdouble r, g, b, a;
 
-	  grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	  gradient_get_color_at (gimp_context_get_gradient (NULL),
+				 paint_core->curpressure, &r, &g, &b, &a);
 	  col[0] = r * 255.0;
 	  col[1] = g * 255.0;
 	  col[2] = b * 255.0;

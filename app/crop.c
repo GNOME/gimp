@@ -19,7 +19,6 @@
 
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
-#include "actionarea.h"
 #include "crop.h"
 #include "cursorutil.h"
 #include "draw_core.h"
@@ -28,6 +27,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimphelp.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "tool_options_ui.h"
 #include "undo.h"
@@ -77,12 +77,12 @@ struct _CropOptions
 {
   ToolOptions  tool_options;
 
-  int          layer_only;
-  int          layer_only_d;
+  gboolean     layer_only;
+  gboolean     layer_only_d;
   GtkWidget   *layer_only_w;
 
-  int          allow_enlarge;
-  int          allow_enlarge_d;
+  gboolean     allow_enlarge;
+  gboolean     allow_enlarge_d;
   GtkWidget   *allow_enlarge_w;
 
   CropType     type;
@@ -126,7 +126,8 @@ static void crop_resize_callback    (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
 /* Crop area-select functions */ 
-typedef enum {
+typedef enum
+{
   AUTO_CROP_NOTHING = 0,
   AUTO_CROP_ALPHA   = 1,
   AUTO_CROP_COLOR   = 2
@@ -333,44 +334,49 @@ crop_adjust_guides (GImage *gimage,
                     int x2, int y2)
 
 {
-GList * glist;
-Guide * guide;
-gint remove_guide;
-/* initialize the traverser */
-glist = gimage->guides;
-while (glist  != NULL)  {
-	guide = (Guide *) glist->data;
-	remove_guide = FALSE;
+  GList * glist;
+  Guide * guide;
+  gint remove_guide;
 
-	switch (guide->orientation) {
-		case ORIENTATION_HORIZONTAL:
-			if ((guide->position < y1) ||(guide->position > y2))
-				remove_guide = TRUE;
-		break;
-		case ORIENTATION_VERTICAL:
-			if ((guide->position < x1) ||(guide->position > x2))
-				remove_guide = TRUE;
-		break;
-		}
+  for (glist = gimage->guides; glist; glist = g_list_next (glist))
+    {
+      guide = (Guide *) glist->data;
+      remove_guide = FALSE;
+
+      switch (guide->orientation)
+	{
+	case ORIENTATION_HORIZONTAL:
+	  if ((guide->position < y1) ||(guide->position > y2))
+	    remove_guide = TRUE;
+	  break;
+
+	case ORIENTATION_VERTICAL:
+	  if ((guide->position < x1) ||(guide->position > x2))
+	    remove_guide = TRUE;
+	  break;
+	}
 	
-		/* edit the guide */
-	gdisplays_expose_guide (gimage, guide);
-	gdisplays_flush();
+      /* edit the guide */
+      gdisplays_expose_guide (gimage, guide);
+      gdisplays_flush();
 
-	if (remove_guide) {
+      if (remove_guide)
+	{
 	  guide->position = -1;
           guide = NULL;
 	}
-	else {
-		if (guide->orientation == ORIENTATION_HORIZONTAL) {
-			guide->position -= y1 ;
-			}
-		else {
-			guide->position -= x1;
- 			}
-		}
-	glist = glist->next;	
+      else
+	{
+	  if (guide->orientation == ORIENTATION_HORIZONTAL)
+	    {
+	      guide->position -= y1 ;
+	    }
+	  else
+	    {
+	      guide->position -= x1;
+	    }
 	}
+    }
 }
 		 
 
@@ -1019,18 +1025,23 @@ crop_info_create (Tool *tool)
   GtkWidget *bbox;
   GtkWidget *button;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Crop"), crop_crop_callback, NULL, NULL },
-    { N_("Resize"), crop_resize_callback, NULL, NULL },
-    { N_("Close"), crop_close_callback, NULL, NULL },
-  };
-
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   /*  create the info dialog  */
   crop_info = info_dialog_new (_("Crop & Resize Information"),
 			       tools_help_func, NULL);
+
+  /*  create the action area  */
+  gimp_dialog_create_action_area (GTK_DIALOG (crop_info->shell),
+
+				  _("Crop"), crop_crop_callback,
+				  NULL, NULL, TRUE, FALSE,
+				  _("Resize"), crop_resize_callback,
+				  NULL, NULL, FALSE, FALSE,
+				  _("Close"), crop_close_callback,
+				  NULL, NULL, FALSE, FALSE,
+
+				  NULL);
 
   /*  add the information fields  */
   spinbutton = info_dialog_add_spinbutton (crop_info, _("Origin X:"), NULL,
@@ -1088,9 +1099,6 @@ crop_info_create (Tool *tool)
 
   gtk_box_pack_start (GTK_BOX (crop_info->vbox), bbox, FALSE, FALSE, 2);
   gtk_widget_show (bbox);
-
-  /* Create the action area  */
-  build_action_area (GTK_DIALOG (crop_info->shell), action_items, 3, 0);
 }
 
 static void

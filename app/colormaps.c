@@ -15,25 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <math.h>
-#include "appenv.h"
+#include <gtk/gtk.h>
+
 #include "app_procs.h"
-#include "gimpbrushlist.h"
 #include "colormaps.h"
-#include "errors.h"
-#include "general.h"
 #include "gimprc.h"
-#include "gradient.h"
-#include "palette.h"
-#include "patterns.h"
-#include "plug_in.h"
-#include "temp_buf.h"
-#include "tile_swap.h"
 
-
-GdkVisual *g_visual = NULL;
-GdkColormap *g_cmap = NULL;
+GdkVisual   *g_visual = NULL;
+GdkColormap *g_cmap   = NULL;
 
 gulong g_black_pixel;
 gulong g_gray_pixel;

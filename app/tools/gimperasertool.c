@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "cursorutil.h"
@@ -26,7 +27,6 @@
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
-#include "palette.h"
 #include "eraser.h"
 #include "selection.h"
 #include "tool_options_ui.h"

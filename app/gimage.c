@@ -7,7 +7,7 @@
 #include "gdisplay.h"
 #include "procedural_db.h"
 
-#include "palette.h"
+#include "paletteP.h"
 #include "undo.h"
 
 #include "layer.h"
@@ -25,11 +25,14 @@
 
 static void gimage_dirty_handler        (GimpImage* gimage);
 static void gimage_destroy_handler      (GimpImage* gimage);
-static void gimage_cmap_change_handler  (GimpImage* gimage, gint ncol, gpointer user_data);
+static void gimage_cmap_change_handler  (GimpImage* gimage,
+					 gint       ncol,
+					 gpointer   user_data);
 static void gimage_rename_handler       (GimpImage* gimage);
 static void gimage_resize_handler       (GimpImage* gimage);
 static void gimage_restructure_handler  (GimpImage* gimage);
-static void gimage_repaint_handler      (GimpImage* gimage, gint, gint, gint, gint);
+static void gimage_repaint_handler      (GimpImage* gimage,
+					 gint, gint, gint, gint);
 
 
 GImage*
@@ -56,7 +59,6 @@ gimage_new (int               width,
 
   gimp_set_add (image_context, gimage);
 
-  palette_import_image_new (gimage);
   return gimage;
 }
 
@@ -148,8 +150,6 @@ gimage_destroy_handler (GimpImage *gimage)
     }
   g_list_free (gimage->guides);
 
-  palette_import_image_destroyed (gimage);
-
   if (gimage_image_count () == 1)  /*  This is the last image  */
     {
       dialog_show_toolbox ();
@@ -163,7 +163,6 @@ gimage_cmap_change_handler (GimpImage *gimage,
 {
   gdisplays_update_full (gimage);
 }
-
 
 static void
 gimage_rename_handler (GimpImage *gimage)
@@ -205,7 +204,6 @@ gimage_repaint_handler (GimpImage *gimage,
 }
 
   
-
 /* These really belong in the layer class */
 
 void
@@ -227,7 +225,6 @@ gimage_set_layer_mask_apply (GImage    *gimage,
 			 drawable_height (GIMP_DRAWABLE (layer)));
 }
 
-
 void
 gimage_set_layer_mask_edit (GImage   *gimage, 
 			    Layer    *layer, 
@@ -240,7 +237,6 @@ gimage_set_layer_mask_edit (GImage   *gimage,
   if (layer->mask)
     layer->edit_mask = edit;
 }
-
 
 void
 gimage_set_layer_mask_show (GImage    *gimage, 
@@ -267,8 +263,3 @@ gimage_foreach (GFunc    func,
 {
   gimp_set_foreach (image_context, func, user_data);
 }
-
-
-
-
-

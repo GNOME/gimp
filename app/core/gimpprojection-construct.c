@@ -23,8 +23,8 @@
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "paint_funcs.h"
-#include "palette.h"
 #include "libgimp/parasite.h"
 #include "parasitelist.h"
 #include "undo.h"
@@ -883,7 +883,7 @@ gimp_image_get_foreground (GimpImage    *gimage,
   guchar pfg[3];
 
   /*  Get the palette color  */
-  palette_get_foreground (&pfg[0], &pfg[1], &pfg[2]);
+  gimp_context_get_foreground (NULL, &pfg[0], &pfg[1], &pfg[2]);
 
   gimp_image_transform_color (gimage, drawable, pfg, fg, RGB);
 }
@@ -896,7 +896,7 @@ gimp_image_get_background (GimpImage    *gimage,
   guchar pbg[3];
 
   /*  Get the palette color  */
-  palette_get_background (&pbg[0], &pbg[1], &pbg[2]);
+  gimp_context_get_background (NULL, &pbg[0], &pbg[1], &pbg[2]);
 
   gimp_image_transform_color (gimage, drawable, pbg, bg, RGB);
 }

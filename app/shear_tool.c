@@ -16,12 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <math.h>
+
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
-#include "palette.h"
 #include "shear_tool.h"
 #include "selection.h"
 #include "tools.h"

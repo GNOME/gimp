@@ -30,8 +30,6 @@ libgimpim_a_SOURCES = \
 gimp_SOURCES = \
 	about_dialog.c		\
 	about_dialog.h		\
-	actionarea.c		\
-	actionarea.h		\
 	airbrush.c		\
 	airbrush.h		\
 	airbrush_blob.c		\
@@ -315,6 +313,7 @@ gimp_SOURCES = \
 	palette_cmds.c		\
 	palette_select.c	\
 	palette_select.h	\
+	paletteP.h		\
 	paint_core.c		\
 	paint_core.h		\
 	paint_funcs.c		\

@@ -18,7 +18,7 @@
 #include "appenv.h"
 #include "about_dialog.h"
 #include "app_procs.h"
-#include "gimpbrushlist.h"
+#include "brush_select.h"
 #include "colormaps.h"
 #include "colormap_dialog.i.h"
 #include "color_area.h"
@@ -48,7 +48,7 @@
 #include "layer_select.h"
 #include "module_db.h"
 #include "palette.h"
-#include "patterns.h"
+#include "pattern_select.h"
 #include "plug_in.h"
 #include "resize.h"
 #include "scale.h"
@@ -1029,14 +1029,14 @@ void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
-  palette_set_default_colors ();
+  gimp_context_set_default_colors (gimp_context_get_user ());
 }
 
 void
 tools_swap_colors_cmd_callback (GtkWidget *widget,
 				gpointer   client_data)
 {
-  palette_swap_colors ();
+  gimp_context_swap_colors (gimp_context_get_user ());
 }
 
 void
@@ -1044,13 +1044,13 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   callback_data,
 			   guint      callback_action)
 {
+  ToolType tool_type;
   GDisplay * gdisp;
   gdisp = gdisplay_active ();
 
-  /*  Activate the appropriate widget.
-   *  Implicitly calls tools_select()
-   */
-  gtk_widget_activate (tool_info[callback_action].tool_widget);
+  tool_type = (ToolType) callback_action;
+
+  gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
   /*  Paranoia  */
   active_tool->drawable = NULL;
@@ -1085,21 +1085,21 @@ void
 dialogs_brushes_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
-  create_brush_dialog ();
+  brush_dialog_create ();
 }
 
 void
 dialogs_patterns_cmd_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
-  create_pattern_dialog ();
+  pattern_dialog_create ();
 }
 
 void
 dialogs_palette_cmd_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
-  palette_create ();
+  palette_dialog_create ();
 }
 
 void
@@ -1129,16 +1129,16 @@ cmap_dlg_sel_cb (ColormapDialog *dlg,
   c = &img->cmap[colormap_dialog_col_index(dlg) * 3];
 
   if(active_color == FOREGROUND)
-    palette_set_foreground (c[0], c[1], c[2]);
+    gimp_context_set_foreground (gimp_context_get_user (), c[0], c[1], c[2]);
   else if(active_color == BACKGROUND)
-    palette_set_background (c[0], c[1], c[2]);
+    gimp_context_set_background (gimp_context_get_user (), c[0], c[1], c[2]);
 }
 
 void
 dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
-  static ColormapDialog * cmap_dlg;
+  static ColormapDialog *cmap_dlg;
 
   if (!cmap_dlg)
     {
@@ -1160,14 +1160,14 @@ void
 dialogs_input_devices_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
-  create_input_dialog ();
+  input_dialog_create ();
 }
 
 void
 dialogs_device_status_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
-  create_device_status ();
+  device_status_create ();
 }
 
 void

@@ -27,8 +27,6 @@
 #include "interface.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
-#include "palette.h"
-#include "patterns.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
@@ -336,7 +334,7 @@ bucket_fill (GimpImage      *gimage,
     gimage_get_background (gimage, drawable, col);
   else if (fill_mode == PATTERN_BUCKET_FILL)
     {
-      pattern = get_active_pattern ();
+      pattern = gimp_context_get_pattern (NULL);
 
       if (!pattern)
 	{

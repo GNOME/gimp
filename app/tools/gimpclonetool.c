@@ -26,7 +26,6 @@
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "paint_options.h"
-#include "patterns.h"
 #include "clone.h"
 #include "selection.h"
 #include "tools.h"
@@ -318,7 +317,7 @@ clone_paint_func (PaintCore    *paint_core,
 	orig_src_y = src_y;
       }
       if (clone_options->type == PATTERN_CLONE)
-	if (!get_active_pattern ())
+	if (! gimp_context_get_pattern (NULL))
 	  g_message (_("No patterns available for this operation."));
       break;
 
@@ -572,7 +571,7 @@ clone_motion (PaintCore            *paint_core,
       break;
 
     case PATTERN_CLONE:
-      pattern = get_active_pattern ();
+      pattern = gimp_context_get_pattern (NULL);
 
       if (!pattern)
 	return;

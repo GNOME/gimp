@@ -859,14 +859,11 @@ draw_gradient (GtkPreview *preview,
 	       gint        width,
 	       gint        height)
 {
-  gradient_t *old_gradient = curr_gradient;
   guchar *p0, *p1, *even, *odd;
   gint x, y;
   gdouble dx, cur_x;
   gdouble r, g, b, a;
   gdouble c0, c1;
-
-  curr_gradient = gradient;
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
@@ -875,7 +872,7 @@ draw_gradient (GtkPreview *preview,
 
   for (x = 0; x < width; x++) 
     {
-      grad_get_color_at (cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, cur_x, &r, &g, &b, &a);
     
       if ((x / GRAD_CHECK_SIZE_SM) & 1) 
 	{
@@ -909,7 +906,6 @@ draw_gradient (GtkPreview *preview,
 
   g_free (odd);
   g_free (even);
-  curr_gradient = old_gradient;
 }
 
 static void

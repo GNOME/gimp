@@ -25,52 +25,58 @@
 #include "gimpdnd.h"
 #include "devices.h"
 #include "interface.h"
+#include "gimpbrushlist.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "palette.h"
+#include "gradient_header.h"
 #include "session.h"
 #include "tools.h"
 #include "dialog_handler.h"
-#include "indicator_area.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
 #define CELL_SIZE 20 /* The size of the preview cells */
+
 #define PREVIEW_EVENT_MASK  GDK_BUTTON_PRESS_MASK | \
 			    GDK_BUTTON_RELEASE_MASK | \
 			    GDK_ENTER_NOTIFY_MASK | \
                             GDK_LEAVE_NOTIFY_MASK
 
+#define DEVICE_CONTEXT_MASK GIMP_CONTEXT_TOOL_MASK | \
+                            GIMP_CONTEXT_FOREGROUND_MASK | \
+			    GIMP_CONTEXT_BRUSH_MASK | \
+			    GIMP_CONTEXT_PATTERN_MASK
+
 typedef struct _DeviceInfo DeviceInfo;
 
-struct _DeviceInfo {
-  guint32 device;		/* device ID */
-  gchar *name;
-  
-  short is_init;		/* has the user used it? */
-  short is_present;		/* is the device currently present */
-  
-  /* gdk_input options - for not present devices */
+struct _DeviceInfo
+{
+  guint32       device;      /*  device ID  */
+  gchar        *name;
 
-  GdkInputMode mode;
-  gint num_axes;
-  GdkAxisUse *axes;
-  gint num_keys;
+  gshort        is_present;  /*  is the device currently present  */
+  
+  /*  gdk_input options - for not present devices  */
+
+  GdkInputMode  mode;
+  gint          num_axes;
+  GdkAxisUse   *axes;
+  gint          num_keys;
   GdkDeviceKey *keys;
 
-  GimpBrushP brush;
-  GPatternP pattern;
-  ToolType tool;
-  guchar foreground[3];
+  GimpContext  *context;
 };
 
 typedef struct _DeviceInfoDialog DeviceInfoDialog;
 
-struct _DeviceInfoDialog {
-  int num_devices;
-  guint32 current;
-  guint32 *ids;
+struct _DeviceInfoDialog
+{
+  gint       num_devices;
+
+  guint32    current;
+  guint32   *ids;
 
   GtkWidget *shell;
   GtkWidget *table;
@@ -83,36 +89,54 @@ struct _DeviceInfoDialog {
   GtkWidget **eventboxes;
 };
 
-/* Local Data */
-
-GList *devices_info = NULL;
-DeviceInfoDialog *deviceD = NULL;
-/* If true, don't update device information dialog */
-int suppress_update = FALSE;
-
-/* Local functions */
+/*  local functions */
 static void input_dialog_destroy_callback  (GtkWidget *, gpointer);
-void input_dialog_able_callback            (GtkWidget *w, guint32 deviceid, 
+static void input_dialog_able_callback     (GtkWidget *w, guint32 deviceid, 
 					    gpointer data);
-static void devices_save_current_info      (void);
+
 static void devices_write_rc_device        (DeviceInfo *device_info, FILE *fp);
 static void devices_write_rc               (void);
+
 static void device_status_destroy_callback (void);
 static void devices_close_callback         (GtkWidget *, gpointer);
-static void device_status_update_current   ();
+
+static void device_status_update           (guint32 deviceid);
+static void device_status_update_current   (void);
 
 static void device_status_drag_color       (GtkWidget *,
-					    guchar *, guchar *, guchar *, gpointer);
+					    guchar *, guchar *, guchar *,
+					    gpointer);
 static void device_status_drop_color       (GtkWidget *,
-				            guchar, guchar, guchar, gpointer);
+				            guchar, guchar, guchar,
+					    gpointer);
 static void device_status_drop_brush       (GtkWidget *,
-					    GdkDragContext *, gint, gint, guint, gpointer);
+					    GdkDragContext *,
+					    gint, gint, guint, gpointer);
 static void device_status_drop_pattern     (GtkWidget *,
-					    GdkDragContext *, gint, gint, guint, gpointer);
+					    GdkDragContext *,
+					    gint, gint, guint, gpointer);
 
+static void device_status_color_changed    (GimpContext *context,
+					    gint         r,
+					    gint         g,
+					    gint         b,
+					    gpointer     data);
+static void device_status_data_changed     (GimpContext *context,
+					    gpointer     dummy,
+					    gpointer     data);
 
-/* Global data */
-int current_device = GDK_CORE_POINTER;
+static void device_status_context_connect  (GimpContext *context,
+					    guint32      deviceid);
+
+/*  global data  */
+gint current_device = GDK_CORE_POINTER;
+
+/*  local data  */
+static GList            *device_info_list = NULL;
+static DeviceInfoDialog *deviceD          = NULL;
+
+/*  if true, don't update device information dialog */
+static gboolean          suppress_update  = FALSE;
 
 /*  dnd stuff  */
 static GtkTargetEntry color_area_target_table[] =
@@ -121,12 +145,14 @@ static GtkTargetEntry color_area_target_table[] =
 };
 static guint n_color_area_targets = (sizeof (color_area_target_table) /
 				     sizeof (color_area_target_table[0]));
+
 static GtkTargetEntry brush_area_target_table[] =
 {
   GIMP_TARGET_BRUSH
 };
 static guint n_brush_area_targets = (sizeof (brush_area_target_table) /
 				     sizeof (brush_area_target_table[0]));
+
 static GtkTargetEntry pattern_area_target_table[] =
 {
   GIMP_TARGET_PATTERN
@@ -134,9 +160,63 @@ static GtkTargetEntry pattern_area_target_table[] =
 static guint n_pattern_area_targets = (sizeof (pattern_area_target_table) /
 				       sizeof (pattern_area_target_table[0]));
 
+/*  utility functions for the device lists  */
+
+static GdkDeviceInfo *
+gdk_device_info_get_by_id (guint32 deviceid)
+{
+  GdkDeviceInfo *info;
+  GList *list;
+
+  for (list = gdk_input_list_devices (); list; list = g_list_next (list))
+    {
+      info = (GdkDeviceInfo *) list->data;
+
+      if (info->deviceid == deviceid)
+	return info;
+    }
+
+  return NULL;
+}
+
+static DeviceInfo *
+device_info_get_by_id (guint32 deviceid)
+{
+  DeviceInfo *info;
+  GList *list;
+
+  for (list = device_info_list; list; list = g_list_next (list))
+    {
+      info = (DeviceInfo *) list->data;
+
+      if (info->device == deviceid)
+	return info;
+    }
+
+  return NULL;
+}
+
+static DeviceInfo *
+device_info_get_by_name (gchar *name)
+{
+  DeviceInfo *info;
+  GList *list;
+
+  for (list = device_info_list; list; list = g_list_next (list))
+    {
+      info = (DeviceInfo *) list->data;
+
+      if (!strcmp (info->name, name))
+	return info;
+    }
+
+  return NULL;
+}
+
+/*  the gtk input dialog  */
 
 void 
-create_input_dialog (void)
+input_dialog_create (void)
 {
   static GtkWidget *inputd = NULL;
   GtkWidget        *hbbox;
@@ -148,7 +228,8 @@ create_input_dialog (void)
       /* register this one only */
       dialog_register (inputd);
 
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
+      gtk_container_set_border_width
+	(GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
       gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (inputd)->action_area),
 			       FALSE);
 
@@ -169,18 +250,23 @@ create_input_dialog (void)
 
       gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
 			  "clicked",
-			  GTK_SIGNAL_FUNC (devices_write_rc), NULL);
+			  GTK_SIGNAL_FUNC (devices_write_rc),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
 			  "clicked",
-			  GTK_SIGNAL_FUNC (devices_close_callback), inputd);
+			  GTK_SIGNAL_FUNC (devices_close_callback),
+			  inputd);
 
       gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
 			  (GtkSignalFunc) input_dialog_destroy_callback, 
 			  &inputd);
+
       gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
-			  GTK_SIGNAL_FUNC (input_dialog_able_callback), NULL);
+			  GTK_SIGNAL_FUNC (input_dialog_able_callback),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (inputd), "disable_device",
-			  GTK_SIGNAL_FUNC (input_dialog_able_callback), NULL);
+			  GTK_SIGNAL_FUNC (input_dialog_able_callback),
+			  NULL);
 
       /*  Connect the "F1" help key  */
       gimp_help_connect_help_accel (inputd,
@@ -198,7 +284,14 @@ create_input_dialog (void)
     }
 }
 
-void
+static void
+input_dialog_destroy_callback (GtkWidget *widget,
+			       gpointer   data)
+{
+  *((GtkWidget **) data) = NULL;
+}
+
+static void
 input_dialog_able_callback (GtkWidget *widget,
 			    guint32    deviceid,
 			    gpointer   data)
@@ -206,91 +299,62 @@ input_dialog_able_callback (GtkWidget *widget,
   device_status_update (deviceid);
 }
 
-static void
-input_dialog_destroy_callback (GtkWidget *widget,
-			       gpointer   call_data)
-{
-  *((GtkWidget **)call_data) = NULL;
-}
 
 void 
 devices_init (void)
 {
-  GList *tmp_list;
+  GdkDeviceInfo *gdk_info;
+  DeviceInfo    *device_info;
+  GList         *list;
 
-  /* Create device info structures for present devices */
-
-  tmp_list = gdk_input_list_devices ();
-
-  while (tmp_list)
+  /*  create device info structures for present devices */
+  for (list = gdk_input_list_devices (); list; list = g_list_next (list))
     {
-      GdkDeviceInfo *gdk_info = (GdkDeviceInfo *)tmp_list->data;
-      DeviceInfo *device_info = g_new (DeviceInfo, 1);
+      gdk_info = (GdkDeviceInfo *) list->data;
 
-      device_info->device = gdk_info->deviceid;
-      device_info->name = g_strdup (gdk_info->name);
+      device_info = g_new (DeviceInfo, 1);
 
-      device_info->is_init = FALSE;
+      device_info->device     = gdk_info->deviceid;
+      device_info->name       = g_strdup (gdk_info->name);
       device_info->is_present = TRUE;
 
-      device_info->mode = gdk_info->mode;
-      device_info->num_axes = gdk_info->num_axes;
-      device_info->axes = NULL;
-      
-      device_info->brush = NULL;
-      device_info->pattern = NULL;
-      device_info->tool = RECT_SELECT;
-      device_info->foreground[0] = 0;
-      device_info->foreground[1] = 0;
-      device_info->foreground[2] = 0;
+      device_info->mode       = gdk_info->mode;
+      device_info->num_axes   = gdk_info->num_axes;
+      device_info->axes       = NULL;
 
-      devices_info = g_list_append (devices_info, device_info);
-	       
-      tmp_list = tmp_list->next;
+      device_info->context    = gimp_context_new (device_info->name, NULL);
+      gimp_context_define_args (device_info->context,
+				DEVICE_CONTEXT_MASK,
+				FALSE);
+      gimp_context_copy_args (gimp_context_get_user (), device_info->context,
+			      DEVICE_CONTEXT_MASK);
+      device_status_context_connect (device_info->context, device_info->device);
+
+      device_info_list = g_list_append (device_info_list, device_info);
     }
 }
 
 void
 devices_restore (void)
-{  
-  char *filename;
-  GList *tmp_list;
+{
   DeviceInfo *device_info;
+  GimpContext *context;
+  gchar *filename;
 
   /* Augment with information from rc file */
   filename = gimp_personal_rc_file ("devicerc");
   parse_gimprc_file (filename);
   g_free (filename);
 
-  tmp_list = devices_info;
-  device_info = NULL;
-  while (tmp_list)
-    {
-      if (((DeviceInfo *)tmp_list->data)->device == current_device)
-	{
-	  device_info = (DeviceInfo *)tmp_list->data;
-	  break;
-	}
-      tmp_list = tmp_list->next;
-    }
-
-  g_return_if_fail (device_info != NULL);
+  if ((device_info = device_info_get_by_id (current_device)) == NULL)
+    return;
 
   suppress_update = TRUE;
 
-  if (device_info->is_init)
-    {
-      gtk_widget_activate (tool_info[(int) device_info->tool].tool_widget);
-      
-      palette_set_foreground (device_info->foreground[0], 
-			      device_info->foreground[1], 
-			      device_info->foreground[2]);
-      
-      if (device_info->brush)
-	select_brush (device_info->brush);
-      if (device_info->pattern)
-	select_pattern (device_info->pattern);
-    }
+  context = gimp_context_get_user ();
+
+  gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
+  gimp_context_set_parent (device_info->context, context);
   
   suppress_update = FALSE;
 }
@@ -303,27 +367,17 @@ devices_rc_update (gchar        *name,
 		   GdkAxisUse   *axes, 
 		   gint          num_keys, 
 		   GdkDeviceKey *keys,
-		   gchar        *brush_name, 
 		   ToolType      tool,
 		   guchar        foreground[], 
-		   gchar        *pattern_name)
+		   guchar        background[],
+		   gchar        *brush_name, 
+		   gchar        *pattern_name,
+		   gchar        *gradient_name)
 {
-  GList *tmp_list;
   DeviceInfo *device_info;
 
-  /* Find device if we have it */
-
-  tmp_list = devices_info;
-  device_info = NULL;
-  while (tmp_list)
-    {
-      if (!strcmp (((DeviceInfo *)tmp_list->data)->name, name))
-	{
-	  device_info = (DeviceInfo *)tmp_list->data;
-	  break;
-	}
-      tmp_list = tmp_list->next;
-    }
+  /*  Find device if we have it  */
+  device_info = device_info_get_by_name (name);
 
   if (!device_info)
     {
@@ -355,31 +409,21 @@ devices_rc_update (gchar        *name,
       else
 	device_info->mode = GDK_MODE_DISABLED;
 
-      device_info->brush = NULL;
-      device_info->pattern = NULL;
-      device_info->tool = RECT_SELECT;
-      device_info->foreground[0] = 0;
-      device_info->foreground[1] = 0;
-      device_info->foreground[2] = 0;
+      device_info->context = gimp_context_new (device_info->name, NULL);
+      gimp_context_define_args (device_info->context,
+				DEVICE_CONTEXT_MASK,
+				FALSE);
+      gimp_context_copy_args (gimp_context_get_user (), device_info->context,
+			      DEVICE_CONTEXT_MASK);
+      device_status_context_connect (device_info->context, device_info->device);
 
-      devices_info = g_list_append (devices_info, device_info);
+      device_info_list = g_list_append (device_info_list, device_info);
     }
   else
     {
-      GdkDeviceInfo *gdk_info = NULL;	/* Quiet gcc */
+      GdkDeviceInfo *gdk_info;
 
-      tmp_list = gdk_input_list_devices();
-      while (tmp_list)
-	{
-	  GdkDeviceInfo *info = (GdkDeviceInfo *)tmp_list->data;
-	  
-	  if (info->deviceid == device_info->device)
-	    {
-	      gdk_info = info;
-	      break;
-	    }
-	  tmp_list = tmp_list->next;
-	}
+      gdk_info = gdk_device_info_get_by_id (device_info->device);
 
       if (gdk_info != NULL)
 	{
@@ -388,10 +432,10 @@ devices_rc_update (gchar        *name,
 	  
 	  if ((values & DEVICE_AXES) && num_axes >= gdk_info->num_axes)
 	    gdk_input_set_axes (gdk_info->deviceid, axes);
-	  
+
 	  if ((values & DEVICE_KEYS) && num_keys >= gdk_info->num_keys)
 	    {
-	      int i;
+	      gint i;
 	      
 	      for (i=0; i<MAX (num_keys, gdk_info->num_keys); i++)
 		gdk_input_set_key (gdk_info->deviceid, i,
@@ -400,75 +444,85 @@ devices_rc_update (gchar        *name,
 	}
       else
 	{
-	  g_warning (_("devices_rc_update called multiple times for not present device\n"));
+	  g_warning (_("devices_rc_update called multiple times "
+		       "for not present device\n"));
 	  return;
 	}
     }
 
-  if (values & (DEVICE_PATTERN | DEVICE_BRUSH | DEVICE_TOOL | DEVICE_FOREGROUND))
-    device_info->is_init = TRUE;
+  if (values & DEVICE_TOOL)
+    {
+      gimp_context_set_tool (device_info->context, tool);
+    }
 
+  if (values & DEVICE_FOREGROUND)
+    {
+      gimp_context_set_foreground (device_info->context,
+				   foreground[0],
+				   foreground[1],
+				   foreground[2]);
+    }
+
+  if (values & DEVICE_BACKGROUND)
+    {
+      gimp_context_set_background (device_info->context,
+				   background[0],
+				   background[1],
+				   background[2]);
+    }
 
   if (values & DEVICE_BRUSH)
     {
-      device_info->brush = gimp_brush_list_get_brush (brush_list, brush_name);
+      gimp_context_set_brush (device_info->context,
+			      gimp_brush_list_get_brush (brush_list,
+							 brush_name));
     }
 
   if (values & DEVICE_PATTERN)
     {
-      device_info->pattern = pattern_list_get_pattern (pattern_list, pattern_name);
+      gimp_context_set_pattern (device_info->context,
+				pattern_list_get_pattern (pattern_list,
+							  pattern_name));
     }
 
-  if (values & DEVICE_TOOL)
-    device_info->tool = tool;
-
-  if (values & DEVICE_FOREGROUND)
+  if (values & DEVICE_GRADIENT)
     {
-      device_info->foreground[0] = foreground[0];
-      device_info->foreground[1] = foreground[1];
-      device_info->foreground[2] = foreground[2];
+      gradient_t *gradient;
+      GSList *list;
+
+      for (list = gradients_list; list; list = g_slist_next (list))
+	{
+	  gradient = (gradient_t *) list->data;
+
+	  if (! strcmp (gradient->name, gradient_name))
+	    {
+	      gimp_context_set_gradient (device_info->context, gradient);
+	      break;
+	    }
+	}
     }
 }
 
 void 
 select_device (guint32 new_device)
 {
-  GList *tmp_list;
   DeviceInfo *device_info;
+  GimpContext *context;
+
+  device_info = device_info_get_by_id (current_device);
+
+  gimp_context_unset_parent (device_info->context);
 
   suppress_update = TRUE;
   
-  /* store old information */
-
-  devices_save_current_info();
-  
-  /* Now see if there is already information about the new device */
-
-  tmp_list = devices_info;
-  device_info = NULL;
-  while (tmp_list)
-    {
-      if (((DeviceInfo *)tmp_list->data)->device == new_device)
-	{
-	  device_info = (DeviceInfo *)tmp_list->data;
-	  break;
-	}
-      tmp_list = tmp_list->next;
-    }
+  device_info = device_info_get_by_id (new_device);
 
   current_device = new_device;
-  
-  if (device_info->is_init)
-    {
-      gtk_widget_activate (tool_info[(int) device_info->tool].tool_widget);
-      palette_set_foreground (device_info->foreground[0], 
-			      device_info->foreground[1], 
-			      device_info->foreground[2]);
-      if (device_info->brush)
-	select_brush (device_info->brush);
-      if (device_info->pattern)
-	select_pattern (device_info->pattern);
-    }
+
+  context = gimp_context_get_user ();
+
+  gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
+  gimp_context_set_parent (device_info->context, context);
 
   suppress_update = FALSE;
 
@@ -495,76 +549,30 @@ devices_check_change (GdkEvent *event)
     default:
       device = current_device;
     }
-  
+
   if (device != current_device)
     {
       select_device (device);
       return TRUE;
     }
   else
-    return FALSE;
-}
-
-static void
-devices_save_current_info (void)
-{
-  GList *tmp_list;
-  DeviceInfo *device_info;
-  
-  tmp_list = devices_info;
-  device_info = NULL;
-  while (tmp_list)
     {
-      if (((DeviceInfo *)tmp_list->data)->device == current_device)
-	{
-	  device_info = (DeviceInfo *)tmp_list->data;
-	  break;
-	}
-      tmp_list = tmp_list->next;
+      return FALSE;
     }
-
-  device_info->is_init = TRUE;
-  device_info->device = current_device;
-  device_info->brush = get_active_brush ();
-  device_info->pattern = get_active_pattern ();
-  if (active_tool)
-    device_info->tool = active_tool->type;
-  else
-    device_info->tool = RECT_SELECT;
-  palette_get_foreground (&device_info->foreground[0], 
-			  &device_info->foreground[1], 
-			  &device_info->foreground[2]);
 }
 
 static void
 devices_write_rc_device (DeviceInfo *device_info,
 			 FILE       *fp)
 {
-  GdkDeviceInfo *gdk_info;
-  GList *tmp_list;
-  gchar *mode = NULL;		/* Quiet gcc */
-  int i;
+  GdkDeviceInfo *gdk_info = NULL;
+  gchar *mode = NULL;
+  gint i;
 
-  gdk_info = NULL;
   if (device_info->is_present)
-    {
-      /* gdk_input_list_devices returns an internal list, so we shouldn't
-	 free it afterwards */
-      tmp_list = gdk_input_list_devices ();
-      while (tmp_list)
-	{
-	  GdkDeviceInfo *info = (GdkDeviceInfo *)tmp_list->data;
-	  
-	  if (info->deviceid == device_info->device)
-	    {
-	      gdk_info = info;
-	      break;
-	    }
-	  tmp_list = tmp_list->next;
-	}
-    }
+    gdk_info = gdk_device_info_get_by_id (device_info->device);
   
-  fprintf (fp, "(device \"%s\"",device_info->name);
+  fprintf (fp, "(device \"%s\"", device_info->name);
 
   switch (gdk_info ? gdk_info->mode : device_info->mode)
     {
@@ -584,10 +592,10 @@ devices_write_rc_device (DeviceInfo *device_info,
   fprintf (fp, "\n        (axes %d",
 	   gdk_info ? gdk_info->num_axes : device_info->num_axes);
 
-  for (i=0; i<(gdk_info ? gdk_info->num_axes : device_info->num_axes); i++)
+  for (i=0; i< (gdk_info ? gdk_info->num_axes : device_info->num_axes); i++)
     {
       gchar *axis_type = NULL;	/* Quiet gcc */
-      
+
       switch (gdk_info ? gdk_info->axes[i] : device_info->axes[i])
 	{
 	case GDK_AXIS_IGNORE:
@@ -631,8 +639,8 @@ devices_write_rc_device (DeviceInfo *device_info,
       if (keyval)
 	{
 	  /* FIXME: integrate this back with menus_install_accelerator */
-	  char accel[64];
-	  char t2[2];
+	  gchar accel[64];
+	  gchar t2[2];
 
 	  accel[0] = '\0';
 	  if (modifiers & GDK_CONTROL_MASK)
@@ -652,32 +660,43 @@ devices_write_rc_device (DeviceInfo *device_info,
     }
   fprintf (fp,")");
 
-  if (device_info->is_init)
+  /* Fixme: hard coded last tool....  see gimprc */
+  if (gimp_context_get_tool (device_info->context) >= FIRST_TOOLBOX_TOOL &&
+      gimp_context_get_tool (device_info->context) <= LAST_TOOLBOX_TOOL)
     {
-      if (device_info->brush)
-        fprintf (fp, "\n        (brush \"%s\")",device_info->brush->name);
-      if (device_info->pattern)
-        fprintf (fp, "\n        (pattern \"%s\")",device_info->pattern->name);
-      /* Fixme: hard coded last tool....  see gimprc */
-      if (device_info->tool && device_info->tool <= LAST_TOOLBOX_TOOL)
-        fprintf (fp, "\n        (tool \"%s\")",
-		 tool_info[device_info->tool].tool_name);
-      fprintf (fp, "\n        (foreground %d %d %d)",
-	       device_info->foreground[0],
-	       device_info->foreground[1],
-	       device_info->foreground[2]);
+      fprintf (fp, "\n        (tool \"%s\")",
+	       tool_info[gimp_context_get_tool (device_info->context)].tool_name);
     }
+
+  {
+    guchar r, g, b;
+    gimp_context_get_foreground (device_info->context, &r, &g, &b);
+    fprintf (fp, "\n        (foreground %d %d %d)", r, g, b);
+  }
+
+  if (gimp_context_get_brush (device_info->context))
+    {
+      fprintf (fp, "\n        (brush \"%s\")",
+	       gimp_context_get_brush (device_info->context)->name);
+    }
+
+  if (gimp_context_get_pattern (device_info->context))
+    {
+      fprintf (fp, "\n        (pattern \"%s\")",
+	       gimp_context_get_pattern (device_info->context)->name);
+    }
+
   fprintf(fp,")\n");
-  
 }
 
 static void
 devices_write_rc (void)
 {
-  char *filename;
+  DeviceInfo *device_info;
+  gchar *filename;
   FILE *fp;
 
-  devices_save_current_info ();
+  device_info = device_info_get_by_id (current_device);
 
   filename = gimp_personal_rc_file ("devicerc");
   fp = fopen (filename, "wb");
@@ -686,18 +705,18 @@ devices_write_rc (void)
   if (!fp)
     return;
 
-  g_list_foreach (devices_info, (GFunc)devices_write_rc_device, fp);
+  g_list_foreach (device_info_list, (GFunc) devices_write_rc_device, fp);
 
   fclose (fp);
 }
 
 void 
-create_device_status (void)
+device_status_create (void)
 {
-  GtkWidget *label;
-  GList *tmp_list;
   DeviceInfo *device_info;
-  int i;
+  GtkWidget *label;
+  GList *list;
+  gint i;
   
   if (deviceD == NULL)
     {
@@ -717,20 +736,20 @@ create_device_status (void)
 
 			 NULL);
 
-      /* register this one only */
+      /*  register this one only  */
       dialog_register (deviceD->shell);
       session_set_window_geometry (deviceD->shell, &device_status_session_info,
 				   FALSE);
 
       deviceD->num_devices = 0;
-      tmp_list = devices_info;
-      while (tmp_list)
+
+      for (list = device_info_list; list; list = g_list_next (list))
 	{
-	  if (((DeviceInfo *)tmp_list->data)->is_present)
+	  if (((DeviceInfo *) list->data)->is_present)
 	    deviceD->num_devices++;
-	  tmp_list = tmp_list->next;
 	}
-      /* devices table */
+
+      /*  devices table  */
       deviceD->table = gtk_table_new (deviceD->num_devices, 5, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (deviceD->table), 3);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (deviceD->shell)->vbox),
@@ -738,32 +757,29 @@ create_device_status (void)
       gtk_widget_realize (deviceD->table);
       gtk_widget_show (deviceD->table);
 
-      deviceD->ids = g_new (guint32, deviceD->num_devices);
-      deviceD->frames = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->tools = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->colors = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->brushes = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->patterns = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->ids        = g_new (guint32, deviceD->num_devices);
+      deviceD->frames     = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->tools      = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->colors     = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->brushes    = g_new (GtkWidget *, deviceD->num_devices);
+      deviceD->patterns   = g_new (GtkWidget *, deviceD->num_devices);
       deviceD->eventboxes = g_new (GtkWidget *, deviceD->num_devices);
 
-      tmp_list = devices_info;
-      i=0;
-      while (tmp_list)
+      for (list = device_info_list, i = 0; list; list = g_list_next (list), i++)
 	{
-	  if (!((DeviceInfo *)tmp_list->data)->is_present)
-	    {
-	      tmp_list = tmp_list->next;
-	      i++;
-	      continue;
-	    }
-	  
-	  device_info = (DeviceInfo *)tmp_list->data;
+	  if (!((DeviceInfo *) list->data)->is_present)
+	    continue;
+
+	  device_info = (DeviceInfo *) list->data;
 
 	  deviceD->ids[i] = device_info->device;
 
+	  /*  the device name  */
+
 	  deviceD->frames[i] = gtk_frame_new (NULL);
-	  
-	  gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]), GTK_SHADOW_OUT);
+
+	  gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]),
+				     GTK_SHADOW_OUT);
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->frames[i],
 			    0, 1, i, i+1,
 			    GTK_FILL, GTK_FILL, 2, 0);
@@ -773,27 +789,33 @@ create_device_status (void)
 	  gtk_container_add (GTK_CONTAINER(deviceD->frames[i]), label);
 	  gtk_widget_show(label);
 
+	  /*  the tool  */
+
 	  deviceD->eventboxes[i] = gtk_event_box_new();
 
-	  deviceD->tools[i] = gtk_pixmap_new (create_tool_pixmap(deviceD->table,
-								 RECT_SELECT),
-					      NULL);
+	  deviceD->tools[i] =
+	    gtk_pixmap_new (create_tool_pixmap (deviceD->table, RECT_SELECT),
+			    NULL);
 
-	  gtk_container_add (GTK_CONTAINER (deviceD->eventboxes[i]),deviceD->tools[i]);
+	  gtk_container_add (GTK_CONTAINER (deviceD->eventboxes[i]),
+			     deviceD->tools[i]);
 
-	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->eventboxes[i],
+	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->eventboxes[i],
 			    1, 2, i, i+1,
 			    0, 0, 2, 2);
 
+	  /*  the foreground color  */
+
 	  deviceD->colors[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
 	  gtk_widget_set_events (deviceD->colors[i], PREVIEW_EVENT_MASK);
-	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]), CELL_SIZE, CELL_SIZE);
-	  /*  dnd stuff  */
+	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]),
+			    CELL_SIZE, CELL_SIZE);
 	  gtk_drag_source_set (deviceD->colors[i],
 			       GDK_BUTTON1_MASK,
 			       color_area_target_table, n_color_area_targets,
 			       GDK_ACTION_COPY);
-	  gimp_dnd_color_source_set (deviceD->colors[i], device_status_drag_color, 
+	  gimp_dnd_color_source_set (deviceD->colors[i],
+				     device_status_drag_color, 
 				     GUINT_TO_POINTER (device_info->device));
  	  gtk_drag_dest_set (deviceD->colors[i],
  			     GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -806,6 +828,8 @@ create_device_status (void)
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->colors[i],
 			    2, 3, i, i+1,
 			    0, 0, 2, 2);
+
+	  /*  the brush  */
 
 	  deviceD->brushes[i] = gimp_context_preview_new (GCP_BRUSH, 
 							  CELL_SIZE, CELL_SIZE,
@@ -823,6 +847,8 @@ create_device_status (void)
 			    3, 4, i, i+1,
 			    0, 0, 2, 2);
 
+	  /*  the pattern  */
+
 	  deviceD->patterns[i] = gimp_context_preview_new (GCP_PATTERN,
 							   CELL_SIZE, CELL_SIZE, 
 							   FALSE, TRUE, TRUE);
@@ -839,13 +865,7 @@ create_device_status (void)
 			    4, 5, i, i+1,
 			    0, 0, 2, 2);
 
-
-	  if (device_info->is_present)
-	    device_status_update (device_info->device);
-
-	  
-	  tmp_list = tmp_list->next;
-	  i++;
+	  device_status_update (device_info->device);
 	}
 
       deviceD->current = 0xffffffff; /* random, but doesn't matter */
@@ -854,30 +874,30 @@ create_device_status (void)
       gtk_widget_show (deviceD->shell);
 
       gtk_signal_connect (GTK_OBJECT (deviceD->shell), "destroy",
-			  GTK_SIGNAL_FUNC(device_status_destroy_callback),
+			  GTK_SIGNAL_FUNC (device_status_destroy_callback),
 			  NULL);
     }
   else
     {
-      if (!GTK_WIDGET_MAPPED(deviceD->shell))
-	gtk_widget_show(deviceD->shell);
+      if (!GTK_WIDGET_MAPPED (deviceD->shell))
+	gtk_widget_show (deviceD->shell);
       else
-	gdk_window_raise(deviceD->shell->window);
+	gdk_window_raise (deviceD->shell->window);
     }
 }
 
 static void
 device_status_destroy_callback (void)
 {
-  g_free(deviceD->ids);
-  g_free(deviceD->frames);
-  g_free(deviceD->tools);
-  g_free(deviceD->eventboxes);
-  g_free(deviceD->colors);
-  g_free(deviceD->brushes);
-  g_free(deviceD->patterns);
+  g_free (deviceD->ids);
+  g_free (deviceD->frames);
+  g_free (deviceD->tools);
+  g_free (deviceD->eventboxes);
+  g_free (deviceD->colors);
+  g_free (deviceD->brushes);
+  g_free (deviceD->patterns);
 
-  g_free(deviceD);
+  g_free (deviceD);
   deviceD = NULL;
 }
 
@@ -885,15 +905,15 @@ static void
 devices_close_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gtk_widget_hide (GTK_WIDGET(data));
+  gtk_widget_hide (GTK_WIDGET (data));
 }
 
 void
 device_status_free (void)
 {                                     
   /* Save device status on exit */
-  if(save_device_status)
-    devices_write_rc();
+  if (save_device_status)
+    devices_write_rc ();
 
   if (deviceD)
     {
@@ -903,13 +923,13 @@ device_status_free (void)
 }
 
 static void
-device_status_update_current ()
+device_status_update_current (void)
 {
-  int i;
+  gint i;
 
   if (deviceD)
     {
-      for (i=0; i<deviceD->num_devices; i++)
+      for (i = 0; i < deviceD->num_devices; i++)
 	{
 	  if (deviceD->ids[i] == deviceD->current)
 	    gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]), 
@@ -918,136 +938,106 @@ device_status_update_current ()
 	    gtk_frame_set_shadow_type (GTK_FRAME(deviceD->frames[i]), 
 				       GTK_SHADOW_IN);
 	}
+
       deviceD->current = current_device;
     }
 }
 
-
 void 
 device_status_update (guint32 deviceid)
 {
-  int i, j;
-  guchar buffer[CELL_SIZE*3];
-  gchar ttbuf[20]; /* [xxx,xxx,xxx] + null */
-  GList *tmp_list;
-  DeviceInfo *device_info;
   GdkDeviceInfo *gdk_info;
+  DeviceInfo    *device_info;
+  guchar buffer[CELL_SIZE*3];
+  gchar  ttbuf[20]; /* [xxx,xxx,xxx] + null */
+  gint   i, j;
 
-  if (deviceD && !suppress_update)
+  if (!deviceD || suppress_update)
+    return;
+
+  if ((device_info = device_info_get_by_id (deviceid)) == NULL)
+    return;
+
+  if ((gdk_info = gdk_device_info_get_by_id (deviceid)) == NULL)
+    return;
+
+  for (i = 0; i < deviceD->num_devices; i++)
     {
-      if (deviceid == current_device)
-	{
-	  devices_save_current_info();
-	}
-      
-      tmp_list = devices_info;
-      while (tmp_list)
-	{
-	  device_info = (DeviceInfo *)tmp_list->data;
-	  
-	  if (device_info->device == deviceid)
-	    break;
-
-	  tmp_list = tmp_list->next;
-	}
-      
-      g_return_if_fail (tmp_list != NULL);
-
-      tmp_list = gdk_input_list_devices();
-      while (tmp_list)
-	{
-	  gdk_info = (GdkDeviceInfo *)tmp_list->data;
-	  
-	  if (gdk_info->deviceid == deviceid)
-	    break;
-
-	  tmp_list = tmp_list->next;
-	}
-      
-      g_return_if_fail (tmp_list != NULL);
-      
-      for (i=0; i<deviceD->num_devices; i++)
-	{
-	  if (deviceD->ids[i] == deviceid)
-	    break;
-	}
-      
-      g_return_if_fail (i<deviceD->num_devices);
-      
-      if (gdk_info->mode == GDK_MODE_DISABLED)
-	{
-	  gtk_widget_hide (deviceD->frames[i]);
-	  gtk_widget_hide (deviceD->tools[i]);
-	  gtk_widget_hide (deviceD->eventboxes[i]);
-	  gtk_widget_hide (deviceD->colors[i]);
-	  gtk_widget_hide (deviceD->brushes[i]);
-	  gtk_widget_hide (deviceD->patterns[i]);
-	}
-      else
-	{
-	  gtk_widget_show (deviceD->frames[i]);
-
-	  gtk_pixmap_set (GTK_PIXMAP (deviceD->tools[i]),
-			  create_tool_pixmap (deviceD->table, 
-					      device_info->tool),
-			  NULL);
-	  
-	  gtk_widget_draw (deviceD->tools[i], NULL);
-	  gtk_widget_show (deviceD->tools[i]);
-	  gtk_widget_show (deviceD->eventboxes[i]);
-	  
-	  gtk_tooltips_set_tip(tool_tips,deviceD->eventboxes[i],
-			       tool_info[(int) device_info->tool].tool_desc,
-			       NULL);
-
-	  if(!device_info->is_init)
-	    return; /* None of the entries have been set */
-
-	  for (j=0;j<CELL_SIZE*3;j+=3)
-	    {
-	      buffer[j] = device_info->foreground[0];
-	      buffer[j+1] = device_info->foreground[1];
-	      buffer[j+2] = device_info->foreground[2];
-	    }
-	  
-	  for (j=0;j<CELL_SIZE;j++)
-	    gtk_preview_draw_row (GTK_PREVIEW(deviceD->colors[i]), buffer, 
-				  0, j, CELL_SIZE);
-	  gtk_widget_draw (deviceD->colors[i], NULL);
-	  gtk_widget_show (deviceD->colors[i]);
-
-	  /* Set the tip to be the RGB value */
-	  sprintf(ttbuf,"[%3d,%3d,%3d]",
-		  device_info->foreground[0],
-		  device_info->foreground[1],
-		  device_info->foreground[2]);
-		  
-	  gtk_tooltips_set_tip(tool_tips, deviceD->colors[i], ttbuf, NULL);
-
-	  if (device_info->brush)
-	    {
-	      gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (deviceD->brushes[i]), 
-					   device_info->brush);
-	      gtk_widget_show (deviceD->brushes[i]);
-	    }
-	  if (device_info->pattern)
-	    {
-	      gimp_context_preview_update (GIMP_CONTEXT_PREVIEW (deviceD->patterns[i]), 
-					   device_info->pattern);
-	      gtk_widget_show (deviceD->patterns[i]);
-	    }
-	}
+      if (deviceD->ids[i] == deviceid)
+	break;
     }
 
-  if (show_indicators) 
+  g_return_if_fail (i < deviceD->num_devices);
+
+  if (gdk_info->mode == GDK_MODE_DISABLED)
     {
-      brush_area_update();
-      pattern_area_update();
+      gtk_widget_hide (deviceD->frames[i]);
+      gtk_widget_hide (deviceD->tools[i]);
+      gtk_widget_hide (deviceD->eventboxes[i]);
+      gtk_widget_hide (deviceD->colors[i]);
+      gtk_widget_hide (deviceD->brushes[i]);
+      gtk_widget_hide (deviceD->patterns[i]);
+    }
+  else
+    {
+      gtk_widget_show (deviceD->frames[i]);
+
+      gtk_pixmap_set
+	(GTK_PIXMAP (deviceD->tools[i]),
+	 create_tool_pixmap (deviceD->table, 
+			     gimp_context_get_tool (device_info->context)),
+	 NULL);
+
+      gtk_widget_draw (deviceD->tools[i], NULL);
+      gtk_widget_show (deviceD->tools[i]);
+      gtk_widget_show (deviceD->eventboxes[i]);
+
+      gtk_tooltips_set_tip (tool_tips,deviceD->eventboxes[i],
+			    tool_info[(int) gimp_context_get_tool (device_info->context)].tool_desc,
+			    NULL);
+
+      for (j = 0; j < CELL_SIZE * 3; j += 3)
+	{
+	  gimp_context_get_foreground (device_info->context,
+				       &buffer[j],
+				       &buffer[j+1],
+				       &buffer[j+2]);
+	}
+
+      for (j = 0; j < CELL_SIZE; j++)
+	gtk_preview_draw_row (GTK_PREVIEW(deviceD->colors[i]), buffer, 
+			      0, j, CELL_SIZE);
+      gtk_widget_draw (deviceD->colors[i], NULL);
+      gtk_widget_show (deviceD->colors[i]);
+
+      /*  Set the tip to be the RGB value  */
+      sprintf (ttbuf, "[%3d,%3d,%3d]",
+	       buffer[j],
+	       buffer[j+1],
+	       buffer[j+2]);
+
+      gtk_tooltips_set_tip (tool_tips, deviceD->colors[i], ttbuf, NULL);
+
+      if (gimp_context_get_brush (device_info->context))
+	{
+	  gimp_context_preview_update
+	    (GIMP_CONTEXT_PREVIEW (deviceD->brushes[i]), 
+	     gimp_context_get_brush (device_info->context));
+	  gtk_widget_show (deviceD->brushes[i]);
+	}
+
+      if (gimp_context_get_pattern (device_info->context))
+	{
+	  gimp_context_preview_update
+	    (GIMP_CONTEXT_PREVIEW (deviceD->patterns[i]), 
+	     gimp_context_get_pattern (device_info->context));
+	  gtk_widget_show (deviceD->patterns[i]);
+	}
     }
 }
 
-
 /*  dnd stuff  */
+
 static void
 device_status_drag_color (GtkWidget *widget,
 			  guchar    *r,
@@ -1055,28 +1045,13 @@ device_status_drag_color (GtkWidget *widget,
 			  guchar    *b,
 			  gpointer   data)
 {
-  guint32 deviceid;
-  GList *tmp_list;
-  DeviceInfo *device_info = NULL;
+  DeviceInfo *device_info;
 
-  deviceid = GPOINTER_TO_UINT (data);
-
-  tmp_list = devices_info;
-  while (tmp_list)
-    {
-      device_info = (DeviceInfo *)tmp_list->data;
-      
-      if (device_info->device == deviceid)
-	break;
-      
-      tmp_list = tmp_list->next;
-    }
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
 
   if (device_info)
     {
-      *r = device_info->foreground[0];
-      *g = device_info->foreground[1];
-      *b = device_info->foreground[2];
+      gimp_context_get_foreground (device_info->context, r, g, b);
     }
   else
     {
@@ -1091,35 +1066,13 @@ device_status_drop_color (GtkWidget *widget,
 			  guchar     b,
 			  gpointer   data)
 {
-  guint32 deviceid;
-  GList *tmp_list;
-  DeviceInfo *device_info = NULL;
+  DeviceInfo *device_info;
 
-  deviceid = GPOINTER_TO_UINT (data);
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
 
-  tmp_list = devices_info;
-  while (tmp_list)
-    {
-      device_info = (DeviceInfo *)tmp_list->data;
-      
-      if (device_info->device == deviceid)
-	break;
-      
-      tmp_list = tmp_list->next;
-    }
   if (device_info && device_info->is_present)
     {
-      if (device_info->device == current_device)
-	{
-	  palette_set_foreground (r, g, b);
-	}
-      else
-	{
-	  device_info->foreground[0] = r;
-	  device_info->foreground[1] = g;
-	  device_info->foreground[2] = b;
-	  device_status_update (device_info->device);
-	}
+      gimp_context_set_foreground (device_info->context, r, g, b);
     }
 }
 
@@ -1131,36 +1084,23 @@ device_status_drop_brush (GtkWidget      *widget,
 			  guint           time,
 			  gpointer        data)
 {
+  DeviceInfo *device_info;
   GtkWidget *src;
   GimpBrush *brush = NULL;
-  guint32 deviceid;
-  GList *tmp_list;
-  DeviceInfo *device_info = NULL;
 
   src = gtk_drag_get_source_widget (context);
+  if (!src)
+    return;
+
   brush = (GimpBrush *) gtk_object_get_data (GTK_OBJECT (src), "gimp_brush");
   if (!brush)
     return;
 
-  deviceid = GPOINTER_TO_UINT (data);
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
 
-  tmp_list = devices_info;
-  while (tmp_list)
-    {
-      device_info = (DeviceInfo *)tmp_list->data;
-      
-      if (device_info->device == deviceid)
-	break;
-      
-      tmp_list = tmp_list->next;
-    }
   if (device_info && device_info->is_present)
     {
-      device_info->brush = brush;
-      if (device_info->device == current_device)
-	select_brush (device_info->brush);
-      else
-	device_status_update (device_info->device);
+      gimp_context_set_brush (device_info->context, brush);
     }
 }
 
@@ -1172,35 +1112,68 @@ device_status_drop_pattern (GtkWidget      *widget,
 			    guint           time,
 			    gpointer        data)
 {
+  DeviceInfo *device_info;
   GtkWidget *src;
   GPattern  *pattern = NULL;
-  guint32 deviceid;
-  GList *tmp_list;
-  DeviceInfo *device_info = NULL;
 
   src = gtk_drag_get_source_widget (context);
+  if (!src)
+    return;
+
   pattern = (GPattern *) gtk_object_get_data (GTK_OBJECT (src), "gimp_pattern");
   if (!pattern)
     return;
   
-  deviceid = GPOINTER_TO_UINT (data);
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
 
-  tmp_list = devices_info;
-  while (tmp_list)
-    {
-      device_info = (DeviceInfo *)tmp_list->data;
-      
-      if (device_info->device == deviceid)
-	break;
-      
-      tmp_list = tmp_list->next;
-    }
   if (device_info && device_info->is_present)
     {
-      device_info->pattern = pattern;
-      if (device_info->device == current_device)
-	select_pattern (device_info->pattern);
-      else
-	device_status_update (device_info->device);
+      gimp_context_set_pattern (device_info->context, pattern);
     }
+}
+
+/*  context callbacks  */
+
+static void
+device_status_color_changed (GimpContext *context,
+			     gint         r,
+			     gint         g,
+			     gint         b,
+			     gpointer     data)
+{
+  DeviceInfo *device_info;
+
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
+
+  device_status_update (device_info->device);
+}
+
+static void
+device_status_data_changed (GimpContext *context,
+			    gpointer     dummy,
+			    gpointer     data)
+{
+  DeviceInfo *device_info;
+
+  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
+
+  device_status_update (device_info->device);
+}
+
+static void
+device_status_context_connect  (GimpContext *context,
+				guint32      deviceid)
+{
+  gtk_signal_connect (GTK_OBJECT (context), "foreground_changed",
+		      GTK_SIGNAL_FUNC (device_status_color_changed),
+		      (gpointer) deviceid);
+  gtk_signal_connect (GTK_OBJECT (context), "tool_changed",
+		      GTK_SIGNAL_FUNC (device_status_data_changed),
+		      (gpointer) deviceid);
+  gtk_signal_connect (GTK_OBJECT (context), "brush_changed",
+		      GTK_SIGNAL_FUNC (device_status_data_changed),
+		      (gpointer) deviceid);
+  gtk_signal_connect (GTK_OBJECT (context), "pattern_changed",
+		      GTK_SIGNAL_FUNC (device_status_data_changed),
+		      (gpointer) deviceid);
 }

@@ -19,11 +19,13 @@
 #define  __PATTERN_SELECT_H__
 
 #include <gtk/gtk.h>
+
 #include "patterns.h"
 
-typedef struct _PatternSelect _PatternSelect, *PatternSelectP;
+typedef struct _PatternSelect PatternSelect;
 
-struct _PatternSelect {
+struct _PatternSelect
+{
   GtkWidget     *shell;
 
   /*  The preview and it's vscale data  */
@@ -40,27 +42,39 @@ struct _PatternSelect {
   GtkWidget *pattern_preview;
   guint      popup_timeout_tag;
 
-  /*  Call back function name  */
-  gchar * callback_name;
+  /*  Callback function name  */
+  gchar       *callback_name;
 
-  /*  Current pattern  */
-  GPatternP pattern;
+  /*  Context to store the current pattern  */
+  GimpContext *context;
 
   /*  Some variables to keep the GUI consistent  */
-  int  cell_width, cell_height;
-  int  scroll_offset;
-  gint old_row;
-  gint old_col;
-  gint NUM_PATTERN_COLUMNS;
-  gint NUM_PATTERN_ROWS;
+  gint  cell_width;
+  gint  cell_height;
+  gint  scroll_offset;
+  gint  old_row;
+  gint  old_col;
+  gint  NUM_PATTERN_COLUMNS;
+  gint  NUM_PATTERN_ROWS;
 };
 
-PatternSelectP  pattern_select_new     (gchar *,gchar *);
-void            pattern_select_select  (PatternSelectP, int);
-void            pattern_select_free    (PatternSelectP);
-void            patterns_check_dialogs(void);
+/*  list of active dialogs  */
+extern GSList *pattern_active_dialogs;
 
-extern GSList *pattern_active_dialogs; /* List of active dialogs */
-extern PatternSelectP pattern_select_dialog;
+/*  the main pattern dialog  */
+extern PatternSelect *pattern_select_dialog;
+
+PatternSelect * pattern_select_new       (gchar         *title,
+					  gchar         *initial_pattern);
+
+void            pattern_select_free      (PatternSelect *psp);
+
+void            pattern_change_callbacks (PatternSelect *psp,
+					  gint           closing);
+void            patterns_check_dialogs   (void);
+
+/*  the main pattern selection  */
+void            pattern_dialog_create    (void);
+void            pattern_dialog_free      (void);
 
 #endif  /*  __PATTERN_SELECT_H__  */

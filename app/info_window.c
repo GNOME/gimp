@@ -18,12 +18,12 @@
 #include "config.h"
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "colormaps.h"
+#include "gdisplay.h"
+#include "gimpui.h"
+#include "gximage.h"
 #include "info_dialog.h"
 #include "info_window.h"
-#include "gdisplay.h"
-#include "gximage.h"
 #include "interface.h"
 #include "scroll.h"
 
@@ -31,30 +31,33 @@
 #include "libgimp/gimpunit.h"
 #include "pixmaps/dropper.xpm"
 
-
 #define MAX_BUF 256
 
 typedef struct _InfoWinData InfoWinData;
+
 struct _InfoWinData
 {
-  char dimensions_str[MAX_BUF];
-  char scale_str[MAX_BUF];
-  char color_type_str[MAX_BUF];
-  char visual_class_str[MAX_BUF];
-  char visual_depth_str[MAX_BUF];
-  char shades_str[MAX_BUF];
-  char resolution_str[MAX_BUF];
-  char unit_str[MAX_BUF];
+  gchar      dimensions_str[MAX_BUF];
+  gchar      scale_str[MAX_BUF];
+  gchar      color_type_str[MAX_BUF];
+  gchar      visual_class_str[MAX_BUF];
+  gchar      visual_depth_str[MAX_BUF];
+  gchar      shades_str[MAX_BUF];
+  gchar      resolution_str[MAX_BUF];
+  gchar      unit_str[MAX_BUF];
+
   void      *gdisp_ptr; /* I'a not happy 'bout this one */
+
   GtkWidget *labelBvalue;
   GtkWidget *labelGvalue;
   GtkWidget *labelRvalue;
   GtkWidget *labelAvalue;
-  gboolean  showingPreview;
+
+  gboolean   showingPreview;
 };
 
 /*  The different classes of visuals  */
-static char *visual_classes[] =
+static gchar *visual_classes[] =
 {
   N_("Static Gray"),
   N_("Grayscale"),
@@ -110,36 +113,34 @@ get_shades (GDisplay *gdisp,
 
 static void
 info_window_close_callback (GtkWidget *widget,
-			    gpointer   client_data)
+			    gpointer   data)
 {
-  info_dialog_popdown ((InfoDialog *) client_data);
+  info_dialog_popdown ((InfoDialog *) data);
 }
 
-
 static void
-info_window_page_switch (GtkWidget *widget, 
+info_window_page_switch (GtkWidget       *widget, 
 			 GtkNotebookPage *page, 
-			 gint page_num)
+			 gint             page_num)
 {
   InfoDialog *info_win;
   InfoWinData *iwd;
   
-  info_win = (InfoDialog *)gtk_object_get_user_data(GTK_OBJECT (widget));
-  iwd = (InfoWinData *)info_win->user_data;
+  info_win = (InfoDialog *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  iwd = (InfoWinData *) info_win->user_data;
 
   /* Only deal with the second page */
-  if(page_num != 1)
+  if (page_num != 1)
     {
       iwd->showingPreview = FALSE;
       return;
     }
 
   iwd->showingPreview = TRUE;
-
 }
 
 static void
-info_window_image_preview_book(InfoDialog *info_win)
+info_window_image_preview_book (InfoDialog *info_win)
 {
   GtkWidget *hbox1;
   GtkWidget *frame;
@@ -160,7 +161,7 @@ info_window_image_preview_book(InfoDialog *info_win)
 
   InfoWinData *iwd;
 
-  iwd = (InfoWinData *)info_win->user_data;
+  iwd = (InfoWinData *) info_win->user_data;
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);
@@ -248,24 +249,18 @@ info_window_image_preview_book(InfoDialog *info_win)
   iwd->labelGvalue = labelGvalue;
   iwd->labelRvalue = labelRvalue;
   iwd->labelAvalue = labelAvalue;
-
 }
 
-  /*  displays information:
-   *    image name
-   *    image width, height
-   *    zoom ratio
-   *    image color type
-   *    Display info:
-   *      visual class
-   *      visual depth
-   *      shades of color/gray
-   */
-
-static ActionAreaItem action_items[] =
-{
-  { N_("Close"), info_window_close_callback, NULL, NULL },
-};
+/*  displays information:
+ *    image name
+ *    image width, height
+ *    zoom ratio
+ *    image color type
+ *    Display info:
+ *      visual class
+ *      visual depth
+ *      shades of color/gray
+ */
 
 InfoDialog *
 info_window_create (void *gdisp_ptr)
@@ -287,6 +282,14 @@ info_window_create (void *gdisp_ptr)
 				       gimp_standard_help_func,
 				       "dialogs/info_window.html");
   g_free (title_buf);
+
+  /*  create the action area  */
+  gimp_dialog_create_action_area (GTK_DIALOG (info_win->shell),
+
+				  _("Close"), info_window_close_callback,
+				  info_win, NULL, TRUE, FALSE,
+
+				  NULL);
 
   iwd = g_new (InfoWinData, 1);
   info_win->user_data = iwd;
@@ -329,11 +332,7 @@ info_window_create (void *gdisp_ptr)
   info_window_update (info_win, gdisp_ptr);
 
   /* Add extra tabs */
-  info_window_image_preview_book(info_win);
-
-  /* Create the action area  */
-  action_items[0].user_data = info_win;
-  build_action_area (GTK_DIALOG (info_win->shell), action_items, 1, 0);
+  info_window_image_preview_book (info_win);
 
   return info_win;
 }

@@ -20,6 +20,7 @@
 
 #include "procedural_db.h"
 
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "palette.h"
 
@@ -50,7 +51,7 @@ palette_get_foreground_invoker (Argument *args)
   guchar *col;
   guchar r, g, b;
 
-  palette_get_foreground (&r, &g, &b);
+  gimp_context_get_foreground (NULL, &r, &g, &b);
   col = (guchar *) g_new (guchar, 3);
   col[RED_PIX] = r;
   col[GREEN_PIX] = g;
@@ -94,7 +95,7 @@ palette_get_background_invoker (Argument *args)
   guchar *col;
   guchar r, g, b;
 
-  palette_get_background (&r, &g, &b);
+  gimp_context_get_background (NULL, &r, &g, &b);
   col = (guchar *) g_new (guchar, 3);
   col[RED_PIX] = r;
   col[GREEN_PIX] = g;
@@ -138,7 +139,7 @@ palette_set_foreground_invoker (Argument *args)
 
   col = (guchar *) args[0].value.pdb_pointer;
 
-  palette_set_foreground (col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+  gimp_context_set_foreground (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
 
   return procedural_db_return_args (&palette_set_foreground_proc, TRUE);
 }
@@ -175,7 +176,7 @@ palette_set_background_invoker (Argument *args)
 
   col = (guchar *) args[0].value.pdb_pointer;
 
-  palette_set_background (col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+  gimp_context_set_background (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
 
   return procedural_db_return_args (&palette_set_background_proc, TRUE);
 }
@@ -208,7 +209,7 @@ static ProcRecord palette_set_background_proc =
 static Argument *
 palette_set_default_colors_invoker (Argument *args)
 {
-  palette_set_default_colors ();
+  gimp_context_set_default_colors (NULL);
   return procedural_db_return_args (&palette_set_default_colors_proc, TRUE);
 }
 
@@ -231,7 +232,7 @@ static ProcRecord palette_set_default_colors_proc =
 static Argument *
 palette_swap_colors_invoker (Argument *args)
 {
-  palette_swap_colors ();
+  gimp_context_swap_colors (NULL);
   return procedural_db_return_args (&palette_swap_colors_proc, TRUE);
 }
 

@@ -17,13 +17,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef  __BRUSH_EDIT_H__
 #define  __BRUSH_EDIT_H__
 
 #include "gimpbrushgenerated.h"
 
-typedef struct _BrushEditGeneratedWindow
+typedef struct _BrushEditGeneratedWindow BrushEditGeneratedWindow;
+
+struct _BrushEditGeneratedWindow
 {
   GtkWidget *shell;
   GtkWidget *frame;
@@ -38,12 +39,12 @@ typedef struct _BrushEditGeneratedWindow
   /*  Brush preview  */
   GtkWidget *brush_preview;
   GimpBrushGenerated *brush;
-  int scale;
-} BrushEditGeneratedWindow;
+  gint scale;
+};
 
-void brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
-				    GimpBrush *brush);
+BrushEditGeneratedWindow * brush_edit_generated_new (void);
 
-BrushEditGeneratedWindow *brush_edit_generated_new ();
+void brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
+				     GimpBrush                *brush);
 
 #endif  /*  __BRUSH_EDIT_H__  */

@@ -18,27 +18,29 @@
 #ifndef __PALETTE_ENTRIES_H__
 #define __PALETTE_ENTRIES_H__
 
-#include "gtk/gtk.h"
-#include "general.h"
+#include <gtk/gtk.h>
 
-struct _PaletteEntries {
-  char *name;
-  char *filename;
-  GSList *colors;
-  int n_colors;
-  int changed;
+typedef struct _PaletteEntries PaletteEntries, *PaletteEntriesP;
+
+struct _PaletteEntries
+{
+  gchar     *name;
+  gchar     *filename;
+  GSList    *colors;
+  gint       n_colors;
+  gboolean   changed;
   GdkPixmap *pixmap;
 };
 
-typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
+typedef struct _PaletteEntry PaletteEntry, *PaletteEntryP;
 
-struct _PaletteEntry {
-  unsigned char color[3];
-  char *name;
-  int position;
+struct _PaletteEntry
+{
+  guchar  color[3];
+  gchar  *name;
+  gint    position;
 };
-typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
 extern GSList * palette_entries_list;
 
-#endif /* __PALETTE_H__ */
+#endif /* __PALETTE_ENTRIES_H__ */

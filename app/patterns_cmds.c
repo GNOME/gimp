@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include "gimpcontext.h"
 #include "patterns.h"
 
 static ProcRecord patterns_get_pattern_proc;
@@ -45,7 +46,7 @@ patterns_get_pattern_invoker (Argument *args)
   Argument *return_args;
   GPatternP patternp;
 
-  success = (patternp = get_active_pattern ()) != NULL;
+  success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
 
   return_args = procedural_db_return_args (&patterns_get_pattern_proc, success);
 
@@ -117,7 +118,7 @@ patterns_set_pattern_invoker (Argument *args)
     
 	  if (!strcmp (patternp->name, name))
 	    {
-	      select_pattern (patternp);
+	      gimp_context_set_pattern (NULL, patternp);
 	      success = TRUE;
 	      break;
 	    }
@@ -250,7 +251,7 @@ patterns_get_pattern_data_invoker (Argument *args)
 	    }
 	}
       else
-	success = (patternp = get_active_pattern ()) != NULL;
+	success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
     
       if (success)
 	{

@@ -22,9 +22,10 @@
 
 #include "gimpbrush.h"
 
-typedef struct _BrushSelect _BrushSelect, *BrushSelectP;
+typedef struct _BrushSelect BrushSelect;
 
-struct _BrushSelect {
+struct _BrushSelect
+{
   GtkWidget *shell;
 
   /*  Place holders which enable global<->per-tool paint options switching  */
@@ -34,7 +35,7 @@ struct _BrushSelect {
   GtkWidget *paint_options_box;
 
   /*  The preview and it's vscale data  */
-  GtkWidget *preview;
+  GtkWidget     *preview;
   GtkAdjustment *sbar_data;
 
   GtkWidget *options_box;
@@ -43,68 +44,68 @@ struct _BrushSelect {
 
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
-  GtkWidget *edit_button;
-  GtkWidget *delete_button;
-  GtkWidget *option_menu;
+  GtkWidget     *edit_button;
+  GtkWidget     *delete_button;
+  GtkWidget     *option_menu;
 
-  /*  Brush preview  */
+  /*  Brush popup  */
   GtkWidget *brush_popup;
   GtkWidget *brush_preview;
   guint      popup_timeout_tag;
   guint      popup_anim_timeout_tag;
   guint      popup_pipe_index;
 
-  /*  Call back function name  */
-  gchar *callback_name;
+  /*  Callback function name  */
+  gchar       *callback_name;
 
-  /*  Current brush  */
-  GimpBrushP brush; 
-  gint       spacing_value;
-
-  /*  Current paint options  */
-  gdouble opacity_value;
-  gint    paint_mode;
+  /*  Context to store the current brush & paint options  */
+  GimpContext *context;
+  gint         spacing_value;
 
   /*  Some variables to keep the GUI consistent  */
-  int  cell_width;
-  int  cell_height;
-  int  scroll_offset;
-  int  redraw;
-  int  old_row;
-  int  old_col;
-  gint NUM_BRUSH_COLUMNS;
-  gint NUM_BRUSH_ROWS;
+  gint      cell_width;
+  gint      cell_height;
+  gint      scroll_offset;
+  gint      old_row;
+  gint      old_col;
+  gint      NUM_BRUSH_COLUMNS;
+  gint      NUM_BRUSH_ROWS;
 
-  int freeze; /* so we don't waste so much time during refresh */
-
+  gboolean  redraw;
+  gboolean  freeze; /*  so we don't waste so much time during refresh  */
 };
 
-BrushSelectP  brush_select_new (gchar        *title,
-				/*  These are the required initial vals
-				 *  If init_name == NULL then use current brush
-				 */
-				gchar        *init_name,
-				gdouble       init_opacity, 
-				gint          init_spacing,
-				gint          init_mode);
-
-void          brush_select_free      (BrushSelectP  bsp);
-
-void          brush_select_select    (BrushSelectP  bsp,
-				      GimpBrushP    brush);
-
-void          brush_change_callbacks (BrushSelectP  bsp,
-				      gint          closing);
-void          brushes_check_dialogs  (void);
-
-/*  show/hide paint options (main brush dialog if bsp == NULL)  */
-void          brush_select_show_paint_options (BrushSelectP  bsp,
-					       gboolean      show);
-
-/* List of active dialogs */
+/*  list of active dialogs  */
 extern GSList *brush_active_dialogs;
 
-/* The main brush dialog */
-extern BrushSelectP brush_select_dialog;
+/*  the main brush dialog */
+extern BrushSelect *brush_select_dialog;
+
+BrushSelect * brush_select_new        (gchar       *title,
+				       /*  These are the required initial vals
+					*  If init_name == NULL then use
+					*  current brush
+					*/
+				       gchar       *init_name,
+				       gdouble      init_opacity, 
+				       gint         init_spacing,
+				       gint         init_mode);
+
+void          brush_select_free       (BrushSelect *bsp);
+
+void          brush_select_freeze_all (void);
+void          brush_select_thaw_all   (void);
+
+void          brush_change_callbacks  (BrushSelect *bsp,
+				       gint         closing);
+void          brushes_check_dialogs   (void);
+
+/*  show/hide paint options (main brush dialog if bsp == NULL)  */
+void          brush_select_show_paint_options (BrushSelect *bsp,
+					       gboolean     show);
+
+/*  the main brush selection  */
+void          brush_dialog_free   (void);
+void          brush_dialog_create (void);
 
 #endif  /*  __BRUSH_SELECT_H__  */

@@ -2482,8 +2482,7 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
 	}
     }
 
-  gtk_widget_activate (tool_info[BEZIER_SELECT].tool_widget);
-  tools_select(BEZIER_SELECT);
+  gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
   active_tool->paused_count = 0;
   active_tool->gdisp_ptr = gdisp;
   active_tool->drawable = gimage_active_drawable (gdisp->gimage);  

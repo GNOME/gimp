@@ -18,18 +18,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#ifndef __GRADIENT_H__
+#define __GRADIENT_H__
 
+typedef struct _gradient_t gradient_t;
 
-#ifndef _GRADIENT_H_
-#define _GRADIENT_H_
+void gradients_init                          (gint        no_data);
+void gradients_free                          (void);
 
-void gradients_init(int no_data);
-void gradients_free(void);
+gradient_t * gradients_get_standard_gradient (void);
 
-void grad_get_color_at(double pos, double *r, double *g, double *b, double *a);
+void gradient_get_color_at                   (gradient_t *gradient,
+					      gdouble     pos,
+					      gdouble    *r,
+					      gdouble    *g,
+					      gdouble    *b,
+					      gdouble    *a);
 
-void grad_create_gradient_editor(void);
-void grad_free_gradient_editor(void);
-void gradients_check_dialogs(void);
+void grad_create_gradient_editor (void);
+void grad_free_gradient_editor   (void);
+void gradients_check_dialogs     (void);
 
-#endif
+#endif  /* __GRADIENT_H__ */

@@ -30,7 +30,6 @@
 #endif
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
@@ -39,10 +38,8 @@
 #include "floating_sel.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "global_edit.h"
 #include "interface.h"
-#include "palette.h"
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"

@@ -29,10 +29,10 @@
 #include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "gradient.h"
 #include "interface.h"
 #include "paint_options.h"
-#include "palette.h"
 #include "selection.h"
 #include "tool_options_ui.h"
 #include "tools.h"
@@ -249,8 +249,6 @@ blend_options_new ()
   BlendOptions *options;
 
   GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *label;
   GtkWidget *menu;
   GtkWidget *table;
   GtkWidget *scale;
@@ -328,76 +326,41 @@ blend_options_new ()
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
-  label = gtk_label_new (_("Offset:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->offset_w =
     gtk_adjustment_new (options->offset_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->offset);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->offset_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
-  gtk_widget_show (scale);
+  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->offset);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Offset:"), 1.0, 1.0,
+			     scale, FALSE);
 
   /*  the blend mode menu  */
-  label = gtk_label_new (_("Blend:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 1, 2);
-  gtk_widget_show (abox);
-
   options->blend_mode_w = gtk_option_menu_new ();
-  gtk_container_add (GTK_CONTAINER (abox), options->blend_mode_w);
-  gtk_widget_show (options->blend_mode_w);
-
   menu = build_menu (blend_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->blend_mode_w), menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Blend:"), 1.0, 0.5,
+			     options->blend_mode_w, TRUE);
 
   /*  the gradient type menu  */
-  label = gtk_label_new (_("Gradient:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 2, 3);
-  gtk_widget_show (abox);
-
   options->gradient_type_w = gtk_option_menu_new ();
-  gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
-  gtk_widget_show (options->gradient_type_w);
-
   menu = build_menu (gradient_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+			     _("Blend:"), 1.0, 0.5,
+			     options->gradient_type_w, TRUE);
 
   /*  the repeat option  */
-  label = gtk_label_new (_("Repeat:"));
-  gtk_misc_set_alignment (GTK_MISC( label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 4);
-  gtk_widget_show (abox);
-
   options->repeat_w = gtk_option_menu_new ();
-  gtk_container_add (GTK_CONTAINER (abox), options->repeat_w);
-  gtk_widget_show (options->repeat_w);
-
   menu = build_menu (repeat_option_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->repeat_w), menu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+			     _("Repeat:"), 1.0, 0.5,
+			     options->repeat_w, TRUE);
 
   /*  show the table  */
   gtk_widget_show (table);
@@ -437,40 +400,30 @@ blend_options_new ()
 		       table);
 
   /*  max depth scale  */
-  label = gtk_label_new (_("Max depth:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->max_depth_w =
     gtk_adjustment_new (options->max_depth_d, 1.0, 10.0, 1.0, 1.0, 1.0);
-  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
-		      (GtkSignalFunc) tool_options_int_adjustment_update,
-		      &options->max_depth);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->max_depth_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
-  gtk_widget_show (scale);
+  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
+		      (GtkSignalFunc) tool_options_int_adjustment_update,
+		      &options->max_depth);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Max Depth:"), 1.0, 1.0,
+			     scale, FALSE);
 
   /*  threshold scale  */
-  label = gtk_label_new (_("Threshold:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->threshold_w =
     gtk_adjustment_new (options->threshold_d, 0.0, 4.0, 0.01, 0.01, 0.0);
-  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->threshold);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
-  gtk_widget_show (scale);
+  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
+		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      &options->threshold);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Threshold:"), 1.0, 1.0,
+			     scale, FALSE);
 
   /*  show the table  */
   gtk_widget_show (table);
@@ -1372,7 +1325,8 @@ gradient_render_pixel (double   x,
   /* Blend the colors */
 
   if (rbd->blend_mode == CUSTOM_MODE)
-    grad_get_color_at (factor, &color->r, &color->g, &color->b, &color->a);
+    gradient_get_color_at (gimp_context_get_gradient (NULL),
+			   factor, &color->r, &color->g, &color->b, &color->a);
   else
     {
       /* Blend values */
@@ -1386,7 +1340,6 @@ gradient_render_pixel (double   x,
 	calc_hsv_to_rgb (&color->r, &color->g, &color->b);
     }
 }
-
 
 static void
 gradient_put_pixel (int      x, 
@@ -1426,8 +1379,6 @@ gradient_put_pixel (int      x,
     pixel_region_set_row(ppd->PR, 0, y, ppd->width, ppd->row_data);
 }
 
-
-
 static void
 gradient_fill_region (GImage          *gimage,
 		      GimpDrawable    *drawable,
@@ -1459,14 +1410,14 @@ gradient_fill_region (GImage          *gimage,
 
   /* Get foreground and background colors, normalized */
 
-  palette_get_foreground(&r, &g, &b);
+  gimp_context_get_foreground (NULL, &r, &g, &b);
 
   rbd.fg.r = r / 255.0;
   rbd.fg.g = g / 255.0;
   rbd.fg.b = b / 255.0;
   rbd.fg.a = 1.0;  /* Foreground is always opaque */
 
-  palette_get_background(&r, &g, &b);
+  gimp_context_get_background (NULL, &r, &g, &b);
 
   rbd.bg.r = r / 255.0;
   rbd.bg.g = g / 255.0;

@@ -31,35 +31,35 @@ struct _SelectionOptions
   ToolOptions  tool_options;
 
   /*  options used by all selection tools  */
-  int          feather;
-  int          feather_d;
+  gboolean     feather;
+  gboolean     feather_d;
   GtkWidget   *feather_w;
 
-  double       feather_radius;
-  double       feather_radius_d;
+  gdouble      feather_radius;
+  gdouble      feather_radius_d;
   GtkObject   *feather_radius_w;
 
   /*  used by all selection tools except rect. select  */
-  int          antialias;
-  int          antialias_d;
+  gboolean     antialias;
+  gboolean     antialias_d;
   GtkWidget   *antialias_w;
 
   /*  used by fuzzy, by-color selection  */
-  int          sample_merged;
-  int          sample_merged_d;
+  gboolean     sample_merged;
+  gboolean     sample_merged_d;
   GtkWidget   *sample_merged_w;
 
   /*  used by rect., ellipse selection  */
-  int          fixed_size;
-  int          fixed_size_d;
+  gboolean     fixed_size;
+  gboolean     fixed_size_d;
   GtkWidget   *fixed_size_w;
 
-  double       fixed_width;
-  double       fixed_width_d;
+  gdouble      fixed_width;
+  gdouble      fixed_width_d;
   GtkObject   *fixed_width_w;
 
-  double       fixed_height;
-  double       fixed_height_d;
+  gdouble      fixed_height;
+  gdouble      fixed_height_d;
   GtkObject   *fixed_height_w;
 
   GUnit        fixed_unit;
@@ -67,7 +67,7 @@ struct _SelectionOptions
   GtkWidget   *fixed_unit_w;
 
   /*  used by bezier selection  */
-  int          extend;
+  gint         extend;
 };
 
 /*  selection tool options functions

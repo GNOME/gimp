@@ -38,20 +38,18 @@ register_brush_select_procs (void)
   procedural_db_register (&brushes_set_popup_proc);
 }
 
-static BrushSelectP
+static BrushSelect *
 brush_get_brushselect (gchar *name)
 {
-  GSList *list = brush_active_dialogs;
-  BrushSelectP bsp;
+  GSList *list;
+  BrushSelect *bsp;
 
-  while (list)
+  for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
-      bsp = (BrushSelectP) list->data;
-      
-      if (!strcmp (name, bsp->callback_name))
-	return bsp;
+      bsp = (BrushSelect *) list->data;
 
-      list = list->next;
+      if (bsp->callback_name && !strcmp (name, bsp->callback_name))
+	return bsp;
     }
 
   return NULL;
@@ -68,7 +66,7 @@ brushes_popup_invoker (Argument *args)
   gint32 spacing;
   gint32 paint_mode;
   ProcRecord *prec;
-  BrushSelectP newdialog;
+  BrushSelect *newdialog;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -98,12 +96,8 @@ brushes_popup_invoker (Argument *args)
 	  else
 	    newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
     
-	  /* Add to list of proc to run when brush changes */
-	  /* change_callbacks = g_list_append (change_callbacks, g_strdup (name)); */
+	  /* The callback procedure to run when brush changes */
 	  newdialog->callback_name = g_strdup (name);
-    
-	  /* Add to active brush dialogs list */
-	  brush_active_dialogs = g_slist_append (brush_active_dialogs, newdialog);
 	}
       else
 	success = FALSE;
@@ -168,7 +162,7 @@ brushes_close_popup_invoker (Argument *args)
   gboolean success = TRUE;
   gchar *name;
   ProcRecord *prec;
-  BrushSelectP bsp;
+  BrushSelect *bsp;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -179,8 +173,6 @@ brushes_close_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
-	  brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
-    
 	  if (GTK_WIDGET_VISIBLE (bsp->shell))
 	    gtk_widget_hide (bsp->shell);
     
@@ -233,7 +225,7 @@ brushes_set_popup_invoker (Argument *args)
   gint32 spacing;
   gint32 paint_mode;
   ProcRecord *prec;
-  BrushSelectP bsp;
+  BrushSelect *bsp;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -256,29 +248,17 @@ brushes_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
-	  GimpBrushP active = gimp_brush_list_get_brush (brush_list, brush_name);
+	  GimpBrush *active = gimp_brush_list_get_brush (brush_list, brush_name);
     
 	  if (active)
 	    {
-	      /* Must alter the wigdets on screen as well */
+	      /* Updating the context updates the widgets as well */
     
-	      bsp->brush = active;
-	      brush_select_select (bsp, active);
+	      gimp_context_set_brush (bsp->context, active);
+	      gimp_context_set_opacity (bsp->context, opacity);
+	      gimp_context_set_paint_mode (bsp->context, paint_mode);
     
-	      bsp->opacity_value = opacity;
-	      bsp->spacing_value = spacing;
-	      bsp->paint_mode = paint_mode;
-    
-	      bsp->spacing_data->value = bsp->spacing_value;
-	      gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data),
-				       "value_changed");
-    
-	      bsp->opacity_data->value = bsp->opacity_value * 100.0;
-	      gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data),
-				       "value_changed");
-	      
-	      gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), bsp->paint_mode);
-    
+	      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data), spacing);
 	    }
 	  else
 	    success = FALSE;

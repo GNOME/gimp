@@ -15,43 +15,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __GIMPBRUSHELIST_H__
-#define __GIMPBRUSHELIST_H__
+#ifndef __GIMPBRUSHLIST_H__
+#define __GIMPBRUSHLIST_H__
 
 #include <glib.h>
+
 #include "temp_buf.h"
 #include "gimpbrush.h"
 #include "gimpbrushlistF.h"
 
-
-#define GIMP_TYPE_BRUSH_LIST  (gimp_brush_list_get_type ())
-#define GIMP_BRUSH_LIST(obj)  (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
+#define GIMP_TYPE_BRUSH_LIST    (gimp_brush_list_get_type ())
+#define GIMP_BRUSH_LIST(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_LIST, GimpBrushList))
 #define GIMP_IS_BRUSH_LIST(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_LIST))
-
-GimpBrushList *gimp_brush_list_new      (void);
-GtkType        gimp_brush_list_get_type (void);
-void           gimp_brush_list_add      (GimpBrushList *list,
-					 GimpBrush *brush);
-void           gimp_brush_list_remove   (GimpBrushList *list,
-					 GimpBrush *brush);
-GimpBrushP     gimp_brush_list_get_brush(GimpBrushList *list, char *name);
-int            gimp_brush_list_length   (GimpBrushList *list);
-
 
 /*  global variables  */
 extern GimpBrushList *brush_list;
 
-
 /*  function declarations  */
-void       brushes_init             (int no_data);
-void       brushes_free             (void);
-void       brush_select_dialog_free (void);
-void       select_brush             (GimpBrushP);
-GimpBrushP gimp_brush_list_get_brush_by_index (GimpBrushList *, int);
-int        gimp_brush_list_get_brush_index (GimpBrushList *, GimpBrush *);
-GimpBrushP get_active_brush         (void);
+GimpBrushList * gimp_brush_list_new                (void);
+GtkType         gimp_brush_list_get_type           (void);
+gint            gimp_brush_list_length             (GimpBrushList *list);
 
-/* TODO: {re}move this function */
-void       create_brush_dialog      (void);
+void            gimp_brush_list_add                (GimpBrushList *list,
+						    GimpBrush     *brush);
+void            gimp_brush_list_remove             (GimpBrushList *list,
+						    GimpBrush     *brush);
 
-#endif  /*  __GIMPBRUSHELIST_H__  */
+GimpBrush     * gimp_brush_list_get_brush          (GimpBrushList *list,
+						    gchar         *name);
+GimpBrush     * gimp_brush_list_get_brush_by_index (GimpBrushList *list,
+						    gint           index);
+
+gint            gimp_brush_list_get_brush_index    (GimpBrushList *list,
+						    GimpBrush     *brush);
+
+
+void            brushes_init                       (gint           no_data);
+void            brushes_free                       (void);
+GimpBrush     * brushes_get_standard_brush         (void);
+
+#endif  /*  __GIMPBRUSHLIST_H__  */

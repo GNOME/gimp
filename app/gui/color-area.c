@@ -15,15 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
 #include "color_area.h"
 #include "color_notebook.h"
 #include "colormaps.h"
+#include "gimpcontext.h"
 #include "gimpdnd.h"
-#include "palette.h"
 
 typedef enum
 {
@@ -35,10 +34,12 @@ typedef enum
 } ColorAreaTarget;
 
 /*  local function prototypes  */
-static void color_area_drop_color (GtkWidget *,
-				   guchar, guchar, guchar, gpointer);
-static void color_area_drag_color (GtkWidget *,
-				   guchar *, guchar *, guchar *, gpointer);
+static void color_area_drop_color    (GtkWidget *,
+				      guchar, guchar, guchar, gpointer);
+static void color_area_drag_color    (GtkWidget *,
+				      guchar *, guchar *, guchar *, gpointer);
+static void color_area_color_changed (GimpContext *,
+				      gint, gint, gint, gpointer);
 
 /*  Global variables  */
 gint active_color = FOREGROUND;
@@ -167,40 +168,32 @@ color_area_draw (void)
   gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
 		      0, 0, width, height);
 
-#ifdef OLD_COLOR_AREA
-  gdk_gc_set_foreground (color_area_gc, &bg);
-  gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
-		      (width - rect_w), (height - rect_h), rect_w, rect_h);
-#else
-  palette_get_background (&r, &g, &b);
+  gimp_context_get_background (gimp_context_get_user (), &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			(width - rect_w), (height - rect_h), rect_w, rect_h,
 			r, g, b);
-#endif
 
   if (active_color == FOREGROUND)
-    gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_OUT,
+    gtk_draw_shadow (color_area->style, color_area_pixmap,
+		     GTK_STATE_NORMAL, GTK_SHADOW_OUT,
 		     (width - rect_w), (height - rect_h), rect_w, rect_h);
   else
-    gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_IN,
+    gtk_draw_shadow (color_area->style, color_area_pixmap,
+		     GTK_STATE_NORMAL, GTK_SHADOW_IN,
 		     (width - rect_w), (height - rect_h), rect_w, rect_h);
 
-#ifdef OLD_COLOR_AREA
-  gdk_gc_set_foreground (color_area_gc, &fg);
-  gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
-		      0, 0, rect_w, rect_h);
-#else
-  palette_get_foreground (&r, &g, &b);
+  gimp_context_get_foreground (gimp_context_get_user (), &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			0, 0, rect_w, rect_h,
 			r, g, b);
-#endif
 
   if (active_color == FOREGROUND)
-    gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_IN,
+    gtk_draw_shadow (color_area->style, color_area_pixmap,
+		     GTK_STATE_NORMAL, GTK_SHADOW_IN,
 		     0, 0, rect_w, rect_h);
   else
-    gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_OUT,
+    gtk_draw_shadow (color_area->style, color_area_pixmap,
+		     GTK_STATE_NORMAL, GTK_SHADOW_OUT,
 		     0, 0, rect_w, rect_h);
 
 
@@ -233,15 +226,17 @@ color_area_select_callback (gint                r,
 	  /* Fallthrough */
 	case COLOR_NOTEBOOK_UPDATE:
 	  if (edit_color == FOREGROUND)
-	    palette_set_foreground (r, g, b);
+	    gimp_context_set_foreground (gimp_context_get_user (), r, g, b);
 	  else
-	    palette_set_background (r, g, b);
+	    gimp_context_set_background (gimp_context_get_user (), r, g, b);
 	  break;
 	case COLOR_NOTEBOOK_CANCEL:
 	  color_notebook_hide (color_notebook);
 	  color_notebook_active = FALSE;
-	  palette_set_foreground (revert_fg_r, revert_fg_g, revert_fg_b);
-	  palette_set_background (revert_bg_r, revert_bg_g, revert_bg_b);
+	  gimp_context_set_foreground (gimp_context_get_user (),
+				       revert_fg_r, revert_fg_g, revert_fg_b);
+	  gimp_context_set_background (gimp_context_get_user (),
+				       revert_bg_r, revert_bg_g, revert_bg_b);
 	}
     }
 }
@@ -249,19 +244,24 @@ color_area_select_callback (gint                r,
 static void
 color_area_edit (void)
 {
+  GimpContext *user_context;
   guchar r, g, b;
+
+  user_context = gimp_context_get_user ();
 
   if (!color_notebook_active)
     {
-      palette_get_foreground (&revert_fg_r, &revert_fg_g, &revert_fg_b);
-      palette_get_background (&revert_bg_r, &revert_bg_g, &revert_bg_b);
+      gimp_context_get_foreground (user_context,
+				   &revert_fg_r, &revert_fg_g, &revert_fg_b);
+      gimp_context_get_background (user_context,
+				   &revert_bg_r, &revert_bg_g, &revert_bg_b);
     }
 
   if (active_color == FOREGROUND)
-    palette_get_foreground (&r, &g, &b);
+    gimp_context_get_foreground (user_context, &r, &g, &b);
   else
-    palette_get_background (&r, &g, &b);
-    
+    gimp_context_get_background (user_context, &r, &g, &b);
+
   edit_color = active_color;
 
   if (! color_notebook)
@@ -337,12 +337,10 @@ color_area_events (GtkWidget *widget,
 		}
 	      break;
 	    case SWAP_AREA:
-	      palette_swap_colors ();
-	      color_area_draw ();
+	      gimp_context_swap_colors (gimp_context_get_user ());
 	      break;
 	    case DEF_AREA:
-	      palette_set_default_colors ();
-	      color_area_draw ();
+	      gimp_context_set_default_colors (gimp_context_get_user ());
 	      break;
 	    default:
 	      break;
@@ -417,13 +415,16 @@ color_area_create (gint       width,
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
 
-  return color_area;
-}
+  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()),
+		      "foreground_changed",
+		      GTK_SIGNAL_FUNC (color_area_color_changed),
+		      color_area);
+  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()),
+		      "background_changed",
+		      GTK_SIGNAL_FUNC (color_area_color_changed),
+		      color_area);
 
-void
-color_area_update ()
-{
-  color_area_draw ();
+  return color_area;
 }
 
 static void
@@ -434,9 +435,9 @@ color_area_drag_color (GtkWidget *widget,
 		       gpointer   data)
 {
   if (active_color == FOREGROUND)
-    palette_get_foreground (r, g, b);
+    gimp_context_get_foreground (gimp_context_get_user (), r, g, b);
   else
-    palette_get_background (r, g, b);
+    gimp_context_get_background (gimp_context_get_user (), r, g, b);
 }
 
 static void
@@ -454,8 +455,18 @@ color_area_drop_color (GtkWidget *widget,
   else
     {
       if (active_color == FOREGROUND)
-	palette_set_foreground (r, g, b);
+	gimp_context_set_foreground (gimp_context_get_user (), r, g, b);
       else
-	palette_set_background (r, g, b);
+	gimp_context_set_background (gimp_context_get_user (), r, g, b);
     }
+}
+
+static void
+color_area_color_changed (GimpContext *context,
+			  gint         r,
+			  gint         g,
+			  gint         b,
+			  gpointer     data)
+{
+  color_area_draw ();
 }

@@ -95,7 +95,7 @@ brushes_get_brush_invoker (Argument *args)
   Argument *return_args;
   GimpBrush *brushp;
 
-  success = (brushp = get_active_brush ()) != NULL;
+  success = (brushp = gimp_context_get_brush (NULL)) != NULL;
 
   return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
 
@@ -165,7 +165,7 @@ brushes_set_brush_invoker (Argument *args)
     {
       brushp = gimp_brush_list_get_brush (brush_list, name);
       if (brushp)
-	select_brush (brushp);
+	gimp_context_set_brush (NULL, brushp);
       else
 	success = FALSE;
     }
@@ -281,7 +281,7 @@ brushes_get_spacing_invoker (Argument *args)
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_spacing_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_spacing (get_active_brush ());
+  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (NULL));
 
   return return_args;
 }
@@ -322,7 +322,7 @@ brushes_set_spacing_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimp_brush_set_spacing (get_active_brush(), spacing);
+    gimp_brush_set_spacing (gimp_context_get_brush (NULL), spacing);
 
   return procedural_db_return_args (&brushes_set_spacing_proc, success);
 }
@@ -525,7 +525,7 @@ brushes_get_brush_data_invoker (Argument *args)
 	    }
 	}
       else
-	success = (brushp = get_active_brush ()) != NULL;
+	success = (brushp = gimp_context_get_brush (NULL)) != NULL;
     
       if (success)
 	{

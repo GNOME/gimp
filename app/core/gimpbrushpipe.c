@@ -95,19 +95,25 @@ gimp_brush_pixmap_init (GimpBrushPixmap *brush)
 GtkType
 gimp_brush_pixmap_get_type (void)
 {
-  static GtkType type=0;
-  if(!type){
-    GtkTypeInfo info={
-      "GimpBrushPixmap",
-      sizeof (GimpBrushPixmap),
-      sizeof (GimpBrushPixmapClass),
-      (GtkClassInitFunc) gimp_brush_pixmap_class_init,
-      (GtkObjectInitFunc) gimp_brush_pixmap_init,
-     /* reserved_1 */ NULL,
-     /* reserved_2 */ NULL,
-    (GtkClassInitFunc) NULL};
-    type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
-  }
+  static GtkType type = 0;
+
+  if (!type)
+    {
+      GtkTypeInfo info =
+      {
+	"GimpBrushPixmap",
+	sizeof (GimpBrushPixmap),
+	sizeof (GimpBrushPixmapClass),
+	(GtkClassInitFunc) gimp_brush_pixmap_class_init,
+	(GtkObjectInitFunc) gimp_brush_pixmap_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL
+      };
+
+      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
+    }
+
   return type;
 }
 
@@ -392,7 +398,7 @@ gimp_brush_pipe_load (char *filename)
       /* load the brush */
       if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[pipe->nbrushes]),
 				  fp, filename)
-	  || !load_pattern_pattern (pattern, fp, filename))
+	  || !pattern_load (pattern, fp, filename))
        {
 	  g_message (_("failed to load one of the pixmap brushes in the pipe"));
 	  fclose (fp);
@@ -414,7 +420,7 @@ gimp_brush_pipe_load (char *filename)
   /*  Clean up  */
   fclose (fp);
 
-  g_free(pattern);
+  g_free (pattern);
   return pipe;
 }
 
@@ -454,7 +460,7 @@ gimp_brush_pixmap_load (char *filename)
   /* load the brush */
   if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[0]),
 			      fp, filename)
-      || !load_pattern_pattern (pattern, fp, filename))
+      || !pattern_load (pattern, fp, filename))
     {
       g_message (_("failed to load pixmap brush"));
       fclose (fp);
@@ -481,5 +487,3 @@ gimp_brush_pixmap_pixmap (GimpBrushPixmap *brush)
 
   return brush->pixmap_mask;
 }
-
-

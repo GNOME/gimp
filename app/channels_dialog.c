@@ -34,7 +34,6 @@
 #include "menus.h"
 #include "ops_buttons.h"
 #include "paint_funcs.h"
-#include "palette.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -23,6 +23,8 @@
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
+/* #include "pixmaps/wilber.xpm" */
+
 /*
  *  Widget Constructors...
  */
@@ -51,8 +53,6 @@ gimp_dialog_delete_callback (GtkWidget *widget,
 }
 
 /*
-#include "/home/mitch/gimp.xpm"
-
 static void
 gimp_dialog_realize_callback (GtkWidget *widget,
 			      gpointer   data) 
@@ -112,7 +112,7 @@ gimp_dialog_new (const gchar       *title,
 			     args);
 
   va_end (args);
-    
+
   return dialog;
 }
 
@@ -128,18 +128,6 @@ gimp_dialog_newv (const gchar       *title,
 		  va_list            args)
 {
   GtkWidget *dialog;
-  GtkWidget *hbbox;
-  GtkWidget *button;
-
-  /*  action area variables  */
-  gchar          *label;
-  GtkSignalFunc   callback;
-  gpointer        data;
-  GtkWidget     **widget_ptr;
-  gboolean        default_action;
-  gboolean        connect_delete;
-
-  gboolean delete_connected = FALSE;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
@@ -152,72 +140,7 @@ gimp_dialog_newv (const gchar       *title,
 			 allow_shrink, allow_grow, auto_shrink);
 
   /*  prepare the action_area  */
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-
-  /*  the action_area buttons  */
-  label = va_arg (args, gchar*);
-
-  if (label)
-    {
-      hbbox = gtk_hbutton_box_new ();
-      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-      gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox,
-			FALSE, FALSE, 0);
-      gtk_widget_show (hbbox);
-      
-      while (label)
-	{
-	  callback = va_arg (args, GtkSignalFunc);
-	  data = va_arg (args, gpointer);
-	  widget_ptr = va_arg (args, gpointer);
-	  default_action = va_arg (args, gboolean);
-	  connect_delete = va_arg (args, gboolean);
-	  
-	  button = gtk_button_new_with_label (label);
-	  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-	  
-	  /*  pass data as user_data if data != NULL, or the dialog otherwise  */
-	  if (callback)
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-				GTK_SIGNAL_FUNC (callback),
-				data ? data : dialog);
-	  
-	  if (widget_ptr)
-	    *widget_ptr = button;
-	  
-	  if (connect_delete && callback && !delete_connected)
-	    {
-	      gtk_object_set_data (GTK_OBJECT (dialog),
-				   "gimp_dialog_cancel_callback",
-				   callback);
-	      gtk_object_set_data (GTK_OBJECT (dialog),
-				   "gimp_dialog_cancel_widget",
-				   button);
-	      
-	      /*  catch the WM delete event  */
-	      gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-				  (GdkEventFunc) gimp_dialog_delete_callback,
-				  data ? data : dialog);
-	      
-	      delete_connected = TRUE;
-	    }
-
-	  if (default_action)
-	    gtk_widget_grab_default (button);
-	  gtk_widget_show (button);
-	  
-	  label = va_arg (args, gchar*);
-	}
-    }
-
-  /*  catch the WM delete event if not already done  */
-  if (! delete_connected)
-    gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-			(GdkEventFunc) gimp_dialog_delete_callback,
-			NULL);
+  gimp_dialog_create_action_areav (GTK_DIALOG (dialog), args);
 
   /*  the realize callback sets the WM icon  */
   /*
@@ -231,6 +154,110 @@ gimp_dialog_newv (const gchar       *title,
     gimp_help_connect_help_accel (dialog, help_func, help_data);
 
   return dialog;
+}
+
+void
+gimp_dialog_create_action_area (GtkDialog *dialog,
+
+				/* specify action area buttons as va_list:
+				 *  gchar          *label,
+				 *  GtkSignalFunc   callback,
+				 *  gpointer        data,
+				 *  GtkWidget     **widget_ptr,
+				 *  gboolean        default_action,
+				 *  gboolean        connect_delete,
+				 */
+
+				...)
+{
+  va_list args;
+
+  va_start (args, dialog);
+
+  gimp_dialog_create_action_areav (dialog, args);
+
+  va_end (args);
+}
+
+void
+gimp_dialog_create_action_areav (GtkDialog *dialog,
+				 va_list    args)
+{
+  GtkWidget *hbbox;
+  GtkWidget *button;
+
+  /*  action area variables  */
+  gchar          *label;
+  GtkSignalFunc   callback;
+  gpointer        data;
+  GtkWidget     **widget_ptr;
+  gboolean        default_action;
+  gboolean        connect_delete;
+
+  gboolean delete_connected = FALSE;
+
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (GTK_IS_DIALOG (dialog));
+
+  /*  prepare the action_area  */
+  label = va_arg (args, gchar*);
+
+  if (label)
+    {
+      gtk_container_set_border_width (GTK_CONTAINER (dialog->action_area), 2);
+      gtk_box_set_homogeneous (GTK_BOX (dialog->action_area), FALSE);
+
+      hbbox = gtk_hbutton_box_new ();
+      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+      gtk_box_pack_end (GTK_BOX (dialog->action_area), hbbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbbox);
+    }
+
+  /*  the action_area buttons  */
+  while (label)
+    {
+      callback = va_arg (args, GtkSignalFunc);
+      data = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, gpointer);
+      default_action = va_arg (args, gboolean);
+      connect_delete = va_arg (args, gboolean);
+
+      button = gtk_button_new_with_label (label);
+      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+
+      /*  pass data as user_data if data != NULL, or the dialog otherwise  */
+      if (callback)
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    GTK_SIGNAL_FUNC (callback),
+			    data ? data : dialog);
+
+      if (widget_ptr)
+	*widget_ptr = button;
+
+      if (connect_delete && callback && !delete_connected)
+	{
+	  gtk_object_set_data (GTK_OBJECT (dialog),
+			       "gimp_dialog_cancel_callback",
+			       callback);
+	  gtk_object_set_data (GTK_OBJECT (dialog),
+			       "gimp_dialog_cancel_widget",
+			       button);
+
+	  /*  catch the WM delete event  */
+	  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+			      (GdkEventFunc) gimp_dialog_delete_callback,
+			      data ? data : dialog);
+
+	  delete_connected = TRUE;
+	}
+
+      if (default_action)
+	gtk_widget_grab_default (button);
+      gtk_widget_show (button);
+
+      label = va_arg (args, gchar*);
+    }
 }
 
 GtkWidget *

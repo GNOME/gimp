@@ -19,31 +19,24 @@
 #define __PALETTE_H__
 
 #include <glib.h>
-#include "procedural_db.h"
-
-#define FOREGROUND 0
-#define BACKGROUND 1
 
 /*  The states for updating a color in the palette via palette_set_* calls */
 #define COLOR_NEW         0
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
-void palettes_init (int no_data);
-void palettes_free (void);
-void palette_create (void);
-void palette_free (void);
-void palette_get_foreground (unsigned char *, unsigned char *, unsigned char *);
-void palette_get_background (unsigned char *, unsigned char *, unsigned char *);
-void palette_set_foreground (int, int, int);
-void palette_set_background (int, int, int);
-void palette_set_active_color (int, int, int, int);
-void palette_set_default_colors (void);
-void palette_swap_colors (void);
-void palette_init_palettes (int no_data);
-void palette_free_palettes (void);
-void palette_import_image_new(GimpImage * gimage);
-void palette_import_image_destroyed(GimpImage* gimage);
-void palette_import_image_renamed(GimpImage* gimage);
+void   palettes_init            (gint  no_data);
+void   palette_init_palettes    (gint  no_data);
+
+void   palettes_free            (void);
+void   palette_free_palettes    (void);
+
+void   palette_dialog_create    (void);
+void   palette_dialog_free      (void);
+
+void   palette_set_active_color (gint  r,
+				 gint  g,
+				 gint  b,
+				 gint  state);
 
 #endif /* __PALETTE_H__ */

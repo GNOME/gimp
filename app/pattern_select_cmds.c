@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include "gimpcontext.h"
 #include "pattern_select.h"
 
 static ProcRecord patterns_popup_proc;
@@ -36,20 +37,18 @@ register_pattern_select_procs (void)
   procedural_db_register (&patterns_set_popup_proc);
 }
 
-static PatternSelectP
+static PatternSelect *
 pattern_get_patternselect (gchar *name)
 {
-  GSList *list = pattern_active_dialogs;
-  PatternSelectP psp;
+  GSList *list;
+  PatternSelect *psp;
 
-  while (list)
+  for (list = pattern_active_dialogs; list; list = g_slist_next (list))
     {
-      psp = (PatternSelectP) list->data;
+      psp = (PatternSelect *) list->data;
       
-      if (!strcmp (name, psp->callback_name))
+      if (psp->callback_name && !strcmp (name, psp->callback_name))
 	return psp;
-
-      list = list->next;
     }
 
   return NULL;
@@ -63,7 +62,7 @@ patterns_popup_invoker (Argument *args)
   gchar *title;
   gchar *pattern;
   ProcRecord *prec;
-  PatternSelectP newdialog;
+  PatternSelect *newdialog;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -84,11 +83,8 @@ patterns_popup_invoker (Argument *args)
 	  else
 	    newdialog = pattern_select_new (title, NULL);
     
-	  /* Add to list of proc to run when pattern changes */
+	  /* The callback procedure to run when pattern changes */
 	  newdialog->callback_name = g_strdup (name);
-    
-	  /* Add to active pattern dialogs list */
-	  pattern_active_dialogs = g_slist_append (pattern_active_dialogs, newdialog);
 	}
       else
 	success = FALSE;
@@ -138,7 +134,7 @@ patterns_close_popup_invoker (Argument *args)
   gboolean success = TRUE;
   gchar *name;
   ProcRecord *prec;
-  PatternSelectP psp;
+  PatternSelect *psp;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -149,8 +145,6 @@ patterns_close_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
-	  pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
-    
 	  if (GTK_WIDGET_VISIBLE (psp->shell))
 	    gtk_widget_hide (psp->shell);
     
@@ -200,7 +194,7 @@ patterns_set_popup_invoker (Argument *args)
   gchar *name;
   gchar *pattern_name;
   ProcRecord *prec;
-  PatternSelectP psp;
+  PatternSelect *psp;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -215,14 +209,12 @@ patterns_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (psp = pattern_get_patternselect (name)))
 	{
-	  GPatternP active = pattern_list_get_pattern (pattern_list, pattern_name);
+	  GPattern *active = pattern_list_get_pattern (pattern_list, pattern_name);
     
 	  if (active)
 	    {
 	      /* Must alter the wigdets on screen as well */
-    
-	      psp->pattern = active;
-	      pattern_select_select (psp, active->index);
+	      gimp_context_set_pattern (psp->context, active);
 	    }
 	  else
 	    success = FALSE;

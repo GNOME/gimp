@@ -1,3 +1,124 @@
+1999-10-26  Michael Natterer  <mitch@gimp.org>
+
+	Put the active tool, brush, pattern and gradient to the context
+	and use contexts in most places which have references to one of
+	those. This is not _really_ a bugfix-only checkin but solves many
+	inconsistencies esp. with the "refresh" functionality and fixes
+	some SEGVs e.g. in the device status dialog.
+	The UI view should now always be in sync with the internal data
+	structures.
+	Introduced a hardcoded brush, pattern and gradient, so "no_data"
+	should actually work, too.
+
+	New Files:
+	* app/Makefile.am
+	* app/paletteP.h: used by palette_select.c
+
+	Removed Files:
+	* app/actionarea.[ch]: now done by gimpui.[ch].
+
+	Modified Files:
+	* gimprc.in: use brush and pattern name, not filename for the
+	default settings.
+
+	* app/gimpcontext.[ch]: connect to brush and brushlist signals to
+	keep the context up-to-date. Remember the name of the
+	active brush/pattern/gradient to find them again after a
+	refresh. Provide functions to refresh the pointers of all contexts
+	after refreshing or deleting brushes/patterns/gradients.
+
+	* app/context_manager.c: connect to the user context's
+	"tool_changed" signal to call the tools_select() function. Update
+	the colormap's fg/bg_pixel in "*_changed" callbacks, too.
+
+	* app/tools.c: tool switching is now triggered by the user context.
+
+	* app/app_procs.c: no need any more to call
+	get_active_brush/... because the brush/pattern/... init functions
+	refresh all contexts after loading the data. Slightly reordered the
+	brush/pattern... init/free calls due to the new context stuff.
+
+	* app/color_area.[ch]
+	* app/indicator_area.[ch]: removed all update functions and
+	connect to the user context instead.
+
+	* app/gimprc.c
+	* app/devices.[ch]: allocate a private context for each device and
+	removed the update function. Prepared for adding the BG color and
+	a gradient to the device status.
+
+	* app/gimpbrushgenerated.[ch]: new function
+	gimp_brush_generated_delete() to get rid of this in the brush
+	selection dialog.
+
+	* app/gimpbrushpipe.c
+	* app/gimpbrushlist.[ch]: removed the "select", "get_active" and
+	the brush select dialog functions, added a function to get the
+	hardcoded standard brush, namespace cleanups.
+
+	* app/brushes_cmds.c
+	* tools/pdbgen/pdb/brushes.pdb: use the brush of the current context.
+
+	* app/brush_select.[ch]
+	* app/brush_select_cmds.c
+	* tools/pdbgen/pdb/brush_select.pdb: allocate a context for brush
+	selections which are not the main one. Append the main dialog to
+	the list of dialogs. Factored out the preview redraw code to the
+	scrollbar update callback. Enabled editing, deleting and
+	refreshing brushes in all dialogs. Functions to freeze and thaw
+	all dialogs on refresh. All dialogs are now always up-to-date by
+	connecting to the brush list signals. Moved the create/free
+	functions of the main brush selection to this files.
+
+	* app/gradient.[ch]
+	* app/gradient_cmds.c
+	* tools/pdbgen/pdb/gradient.pdb: grad_get_color_at() now takes a
+	gradient as parameter instead of using the current gradient of the
+	gradient editor.
+
+	* app/gradient_header.h
+	* app/gradient_select.c
+	* app/gradient_select_cmds.c
+	* tools/pdbgen/pdb/gradient_select.pdb: updates like above.
+	(The gradient stuff should really be split up into separate
+	gradient, selection and editor files before 1.2)
+
+	* app/palette.[ch]
+	* app/palette_cmds.c
+	* app/palette_entries.h
+	* app/palette_select.[ch]
+	* tools/pdbgen/pdb/palette.pdb: removed all the get/set fg/bg
+	functions and the functions to update the import dialog. All
+	changes in all dialogs are now immediately propagated to all the
+	other dialogs on screen. Namespace cleanups. The active palette
+	will soon go to the context as well.
+
+	* app/pattern_select.[ch]
+	* app/pattern_select_cmds.c
+	* app/patterns.[ch]
+	* app/patterns_cmds.c
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb: exactly the same changes as for
+	the brushlist and the brush selections (except the signal stuff).
+
+	* app/[all files needing a brush/pattern/gradient or switching the
+	       active tool]: use context functions.
+
+	* app/convert.c: tweaked the ui to match the other dialogs.
+
+	* app/gimpui.c
+	* app/gimpui.h: new functions to create an action area without
+	creating a dialog.
+
+	* app/[all files using an info_dialog]: use the action_area
+	constructor from gimpui.[ch].
+	I also used some gimpui.c functions in various files which reduces
+	code duplication and removes some gtk 1.0 artefacts.
+
+	* app/[some files not related to the changes above]: While having
+	all the stuff in my emacs I removed dozens of useless includes and
+	did some indentation and cleanups (not changing any functionality).
+
 Tue Oct 26 02:49:30 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* plug-ins/common/pix.c: Doesn't actually have ALPHA, so

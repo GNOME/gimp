@@ -196,7 +196,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'gradient_t *oldgrad, *grad = NULL' ],
+	vars => [ 'gradient_t *grad = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
@@ -219,7 +219,7 @@ HELP
 	}
     }
   else
-    success = (grad = curr_gradient) != NULL;
+    success = (grad = gimp_context_get_gradient (NULL)) != NULL;
 
   if (success)
     {
@@ -233,12 +233,9 @@ HELP
 
       pv = values = g_new (gdouble, i * 4);
 
-      oldgrad = curr_gradient;
-      curr_gradient = grad;
-
       while (i--)
 	{
-	  grad_get_color_at (pos, &r, &g, &b, &a);
+	  gradient_get_color_at (grad, pos, &r, &g, &b, &a);
 
 	  *pv++ = r;
 	  *pv++ = g;
@@ -247,15 +244,13 @@ HELP
 
 	  pos += delta;
 	}
-
-      curr_gradient = oldgrad;
     }
 }
 CODE
     );
 }
 
-@headers = qw(<string.h> "gradient_header.h" "gradient.h");
+@headers = qw(<string.h> "gimpcontext.h" "gradient_header.h" "gradient.h");
 
 $extra{app}->{code} = <<'CODE';
 static GradSelectP

@@ -15,34 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#ifndef __PALETTE_SELECT_H__
+#define __PALETTE_SELECT_H__
 
-#ifndef __PALETTE_SELECT_H_
-#define __PALETTE_SELECT_H_
-
-#define SM_PREVIEW_WIDTH (96 + 2)
+#define SM_PREVIEW_WIDTH  (96 + 2)
 #define SM_PREVIEW_HEIGHT (33 + 2)
-
-struct _PaletteSelect {
-  GtkWidget *shell;
-  GtkWidget *clist;
-  GdkGC *gc;
-  gchar *callback_name;
-};
 
 typedef struct _PaletteSelect PaletteSelect, *PaletteSelectP;
 
-void              palette_select_set_text_all(PaletteEntriesP entries);
-PaletteSelectP    palette_new_selection(gchar * title,gchar * initial_palette);
-void              palette_select_clist_insert_all(PaletteEntriesP p_entries);
-void              palette_select_set_text_all(PaletteEntriesP entries);
-void              palette_select_refresh_all(void);
-void              palette_clist_init(GtkWidget *clist,GtkWidget *shell,GdkGC *gc);
-void              palette_select_palette_init(void);
-void              palette_create_edit(PaletteEntriesP entries);
-void              palette_insert_clist(GtkWidget *clist, 
-				       GtkWidget *shell,
-				       GdkGC     *gc,
-				       PaletteEntriesP p_entries,gint pos);
+struct _PaletteSelect
+{
+  GtkWidget *shell;
+  GtkWidget *clist;
+  GdkGC     *gc;
+  gchar     *callback_name;
+};
 
+PaletteSelect * palette_new_selection (gchar *title,
+				       gchar *initial_palette);
 
-#endif  /* __PALETTE_SELECT_H_ */
+void   palette_select_clist_insert_all (PaletteEntriesP  p_entries);
+void   palette_select_set_text_all     (PaletteEntriesP  entries);
+void   palette_select_refresh_all      (void);
+
+#endif  /* __PALETTE_SELECT_H__ */

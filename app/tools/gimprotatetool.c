@@ -22,7 +22,6 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
-#include "palette.h"
 #include "rotate_tool.h"
 #include "selection.h"
 #include "tools.h"

@@ -43,7 +43,7 @@
 # Specify a default brush. If none is specified it defaults to the
 #  "1circle.gbr" brush which is just a single pixel sized brush.
 #  The brush is searched for in the brush path.
-(default-brush "19fcircle.gbr")
+(default-brush "Circle (19)")
 
 # Set the pattern search path...this path will be searched for valid
 #  patterns at startup.
@@ -51,7 +51,7 @@
 
 # Specify a default pattern.
 #  The pattern is searched for in the specified pattern paths.
-(default-pattern "wood2.pat")
+(default-pattern "Pine?")
 
 # Set the palette search path...this path will be searched for valid
 #  palettes at startup.
@@ -306,6 +306,3 @@
 (gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
 
 # [end of file]
-
-
-

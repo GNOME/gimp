@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMPBRUSH_H__
 #define __GIMPBRUSH_H__
 
@@ -29,20 +28,22 @@
 
 struct _GimpBrush
 {
-  GimpObject gobject;
-  char *     filename;    /*  actual filename--brush's location on disk  */
-  char *     name;        /*  brush's name--for brush selection dialog   */
-  int        spacing;     /*  brush's spacing                            */
-  vector2d   x_axis;      /*  for calculating brush spacing              */
-  vector2d   y_axis;      /*  for calculating brush spacing              */
-  TempBuf *  mask;        /*  the actual mask...                         */
+  GimpObject  gobject;
+
+  gchar      *filename;   /*  actual filename--brush's location on disk  */
+  gchar      *name;       /*  brush's name--for brush selection dialog   */
+  gint        spacing;    /*  brush's spacing                            */
+  vector2d    x_axis;     /*  for calculating brush spacing              */
+  vector2d    y_axis;     /*  for calculating brush spacing              */
+  TempBuf    *mask;       /*  the actual mask...                         */
 };
 
 struct _GimpBrushClass
 {
-  GimpObjectClass parent_class;
-  GimpBrush *(* select_brush) (PaintCore *);
-  gboolean (* want_null_motion) (PaintCore *);
+  GimpObjectClass   parent_class;
+
+  GimpBrush       * (* select_brush)     (PaintCore *);
+  gboolean          (* want_null_motion) (PaintCore *);
 };
 
 #define GIMP_BRUSH_CLASS(klass) \
@@ -52,14 +53,23 @@ struct _GimpBrushClass
 #define GIMP_BRUSH(obj)  (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
 #define GIMP_IS_BRUSH(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
 
-GimpBrush * gimp_brush_new         (char *filename);
-void        gimp_brush_load        (GimpBrush *brush, char *filename);
-int         gimp_brush_load_brush  (GimpBrush *brush, FILE* fp, char* filename);
 GtkType     gimp_brush_get_type    (void);
+GimpBrush * gimp_brush_new         (gchar     *filename);
+
+void        gimp_brush_load        (GimpBrush *brush,
+				    gchar     *filename);
+int         gimp_brush_load_brush  (GimpBrush *brush,
+				    FILE      *fp,
+				    gchar     *filename);
+
 TempBuf   * gimp_brush_get_mask    (GimpBrush *brush);
+
 char      * gimp_brush_get_name    (GimpBrush *brush);
-void        gimp_brush_set_name    (GimpBrush *brush, char *name);
+void        gimp_brush_set_name    (GimpBrush *brush,
+				    gchar     *name);
+
 int         gimp_brush_get_spacing (GimpBrush *brush);
-void        gimp_brush_set_spacing (GimpBrush *brush, int spacing);
+void        gimp_brush_set_spacing (GimpBrush *brush,
+				    gint       spacing);
 
 #endif /* __GIMPBRUSH_H__ */

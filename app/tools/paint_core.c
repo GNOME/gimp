@@ -28,13 +28,11 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
-#include "gimpbrushlist.h"
 #include "gimpbrushpipe.h"
 #include "gimprc.h"
 #include "gradient.h"  /* for grad_get_color_at() */
 #include "paint_funcs.h"
 #include "paint_core.h"
-#include "palette.h"
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
@@ -76,7 +74,7 @@ static void      canvas_tiles_to_canvas_buf (PaintCore *);
 static void      brush_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_canvas_tiles           (int, int, int, int);
-static int       paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
+static void      paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
 
 /***********************************************************************/
 
@@ -157,19 +155,26 @@ static const int subsample[5][5][9] = {
 
 static void
 paint_core_sample_color (GimpDrawable *drawable, 
-			 int x, 
-			 int y, 
-			 int state)
+			 int           x, 
+			 int           y, 
+			 int           state)
 {
-  unsigned char *color;
-  if ((color = gimp_drawable_get_color_at(drawable, x, y)))
+  guchar *color;
+
+  if ((color = gimp_drawable_get_color_at (drawable, x, y)))
     {
       if ((state & GDK_CONTROL_MASK))
-	palette_set_foreground (color[RED_PIX], color[GREEN_PIX], color [BLUE_PIX]);
+	gimp_context_set_foreground (gimp_context_get_user (),
+				     color[RED_PIX],
+				     color[GREEN_PIX],
+				     color[BLUE_PIX]);
       else
-	palette_set_background (color[RED_PIX], color[GREEN_PIX], color [BLUE_PIX]);
+	gimp_context_set_background (gimp_context_get_user (),
+				     color[RED_PIX],
+				     color[GREEN_PIX],
+				     color[BLUE_PIX]);
 
-      g_free(color);
+      g_free (color);
     }
 }
 
@@ -673,22 +678,22 @@ paint_core_init (PaintCore    *paint_core,
     }
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
-  if (brush && brush != get_active_brush ())
-  {
-    gtk_signal_disconnect_by_func(GTK_OBJECT(brush),
-				  GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
-				  NULL);
-    gtk_object_unref(GTK_OBJECT(brush));
-  }
-  if (!(brush = get_active_brush ()))
+  if (brush && brush != gimp_context_get_brush (NULL))
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (brush),
+				     GTK_SIGNAL_FUNC (paint_core_invalidate_cache),
+				     NULL);
+      gtk_object_unref (GTK_OBJECT (brush));
+    }
+  if (!(brush = gimp_context_get_brush (NULL)))
     {
       g_message (_("No brushes available for use with this tool."));
       return FALSE;
     }
-  gtk_object_ref(GTK_OBJECT(brush));
-  gtk_signal_connect(GTK_OBJECT (brush), "dirty",
-		     GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
-		     NULL);
+  gtk_object_ref (GTK_OBJECT (brush));
+  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
+		      GTK_SIGNAL_FUNC (paint_core_invalidate_cache),
+		      NULL);
 
   paint_core->spacing = (double) gimp_brush_get_spacing (brush) / 100.0;
 
@@ -744,7 +749,7 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
   else
     y = y - (int)y;
 
-  grad_get_color_at (y, r, g, b, a);
+  gradient_get_color_at (gimp_context_get_gradient (NULL), y, r, g, b, a);
   *a = (temp_opacity * *a);
 }
   
@@ -1076,18 +1081,16 @@ paint_core_replace_canvas (PaintCore	       *paint_core,
 		      brush_opacity, image_opacity, mode);
 }
 
-static MaskBuf *last_brush_mask = NULL;
-static int cache_invalid = 0;
+static MaskBuf  *last_brush_mask = NULL;
+static gboolean  cache_invalid   = FALSE;
 
-static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah)
+static void
+paint_core_invalidate_cache (GimpBrush *brush,
+			     gpointer  *blah)
 {
-/* Make sure we don't cache data for a brush that has changed */
+  /* Make sure we don't cache data for a brush that has changed */
   if (last_brush_mask == brush->mask)
-  {
-    cache_invalid = 1;
-    return 1;
-  }
-  return 0;
+    cache_invalid = TRUE;
 }
 
 /************************************************************
@@ -1157,7 +1160,7 @@ paint_core_subsample_mask (MaskBuf *mask,
 	}
 
   last_brush_mask = mask;
-  cache_invalid = 0;
+  cache_invalid = FALSE;
   kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2);
   dest = kernel_brushes[index2][index1];
 

@@ -17,7 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __GIMP_BRUSH_GENERATED_H__
 #define __GIMP_BRUSH_GENERATED_H__
 
@@ -26,11 +25,14 @@
 typedef struct _GimpBrushGenerated
 {
   GimpBrush gbrush;
-  float radius;
-  float hardness;     /* 0.0 - 1.0  */
-  float angle;        /* in degrees */
-  float aspect_ratio; /* y/x        */
-  int freeze;
+
+  gfloat     radius;
+  gfloat     hardness;     /* 0.0 - 1.0  */
+  gfloat     angle;        /* in degrees */
+  gfloat     aspect_ratio; /* y/x        */
+
+  gint      freeze;
+
   /*GSpline *profile_curve */ /* Some lazy day...  */
 } GimpBrushGenerated;
 
@@ -38,41 +40,45 @@ typedef struct _GimpBrushGeneratedClass
 {
   GimpBrushClass parent_class;
   
-  void (* generate)  (GimpBrushGenerated *brush);
+  void (* generate) (GimpBrushGenerated *brush);
 } GimpBrushGeneratedClass;
 
 /* object stuff */
 
-#define GIMP_TYPE_BRUSH_GENERATED  (gimp_brush_generated_get_type ())
-#define GIMP_BRUSH_GENERATED(obj)  (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
+#define GIMP_TYPE_BRUSH_GENERATED    (gimp_brush_generated_get_type ())
+#define GIMP_BRUSH_GENERATED(obj)    (GIMP_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
 #define GIMP_IS_BRUSH_GENERATED(obj) (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
 
 guint gimp_brush_generated_get_type (void);
 
 /* normal stuff */
 
-GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
-					     float angle, float aspect_ratio);
+GimpBrushGenerated *gimp_brush_generated_new  (gfloat              radius,
+					       gfloat              hardness,
+					       gfloat              angle,
+					       gfloat              aspect_ratio);
 
-GimpBrushGenerated *gimp_brush_generated_load (const char *file_name);
+GimpBrushGenerated *gimp_brush_generated_load (const gchar        *file_name);
 
-void gimp_brush_generated_save            (GimpBrushGenerated *brush,
-					   const char *file_name);
-void gimp_brush_generated_freeze          (GimpBrushGenerated *brush);
-void gimp_brush_generated_thaw            (GimpBrushGenerated *brush);
+void   gimp_brush_generated_save              (GimpBrushGenerated *brush,
+					       const gchar        *file_name);
+void   gimp_brush_generated_delete            (GimpBrushGenerated *brush);
 
-float gimp_brush_generated_set_radius     (GimpBrushGenerated* brush,
-					   float radius);
-float gimp_brush_generated_set_hardness  (GimpBrushGenerated* brush,
-					  float hardness);
-float gimp_brush_generated_set_angle       (GimpBrushGenerated* brush,
-					    float angle);
-float gimp_brush_generated_set_aspect_ratio(GimpBrushGenerated* brush,
-					    float ratio);
+void   gimp_brush_generated_freeze            (GimpBrushGenerated *brush);
+void   gimp_brush_generated_thaw              (GimpBrushGenerated *brush);
 
-float gimp_brush_generated_get_radius       (const GimpBrushGenerated* brush);
-float gimp_brush_generated_get_hardness      (const GimpBrushGenerated* brush);
-float gimp_brush_generated_get_angle        (const GimpBrushGenerated* brush);
-float gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated* brush);
+gfloat  gimp_brush_generated_set_radius       (GimpBrushGenerated* brush,
+					       gfloat              radius);
+gfloat  gimp_brush_generated_set_hardness     (GimpBrushGenerated *brush,
+					       gfloat              hardness);
+gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated* brush,
+					       gfloat              angle);
+gfloat  gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated* brush,
+					       gfloat              ratio);
+
+gfloat  gimp_brush_generated_get_radius       (const GimpBrushGenerated* brush);
+gfloat  gimp_brush_generated_get_hardness     (const GimpBrushGenerated* brush);
+gfloat  gimp_brush_generated_get_angle        (const GimpBrushGenerated* brush);
+gfloat  gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated* brush);
 
 #endif  /*  __GIMP_BRUSH_GENERATED_H__  */

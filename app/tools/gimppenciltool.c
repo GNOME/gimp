@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
 #include "drawable.h"
 #include "errors.h"
@@ -26,7 +27,6 @@
 #include "paint_core.h"
 #include "paint_options.h"
 #include "paintbrush.h"
-#include "palette.h"
 #include "pencil.h"
 #include "selection.h"
 #include "tool_options_ui.h"
@@ -167,7 +167,8 @@ pencil_motion (PaintCore            *paint_core,
 	{
 	  gdouble r, g, b, a;
 
-	  grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	  gradient_get_color_at (gimp_context_get_gradient (NULL),
+				 paint_core->curpressure, &r, &g, &b, &a);
 	  col[0] = r * 255.0;
 	  col[1] = g * 255.0;
 	  col[2] = b * 255.0;

@@ -20,10 +20,9 @@
  */
 #include "config.h"
 
-#include "actionarea.h"
 #include "appenv.h"
 #include "draw_core.h"
-#include "gimphelp.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "measure.h"
 #include "tool_options_ui.h"
@@ -171,14 +170,9 @@ measure_tool_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   MeasureTool * measure_tool;
-  int x[3];
-  int y[3];
-  int i;
-
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Close"), measure_tool_info_window_close_callback, NULL, NULL },
-  };
+  gint x[3];
+  gint y[3];
+  gint i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -270,9 +264,13 @@ measure_tool_button_press (Tool           *tool,
 					    tools_help_func, NULL);
        info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
        info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
-       action_items[0].user_data = measure_tool_info;
-       build_action_area (GTK_DIALOG (measure_tool_info->shell),
-			  action_items, 1, 0);
+       gimp_dialog_create_action_area
+	 (GTK_DIALOG (measure_tool_info->shell),
+
+	  _("Close"), measure_tool_info_window_close_callback,
+	  measure_tool_info, NULL, TRUE, FALSE,
+
+	  NULL);
       }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,

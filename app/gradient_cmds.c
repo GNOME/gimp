@@ -20,6 +20,7 @@
 
 #include "procedural_db.h"
 
+#include "gimpcontext.h"
 #include "gradient.h"
 #include "gradient_header.h"
 
@@ -107,12 +108,12 @@ gradients_get_active_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
 
-  success = curr_gradient != NULL;
+  success = gimp_context_get_gradient (NULL) != NULL;
 
   return_args = procedural_db_return_args (&gradients_get_active_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (curr_gradient->name);
+    return_args[1].value.pdb_pointer = g_strdup (gimp_context_get_gradient (NULL)->name);
 
   return return_args;
 }
@@ -191,6 +192,7 @@ gradients_sample_uniform_invoker (Argument *args)
   gint32 i;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
+  gradient_t *gradient;
   gdouble pos, delta;
   gdouble r, g, b, a;
   gdouble *pv;
@@ -208,9 +210,11 @@ gradients_sample_uniform_invoker (Argument *args)
     
       pv = color_samples = g_new (gdouble, array_length);
     
+      gradient = gimp_context_get_gradient (NULL);
+    
       while (i--)
 	{
-	  grad_get_color_at(pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
     
 	  *pv++ = r;
 	  *pv++ = g;
@@ -280,6 +284,7 @@ gradients_sample_custom_invoker (Argument *args)
   gdouble *pos;
   gint32 array_length = 0;
   gdouble *color_samples = NULL;
+  gradient_t *gradient;
   gdouble r, g, b, a;
   gdouble *pv;
 
@@ -295,9 +300,11 @@ gradients_sample_custom_invoker (Argument *args)
     
       pv = color_samples = g_new (gdouble, array_length);
     
+      gradient = gimp_context_get_gradient (NULL);
+    
       while (i--)
 	{
-	  grad_get_color_at(*pos, &r, &g, &b, &a);
+	  gradient_get_color_at (gradient, *pos, &r, &g, &b, &a);
     
 	  *pv++ = r;
 	  *pv++ = g;

@@ -18,6 +18,7 @@
 #include "config.h"
 #include "brush_select.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "paint_funcs.h"
 #include "paint_options.h"
 #include "selection_options.h"
@@ -406,11 +407,6 @@ selection_options_init (SelectionOptions     *options,
       gtk_object_set_data (GTK_OBJECT (options->fixed_size_w), "set_sensitive",
 			   table);
 
-      label = gtk_label_new (_("Width:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-
       options->fixed_width_w =
 	gtk_adjustment_new (options->fixed_width_d, 1e-5, 32767.0,
 			    1.0, 50.0, 0.0);
@@ -423,15 +419,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
                           (GtkSignalFunc) tool_options_double_adjustment_update,
                           &options->fixed_width);
-      gtk_table_attach (GTK_TABLE (table), width_spinbutton, 1, 2, 0, 1,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-      gtk_widget_show (width_spinbutton);
-
-      label = gtk_label_new (_("Height:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+				 _("Width:"), 1.0, 0.5,
+				 width_spinbutton, FALSE);
 
       options->fixed_height_w =
 	gtk_adjustment_new (options->fixed_height_d, 1e-5, 32767.0,
@@ -445,15 +435,10 @@ selection_options_init (SelectionOptions     *options,
       gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
                           (GtkSignalFunc) tool_options_double_adjustment_update,
                           &options->fixed_height);
-      gtk_table_attach (GTK_TABLE (table), height_spinbutton, 1, 2, 1, 2,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-      gtk_widget_show (height_spinbutton);
+      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+				 _("Height:"), 1.0, 0.5,
+				 height_spinbutton, FALSE);
 
-      label = gtk_label_new (_("Unit:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       options->fixed_unit_w =
 	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
       gtk_signal_connect (GTK_OBJECT (options->fixed_unit_w), "unit_changed",
@@ -463,10 +448,9 @@ selection_options_init (SelectionOptions     *options,
 			   width_spinbutton);
       gtk_object_set_data (GTK_OBJECT (width_spinbutton), "set_digits",
 			   height_spinbutton);
-      gtk_table_attach (GTK_TABLE (table), options->fixed_unit_w, 1, 2, 2, 3,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-      gtk_widget_show (options->fixed_unit_w);
+      gimp_table_attach_aligned (GTK_TABLE (table), 2,
+				 _("Unit:"), 1.0, 0.5,
+				 options->fixed_unit_w, FALSE);
 
       gtk_widget_show (table);
     }
@@ -541,9 +525,7 @@ paint_options_init (PaintOptions         *options,
 		    ToolOptionsResetFunc  reset_func)
 {
   GtkWidget *vbox;
-  GtkWidget *abox;
   GtkWidget *table;
-  GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *separator;
@@ -600,23 +582,18 @@ paint_options_init (PaintOptions         *options,
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   /*  the opacity scale  */
-  label = gtk_label_new (_("Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->opacity_w =
     gtk_adjustment_new (gimp_context_get_opacity (tool_context) * 100,
 			0.0, 100.0, 1.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
-		      (GtkSignalFunc) tool_options_opacity_adjustment_update,
-		      tool_context);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
-  gtk_widget_show (scale);
+  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
+		      (GtkSignalFunc) tool_options_opacity_adjustment_update,
+		      tool_context);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Opacity:"), 1.0, 1.0,
+			     scale, FALSE);
 
   /*  the paint mode menu  */
   switch (tool_type)
@@ -630,29 +607,19 @@ paint_options_init (PaintOptions         *options,
     case INK:
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
-      label = gtk_label_new (_("Mode:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-
-      abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-      gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 1, 2);
-      gtk_widget_show (abox);
-
       options->paint_mode_w = gtk_option_menu_new ();
-      gtk_container_add (GTK_CONTAINER (abox), options->paint_mode_w);
-      gtk_widget_show (options->paint_mode_w);
-
-      /* eek */
-      gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",
-			   tool_info[tool_type].tool_context);
-
       menu =
 	paint_mode_menu_new (tool_options_paint_mode_update, tool_context);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), menu);
       gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
 				   gimp_context_get_paint_mode (tool_context));
+      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+				 _("Mode:"), 1.0, 0.5,
+				 options->paint_mode_w, TRUE);
+
+      /* eek */
+      gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",
+			   tool_info[tool_type].tool_context);
       break;
     case CONVOLVE:
     case ERASER:

@@ -64,7 +64,7 @@ HELP
 
     %invoke = (
 	vars => [ 'GPatternP patternp' ],
-	code => 'success = (patternp = get_active_pattern ()) != NULL;'
+	code => 'success = (patternp = gimp_context_get_pattern (NULL)) != NULL;'
     );
 }
 
@@ -96,7 +96,7 @@ HELP
 
       if (!strcmp (patternp->name, name))
 	{
-	  select_pattern (patternp);
+	  gimp_context_set_pattern (NULL, patternp);
 	  success = TRUE;
 	  break;
 	}
@@ -202,7 +202,7 @@ HELP
 	}
     }
   else
-    success = (patternp = get_active_pattern ()) != NULL;
+    success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
 
   if (success)
     {
@@ -216,7 +216,7 @@ CODE
     );
 }
 
-@headers = qw("patterns.h");
+@headers = qw("gimpcontext.h" "patterns.h");
 
 @procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
 	    patterns_get_pattern_data);

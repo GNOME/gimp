@@ -17,17 +17,14 @@
  */
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
 #include "app_procs.h"
-#include "colormaps.h"
 #include "color_area.h"
 #include "commands.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
-#include "errors.h"
 #include "fileops.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
@@ -54,31 +51,31 @@
 #include "libgimp/gimpintl.h"
 
 /*  local functions  */
-static void  tools_select_update   (GtkWidget *widget,
-				    gpointer   data);
-static gint  tools_button_press    (GtkWidget *widget,
+static void  tools_select_update   (GtkWidget      *widget,
+				    gpointer        data);
+static gint  tools_button_press    (GtkWidget      *widget,
 				    GdkEventButton *bevent,
-				    gpointer   data);
-static void  gdisplay_destroy      (GtkWidget *widget,
-				    GDisplay  *display);
+				    gpointer        data);
+static void  gdisplay_destroy      (GtkWidget      *widget,
+				    GDisplay       *display);
 
-static gint  gdisplay_delete       (GtkWidget *widget,
-				    GdkEvent *,
-				    GDisplay  *display);
+static gint  gdisplay_delete       (GtkWidget      *widget,
+				    GdkEvent       *event,
+				    GDisplay       *display);
 
 static void  toolbox_destroy       (void);
-static gint  toolbox_delete        (GtkWidget *,
-				    GdkEvent *,
-				    gpointer);
-static gint  toolbox_check_device  (GtkWidget *,
-				    GdkEvent *,
-				    gpointer);
+static gint  toolbox_delete        (GtkWidget      *widget,
+				    GdkEvent       *event,
+				    gpointer        data);
+static gint  toolbox_check_device  (GtkWidget      *widget,
+				    GdkEvent       *event,
+				    gpointer        data);
 
-static GdkPixmap *create_pixmap    (GdkWindow  *parent,
-				    GdkBitmap **mask,
-				    char      **data,
-				    int         width,
-				    int         height);
+static GdkPixmap *create_pixmap    (GdkWindow      *parent,
+				    GdkBitmap     **mask,
+				    gchar         **data,
+				    gint            width,
+				    gint            height);
 
 static void     toolbox_set_drag_dest      (GtkWidget *);
 static void     toolbox_drag_data_received (GtkWidget *,
@@ -111,12 +108,10 @@ static int pixmap_colors[8][3] =
 #define ROWS      8
 #define MARGIN    2
 
-/*  Widgets for each tool button--these are used from command.c to activate on
- *  tool selection via both menus and keyboard accelerators.
- */
-GtkWidget   * tool_label;
+/*  global variables  */
 GtkTooltips * tool_tips;
 
+/*  local variables  */
 static GdkColor    colors[12];
 static GtkWidget * toolbox_shell = NULL;
 
@@ -152,7 +147,7 @@ tools_select_update (GtkWidget *widget,
   tool_type = (ToolType) data;
 
   if ((tool_type != -1) && GTK_TOGGLE_BUTTON (widget)->active)
-    tools_select (tool_type);
+    gimp_context_set_tool (gimp_context_get_user (), tool_type);
 }
 
 static gint
@@ -217,7 +212,7 @@ static void
 allocate_colors (GtkWidget *parent)
 {
   GdkColormap *colormap;
-  int i;
+  gint i;
 
   gtk_widget_realize (parent);
   colormap = gdk_window_get_colormap (parent->window);
@@ -253,15 +248,8 @@ create_indicator_area (GtkWidget *parent)
   GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *ind_area;
-  GdkPixmap *default_pixmap;
-  GdkPixmap *swap_pixmap;
 
   gtk_widget_realize (parent);
-
-  default_pixmap = create_pixmap (parent->window, NULL, default_bits,
-				  default_width, default_height);
-  swap_pixmap    = create_pixmap (parent->window, NULL, swap_bits,
-				  swap_width, swap_height);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -383,11 +371,11 @@ create_tools (GtkWidget *parent)
 	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
 
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			      (GtkSignalFunc) tools_select_update,
+			      GTK_SIGNAL_FUNC (tools_select_update),
 			      (gpointer) tool_info[j].tool_id);
 
 	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			      (GtkSignalFunc) tools_button_press,
+			      GTK_SIGNAL_FUNC (tools_button_press),
 			      (gpointer) tool_info[j].tool_id);
 
 	  gtk_tooltips_set_tip (tool_tips, button,
@@ -405,7 +393,7 @@ create_tools (GtkWidget *parent)
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
 	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      (GtkSignalFunc) tools_select_update,
+			      GTK_SIGNAL_FUNC (tools_select_update),
 			      (gpointer) tool_info[j].tool_id);
 	}
     }
@@ -520,7 +508,7 @@ create_toolbox (void)
   GtkWidget *main_vbox;
   GtkWidget *wbox;
   GtkWidget *menubar;
-  GList *device_list;
+  GList *list;
   GtkAccelGroup *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -537,7 +525,7 @@ create_toolbox (void)
 		      NULL);
 
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      (GtkSignalFunc) toolbox_destroy,
+		      GTK_SIGNAL_FUNC (toolbox_destroy),
 		      NULL);
 
   /* We need to know when the current device changes, so we can update
@@ -547,19 +535,17 @@ create_toolbox (void)
    * device would change to that and not change back. So we check
    * manually that all devices have a cursor, before establishing the check.
    */
-  device_list = gdk_input_list_devices ();
-  while (device_list)
+  for (list = gdk_input_list_devices (); list; list = g_list_next (list))
     {
-      if (!((GdkDeviceInfo *)(device_list->data))->has_cursor)
+      if (!((GdkDeviceInfo *) (list->data))->has_cursor)
 	break;
-
-      device_list = device_list->next;
     }
 
-  if (!device_list)		/* all devices have cursor */
+  if (!list)  /* all devices have cursor */
     {
       gtk_signal_connect (GTK_OBJECT (window), "motion_notify_event",
-			  GTK_SIGNAL_FUNC (toolbox_check_device), NULL);
+			  GTK_SIGNAL_FUNC (toolbox_check_device),
+			  NULL);
 
       gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
       gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
@@ -601,8 +587,6 @@ create_toolbox (void)
   gtk_widget_show (wbox);
 
   create_tools (wbox);
-  /*create_tool_label (vbox);*/
-  /*create_progress_area (vbox);*/
   create_color_area (wbox);
   if (show_indicators && (!no_data) )
       create_indicator_area (wbox);
@@ -615,7 +599,7 @@ create_toolbox (void)
 void
 toolbox_free (void)
 {
-  int i;
+  gint i;
 
   session_get_window_info (toolbox_shell, &toolbox_session_info);
 
@@ -623,7 +607,7 @@ toolbox_free (void)
   for (i = 0; i < num_tools; i++)
     {
       if (!tool_info[i].icon_data)
-	gtk_object_sink    (GTK_OBJECT (tool_info[i].tool_widget));
+	gtk_object_sink (GTK_OBJECT (tool_info[i].tool_widget));
     }
   gtk_object_destroy (GTK_OBJECT (tool_tips));
   gtk_object_unref   (GTK_OBJECT (tool_tips));
@@ -705,17 +689,16 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (gdisplay_delete),
 		      gdisp);
-
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "destroy",
-		      (GtkSignalFunc) gdisplay_destroy,
+		      GTK_SIGNAL_FUNC (gdisplay_destroy),
 		      gdisp);
 
   /*  active display callback  */
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "button_press_event",
-		      (GtkSignalFunc) gdisplay_shell_events,
+		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
 		      gdisp);
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "key_press_event",
-		      (GtkSignalFunc) gdisplay_shell_events,
+		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
 		      gdisp);
 
   /*  dnd stuff  */
@@ -759,7 +742,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_events (GTK_WIDGET (gdisp->origin),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
-		      (GtkSignalFunc) gdisplay_origin_button_press,
+		      GTK_SIGNAL_FUNC (gdisplay_origin_button_press),
 		      gdisp);
 
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
@@ -770,20 +753,20 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_events (GTK_WIDGET (gdisp->hrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->hrule)->klass)->motion_notify_event,
+			     GTK_SIGNAL_FUNC (GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->hrule)->klass)->motion_notify_event),
 			     GTK_OBJECT (gdisp->hrule));
   gtk_signal_connect (GTK_OBJECT (gdisp->hrule), "button_press_event",
-		      (GtkSignalFunc) gdisplay_hruler_button_press,
+		      GTK_SIGNAL_FUNC (gdisplay_hruler_button_press),
 		      gdisp);
 
   gdisp->vrule = gtk_vruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->vrule)->klass)->motion_notify_event,
+			     GTK_SIGNAL_FUNC (GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->vrule)->klass)->motion_notify_event),
 			     GTK_OBJECT (gdisp->vrule));
   gtk_signal_connect (GTK_OBJECT (gdisp->vrule), "button_press_event",
-		      (GtkSignalFunc) gdisplay_vruler_button_press,
+		      GTK_SIGNAL_FUNC (gdisplay_vruler_button_press),
 		      gdisp);
 
   /* The nav window button */
@@ -793,34 +776,34 @@ create_display_shell (GDisplay* gdisp,
   gtk_container_add(GTK_CONTAINER(evbox),navhbox);
   GTK_WIDGET_UNSET_FLAGS (evbox, GTK_CAN_FOCUS);
   gtk_signal_connect (GTK_OBJECT (evbox), "button_press_event",
-                     (GtkSignalFunc) nav_popup_click_handler,
-                     gdisp);
+		      GTK_SIGNAL_FUNC (nav_popup_click_handler),
+		      gdisp);
 
   gdisp->hsb = gtk_hscrollbar_new (gdisp->hsbdata);
   GTK_WIDGET_UNSET_FLAGS (gdisp->hsb, GTK_CAN_FOCUS);
   gdisp->vsb = gtk_vscrollbar_new (gdisp->vsbdata);
   GTK_WIDGET_UNSET_FLAGS (gdisp->vsb, GTK_CAN_FOCUS);
 
-
-  gdisp->qmaskoff = gtk_radio_button_new(group);
+  /* The qmask buttons buttons */
+  gdisp->qmaskoff = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskoff));
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), FALSE);
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "toggled",
-                     (GtkSignalFunc) qmask_deactivate,
-                     gdisp);
+		      GTK_SIGNAL_FUNC (qmask_deactivate),
+		      gdisp);
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskoff), "button_press_event",
-                     (GtkSignalFunc) qmask_click_handler,
-                     gdisp);
+		      GTK_SIGNAL_FUNC (qmask_click_handler),
+		      gdisp);
 
-  gdisp->qmaskon = gtk_radio_button_new(group);
+  gdisp->qmaskon = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskon));
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskon), FALSE);
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "toggled",
-                     (GtkSignalFunc) qmask_activate,
-                     gdisp);
+		      GTK_SIGNAL_FUNC (qmask_activate),
+		      gdisp);
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "button_press_event",
-                     (GtkSignalFunc) qmask_click_handler,
-                     gdisp);
+		      GTK_SIGNAL_FUNC (qmask_click_handler),
+		      gdisp);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), TRUE);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);
@@ -868,11 +851,11 @@ create_display_shell (GDisplay* gdisp,
 
   /* set the active display before doing any other canvas event processing  */
   gtk_signal_connect (GTK_OBJECT (gdisp->canvas), "event",
-		      (GtkSignalFunc) gdisplay_shell_events,
+		      GTK_SIGNAL_FUNC (gdisplay_shell_events),
 		      gdisp);
 
   gtk_signal_connect (GTK_OBJECT (gdisp->canvas), "event",
-		      (GtkSignalFunc) gdisplay_canvas_events,
+		      GTK_SIGNAL_FUNC (gdisplay_canvas_events),
 		      gdisp);
 
   /*  pack all the widgets  */

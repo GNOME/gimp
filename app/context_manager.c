@@ -15,6 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "appenv.h"
+#include "colormaps.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -23,6 +25,8 @@
 
 static GimpContext * global_tool_context;
 
+#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
+                           GIMP_CONTEXT_PAINT_MODE_MASK
 
 static void
 context_manager_display_changed (GimpContext *context,
@@ -50,10 +54,45 @@ context_manager_tool_changed (GimpContext *context,
       if ((tool_context = tool_info[tool_type].tool_context))
 	{
 	  gimp_context_copy_args (tool_context, gimp_context_get_user (),
-				  GIMP_CONTEXT_PAINT_ARGS_MASK);
+				  PAINT_OPTIONS_MASK);
 	  gimp_context_set_parent (tool_context, gimp_context_get_user ());
 	}
     }
+
+  if (! GTK_TOGGLE_BUTTON (tool_info[tool_type].tool_widget)->active)
+    {
+      gtk_signal_handler_block_by_data
+	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
+
+      gtk_widget_activate (tool_info[tool_type].tool_widget);
+
+      gtk_signal_handler_unblock_by_data
+	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
+    }
+
+  tools_select (tool_type);
+}
+
+static void
+context_manager_foreground_changed (GimpContext *context,
+				    gint         r,
+				    gint         g,
+				    gint         b,
+				    gpointer     data)
+{
+  if (no_interface == FALSE)
+    foreground_pixel = get_color (r, g, b);
+}
+
+static void
+context_manager_background_changed (GimpContext *context,
+				    gint         r,
+				    gint         g,
+				    gint         b,
+				    gpointer     data)
+{
+  if (no_interface == FALSE)
+    background_pixel = get_color (r, g, b);
 }
 
 void
@@ -80,9 +119,17 @@ context_manager_init (void)
 		      GTK_SIGNAL_FUNC (context_manager_display_changed),
 		      NULL);
 
-  /*  Update the per-tool paint options  */
+  /*  Update the tool system  */
   gtk_signal_connect (GTK_OBJECT (user_context), "tool_changed",
 		      GTK_SIGNAL_FUNC (context_manager_tool_changed),
+		      NULL);
+
+  /*  Update color-related stuff  */
+  gtk_signal_connect (GTK_OBJECT (user_context), "foreground_changed",
+		      GTK_SIGNAL_FUNC (context_manager_foreground_changed),
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (user_context), "background_changed",
+		      GTK_SIGNAL_FUNC (context_manager_background_changed),
 		      NULL);
 
   /*  Make the user contect the currently active context  */
@@ -94,10 +141,7 @@ context_manager_init (void)
   global_tool_context = gimp_context_new ("Global Tool Context", user_context);
 
   /*  TODO: add foreground, background, brush, pattern, gradient  */
-  gimp_context_define_args (global_tool_context,
-			    GIMP_CONTEXT_OPACITY_MASK |
-			    GIMP_CONTEXT_PAINT_MODE_MASK,
-			    FALSE);
+  gimp_context_define_args (global_tool_context, PAINT_OPTIONS_MASK, FALSE);
 
   /*  Initialize the paint tools' private contexts  */
   for (i = 0; i < num_tools; i++)
@@ -177,7 +221,7 @@ context_manager_set_global_paint_options (gboolean global)
 	}
 
       gimp_context_copy_args (global_tool_context, gimp_context_get_user (),
-			      GIMP_CONTEXT_PAINT_ARGS_MASK);
+			      PAINT_OPTIONS_MASK);
       gimp_context_set_parent (global_tool_context, gimp_context_get_user ());
     }
   else

@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include "gimpcontext.h"
 #include "gradient.h"
 #include "gradient_header.h"
 
@@ -299,7 +300,7 @@ gradients_get_gradient_data_invoker (Argument *args)
   gchar *name;
   gint32 sample_size;
   gdouble *values = NULL;
-  gradient_t *oldgrad, *grad = NULL;
+  gradient_t *grad = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -331,7 +332,7 @@ gradients_get_gradient_data_invoker (Argument *args)
 	    }
 	}
       else
-	success = (grad = curr_gradient) != NULL;
+	success = (grad = gimp_context_get_gradient (NULL)) != NULL;
     
       if (success)
 	{
@@ -345,12 +346,9 @@ gradients_get_gradient_data_invoker (Argument *args)
     
 	  pv = values = g_new (gdouble, i * 4);
     
-	  oldgrad = curr_gradient;
-	  curr_gradient = grad;
-    
 	  while (i--)
 	    {
-	      grad_get_color_at (pos, &r, &g, &b, &a);
+	      gradient_get_color_at (grad, pos, &r, &g, &b, &a);
     
 	      *pv++ = r;
 	      *pv++ = g;
@@ -359,8 +357,6 @@ gradients_get_gradient_data_invoker (Argument *args)
     
 	      pos += delta;
 	    }
-    
-	  curr_gradient = oldgrad;
 	}
     }
 

@@ -16,13 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "appenv.h"
-#include "actionarea.h"
 #include "color_panel.h"
 #include "color_picker.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimphelp.h"
+#include "gimpui.h"
 #include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
@@ -38,6 +37,7 @@
 /*  the color picker structures  */
 
 typedef struct _ColorPickerOptions ColorPickerOptions;
+
 struct _ColorPickerOptions
 {
   ToolOptions  tool_options;
@@ -60,6 +60,7 @@ struct _ColorPickerOptions
 };
 
 typedef struct _ColorPickerTool ColorPickerTool;
+
 struct _ColorPickerTool
 {
   DrawCore *core;       /*  Core select object  */
@@ -203,7 +204,7 @@ color_picker_options_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->average_radius_w), "value_changed",
-		      (GtkSignalFunc) tool_options_double_adjustment_update,
+		      GTK_SIGNAL_FUNC (tool_options_double_adjustment_update),
 		      &options->average_radius);
   gtk_widget_show (scale);
   gtk_widget_show (table);
@@ -215,7 +216,7 @@ color_picker_options_new (void)
 				options->update_active_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (options->update_active_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
 		      &options->update_active);
   gtk_widget_show (options->update_active_w);
 
@@ -230,11 +231,6 @@ color_picker_button_press (Tool           *tool,
   GDisplay * gdisp;
   ColorPickerTool *cp_tool;
   gint x, y;
-
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Close"), color_picker_info_window_close_callback, NULL, NULL },
-  };
 
   gdisp = (GDisplay *) gdisp_ptr;
   cp_tool = (ColorPickerTool *) tool->private;
@@ -295,9 +291,13 @@ color_picker_button_press (Tool           *tool,
       gtk_widget_show (color_panel->color_panel_widget);
 
       /*  create the action area  */
-      action_items[0].user_data = color_picker_info;
-      build_action_area (GTK_DIALOG (color_picker_info->shell),
-			 action_items, 1, 0);
+      gimp_dialog_create_action_area
+	(GTK_DIALOG (color_picker_info->shell),
+
+	 _("Close"), color_picker_info_window_close_callback,
+	 color_picker_info, NULL, TRUE, FALSE,
+
+	 NULL);
     }
 
   /*  Keep the coordinates of the target  */
@@ -520,35 +520,38 @@ pick_color_do (GimpImage    *gimage,
 	    {
 	      count++;
 
-	      color_avg[RED_PIX] += tmp_color[RED_PIX];
+	      color_avg[RED_PIX]   += tmp_color[RED_PIX];
 	      color_avg[GREEN_PIX] += tmp_color[GREEN_PIX];
-	      color_avg[BLUE_PIX] += tmp_color[BLUE_PIX];
+	      color_avg[BLUE_PIX]  += tmp_color[BLUE_PIX];
 	      if (has_alpha)
 		color_avg[ALPHA_PIX] += tmp_color[3];
 
-	      g_free(tmp_color);
+	      g_free (tmp_color);
 	    }
 
-      color[RED_PIX] = (guchar) (color_avg[RED_PIX] / count);
+      color[RED_PIX]   = (guchar) (color_avg[RED_PIX] / count);
       color[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
-      color[BLUE_PIX] = (guchar) (color_avg[BLUE_PIX] / count);
+      color[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX] / count);
       if (has_alpha)
 	color[ALPHA_PIX] = (guchar) (color_avg[3] / count);
       
       is_indexed = FALSE;
     }
 
-  col_value[RED_PIX] = color[RED_PIX];
+  col_value[RED_PIX]   = color[RED_PIX];
   col_value[GREEN_PIX] = color[GREEN_PIX];
-  col_value[BLUE_PIX] = color[BLUE_PIX];
+  col_value[BLUE_PIX]  = color[BLUE_PIX];
   if (has_alpha)
     col_value[ALPHA_PIX] = color[3];
   if (is_indexed)
     col_value[4] = color[4];
 
   if (update_active)
-    palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
-			      col_value [BLUE_PIX], final);
+    palette_set_active_color (col_value [RED_PIX],
+			      col_value [GREEN_PIX],
+			      col_value [BLUE_PIX],
+			      final);
+
   g_free (color);
   return TRUE;
 }
@@ -581,7 +584,7 @@ colorpicker_draw (Tool *tool)
   gint radiusx, radiusy;
   gint cx, cy;
 
-  if(!color_picker_options->sample_average)
+  if (! color_picker_options->sample_average)
     return;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;

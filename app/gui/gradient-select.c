@@ -31,7 +31,6 @@
  * so every thing has to go into the strcuture and we have to have a list 
  * the structures so we can find which one we are taking about.
  */
-
 #include "config.h"
 
 #include <math.h>
@@ -48,25 +47,22 @@
 #include "datafiles.h"
 #include "dialog_handler.h"
 #include "errors.h"
-#include "general.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
-#include "indicator_area.h"
 #include "interface.h"
-#include "palette.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
 
-GSList *grad_active_dialogs = NULL; /* List of active dialogs */
-GradSelectP gradient_select_dialog = NULL; /* The main selection dialog */
+GSList      *grad_active_dialogs    = NULL;  /* List of active dialogs    */
+GradSelectP  gradient_select_dialog = NULL;  /* The main selection dialog */
 
 static void grad_select_close_callback (GtkWidget *, gpointer);
 static void grad_select_edit_callback  (GtkWidget *, gpointer);
 static void grad_change_callbacks      (GradSelectP gsp, gint closing);
-extern void import_palette_grad_update (gradient_t *); /* ALT Hmm... */
 
 void
 grad_free_gradient_editor (void)
@@ -80,17 +76,17 @@ void
 grad_sel_rename_all (gint        n,
 		     gradient_t *grad)
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
+
       gtk_clist_set_text (GTK_CLIST (gsp->clist), n, 1, grad->name);  
-      list = g_slist_next (list);
     }
 
-  if(gradient_select_dialog)
+  if (gradient_select_dialog)
     {
       gtk_clist_set_text (GTK_CLIST (gradient_select_dialog->clist),
 			  n, 1, grad->name);  
@@ -101,16 +97,16 @@ void
 grad_sel_new_all (gint        pos,
 		  gradient_t *grad)
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
+
       gtk_clist_freeze (GTK_CLIST (gsp->clist));
       ed_insert_in_gradients_listbox (gsp->gc, gsp->clist, grad, pos, 1);
       gtk_clist_thaw (GTK_CLIST (gsp->clist));
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
@@ -127,16 +123,16 @@ void
 grad_sel_copy_all (gint        pos,
 		   gradient_t *grad)
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
+
       gtk_clist_freeze (GTK_CLIST (gsp->clist));
       ed_insert_in_gradients_listbox (gsp->gc, gsp->clist, grad, pos, 1);
       gtk_clist_thaw (GTK_CLIST (gsp->clist));
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
@@ -152,14 +148,14 @@ grad_sel_copy_all (gint        pos,
 void
 grad_sel_delete_all (gint n)
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
+
       gtk_clist_remove (GTK_CLIST (gsp->clist), n);
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
@@ -169,18 +165,17 @@ grad_sel_delete_all (gint n)
 }
 
 void
-grad_sel_free_all()
+grad_sel_free_all ()
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
       gtk_clist_freeze (GTK_CLIST (gsp->clist));
       gtk_clist_clear (GTK_CLIST (gsp->clist));
       gtk_clist_thaw (GTK_CLIST (gsp->clist));
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
@@ -194,11 +189,11 @@ grad_sel_free_all()
 void
 grad_sel_refill_all ()
 {
-  GSList *list = grad_active_dialogs;
+  GSList *list;
   GradSelectP gsp; 
   int select_pos = -1;
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
       gsp->grad = curr_gradient;
@@ -207,8 +202,6 @@ grad_sel_refill_all ()
 					     curr_gradient); 
       if (select_pos != -1) 
 	gtk_clist_moveto (GTK_CLIST (gsp->clist), select_pos, 0, 0.0, 0.0); 
-
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
@@ -228,25 +221,24 @@ sel_update_dialogs (gint        row,
 		    gradient_t *grad)
 {
   /* Go around each updating the names and hopefully the previews */
-  GSList *list = grad_active_dialogs;
   GradSelectP gsp; 
+  GSList *list;
 
-  while (list)
+  for (list = grad_active_dialogs; list; list = g_slist_next (list))
     {
       gsp = (GradSelectP) list->data;
+
       gtk_clist_set_text (GTK_CLIST (gsp->clist), row, 1, grad->name);  
       /* Are we updating one that is selected in a popup dialog? */
       if (grad == gsp->grad)
 	grad_change_callbacks (gsp, 0);
-      list = g_slist_next (list);
     }
 
   if (gradient_select_dialog)
     gtk_clist_set_text (GTK_CLIST (gradient_select_dialog->clist),
 			row, 1, grad->name);  
 
-  gradient_area_update ();  /*  update the indicator_area  */
-  import_palette_grad_update (grad);
+  gimp_context_update_gradients (grad);
 }
 
 static void
@@ -261,12 +253,11 @@ sel_list_item_update (GtkWidget      *widget,
   GSList* tmp = g_slist_nth (gradients_list, row);
   gsp->grad = (gradient_t *) (tmp->data);
 
-  /* If main one then make it the current selection */
+  /*  If main one then make it the current selection  */
   if (gsp == gradient_select_dialog)
     {
       grad_set_grad_to_name (gsp->grad->name);
-      gradient_area_update ();  /*  update the indicator_area  */
-      import_palette_grad_update (gsp->grad);
+      gimp_context_set_gradient (gimp_context_get_user (), gsp->grad);
     }
   else
     {
@@ -276,15 +267,15 @@ sel_list_item_update (GtkWidget      *widget,
 
 static void
 grad_select_edit_callback (GtkWidget *widget,
-			   gpointer   client_data)
+			   gpointer   data)
 {
   GradSelectP gsp;
 
-  gsp = (GradSelectP) client_data;
+  gsp = (GradSelectP) data;
 
   grad_create_gradient_editor_init (TRUE);
 
-  /* Set the current gradient in this dialog to the "real current"*/
+  /*  Set the current gradient in this dialog to the "real current"  */
   if (gsp && gsp->grad)
     grad_set_grad_to_name (gsp->grad->name);
 }
@@ -313,36 +304,38 @@ gradients_check_dialogs (void)
   gchar * name;
   ProcRecord *prec = NULL;
 
-  list = grad_active_dialogs;
-
-  while (list)
+  for (list = grad_active_dialogs; list;)
     {
       gsp = (GradSelectP) list->data;
-      list = list->next;
+
+      list = g_slist_next (list);
 
       name = gsp->callback_name;
-      prec = procedural_db_lookup (name);
 
-      if (!prec)
+      if (name)
 	{
-	  grad_active_dialogs = g_slist_remove (grad_active_dialogs, gsp);
+	  prec = procedural_db_lookup (name);
 
-	  /* Can alter grad_active_dialogs list*/
-	  grad_select_close_callback (NULL, gsp); 
+	  if (!prec)
+	    {
+	      grad_active_dialogs = g_slist_remove (grad_active_dialogs, gsp);
+
+	      /* Can alter grad_active_dialogs list*/
+	      grad_select_close_callback (NULL, gsp); 
+	    }
 	}
     }
 }
 
 static void
-grad_change_callbacks(GradSelectP gsp,
-		      gint        closing)
+grad_change_callbacks (GradSelectP gsp,
+		       gint        closing)
 {
   gchar * name;
   ProcRecord *prec = NULL;
   gradient_t *grad;
   int nreturn_vals;
   static int busy = 0;
-  gradient_t *oldgrad = curr_gradient;
 
   /* Any procs registered to callback? */
   Argument *return_vals; 
@@ -354,7 +347,7 @@ grad_change_callbacks(GradSelectP gsp,
   name = gsp->callback_name;
   grad = gsp->grad;
 
-  /* If its still registered run it */
+  /*  If its still registered run it  */
   prec = procedural_db_lookup (name);
 
   if (prec && grad)
@@ -369,11 +362,9 @@ grad_change_callbacks(GradSelectP gsp,
       values = g_new (gdouble, 4 * i);
       pv     = values;
 
-      curr_gradient = grad;
-      
       while (i--)
 	{
-	  grad_get_color_at (pos, &r, &g, &b, &a);
+	  gradient_get_color_at (grad, pos, &r, &g, &b, &a);
 
 	  *pv++ = r;
 	  *pv++ = g;
@@ -382,8 +373,6 @@ grad_change_callbacks(GradSelectP gsp,
 
 	  pos += delta;
 	}
-
-      curr_gradient = oldgrad;
 
       return_vals = procedural_db_run_proc (name,
 					    &nreturn_vals,
@@ -403,21 +392,21 @@ grad_change_callbacks(GradSelectP gsp,
 
 static void
 grad_select_close_callback (GtkWidget *widget,
-			    gpointer   client_data)
+			    gpointer   data)
 {
   GradSelectP gsp;
 
-  gsp = (GradSelectP) client_data;
+  gsp = (GradSelectP) data;
 
   if (GTK_WIDGET_VISIBLE (gsp->shell))
     gtk_widget_hide (gsp->shell);
 
   /* Free memory if poping down dialog which is not the main one */
-  if(gsp != gradient_select_dialog)
+  if (gsp != gradient_select_dialog)
     {
-      grad_change_callbacks(gsp,1);
-      gtk_widget_destroy(gsp->shell); 
-      grad_select_free(gsp); 
+      grad_change_callbacks (gsp, 1);
+      gtk_widget_destroy (gsp->shell); 
+      grad_select_free (gsp); 
     }
 }
 
@@ -500,16 +489,15 @@ gsel_new_selection (gchar *title,
 
   if (initial_gradient && strlen (initial_gradient))
     {
-      list = gradients_list;
-      while (list) 
+      for (list = gradients_list; list; list = g_slist_next (list))
 	{
-	  grad = list->data;
+	  grad = (gradient_t *) list->data;
+
 	  if (strcmp (grad->name, initial_gradient) == 0) 
 	    {
 	      /* We found it! */
 	      break;
 	    }
-	  list = g_slist_next (list);
 	} 
     }
 
@@ -555,7 +543,8 @@ grad_create_gradient_editor (void)
 	  gtk_widget_show (gradient_select_dialog->shell);
 	}
       else
-	gdk_window_raise (gradient_select_dialog->shell->window);
-      return;
+	{
+	  gdk_window_raise (gradient_select_dialog->shell->window);
+	}
     }
 }

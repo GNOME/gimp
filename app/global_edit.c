@@ -17,7 +17,6 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "drawable.h"
 #include "image_new.h"
 #include "floating_sel.h"
@@ -36,7 +35,8 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
-typedef enum {
+typedef enum
+{
   PASTE,
   PASTE_INTO,
   PASTE_AS_NEW
@@ -44,6 +44,7 @@ typedef enum {
 
 /*  The named paste dialog  */
 typedef struct _PasteNamedDlg PasteNamedDlg;
+
 struct _PasteNamedDlg
 {
   GtkWidget   *shell;
@@ -690,11 +691,18 @@ paste_named_buffer (GDisplay *gdisp)
   GtkWidget *button;
   gint i;
 
-  static ActionAreaItem paste_action_items[] =
+  static gchar *paste_action_labels[] =
   {
-    { N_("Paste"), named_buffer_paste_callback, NULL, NULL },
-    { N_("Paste Into"), named_buffer_paste_into_callback, NULL, NULL },
-    { N_("Paste As New"), named_buffer_paste_as_new_callback, NULL, NULL }
+    N_("Paste"),
+    N_("Paste Into"),
+    N_("Paste As New"),
+  };
+
+  static GtkSignalFunc paste_action_functions[] =
+  {
+    named_buffer_paste_callback,
+    named_buffer_paste_into_callback,
+    named_buffer_paste_as_new_callback,
   };
 
   pn_dlg = g_new (PasteNamedDlg, 1);
@@ -742,12 +750,12 @@ paste_named_buffer (GDisplay *gdisp)
   gtk_container_set_border_width (GTK_CONTAINER (bbox), 6);
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  for (i=0; i < 3; i++)
+  for (i = 0; i < 3; i++)
     {
-      button = gtk_button_new_with_label (gettext (paste_action_items[i].label));
+      button = gtk_button_new_with_label (gettext (paste_action_labels[i]));
       gtk_container_add (GTK_CONTAINER (bbox), button);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) paste_action_items[i].callback,
+			  (GtkSignalFunc) paste_action_functions[i],
 			  pn_dlg);
       gtk_widget_show (button);
     }

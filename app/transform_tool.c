@@ -42,28 +42,28 @@ struct _TransformOptions
   ToolType     type_d;
   GtkWidget   *type_w[4];  /* 4 radio buttons */
 
-  int          smoothing;
-  int          smoothing_d;
+  gboolean     smoothing;
+  gboolean     smoothing_d;
   GtkWidget   *smoothing_w;
 
-  int	       direction;
-  int          direction_d;
+  gint	       direction;
+  gint         direction_d;
   GtkWidget   *direction_w[2];  /* 2 radio buttons */
 
-  int          show_grid;
-  int          show_grid_d;
+  gboolean     show_grid;
+  gboolean     show_grid_d;
   GtkWidget   *show_grid_w;
 
-  int	       grid_size;
-  int          grid_size_d;
+  gint	       grid_size;
+  gint         grid_size_d;
   GtkObject   *grid_size_w;
 
-  int	       clip;
-  int          clip_d;
+  gint	       clip;
+  gint         clip_d;
   GtkWidget   *clip_w;
 
-  int          showpath;
-  int          showpath_d;
+  gboolean     showpath;
+  gboolean     showpath_d;
   GtkWidget   *showpath_w;
 };
 
@@ -407,7 +407,7 @@ transform_change_type (int new_type)
       /*  change the type, free the old tool, create the new tool  */
       transform_options->type = new_type;
 
-      tools_select (transform_options->type);
+      gimp_context_set_tool (gimp_context_get_user (), transform_options->type);
     }
 }
 

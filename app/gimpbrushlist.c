@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -35,56 +34,46 @@
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "brush_header.h"
-#include "brush_select.h"
-#include "colormaps.h"
 #include "datafiles.h"
-#include "devices.h"
-#include "errors.h"
 #include "gimprc.h"
 #include "gimpsignal.h"
-#include "menus.h"
-#include "paint_core.h"
-#include "paint_options.h"
 #include "gimplist.h"
 #include "gimpbrush.h"
 #include "gimplistP.h"
 #include "gimpbrushlistP.h"
-#include "dialog_handler.h"
 #include "general.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
-GimpBrush     *active_brush = NULL;
-GimpBrushList *brush_list   = NULL;
+GimpBrushList    *brush_list     = NULL;
 
-BrushSelectP   brush_select_dialog = NULL;
+/*  local variables  */
+static GimpBrush *standard_brush = NULL;
 
+/*  local function prototypes  */
+static void   brushes_brush_load           (gchar         *filename);
 
-/*  static variables  */
-static int          have_default_brush = 0;
+static gint   brush_compare_func           (gconstpointer  first,
+					    gconstpointer  second);
 
-/*  static function prototypes  */
-static void   create_default_brush   (void);
-static gint   brush_compare_func     (gconstpointer, gconstpointer);
-
-static void brush_load                    (char *filename);
-
-/* class functions */
+/*  class functions  */
 static GimpObjectClass* parent_class;
 
 static void
-gimp_brush_list_add_func(GimpList* list, gpointer val)
+gimp_brush_list_add_func (GimpList *list,
+			  gpointer  val)
 {
   list->list=g_slist_insert_sorted (list->list, val, brush_compare_func);
-  GIMP_BRUSH_LIST(list)->num_brushes++;
+  GIMP_BRUSH_LIST (list)->num_brushes++;
 }
 
 static void
-gimp_brush_list_remove_func(GimpList* list, gpointer val)
+gimp_brush_list_remove_func (GimpList *list,
+			     gpointer  val)
 {
-  list->list=g_slist_remove(list->list, val);
-  GIMP_BRUSH_LIST(list)->num_brushes--;
+  list->list=g_slist_remove (list->list, val);
+  GIMP_BRUSH_LIST (list)->num_brushes--;
 }
 
 static void
@@ -99,255 +88,235 @@ gimp_brush_list_class_init (GimpBrushListClass *klass)
 }
 
 void
-gimp_brush_list_init(GimpBrushList *list)
+gimp_brush_list_init (GimpBrushList *list)
 {
   list->num_brushes = 0;
 }
 
-GtkType gimp_brush_list_get_type(void)
+GtkType
+gimp_brush_list_get_type (void)
 {
-  static GtkType type=0;
-  if(!type)
-  {
-    GtkTypeInfo info={
-      "GimpBrushList",
-      sizeof(GimpBrushList),
-      sizeof(GimpBrushListClass),
-      (GtkClassInitFunc)gimp_brush_list_class_init,
-      (GtkObjectInitFunc)gimp_brush_list_init,
-      /* reserved_1 */ NULL,
-      /* reserved_2 */NULL,
-      (GtkClassInitFunc) NULL};
-    type=gtk_type_unique(gimp_list_get_type(), &info);
-  }
+  static GtkType type = 0;
+
+  if (!type)
+    {
+      GtkTypeInfo info =
+      {
+	"GimpBrushList",
+	sizeof (GimpBrushList),
+	sizeof (GimpBrushListClass),
+	(GtkClassInitFunc) gimp_brush_list_class_init,
+	(GtkObjectInitFunc) gimp_brush_list_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL
+      };
+
+      type = gtk_type_unique (gimp_list_get_type (), &info);
+    }
+
   return type;
 }
 
 GimpBrushList *
 gimp_brush_list_new ()
 {
-  GimpBrushList *list=GIMP_BRUSH_LIST(gtk_type_new(gimp_brush_list_get_type()));
-  GIMP_LIST(list)->type = GIMP_TYPE_BRUSH;
-  GIMP_LIST(list)->weak = 0;
+  GimpBrushList *list;
+
+  list = GIMP_BRUSH_LIST (gtk_type_new (gimp_brush_list_get_type ()));
+
+  GIMP_LIST (list)->type = GIMP_TYPE_BRUSH;
+  GIMP_LIST (list)->weak = FALSE;
   
   return list;
 }
-
 
 /*  function declarations  */
 void
 brushes_init (int no_data)
 {
-
   if (brush_list)
-    brushes_free();
+    brushes_free ();
   else
-    brush_list = gimp_brush_list_new();
+    brush_list = gimp_brush_list_new ();
 
-  if (brush_path == NULL || (no_data))
-    create_default_brush ();
-  else
-    datafiles_read_directories (brush_path,(datafile_loader_t)brush_load, 0);
+  if (brush_path != NULL && !no_data)
+    datafiles_read_directories (brush_path,
+				(datafile_loader_t) brushes_brush_load, 0);
+
+  gimp_context_refresh_brushes ();
+}
+
+GimpBrush *
+brushes_get_standard_brush (void)
+{
+  if (! standard_brush)
+    {
+      standard_brush =
+	GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
+
+      /*  set ref_cout to 2 --> never swap the standard brush  */
+      gtk_object_ref (GTK_OBJECT (standard_brush));
+      gtk_object_ref (GTK_OBJECT (standard_brush));
+    }
+
+  return standard_brush;
 }
 
 static void
-brush_load(char *filename)
+brushes_brush_load (gchar *filename)
 {
-  if (strcmp(&filename[strlen(filename) - 4], ".gbr") == 0)
+  if (strcmp (&filename[strlen (filename) - 4], ".gbr") == 0)
     {
       GimpBrush *brush;
-      brush = gimp_brush_new(filename);
+      brush = gimp_brush_new (filename);
       if (brush != NULL)
-	gimp_brush_list_add(brush_list, brush);
+	gimp_brush_list_add (brush_list, brush);
       else
-	g_message("Warning: failed to load brush \"%s\"", filename);
+	g_message ("Warning: failed to load brush \"%s\"", filename);
     }
-  else if (strcmp(&filename[strlen(filename) - 4], ".vbr") == 0)
+  else if (strcmp (&filename[strlen(filename) - 4], ".vbr") == 0)
     {
       GimpBrushGenerated *brush;
-      brush = gimp_brush_generated_load(filename);
+      brush = gimp_brush_generated_load (filename);
       if (brush != NULL)
-	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
-	g_message("Warning: failed to load brush \"%s\"", filename);
+	g_message ("Warning: failed to load brush \"%s\"", filename);
     }
-  else if (strcmp(&filename[strlen(filename) - 4], ".gpb") == 0)
+  else if (strcmp (&filename[strlen (filename) - 4], ".gpb") == 0)
     {
       GimpBrushPipe *brush;
-      brush = gimp_brush_pixmap_load(filename);
+      brush = gimp_brush_pixmap_load (filename);
       if (brush != NULL)
-	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
 	g_message("Warning: failed to load pixmap brush \"%s\"", filename);
     }
-  else if (strcmp(&filename[strlen(filename) - 4], ".gih") == 0)
+  else if (strcmp (&filename[strlen (filename) - 4], ".gih") == 0)
     {
       GimpBrushPipe *brush;
-      brush = gimp_brush_pipe_load(filename);
+      brush = gimp_brush_pipe_load (filename);
       if (brush != NULL)
-	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
 	g_message("Warning: failed to load pixmap pipe \"%s\"", filename);
     }
 }
 
 static gint
-brush_compare_func (gconstpointer first, gconstpointer second)
+brush_compare_func (gconstpointer first,
+		    gconstpointer second)
 {
-  return strcmp (((const GimpBrush *)first)->name, 
-		 ((const GimpBrush *)second)->name);
+  return strcmp (((const GimpBrush *) first)->name, 
+		 ((const GimpBrush *) second)->name);
 }
-
 
 void
 brushes_free ()
 {
   if (brush_list)
-  {
-    while (GIMP_LIST(brush_list)->list)
     {
-      GimpBrush * b = GIMP_BRUSH (GIMP_LIST(brush_list)->list->data);
-      if (GIMP_IS_BRUSH_GENERATED (b))
+      while (GIMP_LIST (brush_list)->list)
 	{
-	  char * filename = g_strdup (b->filename);
-	  if (!filename)
-	  {
-	      char *home;
-	      char *local_path;
-	      char *first_token;
-	      char *token;
-	      char *path;
-	      FILE *tmp_fp;
-	      int  unum = 0;
-
-	      if (brush_vbr_path)
-		{
-		  /* Get the first path specified in the
-		   * brush-vbr-path gimprc variable.
-		   */
-		  home = g_get_home_dir ();
-		  local_path = g_strdup (brush_vbr_path);
-		  first_token = local_path;
-		  token = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
-
-		  if (token)
-		    {
-		      if (*token == '~')
-			if (home != NULL)
-			  path = g_strconcat (home, token + 1, NULL);
-			else
-			  path = g_strdup ("");	/* Better than nothing */
-		      else
-			path = g_strdup (token);
-									 
-		      filename = g_strconcat (path, G_DIR_SEPARATOR_S, b->name, ".vbr", NULL);
-		      while ((tmp_fp = fopen(filename, "r")))
-		      { /* make sure we don't overite an existing brush */
-			fclose(tmp_fp);
-			g_free(filename);
-			filename = g_strdup_printf("%s%s%s_%d.vbr", path,
-						   G_DIR_SEPARATOR_S, b->name,
-						   unum);
-			unum++;
-		      }
-		      g_free (path);
-		    }
-		  g_free (local_path);
-		}
-	  }
-	  else
-	  {
-	   if (strcmp(&filename[strlen(filename) - 4], ".vbr"))
-	     {
-	       g_free (filename);
-	       filename = NULL;
-	     }
-	  }
-
-	  /* okay we are ready to try to save the generated file*/
-	  if (filename)
+	  GimpBrush * b = GIMP_BRUSH (GIMP_LIST (brush_list)->list->data);
+	  if (GIMP_IS_BRUSH_GENERATED (b))
 	    {
-	      gimp_brush_generated_save ( GIMP_BRUSH_GENERATED(b), filename);
-	      g_free (filename);
+	      gchar *filename = g_strdup (b->filename);
+	      if (!filename)
+		{
+		  gchar *home;
+		  gchar *local_path;
+		  gchar *first_token;
+		  gchar *token;
+		  gchar *path;
+		  FILE *tmp_fp;
+		  gint  unum = 0;
+
+		  if (brush_vbr_path)
+		    {
+		      /* Get the first path specified in the
+		       * brush-vbr-path gimprc variable.
+		       */
+		      home = g_get_home_dir ();
+		      local_path = g_strdup (brush_vbr_path);
+		      first_token = local_path;
+		      token = xstrsep (&first_token, G_SEARCHPATH_SEPARATOR_S);
+
+		      if (token)
+			{
+			  if (*token == '~')
+			    if (home != NULL)
+			      path = g_strconcat (home, token + 1, NULL);
+			    else
+			      path = g_strdup ("");	/* Better than nothing */
+			  else
+			    path = g_strdup (token);
+									 
+			  filename = g_strconcat (path, G_DIR_SEPARATOR_S,
+						  b->name, ".vbr", NULL);
+			  while ((tmp_fp = fopen (filename, "r")))
+			    { /* make sure we don't overite an existing brush */
+			      fclose (tmp_fp);
+			      g_free (filename);
+			      filename = g_strdup_printf ("%s%s%s_%d.vbr", path,
+							  G_DIR_SEPARATOR_S,
+							  b->name, unum);
+			      unum++;
+			    }
+			  g_free (path);
+			}
+		      g_free (local_path);
+		    }
+		}
+	      else
+		{
+		  if (strcmp (&filename[strlen (filename) - 4], ".vbr"))
+		    {
+		      g_free (filename);
+		      filename = NULL;
+		    }
+		}
+
+	      /*  okay we are ready to try to save the generated file  */
+	      if (filename)
+		{
+		  gimp_brush_generated_save (GIMP_BRUSH_GENERATED (b), filename);
+		  g_free (filename);
+		}
 	    }
+
+	  gimp_brush_list_remove (brush_list, b);
 	}
-
-      gimp_brush_list_remove(brush_list, b);
     }
-  }
-
-  have_default_brush = 0;
-}
-
-
-void
-brush_select_dialog_free ()
-{
-  if (brush_select_dialog)
-    {
-      brush_select_free (brush_select_dialog);
-      brush_select_dialog = NULL;
-    }
-}
-
-
-GimpBrush *
-get_active_brush ()
-{
-  if (have_default_brush)
-    {
-      have_default_brush = 0;
-      if (!active_brush)
-	gimp_fatal_error (_("get_active_brush(): Specified default brush not found!"));
-    }
-  else if (! active_brush && brush_list)
-    /* need a gimp_list_get_first() type function */
-    select_brush((GimpBrush *) GIMP_LIST(brush_list)->list->data);
-
-  return active_brush;
 }
 
 #if 0
 static GSList *
-insert_brush_in_list (GSList *list, GimpBrush * brush)
+insert_brush_in_list (GSList    *list,
+		      GimpBrush *brush)
 {
   return g_slist_insert_sorted (list, brush, brush_compare_func);
 }
 #endif
 
-static void
-create_default_brush ()
-{
-  GimpBrushGenerated *brush;
-  
-  brush = gimp_brush_generated_new(5.0, .5, 0.0, 1.0);
-
-  /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (GIMP_BRUSH(brush)->mask);
-
-  /*  Make this the default, active brush  */
-  select_brush(GIMP_BRUSH(brush));
-  have_default_brush = 1;
-}
-
-
-
-int
+gint
 gimp_brush_list_get_brush_index (GimpBrushList *brush_list,
-				 GimpBrush *brush)
+				 GimpBrush     *brush)
 {
   /* fix me: make a gimp_list function that does this? */
   return g_slist_index (GIMP_LIST(brush_list)->list, brush);
 }
 
 GimpBrush *
-gimp_brush_list_get_brush_by_index (GimpBrushList *brush_list, int index)
+gimp_brush_list_get_brush_by_index (GimpBrushList *brush_list,
+				    gint           index)
 {
+  GimpBrush *brush = NULL;
   GSList *list;
-  GimpBrush * brush = NULL;
+
   /* fix me: make a gimp_list function that does this? */
-  list = g_slist_nth (GIMP_LIST(brush_list)->list, index);
+  list = g_slist_nth (GIMP_LIST (brush_list)->list, index);
   if (list)
     brush = (GimpBrush *) list->data;
 
@@ -355,8 +324,8 @@ gimp_brush_list_get_brush_by_index (GimpBrushList *brush_list, int index)
 }
 
 static void
-gimp_brush_list_uniquefy_brush_name(GimpBrushList *brush_list,
-				    GimpBrush *brush)
+gimp_brush_list_uniquefy_brush_name (GimpBrushList *brush_list,
+				     GimpBrush     *brush)
 {
   GSList *list, *listb;
   GimpBrush *brushb;
@@ -364,167 +333,117 @@ gimp_brush_list_uniquefy_brush_name(GimpBrushList *brush_list,
   char *newname;
   char *oldname;
   char *ext;
-  g_return_if_fail(GIMP_IS_BRUSH_LIST(brush_list));
-  g_return_if_fail(GIMP_IS_BRUSH(brush));
-  list = GIMP_LIST(brush_list)->list;
+  g_return_if_fail (GIMP_IS_BRUSH_LIST (brush_list));
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  list = GIMP_LIST (brush_list)->list;
   while (list)
-  {
-    brushb = GIMP_BRUSH(list->data);
-    if (brush != brushb &&
-	strcmp(gimp_brush_get_name(brush), gimp_brush_get_name(brushb)) == 0)
-    { /* names conflict */
-      oldname = gimp_brush_get_name(brush);
-      newname = g_malloc(strlen(oldname)+10); /* if this aint enough 
-						 yer screwed */
-      strcpy (newname, oldname);
-      if ((ext = strrchr(newname, '#')))
-      {
-	number = atoi(ext+1);
-	if (&ext[(int)(log10(number) + 1)] != &newname[strlen(newname) - 1])
-	{
-	  number = 1;
-	  ext = &newname[strlen(newname)];
+    {
+      brushb = GIMP_BRUSH (list->data);
+      if (brush != brushb &&
+	  strcmp (gimp_brush_get_name (brush),
+		  gimp_brush_get_name (brushb)) == 0)
+	{ /* names conflict */
+	  oldname = gimp_brush_get_name (brush);
+	  newname = g_malloc (strlen (oldname) + 10); /* if this aint enough 
+							 yer screwed */
+	  strcpy (newname, oldname);
+	  if ((ext = strrchr(newname, '#')))
+	    {
+	      number = atoi (ext+1);
+	      if (&ext[(int)(log10 (number) + 1)] !=
+		  &newname[strlen (newname) - 1])
+		{
+		  number = 1;
+		  ext = &newname[strlen (newname)];
+		}
+	    }
+	  else
+	    {
+	      number = 1;
+	      ext = &newname[strlen (newname)];
+	    }
+	  sprintf (ext, "#%d", number+1);
+	  listb = GIMP_LIST (brush_list)->list;
+	  while (listb) /* make sure the new name is unique */
+	    {
+	      brushb = GIMP_BRUSH (listb->data);
+	      if (brush != brushb &&
+		  strcmp (newname, gimp_brush_get_name (brushb)) == 0)
+		{
+		  number++;
+		  sprintf (ext, "#%d", number+1);
+		  listb = GIMP_LIST (brush_list)->list;
+		}
+	      listb = listb->next;
+	    }
+	  gimp_brush_set_name (brush, newname);
+	  g_free (newname);
+	  if (gimp_list_have (GIMP_LIST (brush_list), brush))
+	    { /* ought to have a better way than this to resort the brush */
+	      gtk_object_ref (GTK_OBJECT (brush));
+	      gimp_brush_list_remove (brush_list, brush);
+	      gimp_brush_list_add (brush_list, brush);
+	      gtk_object_unref (GTK_OBJECT (brush));
+	    }
+	  return;
 	}
-      }
-      else
-      {
-	number = 1;
-	ext = &newname[strlen(newname)];
-      }
-      sprintf(ext, "#%d", number+1);
-      listb = GIMP_LIST(brush_list)->list;
-      while (listb) /* make sure the new name is unique */
-      {
-	brushb = GIMP_BRUSH(listb->data);
-	if (brush != brushb && strcmp(newname,
-				      gimp_brush_get_name(brushb)) == 0)
-	{
-	  number++;
-	  sprintf(ext, "#%d", number+1);
-	  listb = GIMP_LIST(brush_list)->list;
-	}
-	listb = listb->next;
-      }
-      gimp_brush_set_name(brush, newname);
-      g_free(newname);
-      if (gimp_list_have(GIMP_LIST(brush_list), brush))
-      { /* ought to have a better way than this to resort the brush */
-	gtk_object_ref(GTK_OBJECT(brush));
-	gimp_brush_list_remove(brush_list, brush);
-	gimp_brush_list_add(brush_list, brush);
-	gtk_object_unref(GTK_OBJECT(brush));
-      }
-      return;
+      list = list->next;
     }
-    list = list->next;
-  }
 }
 
-static void brush_renamed(GimpBrush *brush, GimpBrushList *brush_list)
+static void
+brush_renamed (GimpBrush     *brush,
+	       GimpBrushList *brush_list)
 {
-  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
+  gimp_brush_list_uniquefy_brush_name (brush_list, brush);
 }
 
 void
-gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
+gimp_brush_list_add (GimpBrushList *brush_list,
+		     GimpBrush     *brush)
 {
-  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
-  gimp_list_add(GIMP_LIST(brush_list), brush);
-  gtk_object_sink(GTK_OBJECT(brush));
-  gtk_signal_connect(GTK_OBJECT(brush), "rename",
-		     (GtkSignalFunc)brush_renamed, brush_list);
+  gimp_brush_list_uniquefy_brush_name (brush_list, brush);
+  gimp_list_add (GIMP_LIST (brush_list), brush);
+  gtk_object_sink (GTK_OBJECT (brush));
+  gtk_signal_connect (GTK_OBJECT (brush), "rename",
+		      GTK_SIGNAL_FUNC (brush_renamed),
+		      brush_list);
 }
 
 void
-gimp_brush_list_remove (GimpBrushList *brush_list, GimpBrush * brush)
+gimp_brush_list_remove (GimpBrushList *brush_list,
+			GimpBrush     *brush)
 {
-/*  if (active_brush == brush)
-  {
-    select_brush(gimp_brush_list_get_brush_by_index(
-      brush_list, gimp_brush_list_get_brush_get_index(brush_list, brush) - 1));
-  } 
-  */
-  gtk_signal_disconnect_by_data(GTK_OBJECT(brush), brush_list);
-  
-  gimp_list_remove(GIMP_LIST(brush_list), brush);
+  gtk_signal_disconnect_by_data (GTK_OBJECT (brush), brush_list);
+
+  gimp_list_remove (GIMP_LIST (brush_list), brush);
 }
 
-int
+gint
 gimp_brush_list_length (GimpBrushList *brush_list)
 {
-  g_return_val_if_fail(GIMP_IS_BRUSH_LIST(brush_list), 0);
-  return (brush_list->num_brushes);
+  g_return_val_if_fail (GIMP_IS_BRUSH_LIST (brush_list), 0);
+
+  return brush_list->num_brushes;
 }
 
 GimpBrush *
-gimp_brush_list_get_brush(GimpBrushList *blist, char *name)
+gimp_brush_list_get_brush (GimpBrushList *blist,
+			   gchar         *name)
 {
   GimpBrush *brushp;
   GSList *list;
+
   if (blist == NULL)
     return NULL;
 
-  list = GIMP_LIST(brush_list)->list;
-
-  while (list)
-  {
-    brushp = (GimpBrush *) list->data;
-
-    if (!strcmp (brushp->name, name))
+  for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
     {
-      return brushp;
+      brushp = (GimpBrush *) list->data;
+
+      if (!strcmp (brushp->name, name))
+	return brushp;
     }
 
-    list = g_slist_next (list);
-  }
   return NULL;
-}
-
-void
-select_brush (GimpBrush * brush)
-{
-  /*  Make sure the active brush is swapped before we get a new one... */
-  if (stingy_memory_use && active_brush && active_brush->mask)
-    temp_buf_swap (active_brush->mask);
-
-  if (active_brush)
-    gtk_object_unref(GTK_OBJECT(active_brush));
-
-  /*  Set the active brush  */
-  active_brush = brush;
-  
-  gtk_object_ref(GTK_OBJECT(active_brush));
-
-  /*  Make sure the active brush is unswapped... */
-  if (stingy_memory_use)
-    temp_buf_unswap (brush->mask);
-
-  /*  Keep up appearances in the brush dialog  */
-  if (brush_select_dialog)
-    brush_select_select (brush_select_dialog, brush);
-
-  device_status_update (current_device);
-}
-
-
-void
-create_brush_dialog (void)
-{
-  if (!brush_select_dialog)
-    {
-      /*  Create the dialog...  */
-      brush_select_dialog = brush_select_new (NULL,NULL,0.0,0,0);
-      
-      /* register this one only */
-      dialog_register(brush_select_dialog->shell);
-    }
-  else
-    {
-      /*  Popup the dialog  */
-      if (!GTK_WIDGET_VISIBLE (brush_select_dialog->shell))
-	gtk_widget_show (brush_select_dialog->shell);
-      else
-	gdk_window_raise(brush_select_dialog->shell->window);
-    }
-  
 }

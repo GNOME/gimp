@@ -156,10 +156,10 @@
 #include "datafiles.h"
 #include "errors.h"
 #include "general.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gradient.h"
-#include "palette.h"
 #include "session.h"
 #include "gradient_header.h"
 
@@ -450,11 +450,13 @@ static gchar *build_user_filename (char *name, char *path_str);
 /***** Local variables *****/
 
 GdkColor            black;
-gint                num_gradients         = 0;
-gradient_t        * curr_gradient         = NULL; /* The active gradient */
-GSList            * gradients_list        = NULL; /* The list of gradients */
-gradient_t        * grad_default_gradient = NULL;
-gradient_editor_t * g_editor              = NULL; /* The gradient editor */
+gint                num_gradients           = 0;
+gradient_t        * curr_gradient           = NULL; /* The active gradient */
+GSList            * gradients_list          = NULL; /* The list of gradients */
+gradient_t        * grad_default_gradient   = NULL;
+gradient_editor_t * g_editor                = NULL; /* The gradient editor */
+
+static gradient_t * standard_gradient = NULL;
 
 static const gchar *blending_types[] =
 {
@@ -480,7 +482,6 @@ gradients_init (int no_data)
   if (!no_data)
     datafiles_read_directories (gradient_path, grad_load_gradient, 0);
 
-
   if (grad_default_gradient != NULL)
     curr_gradient = grad_default_gradient;
   else if (gradients_list != NULL)
@@ -495,9 +496,9 @@ gradients_init (int no_data)
 
       grad_insert_in_gradients_list (curr_gradient);
     }
-}
 
-/*****/
+  gimp_context_refresh_gradients ();
+}
 
 void
 gradients_free (void)
@@ -505,14 +506,29 @@ gradients_free (void)
   grad_free_gradients ();
 }
 
+gradient_t *
+gradients_get_standard_gradient (void)
+{
+  if (! standard_gradient)
+    {
+      standard_gradient = grad_create_default_gradient ();
+      standard_gradient->name     = g_strdup ("Standard");
+      standard_gradient->filename = NULL;
+      standard_gradient->dirty    = FALSE;
+    }
+
+  return standard_gradient;
+}
+
 /*****/
 
 void
-grad_get_color_at (double  pos,
-		   double *r,
-		   double *g,
-		   double *b,
-		   double *a)
+gradient_get_color_at (gradient_t *gradient,
+		       gdouble     pos,
+		       gdouble    *r,
+		       gdouble    *g,
+		       gdouble    *b,
+		       gdouble    *a)
 {
   double          factor = 0.0;
   grad_segment_t *seg;
@@ -521,7 +537,7 @@ grad_get_color_at (double  pos,
   double          h1, s1, v1;
 
   /* if there is no gradient return a totally transparent black */
-  if (curr_gradient == NULL) 
+  if (gradient == NULL) 
     {
       r = 0; g = 0; b = 0; a = 0;
       return;
@@ -532,7 +548,7 @@ grad_get_color_at (double  pos,
   else if (pos > 1.0)
     pos = 1.0;
 
-  seg = seg_get_segment_at (curr_gradient, pos);
+  seg = seg_get_segment_at (gradient, pos);
 
   seg_len = seg->right - seg->left;
 
@@ -570,8 +586,8 @@ grad_get_color_at (double  pos,
       break;
 
     default:
-      grad_dump_gradient (curr_gradient, stderr);
-      gimp_fatal_error (_("grad_get_color_at(): Unknown gradient type %d"),
+      grad_dump_gradient (gradient, stderr);
+      gimp_fatal_error (_("gradient_get_color_at(): Unknown gradient type %d"),
 			(int) seg->type);
       break;
     }
@@ -627,8 +643,8 @@ grad_get_color_at (double  pos,
 	  break;
 
 	default:
-	  grad_dump_gradient (curr_gradient, stderr);
-	  gimp_fatal_error (_("grad_get_color_at(): Unknown coloring mode %d"),
+	  grad_dump_gradient (gradient, stderr);
+	  gimp_fatal_error (_("gradient_get_color_at(): Unknown coloring mode %d"),
 			    (int) seg->color);
 	  break;
 	}
@@ -965,8 +981,8 @@ grad_create_gradient_editor_init (gint need_show)
   g_editor->right_saved_segments          = NULL;
   g_editor->right_saved_dirty             = 0;
 
-  ed_initialize_saved_colors();
-  cpopup_create_main_menu();
+  ed_initialize_saved_colors ();
+  cpopup_create_main_menu ();
 
   /* Show everything */
   g_editor->gc = gdk_gc_new (g_editor->shell->window);
@@ -991,7 +1007,7 @@ ed_fetch_foreground (double *fg_r,
 {
   guchar r, g, b;
 	
-  palette_get_foreground (&r, &g, &b);
+  gimp_context_get_foreground (gimp_context_get_user (), &r, &g, &b);
  	
   *fg_r = (double) r / 255.0;
   *fg_g = (double) g / 255.0;
@@ -1008,7 +1024,7 @@ ed_update_editor (int flags)
     prev_update (TRUE);
 
   if (flags & GRAD_UPDATE_CONTROL)
-    control_update(FALSE);
+    control_update (FALSE);
 
   if (flags & GRAD_RESET_CONTROL)
     control_update (TRUE);
@@ -1109,8 +1125,6 @@ fill_clist_prev (gradient_t *grad,
   double  dx, cur_x;
   double  r, g, b, a;
   double  c0, c1;
-  gradient_t *oldgrad = curr_gradient;
-  curr_gradient = grad;
 
   dx    = (right - left) / (width - 1);
   cur_x = left;
@@ -1121,7 +1135,7 @@ fill_clist_prev (gradient_t *grad,
 
   for (x = 0; x < width; x++)
     {
-      grad_get_color_at (cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (grad, cur_x, &r, &g, &b, &a);
 
       if ((x / GRAD_CHECK_SIZE_SM) & 1)
 	{
@@ -1159,7 +1173,6 @@ fill_clist_prev (gradient_t *grad,
 
   g_free (even);
   g_free (odd);
-  curr_gradient = oldgrad;
 }
 
 /*****/
@@ -1645,6 +1658,8 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 
   grad_sel_delete_all (real_pos);
+
+  gimp_context_refresh_gradients ();
 }
 
 static void
@@ -2045,7 +2060,7 @@ prev_set_hint (gint x)
 
   xpos = control_calc_g_pos (x);
 
-  grad_get_color_at (xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
 
   h = r;
   s = g;
@@ -2072,9 +2087,10 @@ prev_set_foreground (gint x)
   gchar   str[512];
 
   xpos = control_calc_g_pos (x);
-  grad_get_color_at (xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
 
-  palette_set_foreground (r * 255.0, g * 255.0, b * 255.0);
+  gimp_context_set_foreground (gimp_context_get_user (),
+			       r * 255.0, g * 255.0, b * 255.0);
 
   g_snprintf (str, sizeof (str),
 	      _("Foreground color set to RGB (%d, %d, %d) <-> "
@@ -2095,9 +2111,10 @@ prev_set_background (gint x)
   gchar   str[512];
 
   xpos = control_calc_g_pos (x);
-  grad_get_color_at (xpos, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
 
-  palette_set_background (r * 255.0, g * 255.0, b * 255.0);
+  gimp_context_set_background (gimp_context_get_user (),
+			       r * 255.0, g * 255.0, b * 255.0);
 
   g_snprintf (str, sizeof (str),
 	      _("Background color to RGB (%d, %d, %d) <-> "
@@ -2193,7 +2210,7 @@ prev_update (gboolean recalculate)
       last_row = n;
     }
 
-  draw_small_preview (g_editor->gc, g_editor->clist, curr_gradient,last_row);
+  draw_small_preview (g_editor->gc, g_editor->clist, curr_gradient, last_row);
 
   /* Update any others that are on screen */
   sel_update_dialogs (last_row, curr_gradient);
@@ -2221,7 +2238,7 @@ prev_fill_image (int    width,
   /* Create lines to fill the image */
   for (x = 0; x < width; x++)
     {
-      grad_get_color_at (cur_x, &r, &g, &b, &a);
+      gradient_get_color_at (curr_gradient, cur_x, &r, &g, &b, &a);
 
       if ((x / GRAD_CHECK_SIZE) & 1)
 	{
@@ -4546,7 +4563,7 @@ cpopup_split_midpoint (grad_segment_t  *lseg,
   grad_segment_t *newseg;
 
   /* Get color at original segment's midpoint */
-  grad_get_color_at(lseg->middle, &r, &g, &b, &a);
+  gradient_get_color_at (curr_gradient, lseg->middle, &r, &g, &b, &a);
 
   /* Create a new segment and insert it in the list */
 
@@ -4736,8 +4753,10 @@ cpopup_split_uniform (grad_segment_t  *lseg,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      grad_get_color_at (seg->left, &seg->r0, &seg->g0, &seg->b0, &seg->a0);
-      grad_get_color_at (seg->right, &seg->r1, &seg->g1, &seg->b1, &seg->a1);
+      gradient_get_color_at (curr_gradient, seg->left,
+			     &seg->r0, &seg->g0, &seg->b0, &seg->a0);
+      gradient_get_color_at (curr_gradient, seg->right,
+			     &seg->r1, &seg->g1, &seg->b1, &seg->a1);
 
       seg->type  = lseg->type;
       seg->color = lseg->color;
@@ -5667,7 +5686,7 @@ grad_create_default_gradient (void)
 {
   gradient_t *grad;
 
-  grad = grad_new_gradient();
+  grad = grad_new_gradient ();
   grad->segments = seg_new_segment ();
 
   return grad;

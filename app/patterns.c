@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -35,7 +34,6 @@
 #include "devices.h"
 #include "patterns.h"
 #include "pattern_header.h"
-#include "pattern_select.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
@@ -44,24 +42,23 @@
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
-GPatternP       active_pattern = NULL;
-GSList         *pattern_list = NULL;
-gint            num_patterns = 0;
-
-PatternSelectP  pattern_select_dialog = NULL;
+GPattern        *active_pattern = NULL;
+GSList          *pattern_list   = NULL;
+gint             num_patterns   = 0;
 
 /*  static variables  */
-static gint     have_default_pattern = 0;
+static GPattern *standard_pattern = NULL;
 
 /*  static function prototypes  */
-static GSList * insert_pattern_in_list   (GSList *, GPatternP);
-static void     load_pattern             (gchar *);
-static void     free_pattern             (GPatternP);
-static void     pattern_free_one         (gpointer, gpointer);
-static gint     pattern_compare_func     (gconstpointer, 
-					  gconstpointer);
+static GSList * insert_pattern_in_list (GSList *, GPattern *);
+static void     load_pattern           (gchar *);
+static void     free_pattern           (GPattern *);
+static void     pattern_free           (gpointer, gpointer);
+static gint     pattern_compare_func   (gconstpointer, 
+					gconstpointer);
 
-/*  function declarations  */
+/*  public functions  */
+
 void
 patterns_init (gboolean no_data)
 {
@@ -70,40 +67,17 @@ patterns_init (gboolean no_data)
   if (pattern_list)
     patterns_free ();
 
-  pattern_list = NULL;
-  num_patterns = 0;
-
-  if (!pattern_path)
-    return;
-  if (!no_data)
+  if (pattern_path != NULL && !no_data)
     datafiles_read_directories (pattern_path, load_pattern, 0);
 
   /*  assign indexes to the loaded patterns  */
-
-  list = pattern_list;
-
-  while (list)
+  for (list = pattern_list; list; list = g_slist_next (list))
     {
       /*  Set the pattern index  */
       ((GPattern *) list->data)->index = num_patterns++;
-      list = g_slist_next (list);
     }
-}
 
-
-static void
-pattern_free_one (gpointer data,
-		  gpointer dummy)
-{
-  free_pattern ((GPatternP) data);
-}
-
-static gint
-pattern_compare_func (gconstpointer first,
-		      gconstpointer second)
-{
-  return strcmp (((const GPatternP)first)->name, 
-		 ((const GPatternP)second)->name);
+  gimp_context_refresh_patterns ();
 }
 
 void
@@ -111,116 +85,81 @@ patterns_free ()
 {
   if (pattern_list)
     {
-      g_slist_foreach (pattern_list, pattern_free_one, NULL);
+      g_slist_foreach (pattern_list, pattern_free, NULL);
       g_slist_free (pattern_list);
     }
 
-  have_default_pattern = 0;
-  active_pattern = NULL;
   num_patterns = 0;
   pattern_list = NULL;
 }
 
-
-void
-pattern_select_dialog_free ()
+GPattern *
+patterns_get_standard_pattern (void)
 {
-  if (pattern_select_dialog)
+  if (! standard_pattern)
     {
-      pattern_select_free (pattern_select_dialog);
-      pattern_select_dialog = NULL;
+      standard_pattern = g_new (GPattern, 1);
+
+      standard_pattern->filename = NULL;
+      standard_pattern->name     = g_strdup ("Standard");
+      /*  TODO: fill it with something */
+      standard_pattern->mask     = temp_buf_new (8, 8, 8, 0, 0, NULL);
     }
+
+  return standard_pattern;
 }
 
-
-GPatternP
-get_active_pattern ()
+GPattern *
+pattern_list_get_pattern_by_index (GSList *list,
+				   gint    index)
 {
-  if (have_default_pattern)
-    {
-      have_default_pattern = 0;
-      if (!active_pattern)
-	gimp_fatal_error (_("get_active_pattern(): "
-			    "Specified default pattern not found!"));
+  GPattern *pattern = NULL;
 
-    }
-  else if (! active_pattern && pattern_list)
-    active_pattern = (GPatternP) pattern_list->data;
+  list = g_slist_nth (list, index);
+  if (list)
+    pattern = (GPattern *) list->data;
 
-  return active_pattern;
+  return pattern;
 }
 
-
-static GSList *
-insert_pattern_in_list (GSList    *list,
-			GPatternP  pattern)
+GPattern *
+pattern_list_get_pattern (GSList *list,
+			  gchar  *name)
 {
-  return g_slist_insert_sorted (list, pattern, pattern_compare_func);
+  GPattern *pattern;
+
+  for (; list; list = g_slist_next (list))
+    {
+      pattern = (GPattern *) list->data;
+      
+      if (!strcmp (pattern->name, name))
+	return pattern;
+    }
+
+  return NULL;
 }
 
-
-static void
-load_pattern (gchar *filename)
+gboolean
+pattern_load (GPattern *pattern,
+	      FILE     *fp,
+	      gchar    *filename)
 {
-  GPatternP pattern;
-  FILE * fp;
-
-  pattern = (GPatternP) g_malloc (sizeof (GPattern));
-
-  pattern->filename = g_strdup (filename);
-  pattern->name = NULL;
-  pattern->mask = NULL;
-
-  /*  Open the requested file  */
-  if (! (fp = fopen (filename, "rb")))
-    {
-      free_pattern (pattern);
-      return;
-    }
-
-  if(!load_pattern_pattern(pattern, fp, filename))
-    {
-      g_message (_("Pattern load failed"));
-      return;
-    }
-
-  /*  Clean up  */
-  fclose (fp);
-
-  /*temp_buf_swap (pattern->mask);*/
-
-  pattern_list = insert_pattern_in_list (pattern_list, pattern);
-
-  /* Check if the current pattern is the default one */
-
-  if (strcmp (default_pattern, g_basename (filename)) == 0)
-    {
-      active_pattern = pattern;
-      have_default_pattern = 1;
-    }
-}
-
-int
-load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
-{
-
- gint bn_size;
- guchar buf [sz_PatternHeader];
- PatternHeader header;
- guint * hp;
- gint i;
-
+  gint bn_size;
+  guchar buf [sz_PatternHeader];
+  PatternHeader header;
+  guint *hp;
+  gint i;
 
   /*  Read in the header size  */
   if ((fread (buf, 1, sz_PatternHeader, fp)) < sz_PatternHeader)
     {
       fclose (fp);
       free_pattern (pattern);
-      return 0;
+      return FALSE;
     }
 
   /*  rearrange the bytes in each unsigned int  */
-  hp = (unsigned int *) &header;
+  hp = (guint *) &header;
   for (i = 0; i < (sz_PatternHeader / 4); i++)
     hp [i] = (buf [i * 4] << 24) + (buf [i * 4 + 1] << 16) +
              (buf [i * 4 + 2] << 8) + (buf [i * 4 + 3]);
@@ -233,7 +172,7 @@ load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
 	{
 	  fclose (fp);
 	  free_pattern (pattern);
-	  return 0;
+	  return FALSE;
 	}
     }
   /*  Check for correct version  */
@@ -243,7 +182,7 @@ load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
 		 filename);
       fclose (fp);
       free_pattern (pattern);
-      return 0;
+      return FALSE;
     }
 
   /*  Get a new pattern mask  */
@@ -253,13 +192,13 @@ load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sz_PatternHeader)))
     {
-      pattern->name = (char *) g_malloc (sizeof (char) * bn_size);
+      pattern->name = g_new (gchar, bn_size);
       if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
 	{
 	  g_message (_("Error in GIMP pattern file...aborting."));
 	  fclose (fp);
 	  free_pattern (pattern);
-	  return 0;
+	  return FALSE;
 	}
     }
   else
@@ -272,84 +211,69 @@ load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
       header.width * header.height * header.bytes)
     g_message (_("GIMP pattern file appears to be truncated."));
 
-  /* success */
-  return 1;
-
+  /*  success  */
+  return TRUE;
 }
 
-GPatternP           
-pattern_list_get_pattern (GSList *list,
-			  gchar  *name)
-{
-  GPatternP patternp;
-
-  while (list)
-    {
-      patternp = (GPatternP) list->data;
-      
-      if (!strcmp (patternp->name, name))
-	{
-	  return patternp;
-	}
-      list = g_slist_next (list);
-    }
-  return NULL;
-}
-
-GPatternP
-get_pattern_by_index (gint index)
-{
-  GSList *list;
-  GPatternP pattern = NULL;
-
-  list = g_slist_nth (pattern_list, index);
-  if (list)
-    pattern = (GPatternP) list->data;
-
-  return pattern;
-}
-
-void
-select_pattern (GPatternP pattern)
-{
-  /*  Set the active pattern  */
-  active_pattern = pattern;
-
-  /*  Make sure the active pattern is unswapped... */
-  /*temp_buf_unswap (pattern->mask);*/
-
-  /*  Keep up appearances in the pattern dialog  */
-  if (pattern_select_dialog)
-    pattern_select_select (pattern_select_dialog, pattern->index);
-
-  device_status_update (current_device);
-}
-
-
-void
-create_pattern_dialog (void)
-{
-  if (!pattern_select_dialog)
-    {
-      /*  Create the dialog...  */
-      pattern_select_dialog = pattern_select_new (NULL,NULL);
-
-      /* register this one only */
-      dialog_register (pattern_select_dialog->shell);
-    }
-  else
-    {
-      /*  Popup the dialog  */
-      if (!GTK_WIDGET_VISIBLE (pattern_select_dialog->shell))
-	gtk_widget_show (pattern_select_dialog->shell);
-      else
-	gdk_window_raise(pattern_select_dialog->shell->window);
-    }
-}
-
+/*  private functions  */
 
 static void
-free_pattern (GPatternP pattern)
+pattern_free (gpointer data,
+	      gpointer dummy)
+{
+  free_pattern ((GPattern *) data);
+}
+
+static gint
+pattern_compare_func (gconstpointer first,
+		      gconstpointer second)
+{
+  return strcmp (((const GPattern *) first)->name, 
+		 ((const GPattern *) second)->name);
+}
+
+static GSList *
+insert_pattern_in_list (GSList   *list,
+			GPattern *pattern)
+{
+  return g_slist_insert_sorted (list, pattern, pattern_compare_func);
+}
+
+static void
+load_pattern (gchar *filename)
+{
+  GPattern *pattern;
+  FILE *fp;
+
+  pattern = g_new (GPattern, 1);
+
+  pattern->filename = g_strdup (filename);
+  pattern->name     = NULL;
+  pattern->mask     = NULL;
+
+  /*  Open the requested file  */
+  if (! (fp = fopen (filename, "rb")))
+    {
+      free_pattern (pattern);
+      return;
+    }
+
+  if (! pattern_load (pattern, fp, filename))
+    {
+      g_message (_("Pattern load failed"));
+      return;
+    }
+
+  /*  Clean up  */
+  fclose (fp);
+
+  /*temp_buf_swap (pattern->mask);*/
+
+  pattern_list = insert_pattern_in_list (pattern_list, pattern);
+}
+
+static void
+free_pattern (GPattern *pattern)
 {
   if (pattern->mask)
     temp_buf_free (pattern->mask);

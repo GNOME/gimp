@@ -30,7 +30,6 @@
 #include "convolve.h"
 #include "crop.h"
 #include "curves.h"
-#include "devices.h"
 #include "dodgeburn.h"
 #include "eraser.h"
 #include "gdisplay.h"
@@ -696,21 +695,12 @@ active_tool_free (void)
 void
 tools_select (ToolType tool_type)
 {
-  /*  Care for switching to the tool's private context _before_ actually
-   *  switching the tool itself (the context manager needs to know the
-   *  old tool)
-   */
-  gimp_context_set_tool (gimp_context_get_user (), tool_type);
-
   if (active_tool)
     active_tool_free ();
 
   active_tool = (* tool_info[(int) tool_type].new_func) ();
 
   tools_options_show (active_tool->type);
-
-  /*  Update the device-information dialog  */
-  device_status_update (current_device);
 }
 
 void
@@ -723,17 +713,7 @@ tools_initialize (ToolType  tool_type,
   if (tool_info[(int) tool_type].init_func && !gdisp)
     tool_type = RECT_SELECT;
 
-  /*  Activate the appropriate widget.
-   *  Implicitly calls tools_select()
-   */
-  if (active_tool->type == tool_type)
-    {
-      tools_select (tool_type);
-    }
-  else
-    {
-      gtk_widget_activate (tool_info[tool_type].tool_widget);
-    }
+  gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
   if (tool_info[(int) tool_type].init_func)
     {

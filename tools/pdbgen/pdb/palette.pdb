@@ -33,11 +33,11 @@ sub color_arg {
 
 sub invoke_get {
     %invoke = (
-	headers => [ qw("gimpimage.h" "palette.h") ],
+	headers => [ qw("gimpimage.h" "gimpcontext.h") ],
 	vars => [ 'guchar r, g, b' ],
 	code => <<CODE
 {
-  palette_get_@{[shift]}ground (&r, &g, &b);
+  gimp_context_get_@{[shift]}ground (NULL, &r, &g, &b);
   col = (guchar *) g_new (guchar, 3);
   col[RED_PIX] = r;
   col[GREEN_PIX] = g;
@@ -51,7 +51,7 @@ sub invoke_set {
     %invoke = (
 	headers => [ qw("gimpimage.h") ],
 	code => <<CODE
-palette_set_@{[shift]}ground (col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
+gimp_context_set_@{[shift]}ground (NULL, col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
 CODE
     );
 }
@@ -124,7 +124,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'palette_set_default_colors ();' );
+    %invoke = ( code => 'gimp_context_set_default_colors (NULL);' );
 }
 
 sub palette_swap_colors {
@@ -137,7 +137,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'palette_swap_colors ();' );
+    %invoke = ( code => 'gimp_context_swap_colors (NULL);' );
 }
 
 sub palette_refresh {
@@ -170,7 +170,7 @@ CODE
     );
 }
 
-@headers = qw("palette.h");
+@headers = qw("gimpcontext.h" "palette.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

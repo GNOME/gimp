@@ -20,18 +20,16 @@
 #include <stdlib.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
-#include "general.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "info_dialog.h"
 #include "interface.h"
-#include "palette.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "temp_buf.h"
@@ -89,16 +87,17 @@ void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
  *  region around a pixel in a tile manager
  */
 
-typedef struct _PixelSurround {
-  Tile* tile;
-  TileManager* mgr;
-  unsigned char* buff;
-  int buff_size;
-  int bpp;
-  int w;
-  int h;
-  unsigned char bg[MAX_CHANNELS];
-  int row_stride;
+typedef struct _PixelSurround
+{
+  Tile        *tile;
+  TileManager *mgr;
+  guchar      *buff;
+  gint         buff_size;
+  gint         bpp;
+  gint         w;
+  gint         h;
+  guchar       bg[MAX_CHANNELS];
+  gint         row_stride;
 } PixelSurround;
 
 static void
@@ -240,15 +239,7 @@ transform_reset_callback (GtkWidget *w,
   draw_core_resume (transform_core->core, tool);
 }
 
-
-static ActionAreaItem action_items[] = 
-{
-  { NULL, transform_ok_callback, NULL, NULL },
-  { N_("Reset"), transform_reset_callback, NULL, NULL },
-};
-static gint n_action_items = sizeof (action_items) / sizeof (action_items[0]);
-
-static const char *action_labels[] =
+static const gchar *action_labels[] =
 {
   N_("Rotate"),
   N_("Scale"),
@@ -395,11 +386,16 @@ transform_core_button_press (Tool           *tool,
 
 	    if (transform_info != NULL && !transform_info_inited)
 	      {
-		action_items[0].label = action_labels[tool->type - ROTATE];
-		action_items[0].user_data = tool;
-		action_items[1].user_data = tool;
-		build_action_area (GTK_DIALOG (transform_info->shell),
-				   action_items, n_action_items, 0);
+		gimp_dialog_create_action_area
+		  (GTK_DIALOG (transform_info->shell),
+
+		   gettext (action_labels[tool->type - ROTATE]),
+		   transform_ok_callback,
+		   tool, NULL, TRUE, FALSE,
+		   _("Reset"), transform_reset_callback,
+		   tool, NULL, FALSE, FALSE,
+
+		   NULL);
 
 		transform_info_inited = TRUE;
 	      }

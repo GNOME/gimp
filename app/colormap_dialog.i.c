@@ -4,7 +4,6 @@
 #include <math.h>
 #include "gdk/gdkkeysyms.h"
 
-#include "actionarea.h"
 #include "color_notebook.h"
 #include "image_render.h"
 #include "dialog_handler.h"
@@ -14,7 +13,7 @@
 /*#include "gdisplay.h"*/
 #include "general.h"
 #include "gimpdnd.h"
-#include "gimphelp.h"
+#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -138,10 +137,6 @@ ipal_create (GimpSet* context)
   GtkWidget *evbox;
   GtkAccelGroup *accel_group;
   GimpColormapDialog* ipal;
-  ActionAreaItem action_items[] =
-  {
-    { N_("Close"), ipal_close_callback, NULL, NULL },
-  };
 
   MenuItem indexed_color_ops[] =
   {
@@ -155,6 +150,15 @@ ipal_create (GimpSet* context)
   };
   
   ipal = gtk_type_new (GIMP_TYPE_COLORMAP_DIALOG);
+
+  /*  The action area  */
+  gimp_dialog_create_action_area (GTK_DIALOG (ipal),
+
+				  _("Close"), ipal_close_callback,
+				  ipal, NULL, TRUE, TRUE,
+
+				  NULL);
+
   ipal->image = NULL;
   ipal->context = context;
   ipal->cmap_changed_handler
@@ -272,13 +276,7 @@ ipal_create (GimpSet* context)
 		      GTK_SIGNAL_FUNC(hex_entry_change_cb), ipal);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 1);
   
-  
-  /*  The action area  */
-  for(i=0;i<sizeof(action_items)/sizeof(action_items[0]);i++)
-    action_items[i].user_data = ipal;
-  build_action_area (GTK_DIALOG (ipal), action_items, 1, 0);
-
-  /*  Connect the "F1" help key  */
+    /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (GTK_WIDGET (ipal),
 				gimp_standard_help_func,
 				"dialogs/indexed_palette.html");

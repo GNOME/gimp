@@ -17,7 +17,7 @@
  */
 #include "drawable.h"
 #include "drawable_pvt.h"
-#include "palette.h"
+#include "gimpcontext.h"
 #include "gimpimageF.h"
 #include "gdisplay.h"
 #include "undo.h"
@@ -46,11 +46,11 @@ drawable_fill (GimpDrawable *drawable,
   switch (fill_type)
     {
     case FOREGROUND_FILL:
-      palette_get_foreground (&r, &g, &b);
+      gimp_context_get_foreground (NULL, &r, &g, &b);
       break;
 
     case BACKGROUND_FILL:
-      palette_get_background (&r, &g, &b);
+      gimp_context_get_background (NULL, &r, &g, &b);
       break;
 
     case WHITE_FILL:

@@ -18,9 +18,9 @@
 #include "config.h"
 
 #include <stdlib.h>
+
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
-#include "actionarea.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
@@ -28,7 +28,7 @@
 #include "info_window.h"
 #include "gdisplay.h"
 #include "gimprc.h"
-#include "gimphelp.h"
+#include "gimpui.h"
 #include "gximage.h"
 #include "interface.h"
 #include "scroll.h"
@@ -669,12 +669,12 @@ move_to_point (NavWinData *iwd,
   tx = CLAMP (tx, 0, iwd->pwidth);
   ty = CLAMP (ty, 0, iwd->pheight);
   
-  if((tx + iwd->dispwidth) >= iwd->pwidth)
+  if ((tx + iwd->dispwidth) >= iwd->pwidth)
     {
       tx = iwd->pwidth - iwd->dispwidth;
     }
   
-  if((ty + iwd->dispheight) >= iwd->pheight)
+  if ((ty + iwd->dispheight) >= iwd->pheight)
     {
       ty = iwd->pheight - iwd->dispheight;
     }
@@ -683,12 +683,12 @@ move_to_point (NavWinData *iwd,
     return;
 
   /* Update the real display */
-  update_real_view(iwd,tx,ty);
+  update_real_view (iwd, tx, ty);
   
-  nav_window_draw_sqr(iwd,
-		      TRUE,
-		      tx, ty,
-		      iwd->dispwidth, iwd->dispheight);
+  nav_window_draw_sqr (iwd,
+		       TRUE,
+		       tx, ty,
+		       iwd->dispwidth, iwd->dispheight);
   
 }
 
@@ -700,16 +700,16 @@ nav_window_grab_pointer (NavWinData *iwd,
   int ret;
 
   iwd->sq_grabbed = TRUE;
-  gtk_grab_add(widget);
-  cursor = gdk_cursor_new(GDK_CROSSHAIR); 
+  gtk_grab_add (widget);
+  cursor = gdk_cursor_new (GDK_CROSSHAIR); 
   ret = gdk_pointer_grab (widget->window, TRUE,
-		    GDK_BUTTON_RELEASE_MASK |
-		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON_MOTION_MASK |
-		    GDK_EXTENSION_EVENTS_ALL,
-		    widget->window, cursor, 0);
+			  GDK_BUTTON_RELEASE_MASK |
+			  GDK_POINTER_MOTION_HINT_MASK |
+			  GDK_BUTTON_MOTION_MASK |
+			  GDK_EXTENSION_EVENTS_ALL,
+			  widget->window, cursor, 0);
 
-  gdk_cursor_destroy(cursor); 
+  gdk_cursor_destroy (cursor); 
 }
 
 static gint
@@ -1205,11 +1205,6 @@ info_window_image_preview_new (InfoDialog *info_win)
   return vbox1;
 }
 
-static ActionAreaItem action_items[] =
-{
-  { N_("Close"), nav_window_close_callback, NULL, NULL },
-};
-
 NavWinData *
 create_dummy_iwd (void       *gdisp_ptr,
 		  NavWinType  ptype)
@@ -1263,11 +1258,21 @@ nav_window_create (void *gdisp_ptr)
   info_win = info_dialog_new (title_buf,
 			      gimp_standard_help_func,
 			      "dialogs/navigation_window.html");
+  g_free (title_buf);
+
   dialog_register (info_win->shell);
+
+  /*  create the action area  */
+  gimp_dialog_create_action_area (GTK_DIALOG (info_win->shell),
+
+				  _("Close"), nav_window_close_callback,
+				  info_win, NULL, TRUE, FALSE,
+
+				  NULL);
+
   gtk_signal_connect (GTK_OBJECT (info_win->shell), "destroy",
 		      (GtkSignalFunc) nav_window_destroy_callback,
 		      info_win);
-  g_free (title_buf);
 
   iwd = create_dummy_iwd (gdisp_ptr, NAV_WINDOW);
   info_win->user_data = iwd;
@@ -1277,9 +1282,6 @@ nav_window_create (void *gdisp_ptr)
   container = info_window_image_preview_new (info_win);
   gtk_table_attach_defaults (GTK_TABLE (info_win->info_table), container, 
  			     0, 2, 0, 1); 
-  /* Create the action area  */
-  action_items[0].user_data = info_win;
-  build_action_area (GTK_DIALOG (info_win->shell), action_items, 1, 0);
 
   /* Tie into the dirty signal so we can update the preview */
   gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",

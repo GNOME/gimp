@@ -111,7 +111,7 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpBrush *brushp' ],
-	code => 'success = (brushp = get_active_brush ()) != NULL;'
+	code => 'success = (brushp = gimp_context_get_brush (NULL)) != NULL;'
     );
 }
 
@@ -136,7 +136,7 @@ HELP
 {
   brushp = gimp_brush_list_get_brush (brush_list, name);
   if (brushp)
-    select_brush (brushp);
+    gimp_context_set_brush (NULL, brushp);
   else
     success = FALSE;
 }
@@ -189,7 +189,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &spacing_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing (get_active_brush ())';
+    $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (NULL))';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -207,7 +207,7 @@ HELP
     @inargs = ( &spacing_arg );
 
     %invoke = (
-	code => 'gimp_brush_set_spacing (get_active_brush(), spacing);'
+	code => 'gimp_brush_set_spacing (gimp_context_get_brush (NULL), spacing);'
     );
 }
 
@@ -341,7 +341,7 @@ HELP
 	}
     }
   else
-    success = (brushp = get_active_brush ()) != NULL;
+    success = (brushp = gimp_context_get_brush (NULL)) != NULL;
 
   if (success)
     {

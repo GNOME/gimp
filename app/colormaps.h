@@ -18,9 +18,9 @@
 #ifndef __COLORMAPS_H__
 #define __COLORMAPS_H__
 
-#include "gimage.h"               /* For the image types  */
+#include <gdk/gdk.h>
 
-extern GdkVisual *g_visual;
+extern GdkVisual   *g_visual;
 extern GdkColormap *g_cmap;
 
 /*  Pixel values of black and white  */
@@ -40,9 +40,11 @@ extern gulong old_color_pixel;
 extern gulong new_color_pixel;
 
 /*  Colormap entries reserved for color cycled marching ants--optional  */
-extern gulong  marching_ants_pixels[8];
+extern gulong marching_ants_pixels[8];
 
-gulong get_color (int red, int green, int blue);
+gulong get_color              (int red,
+			       int green,
+			       int blue);
 void   get_standard_colormaps (void);
 
 #endif  /*  __COLORMAPS_H__  */

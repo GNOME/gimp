@@ -18,6 +18,9 @@
 #ifndef __COLOR_AREA_H__
 #define __COLOR_AREA_H__
 
+#define FOREGROUND 0
+#define BACKGROUND 1
+
 /*
  *  Global variables
  */
@@ -30,7 +33,6 @@ GtkWidget * color_area_create    (gint       width,
 			          gint       height,
 			          GdkPixmap *default_pixmap,
 				  GdkPixmap *swap_pixmap);
-void        color_area_update    (void);
 
 /* Exported for use by color_select */
 void        color_area_draw_rect (GdkDrawable *drawable,

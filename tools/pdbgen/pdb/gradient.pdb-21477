@@ -73,10 +73,10 @@ HELP
     @outargs = (
 	{ name  => 'name', type  => 'string',
 	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (curr_gradient->name)', no_declare => 1 }
+	  alias => 'g_strdup (gimp_context_get_gradient (NULL)->name)', no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = curr_gradient != NULL;' );
+    %invoke = ( code => 'success = gimp_context_get_gradient (NULL) != NULL;' );
 }
 
 sub gradients_set_active {
@@ -133,7 +133,7 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv' ],
+	vars => [ 'gradient_t *gradient', 'gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   pos = 0.0;
@@ -143,9 +143,11 @@ HELP
 
   pv = color_samples = g_new (gdouble, array_length);
 
+  gradient = gimp_context_get_gradient (NULL);
+
   while (i--)
     {
-      grad_get_color_at(pos, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, pos, &r, &g, &b, &a);
 
       *pv++ = r;
       *pv++ = g;
@@ -186,16 +188,18 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	vars => [ 'gdouble r, g, b, a', 'gdouble *pv' ],
+	vars => [ 'gradient_t *gradient', 'gdouble r, g, b, a', 'gdouble *pv' ],
 	code => <<'CODE'
 {
   array_length = i * 4;
 
   pv = color_samples = g_new (gdouble, array_length);
 
+  gradient = gimp_context_get_gradient (NULL);
+
   while (i--)
     {
-      grad_get_color_at(*pos, &r, &g, &b, &a);
+      gradient_get_color_at (gradient, *pos, &r, &g, &b, &a);
 
       *pv++ = r;
       *pv++ = g;
@@ -209,7 +213,7 @@ CODE
     );
 }
 
-@headers = qw("gradient_header.h" "gradient.h");
+@headers = qw("gimpcontext.h" "gradient_header.h" "gradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

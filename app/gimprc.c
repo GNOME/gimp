@@ -335,19 +335,19 @@ extern char* alternate_system_gimprc;
 #define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
 
 static char *
-gimp_system_rc_file ()
+gimp_system_rc_file (void)
 {
   static char *value = NULL;
   if (value != NULL)
     return value;
 
-  value = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, "gimprc",
-		       NULL);
+  value = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S,
+		       "gimprc", NULL);
   return value;
 }
 
 void
-parse_buffers_init ()
+parse_buffers_init (void)
 {
   parse_info.buffer = g_new (char, 4096);
   parse_info.tokenbuf = parse_info.buffer + 2048;
@@ -369,7 +369,7 @@ static GList *parse_add_directory_tokens (void)
 }
 
 void
-parse_gimprc ()
+parse_gimprc (void)
 {
   char libfilename[MAXPATHLEN];
   char filename[MAXPATHLEN];
@@ -459,11 +459,10 @@ static GList *
 g_list_findstr (GList *list,
 		char  *str)
 {
-  while (list)
+  for (; list; list = g_list_next (list))
     {
       if (! strcmp ((char *) list->data, str))
         break;
-      list = list->next;
     }
 
   return list;
@@ -515,56 +514,56 @@ save_gimprc_strings (gchar *token,
       
       /* special case: save lines starting with '#-' (added by GIMP) */
       if ((cur_line[0] == '#') && (cur_line[1] == '-'))
+	{
+	  if (prev_line != NULL)
 	    {
-	      if (prev_line != NULL)
-	        {
-	          fputs (prev_line, fp_new);
-	          g_free (prev_line);
-	        }
-	      prev_line = g_strdup (cur_line);
-	      continue;
+	      fputs (prev_line, fp_new);
+	      g_free (prev_line);
 	    }
+	  prev_line = g_strdup (cur_line);
+	  continue;
+	}
 
       /* see if the line contains something that we can use 
          and place that into 'name' if its found */
       if (find_token (cur_line, name, 50))
-	    {
+	{
 	  /* check if that entry should be updated */
-	      if (!g_strcasecmp(token, name)) /* if they match */
-	        {
-	          if (prev_line == NULL)
-		        {
-		          fprintf (fp_new, "#- Next line commented out %s\n",
-			           timestamp);
-		          fprintf (fp_new, "# %s\n", cur_line);
-		          fprintf (fp_new, "#- Next line added %s\n",
-			           timestamp);
-		        }
-	          else
-		        {
-	    	      g_free (prev_line);
-		          prev_line = NULL;
-		          fprintf (fp_new, "#- Next line modified %s\n",
-			           timestamp);
-		        }
+	  if (!g_strcasecmp(token, name)) /* if they match */
+	    {
+	      if (prev_line == NULL)
+		{
+		  fprintf (fp_new, "#- Next line commented out %s\n",
+			   timestamp);
+		  fprintf (fp_new, "# %s\n", cur_line);
+		  fprintf (fp_new, "#- Next line added %s\n",
+			   timestamp);
+		}
+	      else
+		{
+		  g_free (prev_line);
+		  prev_line = NULL;
+		  fprintf (fp_new, "#- Next line modified %s\n",
+			   timestamp);
+		}
               if (!found)
                 {
-	              fprintf (fp_new, "(%s \"%s\")\n", token, value);
-				}
+		  fprintf (fp_new, "(%s \"%s\")\n", token, value);
+		}
               else 
-	            fprintf (fp_new, "#- (%s \"%s\")\n", token, value);
-	          found = TRUE;
-	          continue;
-	        } /* end if token and name match */
-	    } /* end if token is found */
+		fprintf (fp_new, "#- (%s \"%s\")\n", token, value);
+	      found = TRUE;
+	      continue;
+	    } /* end if token and name match */
+	} /* end if token is found */
     
       /* all lines that did not match the tests above are simply copied */
       if (prev_line != NULL)
-	    {
-	      fputs (prev_line, fp_new);
-	      g_free (prev_line);
-	      prev_line = NULL;
-	    }
+	{
+	  fputs (prev_line, fp_new);
+	  g_free (prev_line);
+	  prev_line = NULL;
+	}
       fputs (cur_line, fp_new);
     } /* end of while(!feof) */
 
@@ -582,9 +581,9 @@ save_gimprc_strings (gchar *token,
     }
 
   /* update unknown_tokens to reflect new token value */
-  ut = g_new(UnknownToken, 1);
-  ut->token = g_strdup(token);
-  ut->value = g_strdup(value);
+  ut = g_new (UnknownToken, 1);
+  ut->token = g_strdup (token);
+  ut->value = g_strdup (value);
 
   list = unknown_tokens;
   while (list)
@@ -735,7 +734,7 @@ save_gimprc (GList **updated_options,
 }
 
 static int
-get_next_token ()
+get_next_token (void)
 {
   if (next_token != -1)
     {
@@ -751,7 +750,7 @@ get_next_token ()
 }
 
 static int
-peek_next_token ()
+peek_next_token (void)
 {
   if (next_token == -1)
     next_token = get_token (&parse_info);
@@ -760,7 +759,7 @@ peek_next_token ()
 }
 
 static int
-parse_statement ()
+parse_statement (void)
 {
   int token;
   int i;
@@ -1412,7 +1411,7 @@ parse_plug_in_def (gpointer val1p,
 
   return OK;
 
-error:
+ error:
   g_message (_("error parsing pluginrc"));
   tmp_list = plug_in_def->proc_defs;
   while (tmp_list)
@@ -1569,7 +1568,7 @@ parse_proc_def (PlugInProcDef **proc_def)
   *proc_def = pd;
   return OK;
 
-error:
+ error:
   g_free (pd->db_info.name);
   g_free (pd->db_info.blurb);
   g_free (pd->db_info.help);
@@ -1648,7 +1647,7 @@ parse_proc_arg (ProcArg *arg)
 
   return OK;
 
-error:
+ error:
   g_free (arg->name);
   g_free (arg->description);
 
@@ -1687,7 +1686,7 @@ parse_menu_path (gpointer val1p,
 
   return OK;
 
-error:
+ error:
   g_free (menu_path);
   g_free (accelerator);
 
@@ -1881,25 +1880,28 @@ parse_device_accelerator (const char   *accelerator,
     }
 }
 
-static int 
+static gint 
 parse_device (gpointer val1p, 
 	      gpointer val2p)
 {
   DeviceValues values = 0;
-  int i;
-  int token;
+  gint i;
+  gint token;
   
   /* The initialized values here are meaningless */
-  gchar *name = NULL;
-  GdkInputMode mode = GDK_MODE_DISABLED;
-  gint num_axes = 0;
-  GdkAxisUse *axes = NULL;
-  gint num_keys = 0;
+  gchar *name        = NULL;
+  GdkInputMode mode  = GDK_MODE_DISABLED;
+  gint num_axes      = 0;
+  GdkAxisUse *axes   = NULL;
+  gint num_keys      = 0;
   GdkDeviceKey *keys = NULL;
-  gchar *brush_name = NULL;
-  gchar *pattern_name = NULL;
-  ToolType tool = RECT_SELECT;
+
+  ToolType tool        = RECT_SELECT;
   guchar foreground[3] = { 0, 0, 0 };
+  guchar background[3] = { 0, 0, 0 };
+  gchar *brush_name    = NULL;
+  gchar *pattern_name  = NULL;
+  gchar *gradient_name = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -1910,7 +1912,7 @@ parse_device (gpointer val1p,
 
   /* Parse options for device */
 
-  while ( peek_next_token () == TOKEN_LEFT_PAREN )
+  while (peek_next_token () == TOKEN_LEFT_PAREN)
     {
       token = get_next_token ();
 
@@ -1922,7 +1924,7 @@ parse_device (gpointer val1p,
       if (!strcmp ("mode", token_sym))
 	{
 	  values |= DEVICE_MODE;
-	  
+
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_SYMBOL))
 	    goto error;
@@ -1940,7 +1942,7 @@ parse_device (gpointer val1p,
       else if (!strcmp ("axes", token_sym))
 	{
 	  values |= DEVICE_AXES;
-	  
+
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
 	    goto error;
@@ -1948,14 +1950,14 @@ parse_device (gpointer val1p,
 
 	  num_axes = token_int;
 	  axes = g_new (GdkAxisUse, num_axes);
-	  
-	  for (i=0; i<num_axes; i++)
+
+	  for (i = 0; i < num_axes; i++)
 	    {
 	      token = peek_next_token ();
 	      if (!token || (token != TOKEN_SYMBOL))
 		goto error;
 	      token = get_next_token ();
-	      
+
 	      if (!strcmp ("ignore", token_sym))
 		axes[i] = GDK_AXIS_IGNORE;
 	      else if (!strcmp ("x", token_sym))
@@ -1979,7 +1981,7 @@ parse_device (gpointer val1p,
       else if (!strcmp ("keys", token_sym))
 	{
 	  values |= DEVICE_KEYS;
-	  
+
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
 	    goto error;
@@ -1987,38 +1989,16 @@ parse_device (gpointer val1p,
 
 	  num_keys = token_int;
 	  keys = g_new (GdkDeviceKey, num_keys);
-	  
+
 	  for (i=0; i<num_keys; i++)
 	    {
 	      token = peek_next_token ();
 	      if (!token || (token != TOKEN_STRING))
 		goto error;
 	      token = get_next_token ();
-	      
+
 	      parse_device_accelerator (token_str, &keys[i]);
 	    }
-	}
-      else if (!strcmp ("brush", token_sym))
-	{
-	  values |= DEVICE_BRUSH;
-	  
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  brush_name = g_strdup (token_str);
-	}
-      else if (!strcmp ("pattern", token_sym))
-	{
-	  values |= DEVICE_PATTERN;
-	  
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-
-	  pattern_name = g_strdup (token_str);
 	}
       else if (!strcmp ("tool", token_sym))
 	{
@@ -2032,18 +2012,17 @@ parse_device (gpointer val1p,
 	  /* FIXME: this shouldn't be hard coded like this */
 	  for (tool = FIRST_TOOLBOX_TOOL; tool <= LAST_TOOLBOX_TOOL; tool++)
 	    {
-	      if (!strcmp(tool_info[tool].tool_name, token_str))
+	      if (!strcmp (tool_info[tool].tool_name, token_str))
 		break;
 	    }
 	  if (tool > LAST_TOOLBOX_TOOL)
 	    goto error;
-	  
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
 	  values |= DEVICE_FOREGROUND;
-	  
-	  for (i=0; i<3; i++)
+
+	  for (i = 0; i < 3; i++)
 	    {
 	      token = peek_next_token ();
 	      if (!token || (token != TOKEN_NUMBER))
@@ -2052,6 +2031,53 @@ parse_device (gpointer val1p,
 
 	      foreground[i] = token_int;
 	    }
+	}
+      else if (!strcmp ("background", token_sym))
+	{
+	  values |= DEVICE_BACKGROUND;
+
+	  for (i = 0; i < 3; i++)
+	    {
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_NUMBER))
+		goto error;
+	      token = get_next_token ();
+
+	      background[i] = token_int;
+	    }
+	}
+      else if (!strcmp ("brush", token_sym))
+	{
+	  values |= DEVICE_BRUSH;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  brush_name = g_strdup (token_str);
+	}
+      else if (!strcmp ("pattern", token_sym))
+	{
+	  values |= DEVICE_PATTERN;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  pattern_name = g_strdup (token_str);
+	}
+      else if (!strcmp ("gradient", token_sym))
+	{
+	  values |= DEVICE_GRADIENT;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  gradient_name = g_strdup (token_str);
 	}
       else
 	goto error;
@@ -2067,19 +2093,26 @@ parse_device (gpointer val1p,
   token = get_next_token ();
 
   devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
-		     brush_name, tool, foreground,pattern_name);
+		     tool,
+		     foreground,
+		     background,
+		     brush_name,
+		     pattern_name,
+		     gradient_name);
 
   g_free (brush_name);
   g_free (pattern_name);
+  g_free (gradient_name);
   g_free (name);
   g_free (axes);
   g_free (keys);
 
   return OK;
 
-error:
-  g_free (pattern_name);
+ error:
   g_free (brush_name);
+  g_free (pattern_name);
+  g_free (gradient_name);
   g_free (name);
   g_free (axes);
   g_free (keys);
@@ -2111,7 +2144,7 @@ parse_session_info (gpointer val1p,
 
   /* Parse options for session info */
 
-  while ( peek_next_token () == TOKEN_LEFT_PAREN )
+  while (peek_next_token () == TOKEN_LEFT_PAREN)
     {
       token = get_next_token ();
 
@@ -2172,17 +2205,17 @@ static int
 parse_unit_info (gpointer val1p, 
 		 gpointer val2p)
 {
-  int token;
+  gint token;
 
-  GUnit  unit;
+  GUnit unit;
 
-  gchar  *identifier   = NULL;
-  double  factor       = 1.0;
-  int     digits       = 2.0;
-  gchar  *symbol       = NULL;
-  gchar  *abbreviation = NULL;
-  gchar  *singular     = NULL;
-  gchar  *plural       = NULL;
+  gchar   *identifier   = NULL;
+  gdouble  factor       = 1.0;
+  gint     digits       = 2.0;
+  gchar   *symbol       = NULL;
+  gchar   *abbreviation = NULL;
+  gchar   *singular     = NULL;
+  gchar   *plural       = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -2192,20 +2225,20 @@ parse_unit_info (gpointer val1p,
 
   /* Parse options for unit info */
 
-  while ( peek_next_token () == TOKEN_LEFT_PAREN )
+  while (peek_next_token () == TOKEN_LEFT_PAREN)
     {
       token = get_next_token ();
 
       token = peek_next_token ();
       if (!token || (token != TOKEN_SYMBOL))
-	goto parse_unit_info_error_label;
+	goto error;
       token = get_next_token ();
 
       if (!strcmp ("factor", token_sym))
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  factor = token_num;
 	}
@@ -2213,7 +2246,7 @@ parse_unit_info (gpointer val1p,
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  digits = token_int;
 	}
@@ -2221,7 +2254,7 @@ parse_unit_info (gpointer val1p,
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  symbol = g_strdup (token_str);
 	}
@@ -2229,7 +2262,7 @@ parse_unit_info (gpointer val1p,
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  abbreviation = g_strdup (token_str);
 	}
@@ -2237,7 +2270,7 @@ parse_unit_info (gpointer val1p,
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  singular = g_strdup (token_str);
 	}
@@ -2245,21 +2278,21 @@ parse_unit_info (gpointer val1p,
 	{
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
-	    goto parse_unit_info_error_label;
+	    goto error;
 	  token = get_next_token ();
 	  plural = g_strdup (token_str);
 	}
       else
-	goto parse_unit_info_error_label;
+	goto error;
       
       token = peek_next_token ();
       if (!token || (token != TOKEN_RIGHT_PAREN))
-	goto parse_unit_info_error_label;
+	goto error;
       token = get_next_token ();
     }
 
   if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto parse_unit_info_error_label;
+    goto error;
   token = get_next_token ();
 
   unit = gimp_unit_new (identifier, factor, digits,
@@ -2275,17 +2308,12 @@ parse_unit_info (gpointer val1p,
 
   return OK;
 
- parse_unit_info_error_label:
-  if (identifier)
-    g_free (identifier);
-  if (symbol)
-    g_free (symbol);
-  if (abbreviation)
-    g_free (abbreviation);
-  if (singular)
-    g_free (singular);
-  if (plural)
-    g_free (plural);
+ error:
+  g_free (identifier);
+  g_free (symbol);
+  g_free (abbreviation);
+  g_free (singular);
+  g_free (plural);
 
   return ERROR;
 }
@@ -2733,13 +2761,12 @@ gimprc_find_token (char *token)
   GList *list;
   UnknownToken *ut;
 
-  list = unknown_tokens;
-  while (list)
+  for (list = unknown_tokens; list; list = g_list_next (list))
     {
       ut = (UnknownToken *) list->data;
+
       if (strcmp (ut->token, token) == 0)
 	return ut->value;
-      list = list->next;
     }
 
   return NULL;
@@ -2752,10 +2779,10 @@ gimprc_set_token (char *token,
   GList *list;
   UnknownToken *ut;
 
-  list = unknown_tokens;
-  while (list)
+  for (list = unknown_tokens; list; list = g_list_next (list))
     {
       ut = (UnknownToken *) list->data;
+
       if (strcmp (ut->token, token) == 0)
 	{
 	  if (ut->value != value)
@@ -2766,6 +2793,5 @@ gimprc_set_token (char *token,
 	    }
 	  break;
 	}
-      list = list->next;
     }
 }

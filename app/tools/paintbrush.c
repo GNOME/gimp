@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "buildmenu.h"
 #include "drawable.h"
@@ -28,7 +29,6 @@
 #include "gradient.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
-#include "palette.h"
 #include "paint_options.h"
 #include "paintbrush.h"
 #include "selection.h"
@@ -58,32 +58,32 @@ struct _PaintbrushOptions
 {
   PaintOptions  paint_options;
 
-  int           use_fade;
-  int           use_fade_d;
+  gboolean      use_fade;
+  gboolean      use_fade_d;
   GtkWidget    *use_fade_w;
 
-  double        fade_out;
-  double        fade_out_d;
+  gdouble       fade_out;
+  gdouble       fade_out_d;
   GtkObject    *fade_out_w;
 
   GUnit         fade_unit;
   GUnit         fade_unit_d;
   GtkWidget    *fade_unit_w;
 
-  int           use_gradient;
-  int           use_gradient_d;
+  gboolean      use_gradient;
+  gboolean      use_gradient_d;
   GtkWidget    *use_gradient_w;
 
-  double        gradient_length;
-  double        gradient_length_d;
+  gdouble       gradient_length;
+  gdouble       gradient_length_d;
   GtkObject    *gradient_length_w;
 
   GUnit         gradient_unit;
   GUnit         gradient_unit_d;
   GtkWidget    *gradient_unit_w;
 
-  int           gradient_type;
-  int           gradient_type_d;
+  gint          gradient_type;
+  gint          gradient_type_d;
   GtkWidget    *gradient_type_w;
 };
 
@@ -201,7 +201,7 @@ paintbrush_options_new (void)
   };
 
   /*  the new paint tool options structure  */
-  options = (PaintbrushOptions *) g_malloc (sizeof (PaintbrushOptions));
+  options = g_new (PaintbrushOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      PAINTBRUSH,
 		      paintbrush_options_reset);
@@ -240,7 +240,7 @@ paintbrush_options_new (void)
     gtk_check_button_new_with_label (_("Fade Out"));
   gtk_container_add (GTK_CONTAINER (abox), options->use_fade_w);
   gtk_signal_connect (GTK_OBJECT (options->use_fade_w), "toggled",
-		      (GtkSignalFunc) tool_options_toggle_update,
+		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
 		      &options->use_fade);
   gtk_widget_show (options->use_fade_w);
 
@@ -271,8 +271,10 @@ paintbrush_options_new (void)
   /*  automatically set the sensitive state of the fadeout stuff  */
   gtk_widget_set_sensitive (spinbutton, options->use_fade_d);
   gtk_widget_set_sensitive (options->fade_unit_w, options->use_fade_d);
-  gtk_object_set_data (GTK_OBJECT (options->use_fade_w), "set_sensitive", spinbutton);
-  gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive", options->fade_unit_w);
+  gtk_object_set_data (GTK_OBJECT (options->use_fade_w),
+		       "set_sensitive", spinbutton);
+  gtk_object_set_data (GTK_OBJECT (spinbutton),
+		       "set_sensitive", options->fade_unit_w);
 
   /*  the use gradient toggle  */
   abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
@@ -284,7 +286,7 @@ paintbrush_options_new (void)
     gtk_check_button_new_with_label (_("Gradient"));
   gtk_container_add (GTK_CONTAINER (abox), options->use_gradient_w);
   gtk_signal_connect (GTK_OBJECT (options->use_gradient_w), "toggled",
-		      (GtkSignalFunc) paintbrush_gradient_toggle_callback,
+		      GTK_SIGNAL_FUNC (paintbrush_gradient_toggle_callback),
 		      &options->use_gradient);
   gtk_widget_show (options->use_gradient_w);
 
@@ -318,15 +320,15 @@ paintbrush_options_new (void)
   gtk_table_attach (GTK_TABLE (table), type_label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (type_label);
-  
+
   abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 3, 2, 3);
   gtk_widget_show (abox);
-  
+
   options->gradient_type_w = gtk_option_menu_new ();
   gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
   gtk_widget_show (options->gradient_type_w);
-  
+
   menu = build_menu (gradient_type_items, NULL);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
@@ -560,7 +562,8 @@ paintbrush_motion (PaintCore            *paint_core,
 	{
 	  if (!fade_out && pressure_options->color)
 	    {
-	      grad_get_color_at (paint_core->curpressure, &r, &g, &b, &a);
+	      gradient_get_color_at (gimp_context_get_gradient (NULL),
+				     paint_core->curpressure, &r, &g, &b, &a);
 	      col[0] = r * 255.0;
 	      col[1] = g * 255.0;
 	      col[2] = b * 255.0;
@@ -655,8 +658,8 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
   PaintbrushOptions *options = paintbrush_options;
   double             fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
   gboolean           incremental     = PAINTBRUSH_DEFAULT_INCREMENTAL;
-  int                use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
-  int                use_fade        = PAINTBRUSH_DEFAULT_USE_FADE;
+  gboolean           use_gradient    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
+  gboolean           use_fade        = PAINTBRUSH_DEFAULT_USE_FADE;
   double             gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
   int                gradient_type   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
   GUnit              fade_unit       = PAINTBRUSH_DEFAULT_FADE_UNIT;
@@ -675,10 +678,10 @@ paintbrush_non_gui_default (GimpDrawable *drawable,
       gradient_unit   = options->gradient_unit;
     }
 
-  if (use_gradient == 0)
+  if (use_gradient == FALSE)
     gradient_length = 0.0;
 
-  if (use_fade == 0)
+  if (use_fade == FALSE)
     fade_out = 0.0;
 
   /* Hmmm... PDB paintbrush should have gradient type added to it!*/

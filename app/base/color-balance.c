@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "color_balance.h"
 #include "color_transfer.h"
 #include "drawable.h"
@@ -276,7 +275,7 @@ color_balance_new_dialog ()
     N_("Highlights")
   };
 
-  ActionCallback appl_mode_callbacks[] =
+  GtkSignalFunc appl_mode_callbacks[] =
   {
     color_balance_shadows_callback,
     color_balance_midtones_callback,
