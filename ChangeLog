@@ -1,3 +1,8 @@
+2004-12-16  Manish Singh  <yosh@gimp.org>
+
+	* app/widgets/gimppdbdialog.c (gimp_pdb_dialog_set_property): Cast
+	result of g_value_dup_object() to GIMP_CONTEXT().
+
 2004-12-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/script-fu/scripts/circuit.scm: don't try to

@@ -224,7 +224,7 @@ gimp_pdb_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
-      dialog->caller_context = g_value_dup_object (value);
+      dialog->caller_context = GIMP_CONTEXT (g_value_dup_object (value));
       break;
     case PROP_SELECT_TYPE:
       dialog->select_type = (GType) g_value_get_pointer (value);
