@@ -143,15 +143,17 @@ load_image (const gchar       *filename,
   gint    wpid;
   gint    process_status;
   gint    p[2];
+  gboolean name_image = FALSE;
+
+  fprintf (stderr, "Loading URL: %s\n", filename);
 
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
+    tmpname = gimp_temp_name ("xxx");
+  else
     {
-      g_message ("Can't open URL without an extension");
-      *status = GIMP_PDB_CALLING_ERROR;
-      return -1;
+      tmpname = gimp_temp_name (ext + 1);
+      name_image = TRUE;
     }
-
-  tmpname = gimp_temp_name (ext + 1);
 
   if (pipe (p) != 0)
     {
@@ -410,7 +412,10 @@ read_connect:
   if (image_ID != -1)
     {
       *status = GIMP_PDB_SUCCESS;
-      gimp_image_set_filename (image_ID, filename);
+      if (name_image)
+	gimp_image_set_filename (image_ID, filename);
+      else
+	gimp_image_set_filename (image_ID, "");
     }
   else
     *status = GIMP_PDB_EXECUTION_ERROR;
