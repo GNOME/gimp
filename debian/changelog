@@ -1,3 +1,60 @@
+gimp1.2 (0.20010129-cvs3) unstable; urgency=low
+
+  * CVS build.
+
+ -- che@debian.org  Mon, 29 Jan 2001 14:55:01 -0800
+
+gimp1.2 (0.20010129-cvs2) unstable; urgency=low
+
+  * CVS build.
+
+ -- CVS Build By <che@debian.org>  Mon, 29 Jan 2001 14:51:21 -0800
+
+gimp1.2 (0.20010129-cvs1) unstable; urgency=low
+
+  * CVS build.
+
+ -- CVS Build By <che@debian.org>  Mon, 29 Jan 2001 14:47:19 -0800
+
+gimp1.2 (1.2.0-1) unstable; urgency=low
+
+  * We made it!! At long last, we made it. 1.2 is out!
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 25 Dec 2000 12:04:22 -0800
+
+gimp1.1 (1.1.32-1) unstable; urgency=low
+
+  * New upstream version. Closes: #80100
+  * (1.1.31 didn't build. I wish people wouldn't submit bug reports
+    5 minutes after a new developers'-only version comes out, without
+    testing if it even *builds*..)
+
+ -- Ben Gertzfield <che@debian.org>  Fri, 22 Dec 2000 13:05:16 -0800
+
+gimp1.1 (1.1.29-2) unstable; urgency=low
+
+  * Remove dependancy on perl-5.005 that snuck in there when we merged
+    the Helix changes. Closes: #77155
+
+ -- Ben Gertzfield <che@debian.org>  Wed, 15 Nov 2000 19:12:40 -0800
+
+gimp1.1 (1.1.29-1) unstable; urgency=low
+
+  * New upstream version.
+  * Bugs fixed previously that I forgot to close:
+  * Select / By Color doesn't crash. Closes: #62560
+  * libgimp1.1-dev Conflicts: with gimp. Closes: #75331
+  
+ -- Ben Gertzfield <che@debian.org>  Wed,  1 Nov 2000 14:35:01 -0800
+
+gimp1.1 (1.1.28-1) unstable; urgency=low
+
+  * New upstream version. That was quick! /etc and it's patches
+    were accepted. (upstream decided to use /etc/gimp/1.1 instead
+    of /etc/gimp-1.1. *shrug*
+
+ -- Ben Gertzfield <che@debian.org>  Mon, 16 Oct 2000 22:17:37 -0700
+
 gimp1.1 (1.1.27-1) unstable; urgency=low
 
   * New upstream version. Closes: #72193, #74115
