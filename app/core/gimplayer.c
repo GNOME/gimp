@@ -693,9 +693,10 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
                               GimpImage    *dest_image)
 {
   GimpImageBaseType  src_base_type;
-  GimpDrawable      *new_drawable;
-  GimpItem          *new_item;
   GimpImageBaseType  new_base_type;
+  GimpItem          *new_item;
+  GimpDrawable      *new_drawable;
+  GimpLayer         *new_layer;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
@@ -708,6 +709,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
                                   TRUE);
 
   new_drawable = GIMP_DRAWABLE (new_item);
+  new_layer    = GIMP_LAYER (new_item);
 
   if (src_base_type != new_base_type)
     {
@@ -771,7 +773,10 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
 
   gimp_item_set_image (new_item, dest_image);
 
-  return GIMP_LAYER (new_drawable);
+  if (new_layer->mask)
+    gimp_item_set_image (GIMP_ITEM (new_layer->mask), dest_image);
+
+  return new_layer;
 }
 
 GimpLayerMask *
