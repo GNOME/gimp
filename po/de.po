@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
 "POT-Creation-Date: 2002-02-13 16:20+0100\n"
-"PO-Revision-Date: 2002-02-13 16:21+0100\n"
+"PO-Revision-Date: 2002-04-28 01:30+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5332,7 +5332,7 @@ msgstr "/Werkzeuge/Transformationen/Zuschneiden und Größe ändern"
 
 #: app/tools.c:383
 msgid "Crop or resize the image"
-msgstr "Bildgöße ändern"
+msgstr "Bild zuschneiden oder Größe ändern"
 
 #. the transform type radio buttons
 #: app/tools.c:405 app/tools.c:433 app/tools.c:461 app/tools.c:489
