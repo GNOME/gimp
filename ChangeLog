@@ -27,7 +27,11 @@
 	libgimp*/Makefile.am files: Use -no-undefined. Conditionally link
 	to ../lib*/*.la as needed. Use the .def file. Produce MS style
 	import library if possible. Install and uninstall import
-	libraries. Don't distribute makefile.mingw{,.in}.
+	libraries.
+
+	* libgimp/Makefile.am
+	* modules/Makefile.am
+	* plug-ins/Makefile.am: Don't distribute makefile.mingw{,.in}.
 
 	* libgimpproxy/gimpproxy.def
 	* libgimptool/gimptool.def: New files.

@@ -8,8 +8,6 @@ INCLUDES = \
         -I$(includedir)
 
 EXTRA_DIST = \
-	makefile.mingw		\
-	makefile.mingw.in	\
 	makefile.msc		\
 	module.def		\
 	colorsel_water.c
