@@ -243,8 +243,9 @@ while test $# -gt 0; do
         --uninstall-* )
           shift
           if test "x$1" != "x"; then
-            if test -f "$install_dir/$1"; then
-              cmd="rm -f $DESTDIR$install_dir/$1"
+            dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#'`
+            if test -f "$DESTDIR$install_dir/$dest"; then
+              cmd="rm -f $DESTDIR$install_dir/$dest"
               test $quiet = "yes" || echo $cmd
               test $donothing = "yes" || exec $cmd
             else
@@ -260,7 +261,8 @@ while test $# -gt 0; do
           shift
           if test "x$1" != "x"; then
             if test -r "$1"; then
-              cmd="$install_cmd $1 $DESTDIR$install_dir/$1"
+              dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#'`
+              cmd="$install_cmd $1 $DESTDIR$install_dir/$dest"
               test $quiet = "yes" || echo $cmd
               test $donothing = "yes" || exec $cmd
             else

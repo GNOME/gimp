@@ -1,3 +1,8 @@
+2002-10-29  Manish Singh  <yosh@gimp.org>
+
+	* gimptool-1.3.in: strip paths from the plug-in filename for
+	installation (fixes #97111).
+
 2002-10-29  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/Makefile.am
