@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-29 14:57+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-06-29 13:45+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -52,76 +52,76 @@ msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1112
-#: plug-ins/script-fu/script-fu-scripts.c:1114
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1122
+#: plug-ins/script-fu/script-fu-scripts.c:1123
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1156
+#: plug-ins/script-fu/script-fu-scripts.c:1157
 msgid "About"
 msgstr "À propos"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1193
+#: plug-ins/script-fu/script-fu-scripts.c:1194
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1239
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1320
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1325
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du répertoire Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1342
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1349
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1356
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/script-fu/script-fu-scripts.c:1859
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Auteur :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1864
+#: plug-ins/script-fu/script-fu-scripts.c:1865
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1870
+#: plug-ins/script-fu/script-fu-scripts.c:1871
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1878
+#: plug-ins/script-fu/script-fu-scripts.c:1879
 msgid "Image Types:"
 msgstr "Types d'images :"
 
@@ -148,19 +148,19 @@ msgstr "Port du serveur :"
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:120
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Exts/Script-Fu/Console..."
 
-#: plug-ins/script-fu/script-fu.c:147
+#: plug-ins/script-fu/script-fu.c:145
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Exts/Script-Fu/Serveur..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Relire la liste des scripts disponibles"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:274
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Exts/Script-Fu/Rafraîchir"
 
@@ -338,13 +338,13 @@ msgid "Shadow Blur Radius"
 msgstr "Rayon de flou d'ombre"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X Offset"
 msgstr "Décalage de l'ombre en X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y Offset"
 msgstr "Décalage de l'ombre en Y"
@@ -358,19 +358,19 @@ msgstr "Décalage de l'ombre en Y"
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:7
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
@@ -385,7 +385,7 @@ msgstr "Décalage de l'ombre en Y"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:14
-#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "Texte"
 
@@ -447,7 +447,7 @@ msgid "Number of Y Tiles"
 msgstr "Nombre de carreaux en Y"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Start Blend"
 msgstr "Départ mélange"
 
@@ -523,7 +523,7 @@ msgstr "Aplatir image"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -596,7 +596,7 @@ msgstr "Marge"
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
@@ -738,14 +738,14 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Hauteur"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
@@ -806,6 +806,16 @@ msgid "Gradient"
 msgstr "Dégradé"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#, fuzzy
+msgid "Gradient Reverse"
+msgstr "Dégradé"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
 msgstr "Décalage (pixels)"
 
@@ -834,31 +844,28 @@ msgid "After Glow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid ""
-"Burn-In: Need two layers in total!\n"
-"        A foreground text layer with transparency\n"
-"        and a background layer."
+msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 #, fuzzy
 msgid "Corona Width"
 msgstr "Largeur des bandes"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Fadeout"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 #, fuzzy
 msgid "Fadeout Width"
 msgstr "Largeur des bords"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Prepare for GIF"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Speed (pixels/frame)"
 msgstr "Vitesse (pixels/image)"
 
@@ -879,12 +886,12 @@ msgid "Color 3"
 msgstr "Couleur 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
-#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
 msgstr "Granularité"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
-#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image Size"
 msgstr "Taille de l'image"
 
@@ -1098,12 +1105,12 @@ msgstr "<Image>/Script-Fu/Alpha vers Logo/Comic Book..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 msgstr "<Toolbox>/Exts/Script-Fu/Logos/Comic Book..."
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
 msgstr "Couleur de contour"
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline Size"
 msgstr "Taille de contour"
 
@@ -1421,32 +1428,41 @@ msgstr "Mélange les dégradés (contours)"
 msgid "Blend Gradient (Text)"
 msgstr "Mélange les contours (Texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
+msgid "Outline Gradient Reverse"
+msgstr "Rayon de flou de contour"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
 msgstr "Motif (contour)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
 msgstr "Motif (Recouvrant)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Ombre"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+msgid "Text Gradient Reverse"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
 msgstr "Utiliser Motif de recouvrement"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
 msgstr "Utiliser un Motif pour le contour au lieu du Dégradé"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Utiliser un Motif pour le texte au lieu du Dégradé"
 
@@ -1804,7 +1820,7 @@ msgstr "Comportement"
 msgid "Detail in Middle"
 msgstr "Dtail au milieu"
 
-#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
 msgstr "Carreau"
 

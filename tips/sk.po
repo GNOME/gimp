@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"POT-Creation-Date: 2003-06-27 03:00+0200\n"
+"POT-Creation-Date: 2003-07-21 00:18+0200\n"
 "PO-Revision-Date: 2002-03-13 13:25+0100\n"
 "Last-Translator: Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -35,6 +35,15 @@ msgstr ""
 "dialóguVrstvy prepína efekt masky vrstvy."
 
 #: tips/gimp-tips.xml.in.h:4
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"Pri stlačenej klávese <tt>Shift</tt> pri použití Plechovky sa "
+"namiestopoužitia farby pozadia použije farba popredia."
+
+#: tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
@@ -42,7 +51,7 @@ msgstr ""
 "Stlačenie klávesy <tt>Ctrl</tt> a ťahanie myšou v nástroji "
 "Transformáciespôsobí otáčanie s 15 stupňovými krokmi."
 
-#: tips/gimp-tips.xml.in.h:5
+#: tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -50,14 +59,6 @@ msgstr ""
 "Kliknutie na ikonu oka v dialógu Vrstvy so stlačenou klávesou <tt>Shift</"
 "tt>je možné skryť všetky vrstvy okrem tej, na ktorú ste klikli. Ďalšie "
 "kliknutie všetkyvrstvy zobrazí."
-
-#: tips/gimp-tips.xml.in.h:6
-msgid ""
-"<tt>Shift</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr ""
-"Pri stlačenej klávese <tt>Shift</tt> pri použití Plechovky sa "
-"namiestopoužitia farby pozadia použije farba popredia."
 
 #: tips/gimp-tips.xml.in.h:7
 #, fuzzy
@@ -190,7 +191,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voilá, "
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
 "it's completed."
 msgstr ""
 "Dialóg voľby používa podobne ako shell klávesu Tab na dokončovanie názvu "
@@ -199,7 +200,7 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
-"The layer named \"Background\" it special because it lacks transparency. "
+"The layer named \"Background\" is special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
 "stack. You may add transparency to it by right-clicking in the Layers dialog "
 "and selecting \"Add Alpha Channel\"."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-20 12:00+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-07-21 22:35+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -174,8 +174,7 @@ msgstr "Výběr písma"
 msgid "Gradient Selection"
 msgstr "Výběr přechodu"
 
-#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
-#: libgimp/gimpmenu.c:517
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Nic"
 
@@ -183,7 +182,7 @@ msgstr "Nic"
 msgid "Preview"
 msgstr "Náhled"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-29 14:59+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-06-29 14:59+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Sélection des brosses"
 
@@ -152,7 +152,7 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "La conversion exporter ne modifiera pas l'image d'origine."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -161,7 +161,7 @@ msgstr ""
 "Vous êtes sur le point d'enregistrer %s comme %s.\n"
 "Cela ne sauvegardera pas les calques visibles."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -170,16 +170,15 @@ msgstr ""
 "Vous êtes sur le point d'enregistrer %s comme %s.\n"
 "Cela ne sauvegardera pas les calques visibles."
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
 msgstr "Sélection des polices"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Sélection des dégradés"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Aucun"
 
@@ -187,7 +186,7 @@ msgstr "Aucun"
 msgid "Preview"
 msgstr "Aperçu"
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -196,7 +195,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Sélection des motifs"
 
@@ -239,9 +238,9 @@ msgstr "%.1f Mo"
 msgid "Loading module: '%s'\n"
 msgstr "Chargement du module : « %s »\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -250,24 +249,24 @@ msgstr ""
 "Erreur de chargement du module « %s » :\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Module ignoré : « %s »\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "Erreur du module"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr "Chargé"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "Échec du chargement"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr "Non chargé"
 
@@ -534,12 +533,55 @@ msgstr "Contraste"
 msgid "Contrast Cycles:"
 msgstr ""
 
+#: modules/colorsel_cmyk.c:70
+msgid "CMYK color selector"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+#, fuzzy
+msgid "Cyan"
+msgstr "Annuler"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/Noir"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "_Triangle"
 
 #: modules/colorsel_water.c:104
@@ -547,15 +589,12 @@ msgid "Watercolor style color selector"
 msgstr ""
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+msgid "Watercolor"
 msgstr ""
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pression"
-
-#~ msgid "Cancel"
-#~ msgstr "Annuler"
 
 #~ msgid "a layer mask"
 #~ msgstr "un masque de calque"

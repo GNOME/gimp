@@ -10,7 +10,10 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.17
 ==================================
-- Changed all(?) references to GIMP-1.4 to GIMP-2.0 [Sven]
+- Made the text tool optionally create a path [Sven, Mitch]
+- Added the ability to reverse gradients to the blend tool [Mitch]
+- Added dithering to the blend tool [Alastair M. Robinson]
+- Changed all(?) GIMP-1.4 references to GIMP-2.0 [Sven]
 - Allow to transform paths using the transform tools [Mitch]
 - Added a simple CMYK color selector [Sven]
 - Added naive RGB <-> CMYK conversion routines [Sven]
@@ -18,7 +21,7 @@ Overview of Changes in GIMP 1.3.17
 - Finally a brush-shaped cursor for all paint tools [Mitch]
 - Started to integrate new composite functions [Helvetix]
 - Made the style for dockable tabs configurable [Mitch]
-- Some preparations for text transformations and vectors from text [Sven]
+- Some preparations for text transformations [Sven]
 - Store grid settings in XCF [Brix]
 - Redone assembly checks and run-time checks for CPU features [Sven]
 - Added lots of mnemonics to the menus [Jimmac]
@@ -29,7 +32,8 @@ Overview of Changes in GIMP 1.3.17
 - Lots of bug fixes
 
 Other contributors:
-  Eric Pierce, Joao S. O. Bueno, Alastair M. Robinson, Tor Lillqvist
+  Eric Pierce, Joao S. O. Bueno, Tor Lillqvist, Damien Carbery,
+  Maurits Rijk
 
 
 Overview of Changes in GIMP 1.3.16

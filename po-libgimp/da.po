@@ -10,7 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-04-15 23:03+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 #, fuzzy
 msgid "Brush Selection"
 msgstr "Enhedsvalg"
@@ -151,7 +152,7 @@ msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre det oprindelige billede."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -160,7 +161,7 @@ msgstr ""
 "Du er ved at gemme en lagmaske som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -169,18 +170,17 @@ msgstr ""
 "Du er ved at gemme en kanal (gemt markering) som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
 msgstr "Enhedsvalg"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Enhedsvalg"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Ingen"
 
@@ -188,7 +188,7 @@ msgstr "Ingen"
 msgid "Preview"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -197,7 +197,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
 msgstr "Enhedsvalg"
@@ -241,9 +241,9 @@ msgstr "%.1f Mb"
 msgid "Loading module: '%s'\n"
 msgstr "Indlæser modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -252,24 +252,24 @@ msgstr ""
 "Indlæsningsfejl for modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Springer over modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "Modulfejl"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr "Indlæst"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "Indlæsning mislykkedes"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr "Ikke indlæst"
 
@@ -533,12 +533,56 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrastcyklusser:"
 
+#: modules/colorsel_cmyk.c:70
+#, fuzzy
+msgid "CMYK color selector"
+msgstr "Vandfarve-farvevælger"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+#, fuzzy
+msgid "Cyan"
+msgstr "Annullér"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/Sort"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Trekantet farvevælger"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "_Trekant"
 
 #: modules/colorsel_water.c:104
@@ -546,15 +590,13 @@ msgid "Watercolor style color selector"
 msgstr "Vandfarve-farvevælger"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+#, fuzzy
+msgid "Watercolor"
 msgstr "_Vandfarve"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryk"
-
-#~ msgid "Cancel"
-#~ msgstr "Annullér"
 
 #~ msgid "Colorblind display filter"
 #~ msgstr "Farveblindt visningsfilter"

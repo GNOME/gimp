@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.sk\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-04-17 22:40+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.2\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 #, fuzzy
 msgid "Brush Selection"
 msgstr "Výber jednotiek"
@@ -149,7 +150,7 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "Konverzia pri exporte neovplyvní pôvodný obrázok."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -158,7 +159,7 @@ msgstr ""
 "Idete uložiť masku vrstvy ako %s.\n"
 "Viditeľné vrstvy nebudú uložené."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -167,18 +168,17 @@ msgstr ""
 "Idete uložiť kanál (uložený výber) ako %s.\n"
 "Viditeľné vrstvy nebudú uložené."
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
 msgstr "Výber jednotiek"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "Výber jednotiek"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Nič"
 
@@ -186,7 +186,7 @@ msgstr "Nič"
 msgid "Preview"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -195,7 +195,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
 msgstr "Výber jednotiek"
@@ -239,9 +239,9 @@ msgstr ""
 msgid "Loading module: '%s'\n"
 msgstr "Načítavanie modulu: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -250,24 +250,24 @@ msgstr ""
 "Chyba pri načítavaní modulu '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynecháva sa modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr "Načítané"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "Načítavanie zlyhalo"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr "Nenačítané"
 
@@ -531,12 +531,56 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Cykly kontrastu:"
 
+#: modules/colorsel_cmyk.c:70
+#, fuzzy
+msgid "CMYK color selector"
+msgstr "Výber farieb v štýle vodových farieb"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+#, fuzzy
+msgid "Cyan"
+msgstr "Zrušiť"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/Čierna"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Výber farieb t maliarskeho trojuholníka"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "_Trojuholník"
 
 #: modules/colorsel_water.c:104
@@ -544,15 +588,13 @@ msgid "Watercolor style color selector"
 msgstr "Výber farieb v štýle vodových farieb"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+#, fuzzy
+msgid "Watercolor"
 msgstr "_Vodné farby"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tlak"
-
-#~ msgid "Cancel"
-#~ msgstr "Zrušiť"
 
 #~ msgid "a layer mask"
 #~ msgstr "maska vrstvy"

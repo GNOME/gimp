@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2003-06-26 22:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2000-11-04 18:50+0100\n"
 "Last-Translator: Željan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -49,79 +50,79 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1112
-#: plug-ins/script-fu/script-fu-scripts.c:1114
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1122
+#: plug-ins/script-fu/script-fu-scripts.c:1123
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1156
+#: plug-ins/script-fu/script-fu-scripts.c:1157
 msgid "About"
 msgstr "O..."
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
 #
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1193
+#: plug-ins/script-fu/script-fu-scripts.c:1194
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1239
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu odabir boje"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1320
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Odabir Datoteke"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1325
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Odabir Datoteke"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1342
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Odabir Fonta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1349
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Odabir Uzorka"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1356
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Odabir Gradijenta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Odabir Kista"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1859
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
-#: plug-ins/script-fu/script-fu-scripts.c:1858
 msgid "Author:"
 msgstr "Autor:"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1865
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
-#: plug-ins/script-fu/script-fu-scripts.c:1864
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1871
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
-#: plug-ins/script-fu/script-fu-scripts.c:1870
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1878
+#: plug-ins/script-fu/script-fu-scripts.c:1879
 msgid "Image Types:"
 msgstr "Vrste Slika:"
 
@@ -145,19 +146,19 @@ msgstr "Serverski Port:"
 msgid "Server Logfile:"
 msgstr "Serverska Zabilješka(log):"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:120
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Konzola..."
 
-#: plug-ins/script-fu/script-fu.c:147
+#: plug-ins/script-fu/script-fu.c:145
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Ponovno učitaj sve dostupne skripte"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:274
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Osvježi"
 
@@ -338,13 +339,13 @@ msgid "Shadow Blur Radius"
 msgstr "Polumjer Sjene Zamućenja"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X Offset"
 msgstr "X Ofset Sjene"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y Offset"
 msgstr "Y Ofset Sjene"
@@ -358,19 +359,19 @@ msgstr "Y Ofset Sjene"
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:7
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
@@ -385,7 +386,7 @@ msgstr "Y Ofset Sjene"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:14
-#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "Tekst"
 
@@ -447,7 +448,7 @@ msgid "Number of Y Tiles"
 msgstr "Broj Y djelića"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Start Blend"
 msgstr "Početna Blenda"
 
@@ -523,7 +524,7 @@ msgstr "Ravna Slika"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -596,7 +597,7 @@ msgstr "Podloga"
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
@@ -733,14 +734,14 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Web Teme/Beveled Pattern/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Visina"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
@@ -801,6 +802,16 @@ msgid "Gradient"
 msgstr "Gradijent"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#, fuzzy
+msgid "Gradient Reverse"
+msgstr "Gradijent"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
 msgstr "Ofset (piksela)"
 
@@ -829,32 +840,29 @@ msgid "After Glow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid ""
-"Burn-In: Need two layers in total!\n"
-"        A foreground text layer with transparency\n"
-"        and a background layer."
+msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 #, fuzzy
 msgid "Corona Width"
 msgstr "Širina Vrpce"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 #, fuzzy
 msgid "Fadeout"
 msgstr "Širina Ruba"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 #, fuzzy
 msgid "Fadeout Width"
 msgstr "Širina Ruba"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Prepare for GIF"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Speed (pixels/frame)"
 msgstr ""
 
@@ -875,12 +883,12 @@ msgid "Color 3"
 msgstr "Boja 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
-#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
 msgstr "Granulacija"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
-#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image Size"
 msgstr "Veličina Slike"
 
@@ -1094,12 +1102,12 @@ msgstr "<Image>/Script-Fu/Alfa u Logo/Comic Book..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Logotip/Comic Book..."
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
 msgstr "Vanjska Boja"
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline Size"
 msgstr "Vanjska Veličina"
 
@@ -1414,32 +1422,41 @@ msgstr "Izmješaj Gradijent (Van crte)"
 msgid "Blend Gradient (Text)"
 msgstr "Izmješaj Gradijent (Tekst)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
+msgid "Outline Gradient Reverse"
+msgstr "Polumjer Zamućenja na Slici"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
 msgstr "Uzorak (Outline)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
 msgstr "Uzorak (Overlay)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
 msgstr "Uzorak (Tekst)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Sjena"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+msgid "Text Gradient Reverse"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
 msgstr "Koristi Prekrivanje Uzorkom"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
 msgstr "Koristi Uzorak za Crtež , a ne Gradijent"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Koristi Uzorak za Tekst ,a ne Gradijent"
 
@@ -1799,7 +1816,7 @@ msgstr "Ponašanje"
 msgid "Detail in Middle"
 msgstr "Detalj u Sredini"
 
-#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
 msgstr "Djelić"
 

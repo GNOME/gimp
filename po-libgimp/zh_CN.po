@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Translator: Xie Yuheng <phycommusyee@263.net>\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 #, fuzzy
 msgid "Brush Selection"
 msgstr "单位选择"
@@ -147,7 +148,7 @@ msgstr "你的图像在保存之前应该先进行导出，因为："
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变你原来的图像。"
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -156,7 +157,7 @@ msgstr ""
 "你将要把 %s 保存为 %s。\n"
 "这样将不会保存可见的图层。"
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -165,18 +166,17 @@ msgstr ""
 "你将要把 %s 保存为 %s。\n"
 "这样将不会保存可见的图层。"
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
 msgstr "单位选择"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "单位选择"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "无"
 
@@ -184,7 +184,7 @@ msgstr "无"
 msgid "Preview"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -193,7 +193,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
 msgstr "单位选择"
@@ -237,33 +237,33 @@ msgstr ""
 msgid "Loading module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr ""
 
@@ -530,12 +530,54 @@ msgstr ""
 msgid "Contrast Cycles:"
 msgstr ""
 
+#: modules/colorsel_cmyk.c:70
+msgid "CMYK color selector"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+#, fuzzy
+msgid "Cyan"
+msgstr "取消"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/黑"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+msgid "Triangle"
 msgstr ""
 
 #: modules/colorsel_water.c:104
@@ -543,15 +585,12 @@ msgid "Watercolor style color selector"
 msgstr ""
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+msgid "Watercolor"
 msgstr ""
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
-
-#~ msgid "Cancel"
-#~ msgstr "取消"
 
 #~ msgid "a layer mask"
 #~ msgstr "图层蒙板"

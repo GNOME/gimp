@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.2\n"
-"POT-Creation-Date: 2003-06-26 22:13+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:20+0200\n"
 "PO-Revision-Date: 2002-01-31 14:13+0000\n"
 "Last-Translator: Bill Giannakopoulos <BillG@hellug.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
@@ -252,34 +253,35 @@ msgstr "Ημίτονοι"
 msgid "Highlights"
 msgstr "Υπερτόνιση"
 
-#: app/config/gimpconfig-deserialize.c:205 app/config/gimpconfig.c:374
-#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:388
-#: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
+#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:374
+#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:391
+#: app/config/gimpscanner.c:462 app/core/gimpunits.c:157 app/gui/session.c:176
+#: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr ""
 
 #. please don't translate 'yes' and 'no'
-#: app/config/gimpconfig-deserialize.c:434
+#: app/config/gimpconfig-deserialize.c:442
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 
-#: app/config/gimpconfig-deserialize.c:493
+#: app/config/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr ""
 
-#: app/config/gimpconfig-deserialize.c:507
+#: app/config/gimpconfig-deserialize.c:515
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: app/config/gimpconfig-deserialize.c:573
+#: app/config/gimpconfig-deserialize.c:581
 #, fuzzy, c-format
 msgid "while parsing token %s: %s"
 msgstr "Σφάλμα εγγραφής: %s"
 
-#: app/config/gimpconfig-deserialize.c:710
+#: app/config/gimpconfig-deserialize.c:733
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
@@ -325,13 +327,13 @@ msgstr "Σφάλμα ανάγνωσης: %s"
 msgid "Failed to create file '%s': %s"
 msgstr "Αδύνατο το άνοιγμα αρχείου: %s"
 
-#: app/config/gimprc.c:342 app/config/gimprc.c:354 app/gui/gui.c:210
-#: app/gui/gui.c:221
+#: app/config/gimprc.c:343 app/config/gimprc.c:355 app/gui/gui.c:213
+#: app/gui/gui.c:224
 #, fuzzy, c-format
 msgid "Parsing '%s'\n"
 msgstr "Ταξινόμηση του %s"
 
-#: app/config/gimprc.c:577
+#: app/config/gimprc.c:578
 #, fuzzy, c-format
 msgid "Saving '%s'\n"
 msgstr "Ταξινόμηση του %s"
@@ -340,44 +342,44 @@ msgstr "Ταξινόμηση του %s"
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
 #.
-#: app/config/gimprc-blurbs.h:16
+#: app/config/gimprc-blurbs.h:16 app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:19
+#: app/config/gimprc-blurbs.h:19 app/config/gimprc-blurbs.h:26
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:23
+#: app/config/gimprc-blurbs.h:30
 msgid ""
 "Specify that marching ants for selected regions will be drawn with colormap "
 "cycling as opposed to be drawn as animated lines.  This color cycling option "
 "works only with 8-bit displays."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:28
+#: app/config/gimprc-blurbs.h:35
 msgid "Ask for confirmation before closing an image without saving."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:31
+#: app/config/gimprc-blurbs.h:38
 msgid "Sets the mode of cursor the GIMP will use."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:34
+#: app/config/gimprc-blurbs.h:41
 msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:45
+#: app/config/gimprc-blurbs.h:52
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:78
+#: app/config/gimprc-blurbs.h:85
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the intially selected pixel and "
@@ -386,72 +388,72 @@ msgid ""
 "the default threshold."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:128
+#: app/config/gimprc-blurbs.h:135
 msgid "Sets the browser used by the help system."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:131
+#: app/config/gimprc-blurbs.h:138
 msgid "Sets the text to appear in image window status bars."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:134
+#: app/config/gimprc-blurbs.h:141
 msgid "Sets the text to appear in image window titles."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:137
+#: app/config/gimprc-blurbs.h:144
 msgid "When enabled, the GIMP will use a different info window per image view."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:140
+#: app/config/gimprc-blurbs.h:147
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:144
+#: app/config/gimprc-blurbs.h:151
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:147
+#: app/config/gimprc-blurbs.h:154
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:151
+#: app/config/gimprc-blurbs.h:158
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:154
+#: app/config/gimprc-blurbs.h:161
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:158
+#: app/config/gimprc-blurbs.h:165
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:162
+#: app/config/gimprc-blurbs.h:169
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:186
+#: app/config/gimprc-blurbs.h:193
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:190
+#: app/config/gimprc-blurbs.h:197
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:200
+#: app/config/gimprc-blurbs.h:207
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -460,82 +462,82 @@ msgid ""
 "painting."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:213
+#: app/config/gimprc-blurbs.h:220
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:218
+#: app/config/gimprc-blurbs.h:225
 msgid "Sets the default preview size for layers and channels."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:221
+#: app/config/gimprc-blurbs.h:228
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:225
+#: app/config/gimprc-blurbs.h:232
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:229
+#: app/config/gimprc-blurbs.h:236
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:232
+#: app/config/gimprc-blurbs.h:239
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:236
+#: app/config/gimprc-blurbs.h:243
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:242
+#: app/config/gimprc-blurbs.h:249 app/config/gimprc-blurbs.h:265
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:246
+#: app/config/gimprc-blurbs.h:253 app/config/gimprc-blurbs.h:269
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:250
+#: app/config/gimprc-blurbs.h:257 app/config/gimprc-blurbs.h:273
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:254
+#: app/config/gimprc-blurbs.h:261 app/config/gimprc-blurbs.h:277
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:258
+#: app/config/gimprc-blurbs.h:281
 msgid "Enable to display a handy GIMP tip on startup."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:261
+#: app/config/gimprc-blurbs.h:284
 msgid "Enable to display tooltips."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:264
+#: app/config/gimprc-blurbs.h:287
 msgid ""
 "There is always a tradeoff between memory usage and speed.  In most cases, "
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
 "to enable this setting."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:269
+#: app/config/gimprc-blurbs.h:292
 msgid ""
 "Sets the swap file location. The gimp uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -545,24 +547,24 @@ msgid ""
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:278
+#: app/config/gimprc-blurbs.h:301
 msgid "When enabled, menus can be torn off."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:281
+#: app/config/gimprc-blurbs.h:304
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items on the fly."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:284
+#: app/config/gimprc-blurbs.h:307
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:287
+#: app/config/gimprc-blurbs.h:310
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:290
+#: app/config/gimprc-blurbs.h:313
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -570,13 +572,13 @@ msgid ""
 "one that is shared by other users."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:302
+#: app/config/gimprc-blurbs.h:325
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:306
+#: app/config/gimprc-blurbs.h:329
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -584,49 +586,49 @@ msgid ""
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:313
+#: app/config/gimprc-blurbs.h:336
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:316
+#: app/config/gimprc-blurbs.h:339
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:319
+#: app/config/gimprc-blurbs.h:342
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:323
+#: app/config/gimprc-blurbs.h:346
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:327
+#: app/config/gimprc-blurbs.h:350
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack."
 msgstr ""
 
-#: app/config/gimprc-blurbs.h:331
+#: app/config/gimprc-blurbs.h:354
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: app/config/gimpscanner.c:88 app/tools/gimpcurvestool.c:1291
+#: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1291
 #: app/tools/gimplevelstool.c:1489
 #, fuzzy, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Αδύνατο το άνοιγμα αρχείου: %s"
 
 #
-#: app/config/gimpscanner.c:210
+#: app/config/gimpscanner.c:212
 #, fuzzy
 msgid "invalid UTF-8 string"
 msgstr "Σφάλμα στο αρχείο πινέλων του GIMP \"%s\"."
 
-#: app/config/gimpscanner.c:416
+#: app/config/gimpscanner.c:490
 #, fuzzy, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -820,7 +822,7 @@ msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:240 app/core/core-enums.c:261
-#: app/gui/info-window.c:81 app/gui/info-window.c:666
+#: app/gui/info-window.c:82 app/gui/info-window.c:734
 msgid "Grayscale"
 msgstr "Αποχρώσεις του γκρι"
 
@@ -840,12 +842,12 @@ msgid "Indexed-Alpha"
 msgstr "Καταλόγου"
 
 #: app/core/core-enums.c:282 app/gui/preferences-dialog.c:1079
-#: app/gui/preferences-dialog.c:1688 app/gui/user-install-dialog.c:1291
+#: app/gui/preferences-dialog.c:1737 app/gui/user-install-dialog.c:1353
 msgid "Horizontal"
 msgstr "Οριζόντια"
 
 #: app/core/core-enums.c:283 app/gui/preferences-dialog.c:1081
-#: app/gui/preferences-dialog.c:1690 app/gui/user-install-dialog.c:1293
+#: app/gui/preferences-dialog.c:1739 app/gui/user-install-dialog.c:1355
 msgid "Vertical"
 msgstr "Κατακόρυφο"
 
@@ -960,7 +962,7 @@ msgid "QuickMask"
 msgstr ""
 
 #: app/core/core-enums.c:480 app/core/core-enums.c:508
-#: app/core/gimpimage.c:3277
+#: app/core/gimpimage-grid.c:63
 #, fuzzy
 msgid "Grid"
 msgstr "Πλατύ"
@@ -1051,18 +1053,19 @@ msgstr "αντιγραφή"
 
 #
 #: app/core/core-enums.c:496 app/tools/gimptexttool.c:114
+#: app/widgets/widgets-enums.c:72
 msgid "Text"
 msgstr "Κείμενο"
 
 #
 #: app/core/core-enums.c:497 app/core/core-enums.c:537
-#: app/core/gimpdrawable-transform.c:827
+#: app/core/gimpdrawable-transform.c:825
 #, fuzzy
 msgid "Transform"
 msgstr "Μεταφορά"
 
 #: app/core/core-enums.c:498 app/core/core-enums.c:538
-#: app/paint/gimppaintcore.c:447
+#: app/paint/gimppaintcore.c:477
 #, fuzzy
 msgid "Paint"
 msgstr "στιγμή"
@@ -1271,36 +1274,36 @@ msgid "Parasites"
 msgstr "Παράσιτα"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:336
-#: app/gui/dialogs-constructors.c:500 app/gui/preferences-dialog.c:1870
+#: app/core/gimp.c:761 app/gui/dialogs-constructors.c:340
+#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1919
 #: app/pdb/internal_procs.c:83
 msgid "Brushes"
 msgstr "Πινέλα"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:357
-#: app/gui/dialogs-constructors.c:521 app/gui/preferences-dialog.c:1874
+#: app/core/gimp.c:765 app/gui/dialogs-constructors.c:361
+#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1923
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
 msgstr "Σχέδια"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:399
-#: app/gui/dialogs-constructors.c:563 app/gui/preferences-dialog.c:1878
+#: app/core/gimp.c:769 app/gui/dialogs-constructors.c:403
+#: app/gui/dialogs-constructors.c:617 app/gui/preferences-dialog.c:1927
 #: app/pdb/internal_procs.c:152
 msgid "Palettes"
 msgstr "Παλέττες"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:378
-#: app/gui/dialogs-constructors.c:542 app/gui/preferences-dialog.c:1882
+#: app/core/gimp.c:773 app/gui/dialogs-constructors.c:382
+#: app/gui/dialogs-constructors.c:596 app/gui/preferences-dialog.c:1931
 #: app/pdb/internal_procs.c:119
 msgid "Gradients"
 msgstr "Διαβαθμίσεις"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:418
-#: app/gui/dialogs-constructors.c:582
+#: app/core/gimp.c:777 app/gui/dialogs-constructors.c:422
+#: app/gui/dialogs-constructors.c:636
 #, fuzzy
 msgid "Fonts"
 msgstr "στιγμές"
@@ -1312,7 +1315,7 @@ msgid "Documents"
 msgstr "Ευρετήριο Εγγράφων"
 
 #. initialize the template list
-#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:899
+#: app/core/gimp.c:787 app/gui/dialogs-constructors.c:509
 #, fuzzy
 msgid "Templates"
 msgstr "Κατασκευή πανομοιότυπου"
@@ -1423,7 +1426,7 @@ msgstr "Κανάλια"
 msgid "Rotate Channel"
 msgstr "Κανάλι"
 
-#: app/core/gimpchannel.c:485 app/core/gimpdrawable-transform.c:1107
+#: app/core/gimpchannel.c:485 app/core/gimpdrawable-transform.c:1105
 #, fuzzy
 msgid "Transform Channel"
 msgstr "Πληροφορίες Τροχιάς"
@@ -1438,57 +1441,57 @@ msgstr "Νέο Κανάλι"
 msgid "Set Channel Opacity"
 msgstr "Επιλογές Νέου Καναλιού"
 
-#: app/core/gimpchannel.c:1488
+#: app/core/gimpchannel.c:1490
 #, fuzzy
 msgid "Feather Channel"
 msgstr "Διαγραφή Καναλιού"
 
-#: app/core/gimpchannel.c:1510
+#: app/core/gimpchannel.c:1512
 #, fuzzy
 msgid "Sharpen Channel"
 msgstr "Νέο Κανάλι"
 
-#: app/core/gimpchannel.c:1536
+#: app/core/gimpchannel.c:1538
 #, fuzzy
 msgid "Clear Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:1574
+#: app/core/gimpchannel.c:1576
 #, fuzzy
 msgid "Fill Channel"
 msgstr "Κανάλια"
 
-#: app/core/gimpchannel.c:1599
+#: app/core/gimpchannel.c:1601
 #, fuzzy
 msgid "Invert Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:1665
+#: app/core/gimpchannel.c:1667
 #, fuzzy
 msgid "Border Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:1722
+#: app/core/gimpchannel.c:1724
 #, fuzzy
 msgid "Grow Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:1773
+#: app/core/gimpchannel.c:1775
 #, fuzzy
 msgid "Shrink Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpchannel.c:1794
+#: app/core/gimpchannel.c:1796
 #, fuzzy
 msgid "Channel Load"
 msgstr "Κανάλι"
 
-#: app/core/gimpchannel.c:1823
+#: app/core/gimpchannel.c:1825
 #, fuzzy
 msgid "Channel from Alpha"
 msgstr "Κανάλι"
 
-#: app/core/gimpchannel.c:1860
+#: app/core/gimpchannel.c:1862
 #, fuzzy
 msgid "Channel from Mask"
 msgstr "Κανάλι"
@@ -1499,7 +1502,7 @@ msgid "Could not delete '%s': %s"
 msgstr "Αδύνατο το επανάνοιγμα του %s\n"
 
 # gconf/gconf-internals.c:2416
-#: app/core/gimpdatafactory.c:265
+#: app/core/gimpdatafactory.c:266
 #, fuzzy, c-format
 msgid ""
 "Warning: Failed to save data:\n"
@@ -1507,17 +1510,17 @@ msgid ""
 msgstr "Αδύνατη η δημιουργία του %s: %s"
 
 #
-#: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
+#: app/core/gimpdatafactory.c:381 app/core/gimpdatafactory.c:384
 #: app/core/gimpitem.c:265 app/core/gimpitem.c:268
 msgid "copy"
 msgstr "αντιγραφή"
 
-#: app/core/gimpdatafactory.c:392 app/core/gimpitem.c:277
+#: app/core/gimpdatafactory.c:393 app/core/gimpitem.c:277
 #, c-format
 msgid "%s copy"
 msgstr "%s αντίγραφο"
 
-#: app/core/gimpdatafactory.c:437
+#: app/core/gimpdatafactory.c:439
 #, c-format
 msgid ""
 "Trying legacy loader on\n"
@@ -1526,7 +1529,7 @@ msgid ""
 msgstr ""
 
 # gconf/gconf-internals.c:2416
-#: app/core/gimpdatafactory.c:462
+#: app/core/gimpdatafactory.c:464
 #, fuzzy, c-format
 msgid ""
 "Warning: Failed to load data:\n"
@@ -1534,7 +1537,7 @@ msgid ""
 msgstr "Αδύνατη η δημιουργία του %s: %s"
 
 #
-#: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:94
+#: app/core/gimpdrawable-blend.c:242 app/tools/gimpblendtool.c:96
 #, fuzzy
 msgid "Blend"
 msgstr "Αποστολή"
@@ -1543,7 +1546,7 @@ msgstr "Αποστολή"
 msgid "No patterns available for this operation."
 msgstr "Δεν υπάρχουν διαθέσιμα δείγματα για τη λειτουργία αυτή."
 
-#: app/core/gimpdrawable-bucket-fill.c:320 app/tools/gimpbucketfilltool.c:86
+#: app/core/gimpdrawable-bucket-fill.c:348 app/tools/gimpbucketfilltool.c:88
 #, fuzzy
 msgid "Bucket Fill"
 msgstr "Αρχείο Πηγαίου Κώδικα:"
@@ -1571,29 +1574,29 @@ msgid "Offset Drawable"
 msgstr "Καθορισμός Στρώματος"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:882 app/tools/gimpfliptool.c:84
+#: app/core/gimpdrawable-transform.c:880 app/tools/gimpfliptool.c:84
 #, fuzzy
 msgid "Flip"
 msgstr "Δισκέττα"
 
 #. Start a transform undo group
-#: app/core/gimpdrawable-transform.c:949 app/tools/gimprotatetool.c:104
+#: app/core/gimpdrawable-transform.c:947 app/tools/gimprotatetool.c:104
 #, fuzzy
 msgid "Rotate"
 msgstr "Ρυθμός"
 
-#: app/core/gimpdrawable-transform.c:1052
+#: app/core/gimpdrawable-transform.c:1050
 #, fuzzy
 msgid "Transformation"
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/core/gimpdrawable-transform.c:1067
+#: app/core/gimpdrawable-transform.c:1065
 #, fuzzy
 msgid "Paste Transform"
 msgstr "Λεπτομερείς Πληροφορίες Συστήματος"
 
 #
-#: app/core/gimpdrawable-transform.c:1104 app/core/gimplayer.c:557
+#: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:557
 #, fuzzy
 msgid "Transform Layer"
 msgstr "Μεταφορά"
@@ -1626,12 +1629,12 @@ msgstr ""
 msgid "Fill with Transparency"
 msgstr "FG σε Διαφανές"
 
-#: app/core/gimpenvirontable.c:283
+#: app/core/gimpenvirontable.c:285
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr ""
 
-#: app/core/gimpenvirontable.c:301
+#: app/core/gimpenvirontable.c:303
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr ""
@@ -1799,7 +1802,7 @@ msgid "Selection from Channel"
 msgstr "Επιλογή Περιγράμματος"
 
 #: app/core/gimpimage-mask.c:585 app/tools/gimpeditselectiontool.c:242
-#: app/tools/gimpeditselectiontool.c:1084
+#: app/tools/gimpeditselectiontool.c:991
 #, fuzzy
 msgid "Move Selection"
 msgstr "Καμία Επιλογή"
@@ -1875,154 +1878,154 @@ msgstr "Μάσκα Επιλογής"
 msgid "Disable QuickMask"
 msgstr ""
 
-#: app/core/gimpimage-undo-push.c:3366
+#: app/core/gimpimage-undo-push.c:3364
 #, fuzzy, c-format
 msgid "Can't undo %s"
 msgstr "Αδύνατο το κλείδωμα του %s.\n"
 
-#: app/core/gimpimage.c:933 app/core/gimppalette-import.c:204
+#: app/core/gimpimage.c:932 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:652 app/gui/palette-import-dialog.c:589
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
 msgid "Untitled"
 msgstr "Ανώνυμο"
 
 #
-#: app/core/gimpimage.c:1007
+#: app/core/gimpimage.c:1006
 #, fuzzy
 msgid "Change Image Resolution"
 msgstr "Θέση στηλοθετών"
 
-#: app/core/gimpimage.c:1046
+#: app/core/gimpimage.c:1045
 #, fuzzy
 msgid "Change Image Unit"
 msgstr "Επαναφορά Εικόνας;"
 
 #
-#: app/core/gimpimage.c:1953
+#: app/core/gimpimage.c:1960
 #, fuzzy
 msgid "Attach Paraite to Image"
 msgstr "Επισύναψη αρχείου"
 
-#: app/core/gimpimage.c:1986
+#: app/core/gimpimage.c:1993
 #, fuzzy
 msgid "Remove Parasite from Image"
 msgstr "Αφαίρεση του στοιχείου"
 
-#: app/core/gimpimage.c:2505
+#: app/core/gimpimage.c:2512
 #, fuzzy
 msgid "Add Layer"
 msgstr "Προσθήκη αρχείων..."
 
 #
-#: app/core/gimpimage.c:2587
+#: app/core/gimpimage.c:2594
 #, fuzzy
 msgid "Remove Layer"
 msgstr "Μετονομασία Aρχείου"
 
-#: app/core/gimpimage.c:2654
+#: app/core/gimpimage.c:2661
 msgid "Layer cannot be raised higher."
 msgstr ""
 
-#: app/core/gimpimage.c:2659 app/widgets/gimplayertreeview.c:201
+#: app/core/gimpimage.c:2666 app/widgets/gimplayertreeview.c:201
 #, fuzzy
 msgid "Raise Layer"
 msgstr "/Στοίβαγμα/Ανύψωση Στρώματος"
 
-#: app/core/gimpimage.c:2679
+#: app/core/gimpimage.c:2686
 msgid "Layer cannot be lowered more."
 msgstr ""
 
 # # FIX?  see above for "send to back"
-#: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:203
+#: app/core/gimpimage.c:2691 app/widgets/gimplayertreeview.c:203
 #, fuzzy
 msgid "Lower Layer"
 msgstr "/Στοίβαγμα/Βύθιση Στρώματος"
 
 #
-#: app/core/gimpimage.c:2701
+#: app/core/gimpimage.c:2708
 #, fuzzy
 msgid "Layer is already on top."
 msgstr "Το στρώμα είναι ήδη στην κορυφή"
 
-#: app/core/gimpimage.c:2707
+#: app/core/gimpimage.c:2714
 msgid "Cannot raise a layer without alpha."
 msgstr ""
 
-#: app/core/gimpimage.c:2712 app/widgets/gimplayertreeview.c:202
+#: app/core/gimpimage.c:2719 app/widgets/gimplayertreeview.c:202
 #, fuzzy
 msgid "Raise Layer to Top"
 msgstr "/Στοίβαγμα/Στρώμα στην Κορυφή"
 
 #
-#: app/core/gimpimage.c:2732
+#: app/core/gimpimage.c:2739
 #, fuzzy
 msgid "Layer is already on the bottom."
 msgstr "Το στρώμα είναι ήδη στην κορυφή"
 
-#: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:204
+#: app/core/gimpimage.c:2744 app/widgets/gimplayertreeview.c:204
 #, fuzzy
 msgid "Lower Layer to Bottom"
 msgstr "/Στοίβαγμα/Στρώμα στο Βάθος"
 
-#: app/core/gimpimage.c:2781
+#: app/core/gimpimage.c:2788
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
 "Layer was placed above it."
 msgstr ""
 
-#: app/core/gimpimage.c:2827
+#: app/core/gimpimage.c:2834
 #, fuzzy
 msgid "Add Channel"
 msgstr "Προσθήκη στο ταμπλώ"
 
-#: app/core/gimpimage.c:2879
+#: app/core/gimpimage.c:2886
 #, fuzzy
 msgid "Remove Channel"
 msgstr "Ανασήκωση Καναλιού"
 
-#: app/core/gimpimage.c:2927
+#: app/core/gimpimage.c:2934
 msgid "Channel cannot be raised higher."
 msgstr ""
 
-#: app/core/gimpimage.c:2932 app/widgets/gimpchanneltreeview.c:122
+#: app/core/gimpimage.c:2939 app/widgets/gimpchanneltreeview.c:122
 #, fuzzy
 msgid "Raise Channel"
 msgstr "Κανάλι"
 
-#: app/core/gimpimage.c:2948
+#: app/core/gimpimage.c:2955
 msgid "Channel cannot be lowered more."
 msgstr ""
 
-#: app/core/gimpimage.c:2953 app/widgets/gimpchanneltreeview.c:124
+#: app/core/gimpimage.c:2960 app/widgets/gimpchanneltreeview.c:124
 msgid "Lower Channel"
 msgstr "Χαμήλωμα Καναλιού"
 
-#: app/core/gimpimage.c:3018
+#: app/core/gimpimage.c:3025
 #, fuzzy
 msgid "Add Path"
 msgstr "Μονοπάτια"
 
 #
-#: app/core/gimpimage.c:3065
+#: app/core/gimpimage.c:3072
 #, fuzzy
 msgid "Remove Path"
 msgstr "Μετονομασία διαβάθμισης"
 
-#: app/core/gimpimage.c:3112
+#: app/core/gimpimage.c:3119
 msgid "Path cannot be raised higher."
 msgstr ""
 
-#: app/core/gimpimage.c:3117 app/widgets/gimpvectorstreeview.c:127
+#: app/core/gimpimage.c:3124 app/widgets/gimpvectorstreeview.c:127
 #, fuzzy
 msgid "Raise Path"
 msgstr "Επικόλληση Έργου"
 
-#: app/core/gimpimage.c:3133
+#: app/core/gimpimage.c:3140
 msgid "Path cannot be lowered more."
 msgstr ""
 
-#: app/core/gimpimage.c:3138 app/widgets/gimpvectorstreeview.c:129
+#: app/core/gimpimage.c:3145 app/widgets/gimpvectorstreeview.c:129
 #, fuzzy
 msgid "Lower Path"
 msgstr "Εμφάνιση ημερομηνίας"
@@ -2065,7 +2068,7 @@ msgstr ""
 msgid "Cannot create preview"
 msgstr "Aδύνατη η δημιουργία καταλόγου %s"
 
-#: app/core/gimpimagefile.c:800 app/gui/info-window.c:636
+#: app/core/gimpimagefile.c:800 app/gui/info-window.c:704
 #, c-format
 msgid "%d x %d pixels"
 msgstr ""
@@ -2126,8 +2129,7 @@ msgid "Rename Layer"
 msgstr "Μετονομασία Aρχείου"
 
 #: app/core/gimplayer.c:384 app/pdb/layer_cmds.c:636 app/pdb/layer_cmds.c:767
-#: app/tools/gimpeditselectiontool.c:244
-#: app/tools/gimpeditselectiontool.c:1088
+#: app/tools/gimpeditselectiontool.c:244 app/tools/gimpeditselectiontool.c:995
 #, fuzzy
 msgid "Move Layer"
 msgstr "Νέο Στρώμα"
@@ -2251,7 +2253,7 @@ msgstr "Άγνωστη έκδοση μορφής πινέλου #%d στο \"%s\
 msgid ""
 "Unsupported pattern depth %d\n"
 "in file '%s'.\n"
-"GIMP Patterns must be GRAY or RGB.\n"
+"GIMP Patterns must be GRAY or RGB."
 msgstr ""
 
 # gconf/gconfd.c:1676
@@ -2278,7 +2280,7 @@ msgstr "εικονοστοιχείο"
 
 #
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:561
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
 msgid "pixels"
 msgstr "εικονοστοιχεία"
 
@@ -2355,51 +2357,51 @@ msgid "Custom Color"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:764
+#: app/display/gimpdisplayshell.c:778
 msgid "Set Canvas Padding Color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:773
+#: app/display/gimpdisplayshell.c:787
 msgid "Set canvas padding color"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:785
+#: app/display/gimpdisplayshell.c:799
 msgid "/From Theme"
 msgstr ""
 
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:802
 #, fuzzy
 msgid "/Light Check Color"
 msgstr "Φωτεινά τετραγωνίδια"
 
-#: app/display/gimpdisplayshell.c:791
+#: app/display/gimpdisplayshell.c:805
 #, fuzzy
 msgid "/Dark Check Color"
 msgstr "Σκοτεινά τετραγωνίδια"
 
 #
-#: app/display/gimpdisplayshell.c:797
+#: app/display/gimpdisplayshell.c:811
 #, fuzzy
 msgid "/Select Custom Color..."
 msgstr "Επιλέξτε Χρώμα"
 
 #
-#: app/display/gimpdisplayshell.c:801
+#: app/display/gimpdisplayshell.c:815
 #, fuzzy
 msgid "/As in Preferences"
 msgstr "Προτιμήσεις"
 
-#: app/display/gimpdisplayshell.c:826
+#: app/display/gimpdisplayshell.c:840
 msgid "Toggle QuickMask"
 msgstr ""
 
 #
-#: app/display/gimpdisplayshell.c:1681
+#: app/display/gimpdisplayshell.c:1699
 #, fuzzy, c-format
 msgid "Close %s?"
 msgstr "Κλείσιμο"
 
-#: app/display/gimpdisplayshell.c:1683
+#: app/display/gimpdisplayshell.c:1701
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -2514,11 +2516,11 @@ msgstr "καταλόγου"
 msgid "(none)"
 msgstr "Κανένα"
 
-#: app/display/gimpnavigationview.c:379 app/widgets/widgets-enums.c:91
+#: app/display/gimpnavigationview.c:379 app/widgets/widgets-enums.c:112
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: app/display/gimpnavigationview.c:387 app/widgets/widgets-enums.c:90
+#: app/display/gimpnavigationview.c:387 app/widgets/widgets-enums.c:111
 msgid "Zoom in"
 msgstr "Μεγέθυνση"
 
@@ -2600,13 +2602,13 @@ msgstr ""
 "Παρακαλώ επισκεφθείτε το http://www.gimp.org/ για περισσότερες πληροφορίες"
 
 #
-#: app/gui/brush-select.c:182 app/tools/paint_options.c:107
+#: app/gui/brush-select.c:182 app/tools/gimppaintoptions-gui.c:117
 #: app/widgets/gimplayertreeview.c:277
 msgid "Opacity:"
 msgstr "Αδιαφάνεια:"
 
-#: app/gui/brush-select.c:199 app/tools/gimpselectionoptions.c:397
-#: app/tools/paint_options.c:112 app/widgets/gimplayertreeview.c:270
+#: app/gui/brush-select.c:199 app/tools/gimppaintoptions-gui.c:122
+#: app/tools/gimpselectionoptions.c:395 app/widgets/gimplayertreeview.c:270
 msgid "Mode:"
 msgstr "Κατάσταση:"
 
@@ -2873,424 +2875,433 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Επιλογή Προσαρμοσμένης Παλέτ\tτας"
 
-#: app/gui/device-status-dialog.c:123
-msgid "Device Status"
-msgstr "Κατάσταση Συσκευής"
-
-#
-#: app/gui/device-status-dialog.c:397
-#, fuzzy, c-format
-msgid "Foreground: %d, %d, %d"
-msgstr "Προσκήνιο"
-
-#
-#: app/gui/device-status-dialog.c:411
-#, fuzzy, c-format
-msgid "Background: %d, %d, %d"
-msgstr "Φόντο"
-
-#: app/gui/dialogs-constructors.c:272 app/gui/preferences-dialog.c:1304
+#: app/gui/dialogs-constructors.c:253 app/gui/preferences-dialog.c:1304
 #: app/gui/preferences-dialog.c:1307
 #, fuzzy
 msgid "Tool Options"
 msgstr "Επιλογές Εργαλειοθήκης"
 
-#: app/gui/dialogs-constructors.c:292
+#: app/gui/dialogs-constructors.c:274
+#, fuzzy
+msgid "Devices"
+msgstr "Byte Εισόδου"
+
+#: app/gui/dialogs-constructors.c:274
+msgid "Device Status"
+msgstr "Κατάσταση Συσκευής"
+
+#: app/gui/dialogs-constructors.c:295
+msgid "Errors"
+msgstr ""
+
+#: app/gui/dialogs-constructors.c:295
 #, fuzzy
 msgid "Error Console"
 msgstr "Κονσόλα Σφαλμάτων του GIMP"
 
-#: app/gui/dialogs-constructors.c:292
-msgid "Errors"
-msgstr ""
-
 #
-#: app/gui/dialogs-constructors.c:315
-#, fuzzy
-msgid "Image List"
-msgstr "Μάσκα εικόνας"
-
-#
-#: app/gui/dialogs-constructors.c:315 app/gui/dialogs-constructors.c:479
+#: app/gui/dialogs-constructors.c:318 app/gui/dialogs-constructors.c:532
 #, fuzzy
 msgid "Images"
 msgstr "Εικόνα"
 
-#: app/gui/dialogs-constructors.c:336
+#
+#: app/gui/dialogs-constructors.c:318
+#, fuzzy
+msgid "Image List"
+msgstr "Μάσκα εικόνας"
+
+#: app/gui/dialogs-constructors.c:340
 #, fuzzy
 msgid "Brush List"
 msgstr "Επεξεργαστής Πινέλου"
 
-#: app/gui/dialogs-constructors.c:357
+#: app/gui/dialogs-constructors.c:361
 #, fuzzy
 msgid "Pattern List"
 msgstr "Σχέδια"
 
-#: app/gui/dialogs-constructors.c:378
+#: app/gui/dialogs-constructors.c:382
 #, fuzzy
 msgid "Gradient List"
 msgstr "Διαβαθμίσεις"
 
-#: app/gui/dialogs-constructors.c:399
+#: app/gui/dialogs-constructors.c:403
 #, fuzzy
 msgid "Palette List"
 msgstr "Παλέττες"
 
-#: app/gui/dialogs-constructors.c:418
+#: app/gui/dialogs-constructors.c:422
 #, fuzzy
 msgid "Font List"
 msgstr "Επιλογές Εργαλειοθήκης"
 
-#: app/gui/dialogs-constructors.c:437
-#, fuzzy
-msgid "Tool List"
-msgstr "Επιλογές Εργαλειοθήκης"
-
-#: app/gui/dialogs-constructors.c:437 app/gui/dialogs-constructors.c:601
+#: app/gui/dialogs-constructors.c:441 app/gui/dialogs-constructors.c:655
 #, fuzzy
 msgid "Tools"
 msgstr "Γραμμή Εργαλείων"
 
-#: app/gui/dialogs-constructors.c:456
-msgid "Buffer List"
-msgstr ""
+#: app/gui/dialogs-constructors.c:441
+#, fuzzy
+msgid "Tool List"
+msgstr "Επιλογές Εργαλειοθήκης"
 
-#: app/gui/dialogs-constructors.c:456 app/gui/dialogs-constructors.c:620
+#: app/gui/dialogs-constructors.c:461 app/gui/dialogs-constructors.c:675
 #, fuzzy
 msgid "Buffers"
 msgstr "Επικολλημένο Στρώμα"
 
-#: app/gui/dialogs-constructors.c:479
+#: app/gui/dialogs-constructors.c:461
+msgid "Buffer List"
+msgstr ""
+
+#: app/gui/dialogs-constructors.c:482 app/gui/dialogs-constructors.c:696
+#, fuzzy
+msgid "History"
+msgstr "Ιστόγραμμα"
+
+#: app/gui/dialogs-constructors.c:482
+#, fuzzy
+msgid "Document History List"
+msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
+
+#: app/gui/dialogs-constructors.c:509
+msgid "List of Templates"
+msgstr ""
+
+#: app/gui/dialogs-constructors.c:532
 #, fuzzy
 msgid "Image Grid"
 msgstr "εικόνα"
 
-#: app/gui/dialogs-constructors.c:500
+#: app/gui/dialogs-constructors.c:554
 #, fuzzy
 msgid "Brush Grid"
 msgstr "Επεξεργαστής Πινέλου"
 
-#: app/gui/dialogs-constructors.c:521
+#: app/gui/dialogs-constructors.c:575
 #, fuzzy
 msgid "Pattern Grid"
 msgstr "Γέμισμα με Σχέδιο"
 
-#: app/gui/dialogs-constructors.c:542
+#: app/gui/dialogs-constructors.c:596
 #, fuzzy
 msgid "Gradient Grid"
 msgstr "Διαβάθμιση"
 
-#: app/gui/dialogs-constructors.c:563
+#: app/gui/dialogs-constructors.c:617
 #, fuzzy
 msgid "Palette Grid"
 msgstr "Παλέττα"
 
-#: app/gui/dialogs-constructors.c:582
+#: app/gui/dialogs-constructors.c:636
 #, fuzzy
 msgid "Font Grid"
 msgstr "Εμφάνιση Πλέγματος"
 
-#: app/gui/dialogs-constructors.c:601
+#: app/gui/dialogs-constructors.c:655
 #, fuzzy
 msgid "Tool Grid"
 msgstr "Εμφάνιση Πλέγματος"
 
-#: app/gui/dialogs-constructors.c:620
+#: app/gui/dialogs-constructors.c:675
 msgid "Buffer Grid"
 msgstr ""
 
-#
-#: app/gui/dialogs-constructors.c:654
+#: app/gui/dialogs-constructors.c:696
 #, fuzzy
-msgid "Layer List"
-msgstr "Καθορισμός Πλάτους:"
+msgid "Document History Grid"
+msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
-#: app/gui/dialogs-constructors.c:654
+#: app/gui/dialogs-constructors.c:730
 #, fuzzy
 msgid "Layers"
 msgstr "Στρώμα"
 
-#: app/gui/dialogs-constructors.c:688
+#
+#: app/gui/dialogs-constructors.c:730
+#, fuzzy
+msgid "Layer List"
+msgstr "Καθορισμός Πλάτους:"
+
+#: app/gui/dialogs-constructors.c:765
+msgid "Channels"
+msgstr "Κανάλια"
+
+#: app/gui/dialogs-constructors.c:765
 #, fuzzy
 msgid "Channel List"
 msgstr "Κανάλια"
 
-#: app/gui/dialogs-constructors.c:688
-msgid "Channels"
-msgstr "Κανάλια"
-
-#: app/gui/dialogs-constructors.c:728
-#, fuzzy
-msgid "Paths List"
-msgstr "Μονοπάτια"
-
-#: app/gui/dialogs-constructors.c:728 app/pdb/internal_procs.c:158
+#: app/gui/dialogs-constructors.c:806 app/pdb/internal_procs.c:158
 msgid "Paths"
 msgstr "Μονοπάτια"
 
-#: app/gui/dialogs-constructors.c:751
+#: app/gui/dialogs-constructors.c:806
+#, fuzzy
+msgid "Path List"
+msgstr "Μονοπάτια"
+
+#
+#: app/gui/dialogs-constructors.c:830
+#, fuzzy
+msgid "Colormap"
+msgstr "Χρώμα"
+
+#: app/gui/dialogs-constructors.c:830
 #, fuzzy
 msgid "Indexed Palette"
 msgstr "Παλέττα Χρώματος Καταλόγου"
 
 #
-#: app/gui/dialogs-constructors.c:751
-#, fuzzy
-msgid "Colormap"
-msgstr "Χρώμα"
+#: app/gui/dialogs-constructors.c:863
+msgid "Selection"
+msgstr "Επιλογή"
 
 #
-#: app/gui/dialogs-constructors.c:783
+#: app/gui/dialogs-constructors.c:863
 #, fuzzy
 msgid "Selection Editor"
 msgstr "Επιλογή: "
 
 #
-#: app/gui/dialogs-constructors.c:783
-msgid "Selection"
-msgstr "Επιλογή"
+#: app/gui/dialogs-constructors.c:887 app/pdb/internal_procs.c:185
+#: app/widgets/gimpundoeditor.c:122
+msgid "Undo"
+msgstr "Ακύρωση ενέργειας"
 
-#: app/gui/dialogs-constructors.c:807
+#: app/gui/dialogs-constructors.c:887
 #, fuzzy
 msgid "Undo History"
 msgstr " Ιστορικό URL "
 
-#
-#: app/gui/dialogs-constructors.c:807 app/gui/image-menu.c:1351
-#: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:122
-msgid "Undo"
-msgstr "Ακύρωση ενέργειας"
-
-#: app/gui/dialogs-constructors.c:830
-#, fuzzy
-msgid "Color Editor"
-msgstr "Παλέττα χρωμάτων:"
-
-#
-#: app/gui/dialogs-constructors.c:830 app/pdb/internal_procs.c:89
-#: app/tools/paint_options.c:316 app/widgets/gimpwidgets-constructors.c:70
-#: app/widgets/gimpwidgets-constructors.c:103
-msgid "Color"
-msgstr "Χρώμα"
-
-#: app/gui/dialogs-constructors.c:851
-#, fuzzy
-msgid "Document History List"
-msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
-
-#: app/gui/dialogs-constructors.c:851 app/gui/dialogs-constructors.c:872
-#, fuzzy
-msgid "History"
-msgstr "Ιστόγραμμα"
-
-#: app/gui/dialogs-constructors.c:872
-#, fuzzy
-msgid "Document History Grid"
-msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
-
-#: app/gui/dialogs-constructors.c:899
-msgid "List of Templates"
-msgstr ""
-
-#: app/gui/dialogs-constructors.c:920
-msgid "Brush Editor"
-msgstr "Επεξεργαστής Πινέλου"
-
-#: app/gui/dialogs-constructors.c:949
-msgid "Gradient Editor"
-msgstr "Επεξεργαστής Διαβαθμίσεων"
-
-#: app/gui/dialogs-constructors.c:978
-#, fuzzy
-msgid "Palette Editor"
-msgstr "Παλέττα χρωμάτων:"
-
-#: app/gui/dialogs-constructors.c:1014
-msgid "Display Navigation"
-msgstr ""
-
-#: app/gui/dialogs-constructors.c:1014
+#: app/gui/dialogs-constructors.c:918
 #, fuzzy
 msgid "Navigation"
 msgstr "Περιήγηση"
 
+#: app/gui/dialogs-constructors.c:918
+msgid "Display Navigation"
+msgstr ""
+
+#: app/gui/dialogs-constructors.c:937
+msgid "FG/BG"
+msgstr ""
+
+#: app/gui/dialogs-constructors.c:937
+#, fuzzy
+msgid "FG/BG Color"
+msgstr "Χρώμα RGB"
+
+#: app/gui/dialogs-constructors.c:958
+msgid "Brush Editor"
+msgstr "Επεξεργαστής Πινέλου"
+
+#: app/gui/dialogs-constructors.c:988
+msgid "Gradient Editor"
+msgstr "Επεξεργαστής Διαβαθμίσεων"
+
+#: app/gui/dialogs-constructors.c:1018
+#, fuzzy
+msgid "Palette Editor"
+msgstr "Παλέττα χρωμάτων:"
+
 #
-#: app/gui/dialogs-menu.c:53
+#: app/gui/dialogs-menu.c:57
 #, fuzzy
 msgid "/Select Tab"
 msgstr "Επιλογή"
 
-#: app/gui/dialogs-menu.c:56
+#: app/gui/dialogs-menu.c:60
 #, fuzzy
 msgid "/Add Tab/Tool Options..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/dialogs-menu.c:61
+#: app/gui/dialogs-menu.c:62
+#, fuzzy
+msgid "/Add Tab/Device Status..."
+msgstr "/Διάλογοι/Κατάσταση Συσκευής..."
+
+#: app/gui/dialogs-menu.c:67
 #, fuzzy
 msgid "/Add Tab/Layers..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:63
+#: app/gui/dialogs-menu.c:69
 #, fuzzy
 msgid "/Add Tab/Channels..."
 msgstr "_Αλλαγή... "
 
-#: app/gui/dialogs-menu.c:65
+#: app/gui/dialogs-menu.c:71
 #, fuzzy
 msgid "/Add Tab/Paths..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:67
+#: app/gui/dialogs-menu.c:73
 #, fuzzy
 msgid "/Add Tab/Indexed Palette..."
 msgstr "Άνοιγμα Παλέττας"
 
-#: app/gui/dialogs-menu.c:69
+#: app/gui/dialogs-menu.c:75
 #, fuzzy
 msgid "/Add Tab/Selection Editor..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/dialogs-menu.c:71
+#: app/gui/dialogs-menu.c:77
 #, fuzzy
 msgid "/Add Tab/Navigation..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:73
+#: app/gui/dialogs-menu.c:79
 #, fuzzy
 msgid "/Add Tab/Undo History..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
-#: app/gui/dialogs-menu.c:78
+#: app/gui/dialogs-menu.c:84
 #, fuzzy
 msgid "/Add Tab/Colors..."
 msgstr "_Αλλαγή... "
 
-#: app/gui/dialogs-menu.c:80
+#: app/gui/dialogs-menu.c:86
 #, fuzzy
 msgid "/Add Tab/Brushes..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/dialogs-menu.c:82
+#: app/gui/dialogs-menu.c:88
 #, fuzzy
 msgid "/Add Tab/Patterns..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/dialogs-menu.c:84
+#: app/gui/dialogs-menu.c:90
 #, fuzzy
 msgid "/Add Tab/Gradients..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/dialogs-menu.c:86
+#: app/gui/dialogs-menu.c:92
 #, fuzzy
 msgid "/Add Tab/Palettes..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/dialogs-menu.c:88
+#: app/gui/dialogs-menu.c:94
 #, fuzzy
 msgid "/Add Tab/Fonts..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:90
+#: app/gui/dialogs-menu.c:96
 #, fuzzy
 msgid "/Add Tab/Buffers..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:95
+#: app/gui/dialogs-menu.c:101
 #, fuzzy
 msgid "/Add Tab/Images..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:97
+#: app/gui/dialogs-menu.c:103
 msgid "/Add Tab/Document History..."
 msgstr ""
 
-#: app/gui/dialogs-menu.c:99
+#: app/gui/dialogs-menu.c:105
 #, fuzzy
 msgid "/Add Tab/Templates..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/dialogs-menu.c:101
+#: app/gui/dialogs-menu.c:107
 #, fuzzy
 msgid "/Add Tab/Error Console..."
 msgstr "/Διάλογοι/Κονσόλα Σφαλμάτων..."
 
-#: app/gui/dialogs-menu.c:106
+#: app/gui/dialogs-menu.c:112
 msgid "/Add Tab/Tools..."
 msgstr ""
 
-#: app/gui/dialogs-menu.c:108
+#: app/gui/dialogs-menu.c:114
 msgid "/Remove Tab"
 msgstr ""
 
 #
-#: app/gui/dialogs-menu.c:117
+#: app/gui/dialogs-menu.c:123
 #, fuzzy
 msgid "/Preview Size/Tiny"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:122
+#: app/gui/dialogs-menu.c:128
 #, fuzzy
 msgid "/Preview Size/Extra Small"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:123
+#: app/gui/dialogs-menu.c:129
 #, fuzzy
 msgid "/Preview Size/Small"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:124
+#: app/gui/dialogs-menu.c:130
 #, fuzzy
 msgid "/Preview Size/Medium"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:125
+#: app/gui/dialogs-menu.c:131
 #, fuzzy
 msgid "/Preview Size/Large"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:126
+#: app/gui/dialogs-menu.c:132
 #, fuzzy
 msgid "/Preview Size/Extra Large"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:127
+#: app/gui/dialogs-menu.c:133
 #, fuzzy
 msgid "/Preview Size/Huge"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:128
+#: app/gui/dialogs-menu.c:134
 #, fuzzy
 msgid "/Preview Size/Enormous"
 msgstr "Επισκόπηση:"
 
 #
-#: app/gui/dialogs-menu.c:129
+#: app/gui/dialogs-menu.c:135
 #, fuzzy
 msgid "/Preview Size/Gigantic"
 msgstr "Επισκόπηση:"
 
-#: app/gui/dialogs-menu.c:131
+#: app/gui/dialogs-menu.c:139
+msgid "/Tab Style/Icon"
+msgstr ""
+
+#
+#: app/gui/dialogs-menu.c:144
+#, fuzzy
+msgid "/Tab Style/Text"
+msgstr "Εργαλεία"
+
+#: app/gui/dialogs-menu.c:145
+msgid "/Tab Style/Icon & Text"
+msgstr ""
+
+#: app/gui/dialogs-menu.c:147
 #, fuzzy
 msgid "/View as List"
 msgstr "Εμφάνιση καταλόγου"
 
-#: app/gui/dialogs-menu.c:134
+#: app/gui/dialogs-menu.c:150
 #, fuzzy
 msgid "/View as Grid"
 msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
-#: app/gui/dialogs-menu.c:140
+#: app/gui/dialogs-menu.c:156
 msgid "/Show Image Menu"
 msgstr ""
 
-#: app/gui/dialogs-menu.c:143
+#: app/gui/dialogs-menu.c:159
 msgid "/Auto Follow Active Image"
 msgstr ""
 
@@ -3339,19 +3350,19 @@ msgstr ""
 msgid "Equalize does not operate on indexed drawables."
 msgstr "Η Εξίσωση δε λειτουργεί σε εικόνες καταλόγου χρώματος."
 
-#: app/gui/edit-commands.c:192
+#: app/gui/edit-commands.c:193
 msgid "Cut Named"
 msgstr "Αποκοπή Επώνυμου"
 
-#: app/gui/edit-commands.c:195 app/gui/edit-commands.c:213
+#: app/gui/edit-commands.c:196 app/gui/edit-commands.c:214
 msgid "Enter a name for this buffer"
 msgstr "Εισάγετε ένα όνομα για αυτόν τον ενταμιευτή"
 
-#: app/gui/edit-commands.c:210
+#: app/gui/edit-commands.c:211
 msgid "Copy Named"
 msgstr "Αντιγραφή Επώνυμου"
 
-#: app/gui/edit-commands.c:289 app/gui/edit-commands.c:318
+#: app/gui/edit-commands.c:292 app/gui/edit-commands.c:321
 #, fuzzy
 msgid "(Unnamed Buffer)"
 msgstr "Επικολλημένο Στρώμα"
@@ -3373,7 +3384,7 @@ msgid "/Save Selection to File..."
 msgstr "Αποθήκευση επιλογής σε αρχείο..."
 
 #: app/gui/file-commands.c:187 app/gui/file-open-dialog.c:703
-#: app/widgets/gimpdnd.c:1005 app/widgets/gimpdocumentview.c:451
+#: app/widgets/gimpdocumentview.c:451 app/widgets/gimpdnd.c:1005
 #, fuzzy, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3383,7 +3394,7 @@ msgstr ""
 "Σφάλμα ανοίγματος.\n"
 "%s"
 
-#: app/gui/file-commands.c:249 app/gui/file-save-dialog.c:372
+#: app/gui/file-commands.c:248 app/gui/file-save-dialog.c:372
 #, fuzzy, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3394,23 +3405,23 @@ msgstr ""
 "%s"
 
 #
-#: app/gui/file-commands.c:290
+#: app/gui/file-commands.c:289
 #, fuzzy
 msgid "Create New Template"
 msgstr "Νέα Εικόνα"
 
-#: app/gui/file-commands.c:293
+#: app/gui/file-commands.c:292
 #, fuzzy
 msgid "Enter a name for this template"
 msgstr "Εισάγετε ένα όνομα για αυτόν τον ενταμιευτή"
 
-#: app/gui/file-commands.c:316
+#: app/gui/file-commands.c:315
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
 msgstr ""
 
-#: app/gui/file-commands.c:330
+#: app/gui/file-commands.c:329
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -3419,17 +3430,17 @@ msgid ""
 "You will lose all your changes, including all undo information."
 msgstr ""
 
-#: app/gui/file-commands.c:338
+#: app/gui/file-commands.c:337
 #, fuzzy
 msgid "Revert Image"
 msgstr "Επαναφορά Εικόνας;"
 
-#: app/gui/file-commands.c:404
+#: app/gui/file-commands.c:403
 #, fuzzy
 msgid "(Unnamed Template)"
 msgstr "Επικολλημένο Στρώμα"
 
-#: app/gui/file-commands.c:478
+#: app/gui/file-commands.c:477
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3887,104 +3898,103 @@ msgid "/Save as POV-Ray..."
 msgstr "Αποθήκευση ως POV-Ray"
 
 #
-#: app/gui/grid-dialog.c:102
+#: app/gui/grid-dialog.c:104
 #, fuzzy
 msgid "Configure Grid"
 msgstr "Συνέχεια"
 
-#: app/gui/grid-dialog.c:103
+#: app/gui/grid-dialog.c:105
 #, fuzzy
 msgid "Configure Image Grid"
 msgstr "Επιβεβαίωση Μεγέθους Εικόνας"
 
-#: app/gui/grid-dialog.c:132
+#: app/gui/grid-dialog.c:134
 #, fuzzy
 msgid "S_how Grid"
 msgstr "Εμφάνιση Πλέγματος"
 
-#: app/gui/grid-dialog.c:140
+#: app/gui/grid-dialog.c:142
 #, fuzzy
 msgid "S_nap to Grid"
 msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
-#. the appearence frame
-#: app/gui/grid-dialog.c:151
-#, fuzzy
-msgid "Appearence"
+#. the appearance frame
+#: app/gui/grid-dialog.c:153 app/gui/preferences-dialog.c:1451
+msgid "Appearance"
 msgstr "Εμφάνιση"
 
 # # FIX? State = Politeia normally, but in Greece we have
 # #      different subdivisions, so...?
-#: app/gui/grid-dialog.c:165
+#: app/gui/grid-dialog.c:167
 #, fuzzy
 msgid "Line _Style:"
 msgstr "Κατάσταση:"
 
 #
-#: app/gui/grid-dialog.c:169
+#: app/gui/grid-dialog.c:171
 #, fuzzy
-msgid "Grid Foreground Color"
+msgid "Change Grid Foreground Color"
 msgstr "Προσκήνιο"
 
 #
-#: app/gui/grid-dialog.c:173
+#: app/gui/grid-dialog.c:175
 #, fuzzy
 msgid "_Foreground Color:"
 msgstr "Προσκήνιο"
 
 #
-#: app/gui/grid-dialog.c:177
+#: app/gui/grid-dialog.c:179
 #, fuzzy
-msgid "Grid Background Color"
+msgid "Change Grid Background Color"
 msgstr "Φόντο"
 
 #
-#: app/gui/grid-dialog.c:181
+#: app/gui/grid-dialog.c:183
 #, fuzzy
 msgid "_Background Color:"
 msgstr "Φόντο"
 
 #
 #. the spacing frame
-#: app/gui/grid-dialog.c:187
+#: app/gui/grid-dialog.c:189
 #, fuzzy
 msgid "Spacing"
 msgstr "Διάκενο:"
 
-#: app/gui/grid-dialog.c:214 app/gui/grid-dialog.c:255
+#: app/gui/grid-dialog.c:216 app/gui/grid-dialog.c:257
 #: app/gui/preferences-dialog.c:1047
 msgid "Width"
 msgstr "Πλάτος"
 
-#: app/gui/grid-dialog.c:216 app/gui/grid-dialog.c:257
+#: app/gui/grid-dialog.c:218 app/gui/grid-dialog.c:259
 #: app/gui/preferences-dialog.c:1049
 msgid "Height"
 msgstr "Ύψος"
 
 #
-#: app/gui/grid-dialog.c:218 app/gui/grid-dialog.c:259
+#: app/gui/grid-dialog.c:220 app/gui/grid-dialog.c:261
 #: app/gui/preferences-dialog.c:1051 app/gui/preferences-dialog.c:1064
-#: app/gui/user-install-dialog.c:1278 app/widgets/gimptemplateeditor.c:221
+#: app/gui/user-install-dialog.c:1338 app/widgets/gimptemplateeditor.c:221
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
 #. the offset frame
-#: app/gui/grid-dialog.c:226 app/gui/offset-dialog.c:102
+#: app/gui/grid-dialog.c:228 app/gui/offset-dialog.c:102
 #: app/gui/resize-dialog.c:442
 msgid "Offset"
 msgstr "Μετατόπιση"
 
-#: app/gui/gui.c:469
+#: app/gui/gui.c:470
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr ""
 
-#: app/gui/gui.c:487
+#: app/gui/gui.c:489
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Το GIMP"
 
-#: app/gui/gui.c:491
+#: app/gui/gui.c:493
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -4068,984 +4078,1058 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 
 #. <Image>/File
-#: app/gui/image-menu.c:83 app/gui/toolbox-menu.c:48
+#: app/gui/image-menu.c:84 app/gui/toolbox-menu.c:48
 msgid "/_File"
 msgstr "/_Αρχείο"
 
-#: app/gui/image-menu.c:85 app/gui/toolbox-menu.c:50
-msgid "/File/New..."
+#: app/gui/image-menu.c:86 app/gui/toolbox-menu.c:50
+#, fuzzy
+msgid "/File/_New..."
 msgstr "/Αρχείο/Νέο..."
 
-#: app/gui/image-menu.c:90 app/gui/toolbox-menu.c:55
-msgid "/File/Open..."
+#: app/gui/image-menu.c:91 app/gui/toolbox-menu.c:55
+#, fuzzy
+msgid "/File/_Open..."
 msgstr "/Αρχείο/Άνοιγμα..."
 
 #. <Image>/File/Open Recent
-#: app/gui/image-menu.c:98 app/gui/toolbox-menu.c:63
+#: app/gui/image-menu.c:99 app/gui/toolbox-menu.c:63
 #, fuzzy
-msgid "/File/_Open Recent"
+msgid "/File/Open _Recent"
 msgstr "/Αρχείο/Άνοιγμα..."
 
-#: app/gui/image-menu.c:100 app/gui/toolbox-menu.c:65
+#: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:65
 msgid "/File/Open Recent/(None)"
 msgstr ""
 
-#: app/gui/image-menu.c:105 app/gui/toolbox-menu.c:70
+#: app/gui/image-menu.c:106 app/gui/toolbox-menu.c:70
 #, fuzzy
-msgid "/File/Open Recent/Document History..."
+msgid "/File/Open Recent/Document _History..."
 msgstr "/Αρχείο/Διάλογοι/Ευρετήριο Εγγράφων..."
 
-#: app/gui/image-menu.c:113
-msgid "/File/Save"
+#: app/gui/image-menu.c:114
+#, fuzzy
+msgid "/File/_Save"
 msgstr "/Αρχείο/Αποθήκευση"
 
-#: app/gui/image-menu.c:118
+#: app/gui/image-menu.c:119
 #, fuzzy
-msgid "/File/Save as..."
+msgid "/File/Save _as..."
 msgstr "/Αρχείο/Αποθήκευση Ως..."
 
-#: app/gui/image-menu.c:123
+#: app/gui/image-menu.c:124
 #, fuzzy
-msgid "/File/Save a Copy..."
+msgid "/File/Save a Cop_y..."
 msgstr "/Αρχείο/Αποθήκευση Ως..."
 
-#: app/gui/image-menu.c:127
+#: app/gui/image-menu.c:128
 #, fuzzy
-msgid "/File/Save as Template..."
+msgid "/File/Save as _Template..."
 msgstr "/Αρχείο/Αποθήκευση Ως..."
 
-#: app/gui/image-menu.c:131
-msgid "/File/Revert..."
+#: app/gui/image-menu.c:132
+#, fuzzy
+msgid "/File/Re_vert..."
 msgstr "/Αρχείο/Επαναφορά..."
 
-#: app/gui/image-menu.c:139
-msgid "/File/Close"
+#: app/gui/image-menu.c:140
+#, fuzzy
+msgid "/File/_Close"
 msgstr "/Αρχείο/Κλείσιμο"
 
-#: app/gui/image-menu.c:144 app/gui/toolbox-menu.c:228
-msgid "/File/Quit"
+#: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:228
+#, fuzzy
+msgid "/File/_Quit"
 msgstr "/Αρχείο/Έξοδος"
 
 #
 #. <Image>/Edit
-#: app/gui/image-menu.c:154
+#: app/gui/image-menu.c:155
 #, fuzzy
 msgid "/_Edit"
 msgstr "Επεξεργασία"
 
-#: app/gui/image-menu.c:156
-msgid "/Edit/Undo"
+#: app/gui/image-menu.c:157
+#, fuzzy
+msgid "/Edit/_Undo"
 msgstr "/Επεξεργασία/Ακύρωση ενέργειας"
 
-#: app/gui/image-menu.c:161
-msgid "/Edit/Redo"
+#: app/gui/image-menu.c:162
+#, fuzzy
+msgid "/Edit/_Redo"
 msgstr "/Επεξεργασία/Επανεκτέλεση ενέργειας"
 
-#: app/gui/image-menu.c:169
-msgid "/Edit/Cut"
+#: app/gui/image-menu.c:170
+#, fuzzy
+msgid "/Edit/Cu_t"
 msgstr "/Επεξεργασία/Αποκοπή"
 
-#: app/gui/image-menu.c:174
-msgid "/Edit/Copy"
+#: app/gui/image-menu.c:175
+#, fuzzy
+msgid "/Edit/_Copy"
 msgstr "/Επεξεργασία/Αντιγραφή"
 
-#: app/gui/image-menu.c:179
-msgid "/Edit/Paste"
+#: app/gui/image-menu.c:180
+#, fuzzy
+msgid "/Edit/_Paste"
 msgstr "/Επεξεργασία/Επικόλληση"
 
-#: app/gui/image-menu.c:184
-msgid "/Edit/Paste Into"
+#: app/gui/image-menu.c:185
+#, fuzzy
+msgid "/Edit/Paste _Into"
 msgstr "/Επεξεργασία/Επικόλληση Σε"
 
-#: app/gui/image-menu.c:189
-msgid "/Edit/Paste as New"
+#: app/gui/image-menu.c:190
+#, fuzzy
+msgid "/Edit/Paste as _New"
 msgstr "/Επεξεργασία/Επικόλληση ως Νέο"
 
 #. <Image>/Edit/Buffer
-#: app/gui/image-menu.c:197
+#: app/gui/image-menu.c:198
 #, fuzzy
 msgid "/Edit/_Buffer"
 msgstr "/Επεξεργασία/Καθαρισμός"
 
-#: app/gui/image-menu.c:199
-msgid "/Edit/Buffer/Cut Named..."
+#: app/gui/image-menu.c:200
+#, fuzzy
+msgid "/Edit/Buffer/Cu_t Named..."
 msgstr "/Επεξεργασία/Ενταμιευτής/Αποκοπή Επώνυμου..."
 
-#: app/gui/image-menu.c:204
-msgid "/Edit/Buffer/Copy Named..."
+#: app/gui/image-menu.c:205
+#, fuzzy
+msgid "/Edit/Buffer/_Copy Named..."
 msgstr "/Επεξεργασία/Ενταμιευτής/Αντιγραφή Επώνυμου..."
 
-#: app/gui/image-menu.c:209
-msgid "/Edit/Buffer/Paste Named..."
+#: app/gui/image-menu.c:210
+#, fuzzy
+msgid "/Edit/Buffer/_Paste Named..."
 msgstr "/Επεξεργασία/Ενταμιευτής/Επικόλληση Επώνυμου..."
 
-#: app/gui/image-menu.c:217
-msgid "/Edit/Clear"
+#: app/gui/image-menu.c:218
+#, fuzzy
+msgid "/Edit/Cl_ear"
 msgstr "/Επεξεργασία/Καθαρισμός"
 
-#: app/gui/image-menu.c:222
-msgid "/Edit/Fill with FG Color"
+#: app/gui/image-menu.c:223
+#, fuzzy
+msgid "/Edit/Fill with _FG Color"
 msgstr "/Επεξεργασία/Γέμισμα με Χρώμα Προσκηνίου"
 
-#: app/gui/image-menu.c:227
-msgid "/Edit/Fill with BG Color"
+#: app/gui/image-menu.c:228
+#, fuzzy
+msgid "/Edit/Fill with B_G Color"
 msgstr "/Επεξεργασία/Γέμισμα με Χρώμα Παρασκηνίου"
 
-#: app/gui/image-menu.c:232
-msgid "/Edit/Stroke"
+#: app/gui/image-menu.c:233
+#, fuzzy
+msgid "/Edit/Fill with P_attern"
+msgstr "/Επεξεργασία/Γέμισμα με Χρώμα Προσκηνίου"
+
+#: app/gui/image-menu.c:238
+#, fuzzy
+msgid "/Edit/_Stroke Selection"
+msgstr "Σμίκρυνσης Επιλογής"
+
+#: app/gui/image-menu.c:243
+#, fuzzy
+msgid "/Edit/St_roke Active Path"
 msgstr "/Επεξεργασία/Πινελιά"
 
 #
 #. <Image>/Select
-#: app/gui/image-menu.c:242
+#: app/gui/image-menu.c:253
 #, fuzzy
 msgid "/_Select"
 msgstr "Επιλογή"
 
-#: app/gui/image-menu.c:244
-msgid "/Select/All"
+#: app/gui/image-menu.c:255
+#, fuzzy
+msgid "/Select/_All"
 msgstr "/Επιλογή/Όλα"
 
 #
-#: app/gui/image-menu.c:249
-msgid "/Select/None"
+#: app/gui/image-menu.c:260
+#, fuzzy
+msgid "/Select/_None"
 msgstr "/Επιλογή/Τίποτα"
 
 #
-#: app/gui/image-menu.c:254
-msgid "/Select/Invert"
+#: app/gui/image-menu.c:265
+#, fuzzy
+msgid "/Select/_Invert"
 msgstr "/Επιλογή/Αντιστροφή"
 
 #
-#: app/gui/image-menu.c:259
+#: app/gui/image-menu.c:270
 #, fuzzy
-msgid "/Select/Float"
+msgid "/Select/_Float"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
-#: app/gui/image-menu.c:263
+#: app/gui/image-menu.c:274
 #, fuzzy
-msgid "/Select/By Color"
+msgid "/Select/_By Color"
 msgstr "Επιλέξτε Χρώμα"
 
-#: app/gui/image-menu.c:271
+#: app/gui/image-menu.c:282
 #, fuzzy
-msgid "/Select/Feather..."
+msgid "/Select/Fea_ther..."
 msgstr "Επιλογή..."
 
-#: app/gui/image-menu.c:275
-msgid "/Select/Sharpen"
+#: app/gui/image-menu.c:286
+#, fuzzy
+msgid "/Select/_Sharpen"
 msgstr "/Επιλογή/Όξυνση"
 
-#: app/gui/image-menu.c:279
+#: app/gui/image-menu.c:290
 #, fuzzy
-msgid "/Select/Shrink..."
+msgid "/Select/S_hrink..."
 msgstr "Επιλογή..."
 
-#: app/gui/image-menu.c:284
+#: app/gui/image-menu.c:295
 #, fuzzy
-msgid "/Select/Grow..."
+msgid "/Select/_Grow..."
 msgstr "Επιλογή..."
 
-#: app/gui/image-menu.c:289
+#: app/gui/image-menu.c:300
 #, fuzzy
-msgid "/Select/Border..."
+msgid "/Select/Bo_rder..."
 msgstr "Επιλογή..."
 
-#: app/gui/image-menu.c:296
+#: app/gui/image-menu.c:307
 #, fuzzy
-msgid "/Select/Toggle QuickMask"
+msgid "/Select/Toggle _QuickMask"
 msgstr "Μάσκα Επιλογής"
 
-#: app/gui/image-menu.c:301
-msgid "/Select/Save to Channel"
-msgstr ""
+#: app/gui/image-menu.c:312
+#, fuzzy
+msgid "/Select/Save to _Channel"
+msgstr "Διαγραφή Λαβής"
 
 #. <Image>/View
-#: app/gui/image-menu.c:309
+#: app/gui/image-menu.c:320
 #, fuzzy
 msgid "/_View"
 msgstr "/_Αρχείο"
 
-#: app/gui/image-menu.c:311
+#: app/gui/image-menu.c:322
 #, fuzzy
-msgid "/View/New View"
+msgid "/View/_New View"
 msgstr "/Εμφάνιση/Νέα Α_πεικόνιση"
 
-#: app/gui/image-menu.c:316
+#: app/gui/image-menu.c:327
 #, fuzzy
-msgid "/View/Dot for Dot"
+msgid "/View/_Dot for Dot"
 msgstr "/Εμφάνιση/Σ_μίκρυνση"
 
 #. <Image>/View/Zoom
-#: app/gui/image-menu.c:323
+#: app/gui/image-menu.c:334
 #, fuzzy
 msgid "/View/_Zoom"
 msgstr "/Εμφάνιση/Κλίμακα/85%"
 
-#: app/gui/image-menu.c:325
+#: app/gui/image-menu.c:336
 #, fuzzy
-msgid "/View/Zoom/Zoom Out"
+msgid "/View/Zoom/Zoom _Out"
 msgstr "/Εμφάνιση/Σ_μίκρυνση"
 
-#: app/gui/image-menu.c:330
+#: app/gui/image-menu.c:341
 #, fuzzy
-msgid "/View/Zoom/Zoom In"
+msgid "/View/Zoom/Zoom _In"
 msgstr "/Εμφάνιση/Με_γένθυση"
 
-#: app/gui/image-menu.c:335
+#: app/gui/image-menu.c:346
 #, fuzzy
-msgid "/View/Zoom/Zoom to Fit Window"
+msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Εμφάνιση/Με_γένθυση"
 
-#: app/gui/image-menu.c:343
+#: app/gui/image-menu.c:354
 #, fuzzy
 msgid "/View/Zoom/16:1"
 msgstr "/Εμφάνιση/Κλίμακα/141%"
 
-#: app/gui/image-menu.c:347
+#: app/gui/image-menu.c:358
 #, fuzzy
 msgid "/View/Zoom/8:1"
 msgstr "/Εμφάνιση/Κλίμακα/85%"
 
-#: app/gui/image-menu.c:351
+#: app/gui/image-menu.c:362
 #, fuzzy
 msgid "/View/Zoom/4:1"
 msgstr "/Εμφάνιση/Κλίμακα/141%"
 
-#: app/gui/image-menu.c:355
+#: app/gui/image-menu.c:366
 #, fuzzy
 msgid "/View/Zoom/2:1"
 msgstr "/Εμφάνιση/Κλίμακα/25%"
 
-#: app/gui/image-menu.c:359
+#: app/gui/image-menu.c:370
 #, fuzzy
 msgid "/View/Zoom/1:1"
 msgstr "/Εμφάνιση/Κλίμακα/141%"
 
-#: app/gui/image-menu.c:363
+#: app/gui/image-menu.c:374
 #, fuzzy
 msgid "/View/Zoom/1:2"
 msgstr "/Εμφάνιση/Κλίμακα/25%"
 
-#: app/gui/image-menu.c:367
+#: app/gui/image-menu.c:378
 #, fuzzy
 msgid "/View/Zoom/1:4"
 msgstr "/Εμφάνιση/Κλίμακα/141%"
 
-#: app/gui/image-menu.c:371
+#: app/gui/image-menu.c:382
 #, fuzzy
 msgid "/View/Zoom/1:8"
 msgstr "/Εμφάνιση/Κλίμακα/85%"
 
-#: app/gui/image-menu.c:375
+#: app/gui/image-menu.c:386
 #, fuzzy
 msgid "/View/Zoom/1:16"
 msgstr "/Εμφάνιση/Κλίμακα/141%"
 
-#: app/gui/image-menu.c:389
+#: app/gui/image-menu.c:400
 #, fuzzy
-msgid "/View/Info Window..."
+msgid "/View/_Info Window..."
 msgstr "/Εμφάνιση/Ρυθμίσεις Πλέγματος"
 
-#: app/gui/image-menu.c:394
+#: app/gui/image-menu.c:405
 #, fuzzy
-msgid "/View/Navigation Window..."
+msgid "/View/Na_vigation Window..."
 msgstr "/Εμφάνιση/Ρυθμίσεις Πλέγματος"
-
-#: app/gui/image-menu.c:399
-#, fuzzy
-msgid "/View/Display Filters..."
-msgstr "/Διάλογοι/Φίλτρα Εμφάνισης..."
-
-#: app/gui/image-menu.c:406
-#, fuzzy
-msgid "/View/Show Selection"
-msgstr "Επιλογή Χρώματος"
 
 #: app/gui/image-menu.c:410
 #, fuzzy
-msgid "/View/Show Layer Boundary"
+msgid "/View/Display _Filters..."
+msgstr "/Διάλογοι/Φίλτρα Εμφάνισης..."
+
+#: app/gui/image-menu.c:417
+#, fuzzy
+msgid "/View/Show _Selection"
+msgstr "Επιλογή Χρώματος"
+
+#: app/gui/image-menu.c:421
+#, fuzzy
+msgid "/View/Show _Layer Boundary"
 msgstr "Εμφάνιση ή απόκρυψη μπάρας κατάστασης"
-
-#: app/gui/image-menu.c:414
-#, fuzzy
-msgid "/View/Show Guides"
-msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
-
-#: app/gui/image-menu.c:418
-#, fuzzy
-msgid "/View/Snap to Guides"
-msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
 #: app/gui/image-menu.c:425
 #, fuzzy
-msgid "/View/Configure Grid..."
-msgstr "/Εμφάνιση/Ρυθμίσεις Πλέγματος"
+msgid "/View/Show _Guides"
+msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
 #: app/gui/image-menu.c:429
 #, fuzzy
-msgid "/View/Show Grid"
+msgid "/View/Sn_ap to Guides"
 msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
-#: app/gui/image-menu.c:433
+#: app/gui/image-menu.c:436
 #, fuzzy
-msgid "/View/Snap to Grid"
-msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
+msgid "/View/Configure G_rid..."
+msgstr "/Εμφάνιση/Ρυθμίσεις Πλέγματος"
 
-#
 #: app/gui/image-menu.c:440
 #, fuzzy
-msgid "/View/Show Menubar"
-msgstr "Εμφάνιση μπάρας κατάστασης"
+msgid "/View/S_how Grid"
+msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
 #: app/gui/image-menu.c:444
 #, fuzzy
-msgid "/View/Show Rulers"
-msgstr "/Εμφάνιση/Χάρακες"
+msgid "/View/Sna_p to Grid"
+msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
-#: app/gui/image-menu.c:448
+#
+#: app/gui/image-menu.c:451
 #, fuzzy
-msgid "/View/Show Scrollbars"
-msgstr "/Εμφάνιση/Χάρακες"
+msgid "/View/Show _Menubar"
+msgstr "Εμφάνιση μπάρας κατάστασης"
 
-#: app/gui/image-menu.c:452
+#: app/gui/image-menu.c:455
 #, fuzzy
-msgid "/View/Show Statusbar"
-msgstr "Εμφάνιση ή απόκρυψη μπάρας κατάστασης"
+msgid "/View/Show R_ulers"
+msgstr "/Εμφάνιση/Χάρακες"
 
 #: app/gui/image-menu.c:459
-msgid "/View/Shrink Wrap"
-msgstr ""
+#, fuzzy
+msgid "/View/Show Scroll_bars"
+msgstr "/Εμφάνιση/Χάρακες"
 
-#: app/gui/image-menu.c:464
-msgid "/View/Fullscreen"
-msgstr ""
+#: app/gui/image-menu.c:463
+#, fuzzy
+msgid "/View/Show S_tatusbar"
+msgstr "Εμφάνιση ή απόκρυψη μπάρας κατάστασης"
+
+#: app/gui/image-menu.c:470
+#, fuzzy
+msgid "/View/Shrink _Wrap"
+msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
+
+#: app/gui/image-menu.c:475
+#, fuzzy
+msgid "/View/Fullscr_een"
+msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
 #
 #. <Image>/Image
-#: app/gui/image-menu.c:471
+#: app/gui/image-menu.c:482
 #, fuzzy
 msgid "/_Image"
 msgstr "Εικόνα"
 
 #. <Image>/Image/Mode
-#: app/gui/image-menu.c:475
+#: app/gui/image-menu.c:486
 #, fuzzy
 msgid "/Image/_Mode"
 msgstr "εικόνα"
 
-#: app/gui/image-menu.c:477
-msgid "/Image/Mode/RGB"
-msgstr ""
+#: app/gui/image-menu.c:488
+#, fuzzy
+msgid "/Image/Mode/_RGB"
+msgstr "εικόνα"
 
-#: app/gui/image-menu.c:482
-msgid "/Image/Mode/Grayscale"
-msgstr ""
+#: app/gui/image-menu.c:493
+#, fuzzy
+msgid "/Image/Mode/_Grayscale"
+msgstr "εικόνα"
 
-#: app/gui/image-menu.c:487
-msgid "/Image/Mode/Indexed..."
-msgstr ""
+#: app/gui/image-menu.c:498
+#, fuzzy
+msgid "/Image/Mode/_Indexed..."
+msgstr "εικόνα"
 
 #
 #. <Image>/Image/Transform
-#: app/gui/image-menu.c:495
+#: app/gui/image-menu.c:506
 #, fuzzy
 msgid "/Image/_Transform"
 msgstr "Μεταφορά"
 
 #
-#: app/gui/image-menu.c:497
+#: app/gui/image-menu.c:508
 #, fuzzy
-msgid "/Image/Transform/Flip Horizontally"
+msgid "/Image/Transform/Flip _Horizontally"
 msgstr "Μεταφορά"
 
 #
-#: app/gui/image-menu.c:502
+#: app/gui/image-menu.c:513
 #, fuzzy
-msgid "/Image/Transform/Flip Vertically"
+msgid "/Image/Transform/Flip _Vertically"
 msgstr "Μεταφορά"
 
 #
 #. please use the degree symbol in the translation
-#: app/gui/image-menu.c:511
+#: app/gui/image-menu.c:522
 #, fuzzy
-msgid "/Image/Transform/Rotate 90 degrees CW"
+msgid "/Image/Transform/Rotate 90 degrees _CW"
 msgstr "Μεταφορά"
 
-#: app/gui/image-menu.c:516
-msgid "/Image/Transform/Rotate 90 degrees CCW"
-msgstr ""
-
 #
-#: app/gui/image-menu.c:521
+#: app/gui/image-menu.c:527
 #, fuzzy
-msgid "/Image/Transform/Rotate 180 degrees"
+msgid "/Image/Transform/Rotate 90 degrees CC_W"
 msgstr "Μεταφορά"
 
-#: app/gui/image-menu.c:531
-msgid "/Image/Canvas Size..."
-msgstr ""
+#
+#: app/gui/image-menu.c:532
+#, fuzzy
+msgid "/Image/Transform/Rotate _180 degrees"
+msgstr "Μεταφορά"
 
-#: app/gui/image-menu.c:536
-msgid "/Image/Scale Image..."
-msgstr ""
+#: app/gui/image-menu.c:542
+#, fuzzy
+msgid "/Image/Can_vas Size..."
+msgstr "Μέγεθος Εικόνας: %s"
+
+#: app/gui/image-menu.c:547
+#, fuzzy
+msgid "/Image/_Scale Image..."
+msgstr "Νέα Εικόνα"
 
 #
-#: app/gui/image-menu.c:541
+#: app/gui/image-menu.c:552
 #, fuzzy
-msgid "/Image/Crop Image"
+msgid "/Image/_Crop Image"
 msgstr "Φόρτωση Εικόνας"
 
-#: app/gui/image-menu.c:546
+#: app/gui/image-menu.c:557
 #, fuzzy
-msgid "/Image/Duplicate"
+msgid "/Image/_Duplicate"
 msgstr "Δημιουργία αντιγράφου"
 
-#: app/gui/image-menu.c:554
+#: app/gui/image-menu.c:565
 #, fuzzy
-msgid "/Image/Merge Visible Layers..."
+msgid "/Image/Merge Visible _Layers..."
 msgstr "Κατάλογος Εμ_φάνισης..."
 
-#: app/gui/image-menu.c:558
+#: app/gui/image-menu.c:569
 #, fuzzy
-msgid "/Image/Flatten Image"
+msgid "/Image/_Flatten Image"
 msgstr "Νέα Εικόνα"
 
 #. <Image>/Layer
-#: app/gui/image-menu.c:565
+#: app/gui/image-menu.c:576
 #, fuzzy
 msgid "/_Layer"
 msgstr "Στρώμα"
 
-#: app/gui/image-menu.c:567
+#: app/gui/image-menu.c:578
 #, fuzzy
-msgid "/Layer/New Layer..."
+msgid "/Layer/_New Layer..."
 msgstr "/Νέο Στρώμα..."
 
-#: app/gui/image-menu.c:572
+#: app/gui/image-menu.c:583
 #, fuzzy
-msgid "/Layer/Duplicate Layer"
+msgid "/Layer/Du_plicate Layer"
 msgstr "Δημιουργία αντιγράφου"
 
 # # FIX?  see above for "send to back"
-#: app/gui/image-menu.c:577
+#: app/gui/image-menu.c:588
 #, fuzzy
-msgid "/Layer/Anchor Layer"
+msgid "/Layer/Anchor _Layer"
 msgstr "Βύθιση Στρώματος"
 
-#: app/gui/image-menu.c:582
+#: app/gui/image-menu.c:593
 #, fuzzy
-msgid "/Layer/Merge Down"
+msgid "/Layer/Me_rge Down"
 msgstr "Συγχώνευση με το επόμενο"
 
-#: app/gui/image-menu.c:587
+#: app/gui/image-menu.c:598
 #, fuzzy
-msgid "/Layer/Delete Layer"
+msgid "/Layer/_Delete Layer"
 msgstr "Διαγραφή Στρώματος"
 
 #. <Image>/Layer/Stack
-#: app/gui/image-menu.c:597
+#: app/gui/image-menu.c:608
 #, fuzzy
-msgid "/Layer/_Stack"
+msgid "/Layer/Stac_k"
 msgstr "Ανύψωση Στρώματος"
 
-#: app/gui/image-menu.c:599
+#: app/gui/image-menu.c:610
 #, fuzzy
-msgid "/Layer/Stack/Select Previous Layer"
+msgid "/Layer/Stack/Select _Previous Layer"
 msgstr "Ανύψωση Στρώματος"
 
-#: app/gui/image-menu.c:603
+#: app/gui/image-menu.c:614
 #, fuzzy
-msgid "/Layer/Stack/Select Next Layer"
-msgstr "Ανύψωση Στρώματος"
-
-#: app/gui/image-menu.c:607
-#, fuzzy
-msgid "/Layer/Stack/Select Top Layer"
-msgstr "Ανύψωση Στρώματος"
-
-#: app/gui/image-menu.c:611
-#, fuzzy
-msgid "/Layer/Stack/Select Bottom Layer"
+msgid "/Layer/Stack/Select _Next Layer"
 msgstr "Ανύψωση Στρώματος"
 
 #: app/gui/image-menu.c:618
 #, fuzzy
-msgid "/Layer/Stack/Raise Layer"
+msgid "/Layer/Stack/Select _Top Layer"
+msgstr "Ανύψωση Στρώματος"
+
+#: app/gui/image-menu.c:622
+#, fuzzy
+msgid "/Layer/Stack/Select _Bottom Layer"
+msgstr "Ανύψωση Στρώματος"
+
+#: app/gui/image-menu.c:629
+#, fuzzy
+msgid "/Layer/Stack/_Raise Layer"
 msgstr "Ανύψωση Στρώματος"
 
 # # FIX?  see above for "send to back"
-#: app/gui/image-menu.c:623
+#: app/gui/image-menu.c:634
 #, fuzzy
-msgid "/Layer/Stack/Lower Layer"
+msgid "/Layer/Stack/_Lower Layer"
 msgstr "Βύθιση Στρώματος"
 
-#: app/gui/image-menu.c:628
+#: app/gui/image-menu.c:639
 #, fuzzy
-msgid "/Layer/Stack/Layer to Top"
+msgid "/Layer/Stack/Layer to T_op"
 msgstr "/Στοίβαγμα/Στρώμα στην Κορυφή"
 
-#: app/gui/image-menu.c:633
+#: app/gui/image-menu.c:644
 #, fuzzy
-msgid "/Layer/Stack/Layer to Bottom"
+msgid "/Layer/Stack/Layer to Botto_m"
 msgstr "/Στοίβαγμα/Στρώμα στο Βάθος"
 
 #. <Image>/Layer/Colors
-#: app/gui/image-menu.c:641
+#: app/gui/image-menu.c:652
 #, fuzzy
 msgid "/Layer/_Colors"
 msgstr "Επίπεδα Χρώματος:"
 
-#: app/gui/image-menu.c:643
+#: app/gui/image-menu.c:654
 #, fuzzy
-msgid "/Layer/Colors/Color Balance..."
+msgid "/Layer/Colors/Color _Balance..."
 msgstr "Εξισορρόπηση Χρώματος"
 
 #
-#: app/gui/image-menu.c:648
+#: app/gui/image-menu.c:659
 #, fuzzy
-msgid "/Layer/Colors/Hue-Saturation..."
+msgid "/Layer/Colors/Hue-_Saturation..."
 msgstr "Απόχρωση-Κορεσμός"
 
-#: app/gui/image-menu.c:653
+#: app/gui/image-menu.c:664
 #, fuzzy
-msgid "/Layer/Colors/Colorize..."
+msgid "/Layer/Colors/Colori_ze..."
 msgstr "Εξισορρόπηση Χρώματος"
 
-#: app/gui/image-menu.c:658
+#: app/gui/image-menu.c:669
 #, fuzzy
-msgid "/Layer/Colors/Brightness-Contrast..."
+msgid "/Layer/Colors/B_rightness-Contrast..."
 msgstr "Φωτεινότητα-Αντίθεση"
 
-#: app/gui/image-menu.c:663
-msgid "/Layer/Colors/Threshold..."
-msgstr ""
-
-#: app/gui/image-menu.c:668
+#: app/gui/image-menu.c:674
 #, fuzzy
-msgid "/Layer/Colors/Levels..."
+msgid "/Layer/Colors/_Threshold..."
 msgstr "Επίπεδα Χρώματος:"
 
-#: app/gui/image-menu.c:673
-msgid "/Layer/Colors/Curves..."
-msgstr ""
-
-#: app/gui/image-menu.c:678
-msgid "/Layer/Colors/Posterize..."
-msgstr ""
-
-#: app/gui/image-menu.c:686
+#: app/gui/image-menu.c:679
 #, fuzzy
-msgid "/Layer/Colors/Desaturate"
+msgid "/Layer/Colors/_Levels..."
+msgstr "Επίπεδα Χρώματος:"
+
+#: app/gui/image-menu.c:684
+#, fuzzy
+msgid "/Layer/Colors/_Curves..."
+msgstr "Επίπεδα Χρώματος:"
+
+#: app/gui/image-menu.c:689
+#, fuzzy
+msgid "/Layer/Colors/_Posterize..."
+msgstr "Εξισορρόπηση Χρώματος"
+
+#: app/gui/image-menu.c:697
+#, fuzzy
+msgid "/Layer/Colors/_Desaturate"
 msgstr "Στρώματα"
 
-#: app/gui/image-menu.c:691
-msgid "/Layer/Colors/Invert"
-msgstr ""
+#: app/gui/image-menu.c:702
+#, fuzzy
+msgid "/Layer/Colors/In_vert"
+msgstr "Στρώματα"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:699
+#: app/gui/image-menu.c:710
 #, fuzzy
 msgid "/Layer/Colors/_Auto"
 msgstr "Στρώματα"
 
-#: app/gui/image-menu.c:701
-msgid "/Layer/Colors/Auto/Equalize"
-msgstr ""
-
-#: app/gui/image-menu.c:708
+#: app/gui/image-menu.c:712
 #, fuzzy
-msgid "/Layer/Colors/Histogram..."
+msgid "/Layer/Colors/Auto/_Equalize"
+msgstr "Στρώματα"
+
+#: app/gui/image-menu.c:719
+#, fuzzy
+msgid "/Layer/Colors/_Histogram..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:716
+#: app/gui/image-menu.c:727
 #, fuzzy
 msgid "/Layer/_Mask"
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/image-menu.c:718
+#: app/gui/image-menu.c:729
 #, fuzzy
-msgid "/Layer/Mask/Add Layer Mask..."
+msgid "/Layer/Mask/_Add Layer Mask..."
 msgstr "Προσθήκη αρχείων..."
 
-#: app/gui/image-menu.c:722
+#: app/gui/image-menu.c:733
 #, fuzzy
-msgid "/Layer/Mask/Apply Layer Mask"
+msgid "/Layer/Mask/A_pply Layer Mask"
 msgstr "Εφαρμογή Αλλαγών Παραμέτρων"
 
-#: app/gui/image-menu.c:726
+#: app/gui/image-menu.c:737
 #, fuzzy
-msgid "/Layer/Mask/Delete Layer Mask"
+msgid "/Layer/Mask/_Delete Layer Mask"
 msgstr "Διαγραφή Στρώματος"
 
-#: app/gui/image-menu.c:731
+#: app/gui/image-menu.c:742
 #, fuzzy
-msgid "/Layer/Mask/Mask to Selection"
+msgid "/Layer/Mask/_Mask to Selection"
 msgstr "Αντ_ιστρφή επιλογής"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:739
+#: app/gui/image-menu.c:750
 #, fuzzy
 msgid "/Layer/Tr_ansparency"
 msgstr "Διαφανές"
 
-#: app/gui/image-menu.c:741
+#: app/gui/image-menu.c:752
 #, fuzzy
-msgid "/Layer/Transparency/Add Alpha Channel"
+msgid "/Layer/Transparency/_Add Alpha Channel"
 msgstr "Προσθήκη στο ταμπλώ"
 
-#: app/gui/image-menu.c:745
+#: app/gui/image-menu.c:756
 #, fuzzy
-msgid "/Layer/Transparency/Alpha to Selection"
+msgid "/Layer/Transparency/Al_pha to Selection"
 msgstr "Επιλογή επένδυσης"
 
 #
 #. <Image>/Layer/Transform
-#: app/gui/image-menu.c:755
+#: app/gui/image-menu.c:766
 #, fuzzy
 msgid "/Layer/_Transform"
 msgstr "Μεταφορά"
 
-#: app/gui/image-menu.c:757
-msgid "/Layer/Transform/Flip Horizontally"
-msgstr ""
-
-#: app/gui/image-menu.c:762
-msgid "/Layer/Transform/Flip Vertically"
-msgstr ""
-
-#: app/gui/image-menu.c:770
-msgid "/Layer/Transform/Rotate 90 degrees CW"
-msgstr ""
-
-#: app/gui/image-menu.c:775
-msgid "/Layer/Transform/Rotate 90 degrees CCW"
-msgstr ""
-
-#: app/gui/image-menu.c:780
-msgid "/Layer/Transform/Rotate 180 degrees"
-msgstr ""
-
-#: app/gui/image-menu.c:785
-msgid "/Layer/Transform/Arbitrary Rotation..."
-msgstr ""
-
-#: app/gui/image-menu.c:793
-msgid "/Layer/Transform/Offset..."
-msgstr ""
-
-#: app/gui/image-menu.c:800
+#
+#: app/gui/image-menu.c:768
 #, fuzzy
-msgid "/Layer/Layer Boundary Size..."
+msgid "/Layer/Transform/Flip _Horizontally"
+msgstr "Μεταφορά"
+
+#
+#: app/gui/image-menu.c:773
+#, fuzzy
+msgid "/Layer/Transform/Flip _Vertically"
+msgstr "Μεταφορά"
+
+#
+#: app/gui/image-menu.c:781
+#, fuzzy
+msgid "/Layer/Transform/Rotate 90 degrees _CW"
+msgstr "Μεταφορά"
+
+#
+#: app/gui/image-menu.c:786
+#, fuzzy
+msgid "/Layer/Transform/Rotate 90 degrees CC_W"
+msgstr "Μεταφορά"
+
+#
+#: app/gui/image-menu.c:791
+#, fuzzy
+msgid "/Layer/Transform/Rotate _180 degrees"
+msgstr "Μεταφορά"
+
+#: app/gui/image-menu.c:796
+msgid "/Layer/Transform/_Arbitrary Rotation..."
+msgstr ""
+
+#
+#: app/gui/image-menu.c:804
+#, fuzzy
+msgid "/Layer/Transform/_Offset..."
+msgstr "Μεταφορά"
+
+#: app/gui/image-menu.c:811
+#, fuzzy
+msgid "/Layer/Layer _Boundary Size..."
 msgstr "Επιλογή αρχείου ήχου"
 
-#: app/gui/image-menu.c:805
+#: app/gui/image-menu.c:816
 #, fuzzy
-msgid "/Layer/Layer to Imagesize"
+msgid "/Layer/Layer to _Imagesize"
 msgstr "Νέα Εικόνα"
 
 #
-#: app/gui/image-menu.c:810
+#: app/gui/image-menu.c:821
 #, fuzzy
-msgid "/Layer/Scale Layer..."
+msgid "/Layer/_Scale Layer..."
 msgstr "Καθορισμός Στρώματος"
 
 # # FIX?  see above for "send to back"
-#: app/gui/image-menu.c:815
+#: app/gui/image-menu.c:826
 #, fuzzy
-msgid "/Layer/Crop Layer"
+msgid "/Layer/Cr_op Layer"
 msgstr "Βύθιση Στρώματος"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:825
+#: app/gui/image-menu.c:836
 #, fuzzy
 msgid "/_Tools"
 msgstr "Γραμμή Εργαλείων"
 
-#: app/gui/image-menu.c:827
-msgid "/Tools/Toolbox"
-msgstr ""
-
-#: app/gui/image-menu.c:831
+#
+#: app/gui/image-menu.c:838
 #, fuzzy
-msgid "/Tools/Default Colors"
+msgid "/Tools/Tool_box"
+msgstr "Εργαλεία"
+
+#: app/gui/image-menu.c:842
+#, fuzzy
+msgid "/Tools/_Default Colors"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
-#: app/gui/image-menu.c:836
+#: app/gui/image-menu.c:847
 #, fuzzy
-msgid "/Tools/Swap Colors"
+msgid "/Tools/S_wap Colors"
 msgstr "Γραμματοσειρές/Χρώματα"
 
-#: app/gui/image-menu.c:844
+#: app/gui/image-menu.c:855
 #, fuzzy
 msgid "/Tools/_Selection Tools"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
-#: app/gui/image-menu.c:845
+#: app/gui/image-menu.c:856
 #, fuzzy
 msgid "/Tools/_Paint Tools"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
-#: app/gui/image-menu.c:846
+#: app/gui/image-menu.c:857
 #, fuzzy
 msgid "/Tools/_Transform Tools"
 msgstr "Μεταφορά"
 
 #
-#: app/gui/image-menu.c:847
+#: app/gui/image-menu.c:858
 #, fuzzy
 msgid "/Tools/_Color Tools"
 msgstr "Μεταφορά"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:851
+#: app/gui/image-menu.c:862
 #, fuzzy
 msgid "/_Dialogs"
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:853
-msgid "/Dialogs/_Create New Dock"
-msgstr ""
-
-#: app/gui/image-menu.c:855
+#: app/gui/image-menu.c:864
 #, fuzzy
-msgid "/Dialogs/Create New Dock/Layers, Channels & Paths..."
+msgid "/Dialogs/Create New Doc_k"
+msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
+
+#: app/gui/image-menu.c:866
+#, fuzzy
+msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths..."
 msgstr "/Αρχείο/Διάλογοι/Στρώματα, Κανάλια & Μονοπάτια..."
 
-#: app/gui/image-menu.c:859
+#: app/gui/image-menu.c:870
 #, fuzzy
-msgid "/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
+msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:863
+#: app/gui/image-menu.c:874
 #, fuzzy
-msgid "/Dialogs/Create New Dock/Misc. Stuff..."
+msgid "/Dialogs/Create New Dock/_Misc. Stuff..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:868
+#: app/gui/image-menu.c:879
 #, fuzzy
-msgid "/Dialogs/Tool Options..."
+msgid "/Dialogs/Tool _Options..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/image-menu.c:873
-msgid "/Dialogs/Device Status..."
+#: app/gui/image-menu.c:884
+#, fuzzy
+msgid "/Dialogs/_Device Status..."
 msgstr "/Διάλογοι/Κατάσταση Συσκευής..."
 
-#: app/gui/image-menu.c:881
+#: app/gui/image-menu.c:892
 #, fuzzy
-msgid "/Dialogs/Layers..."
+msgid "/Dialogs/_Layers..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:886
+#: app/gui/image-menu.c:897
 #, fuzzy
-msgid "/Dialogs/Channels..."
+msgid "/Dialogs/_Channels..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:891
+#: app/gui/image-menu.c:902
 #, fuzzy
-msgid "/Dialogs/Paths..."
+msgid "/Dialogs/_Paths..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:896
-msgid "/Dialogs/Indexed Palette..."
-msgstr ""
-
-#: app/gui/image-menu.c:901
+#: app/gui/image-menu.c:907
 #, fuzzy
-msgid "/Dialogs/Selection Editor..."
+msgid "/Dialogs/_Indexed Palette..."
+msgstr "/Αρχείο/Διάλογοι/Παλέττα Καταλόγου..."
+
+#: app/gui/image-menu.c:912
+#, fuzzy
+msgid "/Dialogs/_Selection Editor..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
-#: app/gui/image-menu.c:906
+#: app/gui/image-menu.c:917
 #, fuzzy
-msgid "/Dialogs/Navigation..."
+msgid "/Dialogs/Na_vigation..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:911
+#: app/gui/image-menu.c:922
 #, fuzzy
-msgid "/Dialogs/Undo History..."
+msgid "/Dialogs/_Undo History..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
-#: app/gui/image-menu.c:919
+#: app/gui/image-menu.c:930
 #, fuzzy
-msgid "/Dialogs/Colors..."
+msgid "/Dialogs/Colo_rs..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/image-menu.c:924
+#: app/gui/image-menu.c:935
 #, fuzzy
-msgid "/Dialogs/Brushes..."
+msgid "/Dialogs/Brus_hes..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:929
+#: app/gui/image-menu.c:940
 #, fuzzy
-msgid "/Dialogs/Patterns..."
+msgid "/Dialogs/P_atterns..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:934
+#: app/gui/image-menu.c:945
 #, fuzzy
-msgid "/Dialogs/Gradients..."
+msgid "/Dialogs/_Gradients..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:939
+#: app/gui/image-menu.c:950
 #, fuzzy
-msgid "/Dialogs/Palettes..."
+msgid "/Dialogs/Pal_ettes..."
 msgstr "/Διάλογοι/_Ιδιότητες"
 
-#: app/gui/image-menu.c:944
+#: app/gui/image-menu.c:955
 #, fuzzy
-msgid "/Dialogs/Fonts..."
+msgid "/Dialogs/_Fonts..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:949
+#: app/gui/image-menu.c:960
 #, fuzzy
-msgid "/Dialogs/Buffers..."
+msgid "/Dialogs/_Buffers..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:957
+#: app/gui/image-menu.c:968
 #, fuzzy
-msgid "/Dialogs/Images..."
+msgid "/Dialogs/I_mages..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:962
+#: app/gui/image-menu.c:973
 #, fuzzy
-msgid "/Dialogs/Document History..."
+msgid "/Dialogs/Document Histor_y..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
-#: app/gui/image-menu.c:967
+#: app/gui/image-menu.c:978
 #, fuzzy
-msgid "/Dialogs/Templates..."
+msgid "/Dialogs/_Templates..."
 msgstr "/Διάλογοι/Στ_ρώματα"
 
-#: app/gui/image-menu.c:972
-msgid "/Dialogs/Error Console..."
+#: app/gui/image-menu.c:983
+#, fuzzy
+msgid "/Dialogs/Error Co_nsole..."
 msgstr "/Διάλογοι/Κονσόλα Σφαλμάτων..."
 
 #
-#: app/gui/image-menu.c:982
+#: app/gui/image-menu.c:993
 #, fuzzy
 msgid "/Filte_rs"
 msgstr "Αρχεία/"
 
-#: app/gui/image-menu.c:984
+#: app/gui/image-menu.c:995
 msgid "/Filters/Repeat Last"
 msgstr "/Φίλτρα/Επανάληψη Προηγούμενου"
 
-#: app/gui/image-menu.c:989
+#: app/gui/image-menu.c:1000
 msgid "/Filters/Re-Show Last"
 msgstr "/Φίλτρα/Επανεμφάνιση Προηγούμενου"
 
 #
-#: app/gui/image-menu.c:997
+#: app/gui/image-menu.c:1008
 #, fuzzy
 msgid "/Filters/_Blur"
 msgstr "/Φίλτρα/Θόλωση"
 
-#: app/gui/image-menu.c:998
+#: app/gui/image-menu.c:1009
 #, fuzzy
 msgid "/Filters/_Colors"
 msgstr "/Φίλτρα/Χρώματα"
 
-#: app/gui/image-menu.c:999
+#: app/gui/image-menu.c:1010
 #, fuzzy
 msgid "/Filters/_Noise"
 msgstr "/Φίλτρα/Θόρυβος"
 
 #
-#: app/gui/image-menu.c:1000
+#: app/gui/image-menu.c:1011
 #, fuzzy
-msgid "/Filters/_Edge-Detect"
+msgid "/Filters/Edge-De_tect"
 msgstr "Αρχεία/"
 
 #
-#: app/gui/image-menu.c:1001
+#: app/gui/image-menu.c:1012
 #, fuzzy
 msgid "/Filters/En_hance"
 msgstr "Όνομα φίλτρου:"
 
-#: app/gui/image-menu.c:1002
+#: app/gui/image-menu.c:1013
 #, fuzzy
 msgid "/Filters/_Generic"
 msgstr "FileRunner"
 
 #
-#: app/gui/image-menu.c:1006
+#: app/gui/image-menu.c:1017
 #, fuzzy
 msgid "/Filters/Gla_ss Effects"
 msgstr "Αρχεία/"
 
 #
-#: app/gui/image-menu.c:1007
+#: app/gui/image-menu.c:1018
 #, fuzzy
 msgid "/Filters/_Light Effects"
 msgstr "Αρχεία/"
 
-#: app/gui/image-menu.c:1008
+#: app/gui/image-menu.c:1019
 #, fuzzy
 msgid "/Filters/_Distorts"
 msgstr "/Φίλτρα/Χρώματα"
 
-#: app/gui/image-menu.c:1009
+#: app/gui/image-menu.c:1020
 #, fuzzy
 msgid "/Filters/_Artistic"
 msgstr "Κινούμενα σχέδια"
 
 #
-#: app/gui/image-menu.c:1010
+#: app/gui/image-menu.c:1021
 #, fuzzy
 msgid "/Filters/_Map"
 msgstr "Αρχεία/"
 
-#: app/gui/image-menu.c:1011
+#: app/gui/image-menu.c:1022
 #, fuzzy
 msgid "/Filters/_Render"
 msgstr "FileRunner"
 
 #
-#: app/gui/image-menu.c:1012
+#: app/gui/image-menu.c:1023
 #, fuzzy
 msgid "/Filters/_Web"
 msgstr "Αρχεία/"
 
-#: app/gui/image-menu.c:1016
+#: app/gui/image-menu.c:1027
 #, fuzzy
 msgid "/Filters/An_imation"
 msgstr "Κινούμενα σχέδια"
 
-#: app/gui/image-menu.c:1017
+#: app/gui/image-menu.c:1028
 #, fuzzy
 msgid "/Filters/C_ombine"
 msgstr "/Αρχείο/Κ_λείσιμο"
 
-#: app/gui/image-menu.c:1021
+#: app/gui/image-menu.c:1032
 #, fuzzy
-msgid "/Filters/_Toys"
+msgid "/Filters/To_ys"
 msgstr "/Αρχείο/Κ_λείσιμο"
 
 #
-#: app/gui/image-menu.c:1342
+#: app/gui/image-menu.c:1357
 #, fuzzy, c-format
-msgid "Undo %s"
+msgid "_Undo %s"
 msgstr "Ακύρωση ενέργειας"
 
 #
-#: app/gui/image-menu.c:1347
+#: app/gui/image-menu.c:1362
 #, fuzzy, c-format
-msgid "Redo %s"
+msgid "_Redo %s"
 msgstr "Επανεκτέλεση"
 
 #
-#: app/gui/image-menu.c:1352 app/widgets/gimpundoeditor.c:130
-msgid "Redo"
+#: app/gui/image-menu.c:1366
+#, fuzzy
+msgid "_Undo"
+msgstr "Ακύρωση ενέργειας"
+
+#
+#: app/gui/image-menu.c:1367
+#, fuzzy
+msgid "_Redo"
 msgstr "Επανεκτέλεση"
 
-#: app/gui/image-menu.c:1595
+#: app/gui/image-menu.c:1612
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr ""
 
-#: app/gui/image-menu.c:1604
+#: app/gui/image-menu.c:1621
 #, fuzzy, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "Μεγέθυνση"
@@ -5070,147 +5154,165 @@ msgstr "Διαγραφή Στρώματος"
 #
 #. General
 #: app/gui/info-dialog.c:351 app/gui/preferences-dialog.c:1278
+#: app/gui/preferences-dialog.c:1394
 msgid "General"
 msgstr "Γενικά"
 
-#: app/gui/info-window.c:80
+#: app/gui/info-window.c:81
 msgid "Static Gray"
 msgstr "Στατικό Γκρι"
 
 #
-#: app/gui/info-window.c:82
+#: app/gui/info-window.c:83
 msgid "Static Color"
 msgstr "Στατικό Χρώμα"
 
-#: app/gui/info-window.c:83
+#: app/gui/info-window.c:84
 msgid "Pseudo Color"
 msgstr "Ψευδόχρωμα"
 
-#: app/gui/info-window.c:84
+#: app/gui/info-window.c:85
 msgid "True Color"
 msgstr "Φυσικό Χρώμα"
 
 #
-#: app/gui/info-window.c:85
+#: app/gui/info-window.c:86
 msgid "Direct Color"
 msgstr "Απευθείας Χρώμα"
 
-#: app/gui/info-window.c:159 app/gui/resize-dialog.c:474
+#: app/gui/info-window.c:160 app/gui/resize-dialog.c:474
 msgid "X:"
 msgstr "Χ:"
 
-#: app/gui/info-window.c:165 app/gui/resize-dialog.c:377
-#: app/gui/resize-dialog.c:476 app/gui/resize-dialog.c:625
-#: app/tools/gimpcroptool.c:1024 app/tools/gimprotatetool.c:200
-#: app/tools/gimpscaletool.c:202 app/tools/gimpsheartool.c:178
-#: app/widgets/gimptemplateeditor.c:294
+#. Yellow
+#: app/gui/info-window.c:166 app/gui/info-window.c:317
+#: app/gui/resize-dialog.c:377 app/gui/resize-dialog.c:476
+#: app/gui/resize-dialog.c:625 app/tools/gimpcroptool.c:1024
+#: app/tools/gimprotatetool.c:200 app/tools/gimpscaletool.c:202
+#: app/tools/gimpsheartool.c:178 app/widgets/gimptemplateeditor.c:294
 msgid "Y:"
 msgstr "Υ:"
 
-#: app/gui/info-window.c:173 app/gui/info-window.c:240
-#: app/gui/info-window.c:282 app/gui/info-window.c:300
-#: app/gui/info-window.c:480 app/gui/info-window.c:527
-#: app/gui/info-window.c:528 app/gui/info-window.c:531
-#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:362
-#: app/tools/gimpcolorpickertool.c:368
+#: app/gui/info-window.c:174 app/gui/info-window.c:241
+#: app/gui/info-window.c:283 app/gui/info-window.c:332
+#: app/gui/info-window.c:351 app/gui/info-window.c:531
+#: app/gui/info-window.c:578 app/gui/info-window.c:579
+#: app/gui/info-window.c:580 app/gui/info-window.c:583
+#: app/gui/info-window.c:584 app/gui/info-window.c:609
+#: app/tools/gimpcolorpickertool.c:360 app/tools/gimpcolorpickertool.c:366
 msgid "N/A"
 msgstr "Μ/Ε"
 
 #. Red
-#: app/gui/info-window.c:218
+#: app/gui/info-window.c:219
 msgid "R:"
 msgstr "R:"
 
 #. Green
-#: app/gui/info-window.c:225
+#: app/gui/info-window.c:226
 msgid "G:"
 msgstr ""
 
 #
 #. Blue
-#: app/gui/info-window.c:232
+#: app/gui/info-window.c:233
 msgid "B:"
 msgstr "Β:"
 
 #
 #. Hue
-#: app/gui/info-window.c:260
+#: app/gui/info-window.c:261
 #, fuzzy
 msgid "H:"
 msgstr "Απόχρωση:"
 
 #. Saturation
-#: app/gui/info-window.c:267
+#: app/gui/info-window.c:268
 #, fuzzy
 msgid "S:"
 msgstr "S"
 
 #. Value
-#: app/gui/info-window.c:274
+#: app/gui/info-window.c:275
 #, fuzzy
 msgid "V:"
 msgstr "V"
 
-#: app/gui/info-window.c:295
+#. Cyan
+#: app/gui/info-window.c:303
+msgid "C:"
+msgstr ""
+
+#. Magenta
+#: app/gui/info-window.c:310
+msgid "M:"
+msgstr ""
+
+#. Black
+#: app/gui/info-window.c:324
+msgid "K:"
+msgstr ""
+
+#: app/gui/info-window.c:346
 msgid "A:"
 msgstr "Α:"
 
-#: app/gui/info-window.c:306
+#: app/gui/info-window.c:357
 msgid "Extended"
 msgstr "Εκτεταμένο"
 
-#: app/gui/info-window.c:329
+#: app/gui/info-window.c:380
 #, fuzzy
 msgid "Info Window"
 msgstr "Πληροφορίες Χρήστη"
 
-#: app/gui/info-window.c:331
+#: app/gui/info-window.c:382
 #, fuzzy
 msgid "Image Information"
 msgstr "Υποβολή Πληροφοριών"
 
 #. add the information fields
-#: app/gui/info-window.c:347
+#: app/gui/info-window.c:398
 msgid "Dimensions (W x H):"
 msgstr ""
 
 #
-#: app/gui/info-window.c:351
+#: app/gui/info-window.c:402
 msgid "Resolution:"
 msgstr "Aνάλυση:"
 
-#: app/gui/info-window.c:353
+#: app/gui/info-window.c:404
 msgid "Scale Ratio:"
 msgstr "Βαθμωτή Αναλογία:"
 
-#: app/gui/info-window.c:355
+#: app/gui/info-window.c:406
 msgid "Display Type:"
 msgstr "Τύπος Εμφάνισης:"
 
-#: app/gui/info-window.c:357
+#: app/gui/info-window.c:408
 msgid "Visual Class:"
 msgstr "Εικονική Κλάση:"
 
-#: app/gui/info-window.c:359
+#: app/gui/info-window.c:410
 msgid "Visual Depth:"
 msgstr "Εικονικό Βάθος:"
 
 #. image resolution
-#: app/gui/info-window.c:649
+#: app/gui/info-window.c:717
 #, c-format
 msgid "%g x %g dpi"
 msgstr ""
 
-#: app/gui/info-window.c:663
+#: app/gui/info-window.c:731
 msgid "RGB Color"
 msgstr "Χρώμα RGB"
 
-#: app/gui/info-window.c:670
+#: app/gui/info-window.c:738
 msgid "Indexed Color"
 msgstr "Χρώματος Καταλόγου"
 
 #
-#: app/gui/info-window.c:670
+#: app/gui/info-window.c:738
 msgid "colors"
 msgstr "χρώματα"
 
@@ -5244,7 +5346,7 @@ msgstr "Καθορισμός Πλάτους:"
 #: app/gui/layers-commands.c:663 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:1041 app/tools/gimpscaletool.c:176
-#: app/tools/gimpscaletool.c:184 app/tools/gimpselectionoptions.c:575
+#: app/tools/gimpscaletool.c:184 app/tools/gimpselectionoptions.c:573
 #: app/widgets/gimptemplateeditor.c:159 app/widgets/gimptemplateeditor.c:177
 msgid "Height:"
 msgstr "Ύψος:"
@@ -5387,11 +5489,11 @@ msgstr "Ιδιότητες Στρώματος"
 
 #: app/gui/module-browser.c:121
 #, fuzzy
-msgid "Module Browser"
+msgid "Module Manager"
 msgstr "Κανένα σφάλμα"
 
 #: app/gui/module-browser.c:123
-msgid "Browse & Manage Loadable Modules"
+msgid "Manage Loadable Modules"
 msgstr ""
 
 #: app/gui/module-browser.c:165
@@ -5714,22 +5816,22 @@ msgstr "Διαγραφή Παραμέτρου"
 msgid "/Refresh Patterns"
 msgstr "Σχέδια"
 
-#: app/gui/plug-in-menus.c:356
+#: app/gui/plug-in-menus.c:363
 #, fuzzy, c-format
-msgid "Repeat \"%s\""
+msgid "Re_peat \"%s\""
 msgstr "Επανάληψη:"
 
-#: app/gui/plug-in-menus.c:357
+#: app/gui/plug-in-menus.c:364
 #, fuzzy, c-format
-msgid "Re-show \"%s\""
+msgid "R_e-show \"%s\""
 msgstr "/Φίλτρα/Επανεμφάνιση Προηγούμενου"
 
-#: app/gui/plug-in-menus.c:383
+#: app/gui/plug-in-menus.c:390
 #, fuzzy
 msgid "Repeat Last"
 msgstr "/Φίλτρα/Επανάληψη Προηγούμενου"
 
-#: app/gui/plug-in-menus.c:386
+#: app/gui/plug-in-menus.c:393
 #, fuzzy
 msgid "Re-Show Last"
 msgstr "/Φίλτρα/Επανεμφάνιση Προηγούμενου"
@@ -5760,8 +5862,8 @@ msgstr "Εξ ορισμού μέγιστο μέγεθος ουράς"
 msgid "Default Image Resolution and Resolution Unit"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1083 app/gui/preferences-dialog.c:1692
-#: app/gui/user-install-dialog.c:1295
+#: app/gui/preferences-dialog.c:1083 app/gui/preferences-dialog.c:1741
+#: app/gui/user-install-dialog.c:1357
 msgid "dpi"
 msgstr ""
 
@@ -5790,7 +5892,7 @@ msgid "Interface"
 msgstr "Διεπαφή"
 
 #
-#. General
+#. Previews
 #: app/gui/preferences-dialog.c:1158
 #, fuzzy
 msgid "Previews"
@@ -5975,405 +6077,425 @@ msgstr "Αποθήκευση επιλογών και έξοδος"
 msgid "Image Windows"
 msgstr "Παράθυρα Εικόνων"
 
-#. Appearance
-#: app/gui/preferences-dialog.c:1394
-msgid "Appearance"
-msgstr "Εμφάνιση"
-
 #: app/gui/preferences-dialog.c:1397
 #, fuzzy
 msgid "Use \"_Dot for Dot\" by default"
 msgstr "εξ' ορισμού είδος αναζήτησης"
 
+#: app/gui/preferences-dialog.c:1403
+msgid "Marching _Ants Speed:"
+msgstr ""
+
+#. Zoom & Resize Behavior
+#: app/gui/preferences-dialog.c:1407
+msgid "Zoom & Resize Behavior"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1411
+msgid "Resize Window on _Zoom"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1414
+msgid "Resize Window on Image _Size Change"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1420
+#, fuzzy
+msgid "Fit to Window"
+msgstr "Πληροφορίες Χρήστη"
+
+#: app/gui/preferences-dialog.c:1422
+#, fuzzy
+msgid "Inital Zoom Ratio:"
+msgstr "Βαθμωτή Αναλογία:"
+
+#. Pointer Movement Feedback
+#: app/gui/preferences-dialog.c:1426
+msgid "Pointer Movement Feedback"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1430
+msgid "Perfect-but-Slow _Pointer Tracking"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1433
+msgid "Enable Cursor _Updating"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1439
+#, fuzzy
+msgid "Cursor M_ode:"
+msgstr "Πηγαίος κώδικας C"
+
+#: app/gui/preferences-dialog.c:1448
+#, fuzzy
+msgid "Image Window Appearance"
+msgstr "Παράθυρα Εικόνων"
+
+#. Normal Mode
+#: app/gui/preferences-dialog.c:1458
+msgid "Default Appearance in Normal Mode"
+msgstr ""
+
 #
-#: app/gui/preferences-dialog.c:1400
+#: app/gui/preferences-dialog.c:1462 app/gui/preferences-dialog.c:1491
 #, fuzzy
 msgid "Show Menubar"
 msgstr "Εμφάνιση μπάρας κατάστασης"
 
-#: app/gui/preferences-dialog.c:1403
+#: app/gui/preferences-dialog.c:1465 app/gui/preferences-dialog.c:1494
 #, fuzzy
 msgid "Show _Rulers"
 msgstr "Εμφάνιση _Χαράκων"
 
-#: app/gui/preferences-dialog.c:1406
+#: app/gui/preferences-dialog.c:1468 app/gui/preferences-dialog.c:1497
 #, fuzzy
 msgid "Show Scrollbars"
 msgstr "/Εμφάνιση/Χάρακες"
 
 #
-#: app/gui/preferences-dialog.c:1409
+#: app/gui/preferences-dialog.c:1471 app/gui/preferences-dialog.c:1500
 #, fuzzy
 msgid "Show S_tatusbar"
 msgstr "Εμφάνιση μπάρας κατάστασης"
 
-#: app/gui/preferences-dialog.c:1415
-#, fuzzy
-msgid "Fit to Window"
-msgstr "Πληροφορίες Χρήστη"
-
-#: app/gui/preferences-dialog.c:1417
-#, fuzzy
-msgid "Inital Zoom Ratio:"
-msgstr "Βαθμωτή Αναλογία:"
-
-#: app/gui/preferences-dialog.c:1420
-msgid "Marching _Ants Speed:"
+#: app/gui/preferences-dialog.c:1477 app/gui/preferences-dialog.c:1506
+msgid "Canvas Padding Mode:"
 msgstr ""
 
-#. Canvas Padding Color
-#: app/gui/preferences-dialog.c:1424
-msgid "Canvas Padding Color"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1429
-msgid "Padding Mode:"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1432
+#: app/gui/preferences-dialog.c:1480 app/gui/preferences-dialog.c:1509
 #, fuzzy
-msgid "Custom Color:"
+msgid "Custom Padding Color:"
 msgstr "Ψευδόχρωμα"
 
-#: app/gui/preferences-dialog.c:1433
+#: app/gui/preferences-dialog.c:1481 app/gui/preferences-dialog.c:1510
 #, fuzzy
 msgid "Select Custom Canvas Padding Color"
 msgstr "Επιλογή Προσαρμοσμένης Παλέτ\tτας"
 
-#. Zoom & Resize Behavior
-#: app/gui/preferences-dialog.c:1439
-msgid "Zoom & Resize Behavior"
+#. Fullscreen Mode
+#: app/gui/preferences-dialog.c:1487
+msgid "Default Appearance in Fullscreen Mode"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1443
-msgid "Resize Window on _Zoom"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1446
-msgid "Resize Window on Image _Size Change"
-msgstr ""
-
-#. Pointer Movement Feedback
-#: app/gui/preferences-dialog.c:1450
-msgid "Pointer Movement Feedback"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1454
-msgid "Perfect-but-Slow _Pointer Tracking"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1457
-msgid "Enable Cursor _Updating"
-msgstr ""
-
-#: app/gui/preferences-dialog.c:1463
-#, fuzzy
-msgid "Cursor M_ode:"
-msgstr "Πηγαίος κώδικας C"
-
-#: app/gui/preferences-dialog.c:1472
+#: app/gui/preferences-dialog.c:1521
 #, fuzzy
 msgid "Image Title & Statusbar Format"
 msgstr "Αρχείο εικόνας:"
 
-#: app/gui/preferences-dialog.c:1475
+#: app/gui/preferences-dialog.c:1524
 #, fuzzy
 msgid "Title & Status"
 msgstr "Κατάσταση Συσκευής"
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
-#: app/gui/preferences-dialog.c:1494
+#: app/gui/preferences-dialog.c:1543
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
-#: app/gui/preferences-dialog.c:1495
+#: app/gui/preferences-dialog.c:1544
 msgid "Standard"
 msgstr "Κανονικό"
 
 #
-#: app/gui/preferences-dialog.c:1496
+#: app/gui/preferences-dialog.c:1545
 #, fuzzy
 msgid "Show zoom percentage"
 msgstr "Εμφάνιση μέσου φορτίου"
 
-#: app/gui/preferences-dialog.c:1497
+#: app/gui/preferences-dialog.c:1546
 #, fuzzy
 msgid "Show zoom ratio"
 msgstr "Εμφάνιση πληροφοριών των χαρακτηριστικών του ήχου"
 
-#: app/gui/preferences-dialog.c:1498
+#: app/gui/preferences-dialog.c:1547
 #, fuzzy
 msgid "Show reversed zoom ratio"
 msgstr "Εμφάνιση πληροφοριών των χαρακτηριστικών του ήχου"
 
-#: app/gui/preferences-dialog.c:1499
+#: app/gui/preferences-dialog.c:1548
 msgid "Show memory usage"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1512
+#: app/gui/preferences-dialog.c:1561
 #, fuzzy
 msgid "Image Title Format"
 msgstr "Αρχείο εικόνας:"
 
-#: app/gui/preferences-dialog.c:1517
+#: app/gui/preferences-dialog.c:1566
 #, fuzzy
 msgid "Image Statusbar Format"
 msgstr "Αρχείο εικόνας:"
 
 #
-#: app/gui/preferences-dialog.c:1602 app/gui/preferences-dialog.c:1605
+#: app/gui/preferences-dialog.c:1651 app/gui/preferences-dialog.c:1654
 msgid "Display"
 msgstr "Εμφάνιση"
 
 #. Transparency
-#: app/gui/preferences-dialog.c:1612
+#: app/gui/preferences-dialog.c:1661
 #, fuzzy
 msgid "Transparency"
 msgstr "Διαφανές"
 
-#: app/gui/preferences-dialog.c:1616
+#: app/gui/preferences-dialog.c:1665
 #, fuzzy
 msgid "Transparency _Type:"
 msgstr "Είδος διαφάνειας"
 
-#: app/gui/preferences-dialog.c:1619
+#: app/gui/preferences-dialog.c:1668
 #, fuzzy
 msgid "Check _Size:"
 msgstr "Μεγέθος Τετραγωνιδίων"
 
 #
 #. 8-Bit Displays
-#: app/gui/preferences-dialog.c:1623
+#: app/gui/preferences-dialog.c:1672
 #, fuzzy
 msgid "8-Bit Displays"
 msgstr "Εμφάνιση"
 
-#: app/gui/preferences-dialog.c:1631
+#: app/gui/preferences-dialog.c:1680
 #, fuzzy
 msgid "Minimum Number of Colors:"
 msgstr "Αριθμός Χρωμάτων"
 
-#: app/gui/preferences-dialog.c:1634
+#: app/gui/preferences-dialog.c:1683
 #, fuzzy
 msgid "Install Colormap"
 msgstr "Εγκατάσταση χάρτη χρωμάτων"
 
-#: app/gui/preferences-dialog.c:1637
+#: app/gui/preferences-dialog.c:1686
 #, fuzzy
 msgid "Colormap Cycling"
 msgstr "Αντιγραφή"
 
-#: app/gui/preferences-dialog.c:1646 app/gui/preferences-dialog.c:1649
+#: app/gui/preferences-dialog.c:1695 app/gui/preferences-dialog.c:1698
 msgid "Monitor"
 msgstr "Έλεγχος"
 
-#: app/gui/preferences-dialog.c:1655
+#: app/gui/preferences-dialog.c:1704
 #, fuzzy
 msgid "Get Monitor Resolution"
 msgstr "Επιλογες ελέγχου"
 
-#: app/gui/preferences-dialog.c:1664
+#: app/gui/preferences-dialog.c:1713
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr ""
 
 #
-#: app/gui/preferences-dialog.c:1701
+#: app/gui/preferences-dialog.c:1750
 #, fuzzy
 msgid "C_alibrate"
 msgstr "Δημιουργία"
 
-#: app/gui/preferences-dialog.c:1715
+#: app/gui/preferences-dialog.c:1764
 #, fuzzy
 msgid "From _Windowing System"
 msgstr "Άγνωστο σύστημα"
 
-#: app/gui/preferences-dialog.c:1740
+#: app/gui/preferences-dialog.c:1789
 #, fuzzy
 msgid "_Manually"
 msgstr "Χειροκίνητα"
 
 #
-#: app/gui/preferences-dialog.c:1760 app/gui/preferences-dialog.c:1763
-#: app/gui/preferences-dialog.c:1894
+#: app/gui/preferences-dialog.c:1809 app/gui/preferences-dialog.c:1812
+#: app/gui/preferences-dialog.c:1947
 msgid "Environment"
 msgstr "Περιβάλλον"
 
 #. Resource Consumption
-#: app/gui/preferences-dialog.c:1770
+#: app/gui/preferences-dialog.c:1819
 #, fuzzy
 msgid "Resource Consumption"
 msgstr "Επιβεβαίωση αντικατάστασης"
 
 #
-#: app/gui/preferences-dialog.c:1774
+#: app/gui/preferences-dialog.c:1823
 #, fuzzy
 msgid "Conservative Memory Usage"
 msgstr "Χρήση Μνήμης"
 
-#: app/gui/preferences-dialog.c:1784
+#: app/gui/preferences-dialog.c:1833
 #, fuzzy
 msgid "Minimal Number of Undo Levels:"
 msgstr "Αριθμός Χρωμάτων"
 
-#: app/gui/preferences-dialog.c:1787
+#: app/gui/preferences-dialog.c:1836
 msgid "Maximum Undo Memory:"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1790 app/gui/user-install-dialog.c:1173
+#: app/gui/preferences-dialog.c:1839 app/gui/user-install-dialog.c:1230
 #, fuzzy
 msgid "Tile Cache Size:"
 msgstr "Μέγεθος ενταμίευσης"
 
-#: app/gui/preferences-dialog.c:1795
+#: app/gui/preferences-dialog.c:1844
 #, fuzzy
 msgid "Number of Processors to Use:"
 msgstr "Αριθμός κύκλων προς χρήση."
 
 #. File Saving
-#: app/gui/preferences-dialog.c:1800
+#: app/gui/preferences-dialog.c:1849
 #, fuzzy
 msgid "File Saving"
 msgstr "Αποθηκεύεται"
 
-#: app/gui/preferences-dialog.c:1804
+#: app/gui/preferences-dialog.c:1853
 #, fuzzy
 msgid "Only when Modified"
 msgstr "Ημερομηνία Τροποποίησης"
 
-#: app/gui/preferences-dialog.c:1805
+#: app/gui/preferences-dialog.c:1854
 msgid "Always"
 msgstr "Πάντα"
 
-#: app/gui/preferences-dialog.c:1806
+#: app/gui/preferences-dialog.c:1855
 msgid "\"File -> Save\" Saves the Image:"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1809
+#: app/gui/preferences-dialog.c:1858
 #, fuzzy
 msgid "Size of Thumbnail Files:"
 msgstr "Κατάληξη προς σύναψη στο αρχείο εικόνας γρήγορης προβολής:"
 
-#: app/gui/preferences-dialog.c:1818 app/gui/preferences-dialog.c:1821
+#: app/gui/preferences-dialog.c:1867 app/gui/preferences-dialog.c:1870
 #, fuzzy
 msgid "Folders"
 msgstr "Περιοχή Εναλλαγής"
 
-#: app/gui/preferences-dialog.c:1836
+#: app/gui/preferences-dialog.c:1885
 #, fuzzy
 msgid "Temp Dir:"
 msgstr "Προσωρ. καταλ.:"
 
 #
-#: app/gui/preferences-dialog.c:1836
+#: app/gui/preferences-dialog.c:1885
 #, fuzzy
 msgid "Select Temp Dir"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/gui/preferences-dialog.c:1837
+#: app/gui/preferences-dialog.c:1886
 #, fuzzy
 msgid "Swap Dir:"
 msgstr "Περιοχή Εναλλαγής"
 
-#: app/gui/preferences-dialog.c:1837 app/gui/user-install-dialog.c:1194
+#: app/gui/preferences-dialog.c:1886 app/gui/user-install-dialog.c:1252
 #, fuzzy
 msgid "Select Swap Dir"
 msgstr "Επιλογή Χάρτη:"
 
-#: app/gui/preferences-dialog.c:1870
+#: app/gui/preferences-dialog.c:1919
 #, fuzzy
 msgid "Brush Folders"
 msgstr "Πινέλα"
 
 #
-#: app/gui/preferences-dialog.c:1872
+#: app/gui/preferences-dialog.c:1921
 #, fuzzy
 msgid "Select Brush Folders"
 msgstr "Επιλογή Διεργασιών"
 
-#: app/gui/preferences-dialog.c:1874
+#: app/gui/preferences-dialog.c:1923
 #, fuzzy
 msgid "Pattern Folders"
 msgstr "Γέμισμα με Σχέδιο"
 
 #
-#: app/gui/preferences-dialog.c:1876
+#: app/gui/preferences-dialog.c:1925
 #, fuzzy
 msgid "Select Pattern Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/gui/preferences-dialog.c:1878
+#: app/gui/preferences-dialog.c:1927
 #, fuzzy
 msgid "Palette Folders"
 msgstr "Παλέττες"
 
 #
-#: app/gui/preferences-dialog.c:1880
+#: app/gui/preferences-dialog.c:1929
 #, fuzzy
 msgid "Select Palette Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/gui/preferences-dialog.c:1882
+#: app/gui/preferences-dialog.c:1931
 #, fuzzy
 msgid "Gradient Folders"
 msgstr "Διαβαθμίσεις"
 
 #
-#: app/gui/preferences-dialog.c:1884
+#: app/gui/preferences-dialog.c:1933
 #, fuzzy
 msgid "Select Gradient Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/gui/preferences-dialog.c:1886
+#: app/gui/preferences-dialog.c:1935
 msgid "Plug-Ins"
 msgstr "Αρθρώματα"
 
-#: app/gui/preferences-dialog.c:1886
+#: app/gui/preferences-dialog.c:1935
 #, fuzzy
 msgid "Plug-In Folders"
 msgstr "Αρθρώματα"
 
-#: app/gui/preferences-dialog.c:1888
+#: app/gui/preferences-dialog.c:1937
 #, fuzzy
 msgid "Select Plug-In Folders"
 msgstr "Επιλογή Καταλόγου Αρθρωμάτων"
 
-#: app/gui/preferences-dialog.c:1890
+#: app/gui/preferences-dialog.c:1939
+msgid "Scripts"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1939
+#, fuzzy
+msgid "Script-Fu Folders"
+msgstr "Διαβαθμίσεις"
+
+#
+#: app/gui/preferences-dialog.c:1941
+#, fuzzy
+msgid "Select Script-Fu Folders"
+msgstr "Επιλογή Διεργασιών"
+
+#: app/gui/preferences-dialog.c:1943
 msgid "Modules"
 msgstr "Μονάδες"
 
-#: app/gui/preferences-dialog.c:1890
+#: app/gui/preferences-dialog.c:1943
 #, fuzzy
 msgid "Module Folders"
 msgstr "Κανένα σφάλμα"
 
-#: app/gui/preferences-dialog.c:1892
+#: app/gui/preferences-dialog.c:1945
 #, fuzzy
 msgid "Select Module Folders"
 msgstr "Επιλογή χρώματος"
 
 #
-#: app/gui/preferences-dialog.c:1894
+#: app/gui/preferences-dialog.c:1947
 #, fuzzy
 msgid "Environment Folders"
 msgstr "Περιβάλλον"
 
 #
-#: app/gui/preferences-dialog.c:1896
+#: app/gui/preferences-dialog.c:1949
 #, fuzzy
 msgid "Select Environment Folders"
 msgstr "Επιλογή εκτυπωτή"
 
-#: app/gui/preferences-dialog.c:1898
+#: app/gui/preferences-dialog.c:1951
 msgid "Themes"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1898
+#: app/gui/preferences-dialog.c:1951
 msgid "Theme Folders"
 msgstr ""
 
 #
-#: app/gui/preferences-dialog.c:1900
+#: app/gui/preferences-dialog.c:1953
 #, fuzzy
 msgid "Select Theme Folders"
 msgstr "Επιλογή εκτυπωτή"
@@ -6423,7 +6545,7 @@ msgstr "Λιγότερες Επιλογές"
 
 #
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
-#: app/tools/paint_options.c:305
+#: app/tools/gimppaintoptions-gui.c:345
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -6497,10 +6619,11 @@ msgstr "Aνάλυση Χ:"
 
 #
 #: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:317
+#, c-format
 msgid "pixels/%a"
 msgstr "εικονοστοιχεία/%a"
 
-#: app/gui/resize-dialog.c:695 app/tools/gimptransformoptions.c:308
+#: app/gui/resize-dialog.c:695 app/tools/gimptransformoptions.c:310
 #, fuzzy
 msgid "Interpolation:"
 msgstr "Είδος παρεμβολής"
@@ -6546,11 +6669,11 @@ msgid "Border Selection by:"
 msgstr "Επιλογή Περιγράμματος από:"
 
 #
-#: app/gui/splash.c:56
+#: app/gui/splash.c:58
 msgid "GIMP Startup"
 msgstr "Εκκίνηση του GIMP"
 
-#: app/gui/splash.c:109 app/widgets/gimptoolbox.c:165
+#: app/gui/splash.c:111 app/widgets/gimptoolbox.c:166
 msgid "The GIMP"
 msgstr "Το GIMP"
 
@@ -6638,17 +6761,17 @@ msgid "tips-locale:C"
 msgstr ""
 
 #
-#: app/gui/tool-options-dialog.c:100
+#: app/gui/tool-options-dialog.c:99
 #, fuzzy
 msgid "Save current settings as default values"
 msgstr "Αποθήκευση επιλογών και έξοδος"
 
-#: app/gui/tool-options-dialog.c:109
+#: app/gui/tool-options-dialog.c:108
 #, fuzzy
 msgid "Restore saved default values"
 msgstr "Αφαίρεση της επιλεγμένης καταχώρησης από τον πίνακα"
 
-#: app/gui/tool-options-dialog.c:118
+#: app/gui/tool-options-dialog.c:117
 #, fuzzy
 msgid "Reset to factory defaults"
 msgstr "εξ' ορισμού είδος αναζήτησης"
@@ -6660,7 +6783,8 @@ msgid "/File/_Acquire"
 msgstr "/Αρχείο/Λήψη"
 
 #: app/gui/toolbox-menu.c:82
-msgid "/File/Preferences..."
+#, fuzzy
+msgid "/File/_Preferences..."
 msgstr "/Αρχείο/Προτιμήσεις..."
 
 #. <Toolbox>/File/Dialogs
@@ -6671,115 +6795,122 @@ msgstr "/Διάλογοι/Στ_ρώματα"
 
 #: app/gui/toolbox-menu.c:92
 #, fuzzy
-msgid "/File/Dialogs/_Create New Dock"
+msgid "/File/Dialogs/Create New Doc_k"
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:94
 #, fuzzy
-msgid "/File/Dialogs/Create New Dock/Layers, Channels & Paths..."
+msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths..."
 msgstr "/Αρχείο/Διάλογοι/Στρώματα, Κανάλια & Μονοπάτια..."
 
 #: app/gui/toolbox-menu.c:98
 #, fuzzy
-msgid "/File/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
+msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:102
 #, fuzzy
-msgid "/File/Dialogs/Create New Dock/Misc. Stuff..."
+msgid "/File/Dialogs/Create New Dock/_Misc. Stuff..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:107
-msgid "/File/Dialogs/Tool Options..."
+#, fuzzy
+msgid "/File/Dialogs/Tool _Options..."
 msgstr "/Αρχείο/Διάλογοι/Επιλογές Εργαλείων..."
 
 #: app/gui/toolbox-menu.c:112
-msgid "/File/Dialogs/Device Status..."
+#, fuzzy
+msgid "/File/Dialogs/_Device Status..."
 msgstr "/Αρχείο/Διάλογοι/Κατάσταση Συσκευής..."
 
 #: app/gui/toolbox-menu.c:120
 #, fuzzy
-msgid "/File/Dialogs/Layers..."
+msgid "/File/Dialogs/_Layers..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:125
 #, fuzzy
-msgid "/File/Dialogs/Channels..."
+msgid "/File/Dialogs/_Channels..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:130
 #, fuzzy
-msgid "/File/Dialogs/Paths..."
+msgid "/File/Dialogs/_Paths..."
 msgstr "/Αρχείο/Διάλογοι/Παλέττες..."
 
 #: app/gui/toolbox-menu.c:135
-msgid "/File/Dialogs/Indexed Palette..."
+#, fuzzy
+msgid "/File/Dialogs/_Indexed Palette..."
 msgstr "/Αρχείο/Διάλογοι/Παλέττα Καταλόγου..."
 
 #: app/gui/toolbox-menu.c:140
 #, fuzzy
-msgid "/File/Dialogs/Selection Editor..."
+msgid "/File/Dialogs/_Selection Editor..."
 msgstr "/Αρχείο/Διάλογοι/Ευρετήριο Εγγράφων..."
 
 #: app/gui/toolbox-menu.c:145
 #, fuzzy
-msgid "/File/Dialogs/Navigation..."
+msgid "/File/Dialogs/Na_vigation..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:150
 #, fuzzy
-msgid "/File/Dialogs/Undo History..."
+msgid "/File/Dialogs/_Undo History..."
 msgstr "/Αρχείο/Διάλογοι/Ευρετήριο Εγγράφων..."
 
 #: app/gui/toolbox-menu.c:158
 #, fuzzy
-msgid "/File/Dialogs/Colors..."
+msgid "/File/Dialogs/Colo_rs..."
 msgstr "/Αρχείο/Διάλογοι/Πινέλα..."
 
 #: app/gui/toolbox-menu.c:163
-msgid "/File/Dialogs/Brushes..."
+#, fuzzy
+msgid "/File/Dialogs/Brus_hes..."
 msgstr "/Αρχείο/Διάλογοι/Πινέλα..."
 
 #: app/gui/toolbox-menu.c:168
-msgid "/File/Dialogs/Patterns..."
+#, fuzzy
+msgid "/File/Dialogs/P_atterns..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:173
-msgid "/File/Dialogs/Gradients..."
+#, fuzzy
+msgid "/File/Dialogs/_Gradients..."
 msgstr "/Αρχείο/Διάλογοι/Διαβαθμίσεις..."
 
 #: app/gui/toolbox-menu.c:178
 #, fuzzy
-msgid "/File/Dialogs/Palettes..."
+msgid "/File/Dialogs/Pal_ettes..."
 msgstr "/Αρχείο/Διάλογοι/Παλέττες..."
 
 #: app/gui/toolbox-menu.c:183
 #, fuzzy
-msgid "/File/Dialogs/Fonts..."
+msgid "/File/Dialogs/_Fonts..."
 msgstr "/Αρχείο/Διάλογοι/Παλέττες..."
 
 #: app/gui/toolbox-menu.c:188
 #, fuzzy
-msgid "/File/Dialogs/Buffers..."
+msgid "/File/Dialogs/_Buffers..."
 msgstr "/Αρχείο/Διάλογοι/Πινέλα..."
 
 #: app/gui/toolbox-menu.c:196
 #, fuzzy
-msgid "/File/Dialogs/Images..."
+msgid "/File/Dialogs/I_mages..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:201
 #, fuzzy
-msgid "/File/Dialogs/Document History..."
+msgid "/File/Dialogs/Document Histor_y..."
 msgstr "/Αρχείο/Διάλογοι/Ευρετήριο Εγγράφων..."
 
 #: app/gui/toolbox-menu.c:206
 #, fuzzy
-msgid "/File/Dialogs/Templates..."
+msgid "/File/Dialogs/_Templates..."
 msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:211
-msgid "/File/Dialogs/Error Console..."
+#, fuzzy
+msgid "/File/Dialogs/Error Co_nsole..."
 msgstr "/Αρχείο/Διάλογοι/Κονσόλα Σφαλμάτων..."
 
 #. <Toolbox>/Xtns
@@ -6788,7 +6919,8 @@ msgid "/_Xtns"
 msgstr "/_Επκτς"
 
 #: app/gui/toolbox-menu.c:238
-msgid "/Xtns/Module Browser..."
+#, fuzzy
+msgid "/Xtns/_Module Manager..."
 msgstr "/Επκτς/Περιήγηση Συστατικών..."
 
 #. <Toolbox>/Help
@@ -6797,20 +6929,24 @@ msgid "/_Help"
 msgstr "/_Βοήθεια"
 
 #: app/gui/toolbox-menu.c:249
-msgid "/Help/Help..."
+#, fuzzy
+msgid "/Help/_Help..."
 msgstr "/Βοήθεια/Βοήθεια..."
 
 #: app/gui/toolbox-menu.c:254
-msgid "/Help/Context Help..."
+#, fuzzy
+msgid "/Help/_Context Help..."
 msgstr "/Βοήθεια/Βοήθεια βάσει Περιεχομένου..."
 
 #: app/gui/toolbox-menu.c:259
-msgid "/Help/Tip of the Day..."
+#, fuzzy
+msgid "/Help/_Tip of the Day..."
 msgstr "/Βοήθεια/Υπόδειξη της Ημέρας..."
 
 #
 #: app/gui/toolbox-menu.c:264
-msgid "/Help/About..."
+#, fuzzy
+msgid "/Help/_About..."
 msgstr "/Βοήθεια/Περί..."
 
 #: app/gui/user-install-dialog.c:138
@@ -6970,47 +7106,47 @@ msgid ""
 "Levels tool."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:380
+#: app/gui/user-install-dialog.c:374
 msgid ""
 "Installation successful.\n"
 "Click \"Continue\" to proceed."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:386
+#: app/gui/user-install-dialog.c:380
 #, fuzzy
 msgid ""
 "Installation failed.\n"
 "Contact system administrator."
 msgstr "Η εγκατάσταση του %s απέτυχε"
 
-#: app/gui/user-install-dialog.c:578
+#: app/gui/user-install-dialog.c:585
 #, fuzzy
 msgid "GIMP User Installation"
 msgstr "Πληροφορίες Χρήστη"
 
 #
-#: app/gui/user-install-dialog.c:586
+#: app/gui/user-install-dialog.c:593
 msgid "Continue"
 msgstr "Συνέχεια"
 
-#: app/gui/user-install-dialog.c:736
+#: app/gui/user-install-dialog.c:743
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
 msgstr ""
 
-#: app/gui/user-install-dialog.c:738
+#: app/gui/user-install-dialog.c:745
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:742
+#: app/gui/user-install-dialog.c:750
 msgid ""
-"The GIMP - GNU Image Manipulation Program\n"
+"<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:752
+#: app/gui/user-install-dialog.c:760
 #, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
@@ -7028,7 +7164,7 @@ msgstr ""
 "Free Software Foundation (Ίδρυμα Ελεύθερου Λογισμικού), είτε την έκδοση 2 "
 "της άδειας, ή (κατά την προτίμησή σας) οποιαδήποτε μεταγενέστερη έκδοση."
 
-#: app/gui/user-install-dialog.c:758
+#: app/gui/user-install-dialog.c:766
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -7036,7 +7172,7 @@ msgid ""
 "See the GNU General Public License for more details."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:764
+#: app/gui/user-install-dialog.c:772
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -7045,130 +7181,121 @@ msgid ""
 msgstr ""
 
 #
-#: app/gui/user-install-dialog.c:788
+#: app/gui/user-install-dialog.c:796
 #, fuzzy
 msgid "Personal GIMP Folder"
 msgstr "Προσωπικό λεξικό:"
 
-#: app/gui/user-install-dialog.c:789
+#: app/gui/user-install-dialog.c:797
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:826
+#: app/gui/user-install-dialog.c:835
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
-"'%s' needs to be created."
+"'<b>%s</b>' needs to be created."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:832
+#: app/gui/user-install-dialog.c:842
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
 "to get more information about the selected item."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:906
+#: app/gui/user-install-dialog.c:928
 #, fuzzy
 msgid "User Installation Log"
 msgstr "Προβλήματα Εγκατάστασης"
 
-#: app/gui/user-install-dialog.c:907
+#: app/gui/user-install-dialog.c:929
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:913
+#: app/gui/user-install-dialog.c:936
 #, fuzzy
 msgid "GIMP Performance Tuning"
 msgstr " Επίδοση "
 
-#: app/gui/user-install-dialog.c:914
+#: app/gui/user-install-dialog.c:937
 msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:917
-msgid "For optimal GIMP performance, some settings may have to be adjusted."
+#: app/gui/user-install-dialog.c:941
+msgid ""
+"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 
-#: app/gui/user-install-dialog.c:926
+#: app/gui/user-install-dialog.c:946
 #, fuzzy
 msgid "Monitor Resolution"
 msgstr "Επιλογες ελέγχου"
 
-#: app/gui/user-install-dialog.c:927
+#: app/gui/user-install-dialog.c:947
 msgid "Click \"Continue\" to start The GIMP."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:930
+#: app/gui/user-install-dialog.c:951
 msgid ""
-"To display images in their natural size, GIMP needs to know your monitor "
-"resolution."
+"<b>To display images in their natural size, GIMP needs to know your monitor "
+"resolution.</b>"
 msgstr ""
 
-#: app/gui/user-install-dialog.c:939
+#: app/gui/user-install-dialog.c:956
 msgid "Aborting Installation..."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:967
+#: app/gui/user-install-dialog.c:984
 #, fuzzy, c-format
 msgid "Cannot open '%s' for reading: %s"
 msgstr "Άνοιγμα του '%s' για ανάγνωση αδύνατο.\n"
 
-#: app/gui/user-install-dialog.c:976
+#: app/gui/user-install-dialog.c:993
 #, fuzzy, c-format
 msgid "Cannot open '%s' for writing: %s"
 msgstr "Άνοιγμα του `%s' για εγγραφή αδύνατο"
 
-#: app/gui/user-install-dialog.c:987 app/gui/user-install-dialog.c:1010
+#: app/gui/user-install-dialog.c:1004 app/gui/user-install-dialog.c:1027
 #, fuzzy, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Σφάλμα ανάγνωσης: %s"
 
-#: app/gui/user-install-dialog.c:998
+#: app/gui/user-install-dialog.c:1015
 #, fuzzy, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Σφάλμα ανάγνωσης: %s"
 
-#: app/gui/user-install-dialog.c:1048 app/gui/user-install-dialog.c:1082
+#: app/gui/user-install-dialog.c:1104 app/gui/user-install-dialog.c:1136
 #, fuzzy, c-format
-msgid "Creating folder '%s'\n"
+msgid "Creating folder '%s'..."
 msgstr "Δημιουργία καταλόγου χρήστη: %s\n"
 
-#: app/gui/user-install-dialog.c:1062
+#: app/gui/user-install-dialog.c:1118
 #, fuzzy, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Aδύνατη η δημιουργία καταλόγου %s"
 
-#: app/gui/user-install-dialog.c:1066 app/gui/user-install-dialog.c:1134
-#, fuzzy
-msgid "  Success\n"
-msgstr "Επιτυχία"
-
-#: app/gui/user-install-dialog.c:1096
+#: app/gui/user-install-dialog.c:1150
 #, fuzzy, c-format
 msgid "Cannot create folder: %s"
 msgstr "Aδύνατη η δημιουργία καταλόγου %s"
 
-#: app/gui/user-install-dialog.c:1117
+#: app/gui/user-install-dialog.c:1171
 #, fuzzy, c-format
-msgid "Copying file '%s' from '%s'\n"
+msgid "Copying file '%s' from '%s'..."
 msgstr "Αντιγραφή αρχείων"
 
-#: app/gui/user-install-dialog.c:1141
-#, fuzzy, c-format
-msgid "  Failure: %s\n"
-msgstr "Σχήμα %s"
-
-#: app/gui/user-install-dialog.c:1161
+#: app/gui/user-install-dialog.c:1218
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1184
+#: app/gui/user-install-dialog.c:1242
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -7176,34 +7303,36 @@ msgid ""
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1199
+#: app/gui/user-install-dialog.c:1257
 #, fuzzy
 msgid "Swap Folder:"
 msgstr "Περιοχή Εναλλαγής"
 
-#: app/gui/user-install-dialog.c:1246
+#: app/gui/user-install-dialog.c:1308
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1254
+#: app/gui/user-install-dialog.c:1316
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1272
-msgid "Alternatively, you can set the monitor resolution manually."
+#: app/gui/user-install-dialog.c:1336
+msgid ""
+"Alternatively, you can set\n"
+"the monitor resolution manually."
 msgstr ""
 
-#: app/gui/user-install-dialog.c:1318
+#: app/gui/user-install-dialog.c:1381
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
 
 #
-#: app/gui/user-install-dialog.c:1325
+#: app/gui/user-install-dialog.c:1384
 #, fuzzy
 msgid "Calibrate"
 msgstr "Δημιουργία"
@@ -7315,12 +7444,12 @@ msgstr "_Εργαλειοθήκη με κείμενο"
 msgid "/Edit Path Attributes..."
 msgstr "Ιδιότητες Στρώματος"
 
-#: app/paint/gimpairbrush.c:82 app/tools/gimpairbrushtool.c:61
+#: app/paint/gimpairbrush.c:68 app/tools/gimpairbrushtool.c:61
 msgid "Airbrush"
 msgstr ""
 
 #
-#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:97
+#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:98
 #, fuzzy
 msgid "Clone"
 msgstr "Κλείσιμο"
@@ -7342,17 +7471,17 @@ msgid "Eraser"
 msgstr "Διαγραφή"
 
 #
-#: app/paint/gimppaintbrush.c:67 app/tools/gimppaintbrushtool.c:55
+#: app/paint/gimppaintbrush.c:64 app/tools/gimppaintbrushtool.c:56
 #, fuzzy
 msgid "Paintbrush"
 msgstr "Στιγμές"
 
-#: app/paint/gimppaintcore.c:380
+#: app/paint/gimppaintcore.c:409
 #, fuzzy
 msgid "No brushes available for use with this tool."
 msgstr "Με συγχωρείτε, δεν υπάρχει βοήθεια για αυτές τις ρυθμίσεις."
 
-#: app/paint/gimppencil.c:66 app/tools/gimppenciltool.c:55
+#: app/paint/gimppencil.c:45 app/tools/gimppenciltool.c:55
 #, fuzzy
 msgid "Pencil"
 msgstr "Πένα"
@@ -7393,41 +7522,21 @@ msgstr "Υπεκφυγή"
 msgid "Burn"
 msgstr "Κάψιμο"
 
-#
 #: app/paint/paint-enums.c:71
-#, fuzzy
-msgid "Once Forward"
-msgstr "Προώθηση"
-
-#: app/paint/paint-enums.c:72
-#, fuzzy
-msgid "Once Backward"
-msgstr " Πρός τα πίσω"
-
-#: app/paint/paint-enums.c:73
-msgid "Loop Sawtooth"
-msgstr ""
-
-#: app/paint/paint-enums.c:74
-#, fuzzy
-msgid "Loop Triangle"
-msgstr "Κενό Τρίγωνο"
-
-#: app/paint/paint-enums.c:92
 msgid "Blur"
 msgstr "Θόλωση"
 
 #
-#: app/paint/paint-enums.c:93
+#: app/paint/paint-enums.c:72
 msgid "Sharpen"
 msgstr "Όξυνση"
 
-#: app/paint/paint-enums.c:131
+#: app/paint/paint-enums.c:110
 #, fuzzy
 msgid "Constant"
 msgstr "Αντίθεση:"
 
-#: app/paint/paint-enums.c:132 app/tools/paint_options.c:187
+#: app/paint/paint-enums.c:111 app/tools/gimppaintoptions-gui.c:222
 #, fuzzy
 msgid "Incremental"
 msgstr "Ενόργανη μουσική"
@@ -7477,6 +7586,13 @@ msgstr "Εσωτερικές Διαδικασίες"
 #: app/pdb/internal_procs.c:80
 msgid "Brush UI"
 msgstr ""
+
+#
+#: app/pdb/internal_procs.c:89 app/tools/gimppaintoptions-gui.c:354
+#: app/widgets/gimpwidgets-constructors.c:70
+#: app/widgets/gimpwidgets-constructors.c:103
+msgid "Color"
+msgstr "Χρώμα"
 
 #: app/pdb/internal_procs.c:92
 msgid "Convert"
@@ -7639,8 +7755,8 @@ msgid "Temporary Procedure"
 msgstr "Αποθηκευμένες Διαδικασίες"
 
 #
-#: app/pdb/selection_tools_cmds.c:326 app/tools/gimpfreeselecttool.c:96
-#: app/tools/tools-enums.c:98
+#: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:33
+#: app/tools/gimpfreeselecttool.c:96
 #, fuzzy
 msgid "Free Select"
 msgstr "Επιλογή"
@@ -7656,7 +7772,7 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/plug-in/plug-ins.c:138
+#: app/plug-in/plug-ins.c:139
 #, fuzzy
 msgid "Resource configuration"
 msgstr "Επιβεβαίωση αντικατάστασης"
@@ -7664,37 +7780,37 @@ msgstr "Επιβεβαίωση αντικατάστασης"
 #. Query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:144
+#: app/plug-in/plug-ins.c:145
 #, fuzzy
 msgid "Querying new Plug-ins"
 msgstr "Αρθρώματα"
 
-#: app/plug-in/plug-ins.c:162
+#: app/plug-in/plug-ins.c:163
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:217
+#: app/plug-in/plug-ins.c:218
 #, fuzzy, c-format
 msgid "writing \"%s\"\n"
 msgstr "Ταξινόμηση του %s"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:274
+#: app/plug-in/plug-ins.c:275
 msgid "Initializing Plug-ins"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:289
+#: app/plug-in/plug-ins.c:290
 #, fuzzy, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr "Μη έγκυρο συστατικό"
 
-#: app/plug-in/plug-ins.c:318
+#: app/plug-in/plug-ins.c:319
 #, fuzzy
 msgid "Starting Extensions"
 msgstr "Αρχικό επίπεδο: "
 
-#: app/plug-in/plug-ins.c:327
+#: app/plug-in/plug-ins.c:328
 #, fuzzy, c-format
 msgid "Starting extension: \"%s\"\n"
 msgstr "Αρχικό επίπεδο: "
@@ -7734,7 +7850,7 @@ msgid ""
 msgstr ""
 
 #
-#: app/text/gimptext-compat.c:107 app/tools/gimptexttool.c:312
+#: app/text/gimptext-compat.c:107 app/tools/gimptexttool.c:330
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Καθορισμός Στρώματος"
@@ -7745,33 +7861,33 @@ msgstr "Καθορισμός Στρώματος"
 msgid "(invalid UTF-8 string)"
 msgstr "Σφάλμα στο αρχείο πινέλων του GIMP \"%s\"."
 
-#: app/text/gimptext.c:159
+#: app/text/gimptext.c:162
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
-#: app/text/gimptext.c:166
+#: app/text/gimptext.c:169
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
 msgstr ""
 
-#: app/text/gimptext.c:197
+#: app/text/gimptext.c:200
 msgid "How many pixels the first line should be shorter"
 msgstr ""
 
-#: app/text/gimptext.c:203
+#: app/text/gimptext.c:206
 msgid "Additional line spacing (in pixels)"
 msgstr ""
 
 #
-#: app/text/gimptextlayer.c:124
+#: app/text/gimptextlayer.c:129
 #, fuzzy
 msgid "Text Layer"
 msgstr "Καθορισμός Στρώματος"
 
 #
-#: app/text/gimptextlayer.c:409
+#: app/text/gimptextlayer.c:419
 #, fuzzy
 msgid "Empty Text Layer"
 msgstr "Καθορισμός Στρώματος"
@@ -7785,43 +7901,43 @@ msgstr "Κόψιμο"
 msgid "Resize"
 msgstr "Αλλαγή μεγέθους"
 
-#: app/tools/tools-enums.c:99
+#: app/tools/tools-enums.c:34
 #, fuzzy
 msgid "Fixed Size"
 msgstr "Μέγεθος Εικόνας: %s"
 
-#: app/tools/tools-enums.c:100
+#: app/tools/tools-enums.c:35
 #, fuzzy
 msgid "Fixed Aspect Ratio"
 msgstr "Διατήρηση αναλογιών"
 
 #
-#: app/tools/tools-enums.c:118
+#: app/tools/tools-enums.c:53
 #, fuzzy
 msgid "Transform Active Layer"
 msgstr "Μεταφορά"
 
-#: app/tools/tools-enums.c:119
+#: app/tools/tools-enums.c:54
 #, fuzzy
 msgid "Transform Selection"
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/tools/tools-enums.c:120
+#: app/tools/tools-enums.c:55
 #, fuzzy
 msgid "Transform Active Path"
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/tools/tools-enums.c:138
+#: app/tools/tools-enums.c:73
 #, fuzzy
 msgid "Don't Show Grid"
 msgstr "Εμφάνιση Πλέγματος"
 
-#: app/tools/tools-enums.c:139
+#: app/tools/tools-enums.c:74
 #, fuzzy
 msgid "Number of Grid Lines"
 msgstr "Αριθμός Χρωμάτων"
 
-#: app/tools/tools-enums.c:140
+#: app/tools/tools-enums.c:75
 msgid "Grid Line Spacing"
 msgstr ""
 
@@ -7830,8 +7946,9 @@ msgid "Airbrush with variable pressure"
 msgstr ""
 
 #: app/tools/gimpairbrushtool.c:63
-msgid "/Tools/Paint Tools/Airbrush"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/_Airbrush"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimpairbrushtool.c:143 app/tools/gimpconvolvetool.c:242
 #: app/tools/gimpsmudgetool.c:144
@@ -7842,56 +7959,62 @@ msgstr "Ρυθμός:"
 msgid "Pressure:"
 msgstr "Πίεση:"
 
-#: app/tools/gimpblendoptions.c:243
+#: app/tools/gimpblendoptions.c:245
 msgid "Offset:"
 msgstr "Μετατόπιση"
 
-#: app/tools/gimpblendoptions.c:252
+#: app/tools/gimpblendoptions.c:254
 #, fuzzy
 msgid "Shape:"
 msgstr "Σχήμα"
 
-#: app/tools/gimpblendoptions.c:258
+#: app/tools/gimpblendoptions.c:260 app/tools/gimppaintoptions-gui.c:478
 msgid "Repeat:"
 msgstr "Επανάληψη:"
 
+#: app/tools/gimpblendoptions.c:268
+#, fuzzy
+msgid "Dithering"
+msgstr "Εκκινείται"
+
 #
-#: app/tools/gimpblendoptions.c:281
+#: app/tools/gimpblendoptions.c:288
 msgid "Adaptive Supersampling"
 msgstr "Προσαρμοσμένο υπερδείγμα"
 
-#: app/tools/gimpblendoptions.c:291
+#: app/tools/gimpblendoptions.c:298
 msgid "Max Depth:"
 msgstr "Μέγιστο Βάθος:"
 
-#: app/tools/gimpblendoptions.c:298 app/tools/gimpbucketfilloptions.c:273
-#: app/tools/gimpmagnifyoptions.c:241 app/tools/gimpselectionoptions.c:505
+#: app/tools/gimpblendoptions.c:305 app/tools/gimpbucketfilloptions.c:280
+#: app/tools/gimpmagnifyoptions.c:247 app/tools/gimpselectionoptions.c:503
 msgid "Threshold:"
 msgstr "Κατώφλι:"
 
-#: app/tools/gimpblendtool.c:95
+#: app/tools/gimpblendtool.c:97
 msgid "Fill with a color gradient"
 msgstr ""
 
-#: app/tools/gimpblendtool.c:96
-msgid "/Tools/Paint Tools/Blend"
-msgstr ""
+#: app/tools/gimpblendtool.c:98
+#, fuzzy
+msgid "/Tools/Paint Tools/Blen_d"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
-#: app/tools/gimpblendtool.c:184
+#: app/tools/gimpblendtool.c:186
 msgid "Blend: Invalid for indexed images."
 msgstr "Ανάμειξη: Άκυρο για εικόνες καταλόγου χρωμάτων."
 
 #. initialize the statusbar display
-#: app/tools/gimpblendtool.c:202
+#: app/tools/gimpblendtool.c:204
 msgid "Blend: 0, 0"
 msgstr "Ανάμειξη: 0, 0"
 
-#: app/tools/gimpblendtool.c:238
+#: app/tools/gimpblendtool.c:242
 msgid "Blending..."
 msgstr "Γίνεται ανάμειξη..."
 
 #
-#: app/tools/gimpblendtool.c:321
+#: app/tools/gimpblendtool.c:327
 msgid "Blend: "
 msgstr "Ανάμειξη: "
 
@@ -7901,7 +8024,7 @@ msgstr ""
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
 #, fuzzy
-msgid "/Tools/Color Tools/Brightness-Contrast..."
+msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "Φωτεινότητα-Αντίθεση"
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
@@ -7923,46 +8046,47 @@ msgstr "Φωτεινότητα:"
 msgid "Con_trast:"
 msgstr "Αντίθεση:"
 
-#: app/tools/gimpbucketfilloptions.c:119
+#: app/tools/gimpbucketfilloptions.c:120
 msgid "Allow completely transparent regions to be filled"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:125
+#: app/tools/gimpbucketfilloptions.c:126
 msgid "Base filled area on all visible layers"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:131 app/tools/gimpselectionoptions.c:163
+#: app/tools/gimpbucketfilloptions.c:132 app/tools/gimpselectionoptions.c:164
 msgid "Maximum color difference"
 msgstr ""
 
 #. fill type
-#: app/tools/gimpbucketfilloptions.c:237
+#: app/tools/gimpbucketfilloptions.c:244
 #, fuzzy, c-format
 msgid "Fill Type  %s"
 msgstr "Τύπος γεμίσματος"
 
-#: app/tools/gimpbucketfilloptions.c:244 app/tools/gimpselectionoptions.c:476
+#: app/tools/gimpbucketfilloptions.c:251 app/tools/gimpselectionoptions.c:474
 msgid "Finding Similar Colors"
 msgstr ""
 
-#: app/tools/gimpbucketfilloptions.c:255
+#: app/tools/gimpbucketfilloptions.c:262
 #, fuzzy
 msgid "Fill Transparent Areas"
 msgstr "FG σε Διαφανές"
 
-#: app/tools/gimpbucketfilloptions.c:261
-#: app/tools/gimpcolorpickeroptions.c:168 app/tools/gimpselectionoptions.c:493
-#: app/tools/gimpselectionoptions.c:539
+#: app/tools/gimpbucketfilloptions.c:268
+#: app/tools/gimpcolorpickeroptions.c:168 app/tools/gimpselectionoptions.c:491
+#: app/tools/gimpselectionoptions.c:537
 msgid "Sample Merged"
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:87
+#: app/tools/gimpbucketfilltool.c:89
 msgid "Fill with a color or pattern"
 msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:88
-msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr ""
+#: app/tools/gimpbucketfilltool.c:90
+#, fuzzy
+msgid "/Tools/Paint Tools/_Bucket Fill"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
 #: app/tools/gimpbycolorselecttool.c:80
@@ -7976,23 +8100,25 @@ msgid "Select regions by color"
 msgstr "Επιλογή χρώματος"
 
 #: app/tools/gimpbycolorselecttool.c:82
-msgid "/Tools/Selection Tools/By Color Select"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/_By Color Select"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
-#: app/tools/gimpclonetool.c:98
+#: app/tools/gimpclonetool.c:99
 msgid "Paint using Patterns or Image Regions"
 msgstr ""
 
-#: app/tools/gimpclonetool.c:99
-msgid "/Tools/Paint Tools/Clone"
-msgstr ""
+#: app/tools/gimpclonetool.c:100
+#, fuzzy
+msgid "/Tools/Paint Tools/_Clone"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
-#: app/tools/gimpclonetool.c:368
+#: app/tools/gimpclonetool.c:369
 msgid "Source"
 msgstr "Πηγή"
 
-#: app/tools/gimpclonetool.c:374
+#: app/tools/gimpclonetool.c:375
 msgid "Alignment"
 msgstr "Ευθυγράμμιση"
 
@@ -8002,7 +8128,7 @@ msgstr ""
 
 #: app/tools/gimpcolorbalancetool.c:96
 #, fuzzy
-msgid "/Tools/Color Tools/Color Balance..."
+msgid "/Tools/Color Tools/Color _Balance..."
 msgstr "Εξισορρόπηση Χρώματος"
 
 #: app/tools/gimpcolorbalancetool.c:160
@@ -8057,7 +8183,7 @@ msgstr "Πεπιεσμένο πλακάκι"
 
 #: app/tools/gimpcolorizetool.c:95
 #, fuzzy
-msgid "/Tools/Color Tools/Colorize..."
+msgid "/Tools/Color Tools/Colori_ze..."
 msgstr "Εξισορρόπηση Χρώματος"
 
 #: app/tools/gimpcolorizetool.c:162
@@ -8093,11 +8219,11 @@ msgstr "Φωτισμός:"
 msgid "_Saturation:"
 msgstr "Κορεσμός:"
 
-#: app/tools/gimpcoloroptions.c:200
+#: app/tools/gimpcoloroptions.c:201
 msgid "Sample Average"
 msgstr ""
 
-#: app/tools/gimpcoloroptions.c:210 app/tools/gimpselectionoptions.c:438
+#: app/tools/gimpcoloroptions.c:211 app/tools/gimpselectionoptions.c:436
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "Ακτίνα:"
@@ -8116,8 +8242,9 @@ msgid "Pick colors from the image"
 msgstr ""
 
 #: app/tools/gimpcolorpickertool.c:104
-msgid "/Tools/Color Picker"
-msgstr ""
+#, fuzzy
+msgid "/Tools/C_olor Picker"
+msgstr "Επιλογέας Χρώματος"
 
 #
 #: app/tools/gimpcolorpickertool.c:263
@@ -8126,41 +8253,35 @@ msgid "Color Picker Information"
 msgstr "(Καμία πληροφορία)"
 
 #
-#: app/tools/gimpcolorpickertool.c:279 app/tools/gimpcolorpickertool.c:294
+#: app/tools/gimpcolorpickertool.c:279 app/tools/gimpcolorpickertool.c:290
 msgid "Red:"
 msgstr "Κόκκινο:"
 
 #
-#: app/tools/gimpcolorpickertool.c:280 app/tools/gimpcolorpickertool.c:295
+#: app/tools/gimpcolorpickertool.c:280 app/tools/gimpcolorpickertool.c:291
 msgid "Green:"
 msgstr "Πράσινο:"
 
 #
-#: app/tools/gimpcolorpickertool.c:281 app/tools/gimpcolorpickertool.c:296
+#: app/tools/gimpcolorpickertool.c:281 app/tools/gimpcolorpickertool.c:292
 msgid "Blue:"
 msgstr "Μπλε:"
 
-#: app/tools/gimpcolorpickertool.c:282 app/tools/gimpcolorpickertool.c:288
-#: app/tools/gimpcolorpickertool.c:297
-msgid "Alpha:"
-msgstr "Άλφα:"
-
-#: app/tools/gimpcolorpickertool.c:283 app/tools/gimpcolorpickertool.c:289
-#: app/widgets/gimpcolormapeditor.c:373
-msgid "Hex Triplet:"
-msgstr "Τριάδα σε Δεκαεξ. Μορφή:"
-
-#: app/tools/gimpcolorpickertool.c:287
+#: app/tools/gimpcolorpickertool.c:285
 msgid "Intensity:"
 msgstr "Ένταση:"
 
-#: app/tools/gimpcolorpickertool.c:293
+#: app/tools/gimpcolorpickertool.c:289
 msgid "Index:"
 msgstr "Ευρετήριο:"
 
-#: app/tools/gimpcolorpickertool.c:298
-msgid "Hex Triplet"
-msgstr "Τριάδα σε Δεκαεξ. Μορφή"
+#: app/tools/gimpcolorpickertool.c:300
+msgid "Alpha:"
+msgstr "Άλφα:"
+
+#: app/tools/gimpcolorpickertool.c:301 app/widgets/gimpcolormapeditor.c:373
+msgid "Hex Triplet:"
+msgstr "Τριάδα σε Δεκαεξ. Μορφή:"
 
 #
 #: app/tools/gimpconvolvetool.c:91
@@ -8169,8 +8290,9 @@ msgid "Blur or Sharpen"
 msgstr "Όξυνση"
 
 #: app/tools/gimpconvolvetool.c:92
-msgid "/Tools/Paint Tools/Convolve"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/Con_volve"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:224
@@ -8179,18 +8301,18 @@ msgid "Convolve Type  %s"
 msgstr "Τύπος Τυλίγματος"
 
 #. tool toggle
-#: app/tools/gimpcropoptions.c:190 app/tools/gimpmagnifyoptions.c:224
-#: app/tools/gimpmoveoptions.c:179
+#: app/tools/gimpcropoptions.c:191 app/tools/gimpmagnifyoptions.c:230
+#: app/tools/gimpmoveoptions.c:180
 #, fuzzy, c-format
 msgid "Tool Toggle  %s"
 msgstr "Εργαλείο Μεταβολής"
 
-#: app/tools/gimpcropoptions.c:201
+#: app/tools/gimpcropoptions.c:202
 msgid "Current Layer only"
 msgstr "Μόνο το Τρέχον Στρώμα"
 
 #. enlarge toggle
-#: app/tools/gimpcropoptions.c:206
+#: app/tools/gimpcropoptions.c:207
 #, fuzzy, c-format
 msgid "Allow Enlarging  %s"
 msgstr "Επέτρεψε Μεγέθυνση"
@@ -8207,7 +8329,7 @@ msgstr "Κλείσιμο συστήματος ή επανεκκίνηση του
 #
 #: app/tools/gimpcroptool.c:161
 #, fuzzy
-msgid "/Tools/Transform Tools/Crop & Resize"
+msgid "/Tools/Transform Tools/_Crop & Resize"
 msgstr "Μεταφορά"
 
 #: app/tools/gimpcroptool.c:594
@@ -8230,7 +8352,7 @@ msgid "Origin X:"
 msgstr "Προέλευση Χ:"
 
 #. the pixel size labels
-#: app/tools/gimpcroptool.c:1038 app/tools/gimpselectionoptions.c:567
+#: app/tools/gimpcroptool.c:1038 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:153 app/widgets/gimptemplateeditor.c:171
 msgid "Width:"
 msgstr "Πλάτος:"
@@ -8252,7 +8374,7 @@ msgstr "Παραμετροποιημένα χρώματα"
 #
 #: app/tools/gimpcurvestool.c:161
 #, fuzzy
-msgid "/Tools/Color Tools/Curves..."
+msgid "/Tools/Color Tools/_Curves..."
 msgstr "Μεταφορά"
 
 #: app/tools/gimpcurvestool.c:234
@@ -8312,8 +8434,9 @@ msgid "Dodge or Burn strokes"
 msgstr ""
 
 #: app/tools/gimpdodgeburntool.c:72
-msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/Dod_geBurn"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
 #. the type (dodge or burn)
@@ -8332,8 +8455,7 @@ msgid "Exposure:"
 msgstr "Έκθεση:"
 
 #
-#: app/tools/gimpeditselectiontool.c:246
-#: app/tools/gimpeditselectiontool.c:1086
+#: app/tools/gimpeditselectiontool.c:246 app/tools/gimpeditselectiontool.c:993
 #, fuzzy
 msgid "Move Floating Layer"
 msgstr "Επιλογή Γραμματοσειράς"
@@ -8354,8 +8476,9 @@ msgid "Select elliptical regions"
 msgstr "Επιλογή όλων των γραμμών"
 
 #: app/tools/gimpellipseselecttool.c:72
-msgid "/Tools/Selection Tools/Ellipse Select"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/_Ellipse Select"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimperasertool.c:71
 #, fuzzy
@@ -8363,27 +8486,23 @@ msgid "Erase to background or transparency"
 msgstr "Κατάλογος εργασιών παρασκηνίου"
 
 #: app/tools/gimperasertool.c:72
-msgid "/Tools/Paint Tools/Eraser"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/_Eraser"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #. the anti_erase toggle
-#: app/tools/gimperasertool.c:192
+#: app/tools/gimperasertool.c:191
 #, fuzzy, c-format
 msgid "Anti Erase  %s"
 msgstr "Αντι-Διαγραφή"
 
-#. the hard toggle
-#: app/tools/gimperasertool.c:201
-msgid "Hard Edge"
-msgstr "Σκληρή Άκρη"
-
-#: app/tools/gimpflipoptions.c:174 app/tools/gimptransformoptions.c:293
+#: app/tools/gimpflipoptions.c:175 app/tools/gimptransformoptions.c:295
 #, fuzzy
 msgid "Affect:"
 msgstr "Μετατόπιση"
 
 #. tool toggle
-#: app/tools/gimpflipoptions.c:180
+#: app/tools/gimpflipoptions.c:181
 #, fuzzy, c-format
 msgid "Flip Type  %s"
 msgstr "Τύπος γεμίσματος"
@@ -8394,9 +8513,11 @@ msgstr "Τύπος γεμίσματος"
 msgid "Flip the layer or selection"
 msgstr "Αντιγραφή επιλεγμένου"
 
+#
 #: app/tools/gimpfliptool.c:86
-msgid "/Tools/Transform Tools/Flip"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Transform Tools/_Flip"
+msgstr "Μεταφορά"
 
 #: app/tools/gimpfreeselecttool.c:97
 #, fuzzy
@@ -8404,8 +8525,9 @@ msgid "Select hand-drawn regions"
 msgstr "Επιλέξτε εικονίδιο"
 
 #: app/tools/gimpfreeselecttool.c:98
-msgid "/Tools/Selection Tools/Free Select"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/_Free Select"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimpfuzzyselecttool.c:99
 #, fuzzy
@@ -8413,8 +8535,9 @@ msgid "Select contiguous regions"
 msgstr "Επιλογή εντολής από προηγούμενα"
 
 #: app/tools/gimpfuzzyselecttool.c:100
-msgid "/Tools/Selection Tools/Fuzzy Select"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/Fu_zzy Select"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimphistogramtool.c:121
 msgid "Histogram"
@@ -8427,7 +8550,7 @@ msgstr "Εμφάνιση καταλόγου"
 
 #: app/tools/gimphistogramtool.c:123
 #, fuzzy
-msgid "/Tools/Color Tools/Histogram..."
+msgid "/Tools/Color Tools/_Histogram..."
 msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
 
 #: app/tools/gimphistogramtool.c:184
@@ -8486,7 +8609,7 @@ msgstr "Ρυθμίσεις επικεφαλίδας"
 #
 #: app/tools/gimphuesaturationtool.c:109
 #, fuzzy
-msgid "/Tools/Color Tools/Hue-Saturation..."
+msgid "/Tools/Color Tools/Hue-_Saturation..."
 msgstr "Απόχρωση-Κορεσμός"
 
 #: app/tools/gimphuesaturationtool.c:176
@@ -8592,19 +8715,20 @@ msgid "Shape"
 msgstr "Σχήμα"
 
 #
-#: app/tools/gimpinktool.c:166 app/tools/gimpinktool.c:703
+#: app/tools/gimpinktool.c:167 app/tools/gimpinktool.c:704
 #, fuzzy
 msgid "Ink"
 msgstr "Μέσα"
 
-#: app/tools/gimpinktool.c:167
+#: app/tools/gimpinktool.c:168
 #, fuzzy
 msgid "Draw in ink"
 msgstr "Ολίσθηση συρταριών"
 
-#: app/tools/gimpinktool.c:168
-msgid "/Tools/Paint Tools/Ink"
-msgstr ""
+#: app/tools/gimpinktool.c:169
+#, fuzzy
+msgid "/Tools/Paint Tools/In_k"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
@@ -8616,8 +8740,9 @@ msgid "Select shapes from image"
 msgstr "Επιλογή αρχείου εικόνας"
 
 #: app/tools/gimpiscissorstool.c:279
-msgid "/Tools/Selection Tools/Intelligent Scissors"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/_Intelligent Scissors"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #: app/tools/gimplevelstool.c:163
 #, fuzzy
@@ -8626,7 +8751,7 @@ msgstr "Παραμετροποιημένα χρώματα"
 
 #: app/tools/gimplevelstool.c:164
 #, fuzzy
-msgid "/Tools/Color Tools/Levels..."
+msgid "/Tools/Color Tools/_Levels..."
 msgstr "Επίπεδα Χρώματος:"
 
 #: app/tools/gimplevelstool.c:235
@@ -8700,7 +8825,7 @@ msgstr "_Επάνω ένα Επίπεδο"
 msgid "Save Levels"
 msgstr "Αποθήκευση Αποτελεσμάτων"
 
-#: app/tools/gimpmagnifyoptions.c:219
+#: app/tools/gimpmagnifyoptions.c:225
 #, fuzzy
 msgid "Allow Window Resizing"
 msgstr "Αλλαγή μεγέθους παραθύρου"
@@ -8716,10 +8841,10 @@ msgstr "Σμίκρυνση"
 
 #: app/tools/gimpmagnifytool.c:97
 #, fuzzy
-msgid "/Tools/Magnify"
+msgid "/Tools/M_agnify"
 msgstr "Μεγέθυνση"
 
-#: app/tools/gimpmeasureoptions.c:170
+#: app/tools/gimpmeasureoptions.c:171
 #, fuzzy
 msgid "Use Info Window"
 msgstr "Πληροφορίες Χρήστη"
@@ -8734,9 +8859,11 @@ msgstr "Πίεση"
 msgid "Measure angles and lengths"
 msgstr ""
 
+#
 #: app/tools/gimpmeasuretool.c:130
-msgid "/Tools/Measure"
-msgstr ""
+#, fuzzy
+msgid "/Tools/_Measure"
+msgstr "Πίεση"
 
 #: app/tools/gimpmeasuretool.c:286
 #, fuzzy
@@ -8758,29 +8885,29 @@ msgstr "αντίσταση"
 msgid "degrees"
 msgstr "πράσινο"
 
-#: app/tools/gimpmoveoptions.c:183
+#: app/tools/gimpmoveoptions.c:184
 #, fuzzy
 msgid "Move Current Layer"
 msgstr "Μόνο το Τρέχον Στρώμα"
 
-#: app/tools/gimpmoveoptions.c:184
+#: app/tools/gimpmoveoptions.c:185
 #, fuzzy
 msgid "Pick a Layer to Move"
 msgstr "/Στοίβαγμα/Στρώμα στην Κορυφή"
 
 #. move mask
-#: app/tools/gimpmoveoptions.c:191
+#: app/tools/gimpmoveoptions.c:192
 #, c-format
 msgid "Move Mode  %s"
 msgstr ""
 
-#: app/tools/gimpmoveoptions.c:195
+#: app/tools/gimpmoveoptions.c:196
 #, fuzzy
 msgid "Move Selection Outline"
 msgstr "Επιλογή Περιγράμματος"
 
 #
-#: app/tools/gimpmoveoptions.c:196
+#: app/tools/gimpmoveoptions.c:197
 #, fuzzy
 msgid "Move Pixels"
 msgstr "Εικονοστοιχεία"
@@ -8795,25 +8922,106 @@ msgstr "Μετακίνηση"
 msgid "Move layers & selections"
 msgstr "Καθαρισμός επιλογής"
 
+#
 #: app/tools/gimpmovetool.c:106
-msgid "/Tools/Transform Tools/Move"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Transform Tools/_Move"
+msgstr "Μεταφορά"
 
-#: app/tools/gimppaintbrushtool.c:56
+#: app/tools/gimppaintbrushtool.c:57
 msgid "Paint fuzzy brush strokes"
 msgstr ""
 
-#: app/tools/gimppaintbrushtool.c:57
-msgid "/Tools/Paint Tools/Paintbrush"
+#: app/tools/gimppaintbrushtool.c:58
+#, fuzzy
+msgid "/Tools/Paint Tools/_Paintbrush"
+msgstr "Εξ' ορισμού Μεγέθυνση"
+
+#
+#: app/tools/gimppaintoptions-gui.c:145
+#, fuzzy
+msgid "Open the brush selection dialog"
+msgstr "Κατασκευή πανομοιότυπης επιλογής"
+
+#: app/tools/gimppaintoptions-gui.c:148
+#, fuzzy
+msgid "Brush:"
+msgstr "Πινέλα"
+
+#
+#: app/tools/gimppaintoptions-gui.c:162
+#, fuzzy
+msgid "Open the pattern selection dialog"
+msgstr "Αντιγραφή επιλεγμένου"
+
+#: app/tools/gimppaintoptions-gui.c:165
+#, fuzzy
+msgid "Pattern:"
+msgstr "Σχέδια"
+
+#
+#: app/tools/gimppaintoptions-gui.c:186
+#, fuzzy
+msgid "Open the gradient selection dialog"
+msgstr "Κατασκευή πανομοιότυπης επιλογής"
+
+#
+#: app/tools/gimppaintoptions-gui.c:196
+#, fuzzy
+msgid "Reverse"
+msgstr "Επαναφορά"
+
+#: app/tools/gimppaintoptions-gui.c:201
+msgid "Gradient:"
+msgstr "Διαβάθμιση:"
+
+#: app/tools/gimppaintoptions-gui.c:236
+msgid "Hard Edge"
+msgstr "Σκληρή Άκρη"
+
+#: app/tools/gimppaintoptions-gui.c:291
+#, fuzzy
+msgid "Pressure Sensitivity"
+msgstr "Ευαισ_θησία"
+
+#
+#: app/tools/gimppaintoptions-gui.c:307
+#, fuzzy
+msgid "Opacity"
+msgstr "Διαφάνεια:"
+
+#: app/tools/gimppaintoptions-gui.c:321
+#, fuzzy
+msgid "Hardness"
+msgstr "Υλικό"
+
+#: app/tools/gimppaintoptions-gui.c:332
+msgid "Rate"
+msgstr "Ρυθμός"
+
+# sysdeps/names/swap.c:45
+#: app/tools/gimppaintoptions-gui.c:392
+#, fuzzy
+msgid "Fade Out"
+msgstr "Εξερχ. Σελίδα"
+
+#: app/tools/gimppaintoptions-gui.c:405 app/tools/gimppaintoptions-gui.c:463
+msgid "Length:"
 msgstr ""
+
+#: app/tools/gimppaintoptions-gui.c:448
+#, fuzzy
+msgid "Use Color from Gradient"
+msgstr "Προσαρμοσμένη Διαβάθμιση"
 
 #: app/tools/gimppenciltool.c:56
 msgid "Paint hard edged pixels"
 msgstr ""
 
 #: app/tools/gimppenciltool.c:57
-msgid "/Tools/Paint Tools/Pencil"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/Pe_ncil"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
 #: app/tools/gimpperspectivetool.c:82
@@ -8827,9 +9035,11 @@ msgstr "Ιδιότητες..."
 msgid "Change perspective of the layer or selection"
 msgstr "Αντιγραφή επιλεγμένου"
 
+#
 #: app/tools/gimpperspectivetool.c:84
-msgid "/Tools/Transform Tools/Perspective"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Transform Tools/_Perspective"
+msgstr "Μεταφορά"
 
 #: app/tools/gimpperspectivetool.c:146
 #, fuzzy
@@ -8854,7 +9064,7 @@ msgstr ""
 #
 #: app/tools/gimpposterizetool.c:77
 #, fuzzy
-msgid "/Tools/Color Tools/Posterize..."
+msgid "/Tools/Color Tools/_Posterize..."
 msgstr "Μεταφορά"
 
 #: app/tools/gimpposterizetool.c:141
@@ -8877,8 +9087,9 @@ msgid "Select rectangular regions"
 msgstr "Επιλέξτε εικονίδιο"
 
 #: app/tools/gimprectselecttool.c:97
-msgid "/Tools/Selection Tools/Rect Select"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Selection Tools/_Rect Select"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
 #: app/tools/gimprectselecttool.c:241
@@ -8918,7 +9129,7 @@ msgstr "Αντιγραφή επιλεγμένου"
 #
 #: app/tools/gimprotatetool.c:106
 #, fuzzy
-msgid "/Tools/Transform Tools/Rotate"
+msgid "/Tools/Transform Tools/_Rotate"
 msgstr "Μεταφορά"
 
 #: app/tools/gimprotatetool.c:170
@@ -8945,7 +9156,7 @@ msgstr "Αντιγραφή επιλεγμένου"
 #
 #: app/tools/gimpscaletool.c:99
 #, fuzzy
-msgid "/Tools/Transform Tools/Scale"
+msgid "/Tools/Transform Tools/_Scale"
 msgstr "Μεταφορά"
 
 #: app/tools/gimpscaletool.c:163
@@ -8962,42 +9173,42 @@ msgstr "Τρέχον Πλάτος:"
 msgid "Scale Ratio X:"
 msgstr "Δειγματοληψία"
 
-#: app/tools/gimpselectionoptions.c:138
+#: app/tools/gimpselectionoptions.c:139
 #, fuzzy
 msgid "Smooth edges"
 msgstr "Ομαλό"
 
-#: app/tools/gimpselectionoptions.c:152
+#: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:158
+#: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:173
+#: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:405 app/tools/gimptextoptions.c:305
+#: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:306
 msgid "Antialiasing"
 msgstr "Εξομάλυνση"
 
-#: app/tools/gimpselectionoptions.c:428
+#: app/tools/gimpselectionoptions.c:426
 #, fuzzy
 msgid "Feather Edges"
 msgstr "Μακρύτερα"
 
-#: app/tools/gimpselectionoptions.c:463
+#: app/tools/gimpselectionoptions.c:461
 msgid "Show Interactive Boundary"
 msgstr ""
 
-#: app/tools/gimpselectionoptions.c:487
+#: app/tools/gimpselectionoptions.c:485
 #, fuzzy
 msgid "Select Transparent Areas"
 msgstr "Επιλέξτε εικονίδιο"
 
-#: app/tools/gimpselectionoptions.c:531
+#: app/tools/gimpselectionoptions.c:529
 #, fuzzy
 msgid "Auto Shrink Selection"
 msgstr "Σμίκρυνσης Επιλογής"
@@ -9017,7 +9228,7 @@ msgstr "Αντιγραφή επιλεγμένου"
 #
 #: app/tools/gimpsheartool.c:101
 #, fuzzy
-msgid "/Tools/Transform Tools/Shear"
+msgid "/Tools/Transform Tools/S_hear"
 msgstr "Μεταφορά"
 
 #: app/tools/gimpsheartool.c:163
@@ -9041,66 +9252,73 @@ msgid "Smudge image"
 msgstr "εικόνα"
 
 #: app/tools/gimpsmudgetool.c:63
-msgid "/Tools/Paint Tools/Smudge"
-msgstr ""
+#, fuzzy
+msgid "/Tools/Paint Tools/_Smudge"
+msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
-#: app/tools/gimptextoptions.c:267
+#: app/tools/gimptextoptions.c:268
 #, fuzzy
 msgid "Open the font selection dialog"
 msgstr "Κατασκευή πανομοιότυπης επιλογής"
 
-#: app/tools/gimptextoptions.c:270
+#: app/tools/gimptextoptions.c:271
 #, fuzzy
 msgid "Font:"
 msgstr "Μετρητής:"
 
-#: app/tools/gimptextoptions.c:275
+#: app/tools/gimptextoptions.c:276
 #, fuzzy
 msgid "_Font:"
 msgstr "Μετρητής:"
 
 #
-#: app/tools/gimptextoptions.c:282
+#: app/tools/gimptextoptions.c:283
 #, fuzzy
 msgid "_Size:"
 msgstr "Μέγεθος:"
 
-#: app/tools/gimptextoptions.c:291
+#: app/tools/gimptextoptions.c:292
 msgid "_Hinting"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:297
+#: app/tools/gimptextoptions.c:298
 msgid "Force Auto-Hinter"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:311
+#: app/tools/gimptextoptions.c:312
 #, fuzzy
 msgid "Text Color"
 msgstr "Φυσικό Χρώμα"
 
 #
-#: app/tools/gimptextoptions.c:316
+#: app/tools/gimptextoptions.c:317
 #, fuzzy
 msgid "Color:"
 msgstr "Χρώμα"
 
-#: app/tools/gimptextoptions.c:321
+#: app/tools/gimptextoptions.c:322
 msgid "Justify:"
 msgstr ""
 
-#: app/tools/gimptextoptions.c:327
+#: app/tools/gimptextoptions.c:328
 #, fuzzy
 msgid "Indent:"
 msgstr "Ευρετήριο:"
 
 #
-#: app/tools/gimptextoptions.c:333
+#: app/tools/gimptextoptions.c:334
 #, fuzzy
 msgid ""
 "Line\n"
 "Spacing:"
 msgstr "Διάκενο:"
+
+#
+#: app/tools/gimptextoptions.c:337
+#, fuzzy
+msgid "Create Path from Text"
+msgstr "Νέα Εικόνα"
 
 #
 #: app/tools/gimptexttool.c:115
@@ -9111,10 +9329,10 @@ msgstr "Προσθήκη συννημένων αρχείων στο παρόν �
 #
 #: app/tools/gimptexttool.c:116
 #, fuzzy
-msgid "/Tools/Text"
+msgid "/Tools/Te_xt"
 msgstr "Εργαλεία"
 
-#: app/tools/gimptexttool.c:372
+#: app/tools/gimptexttool.c:415
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Παλέττα χρωμάτων:"
@@ -9126,7 +9344,7 @@ msgstr ""
 #
 #: app/tools/gimpthresholdtool.c:90
 #, fuzzy
-msgid "/Tools/Color Tools/Threshold..."
+msgid "/Tools/Color Tools/_Threshold..."
 msgstr "Μεταφορά"
 
 #: app/tools/gimpthresholdtool.c:157
@@ -9143,56 +9361,56 @@ msgstr ""
 msgid "Threshold Range:"
 msgstr "Κατώφλι"
 
-#: app/tools/gimptransformoptions.c:299
+#: app/tools/gimptransformoptions.c:301
 #, fuzzy
 msgid "Transform Direction"
 msgstr "Πληροφορίες Τροχιάς"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:317
+#: app/tools/gimptransformoptions.c:319
 #, fuzzy
 msgid "Clip Result"
 msgstr "Αποτελέσματα"
 
-#: app/tools/gimptransformoptions.c:344
+#: app/tools/gimptransformoptions.c:346
 #, fuzzy
 msgid "Density:"
 msgstr "Πυκνότητα"
 
 #. the constraints frame
-#: app/tools/gimptransformoptions.c:355
+#: app/tools/gimptransformoptions.c:357
 #, fuzzy
 msgid "Constraints"
 msgstr "Αντίθεση:"
 
-#: app/tools/gimptransformoptions.c:366
+#: app/tools/gimptransformoptions.c:368
 #, c-format
 msgid "15 Degrees  %s"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:377
+#: app/tools/gimptransformoptions.c:379
 #, c-format
 msgid "Keep Height  %s"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:387 app/tools/gimptransformoptions.c:401
+#: app/tools/gimptransformoptions.c:389 app/tools/gimptransformoptions.c:403
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
 "the aspect ratio"
 msgstr ""
 
-#: app/tools/gimptransformoptions.c:391
+#: app/tools/gimptransformoptions.c:393
 #, c-format
 msgid "Keep Width  %s"
 msgstr ""
 
-#: app/tools/gimptransformtool.c:240
+#: app/tools/gimptransformtool.c:243
 #, fuzzy
 msgid "Transforming..."
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/tools/gimptransformtool.c:291
+#: app/tools/gimptransformtool.c:295
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -9210,82 +9428,10 @@ msgstr ""
 #
 #: app/tools/gimpvectortool.c:116
 #, fuzzy
-msgid "/Tools/Vectors"
+msgid "/Tools/_Vectors"
 msgstr "Εργαλεία"
 
-#
-#: app/tools/paint_options.c:135
-#, fuzzy
-msgid "Open the brush selection dialog"
-msgstr "Κατασκευή πανομοιότυπης επιλογής"
-
-#: app/tools/paint_options.c:138
-#, fuzzy
-msgid "Brush:"
-msgstr "Πινέλα"
-
-#
-#: app/tools/paint_options.c:152
-#, fuzzy
-msgid "Open the pattern selection dialog"
-msgstr "Αντιγραφή επιλεγμένου"
-
-#: app/tools/paint_options.c:155
-#, fuzzy
-msgid "Pattern:"
-msgstr "Σχέδια"
-
-#
-#: app/tools/paint_options.c:168
-#, fuzzy
-msgid "Open the gradient selection dialog"
-msgstr "Κατασκευή πανομοιότυπης επιλογής"
-
-#: app/tools/paint_options.c:174
-msgid "Gradient:"
-msgstr "Διαβάθμιση:"
-
-#: app/tools/paint_options.c:249
-#, fuzzy
-msgid "Pressure Sensitivity"
-msgstr "Ευαισ_θησία"
-
-#
-#: app/tools/paint_options.c:265
-#, fuzzy
-msgid "Opacity"
-msgstr "Διαφάνεια:"
-
-#: app/tools/paint_options.c:279
-#, fuzzy
-msgid "Hardness"
-msgstr "Υλικό"
-
-#: app/tools/paint_options.c:290
-msgid "Rate"
-msgstr "Ρυθμός"
-
-# sysdeps/names/swap.c:45
-#: app/tools/paint_options.c:349
-#, fuzzy
-msgid "Fade Out"
-msgstr "Εξερχ. Σελίδα"
-
-#: app/tools/paint_options.c:362 app/tools/paint_options.c:420
-msgid "Length:"
-msgstr ""
-
-#: app/tools/paint_options.c:405
-#, fuzzy
-msgid "Use Color from Gradient"
-msgstr "Προσαρμοσμένη Διαβάθμιση"
-
-#
-#: app/tools/paint_options.c:435
-msgid "Type:"
-msgstr "Τύπος:"
-
-#: app/tools/tool_manager.c:214
+#: app/tools/tool_manager.c:189
 #, fuzzy
 msgid "This tool has no options."
 msgstr "Το παρόν αντικείμενο δεν έχει ιδιότητες."
@@ -9328,7 +9474,7 @@ msgstr "Μονοπάτια"
 msgid "Rotate Path"
 msgstr "Επικόλληση Έργου"
 
-#: app/vectors/gimpvectors.c:513
+#: app/vectors/gimpvectors.c:514
 #, fuzzy
 msgid "Transform Path"
 msgstr "Πληροφορίες Τροχιάς"
@@ -9357,10 +9503,23 @@ msgstr ""
 
 #: app/widgets/widgets-enums.c:71
 #, fuzzy
+msgid "Icon"
+msgstr "Μετρητής:"
+
+#: app/widgets/widgets-enums.c:73
+msgid "Icon & Text"
+msgstr ""
+
+#: app/widgets/widgets-enums.c:74
+msgid "Icon & Desc"
+msgstr ""
+
+#: app/widgets/widgets-enums.c:92
+#, fuzzy
 msgid "View as List"
 msgstr "Εμφάνιση καταλόγου"
 
-#: app/widgets/widgets-enums.c:72
+#: app/widgets/widgets-enums.c:93
 #, fuzzy
 msgid "View as Grid"
 msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
@@ -9377,6 +9536,10 @@ msgstr "Λόγος αναλογιών:"
 #: app/widgets/gimpbrushfactoryview.c:115
 msgid "Spacing:"
 msgstr "Διάκενο:"
+
+#: app/widgets/gimpbrushfactoryview.c:118
+msgid "Percentage of width of brush"
+msgstr ""
 
 #: app/widgets/gimpbufferview.c:151
 #, fuzzy
@@ -9423,24 +9586,24 @@ msgstr ""
 "Κανάλι προς Επιλογμένο. \n"
 "<Shift> Προσθήκη          <Ctrl> Αφαίρεση      <Shift><Ctrl> Τομή"
 
-#: app/widgets/gimpcoloreditor.c:236
+#: app/widgets/gimpcoloreditor.c:215
 #, fuzzy
 msgid "FG"
 msgstr "G"
 
-#: app/widgets/gimpcoloreditor.c:236
+#: app/widgets/gimpcoloreditor.c:215
 #, fuzzy
 msgid "BG"
 msgstr "B"
 
 #
-#: app/widgets/gimpcoloreditor.c:240
+#: app/widgets/gimpcoloreditor.c:219
 #, fuzzy
 msgid "Edit Foreground Color"
 msgstr "Προσκήνιο"
 
 #
-#: app/widgets/gimpcoloreditor.c:240
+#: app/widgets/gimpcoloreditor.c:219
 #, fuzzy
 msgid "Edit Background Color"
 msgstr "Φόντο"
@@ -9512,6 +9675,28 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Διαγραφή Παραμέτρου"
 
+#: app/widgets/gimpdevicestatus.c:288
+#, fuzzy
+msgid "Save device status"
+msgstr "Κατάσταση Συσκευής"
+
+#: app/widgets/gimpdevicestatus.c:295
+#, fuzzy
+msgid "Configure input devices"
+msgstr "Byte Εισόδου"
+
+#
+#: app/widgets/gimpdevicestatus.c:401
+#, fuzzy, c-format
+msgid "Foreground: %d, %d, %d"
+msgstr "Προσκήνιο"
+
+#
+#: app/widgets/gimpdevicestatus.c:406
+#, fuzzy, c-format
+msgid "Background: %d, %d, %d"
+msgstr "Φόντο"
+
 #: app/widgets/gimpdock.c:289
 msgid "You can drop dockable dialogs here."
 msgstr ""
@@ -9566,19 +9751,19 @@ msgstr "Το GIMP"
 msgid "%s Message"
 msgstr "Μήνυμα GIMP"
 
-#: app/widgets/gimperrorconsole.c:331
+#: app/widgets/gimperrorconsole.c:334
 #, fuzzy
 msgid "Cannot save. Nothing is selected."
 msgstr "Δε μπορείτε να αποθηκεύσετε, τίποτα δεν είναι επιλεγμένο!"
 
 #
-#: app/widgets/gimperrorconsole.c:341
+#: app/widgets/gimperrorconsole.c:344
 #, fuzzy
 msgid "Save Error Log to File"
 msgstr "Αποθήκευση καταγραφών σφαλμάτων σε αρχείο..."
 
 #
-#: app/widgets/gimperrorconsole.c:390
+#: app/widgets/gimperrorconsole.c:393
 #, fuzzy, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -9640,86 +9825,86 @@ msgstr ""
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:789
+#: app/widgets/gimpgradienteditor.c:794
 #, fuzzy, c-format
 msgid "Position: %0.6f"
 msgstr "Θέση χειριστή: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:791
+#: app/widgets/gimpgradienteditor.c:796
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:794
+#: app/widgets/gimpgradienteditor.c:799
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
 #
-#: app/widgets/gimpgradienteditor.c:825 app/widgets/gimpgradienteditor.c:859
+#: app/widgets/gimpgradienteditor.c:830 app/widgets/gimpgradienteditor.c:864
 #, fuzzy, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "Φόντο"
 
-#: app/widgets/gimpgradienteditor.c:832
+#: app/widgets/gimpgradienteditor.c:837
 msgid "Foreground color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:864
+#: app/widgets/gimpgradienteditor.c:869
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:867
+#: app/widgets/gimpgradienteditor.c:872
 msgid "Background color set to:"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1054 app/widgets/gimpgradienteditor.c:1116
+#: app/widgets/gimpgradienteditor.c:1059 app/widgets/gimpgradienteditor.c:1121
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1060
+#: app/widgets/gimpgradienteditor.c:1065
 msgid "Drag: move"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1066 app/widgets/gimpgradienteditor.c:1079
-#: app/widgets/gimpgradienteditor.c:1092 app/widgets/gimpgradienteditor.c:1113
+#: app/widgets/gimpgradienteditor.c:1071 app/widgets/gimpgradienteditor.c:1084
+#: app/widgets/gimpgradienteditor.c:1097 app/widgets/gimpgradienteditor.c:1118
 #, fuzzy, c-format
 msgid "%s%sClick: extend selection"
 msgstr "Διαγραφή επιλεγμένου"
 
-#: app/widgets/gimpgradienteditor.c:1072 app/widgets/gimpgradienteditor.c:1085
+#: app/widgets/gimpgradienteditor.c:1077 app/widgets/gimpgradienteditor.c:1090
 #, fuzzy
 msgid "Click: select"
 msgstr "Διαγραφή επιλεγμένου"
 
-#: app/widgets/gimpgradienteditor.c:1098 app/widgets/gimpgradienteditor.c:1121
+#: app/widgets/gimpgradienteditor.c:1103 app/widgets/gimpgradienteditor.c:1126
 msgid "Click: select    Drag: move"
 msgstr ""
 
-#: app/widgets/gimpgradienteditor.c:1346 app/widgets/gimpgradienteditor.c:1355
+#: app/widgets/gimpgradienteditor.c:1354 app/widgets/gimpgradienteditor.c:1363
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Θέση χειριστή: %0.6f"
 
-#: app/widgets/gimpgradienteditor.c:1374
+#: app/widgets/gimpgradienteditor.c:1382
 #, c-format
 msgid "Distance: %0.6f"
 msgstr ""
 
-#: app/widgets/gimphelp.c:196
+#: app/widgets/gimphelp.c:204
 msgid "Could not find GIMP Help Browser"
 msgstr "Αδύνατη η εύρεση του Εξερευνητή Βοήθειας του GIMP"
 
-#: app/widgets/gimphelp.c:198
+#: app/widgets/gimphelp.c:206
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/widgets/gimphelp.c:201
+#: app/widgets/gimphelp.c:209
 msgid "Use Netscape instead"
 msgstr "Χρήση Netscape αντίθετα"
 
@@ -9740,7 +9925,7 @@ msgstr ""
 msgid "Delete this image"
 msgstr "Διαγραφή Καναλιού"
 
-#: app/widgets/gimpitemfactory.c:522
+#: app/widgets/gimpitemfactory.c:550
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
@@ -9786,7 +9971,7 @@ msgid "Anchor Floating Layer"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
-#: app/widgets/gimppaletteeditor.c:256 app/widgets/gimppaletteeditor.c:922
+#: app/widgets/gimppaletteeditor.c:256 app/widgets/gimppaletteeditor.c:927
 #, fuzzy
 msgid "Undefined"
 msgstr "Υπογραμμισμένα"
@@ -9812,13 +9997,13 @@ msgid "Delete Color"
 msgstr "Εξ' ορισμού Μεγέθυνση"
 
 #
-#: app/widgets/gimppaletteeditor.c:1026
+#: app/widgets/gimppaletteeditor.c:1031
 #, fuzzy
 msgid "Edit Palette Color"
 msgstr "Στατικό Χρώμα"
 
 #
-#: app/widgets/gimppaletteeditor.c:1028
+#: app/widgets/gimppaletteeditor.c:1033
 #, fuzzy
 msgid "Edit Color Palette Entry"
 msgstr "Στατικό Χρώμα"
@@ -9952,11 +10137,16 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 
-#: app/widgets/gimptoolbox.c:726
+#: app/widgets/gimptoolbox.c:738
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
 msgstr ""
+
+#
+#: app/widgets/gimpundoeditor.c:130
+msgid "Redo"
+msgstr "Επανεκτέλεση"
 
 #: app/widgets/gimpundoeditor.c:172
 #, fuzzy
@@ -10142,12 +10332,12 @@ msgstr "Μήνυμα GIMP"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:407
+#: app/widgets/gimpwidgets-utils.c:386
 #, c-format
 msgid "<%s>"
 msgstr ""
 
-#: app/xcf/xcf-load.c:261
+#: app/xcf/xcf-load.c:280
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -10155,8 +10345,8 @@ msgid ""
 msgstr ""
 
 #
-#: app/xcf/xcf-save.c:146 app/xcf/xcf-save.c:156 app/xcf/xcf-save.c:166
-#: app/xcf/xcf-save.c:176 app/xcf/xcf-save.c:190 app/xcf/xcf.c:318
+#: app/xcf/xcf-save.c:148 app/xcf/xcf-save.c:158 app/xcf/xcf-save.c:168
+#: app/xcf/xcf-save.c:178 app/xcf/xcf-save.c:192 app/xcf/xcf.c:318
 #, fuzzy, c-format
 msgid "Error saving XCF file: %s"
 msgstr ""
@@ -10190,6 +10380,52 @@ msgstr ""
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr ""
+
+#
+#, fuzzy
+#~ msgid "Once Forward"
+#~ msgstr "Προώθηση"
+
+#, fuzzy
+#~ msgid "Once Backward"
+#~ msgstr " Πρός τα πίσω"
+
+#, fuzzy
+#~ msgid "Loop Triangle"
+#~ msgstr "Κενό Τρίγωνο"
+
+#
+#~ msgid "Type:"
+#~ msgstr "Τύπος:"
+
+#, fuzzy
+#~ msgid "Color Editor"
+#~ msgstr "Παλέττα χρωμάτων:"
+
+#, fuzzy
+#~ msgid "Appearence"
+#~ msgstr "Εμφάνιση"
+
+#
+#, fuzzy
+#~ msgid "Grid Foreground Color"
+#~ msgstr "Προσκήνιο"
+
+#
+#, fuzzy
+#~ msgid "Grid Background Color"
+#~ msgstr "Φόντο"
+
+#, fuzzy
+#~ msgid "  Success\n"
+#~ msgstr "Επιτυχία"
+
+#, fuzzy
+#~ msgid "  Failure: %s\n"
+#~ msgstr "Σχήμα %s"
+
+#~ msgid "Hex Triplet"
+#~ msgstr "Τριάδα σε Δεκαεξ. Μορφή"
 
 #, fuzzy
 #~ msgid "Tool Plug-Ins"
@@ -10398,10 +10634,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Document History Tree"
 #~ msgstr "/Διάλογοι/Ακύρωση Ιστορικού..."
-
-#, fuzzy
-#~ msgid "/View as Tree"
-#~ msgstr "/Εμφάνιση/Τοποθέτηση Σε Πλέγμα"
 
 #, fuzzy
 #~ msgid "Undo History: %s"
@@ -11310,10 +11542,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Rotation"
 #~ msgstr "τοποθεσία"
-
-#, fuzzy
-#~ msgid "Shearing"
-#~ msgstr "Εκκινείται"
 
 #, fuzzy
 #~ msgid "Tool Paradigm"

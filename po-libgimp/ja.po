@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-04-14 14:10+0900\n"
 "Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 #, fuzzy
 msgid "Brush Selection"
 msgstr "単位選択"
@@ -147,7 +148,7 @@ msgstr "以下の理由のため画像のエキスポートを行う必要があ
 msgid "The export conversion won't modify your original image."
 msgstr "エキスポート変換は元画像には影響を与えません."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -156,7 +157,7 @@ msgstr ""
 "レイヤーマスクを %s として保存しようとしています.\n"
 "この操作では, 可視レイヤーは保存されません."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -165,18 +166,17 @@ msgstr ""
 "チャンネル (保存済みの選択領域) を %s として保存しようとしています.\n"
 "この操作では, 可視レイヤーは保存されません."
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
 msgstr "単位選択"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 #, fuzzy
 msgid "Gradient Selection"
 msgstr "単位選択"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "なし"
 
@@ -184,7 +184,7 @@ msgstr "なし"
 msgid "Preview"
 msgstr ""
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -193,7 +193,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 #, fuzzy
 msgid "Pattern Selection"
 msgstr "単位選択"
@@ -237,9 +237,9 @@ msgstr ""
 msgid "Loading module: '%s'\n"
 msgstr "モジュールの読み込み: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -248,24 +248,24 @@ msgstr ""
 "モジュール '%s' 読み込みエラー:\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "モジュールの読み込みを飛ばします: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "モジュールエラー"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 msgid "Loaded"
 msgstr "読み込み済み"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "読み込み失敗"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr "未読み込み"
 
@@ -529,12 +529,56 @@ msgstr "コントラスト"
 msgid "Contrast Cycles:"
 msgstr "コントラストサイクル:"
 
+#: modules/colorsel_cmyk.c:70
+#, fuzzy
+msgid "CMYK color selector"
+msgstr "水彩色形式の色選択"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+#, fuzzy
+msgid "Cyan"
+msgstr "キャンセル"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/黒"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr "Painter 式の色選択"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "三角形(_T)"
 
 #: modules/colorsel_water.c:104
@@ -542,15 +586,13 @@ msgid "Watercolor style color selector"
 msgstr "水彩色形式の色選択"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+#, fuzzy
+msgid "Watercolor"
 msgstr "水彩色(_W)"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "圧力"
-
-#~ msgid "Cancel"
-#~ msgstr "キャンセル"
 
 #, fuzzy
 #~ msgid "_Time"

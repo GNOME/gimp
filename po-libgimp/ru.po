@@ -4,7 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp-1.3+\n"
-"POT-Creation-Date: 2003-07-06 17:30+0400\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-07-06 17:42+0400\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -92,7 +93,8 @@ msgstr "%s может обработать только RGB или индекс�
 #: libgimp/gimpexport.c:284
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s может обработать только изображения в оттенках серого или индексированные"
+msgstr ""
+"%s может обработать только изображения в оттенках серого или индексированные"
 
 #: libgimp/gimpexport.c:295
 #, c-format
@@ -146,7 +148,7 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -155,7 +157,7 @@ msgstr ""
 "Вы собираетесь сохранить маску слоя как %s.\n"
 "Видимые слои не будут сохранены."
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -172,8 +174,7 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
-#: libgimp/gimpmenu.c:517
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Без"
 
@@ -181,7 +182,7 @@ msgstr "Без"
 msgid "Preview"
 msgstr "Просмотр"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -377,7 +378,8 @@ msgstr "Гигабайты"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
+msgstr ""
+"Выберите пипетку, затем укажите цвет где-нибудь на экране, чтобы выбрать его."
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
@@ -471,11 +473,13 @@ msgstr "Перемешать"
 
 #: libgimpwidgets/gimpwidgets.c:958
 msgid "Seed random number generator with a generated random number"
-msgstr "Инициализировать генератор случайных чисел сгенерированным случайным числом"
+msgstr ""
+"Инициализировать генератор случайных чисел сгенерированным случайным числом"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
+msgstr ""
+"Фильтр моделирующий недостаток цвета (алгоритм Бреттеля-Виенота-Моллона)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
@@ -525,12 +529,54 @@ msgstr "Контрастность"
 msgid "Contrast Cycles:"
 msgstr "Циклы контрастности:"
 
+#: modules/colorsel_cmyk.c:70
+msgid "CMYK color selector"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+msgid "Cyan"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "/Чёрный"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "Треугольник"
 
 #: modules/colorsel_water.c:104
@@ -538,7 +584,7 @@ msgid "Watercolor style color selector"
 msgstr ""
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+msgid "Watercolor"
 msgstr ""
 
 #: modules/colorsel_water.c:251

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-24 09:28+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-07-24 02:13+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -170,8 +170,7 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: libgimp/gimpmenu.c:104 libgimp/gimpmenu.c:184 libgimp/gimpmenu.c:259
-#: libgimp/gimpmenu.c:354
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Geen"
 
@@ -179,7 +178,7 @@ msgstr "Geen"
 msgid "Preview"
 msgstr "Vooruitblik"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-27 04:21+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-06-27 23:32+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -51,76 +51,76 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Pouze neinteraktivní spuštění umožňuje režim provádění Skript-fu"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1112
-#: plug-ins/script-fu/script-fu-scripts.c:1114
+#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
 msgid "/Script-Fu/"
 msgstr "/Skript-fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1122
+#: plug-ins/script-fu/script-fu-scripts.c:1123
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1156
+#: plug-ins/script-fu/script-fu-scripts.c:1157
 msgid "About"
 msgstr "O programu"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1166
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "Script Arguments"
 msgstr "Argumenty skriptu"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1193
+#: plug-ins/script-fu/script-fu-scripts.c:1194
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1239
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script-Fu Color Selection"
 msgstr "Skript-fu výběr barvy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1320
 msgid "Script-Fu File Selection"
 msgstr "Skript-fu výběr souboru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1325
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-fu výběr adresáře"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1342
 msgid "Script-Fu Font Selection"
 msgstr "Výběr písma Skript-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1349
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-fu výběr vzorku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1356
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-fu výběr přechodu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-fu výběr stopy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/script-fu/script-fu-scripts.c:1859
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1864
+#: plug-ins/script-fu/script-fu-scripts.c:1865
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1870
+#: plug-ins/script-fu/script-fu-scripts.c:1871
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1878
+#: plug-ins/script-fu/script-fu-scripts.c:1879
 msgid "Image Types:"
 msgstr "Typy obrázku:"
 
@@ -147,19 +147,19 @@ msgstr "Port serveru:"
 msgid "Server Logfile:"
 msgstr "Žurnálový soubor serveru:"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: plug-ins/script-fu/script-fu.c:120
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Konzole..."
 
-#: plug-ins/script-fu/script-fu.c:147
+#: plug-ins/script-fu/script-fu.c:145
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Server..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Znovu načíst všechny dostupné skripty"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:274
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Rozš./Skript-fu/Zaktualizovat"
 
@@ -337,13 +337,13 @@ msgid "Shadow Blur Radius"
 msgstr "Poloměr neostrosti stínu"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X Offset"
 msgstr "X posun stínu"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y Offset"
 msgstr "Y posun stínu"
@@ -357,19 +357,19 @@ msgstr "Y posun stínu"
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #: plug-ins/script-fu/scripts/chalk.scm.h:7
 #: plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
@@ -384,7 +384,7 @@ msgstr "Y posun stínu"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:14
-#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "Text"
 
@@ -446,7 +446,7 @@ msgid "Number of Y Tiles"
 msgstr "Y počet dlaždic"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Start Blend"
 msgstr "Počátek mísení"
 
@@ -522,7 +522,7 @@ msgstr "Sloučit obraz"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -596,7 +596,7 @@ msgstr "Výplň"
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
@@ -733,14 +733,14 @@ msgstr "<Toolbox>/Rozš./Skript-fu/Témata z webu/Zkosený vzor/Vodorovná čár
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Výška"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
@@ -801,6 +801,16 @@ msgid "Gradient"
 msgstr "Přechod"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#, fuzzy
+msgid "Gradient Reverse"
+msgstr "Přechod"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
 msgstr "Posun (pixely)"
 
@@ -829,32 +839,26 @@ msgid "After Glow"
 msgstr "Po záři"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid ""
-"Burn-In: Need two layers in total!\n"
-"        A foreground text layer with transparency\n"
-"        and a background layer."
+msgid "Burn-In: Need two layers in total!"
 msgstr ""
-"Vpálení: Je zapotřebí celkem dvou vrstev!\n"
-"        Vrstva textu v popředí s průhledností\n"
-"        a vrstva pozadí."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona Width"
 msgstr "Šířka koróny"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Fadeout"
 msgstr "Zhasnutí"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout Width"
 msgstr "Šířka zhasnutí"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Prepare for GIF"
 msgstr "Připravit pro GIF"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Speed (pixels/frame)"
 msgstr "Rychlost (pixelů/rámec)"
 
@@ -875,12 +879,12 @@ msgid "Color 3"
 msgstr "Barva 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
-#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
 msgstr "Zrnitost"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
-#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image Size"
 msgstr "Velikost obrázku"
 
@@ -1094,12 +1098,12 @@ msgstr "<Image>/Skript-fu/Alfa do loga/Komická kniha..."
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
 msgstr "<Toolbox>/Rozš./Skript-fu/Loga/Komická kniha..."
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
 msgstr "Barva obrysu"
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline Size"
 msgstr "Velikost obrysu"
 
@@ -1419,32 +1423,41 @@ msgstr "Přechod mísení (obrys)"
 msgid "Blend Gradient (Text)"
 msgstr "Přechod mísení (text)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
+msgid "Outline Gradient Reverse"
+msgstr "Poloměr rozostření obrysu"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
 msgstr "Vzorek (obrys)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
 msgstr "Vzorek (překrytí)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
 msgstr "Vzorek (text)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Stín"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+msgid "Text Gradient Reverse"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
 msgstr "Použít překrytí vzorků"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
 msgstr "Použít na obrysy vzorku místo přechodu"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Použít na text vzorku místo přechodu"
 
@@ -1802,7 +1815,7 @@ msgstr "Chování"
 msgid "Detail in Middle"
 msgstr "Detail uprostřed"
 
-#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
 msgstr "Dlaždice"
 
@@ -2360,6 +2373,15 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Registr modulů"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
+
+#~ msgid ""
+#~ "Burn-In: Need two layers in total!\n"
+#~ "        A foreground text layer with transparency\n"
+#~ "        and a background layer."
+#~ msgstr ""
+#~ "Vpálení: Je zapotřebí celkem dvou vrstev!\n"
+#~ "        Vrstva textu v popředí s průhledností\n"
+#~ "        a vrstva pozadí."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
 #~ msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/Kotálnice..."

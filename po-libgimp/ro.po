@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:321
+#: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Selecţie pensulă"
 
@@ -153,31 +154,30 @@ msgstr ""
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpexport.c:610
+#: libgimp/gimpexport.c:611
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:615
+#: libgimp/gimpexport.c:617
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpfontmenu.c:80
+#: libgimp/gimpfontmenu.c:89
 #, fuzzy
 msgid "Font Selection"
 msgstr "Din selecţie"
 
-#: libgimp/gimpgradientmenu.c:172
+#: libgimp/gimpgradientmenu.c:102
 msgid "Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: libgimp/gimpmenu.c:176 libgimp/gimpmenu.c:296 libgimp/gimpmenu.c:411
-#: libgimp/gimpmenu.c:593
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Nimic"
 
@@ -185,7 +185,7 @@ msgstr "Nimic"
 msgid "Preview"
 msgstr "Previzualizare"
 
-#: libgimp/gimpmiscui.c:529
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -194,7 +194,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:321
+#: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Selecţie model"
 
@@ -237,34 +237,34 @@ msgstr "%.1f MOcteţi"
 msgid "Loading module: '%s'\n"
 msgstr "încarc modulul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
-#: libgimpmodule/gimpmodule.c:432
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
 #, fuzzy, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr "eroare la încărcare modul: %s: %s"
 
-#: libgimpmodule/gimpmodule.c:270
+#: libgimpmodule/gimpmodule.c:271
 #, fuzzy, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "ignor modulul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:406
+#: libgimpmodule/gimpmodule.c:408
 msgid "Module error"
 msgstr "Eroare în modul"
 
-#: libgimpmodule/gimpmodule.c:407
+#: libgimpmodule/gimpmodule.c:409
 #, fuzzy
 msgid "Loaded"
 msgstr "Incărcat cu SUCCES"
 
-#: libgimpmodule/gimpmodule.c:408
+#: libgimpmodule/gimpmodule.c:410
 msgid "Load failed"
 msgstr "Incărcarea a eşuat"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:411
 msgid "Not loaded"
 msgstr ""
 
@@ -559,13 +559,58 @@ msgstr "Contrast:"
 msgid "Contrast Cycles:"
 msgstr "Contrast:"
 
+#: modules/colorsel_cmyk.c:70
+#, fuzzy
+msgid "CMYK color selector"
+msgstr "Selecţie după culoare"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:143
+#, fuzzy
+msgid "_C"
+msgstr "C"
+
+#: modules/colorsel_cmyk.c:144
+#, fuzzy
+msgid "_M"
+msgstr "M"
+
+#: modules/colorsel_cmyk.c:145
+#, fuzzy
+msgid "_Y"
+msgstr "Y"
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr ""
+
+#: modules/colorsel_cmyk.c:150
+msgid "Cyan"
+msgstr "Bleu"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr "Violet"
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr "Galben"
+
+#: modules/colorsel_cmyk.c:153
+#, fuzzy
+msgid "Black"
+msgstr "Numai negru"
+
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
 #: modules/colorsel_triangle.c:182
 #, fuzzy
-msgid "_Triangle"
+msgid "Triangle"
 msgstr "Triunghi"
 
 #: modules/colorsel_water.c:104
@@ -575,7 +620,7 @@ msgstr "Tipul de colorare pentru selecţie"
 
 #: modules/colorsel_water.c:176
 #, fuzzy
-msgid "_Watercolor"
+msgid "Watercolor"
 msgstr "Culoarea Apei"
 
 #: modules/colorsel_water.c:251
@@ -4002,9 +4047,6 @@ msgstr "Presiune"
 #~ msgid "No available patterns for this operation."
 #~ msgstr "Nu există nici un model disponibil pentru această operaţie."
 
-#~ msgid "By Color Selection"
-#~ msgstr "Selecţie după culoare"
-
 #~ msgid "Inactive"
 #~ msgstr "Inactiv"
 
@@ -4058,15 +4100,6 @@ msgstr "Presiune"
 
 #~ msgid "Color Levels:"
 #~ msgstr "Nivele de culoare:"
-
-#~ msgid "Cyan"
-#~ msgstr "Bleu"
-
-#~ msgid "Magenta"
-#~ msgstr "Violet"
-
-#~ msgid "Yellow"
-#~ msgstr "Galben"
 
 #~ msgid "Preserve Luminosity"
 #~ msgstr "Păstrează luminozitatea"
@@ -4208,15 +4241,6 @@ msgstr "Presiune"
 
 #~ msgid "Master"
 #~ msgstr "Stapân"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "M"
-#~ msgstr "M"
 
 #~ msgid "Hue / Lightness / Saturation Adjustments"
 #~ msgstr "Reglare Nuanţa / Luminozitate / Saturare"

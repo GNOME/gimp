@@ -1,5 +1,9 @@
 2003-07-25  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.3.17 release.
+
+2003-07-25  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: fixed the --without-aa option I added lately.
 
 2003-07-24  Maurits Rijk <lpeek.mrijk@consunet.nl>

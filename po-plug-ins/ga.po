@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp po-plug-ins CVS\n"
-"POT-Creation-Date: 2003-06-26 22:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2000-08-27 00:23+0000\n"
 "Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
@@ -13,375 +14,375 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:294
-#: plug-ins/FractalExplorer/Dialogs.c:1400 plug-ins/gfig/gfig.c:3236
+#: plug-ins/FractalExplorer/Dialogs.c:295
+#: plug-ins/FractalExplorer/Dialogs.c:1401 plug-ins/gfig/gfig.c:3216
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
-#: plug-ins/webbrowser/webbrowser.c:279
+#: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Faoi"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:317 plug-ins/Lighting/lighting_ui.c:1150
+#: plug-ins/FractalExplorer/Dialogs.c:318 plug-ins/Lighting/lighting_ui.c:1150
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
 #: plug-ins/common/blinds.c:339 plug-ins/common/curve_bend.c:1378
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:722
 #: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:671
 #: plug-ins/common/iwarp.c:1211 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:821
+#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:704
 #: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
-#: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:405
+#: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:403
 #: plug-ins/common/waves.c:454 plug-ins/common/whirlpinch.c:673
 #: plug-ins/flame/flame.c:947 plug-ins/gflare/gflare.c:2319
-#: plug-ins/gflare/gflare.c:3245 plug-ins/gimpressionist/orientmap.c:501
-#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:434
+#: plug-ins/gflare/gflare.c:3246 plug-ins/gimpressionist/orientmap.c:501
+#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
 msgstr "Réamhthaispeántas"
 
-#: plug-ins/FractalExplorer/Dialogs.c:363
+#: plug-ins/FractalExplorer/Dialogs.c:364
 msgid "Realtime Preview"
 msgstr "Réamhthaispeántas Beo"
 
-#: plug-ins/FractalExplorer/Dialogs.c:370
+#: plug-ins/FractalExplorer/Dialogs.c:371
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr ""
 "Má chuireann tú an rogha seo ar súil, athscríobhfar an réamhthaispeántas gan "
 "stró"
 
-#: plug-ins/FractalExplorer/Dialogs.c:373
+#: plug-ins/FractalExplorer/Dialogs.c:374
 msgid "Redraw"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:379
+#: plug-ins/FractalExplorer/Dialogs.c:380
 msgid "Redraw preview"
 msgstr ""
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:382
+#: plug-ins/FractalExplorer/Dialogs.c:383
 msgid "Zoom Options"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:396
+#: plug-ins/FractalExplorer/Dialogs.c:397
 msgid "Undo last zoom"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:406
+#: plug-ins/FractalExplorer/Dialogs.c:407
 msgid "Redo last zoom"
 msgstr ""
 
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:438 plug-ins/gflare/gflare.c:2669
-#: plug-ins/gflare/gflare.c:3478 plug-ins/gflare/gflare.c:3585
-#: plug-ins/gflare/gflare.c:3724
+#: plug-ins/FractalExplorer/Dialogs.c:439 plug-ins/gflare/gflare.c:2670
+#: plug-ins/gflare/gflare.c:3479 plug-ins/gflare/gflare.c:3586
+#: plug-ins/gflare/gflare.c:3725
 msgid "Parameters"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:441
+#: plug-ins/FractalExplorer/Dialogs.c:442
 msgid "Fractal Parameters"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:455
+#: plug-ins/FractalExplorer/Dialogs.c:456
 msgid "XMIN:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:458
+#: plug-ins/FractalExplorer/Dialogs.c:459
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:466
+#: plug-ins/FractalExplorer/Dialogs.c:467
 msgid "XMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:469
+#: plug-ins/FractalExplorer/Dialogs.c:470
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:477
+#: plug-ins/FractalExplorer/Dialogs.c:478
 msgid "YMIN:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:480
+#: plug-ins/FractalExplorer/Dialogs.c:481
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:488
+#: plug-ins/FractalExplorer/Dialogs.c:489
 msgid "YMAX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:491
+#: plug-ins/FractalExplorer/Dialogs.c:492
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:499
+#: plug-ins/FractalExplorer/Dialogs.c:500
 msgid "ITER:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:502
+#: plug-ins/FractalExplorer/Dialogs.c:503
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:511
+#: plug-ins/FractalExplorer/Dialogs.c:512
 msgid "CX:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:514
+#: plug-ins/FractalExplorer/Dialogs.c:515
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:523
+#: plug-ins/FractalExplorer/Dialogs.c:524
 msgid "CY:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:526
+#: plug-ins/FractalExplorer/Dialogs.c:527
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:543
+#: plug-ins/FractalExplorer/Dialogs.c:544
 msgid "Load a fractal from file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:551
+#: plug-ins/FractalExplorer/Dialogs.c:552
 msgid "Reset parameters to default values"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:560
+#: plug-ins/FractalExplorer/Dialogs.c:561
 msgid "Save active fractal to file"
 msgstr ""
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:563
+#: plug-ins/FractalExplorer/Dialogs.c:564
 msgid "Fractal Type"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:576
+#: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Mandelbrot"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:578
+#: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Julia"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:580
+#: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 1"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:582
+#: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Barnsley 2"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:584
+#: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Barnsley 3"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:586
+#: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Spider"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:588
+#: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Man'o'war"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:590
+#: plug-ins/FractalExplorer/Dialogs.c:591
 msgid "Lambda"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:592
+#: plug-ins/FractalExplorer/Dialogs.c:593
 msgid "Sierpinski"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:642 plug-ins/common/sinus.c:1785
+#: plug-ins/FractalExplorer/Dialogs.c:643 plug-ins/common/sinus.c:1785
 #: plug-ins/common/sinus.c:1803
 msgid "Colors"
 msgstr ""
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:646 plug-ins/common/borderaverage.c:414
+#: plug-ins/FractalExplorer/Dialogs.c:647 plug-ins/common/borderaverage.c:414
 msgid "Number of Colors"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:659
+#: plug-ins/FractalExplorer/Dialogs.c:660
 msgid "Number of Colors:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:662
+#: plug-ins/FractalExplorer/Dialogs.c:663
 msgid "Change the number of colors in the mapping"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:669
+#: plug-ins/FractalExplorer/Dialogs.c:670
 msgid "Use loglog Smoothing"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:676
+#: plug-ins/FractalExplorer/Dialogs.c:677
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:680
+#: plug-ins/FractalExplorer/Dialogs.c:681
 msgid "Color Density"
 msgstr ""
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:694 plug-ins/common/compose.c:129
-#: plug-ins/common/compose.c:139 plug-ins/common/exchange.c:419
+#: plug-ins/FractalExplorer/Dialogs.c:695 plug-ins/common/compose.c:138
+#: plug-ins/common/compose.c:148 plug-ins/common/exchange.c:419
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:697
+#: plug-ins/FractalExplorer/Dialogs.c:698
 msgid "Change the intensity of the red channel"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:704 plug-ins/common/compose.c:130
-#: plug-ins/common/compose.c:140 plug-ins/common/exchange.c:463
+#: plug-ins/FractalExplorer/Dialogs.c:705 plug-ins/common/compose.c:139
+#: plug-ins/common/compose.c:149 plug-ins/common/exchange.c:463
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:707
+#: plug-ins/FractalExplorer/Dialogs.c:708
 msgid "Change the intensity of the green channel"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:714 plug-ins/common/compose.c:131
-#: plug-ins/common/compose.c:141 plug-ins/common/exchange.c:507
+#: plug-ins/FractalExplorer/Dialogs.c:715 plug-ins/common/compose.c:140
+#: plug-ins/common/compose.c:150 plug-ins/common/exchange.c:507
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:717
+#: plug-ins/FractalExplorer/Dialogs.c:718
 msgid "Change the intensity of the blue channel"
 msgstr ""
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:723
+#: plug-ins/FractalExplorer/Dialogs.c:724
 msgid "Color Function"
 msgstr ""
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:734 plug-ins/common/AlienMap.c:1226
+#: plug-ins/FractalExplorer/Dialogs.c:735 plug-ins/common/AlienMap.c:1229
 #: plug-ins/common/decompose.c:121
 msgid "Red"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:738
-#: plug-ins/FractalExplorer/Dialogs.c:779
-#: plug-ins/FractalExplorer/Dialogs.c:820
+#: plug-ins/FractalExplorer/Dialogs.c:739
+#: plug-ins/FractalExplorer/Dialogs.c:780
+#: plug-ins/FractalExplorer/Dialogs.c:821
 msgid "Sine"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:740
-#: plug-ins/FractalExplorer/Dialogs.c:781
-#: plug-ins/FractalExplorer/Dialogs.c:822
+#: plug-ins/FractalExplorer/Dialogs.c:741
+#: plug-ins/FractalExplorer/Dialogs.c:782
+#: plug-ins/FractalExplorer/Dialogs.c:823
 msgid "Cosine"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:742
-#: plug-ins/FractalExplorer/Dialogs.c:783
-#: plug-ins/FractalExplorer/Dialogs.c:824 plug-ins/Lighting/lighting_ui.c:518
+#: plug-ins/FractalExplorer/Dialogs.c:743
+#: plug-ins/FractalExplorer/Dialogs.c:784
+#: plug-ins/FractalExplorer/Dialogs.c:825 plug-ins/Lighting/lighting_ui.c:518
 #: plug-ins/common/CML_explorer.c:170 plug-ins/common/align_layers.c:444
-#: plug-ins/common/align_layers.c:477 plug-ins/common/ps.c:2740
-#: plug-ins/common/ps.c:2753 plug-ins/common/psp.c:445
+#: plug-ins/common/align_layers.c:477 plug-ins/common/ps.c:2741
+#: plug-ins/common/ps.c:2754 plug-ins/common/psp.c:445
 #: plug-ins/fits/fits.c:1029
 msgid "None"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:747
-#: plug-ins/FractalExplorer/Dialogs.c:788
-#: plug-ins/FractalExplorer/Dialogs.c:829
+#: plug-ins/FractalExplorer/Dialogs.c:748
+#: plug-ins/FractalExplorer/Dialogs.c:789
+#: plug-ins/FractalExplorer/Dialogs.c:830
 msgid "Use sine-function for this color component"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:750
-#: plug-ins/FractalExplorer/Dialogs.c:791
-#: plug-ins/FractalExplorer/Dialogs.c:832
+#: plug-ins/FractalExplorer/Dialogs.c:751
+#: plug-ins/FractalExplorer/Dialogs.c:792
+#: plug-ins/FractalExplorer/Dialogs.c:833
 msgid "Use cosine-function for this color component"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:753
-#: plug-ins/FractalExplorer/Dialogs.c:794
-#: plug-ins/FractalExplorer/Dialogs.c:835
+#: plug-ins/FractalExplorer/Dialogs.c:754
+#: plug-ins/FractalExplorer/Dialogs.c:795
+#: plug-ins/FractalExplorer/Dialogs.c:836
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:762
-#: plug-ins/FractalExplorer/Dialogs.c:803
-#: plug-ins/FractalExplorer/Dialogs.c:844
+#: plug-ins/FractalExplorer/Dialogs.c:763
+#: plug-ins/FractalExplorer/Dialogs.c:804
+#: plug-ins/FractalExplorer/Dialogs.c:845
 msgid "Inversion"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:770
-#: plug-ins/FractalExplorer/Dialogs.c:811
-#: plug-ins/FractalExplorer/Dialogs.c:852
+#: plug-ins/FractalExplorer/Dialogs.c:771
+#: plug-ins/FractalExplorer/Dialogs.c:812
+#: plug-ins/FractalExplorer/Dialogs.c:853
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:775 plug-ins/common/AlienMap.c:1249
+#: plug-ins/FractalExplorer/Dialogs.c:776 plug-ins/common/AlienMap.c:1252
 #: plug-ins/common/decompose.c:122
 msgid "Green"
 msgstr ""
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:816 plug-ins/common/AlienMap.c:1272
+#: plug-ins/FractalExplorer/Dialogs.c:817 plug-ins/common/AlienMap.c:1275
 #: plug-ins/common/decompose.c:127
 msgid "Blue"
 msgstr ""
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:857
+#: plug-ins/FractalExplorer/Dialogs.c:858
 msgid "Color Mode"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:868
+#: plug-ins/FractalExplorer/Dialogs.c:869
 msgid "As Specified above"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:880
+#: plug-ins/FractalExplorer/Dialogs.c:881
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:890
+#: plug-ins/FractalExplorer/Dialogs.c:891
 msgid "Apply Active Gradient to Final Image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:902
+#: plug-ins/FractalExplorer/Dialogs.c:903
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:907
+#: plug-ins/FractalExplorer/Dialogs.c:908
 msgid "FractalExplorer Gradient"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:939
+#: plug-ins/FractalExplorer/Dialogs.c:940
 msgid "Fractals"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1594 plug-ins/bmp/bmpwrite.c:199
+#: plug-ins/FractalExplorer/Dialogs.c:1595 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
-#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:970
+#: plug-ins/common/gbr.c:494 plug-ins/common/gif.c:991
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
-#: plug-ins/common/jpeg.c:1304 plug-ins/common/pat.c:390
-#: plug-ins/common/pcx.c:583 plug-ins/common/pix.c:514
-#: plug-ins/common/png.c:845 plug-ins/common/ps.c:995
-#: plug-ins/common/psd_save.c:1526 plug-ins/common/sunras.c:512
-#: plug-ins/common/tiff.c:1389 plug-ins/common/xbm.c:1006
-#: plug-ins/common/xwd.c:525 plug-ins/fits/fits.c:461
+#: plug-ins/common/jpeg.c:1299 plug-ins/common/pat.c:385
+#: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
+#: plug-ins/common/png.c:936 plug-ins/common/ps.c:995
+#: plug-ins/common/psd_save.c:1527 plug-ins/common/sunras.c:520
+#: plug-ins/common/tiff.c:1516 plug-ins/common/xbm.c:1002
+#: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
 #: plug-ins/flame/flame.c:460 plug-ins/gfli/gfli.c:712
 #, c-format
 msgid ""
@@ -389,57 +390,57 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1609
+#: plug-ins/FractalExplorer/Dialogs.c:1610
 #, c-format
 msgid ""
 "Failed to write '%s':\n"
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1631
+#: plug-ins/FractalExplorer/Dialogs.c:1632
 msgid "Save: No filename given"
 msgstr ""
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1638
+#: plug-ins/FractalExplorer/Dialogs.c:1639
 msgid "Save: Can't save to a folder."
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1683
+#: plug-ins/FractalExplorer/Dialogs.c:1684
 msgid "Load Fractal Parameters"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1695
+#: plug-ins/FractalExplorer/Dialogs.c:1696
 msgid "Click here to load your file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1702
+#: plug-ins/FractalExplorer/Dialogs.c:1703
 msgid "Click here to cancel load procedure"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1720
+#: plug-ins/FractalExplorer/Dialogs.c:1721
 msgid "Save Fractal Parameters"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1732
+#: plug-ins/FractalExplorer/Dialogs.c:1733
 msgid "Click here to save your file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1739
+#: plug-ins/FractalExplorer/Dialogs.c:1740
 msgid "Click here to cancel save procedure"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1998 plug-ins/bmp/bmpread.c:97
+#: plug-ins/FractalExplorer/Dialogs.c:2003 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
 #: plug-ins/common/gbr.c:299 plug-ins/common/gih.c:628
-#: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:772
-#: plug-ins/common/pat.c:268 plug-ins/common/pcx.c:301
-#: plug-ins/common/pix.c:333 plug-ins/common/png.c:473
+#: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:770
+#: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
+#: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:875
 #: plug-ins/common/psd.c:1660 plug-ins/common/psp.c:1490
-#: plug-ins/common/sunras.c:385 plug-ins/common/tga.c:425
-#: plug-ins/common/tiff.c:437 plug-ins/common/xbm.c:735
-#: plug-ins/common/xwd.c:379 plug-ins/faxg3/faxg3.c:212
+#: plug-ins/common/sunras.c:393 plug-ins/common/tga.c:425
+#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:730
+#: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:218
 #: plug-ins/fits/fits.c:349 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:460
 #, c-format
 msgid ""
@@ -447,14 +448,14 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:2005
+#: plug-ins/FractalExplorer/Dialogs.c:2010
 #, c-format
 msgid ""
 "'%s'\n"
 "is not a FractalExplorer file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:2010
+#: plug-ins/FractalExplorer/Dialogs.c:2015
 #, c-format
 msgid ""
 "'%s' is corrupt.\n"
@@ -469,8 +470,8 @@ msgstr ""
 msgid "Rendering Fractal..."
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:4831
-#: plug-ins/gflare/gflare.c:3107
+#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:4799
+#: plug-ins/gflare/gflare.c:3108
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -493,39 +494,39 @@ msgstr ""
 msgid "New Fractal"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1186
+#: plug-ins/FractalExplorer/FractalExplorer.c:1179
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1194
+#: plug-ins/FractalExplorer/FractalExplorer.c:1187
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1266
+#: plug-ins/FractalExplorer/FractalExplorer.c:1239
 msgid "My first fractal"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1282
+#: plug-ins/FractalExplorer/FractalExplorer.c:1255
 msgid "Choose Fractal by double-clicking on it"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1319
+#: plug-ins/FractalExplorer/FractalExplorer.c:1292
 msgid "Select folder and rescan collection"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1331
+#: plug-ins/FractalExplorer/FractalExplorer.c:1304
 msgid "Delete currently selected fractal"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1386
+#: plug-ins/FractalExplorer/FractalExplorer.c:1352
 msgid "Rescan for Fractals"
 msgstr ""
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1405
+#: plug-ins/FractalExplorer/FractalExplorer.c:1369
 msgid "Add FractalExplorer Path"
 msgstr ""
 
@@ -656,7 +657,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:569 plug-ins/common/flarefx.c:769
 #: plug-ins/common/nova.c:482 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1205 plug-ins/gflare/gflare.c:2648
+#: plug-ins/flame/flame.c:1205 plug-ins/gflare/gflare.c:2649
 msgid "_X:"
 msgstr ""
 
@@ -666,8 +667,8 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:586 plug-ins/common/flarefx.c:790
 #: plug-ins/common/nova.c:503 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1258 plug-ins/flame/flame.c:1219
-#: plug-ins/gflare/gflare.c:2652
+#: plug-ins/common/xbm.c:1254 plug-ins/flame/flame.c:1219
+#: plug-ins/gflare/gflare.c:2653
 msgid "_Y:"
 msgstr ""
 
@@ -1006,7 +1007,7 @@ msgid "Object Z position in XYZ space"
 msgstr ""
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/common/ps.c:2924
+#: plug-ins/MapObject/mapobject_ui.c:1081 plug-ins/common/ps.c:2925
 msgid "Rotation"
 msgstr ""
 
@@ -1096,7 +1097,7 @@ msgstr ""
 msgid "Cylinder radius"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:791
+#: plug-ins/MapObject/mapobject_ui.c:1300 plug-ins/common/mblur.c:792
 msgid "L_ength:"
 msgstr ""
 
@@ -1143,17 +1144,17 @@ msgstr ""
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
-#: plug-ins/common/gbr.c:304 plug-ins/common/gifload.c:299
-#: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:341
-#: plug-ins/common/jpeg.c:776 plug-ins/common/pat.c:272
+#: plug-ins/common/gbr.c:304 plug-ins/common/gih.c:632
+#: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:341
+#: plug-ins/common/jpeg.c:774 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
-#: plug-ins/common/png.c:479 plug-ins/common/pnm.c:411
+#: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
 #: plug-ins/common/ps.c:881 plug-ins/common/psd.c:1664
-#: plug-ins/common/sunras.c:436 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:441 plug-ins/common/xbm.c:739
-#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:428
-#: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
-#: plug-ins/xjt/xjt.c:3329
+#: plug-ins/common/sunras.c:444 plug-ins/common/tga.c:429
+#: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
+#: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:432
+#: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:464 plug-ins/sgi/sgi.c:322
+#: plug-ins/xjt/xjt.c:3355
 #, c-format
 msgid "Opening '%s'..."
 msgstr ""
@@ -1176,22 +1177,22 @@ msgid ""
 msgstr ""
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:335
-#: plug-ins/bmp/bmpread.c:342 plug-ins/common/CEL.c:295
-#: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:604
+#: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:336
+#: plug-ins/bmp/bmpread.c:344 plug-ins/common/CEL.c:295
+#: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:617
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:979
-#: plug-ins/common/gifload.c:855 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:931 plug-ins/common/pat.c:343
+#: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:373
+#: plug-ins/common/jpeg.c:929 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
-#: plug-ins/common/pix.c:373 plug-ins/common/png.c:603
+#: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2005
-#: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:923
-#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:658
+#: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
+#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
-#: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:878
-#: plug-ins/faxg3/faxg3.c:454 plug-ins/fits/fits.c:517
-#: plug-ins/gfig/gfig.c:2684 plug-ins/gfig/gfig.c:3052 plug-ins/sgi/sgi.c:367
-#: plug-ins/twain/twain.c:742 plug-ins/winsnap/winsnap.c:1233
+#: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:873
+#: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
+#: plug-ins/gfig/gfig.c:2664 plug-ins/gfig/gfig.c:3032 plug-ins/sgi/sgi.c:367
+#: plug-ins/twain/twain.c:746 plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr ""
 
@@ -1201,16 +1202,16 @@ msgstr ""
 
 #. And let's begin the progress
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:502
-#: plug-ins/common/gif.c:977 plug-ins/common/gih.c:1233
+#: plug-ins/common/gif.c:998 plug-ins/common/gih.c:1233
 #: plug-ins/common/gtm.c:258 plug-ins/common/hrz.c:470
-#: plug-ins/common/jpeg.c:1260 plug-ins/common/pat.c:395
-#: plug-ins/common/pcx.c:544 plug-ins/common/pix.c:520
-#: plug-ins/common/png.c:852 plug-ins/common/pnm.c:787
-#: plug-ins/common/ps.c:1000 plug-ins/common/psd_save.c:1531
-#: plug-ins/common/sunras.c:517 plug-ins/common/tga.c:1031
-#: plug-ins/common/tiff.c:1394 plug-ins/common/xbm.c:1011
-#: plug-ins/common/xpm.c:595 plug-ins/common/xwd.c:530
-#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1711
+#: plug-ins/common/jpeg.c:1255 plug-ins/common/pat.c:390
+#: plug-ins/common/pcx.c:540 plug-ins/common/pix.c:520
+#: plug-ins/common/png.c:943 plug-ins/common/pnm.c:787
+#: plug-ins/common/ps.c:1000 plug-ins/common/psd_save.c:1532
+#: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
+#: plug-ins/common/tiff.c:1521 plug-ins/common/xbm.c:1007
+#: plug-ins/common/xpm.c:595 plug-ins/common/xwd.c:534
+#: plug-ins/gfli/gfli.c:680 plug-ins/sgi/sgi.c:535 plug-ins/xjt/xjt.c:1725
 #, c-format
 msgid "Saving '%s'..."
 msgstr ""
@@ -1229,208 +1230,208 @@ msgid "_RLE encoded"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:941
-msgid "<Image>/Filters/Colors/Map/Alien Map..."
+msgid "<Image>/Filters/Colors/Map/_Alien Map..."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1084
 msgid "AlienMap: Transforming..."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1151
+#: plug-ins/common/AlienMap.c:1154
 msgid "AlienMap"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1156 plug-ins/common/AlienMap2.c:1146
+#: plug-ins/common/AlienMap.c:1159 plug-ins/common/AlienMap2.c:1149
 msgid "About..."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1199 plug-ins/common/diffraction.c:601
+#: plug-ins/common/AlienMap.c:1202 plug-ins/common/diffraction.c:601
 #: plug-ins/common/diffraction.c:639 plug-ins/common/diffraction.c:677
-#: plug-ins/common/noisify.c:371 plug-ins/common/noisify.c:378
+#: plug-ins/common/noisify.c:374 plug-ins/common/noisify.c:381
 msgid "_Red:"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1202
+#: plug-ins/common/AlienMap.c:1205
 msgid "Change intensity of the red channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1208 plug-ins/common/diffraction.c:610
+#: plug-ins/common/AlienMap.c:1211 plug-ins/common/diffraction.c:610
 #: plug-ins/common/diffraction.c:648 plug-ins/common/diffraction.c:686
-#: plug-ins/common/noisify.c:372 plug-ins/common/noisify.c:379
+#: plug-ins/common/noisify.c:375 plug-ins/common/noisify.c:382
 msgid "_Green:"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1211
+#: plug-ins/common/AlienMap.c:1214
 msgid "Change intensity of the green channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1217 plug-ins/common/diffraction.c:619
+#: plug-ins/common/AlienMap.c:1220 plug-ins/common/diffraction.c:619
 #: plug-ins/common/diffraction.c:657 plug-ins/common/diffraction.c:695
-#: plug-ins/common/noisify.c:373 plug-ins/common/noisify.c:380
+#: plug-ins/common/noisify.c:376 plug-ins/common/noisify.c:383
 msgid "_Blue:"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1220
+#: plug-ins/common/AlienMap.c:1223
 msgid "Change intensity of the blue channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1230 plug-ins/common/AlienMap.c:1253
-#: plug-ins/common/AlienMap.c:1276
+#: plug-ins/common/AlienMap.c:1233 plug-ins/common/AlienMap.c:1256
+#: plug-ins/common/AlienMap.c:1279
 msgid "_Sine"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1231 plug-ins/common/AlienMap.c:1254
-#: plug-ins/common/AlienMap.c:1277
+#: plug-ins/common/AlienMap.c:1234 plug-ins/common/AlienMap.c:1257
+#: plug-ins/common/AlienMap.c:1280
 msgid "Cos_ine"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1232 plug-ins/common/AlienMap.c:1255
-#: plug-ins/common/AlienMap.c:1278 plug-ins/common/tiff.c:1657
+#: plug-ins/common/AlienMap.c:1235 plug-ins/common/AlienMap.c:1258
+#: plug-ins/common/AlienMap.c:1281 plug-ins/common/tiff.c:1805
 msgid "_None"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1237
+#: plug-ins/common/AlienMap.c:1240
 msgid "Use sine-function for red component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1239
+#: plug-ins/common/AlienMap.c:1242
 msgid "Use cosine-function for red component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1241
+#: plug-ins/common/AlienMap.c:1244
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1260
+#: plug-ins/common/AlienMap.c:1263
 msgid "Use sine-function for green component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1262
+#: plug-ins/common/AlienMap.c:1265
 msgid "Use cosine-function for green component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1264
+#: plug-ins/common/AlienMap.c:1267
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1283
+#: plug-ins/common/AlienMap.c:1286
 msgid "Use sine-function for blue component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1285
+#: plug-ins/common/AlienMap.c:1288
 msgid "Use cosine-function for blue component."
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1287
+#: plug-ins/common/AlienMap.c:1290
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1353
+#: plug-ins/common/AlienMap.c:1356
 msgid "About AlienMap"
 msgstr ""
 
 #: plug-ins/common/AlienMap2.c:949
-msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
+msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
 msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1074
 msgid "AlienMap2: Transforming..."
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1141
+#: plug-ins/common/AlienMap2.c:1144
 msgid "AlienMap2"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1190
+#: plug-ins/common/AlienMap2.c:1193
 msgid "R/H-_Frequency:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1193
+#: plug-ins/common/AlienMap2.c:1196
 msgid "Change frequency of the red/hue channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1200
+#: plug-ins/common/AlienMap2.c:1203
 msgid "R/H-_Phaseshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1203
+#: plug-ins/common/AlienMap2.c:1206
 msgid "Change angle of the red/hue channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1210
+#: plug-ins/common/AlienMap2.c:1213
 msgid "G/S-Fr_equency:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1213
+#: plug-ins/common/AlienMap2.c:1216
 msgid "Change frequency of the green/saturation channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1220
+#: plug-ins/common/AlienMap2.c:1223
 msgid "G/S-Ph_aseshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1223
+#: plug-ins/common/AlienMap2.c:1226
 msgid "Change angle of the green/saturation channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1230
+#: plug-ins/common/AlienMap2.c:1233
 msgid "B/L-Freq_uency:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1233
+#: plug-ins/common/AlienMap2.c:1236
 msgid "Change frequency of the blue/luminance channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1240
+#: plug-ins/common/AlienMap2.c:1243
 msgid "B/L-Pha_seshift:"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1243
+#: plug-ins/common/AlienMap2.c:1246
 msgid "Change angle of the blue/luminance channel"
 msgstr ""
 
 #. * Gray: Operation-Mode *
-#: plug-ins/common/AlienMap2.c:1251 plug-ins/common/deinterlace.c:315
+#: plug-ins/common/AlienMap2.c:1254 plug-ins/common/deinterlace.c:315
 #: plug-ins/common/hot.c:613 plug-ins/common/waves.c:333
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "Mode"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1255
+#: plug-ins/common/AlienMap2.c:1258
 msgid "_RGB Color Model"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1256
+#: plug-ins/common/AlienMap2.c:1259
 msgid "_HSL Color Model"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1268
+#: plug-ins/common/AlienMap2.c:1271
 msgid "_Modify Red/Hue Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1273
+#: plug-ins/common/AlienMap2.c:1276
 msgid "Use function for red/hue component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1280
+#: plug-ins/common/AlienMap2.c:1283
 msgid "Mo_dify Green/Saturation Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1286
+#: plug-ins/common/AlienMap2.c:1289
 msgid "Use function for green/saturation component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1293
+#: plug-ins/common/AlienMap2.c:1296
 msgid "Mod_ify Blue/Luminance Channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1299
+#: plug-ins/common/AlienMap2.c:1302
 msgid "Use function for blue/luminance component"
 msgstr ""
 
-#: plug-ins/common/AlienMap2.c:1376
+#: plug-ins/common/AlienMap2.c:1379
 msgid "About AlienMap2"
 msgstr ""
 
@@ -1560,7 +1561,7 @@ msgstr ""
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:203 plug-ins/common/sunras.c:1602
+#: plug-ins/common/CML_explorer.c:203 plug-ins/common/sunras.c:1610
 #: plug-ins/print/gimp_main_window.c:1640
 msgid "Standard"
 msgstr ""
@@ -1908,7 +1909,7 @@ msgstr ""
 
 #. file save type
 #: plug-ins/common/aa.c:358 plug-ins/common/pnm.c:937
-#: plug-ins/common/sunras.c:1594
+#: plug-ins/common/sunras.c:1602
 msgid "Data Formatting"
 msgstr ""
 
@@ -1933,27 +1934,27 @@ msgstr ""
 #: plug-ins/common/blinds.c:401 plug-ins/common/blur.c:613
 #: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
-#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:434
+#: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:435
 #: plug-ins/common/emboss.c:542 plug-ins/common/engrave.c:234
 #: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
 #: plug-ins/common/glasstile.c:265 plug-ins/common/grid.c:699
-#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1726
-#: plug-ins/common/lic.c:771 plug-ins/common/max_rgb.c:284
-#: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:337
+#: plug-ins/common/illusion.c:422 plug-ins/common/jpeg.c:1723
+#: plug-ins/common/lic.c:771 plug-ins/common/max_rgb.c:287
+#: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:340
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:339
-#: plug-ins/common/png.c:1210 plug-ins/common/polar.c:841
-#: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:590
-#: plug-ins/common/scatter_hsv.c:403 plug-ins/common/sel_gauss.c:255
-#: plug-ins/common/sharpen.c:617 plug-ins/common/shift.c:344
-#: plug-ins/common/smooth_palette.c:440 plug-ins/common/snoise.c:524
-#: plug-ins/common/sobel.c:262 plug-ins/common/sparkle.c:363
-#: plug-ins/common/struc.c:1283 plug-ins/common/threshold_alpha.c:245
-#: plug-ins/common/unsharp.c:662 plug-ins/common/video.c:2169
-#: plug-ins/common/vpropagate.c:1085 plug-ins/common/waves.c:359
-#: plug-ins/common/whirlpinch.c:695 plug-ins/common/wind.c:912
-#: plug-ins/common/xpm.c:763 plug-ins/maze/maze_face.c:205
-#: plug-ins/mosaic/mosaic.c:672 plug-ins/xjt/xjt.c:877
+#: plug-ins/common/polar.c:723 plug-ins/common/randomize.c:722
+#: plug-ins/common/ripple.c:591 plug-ins/common/scatter_hsv.c:406
+#: plug-ins/common/sel_gauss.c:255 plug-ins/common/sharpen.c:617
+#: plug-ins/common/shift.c:344 plug-ins/common/smooth_palette.c:440
+#: plug-ins/common/snoise.c:524 plug-ins/common/sobel.c:262
+#: plug-ins/common/sparkle.c:363 plug-ins/common/struc.c:1283
+#: plug-ins/common/threshold_alpha.c:248 plug-ins/common/unsharp.c:662
+#: plug-ins/common/video.c:2169 plug-ins/common/vpropagate.c:1085
+#: plug-ins/common/waves.c:359 plug-ins/common/whirlpinch.c:695
+#: plug-ins/common/wind.c:912 plug-ins/common/xpm.c:764
+#: plug-ins/maze/maze_face.c:205 plug-ins/mosaic/mosaic.c:672
+#: plug-ins/xjt/xjt.c:878
 msgid "Parameter Settings"
 msgstr ""
 
@@ -1970,7 +1971,7 @@ msgid "Fill (right to left)"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/gfig/gfig.c:3269
+#: plug-ins/gfig/gfig.c:3249
 msgid "Snap to Grid"
 msgstr ""
 
@@ -1983,7 +1984,7 @@ msgid "Left Edge"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:465 plug-ins/common/align_layers.c:498
-#: plug-ins/gflare/gflare.c:2636
+#: plug-ins/gflare/gflare.c:2637
 msgid "Center"
 msgstr ""
 
@@ -2032,7 +2033,7 @@ msgid "_Grid Size:"
 msgstr ""
 
 #: plug-ins/common/animationplay.c:241
-msgid "<Image>/Filters/Animation/Animation Playback..."
+msgid "<Image>/Filters/Animation/Animation _Playback..."
 msgstr ""
 
 #: plug-ins/common/animationplay.c:544
@@ -2062,19 +2063,19 @@ msgid "Frame %d of %d"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:176
-msgid "<Image>/Filters/Animation/Animation Optimize"
+msgid "<Image>/Filters/Animation/Animation _Optimize"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:193
-msgid "<Image>/Filters/Animation/Animation UnOptimize"
+msgid "<Image>/Filters/Animation/Animation _UnOptimize"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:208
-msgid "<Image>/Filters/Animation/Animation: Remove Backdrop"
+msgid "<Image>/Filters/Animation/Animation: _Remove Backdrop"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:224
-msgid "<Image>/Filters/Animation/Animation: Find Backdrop"
+msgid "<Image>/Filters/Animation/Animation: _Find Backdrop"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:423
@@ -2098,7 +2099,7 @@ msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr ""
 
 #: plug-ins/common/apply_lens.c:131
-msgid "<Image>/Filters/Glass Effects/Apply Lens..."
+msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
 msgstr ""
 
 #: plug-ins/common/apply_lens.c:195
@@ -2130,7 +2131,7 @@ msgid "_Lens Refraction Index:"
 msgstr ""
 
 #: plug-ins/common/autocrop.c:75
-msgid "<Image>/Image/Transform/Autocrop"
+msgid "<Image>/Image/Transform/_Autocrop"
 msgstr ""
 
 #: plug-ins/common/autocrop.c:120
@@ -2138,7 +2139,7 @@ msgid "Cropping..."
 msgstr ""
 
 #: plug-ins/common/autostretch_hsv.c:92
-msgid "<Image>/Layer/Colors/Auto/Stretch HSV"
+msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
 msgstr ""
 
 #: plug-ins/common/autostretch_hsv.c:124
@@ -2146,7 +2147,7 @@ msgid "Auto-Stretching HSV..."
 msgstr ""
 
 #: plug-ins/common/blinds.c:185
-msgid "<Image>/Filters/Distorts/Blinds..."
+msgid "<Image>/Filters/Distorts/_Blinds..."
 msgstr ""
 
 #: plug-ins/common/blinds.c:274
@@ -2159,17 +2160,17 @@ msgid "Blinds"
 msgstr ""
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:365 plug-ins/common/ripple.c:543
+#: plug-ins/common/blinds.c:365 plug-ins/common/ripple.c:544
 msgid "Orientation"
 msgstr ""
 
-#: plug-ins/common/blinds.c:369 plug-ins/common/ripple.c:548
-#: plug-ins/common/tileit.c:448
+#: plug-ins/common/blinds.c:369 plug-ins/common/ripple.c:549
+#: plug-ins/common/tileit.c:446
 msgid "_Horizontal"
 msgstr ""
 
-#: plug-ins/common/blinds.c:370 plug-ins/common/ripple.c:551
-#: plug-ins/common/tileit.c:458
+#: plug-ins/common/blinds.c:370 plug-ins/common/ripple.c:552
+#: plug-ins/common/tileit.c:456
 msgid "_Vertical"
 msgstr ""
 
@@ -2187,7 +2188,7 @@ msgid "_Num Segments:"
 msgstr ""
 
 #: plug-ins/common/blur.c:196
-msgid "<Image>/Filters/Blur/Blur..."
+msgid "<Image>/Filters/Blur/_Blur..."
 msgstr ""
 
 #.
@@ -2219,7 +2220,7 @@ msgid "Number of times to apply filter"
 msgstr ""
 
 #: plug-ins/common/borderaverage.c:99
-msgid "<Image>/Filters/Colors/Border Average..."
+msgid "<Image>/Filters/Colors/_Border Average..."
 msgstr ""
 
 #: plug-ins/common/borderaverage.c:162
@@ -2251,7 +2252,7 @@ msgid "256 (nonsense?)"
 msgstr ""
 
 #: plug-ins/common/bumpmap.c:376
-msgid "<Image>/Filters/Map/Bump Map..."
+msgid "<Image>/Filters/Map/_Bump Map..."
 msgstr ""
 
 #: plug-ins/common/bumpmap.c:528
@@ -2326,7 +2327,7 @@ msgid "Can't open bzip2ed file without a sensible extension"
 msgstr ""
 
 #: plug-ins/common/c_astretch.c:88
-msgid "<Image>/Layer/Colors/Auto/Stretch Contrast"
+msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
 msgstr ""
 
 #: plug-ins/common/c_astretch.c:120
@@ -2334,7 +2335,7 @@ msgid "Auto-Stretching Contrast..."
 msgstr ""
 
 #: plug-ins/common/checkerboard.c:104
-msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
+msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
 msgstr ""
 
 #: plug-ins/common/checkerboard.c:169
@@ -2350,12 +2351,12 @@ msgid "_Psychobilly"
 msgstr ""
 
 #: plug-ins/common/checkerboard.c:438 plug-ins/common/papertile.c:305
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "_Size:"
 msgstr ""
 
 #: plug-ins/common/color_enhance.c:92
-msgid "<Image>/Layer/Colors/Auto/Color Enhance"
+msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
 msgstr ""
 
 #: plug-ins/common/color_enhance.c:124
@@ -2363,199 +2364,199 @@ msgid "Color Enhance..."
 msgstr ""
 
 #: plug-ins/common/colorify.c:132
-msgid "<Image>/Filters/Colors/Colorify..."
+msgid "<Image>/Filters/Colors/_Colorify..."
 msgstr ""
 
 #: plug-ins/common/colorify.c:190
 msgid "Colorifying..."
 msgstr ""
 
-#: plug-ins/common/colorify.c:254
+#: plug-ins/common/colorify.c:259
 msgid "Colorify"
 msgstr ""
 
-#: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
-#: plug-ins/common/ps.c:2724 plug-ins/common/xpm.c:433
+#: plug-ins/common/colorify.c:276 plug-ins/common/colortoalpha.c:336
+#: plug-ins/common/ps.c:2725 plug-ins/common/xpm.c:433
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:106
 #: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr ""
 
-#: plug-ins/common/colorify.c:285
+#: plug-ins/common/colorify.c:290
 msgid "Custom Color:"
 msgstr ""
 
-#: plug-ins/common/colorify.c:290
+#: plug-ins/common/colorify.c:295
 msgid "Colorify Custom Color"
 msgstr ""
 
 #: plug-ins/common/colortoalpha.c:108
-msgid "<Image>/Filters/Colors/Color to Alpha..."
+msgid "<Image>/Filters/Colors/Color to _Alpha..."
 msgstr ""
 
 #: plug-ins/common/colortoalpha.c:181
 msgid "Removing color..."
 msgstr ""
 
-#: plug-ins/common/colortoalpha.c:316
+#: plug-ins/common/colortoalpha.c:319
 msgid "Color to Alpha"
 msgstr ""
 
-#: plug-ins/common/colortoalpha.c:345 plug-ins/common/mapcolor.c:644
-#: plug-ins/gfli/gfli.c:850 plug-ins/gfli/gfli.c:920
+#: plug-ins/common/colortoalpha.c:348 plug-ins/common/mapcolor.c:644
+#: plug-ins/gfli/gfli.c:850 plug-ins/gfli/gfli.c:919
 msgid "From:"
 msgstr ""
 
-#: plug-ins/common/colortoalpha.c:350
+#: plug-ins/common/colortoalpha.c:353
 msgid "Color to Alpha Color Picker"
 msgstr ""
 
-#: plug-ins/common/colortoalpha.c:362
+#: plug-ins/common/colortoalpha.c:365
 msgid "to Alpha"
 msgstr ""
 
-#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:118
+#: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:118
 msgid "RGB"
 msgstr ""
 
-#: plug-ins/common/compose.c:138 plug-ins/common/decompose.c:123
+#: plug-ins/common/compose.c:147 plug-ins/common/decompose.c:123
 msgid "RGBA"
 msgstr ""
 
-#: plug-ins/common/compose.c:142
+#: plug-ins/common/compose.c:151
 msgid "Alpha:"
 msgstr ""
 
-#: plug-ins/common/compose.c:148 plug-ins/common/decompose.c:128
+#: plug-ins/common/compose.c:157 plug-ins/common/decompose.c:128
 msgid "HSV"
 msgstr ""
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:149 plug-ins/rcm/rcm_dialog.c:456
+#: plug-ins/common/compose.c:158 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
 msgstr ""
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:150 plug-ins/print/gimp_color_window.c:338
+#: plug-ins/common/compose.c:159 plug-ins/print/gimp_color_window.c:338
 #: plug-ins/rcm/rcm_dialog.c:482
 msgid "Saturation:"
 msgstr ""
 
-#: plug-ins/common/compose.c:151
+#: plug-ins/common/compose.c:160
 msgid "Value:"
 msgstr ""
 
-#: plug-ins/common/compose.c:155 plug-ins/common/decompose.c:134
+#: plug-ins/common/compose.c:164 plug-ins/common/decompose.c:134
 msgid "CMY"
 msgstr ""
 
-#: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
+#: plug-ins/common/compose.c:165 plug-ins/common/compose.c:172
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:281
 msgid "Cyan:"
 msgstr ""
 
-#: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
+#: plug-ins/common/compose.c:166 plug-ins/common/compose.c:173
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:300
 msgid "Magenta:"
 msgstr ""
 
-#: plug-ins/common/compose.c:158 plug-ins/common/compose.c:165
+#: plug-ins/common/compose.c:167 plug-ins/common/compose.c:174
 #: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:319
 msgid "Yellow:"
 msgstr ""
 
-#: plug-ins/common/compose.c:162 plug-ins/common/decompose.c:140
+#: plug-ins/common/compose.c:171 plug-ins/common/decompose.c:140
 msgid "CMYK"
 msgstr ""
 
-#: plug-ins/common/compose.c:166
+#: plug-ins/common/compose.c:175
 msgid "Black:"
 msgstr ""
 
-#: plug-ins/common/compose.c:170
+#: plug-ins/common/compose.c:179
 msgid "Luma_y470:"
 msgstr ""
 
-#: plug-ins/common/compose.c:171
+#: plug-ins/common/compose.c:180
 msgid "Blueness_cb470:"
 msgstr ""
 
-#: plug-ins/common/compose.c:172
+#: plug-ins/common/compose.c:181
 msgid "Redness_cr470:"
 msgstr ""
 
-#: plug-ins/common/compose.c:177
+#: plug-ins/common/compose.c:186
 msgid "Luma_y709:"
 msgstr ""
 
-#: plug-ins/common/compose.c:178
+#: plug-ins/common/compose.c:187
 msgid "Blueness_cb709:"
 msgstr ""
 
-#: plug-ins/common/compose.c:179
+#: plug-ins/common/compose.c:188
 msgid "Redness_cr709:"
 msgstr ""
 
-#: plug-ins/common/compose.c:184
+#: plug-ins/common/compose.c:193
 msgid "Luma_y470f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:185
+#: plug-ins/common/compose.c:194
 msgid "Blueness_cb470f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:186
+#: plug-ins/common/compose.c:195
 msgid "Redness_cr470f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:191
+#: plug-ins/common/compose.c:200
 msgid "Luma_y709f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:192
+#: plug-ins/common/compose.c:201
 msgid "Blueness_cb709f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:193
+#: plug-ins/common/compose.c:202
 msgid "Redness_cr709f:"
 msgstr ""
 
-#: plug-ins/common/compose.c:292
+#: plug-ins/common/compose.c:301
 msgid "<Image>/Filters/Colors/Compose..."
 msgstr ""
 
-#: plug-ins/common/compose.c:355
+#: plug-ins/common/compose.c:364
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr ""
 
-#: plug-ins/common/compose.c:407
+#: plug-ins/common/compose.c:416
 msgid "Composing..."
 msgstr ""
 
-#: plug-ins/common/compose.c:475
+#: plug-ins/common/compose.c:484
 msgid "Drawables have different size"
 msgstr ""
 
-#: plug-ins/common/compose.c:492
+#: plug-ins/common/compose.c:501
 msgid "Images have different size"
 msgstr ""
 
-#: plug-ins/common/compose.c:506
+#: plug-ins/common/compose.c:515
 msgid "Error in getting layer IDs"
 msgstr ""
 
-#: plug-ins/common/compose.c:523
+#: plug-ins/common/compose.c:532
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr ""
 
-#: plug-ins/common/compose.c:991
+#: plug-ins/common/compose.c:1018
 msgid "Compose"
 msgstr ""
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1014
+#: plug-ins/common/compose.c:1041
 msgid "Compose Channels"
 msgstr ""
 
@@ -2563,7 +2564,7 @@ msgstr ""
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1027
+#: plug-ins/common/compose.c:1054
 msgid "Channel Representations"
 msgstr ""
 
@@ -2592,7 +2593,7 @@ msgid "E_xtend"
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:389
-#: plug-ins/common/edge.c:463 plug-ins/common/ripple.c:565
+#: plug-ins/common/edge.c:464 plug-ins/common/ripple.c:566
 msgid "_Wrap"
 msgstr ""
 
@@ -2601,7 +2602,7 @@ msgid "Cro_p"
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:193
-msgid "<Image>/Filters/Generic/Convolution Matrix..."
+msgid "<Image>/Filters/Generic/_Convolution Matrix..."
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:227
@@ -2693,7 +2694,7 @@ msgid "Op_acity:"
 msgstr ""
 
 #: plug-ins/common/cubism.c:157
-msgid "<Image>/Filters/Artistic/Cubism..."
+msgid "<Image>/Filters/Artistic/_Cubism..."
 msgstr ""
 
 #: plug-ins/common/cubism.c:264
@@ -2733,7 +2734,7 @@ msgid "Free"
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:682
-msgid "<Image>/Filters/Distorts/CurveBend..."
+msgid "<Image>/Filters/Distorts/_CurveBend..."
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:811
@@ -2758,8 +2759,8 @@ msgid "Automatic Pre_view"
 msgstr "Réamhthaispeántas Beo"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:512
-#: plug-ins/gfig/gfig.c:3850 plug-ins/mosaic/mosaic.c:592
+#: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:513
+#: plug-ins/gfig/gfig.c:3830 plug-ins/mosaic/mosaic.c:592
 msgid "Options"
 msgstr ""
 
@@ -2775,7 +2776,7 @@ msgstr ""
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1474 plug-ins/common/gqbist.c:859
-#: plug-ins/common/ripple.c:521 plug-ins/mosaic/mosaic.c:600
+#: plug-ins/common/ripple.c:522 plug-ins/mosaic/mosaic.c:600
 msgid "_Antialiasing"
 msgstr ""
 
@@ -2986,7 +2987,7 @@ msgid "redness_cr709f"
 msgstr ""
 
 #: plug-ins/common/decompose.c:229
-msgid "<Image>/Filters/Colors/Decompose..."
+msgid "<Image>/Filters/Colors/_Decompose..."
 msgstr ""
 
 #: plug-ins/common/decompose.c:310
@@ -3003,7 +3004,7 @@ msgid "Extract Channels:"
 msgstr ""
 
 #: plug-ins/common/deinterlace.c:91
-msgid "<Image>/Filters/Enhance/Deinterlace..."
+msgid "<Image>/Filters/Enhance/_Deinterlace..."
 msgstr ""
 
 #: plug-ins/common/deinterlace.c:146
@@ -3023,7 +3024,7 @@ msgid "Keep _Even Fields"
 msgstr ""
 
 #: plug-ins/common/depthmerge.c:202
-msgid "<Image>/Filters/Combine/Depth Merge..."
+msgid "<Image>/Filters/Combine/_Depth Merge..."
 msgstr ""
 
 #: plug-ins/common/depthmerge.c:392
@@ -3063,7 +3064,7 @@ msgid "Scale 2:"
 msgstr ""
 
 #: plug-ins/common/despeckle.c:186
-msgid "<Image>/Filters/Enhance/Despeckle..."
+msgid "<Image>/Filters/Enhance/Des_peckle..."
 msgstr ""
 
 #. Source image region
@@ -3117,7 +3118,7 @@ msgstr ""
 
 #: plug-ins/common/despeckle.c:753 plug-ins/common/nlfilt.c:397
 #: plug-ins/common/nova.c:376 plug-ins/common/unsharp.c:676
-#: plug-ins/common/whirlpinch.c:725 plug-ins/gflare/gflare.c:2683
+#: plug-ins/common/whirlpinch.c:725 plug-ins/gflare/gflare.c:2684
 #: plug-ins/imagemap/imap_circle.c:279
 msgid "_Radius:"
 msgstr ""
@@ -3131,7 +3132,7 @@ msgid "_White Level:"
 msgstr ""
 
 #: plug-ins/common/destripe.c:149
-msgid "<Image>/Filters/Enhance/Destripe..."
+msgid "<Image>/Filters/Enhance/Des_tripe..."
 msgstr ""
 
 #: plug-ins/common/destripe.c:348
@@ -3147,7 +3148,7 @@ msgid "Create _Histogram"
 msgstr ""
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/gtm.c:606
-#: plug-ins/common/ps.c:2680 plug-ins/common/ps.c:2856
+#: plug-ins/common/ps.c:2681 plug-ins/common/ps.c:2857
 #: plug-ins/common/smooth_palette.c:453 plug-ins/common/tile.c:426
 #: plug-ins/imagemap/imap_cmd_guides.c:159
 #: plug-ins/imagemap/imap_rectangle.c:404
@@ -3155,7 +3156,7 @@ msgid "_Width:"
 msgstr ""
 
 #: plug-ins/common/diffraction.c:189
-msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
+msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
 msgstr ""
 
 #: plug-ins/common/diffraction.c:331
@@ -3195,7 +3196,7 @@ msgid "O_ther options"
 msgstr ""
 
 #: plug-ins/common/displace.c:163
-msgid "<Image>/Filters/Map/Displace..."
+msgid "<Image>/Filters/Map/_Displace..."
 msgstr ""
 
 #: plug-ins/common/displace.c:235
@@ -3227,36 +3228,36 @@ msgstr ""
 msgid "On Edges:"
 msgstr ""
 
-#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:473
-#: plug-ins/common/ripple.c:566 plug-ins/common/waves.c:337
+#: plug-ins/common/displace.c:403 plug-ins/common/edge.c:474
+#: plug-ins/common/ripple.c:567 plug-ins/common/waves.c:337
 msgid "_Smear"
 msgstr ""
 
-#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:483
+#: plug-ins/common/displace.c:417 plug-ins/common/edge.c:484
 #: plug-ins/common/fractaltrace.c:804 plug-ins/common/newsprint.c:435
-#: plug-ins/common/ripple.c:567
+#: plug-ins/common/ripple.c:568
 msgid "_Black"
 msgstr ""
 
-#: plug-ins/common/edge.c:133
-msgid "<Image>/Filters/Edge-Detect/Edge..."
+#: plug-ins/common/edge.c:134
+msgid "<Image>/Filters/Edge-Detect/_Edge..."
 msgstr ""
 
-#: plug-ins/common/edge.c:200
+#: plug-ins/common/edge.c:201
 msgid "Edge Detection..."
 msgstr ""
 
-#: plug-ins/common/edge.c:417
+#: plug-ins/common/edge.c:418
 msgid "Edge Detection"
 msgstr ""
 
-#: plug-ins/common/edge.c:447 plug-ins/common/unsharp.c:685
+#: plug-ins/common/edge.c:448 plug-ins/common/unsharp.c:685
 #, fuzzy
 msgid "_Amount:"
 msgstr "Faoi"
 
 #: plug-ins/common/emboss.c:154
-msgid "<Image>/Filters/Distorts/Emboss..."
+msgid "<Image>/Filters/Distorts/_Emboss..."
 msgstr ""
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:500
@@ -3285,7 +3286,7 @@ msgid "Do _Preview"
 msgstr "Réamhthaispeántas"
 
 #: plug-ins/common/engrave.c:118
-msgid "<Image>/Filters/Distorts/Engrave..."
+msgid "<Image>/Filters/Distorts/En_grave..."
 msgstr ""
 
 #: plug-ins/common/engrave.c:189
@@ -3301,15 +3302,15 @@ msgid "_Limit Line Width"
 msgstr ""
 
 #: plug-ins/common/engrave.c:255 plug-ins/common/film.c:1233
-#: plug-ins/common/gtm.c:622 plug-ins/common/ps.c:2689
-#: plug-ins/common/ps.c:2865 plug-ins/common/smooth_palette.c:458
+#: plug-ins/common/gtm.c:622 plug-ins/common/ps.c:2690
+#: plug-ins/common/ps.c:2866 plug-ins/common/smooth_palette.c:458
 #: plug-ins/common/tile.c:430 plug-ins/imagemap/imap_cmd_guides.c:169
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr ""
 
 #: plug-ins/common/exchange.c:140
-msgid "<Image>/Filters/Colors/Map/Color Exchange..."
+msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
 msgstr ""
 
 #: plug-ins/common/exchange.c:242
@@ -3358,7 +3359,7 @@ msgid "Lock Thresholds"
 msgstr ""
 
 #: plug-ins/common/film.c:252
-msgid "<Image>/Filters/Combine/Film..."
+msgid "<Image>/Filters/Combine/_Film..."
 msgstr ""
 
 #: plug-ins/common/film.c:338
@@ -3477,7 +3478,7 @@ msgstr ""
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:202
-msgid "<Image>/Filters/Light Effects/FlareFX..."
+msgid "<Image>/Filters/Light Effects/_FlareFX..."
 msgstr ""
 
 #: plug-ins/common/flarefx.c:274
@@ -3499,7 +3500,7 @@ msgid "_Show Cursor"
 msgstr ""
 
 #: plug-ins/common/fractaltrace.c:130
-msgid "<Image>/Filters/Map/Fractal Trace..."
+msgid "<Image>/Filters/Map/_Fractal Trace..."
 msgstr ""
 
 #: plug-ins/common/fractaltrace.c:468 plug-ins/common/fractaltrace.c:750
@@ -3540,7 +3541,7 @@ msgid "Y_2:"
 msgstr ""
 
 #: plug-ins/common/gauss_iir.c:177
-msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
+msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
 msgstr ""
 
 #: plug-ins/common/gauss_iir.c:249
@@ -3580,7 +3581,7 @@ msgid "_Vertical:"
 msgstr ""
 
 #: plug-ins/common/gauss_rle.c:171
-msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
+msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
 msgstr ""
 
 #: plug-ins/common/gauss_rle.c:242
@@ -3622,12 +3623,12 @@ msgid "Spacing:"
 msgstr ""
 
 #: plug-ins/common/gbr.c:603 plug-ins/common/gih.c:886
-#: plug-ins/common/pat.c:484 plug-ins/gimpressionist/presets.c:376
+#: plug-ins/common/pat.c:479 plug-ins/gimpressionist/presets.c:376
 msgid "Description:"
 msgstr ""
 
 #: plug-ins/common/gee.c:103
-msgid "<Image>/Filters/Toys/Gee-Slime"
+msgid "<Image>/Filters/Toys/Gee-_Slime"
 msgstr ""
 
 #: plug-ins/common/gee.c:174
@@ -3646,7 +3647,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/gee_zoom.c:139
-msgid "<Image>/Filters/Toys/Gee-Zoom"
+msgid "<Image>/Filters/Toys/Gee-_Zoom"
 msgstr ""
 
 #: plug-ins/common/gee_zoom.c:205
@@ -3659,41 +3660,47 @@ msgid ""
 "1998-2000"
 msgstr ""
 
-#: plug-ins/common/gicon.c:434
+#: plug-ins/common/gicon.c:435
 msgid "Save as GIcon"
 msgstr ""
 
-#: plug-ins/common/gicon.c:462
+#: plug-ins/common/gicon.c:463
 msgid "Icon Name:"
 msgstr ""
 
-#: plug-ins/common/gif.c:684
+#: plug-ins/common/gif.c:685
 msgid ""
 "Couldn't simply reduce colors further.\n"
 "Saving as opaque."
 msgstr ""
 
-#: plug-ins/common/gif.c:946
+#: plug-ins/common/gif.c:906
+msgid ""
+"The GIF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+
+#: plug-ins/common/gif.c:967
 msgid ""
 "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 
-#: plug-ins/common/gif.c:1088
+#: plug-ins/common/gif.c:1109
 msgid ""
 "Warning:\n"
 "Transparent color in written file might be incorrect on viewers which don't "
 "support transparency."
 msgstr ""
 
-#: plug-ins/common/gif.c:1127
+#: plug-ins/common/gif.c:1148
 msgid "Delay inserted to prevent evil CPU-sucking anim."
 msgstr ""
 
-#: plug-ins/common/gif.c:1171
+#: plug-ins/common/gif.c:1192
 msgid "GIF Warning"
 msgstr ""
 
-#: plug-ins/common/gif.c:1197
+#: plug-ins/common/gif.c:1218
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3704,61 +3711,61 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 
-#: plug-ins/common/gif.c:1243
+#: plug-ins/common/gif.c:1264
 msgid "Save as GIF"
 msgstr ""
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1265
+#: plug-ins/common/gif.c:1286
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1273 plug-ins/common/mng.c:1138
+#: plug-ins/common/gif.c:1294 plug-ins/common/mng.c:1138
 msgid "Interlace"
 msgstr ""
 
-#: plug-ins/common/gif.c:1289
+#: plug-ins/common/gif.c:1310
 msgid "GIF Comment:"
 msgstr ""
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1350
+#: plug-ins/common/gif.c:1371
 msgid "Animated GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1358
+#: plug-ins/common/gif.c:1379
 msgid "Loop forever"
 msgstr ""
 
-#: plug-ins/common/gif.c:1371
+#: plug-ins/common/gif.c:1392
 msgid "Delay between Frames where Unspecified:"
 msgstr ""
 
-#: plug-ins/common/gif.c:1384
+#: plug-ins/common/gif.c:1405
 msgid "Milliseconds"
 msgstr ""
 
-#: plug-ins/common/gif.c:1394
+#: plug-ins/common/gif.c:1415
 msgid "Frame Disposal where Unspecified: "
 msgstr ""
 
-#: plug-ins/common/gif.c:1403
+#: plug-ins/common/gif.c:1424
 msgid "I don't Care"
 msgstr ""
 
-#: plug-ins/common/gif.c:1405
+#: plug-ins/common/gif.c:1426
 msgid "Cumulative Layers (Combine)"
 msgstr ""
 
-#: plug-ins/common/gif.c:1407
+#: plug-ins/common/gif.c:1428
 msgid "One Frame per Layer (Replace)"
 msgstr ""
 
-#: plug-ins/common/gif.c:2370
+#: plug-ins/common/gif.c:2393
 msgid "Error writing output file."
 msgstr ""
 
-#: plug-ins/common/gif.c:2460
+#: plug-ins/common/gif.c:2483
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -3832,24 +3839,24 @@ msgstr ""
 msgid "Selection:"
 msgstr ""
 
-#: plug-ins/common/gifload.c:857
+#: plug-ins/common/gifload.c:858
 #, c-format
 msgid "Background (%dms)"
 msgstr ""
 
-#: plug-ins/common/gifload.c:905 plug-ins/common/iwarp.c:766
+#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:766
 #: plug-ins/common/iwarp.c:794
 #, c-format
 msgid "Frame %d"
 msgstr ""
 
-#: plug-ins/common/gifload.c:907
+#: plug-ins/common/gifload.c:908
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr ""
 
 #: plug-ins/common/glasstile.c:123
-msgid "<Image>/Filters/Glass Effects/Glass Tile..."
+msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
 msgstr ""
 
 #: plug-ins/common/glasstile.c:199
@@ -3869,7 +3876,7 @@ msgid "Tile _Height:"
 msgstr ""
 
 #: plug-ins/common/gqbist.c:438
-msgid "<Image>/Filters/Render/Pattern/Qbist..."
+msgid "<Image>/Filters/Render/Pattern/_Qbist..."
 msgstr ""
 
 #: plug-ins/common/gqbist.c:535
@@ -3889,7 +3896,7 @@ msgid "G-Qbist 1.12"
 msgstr ""
 
 #: plug-ins/common/gradmap.c:121
-msgid "<Image>/Filters/Colors/Map/Gradient Map"
+msgid "<Image>/Filters/Colors/Map/_Gradient Map"
 msgstr ""
 
 #: plug-ins/common/gradmap.c:156
@@ -3897,25 +3904,25 @@ msgid "Gradient Map..."
 msgstr ""
 
 #: plug-ins/common/grid.c:152
-msgid "<Image>/Filters/Render/Pattern/Grid..."
+msgid "<Image>/Filters/Render/Pattern/_Grid..."
 msgstr ""
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:3258
+#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:3238
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_stock.c:47 plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr ""
 
 #. attach labels
-#: plug-ins/common/grid.c:748 plug-ins/pagecurl/pagecurl.c:594
+#: plug-ins/common/grid.c:748 plug-ins/pagecurl/pagecurl.c:593
 msgid "Horizontal"
 msgstr ""
 
-#: plug-ins/common/grid.c:750 plug-ins/pagecurl/pagecurl.c:595
+#: plug-ins/common/grid.c:750 plug-ins/pagecurl/pagecurl.c:594
 msgid "Vertical"
 msgstr ""
 
@@ -3953,7 +3960,7 @@ msgstr ""
 msgid "GIMP Table Magic"
 msgstr ""
 
-#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3910
+#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3890
 msgid "Warning"
 msgstr ""
 
@@ -4065,7 +4072,7 @@ msgid "The amount of cellspacing."
 msgstr ""
 
 #: plug-ins/common/guillotine.c:79
-msgid "<Image>/Image/Transform/Guillotine"
+msgid "<Image>/Image/Transform/_Guillotine"
 msgstr ""
 
 #: plug-ins/common/guillotine.c:110
@@ -4081,7 +4088,7 @@ msgid "No sensible extension, attempting to load with file magic"
 msgstr ""
 
 #: plug-ins/common/hot.c:217
-msgid "<Image>/Filters/Colors/Hot..."
+msgid "<Image>/Filters/Colors/_Hot..."
 msgstr ""
 
 #: plug-ins/common/hot.c:377
@@ -4127,7 +4134,7 @@ msgid "Image must be RGB or GRAY"
 msgstr ""
 
 #: plug-ins/common/illusion.c:103
-msgid "<Image>/Filters/Map/Illusion..."
+msgid "<Image>/Filters/Map/_Illusion..."
 msgstr ""
 
 #: plug-ins/common/illusion.c:175
@@ -4151,7 +4158,7 @@ msgid "Mode _2"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:259
-msgid "<Image>/Filters/Distorts/IWarp..."
+msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr ""
 
 #: plug-ins/common/iwarp.c:679
@@ -4240,7 +4247,7 @@ msgid "Thresho_ld:"
 msgstr ""
 
 #: plug-ins/common/iwarp.c:1169 plug-ins/common/sinus.c:1774
-#: plug-ins/gflare/gflare.c:2793
+#: plug-ins/gflare/gflare.c:2794
 msgid "_Settings"
 msgstr ""
 
@@ -4249,7 +4256,7 @@ msgid "IWarp"
 msgstr ""
 
 #: plug-ins/common/jigsaw.c:409
-msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
+msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
 msgstr ""
 
 #: plug-ins/common/jigsaw.c:464
@@ -4316,86 +4323,86 @@ msgstr ""
 msgid "Export Preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:924
+#: plug-ins/common/jpeg.c:922
 msgid "JPEG preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1173
+#: plug-ins/common/jpeg.c:1174
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1608 plug-ins/common/jpeg.c:1716
+#: plug-ins/common/jpeg.c:1605 plug-ins/common/jpeg.c:1713
 msgid "Size: unknown"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1671
+#: plug-ins/common/jpeg.c:1668
 msgid "Save as JPEG"
 msgstr ""
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:232
+#: plug-ins/common/jpeg.c:1691 plug-ins/print/gimp_color_window.c:232
 msgid "Image Preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1703
+#: plug-ins/common/jpeg.c:1700
 msgid "Preview (in image window, will modify image's undo history!)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1736 plug-ins/xjt/xjt.c:910
+#: plug-ins/common/jpeg.c:1733 plug-ins/xjt/xjt.c:911
 msgid "Quality:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1759 plug-ins/xjt/xjt.c:919
+#: plug-ins/common/jpeg.c:1756 plug-ins/xjt/xjt.c:920
 msgid "Smoothing:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1787
+#: plug-ins/common/jpeg.c:1784
 msgid "Restart markers"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1796
+#: plug-ins/common/jpeg.c:1793
 msgid "Restart frequency (rows):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1825 plug-ins/xjt/xjt.c:888
+#: plug-ins/common/jpeg.c:1822 plug-ins/xjt/xjt.c:889
 msgid "Optimize"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1839
+#: plug-ins/common/jpeg.c:1836
 msgid "Progressive"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1858
+#: plug-ins/common/jpeg.c:1855
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1884
+#: plug-ins/common/jpeg.c:1881
 msgid "Subsampling:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1893
+#: plug-ins/common/jpeg.c:1890
 msgid "Fast Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1894
+#: plug-ins/common/jpeg.c:1891
 msgid "Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1892
 msgid "Floating-Point"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1896
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1907
+#: plug-ins/common/jpeg.c:1904
 msgid "Image comments"
 msgstr ""
 
 #: plug-ins/common/laplace.c:95
-msgid "<Image>/Filters/Edge-Detect/Laplace"
+msgid "<Image>/Filters/Edge-Detect/_Laplace"
 msgstr ""
 
 #: plug-ins/common/laplace.c:225
@@ -4475,11 +4482,11 @@ msgid "M_aximum Value:"
 msgstr ""
 
 #: plug-ins/common/lic.c:896
-msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
+msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 msgstr ""
 
 #: plug-ins/common/mail.c:220
-msgid "<Image>/File/Mail Image..."
+msgid "<Image>/File/_Mail Image..."
 msgstr ""
 
 #: plug-ins/common/mail.c:463
@@ -4498,12 +4505,12 @@ msgstr ""
 msgid "Subject:"
 msgstr ""
 
-#: plug-ins/common/mail.c:530 plug-ins/common/tiff.c:1682
-#: plug-ins/common/xbm.c:1218
+#: plug-ins/common/mail.c:530 plug-ins/common/tiff.c:1830
+#: plug-ins/common/xbm.c:1214
 msgid "Comment:"
 msgstr ""
 
-#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3610
+#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3590
 #: plug-ins/imagemap/imap_settings.c:92
 msgid "Filename:"
 msgstr ""
@@ -4542,7 +4549,7 @@ msgid "Second Destination Color"
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:354
-msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
+msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:369
@@ -4576,67 +4583,67 @@ msgid "Destination color range"
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:644 plug-ins/gfli/gfli.c:859
-#: plug-ins/gfli/gfli.c:929
+#: plug-ins/gfli/gfli.c:928
 msgid "To:"
 msgstr ""
 
 #: plug-ins/common/max_rgb.c:121
-msgid "<Image>/Filters/Colors/Max RGB..."
+msgid "<Image>/Filters/Colors/_Max RGB..."
 msgstr ""
 
 #: plug-ins/common/max_rgb.c:157
 msgid "Can only operate on RGB drawables."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:233
+#: plug-ins/common/max_rgb.c:236
 msgid "Max RGB..."
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:256
+#: plug-ins/common/max_rgb.c:259
 msgid "Max RGB"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:289
+#: plug-ins/common/max_rgb.c:292
 msgid "_Hold the Maximal Channels"
 msgstr ""
 
-#: plug-ins/common/max_rgb.c:292
+#: plug-ins/common/max_rgb.c:295
 msgid "Ho_ld the Minimal Channels"
 msgstr ""
 
-#: plug-ins/common/mblur.c:152
-msgid "<Image>/Filters/Blur/Motion Blur..."
+#: plug-ins/common/mblur.c:153
+msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr ""
 
-#: plug-ins/common/mblur.c:669
+#: plug-ins/common/mblur.c:670
 msgid "Motion Blurring..."
 msgstr ""
 
-#: plug-ins/common/mblur.c:738
+#: plug-ins/common/mblur.c:739
 msgid "Motion Blur"
 msgstr ""
 
-#: plug-ins/common/mblur.c:760
+#: plug-ins/common/mblur.c:761
 msgid "Blur Type"
 msgstr ""
 
-#: plug-ins/common/mblur.c:765
+#: plug-ins/common/mblur.c:766
 msgid "_Linear"
 msgstr ""
 
-#: plug-ins/common/mblur.c:768
+#: plug-ins/common/mblur.c:769
 msgid "_Radial"
 msgstr ""
 
-#: plug-ins/common/mblur.c:771
+#: plug-ins/common/mblur.c:772
 msgid "_Zoom"
 msgstr ""
 
-#: plug-ins/common/mblur.c:779
+#: plug-ins/common/mblur.c:780
 msgid "Blur Parameters"
 msgstr ""
 
-#: plug-ins/common/mblur.c:800 plug-ins/common/newsprint.c:1034
+#: plug-ins/common/mblur.c:801 plug-ins/common/newsprint.c:1034
 msgid "_Angle:"
 msgstr ""
 
@@ -4672,7 +4679,7 @@ msgstr ""
 msgid "Combine"
 msgstr ""
 
-#: plug-ins/common/mng.c:1233 plug-ins/gfig/gfig.c:3006
+#: plug-ins/common/mng.c:1233 plug-ins/gfig/gfig.c:2986
 msgid "Replace"
 msgstr ""
 
@@ -4684,7 +4691,7 @@ msgstr ""
 msgid "PNG Compression Level:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1258 plug-ins/common/png.c:1286
+#: plug-ins/common/mng.c:1258 plug-ins/common/png.c:1388
 msgid "Choose a high compression level for small file size"
 msgstr ""
 
@@ -4757,7 +4764,7 @@ msgid "Intensity"
 msgstr ""
 
 #: plug-ins/common/newsprint.c:564
-msgid "<Image>/Filters/Distorts/Newsprint..."
+msgid "<Image>/Filters/Distorts/Newsprin_t..."
 msgstr ""
 
 #: plug-ins/common/newsprint.c:663
@@ -4823,7 +4830,7 @@ msgid "_Factory Defaults"
 msgstr ""
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:3015
+#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:2995
 msgid "Antialiasing"
 msgstr ""
 
@@ -4832,7 +4839,7 @@ msgid "O_versample:"
 msgstr ""
 
 #: plug-ins/common/nlfilt.c:126
-msgid "<Image>/Filters/Enhance/NL Filter..."
+msgid "<Image>/Filters/Enhance/_NL Filter..."
 msgstr ""
 
 #: plug-ins/common/nlfilt.c:244
@@ -4869,36 +4876,36 @@ msgid "_Do Preview"
 msgstr "Réamhthaispeántas"
 
 #: plug-ins/common/noisify.c:132
-msgid "<Image>/Filters/Noise/Noisify..."
+msgid "<Image>/Filters/Noise/_Noisify..."
 msgstr ""
 
 #: plug-ins/common/noisify.c:206
 msgid "Adding Noise..."
 msgstr ""
 
-#: plug-ins/common/noisify.c:308
+#: plug-ins/common/noisify.c:311
 msgid "Noisify"
 msgstr ""
 
-#: plug-ins/common/noisify.c:349
+#: plug-ins/common/noisify.c:352
 msgid "_Independent"
 msgstr ""
 
-#: plug-ins/common/noisify.c:362 plug-ins/common/noisify.c:366
+#: plug-ins/common/noisify.c:365 plug-ins/common/noisify.c:369
 msgid "_Gray:"
 msgstr ""
 
-#: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:381
+#: plug-ins/common/noisify.c:370 plug-ins/common/noisify.c:384
 msgid "_Alpha:"
 msgstr ""
 
-#: plug-ins/common/noisify.c:390
+#: plug-ins/common/noisify.c:393
 #, c-format
 msgid "Channel #%d:"
 msgstr ""
 
 #: plug-ins/common/normalize.c:90
-msgid "<Image>/Layer/Colors/Auto/Normalize"
+msgid "<Image>/Layer/Colors/Auto/_Normalize"
 msgstr ""
 
 #: plug-ins/common/normalize.c:122
@@ -4907,7 +4914,7 @@ msgstr ""
 
 #. don't translate '<Image>'
 #: plug-ins/common/nova.c:209
-msgid "<Image>/Filters/Light Effects/SuperNova..."
+msgid "<Image>/Filters/Light Effects/Su_perNova..."
 msgstr ""
 
 #: plug-ins/common/nova.c:290
@@ -4940,7 +4947,7 @@ msgid "S_how Cursor"
 msgstr ""
 
 #: plug-ins/common/oilify.c:118
-msgid "<Image>/Filters/Artistic/Oilify..."
+msgid "<Image>/Filters/Artistic/Oili_fy..."
 msgstr ""
 
 #: plug-ins/common/oilify.c:193
@@ -5036,10 +5043,10 @@ msgid "September 31, 1999"
 msgstr ""
 
 #: plug-ins/common/papertile.c:838
-msgid "<Image>/Filters/Map/Paper Tile..."
+msgid "<Image>/Filters/Map/_Paper Tile..."
 msgstr ""
 
-#: plug-ins/common/pat.c:456
+#: plug-ins/common/pat.c:451
 msgid "Save as Pattern"
 msgstr ""
 
@@ -5061,14 +5068,14 @@ msgstr ""
 msgid "Unusual PCX flavour, giving up"
 msgstr ""
 
-#: plug-ins/common/pcx.c:577
+#: plug-ins/common/pcx.c:573
 msgid ""
 "Can't save layers with alpha.\n"
 "Flatten your image"
 msgstr ""
 
 #: plug-ins/common/pixelize.c:184
-msgid "<Image>/Filters/Blur/Pixelize..."
+msgid "<Image>/Filters/Blur/_Pixelize..."
 msgstr ""
 
 #: plug-ins/common/pixelize.c:282
@@ -5088,7 +5095,7 @@ msgid "Pixel _Height:"
 msgstr ""
 
 #: plug-ins/common/plasma.c:192
-msgid "<Image>/Filters/Render/Clouds/Plasma..."
+msgid "<Image>/Filters/Render/Clouds/_Plasma..."
 msgstr ""
 
 #: plug-ins/common/plasma.c:271
@@ -5124,7 +5131,7 @@ msgid "Temporary Procedure"
 msgstr ""
 
 #: plug-ins/common/plugindetails.c:145
-msgid "<Toolbox>/Xtns/Plugin Details..."
+msgid "<Toolbox>/Xtns/_Plugin Details..."
 msgstr ""
 
 #: plug-ins/common/plugindetails.c:221
@@ -5210,7 +5217,7 @@ msgstr ""
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/common/png.c:457
+#: plug-ins/common/png.c:471
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5218,14 +5225,14 @@ msgid ""
 msgstr ""
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:588
+#: plug-ins/common/png.c:602
 #, c-format
 msgid ""
 "'%s':\n"
 "Unknown PNG color model"
 msgstr ""
 
-#: plug-ins/common/png.c:834
+#: plug-ins/common/png.c:922
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5234,41 +5241,50 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1174
+#: plug-ins/common/png.c:1270
 msgid ""
 "Couldn't losslessly save transparency,\n"
 "saving opacity instead."
 msgstr ""
 
-#: plug-ins/common/png.c:1198
+#: plug-ins/common/png.c:1294
 msgid "Save as PNG"
 msgstr ""
 
-#: plug-ins/common/png.c:1223
+#. parameter settings
+#: plug-ins/common/png.c:1306 plug-ins/common/sample_colorize.c:1382
+msgid "Settings"
+msgstr ""
+
+#: plug-ins/common/png.c:1319
 msgid "_Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1233
-msgid "Save _background color"
+#: plug-ins/common/png.c:1329
+msgid "Save _Background Color"
 msgstr ""
 
-#: plug-ins/common/png.c:1241
-msgid "Save _gamma"
+#: plug-ins/common/png.c:1337
+msgid "Save _Gamma"
 msgstr ""
 
-#: plug-ins/common/png.c:1249
-msgid "Save _layer offset"
+#: plug-ins/common/png.c:1345
+msgid "Save _Layer Offset"
 msgstr ""
 
-#: plug-ins/common/png.c:1257
-msgid "Save _resolution"
+#: plug-ins/common/png.c:1353
+msgid "Save _Resolution"
 msgstr ""
 
-#: plug-ins/common/png.c:1265
-msgid "Save creation _time"
+#: plug-ins/common/png.c:1361
+msgid "Save Creation _Time"
 msgstr ""
 
-#: plug-ins/common/png.c:1281
+#: plug-ins/common/png.c:1369
+msgid "Save Comme_nt"
+msgstr ""
+
+#: plug-ins/common/png.c:1384
 msgid "Co_mpression Level:"
 msgstr ""
 
@@ -5318,51 +5334,51 @@ msgstr ""
 msgid "Ascii"
 msgstr ""
 
-#: plug-ins/common/polar.c:202
-msgid "<Image>/Filters/Distorts/Polar Coords..."
+#: plug-ins/common/polar.c:184
+msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr ""
 
-#: plug-ins/common/polar.c:385
+#: plug-ins/common/polar.c:350
 msgid "Polarizing..."
 msgstr ""
 
-#: plug-ins/common/polar.c:798
+#: plug-ins/common/polar.c:681
 msgid "Polarize"
 msgstr ""
 
-#: plug-ins/common/polar.c:857
+#: plug-ins/common/polar.c:739
 msgid "Circle _Depth in Percent:"
 msgstr ""
 
-#: plug-ins/common/polar.c:866
+#: plug-ins/common/polar.c:748
 msgid "Offset _Angle:"
 msgstr ""
 
-#: plug-ins/common/polar.c:878
+#: plug-ins/common/polar.c:760
 msgid "_Map Backwards"
 msgstr ""
 
-#: plug-ins/common/polar.c:884
+#: plug-ins/common/polar.c:766
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
 
-#: plug-ins/common/polar.c:892
+#: plug-ins/common/polar.c:774
 msgid "Map from _Top"
 msgstr ""
 
-#: plug-ins/common/polar.c:898
+#: plug-ins/common/polar.c:780
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
 
-#: plug-ins/common/polar.c:907
+#: plug-ins/common/polar.c:789
 msgid "To _Polar"
 msgstr ""
 
-#: plug-ins/common/polar.c:913
+#: plug-ins/common/polar.c:795
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5380,125 +5396,125 @@ msgstr ""
 msgid "Cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/ps.c:2192 plug-ins/common/ps.c:2323
-#: plug-ins/common/ps.c:2473 plug-ins/common/ps.c:2601
+#: plug-ins/common/ps.c:2192 plug-ins/common/ps.c:2324
+#: plug-ins/common/ps.c:2474 plug-ins/common/ps.c:2602
 msgid "write error occured"
 msgstr ""
 
-#: plug-ins/common/ps.c:2626
+#: plug-ins/common/ps.c:2627
 msgid "Load PostScript"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/ps.c:2653
+#: plug-ins/common/ps.c:2654
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2671 plug-ins/print/gimp_main_window.c:1095
+#: plug-ins/common/ps.c:2672 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2699
+#: plug-ins/common/ps.c:2700
 msgid "Pages:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2705
+#: plug-ins/common/ps.c:2706
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2718
+#: plug-ins/common/ps.c:2719
 msgid "Coloring"
 msgstr ""
 
-#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2723
 msgid "B/W"
 msgstr ""
 
 #. * Gray *
-#: plug-ins/common/ps.c:2723 plug-ins/rcm/rcm_dialog.c:418
+#: plug-ins/common/ps.c:2724 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr ""
 
-#: plug-ins/common/ps.c:2725 plug-ins/fits/fits.c:1017
+#: plug-ins/common/ps.c:2726 plug-ins/fits/fits.c:1017
 msgid "Automatic"
 msgstr ""
 
-#: plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2736
 msgid "Text Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2741 plug-ins/common/ps.c:2754
+#: plug-ins/common/ps.c:2742 plug-ins/common/ps.c:2755
 msgid "Weak"
 msgstr ""
 
-#: plug-ins/common/ps.c:2742 plug-ins/common/ps.c:2755
+#: plug-ins/common/ps.c:2743 plug-ins/common/ps.c:2756
 msgid "Strong"
 msgstr ""
 
-#: plug-ins/common/ps.c:2748
+#: plug-ins/common/ps.c:2749
 msgid "Graphic Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2808
+#: plug-ins/common/ps.c:2809
 msgid "Save as PostScript"
 msgstr ""
 
 #. Image Size
-#: plug-ins/common/ps.c:2838
+#: plug-ins/common/ps.c:2839
 msgid "Image Size"
 msgstr ""
 
-#: plug-ins/common/ps.c:2874
+#: plug-ins/common/ps.c:2875
 msgid "_X-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2883
+#: plug-ins/common/ps.c:2884
 msgid "_Y-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2889
+#: plug-ins/common/ps.c:2890
 msgid "_Keep Aspect Ratio"
 msgstr ""
 
-#: plug-ins/common/ps.c:2895
+#: plug-ins/common/ps.c:2896
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2904
+#: plug-ins/common/ps.c:2905
 msgid "Unit"
 msgstr ""
 
-#: plug-ins/common/ps.c:2909
+#: plug-ins/common/ps.c:2910
 msgid "_Inch"
 msgstr ""
 
-#: plug-ins/common/ps.c:2912
+#: plug-ins/common/ps.c:2913
 msgid "_Millimeter"
 msgstr ""
 
 #. Format
-#: plug-ins/common/ps.c:2940
+#: plug-ins/common/ps.c:2941
 msgid "Output"
 msgstr ""
 
-#: plug-ins/common/ps.c:2948
+#: plug-ins/common/ps.c:2949
 msgid "_PostScript Level 2"
 msgstr ""
 
-#: plug-ins/common/ps.c:2957
+#: plug-ins/common/ps.c:2958
 msgid "_Encapsulated PostScript"
 msgstr ""
 
-#: plug-ins/common/ps.c:2966
+#: plug-ins/common/ps.c:2967
 #, fuzzy
 msgid "P_review"
 msgstr "Réamhthaispeántas"
 
-#: plug-ins/common/ps.c:2987
+#: plug-ins/common/ps.c:2988
 #, fuzzy
 msgid "Preview _Size:"
 msgstr "Réamhthaispeántas"
@@ -5533,15 +5549,15 @@ msgid "Random Slur 1.7"
 msgstr ""
 
 #: plug-ins/common/randomize.c:237
-msgid "<Image>/Filters/Noise/Hurl..."
+msgid "<Image>/Filters/Noise/_Hurl..."
 msgstr ""
 
 #: plug-ins/common/randomize.c:249
-msgid "<Image>/Filters/Noise/Pick..."
+msgid "<Image>/Filters/Noise/_Pick..."
 msgstr ""
 
 #: plug-ins/common/randomize.c:261
-msgid "<Image>/Filters/Noise/Slur..."
+msgid "<Image>/Filters/Noise/_Slur..."
 msgstr ""
 
 #: plug-ins/common/randomize.c:746
@@ -5549,44 +5565,44 @@ msgid "R_andomization (%):"
 msgstr ""
 
 #: plug-ins/common/ripple.c:147
-msgid "<Image>/Filters/Distorts/Ripple..."
+msgid "<Image>/Filters/Distorts/_Ripple..."
 msgstr ""
 
 #: plug-ins/common/ripple.c:226
 msgid "Rippling..."
 msgstr ""
 
-#: plug-ins/common/ripple.c:483
+#: plug-ins/common/ripple.c:484
 msgid "Ripple"
 msgstr ""
 
-#: plug-ins/common/ripple.c:530
+#: plug-ins/common/ripple.c:531
 msgid "_Retain Tilability"
 msgstr ""
 
 #. Edges toggle box
-#: plug-ins/common/ripple.c:561
+#: plug-ins/common/ripple.c:562
 msgid "Edges"
 msgstr ""
 
 #. Wave toggle box
-#: plug-ins/common/ripple.c:575
+#: plug-ins/common/ripple.c:576
 msgid "Wave Type"
 msgstr ""
 
-#: plug-ins/common/ripple.c:579
+#: plug-ins/common/ripple.c:580
 msgid "Saw_tooth"
 msgstr ""
 
-#: plug-ins/common/ripple.c:580
+#: plug-ins/common/ripple.c:581
 msgid "S_ine"
 msgstr ""
 
-#: plug-ins/common/ripple.c:602
+#: plug-ins/common/ripple.c:603
 msgid "_Period:"
 msgstr ""
 
-#: plug-ins/common/ripple.c:612
+#: plug-ins/common/ripple.c:613
 msgid "A_mplitude:"
 msgstr ""
 
@@ -5598,137 +5614,132 @@ msgstr ""
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr ""
 
-#: plug-ins/common/rotate.c:438
+#: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
 msgstr ""
 
-#: plug-ins/common/rotate.c:444
+#: plug-ins/common/rotate.c:445
 msgid "Rotating..."
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:305
-msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
+#: plug-ins/common/sample_colorize.c:307
+msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:1356
+#: plug-ins/common/sample_colorize.c:1358
 msgid "Sample Colorize"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:1364
+#: plug-ins/common/sample_colorize.c:1366
 msgid "Get Sample Colors"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:1370
+#: plug-ins/common/sample_colorize.c:1372
 msgid "Apply"
 msgstr ""
 
-#. parameter settings
-#: plug-ins/common/sample_colorize.c:1380
-msgid "Settings"
-msgstr ""
-
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1400
+#: plug-ins/common/sample_colorize.c:1402
 msgid "Destination:"
 msgstr ""
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1419
+#: plug-ins/common/sample_colorize.c:1421
 msgid "Sample:"
 msgstr ""
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1438
+#: plug-ins/common/sample_colorize.c:1440
 msgid "** From GRADIENT **"
 msgstr ""
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1447
+#: plug-ins/common/sample_colorize.c:1449
 msgid "** From INVERSE GRADIENT **"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1463
-#: plug-ins/common/sample_colorize.c:1490
+#: plug-ins/common/sample_colorize.c:1465
+#: plug-ins/common/sample_colorize.c:1492
 msgid "Show Selection"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1474
-#: plug-ins/common/sample_colorize.c:1501
+#: plug-ins/common/sample_colorize.c:1476
+#: plug-ins/common/sample_colorize.c:1503
 msgid "Show Color"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:1612
+#: plug-ins/common/sample_colorize.c:1614
 msgid "In Level:"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:1662
+#: plug-ins/common/sample_colorize.c:1664
 msgid "Out Level:"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1702
+#: plug-ins/common/sample_colorize.c:1704
 msgid "Hold Intensity"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1713
+#: plug-ins/common/sample_colorize.c:1715
 msgid "Original Intensity"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1731
+#: plug-ins/common/sample_colorize.c:1733
 msgid "Use Subcolors"
 msgstr ""
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1742
+#: plug-ins/common/sample_colorize.c:1744
 msgid "Smooth Samplecolors"
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:2721
+#: plug-ins/common/sample_colorize.c:2723
 msgid "Sample Analyze..."
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:3073
+#: plug-ins/common/sample_colorize.c:3080
 msgid "Remap Colorized..."
 msgstr ""
 
 #: plug-ins/common/scatter_hsv.c:149
-msgid "<Image>/Filters/Noise/Scatter HSV..."
+msgid "<Image>/Filters/Noise/S_catter HSV..."
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:241
+#: plug-ins/common/scatter_hsv.c:244
 msgid "Scattering HSV..."
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:344
+#: plug-ins/common/scatter_hsv.c:347
 msgid "Scatter HSV"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:364
+#: plug-ins/common/scatter_hsv.c:367
 msgid "Preview (1:4) - Right Click to Jump"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:416
+#: plug-ins/common/scatter_hsv.c:419
 msgid "_Holdness:"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:425
+#: plug-ins/common/scatter_hsv.c:428
 msgid "H_ue:"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:434
+#: plug-ins/common/scatter_hsv.c:437
 msgid "_Saturation:"
 msgstr ""
 
-#: plug-ins/common/scatter_hsv.c:443
+#: plug-ins/common/scatter_hsv.c:446
 msgid "_Value:"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1072
-msgid "<Toolbox>/File/Acquire/Screen Shot..."
+#: plug-ins/common/screenshot.c:135
+msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr ""
 
 #. main dialog
@@ -5737,7 +5748,7 @@ msgid "Screen Shot"
 msgstr ""
 
 #. single window
-#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:901
+#: plug-ins/common/screenshot.c:406 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr ""
 
@@ -5758,12 +5769,12 @@ msgstr ""
 msgid "_after"
 msgstr "Réamhthaispeántas Beo"
 
-#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1018
+#: plug-ins/common/screenshot.c:484 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr ""
 
 #: plug-ins/common/sel_gauss.c:124
-msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
+msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
 msgstr ""
 
 #: plug-ins/common/sel_gauss.c:201
@@ -5786,16 +5797,16 @@ msgstr ""
 msgid "_Max. Delta:"
 msgstr ""
 
-#: plug-ins/common/semiflatten.c:78
-msgid "<Image>/Filters/Colors/Semi-Flatten"
+#: plug-ins/common/semiflatten.c:79
+msgid "<Image>/Filters/Colors/_Semi-Flatten"
 msgstr ""
 
-#: plug-ins/common/semiflatten.c:117
+#: plug-ins/common/semiflatten.c:118
 msgid "Semi-Flattening..."
 msgstr ""
 
 #: plug-ins/common/sharpen.c:171
-msgid "<Image>/Filters/Enhance/Sharpen..."
+msgid "<Image>/Filters/Enhance/_Sharpen..."
 msgstr ""
 
 #.
@@ -5815,7 +5826,7 @@ msgid "_Sharpness:"
 msgstr ""
 
 #: plug-ins/common/shift.c:116
-msgid "<Image>/Filters/Distorts/Shift..."
+msgid "<Image>/Filters/Distorts/_Shift..."
 msgstr ""
 
 #: plug-ins/common/shift.c:192
@@ -5840,7 +5851,7 @@ msgid "Shift _Amount:"
 msgstr "Faoi"
 
 #: plug-ins/common/sinus.c:1162
-msgid "<Image>/Filters/Render/Sinus..."
+msgid "<Image>/Filters/Render/_Sinus..."
 msgstr ""
 
 #: plug-ins/common/sinus.c:1247
@@ -5959,7 +5970,7 @@ msgid "_Blend"
 msgstr ""
 
 #: plug-ins/common/smooth_palette.c:89
-msgid "<Image>/Filters/Colors/Smooth Palette..."
+msgid "<Image>/Filters/Colors/Smoo_th Palette..."
 msgstr ""
 
 #: plug-ins/common/smooth_palette.c:178
@@ -5975,7 +5986,7 @@ msgid "_Search Depth:"
 msgstr ""
 
 #: plug-ins/common/snoise.c:183
-msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
+msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
 msgstr ""
 
 #: plug-ins/common/snoise.c:309
@@ -6010,7 +6021,7 @@ msgid "_Y Size:"
 msgstr ""
 
 #: plug-ins/common/sobel.c:141
-msgid "<Image>/Filters/Edge-Detect/Sobel..."
+msgid "<Image>/Filters/Edge-Detect/_Sobel..."
 msgstr ""
 
 #: plug-ins/common/sobel.c:244
@@ -6036,7 +6047,7 @@ msgstr ""
 #. don't translate '<Image>', it's a special
 #. * keyword for the gtk toolkit
 #: plug-ins/common/sparkle.c:193
-msgid "<Image>/Filters/Light Effects/Sparkle..."
+msgid "<Image>/Filters/Light Effects/_Sparkle..."
 msgstr ""
 
 #: plug-ins/common/sparkle.c:296
@@ -6307,11 +6318,11 @@ msgid "Rendering Sphere..."
 msgstr ""
 
 #: plug-ins/common/spheredesigner.c:3097
-msgid "<Image>/Filters/Render/Sphere Designer..."
+msgid "<Image>/Filters/Render/Sphere _Designer..."
 msgstr ""
 
 #: plug-ins/common/spread.c:118
-msgid "<Image>/Filters/Noise/Spread..."
+msgid "<Image>/Filters/Noise/Sp_read..."
 msgstr ""
 
 #: plug-ins/common/spread.c:196
@@ -6328,7 +6339,7 @@ msgid "Spread Amount"
 msgstr ""
 
 #: plug-ins/common/struc.c:1153
-msgid "<Image>/Filters/Artistic/Apply Canvas..."
+msgid "<Image>/Filters/Artistic/_Apply Canvas..."
 msgstr ""
 
 #: plug-ins/common/struc.c:1232
@@ -6362,52 +6373,52 @@ msgstr ""
 msgid "Bottom-_Right"
 msgstr ""
 
-#: plug-ins/common/sunras.c:394
+#: plug-ins/common/sunras.c:402
 msgid "Can't open file as SUN-raster-file"
 msgstr ""
 
-#: plug-ins/common/sunras.c:401
+#: plug-ins/common/sunras.c:409
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr ""
 
-#: plug-ins/common/sunras.c:424
+#: plug-ins/common/sunras.c:432
 msgid "Can't read color entries"
 msgstr ""
 
-#: plug-ins/common/sunras.c:431
+#: plug-ins/common/sunras.c:439
 msgid "Type of colormap not supported"
 msgstr ""
 
-#: plug-ins/common/sunras.c:469
+#: plug-ins/common/sunras.c:477
 msgid "This image depth is not supported"
 msgstr ""
 
-#: plug-ins/common/sunras.c:492
+#: plug-ins/common/sunras.c:500
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/sunras.c:503
+#: plug-ins/common/sunras.c:511
 msgid "Can't operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/sunras.c:1030 plug-ins/common/sunras.c:1121
-#: plug-ins/common/sunras.c:1202 plug-ins/common/sunras.c:1297
-#: plug-ins/common/xwd.c:1326 plug-ins/common/xwd.c:1488
-#: plug-ins/common/xwd.c:1685 plug-ins/common/xwd.c:1935
+#: plug-ins/common/sunras.c:1038 plug-ins/common/sunras.c:1129
+#: plug-ins/common/sunras.c:1210 plug-ins/common/sunras.c:1305
+#: plug-ins/common/xwd.c:1330 plug-ins/common/xwd.c:1492
+#: plug-ins/common/xwd.c:1689 plug-ins/common/xwd.c:1939
 #: plug-ins/fits/fits.c:684
 msgid "EOF encountered on reading"
 msgstr ""
 
-#: plug-ins/common/sunras.c:1452 plug-ins/common/sunras.c:1560
+#: plug-ins/common/sunras.c:1460 plug-ins/common/sunras.c:1568
 #: plug-ins/fits/fits.c:836 plug-ins/fits/fits.c:960
 msgid "Write error occured"
 msgstr ""
 
-#: plug-ins/common/sunras.c:1576
+#: plug-ins/common/sunras.c:1584
 msgid "Save as SUNRAS"
 msgstr ""
 
-#: plug-ins/common/sunras.c:1599
+#: plug-ins/common/sunras.c:1607
 msgid "RunLength Encoded"
 msgstr ""
 
@@ -6445,7 +6456,7 @@ msgid "Or_igin at bottom left"
 msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:107
-msgid "<Image>/Layer/Transparency/Threshold Alpha..."
+msgid "<Image>/Layer/Transparency/_Threshold Alpha..."
 msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:142
@@ -6456,23 +6467,23 @@ msgstr ""
 msgid "RGBA/GRAYA drawable is not selected."
 msgstr ""
 
-#: plug-ins/common/threshold_alpha.c:207
+#: plug-ins/common/threshold_alpha.c:210
 msgid "Threshold Alpha: Coloring Transparency..."
 msgstr ""
 
-#: plug-ins/common/threshold_alpha.c:229
+#: plug-ins/common/threshold_alpha.c:232
 msgid "Threshold Alpha"
 msgstr ""
 
-#: plug-ins/common/threshold_alpha.c:257
+#: plug-ins/common/threshold_alpha.c:260
 msgid "Threshold:"
 msgstr ""
 
-#: plug-ins/common/tiff.c:667
+#: plug-ins/common/tiff.c:686
 msgid "TIFF Channel"
 msgstr ""
 
-#: plug-ins/common/tiff.c:675
+#: plug-ins/common/tiff.c:694
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6480,40 +6491,42 @@ msgid ""
 "this conversion."
 msgstr ""
 
-#: plug-ins/common/tiff.c:1631
+#: plug-ins/common/tiff.c:1650
+msgid ""
+"The TIFF format only supports comments in\n"
+"7bit ASCII encoding. No comment is saved."
+msgstr ""
+
+#: plug-ins/common/tiff.c:1779
 msgid "Save as TIFF"
 msgstr ""
 
 #. compression
-#: plug-ins/common/tiff.c:1652
+#: plug-ins/common/tiff.c:1800
 msgid "Compression"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1660
+#: plug-ins/common/tiff.c:1808
 msgid "_LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1663
+#: plug-ins/common/tiff.c:1811
 msgid "_Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1666
+#: plug-ins/common/tiff.c:1814
 msgid "_Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1669
+#: plug-ins/common/tiff.c:1817
 msgid "_JPEG"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1727
-msgid "Your comment string is too long."
-msgstr ""
-
 #: plug-ins/common/tile.c:127
-msgid "<Image>/Filters/Map/Tile..."
+msgid "<Image>/Filters/Map/_Tile..."
 msgstr ""
 
-#: plug-ins/common/tile.c:205 plug-ins/common/tileit.c:331
+#: plug-ins/common/tile.c:205 plug-ins/common/tileit.c:329
 msgid "Tiling..."
 msgstr ""
 
@@ -6530,56 +6543,56 @@ msgstr ""
 msgid "C_reate New Image"
 msgstr ""
 
-#: plug-ins/common/tileit.c:236
-msgid "<Image>/Filters/Map/Small Tiles..."
+#: plug-ins/common/tileit.c:234
+msgid "<Image>/Filters/Map/_Small Tiles..."
 msgstr ""
 
 #. Get the preview image
 #. Start buildng the dialog up
-#: plug-ins/common/tileit.c:379
+#: plug-ins/common/tileit.c:377
 msgid "TileIt"
 msgstr ""
 
 #. Area for buttons etc
-#: plug-ins/common/tileit.c:434
+#: plug-ins/common/tileit.c:432
 msgid "Flipping"
 msgstr ""
 
-#: plug-ins/common/tileit.c:476
+#: plug-ins/common/tileit.c:474
 msgid "Applied to Tile"
 msgstr ""
 
-#: plug-ins/common/tileit.c:490
+#: plug-ins/common/tileit.c:488
 msgid "A_ll Tiles"
 msgstr ""
 
-#: plug-ins/common/tileit.c:504
+#: plug-ins/common/tileit.c:502
 msgid "Al_ternate Tiles"
 msgstr ""
 
-#: plug-ins/common/tileit.c:518
+#: plug-ins/common/tileit.c:516
 msgid "_Explicit Tile"
 msgstr ""
 
-#: plug-ins/common/tileit.c:524
+#: plug-ins/common/tileit.c:522
 msgid "Ro_w:"
 msgstr ""
 
-#: plug-ins/common/tileit.c:548
+#: plug-ins/common/tileit.c:546
 msgid "Col_umn:"
 msgstr ""
 
-#: plug-ins/common/tileit.c:604
+#: plug-ins/common/tileit.c:602
 msgid "O_pacity:"
 msgstr ""
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:615
+#: plug-ins/common/tileit.c:613
 msgid "Segment Setting"
 msgstr ""
 
 #: plug-ins/common/tiler.c:65
-msgid "<Image>/Filters/Map/Make Seamless"
+msgid "<Image>/Filters/Map/_Make Seamless"
 msgstr ""
 
 #: plug-ins/common/tiler.c:319
@@ -6659,7 +6672,7 @@ msgid "The unit's plural form."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:115
-msgid "<Toolbox>/Xtns/Unit Editor..."
+msgid "<Toolbox>/Xtns/_Unit Editor..."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:179
@@ -6715,7 +6728,7 @@ msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
 
 #: plug-ins/common/unsharp.c:153
-msgid "<Image>/Filters/Enhance/Unsharp Mask..."
+msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
 msgstr ""
 
 #: plug-ins/common/unsharp.c:365
@@ -6763,7 +6776,7 @@ msgid "_Dots"
 msgstr ""
 
 #: plug-ins/common/video.c:1840
-msgid "<Image>/Filters/Distorts/Video..."
+msgid "<Image>/Filters/Distorts/Vi_deo..."
 msgstr ""
 
 #: plug-ins/common/video.c:1910
@@ -6788,7 +6801,7 @@ msgid "_Rotated"
 msgstr ""
 
 #: plug-ins/common/vinvert.c:85
-msgid "<Image>/Filters/Colors/Value Invert"
+msgid "<Image>/Filters/Colors/_Value Invert"
 msgstr ""
 
 #: plug-ins/common/vinvert.c:124
@@ -6828,15 +6841,15 @@ msgid "More T_ransparent"
 msgstr ""
 
 #: plug-ins/common/vpropagate.c:249
-msgid "<Image>/Filters/Distorts/Value Propagate..."
+msgid "<Image>/Filters/Distorts/_Value Propagate..."
 msgstr ""
 
 #: plug-ins/common/vpropagate.c:261
-msgid "<Image>/Filters/Generic/Erode"
+msgid "<Image>/Filters/Generic/E_rode"
 msgstr ""
 
 #: plug-ins/common/vpropagate.c:273
-msgid "<Image>/Filters/Generic/Dilate"
+msgid "<Image>/Filters/Generic/_Dilate"
 msgstr ""
 
 #: plug-ins/common/vpropagate.c:461
@@ -6889,7 +6902,7 @@ msgid "Propagating Value Channel"
 msgstr ""
 
 #: plug-ins/common/warp.c:266
-msgid "<Image>/Filters/Map/Warp..."
+msgid "<Image>/Filters/Map/_Warp..."
 msgstr ""
 
 #: plug-ins/common/warp.c:413
@@ -6922,7 +6935,7 @@ msgid "Smear"
 msgstr ""
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3192
+#: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3172
 msgid "Black"
 msgstr ""
 
@@ -7009,7 +7022,7 @@ msgid "Flow Step %d..."
 msgstr ""
 
 #: plug-ins/common/waves.c:124
-msgid "<Image>/Filters/Distorts/Waves..."
+msgid "<Image>/Filters/Distorts/_Waves..."
 msgstr ""
 
 #: plug-ins/common/waves.c:303
@@ -7037,7 +7050,7 @@ msgid "Waving..."
 msgstr ""
 
 #: plug-ins/common/whirlpinch.c:189
-msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
+msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
 msgstr ""
 
 #: plug-ins/common/whirlpinch.c:379
@@ -7092,7 +7105,7 @@ msgid "Pasting..."
 msgstr ""
 
 #: plug-ins/common/wind.c:195
-msgid "<Image>/Filters/Distorts/Wind..."
+msgid "<Image>/Filters/Distorts/Wi_nd..."
 msgstr ""
 
 #: plug-ins/common/wind.c:328
@@ -7162,7 +7175,7 @@ msgid "Higher values increase the magnitude of the effect"
 msgstr ""
 
 #: plug-ins/common/winprint.c:186
-msgid "<Image>/File/Print"
+msgid "<Image>/File/_Print"
 msgstr ""
 
 #: plug-ins/common/winprint.c:198
@@ -7237,28 +7250,28 @@ msgstr ""
 msgid "Created with The GIMP"
 msgstr ""
 
-#: plug-ins/common/xbm.c:818
+#: plug-ins/common/xbm.c:813
 #, c-format
 msgid ""
 "'%s':\n"
 "Can't read header (ftell == %ld)"
 msgstr ""
 
-#: plug-ins/common/xbm.c:825
+#: plug-ins/common/xbm.c:820
 #, c-format
 msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
 
-#: plug-ins/common/xbm.c:831
+#: plug-ins/common/xbm.c:826
 #, c-format
 msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr ""
 
-#: plug-ins/common/xbm.c:837
+#: plug-ins/common/xbm.c:832
 #, c-format
 msgid ""
 "'%s':\n"
@@ -7266,7 +7279,7 @@ msgid ""
 msgstr ""
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:970
+#: plug-ins/common/xbm.c:966
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7275,69 +7288,69 @@ msgid ""
 "(1-bit) indexed image and try again."
 msgstr ""
 
-#: plug-ins/common/xbm.c:981
+#: plug-ins/common/xbm.c:977
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
 
-#: plug-ins/common/xbm.c:1156
+#: plug-ins/common/xbm.c:1152
 msgid "Save as XBM"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1173
+#: plug-ins/common/xbm.c:1169
 msgid "XBM Options"
 msgstr ""
 
 #. X10 format
-#: plug-ins/common/xbm.c:1184
+#: plug-ins/common/xbm.c:1180
 msgid "_X10 Format Bitmap"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1204
+#: plug-ins/common/xbm.c:1200
 msgid "_Identifier Prefix:"
 msgstr ""
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1226
+#: plug-ins/common/xbm.c:1222
 msgid "_Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1248
+#: plug-ins/common/xbm.c:1244
 msgid "Hot Spot _X:"
 msgstr ""
 
 #. mask file
-#: plug-ins/common/xbm.c:1265
+#: plug-ins/common/xbm.c:1261
 msgid "Mask File"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1276
+#: plug-ins/common/xbm.c:1272
 msgid "W_rite Extra Mask File"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1289
+#: plug-ins/common/xbm.c:1285
 msgid "_Mask File Extension:"
 msgstr ""
 
-#: plug-ins/common/xpm.c:746
+#: plug-ins/common/xpm.c:747
 msgid "Save as XPM"
 msgstr ""
 
-#: plug-ins/common/xpm.c:776
+#: plug-ins/common/xpm.c:777
 msgid "_Alpha Threshold:"
 msgstr ""
 
-#: plug-ins/common/xwd.c:386
+#: plug-ins/common/xwd.c:390
 msgid "Can't open file as XWD file"
 msgstr ""
 
-#: plug-ins/common/xwd.c:421
+#: plug-ins/common/xwd.c:425
 msgid "can't read color entries"
 msgstr ""
 
-#: plug-ins/common/xwd.c:478
+#: plug-ins/common/xwd.c:482
 #, c-format
 msgid ""
 "load_image (xwd): XWD-file %s has format %d, depth %d\n"
@@ -7345,32 +7358,32 @@ msgid ""
 "Currently this is not supported.\n"
 msgstr ""
 
-#: plug-ins/common/xwd.c:505
+#: plug-ins/common/xwd.c:509
 msgid "XWD save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/xwd.c:516
+#: plug-ins/common/xwd.c:520
 msgid "cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/xwd.c:1228
+#: plug-ins/common/xwd.c:1232
 msgid "EOF encountered on "
 msgstr ""
 
-#: plug-ins/common/xwd.c:1374
+#: plug-ins/common/xwd.c:1378
 msgid "No memory for mapping colors"
 msgstr ""
 
-#: plug-ins/common/xwd.c:2059
+#: plug-ins/common/xwd.c:2063
 msgid "Error during writing indexed/grey image"
 msgstr ""
 
-#: plug-ins/common/xwd.c:2148
+#: plug-ins/common/xwd.c:2152
 msgid "Error during writing rgb image"
 msgstr ""
 
 #: plug-ins/common/zealouscrop.c:69
-msgid "<Image>/Layer/Transform/Zealous Crop"
+msgid "<Image>/Layer/Transform/_Zealous Crop"
 msgstr ""
 
 #: plug-ins/common/zealouscrop.c:115
@@ -7465,8 +7478,8 @@ msgstr ""
 msgid "BLANK/NaN Pixel Replacement"
 msgstr ""
 
-#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2686
-#: plug-ins/gfig/gfig.c:3193
+#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2666
+#: plug-ins/gfig/gfig.c:3173
 msgid "White"
 msgstr ""
 
@@ -7541,7 +7554,7 @@ msgstr ""
 msgid "Horseshoe"
 msgstr ""
 
-#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3177
+#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3157
 msgid "Polar"
 msgstr ""
 
@@ -7728,32 +7741,32 @@ msgstr ""
 msgid "Shadows:"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1038
+#: plug-ins/fp/fp_gtk.c:1039
 msgid "Midtones:"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1038
+#: plug-ins/fp/fp_gtk.c:1040
 msgid "Highlights:"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1052
+#: plug-ins/fp/fp_gtk.c:1054
 msgid "Advanced Filter Pack Options"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1063
+#: plug-ins/fp/fp_gtk.c:1065
 msgid "Smoothness of Aliasing"
 msgstr ""
 
 #. ****************** MISC OPTIONS **************************
-#: plug-ins/fp/fp_gtk.c:1152
+#: plug-ins/fp/fp_gtk.c:1154
 msgid "Miscellaneous Options"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1163
+#: plug-ins/fp/fp_gtk.c:1165
 msgid "Preview as You Drag"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:1167
+#: plug-ins/fp/fp_gtk.c:1169
 msgid "Preview Size"
 msgstr ""
 
@@ -7761,564 +7774,564 @@ msgstr ""
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:960
+#: plug-ins/gfig/gfig.c:938
 msgid "First Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1358
+#: plug-ins/gfig/gfig.c:1336
 #, c-format
 msgid ""
 "Error opening file '%s':\n"
 "%s"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1454
+#: plug-ins/gfig/gfig.c:1432
 msgid "Save Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1703
+#: plug-ins/gfig/gfig.c:1683
 msgid "Show previous object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1716
+#: plug-ins/gfig/gfig.c:1696
 msgid "Show next object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1728
+#: plug-ins/gfig/gfig.c:1708
 msgid "All"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1729
+#: plug-ins/gfig/gfig.c:1709
 msgid "Show all objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1828
+#: plug-ins/gfig/gfig.c:1808
 msgid "Number of Sides/Points/Turns:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1844
+#: plug-ins/gfig/gfig.c:1824
 msgid "Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1845
+#: plug-ins/gfig/gfig.c:1825
 msgid "Anti-Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1849 plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/gfig/gfig.c:1829 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:497
 msgid "Orientation:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1869
+#: plug-ins/gfig/gfig.c:1849
 msgid "Bezier Settings"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1889
+#: plug-ins/gfig/gfig.c:1869
 msgid "Closed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1894
+#: plug-ins/gfig/gfig.c:1874
 msgid "Close curve on completion"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1899
+#: plug-ins/gfig/gfig.c:1879
 msgid "Show Line Frame"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1904
+#: plug-ins/gfig/gfig.c:1884
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1920
+#: plug-ins/gfig/gfig.c:1900
 msgid "Regular Polygon Number of Sides"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1932
+#: plug-ins/gfig/gfig.c:1912
 msgid "Star Number of Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1944
+#: plug-ins/gfig/gfig.c:1924
 msgid "Spiral Number of Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1974
+#: plug-ins/gfig/gfig.c:1954
 msgid "Create line"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1979
+#: plug-ins/gfig/gfig.c:1959
 msgid "Create circle"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1984
+#: plug-ins/gfig/gfig.c:1964
 msgid "Create ellipse"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1989
+#: plug-ins/gfig/gfig.c:1969
 msgid "Create arch"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1998
+#: plug-ins/gfig/gfig.c:1978
 msgid "Create reg polygon"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2006
+#: plug-ins/gfig/gfig.c:1986
 msgid "Create star"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2015
+#: plug-ins/gfig/gfig.c:1995
 msgid "Create spiral"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2025
+#: plug-ins/gfig/gfig.c:2005
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2031
+#: plug-ins/gfig/gfig.c:2011
 msgid "Move an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2036
+#: plug-ins/gfig/gfig.c:2016
 msgid "Move a single point"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2041
+#: plug-ins/gfig/gfig.c:2021
 msgid "Copy an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2046
+#: plug-ins/gfig/gfig.c:2026
 msgid "Delete an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2203 plug-ins/gfig/gfig.c:2641
-#: plug-ins/gfig/gfig.c:3837
+#: plug-ins/gfig/gfig.c:2183 plug-ins/gfig/gfig.c:2621
+#: plug-ins/gfig/gfig.c:3817
 msgid "Brush"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2204
+#: plug-ins/gfig/gfig.c:2184
 msgid "Airbrush"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2205
+#: plug-ins/gfig/gfig.c:2185
 msgid "Pencil"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2206 plug-ins/gfig/gfig.c:3050
+#: plug-ins/gfig/gfig.c:2186 plug-ins/gfig/gfig.c:3030
 msgid "Pattern"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2213
+#: plug-ins/gfig/gfig.c:2193
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2622 plug-ins/rcm/rcm_dialog.c:130
+#: plug-ins/gfig/gfig.c:2602 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2623 plug-ins/webbrowser/webbrowser.c:321
+#: plug-ins/gfig/gfig.c:2603 plug-ins/webbrowser/webbrowser.c:320
 msgid "New"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2624
+#: plug-ins/gfig/gfig.c:2604
 msgid "Multiple"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2629
+#: plug-ins/gfig/gfig.c:2609
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2634
+#: plug-ins/gfig/gfig.c:2614
 msgid "Draw on:"
 msgstr ""
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2643 plug-ins/imagemap/imap_selection.c:364
+#: plug-ins/gfig/gfig.c:2623 plug-ins/imagemap/imap_selection.c:365
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2645
+#: plug-ins/gfig/gfig.c:2625
 msgid "Selection+Fill"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2672
+#: plug-ins/gfig/gfig.c:2652
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2676
+#: plug-ins/gfig/gfig.c:2656
 msgid "Using:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2683 plug-ins/gimpressionist/general.c:119
+#: plug-ins/gfig/gfig.c:2663 plug-ins/gimpressionist/general.c:119
 msgid "Transparent"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2685 plug-ins/gfig/gfig.c:3051
+#: plug-ins/gfig/gfig.c:2665 plug-ins/gfig/gfig.c:3031
 msgid "Foreground"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2687 plug-ins/gfig/gfig.c:5106
+#: plug-ins/gfig/gfig.c:2667 plug-ins/gfig/gfig.c:5074
 #: plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2691
+#: plug-ins/gfig/gfig.c:2671
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2696
+#: plug-ins/gfig/gfig.c:2676
 msgid "With BG of:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2699
+#: plug-ins/gfig/gfig.c:2679
 msgid "Reverse Line"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2706
+#: plug-ins/gfig/gfig.c:2686
 msgid "Draw lines in reverse order"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2714
+#: plug-ins/gfig/gfig.c:2694
 msgid "Scale to Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2722
+#: plug-ins/gfig/gfig.c:2702
 msgid "Scale drawings to images size"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2744
+#: plug-ins/gfig/gfig.c:2724
 msgid "Approx. Circles/Ellipses"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2751
+#: plug-ins/gfig/gfig.c:2731
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2801
+#: plug-ins/gfig/gfig.c:2781
 msgid "Gfig Brush Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2839
+#: plug-ins/gfig/gfig.c:2819
 msgid "Fade out:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2862
+#: plug-ins/gfig/gfig.c:2842
 msgid "Gradient:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2882
+#: plug-ins/gfig/gfig.c:2862
 msgid "Pressure:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2900
+#: plug-ins/gfig/gfig.c:2880
 msgid "No Options..."
 msgstr ""
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:2915
+#: plug-ins/gfig/gfig.c:2895
 msgid "Set Brush..."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3004
+#: plug-ins/gfig/gfig.c:2984
 msgid "Add"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3005
+#: plug-ins/gfig/gfig.c:2985
 msgid "Subtract"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3007
+#: plug-ins/gfig/gfig.c:2987
 msgid "Intersect"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3011
+#: plug-ins/gfig/gfig.c:2991
 msgid "Selection Type:"
 msgstr ""
 
 #. 3
-#: plug-ins/gfig/gfig.c:3024
+#: plug-ins/gfig/gfig.c:3004
 msgid "Feather"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3042
+#: plug-ins/gfig/gfig.c:3022
 msgid "Radius:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3056
+#: plug-ins/gfig/gfig.c:3036
 msgid "Fill Type:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3069
+#: plug-ins/gfig/gfig.c:3049
 msgid "Fill Opacity:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3077
+#: plug-ins/gfig/gfig.c:3057
 msgid "Each Selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3078
+#: plug-ins/gfig/gfig.c:3058
 msgid "All Selections"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3082
+#: plug-ins/gfig/gfig.c:3062
 msgid "Fill after:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3089
+#: plug-ins/gfig/gfig.c:3069
 msgid "Segment"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3090
+#: plug-ins/gfig/gfig.c:3070
 msgid "Sector"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3094
+#: plug-ins/gfig/gfig.c:3074
 msgid "Arc as:"
 msgstr ""
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:3153
+#: plug-ins/gfig/gfig.c:3133
 msgid "Show Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3164
+#: plug-ins/gfig/gfig.c:3144
 msgid "Reload Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3176 plug-ins/imagemap/imap_menu.c:366
+#: plug-ins/gfig/gfig.c:3156 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3178
+#: plug-ins/gfig/gfig.c:3158
 msgid "Isometric"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3182
+#: plug-ins/gfig/gfig.c:3162
 msgid "Grid Type:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3191 plug-ins/gflare/gflare.c:575
+#: plug-ins/gfig/gfig.c:3171 plug-ins/gflare/gflare.c:575
 msgid "Normal"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3194
+#: plug-ins/gfig/gfig.c:3174
 msgid "Grey"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3195
+#: plug-ins/gfig/gfig.c:3175
 msgid "Darker"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3196
+#: plug-ins/gfig/gfig.c:3176
 msgid "Lighter"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3197
+#: plug-ins/gfig/gfig.c:3177
 msgid "Very Dark"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3201
+#: plug-ins/gfig/gfig.c:3181
 msgid "Grid Color:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3205
+#: plug-ins/gfig/gfig.c:3185
 msgid "Max Undo:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3213
+#: plug-ins/gfig/gfig.c:3193
 msgid "Show Position"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3224
+#: plug-ins/gfig/gfig.c:3204
 msgid "Hide Control Points"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3277
+#: plug-ins/gfig/gfig.c:3257
 msgid "Display Grid"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3288
+#: plug-ins/gfig/gfig.c:3268
 msgid "Lock on Grid"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3303
+#: plug-ins/gfig/gfig.c:3283
 msgid "Grid Spacing:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3367
+#: plug-ins/gfig/gfig.c:3347
 msgid "Object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3404
+#: plug-ins/gfig/gfig.c:3384
 msgid "Create a new Gfig object collection for editing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3414
+#: plug-ins/gfig/gfig.c:3394
 msgid "Load a single Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3422
+#: plug-ins/gfig/gfig.c:3402
 msgid "Edit Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3426
+#: plug-ins/gfig/gfig.c:3406
 msgid "_Merge"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3430
+#: plug-ins/gfig/gfig.c:3410
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3439
+#: plug-ins/gfig/gfig.c:3419
 msgid "Delete currently selected Gfig Object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3449
+#: plug-ins/gfig/gfig.c:3429
 msgid "Select folder and rescan Gfig object collections"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3520 plug-ins/gimpressionist/size.c:98
+#: plug-ins/gfig/gfig.c:3500 plug-ins/gimpressionist/size.c:98
 msgid "Size:"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3547
+#: plug-ins/gfig/gfig.c:3527
 msgid "XY Position:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3568
+#: plug-ins/gfig/gfig.c:3548
 msgid "Object Details"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3597
+#: plug-ins/gfig/gfig.c:3577
 msgid "Collection Details"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3604
+#: plug-ins/gfig/gfig.c:3584
 msgid "Draw Name:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3616 plug-ins/gfig/gfig.c:3622
+#: plug-ins/gfig/gfig.c:3596 plug-ins/gfig/gfig.c:3602
 msgid "(none)"
 msgstr ""
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3771
+#: plug-ins/gfig/gfig.c:3751
 msgid "Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3791 plug-ins/gfig/gfig.c:3832
+#: plug-ins/gfig/gfig.c:3771 plug-ins/gfig/gfig.c:3812
 msgid "Paint"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3845 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:3825 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3907
+#: plug-ins/gfig/gfig.c:3887
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4233
+#: plug-ins/gfig/gfig.c:4213
 msgid "Enter Gfig Object Name"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4258
+#: plug-ins/gfig/gfig.c:4238
 msgid "Gfig Object Name:"
 msgstr ""
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4317
+#: plug-ins/gfig/gfig.c:4289
 msgid "Rescan for Gfig Objects"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4336
+#: plug-ins/gfig/gfig.c:4306
 msgid "Add Gfig Path"
 msgstr ""
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4410
+#: plug-ins/gfig/gfig.c:4378
 msgid "Load Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4435
+#: plug-ins/gfig/gfig.c:4403
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4549
+#: plug-ins/gfig/gfig.c:4517
 #, c-format
 msgid "Gfig Layer %d"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4623
+#: plug-ins/gfig/gfig.c:4591
 #, fuzzy
 msgid "About Gfig"
 msgstr "Faoi"
 
-#: plug-ins/gfig/gfig.c:4648
+#: plug-ins/gfig/gfig.c:4616
 msgid "Gfig - GIMP plug-in"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4653
+#: plug-ins/gfig/gfig.c:4621
 msgid "Release 1.3"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4706
+#: plug-ins/gfig/gfig.c:4674
 msgid "New Gfig Object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4835
+#: plug-ins/gfig/gfig.c:4803
 msgid "Delete Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4863 plug-ins/gfig/gfig.c:4902
+#: plug-ins/gfig/gfig.c:4831 plug-ins/gfig/gfig.c:4870
 msgid "<NONE>"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4940
+#: plug-ins/gfig/gfig.c:4908
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5047
+#: plug-ins/gfig/gfig.c:5015
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5079 plug-ins/imagemap/imap_toolbar.c:104
+#: plug-ins/gfig/gfig.c:5047 plug-ins/imagemap/imap_toolbar.c:104
 msgid "Save"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5093
+#: plug-ins/gfig/gfig.c:5061
 msgid "Save As..."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5119 plug-ins/imagemap/imap_selection.c:174
+#: plug-ins/gfig/gfig.c:5087 plug-ins/imagemap/imap_selection.c:174
 #: plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5967
+#: plug-ins/gfig/gfig.c:5935
 msgid "Error reading file"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:6323
+#: plug-ins/gfig/gfig.c:6291
 msgid "Hey where has the object gone ?"
 msgstr ""
 
@@ -8334,47 +8347,42 @@ msgstr ""
 msgid "<Image>/Filters/Light Effects/GFlare..."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:959
+#: plug-ins/gflare/gflare.c:958
 msgid "Gradient Flare..."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:971
+#: plug-ins/gflare/gflare.c:970
 msgid "GFlare: cannot operate on indexed color images"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:1253
+#: plug-ins/gflare/gflare.c:1257
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:1261
+#: plug-ins/gflare/gflare.c:1265
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:1314
+#: plug-ins/gflare/gflare.c:1318
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:1434
+#: plug-ins/gflare/gflare.c:1443
 #, c-format
 msgid ""
 "GFlare `%s' is not saved.\n"
 "If you add a new entry in %s, like:\n"
 "(gflare-path \"%s\")\n"
 "and make a folder %s,\n"
-"then you can save your own GFlare's into that folder."
+"then you can save your own GFlares into that folder."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:1461
+#: plug-ins/gflare/gflare.c:1475
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr ""
-
-#: plug-ins/gflare/gflare.c:1616
-#, c-format
-msgid "Error reading GFlare folder '%s'"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:2288
@@ -8394,115 +8402,115 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2696
+#: plug-ins/gflare/gflare.c:2697
 msgid "Ro_tation:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2708
+#: plug-ins/gflare/gflare.c:2709
 msgid "_Hue Rotation:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2720
+#: plug-ins/gflare/gflare.c:2721
 msgid "Vector _Angle:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2732
+#: plug-ins/gflare/gflare.c:2733
 msgid "Vector _Length:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2753
+#: plug-ins/gflare/gflare.c:2754
 msgid "A_daptive Supersampling"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2773
+#: plug-ins/gflare/gflare.c:2774
 msgid "_Max Depth:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2783
+#: plug-ins/gflare/gflare.c:2784
 msgid "_Threshold"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2900
+#: plug-ins/gflare/gflare.c:2901
 msgid "S_elector"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2979
+#: plug-ins/gflare/gflare.c:2980
 msgid "New GFlare"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2982
+#: plug-ins/gflare/gflare.c:2983
 msgid "Enter a Name for the New GFlare:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2983
+#: plug-ins/gflare/gflare.c:2984
 msgid "untitled"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3001
+#: plug-ins/gflare/gflare.c:3002
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3051
+#: plug-ins/gflare/gflare.c:3052
 msgid "Copy GFlare"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3054
+#: plug-ins/gflare/gflare.c:3055
 msgid "Enter a Name for the Copied GFlare:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3075
+#: plug-ins/gflare/gflare.c:3076
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3101
+#: plug-ins/gflare/gflare.c:3102
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3111
+#: plug-ins/gflare/gflare.c:3112
 msgid "Delete GFlare"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3168
+#: plug-ins/gflare/gflare.c:3169
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3209
+#: plug-ins/gflare/gflare.c:3210
 msgid "GFlare Editor"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3214
+#: plug-ins/gflare/gflare.c:3215
 msgid "Rescan Gradients"
 msgstr ""
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3335
+#: plug-ins/gflare/gflare.c:3336
 msgid "Glow Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3347 plug-ins/gflare/gflare.c:3377
-#: plug-ins/gflare/gflare.c:3407
+#: plug-ins/gflare/gflare.c:3348 plug-ins/gflare/gflare.c:3378
+#: plug-ins/gflare/gflare.c:3408
 msgid "Opacity:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3360 plug-ins/gflare/gflare.c:3390
-#: plug-ins/gflare/gflare.c:3420
+#: plug-ins/gflare/gflare.c:3361 plug-ins/gflare/gflare.c:3391
+#: plug-ins/gflare/gflare.c:3421
 msgid "Paint Mode:"
 msgstr ""
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3365
+#: plug-ins/gflare/gflare.c:3366
 msgid "Rays Paint Options"
 msgstr ""
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3395
+#: plug-ins/gflare/gflare.c:3396
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3424 plug-ins/gimpressionist/general.c:57
+#: plug-ins/gflare/gflare.c:3425 plug-ins/gimpressionist/general.c:57
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "_General"
 msgstr ""
@@ -8510,93 +8518,93 @@ msgstr ""
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3450 plug-ins/gflare/gflare.c:3555
-#: plug-ins/gflare/gflare.c:3696
+#: plug-ins/gflare/gflare.c:3451 plug-ins/gflare/gflare.c:3556
+#: plug-ins/gflare/gflare.c:3697
 msgid "Gradients"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3462 plug-ins/gflare/gflare.c:3569
-#: plug-ins/gflare/gflare.c:3708
+#: plug-ins/gflare/gflare.c:3463 plug-ins/gflare/gflare.c:3570
+#: plug-ins/gflare/gflare.c:3709
 msgid "Radial Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3466 plug-ins/gflare/gflare.c:3573
+#: plug-ins/gflare/gflare.c:3467 plug-ins/gflare/gflare.c:3574
 msgid "Angular Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3470 plug-ins/gflare/gflare.c:3577
+#: plug-ins/gflare/gflare.c:3471 plug-ins/gflare/gflare.c:3578
 msgid "Angular Size Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3491 plug-ins/gflare/gflare.c:3598
-#: plug-ins/gflare/gflare.c:3737
+#: plug-ins/gflare/gflare.c:3492 plug-ins/gflare/gflare.c:3599
+#: plug-ins/gflare/gflare.c:3738
 msgid "Size (%):"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3610
-#: plug-ins/gflare/gflare.c:3749
+#: plug-ins/gflare/gflare.c:3504 plug-ins/gflare/gflare.c:3611
+#: plug-ins/gflare/gflare.c:3750
 msgid "Rotation:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3515 plug-ins/gflare/gflare.c:3623
-#: plug-ins/gflare/gflare.c:3762
+#: plug-ins/gflare/gflare.c:3516 plug-ins/gflare/gflare.c:3624
+#: plug-ins/gflare/gflare.c:3763
 msgid "Hue Rotation:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3529
+#: plug-ins/gflare/gflare.c:3530
 msgid "G_low"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3635
+#: plug-ins/gflare/gflare.c:3636
 msgid "# of Spikes:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3647
+#: plug-ins/gflare/gflare.c:3648
 msgid "Spike Thickness:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3661
+#: plug-ins/gflare/gflare.c:3662
 msgid "_Rays"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3712
+#: plug-ins/gflare/gflare.c:3713
 msgid "Size Factor Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3716
+#: plug-ins/gflare/gflare.c:3717
 msgid "Probability Gradient:"
 msgstr ""
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:3779
+#: plug-ins/gflare/gflare.c:3780
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3788 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gflare/gflare.c:3789 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3805 plug-ins/imagemap/imap_menu.c:371
+#: plug-ins/gflare/gflare.c:3806 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3838
+#: plug-ins/gflare/gflare.c:3839
 msgid "Random Seed:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3856
+#: plug-ins/gflare/gflare.c:3857
 msgid "_Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4452
+#: plug-ins/gflare/gflare.c:4457
 msgid "none"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4465
+#: plug-ins/gflare/gflare.c:4470
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr ""
@@ -8614,7 +8622,7 @@ msgstr ""
 msgid "GFLI 1.3 - Load framestack"
 msgstr ""
 
-#: plug-ins/gfli/gfli.c:888
+#: plug-ins/gfli/gfli.c:887
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
@@ -8788,11 +8796,11 @@ msgstr ""
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimp.c:102
+#: plug-ins/gimpressionist/gimp.c:106
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
 msgstr ""
 
-#: plug-ins/gimpressionist/gimp.c:294
+#: plug-ins/gimpressionist/gimp.c:298
 msgid "Painting..."
 msgstr ""
 
@@ -8924,7 +8932,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:499
-#: plug-ins/gimpressionist/sizemap.c:432
+#: plug-ins/gimpressionist/sizemap.c:434
 msgid "Adjust the preview's brightness"
 msgstr ""
 
@@ -8937,7 +8945,7 @@ msgid "Select next vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:530
-#: plug-ins/gimpressionist/sizemap.c:465
+#: plug-ins/gimpressionist/sizemap.c:467
 msgid "A_dd"
 msgstr ""
 
@@ -8946,7 +8954,7 @@ msgid "Add new vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:537
-#: plug-ins/gimpressionist/sizemap.c:473
+#: plug-ins/gimpressionist/sizemap.c:475
 msgid "_Kill"
 msgstr ""
 
@@ -8971,7 +8979,7 @@ msgid "Vortex_3"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:565
-#: plug-ins/gimpressionist/sizemap.c:519
+#: plug-ins/gimpressionist/sizemap.c:521
 msgid "_Voronoi"
 msgstr ""
 
@@ -9006,7 +9014,7 @@ msgid "S_trength exp.:"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:614
-#: plug-ins/gimpressionist/sizemap.c:514
+#: plug-ins/gimpressionist/sizemap.c:516
 msgid "Change the exponent of the strength"
 msgstr ""
 
@@ -9197,53 +9205,53 @@ msgstr ""
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:376
+#: plug-ins/gimpressionist/sizemap.c:378
 msgid "Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/gimpressionist/sizemap.c:404
 msgid "Smvectors"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:412
+#: plug-ins/gimpressionist/sizemap.c:414
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:455
+#: plug-ins/gimpressionist/sizemap.c:457
 msgid "Select previous smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:463
+#: plug-ins/gimpressionist/sizemap.c:465
 msgid "Select next smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:471
+#: plug-ins/gimpressionist/sizemap.c:473
 msgid "Add new smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:479
+#: plug-ins/gimpressionist/sizemap.c:481
 msgid "Delete selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/sizemap.c:494
 msgid "Change the angle of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/gimpressionist/sizemap.c:501
 msgid "S_trength:"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:503
+#: plug-ins/gimpressionist/sizemap.c:505
 msgid "Change the strength of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:510
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "St_rength exp.:"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:526
+#: plug-ins/gimpressionist/sizemap.c:528
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9417,27 +9425,27 @@ msgstr ""
 msgid "Transformation %s"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2616
+#: plug-ins/ifscompose/ifscompose.c:2622
 #, c-format
 msgid ""
 "Cannot save file '%s'.\n"
 "Check the path and permissions."
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2704
+#: plug-ins/ifscompose/ifscompose.c:2710
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2709 plug-ins/ifscompose/ifscompose.c:2719
+#: plug-ins/ifscompose/ifscompose.c:2715 plug-ins/ifscompose/ifscompose.c:2725
 msgid "Load failed"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2732
+#: plug-ins/ifscompose/ifscompose.c:2738
 msgid "Save as IFS file"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:2757
+#: plug-ins/ifscompose/ifscompose.c:2763
 msgid "Load IFS file"
 msgstr ""
 
@@ -9946,7 +9954,7 @@ msgstr ""
 msgid "_Help"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:398
+#: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr ""
 
@@ -10066,15 +10074,15 @@ msgstr ""
 msgid "Upper left _y:"
 msgstr ""
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "URL"
 msgstr ""
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "Target"
 msgstr ""
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "Comment"
 msgstr ""
 
@@ -10186,11 +10194,11 @@ msgstr ""
 msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr ""
 
-#: plug-ins/maze/maze.c:156
+#: plug-ins/maze/maze.c:164
 msgid "<Image>/Filters/Render/Pattern/Maze..."
 msgstr ""
 
-#: plug-ins/maze/maze.c:403
+#: plug-ins/maze/maze.c:411
 msgid "Drawing Maze..."
 msgstr ""
 
@@ -10324,57 +10332,57 @@ msgstr ""
 msgid "Unable to add additional point.\n"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:217
+#: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/Pagecurl..."
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:502
+#: plug-ins/pagecurl/pagecurl.c:501
 msgid "Pagecurl Effect"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:524
+#: plug-ins/pagecurl/pagecurl.c:523
 msgid "Curl Location"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:549
+#: plug-ins/pagecurl/pagecurl.c:548
 msgid "Upper Left"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:550
+#: plug-ins/pagecurl/pagecurl.c:549
 msgid "Upper Right"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:551
+#: plug-ins/pagecurl/pagecurl.c:550
 msgid "Lower Left"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:552
+#: plug-ins/pagecurl/pagecurl.c:551
 msgid "Lower Right"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:582
+#: plug-ins/pagecurl/pagecurl.c:581
 msgid "Curl Orientation"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:621
+#: plug-ins/pagecurl/pagecurl.c:620
 msgid "Shade under Curl"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:632
+#: plug-ins/pagecurl/pagecurl.c:631
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:645
+#: plug-ins/pagecurl/pagecurl.c:644
 msgid "Curl Opacity"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:775
+#: plug-ins/pagecurl/pagecurl.c:774
 msgid "Curl Layer"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:1012
+#: plug-ins/pagecurl/pagecurl.c:1011
 msgid "Page Curl..."
 msgstr ""
 
@@ -10915,20 +10923,20 @@ msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 
-#: plug-ins/print/print.c:166
+#: plug-ins/print/print.c:170
 msgid "<Image>/File/Print..."
 msgstr ""
 
-#: plug-ins/print/print.c:733 plug-ins/print/print.c:734
-#: plug-ins/print/print.c:832 plug-ins/print/print.c:1181
+#: plug-ins/print/print.c:736 plug-ins/print/print.c:737
+#: plug-ins/print/print.c:835 plug-ins/print/print.c:1184
 msgid "File"
 msgstr ""
 
-#: plug-ins/rcm/rcm.c:112
+#: plug-ins/rcm/rcm.c:116
 msgid "<Image>/Filters/Colors/Map/Colormap Rotation..."
 msgstr ""
 
-#: plug-ins/rcm/rcm.c:274
+#: plug-ins/rcm/rcm.c:278
 msgid "Rotating the colormap..."
 msgstr ""
 
@@ -11067,128 +11075,132 @@ msgid ""
 "(Not Supported by SGI)"
 msgstr ""
 
-#: plug-ins/twain/twain.c:531
+#: plug-ins/twain/twain.c:535
 msgid "<Toolbox>/File/Acquire/TWAIN..."
 msgstr ""
 
 #. Initialize our progress dialog
-#: plug-ins/twain/twain.c:665
+#: plug-ins/twain/twain.c:669
 msgid "Transferring TWAIN data"
 msgstr ""
 
-#: plug-ins/webbrowser/webbrowser.c:140
+#: plug-ins/webbrowser/webbrowser.c:139
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
 msgstr ""
 
-#: plug-ins/webbrowser/webbrowser.c:274
+#: plug-ins/webbrowser/webbrowser.c:273
 msgid "Open URL"
 msgstr ""
 
-#: plug-ins/webbrowser/webbrowser.c:308
+#: plug-ins/webbrowser/webbrowser.c:307
 msgid "URL:"
 msgstr ""
 
-#: plug-ins/webbrowser/webbrowser.c:318
+#: plug-ins/webbrowser/webbrowser.c:317
 msgid "Window:"
 msgstr ""
 
-#: plug-ins/webbrowser/webbrowser.c:332
+#: plug-ins/webbrowser/webbrowser.c:331
 msgid "Current"
 msgstr ""
 
-#: plug-ins/winsnap/winsnap.c:944
+#: plug-ins/winsnap/winsnap.c:949
 msgid "Grab a single window"
 msgstr ""
 
-#: plug-ins/winsnap/winsnap.c:955
+#: plug-ins/winsnap/winsnap.c:960
 msgid "Include decorations"
 msgstr ""
 
-#: plug-ins/winsnap/winsnap.c:991
+#: plug-ins/winsnap/winsnap.c:996
 msgid "Grab the whole screen"
 msgstr ""
 
-#: plug-ins/winsnap/winsnap.c:1009
+#: plug-ins/winsnap/winsnap.c:1014
 msgid "after"
 msgstr ""
 
-#: plug-ins/winsnap/winsnap.c:1220
+#: plug-ins/winsnap/winsnap.c:1077
+msgid "<Toolbox>/File/Acquire/Screen Shot..."
+msgstr ""
+
+#: plug-ins/winsnap/winsnap.c:1225
 msgid "No data captured"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:729
+#: plug-ins/xjt/xjt.c:730
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:766
+#: plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:782
+#: plug-ins/xjt/xjt.c:783
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:798
+#: plug-ins/xjt/xjt.c:799
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:818
+#: plug-ins/xjt/xjt.c:819
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:839
+#: plug-ins/xjt/xjt.c:840
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:860
+#: plug-ins/xjt/xjt.c:861
 msgid "Save as XJT"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:898
+#: plug-ins/xjt/xjt.c:899
 msgid "Clear Transparent"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1301
+#: plug-ins/xjt/xjt.c:1304
 #, c-format
 msgid "Can't open (write): %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1702
+#: plug-ins/xjt/xjt.c:1716
 msgid "xjt: cannot operate on indexed color images"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1706
+#: plug-ins/xjt/xjt.c:1720
 msgid "xjt: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1721 plug-ins/xjt/xjt.c:3339
+#: plug-ins/xjt/xjt.c:1735 plug-ins/xjt/xjt.c:3365
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1730
+#: plug-ins/xjt/xjt.c:1744
 #, c-format
 msgid "Can't open: %s"
 msgstr ""
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2551 plug-ins/xjt/xjt.c:2558
+#: plug-ins/xjt/xjt.c:2569 plug-ins/xjt/xjt.c:2576
 #, c-format
 msgid "Can't open (read): %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:3202
+#: plug-ins/xjt/xjt.c:3228
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:3207
+#: plug-ins/xjt/xjt.c:3233
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr ""

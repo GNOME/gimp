@@ -322,27 +322,6 @@
 #
 # (image-status-format "%f-%p.%i (%t)")
 
-# When enabled, the menubar is visible by default. This can also be toggled
-# with the "View->Show Menubar" command.  Possible values are yes and no.
-#
-# (show-menubar yes)
-
-# When enabled, the rulers are visible by default. This can also be toggled
-# with the "View->Show Rulers" command.  Possible values are yes and no.
-#
-# (show-rulers yes)
-
-# When enabled, the scrollbars are visible by default. This can also be
-# toggled with the "View->Show Scrollbars" command.  Possible values are yes
-# and no.
-#
-# (show-scrollbars yes)
-
-# When enabled, the statusbar is visible by default. This can also be toggled
-# with the "View->Show Statusbar" command.  Possible values are yes and no.
-#
-# (show-statusbar yes)
-
 # Ask for confirmation before closing an image without saving.  Possible
 # values are yes and no.
 #
@@ -371,6 +350,27 @@
 #
 # (navigation-preview-size medium)
 
+# When enabled, the menubar is visible by default. This can also be toggled
+# with the "View->Show Menubar" command.  Possible values are yes and no.
+#
+# (show-menubar yes)
+
+# When enabled, the rulers are visible by default. This can also be toggled
+# with the "View->Show Rulers" command.  Possible values are yes and no.
+#
+# (show-rulers yes)
+
+# When enabled, the scrollbars are visible by default. This can also be
+# toggled with the "View->Show Scrollbars" command.  Possible values are yes
+# and no.
+#
+# (show-scrollbars yes)
+
+# When enabled, the statusbar is visible by default. This can also be toggled
+# with the "View->Show Statusbar" command.  Possible values are yes and no.
+#
+# (show-statusbar yes)
+
 # Specifies how the area around the image should be drawn.  Possible values
 # are default, light-check, dark-check and custom.
 #
@@ -381,6 +381,38 @@
 # alpha) with channel values as floats between 0.0 and 1.0.
 #
 # (canvas-padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000))
+
+# When enabled, the menubar is visible by default. This can also be toggled
+# with the "View->Show Menubar" command.  Possible values are yes and no.
+#
+# (fullscreen-show-menubar no)
+
+# When enabled, the rulers are visible by default. This can also be toggled
+# with the "View->Show Rulers" command.  Possible values are yes and no.
+#
+# (fullscreen-show-rulers no)
+
+# When enabled, the scrollbars are visible by default. This can also be
+# toggled with the "View->Show Scrollbars" command.  Possible values are yes
+# and no.
+#
+# (fullscreen-show-scrollbars no)
+
+# When enabled, the statusbar is visible by default. This can also be toggled
+# with the "View->Show Statusbar" command.  Possible values are yes and no.
+#
+# (fullscreen-show-statusbar no)
+
+# Specifies how the area around the image should be drawn.  Possible values
+# are default, light-check, dark-check and custom.
+#
+# (fullscreen-canvas-padding-mode custom)
+
+# Sets the canvas padding color used if the padding mode is set to custom
+# color.  The color is specified in the form (color-rgba red green blue
+# alpha) with channel values as floats between 0.0 and 1.0.
+#
+# (fullscreen-canvas-padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000))
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"POT-Creation-Date: 2003-06-27 03:00+0200\n"
+"POT-Creation-Date: 2003-07-21 00:18+0200\n"
 "PO-Revision-Date: 2003-02-10 01:31+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -35,6 +35,15 @@ msgstr ""
 "遮罩的效果。"
 
 #: tips/gimp-tips.xml.in.h:4
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"使用「油漆桶填色」工具時，按 <tt>Shift</tt> 鍵加上滑鼠按鈕會令填色時使用背景"
+"顏色而非前景顏色。"
+
+#: tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
@@ -42,21 +51,13 @@ msgstr ""
 "在「變換工具」的旋轉模式中，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕會將旋轉角度限制"
 "為 15°的倍數。"
 
-#: tips/gimp-tips.xml.in.h:5
+#: tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
 "在「圖層」對話窗的眼形圖示中，按 <tt>Shift</tt> 鍵加上滑鼠按鈕會只顯示指定圖"
 "層而隱藏其它圖層。再做一次則會顯示所有圖層。"
-
-#: tips/gimp-tips.xml.in.h:6
-msgid ""
-"<tt>Shift</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr ""
-"使用「油漆桶填色」工具時，按 <tt>Shift</tt> 鍵加上滑鼠按鈕會令填色時使用背景"
-"顏色而非前景顏色。"
 
 #: tips/gimp-tips.xml.in.h:7
 #, fuzzy
@@ -180,7 +181,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voilá, "
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
 "it's completed."
 msgstr ""
 "在檔案選擇對話窗內有類似命令殼的指令自動補齊功能。只要鍵入部份的檔案名稱，按"
@@ -189,7 +190,7 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
-"The layer named \"Background\" it special because it lacks transparency. "
+"The layer named \"Background\" is special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
 "stack. You may add transparency to it by right-clicking in the Layers dialog "
 "and selecting \"Add Alpha Channel\"."

@@ -8,7 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.17\n"
-"POT-Creation-Date: 2003-07-15 02:16+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-07-15 02:18+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -174,8 +175,7 @@ msgstr "Schriftenauswahl"
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
-#: libgimp/gimpmenu.c:93 libgimp/gimpmenu.c:217 libgimp/gimpmenu.c:334
-#: libgimp/gimpmenu.c:517
+#: libgimp/gimpmenu.c:401
 msgid "None"
 msgstr "Keine"
 
@@ -183,7 +183,7 @@ msgstr "Keine"
 msgid "Preview"
 msgstr "Vorschau"
 
-#: libgimp/gimpmiscui.c:537
+#: libgimp/gimpmiscui.c:536
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -477,7 +477,8 @@ msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Farbenblindheit Anzeigenfarbfilter (Algorithmus von Brettel-Vienot-Mollon)"
+msgstr ""
+"Farbenblindheit Anzeigenfarbfilter (Algorithmus von Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
@@ -527,43 +528,44 @@ msgstr "Kontrast"
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_cmyk.c:74
+#: modules/colorsel_cmyk.c:70
 msgid "CMYK color selector"
 msgstr "CMYK Farbmischer"
 
-#: modules/colorsel_cmyk.c:136
-msgid "_CMYK"
+#: modules/colorsel_cmyk.c:129
+#, fuzzy
+msgid "CMYK"
 msgstr "_CMYK"
 
-#: modules/colorsel_cmyk.c:150
+#: modules/colorsel_cmyk.c:143
 msgid "_C"
 msgstr "_C"
 
-#: modules/colorsel_cmyk.c:151
+#: modules/colorsel_cmyk.c:144
 msgid "_M"
 msgstr "_M"
 
-#: modules/colorsel_cmyk.c:152
+#: modules/colorsel_cmyk.c:145
 msgid "_Y"
 msgstr "_Y"
 
-#: modules/colorsel_cmyk.c:153
+#: modules/colorsel_cmyk.c:146
 msgid "_K"
 msgstr "_K"
 
-#: modules/colorsel_cmyk.c:157
+#: modules/colorsel_cmyk.c:150
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/colorsel_cmyk.c:158
+#: modules/colorsel_cmyk.c:151
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/colorsel_cmyk.c:159
+#: modules/colorsel_cmyk.c:152
 msgid "Yellow"
 msgstr "Gelb (Yellow)"
 
-#: modules/colorsel_cmyk.c:160
+#: modules/colorsel_cmyk.c:153
 msgid "Black"
 msgstr "Schwarz (Key)"
 
@@ -572,7 +574,8 @@ msgid "Painter-style triangle color selector"
 msgstr "Dreiecks-Farbauswahl im Stil von Painter"
 
 #: modules/colorsel_triangle.c:182
-msgid "_Triangle"
+#, fuzzy
+msgid "Triangle"
 msgstr "_Dreieck"
 
 #: modules/colorsel_water.c:104
@@ -580,7 +583,8 @@ msgid "Watercolor style color selector"
 msgstr "Wasserfarben Farbmischer"
 
 #: modules/colorsel_water.c:176
-msgid "_Watercolor"
+#, fuzzy
+msgid "Watercolor"
 msgstr "_Wasserfarbe"
 
 #: modules/colorsel_water.c:251

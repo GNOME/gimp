@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-18 11:58+0200\n"
+"POT-Creation-Date: 2003-07-25 01:21+0200\n"
 "PO-Revision-Date: 2003-07-19 01:02+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -30,13 +30,13 @@ msgstr "O programu"
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:722
 #: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:671
 #: plug-ins/common/iwarp.c:1211 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:821
+#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:704
 #: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
 #: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:403
 #: plug-ins/common/waves.c:454 plug-ins/common/whirlpinch.c:673
 #: plug-ins/flame/flame.c:947 plug-ins/gflare/gflare.c:2319
 #: plug-ins/gflare/gflare.c:3246 plug-ins/gimpressionist/orientmap.c:501
-#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:434
+#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
@@ -1983,7 +1983,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/nlfilt.c:376 plug-ins/common/noisify.c:340
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:339
-#: plug-ins/common/polar.c:841 plug-ins/common/randomize.c:722
+#: plug-ins/common/polar.c:723 plug-ins/common/randomize.c:722
 #: plug-ins/common/ripple.c:591 plug-ins/common/scatter_hsv.c:406
 #: plug-ins/common/sel_gauss.c:255 plug-ins/common/sharpen.c:617
 #: plug-ins/common/shift.c:344 plug-ins/common/smooth_palette.c:440
@@ -2391,7 +2391,7 @@ msgid "_Psychobilly"
 msgstr "_Psychoplocha"
 
 #: plug-ins/common/checkerboard.c:438 plug-ins/common/papertile.c:305
-#: plug-ins/gimpressionist/sizemap.c:488
+#: plug-ins/gimpressionist/sizemap.c:490
 msgid "_Size:"
 msgstr "Veliko_st:"
 
@@ -5420,41 +5420,41 @@ msgstr "Binární"
 msgid "Ascii"
 msgstr "ASCII"
 
-#: plug-ins/common/polar.c:202
+#: plug-ins/common/polar.c:184
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr "<Image>/Filtry/Zkreslení/_Polární souřadnice..."
 
-#: plug-ins/common/polar.c:385
+#: plug-ins/common/polar.c:350
 msgid "Polarizing..."
 msgstr "Polarizuje se..."
 
-#: plug-ins/common/polar.c:798
+#: plug-ins/common/polar.c:681
 msgid "Polarize"
 msgstr "Polarizace"
 
-#: plug-ins/common/polar.c:857
+#: plug-ins/common/polar.c:739
 msgid "Circle _Depth in Percent:"
 msgstr "Hloubka _kružnice v procentech:"
 
-#: plug-ins/common/polar.c:866
+#: plug-ins/common/polar.c:748
 msgid "Offset _Angle:"
 msgstr "Úhel p_osunu:"
 
-#: plug-ins/common/polar.c:878
+#: plug-ins/common/polar.c:760
 msgid "_Map Backwards"
 msgstr "Zpětné _mapování"
 
-#: plug-ins/common/polar.c:884
+#: plug-ins/common/polar.c:766
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Při zaškrtnutí začne mapování napravo straně namísto nalevo."
 
-#: plug-ins/common/polar.c:892
+#: plug-ins/common/polar.c:774
 msgid "Map from _Top"
 msgstr "Mapování _shora"
 
-#: plug-ins/common/polar.c:898
+#: plug-ins/common/polar.c:780
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5462,11 +5462,11 @@ msgstr ""
 "Bez zaškrtnutí začne pokládat dolní řadu doprostřed a horní řadu ven. Při "
 "zaškrtnutí to bude naopak."
 
-#: plug-ins/common/polar.c:907
+#: plug-ins/common/polar.c:789
 msgid "To _Polar"
 msgstr "Do _polárních"
 
-#: plug-ins/common/polar.c:913
+#: plug-ins/common/polar.c:795
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -8082,7 +8082,7 @@ msgid "Draw on:"
 msgstr "Kreslit jako:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2623 plug-ins/imagemap/imap_selection.c:364
+#: plug-ins/gfig/gfig.c:2623 plug-ins/imagemap/imap_selection.c:365
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr "Výběr"
@@ -9081,7 +9081,7 @@ msgstr ""
 "směruje dle myši. Prostřední tlačítko přidává nový vektor."
 
 #: plug-ins/gimpressionist/orientmap.c:499
-#: plug-ins/gimpressionist/sizemap.c:432
+#: plug-ins/gimpressionist/sizemap.c:434
 msgid "Adjust the preview's brightness"
 msgstr "Upraví jas náhledu"
 
@@ -9094,7 +9094,7 @@ msgid "Select next vector"
 msgstr "Vybrat následující vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:530
-#: plug-ins/gimpressionist/sizemap.c:465
+#: plug-ins/gimpressionist/sizemap.c:467
 msgid "A_dd"
 msgstr "Při_dat"
 
@@ -9103,7 +9103,7 @@ msgid "Add new vector"
 msgstr "Přidat nový vektor"
 
 #: plug-ins/gimpressionist/orientmap.c:537
-#: plug-ins/gimpressionist/sizemap.c:473
+#: plug-ins/gimpressionist/sizemap.c:475
 msgid "_Kill"
 msgstr "_Odstranit"
 
@@ -9128,7 +9128,7 @@ msgid "Vortex_3"
 msgstr "Vír_3"
 
 #: plug-ins/gimpressionist/orientmap.c:565
-#: plug-ins/gimpressionist/sizemap.c:519
+#: plug-ins/gimpressionist/sizemap.c:521
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
@@ -9163,7 +9163,7 @@ msgid "S_trength exp.:"
 msgstr "Exp. _síly:"
 
 #: plug-ins/gimpressionist/orientmap.c:614
-#: plug-ins/gimpressionist/sizemap.c:514
+#: plug-ins/gimpressionist/sizemap.c:516
 msgid "Change the exponent of the strength"
 msgstr "Změna exponentu síly"
 
@@ -9360,15 +9360,15 @@ msgstr "Velikost stopy bude určena ručně"
 msgid "Opens up the Size Map Editor"
 msgstr "Otvírá editor mapy velikosti"
 
-#: plug-ins/gimpressionist/sizemap.c:376
+#: plug-ins/gimpressionist/sizemap.c:378
 msgid "Size Map Editor"
 msgstr "Editor map velikosti"
 
-#: plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/gimpressionist/sizemap.c:404
 msgid "Smvectors"
 msgstr "Vektory mv"
 
-#: plug-ins/gimpressionist/sizemap.c:412
+#: plug-ins/gimpressionist/sizemap.c:414
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9376,39 +9376,39 @@ msgstr ""
 "Pole vektorů mv. Levé tlačítko přesunuje zvolený vektor. Pravé tlačítko ho "
 "směruje dle myši. Prostřední tlačítko přidává nový vektor mv."
 
-#: plug-ins/gimpressionist/sizemap.c:455
+#: plug-ins/gimpressionist/sizemap.c:457
 msgid "Select previous smvector"
 msgstr "Vybrat předchozí vektor mv"
 
-#: plug-ins/gimpressionist/sizemap.c:463
+#: plug-ins/gimpressionist/sizemap.c:465
 msgid "Select next smvector"
 msgstr "Vybrat následující vektor mv"
 
-#: plug-ins/gimpressionist/sizemap.c:471
+#: plug-ins/gimpressionist/sizemap.c:473
 msgid "Add new smvector"
 msgstr "Přidat nový vektor mv"
 
-#: plug-ins/gimpressionist/sizemap.c:479
+#: plug-ins/gimpressionist/sizemap.c:481
 msgid "Delete selected smvector"
 msgstr "Smazat zvolený vektor mv"
 
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/sizemap.c:494
 msgid "Change the angle of the selected smvector"
 msgstr "Změna úhlu zvoleného vektoru mv"
 
-#: plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/gimpressionist/sizemap.c:501
 msgid "S_trength:"
 msgstr "Pevnos_t:"
 
-#: plug-ins/gimpressionist/sizemap.c:503
+#: plug-ins/gimpressionist/sizemap.c:505
 msgid "Change the strength of the selected smvector"
 msgstr "Změna pevnosti zvoleného vektoru mv"
 
-#: plug-ins/gimpressionist/sizemap.c:510
+#: plug-ins/gimpressionist/sizemap.c:512
 msgid "St_rength exp.:"
 msgstr "Exp. _síly:"
 
-#: plug-ins/gimpressionist/sizemap.c:526
+#: plug-ins/gimpressionist/sizemap.c:528
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10125,7 +10125,7 @@ msgstr "Vytvořit vodítka..."
 msgid "_Help"
 msgstr "Nápo_věda"
 
-#: plug-ins/imagemap/imap_menu.c:398
+#: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "O obrázkové mapě..."
 
@@ -10245,15 +10245,15 @@ msgstr "_X odleva odshora:"
 msgid "Upper left _y:"
 msgstr "_Y odleva odshora:"
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "URL"
 msgstr "URL"
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "Target"
 msgstr "Cíl"
 
-#: plug-ins/imagemap/imap_selection.c:342
+#: plug-ins/imagemap/imap_selection.c:343
 msgid "Comment"
 msgstr "Komentář"
 
