@@ -1338,7 +1338,7 @@ gimp_main(...)
 		              argc++;
 		          }
 		        else
-		          croak (__("internal error (please report): too many main arguments"));
+		          croak ("internal error (please report): too many arguments to main");
 		      }
 		    else
 		      croak (__("arguments to main not yet supported!"));
@@ -1584,10 +1584,10 @@ gimp_call_procedure (proc_name, ...)
                                 SPAGAIN;
                               }
                             else
-                              sprintf (croak_str, __("unsupported status code: %d, fatal error\n"), values[0].data.d_status);
+                              sprintf (croak_str, "unsupported status code: %d, fatal error\n", values[0].data.d_status);
                           }
                         else
-                          sprintf (croak_str, __("gimp didn't return an execution status, fatal error"));
+                          sprintf (croak_str, "gimp didn't return an execution status, fatal error");
                         
                       }
                     

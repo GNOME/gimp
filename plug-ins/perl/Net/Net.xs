@@ -71,10 +71,10 @@ static void destroy_object (SV *sv)
           hv_delete (object_cache, (char *)&id, sizeof(id), G_DISCARD);
         }
       else
-        croak (__("Internal error: Gimp::Net #101, please report!"));
+        croak ("Internal error: Gimp::Net #101, please report!");
     }
   else
-    croak (__("Internal error: Gimp::Net #100, please report!"));
+    croak ("Internal error: Gimp::Net #100, please report!");
 }
 
 /* allocate this much as initial length */
@@ -135,7 +135,7 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
       else if (SvTYPE(rv) == SVt_PVMG)
         sv2net (deobjectify, s, rv);
       else
-        croak (__("Internal error: unable to convert reference in sv2net, please report!"));
+        croak ("Internal error: unable to convert reference in sv2net, please report!");
     }
   else if (SvOK(sv))
     {
@@ -190,7 +190,7 @@ static SV *net2sv (int objectify, char **_s)
       case 'b':
         sscanf (s, "%x:%n", &ui, &n); s += n;
         if (ui >= sizeof str)
-          croak (__("Internal error: stashname too long, please report!"));
+          croak ("Internal error: stashname too long, please report!");
 
         memcpy (str, s, ui); s += ui;
         str[ui] = 0;
@@ -204,7 +204,7 @@ static SV *net2sv (int objectify, char **_s)
 
             cv = hv_fetch (object_cache, (char *)(id=l,&id), sizeof(id), 0);
             if (!cv)
-              croak (__("Internal error: asked to deobjectify an object not in the cache, please report!"));
+              croak ("Internal error: asked to deobjectify an object not in the cache, please report!");
 
             sv = *cv;
             SvREFCNT_inc (sv);
@@ -225,7 +225,7 @@ static SV *net2sv (int objectify, char **_s)
         break;
 
       default:
-        croak (__("Internal error: unable to handle argtype '%c' in net2sv, please report!"), s[-1]);
+        croak ("Internal error: unable to handle argtype '%c' in net2sv, please report!", s[-1]);
     }
 
   *_s = s;

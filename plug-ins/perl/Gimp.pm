@@ -328,7 +328,7 @@ sub _initialized_callback {
          require Gimp::Compat;
          $compat_gimp_version[0] == $Gimp::Compat::max_gimp_version[0]
             && $compat_gimp_version[1] == $Gimp::Compat::max_gimp_version[1]
-               or die __"FATAL: Gimp::Compat version mismatch\n";
+               or die "FATAL: Gimp::Compat version mismatch\n";
       }
    }
    if (@log) {
@@ -984,7 +984,7 @@ integers>, rather than blessed objects.
 
 =item gimp_drawable_bounds drawable/gdrawable
 
-Returns an array (0,0,w,h) containing the upper left corner and the
+Returns an array (x,y,w,h) containing the upper left corner and the
 size of currently selected parts of the drawable, just as needed by
 PixelRgn->new and similar functions.
 
