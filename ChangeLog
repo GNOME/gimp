@@ -1,3 +1,8 @@
+2003-02-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpmarshal.list: reduced to the set of marshallers we
+	actually use.
+
 2003-02-20  Michael Natterer  <mitch@gimp.org>
 
 	Reimplemented the undo history:

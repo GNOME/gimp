@@ -3,7 +3,6 @@
 
 app/app_procs.c
 app/main.c
-app/undo_history.c
 
 app/base/base-enums.c
 
@@ -258,6 +257,7 @@ app/widgets/gimptexteditor.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
+app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorslistview.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
