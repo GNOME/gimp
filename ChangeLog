@@ -1,3 +1,10 @@
+<<<<<<< ChangeLog
+2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/checkerboard.c: fix for #82499 (small typo) and also 
+	adds mnemonics
+
+=======
 2002-05-24  Sven Neumann  <sven@gimp.org>
 
 	* app/core/cpercep.[ch]
@@ -5,6 +12,7 @@
 	* app/paint-funcs/paint-funcs.c: removed C++ style comments and
 	compiler warnings.
 
+>>>>>>> 1.4411
 2002-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig.[ch]
