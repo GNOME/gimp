@@ -71,6 +71,8 @@ static void run   (gchar   *name,
 		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
+static void   init_gtk        (void);
+
 /* return the image-ID of the new image, or -1 in case of an error */
 static gint32 load_image      (gchar  *filename,
 			       gint32  from_frame,
@@ -82,7 +84,6 @@ static gint   save_image      (gchar  *filename,
 			       gint32  image_id,
 			       gint32  from_frame,
 			       gint32  to_frame);
-static void   init_gtk        (void);
 static gint   save_dialog     (gint32  image_id);
 
 /* return TRUE or FALSE */
@@ -126,7 +127,7 @@ GParamDef save_args[] =
   { PARAM_STRING, "filename", "The name of the file to save" },
   { PARAM_STRING, "raw_filename", "The name entered" },
   { PARAM_INT32, "from_frame", "Save beginning from this frame" },
-  { PARAM_INT32, "to_frame", "End saveing with this frame" },
+  { PARAM_INT32, "to_frame", "End saving with this frame" },
 };
 gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -288,9 +289,7 @@ run (gchar   *name,
 	      values[1].data.d_image = image_ID;
 	    }
 	  else
-	    {
-	      status = STATUS_EXECUTION_ERROR;
-	    }
+	    status = STATUS_EXECUTION_ERROR;
 	  break;
 
 	case RUN_INTERACTIVE:
@@ -306,14 +305,10 @@ run (gchar   *name,
 		  values[1].data.d_image = image_ID;
 		}
 	      else
-		{
-		  status = STATUS_EXECUTION_ERROR;
-		}
+		status = STATUS_EXECUTION_ERROR;
 	    }
 	  else
-	    {
-	      status = STATUS_CANCEL;
-	    }
+	    status = STATUS_CANCEL;
 	  break;
 
 	case RUN_WITH_LAST_VALS:
@@ -324,7 +319,6 @@ run (gchar   *name,
   else if (strcmp (name, "file_fli_save") == 0)
     {
       INIT_I18N_UI ();
-      init_gtk ();
 
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -345,16 +339,15 @@ run (gchar   *name,
 		  break;
 		}
 	    }
-	  if (! save_image (param[3].data.d_string,
-			    image_ID,
+	  if (! save_image (param[3].data.d_string, image_ID,
 			    param[5].data.d_int32,
 			    param[6].data.d_int32))
-	    {
-	      status = STATUS_EXECUTION_ERROR;
-	    }
+	    status = STATUS_EXECUTION_ERROR;
 	  break;
 
 	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI", 
 				      (CAN_HANDLE_INDEXED |
 				       CAN_HANDLE_GRAY | 
@@ -368,21 +361,11 @@ run (gchar   *name,
 
 	  if (save_dialog (param[1].data.d_image))
 	    {
-	      if (! save_image (param[3].data.d_string,
-				image_ID,
-				from_frame, to_frame))
-		{
-		  status = STATUS_EXECUTION_ERROR;
-		}
+	      if (! save_image (param[3].data.d_string, image_ID, from_frame, to_frame))
+		status = STATUS_EXECUTION_ERROR;
 	    }
 	  else
-	    {
-	      status = STATUS_CANCEL;
-	    }
-	  break;
-
-	case RUN_WITH_LAST_VALS:
-	  status = STATUS_CALLING_ERROR;
+	    status = STATUS_CANCEL;
 	  break;
 	}
 
@@ -426,15 +409,11 @@ run (gchar   *name,
 	      values[3].data.d_int32 = frames;
 	    }
 	  else
-	    {
-	      status = STATUS_EXECUTION_ERROR;
-	    }
+	    status = STATUS_EXECUTION_ERROR;
 	}
     }
   else
-    {
-      status = STATUS_CALLING_ERROR;
-    }
+    status = STATUS_CALLING_ERROR;
 
   values[0].data.d_status = status;
 }
@@ -448,20 +427,20 @@ get_info (gchar  *filename,
 	  gint32 *height,
 	  gint32 *frames)
 {
-  FILE *f;
+  FILE *file;
   s_fli_header fli_header;
 
   *width = 0; *height = 0; *frames = 0;
 
-  f = fopen (filename ,"rb");
+  file = fopen (filename ,"rb");
 
-  if (!f)
+  if (!file)
     {
-      g_message (_("FLI: can't open \"%s\"\n"), filename);
+      g_message (_("FLI: Can't open \"%s\""), filename);
       return FALSE;
     }
-  fli_read_header (f, &fli_header);
-  fclose (f);
+  fli_read_header (file, &fli_header);
+  fclose (file);
   *width = fli_header.width;
   *height = fli_header.height;
   *frames = fli_header.frames;
@@ -477,7 +456,7 @@ load_image (gchar  *filename,
 	    gint32  from_frame,
 	    gint32  to_frame)
 {
-  FILE *f;
+  FILE *file;
   gchar *name_buf;
   GDrawable *drawable;
   gint32 image_id, layer_ID;
@@ -493,17 +472,17 @@ load_image (gchar  *filename,
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
-  f = fopen (filename ,"rb");
-  if (!f)
+  file = fopen (filename ,"rb");
+  if (!file)
     {
-      g_message (_("FLI: can't open \"%s\"\n"), filename);
+      g_message (_("FLI: Can't open \"%s\""), filename);
       return -1;
     }
-  fli_read_header (f, &fli_header);
+  fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)
     return -1;
   else
-    fseek (f, 128, SEEK_SET);
+    fseek (file, 128, SEEK_SET);
 
   /*
    * Fix parameters
@@ -547,7 +526,7 @@ load_image (gchar  *filename,
    */
   for (cnt = 1; cnt < from_frame; cnt++)
     {
-      fli_read_frame (f, &fli_header, ofb, ocm, fb, cm);
+      fli_read_frame (file, &fli_header, ofb, ocm, fb, cm);
       memcpy (ocm, cm, 768);
       fb_x = fb; fb = ofb; ofb = fb_x;
     }
@@ -563,9 +542,8 @@ load_image (gchar  *filename,
       g_free (name_buf);
 
       drawable = gimp_drawable_get (layer_ID);
-      gimp_progress_update ((double) cnt / (double)(to_frame - from_frame));
 
-      fli_read_frame (f, &fli_header, ofb, ocm, fb, cm);
+      fli_read_frame (file, &fli_header, ofb, ocm, fb, cm);
 
       gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			   0, 0, fli_header.width, fli_header.height,
@@ -581,17 +559,27 @@ load_image (gchar  *filename,
 
       gimp_image_add_layer (image_id, layer_ID, 0);
 
-      memcpy (ocm, cm, 768);
-      fb_x = fb; fb = ofb; ofb = fb_x;
+      if (cnt < to_frame)
+	{
+	  memcpy (ocm, cm, 768);
+	  fb_x = fb; fb = ofb; ofb = fb_x;
+	}
+      
+      gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
+
   gimp_image_set_cmap (image_id, cm, 256);
-  fclose (f);
+
+  fclose (file);
 
   g_free (fb);
   g_free (ofb);
 
   return image_id;
 }
+
+
+#define MAXDIFF 195075    /*  3 * SQR (255) + 1  */
 
 /*
  * get framestack and store as fli animation
@@ -603,12 +591,19 @@ save_image (gchar  *filename,
 	    gint32  from_frame,
 	    gint32  to_frame)
 {
-  FILE *f;
+  FILE *file;
   gchar *name_buf;
   GDrawable *drawable;
   gint32 *framelist;
   gint nframes;
-    	
+  gint colors, i;
+  guchar *cmap;
+  guchar bg;
+  guchar red, green, blue;
+  gint diff, sum, max;
+  gint offset_x, offset_y, xc, yc, xx, yy;
+  guint rows, cols, bytes;
+  guchar *src_row;
   guchar *fb, *ofb;
   guchar cm[768];
   GPixelRgn pixel_rgn;
@@ -646,37 +641,50 @@ save_image (gchar  *filename,
       to_frame = nframes;
     }
 
+  gimp_palette_get_background (&red, &green, &blue);
+
   switch (gimp_image_base_type (image_id))
     {
     case GIMP_GRAY:
-      {
-	/* build grayscale palette */
-	gint i;
-	for (i = 0; i < 256; i++)
-	  {
-	    cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
-	  }
-	break;
-      }
+      /* build grayscale palette */
+      for (i = 0; i < 256; i++)
+	{
+	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
+	}
+      bg = INTENSITY (red, green, blue);
+      break;
+
     case GIMP_INDEXED:
-      {
-	gint colors, i;
-	guchar *cmap;
-	cmap = gimp_image_get_cmap(image_id, &colors);
-	for (i = 0; i < colors; i++)
-	  {
-	    cm[i*3+0] = cmap[i*3+0];
-	    cm[i*3+1] = cmap[i*3+1];
-	    cm[i*3+2] = cmap[i*3+2];
-	  }
-	for (i = colors; i < 256; i++)
-	  {
-	    cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
-	  }
-	break;
-      }
+      max = MAXDIFF;
+      bg = 0;
+      cmap = gimp_image_get_cmap (image_id, &colors);
+      for (i = 0; i < MIN (colors, 256); i++)
+	{
+	  cm[i*3+0] = cmap[i*3+0];
+	  cm[i*3+1] = cmap[i*3+1];
+	  cm[i*3+2] = cmap[i*3+2];
+	  
+	  diff = red - cm[i*3+0];
+	  sum = SQR (diff);
+	  diff = green - cm[i*3+1];
+	  sum +=  SQR (diff);
+	  diff = blue - cm[i*3+2];
+	  sum += SQR (diff);
+
+	  if (sum < max)
+	    {
+	      bg = i;
+	      max = sum;
+	    }
+	}
+      for (i = colors; i < 256; i++)
+	{
+	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
+	}
+      break;
+      
     default:
-      g_message (_("FLI: Sorry, I can save only INDEXED and GRAY images.\n"));
+      g_message (_("FLI: Sorry, I can save only INDEXED and GRAY images."));
       return FALSE;
     }
 
@@ -709,29 +717,26 @@ save_image (gchar  *filename,
   fli_header.aspect_y = 1;  /* ... as GIMP supports it. */
   fli_header.oframe1  = fli_header.oframe2 = 0; /* will be fixed during the write */
 
-  f = fopen (filename ,"wb");
-  if (!f)
+  file = fopen (filename ,"wb");
+  if (!file)
     {
-      g_message (_("FLI: can't open \"%s\"\n"), filename);
+      g_message (_("FLI: Can't open \"%s\""), filename);
       return FALSE;
     }
-  fseek (f, 128, SEEK_SET);
+  fseek (file, 128, SEEK_SET);
 
   fb = g_malloc (fli_header.width * fli_header.height);
   ofb = g_malloc (fli_header.width * fli_header.height);
+
+  /* initialize with bg color */
+  memset (fb, bg, fli_header.width * fli_header.height);
 
   /*
    * Now write all frames
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-      gint offset_x, offset_y, xc, yc, xx, yy;
-      guint rows, cols, bytes;
-      guchar *src_row;
-
-      gimp_progress_update ((double) cnt / (double)(to_frame - from_frame));
-
-      /* get layer data from GIMP */
+     /* get layer data from GIMP */
       drawable = gimp_drawable_get (framelist[nframes-cnt]);
       gimp_drawable_offsets (framelist[nframes-cnt], &offset_x, &offset_y);
       cols = drawable->width;
@@ -745,13 +750,13 @@ save_image (gchar  *filename,
       /* now paste it into the framebuffer, with the neccessary offset */
       for (yc = 0, yy = offset_y; yc < rows; yc++, yy++)
 	{
-	  if ((yy >= 0) && (yy < fli_header.height))
+	  if (yy >= 0 && yy < fli_header.height)
 	    {
 	      gimp_pixel_rgn_get_row (&pixel_rgn, src_row, 0, yc, cols);
 	      
 	      for (xc = 0, xx = offset_x; xc < cols; xc++, xx++)
 		{
-		  if ((xx >= 0) && (xx < fli_header.width))
+		  if (xx >= 0 && xx < fli_header.width)
 		    fb[yy * fli_header.width + xx] = src_row[xc * bytes];
 		}
 	    }
@@ -763,23 +768,25 @@ save_image (gchar  *filename,
       if (cnt > from_frame)
 	{
 	  /* save frame, allow all codecs */
-	  fli_write_frame (f, &fli_header, ofb, cm, fb, cm, W_ALL);
+	  fli_write_frame (file, &fli_header, ofb, cm, fb, cm, W_ALL);
 	}
       else
 	{
 	  /* save first frame, no delta information, allow all codecs */
-	  fli_write_frame (f, &fli_header, NULL, NULL, fb, cm, W_ALL);
+	  fli_write_frame (file, &fli_header, NULL, NULL, fb, cm, W_ALL);
 	}
 
       if (cnt < to_frame)
 	memcpy (ofb, fb, fli_header.width * fli_header.height);
-    }
+ 
+      gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
+     }
 
   /*
    * finish fli
    */
-  fli_write_header (f, &fli_header);
-  fclose (f);
+  fli_write_header (file, &fli_header);
+  fclose (file);
 
   g_free (fb);
   g_free (ofb);
@@ -910,8 +917,6 @@ save_dialog (gint32 image_id)
 
   from_frame = 1;
   to_frame   = nframes;
-
-  init_gtk ();
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), "gfli",
 			    gimp_plugin_help_func, "filters/gfli.html",

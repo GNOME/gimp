@@ -1,3 +1,11 @@
+Sun Feb 13 12:08:02 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/channels_dialog.c: Reverted bogus change by Daniel Egger.
+	This variable is supposed to be static and functions never get 
+	interrupted by dnd events.
+
+	* plug-ins/gfli/gfli.c: polished it a bit more
+
 2000-02-13  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/CML_explorer.c
