@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-18 16:48+0900\n"
-"PO-Revision-Date: 2004-03-18 16:48+0900\n"
+"POT-Creation-Date: 2004-03-19 17:46+0900\n"
+"PO-Revision-Date: 2004-03-19 17:48+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -462,7 +462,7 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:140 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunde inte öppna \"%s\" för att läsa: %s"
@@ -9740,44 +9740,31 @@ msgstr ""
 "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt "
 "har någon påverkan"
 
-#: plug-ins/help/domain.c:136
+#: plug-ins/help/domain.c:161
 msgid "The GIMP help files are not installed."
 msgstr "GIMPs hjälpfiler är inte installerade."
 
-#: plug-ins/help/domain.c:138
-msgid "The requested help files are not installed."
-msgstr "De efterfrågade hjälpfilerna är inte installerade."
+#: plug-ins/help/domain.c:163
+msgid "There is a problem with the GIMP help files."
+msgstr "Det är problem med hjälpfilerna för GIMP."
 
-#: plug-ins/help/domain.c:147
+#: plug-ins/help/domain.c:168
 msgid "Please check your installation."
 msgstr "Kontrollera din installation."
 
-#: plug-ins/help/domain.c:150
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Misslyckades med att öppna hjälpfiler:\n"
-"%s"
-
-#: plug-ins/help/domain.c:152
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(entries appearing before the error have been added anyway)"
-msgstr ""
-"Tolkningsfel i hjälpdomänen:\n"
-"%s\n"
-"\n"
-"(lade till enheter före fel i alla fall)"
-
-#: plug-ins/help/domain.c:159
+#: plug-ins/help/domain.c:174
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hjälp-ID \"%s\" är okänt"
+
+#: plug-ins/help/domain.c:414
+#, c-format
+msgid ""
+"Parse error in '%s':\n"
+"%s"
+msgstr ""
+"Tolkningsfel i \"%s\":\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -11716,6 +11703,27 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
 
+#~ msgid "The requested help files are not installed."
+#~ msgstr "De efterfrågade hjälpfilerna är inte installerade."
+
+#~ msgid ""
+#~ "Failed to open help files:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Misslyckades med att öppna hjälpfiler:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Parse error in help domain:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(entries appearing before the error have been added anyway)"
+#~ msgstr ""
+#~ "Tolkningsfel i hjälpdomänen:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(lade till enheter före fel i alla fall)"
+
 #~ msgid "Only an indexed-alpha image can be saved in CEL format"
 #~ msgstr "Endast en indexerad-alfa-bild kan sparas i CEL-format"
 
@@ -11831,13 +11839,6 @@ msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
 
 #~ msgid "Can't open '%s': %s"
 #~ msgstr "Kan inte öppna \"%s\": %s"
-
-#~ msgid ""
-#~ "Error opening file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fel vid öppnande av fil \"%s\":\n"
-#~ "%s"
 
 #~ msgid "Show grid"
 #~ msgstr "Visa rutnät"
