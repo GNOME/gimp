@@ -31,6 +31,7 @@ typedef struct _GimpPluginConfig    GimpPluginConfig;
 typedef struct _GimpRc              GimpRc;
 
 typedef struct _GimpConfigWriter    GimpConfigWriter;
+typedef struct _GimpXmlParser       GimpXmlParser;
 
 
 #endif /* __CONFIG_TYPES_H__ */

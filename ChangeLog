@@ -1,3 +1,22 @@
+2003-09-15  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/config-types.h
+	* app/config/gimpxmlparser.[ch]: new files that hold a simple XML
+	parser based on GMarkupParser. It's not a full-featured XML parser;
+	it only adds transparent handling of encodings to GMarkupParser
+	and provides a convenient API to deal with files or IO channels.
+
+	* app/vectors/gimpvectors-import.c: use the new GimpXmlParser.
+	
+	* app/vectors/gimpvectors-export.c: write encoding attribute.
+
+	* app/tips-dialog.c
+	* app/tips-parser.c: use the new GimpXmlParser.
+
+	* app/vectors/Makefile.am: had to add one of those truly ugly
+	hacks here in order to get the application linked.
+	
 2003-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_constructor): 

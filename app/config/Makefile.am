@@ -37,7 +37,9 @@ libappconfig_a_SOURCES = \
 	gimprc.h			\
 	gimprc-blurbs.h			\
 	gimpscanner.c			\
-	gimpscanner.h
+	gimpscanner.h			\
+	gimpxmlparser.c			\
+	gimpxmlparser.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"	\

@@ -21,10 +21,12 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>
+
+#include "config/config-types.h"
+#include "config/gimpxmlparser.h"
 
 #include "tips-parser.h"
 
@@ -51,7 +53,6 @@ typedef enum
 typedef struct _TipsParser TipsParser;
 struct _TipsParser
 {
-  const gchar           *filename;
   TipsParserState        state;
   TipsParserState        last_known_state;
   const gchar           *locale;
@@ -80,9 +81,6 @@ static void  tips_parser_characters    (GMarkupParseContext  *context,
                                         gsize                 text_len,
                                         gpointer              user_data,
                                         GError              **error);
-static void  tips_parser_error         (GMarkupParseContext  *context,
-                                        GError               *error,
-                                        gpointer              user_data);
 
 static void tips_parser_start_markup   (TipsParser   *parser,
                                         const gchar  *markup_name);
@@ -103,7 +101,7 @@ static const GMarkupParser markup_parser =
   tips_parser_end_element,
   tips_parser_characters,
   NULL,  /*  passthrough  */
-  tips_parser_error
+  NULL   /*  error        */
 };
 
 
@@ -134,44 +132,30 @@ gimp_tip_free (GimpTip *tip)
  * gimp_tips_from_file:
  * @filename: the name of the tips file to parse
  * @error: return location for a #GError
- * 
+ *
  * Reads a gimp-tips XML file, creates a new #GimpTip for
  * each tip entry and returns a #GList of them. If a parser
  * error occurs at some point, the uncompleted list is
  * returned and @error is set (unless @error is %NULL).
  * The message set in @error contains a detailed description
  * of the problem.
- * 
+ *
  * Return value: a #Glist of #GimpTips.
  **/
 GList *
 gimp_tips_from_file (const gchar  *filename,
                      GError      **error)
 {
-  GMarkupParseContext *context;
-  TipsParser          *parser;
-  const gchar         *tips_locale;
-  FILE                *fp;
-  gsize                bytes;
-  gchar                buf[4096];
-  GList               *tips    = NULL;
+  GimpXmlParser *xml_parser;
+  TipsParser    *parser;
+  const gchar   *tips_locale;
+  GList         *tips = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fp = fopen (filename, "r");
-  if (!fp)
-    {
-      g_set_error (error, 0, 0,
-                   _("Your GIMP tips file appears to be missing! "
-                     "There should be a file called '%s'. "
-                     "Please check your installation."), filename);
-      return NULL;
-    }
-
   parser = g_new0 (TipsParser, 1);
-  parser->filename = filename;
-  parser->value    = g_string_new (NULL);
+  parser->value = g_string_new (NULL);
 
   /* This is a special string to specify the language identifier to
      look for in the gimp-tips.xml file. Please translate the C in it
@@ -189,17 +173,11 @@ gimp_tips_from_file (const gchar  *filename,
   else
     g_warning ("Wrong translation for 'tips-locale:', fix the translation!");
 
-  context = g_markup_parse_context_new (&markup_parser, 0, parser, NULL);
+  xml_parser = gimp_xml_parser_new (&markup_parser, parser);
 
-  while ((bytes = fread (buf, sizeof (gchar), sizeof (buf), fp)) > 0 &&
-         g_markup_parse_context_parse (context, buf, bytes, error))
-    ;
+  gimp_xml_parser_parse_file (xml_parser, filename, error);
 
-  if (error == NULL || *error == NULL)
-    g_markup_parse_context_end_parse (context, error);
-
-  fclose (fp);
-  g_markup_parse_context_free (context);
+  gimp_xml_parser_free (xml_parser);
 
   tips = g_list_reverse (parser->tips);
 
@@ -249,7 +227,7 @@ tips_parser_start_element (GMarkupParseContext *context,
       else
         tips_parser_start_unknown (parser);
       break;
-      
+
     case TIPS_IN_TIP:
       if (strcmp (element_name, "welcome") == 0)
         {
@@ -264,10 +242,10 @@ tips_parser_start_element (GMarkupParseContext *context,
       else
         tips_parser_start_unknown (parser);
       break;
-    
+
     case TIPS_IN_WELCOME:
     case TIPS_IN_THETIP:
-      if (strcmp (element_name, "b"  ) == 0 || 
+      if (strcmp (element_name, "b"  ) == 0 ||
           strcmp (element_name, "big") == 0 ||
           strcmp (element_name, "tt" ) == 0)
         tips_parser_start_markup (parser, element_name);
@@ -304,7 +282,7 @@ tips_parser_end_element (GMarkupParseContext *context,
       parser->current_tip = NULL;
       parser->state = TIPS_IN_TIPS;
       break;
-      
+
     case TIPS_IN_WELCOME:
       if (parser->markup_depth == 0)
         {
@@ -350,7 +328,7 @@ tips_parser_characters (GMarkupParseContext *context,
         {
           gint i;
 
-          /* strip tabs, newlines and adjacent whitespace */ 
+          /* strip tabs, newlines and adjacent whitespace */
           for (i = 0; i < text_len; i++)
             {
               if (text[i] != ' ' &&
@@ -365,16 +343,6 @@ tips_parser_characters (GMarkupParseContext *context,
     default:
       break;
     }
-}
-
-static void
-tips_parser_error (GMarkupParseContext *context,
-                   GError              *error,
-                   gpointer             user_data)
-{
-  TipsParser *parser = (TipsParser *) user_data;
-
-  g_warning ("%s: %s", parser->filename, error->message);
 }
 
 static void
@@ -411,7 +379,7 @@ tips_parser_end_unknown (TipsParser *parser)
   g_assert (parser->unknown_depth > 0 && parser->state == TIPS_IN_UNKNOWN);
 
   parser->unknown_depth--;
-  
+
   if (parser->unknown_depth == 0)
     parser->state = parser->last_known_state;
 }
@@ -428,7 +396,7 @@ tips_parser_parse_locale (TipsParser   *parser,
       if (strcmp (*names, "xml:lang") == 0 && **values)
         {
           parser->locale_state = (parser->locale &&
-                                  strcmp (*values, parser->locale) == 0 ? 
+                                  strcmp (*values, parser->locale) == 0 ?
                                   TIPS_LOCALE_MATCH : TIPS_LOCALE_MISMATCH);
         }
 
@@ -439,7 +407,7 @@ tips_parser_parse_locale (TipsParser   *parser,
 
 static void
 tips_parser_set_by_locale (TipsParser  *parser,
-                           gchar      **dest) 
+                           gchar      **dest)
 {
   switch (parser->locale_state)
     {
@@ -459,7 +427,7 @@ tips_parser_set_by_locale (TipsParser  *parser,
       g_free (*dest);
       *dest = g_strdup (parser->value->str);
       break;
-        
+
     case TIPS_LOCALE_MISMATCH:
       break;
     }

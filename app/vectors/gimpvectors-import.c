@@ -24,7 +24,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
@@ -33,6 +32,8 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "vectors-types.h"
+
+#include "config/gimpxmlparser.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -134,32 +135,19 @@ gimp_vectors_import (GimpImage    *image,
                      gboolean      merge,
                      GError      **error)
 {
-  GMarkupParseContext *context;
-  FILE                *file;
-  GQueue              *stack;
-  GList               *paths;
-  SvgHandler          *base;
-  gboolean             success = TRUE;
-  gsize                bytes;
-  gchar                buf[4096];
+  GimpXmlParser *parser;
+  GQueue        *stack;
+  GList         *paths;
+  SvgHandler    *base;
+  gboolean       success = TRUE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = fopen (filename, "r");
-  if (!file)
-    {
-      g_set_error (error, 0, 0,
-                   _("Failed to open file: '%s': %s"),
-                   filename, g_strerror (errno));
-      return FALSE;
-    }
-
   stack = g_queue_new ();
 
   /*  the base of the stack, defines the size of the view-port  */
-
   base = g_new0 (SvgHandler, 1);
   base->name   = "image";
   base->width  = image->width;
@@ -167,17 +155,11 @@ gimp_vectors_import (GimpImage    *image,
 
   g_queue_push_head (stack, base);
 
-  context = g_markup_parse_context_new (&markup_parser, 0, stack, NULL);
+  parser = gimp_xml_parser_new (&markup_parser, stack);
 
-  while (success &&
-         (bytes = fread (buf, sizeof (gchar), sizeof (buf), file)) > 0)
-    success = g_markup_parse_context_parse (context, buf, bytes, error);
+  success = gimp_xml_parser_parse_file (parser, filename, error);
 
-  if (success)
-    success = g_markup_parse_context_end_parse (context, error);
-
-  fclose (file);
-  g_markup_parse_context_free (context);
+  gimp_xml_parser_free (parser);
 
   if (success)
     {

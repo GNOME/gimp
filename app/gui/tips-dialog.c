@@ -79,16 +79,37 @@ tips_dialog_create (Gimp *gimp)
       GError *error = NULL;
       gchar  *filename;
 
-      filename = g_build_filename (gimp_data_directory (), "tips", 
+      filename = g_build_filename (gimp_data_directory (), "tips",
                                    "gimp-tips.xml", NULL);
 
       tips = gimp_tips_from_file (filename, &error);
       g_free (filename);
 
-      if (error)
+      if (!tips)
         {
-          tips = g_list_prepend (tips, 
-                                 gimp_tip_new (_("<b>The GIMP tips file could not be parsed correctly!</b>"), error->message));
+          GimpTip *tip;
+
+          if (error->code == G_FILE_ERROR_NOENT)
+            {
+              tip = gimp_tip_new (_("<b>Your GIMP tips file appears to be missing!</b>"),
+                                  NULL);
+              tip->thetip = g_strdup_printf (_("There should be a file called '%s'. "
+                                               "Please check your installation."),
+                                             filename);
+            }
+          else
+            {
+              tip = gimp_tip_new (_("<b>The GIMP tips file could not be parsed!</b>"),
+                                  error->message);
+            }
+
+          tips = g_list_prepend (tips, tip);
+          g_error_free (error);
+        }
+      else if (error)
+        {
+          g_printerr ("Error while parsing '%s': %s",
+                      filename, error->message);
           g_error_free (error);
         }
     }
@@ -122,7 +143,7 @@ tips_dialog_create (Gimp *gimp)
 		    config);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);      
+  gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -151,7 +172,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  filename = g_build_filename (gimp_data_directory (), 
+  filename = g_build_filename (gimp_data_directory (),
                                "images", "wilber-tips.png", NULL);
   wilber = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
@@ -250,7 +271,7 @@ tips_set_labels (GimpTip *tip)
     gtk_widget_show (welcome_label);
   else
     gtk_widget_hide (welcome_label);
-    
+
   gtk_label_set_markup (GTK_LABEL (welcome_label), tip->welcome);
   gtk_label_set_markup (GTK_LABEL (thetip_label), tip->thetip);
 }

@@ -78,7 +78,7 @@ gimp_vectors_export (const GimpImage    *image,
     }
 
   fprintf (file,
-           "<?xml version=\"1.0\" standalone=\"no\"?>\n"
+           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
            "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
            "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n");
   fprintf (file,
