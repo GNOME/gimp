@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-10-02 22:23+0200\n"
-"PO-Revision-Date: 2001-10-03 11:52+0200\n"
+"POT-Creation-Date: 2001-10-25 21:28+0200\n"
+"PO-Revision-Date: 2001-10-25 21:30+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7986,16 +7986,16 @@ msgstr ""
 "OPERACJA ZOSTA£A ANULOWANA.\n"
 "Bie¿±ca ramka zmieni³a siê jeszcze przed zamkniêciem okna."
 
-#: plug-ins/gap/gap_lib.c:1
+#: plug-ins/gap/gap_lib.c:1 plug-ins/gap/gap_lib.c:1
 msgid ""
 "OPERATION CANCELLED.\n"
-"GAP-plugins works only with filenames\n"
-"that end with _0001.xcf.\n"
+"GAP plug-ins only work with filenames\n"
+"that end in numbers like _0001.xcf.\n"
 "==> Rename your image, then try again."
 msgstr ""
-"OPERACJA ZAKOÑCZONA.\n"
+"OPERACJA ZOSTA£A ANULOWANA.\n"
 "Wtyczka GAP pracuje tylko z plikami\n"
-"których nazwa koñczy siê '_0001.xcf'.\n"
+"których nazwy koñcz± siê na \"_0001.xcf\".\n"
 "==> Zmieñ nazwê pliku i spróbuj jeszcze raz."
 
 #: plug-ins/gap/gap_lib.c:1
@@ -8023,6 +8023,11 @@ msgstr "Zapisz jak jest"
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "B³±d: nie mo¿na zmieniæ nazwy ramki %ld na %ld"
+
+#: plug-ins/gap/gap_lib.c:1
+#, c-format
+msgid "Error: could not save frame %s"
+msgstr "B³±d: nie mo¿na zapisaæ ramki %s"
 
 #: plug-ins/gap/gap_lib.c:1
 msgid "Duplicating frames..."
