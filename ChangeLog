@@ -1,3 +1,10 @@
+2004-07-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c: only write aux-info for properties
+	that have been changed from their default values.
+
+	* app/widgets/gimphistogrameditor.c: some code cleanup.
+
 2004-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpselectiondata.[ch]: added a "const gchar *format"
@@ -14,7 +21,6 @@
 	 http://bugzilla.abisource.com/show_bug.cgi?id=7068)
 
 2004-07-08  Sven Neumann  <sven@gimp.org>
-	
 	* app/config/gimpconfig-deserialize.c
 	* app/config/gimpconfig-serialize.c: removed redundant casts.
 

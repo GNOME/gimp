@@ -87,13 +87,15 @@ gimp_session_info_free (GimpSessionInfo *info)
 
   if (info->aux_info)
     {
-      g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
+      g_list_foreach (info->aux_info,
+                      (GFunc) gimp_session_info_aux_free, NULL);
       g_list_free (info->aux_info);
     }
 
    if (info->books)
      {
-       g_list_foreach (info->books, (GFunc) gimp_session_info_book_free, NULL);
+       g_list_foreach (info->books,
+                       (GFunc) gimp_session_info_book_free, NULL);
        g_list_free (info->books);
      }
 
@@ -155,12 +157,8 @@ gimp_session_info_aux_free (GimpSessionInfoAux *aux)
 {
   g_return_if_fail (aux != NULL);
 
-  if (aux->name)
-    g_free (aux->name);
-
-  if (aux->value)
-    g_free (aux->value);
-
+  g_free (aux->name);
+  g_free (aux->value);
   g_free (aux);
 }
 
@@ -191,15 +189,19 @@ gimp_session_info_aux_new_from_props (GObject *object,
           g_value_init (&value, pspec->value_type);
           g_object_get_property (object, pspec->name, &value);
 
-          if (gimp_config_serialize_value (&value, str, FALSE))
-            list = g_list_prepend (list,
-                                   gimp_session_info_aux_new (prop_name,
-                                                              str->str));
+          if (! g_param_value_defaults (pspec, &value) &&
+              gimp_config_serialize_value (&value, str, TRUE))
+            {
+              list = g_list_prepend (list,
+                                     gimp_session_info_aux_new (prop_name,
+                                                                str->str));
+            }
+
           g_value_unset (&value);
         }
       else
         {
-          g_warning ("%s: no property names '%s' for %s",
+          g_warning ("%s: no property named '%s' for %s",
                      G_STRFUNC,
                      prop_name, G_OBJECT_CLASS_NAME (class));
         }
@@ -286,7 +288,7 @@ gimp_session_info_aux_set_props (GObject *object,
                 }
               else
                 {
-                  g_warning ("%s: no property names '%s' for %s",
+                  g_warning ("%s: no property named '%s' for %s",
                              G_STRFUNC,
                              prop_name, G_OBJECT_CLASS_NAME (class));
                 }

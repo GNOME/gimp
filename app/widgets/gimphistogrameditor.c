@@ -53,20 +53,13 @@ static void    gimp_histogram_editor_docked_iface_init (GimpDockedInterface *doc
 static void    gimp_histogram_editor_set_aux_info (GimpDocked          *docked,
                                                    GList               *aux_info);
 static GList * gimp_histogram_editor_get_aux_info (GimpDocked          *docked);
+
 static void  gimp_histogram_editor_set_image      (GimpImageEditor     *editor,
                                                    GimpImage           *gimage);
-
-static void  gimp_histogram_editor_range_changed  (GimpHistogramView   *view,
-                                                   gint                 start,
-                                                   gint                 end,
-                                                   GimpHistogramEditor *editor);
-static void  gimp_histogram_editor_channel_notify (GimpHistogramView   *view,
-                                                   GParamSpec          *pspec,
-                                                   GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_layer_changed  (GimpImage           *gimage,
                                                    GimpHistogramEditor *editor);
-
 static void  gimp_histogram_editor_update         (GimpHistogramEditor *editor);
+
 static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
 static gboolean gimp_histogram_editor_item_visible (GtkTreeModel       *model,
                                                     GtkTreeIter        *iter,
@@ -118,9 +111,7 @@ gimp_histogram_editor_get_type (void)
 static void
 gimp_histogram_editor_class_init (GimpHistogramEditorClass* klass)
 {
-  GimpImageEditorClass *image_editor_class;
-
-  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -192,13 +183,12 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->box));
 
-  g_signal_connect (view, "range_changed",
-                    G_CALLBACK (gimp_histogram_editor_range_changed),
-                    editor);
-
-  g_signal_connect (view, "notify::histogram-channel",
-                    G_CALLBACK (gimp_histogram_editor_channel_notify),
-                    editor);
+  g_signal_connect_swapped (view, "range_changed",
+                            G_CALLBACK (gimp_histogram_editor_info_update),
+                            editor);
+  g_signal_connect_swapped (view, "notify::histogram-channel",
+                            G_CALLBACK (gimp_histogram_editor_info_update),
+                            editor);
 
   table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -222,8 +212,6 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                         GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (label);
     }
-
-  gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
 
 static void
@@ -251,8 +239,6 @@ gimp_histogram_editor_set_aux_info (GimpDocked *docked,
                                    NULL);
 }
 
-#define AUX_INFO_channel "channel"
-
 static GList *
 gimp_histogram_editor_get_aux_info (GimpDocked *docked)
 {
@@ -276,11 +262,8 @@ static void
 gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
                                  GimpImage       *gimage)
 {
-  GimpHistogramEditor *editor;
-  GimpHistogramView   *view;
-
-  editor = GIMP_HISTOGRAM_EDITOR (image_editor);
-  view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (image_editor);
+  GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
   if (image_editor->gimage)
     {
@@ -329,33 +312,16 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 GtkWidget *
 gimp_histogram_editor_new (GimpImage *gimage)
 {
-  GimpHistogramEditor *editor;
+  GimpImageEditor *editor;
 
-  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
 
   editor = g_object_new (GIMP_TYPE_HISTOGRAM_EDITOR, NULL);
 
   if (gimage)
-    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
+    gimp_image_editor_set_image (editor, gimage);
 
   return GTK_WIDGET (editor);
-}
-
-static void
-gimp_histogram_editor_range_changed (GimpHistogramView   *view,
-                                     gint                 start,
-                                     gint                 end,
-                                     GimpHistogramEditor *editor)
-{
-  gimp_histogram_editor_info_update (editor);
-}
-
-static void
-gimp_histogram_editor_channel_notify (GimpHistogramView   *view,
-                                      GParamSpec          *pspec,
-                                      GimpHistogramEditor *editor)
-{
-  gimp_histogram_editor_info_update (editor);
 }
 
 static void
