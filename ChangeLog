@@ -1,3 +1,10 @@
+Tue Dec  9 15:26:48 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* Added Lauri Alanko's tools patch
+
+	* Clarified the units in the tile cache size field in the
+	preferences dialog
+
 Tue Dec  9 15:21:16 PST 1997 Raph Levien <raph@acm.org>
 
 	* app/gimprc.c, app/commands.c: committed the preferences patch I
