@@ -8,6 +8,13 @@ Thu Mar 18 02:12:26 MET 1999 Sven Neumann <sven@gimp.org>
 	seperate package, but now it's here for testing and your
 	pleasure.
 
+1999-03-18  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in plug-ins/Makefile.am: Add wmf plug-in.
+
+	* plug-ins/wmf: New subdirectory. Wmf plug-in finally works OK
+	on X11 now, with a workaround for a GDK bug.
+
 Wed Mar 17 21:46:08 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/plug-ins/exchange/exchange.c: fixed NON_INTERACTIVE
