@@ -26,7 +26,7 @@ Wed Feb 16 02:36:48 CET 2000  Sven Neumann <sven@gimp.org>
 	* app/xcf.c: 
 	Moved some functions out of paths_dialog.c into the new file 
 	paths.c and did a general namespace cleanup:
-	s/PATHP/Path*/  s/PATHIMAGELISTP/PathList/ and friends.
+	s/PATHP/Path*/  s/PATHIMAGELISTP/PathList*/ and friends.
 
 	Paths are now copied on image duplicate (fixes bug #5726).
 	
@@ -37,7 +37,7 @@ Wed Feb 16 02:36:48 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/xjt/xjt.c
 	* plug-ins/xjt/xpdb_calls.c
 	* plug-ins/xjt/xpdb_calls.h: applied patch from Wolfgang Hofer
-	that enables loading and saving of paths based on Andy's change
+	that enables loading and saving of paths based on Andy's changes
 	explained below.
 
 Tue Feb 15 23:27:42 GMT 2000 Andy Thomas <alt@gimp.org>
