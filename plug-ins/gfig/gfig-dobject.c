@@ -355,7 +355,7 @@ object_operation_start (GdkPoint *pnt,
 
   if (shift_down && selvals.otype == MOVE_OBJ)
     {
-      move_all_pnt = g_malloc0 (sizeof (*move_all_pnt));
+      move_all_pnt = g_new (GdkPoint, 1);
       *move_all_pnt = *pnt; /* Structure copy */
       setup_undo ();
       return;
@@ -773,7 +773,7 @@ add_to_all_obj (GFigObj    *fobj,
  */
 void
 object_start (GdkPoint *pnt,
-              gint      shift_down)
+              gboolean  shift_down)
 {
   /* start for the current object */
   if (!selvals.scaletoimage)

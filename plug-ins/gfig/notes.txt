@@ -59,8 +59,3 @@ is about to happen, but it is difficult to implement, because Gimp
 does not yet provide an easy way to tell whether a layer has been
 modified (as far as I know).
 
-PLEASE DO NOT FILE BUG REPORTS ABOUT THIS VERSION OF GFIG.  Given the
-pace of development, it would just be unnecessary clutter in
-Bugzilla.  I would be happy to see your thoughts, though; my address
-is weskaggs@primate.ucdavis.edu.
-

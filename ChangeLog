@@ -1,3 +1,15 @@
+2004-11-21  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-preview.c: call gfig_grid_colours() in the
+	realize callback of the preview, so the gray gc of the grid works
+	again. Reported by Zigomar.
+
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-preview.h
+	* plug-ins/gfig/gfig-spiral.h
+	* plug-ins/gfig/gfig-star.h
+	* plug-ins/gfig/notes.txt: small cosmetics fixes.
+
 2004-11-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/compose.c
