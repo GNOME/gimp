@@ -33,19 +33,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <errno.h>
 #include <ctype.h>
 #ifdef __EMX__
 #include <process.h>
 #endif
 
+#include <gtk/gtk.h>
+
+#ifdef G_OS_WIN32
+#define STRICT
+#include <windows.h>
+#include <shellapi.h>
+#else
 #include <X11/X.h>
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xmu/WinUtil.h>	/* for XmuClientWindow() */
+#endif
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -78,10 +87,12 @@ static void new_window_callback (GtkWidget *widget,
 				 gpointer   data);
 static void url_callback        (GtkWidget *widget,
 				 gpointer   data);
+#ifndef G_OS_WIN32
+static gint mozilla_remote      (gchar     *command);
+#endif
 
 static gint open_url            (gchar     *url,
 				 gint       new_window);
-static gint mozilla_remote      (gchar     *command);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -208,6 +219,11 @@ static gint
 start_browser (gchar *prog,
 	       gchar *url)
 {
+#ifdef G_OS_WIN32
+
+  ShellExecute (HWND_DESKTOP, "open", url, NULL, "C:\\", SW_SHOWNORMAL);
+
+#else
 #ifndef __EMX__
   pid_t cpid;
 
@@ -221,6 +237,7 @@ start_browser (gchar *prog,
 #else
   return (spawnlp (P_NOWAIT, prog, prog, url, NULL) != -1);
 #endif
+#endif /* !G_OS_WIN32 */
 }
 
 static gint
@@ -232,14 +249,14 @@ open_url (gchar *url,
   while (isspace (*url))
     ++url;
 
+#ifndef G_OS_WIN32
   sprintf (buf, "openURL(%s%s)", url, new_window ? ",new-window" : "");
 
   if (mozilla_remote (buf))
     return (TRUE);
-
+#endif
   return (start_browser (BROWSER_PROGNAME, url));
 }
-
 
 static gint
 open_url_dialog (void)
@@ -367,6 +384,8 @@ url_callback (GtkWidget *widget,
 {
   strncpy (url_info.url, gtk_entry_get_text (GTK_ENTRY (widget)), URL_BUF_SIZE);
 }
+
+#ifndef G_OS_WIN32
 
 /* -*- Mode:C; tab-width: 8 -*-
  * remote.c --- remote control of Netscape Navigator for Unix.
@@ -955,3 +974,5 @@ mozilla_remote (char *command)
 
   return (!status);
 }
+
+#endif /* !G_OS_WIN32 */

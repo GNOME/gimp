@@ -1,3 +1,16 @@
+2000-04-11  Tor Lillqvist  <tml@iki.fi>
+
+	* README: Warn about the ads in the messages from the
+	egroups-hosted Win32 lists ;-)
+
+	* gimprc.win32: Use correct path separators. Document help-browser
+	diffferently on Win32.
+
+	* plug-ins/webbrowser/webbrowser.c: Implement on Win32.
+
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc: Add it.
+
 2000-04-10  Tor Lillqvist  <tml@iki.fi>
 
 	* README: Correct the info about Win32 mailing lists.

@@ -289,22 +289,21 @@
 
 # Help browser
 #  Determines which program to use as browser for the GIMP help pages.
-#  Possible values are "gimp" which means the built-in help browser
-#  which comes with GIMP as a plug-in and "netscape" which will show
-#  the help pages using the "netscape-remote" command.
-(help-browser gimp)
+#  The only possible value on Win32 is "netscape" which will show
+#  the help pages using your default web browser.
+(help-browser netscape)
 
 # Gfig search path
 #  This path will be searched for Gfig figures when you use the Gfig plug-in.
-(gfig-path "${gimp_dir}/gfig;${gimp_data_dir}/gfig")
+(gfig-path "${gimp_dir}\\gfig;${gimp_data_dir}\\gfig")
 
 # Fractalexplorer path
 #  This path will be searched for fractals when you use the Fractalexplorer  
 #  plug-in.
-(fractalexplorer-path "${gimp_dir}/fractalexplorer;${gimp_data_dir}/fractalexplorer")
+(fractalexplorer-path "${gimp_dir}\\fractalexplorer;${gimp_data_dir}\\fractalexplorer")
 
 # GFlare path
 #  This path will be searched for gflares when you use the GFlare plug-in.
-(gflare-path "${gimp_dir}/gflare;${gimp_data_dir}/gflare")
+(gflare-path "${gimp_dir}\\gflare;${gimp_data_dir}\\gflare")
 
 # [end of file]
