@@ -1,3 +1,14 @@
+Sun Dec 19 23:59:33 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/gimphelp.h
+	* app/gimphelp_cmds.c
+	* app/internal_procs.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl 
+	* tools/pdbgen/pdb/gimphelp.pdb: made gimp_help accessible through 
+	the PDB.
+
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/about_dialog.c: connect the "F1" help accelerator.
