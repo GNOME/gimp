@@ -96,10 +96,11 @@ base_exit (void)
 static void
 toast_old_temp_files (void)
 {
-  DIR           *dir;
+  DIR *dir = NULL;
   struct dirent *entry;
 
-  dir = opendir (base_config->swap_path);
+  if (base_config->swap_path)
+    dir = opendir (base_config->swap_path);
 
   if (!dir)
     return;

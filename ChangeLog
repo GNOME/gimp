@@ -1,19 +1,6 @@
-2001-11-16  Michael Natterer  <mitch@gimp.org>
+2001-11-17  Daniel Egger  <egger@fhm.edu>
 
-	Wishlist item #57812:
-
-	* app/core/gimpimage.[ch]: added a progress_callback to
-	gimp_image_scale().
-
-	* app/gui/gui.c
-	* app/gui/image-commands.c
-	* app/gui/resize-dialog.h
-	* tools/pdbgen/pdb/image.pdb: changed accordingly.
-
-	* app/core/gimp.[ch]: found that gimp->busy needs to be a counter,
-	not a boolean, so nested calls work.
-
-	* app/pdb/image_cmds.c: regenerated.
+	* app/base/base.c: Prevent from crash if swap_path == NULL. 
 
 2001-11-16  Michael Natterer  <mitch@gimp.org>
 
