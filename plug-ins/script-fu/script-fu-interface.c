@@ -49,6 +49,7 @@ typedef union
   SFColor     sfa_color;
   gint32      sfa_toggle;
   gchar *     sfa_value;
+  gchar *     sfa_string;
 } SFArgValue;
 
 typedef struct
@@ -106,15 +107,15 @@ static void       script_fu_menu_callback    (gint32     id,
 					      gpointer   data);
 static void       script_fu_toggle_update    (GtkWidget *widget,
 					      gpointer   data);
-static void       script_fu_preview_callback (GtkWidget *widget,
-					      gpointer   data);
-static void       script_fu_preview_changed  (GtkWidget *widget,
-					      gpointer   data);
-static void       script_fu_preview_cancel   (GtkWidget *widget,
-					      gpointer   data);
-static gint       script_fu_preview_delete   (GtkWidget *widget,
-					      GdkEvent  *event,
-					      gpointer   data);
+static void       script_fu_color_preview_callback (GtkWidget *widget,
+						    gpointer   data);
+static void       script_fu_color_preview_changed  (GtkWidget *widget,
+						    gpointer   data);
+static void       script_fu_color_preview_cancel   (GtkWidget *widget,
+						    gpointer   data);
+static gint       script_fu_color_preview_delete   (GtkWidget *widget,
+						    GdkEvent  *event,
+						    gpointer   data);
 
 /*
  *  Local variables
@@ -447,6 +448,17 @@ script_fu_add_script (LISP a)
 		  args[i + 1].name = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
+
+		case SF_STRING:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: string defaults must be string values", NIL);
+		  script->arg_defaults[i].sfa_string = g_strdup (get_c_string (car (a)));
+
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "string";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		default:
 		  break;
 		}
@@ -586,6 +598,9 @@ script_fu_script_proc (char     *name,
 		  case SF_VALUE:
 		    length += strlen (params[i + 1].data.d_string) + 1;
 		    break;
+		  case SF_STRING:
+		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;
 		  default:
 		    break;
 		  }
@@ -620,6 +635,10 @@ script_fu_script_proc (char     *name,
 		      break;
 		    case SF_VALUE:
 		      text = params[i + 1].data.d_string;
+		      break;
+		    case SF_STRING:
+		      sprintf (buffer, "\"%s\"", params[i + 1].data.d_string);
+		      text = buffer;
 		      break;
 		    default:
 		      break;
@@ -705,6 +724,9 @@ script_fu_free_script (SFScript *script)
 	      break;
 	    case SF_VALUE:
 	      g_free (script->arg_defaults[i].sfa_value);
+	      break;
+	    case SF_STRING:
+	      g_free (script->arg_defaults[i].sfa_string);
 	      break;
 	    default:
 	      break;
@@ -883,7 +905,7 @@ script_fu_interface (SFScript *script)
 				   script->arg_values[i].sfa_color.color);
 
 	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "clicked",
-			      (GtkSignalFunc) script_fu_preview_callback,
+			      (GtkSignalFunc) script_fu_color_preview_callback,
 			      &script->arg_values[i].sfa_color);
 	  break;
 
@@ -903,13 +925,20 @@ script_fu_interface (SFScript *script)
 	  gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]),
 			      script->arg_defaults[i].sfa_value);
 	  break;
+
+	case SF_STRING:
+	  script->args_widgets[i] = gtk_entry_new ();
+	  gtk_widget_set_usize (script->args_widgets[i], TEXT_WIDTH, 0);
+	  gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]),
+			      script->arg_defaults[i].sfa_string);
+	  break;
 	default:
 	  break;
 	}
       hbox = gtk_hbox_new (FALSE, 0);
       gtk_box_pack_start (GTK_BOX(hbox), script->args_widgets[i],
-                          (script->arg_types[i] == SF_VALUE),
-                          (script->arg_types[i] == SF_VALUE), 0);
+                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING)),
+                          ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING)), 0);
       gtk_widget_show (hbox);
 
       gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
@@ -1035,6 +1064,9 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_VALUE:
 	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 1;
 	break;
+      case SF_STRING:
+	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 3;
+	break;
       default:
 	break;
       }
@@ -1067,6 +1099,11 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_VALUE:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
+	  break;
+	case SF_STRING:
+	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
+	  sprintf (buffer, "\"%s\"", text);
+	  text = buffer;
 	  break;
 	default:
 	  break;
@@ -1128,8 +1165,8 @@ script_fu_toggle_update (GtkWidget *widget,
 }
 
 static void
-script_fu_preview_callback (GtkWidget *widget,
-			    gpointer   data)
+script_fu_color_preview_callback (GtkWidget *widget,
+				  gpointer   data)
 {
   GtkColorSelectionDialog *csd;
   SFColor *color;
@@ -1150,13 +1187,13 @@ script_fu_preview_callback (GtkWidget *widget,
 				 (GtkSignalFunc) gtk_widget_hide,
 				 GTK_OBJECT (color->dialog));
       gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
-			  (GtkSignalFunc) script_fu_preview_delete,
+			  (GtkSignalFunc) script_fu_color_preview_delete,
 			  color);
       gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-			  (GtkSignalFunc) script_fu_preview_cancel,
+			  (GtkSignalFunc) script_fu_color_preview_cancel,
 			  color);
       gtk_signal_connect (GTK_OBJECT (csd->colorsel), "color_changed",
-			  (GtkSignalFunc) script_fu_preview_changed,
+			  (GtkSignalFunc) script_fu_color_preview_changed,
 			  color);
 
       /* call here so the old color is set */
@@ -1174,8 +1211,8 @@ script_fu_preview_callback (GtkWidget *widget,
 }
 
 static void
-script_fu_preview_changed (GtkWidget *widget,
-			   gpointer data)
+script_fu_color_preview_changed (GtkWidget *widget,
+				 gpointer data)
 {
   SFColor *color;
 
@@ -1186,8 +1223,8 @@ script_fu_preview_changed (GtkWidget *widget,
 }
 
 static void
-script_fu_preview_cancel (GtkWidget *widget,
-			  gpointer data)
+script_fu_color_preview_cancel (GtkWidget *widget,
+				gpointer data)
 {
   SFColor *color;
 
@@ -1203,10 +1240,10 @@ script_fu_preview_cancel (GtkWidget *widget,
 }
 
 static gint
-script_fu_preview_delete (GtkWidget *widget,
-			  GdkEvent *event,
-			  gpointer data)
+script_fu_color_preview_delete (GtkWidget *widget,
+				GdkEvent *event,
+				gpointer data)
 {
-  script_fu_preview_cancel (widget, data);
+  script_fu_color_preview_cancel (widget, data);
   return TRUE;
 }

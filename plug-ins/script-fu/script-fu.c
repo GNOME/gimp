@@ -446,6 +446,7 @@ init_constants ()
   setvar (cintern ("SF-COLOR"), flocons (SF_COLOR), NIL);
   setvar (cintern ("SF-TOGGLE"), flocons (SF_TOGGLE), NIL);
   setvar (cintern ("SF-VALUE"), flocons (SF_VALUE), NIL);
+  setvar (cintern ("SF-STRING"), flocons (SF_STRING), NIL);
 }
 
 static void

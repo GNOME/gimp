@@ -29,7 +29,8 @@ typedef enum
   SF_CHANNEL,
   SF_COLOR,
   SF_TOGGLE,
-  SF_VALUE
+  SF_VALUE,
+  SF_STRING
 } SFArgType;
 
 #endif /*  __SCRIPT_FU_ENUMS__  */

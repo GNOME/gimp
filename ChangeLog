@@ -1,3 +1,11 @@
+Wed Aug  5 21:39:59 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-scripts.c: New ScriptFu argument type
+	SF-STRING: Never have to add those damned quotes again... More types
+	to follow soon.	 
+
 Wed Aug  5 14:32:51 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimprc.in
