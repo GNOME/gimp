@@ -1,7 +1,13 @@
 2004-11-03  Michael Natterer  <mitch@gimp.org>
 
-	* app/dialogs/module-dialog.c: use gtk_tree_model_get_iter_first()
-	instead of the deprecated _get_iter_root().
+	* app/dialogs/module-dialog.c
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: use
+	gtk_tree_model_get_iter_first() instead of the deprecated
+	_get_iter_root().
+
+	* app/display/gimpdisplayshell-callbacks.c: don't include
+	"widgets/gimpitemfactory.h".
 
 2004-11-03  Øyvind Kolås  <pippin@gimp.org>
 

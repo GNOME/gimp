@@ -50,7 +50,6 @@
 #include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
