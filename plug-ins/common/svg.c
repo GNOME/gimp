@@ -18,6 +18,10 @@
 
 /* SVG loading and saving file filter for the GIMP
  * -Dom Lachowicz <cinamod@hotmail.com>
+ *
+ * TODO: 
+ * 1) size/zoom dialog
+ * 2) image preview
  */
 
 #include "config.h"
