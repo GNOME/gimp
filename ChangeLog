@@ -1,5 +1,9 @@
 2005-02-20  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-processor.c: better error reporting.
+
+2005-02-20  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/context-actions.c
 	* app/actions/context-commands.c[ch]: added actions to control the
 	average radius of color picker tools (bug #167765).

@@ -85,7 +85,6 @@ static void
 do_parallel_regions (PixelProcessor *processor)
 {
   PixelRegion tr[4];
-  gint        n_tiles = 0;
   gint        i;
 
   g_static_mutex_lock (&processor->mutex);
@@ -116,7 +115,6 @@ do_parallel_regions (PixelProcessor *processor)
 	  }
 
       g_static_mutex_unlock (&processor->mutex);
-      n_tiles++;
 
       switch(processor->num_regions)
 	{
@@ -274,7 +272,8 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
 #ifdef ENABLE_MP
   if (pool && tiles > TILES_PER_THREAD)
     {
-      gint tasks = MIN (tiles / TILES_PER_THREAD,
+      GError *error = NULL;
+      gint    tasks = MIN (tiles / TILES_PER_THREAD,
                         g_thread_pool_get_max_threads (pool));
 
       /*
@@ -285,7 +284,15 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
       g_mutex_lock (pool_mutex);
 
       while (tasks--)
-        g_thread_pool_push (pool, processor, NULL);
+        {
+          g_thread_pool_push (pool, processor, &error);
+
+          if (error)
+            {
+              g_warning ("thread creation failed: %s", error->message);
+              g_clear_error (&error);
+            }
+        }
 
       if (progress_func)
         {
@@ -372,7 +379,7 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc         func,
 
     default:
       g_warning ("pixel_regions_process_parallel: "
-                 "bad number of regions (%d)\n", processor.num_regions);
+                 "bad number of regions (%d)", processor.num_regions);
     }
 
   if (! processor.PRI)
@@ -439,7 +446,7 @@ pixel_processor_set_num_threads (gint num_threads)
 
       if (error)
         {
-          g_warning ("changing the number of threads to %d failed: %s\n",
+          g_warning ("changing the number of threads to %d failed: %s",
                      num_threads, error->message);
           g_clear_error (&error);
         }
