@@ -212,15 +212,14 @@ paint_core_button_press (Tool           *tool,
 	{
 	  if (bevent->state & GDK_CONTROL_MASK)
 	    {
-	      double dx, dy;
-	      
+	      double dx, dy, d;
+	
 	      dx = paint_core->curx - paint_core->lastx;
 	      dy = paint_core->cury - paint_core->lasty;
+	      d  = (fabs(dx) + fabs(dy)) / 2;  
 	      
-	      paint_core->curx = paint_core->lastx + 
-		((dx < 0) && (dy > 0) ? - MAX (dx, dy) : MAX (dx, dy));
-	      paint_core->cury = paint_core->lasty + 
-		((dy < 0) && (dx > 0) ? - MAX (dx, dy) : MAX (dx, dy));
+	      paint_core->curx = paint_core->lastx + ((dx < 0) ? -d : d);
+	      paint_core->cury = paint_core->lasty + ((dy < 0) ? -d : d);
 	    }
 	  else
 	    paint_core->curx = paint_core->lastx;
@@ -370,6 +369,8 @@ paint_core_cursor_update (Tool           *tool,
       if (gdisp_ptr == tool->gdisp_ptr && (mevent->state & GDK_SHIFT_MASK))
 	{
 	  ctype = GDK_PENCIL;
+
+	  
 	  /*  Get the current coordinates */ 
 	  gdisplay_untransform_coords_f (gdisp, 
 					 (double) mevent->x, 

@@ -186,8 +186,10 @@ measure_tool_button_press (Tool           *tool,
     {
       GDisplay *old_gdisp = tool->gdisp_ptr;
       gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar), measure_tool->context_id);
-    }
-
+      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
+			  measure_tool->context_id, (""));
+    } 
+  
   measure_tool->function = CREATING;
 
   if (tool->state == ACTIVE && gdisp_ptr == tool->gdisp_ptr)
@@ -197,7 +199,7 @@ measure_tool_button_press (Tool           *tool,
       for (i=0; i < measure_tool->num_points; i++)
 	{
 	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
-				     &x[i], &y[i], TRUE);      
+				     &x[i], &y[i], FALSE);      
 	  if (bevent->x == BOUNDS (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      bevent->y == BOUNDS (bevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
@@ -205,13 +207,15 @@ measure_tool_button_press (Tool           *tool,
 		{
 		  Guide *guide;
 
-		  if (bevent->state & GDK_CONTROL_MASK)
+		  if (bevent->state & GDK_CONTROL_MASK && 
+		      (measure_tool->y[i] == BOUNDS (measure_tool->y[i], 0, gdisp->gimage->height)))
 		    {
 		      guide = gimp_image_add_hguide (gdisp->gimage);
 		      guide->position = measure_tool->y[i];
 		      gdisplays_expose_guide (gdisp->gimage, guide);
 		    }  
-		  if (bevent->state & GDK_MOD1_MASK)
+		  if (bevent->state & GDK_MOD1_MASK &&
+		      (measure_tool->x[i] == BOUNDS (measure_tool->x[i], 0, gdisp->gimage->width)))
 		    {
 		      guide = gimp_image_add_vguide (gdisp->gimage);
 		      guide->position = measure_tool->x[i];
@@ -235,7 +239,11 @@ measure_tool_button_press (Tool           *tool,
     {
       if (tool->state == ACTIVE)
 	draw_core_stop (measure_tool->core, tool);
-      
+      else
+	/* initialize the statusbar display */
+	measure_tool->context_id = 
+	  gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "measure");
+
       /*  set the first point and go into ADDING mode  */
       gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
 				   &measure_tool->x[0], &measure_tool->y[0], TRUE, FALSE);
@@ -245,12 +253,6 @@ measure_tool_button_press (Tool           *tool,
 
       /*  set the gdisplay  */
       tool->gdisp_ptr = gdisp_ptr;
-
-      /* initialize the statusbar display */
-      measure_tool->context_id = 
-	gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "measure");
-      gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
-			  measure_tool->context_id, (""));
 
       /*  start drawing the measure tool  */
       draw_core_start (measure_tool->core, gdisp->canvas->window, tool);
@@ -397,7 +399,6 @@ measure_tool_motion (Tool           *tool,
       break;
     }
 
-
   /*  calculate distance and angle  */
   ax = measure_tool->x[1] - measure_tool->x[0];
   ay = measure_tool->y[1] - measure_tool->y[0];
@@ -498,7 +499,7 @@ measure_tool_cursor_update (Tool           *tool,
       for (i=0; i<measure_tool->num_points; i++)
 	{
 	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
-				     &x[i], &y[i], TRUE);      
+				     &x[i], &y[i], FALSE);      
 	  
 	  if (mevent->x == BOUNDS (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
 	      mevent->y == BOUNDS (mevent->y, y[i] - TARGET, y[i] + TARGET))
@@ -543,7 +544,7 @@ measure_tool_draw (Tool *tool)
   for (i = 0; i < measure_tool->num_points; i++)
     {
       gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i],
-				 &x[i], &y[i], TRUE);
+				 &x[i], &y[i], FALSE);
       if (i == 0 && measure_tool->num_points == 3)
 	{
 	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
@@ -665,6 +666,8 @@ tools_new_measure_tool (void)
 
   tool->private = (void *) private;
  
+  tool->preserve = TRUE;  /*  Preserve tool across drawable changes  */
+
   tool->button_press_func   = measure_tool_button_press;
   tool->button_release_func = measure_tool_button_release;
   tool->motion_func         = measure_tool_motion;

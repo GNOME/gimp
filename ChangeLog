@@ -1,3 +1,9 @@
+Sat Aug 21 15:16:00 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: corrected my last "fix"
+	* app/paint_core.c: corrected an error in the modifier handling I 
+	introduced earlier
+
 Sat Aug 21 13:30:38 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/measure.c: corrected the guides placement and added 
