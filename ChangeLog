@@ -1,6 +1,7 @@
 2004-07-21  Ray Strode  <rstrode@redhat.com>
-	* gimp/data/misc/gimp.desktop.in.in: Add MimeType line to desktop file
-	new mime sytem.
+
+	* gimp/data/misc/gimp.desktop.in.in: Add MimeType line to desktop
+	file for new MIME system.
 
 2004-07-21  Sven Neumann  <sven@gimp.org>
 
