@@ -34,7 +34,6 @@
 #include "tools/bucket_fill.h"
 #include "tools/by_color_select.h"
 #include "tools/clone.h"
-#include "tools/gimpcolorpickertool.h"
 #include "tools/convolve.h"
 #include "tools/crop.h"
 #include "tools/dodgeburn.h"
@@ -43,6 +42,7 @@
 #include "tools/flip_tool.h"
 #include "tools/free_select.h"
 #include "tools/fuzzy_select.h"
+#include "tools/gimpcolorpickertool.h"
 #include "tools/gimppaintbrushtool.h"
 #include "tools/pencil.h"
 #include "tools/perspective_tool.h"
@@ -1928,8 +1928,8 @@ paintbrush_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, fade_out,
-				  method, gradient_length);
+    success = gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
+					    fade_out, method, gradient_length);
 
   return procedural_db_return_args (&paintbrush_proc, success);
 }

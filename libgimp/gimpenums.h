@@ -30,7 +30,9 @@ typedef enum
 {
   GIMP_WHITE_MASK,
   GIMP_BLACK_MASK,
-  GIMP_ALPHA_MASK
+  GIMP_ALPHA_MASK,
+  GIMP_SELECTION_MASK,
+  GIMP_INV_SELECTION_MASK
 } GimpAddMaskType;
 
 typedef enum

@@ -1658,11 +1658,12 @@ gimp_crop_tool_destroy (GtkObject *object)
 void
 gimp_crop_tool_register (void)
 {
-  tool_manager_register_tool(GIMP_TYPE_CROP_TOOL,
-                             "gimp:crop_tool",
-			     _("Crop Tool"),
-			     _("Crop or Resize an image"),
-			     N_("/Tools/Crop Tool"), "<shift>C",
-			     NULL, "tools/crop_tool.html",
-			     (const gchar **) crop_bits);
+  tool_manager_register_tool (GIMP_TYPE_CROP_TOOL,
+                              FALSE,
+                              "gimp:crop_tool",
+                              _("Crop Tool"),
+                              _("Crop or Resize an image"),
+                              N_("/Tools/Crop Tool"), "<shift>C",
+                              NULL, "tools/crop_tool.html",
+                              (const gchar **) crop_bits);
 }

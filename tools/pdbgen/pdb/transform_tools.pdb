@@ -412,7 +412,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/color_picker.h") ],
+	headers => [ qw("tools/gimpcolorpickertool.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -865,10 +865,10 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/paintbrush.h") ],
+	headers => [ qw("tools/gimppaintbrushtool.h") ],
 	code => <<'CODE'
-success = paintbrush_non_gui (drawable, num_strokes, strokes, fade_out,
-			      method, gradient_length);
+success = gimp_paintbrush_tool_non_gui (drawable, num_strokes, strokes, 
+	                                fade_out, method, gradient_length);
 CODE
     );
 }
@@ -902,9 +902,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/paintbrush.h") ],
+	headers => [ qw("tools/gimppaintbrushtool.h") ],
 	code => <<'CODE'
-success = paintbrush_non_gui_default (drawable, num_strokes, strokes);
+success = gimp_paintbrush_tool_non_gui_default (drawable, num_strokes, strokes);
 CODE
     );
 }

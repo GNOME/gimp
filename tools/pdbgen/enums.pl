@@ -125,13 +125,18 @@ package Gimp::CodeGen::enums;
     AddMaskType =>
 	{ contig => 1,
 	  header => 'appenums.h',
-	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK) ],
+	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
+			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK) ],
 	  mapping => { ADD_WHITE_MASK => '0',
 		       ADD_BLACK_MASK => '1',
-		       ADD_ALPHA_MASK => '2' },
+		       ADD_ALPHA_MASK => '2',
+		       ADD_SELECTION_MASK => '3',
+		       ADD_INV_SELECTION_MASK => '4' },
 	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
 		       ADD_BLACK_MASK => 'BLACK_MASK',
-		       ADD_ALPHA_MASK => 'ALPHA_MASK' }
+		       ADD_ALPHA_MASK => 'ALPHA_MASK',
+		       ADD_SELECTION_MASK => 'SELECTION_MASK',
+		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK' }
 	},
     GradientPaintMode =>
 	{ contig => 1,
