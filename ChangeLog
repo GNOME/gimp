@@ -1,3 +1,9 @@
+Mon Nov 15 11:48:59 1999  ape@spacetec.no  (Asbjorn Pettersen)
+
+	* modules/colorsel_gtk.c (module_init): Removed most of the
+	OS/2 code and fixed a OS/2 bug.
+ 	Include  modregister.h.
+
 Mon Nov 15 11:30:42 CET 1999 Olof S Kylander <olof@gimp.org>
 	
 	* app/xinput_airbrush.c
