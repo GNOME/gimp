@@ -20,7 +20,7 @@ gckinclude_HEADERS =	gck.h		\
 			gckui.h		\
 			gckvector.h
 
-libgck_la_LDFLAGS = -version-info 1:0:0
+libgck_la_LDFLAGS = -version-info $(GIMP_MAJOR_VERSION):$(GIMP_MINOR_VERSION):0
 
 INCLUDES = \
 	-I..			\

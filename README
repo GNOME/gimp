@@ -1,7 +1,7 @@
 The GIMP: the GNU Image Manipulation Program
 --------------------------------------------
 
-The main difference between v1.0 and much earlier versions is the
+The main difference between v1.0.1 and much earlier versions is the
 use of a tile based memory management for images. This allows the GIMP
 to work with images much larger than physical memory in a usable
 fashion. Before such memory management, the GIMP was nearly unusable

@@ -1,1 +1,16 @@
+What's new in GIMP 1.0.1
+
+* Redid the way batch mode works: it now uses script-fu instead of a thin
+  wrapper around the PDB. This may break some stuff that relies on batch
+  mode, but batch mode was broken in 1.0 anyway
+* NeXTStep support
+* Portability fixes (should compile on non-gcc compilers)
+* gimptool supports a lot more options
+* Added gimpfeatures.h header
+* Plug-in bugfixes, updates
+* New gimp.m4 for plug-ins to use to check for gimp using autoconf/automake
+* Less spurious message dialogs
+* PDB interface for setting the g_message handler
+* App bugfixes
+
 GIMP 1.0 Released!

@@ -1,3 +1,7 @@
+Sun Sep 27 01:49:26 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 1.0.1 release
+
 Mon Sep 21 02:11:27 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: correct test for restoring old foundry in
