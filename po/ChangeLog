@@ -1,3 +1,8 @@
+2003-05-21  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
+
+	* ru.po: updated Russian translation
+	from Russian team <gnome-cyr@gnome.org>.
+
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/tools/gimpcolorizetool.c.
