@@ -1,6 +1,11 @@
+2004-05-03  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added new files.
+
 2004-05-03  Sigurd Gartmann  <sigurd-translate@brogar.org>
 
-	* no.po: Updated norwegian bokmål translation (Work by Runar Ingebrigtsen)
+	* no.po: Updated norwegian bokmål translation (Work by
+	Runar Ingebrigtsen)
 
 2004-04-29  Michael Natterer  <mitch@gimp.org>
 
