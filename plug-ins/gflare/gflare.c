@@ -35,7 +35,7 @@
   version 0.27
   Changed so that it works with GIMP 1.1.x
   Default problem solved
-  Still buggy (GTK!), please report all fixes to martin.weber@usa.net
+  martweb@gmx.net
  */
 
 
@@ -58,7 +58,8 @@ static char rcsid[] = "$Id$";
 #include <unistd.h>
 #include <dirent.h>
 #include "gtk/gtk.h"
-#include "../../libgimp/gimp.h"
+#include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 #include "asupsample.h"
 #include "gtkmultioptionmenu.h"
 
@@ -614,8 +615,6 @@ static clock_t	get_values_external_clock = 0;
  static void calc_addition (guchar *dest, guchar *src1, guchar *src2);
  static void calc_screen (guchar *dest, guchar *src1, guchar *src2);
  static void calc_overlay (guchar *dest, guchar *src1, guchar *src2);
- static void rgb_to_hsv (int *r, int *g, int *b);
- static void hsv_to_rgb (int *h, int *s, int *v);
  static void dlg_ok_callback (GtkWidget *widget, gpointer data);
  static void dlg_close_callback (GtkWidget *widget, gpointer data);
  static void dlg_setup_gflare (void);
@@ -1864,9 +1863,9 @@ calc_sample_one_gradient ()
 		      g = gradient[j*4+1];
 		      b = gradient[j*4+2];
 
-		      rgb_to_hsv (&r, &g, &b);
+		      gimp_rgb_to_hsv (&r, &g, &b);
 		      r = (r + hue) % 256;
-		      hsv_to_rgb (&r, &g, &b);
+		      gimp_hsv_to_rgb (&r, &g, &b);
 
 		      gradient[j*4] = r;
 		      gradient[j*4+1] = g;
@@ -2325,144 +2324,6 @@ calc_overlay (guchar *dest, guchar *src1, guchar *src2)
       dest[i] = (screen * src1[i] + mult * (255 - src1[i])) / 255;
     }
   dest[3] = MIN (src1[3], src2[3]);
-}
-
-/*
-	HSV routines, needed for Hue Rotation
-	taken from app/paint_funcs.c
-	And I don't know what's the difference between HSV and HSL.
- */
-static void
-rgb_to_hsv (int *r,
-	    int *g,
-	    int *b)
-{
-  int red, green, blue;
-  float h, s, v;
-  int min, max;
-  int delta;
-
-  h = 0.0;
-
-  red = *r;
-  green = *g;
-  blue = *b;
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0)
-    s = ((max - min) * 255) / (float) max;
-  else
-    s = 0;
-
-  if (s == 0)
-    h = 0;
-  else
-    {
-      delta = max - min;
-      if (red == max)
-	h = (green - blue) / (float) delta;
-      else if (green == max)
-	h = 2 + (blue - red) / (float) delta;
-      else if (blue == max)
-	h = 4 + (red - green) / (float) delta;
-      h *= 42.5;
-
-      if (h < 0)
-	h += 255;
-      if (h > 255)
-	h -= 255;
-    }
-
-  *r = h;
-  *g = s;
-  *b = v;
-}
-
-static void
-hsv_to_rgb (int *h,
-	    int *s,
-	    int *v)
-{
-  float hue, saturation, value;
-  float f, p, q, t;
-
-  if (*s == 0)
-    {
-      *h = *v;
-      *s = *v;
-      *v = *v;
-    }
-  else
-    {
-      hue = *h * 6.0 / 255.0;
-      saturation = *s / 255.0;
-      value = *v / 255.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - (saturation * f));
-      t = value * (1.0 - (saturation * (1.0 - f)));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  *h = value * 255;
-	  *s = t * 255;
-	  *v = p * 255;
-	  break;
-	case 1:
-	  *h = q * 255;
-	  *s = value * 255;
-	  *v = p * 255;
-	  break;
-	case 2:
-	  *h = p * 255;
-	  *s = value * 255;
-	  *v = t * 255;
-	  break;
-	case 3:
-	  *h = p * 255;
-	  *s = q * 255;
-	  *v = value * 255;
-	  break;
-	case 4:
-	  *h = t * 255;
-	  *s = p * 255;
-	  *v = value * 255;
-	  break;
-	case 5:
-	  *h = value * 255;
-	  *s = p * 255;
-	  *v = q * 255;
-	  break;
-	}
-    }
 }
 
 /*************************************************************************/
