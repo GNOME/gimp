@@ -1,3 +1,7 @@
+2002-06-30  Christophe Merlet  <christophe@merlet.net>
+
+	* fr.po: Updated French translation.
+
 2002-06-21  Zbigniew Chyla  <chyla@buy.pl>
 
 	* pl.po: Updated Polish translation by
@@ -127,7 +131,7 @@
 
 	* POTFILES.in: added app/gui/file-dialog-utils.c
 
-2002-04-15  Christophe Merlet  <redfox@eikonex.org>
+2002-04-15  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation from work of
 	Raymond Ostertag <r.ostertag@laposte.net> and
@@ -490,7 +494,7 @@
 
 	* de.po: converted to UTF-8.
 
-2001-08-29  Christophe Merlet  <redfox@eikonex.org>
+2001-08-29  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation from contributions of
 	David Odin <dindinx@wanadoo.fr>.
@@ -669,7 +673,7 @@
 
 	* ja.po: updated japanese translation.
 
-2000-11-24  Christophe Merlet  <redfox@eikonex.org>
+2000-11-24  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: Updated French translation.
 

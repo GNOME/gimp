@@ -1,3 +1,8 @@
+2002-06-30  Christophe Merlet  <christophe@merlet.net>
+
+	* fr.po: Updated French translation and
+	converted to UTF-8.
+
 2002-06-19  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.
@@ -259,7 +264,7 @@
 
 	* ja.po: updated Japanese translation.
 
-2000-11-24  Christophe Merlet  <redfox@eikonex.org>
+2000-11-24  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
 
