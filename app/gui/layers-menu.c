@@ -158,12 +158,12 @@ GimpItemFactoryEntry layers_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  { { N_("/Merge Visible Layers..."), NULL,
+  { { N_("/Merge _Visible Layers..."), NULL,
       layers_merge_layers_cmd_callback, 0,
       NULL, NULL },
     NULL,
     GIMP_HELP_IMAGE_MERGE_LAYERS, NULL },
-  { { N_("/Flatten Image"), NULL,
+  { { N_("/_Flatten Image"), NULL,
       layers_flatten_image_cmd_callback, 0,
       NULL, NULL },
     NULL,

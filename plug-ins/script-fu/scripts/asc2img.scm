@@ -223,18 +223,17 @@
  SF-ADJUSTMENT _"Buffer Amount (% Height of Text)" '(35 0 100 1 10 0 0)
 )
 
-(script-fu-register
- "script-fu-asc-2-img-layer"
- _"<Image>/Script-Fu/Utils/ASCII to Image Layer..."
- "Create a new layer of text from a simple text file"
- "Chris Gutteridge: cjg@ecs.soton.ac.uk"
- "30th April 1998"
- "Chris Gutteridge / ECS @ University of Southampton, England"
- "*"
- SF-IMAGE "Image" 0
- SF-DRAWABLE "Layer" 0
- SF-FILENAME _"Filename"             "afile"
- SF-FONT     _"Font"                 "Bitstream Charter"
- SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
- SF-COLOR    _"Text Color"           '(0 0 0)
+(script-fu-register "script-fu-asc-2-img-layer"
+		    _"<Image>/Script-Fu/Utils/_ASCII to Layer..."
+		    "Create a new layer of text from a simple text file"
+		    "Chris Gutteridge: cjg@ecs.soton.ac.uk"
+		    "30th April 1998"
+		    "Chris Gutteridge / ECS @ University of Southampton, England"
+		    "*"
+		    SF-IMAGE      "Image"               0
+		    SF-DRAWABLE   "Layer"               0
+		    SF-FILENAME   _"Filename"           "afile"
+		    SF-FONT       _"Font"               "Bitstream Charter"
+		    SF-ADJUSTMENT _"Font Size (pixels)" '(45 2 1000 1 10 0 1)
+		    SF-COLOR      _"Text Color"         '(0 0 0)
 )

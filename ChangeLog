@@ -1,3 +1,16 @@
+2004-01-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/layers-menu.c
+	* app/gui/patterns-menu.c
+	* app/gui/tool-options-menu.c
+	* plug-ins/script-fu/scripts/asc2img.scm: added the last missing
+	menu mnemonics. Sorry for the string change but it's IMHO better
+	to un-fuzzy these 14 strings now than to carry them around during
+	the whole 2.0.x cycle. Finally fixes bug #106991.
+
+	* plug-ins/script-fu/scripts/asc2img.scm: changed "ASCII to Image
+	Layer" to "ASCII to Layer". We never use the term "Image Layer".
+
 2004-01-08  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/fileops.pdb: Add notes about menu path requirements
