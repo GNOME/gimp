@@ -89,12 +89,14 @@ static void        file_open_dialog_open_image      (GtkWidget        *open_dial
                                                      PlugInProcDef    *load_proc);
 
 
-static GtkWidget     *fileload               = NULL;
+static GtkWidget      *fileload               = NULL;
 
-static GtkWidget     *open_options_frame     = NULL;
-static GtkWidget     *open_options_title     = NULL;
-static GimpImagefile *open_options_imagefile = NULL;
-static GtkWidget     *open_options_preview   = NULL;
+static GtkWidget      *open_options_frame     = NULL;
+static GtkWidget      *open_options_title     = NULL;
+static GimpImagefile  *open_options_imagefile = NULL;
+static GtkWidget      *open_options_preview   = NULL;
+static GtkWidget      *open_options_label     = NULL;
+static GtkProgressBar *open_options_progress  = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 
@@ -205,10 +207,12 @@ file_open_dialog_create (Gimp *gimp)
   /*  The preview frame  */
   {
     GtkWidget *vbox;
+    GtkWidget *vbox2;
     GtkWidget *ebox;
     GtkWidget *hbox;
     GtkWidget *button;
     GtkWidget *label;
+    GtkWidget *progress;
     GtkStyle  *style;
 
     open_options_frame = gtk_frame_new (NULL);
@@ -232,7 +236,7 @@ file_open_dialog_create (Gimp *gimp)
 
     gimp_help_set_help_data (ebox, _("Click to create preview"), NULL);
 
-    vbox = gtk_vbox_new (FALSE, 2);
+    vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add (GTK_CONTAINER (ebox), vbox);
     gtk_widget_show (vbox);
 
@@ -258,8 +262,13 @@ file_open_dialog_create (Gimp *gimp)
                       G_CALLBACK (gtk_true),
                       NULL);
 
+    vbox2 = gtk_vbox_new (FALSE, 2);
+    gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+    gtk_container_add (GTK_CONTAINER (vbox), vbox2);
+    gtk_widget_show (vbox2);
+
     hbox = gtk_hbox_new (TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
     open_options_imagefile = gimp_imagefile_new (NULL);
@@ -275,7 +284,7 @@ file_open_dialog_create (Gimp *gimp)
     gtk_widget_modify_bg (open_options_preview, GTK_STATE_INSENSITIVE,
                           &style->base[GTK_STATE_NORMAL]);
 
-    gtk_box_pack_start (GTK_BOX (hbox), open_options_preview, TRUE, FALSE, 4);
+    gtk_box_pack_start (GTK_BOX (hbox), open_options_preview, TRUE, FALSE, 10);
     gtk_widget_show (open_options_preview);
 
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), open_options_preview);
@@ -284,17 +293,19 @@ file_open_dialog_create (Gimp *gimp)
                       open_dialog);
 
     open_options_title = gtk_label_new (_("No Selection"));
-    gtk_box_pack_start (GTK_BOX (vbox), open_options_title, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox2), open_options_title, FALSE, FALSE, 0);
     gtk_widget_show (open_options_title);
 
     label = gtk_label_new (" \n ");
     gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-    gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
     g_signal_connect (G_OBJECT (open_options_imagefile), "info_changed",
                       G_CALLBACK (file_open_imagefile_info_changed),
                       label);
+
+    open_options_label = label;
 
     /* pack the containing open_options hbox into the open-dialog */
     for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
@@ -303,6 +314,23 @@ file_open_dialog_create (Gimp *gimp)
     gtk_widget_show (open_options_frame);
 
     gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
+
+    /*  The progress bar  */
+
+    progress = gtk_progress_bar_new ();
+    gtk_box_pack_end (GTK_BOX (vbox2), progress, FALSE, FALSE, 0);
+    /* don't gtk_widget_show (progress); */
+
+    open_options_progress = GTK_PROGRESS_BAR (progress);
+
+    /* eek */
+    {
+      GtkRequisition requisition;
+
+      gtk_progress_bar_set_text (open_options_progress, "foo");
+      gtk_widget_size_request (progress, &requisition);
+      gtk_widget_set_size_request (open_options_title, requisition.width, -1);
+    }
   }
 
   return open_dialog;
@@ -429,6 +457,7 @@ file_open_thumbnail_clicked (GtkWidget *widget,
   if (gimp->config->write_thumbnails)
     {
       gchar **selections;
+      gint    n_selections;
       gint    i;
 
       gimp_set_busy (gimp);
@@ -436,11 +465,66 @@ file_open_thumbnail_clicked (GtkWidget *widget,
 
       selections = gtk_file_selection_get_selections (fs);
 
+      n_selections = 0;
+      for (i = 0; selections[i] != NULL; i++)
+        n_selections++;
+
+      if (n_selections > 1)
+        {
+          gtk_progress_bar_set_text (open_options_progress, NULL);
+          gtk_progress_bar_set_fraction (open_options_progress, 0.0);
+
+          gtk_widget_hide (open_options_label);
+          gtk_widget_show (GTK_WIDGET (open_options_progress));
+        }
+
       for (i = 1; selections[i] != NULL; i++)
-        file_open_create_thumbnail (selections[i]);
+        {
+          if (n_selections > 1)
+            {
+              gchar *str;
+
+              str = g_strdup_printf (_("Thumbnail %d of %d"),
+                                     i, n_selections);
+              gtk_progress_bar_set_text (open_options_progress, str);
+              g_free (str);
+            }
+
+          file_open_create_thumbnail (selections[i]);
+
+          if (n_selections > 1)
+            {
+              gtk_progress_bar_set_fraction (open_options_progress,
+                                             (gdouble) i /
+                                             (gdouble) n_selections);
+            }
+        }
 
       if (selections[0])
-        file_open_create_thumbnail (selections[0]);
+        {
+          if (n_selections > 1)
+            {
+              gchar *str;
+
+              str = g_strdup_printf (_("Thumbnail %d of %d"),
+                                     n_selections, n_selections);
+              gtk_progress_bar_set_text (open_options_progress, str);
+              g_free (str);
+            }
+
+          file_open_create_thumbnail (selections[0]);
+
+          if (n_selections > 1)
+            {
+              gtk_progress_bar_set_fraction (open_options_progress, 1.0);
+            }
+        }
+
+      if (n_selections > 1)
+        {
+          gtk_widget_hide (GTK_WIDGET (open_options_progress));
+          gtk_widget_show (open_options_label);
+        }
 
       g_strfreev (selections);
 

@@ -1,5 +1,11 @@
 2002-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-open-dialog.c: added a progress bar to the preview
+	frame to show the progress when creating many previews. Also added
+	some more ugly static variables...
+
+2002-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagefile.[ch]: create the thumbnail subdir strings
 	only once in class_init, minor stuff.
 
