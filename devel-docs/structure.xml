@@ -227,24 +227,6 @@
       <tgroup cols="2" align="left">
 	<tbody>
 	  <row>
-	    <entry><filename>app/arch</filename></entry>
-	    <entry>
-	      architecture specific code
-	    </entry>
-	  </row>
-	  <row>
-	    <entry><filename>app/arch/i386</filename></entry>
-	    <entry>
-	      Intel 386 specific code
-	    </entry>
-	  </row>
-	  <row>
-	    <entry><filename>app/arch/i386/mmx</filename></entry>
-	    <entry>
-	      MMX code for the Intel 386 processor family
-	    </entry>
-	  </row>
-	  <row>
 	    <entry><filename>app/base</filename></entry>
 	    <entry>
 	      base functionality such as pixel regions, tiles etc.
@@ -254,7 +236,14 @@
 	    <entry><filename>app/paint-funcs</filename></entry>
 	    <entry>
 	      functions to manipulate pixels, part of the base
-	      functionality, uses code from the arch directory
+	      functionality
+	    </entry>
+	  </row>
+	  <row>
+	    <entry><filename>app/compose</filename></entry>
+	    <entry>
+	      new pixel compositing routines that supersede the code
+              in <filename>app/paint-funcs</filename>
 	    </entry>
 	  </row>
 	  <row>
@@ -262,14 +251,14 @@
 	    <entry>
 	      handling of config files, provides the GimpConfig
 	      interface and the GimpRc object which is used from
-	      all over of the application. Depends on GObject
+	      all over of the application; depends on GObject
 	    </entry>
 	  </row>
 	  <row>
 	    <entry><filename>app/core</filename></entry>
 	    <entry>
 	      the core of the GIMP core, makes heavy use of GObject
-              but is not GTK+-dependant.
+              but is not GTK+-dependant
 	    </entry>
 	  </row>
 	  <row>

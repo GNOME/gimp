@@ -25,17 +25,26 @@ you will need the following utilities:
 
 Perl v5 - Most of the scripts used are written in Perl.
 
-DocBook DTD v3.0  -  This is the DocBook SGML DTD.
-    http://www.ora.com/davenport
-
-libxslt & libxml2 (version >= 2.3.6)  -  This is used to convert the
-    XML templates to HTML.
+libxslt & libxml2 (version >= 2.3.6)
+    This is used to convert the XML templates to HTML.
     http://xmlsoft.org/
 
-gtk-doc (version >= 1.0)  -  This package automatically generates DocBook
-    documentation from source and is able to convert it into HTML (and
-    other formats).
+DocBook XML DTD v4.1.2
+    http://www.docbook.org/
+
+gtk-doc (version >= 1.0)
+    This package automatically generates DocBook documentation from
+    source and is able to convert it into HTML (and other formats).
     ftp://ftp.gtk.org/pub/gtk-doc/
+
+
+You need to have all this properly setup. This includes the
+availability of an XML catalog (/etc/xml/catalog) that tells the
+XSLT processor where to look for locally installed DTDs. If that
+file is missing, the XSLT processor will try to access the DTDs
+online which will either fail or take forever. For this reason,
+the docs are not built by default. If you think you have a working
+setup, pass '--enable-gtk-doc' to configure.
 
 
 HOWTO
@@ -52,7 +61,7 @@ or removed or parameters changed, there is no need to touch the
 Makefile or any other files in the toplevel directory.
 
 In most cases you will work on the documentation by adding or editing
-comment blocks in the C source and by editing the template SGML files
+comment blocks in the C source and by editing the template XML files
 in the tmpl directory.
 
 After you've done any changes to the documentation, running 'make'
