@@ -24,6 +24,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "gimpcontextpreview.h"
+#include "gimpdnd.h"
 #include "devices.h"
 #include "interface.h"
 #include "gimprc.h"
@@ -91,15 +92,21 @@ DeviceInfoDialog *deviceD = NULL;
 int suppress_update = FALSE;
 
 /* Local functions */
-static void input_dialog_destroy_callback (GtkWidget *, gpointer);
-void input_dialog_able_callback (GtkWidget *w, guint32 deviceid, 
-				 gpointer data);
-static void devices_save_current_info (void);
-static void devices_write_rc_device (DeviceInfo *device_info, FILE *fp);
-static void devices_write_rc (void);
+static void input_dialog_destroy_callback  (GtkWidget *, gpointer);
+void input_dialog_able_callback            (GtkWidget *w, guint32 deviceid, 
+					    gpointer data);
+static void devices_save_current_info      (void);
+static void devices_write_rc_device        (DeviceInfo *device_info, FILE *fp);
+static void devices_write_rc               (void);
 static void device_status_destroy_callback (void);
-static void devices_close_callback (GtkWidget *, gpointer);
-static void device_status_update_current ();
+static void devices_close_callback         (GtkWidget *, gpointer);
+static void device_status_update_current   ();
+
+static void device_status_drag_color       (GtkWidget *,
+					    guchar *, guchar *, guchar *, gpointer);
+static void device_status_drop_color       (GtkWidget *,
+				            guchar, guchar, guchar, gpointer);
+
 
 /* Global data */
 int current_device = GDK_CORE_POINTER;
@@ -110,6 +117,15 @@ static ActionAreaItem action_items[] =
   { N_("Save"), (ActionCallback)devices_write_rc, NULL, NULL },
   { N_("Close"), devices_close_callback, NULL, NULL }
 };
+
+/*  dnd stuff  */
+static GtkTargetEntry color_area_target_table[] =
+{
+  GIMP_TARGET_COLOR
+};
+static guint n_color_area_targets = (sizeof (color_area_target_table) /
+				     sizeof (color_area_target_table[0]));
+
 
 void 
 create_input_dialog (void)
@@ -744,6 +760,21 @@ create_device_status (void)
 	  deviceD->colors[i] = gtk_preview_new (GTK_PREVIEW_COLOR);
 	  gtk_widget_set_events (deviceD->colors[i], PREVIEW_EVENT_MASK);
 	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]), CELL_SIZE, CELL_SIZE);
+	  /*  dnd stuff  */
+	  gtk_drag_source_set (deviceD->colors[i],
+			       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+			       color_area_target_table, n_color_area_targets,
+			       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+	  gimp_dnd_color_source_set (deviceD->colors[i], device_status_drag_color, 
+				     GUINT_TO_POINTER (device_info->device));
+ 	  gtk_drag_dest_set (deviceD->colors[i],
+ 			     GTK_DEST_DEFAULT_HIGHLIGHT |
+ 			     GTK_DEST_DEFAULT_MOTION |
+ 			     GTK_DEST_DEFAULT_DROP,
+ 			     color_area_target_table, n_color_area_targets,
+ 			     GDK_ACTION_COPY); 
+ 	  gimp_dnd_color_dest_set (deviceD->colors[i], device_status_drop_color, 
+				   GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->colors[i],
 			    2, 3, i, i+1,
 			    0, 0, 2, 2);
@@ -972,4 +1003,82 @@ device_status_update (guint32 deviceid)
       pattern_area_update();
     }
 }
+
+
+/*  dnd stuff  */
+static void
+device_status_drag_color (GtkWidget *widget,
+			  guchar    *r,
+			  guchar    *g,
+			  guchar    *b,
+			  gpointer   data)
+{
+  guint32 deviceid;
+  GList *tmp_list;
+  DeviceInfo *device_info = NULL;
+
+  deviceid = GPOINTER_TO_UINT (data);
+
+  tmp_list = devices_info;
+  while (tmp_list)
+    {
+      device_info = (DeviceInfo *)tmp_list->data;
+      
+      if (device_info->device == deviceid)
+	break;
+      
+      tmp_list = tmp_list->next;
+    }
+
+  if (device_info)
+    {
+      *r = device_info->foreground[0];
+      *g = device_info->foreground[1];
+      *b = device_info->foreground[2];
+    }
+  else
+    {
+      *r = *g = *b = 0;
+    }
+}
+
+static void
+device_status_drop_color (GtkWidget *widget,
+			  guchar     r,
+			  guchar     g,
+			  guchar     b,
+			  gpointer   data)
+{
+  guint32 deviceid;
+  GList *tmp_list;
+  DeviceInfo *device_info = NULL;
+
+  deviceid = GPOINTER_TO_UINT (data);
+
+  tmp_list = devices_info;
+  while (tmp_list)
+    {
+      device_info = (DeviceInfo *)tmp_list->data;
+      
+      if (device_info->device == deviceid)
+	break;
+      
+      tmp_list = tmp_list->next;
+    }
+  if (device_info && device_info->is_present)
+    {
+      if (device_info->device == current_device)
+	{
+	  palette_set_foreground (r, g, b);
+	}
+      else
+	{
+	  device_info->foreground[0] = r;
+	  device_info->foreground[1] = g;
+	  device_info->foreground[2] = b;
+	  device_status_update (device_info->device);
+	}
+    }
+}
+
 

@@ -1,3 +1,7 @@
+Sat Sep  4 05:39:39 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c: dnd for colors, more dnd to follow soon ...
+
 Sat Sep  4 04:36:11 CET 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/spheredesigner.c: Various fixes and
