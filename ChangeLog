@@ -1,3 +1,15 @@
+Tue Mar  2 01:24:41 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/chain.xpm
+	* libgimp/gimpchainbutton.c
+	* libgimp/gimpchainbutton.h: a mockup for a new widget that 
+	indicates that two entries are connected. Please feel free to
+	hack this as I'm afraid I won't find the time to finish this.
+
+	* app/file_new_dialogs: a first attempt to make the dialog 
+	easier to use w/o loosing the flexibility it provided.
+
 1999-02-28  Jay Cox  <jaycox@earthlink.net>
 
 	* app/Makefile.am: added gimphistogram*, histogramwidget*, 

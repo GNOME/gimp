@@ -19,6 +19,8 @@ lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
 
 libgimpi_a_SOURCES = \
+	gimpchainbutton.c	\
+	gimpchainbutton.h	\
 	gimpmatrix.c	\
 	gimpmatrix.h	\
 	gimpprotocol.c	\
@@ -77,6 +79,7 @@ libgimpui_la_SOURCES = \
 gimpinclude_HEADERS = \
 	color_selector.h	\
 	gimp.h			\
+	gimpchainbutton.h	\
 	gimpenums.h		\
 	gimpfeatures.h		\
 	gimpmatrix.h		\
