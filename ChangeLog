@@ -1,3 +1,9 @@
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-blend.c (gradient_calc_shapeburst_*):
+	applied a patch from Pedro Gimeno that fixes the crash reported in
+	bug #136219.
+
 2004-03-13  Michael Natterer  <mitch@gimp.org>
 
 	Completed the fix for bug #136702:

@@ -520,12 +520,12 @@ gradient_calc_shapeburst_angular_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (gint) CLAMP (x, 0.0, distR.w);
-  iy = (gint) CLAMP (y, 0.0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
+  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = 1.0 - *((float *) tile_data_pointer (tile,
-                                               ix % TILE_WIDTH,
-                                               iy % TILE_HEIGHT));
+  value = 1.0 - *((gfloat *) tile_data_pointer (tile,
+                                                ix % TILE_WIDTH,
+                                                iy % TILE_HEIGHT));
   tile_release (tile, FALSE);
 
   return value;
@@ -540,8 +540,8 @@ gradient_calc_shapeburst_spherical_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (gint) CLAMP (x, 0.0, distR.w);
-  iy = (gint) CLAMP (y, 0.0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
+  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((gfloat *) tile_data_pointer (tile,
                                           ix % TILE_WIDTH,
@@ -561,12 +561,12 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
   Tile   *tile;
   gfloat  value;
 
-  ix = (gint) CLAMP (x, 0.0, distR.w);
-  iy = (gint) CLAMP (y, 0.0, distR.h);
+  ix = (gint) CLAMP (x, 0.0, distR.w - 0.7);
+  iy = (gint) CLAMP (y, 0.0, distR.h - 0.7);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = *((float *) tile_data_pointer (tile,
-                                         ix % TILE_WIDTH,
-                                         iy % TILE_HEIGHT));
+  value = *((gfloat *) tile_data_pointer (tile,
+                                          ix % TILE_WIDTH,
+                                          iy % TILE_HEIGHT));
   value = cos (0.5 * G_PI * value);
   tile_release (tile, FALSE);
 
