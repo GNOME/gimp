@@ -2125,7 +2125,6 @@ scale_area  (
   ScaleRowResampleFunc scale_row_resample = scale_row_resample_funcs (src_tag);
   ScaleSetDestRowFunc  scale_set_dest_row = scale_set_dest_funcs (dest_tag);
 
-  printf("scale_area\n");  
   /* set up the src rows and data  */
   src_m1_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
   src_row_data    = (guchar *) g_malloc (orig_width * bytes_per_pixel);
