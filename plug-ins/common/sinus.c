@@ -1074,7 +1074,7 @@ typedef struct
   guchar  *bits;
 } mwPreview;
 
-static gint              drawable_is_grayscale = FALSE;
+static gboolean          drawable_is_grayscale = FALSE;
 static mwPreview 	*thePreview;
 static GimpDrawable     *drawable;
 
@@ -1105,14 +1105,17 @@ static gdouble cosinus  (gdouble v);
 static gint    sinus_dialog     (void);
 static void    sinus_do_preview (GtkWidget *widget);
 
-static inline void compute_block_4 (guchar *dest_row, guint rowstride,
-				    gint x0, gint y0, gint h, gint w, params *p);
-static inline void compute_block_3 (guchar *dest_row, guint rowstride,
-				    gint x0, gint y0, gint h, gint w, params *p);
-static inline void compute_block_2 (guchar *dest_row, guint rowstride,
-				    gint x0, gint y0, gint h, gint w, params *p);
-static inline void compute_block_1 (guchar *dest_row, guint rowstride,
-				    gint x0, gint y0, gint h, gint w, params *p);
+static void assign_block_4 (guchar *dest, gdouble grey, params *p);
+static void assign_block_3 (guchar *dest, gdouble grey, params *p);
+static void assign_block_2 (guchar *dest, gdouble grey, params *p);
+static void assign_block_1 (guchar *dest, gdouble grey, params *p);
+static void compute_block_x (guchar *dest_row,
+			     guint rowstride,
+			     gint x0, gint y0, gint w, gint h,
+			     gint bpp,
+			     void (*assign)(guchar *dest, gdouble grey, 
+					    params *p), 
+			     params *p);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1193,10 +1196,7 @@ run (gchar      *name,
       /* In order to prepare the dialog I need to know wether it's grayscale or not */
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       thePreview = mw_preview_build_virgin(drawable);
-      if (gimp_drawable_is_gray (drawable->drawable_id))
-	drawable_is_grayscale = TRUE;
-      else
-	drawable_is_grayscale = FALSE;
+      drawable_is_grayscale = gimp_drawable_is_gray (drawable->drawable_id);
 
       if (!sinus_dialog())
         return;
@@ -1396,20 +1396,24 @@ sinus (void)
       switch (bytes)
 	{
 	case 4:
-	  compute_block_4 (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h, &p);
+	  compute_block_x (dest_rgn.data, dest_rgn.rowstride, 
+			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+			   4, assign_block_4, &p);
 	  break;
 	case 3:
-	  compute_block_3 (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h, &p);
+	  compute_block_x (dest_rgn.data, dest_rgn.rowstride, 
+			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+			   3, assign_block_3, &p);
 	  break;
 	case 2:
-	  compute_block_2 (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h, &p);
+	  compute_block_x (dest_rgn.data, dest_rgn.rowstride, 
+			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+			   2, assign_block_2, &p);
 	  break;
 	case 1:
-	  compute_block_1 (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h, &p);
+	  compute_block_x (dest_rgn.data, dest_rgn.rowstride, 
+			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+			   1, assign_block_1, &p);
 	  break;
 	}
       progress += dest_rgn.w * dest_rgn.h;
@@ -1418,7 +1422,7 @@ sinus (void)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, ix1, iy1, (ix2-ix1), (iy2-iy1));
+  gimp_drawable_update (drawable->drawable_id, ix1, iy1, ix2 - ix1, iy2 - iy1);
 }
 
 static gdouble 
@@ -1444,131 +1448,68 @@ cosinus (gdouble v)
   return 0.5 - 0.5 * sin ((v + 0.25) * G_PI * 2);
 }
 
-static inline void 
-compute_block_4 (guchar *dest_row, 
-		 guint   rowstride,
-		 gint    x0,
-		 gint    y0,
-		 gint    w,
-		 gint    h, 
+static void
+assign_block_4 (guchar *dest, gdouble grey, params *p)
+{
+  dest[0] = p->r + (gint) (grey * p->dr);
+  dest[1] = p->g + (gint) (grey * p->dg);
+  dest[2] = p->b + (gint) (grey * p->db);
+  dest[3] = p->a + (gint) (grey * p->da);
+}
+
+static void
+assign_block_3 (guchar *dest, gdouble grey, params *p)
+{
+  dest[0] = p->r + (gint) (grey * p->dr);
+  dest[1] = p->g + (gint) (grey * p->dg);
+  dest[2] = p->b + (gint) (grey * p->db);
+}
+
+static void
+assign_block_2 (guchar *dest, gdouble grey, params *p)
+{
+  dest[0] = (guchar) (grey * 255.0);
+  dest[1] = p->a + (gint)(grey * p->da);
+}
+
+static void
+assign_block_1 (guchar *dest, gdouble grey, params *p)
+{
+  dest[0]= (guchar) (grey * 255.0);
+}
+
+static void 
+compute_block_x (guchar *dest_row, guint rowstride, 
+		 gint x0, gint y0, gint w, gint h,
+		 gint bpp,
+		 void (*assign)(guchar *dest, gdouble grey, params *p), 
 		 params *p)
 {
   gint     i, j;
   gdouble  x, y, grey;
+  gdouble  pow_exp;
   guchar  *dest;
 
-  for (j = y0; j < (y0 + h); j++)
+  pow_exp = exp (svals.blend_power);
+
+  for (j = y0; j < y0 + h; j++)
     {
-      y=((gdouble)j)/p->height;
+      y= ((gdouble) j) / p->height;
       dest = dest_row;
-      for (i= x0; i<(x0+w); i++)
+      for (i = x0; i < x0 + w; i++)
 	{
-	  x=((gdouble)i)/p->width;
+	  gdouble c;
 
-	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
-	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
-	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
+	  x = ((gdouble) i) / p->width;
 
-	  *dest++= p->r+(gint)(grey*p->dr);
-	  *dest++= p->g+(gint)(grey*p->dg);
-	  *dest++= p->b+(gint)(grey*p->db);
-	  *dest++= p->a+(gint)(grey*p->da);
-	}
-      dest_row += rowstride;
-    }
-}
+	  c = 0.5 * sin(p->c31 * x + p->c32 * y + p->c33);
 
-static inline void 
-compute_block_3 (guchar *dest_row, 
-		 guint   rowstride,
-		 gint    x0,
-		 gint    y0,
-		 gint    w,
-		 gint    h, 
-		 params *p)
-{
-  gint     i, j;
-  gdouble  x, y, grey;
-  guchar  *dest;
+	  grey = sin(p->c11 * x + p->c12 * y + p->c13) * (0.5 + 0.5 * c) + 
+	    sin(p->c21 * x + p->c22 * y + p->c23) * (0.5 - 0.5 * c);
+	  grey = pow(p->blend(svals.cmplx * (0.5 + 0.5 * grey)), pow_exp);
 
-  for (j=y0; j<(y0+h); j++)
-    {
-      y=((gdouble)j)/p->height;
-      dest = dest_row;
-      for (i= x0; i<(x0+w); i++)
-	{
-	  x=((gdouble)i)/p->width;
-
-	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
-	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
-	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
-
-	  *dest++= p->r+(gint)(grey*p->dr);
-	  *dest++= p->g+(gint)(grey*p->dg);
-	  *dest++= p->b+(gint)(grey*p->db);
-	}
-      dest_row += rowstride;
-    }
-}
-
-static inline void 
-compute_block_2 (guchar *dest_row, 
-		 guint   rowstride,
-		 gint    x0,
-		 gint    y0,
-		 gint    w,
-		 gint    h, 
-		 params *p)
-{
-  gint     i, j;
-  gdouble  x, y, grey;
-  guchar  *dest;
-
-  for (j=y0; j<(y0+h); j++)
-    {
-      y=((gdouble)j)/p->height;
-      dest = dest_row;
-      for (i= x0; i<(x0+w); i++)
-	{
-	  x=((gdouble)i)/p->width;
-
-	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
-	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
-	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
-
-	  *dest++= (guchar)(grey*255.0);
-	  *dest++= p->a+(gint)(grey*p->da);
-	}
-      dest_row += rowstride;
-    }
-}
-
-static inline void 
-compute_block_1 (guchar *dest_row, 
-		 guint   rowstride,
-		 gint    x0,
-		 gint    y0,
-		 gint    w,
-		 gint    h, 
-		 params *p)
-{
-  gint i,j;
-  double x,y, grey;
-  guchar *dest;
-
-  for (j=y0; j<(y0+h); j++)
-    {
-      y=((double)j)/p->height;
-      dest = dest_row;
-      for (i= x0; i<(x0+w); i++)
-	{
-	  x=((double)i)/p->width;
-
-	  grey = sin(p->c11*x + p->c12*y + p->c13) * (0.5+0.5*sin(p->c31*x + p->c32*y +p->c33)) \
-	    + sin(p->c21*x + p->c22*y + p->c23) * (0.5-0.5*sin(p->c31*x + p->c32*y +p->c33));
-	  grey=pow(p->blend(svals.cmplx*(0.5+0.5*grey)),exp(svals.blend_power));
-
-	  *dest++= (guchar)(grey*255.0);
+	  assign (dest, grey, p);
+	  dest += bpp;
 	}
       dest_row += rowstride;
     }
@@ -1607,18 +1548,16 @@ alpha_scale_update (GtkWidget *color_button,
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
   gtk_adjustment_set_value (adj, color.a);
 
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
-gboolean run_flag = FALSE;
+static gboolean run_flag = FALSE;
 
 static void
 sinus_ok_callback (GtkWidget *widget,
 		   gpointer   data)
 {
   run_flag = TRUE;
-
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -1627,9 +1566,7 @@ sinus_toggle_button_update (GtkWidget *widget,
 			    gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
-
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
 static void
@@ -1637,9 +1574,7 @@ sinus_radio_button_update (GtkWidget *widget,
 			   gpointer   data)
 {
   gimp_radio_button_update (widget, data);
-
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
 static void
@@ -1647,18 +1582,14 @@ sinus_double_adjustment_update (GtkAdjustment *adjustment,
 				gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
-
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
 static void
 sinus_random_update (GObject   *unused,
 		     gpointer   data)
 {
-
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
 /*****************************************/
@@ -1805,7 +1736,7 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   hbox = gimp_random_seed_new (&svals.seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random Seed:"), 1.0, 0.5,
+				     _("R_andom Seed:"), 1.0, 0.5,
 				     hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
@@ -1919,6 +1850,9 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  gtk_widget_set_sensitive (frame, 
+			    gimp_drawable_has_alpha (drawable->drawable_id));
+
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -2029,6 +1963,9 @@ sinus_do_preview (GtkWidget *widget)
   guchar *buf, *savbuf;
   params p;
 
+  if (!do_preview)
+    return;
+
   if (theWidget == NULL)
     {
       theWidget = widget;
@@ -2044,12 +1981,12 @@ sinus_do_preview (GtkWidget *widget)
   prepare_coef (&p);
 
   if (thePreview->bpp == 3)
-    compute_block_3 (buf, rowsize, 0, 0,
-		     thePreview->width, thePreview->height, &p);
+    compute_block_x (buf, rowsize, 0, 0, thePreview->width, thePreview->height,
+		     3, assign_block_3, &p);
   else if (thePreview->bpp == 1)
     {
-      compute_block_1 (buf, rowsize, 0, 0,
-		       thePreview->width, thePreview->height, &p);
+      compute_block_x (buf, rowsize, 0, 0, thePreview->width, 
+		       thePreview->height, 1, assign_block_1, &p);
     }
 
   for (y = 0; y < thePreview->height; y++)
@@ -2068,9 +2005,7 @@ mw_preview_toggle_callback (GtkWidget *widget,
                             gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
-
-  if (do_preview)
-    sinus_do_preview (NULL);
+  sinus_do_preview (NULL);
 }
 
 static mwPreview *
