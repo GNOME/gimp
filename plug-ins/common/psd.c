@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 3.0.7
+ * PSD Plugin version 3.0.8
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -34,6 +34,9 @@
 
 /*
  * Revision history:
+ *
+ *  2003.08.31 / v3.0.8 / applied (modified) patch from Andy Wallis
+ *       Fix for handling of layer masks. See bug #68538.
  *
  *  2003.06.16 / v3.0.7 / Adam D. Moss
  *       Avoid memory corruption when things get shot to hell in the
@@ -1058,6 +1061,17 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
     {
       IFDBG printf("\t\t\t\t\t\tNULL LAYER NAME\n");
     }
+  /* If no layermask data - set offset and size from layer data */
+  if (! layermaskdatasize)
+    {
+      IFDBG
+        fprintf(stderr, "Setting layer mask data layer\n");
+
+      psd_image.layer[layernum].lm_x = psd_image.layer[layernum].x;
+      psd_image.layer[layernum].lm_y = psd_image.layer[layernum].y;
+      psd_image.layer[layernum].lm_width =  psd_image.layer[layernum].width;
+      psd_image.layer[layernum].lm_height = psd_image.layer[layernum].height;
+    }
 
   if (totaloff-(*offset) > 0)
     {
@@ -1066,7 +1080,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
 	  printf("Warning: layer record dross: ");
 	  dumpchunk(totaloff-(*offset), fd, "layer record dross throw");
 	}
-	else
+      else
 	{
 	  throwchunk(totaloff-(*offset), fd, "layer record dross throw");
 	}
@@ -1329,7 +1343,6 @@ do_image_resources(FILE *fd)
       offset += 2;
       IFDBG printf("\tID: 0x%04x / ",ID);
 
-
       Name = getpascalstring(fd, "ID name");
       offset++;
 
@@ -1374,8 +1387,39 @@ do_image_resources(FILE *fd)
 
 }
 
+
+/* Convert RGB data to RGBA data */
 static guchar*
-chans_to_GRAYA (guchar* grey, guchar* alpha, gint numpix)
+RGB_to_RGBA (const guchar* rgb_data, gint numpix)
+{
+  guchar* rtn;
+  int i,j;
+
+  if (!rgb_data)
+    {
+      printf("NULL rgb data - eep!");
+      return NULL;
+    }
+
+  rtn = g_malloc(numpix * 4);
+
+  j = 0;
+  for (i=0; i<numpix; i++)
+    {
+      rtn[j++] = rgb_data[i*3];
+      rtn[j++] = rgb_data[i*3+1];
+      rtn[j++] = rgb_data[i*3+2];
+      rtn[j++] = 255;
+    }
+
+  return rtn;
+}
+
+
+static guchar*
+chans_to_GRAYA (const guchar* grey,
+                const guchar* alpha,
+                gint numpix)
 {
   guchar* rtn;
   int i;
@@ -1398,7 +1442,10 @@ chans_to_GRAYA (guchar* grey, guchar* alpha, gint numpix)
 }
 
 static guchar*
-chans_to_RGB (guchar* red, guchar* green, guchar* blue, gint numpix)
+chans_to_RGB (const guchar* red,
+              const guchar* green,
+              const guchar* blue,
+              gint numpix)
 {
   guchar* rtn;
   int i;
@@ -1421,10 +1468,12 @@ chans_to_RGB (guchar* red, guchar* green, guchar* blue, gint numpix)
   return rtn;
 }
 
-static
-guchar* chans_to_RGBA (guchar* red, guchar* green, guchar* blue,
-		       guchar* alpha,
-		       gint numpix)
+static guchar*
+chans_to_RGBA (const guchar* red,
+               const guchar* green,
+               const guchar* blue,
+               const guchar* alpha,
+               gint numpix)
 {
   guchar* rtn;
   int i;
@@ -1619,8 +1668,9 @@ resize_mask(guchar* src, guchar* dest,
     {
       for (x=0; x<dest_w; x++)
 	{
-	  if ((x>src_x) && (x<src_x+src_w) &&
-	      (y>src_y) && (y<src_y+src_h))
+	  /* Avoid a 1-pixel border top-left */
+	  if ((x>=src_x) && (x<src_x+src_w) &&
+	      (y>=src_y) && (y<src_y+src_h))
 	    {
 	      dest[dest_w * y + x] =
 		src[src_w * (y-src_y) + (x-src_x)];
@@ -1651,6 +1701,7 @@ load_image (const gchar *name)
   GimpPixelRgn pixel_rgn;
   gint32 iter;
   fpos_t tmpfpos;
+  int red_chan, grn_chan, blu_chan, alpha_chan, ichan;
 
   IFDBG printf("------- %s ---------------------------------\n",name);
 
@@ -1684,7 +1735,8 @@ load_image (const gchar *name)
 				    psd_image.resolution.vRes / 65536.0);
 	  /* currently can only set one unit for the image so we use the
 	     horizontal unit from the psd image */
-	  gimp_image_set_unit(image_ID, psd_unit_to_gimp_unit( psd_image.resolution.widthUnit));
+	  gimp_image_set_unit(image_ID,
+                              psd_unit_to_gimp_unit (psd_image.resolution.widthUnit));
 	}
 
       fgetpos (fd, &tmpfpos);
@@ -1765,13 +1817,42 @@ load_image (const gchar *name)
 		    seek_to_and_unpack_pixeldata(fd, lnum, 1);
 		    seek_to_and_unpack_pixeldata(fd, lnum, 2);
 		    seek_to_and_unpack_pixeldata(fd, lnum, 3);
+
+		    /* Fix for unexpected layer data order for files
+                     * from PS files created by PanoTools. Rather
+		     * than assuming an order, we find the actual order.
+		     */
+
+		    red_chan = grn_chan = blu_chan = alpha_chan = -1;
+
+		    for (ichan=0; ichan<numc; ichan++)
+                      {
+                        switch(psd_image.layer[lnum].channel[ichan].type)
+                          {
+                          case 0:    red_chan = ichan; break;
+                          case 1:    grn_chan = ichan; break;
+                          case 2:    blu_chan = ichan; break;
+                          case -1: alpha_chan = ichan; break;
+		      }
+		    }
+
+		    if ((red_chan < 0) ||
+                        (grn_chan < 0) ||
+                        (blu_chan < 0) ||
+                        (alpha_chan < 0))
+                      {
+                        g_message ("Error: Cannot identify required RGBA channels");
+                        gimp_quit();
+                        break;
+                      }
+
 		    merged_data =
-		      chans_to_RGBA (layer->channel[1].data,
-				     layer->channel[2].data,
-				     layer->channel[3].data,
-				     layer->channel[0].data,
-				     layer->width *
-				     layer->height);
+		      chans_to_RGBA (psd_image.layer[lnum].channel[red_chan].data,
+				     psd_image.layer[lnum].channel[grn_chan].data,
+				     psd_image.layer[lnum].channel[blu_chan].data,
+				     psd_image.layer[lnum].channel[alpha_chan].data,
+				     psd_image.layer[lnum].width *
+				     psd_image.layer[lnum].height);
 
 		    g_free(layer->channel[0].data);
 		    g_free(layer->channel[1].data);
@@ -1786,12 +1867,13 @@ load_image (const gchar *name)
 		  fprintf(stderr, "YAH1\n");
 
 		layer_ID = gimp_layer_new (image_ID,
-					   layer->name,
-					   layer->width,
-					   layer->height,
-					   (numc==3) ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
-					   (100.0*(double)layer->opacity)/255.0,
-					   psd_lmode_to_gimp_lmode(layer->blendkey));
+					   psd_image.layer[lnum].name,
+					   psd_image.layer[lnum].width,
+					   psd_image.layer[lnum].height,
+					   psd_layer_has_alpha(&psd_image.layer[lnum]) ?
+                                           GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE,
+					   (100.0 * (double)psd_image.layer[lnum].opacity) / 255.0,
+					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
 
 		IFDBG
 		  fprintf(stderr, "YAH2\n");
@@ -1800,7 +1882,7 @@ load_image (const gchar *name)
 
 	    default:
 	      {
-		printf("Error: Sorry, can't deal with a layered image of this type.\n");
+		g_message ("Error: Sorry, can't deal with a layered image of this type.\n");
 		gimp_quit();
 	      }; break; /* default */
 	    }
@@ -1823,6 +1905,8 @@ load_image (const gchar *name)
 
 		  lm_data = g_malloc(layer->width * layer->height);
 		  {
+                    guchar *tmp;
+
 		    seek_to_and_unpack_pixeldata(fd, lnum, iter);
 		    /* PS layer masks can be a different size to
 		       their owning layer, so we have to resize them. */
@@ -1838,7 +1922,19 @@ load_image (const gchar *name)
 
 		    /* give it to GIMP */
 		    mask_id = gimp_layer_create_mask(layer_ID, 0);
-		    gimp_image_add_layer_mask(image_ID, layer_ID, mask_id);
+
+ 		    /* Convert the layer RGB data (not the mask) to RGBA */
+                    tmp = merged_data;
+ 		    merged_data = RGB_to_RGBA (tmp,
+                                               psd_image.layer[lnum].width *
+                                               psd_image.layer[lnum].height);
+                    g_free (tmp);
+
+ 		    /* Add alpha - otherwise cannot add layer mask */
+ 		    gimp_layer_add_alpha(layer_ID);
+
+ 		    /* Add layer mask */
+		    gimp_image_add_layer_mask (image_ID, layer_ID, mask_id);
 
 		    drawable = gimp_drawable_get (mask_id);
 
@@ -1886,7 +1982,7 @@ load_image (const gchar *name)
 	  gimp_drawable_detach (drawable);
 	  drawable = NULL;
 
-	  g_free(merged_data);
+	  g_free (merged_data);
 
 	  gimp_progress_update ((double)(lnum+1.0) /
 				(double)psd_image.num_layers);

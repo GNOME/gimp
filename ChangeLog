@@ -1,3 +1,8 @@
+2003-08-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/psd.c: applied a modified version of a patch
+	from Andy Wallis that is supposed to fix bug #68538.
+
 2003-08-31  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: added a prominent comment for translators to make
