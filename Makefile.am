@@ -9,8 +9,6 @@ EXTRA_SCRIPTS = gimpinstall
 EXTRA_DIST = \
 	cursors/bad		\
 	cursors/badmsk		\
-	cursors/bigcirc		\
-	cursors/bigcircmsk	\
 	cursors/dropper		\
 	cursors/droppermsk	\
 	cursors/mouse1		\
@@ -31,6 +29,8 @@ EXTRA_DIST = \
 	cursors/mouse1_selmmsk	\
 	cursors/mouse1_selp	\
 	cursors/mouse1_selpmsk	\
+	cursors/mouse1_selu	\
+	cursors/mouse1_selumsk	\
 	cursors/mouse1_u	\
 	cursors/mouse1_umsk	\
 	pixmaps/anchor.xpm	\

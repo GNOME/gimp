@@ -1536,7 +1536,7 @@ bezier_select_cursor_update (Tool           *tool,
       else if ((mevent->state & GDK_CONTROL_MASK) && !(mevent->state & GDK_SHIFT_MASK))
 	gdisplay_install_tool_cursor (gdisp,GIMP_MOUSE1SELM_CURSOR );
       else if ((mevent->state & GDK_CONTROL_MASK) && (mevent->state & GDK_SHIFT_MASK))
-	gdisplay_install_tool_cursor (gdisp, GIMP_BIGCIRC_CURSOR);
+	gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1SELU_CURSOR);
       else
 	gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1SEL_CURSOR);
       return;

@@ -27,8 +27,6 @@
 #include "../cursors/mouse1_mmsk"
 #include "../cursors/mouse1_u"
 #include "../cursors/mouse1_umsk"
-#include "../cursors/bigcirc"
-#include "../cursors/bigcircmsk"
 #include "../cursors/dropper"
 #include "../cursors/droppermsk"
 #include "../cursors/mouse1_ap"
@@ -37,12 +35,14 @@
 #include "../cursors/mouse1_cpmsk"
 #include "../cursors/mouse1_mm"
 #include "../cursors/mouse1_mmmsk"
-#include "../cursors/mouse1_sel"
-#include "../cursors/mouse1_selmsk"
 #include "../cursors/mouse1_selm"
 #include "../cursors/mouse1_selmmsk"
 #include "../cursors/mouse1_selp"
 #include "../cursors/mouse1_selpmsk"
+#include "../cursors/mouse1_selu"
+#include "../cursors/mouse1_selumsk"
+#include "../cursors/mouse1_sel"
+#include "../cursors/mouse1_selmsk"
 #include "../cursors/bad"
 #include "../cursors/badmsk"
 
@@ -66,8 +66,6 @@ static BM_Cursor gimp_cursors[] =
     mouse1_m_x_hot, mouse1_m_y_hot, NULL},
   { mouse1_u_bits, mouse1_umsk_bits, mouse1_u_width, mouse1_u_height,
     mouse1_u_x_hot, mouse1_u_y_hot, NULL},
-  { bigcirc_bits, bigcircmsk_bits, bigcirc_width, bigcirc_height,
-    bigcirc_x_hot, bigcirc_y_hot, NULL},
   { dropper_bits, droppermsk_bits, dropper_width, dropper_height,
     dropper_x_hot, dropper_y_hot, NULL},
   { mouse1_ap_bits, mouse1_apmsk_bits, mouse1_ap_width, mouse1_ap_height,
@@ -80,6 +78,8 @@ static BM_Cursor gimp_cursors[] =
     mouse1_selp_x_hot, mouse1_selp_y_hot, NULL},
   { mouse1_selm_bits, mouse1_selmmsk_bits, mouse1_selm_width, mouse1_selm_height,
     mouse1_selm_x_hot, mouse1_selm_y_hot, NULL},
+  { mouse1_selu_bits, mouse1_selumsk_bits, mouse1_selu_width, mouse1_selu_height,
+    mouse1_selu_x_hot, mouse1_selu_y_hot, NULL},
   { mouse1_sel_bits, mouse1_selmsk_bits, mouse1_sel_width, mouse1_sel_height,
     mouse1_sel_x_hot, mouse1_sel_y_hot, NULL},
   { bad_bits, badmsk_bits, bad_width, bad_height,

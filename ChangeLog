@@ -1,5 +1,20 @@
+Wed Jan 19 21:36:06 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* cursors/bigcirc
+	* cursors/bigcircmsk: removed
+
+	* cursors/mouse1_selu
+	* cursors/mouse1_selumsk: new files
+
+	* Makefile.am
+	* app/bezier_select.c
+	* app/cursorutil.c
+	* app/cursorutil.h: got rid of the big fat bigcirc cursor and added
+	a new one in the style of the others
+
 2000-01-19  Garry R. Osgood <gosgood@idt.net>
-        * gimp/app/disp_callbacks.c
+
+	* gimp/app/disp_callbacks.c
         * gimp/app/ellipse_select.c
         * gimp/app/free_select.c
         * gimp/app/fuzzy_select.c
@@ -77,7 +92,7 @@ Tue Jan 18 21:46:25 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/gap/gap_filter_iterators.c
 	* plug-ins/gap/iter_ALT/gen/plug_in_gauss_iir2_iter_ALT.inc
 	* plug-ins/gap/iter_ALT/gen/plug_in_gauss_rle2_iter_ALT.inc: added
-	iteraror functions for the new gauss_blur functions.
+	iterator functions for the new gauss_blur functions.
 
 	* plug-ins/common/grid.c: small changes to the way the size_entries 
 	are set up
