@@ -40,46 +40,46 @@
 
 static gint pixel_difference              (guchar       *col1,
                                            guchar       *col2,
-                                           gboolean      antialias, 
-                                           gint          threshold, 
+                                           gboolean      antialias,
+                                           gint          threshold,
                                            gint          bytes,
                                            gboolean      has_alpha,
                                            gboolean      select_transparent);
-static void ref_tiles                     (TileManager  *src, 
-                                           TileManager  *mask, 
-                                           Tile        **s_tile, 
+static void ref_tiles                     (TileManager  *src,
+                                           TileManager  *mask,
+                                           Tile        **s_tile,
                                            Tile        **m_tile,
-                                           gint          x, 
-                                           gint          y, 
-                                           guchar      **s, 
+                                           gint          x,
+                                           gint          y,
+                                           guchar      **s,
                                            guchar      **m);
-static gint find_contiguous_segment       (guchar       *col, 
+static gint find_contiguous_segment       (guchar       *col,
                                            PixelRegion  *src,
-                                           PixelRegion  *mask, 
-                                           gint          width, 
+                                           PixelRegion  *mask,
+                                           gint          width,
                                            gint          bytes,
                                            gboolean      has_alpha,
                                            gboolean      select_transparent,
                                            gboolean      antialias,
                                            gint          threshold,
-                                           gint          initial, 
-                                           gint         *start, 
+                                           gint          initial,
+                                           gint         *start,
                                            gint         *end);
-static void find_contiguous_region_helper (PixelRegion  *mask, 
+static void find_contiguous_region_helper (PixelRegion  *mask,
                                            PixelRegion  *src,
-                                           gboolean      has_alpha, 
+                                           gboolean      has_alpha,
                                            gboolean      select_transparent,
-                                           gboolean      antialias, 
+                                           gboolean      antialias,
                                            gint          threshold,
-                                           gint          x, 
-                                           gint          y, 
+                                           gint          x,
+                                           gint          y,
                                            guchar       *col);
 
 
 /*  public functions  */
 
 GimpChannel *
-gimp_image_contiguous_region_by_seed (GimpImage    *gimage, 
+gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
                                       GimpDrawable *drawable,
                                       gboolean      sample_merged,
                                       gboolean      antialias,
@@ -126,9 +126,9 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
-		     0, 0, 
-		     gimp_item_width  (GIMP_ITEM (mask)), 
-		     gimp_item_height (GIMP_ITEM (mask)), 
+		     0, 0,
+		     gimp_item_width  (GIMP_ITEM (mask)),
+		     gimp_item_height (GIMP_ITEM (mask)),
 		     TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
@@ -255,7 +255,7 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   alpha = bytes - 1;
   mask = gimp_channel_new_mask (gimage, width, height);
 
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 		     0, 0,
                      width, height,
                      TRUE);
@@ -283,9 +283,9 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 		rgb[color_bytes - 1] = idata[alpha];
 
 	      /*  Find how closely the colors match  */
-	      *mdata++ = pixel_difference (col, rgb, 
+	      *mdata++ = pixel_difference (col, rgb,
                                            antialias, threshold,
-                                           color_bytes, 
+                                           color_bytes,
                                            has_alpha, select_transparent);
 
 	      idata += bytes;
@@ -358,13 +358,13 @@ pixel_difference (guchar   *col1,
 }
 
 static void
-ref_tiles (TileManager  *src, 
-	   TileManager  *mask, 
-	   Tile        **s_tile, 
+ref_tiles (TileManager  *src,
+	   TileManager  *mask,
+	   Tile        **s_tile,
 	   Tile        **m_tile,
-	   gint          x, 
-	   gint          y, 
-	   guchar      **s, 
+	   gint          x,
+	   gint          y,
+	   guchar      **s,
 	   guchar      **m)
 {
   if (*s_tile != NULL)
@@ -380,17 +380,17 @@ ref_tiles (TileManager  *src,
 }
 
 static int
-find_contiguous_segment (guchar      *col, 
+find_contiguous_segment (guchar      *col,
 			 PixelRegion *src,
-			 PixelRegion *mask, 
-			 gint         width, 
+			 PixelRegion *mask,
+			 gint         width,
 			 gint         bytes,
 			 gboolean     has_alpha,
                          gboolean     select_transparent,
 			 gboolean     antialias,
 			 gint         threshold,
-			 gint         initial, 
-			 gint        *start, 
+			 gint         initial,
+			 gint        *start,
 			 gint        *end)
 {
   guchar *s;
@@ -399,11 +399,11 @@ find_contiguous_segment (guchar      *col,
   Tile   *s_tile = NULL;
   Tile   *m_tile = NULL;
 
-  ref_tiles (src->tiles, mask->tiles, 
+  ref_tiles (src->tiles, mask->tiles,
              &s_tile, &m_tile, src->x, src->y, &s, &m);
 
   /* check the starting pixel */
-  if (! (diff = pixel_difference (col, s, antialias, threshold, 
+  if (! (diff = pixel_difference (col, s, antialias, threshold,
                                   bytes, has_alpha, select_transparent)))
     {
       tile_release (s_tile, FALSE);
@@ -418,10 +418,10 @@ find_contiguous_segment (guchar      *col,
   while (*start >= 0 && diff)
     {
       if (! ((*start + 1) % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, 
+	ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *start, src->y, &s, &m);
 
-      diff = pixel_difference (col, s, antialias, threshold, 
+      diff = pixel_difference (col, s, antialias, threshold,
                                bytes, has_alpha, select_transparent);
 
       if ((*m-- = diff))
@@ -435,16 +435,16 @@ find_contiguous_segment (guchar      *col,
   *end = initial + 1;
 
   if (*end % TILE_WIDTH && *end < width)
-    ref_tiles (src->tiles, mask->tiles, 
+    ref_tiles (src->tiles, mask->tiles,
                &s_tile, &m_tile, *end, src->y, &s, &m);
 
   while (*end < width && diff)
     {
       if (! (*end % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, 
+	ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *end, src->y, &s, &m);
 
-      diff = pixel_difference (col, s, antialias, threshold, 
+      diff = pixel_difference (col, s, antialias, threshold,
                                bytes, has_alpha, select_transparent);
 
       if ((*m++ = diff))
@@ -461,14 +461,14 @@ find_contiguous_segment (guchar      *col,
 }
 
 static void
-find_contiguous_region_helper (PixelRegion *mask, 
+find_contiguous_region_helper (PixelRegion *mask,
 			       PixelRegion *src,
-			       gboolean     has_alpha, 
+			       gboolean     has_alpha,
                                gboolean     select_transparent,
-			       gboolean     antialias, 
-			       gint         threshold, 
-			       gint         x, 
-			       gint         y, 
+			       gboolean     antialias,
+			       gint         threshold,
+			       gint         x,
+			       gint         y,
 			       guchar      *col)
 {
   gint start, end, i;
@@ -480,7 +480,7 @@ find_contiguous_region_helper (PixelRegion *mask,
   if (y < 0 || y >= src->h) return;
 
   tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-  val = *(guchar *)(tile_data_pointer (tile, 
+  val = *(guchar *)(tile_data_pointer (tile,
 				       x % TILE_WIDTH, y % TILE_HEIGHT));
   tile_release (tile, FALSE);
   if (val != 0)
@@ -491,7 +491,7 @@ find_contiguous_region_helper (PixelRegion *mask,
 
   if (! find_contiguous_segment (col, src, mask, src->w, src->bytes,
                                  has_alpha, select_transparent,
-                                 antialias, threshold, 
+                                 antialias, threshold,
                                  x, &start, &end))
     return;
 

@@ -1,5 +1,10 @@
 2003-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-contiguous-region.c: removed trailing
+	whitspace.
+
+2003-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_gc_new): restore the
 	cap_style and join_style properties for the XOR GdkGC to the
 	values GimpDrawTool's GC used to have. Fixes the result of
