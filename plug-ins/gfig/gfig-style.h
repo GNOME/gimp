@@ -61,8 +61,6 @@ void gfig_gradient_changed_callback (const gchar *gradient_name,
 void mygimp_brush_info              (gint *width,
                                      gint *height);
 
-gchar *mygimp_brush_get            (void);
-
 void gfig_read_gimp_style          (Style *style,
                                     const gchar *name);
 
@@ -70,14 +68,14 @@ void gfig_style_append             (Style *style);
 
 void gfig_style_apply             (Style *style);
 
-void gfig_style_copy              (Style *style1, 
+void gfig_style_copy              (Style *style1,
                                    Style *style0,
                                    const gchar *name);
 
 void gfig_rgba_copy               (GimpRGB *color1,
                                    GimpRGB *color2);
 
-void gfig_style_copy              (Style *style1, 
+void gfig_style_copy              (Style *style1,
                                    Style *style0,
                                    const gchar *name);
 
@@ -90,7 +88,7 @@ gboolean gfig_skip_style          (Style *style,
 gboolean gfig_load_styles         (GFigObj *gfig,
                                    FILE *fp);
 
-void gfig_save_style              (Style   *style, 
+void gfig_save_style              (Style   *style,
                                    GString *string);
 
 void gfig_style_save_as_attributes (Style   *style,

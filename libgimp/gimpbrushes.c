@@ -30,10 +30,7 @@
  *
  * Get the brush opacity.
  *
- * This procedure returns the opacity setting for brushes. This value
- * is set globally and will remain the same even if the brush mask is
- * changed. The return value is a floating point number between 0 and
- * 100.
+ * This procedure is deprecated! Use 'gimp_context_get_opacity' instead.
  *
  * Returns: The brush opacity.
  */
@@ -49,10 +46,7 @@ gimp_brushes_get_opacity (void)
  *
  * Set the brush opacity.
  *
- * This procedure modifies the opacity setting for brushes. This value
- * is set globally and will remain the same even if the brush mask is
- * changed. The value should be a floating point number between 0 and
- * 100.
+ * This procedure is deprecated! Use 'gimp_context_set_opacity' instead.
  *
  * Returns: TRUE on success.
  */
@@ -67,10 +61,7 @@ gimp_brushes_set_opacity (gdouble opacity)
  *
  * Get the brush paint mode.
  *
- * This procedure returns the paint-mode setting for brushes. This
- * value is set globally and will not change if a different brush is
- * selected. The return value is an integer which corresponds to the
- * values listed in the argument description.
+ * This procedure isdeprecated! Use 'gimp_context_get_paint_mode' instead.
  *
  * Returns: The paint mode.
  */
@@ -86,9 +77,7 @@ gimp_brushes_get_paint_mode (void)
  *
  * Set the brush paint mode.
  *
- * This procedure modifies the paint_mode setting for the current
- * brush. This value is set globally and will not change if a different
- * brush mask is selected.
+ * This procedure is deprecated! Use 'gimp_context_set_paint_mode' instead.
  *
  * Returns: TRUE on success.
  */
@@ -96,4 +85,20 @@ gboolean
 gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
 {
   return gimp_context_set_paint_mode (paint_mode);
+}
+
+/**
+ * gimp_brushes_set_brush:
+ * @name: The brush name.
+ *
+ * Set the specified brush as the active brush.
+ *
+ * This procedure is deprecated! Use 'gimp_context_set_brush' instead.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_brushes_set_brush (const gchar *name)
+{
+  return gimp_context_set_brush (name);
 }

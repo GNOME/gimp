@@ -20,7 +20,8 @@
 sub brush_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The brush name'
+    desc => 'The brush name',
+    null_ok => '1'
 }}
 
 sub dim_args () {
@@ -67,7 +68,7 @@ sub brushes_refresh {
 
     $help = <<'HELP';
 This procedure retrieves all brushes currently in the user's brush path
-and updates the brush dialog accordingly.
+and updates the brush dialogs accordingly.
 HELP
 
     $author = $copyright = 'Seth Burgess';
@@ -87,15 +88,15 @@ sub brushes_get_list {
     $blurb = 'Retrieve a complete listing of the available brushes.';
 
     $help = <<'HELP';
-This procedure returns a complete listing of available GIMP brushes. Each name
-returned can be used as input to the 'gimp_brushes_set_brush'.
+This procedure returns a complete listing of available GIMP
+brushes. Each name returned can be used as input to the
+'gimp_context_set_brush' procedure.
 HELP
 
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'filter',
-          type => 'string', null_ok => 1,
+	{ name => 'filter', type => 'string', null_ok => 1,
           desc => 'An optional regular expression used to filter the list' }
     );
 
@@ -123,6 +124,8 @@ paramter. All paint operations and stroke operations use this mask to control
 the application of paint to the image.
 HELP
 
+    $deprecated = 1;
+
     &std_pdb_misc;
 
     @outargs = (
@@ -136,37 +139,6 @@ HELP
     %invoke = (
 	vars => [ 'GimpBrush *brush' ],
 	code => 'success = (brush = gimp_context_get_brush (context)) != NULL;'
-    );
-}
-
-sub brushes_set_brush {
-    $blurb = 'Set the specified brush as the active brush.';
-
-    $help = <<'HELP';
-This procedure allows the active brush mask to be set by specifying its name.
-The name is simply a string which corresponds to one of the names of the
-installed brushes. If there is no matching brush found, this procedure will
-return an error.  Otherwise, the specified brush becomes active and will be
-used in all subsequent paint operations.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &brush_arg );
-
-    %invoke = (
-	vars => [ 'GimpBrush *brush' ],
-	code => <<'CODE'
-{
-  brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-
-  if (brush)
-    gimp_context_set_brush (context, brush);
-  else
-    success = FALSE;
-}
-CODE
     );
 }
 
@@ -205,6 +177,53 @@ HELP
     );
 }
 
+sub brushes_get_brush_info {
+    $blurb = <<'BLURB';
+Retrieve information about the specified brush.
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the specified brush. This
+includes the brush name, and the brush extents (width and height).
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2004';
+
+    @inargs = (
+        &brush_arg
+    );
+    $inargs[0]->{desc} = 'The brush name ("" means current active brush)';
+
+    @outargs = (
+	&brush_arg,
+	&dim_args,
+	&spacing_arg
+    );
+
+    &brush_outargs;
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  if (name && strlen (name))
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+    }
+  else
+    {
+      brush = gimp_context_get_brush (context);
+    }
+
+  if (! brush)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub brushes_get_brush_data {
     $blurb = <<'BLURB';
 Retrieve information about the currently active brush (including data).
@@ -219,7 +238,9 @@ HELP
     $author = $copyright = 'Andy Thomas';
     $date = '1998';
 
-    @inargs = ( &brush_arg );
+    @inargs = (
+        &brush_arg
+    );
     $inargs[0]->{desc} = 'The brush name ("" means current active brush)';
 
     @outargs = (
@@ -241,11 +262,10 @@ HELP
 				desc => 'Length of brush mask data' } };
     
     %invoke = (
-	headers => [ qw(<string.h>) ],
 	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
-  if (strlen (name))
+  if (name && strlen (name))
     {
       brush = (GimpBrush *)
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
@@ -267,13 +287,13 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
-              "core/gimpcontext.h" "core/gimpdatafactory.h" "base/temp-buf.h");
+@headers = qw(<string.h> "base/temp-buf.h"
+              "core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
+              "core/gimpcontext.h" "core/gimpdatafactory.h");
 
-@procs = qw(brushes_refresh brushes_get_list
-            brushes_get_brush brushes_set_brush
+@procs = qw(brushes_refresh brushes_get_list brushes_get_brush
             brushes_get_spacing brushes_set_spacing
-	    brushes_get_brush_data);
+	    brushes_get_brush_info brushes_get_brush_data);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brushes';

@@ -29,9 +29,10 @@ G_BEGIN_DECLS
 #ifndef GIMP_DISABLE_DEPRECATED
 
 gdouble              gimp_brushes_get_opacity    (void);
-gboolean             gimp_brushes_set_opacity    (gdouble              opacity);
+gboolean             gimp_brushes_set_opacity    (gdouble               opacity);
 GimpLayerModeEffects gimp_brushes_get_paint_mode (void);
-gboolean             gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode);
+gboolean             gimp_brushes_set_paint_mode (GimpLayerModeEffects  paint_mode);
+gboolean             gimp_brushes_set_brush      (const gchar          *name);
 
 #endif /* GIMP_DISABLE_DEPRECATED */
 

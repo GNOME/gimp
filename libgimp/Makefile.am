@@ -173,6 +173,8 @@ libgimp_2_0_la_SOURCES = \
 	gimpdrawable.h		\
 	gimpfontselect.c	\
 	gimpfontselect.h	\
+	gimpgradients.c		\
+	gimpgradients.h		\
 	gimpgradientselect.c	\
 	gimpgradientselect.h	\
 	gimpimage.c		\
@@ -181,8 +183,12 @@ libgimp_2_0_la_SOURCES = \
 	gimplayer.h		\
 	gimppalette.c		\
 	gimppalette.h		\
+	gimppalettes.c		\
+	gimppalettes.h		\
 	gimppaletteselect.c	\
 	gimppaletteselect.h	\
+	gimppatterns.c		\
+	gimppatterns.h		\
 	gimppatternselect.c	\
 	gimppatternselect.h	\
 	gimppixelfetcher.c	\
@@ -246,11 +252,14 @@ gimpinclude_HEADERS = \
 	gimpdrawable.h		\
 	gimpenums.h		\
 	gimpfontselect.h	\
+	gimpgradients.h		\
 	gimpgradientselect.h	\
 	gimpimage.h		\
 	gimplayer.h		\
 	gimppalette.h		\
+	gimppalettes.h		\
 	gimppaletteselect.h	\
+	gimppatterns.h		\
 	gimppatternselect.h	\
 	gimppixelfetcher.h	\
 	gimppixelrgn.h		\

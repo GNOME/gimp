@@ -32,12 +32,17 @@ G_BEGIN_DECLS
 gboolean gimp_brushes_refresh        (void);
 gchar**  gimp_brushes_get_list       (const gchar           *filter,
 				      gint                  *num_brushes);
+#ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_brushes_get_brush      (gint                  *width,
 				      gint                  *height,
 				      gint                  *spacing);
-gboolean gimp_brushes_set_brush      (const gchar           *name);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gint     gimp_brushes_get_spacing    (void);
 gboolean gimp_brushes_set_spacing    (gint                   spacing);
+gchar*   gimp_brushes_get_brush_info (const gchar           *name,
+				      gint                  *width,
+				      gint                  *height,
+				      gint                  *spacing);
 gchar*   gimp_brushes_get_brush_data (const gchar           *name,
 				      gdouble               *opacity,
 				      gint                  *spacing,

@@ -33,7 +33,7 @@
  * Refresh current patterns. This function always succeeds.
  *
  * This procedure retrieves all patterns currently in the user's
- * pattern path and updates the pattern dialogs accordingly.
+ * pattern path and updates all pattern dialogs accordingly.
  *
  * Returns: TRUE on success.
  */
@@ -64,7 +64,7 @@ gimp_patterns_refresh (void)
  *
  * This procedure returns a complete listing of available GIMP
  * patterns. Each name returned can be used as input to the
- * 'gimp_patterns_set_pattern'.
+ * 'gimp_context_set_pattern'.
  *
  * Returns: The list of pattern names.
  */
@@ -137,37 +137,42 @@ gimp_patterns_get_pattern (gint *width,
 }
 
 /**
- * gimp_patterns_set_pattern:
- * @name: The pattern name.
+ * gimp_patterns_get_pattern_info:
+ * @name: The pattern name (\"\" means currently active pattern).
+ * @width: The pattern width.
+ * @height: The pattern height.
  *
- * Set the specified pattern as the active pattern.
+ * Retrieve information about the specified pattern.
  *
- * This procedure allows the active pattern mask to be set by
- * specifying its name. The name is simply a string which corresponds
- * to one of the names of the installed patterns. If there is no
- * matching pattern found, this procedure will return an error.
- * Otherwise, the specified pattern becomes active and will be used in
- * all subsequent paint operations.
+ * This procedure retrieves information about the specified pattern.
+ * This includes the pattern extents (width and height).
  *
- * Returns: TRUE on success.
+ * Returns: The pattern name.
  */
-gboolean
-gimp_patterns_set_pattern (const gchar *name)
+gchar *
+gimp_patterns_get_pattern_info (const gchar *name,
+				gint        *width,
+				gint        *height)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_patterns_set_pattern",
+  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_info",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      ret_name = g_strdup (return_vals[1].data.d_string);
+      *width = return_vals[2].data.d_int32;
+      *height = return_vals[3].data.d_int32;
+    }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return ret_name;
 }
 
 /**

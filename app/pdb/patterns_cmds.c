@@ -38,7 +38,7 @@
 static ProcRecord patterns_refresh_proc;
 static ProcRecord patterns_get_list_proc;
 static ProcRecord patterns_get_pattern_proc;
-static ProcRecord patterns_set_pattern_proc;
+static ProcRecord patterns_get_pattern_info_proc;
 static ProcRecord patterns_get_pattern_data_proc;
 
 void
@@ -47,7 +47,7 @@ register_patterns_procs (Gimp *gimp)
   procedural_db_register (gimp, &patterns_refresh_proc);
   procedural_db_register (gimp, &patterns_get_list_proc);
   procedural_db_register (gimp, &patterns_get_pattern_proc);
-  procedural_db_register (gimp, &patterns_set_pattern_proc);
+  procedural_db_register (gimp, &patterns_get_pattern_info_proc);
   procedural_db_register (gimp, &patterns_get_pattern_data_proc);
 }
 
@@ -66,7 +66,7 @@ static ProcRecord patterns_refresh_proc =
 {
   "gimp_patterns_refresh",
   "Refresh current patterns. This function always succeeds.",
-  "This procedure retrieves all patterns currently in the user's pattern path and updates the pattern dialogs accordingly.",
+  "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
   "Michael Natterer",
   "Michael Natterer",
   "2002",
@@ -135,7 +135,7 @@ static ProcRecord patterns_get_list_proc =
 {
   "gimp_patterns_get_list",
   "Retrieve a complete listing of the available patterns.",
-  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_patterns_set_pattern'.",
+  "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp_context_set_pattern'.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -207,56 +207,91 @@ static ProcRecord patterns_get_pattern_proc =
 };
 
 static Argument *
-patterns_set_pattern_invoker (Gimp         *gimp,
-                              GimpContext  *context,
-                              GimpProgress *progress,
-                              Argument     *args)
+patterns_get_pattern_info_invoker (Gimp         *gimp,
+                                   GimpContext  *context,
+                                   GimpProgress *progress,
+                                   Argument     *args)
 {
   gboolean success = TRUE;
+  Argument *return_args;
   gchar *name;
-  GimpPattern *pattern;
+  GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
-
-      if (pattern)
-        gimp_context_set_pattern (context, pattern);
+      if (name && strlen (name))
+        {
+          pattern = (GimpPattern *)
+            gimp_container_get_child_by_name (gimp->pattern_factory->container,
+                                              name);
+        }
       else
+        {
+          pattern = gimp_context_get_pattern (context);
+        }
+
+      if (! pattern)
         success = FALSE;
     }
 
-  return procedural_db_return_args (&patterns_set_pattern_proc, success);
+  return_args = procedural_db_return_args (&patterns_get_pattern_info_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (pattern)->name);
+      return_args[2].value.pdb_int = pattern->mask->width;
+      return_args[3].value.pdb_int = pattern->mask->height;
+    }
+
+  return return_args;
 }
 
-static ProcArg patterns_set_pattern_inargs[] =
+static ProcArg patterns_get_pattern_info_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The pattern name (\"\" means currently active pattern)"
+  }
+};
+
+static ProcArg patterns_get_pattern_info_outargs[] =
 {
   {
     GIMP_PDB_STRING,
     "name",
     "The pattern name"
+  },
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The pattern width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The pattern height"
   }
 };
 
-static ProcRecord patterns_set_pattern_proc =
+static ProcRecord patterns_get_pattern_info_proc =
 {
-  "gimp_patterns_set_pattern",
-  "Set the specified pattern as the active pattern.",
-  "This procedure allows the active pattern mask to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed patterns. If there is no matching pattern found, this procedure will return an error. Otherwise, the specified pattern becomes active and will be used in all subsequent paint operations.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
+  "gimp_patterns_get_pattern_info",
+  "Retrieve information about the specified pattern.",
+  "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
   GIMP_INTERNAL,
   1,
-  patterns_set_pattern_inargs,
-  0,
-  NULL,
-  { { patterns_set_pattern_invoker } }
+  patterns_get_pattern_info_inargs,
+  3,
+  patterns_get_pattern_info_outargs,
+  { { patterns_get_pattern_info_invoker } }
 };
 
 static Argument *
@@ -273,12 +308,12 @@ patterns_get_pattern_data_invoker (Gimp         *gimp,
   GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           pattern = (GimpPattern *)
             gimp_container_get_child_by_name (gimp->pattern_factory->container,

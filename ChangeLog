@@ -1,5 +1,47 @@
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/patterns.pdb: removed the foos_set_foo()
+	procedures and marked the foos_set_foo() ones as deprecated. For
+	brushes, patterns and palettes, added foos_get_foo_info()
+	procedures which work like foos_get_foo_data() but return just the
+	properties, not the actual data. Allow NULL or "" to be passed
+	as name to all functions (use the current brush, pattern etc.
+	in this case).
+
+	* tools/pdbgen/pdb/fonts.pdb: cleanup.
+
+	* app/pdb/procedural_db.c: added the removed ones to the compat
+	hash table.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpbrushes.[ch]
+	* libgimp/gimpgradients.[ch]
+	* libgimp/gimppalettes.[ch]
+	* libgimp/gimppatterns.[ch]: new files with compat functions
+	wich call the resp. gimp_context_*() functions.
+
+	* libgimp/gimp.h: changed accordingly.
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalettes_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]: regenerated.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-style.[ch]
+	* plug-ins/gflare/gflare.c: changed accordingly.
+
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/bumpmap.c (bumpmap_dialog): added a GtkPaned for
 	packing preview and controls so the controls are resizable again.
 

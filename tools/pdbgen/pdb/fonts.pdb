@@ -49,8 +49,7 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'filter',
-          type => 'string', null_ok => 1,
+	{ name => 'filter', type => 'string', null_ok => 1,
           desc => 'An optional regular expression used to filter the list' }
     );
 

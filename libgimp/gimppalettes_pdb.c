@@ -30,8 +30,8 @@
  *
  * Refreshes current palettes. This function always succeeds.
  *
- * This procedure incorporates all palettes currently in the users
- * palette path.
+ * This procedure retrieves all palettes currently in the user's
+ * palette path and updates the palette dialogs accordingly.
  *
  * Returns: TRUE on success.
  */
@@ -62,7 +62,7 @@ gimp_palettes_refresh (void)
  *
  * This procedure returns a complete listing of available palettes.
  * Each name returned can be used as input to the command
- * 'gimp_palette_set_palette'.
+ * 'gimp_context_set_palette'.
  *
  * Returns: The list of palette names.
  */
@@ -129,50 +129,52 @@ gimp_palettes_get_palette (gint *num_colors)
 }
 
 /**
- * gimp_palettes_set_palette:
- * @name: The palette name.
+ * gimp_palettes_get_palette_info:
+ * @name: The palette name (\"\" means currently active palette).
+ * @num_colors: The palette num_colors.
  *
- * Set the specified palette as the active palette.
+ * Retrieve information about the specified palette.
  *
- * This procedure allows the active palette to be set by specifying its
- * name. The name is simply a string which corresponds to one of the
- * names of the installed palettes. If no matching palette is found,
- * this procedure will return an error. Otherwise, the specified
- * palette becomes active and will be used in all subsequent palette
- * operations.
+ * This procedure retrieves information about the specified palette.
+ * This includes the name, and the number of colors.
  *
- * Returns: TRUE on success.
+ * Returns: The palette name.
  */
-gboolean
-gimp_palettes_set_palette (const gchar *name)
+gchar *
+gimp_palettes_get_palette_info (const gchar *name,
+				gint        *num_colors)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gchar *ret_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_palettes_set_palette",
+  return_vals = gimp_run_procedure ("gimp_palettes_get_palette_info",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, name,
 				    GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      ret_name = g_strdup (return_vals[1].data.d_string);
+      *num_colors = return_vals[2].data.d_int32;
+    }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return ret_name;
 }
 
 /**
  * gimp_palettes_get_palette_entry:
- * @name: the palette name (\"\" means currently active palette).
+ * @name: The palette name (\"\" means currently active palette).
  * @entry_num: The entry to retrieve.
  * @num_colors: The palette num_colors.
  * @color: The color requested.
  *
- * Gets the specified palette entry from the currently active palette.
+ * Gets the specified palette entry from the specified palette.
  *
  * This procedure retrieves the color of the zero-based entry specifed
- * for the current palette. It returns an error if the entry does not
+ * for the specified palette. It returns an error if the entry does not
  * exist.
  *
  * Returns: The palette name.

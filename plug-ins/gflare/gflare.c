@@ -4799,16 +4799,16 @@ gradient_get_values_real_external (const gchar *gradient_name,
   gint     i;
   gint     j;
 
-  old_name = gimp_gradients_get_gradient ();
+  old_name = gimp_context_get_gradient ();
 
-  gimp_gradients_set_gradient (gradient_name);
+  gimp_context_set_gradient (gradient_name);
 
   tmp_values = gimp_gradients_sample_uniform (nvalues, reverse);
   for (i = 0; i < nvalues; i++)
     for (j = 0; j < 4; j++)
       values[4*i+j] = (guchar) (tmp_values[4*i+j] * 255);
 
-  gimp_gradients_set_gradient (old_name);
+  gimp_context_set_gradient (old_name);
 
   g_free (tmp_values);
   g_free (old_name);

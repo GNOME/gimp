@@ -522,7 +522,7 @@ gfig_dialog (void)
   gfig_list_load_all (gfig_path);
 
   /* Setup initial brush settings */
-  gfig_context->bdesc.name = mygimp_brush_get ();
+  gfig_context->bdesc.name = gimp_context_get_brush ();
   mygimp_brush_info (&gfig_context->bdesc.width, &gfig_context->bdesc.height);
 
   gtk_widget_show (main_hbox);

@@ -36,8 +36,6 @@
 
 static ProcRecord gradients_refresh_proc;
 static ProcRecord gradients_get_list_proc;
-static ProcRecord gradients_get_gradient_proc;
-static ProcRecord gradients_set_gradient_proc;
 static ProcRecord gradients_sample_uniform_proc;
 static ProcRecord gradients_sample_custom_proc;
 static ProcRecord gradients_get_gradient_data_proc;
@@ -51,8 +49,6 @@ register_gradients_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &gradients_refresh_proc);
   procedural_db_register (gimp, &gradients_get_list_proc);
-  procedural_db_register (gimp, &gradients_get_gradient_proc);
-  procedural_db_register (gimp, &gradients_set_gradient_proc);
   procedural_db_register (gimp, &gradients_sample_uniform_proc);
   procedural_db_register (gimp, &gradients_sample_custom_proc);
   procedural_db_register (gimp, &gradients_get_gradient_data_proc);
@@ -146,7 +142,7 @@ static ProcRecord gradients_get_list_proc =
 {
   "gimp_gradients_get_list",
   "Retrieve the list of loaded gradients.",
-  "This procedure returns a list of the gradients that are currently loaded in the gradient editor. You can later use the gimp_gradients_set_active function to set the active gradient.",
+  "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp_context_set_gradient' function to set the active gradient.",
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
@@ -156,103 +152,6 @@ static ProcRecord gradients_get_list_proc =
   2,
   gradients_get_list_outargs,
   { { gradients_get_list_invoker } }
-};
-
-static Argument *
-gradients_get_gradient_invoker (Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-
-  success = gimp_context_get_gradient (context) != NULL;
-
-  return_args = procedural_db_return_args (&gradients_get_gradient_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gimp_context_get_gradient (context))->name);
-
-  return return_args;
-}
-
-static ProcArg gradients_get_gradient_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the active gradient"
-  }
-};
-
-static ProcRecord gradients_get_gradient_proc =
-{
-  "gimp_gradients_get_gradient",
-  "Retrieve the name of the active gradient.",
-  "This procedure returns the name of the active gradient in the gradient editor.",
-  "Federico Mena Quintero",
-  "Federico Mena Quintero",
-  "1997",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  gradients_get_gradient_outargs,
-  { { gradients_get_gradient_invoker } }
-};
-
-static Argument *
-gradients_set_gradient_invoker (Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
-{
-  gboolean success = TRUE;
-  gchar *name;
-  GimpGradient *gradient;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
-
-      if (gradient)
-        gimp_context_set_gradient (context, gradient);
-      else
-        success = FALSE;
-    }
-
-  return procedural_db_return_args (&gradients_set_gradient_proc, success);
-}
-
-static ProcArg gradients_set_gradient_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The name of the gradient to set"
-  }
-};
-
-static ProcRecord gradients_set_gradient_proc =
-{
-  "gimp_gradients_set_gradient",
-  "Sets the specified gradient as the active gradient.",
-  "This procedure lets you set the specified gradient as the active or \"current\" one. The name is simply a string which corresponds to one of the loaded gradients in the gradient editor. If no matching gradient is found, this procedure will return an error. Otherwise, the specified gradient will become active and will be used for subsequent custom gradient operations.",
-  "Federico Mena Quintero",
-  "Federico Mena Quintero",
-  "1997",
-  GIMP_INTERNAL,
-  1,
-  gradients_set_gradient_inargs,
-  0,
-  NULL,
-  { { gradients_set_gradient_invoker } }
 };
 
 static Argument *
@@ -280,7 +179,7 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
-      pos = 0.0;
+      pos   = 0.0;
       delta = 1.0 / (i - 1);
 
       array_length = i * 4;
@@ -345,7 +244,7 @@ static ProcRecord gradients_sample_uniform_proc =
 {
   "gimp_gradients_sample_uniform",
   "Sample the active gradient in uniform parts.",
-  "This procedure samples the active gradient from the gradient editor in the specified number of uniform parts. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
+  "This procedure samples the active gradient in the specified number of uniform parts. It returns a list of floating-point values which correspond to the RGBA values for each sample. The minimum number of samples to take is 2, in which case the returned colors will correspond to the { 0.0, 1.0 } positions in the gradient. For example, if the number of samples is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.",
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
@@ -451,7 +350,7 @@ static ProcRecord gradients_sample_custom_proc =
 {
   "gimp_gradients_sample_custom",
   "Sample the active gradient in custom positions.",
-  "This procedure samples the active gradient from the gradient editor in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
+  "This procedure samples the active gradient in the specified number of points. The procedure will sample the gradient in the specified positions from the list. The left endpoint of the gradient corresponds to position 0.0, and the right endpoint corresponds to 1.0. The procedure returns a list of floating-point values which correspond to the RGBA values for each sample.",
   "Federico Mena Quintero",
   "Federico Mena Quintero",
   "1997",
@@ -478,7 +377,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   sample_size = args[1].value.pdb_int;
@@ -489,7 +388,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           gradient = (GimpGradient *)
             gimp_container_get_child_by_name (gimp->gradient_factory->container,

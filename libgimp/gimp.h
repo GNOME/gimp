@@ -36,11 +36,14 @@
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfontselect.h>
+#include <libgimp/gimpgradients.h>
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimppalette.h>
+#include <libgimp/gimppalettes.h>
 #include <libgimp/gimppaletteselect.h>
+#include <libgimp/gimppatterns.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixelfetcher.h>
 #include <libgimp/gimppixelrgn.h>

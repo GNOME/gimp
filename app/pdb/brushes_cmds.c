@@ -38,9 +38,9 @@
 static ProcRecord brushes_refresh_proc;
 static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_proc;
-static ProcRecord brushes_set_brush_proc;
 static ProcRecord brushes_get_spacing_proc;
 static ProcRecord brushes_set_spacing_proc;
+static ProcRecord brushes_get_brush_info_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
@@ -49,9 +49,9 @@ register_brushes_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_refresh_proc);
   procedural_db_register (gimp, &brushes_get_list_proc);
   procedural_db_register (gimp, &brushes_get_brush_proc);
-  procedural_db_register (gimp, &brushes_set_brush_proc);
   procedural_db_register (gimp, &brushes_get_spacing_proc);
   procedural_db_register (gimp, &brushes_set_spacing_proc);
+  procedural_db_register (gimp, &brushes_get_brush_info_proc);
   procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
@@ -70,7 +70,7 @@ static ProcRecord brushes_refresh_proc =
 {
   "gimp_brushes_refresh",
   "Refresh current brushes. This function always succeeds.",
-  "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialog accordingly.",
+  "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialogs accordingly.",
   "Seth Burgess",
   "Seth Burgess",
   "1997",
@@ -139,7 +139,7 @@ static ProcRecord brushes_get_list_proc =
 {
   "gimp_brushes_get_list",
   "Retrieve a complete listing of the available brushes.",
-  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_brushes_set_brush'.",
+  "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp_context_set_brush' procedure.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -214,59 +214,6 @@ static ProcRecord brushes_get_brush_proc =
   4,
   brushes_get_brush_outargs,
   { { brushes_get_brush_invoker } }
-};
-
-static Argument *
-brushes_set_brush_invoker (Gimp         *gimp,
-                           GimpContext  *context,
-                           GimpProgress *progress,
-                           Argument     *args)
-{
-  gboolean success = TRUE;
-  gchar *name;
-  GimpBrush *brush;
-
-  name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
-    success = FALSE;
-
-  if (success)
-    {
-      brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-
-      if (brush)
-        gimp_context_set_brush (context, brush);
-      else
-        success = FALSE;
-    }
-
-  return procedural_db_return_args (&brushes_set_brush_proc, success);
-}
-
-static ProcArg brushes_set_brush_inargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "name",
-    "The brush name"
-  }
-};
-
-static ProcRecord brushes_set_brush_proc =
-{
-  "gimp_brushes_set_brush",
-  "Set the specified brush as the active brush.",
-  "This procedure allows the active brush mask to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed brushes. If there is no matching brush found, this procedure will return an error. Otherwise, the specified brush becomes active and will be used in all subsequent paint operations.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  brushes_set_brush_inargs,
-  0,
-  NULL,
-  { { brushes_set_brush_invoker } }
 };
 
 static Argument *
@@ -353,6 +300,99 @@ static ProcRecord brushes_set_spacing_proc =
 };
 
 static Argument *
+brushes_get_brush_info_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name && !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (name && strlen (name))
+        {
+          brush = (GimpBrush *)
+            gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+        }
+      else
+        {
+          brush = gimp_context_get_brush (context);
+        }
+
+      if (! brush)
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brushes_get_brush_info_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (brush)->name);
+      return_args[2].value.pdb_int = brush->mask->width;
+      return_args[3].value.pdb_int = brush->mask->height;
+      return_args[4].value.pdb_int = brush->spacing;
+    }
+
+  return return_args;
+}
+
+static ProcArg brushes_get_brush_info_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name (\"\" means current active brush)"
+  }
+};
+
+static ProcArg brushes_get_brush_info_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  },
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The brush width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The brush height"
+  },
+  {
+    GIMP_PDB_INT32,
+    "spacing",
+    "The brush spacing: 0 <= spacing <= 1000"
+  }
+};
+
+static ProcRecord brushes_get_brush_info_proc =
+{
+  "gimp_brushes_get_brush_info",
+  "Retrieve information about the specified brush.",
+  "This procedure retrieves information about the specified brush. This includes the brush name, and the brush extents (width and height).",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  brushes_get_brush_info_inargs,
+  4,
+  brushes_get_brush_info_outargs,
+  { { brushes_get_brush_info_invoker } }
+};
+
+static Argument *
 brushes_get_brush_data_invoker (Gimp         *gimp,
                                 GimpContext  *context,
                                 GimpProgress *progress,
@@ -366,12 +406,12 @@ brushes_get_brush_data_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+  if (name && !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (strlen (name))
+      if (name && strlen (name))
         {
           brush = (GimpBrush *)
             gimp_container_get_child_by_name (gimp->brush_factory->container, name);

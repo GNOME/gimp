@@ -54,16 +54,15 @@ sub gradients_get_list {
     $blurb = 'Retrieve the list of loaded gradients.';
 
     $help = <<'HELP';
-This procedure returns a list of the gradients that are currently loaded in the
-gradient editor. You can later use the gimp_gradients_set_active function to
+This procedure returns a list of the gradients that are currently loaded.
+You can later use the 'gimp_context_set_gradient' function to
 set the active gradient.
 HELP
 
     &federico_misc;
 
     @inargs = (
-	{ name => 'filter',
-          type => 'string', null_ok => 1,
+	{ name => 'filter', type => 'string', null_ok => 1,
           desc => 'An optional regular expression used to filter the list' }
     );
 
@@ -78,59 +77,6 @@ HELP
     %invoke = (
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code => 'gradient_list = gimp_container_get_filtered_name_array (gimp->gradient_factory->container, filter, &num_gradients);'
-    );
-}
-
-sub gradients_get_gradient {
-    $blurb = 'Retrieve the name of the active gradient.';
-
-    $help = <<'HELP';
-This procedure returns the name of the active gradient in the gradient editor.
-HELP
-
-    &federico_misc;
-
-    @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (GIMP_OBJECT (gimp_context_get_gradient (context))->name)',
-	  no_declare => 1 }
-    );
-
-    %invoke = ( code => 'success = gimp_context_get_gradient (context) != NULL;' );
-}
-
-sub gradients_set_gradient {
-    $blurb = 'Sets the specified gradient as the active gradient.';
-
-    $help = <<'HELP';
-This procedure lets you set the specified gradient as the active or "current"
-one. The name is simply a string which corresponds to one of the loaded
-gradients in the gradient editor. If no matching gradient is found, this
-procedure will return an error. Otherwise, the specified gradient will become
-active and will be used for subsequent custom gradient operations.
-HELP
-
-    &federico_misc;
-
-    @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The name of the gradient to set' }
-    );
-
-    %invoke = (
-        vars => [ 'GimpGradient *gradient' ],
-        code => <<'CODE'
-{
-  gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
-
-  if (gradient)
-    gimp_context_set_gradient (context, gradient);
-  else
-    success = FALSE;
-}
-CODE
     );
 }
 
@@ -158,7 +104,7 @@ sub gradients_sample_uniform {
     $blurb = 'Sample the active gradient in uniform parts.';
 
     $help = <<'HELP';
-This procedure samples the active gradient from the gradient editor in the
+This procedure samples the active gradient in the
 specified number of uniform parts. It returns a list of floating-point values
 which correspond to the RGBA values for each sample. The minimum number of
 samples to take is 2, in which case the returned colors will correspond to the
@@ -178,7 +124,7 @@ HELP
 	vars => [ 'GimpGradient *gradient', 'gdouble pos, delta', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
-  pos = 0.0;
+  pos   = 0.0;
   delta = 1.0 / (i - 1);
 
   array_length = i * 4;
@@ -207,12 +153,12 @@ sub gradients_sample_custom {
     $blurb = 'Sample the active gradient in custom positions.';
 
     $help = <<'HELP';
-This procedure samples the active gradient from the gradient editor in the
-specified number of points. The procedure will sample the gradient in the
-specified positions from the list. The left endpoint of the gradient
-corresponds to position 0.0, and the right endpoint corresponds to 1.0. The
-procedure returns a list of floating-point values which correspond to the RGBA
-values for each sample.
+This procedure samples the active gradient in the specified number of
+points. The procedure will sample the gradient in the specified
+positions from the list. The left endpoint of the gradient corresponds
+to position 0.0, and the right endpoint corresponds to 1.0. The
+procedure returns a list of floating-point values which correspond to
+the RGBA values for each sample.
 HELP
 
     &federico_misc;
@@ -277,7 +223,8 @@ HELP
 
     @inargs = (
 	{ name => 'name', type => 'string',
-	  desc => 'The gradient name ("" means current active gradient)' },
+	  desc => 'The gradient name ("" means current active gradient)',
+          null_ok => '1' },
 	&sample_size_arg,
 	&reverse_arg
     );
@@ -297,7 +244,7 @@ HELP
 	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<'CODE'
 {
-  if (strlen (name))
+  if (name && strlen (name))
     {
       gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container,
@@ -340,8 +287,7 @@ CODE
     );
 }
 
-sub gradients_new
-{
+sub gradients_new {
     $blurb = "Creates a new gradient";
     $help  = "This procedure creates a new, uninitialized gradient";
     $since = '2.2';
@@ -384,8 +330,7 @@ else
 CODE
 
 
-sub gradients_duplicate
-{
+sub gradients_duplicate {
     $blurb = "Duplicates a gradient";
     $help  = "This procedure creates an identical gradient by a different name";
     $since = '2.2';
@@ -429,8 +374,7 @@ CODE
 }
 
 
-sub gradients_delete
-{
+sub gradients_delete {
     $blurb = "Deletes a gradient";
     $help  = "This procedure deletes a gradient";
     $since = '2.2';
@@ -470,8 +414,7 @@ CODE
 }
 
 
-sub gradients_rename
-{
+sub gradients_rename {
     $blurb = "Rename a gradient";
     $help  = "This procedure renames a gradient";
     $since = '2.2';
@@ -511,7 +454,6 @@ CODE
               "core/gimpdatafactory.h" "core/gimpgradient.h");
 
 @procs = qw(gradients_refresh gradients_get_list
-            gradients_get_gradient gradients_set_gradient
 	    gradients_sample_uniform gradients_sample_custom
             gradients_get_gradient_data
             gradients_new gradients_duplicate
