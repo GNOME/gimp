@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-07 20:00+0100\n"
-"PO-Revision-Date: 2003-01-07 20:01+0100\n"
+"POT-Creation-Date: 2003-01-09 11:34+0100\n"
+"PO-Revision-Date: 2003-01-09 11:35+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,10 +35,24 @@ msgstr ""
 "För att utföra användarinstallationen startar du GIMP utan\n"
 "\"--nointerface\"-flaggan\n"
 
+#: app/main.c:168
+msgid ""
+"ERROR: GIMP could not initialize the GUI.\n"
+"\n"
+msgstr ""
+"FEL: GIMP kunde inte initiera det grafiska användargränssnittet.\n"
+"\n"
+
+#: app/main.c:169
+msgid "Make sure a proper setup for your display environment exists.\n"
+msgstr ""
+"Försäkra dig om att det finns en korrekt konfiguration för din "
+"displaymiljö.\n"
+
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:312
+#: app/main.c:323
 #, c-format
 msgid ""
 "\n"
@@ -47,11 +61,11 @@ msgstr ""
 "\n"
 "Ogiltig flagga \"%s\"\n"
 
-#: app/main.c:329
+#: app/main.c:445
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:334
+#: app/main.c:453
 #, c-format
 msgid ""
 "\n"
@@ -62,15 +76,15 @@ msgstr ""
 "Användning: %s [flagga ...] [fil ...]\n"
 "\n"
 
-#: app/main.c:335
+#: app/main.c:454
 msgid "Options:\n"
 msgstr "Alternativ:\n"
 
-#: app/main.c:336
+#: app/main.c:455
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <kommandon>  Kör i flerjobbsläge.\n"
 
-#: app/main.c:337
+#: app/main.c:456
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -78,7 +92,7 @@ msgstr ""
 "  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte ett "
 "separat dialogfönster.\n"
 
-#: app/main.c:338
+#: app/main.c:457
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -86,65 +100,65 @@ msgstr ""
 "  -d, --no-data            Läs in inte in penslar, färgskalor, färgpaletter, "
 "mönster.\n"
 
-#: app/main.c:339
+#: app/main.c:458
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Kör utan användargränssnitt.\n"
 
-#: app/main.c:340
+#: app/main.c:459
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Använd en alternativ gimprc-fil.\n"
 
-#: app/main.c:341
+#: app/main.c:460
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Skriv ut denna hjälptext.\n"
 
-#: app/main.c:342
+#: app/main.c:461
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    Försök att återställa sparad session.\n"
 
-#: app/main.c:343
+#: app/main.c:462
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Visa inte startfönstret.\n"
 
-#: app/main.c:344
+#: app/main.c:463
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Visa ingen bild i startfönstret.\n"
 
-#: app/main.c:345
+#: app/main.c:464
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Skriv ut versionsinformation.\n"
 
-#: app/main.c:346
+#: app/main.c:465
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:347
+#: app/main.c:466
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Använd inte delat minne mellan GIMP och tillägg.\n"
 
-#: app/main.c:348
+#: app/main.c:467
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Använd inte MMX-rutiner.\n"
 
-#: app/main.c:349
+#: app/main.c:468
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Aktivera ickefatal signalhanterare för "
 "felsökning.\n"
 
-#: app/main.c:350
+#: app/main.c:469
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Använd en speciell X-display.\n"
 
-#: app/main.c:351
+#: app/main.c:470
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Använd en alternativ system-gimprc-fil.\n"
 
-#: app/main.c:353
+#: app/main.c:472
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
@@ -152,7 +166,7 @@ msgstr ""
 "                           Felsökningsläge för fatala signaler.\n"
 "\n"
 
-#: app/main.c:370
+#: app/main.c:490
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
@@ -530,8 +544,8 @@ msgstr ""
 msgid "Failed to create file '%s': %s"
 msgstr "Misslyckades med att skapa filen \"%s\": %s"
 
-#: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:184
-#: app/gui/gui.c:195
+#: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:187
+#: app/gui/gui.c:198
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Tolkar \"%s\"\n"
@@ -1478,12 +1492,12 @@ msgstr "Ångra"
 msgid "Redo"
 msgstr "Gör om"
 
-#: app/display/gimpdisplayshell.c:2045
+#: app/display/gimpdisplayshell.c:1977
 #, c-format
 msgid "Close %s?"
 msgstr "Stänga %s?"
 
-#: app/display/gimpdisplayshell.c:2047
+#: app/display/gimpdisplayshell.c:1979
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -2378,16 +2392,16 @@ msgstr ""
 msgid "Save \"%s\" as POV-Ray"
 msgstr "Spara \"%s\" som POV-Ray"
 
-#: app/gui/gui.c:455
+#: app/gui/gui.c:458
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Lägger till temat \"%s\" (%s)\n"
 
-#: app/gui/gui.c:521
+#: app/gui/gui.c:524
 msgid "Quit The GIMP?"
 msgstr "Avsluta GIMP?"
 
-#: app/gui/gui.c:525
+#: app/gui/gui.c:528
 msgid ""
 "Some files are unsaved.\n"
 "\n"
