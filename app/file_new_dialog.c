@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "actionarea.h"
 #include "app_procs.h"
@@ -12,10 +10,10 @@
 #include "plug_in.h"
 #include "tile_manager_pvt.h"
 #include "gdisplay.h"
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpsizeentry.h"
 
+#include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpsizeentry.h"
 
 typedef struct {
   GtkWidget *dlg;
@@ -23,7 +21,6 @@ typedef struct {
   GtkWidget *size_sizeentry;
   GtkWidget *simple_res;
   GtkWidget *resolution_sizeentry;
-  GtkWidget *change_size;
   GtkWidget *couple_resolutions;
 
   int width;
@@ -51,15 +48,15 @@ static   int          last_width = 256;
 static   int          last_height = 256;
 static   int          last_type = RGB;
 static   int          last_fill_type = BACKGROUND_FILL; 
-static   float        last_xresolution = 72;     /* always in DPI */
-static   float        last_yresolution = 72;
+static   float        last_xresolution = 72.0;     /* always in DPI */
+static   float        last_yresolution = 72.0;
 static   GUnit        last_unit = UNIT_INCH;
 static   GUnit        last_res_unit = UNIT_INCH;
-static   gboolean     last_new_image = TRUE;
+static   gboolean     last_new_image = FALSE;
 
+static   int          new_dialog_run = 0;
 
-static int new_dialog_run;
-extern TileManager *global_buf;
+extern   TileManager *global_buf;
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
@@ -73,10 +70,10 @@ file_new_ok_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   NewImageValues *vals;
-  GImage *gimage;
-  GDisplay *gdisplay;
-  Layer *layer;
-  int type;
+  GImage         *gimage;
+  GDisplay       *gdisplay;
+  Layer          *layer;
+  int             type;
 
   vals = data;
 
@@ -98,7 +95,6 @@ file_new_ok_callback (GtkWidget *widget,
   vals->res_unit =
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (vals->resolution_sizeentry));
 
-  last_new_image = TRUE;
   gtk_widget_destroy (vals->dlg);
 
   last_width = vals->width;
@@ -109,6 +105,7 @@ file_new_ok_callback (GtkWidget *widget,
   last_yresolution = vals->yresolution;
   last_unit = vals->unit;
   last_res_unit = vals->res_unit;
+  last_new_image = TRUE;
   
   switch (vals->fill_type)
     {
@@ -134,26 +131,27 @@ file_new_ok_callback (GtkWidget *widget,
   layer = layer_new (gimage, gimage->width, gimage->height,
 		     type, _("Background"), OPAQUE_OPACITY, NORMAL);
 
-  if (layer) {
-    /*  add the new layer to the gimage  */
-    gimage_disable_undo (gimage);
-    gimage_add_layer (gimage, layer, 0);
-    gimage_enable_undo (gimage);
-    
-    drawable_fill (GIMP_DRAWABLE(layer), vals->fill_type);
-
-    gimage_clean_all (gimage);
-    
-    gdisplay = gdisplay_new (gimage, 0x0101);
-  }
+  if (layer)
+    {
+      /*  add the new layer to the gimage  */
+      gimage_disable_undo (gimage);
+      gimage_add_layer (gimage, layer, 0);
+      gimage_enable_undo (gimage);
+      
+      drawable_fill (GIMP_DRAWABLE(layer), vals->fill_type);
+      
+      gimage_clean_all (gimage);
+      
+      gdisplay = gdisplay_new (gimage, 0x0101);
+    }
 
   g_free (vals);
 }
 
 static gint
 file_new_delete_callback (GtkWidget *widget,
-			  GdkEvent *event,
-			  gpointer data)
+			  GdkEvent  *event,
+			  gpointer   data)
 {
   file_new_cancel_callback (widget, data);
 
@@ -193,15 +191,14 @@ file_new_advanced_res_callback (GtkWidget *widget,
   NewImageValues *vals;
 
   vals = data;
-  gtk_widget_hide(widget);
-  gtk_widget_hide(vals->simple_res);
-  gtk_widget_show(vals->resolution_sizeentry);
-  gtk_widget_show (vals->couple_resolutions);
+
+  gtk_widget_hide (vals->simple_res);
+  gtk_widget_show (vals->resolution_sizeentry);
 }
 
 static void
 file_new_resolution_callback (GtkWidget *widget,
-			      gpointer data)
+			      gpointer   data)
 {
   NewImageValues *vals;
 
@@ -214,14 +211,16 @@ file_new_resolution_callback (GtkWidget *widget,
 
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_sizeentry),
+				    vals);
+
   if (widget == vals->simple_res)
     {
       if (new_xres != xres)
 	{
-	  xres = new_xres;
-	  yres = xres;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1, xres);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0, yres);
+	  yres = new_yres = xres = new_xres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0, xres);
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1, yres);
 	}
     } 
   else 
@@ -232,13 +231,13 @@ file_new_resolution_callback (GtkWidget *widget,
 	  if (new_xres != xres)
 	    {
 	      yres = new_yres = xres = new_xres;
-	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1, yres);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, yres);
 	    }
 	  
 	  if (new_yres != yres)
 	    {
 	      xres = new_xres = yres = new_yres;
-	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0, xres);
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
 	    }
 	}
       else
@@ -249,37 +248,40 @@ file_new_resolution_callback (GtkWidget *widget,
 	    yres = new_yres;
 	}
     }
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_sizeentry),
+				      vals);
+
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
-				  xres,
-				  FALSE);
+				  xres, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
-				  yres,
-				  FALSE);
+				  yres, FALSE);
 }
 
 void
-file_new_cmd_callback (GtkWidget           *widget,
-		       gpointer             callback_data,
-		       guint                callback_action)
+file_new_cmd_callback (GtkWidget *widget,
+		       gpointer   callback_data,
+		       guint      callback_action)
 {
-  GDisplay *gdisp;
+  GDisplay       *gdisp;
   NewImageValues *vals;
-  GtkWidget *button;
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *radio_box;
-  gboolean   advanced_options = FALSE;
-  GSList *group;
+
+  GtkWidget      *top_vbox;
+  GtkWidget      *button;
+  GtkWidget      *hbox;
+  GtkWidget      *frame;
+  GtkWidget      *radio_box;
+  gboolean        advanced_options = FALSE;
+  GSList         *group;
 
   if(!new_dialog_run)
     {
+      /*  all from gimprc  */
       last_width = default_width;
       last_height = default_height;
       last_type = default_type;
-      last_xresolution = default_xresolution;  /* these values are taken */
-      last_yresolution = default_yresolution;  /* from gimprc            */
+      last_xresolution = default_xresolution;
+      last_yresolution = default_yresolution;
       last_unit = default_units;
       last_res_unit = default_resolution_units;
 
@@ -354,11 +356,15 @@ file_new_cmd_callback (GtkWidget           *widget,
   build_action_area (GTK_DIALOG (vals->dlg), action_items, 2, 1);
 
   /* vbox holding the rest of the dialog */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  top_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dlg)->vbox),
-		      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+		      top_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (top_vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (top_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   vals->size_sizeentry = gimp_size_entry_new (2, vals->unit, "%p",
 					      FALSE, TRUE, 75,
@@ -381,22 +387,18 @@ file_new_cmd_callback (GtkWidget           *widget,
 				_("Height"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->size_sizeentry),
 				_("Pixels"), 1, 4, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (vals->size_sizeentry), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), vals->size_sizeentry, TRUE, TRUE, 0);
-
-  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (vals->size_sizeentry));
+  gtk_box_pack_start (GTK_BOX (hbox), vals->size_sizeentry, FALSE, FALSE, 4);
   gtk_widget_show (vals->size_sizeentry);
 
   /* resolution frame */
   frame = gtk_frame_new (_("Resolution"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   vals->simple_res = gimp_size_entry_new (1, vals->res_unit, "%s",
 					  FALSE, FALSE, 75,
@@ -406,16 +408,24 @@ file_new_cmd_callback (GtkWidget           *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->simple_res), 0,
 			      MIN(vals->xresolution, vals->yresolution));
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->simple_res),
-				_("pixels per "), 1, 2, 0.0);
+				_("Pixels per "), 1, 2, 0.0);
   gtk_signal_connect (GTK_OBJECT (vals->simple_res), "value_changed",
-		      (GtkSignalFunc)file_new_resolution_callback, vals);
-  gtk_box_pack_start (GTK_BOX (vbox2), vals->simple_res, TRUE, TRUE, 0);
+		      (GtkSignalFunc) file_new_resolution_callback, vals);
+  gtk_box_pack_start (GTK_BOX (hbox), vals->simple_res, FALSE, FALSE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE (vals->simple_res), 2);
+  button = gtk_button_new_with_label (_("Advanced options >>"));
+  gtk_table_attach_defaults (GTK_TABLE (vals->simple_res), 
+			     button, 1, 4, 3, 4);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) file_new_advanced_res_callback, vals);
+  gtk_widget_show (button);
 
   /* the advanced resolution stuff
      (not shown by default, but used to keep track of all the variables) */
-  vals->resolution_sizeentry = gimp_size_entry_new (2, vals->res_unit, "%s",
-						    FALSE, TRUE, 75,
-						    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  vals->resolution_sizeentry =
+    gimp_size_entry_new (2, vals->res_unit, "%s",
+			 FALSE, TRUE, 75,
+			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
 					 0, 1, 32767);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
@@ -431,36 +441,29 @@ file_new_cmd_callback (GtkWidget           *widget,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
 				_("dpi"), 1, 3, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
-				_("pixels per "), 2, 3, 0.0);
+				_("Pixels per "), 2, 3, 0.0);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "value_changed",
+		      (GtkSignalFunc) file_new_resolution_callback, vals);
+  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "refval_changed",
+		      (GtkSignalFunc) file_new_resolution_callback, vals);
+  gtk_box_pack_start (GTK_BOX (hbox), vals->resolution_sizeentry,
+		      FALSE, FALSE, 0);
   vals->couple_resolutions = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (ABS (vals->xresolution - vals->yresolution) < 1e-5)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (vals->couple_resolutions), TRUE);
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (vals->couple_resolutions),
+				  TRUE);
   gtk_table_attach_defaults (GTK_TABLE (vals->resolution_sizeentry), 
 			     vals->couple_resolutions, 1, 3, 3, 4);
-  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "value_changed",
-		      (GtkSignalFunc)file_new_resolution_callback, vals);
-  gtk_signal_connect (GTK_OBJECT (vals->resolution_sizeentry), "refval_changed",
-		      (GtkSignalFunc)file_new_resolution_callback, vals);
-  gtk_box_pack_start (GTK_BOX (vbox2), vals->resolution_sizeentry,
-		      TRUE, TRUE, 0);
+  gtk_widget_show (vals->couple_resolutions);
+
   if (advanced_options != FALSE)
-    {
-      gtk_widget_show (vals->resolution_sizeentry);
-      gtk_widget_show (vals->couple_resolutions);
-    } else {
-      gtk_widget_show (vals->simple_res);
-      button = gtk_button_new_with_label (_("Advanced options >>"));
-      gtk_box_pack_start (GTK_BOX (vbox2), button,
-			  FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc)file_new_advanced_res_callback, vals);
-      gtk_widget_show (button);
-    }
+    gtk_widget_show (vals->resolution_sizeentry);
+  else
+    gtk_widget_show (vals->simple_res);
 
   /* hbox containing the Image type and fill type frames */
-  hbox = gtk_hbox_new(FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new(FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (top_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show(hbox);
 
   /* frame for Image Type */
@@ -551,10 +554,12 @@ file_new_cmd_callback (GtkWidget           *widget,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
+  gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (vals->size_sizeentry));
   gtk_widget_show (vals->dlg);
 }
 
-void file_new_reset_current_cut_buffer()
+void
+file_new_reset_current_cut_buffer ()
 {
   /* this function just changes the status of last_image_new
      so i can if theres been a cut/copy since the last file new */

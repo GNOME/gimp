@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "actionarea.h"
@@ -31,6 +29,7 @@
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpsizeentry.h"
 
 #define STATUSBAR_SIZE 128
 
@@ -68,15 +67,9 @@ struct _crop
 /* speed of key movement */
 #define ARROW_VELOCITY 25
 
-/* maximum information buffer size */
-#define MAX_INFO_BUF    16
-
-static InfoDialog *  crop_info = NULL;
-static char          orig_x_buf [MAX_INFO_BUF];
-static char          orig_y_buf [MAX_INFO_BUF];
-static char          width_buf  [MAX_INFO_BUF];
-static char          height_buf [MAX_INFO_BUF];
-
+static InfoDialog * crop_info = NULL;
+static gfloat       orig_vals[2];
+static gfloat       size_vals[2];
 
 /*  crop action functions  */
 static void crop_button_press       (Tool *, GdkEventButton *, gpointer);
@@ -101,10 +94,8 @@ static void crop_selection_callback (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
 /*  Crop dialog callback funtions  */
-static void crop_orig_x_changed     (GtkWidget *, gpointer);
-static void crop_orig_y_changed     (GtkWidget *, gpointer);
-static void crop_width_changed      (GtkWidget *, gpointer);
-static void crop_height_changed     (GtkWidget *, gpointer);
+static void crop_orig_changed       (GtkWidget *, gpointer);
+static void crop_size_changed       (GtkWidget *, gpointer);
 
 /*  Options callbacks */
 static void crop_checkbutton_update (GtkWidget *, gpointer);
@@ -791,18 +782,29 @@ static void
 crop_start (Tool *tool,
 	    Crop *crop)
 {
-  GDisplay * gdisp;
+  static GDisplay * old_gdisp = NULL;
+  GDisplay        * gdisp;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   crop_recalc (tool, crop);
-  /*  if the crop information dialog doesn't yet exist, create the bugger  */
+  /*  if the crop information dialog already exists, delete it  */
+  if (crop_info && (gdisp != old_gdisp))
+    {
+      info_dialog_popdown (crop_info);
+      info_dialog_free (crop_info);
+      crop_info = NULL;
+    }
+  old_gdisp = gdisp;
+
   if (! crop_info)
     crop_info_create (tool);
   
   /* initialize the statusbar display */
-  crop->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "crop");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), crop->context_id, _("Crop: 0 x 0"));
+  crop->context_id =
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "crop");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+		      crop->context_id, _("Crop: 0 x 0"));
 
   draw_core_start (crop->core, gdisp->canvas->window, tool);
 }
@@ -822,14 +824,74 @@ static ActionAreaItem action_items[3] =
 static void
 crop_info_create (Tool *tool)
 {
+  GDisplay      *gdisp;
+  GtkWidget     *sizeentry;
+  GtkWidget     *spinbutton2;
+  GtkAdjustment *adjustment2;
+
+  gdisp = (GDisplay *) tool->gdisp_ptr;
+
   /*  create the info dialog  */
   crop_info = info_dialog_new (_("Crop Information"));
 
   /*  add the information fields  */
-  info_dialog_add_field (crop_info, _("X Origin: "), orig_x_buf, crop_orig_x_changed, tool);
-  info_dialog_add_field (crop_info, _("Y Origin: "), orig_y_buf, crop_orig_y_changed, tool);
-  info_dialog_add_field (crop_info, _("Width: "), width_buf, crop_width_changed, tool);
-  info_dialog_add_field (crop_info, _("Height: "), height_buf, crop_height_changed, tool);
+  spinbutton2 = info_dialog_add_spinbutton (crop_info, _("Origin X:"), NULL,
+					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
+  adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
+
+  sizeentry =
+    info_dialog_add_sizeentry (crop_info, _("Y:"), orig_vals, 1,
+			       gdisp->dot_for_dot ? 
+			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+			       crop_orig_changed, tool);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+			     adjustment2,
+			     GTK_SPIN_BUTTON (spinbutton2),
+			     NULL, NULL);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+					 -65536, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+				  gdisp->gimage->xresolution, FALSE);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, orig_vals[0]);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+					 -65536, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+				  gdisp->gimage->yresolution, FALSE);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, orig_vals[1]);
+
+  spinbutton2 = info_dialog_add_spinbutton (crop_info, _("Width:"), NULL,
+					    -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
+  adjustment2 = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
+
+  sizeentry =
+    info_dialog_add_sizeentry (crop_info, _("Height:"), size_vals, 1,
+			       gdisp->dot_for_dot ? 
+			       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+			       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+			       crop_size_changed, tool);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+			     adjustment2,
+			     GTK_SPIN_BUTTON (spinbutton2),
+			     NULL, NULL);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+					 -65536, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+				  gdisp->gimage->xresolution, FALSE);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, size_vals[0]);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+					 -65536, 65536);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+				  gdisp->gimage->yresolution, FALSE);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, size_vals[1]);
+
+  gtk_table_set_row_spacing (GTK_TABLE (crop_info->info_table), 0, 0);
+  gtk_table_set_row_spacing (GTK_TABLE (crop_info->info_table), 1, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (crop_info->info_table), 2, 0);
 
   /* Create the action area  */
   build_action_area (GTK_DIALOG (crop_info->shell), action_items, 3, 0);
@@ -842,10 +904,10 @@ crop_info_update (Tool *tool)
  
   crop = (Crop *) tool->private;
 
-  sprintf (orig_x_buf, "%d", crop->tx1);
-  sprintf (orig_y_buf, "%d", crop->ty1);
-  sprintf (width_buf, "%d", (crop->tx2 - crop->tx1));
-  sprintf (height_buf, "%d", (crop->ty2 - crop->ty1));
+  orig_vals[0] = crop->tx1;
+  orig_vals[1] = crop->ty1;
+  size_vals[0] = crop->tx2 - crop->tx1;
+  size_vals[1] = crop->ty2 - crop->ty1;
 
   info_dialog_update (crop_info);
   info_dialog_popup (crop_info);
@@ -908,14 +970,14 @@ crop_close_callback (GtkWidget *w,
 }
 
 static void
-crop_orig_x_changed (GtkWidget *w,
-		     gpointer  data)
+crop_orig_changed (GtkWidget *w,
+		   gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
+  Tool     *tool;
+  Crop     *crop;
+  GDisplay *gdisp;
+  int       ox;
+  int       oy;
 
   tool = (Tool *)data;
 
@@ -923,32 +985,32 @@ crop_orig_x_changed (GtkWidget *w,
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       crop = (Crop *) tool->private;
+      ox = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
+      oy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
 
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
-
-      if (value != crop->tx1)
+      if ((ox != crop->tx1) ||
+	  (oy != crop->ty1))
 	{
 	  draw_core_pause (crop->core, tool);
-	  crop->tx2 = crop->tx2 + (value - crop->tx1);
-	  crop->tx1 = value;
+	  crop->tx2 = crop->tx2 + (ox - crop->tx1);
+	  crop->tx1 = ox;
+	  crop->ty2 = crop->ty2 + (oy - crop->ty1);
+	  crop->ty1 = oy;
 	  crop_recalc (tool, crop);
 	  draw_core_resume (crop->core, tool);
 	}
-      
-      g_free (str);
     }
 }
 
 static void
-crop_orig_y_changed (GtkWidget *w,
-		     gpointer  data)
+crop_size_changed (GtkWidget *w,
+		   gpointer   data)
 {
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
+  Tool     *tool;
+  Crop     *crop;
+  GDisplay *gdisp;
+  int       sx;
+  int       sy;
 
   tool = (Tool *)data;
 
@@ -956,84 +1018,18 @@ crop_orig_y_changed (GtkWidget *w,
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       crop = (Crop *) tool->private;
+      sx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
+      sy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
 
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
-
-      if (value != crop->ty1)
+      if ((sx != (crop->tx2 - crop->tx1)) ||
+	  (sy != (crop->ty2 - crop->ty1)))
 	{
 	  draw_core_pause (crop->core, tool);
-	  crop->ty2 = crop->ty2 + (value - crop->ty1);
-	  crop->ty1 = value;
+	  crop->tx2 = sx + crop->tx1;
+	  crop->ty2 = sy + crop->ty1;
 	  crop_recalc (tool, crop);
 	  draw_core_resume (crop->core, tool);
 	}
-      
-      g_free (str);
-    }
-}
-
-static void
-crop_width_changed (GtkWidget *w,
-		    gpointer  data)
-{
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
-
-  tool = (Tool *)data;
-
-  if (tool)
-    {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
-      crop = (Crop *) tool->private;
-
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
-
-      if (value != (crop->tx2 - crop->tx1));
-	{
-	  draw_core_pause (crop->core, tool);
-	  crop->tx2 = value + crop->tx1;
-	  crop_recalc (tool, crop);
-	  draw_core_resume (crop->core, tool);
-	}
-      
-      g_free (str);
-    }
-}
-
-static void
-crop_height_changed (GtkWidget *w,
-		     gpointer  data)
-{
-  Tool * tool;
-  Crop * crop;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
-
-  tool = (Tool *)data;
-
-  if (tool)
-    {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
-      crop = (Crop *) tool->private;
-
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
-
-      if (value != (crop->ty2 - crop->ty1));
-	{
-	  draw_core_pause (crop->core, tool);
-	  crop->ty2 = value + crop->ty1;
-	  crop_recalc (tool, crop);
-	  draw_core_resume (crop->core, tool);
-	}
-      
-      g_free (str);
     }
 }
 

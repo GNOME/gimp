@@ -20,20 +20,32 @@
 
 #include "gtk/gtk.h"
 
-typedef struct _info_field InfoField;
+#include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpunit.h"
 
-struct _info_field
+typedef enum { 
+  INFO_LABEL,
+  INFO_ENTRY,
+  INFO_SCALE,
+  INFO_SPINBUTTON,
+  INFO_SIZEENTRY
+} InfoFieldType;
+
+typedef struct _InfoField  InfoField;
+typedef struct _InfoDialog InfoDialog;
+
+struct _InfoField
 {
-  GtkWidget     *w;
-  char          *text_ptr;
+  InfoFieldType  field_type;
+
+  GtkObject     *obj;
+  void          *value_ptr;
+
   GtkSignalFunc  callback;
   gpointer       client_data;
 };
 
-
-typedef struct _info_dialog InfoDialog;
-
-struct _info_dialog
+struct _InfoDialog
 {
   GtkWidget   *shell;
   GtkWidget   *vbox;
@@ -45,18 +57,61 @@ struct _info_dialog
   void        *user_data;
 };
 
-
 /*  Info Dialog functions  */
 
-InfoDialog *  info_dialog_new         (char *);
-void          info_dialog_free        (InfoDialog *);
-void          info_dialog_add_field   (InfoDialog *, 
-				       char *, 
-				       char *, 
-				       GtkSignalFunc,
-				       gpointer);
-void          info_dialog_popup       (InfoDialog *);
-void          info_dialog_popdown     (InfoDialog *);
-void          info_dialog_update      (InfoDialog *);
+InfoDialog *info_dialog_new            (gchar           *title);
+void        info_dialog_free           (InfoDialog      *idialog);
+
+void        info_dialog_popup          (InfoDialog      *idialog);
+void        info_dialog_popdown        (InfoDialog      *idialog);
+
+void        info_dialog_update         (InfoDialog      *idialog);
+
+GtkWidget  *info_dialog_add_label      (InfoDialog      *idialog,
+					gchar           *title,
+					gchar           *text_ptr);
+
+GtkWidget  *info_dialog_add_entry      (InfoDialog      *idialog,
+					gchar           *title,
+					gchar           *text_ptr,
+					GtkSignalFunc    callback,
+					gpointer         data);
+
+GtkWidget  *info_dialog_add_scale      (InfoDialog      *idialog,
+					gchar           *title,
+					gfloat          *value_ptr,
+					gfloat           lower,
+					gfloat           upper,
+					gfloat           step_increment,
+					gfloat           page_increment,
+					gfloat           page_size,
+					gint             digits,
+					GtkSignalFunc    callback,
+					gpointer         data);
+
+GtkWidget  *info_dialog_add_spinbutton (InfoDialog      *idialog,
+					gchar           *title,
+					gfloat          *value_ptr,
+					gfloat           lower,
+					gfloat           upper,
+					gfloat           step_increment,
+					gfloat           page_increment,
+					gfloat           page_size,
+					gfloat           climb_rate,
+					gint             digits,
+					GtkSignalFunc    callback,
+					gpointer         data);
+
+GtkWidget  *info_dialog_add_sizeentry  (InfoDialog      *idialog,
+					gchar           *title,
+					gfloat          *value_ptr,
+					gint             nfields,
+					GUnit            unit,
+					gchar           *unit_format,
+					gboolean         menu_show_pixels,
+					gboolean         show_refval,
+					GimpSizeEntryUP  update_policy,
+					GtkSignalFunc    callback,
+					gpointer         data);
 
 #endif  /*  __INFO_DIALOG_H__  */

@@ -193,7 +193,7 @@ sessionrc_write_info (SessionInfo *info, FILE *fp)
 static void
 session_open_dialog (SessionInfo *info)
 {
-  if (info == NULL || info->open == FALSE) 
+  if (info == NULL || info->open == FALSE || info->open_callback == NULL) 
     return;
 
   (info->open_callback) ();

@@ -104,6 +104,17 @@ GtkWidget*  gimp_size_entry_new        (gint             number_of_fields,
 					guint            spinbutton_usize,
 					GimpSizeEntryUP  update_policy);
 
+/* add a field to the sizeentry
+ * if show_refval if FALSE, then the refval pointers will be ignored
+ *
+ * the new field will have the index 0
+ */
+void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
+					GtkAdjustment   *value_adjustment,
+					GtkSpinButton   *value_spinbutton,
+					GtkAdjustment   *refval_adjustment,
+					GtkSpinButton   *refval_spinbutton);
+
 /* this one is just a convenience function if you want to add labels
  * to the empty cells of the widget
  * (take care not to specify cells which already have a widget ;-)

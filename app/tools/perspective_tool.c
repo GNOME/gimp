@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -46,7 +44,9 @@
 static char        matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, GimpDrawable *, GDisplay *, TileManager *, int, GimpMatrix);
+static void *      perspective_tool_perspective (GImage *, GimpDrawable *,
+						 GDisplay *, TileManager *,
+						 int, GimpMatrix);
 static void        perspective_find_transform   (double *, GimpMatrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
@@ -54,10 +54,9 @@ static void        perspective_info_update      (Tool *);
 static Argument *  perspective_invoker          (Argument *);
 
 void *
-perspective_tool_transform (tool, gdisp_ptr, state)
-     Tool * tool;
-     gpointer gdisp_ptr;
-     int state;
+perspective_tool_transform (Tool     *tool,
+			    gpointer  gdisp_ptr,
+			    int       state)
 {
   GDisplay * gdisp;
   TransformCore * transform_core;
@@ -70,13 +69,12 @@ perspective_tool_transform (tool, gdisp_ptr, state)
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new (_("Perspective Transform Information"));
-	  info_dialog_add_field (transform_info, "Matrix: ",
-				 matrix_row_buf[0], NULL, NULL);
-	  info_dialog_add_field (transform_info, "        ",
-				 matrix_row_buf[1], NULL, NULL);
-	  info_dialog_add_field (transform_info, "        ",
-				 matrix_row_buf[2], NULL, NULL);
+	  transform_info =
+	    info_dialog_new (_("Perspective Transform Information"));
+	  info_dialog_add_label (transform_info, "Matrix:",
+				 matrix_row_buf[0]);
+	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);
+	  info_dialog_add_label (transform_info, "", matrix_row_buf[2]);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
@@ -105,9 +103,13 @@ perspective_tool_transform (tool, gdisp_ptr, state)
     case FINISH :
       /*  Let the transform core handle the inverse mapping  */
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      return perspective_tool_perspective (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
-					   transform_core->original, transform_tool_smoothing (),
-					   transform_core->transform);
+      return
+	perspective_tool_perspective (gdisp->gimage,
+				      gimage_active_drawable (gdisp->gimage),
+				      gdisp,
+				      transform_core->original,
+				      transform_tool_smoothing (),
+				      transform_core->transform);
       break;
     }
 
@@ -144,16 +146,14 @@ tools_new_perspective_tool ()
 
 
 void
-tools_free_perspective_tool (tool)
-     Tool * tool;
+tools_free_perspective_tool (Tool *tool)
 {
   transform_core_free (tool);
 }
 
 
 static void
-perspective_info_update (tool)
-     Tool * tool;
+perspective_info_update (Tool *tool)
 {
   TransformCore * transform_core;
   int i;
@@ -179,9 +179,8 @@ perspective_info_update (tool)
 
 
 static void
-perspective_tool_motion (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+perspective_tool_motion (Tool *tool,
+			 void *gdisp_ptr)
 {
   GDisplay * gdisp;
   TransformCore * transform_core;
@@ -217,9 +216,8 @@ perspective_tool_motion (tool, gdisp_ptr)
 }
 
 static void *
-perspective_tool_recalc (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+perspective_tool_recalc (Tool *tool,
+			 void *gdisp_ptr)
 {
   TransformCore * transform_core;
   GDisplay * gdisp;
@@ -261,9 +259,8 @@ perspective_tool_recalc (tool, gdisp_ptr)
 
 
 static void
-perspective_find_transform (coords, m)
-     double * coords;
-     GimpMatrix m;
+perspective_find_transform (double     *coords,
+			    GimpMatrix  m)
 {
   double dx1, dx2, dx3, dy1, dy2, dy3;
   double det1, det2;
@@ -311,13 +308,12 @@ perspective_find_transform (coords, m)
 
 
 static void *
-perspective_tool_perspective (gimage, drawable, gdisp, float_tiles, interpolation, matrix)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     GDisplay *gdisp;
-     TileManager *float_tiles;
-     int interpolation;
-     GimpMatrix matrix;
+perspective_tool_perspective (GImage       *gimage,
+			      GimpDrawable *drawable,
+			      GDisplay     *gdisp,
+			      TileManager  *float_tiles,
+			      int           interpolation,
+			      GimpMatrix    matrix)
 {
   void *ret;
   gimp_progress *progress;
@@ -411,8 +407,7 @@ ProcRecord perspective_proc =
 
 
 static Argument *
-perspective_invoker (args)
-     Argument *args;
+perspective_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;

@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -39,32 +37,36 @@
 #define Y2 3
 
 /*  storage for information dialog fields  */
-char          orig_width_buf  [MAX_INFO_BUF];
-char          orig_height_buf [MAX_INFO_BUF];
-char          width_buf       [MAX_INFO_BUF];
-char          height_buf      [MAX_INFO_BUF];
-char          x_ratio_buf     [MAX_INFO_BUF];
-char          y_ratio_buf     [MAX_INFO_BUF];
+static gchar       orig_width_buf  [MAX_INFO_BUF];
+static gchar       orig_height_buf [MAX_INFO_BUF];
+static gfloat      size_vals[2];
+static gchar       x_ratio_buf     [MAX_INFO_BUF];
+static gchar       y_ratio_buf     [MAX_INFO_BUF];
+
+/*  needed for original size unit update  */
+static GtkWidget  *sizeentry;
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, GimpDrawable *, GDisplay *, double *, TileManager *, int, GimpMatrix);
+static void *      scale_tool_scale   (GImage *, GimpDrawable *, GDisplay *,
+				       double *, TileManager *, int, GimpMatrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
 static Argument *  scale_invoker      (Argument *);
 
 /*  callback functions for the info dialog entries  */
-static void        scale_width_changed  (GtkWidget *entry, gpointer data);
-static void        scale_height_changed (GtkWidget *entry, gpointer data);
+static void        scale_size_changed (GtkWidget *w, gpointer data);
+static void        scale_unit_changed (GtkWidget *w, gpointer data);
 
 void *
-scale_tool_transform (tool, gdisp_ptr, state)
-     Tool * tool;
-     gpointer gdisp_ptr;
-     int state;
+scale_tool_transform (Tool     *tool,
+		      gpointer  gdisp_ptr,
+		      int       state)
 {
-  GDisplay * gdisp;
-  TransformCore * transform_core;
+  GDisplay      *gdisp;
+  TransformCore *transform_core;
+  GtkWidget     *spinbutton2;
+  GtkAdjustment *adjustment2;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
@@ -75,12 +77,55 @@ scale_tool_transform (tool, gdisp_ptr, state)
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new (_("Scaling Information"));
-	  info_dialog_add_field (transform_info, _("Original Width: "), orig_width_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, _("Original Height: "), orig_height_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, _("Current Width: "), width_buf, scale_width_changed, tool);
-	  info_dialog_add_field (transform_info, _("Current Height: "), height_buf, scale_height_changed, tool);
-	  info_dialog_add_field (transform_info, _("X Scale Ratio: "), x_ratio_buf, NULL, NULL);
-	  info_dialog_add_field (transform_info, _("Y Scale Ratio: "), y_ratio_buf, NULL, NULL);
+
+	  info_dialog_add_label (transform_info, _("Original Width:"),
+				 orig_width_buf);
+	  info_dialog_add_label (transform_info, _("Height:"),
+				 orig_height_buf);
+
+	  spinbutton2 =
+	    info_dialog_add_spinbutton (transform_info, _("Current Width:"),
+					NULL, -1, 1, 1, 10, 1, 1, 2, NULL, NULL);
+	  adjustment2 =
+	    gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton2));
+
+	  sizeentry =
+	    info_dialog_add_sizeentry (transform_info, _("Height:"),
+				       size_vals, 1,
+				       gdisp->dot_for_dot ? 
+				       UNIT_PIXEL : gdisp->gimage->unit, "%a",
+				       TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
+				       scale_size_changed, tool);
+	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+				     adjustment2,
+				     GTK_SPIN_BUTTON (spinbutton2),
+				     NULL, NULL);
+	  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
+			      scale_unit_changed, tool);
+
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+						 1, 65536);
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+					  gdisp->gimage->xresolution, FALSE);
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+				      size_vals[0]);
+
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+						 1, 65536);
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+					  gdisp->gimage->yresolution, FALSE);
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+				      size_vals[1]);
+
+	  info_dialog_add_label (transform_info, _("Scale Ratio X:"),
+				 x_ratio_buf);
+	  info_dialog_add_label (transform_info, _("Y:"),
+				 y_ratio_buf);
+
+	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
+				     1, 4);
+	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
+				     2, 0);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
@@ -104,15 +149,18 @@ scale_tool_transform (tool, gdisp_ptr, state)
 
     case FINISH :
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
-      return scale_tool_scale (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
-			       transform_core->trans_info, transform_core->original,
-			       transform_tool_smoothing (), transform_core->transform);
+      return scale_tool_scale (gdisp->gimage,
+			       gimage_active_drawable (gdisp->gimage),
+			       gdisp,
+			       transform_core->trans_info,
+			       transform_core->original,
+			       transform_tool_smoothing (),
+			       transform_core->transform);
       break;
     }
 
   return NULL;
 }
-
 
 Tool *
 tools_new_scale_tool ()
@@ -137,34 +185,49 @@ tools_new_scale_tool ()
   return tool;
 }
 
-
 void
-tools_free_scale_tool (tool)
-     Tool * tool;
+tools_free_scale_tool (Tool *tool)
 {
   transform_core_free (tool);
 }
 
-
 static void
-scale_info_update (tool)
-     Tool * tool;
+scale_info_update (Tool *tool)
 {
-  GDisplay * gdisp;
+  GDisplay      * gdisp;
   TransformCore * transform_core;
-  double ratio_x, ratio_y;
-  int x1, y1, x2, y2, x3, y3, x4, y4;
+  double          ratio_x, ratio_y;
+  int             x1, y1, x2, y2, x3, y3, x4, y4;
+  GUnit           unit;
+  float           unit_factor;
+  gchar           format_buf[16];
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));;
+  unit_factor = gimp_unit_get_factor (unit);
 
   /*  Find original sizes  */
   x1 = transform_core->x1;
   y1 = transform_core->y1;
   x2 = transform_core->x2;
   y2 = transform_core->y2;
-  sprintf (orig_width_buf, "%d", x2 - x1);
-  sprintf (orig_height_buf, "%d", y2 - y1);
+
+  if (unit) /* unit != UNIT_PIXEL */
+    {
+      g_snprintf (format_buf, 16, "%%.%df %s",
+		  gimp_unit_get_digits (unit) + 1,
+		  gimp_unit_get_symbol (unit));
+      g_snprintf (orig_width_buf, MAX_INFO_BUF, format_buf,
+		  (x2 - x1) * unit_factor / gdisp->gimage->xresolution);
+      g_snprintf (orig_height_buf, MAX_INFO_BUF, format_buf,
+		  (y2 - y1) * unit_factor / gdisp->gimage->yresolution);
+    }
+  else /* unit == UNIT_PIXEL */
+    {
+      g_snprintf (orig_width_buf, MAX_INFO_BUF, "%d", x2 - x1);
+      g_snprintf (orig_height_buf, MAX_INFO_BUF, "%d", y2 - y1);
+    }
 
   /*  Find current sizes  */
   x3 = (int) transform_core->trans_info [X1];
@@ -172,8 +235,8 @@ scale_info_update (tool)
   x4 = (int) transform_core->trans_info [X2];
   y4 = (int) transform_core->trans_info [Y2];
 
-  sprintf (width_buf, "%d", x4 - x3);
-  sprintf (height_buf, "%d", y4 - y3);
+  size_vals[0] = x4 - x3;
+  size_vals[1] = y4 - y3;
 
   ratio_x = ratio_y = 0.0;
 
@@ -182,22 +245,22 @@ scale_info_update (tool)
   if (y2 - y1)
     ratio_y = (double) (y4 - y3) / (double) (y2 - y1);
 
-  sprintf (x_ratio_buf, "%0.2f", ratio_x);
-  sprintf (y_ratio_buf, "%0.2f", ratio_y);
+  g_snprintf (x_ratio_buf, MAX_INFO_BUF, "%0.2f", ratio_x);
+  g_snprintf (y_ratio_buf, MAX_INFO_BUF, "%0.2f", ratio_y);
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
 }
 
 static void
-scale_width_changed (GtkWidget *w,
-		     gpointer  data)
+scale_size_changed (GtkWidget *w,
+		    gpointer   data)
 {
-  Tool * tool;
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
+  Tool          *tool;
+  TransformCore *transform_core;
+  GDisplay      *gdisp;
+  int            width;
+  int            height;
 
   tool = (Tool *)data;
 
@@ -206,57 +269,35 @@ scale_width_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
+      width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
+      height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
 
-      if (value != (transform_core->trans_info[X2] - transform_core->trans_info[X1]))
+      if ((width != (transform_core->trans_info[X2] -
+		     transform_core->trans_info[X1])) ||
+	  (height != (transform_core->trans_info[Y2] -
+		      transform_core->trans_info[Y1])))
 	{
 	  draw_core_pause (transform_core->core, tool);
-	  transform_core->trans_info[X2] = transform_core->trans_info[X1] + value;
+	  transform_core->trans_info[X2] =
+	    transform_core->trans_info[X1] + width;
+	  transform_core->trans_info[Y2] =
+	    transform_core->trans_info[Y1] + height;
 	  scale_tool_recalc (tool, gdisp);
 	  draw_core_resume (transform_core->core, tool);
 	}
-      
-      g_free (str);
     }
 }
 
 static void
-scale_height_changed (GtkWidget *w,
-		      gpointer  data)
+scale_unit_changed (GtkWidget *w,
+		    gpointer   data)
 {
-  Tool * tool;
-  TransformCore * transform_core;
-  GDisplay * gdisp;
-  gchar *str;
-  int value;
-
-  tool = (Tool *)data;
-
-  if (tool)
-    {
-      gdisp = (GDisplay *) tool->gdisp_ptr;
-      transform_core = (TransformCore *) tool->private;
-
-      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
-      value = (int) atof(str);
-
-      if (value != (transform_core->trans_info[Y2] - transform_core->trans_info[Y1]))
-	{
-	  draw_core_pause (transform_core->core, tool);
-	  transform_core->trans_info[Y2] = transform_core->trans_info[Y1] + value;
-	  scale_tool_recalc (tool, gdisp);
-	  draw_core_resume (transform_core->core, tool);
-	}
-      
-      g_free (str);
-    }
+  scale_info_update ((Tool*) data);
 }
 
 static void
-scale_tool_motion (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+scale_tool_motion (Tool *tool,
+		   void *gdisp_ptr)
 {
   GDisplay * gdisp;
   TransformCore * transform_core;
@@ -357,9 +398,8 @@ scale_tool_motion (tool, gdisp_ptr)
 }
 
 static void *
-scale_tool_recalc (tool, gdisp_ptr)
-     Tool * tool;
-     void * gdisp_ptr;
+scale_tool_recalc (Tool *tool,
+		   void *gdisp_ptr)
 {
   TransformCore * transform_core;
   GDisplay * gdisp;
@@ -425,14 +465,13 @@ scale_tool_recalc (tool, gdisp_ptr)
 }
 
 static void *
-scale_tool_scale (gimage, drawable, gdisp, trans_info, float_tiles, interpolation, matrix)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     GDisplay *gdisp;
-     double *trans_info;
-     TileManager *float_tiles;
-     int interpolation;
-     GimpMatrix matrix;
+scale_tool_scale (GImage       *gimage,
+		  GimpDrawable *drawable,
+		  GDisplay     *gdisp,
+		  double       *trans_info,
+		  TileManager  *float_tiles,
+		  int           interpolation,
+		  GimpMatrix    matrix)
 {
   void *ret;
   gimp_progress *progress;
@@ -510,8 +549,7 @@ ProcRecord scale_proc =
 
 
 static Argument *
-scale_invoker (args)
-     Argument *args;
+scale_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;

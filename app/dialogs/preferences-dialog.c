@@ -28,7 +28,7 @@
 #include "layer_select.h"
 #include "session.h"
 
-/*#include "config.h"*/
+#include "config.h"
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpfileselection.h"
 #include "libgimp/gimpintl.h"
@@ -43,9 +43,8 @@ static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
 static void file_prefs_toggle_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
-/* static void file_prefs_text_callback (GtkWidget *, gpointer); */
-static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
-/* static void file_prefs_float_spinbutton_callback (GtkWidget *, gpointer); */
+static void file_prefs_int_adjustment_callback (GtkAdjustment *, gpointer);
+/*static void file_prefs_float_adjustment_callback (GtkAdjustment *, gpointer);*/
 static void file_prefs_string_callback (GtkWidget *, gpointer);
 static void file_prefs_filename_callback (GtkWidget *, gpointer);
 static void file_prefs_path_callback (GtkWidget *, gpointer);
@@ -56,10 +55,6 @@ static void file_prefs_res_source_callback (GtkWidget *, gpointer);
 static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
-
-/* static   int          last_type = RGB; ??? */
-
-static   GtkWidget   *prefs_dlg = NULL;
 static   int          old_perfectmouse;
 static   int          old_transparency_type;
 static   int          old_transparency_size;
@@ -118,16 +113,18 @@ static   int          edit_cycled_marching_ants;
 static   int          edit_last_opened_size;
 static   int          edit_num_processors;
 
-static   GtkWidget   *tile_cache_size_spinbutton = NULL;
+static   GtkWidget   *prefs_dlg = NULL;
+
+static   GtkObject   *tile_cache_size_adjustment = NULL;
 static   int          divided_tile_cache_size;
 static   int          mem_size_unit;
+
 static   GtkWidget   *default_size_sizeentry = NULL;
 static   GtkWidget   *default_resolution_sizeentry = NULL;
 static   GtkWidget   *default_resolution_force_equal = NULL;
 static   GtkWidget   *resolution_xserver_label = NULL;
 static   GtkWidget   *monitor_resolution_sizeentry = NULL;
 static   GtkWidget   *monitor_resolution_force_equal = NULL;
-static   GtkWidget   *num_processors_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
    updated by Michael Natterer 27/3/99
@@ -149,6 +146,7 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
    install-cmap
    cycled-marching-ants
    last-opened-size
+   num-processors
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -161,8 +159,9 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
 
    Here are the remaining issues as I see them:
 
-   Still no settings for default-brush, default-gradient,
-   default-palette, default-pattern, gamma-correction, color-cube.
+   Still no settings for default-gradient, default-palette,
+   gamma-correction, color-cube.
+
    No widget for confirm-on-close although a lot of stuff is there.
 
    The semantics of "save" are a little funny - it only saves the
@@ -678,42 +677,30 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
 	divided_tile_cache_size * mem_size_unit / new_unit;
       mem_size_unit = new_unit;
 
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton),
-				 (float)divided_tile_cache_size);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (tile_cache_size_adjustment),
+				(float)divided_tile_cache_size);
     }
 }
 
-/*  commented out because it's not used 
 static void
-file_prefs_text_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  int *val;
-  
-  val = data;
-  *val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-*/
-
-static void
-file_prefs_spinbutton_callback (GtkWidget *widget,
-                                gpointer   data)
+file_prefs_int_adjustment_callback (GtkAdjustment *adj,
+				    gpointer       data)
 {
   int *val;
 
   val = data;
-  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+  *val = (int) adj->value;
 }
 
 /*  commented out because it's not used 
 static void
-file_prefs_float_spinbutton_callback (GtkWidget *widget,
-				      gpointer   data)
+file_prefs_float_adjustment_callback (GtkAdjustment *adj,
+				      gpointer       data)
 {
   float *val;
 
   val = data;
-  *val = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
+  *val = (float) adj->value;
 }
 */
 
@@ -888,7 +875,7 @@ file_prefs_monitor_resolution_callback (GtkWidget *widget,
  *  convenience constructors test site ;)
  */
 
-/*  local callback of gimp_dialog_new ()  */
+/*  local callbacks of gimp_dialog_new ()  */
 static int
 gimp_dialog_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
@@ -911,6 +898,31 @@ gimp_dialog_delete_callback (GtkWidget *widget,
   return TRUE;
 }
 
+/*
+#include "/home/mitschel/wilber3.xpm"
+
+static void
+gimp_dialog_realize_callback (GtkWidget *widget,
+			      gpointer   data) 
+{
+  static GdkPixmap *wilber_pixmap = NULL;
+  static GdkBitmap *wilber_mask   = NULL;
+  GtkStyle         *style;
+
+  style = gtk_widget_get_style (widget);
+
+  if (wilber_pixmap == NULL)
+    wilber_pixmap =
+      gdk_pixmap_create_from_xpm_d (widget->window,
+				    &wilber_mask,
+				    &style->bg[GTK_STATE_NORMAL],
+				    wilber3_xpm);
+
+  gdk_window_set_icon (widget->window, NULL,
+		       wilber_pixmap, wilber_mask);
+}
+*/
+
 /*  this is an experimental one
  *  I tried to fold the entire dialog creation and the ActionArea stuff
  *  into one function. Might be not general enough.
@@ -920,15 +932,19 @@ gimp_dialog_delete_callback (GtkWidget *widget,
  *   - policy setting
  */
 GtkWidget*
-gimp_dialog_new (const gchar   *title,
-		 const gchar   *wmclass_name,
+gimp_dialog_new (const gchar       *title,
+		 const gchar       *wmclass_name,
+		 GtkWindowPosition  position,
+		 gint               allow_shrink,
+		 gint               allow_grow,
+		 gint               auto_shrink,
 
 		 /* this is an action_area button */
-		 gchar         *label1,
-		 GtkSignalFunc  callback1,
-		 gpointer       data1,
-		 gboolean       default_action1,
-		 gboolean       connect_delete1,
+		 gchar             *label,
+		 GtkSignalFunc      callback,
+		 gpointer           data,
+		 gboolean           default_action,
+		 gboolean           connect_delete,
 
 		 /* more action_area buttons */
 		 ...)
@@ -938,21 +954,18 @@ gimp_dialog_new (const gchar   *title,
   GtkWidget     *button;
 
   va_list        args;
-  gchar         *label;
-  GtkSignalFunc  callback;
-  gpointer       data;
-  gboolean       default_action;
-  gboolean       connect_delete;
-
   gboolean       delete_connected = FALSE;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
-  g_return_val_if_fail (label1 != NULL, NULL);
+  g_return_val_if_fail (label != NULL, NULL);
 
   dialog = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog), title);
+  gtk_window_set_position (GTK_WINDOW (dialog), position);
+  gtk_window_set_policy (GTK_WINDOW (dialog),
+			 allow_grow, allow_shrink, auto_shrink);
 
   /* prepare the action_area */
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area),
@@ -965,12 +978,7 @@ gimp_dialog_new (const gchar   *title,
 		    FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 
-  label = label1;
-  callback = callback1;
-  data = data1;
-  default_action = default_action1;
-  connect_delete = connect_delete1;
-  va_start (args, connect_delete1);
+  va_start (args, connect_delete);
   while (label)
     {
       button = gtk_button_new_with_label (label);
@@ -1021,6 +1029,13 @@ gimp_dialog_new (const gchar   *title,
 			(GdkEventFunc) gimp_dialog_delete_callback,
 			NULL);
 
+  /* the realize callback sets the wm icon pixmap */
+  /*
+  gtk_signal_connect (GTK_OBJECT (dialog), "realize",
+		      (GtkSignalFunc) gimp_dialog_realize_callback,
+		      NULL);
+  */
+  
   return dialog;
 }
 
@@ -1029,9 +1044,9 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
 		      gpointer       initial,
 
 		      /* this is a menu item */
-		      gchar         *label1,
-		      gpointer       data1,
-		      gpointer       set_data1,
+		      gchar         *label,
+		      gpointer       data,
+		      gpointer       set_data,
 
 		      /* more menu items */
 		      ...)
@@ -1041,21 +1056,15 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
   GtkWidget *optionmenu;
 
   va_list    args;
-  gchar     *label;
-  gpointer   data;
-  gpointer   set_data;
   gint       i;
   gint       initial_index;
 
-  g_return_val_if_fail (label1 != NULL, NULL);
+  g_return_val_if_fail (label != NULL, NULL);
 
   menu = gtk_menu_new ();
 
   initial_index = 0;
-  label = label1;
-  data = data1;
-  set_data = set_data1;
-  va_start (args, set_data1);
+  va_start (args, set_data);
   for (i = 0; label; i++)
     {
       menuitem = gtk_menu_item_new_with_label (label);
@@ -1092,9 +1101,9 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
 		      gpointer       initial,
 
 		      /* this is a radio button */
-		      gchar         *label1,
-		      gpointer       data1,
-		      gpointer       set_data1,
+		      gchar         *label,
+		      gpointer       data,
+		      gpointer       set_data,
 
 		      /* more radio buttons */
 		      ...)
@@ -1104,20 +1113,14 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
   GSList    *group;
 
   va_list    args;
-  gchar     *label;
-  gpointer   data;
-  gpointer   set_data;
 
-  g_return_val_if_fail (label1 != NULL, NULL);
+  g_return_val_if_fail (label != NULL, NULL);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   group = NULL;
 
-  label = label1;
-  data = data1;
-  set_data = set_data1;
-  va_start (args, set_data1);
+  va_start (args, set_data);
   while (label)
     {
       button = gtk_radio_button_new_with_label (group, label);
@@ -1148,32 +1151,60 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
 
 /*  this might be the standard gimp spinbutton  */
 GtkWidget*
-gimp_spin_button_new (gfloat   value,
-		      gfloat   lower,
-		      gfloat   upper,
-		      gfloat   step_increment,
-		      gfloat   page_increment,
-		      gfloat   page_size,
-		      gfloat   climb_rate,
-		      guint    digits)
+gimp_spin_button_new (GtkObject **adjustment, /* return value */
+		      gfloat      value,
+		      gfloat      lower,
+		      gfloat      upper,
+		      gfloat      step_increment,
+		      gfloat      page_increment,
+		      gfloat      page_size,
+		      gfloat      climb_rate,
+		      guint       digits)
 {
   GtkWidget *spinbutton;
 
-  spinbutton =
-    gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (value,
-							     lower,
-							     upper,
-							     step_increment,
-							     page_increment,
-							     page_size)),
-			 climb_rate,
-			 digits);
+  *adjustment = gtk_adjustment_new (value, lower, upper,
+				    step_increment, page_increment, page_size);
+
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+				    climb_rate, digits);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
 				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   return spinbutton;
+}
+
+/*  add correctly aligned label & widget to a two-column table  */
+void
+gimp_table_attach_aligned (GtkTable  *table,
+			   gint       row,
+			   gchar     *text,
+			   GtkWidget *widget,
+			   gboolean   left_adjust)
+{
+  GtkWidget *label;
+
+  label = gtk_label_new (text);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  if (left_adjust)
+    {
+      GtkWidget* alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+      gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
+      gtk_widget_show (alignment);
+      gtk_container_add (GTK_CONTAINER (alignment), widget);
+    }
+  else
+    {
+      gtk_table_attach_defaults (table, widget, 1, 2, row, row + 1);
+    }
+
+  gtk_widget_show (widget);
 }
 
 
@@ -1193,16 +1224,23 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
 {
   GtkWidget *out_vbox;
   GtkWidget *vbox;
-  GtkWidget *button;
+  GtkWidget *frame;
+  GtkWidget *label;
   gchar     *titles[1];
 
   out_vbox = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (out_vbox);
 
-  button = gtk_button_new_with_label (notebook_label);
-  gtk_misc_set_alignment (GTK_MISC (GTK_BIN (button)->child), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (out_vbox), button, FALSE, TRUE, 0);
-  gtk_widget_show (button);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_box_pack_start (GTK_BOX (out_vbox), frame, FALSE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  label = gtk_label_new (notebook_label);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_padding (GTK_MISC (label), 2, 1);
+  gtk_container_add (GTK_CONTAINER (frame), label);
+  gtk_widget_show (label);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -1213,7 +1251,7 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
   *new_node = gtk_ctree_insert_node (ctree, parent, NULL,
 				     titles, 0,
 				     NULL, NULL, NULL, NULL,
-				     FALSE, TRUE);
+				     FALSE, FALSE);
   gtk_ctree_node_set_row_data (ctree,
 			       *new_node, (gpointer) page_index);
   gtk_notebook_append_page (notebook, out_vbox, NULL);
@@ -1238,24 +1276,6 @@ file_pref_tree_select_callback (GtkWidget    *widget,
   gtk_notebook_set_page (notebook, page);
 }
 
-/*  add correctly aligned label & widget to a prefs table  */
-static void
-file_pref_table_attach (GtkTable   *table,
-			GtkLabel   *label,
-			GtkWidget  *widget,
-			gint        row)
-{
-  GtkWidget *hbox;
-
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach_defaults (table, GTK_WIDGET (label), 0, 1, row, row + 1);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (table, hbox, 1, 2, row, row + 1);
-  gtk_widget_show (hbox);
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-}
-
 /************************************************************************
  *  create the preferences dialog
  */
@@ -1275,7 +1295,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget     *vbox2;
   GtkWidget     *hbox;
   GtkWidget     *abox;
-  GtkWidget     *label;
   GtkWidget     *button;
   GtkWidget     *fileselection;
   GtkWidget     *patheditor;
@@ -1285,6 +1304,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget     *optionmenu;
   GtkWidget     *table;
   GSList        *group;
+  GtkObject     *adjustment;
 
   int            i;
 
@@ -1369,6 +1389,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   prefs_dlg =
     gimp_dialog_new (_("Preferences"),
 		     "gimp_preferences",
+		     GTK_WIN_POS_NONE, FALSE, FALSE, FALSE,
 		     _("OK"), file_prefs_ok_callback, NULL,
 		     FALSE, FALSE,
 		     _("Save"), file_prefs_save_callback, NULL,
@@ -1521,16 +1542,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Default Image Type:"));
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) default_type,
 			  _("RGB"),       &default_type, (gpointer) RGB,
 			  _("Grayscale"), &default_type, (gpointer) GRAY,
 			  NULL);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Default Image Type:"), optionmenu, TRUE);
 
   /* Display page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1558,7 +1577,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Transparency Type:"));
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) transparency_type,
@@ -1575,11 +1593,9 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Black Only"),
 			  &transparency_type, (gpointer) BLACK_ONLY,
 			  NULL);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Transparency Type:"), optionmenu, TRUE);
 
-  label = gtk_label_new (_("Check Size:"));
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) transparency_size,
@@ -1590,9 +1606,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Large Checks"), 
 			  &transparency_size, (gpointer) LARGE_CHECKS,
 			  NULL);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 1);
-  gtk_widget_show (label);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Check Size:"), optionmenu, TRUE);
 
   frame = gtk_frame_new (_("Scaling")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1630,7 +1645,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
-      
+
   table = gtk_table_new (3, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -1651,7 +1666,6 @@ file_pref_cmd_callback (GtkWidget *widget,
      gtk_widget_show (button);
   */
 
-  label = gtk_label_new (_("Preview Size:"));
   optionmenu =
     gimp_option_menu_new (file_prefs_preview_size_callback,
 			  (gpointer) preview_size,
@@ -1660,29 +1674,26 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  _("Medium"), (gpointer)  64, (gpointer)  64,
 			  _("Large"),  (gpointer) 128, (gpointer) 128,
 			  NULL);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Preview Size:"), optionmenu, TRUE);
 
-  label = gtk_label_new (_("Levels of Undo:"));
   spinbutton =
-    gimp_spin_button_new (levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+    gimp_spin_button_new (&adjustment,
+			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &levels_of_undo);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 1);
-  gtk_widget_show (label);
-  gtk_widget_show (spinbutton);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Levels of Undo:"), spinbutton, TRUE);
 
-  label = gtk_label_new (_("Recent Documents List Size:"));
   spinbutton =
-    gimp_spin_button_new (last_opened_size, 0.0, 256.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+    gimp_spin_button_new (&adjustment,
+			  last_opened_size, 0.0, 256.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &edit_last_opened_size);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 2);
-  gtk_widget_show (label);
-  gtk_widget_show (spinbutton);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+			     _("Recent Documents List Size:"), spinbutton, TRUE);
 
   frame = gtk_frame_new (_("Help System")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -1749,31 +1760,24 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &show_statusbar);
   gtk_widget_show (button);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Marching Ants Speed:"));
   spinbutton =
-    gimp_spin_button_new (marching_speed, 0.0, 32000.0, 50.0, 100.0, 0.0,
+    gimp_spin_button_new (&adjustment,
+			  marching_speed, 0.0, 32000.0, 50.0, 100.0, 0.0,
 			  1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &marching_speed);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 0);
-  gtk_widget_show (label);
-  gtk_widget_show (spinbutton);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Marching Ants Speed:"), spinbutton, TRUE);
 
   /* The title format string */
-  label = gtk_label_new (_("Image Title Format:"));
-
   combo = gtk_combo_new ();
   gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
   gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
@@ -1809,9 +1813,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (file_prefs_string_callback), 
 		      &image_title_format);
 
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), combo, 1);
-  gtk_widget_show (label);
-  gtk_widget_show (combo);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Image Title Format:"), combo, FALSE);
   /* End of the title format string */
 
   frame = gtk_frame_new (_("Pointer Movement Feedback")); 
@@ -1823,7 +1826,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  button = gtk_check_button_new_with_label(_("Perfect-but-slow Pointer Tracking"));
+  button =
+    gtk_check_button_new_with_label(_("Perfect-but-slow Pointer Tracking"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
@@ -1869,33 +1873,28 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
 #ifdef ENABLE_MP
   table = gtk_table_new (2, 2, FALSE);
 #else
   table = gtk_table_new (1, 2, FALSE);
-#endif
+#endif /* ENABLE_MP */
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Tile Cache Size:"));
   hbox = gtk_hbox_new (FALSE, 2);
-  tile_cache_size_spinbutton =
-    gimp_spin_button_new (divided_tile_cache_size,
+  spinbutton =
+    gimp_spin_button_new (&tile_cache_size_adjustment,
+			  divided_tile_cache_size,
 			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
 			  1.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton,
-		      FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
-		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &divided_tile_cache_size);
-  gtk_widget_show (tile_cache_size_spinbutton);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
       
   optionmenu =
     gimp_option_menu_new (file_prefs_mem_size_unit_callback,
@@ -1907,23 +1906,19 @@ file_pref_cmd_callback (GtkWidget *widget,
 			  NULL);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
-  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), hbox, 0);
-  gtk_widget_show (hbox);
-  gtk_widget_show (label);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Tile Cache Size:"), hbox, TRUE);
 
 #ifdef ENABLE_MP
-  label = gtk_label_new (_("Number of Processors to Use:"));
-  num_processors_spinbutton =
-    gimp_spin_button_new (num_processors, 1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (num_processors_spinbutton), "changed",
-		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+  spinbutton =
+    gimp_spin_button_new (&adjustment,
+			  num_processors, 1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) file_prefs_int_adjustment_callback,
 		      &num_processors);
-  file_pref_table_attach (GTK_TABLE (table),
-			  GTK_LABEL (label), num_processors_spinbutton, 1);
-  gtk_widget_show (label);
-  gtk_widget_show (num_processors_spinbutton);
-#else
-  num_processors_spinbutton = NULL;
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Number of Processors to Use:"),
+			     spinbutton, TRUE);
 #endif /* ENABLE_MP */
 
   frame = gtk_frame_new (_("8-Bit Displays")); 
@@ -2148,24 +2143,18 @@ file_pref_cmd_callback (GtkWidget *widget,
 
     for (i = 0; i < ndirs; i++)
       {
-	label = gtk_label_new (gettext(dirs[i].label));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
-			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_show (label);
-	    
 	fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
 						 *(dirs[i].mdir),
 						 TRUE, TRUE);
 	gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
 			    (GtkSignalFunc) file_prefs_filename_callback,
 			    dirs[i].mdir);
-	gtk_table_attach (GTK_TABLE (table), fileselection, 1, 2, i, i+1,
-			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
-	gtk_widget_show (fileselection); 
+	gimp_table_attach_aligned (GTK_TABLE (table), i,
+				   gettext(dirs[i].label), fileselection, FALSE);
       }
   }
 
+  /* Directories / <paths> */
   {
     static const struct {
       char  *tree_label;

@@ -1,3 +1,30 @@
+1999-04-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gimage_mask.[ch]: made function headers ansi compliant.
+
+	* app/file_new_dialog.c
+	* app/preferences_dialog.c: minor GUI and signal handling
+	changes. Added a WM hint pixmap to the prefs dialog but commented
+	it out because it looked ugly. If someone has a nice pixmap,
+	please try it and tell me ;)
+
+	* app/color_picker.c
+	* app/crop.c
+	* app/info_window.c
+	* app/perspective_tool.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/info_dialog.[ch]: the info_dialog allows scales, spinbuttons
+	and sizeentries now. Made some dialogs use these widgets and
+	added unit support. Sprinkled some g_snprintf's, removed
+	#include's, ansi issues, ...
+
+	* app/session.c: don't call a NULL callback.
+
+	* libgimp/gimpsizeentry.[ch]: new function
+	gimp_size_entry_add_field() which allows a more flexible GUI
+	layout. More intelligent signal handling.
+
 Tue Mar 30 22:17:43 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/fileops.c: Thumbnails save with checkerboard-alpha.
