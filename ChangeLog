@@ -1,3 +1,8 @@
+2003-02-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorbutton.c (gimp_color_button_clicked):
+	fixed usage of gtk_color_selection_set_has_opacity_control().
+
 2003-02-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* libgimp/gimpmiscui.[ch]: factored out more preview stuff from several

@@ -387,7 +387,7 @@ gimp_color_button_clicked (GtkButton *button)
     {
       dialog = gtk_color_selection_dialog_new (color_button->title);
 
-      gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel), TRUE);
+      gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel), gimp_color_button_has_alpha (color_button));
 
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (dialog)->help_button);
       gtk_container_set_border_width (GTK_CONTAINER (dialog), 2);
