@@ -473,7 +473,7 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_id);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
@@ -1070,6 +1070,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     &top_iter,
 				     page_index++);
 
+  gtk_box_set_spacing (GTK_BOX (vbox), 6);
+
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
 
@@ -1123,6 +1125,8 @@ prefs_dialog_new (Gimp       *gimp,
   editor = gimp_grid_editor_new (core_config->default_grid,
                                  core_config->default_image->xresolution,
                                  core_config->default_image->yresolution);
+
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
   gtk_container_add (GTK_CONTAINER (vbox), editor);
   gtk_widget_show (editor);

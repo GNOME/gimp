@@ -1,3 +1,7 @@
+2003-10-29  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c: increased vertical spacing.
+
 2003-10-28  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
