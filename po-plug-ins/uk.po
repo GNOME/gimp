@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2000-12-26 13:45+0200\n"
+"POT-Creation-Date: 2000-12-27 13:29+0200\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -732,8 +732,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/FractalExplorer.c:1166
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
-msgstr ""
-"fractalexplorer-path не зконф╕╜уровано - таких каталог╕в не знайдено:"
+msgstr "fractalexplorer-path не зконф╕╜уровано - таких каталог╕в не знайдено:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1342
 msgid "My first fractal"
@@ -763,7 +762,7 @@ msgstr "Актуал╕зувати фрактали"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 msgid "Add FractalExplorer Path"
-msgstr "Додати шлях досл╕дника фрактал╕в"
+msgstr "Додати контур досл╕дника фрактал╕в"
 
 #: plug-ins/Lighting/lighting_main.c:169
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
@@ -1161,7 +1160,7 @@ msgstr "Тип об'╓кту в╕дображення"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr "Зробити зображення прозорим за межами об'╓кта"
+msgstr "Зробити зображення прозорим за межами об'╓кту"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
@@ -1209,15 +1208,15 @@ msgstr "Кол╕р джерела св╕тла:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1043
 msgid "Object X position in XYZ space"
-msgstr "Позиц╕я об'╓кта по X у простор╕ XYZ"
+msgstr "Позиц╕я об'╓кту по X у простор╕ XYZ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1054
 msgid "Object Y position in XYZ space"
-msgstr "Позиц╕я об'╓кта по Y у простор╕ XYZ"
+msgstr "Позиц╕я об'╓кту по Y у простор╕ XYZ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1065
 msgid "Object Z position in XYZ space"
-msgstr "Позиц╕я об'╓кта по Z у простор╕ XYZ"
+msgstr "Позиц╕я об'╓кту по Z у простор╕ XYZ"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2898
@@ -2091,6 +2090,8 @@ msgid ""
 "Parameters were Saved to\n"
 "\"%s\""
 msgstr ""
+"Параметри було збережено в\n"
+"\"%s\""
 
 #: plug-ins/common/CML_explorer.c:2249
 msgid "CML File Operation Warning"
@@ -2111,7 +2112,7 @@ msgstr "Завантажити параметри з"
 
 #: plug-ins/common/CML_explorer.c:2308
 msgid "Selective Load from"
-msgstr ""
+msgstr "Виб╕ркове завантаження з"
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
@@ -2729,12 +2730,12 @@ msgstr "Складання: Зображення мають р╕зний розм╕р"
 
 #: plug-ins/common/compose.c:445
 msgid "Compose: Error in getting layer IDs"
-msgstr ""
+msgstr "Складання: Попилка отримання ╕дентиф╕катора шару"
 
 #: plug-ins/common/compose.c:462
 #, c-format
 msgid "Compose: Image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "Складання: Зображення не у в╕дт╕нках с╕рого (bpp=%d)"
 
 #: plug-ins/common/compose.c:771
 msgid "Compose"
@@ -2756,25 +2757,25 @@ msgstr "Представлення канал╕в"
 #: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:383
 #: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
-msgstr ""
+msgstr "С╕рий"
 
 #: plug-ins/common/convmatrix.c:89 plug-ins/common/decompose.c:138
 msgid "Alpha"
-msgstr ""
+msgstr "Альфа"
 
 #: plug-ins/common/convmatrix.c:94
 msgid "Extend"
-msgstr ""
+msgstr "Розширювати"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
 #: plug-ins/common/warp.c:512
 msgid "Wrap"
-msgstr ""
+msgstr "Завертати"
 
 #: plug-ins/common/convmatrix.c:96
 msgid "Crop"
-msgstr ""
+msgstr "Обр╕зати"
 
 #: plug-ins/common/convmatrix.c:195
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
@@ -2785,6 +2786,8 @@ msgid ""
 "Convolution Matrix does not work\n"
 "on layers smaller than 3 pixels."
 msgstr ""
+"Звертання матриц╕ не працю╓\n"
+"на шарах менших трьох точок."
 
 #: plug-ins/common/convmatrix.c:292
 msgid "Applying convolution"
@@ -2939,11 +2942,11 @@ msgstr "Скоп╕ювати"
 
 #: plug-ins/common/curve_bend.c:1365
 msgid "CopyInv"
-msgstr ""
+msgstr "Коп╕я-негатив"
 
 #: plug-ins/common/curve_bend.c:1367
 msgid "Swap"
-msgstr ""
+msgstr "Переставити"
 
 #. The Load button
 #: plug-ins/common/curve_bend.c:1386
@@ -4312,11 +4315,11 @@ msgstr "К╕льк╕сть елемент╕в"
 
 #: plug-ins/common/jigsaw.c:2548
 msgid "Number of pieces going across"
-msgstr ""
+msgstr "К╕льк╕сть елемент╕в, що перетинаються"
 
 #: plug-ins/common/jigsaw.c:2561
 msgid "Number of pieces going down"
-msgstr ""
+msgstr "К╕льк╕сть елемент╕в в низу"
 
 #: plug-ins/common/jigsaw.c:2572
 msgid "Bevel Edges"
@@ -4328,11 +4331,11 @@ msgstr "Ширина заокруглення:"
 
 #: plug-ins/common/jigsaw.c:2588
 msgid "Degree of slope of each piece's edge"
-msgstr ""
+msgstr "Кут нахилу краю кожного елементу"
 
 #: plug-ins/common/jigsaw.c:2602
 msgid "The amount of highlighting on the edges of each piece"
-msgstr ""
+msgstr "Розм╕р виблиску на краях кожного елементу"
 
 #: plug-ins/common/jigsaw.c:2619
 msgid "Jigsaw Style"
@@ -6355,8 +6358,8 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Визначення довжини буде збережено лише перед виходом з GIMP якщо "
-"стовпчик в╕дм╕чено."
+"Визначення довжини буде збережено лише перед виходом з GIMP якщо стовпчик "
+"в╕дм╕чено."
 
 #: plug-ins/common/uniteditor.c:539
 msgid ""
@@ -6376,8 +6379,8 @@ msgid ""
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 "Це поле - п╕дказка для поля числового воду. Воно вказу╓ к╕льк╕сть десяткових "
-"знак╕в у пол╕ вводу, як╕ будуть давати приблизно таку ж точн╕сть як поле"
-"вводу дюйм╕в з двома десятковими знаками."
+"знак╕в у пол╕ вводу, як╕ будуть давати приблизно таку ж точн╕сть як "
+"полевводу дюйм╕в з двома десятковими знаками."
 
 #: plug-ins/common/uniteditor.c:548
 msgid ""
@@ -6473,7 +6476,7 @@ msgstr "Неч╕тка маска"
 
 #: plug-ins/common/video.c:44
 msgid "Staggered"
-msgstr "Ших╕вниця"
+msgstr "Шах╕вниця"
 
 #: plug-ins/common/video.c:45
 msgid "Large staggered"
@@ -6546,11 +6549,11 @@ msgstr "Темн╕ше (менш╕ значення)"
 
 #: plug-ins/common/vpropagate.c:166
 msgid "Middle Value to Peaks"
-msgstr ""
+msgstr "Середня значення у п╕ках"
 
 #: plug-ins/common/vpropagate.c:169
 msgid "Foreground to Peaks"
-msgstr ""
+msgstr "Передн╕й план у п╕ках"
 
 #: plug-ins/common/vpropagate.c:172
 msgid "Only Foreground"
@@ -6595,7 +6598,7 @@ msgstr "Верхн╕й пор╕г:"
 
 #: plug-ins/common/vpropagate.c:1005
 msgid "Propagating Rate:"
-msgstr ""
+msgstr "Швидк╕сть розповсюдження:"
 
 #: plug-ins/common/vpropagate.c:1017
 msgid "To Left"
@@ -6615,11 +6618,11 @@ msgstr "Вниз"
 
 #: plug-ins/common/vpropagate.c:1039
 msgid "Propagating Alpha Channel"
-msgstr ""
+msgstr "Розповсюдження альфа-каналу"
 
 #: plug-ins/common/vpropagate.c:1049
 msgid "Propagating Value Channel"
-msgstr ""
+msgstr "Розповсюдження каналу яскравост╕"
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
@@ -6640,7 +6643,7 @@ msgstr "╤терац╕й:"
 #. Displacement map menu
 #: plug-ins/common/warp.c:486
 msgid "Displacement Map:"
-msgstr ""
+msgstr "Мапа зам╕щення:"
 
 #: plug-ins/common/warp.c:545
 msgid "FG Color"
@@ -6667,11 +6670,11 @@ msgstr "П╕дкроки:"
 #. Magnitude map menu
 #: plug-ins/common/warp.c:602
 msgid "Magnitude Map:"
-msgstr ""
+msgstr "Мапа значень:"
 
 #: plug-ins/common/warp.c:621
 msgid "Use Mag Map"
-msgstr ""
+msgstr "Використовувати маг╕чну мапу"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" table         --------------------------
@@ -6681,11 +6684,11 @@ msgstr "╤нш╕ параметри"
 
 #: plug-ins/common/warp.c:651
 msgid "Gradient Scale:"
-msgstr ""
+msgstr "Масштаб град╕╓нта:"
 
 #: plug-ins/common/warp.c:666
 msgid "Gradient map selection menu"
-msgstr ""
+msgstr "Меню вибору град╕╓нтно╖ мапи"
 
 #: plug-ins/common/warp.c:676
 msgid "Vector Mag:"
@@ -6693,7 +6696,7 @@ msgstr "Довжина вектора:"
 
 #: plug-ins/common/warp.c:702
 msgid "Fixed-direction-vector map selection menu"
-msgstr ""
+msgstr "Меню вибору мапи вектор╕в з ф╕ксованими напрямками"
 
 #.
 #. if (display_diff_map) {
@@ -6849,7 +6852,7 @@ msgstr "Обидва"
 
 #: plug-ins/common/wind.c:1142
 msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr ""
+msgstr "П╕двищення значень обмежу╓ ефект меншими д╕лянками зображення"
 
 #: plug-ins/common/wind.c:1155 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
@@ -6858,7 +6861,7 @@ msgstr "Сила:"
 
 #: plug-ins/common/wind.c:1159
 msgid "Higher values increase the magnitude of the effect"
-msgstr ""
+msgstr "П╕двищення значень п╕дсилю╓ ефект"
 
 #: plug-ins/common/winprint.c:189
 msgid "<Image>/File/Print"
@@ -7466,15 +7469,15 @@ msgstr "Натисн╕ть кнопку"
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
-msgstr ""
+msgstr "Виб╕р"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
-msgstr ""
+msgstr "Застосувати ф╕льтр \"GAP-ан╕моване\""
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:86
 msgid "Animated Filter apply (init)"
-msgstr ""
+msgstr "Застосувати ан╕мац╕йний ф╕льтр (╕н╕ц╕ал╕зац╕я)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:165
 msgid "Gen Code by name"
@@ -7482,20 +7485,20 @@ msgstr ""
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:665
 msgid "Animated Filter apply (by name - please wait)"
-msgstr ""
+msgstr "Застосову╓ться ан╕мац╕йний ф╕льтр (за назвою - зачекайте)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:689
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr ""
+msgstr "Застосову╓ться ан╕мац╕йний ф╕льтр (за анотац╕╓ю- зачекайте)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:697
 msgid "Animated Filter apply (please wait)"
-msgstr ""
+msgstr "Застосову╓ться ан╕мац╕йний ф╕льтр (зачекайте)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
 #: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
 msgid "Animated Filter apply"
-msgstr ""
+msgstr "Застосову╓ться ан╕мац╕йний ф╕льтр"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
@@ -8287,7 +8290,7 @@ msgstr "Вибрати ф╕льтр для застосування до ан╕мованих кадр╕в."
 
 #: plug-ins/gap/gap_mod_layer.c:805
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr "Зм╕на GAP: В останньому обробленому калр╕ нема╓ вибраного шару"
+msgstr "Зм╕на GAP: В останньому обробленому кадр╕ нема╓ вибраного шару"
 
 #: plug-ins/gap/gap_mod_layer.c:891
 msgid "Modifying Frames/Layer(s)..."
@@ -10342,7 +10345,7 @@ msgstr "Позиц╕я XY:"
 
 #: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
-msgstr "Подробиц╕ об'╓кта"
+msgstr "Подробиц╕ об'╓кту"
 
 #: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
@@ -10385,28 +10388,30 @@ msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
+"╢ %d не збережених об'╓кт╕в Gfig.\n"
+"Продовжувати процедуру виходу?"
 
 #: plug-ins/gfig/gfig.c:4420
 msgid "Enter Gfig Entry Name"
-msgstr ""
+msgstr "Вв╕д назви елементу Gfig"
 
 #: plug-ins/gfig/gfig.c:4444
 msgid "Gfig Object Name:"
-msgstr ""
+msgstr "Назва об'╓кту Gfig:"
 
 #. the dialog
 #: plug-ins/gfig/gfig.c:4503
 msgid "Rescan for Gfig Objects"
-msgstr ""
+msgstr "Актуал╕зувати об'╓кти Gfig"
 
 #: plug-ins/gfig/gfig.c:4521
 msgid "Add Gfig Path"
-msgstr ""
+msgstr "Додати контур Gfig"
 
 #. Load a single object
 #: plug-ins/gfig/gfig.c:4599
 msgid "Load Gfig obj"
-msgstr ""
+msgstr "Завантажити об'╓кт Gfig"
 
 #: plug-ins/gfig/gfig.c:4624
 msgid "Error in copy layer for onlayers"
@@ -10422,7 +10427,7 @@ msgstr "Помилка в створенн╕ шару"
 #: plug-ins/gfig/gfig.c:4735
 #, c-format
 msgid "Gfig Layer %d"
-msgstr ""
+msgstr "Шар Gfig %d"
 
 #: plug-ins/gfig/gfig.c:4808
 msgid "About GFig"
@@ -10446,25 +10451,25 @@ msgstr "╤зометрична с╕тка Роба Сандерса"
 
 #: plug-ins/gfig/gfig.c:4890
 msgid "New gfig obj"
-msgstr ""
+msgstr "Новий об'╓кт Gfig"
 
 #: plug-ins/gfig/gfig.c:5016
 msgid "Delete Gfig Drawing"
-msgstr ""
+msgstr "Стерти рисунок Gfig"
 
 #: plug-ins/gfig/gfig.c:5044 plug-ins/gfig/gfig.c:5084
 msgid "<NONE>"
-msgstr ""
+msgstr "<Нема╓>"
 
 #: plug-ins/gfig/gfig.c:5122
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Виправлення об'╓кту лише для зчитування - ви не зможете зберегти його"
 
 #. Create new entry with name + copy at end & copy object into it
 #: plug-ins/gfig/gfig.c:5225
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "Коп╕я %s"
 
 #: plug-ins/gfig/gfig.c:5270
 msgid "Save as..."
@@ -10476,7 +10481,7 @@ msgstr "Помилка зчитування файлу"
 
 #: plug-ins/gfig/gfig.c:6510
 msgid "Hey where has the object gone ?"
-msgstr ""
+msgstr "Гей, куди под╕вся об'╓кт?"
 
 #: plug-ins/gflare/gflare.c:826
 msgid "<Image>/Filters/Light Effects/GFlare..."
@@ -10488,7 +10493,7 @@ msgstr "Град╕╓нтний спалах..."
 
 #: plug-ins/gflare/gflare.c:954
 msgid "GFlare: cannot operate on indexed color images"
-msgstr ""
+msgstr "Град╕╓нтний спалах не працю╓ на ╕ндексованих зображеннях"
 
 #: plug-ins/gflare/gflare.c:992
 #, c-format
@@ -10506,12 +10511,12 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:1367
 #, c-format
 msgid "not valid GFlare file: %s"
-msgstr ""
+msgstr "нев╕рний файл GFalre: %s"
 
 #: plug-ins/gflare/gflare.c:1427
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
-msgstr ""
+msgstr "нев╕рно сформований файл GFalre: %s\n"
 
 #: plug-ins/gflare/gflare.c:1541
 #, c-format
@@ -10898,7 +10903,7 @@ msgstr "Глибина т╕н╕:"
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "Глибина т╕ни, визнача╓, як далеко в╕д об'╓кта вона ма╓ бути"
+msgstr "Глибина т╕ни, визнача╓, як далеко в╕д об'╓кту вона ма╓ бути"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
@@ -11605,7 +11610,7 @@ msgstr "Створити"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:50
 msgid "Edit Object"
-msgstr "Виправлення об'╓кта"
+msgstr "Виправлення об'╓кту"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
 msgid "Create Guides"
@@ -11677,21 +11682,21 @@ msgstr "Напрямн╕"
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
 #: plug-ins/imagemap/imap_selection.c:166
 msgid "Move Down"
-msgstr ""
+msgstr "Зсунути вниз"
 
 #: plug-ins/imagemap/imap_cmd_move_sash.c:64
 msgid "Move Sash"
-msgstr ""
+msgstr "Зсунути смугу"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:52
 msgid "Move Selected Objects"
-msgstr ""
+msgstr "Перем╕стити вибран╕ об'╓кти"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:51
 #: plug-ins/imagemap/imap_selection.c:163
 msgid "Move Up"
-msgstr ""
+msgstr "Зсунути вгору"
 
 #: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
 #: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
@@ -11770,7 +11775,7 @@ msgstr "е-пошта"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "URL to activate when this area is clicked: (required)"
-msgstr ""
+msgstr "URL, що актив╕зу╓ться при клацанн╕ на ц╕й д╕лянц╕: (обов'язково)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:227
 msgid "Select HTML file"
@@ -11782,7 +11787,7 @@ msgstr "В╕дносне посилання"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:241
 msgid "Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
+msgstr "Назва призначення/╤дентиф╕катор: (необов'язково - лише для кадр╕в)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:245
 msgid "Comment about this area: (optional)"
