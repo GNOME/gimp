@@ -194,6 +194,12 @@ gui_themes_init (Gimp *gimp)
   gtk_rc_parse (gtkrc);
 
   g_free (gtkrc);
+
+  /*  tooltips  */
+  gimp_help_init ();
+
+  if (! gimprc.show_tool_tips)
+    gimp_help_disable_tooltips ();
 }
 
 void
@@ -229,12 +235,6 @@ gui_init (Gimp *gimp)
       gimprc.using_xserver_resolution = TRUE;
     }
 
-  /*  tooltips  */
-  gimp_help_init ();
-
-  if (! gimprc.show_tool_tips)
-    gimp_help_disable_tooltips ();
-
   menus_init (gimp);
 
 #ifdef DISPLAY_FILTERS
@@ -261,7 +261,8 @@ gui_restore (Gimp     *gimp,
 
   menus_restore (gimp);
 
-  gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
+  gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                  "gimp:toolbox", -1);
 
   color_select_init ();
 
@@ -278,7 +279,8 @@ gui_post_init (Gimp *gimp)
 
   if (gimprc.show_tips)
     {
-      gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:tips-dialog");
+      gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                      "gimp:tips-dialog", -1);
     }
 }
 
@@ -535,7 +537,8 @@ gui_image_disconnect (GimpImage *gimage,
   /*  check if this is the last image  */
   if (gimp_container_num_children (gimp->images) == 1)
     {
-      gimp_dialog_factory_dialog_raise (global_dialog_factory, "gimp:toolbox");
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+                                        "gimp:toolbox", -1);
     }
 }
 

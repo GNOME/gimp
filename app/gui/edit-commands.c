@@ -223,7 +223,7 @@ void
 edit_named_paste_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  gimp_dialog_factory_dialog_raise (global_dock_factory, "gimp:buffer-list");
+  gimp_dialog_factory_dialog_raise (global_dock_factory, "gimp:buffer-list", -1);
 }
 
 void

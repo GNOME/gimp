@@ -59,7 +59,7 @@ brush_preview_clicked (GtkWidget *widget,
 		       gpointer   data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-				    "gimp:brush-grid");
+				    "gimp:brush-grid", -1);
 }
 
 static void
@@ -79,7 +79,7 @@ pattern_preview_clicked (GtkWidget *widget,
 			 gpointer   data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-				    "gimp:pattern-grid");
+				    "gimp:pattern-grid", -1);
 }
 
 static void
@@ -99,7 +99,7 @@ gradient_preview_clicked (GtkWidget *widget,
 			  gpointer   data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-				    "gimp:gradient-list");
+				    "gimp:gradient-list", -1);
 }
 
 static void

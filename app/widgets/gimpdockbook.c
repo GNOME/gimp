@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -32,6 +34,10 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpimagedock.h"
+
+/* EEK, see below  */
+#include "gimpcontainerview.h"
+#include "gimpcontainerview-utils.h"
 
 
 #define TAB_WIDGET_SIZE     24
@@ -431,30 +437,119 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
     {
       GtkItemFactory *ifactory;
       GtkWidget      *add_widget;
-      GtkWidget      *toggle_widget;
-      GtkWidget      *auto_widget;
-      GtkWidget      *notebook_menu;
       gint            origin_x;
       gint            origin_y;
       gint            x, y;
 
-      ifactory      = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
-      add_widget    = gtk_item_factory_get_widget (ifactory,
-						   "/Select Tab");
-      toggle_widget = gtk_item_factory_get_widget (ifactory,
-						   "/Show Image Menu");
-      auto_widget   = gtk_item_factory_get_widget (ifactory, 
+      ifactory = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
+
+      add_widget = gtk_item_factory_get_widget (ifactory, "/Select Tab");
+
+      /*  update the menu items  */
+      {
+        GimpDialogFactoryEntry *entry;
+        GimpContainerView      *view;
+        GtkWidget              *list_widget;
+        GtkWidget              *grid_widget;
+        GtkWidget              *size_widget;
+        GtkWidget              *toggle_widget;
+        GtkWidget              *auto_widget;
+        gboolean                is_grid      = FALSE;
+        gint                    preview_size = 16;
+
+        entry = g_object_get_data (G_OBJECT (dockable),
+                                   "gimp-dialog-factory-entry");
+
+        if (entry)
+          {
+            if (strstr (entry->identifier, "grid"))
+              is_grid = TRUE;
+          }
+
+        view = gimp_container_view_get_by_dockable (dockable);
+
+        if (view)
+          {
+            preview_size = view->preview_size;
+          }
+
+        list_widget = gtk_item_factory_get_widget (ifactory, "/View as List");
+        grid_widget = gtk_item_factory_get_widget (ifactory, "/View as Grid");
+        toggle_widget = gtk_item_factory_get_widget (ifactory,
+                                                     "/Show Image Menu");
+        auto_widget = gtk_item_factory_get_widget (ifactory, 
 						   "/Auto Follow Active Image");
-      notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
 
-      g_object_ref (G_OBJECT (notebook_menu));
-      gtk_menu_detach (GTK_MENU (notebook_menu));
+        /*  yes, this is insane  */
+        if (preview_size >= 128)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Enormous");
+          }
+        else if (preview_size >= 64)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Huge");
+          }
+        else if (preview_size >= 48)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Large");
+          }
+        else if (preview_size >= 32)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Medium");
+          }
+        else if (preview_size >= 24)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Small");
+          }
+        else
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Tiny");
+          }
 
-      GTK_NOTEBOOK (dockbook)->menu = notebook_menu;
+        gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (size_widget),
+                                        TRUE);
 
-      gtk_menu_item_set_submenu (GTK_MENU_ITEM (add_widget), notebook_menu);
+        if (is_grid)
+          {
+            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (grid_widget),
+                                            TRUE);
+          }
+        else
+          {
+            gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (list_widget),
+                                            TRUE);
+          }
 
-      g_object_unref (G_OBJECT (notebook_menu));
+        gtk_check_menu_item_set_active
+          (GTK_CHECK_MENU_ITEM (toggle_widget),
+           GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
+
+        gtk_check_menu_item_set_active
+          (GTK_CHECK_MENU_ITEM (auto_widget),
+           GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
+      }
+
+      /*  do evil things  */
+      {
+        GtkWidget *notebook_menu;
+
+        notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
+
+        g_object_ref (G_OBJECT (notebook_menu));
+        gtk_menu_detach (GTK_MENU (notebook_menu));
+
+        GTK_NOTEBOOK (dockbook)->menu = notebook_menu;
+
+        gtk_menu_item_set_submenu (GTK_MENU_ITEM (add_widget), notebook_menu);
+
+        g_object_unref (G_OBJECT (notebook_menu));
+      }
 
       gdk_window_get_origin (widget->window, &origin_x, &origin_y);
 
@@ -471,14 +566,6 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
        *  if for gimp_dockbook_menu_end()
        */
       g_object_ref (G_OBJECT (dockbook));
-
-      gtk_check_menu_item_set_active
-	(GTK_CHECK_MENU_ITEM (toggle_widget),
-	 GIMP_IMAGE_DOCK (dockbook->dock)->show_image_menu);
-
-      gtk_check_menu_item_set_active
-	(GTK_CHECK_MENU_ITEM (auto_widget),
-	 GIMP_IMAGE_DOCK (dockbook->dock)->auto_follow_active);
 
       gtk_item_factory_popup_with_data (ifactory,
 					dockbook,

@@ -33,8 +33,10 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "gimpcontainereditor.h"
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
+#include "gimpdockable.h"
 #include "gimplistitem.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
@@ -78,6 +80,30 @@ static GimpNameFuncEntry name_func_entries[] =
 
 
 /*  public functions  */
+
+GimpContainerView *
+gimp_container_view_get_by_dockable (GimpDockable *dockable)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+
+  if (GTK_BOX (dockable)->children)
+    {
+      GtkWidget *child;
+
+      child = ((GtkBoxChild *) GTK_BOX (dockable)->children->data)->widget;
+
+      if (GIMP_IS_CONTAINER_EDITOR (child))
+        {
+          return GIMP_CONTAINER_EDITOR (child)->view;
+        }
+      else if (GIMP_IS_CONTAINER_VIEW (child))
+        {
+          return GIMP_CONTAINER_VIEW (child);
+        }
+    }
+
+  return NULL;
+}
 
 GimpItemGetNameFunc
 gimp_container_view_get_built_in_name_func (GType  type)

@@ -1,3 +1,39 @@
+2001-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c: removed a useless g_return_if_fail().
+
+	* app/widgets/gimpcontainereditor.h: removed GimpViewType enum.
+
+	* app/widgets/widgets-types.h: added it here.
+
+	* app/widgets/gimpcontainerview-utils.[ch]: added a utility function
+	which gets the GimpContainerView out of a GimpDockable.
+
+	* app/widgets/gimpdialogfactory.[ch]: added support for saving and
+	loading of each GimpDockable's preview size. Store the dialog's
+	default preview size in the GimpDialogFactoryEntry.  Pass the
+	preview_size to each created dialog.
+
+	* app/gui/menus.c: added menu items for setting the preview_size
+	and switching between list and grid view. Removed the item
+	overkill in the "Add Tab" submenu.
+
+	* app/gui/dialogs-commands.[ch]: added callbacks for the new items.
+
+	* app/widgets/gimpdockbook.c: set the item's state before showing
+	the menu.
+
+	* app/errors.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/edit-commands.c
+	* app/gui/gui.c
+	* app/gui/indicator-area.c
+	* app/gui/toolbox.c: changed accordingly.
+
+	* app/tools/selection_options.[ch]: cleaned up the selection
+	options and added some tooltips. Much more to do...
+
 2001-11-23  Rebecca Walter  <rjp@mail.tele.dk>
 
 	* app/file/*.c: Proofing. only minor changes.

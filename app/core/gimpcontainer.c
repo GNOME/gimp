@@ -686,7 +686,6 @@ gimp_container_remove_handler (GimpContainer *container,
   GimpContainerHandler *handler;
   GList                *list;
 
-  g_return_if_fail (container != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (id != 0);
 

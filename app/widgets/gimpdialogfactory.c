@@ -21,7 +21,8 @@
 
 #include "config.h"
 
-#include <string.h> /* strcmp */
+#include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -31,6 +32,8 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpcontainerview.h"
+#include "gimpcontainerview-utils.h"
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
@@ -235,6 +238,7 @@ void
 gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
 				    const gchar       *identifier,
 				    GimpDialogNewFunc  new_func,
+                                    gint               preview_size,
 				    gboolean           singleton,
 				    gboolean           session_managed,
 				    gboolean           remember_size,
@@ -249,6 +253,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
 
   entry->identifier       = g_strdup (identifier);
   entry->new_func         = new_func;
+  entry->preview_size     = preview_size;
   entry->singleton        = singleton ? TRUE : FALSE;
   entry->session_managed  = session_managed ? TRUE : FALSE;
   entry->remember_size    = remember_size ? TRUE : FALSE;
@@ -313,6 +318,7 @@ static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 					 GimpContext       *context,
 					 const gchar       *identifier,
+                                         gint               preview_size,
 					 gboolean           raise_if_found)
 {
   GimpDialogFactoryEntry *entry;
@@ -375,12 +381,21 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
        *  - the factory's context, which happens when raising a toplevel
        *    dialog was the original request.
        */
+      if (preview_size < 16)
+        preview_size = entry->preview_size;
+
       if (context)
-	dialog = entry->new_func (factory, context);
+	dialog = entry->new_func (factory,
+                                  context,
+                                  preview_size);
       else if (dock)
-	dialog = entry->new_func (factory, GIMP_DOCK (dock)->context);
+	dialog = entry->new_func (factory,
+                                  GIMP_DOCK (dock)->context,
+                                  preview_size);
       else
-	dialog = entry->new_func (factory, factory->context);
+	dialog = entry->new_func (factory,
+                                  factory->context,
+                                  preview_size);
 
       if (dialog)
 	{
@@ -490,7 +505,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
-				const gchar       *identifier)
+				const gchar       *identifier,
+                                gint               preview_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
@@ -498,6 +514,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
 						  factory->context,
 						  identifier,
+                                                  preview_size,
 						  FALSE);
 }
 
@@ -516,7 +533,8 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
-				  const gchar       *identifier)
+				  const gchar       *identifier,
+                                  gint               preview_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
@@ -524,6 +542,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
 						  NULL,
 						  identifier,
+                                                  preview_size,
 						  TRUE);
 }
 
@@ -547,7 +566,8 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 GtkWidget *
 gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 				  GimpDock          *dock,
-				  const gchar       *identifier)
+				  const gchar       *identifier,
+                                  gint               preview_size)
 {
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
@@ -556,6 +576,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
 						  dock->context,
 						  identifier,
+                                                  preview_size,
 						  FALSE);
 }
 
@@ -578,7 +599,7 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (factory->new_dock_func != NULL, NULL);
 
-  dock = factory->new_dock_func (factory, factory->context);
+  dock = factory->new_dock_func (factory, factory->context, 0);
 
   if (dock)
     {
@@ -840,7 +861,7 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
     case GIMP_DIALOG_HIDE_ALL:
       toggle_state = GIMP_DIALOG_SHOW_TOOLBOX;
 
-      gimp_dialog_factory_dialog_raise (toolbox_factory, toolbox_identifier);
+      gimp_dialog_factory_dialog_raise (toolbox_factory, toolbox_identifier, -1);
       break;
 
     case GIMP_DIALOG_SHOW_TOOLBOX:
@@ -981,8 +1002,32 @@ gimp_dialog_factories_save_foreach (gchar             *name,
                                              "gimp-dialog-factory-entry");
 
 		  if (entry)
-		    fprintf (fp, "\"%s\"%s",
-			     entry->identifier, pages->next ? " ": "");
+                    {
+                      GimpContainerView *view;
+                      gint               preview_size = -1;
+
+                      view = gimp_container_view_get_by_dockable (dockable);
+
+                      if (view && view->preview_size >= 16)
+                        {
+                          preview_size = view->preview_size;
+                        }
+
+                      if (preview_size > 0 &&
+                          preview_size != entry->preview_size)
+                        {
+                          fprintf (fp, "\"%s@%d\"",
+                                   entry->identifier, preview_size);
+                        }
+                      else
+                        {
+                          fprintf (fp, "\"%s\"",
+                                   entry->identifier);
+                        }
+
+                      if (pages->next)
+                        fprintf (fp, " ");
+                    }
 		}
 
 	      g_list_free (children);
@@ -1021,7 +1066,8 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 
 	  dialog =
 	    gimp_dialog_factory_dialog_new (factory,
-					    info->toplevel_entry->identifier);
+					    info->toplevel_entry->identifier,
+                                            info->toplevel_entry->preview_size);
 
 	  if (dialog && info->aux_info)
 	    gimp_dialog_factory_set_aux_info (dialog, info);
@@ -1049,12 +1095,25 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 		{
 		  GtkWidget *dockable;
 		  gchar     *identifier;
+                  gchar     *substring;
+                  gint       preview_size = -1;
 
 		  identifier = (gchar *) pages->data;
 
+                  if ((substring = strstr (identifier, "@")))
+                    {
+                      *substring = '\0';
+
+                      preview_size = atoi (substring + 1);
+
+                      if (preview_size < 16)
+                        preview_size = -1;
+                    }
+
 		  dockable = gimp_dialog_factory_dockable_new (factory,
 							       dock,
-							       identifier);
+							       identifier,
+                                                               preview_size);
 
 		  if (dockable)
 		    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);

@@ -46,8 +46,6 @@ selection_options_init (SelectionOptions *options,
                         GimpToolInfo     *tool_info)
 {
   GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *table;
   GtkWidget *label;
   GtkWidget *scale;
 
@@ -94,17 +92,28 @@ selection_options_init (SelectionOptions *options,
 
   /*  the selection operation radio buttons  */
   {
-    struct
+    SelectOps radio_ops[] =
     {
-      SelectOps    op;
-      const gchar *stock_id;
-    }
-    select_op_entries[] =
+      SELECTION_REPLACE,
+      SELECTION_ADD,
+      SELECTION_SUB,
+      SELECTION_INTERSECT
+    };
+
+    const gchar *radio_stock_ids[] =
     {
-      { SELECTION_REPLACE,   GIMP_STOCK_SELECTION_REPLACE   },
-      { SELECTION_ADD,       GIMP_STOCK_SELECTION_ADD       },
-      { SELECTION_SUB,       GIMP_STOCK_SELECTION_SUBTRACT  },
-      { SELECTION_INTERSECT, GIMP_STOCK_SELECTION_INTERSECT }
+      GIMP_STOCK_SELECTION_REPLACE,
+      GIMP_STOCK_SELECTION_ADD,
+      GIMP_STOCK_SELECTION_SUBTRACT,
+      GIMP_STOCK_SELECTION_INTERSECT
+    };
+
+    const gchar *radio_tooltips[] =
+    {
+      _("Replace the current selection"),
+      _("Add to the current selection"),
+      _("Subtract from the current selection"),
+      _("Intersect with the current selection")
     };
 
     GtkWidget *hbox;
@@ -121,7 +130,7 @@ selection_options_init (SelectionOptions *options,
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    for (i = 0; i < G_N_ELEMENTS (select_op_entries); i++)
+    for (i = 0; i < G_N_ELEMENTS (radio_ops); i++)
       {
         options->op_w[i] = gtk_radio_button_new (group);
         group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (options->op_w[i]));
@@ -129,72 +138,26 @@ selection_options_init (SelectionOptions *options,
         gtk_box_pack_start (GTK_BOX (hbox), options->op_w[i], FALSE, FALSE, 0);
         gtk_widget_show (options->op_w[i]);
 
-        image = gtk_image_new_from_stock (select_op_entries[i].stock_id,
+        gimp_help_set_help_data (options->op_w[i], radio_tooltips[i], NULL);
+
+        image = gtk_image_new_from_stock (radio_stock_ids[i],
                                           GTK_ICON_SIZE_BUTTON);
         gtk_container_add (GTK_CONTAINER (options->op_w[i]), image);
         gtk_widget_show (image);
 
-        if (select_op_entries[i].op == options->op)
+        if (radio_ops[i] == options->op)
           {
             gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->op_w[i]),
                                           TRUE);
           }
 
         g_object_set_data (G_OBJECT (options->op_w[i]), "gimp-item-data",
-                           GINT_TO_POINTER (select_op_entries[i].op));
+                           GINT_TO_POINTER (radio_ops[i]));
         g_signal_connect (G_OBJECT (options->op_w[i]), "toggled",
                           G_CALLBACK (gimp_radio_button_update),
                           &options->op);
       }
   }
-
-  /*  the feather toggle button  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-  options->feather_w = gtk_check_button_new_with_label (_("Feather"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
-				options->feather_d);
-  gtk_table_attach (GTK_TABLE (table), options->feather_w, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-  gtk_widget_show (options->feather_w);
-
-  g_signal_connect (G_OBJECT (options->feather_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->feather);
-
-  /*  the feather radius scale  */
-  label = gtk_label_new (_("Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
-
-  options->feather_radius_w =
-    gtk_adjustment_new (options->feather_radius_d, 0.0, 100.0, 1.0, 1.0, 1.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->feather_radius_w));
-  gtk_container_add (GTK_CONTAINER (abox), scale);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_widget_show (scale);
-
-  g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->feather_radius);
-
-  /*  grey out label & scale if feather is off  */
-  gtk_widget_set_sensitive (scale, options->feather_d);
-  gtk_widget_set_sensitive (label, options->feather_d);
-  g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", scale);
-  g_object_set_data (G_OBJECT (scale), "set_sensitive", label);
-
-  gtk_widget_show (table);
 
   /*  the antialias toggle button  */
   options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
@@ -202,6 +165,8 @@ selection_options_init (SelectionOptions *options,
                                 options->antialias_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
   gtk_widget_show (options->antialias_w);
+
+  gimp_help_set_help_data (options->antialias_w, _("Smooth edges"), NULL);
 
   if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
     {
@@ -213,6 +178,54 @@ selection_options_init (SelectionOptions *options,
                         G_CALLBACK (gimp_toggle_button_update),
                         &options->antialias);
     }
+
+  /*  the feather frame  */
+  {
+    GtkWidget *frame;
+    GtkWidget *hbox;
+
+    frame = gtk_frame_new (NULL);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
+
+    options->feather_w = gtk_check_button_new_with_label (_("Feather Edges"));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
+                                  options->feather_d);
+    gtk_frame_set_label_widget (GTK_FRAME (frame), options->feather_w);
+    gtk_widget_show (options->feather_w);
+
+    g_signal_connect (G_OBJECT (options->feather_w), "toggled",
+                      G_CALLBACK (gimp_toggle_button_update),
+                      &options->feather);
+
+    /*  the feather radius scale  */
+    hbox = gtk_hbox_new (FALSE, 2);
+    gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+    gtk_container_add (GTK_CONTAINER (frame), hbox);
+    gtk_widget_show (hbox);
+  
+    label = gtk_label_new (_("Radius:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+
+    options->feather_radius_w =
+      gtk_adjustment_new (options->feather_radius_d, 0.0, 100.0, 1.0, 1.0, 1.0);
+
+    scale = gtk_hscale_new (GTK_ADJUSTMENT (options->feather_radius_w));
+    gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+    gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+    gtk_widget_show (scale);
+
+    g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
+                      G_CALLBACK (gimp_double_adjustment_update),
+                      &options->feather_radius);
+
+    /*  grey out label & scale if feather is off  */
+    gtk_widget_set_sensitive (hbox, options->feather_d);
+    g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", hbox);
+  }
 
 #if 0
   /*  a separator between the common and tool-specific selection options  */
@@ -250,16 +263,30 @@ selection_options_init (SelectionOptions *options,
   if (tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
       tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
+      GtkWidget *frame;
+      GtkWidget *vbox2;
       GtkWidget *hbox;
+
+      frame = gtk_frame_new (_("Finding Similar Colors"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox2 = gtk_vbox_new (FALSE, 0);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      gtk_widget_show (vbox2);
 
       /*  the sample merged toggle  */
       options->sample_merged_w =
 	gtk_check_button_new_with_label (_("Sample Merged"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
-      gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w,
+      gtk_box_pack_start (GTK_BOX (vbox2), options->sample_merged_w,
 			  FALSE, FALSE, 0);
       gtk_widget_show (options->sample_merged_w);
+
+      gimp_help_set_help_data (options->sample_merged_w,
+                               _("Base selection on all visible layers"), NULL);
 
       g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
@@ -267,7 +294,7 @@ selection_options_init (SelectionOptions *options,
 
       /*  the threshold scale  */
       hbox = gtk_hbox_new (FALSE, 1);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
   
       label = gtk_label_new (_("Threshold:"));
@@ -282,6 +309,8 @@ selection_options_init (SelectionOptions *options,
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
+
+      gimp_help_set_help_data (scale, _("Maximum color difference"), NULL);
 
       g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),
@@ -330,6 +359,10 @@ selection_options_init (SelectionOptions *options,
       gtk_box_pack_start (GTK_BOX (vbox2), options->shrink_merged_w,
                           FALSE, FALSE, 0);
       gtk_widget_show (options->shrink_merged_w);
+
+      gimp_help_set_help_data (options->shrink_merged_w,
+                               _("Use all visible layers when shrinking "
+                                 "the selection"), NULL);
 
       g_signal_connect (G_OBJECT (options->shrink_merged_w), "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
@@ -437,18 +470,18 @@ selection_options_reset (GimpToolOptions *tool_options)
                                    GINT_TO_POINTER (options->op_d));
     }
 
+  if (options->antialias_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+                                    options->antialias_d);
+    }
+
   if (options->feather_w)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
 				    options->feather_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->feather_radius_w),
 				options->feather_radius_d);
-    }
-
-  if (options->antialias_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
-                                    options->antialias_d);
     }
 
   if (options->sample_merged_w)

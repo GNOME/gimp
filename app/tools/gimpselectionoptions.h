@@ -34,6 +34,10 @@ struct _SelectionOptions
   SelectOps    op_d;
   GtkWidget   *op_w[4]; /*  4 radio buttons  */
 
+  gboolean     antialias;
+  gboolean     antialias_d;
+  GtkWidget   *antialias_w;
+
   gboolean     feather;
   gboolean     feather_d;
   GtkWidget   *feather_w;
@@ -41,11 +45,6 @@ struct _SelectionOptions
   gdouble      feather_radius;
   gdouble      feather_radius_d;
   GtkObject   *feather_radius_w;
-
-  /*  used by all selection tools except rect. select  */
-  gboolean     antialias;
-  gboolean     antialias_d;
-  GtkWidget   *antialias_w;
 
   /*  used by fuzzy, by-color selection  */
   gboolean     sample_merged;

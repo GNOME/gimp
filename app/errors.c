@@ -60,7 +60,7 @@ gimp_message_log_func (const gchar    *log_domain,
 
 	case ERROR_CONSOLE:
 	  gimp_dialog_factory_dialog_raise (global_dock_factory,
-					    "gimp:error-console");
+					    "gimp:error-console", -1);
 	  error_console_add ((gchar *) message);
 	  break;
 

@@ -29,6 +29,12 @@
 
 typedef enum
 {
+  GIMP_VIEW_TYPE_GRID,
+  GIMP_VIEW_TYPE_LIST
+} GimpViewType;
+
+typedef enum
+{
   GIMP_DROP_NONE,
   GIMP_DROP_ABOVE,
   GIMP_DROP_BELOW

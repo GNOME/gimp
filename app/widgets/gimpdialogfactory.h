@@ -29,7 +29,8 @@
 
 
 typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
-					   GimpContext       *context);
+					   GimpContext       *context,
+                                           gint               preview_size);
 
 
 typedef struct _GimpDialogFactoryEntry GimpDialogFactoryEntry;
@@ -39,6 +40,7 @@ struct _GimpDialogFactoryEntry
 {
   gchar             *identifier;
   GimpDialogNewFunc  new_func;
+  gint               preview_size;
   gboolean           singleton;
   gboolean           session_managed;
   gboolean           remember_size;
@@ -113,6 +115,7 @@ GimpDialogFactory * gimp_dialog_factory_from_name (const gchar       *name);
 void        gimp_dialog_factory_register_entry    (GimpDialogFactory *factory,
 						   const gchar       *identifier,
 						   GimpDialogNewFunc  new_func,
+                                                   gint               preview_size,
 						   gboolean           singleton,
 						   gboolean           session_managed,
 						   gboolean           remember_size,
@@ -126,12 +129,15 @@ GimpSessionInfo * gimp_dialog_factory_find_session_info
 						   const gchar       *identifier);
 
 GtkWidget * gimp_dialog_factory_dialog_new        (GimpDialogFactory *factory,
-						   const gchar       *identifier);
+						   const gchar       *identifier,
+                                                   gint               preview_size);
 GtkWidget * gimp_dialog_factory_dialog_raise      (GimpDialogFactory *factory,
-						   const gchar       *identifier);
+						   const gchar       *identifier,
+                                                   gint               preview_size);
 GtkWidget * gimp_dialog_factory_dockable_new      (GimpDialogFactory *factory,
 						   GimpDock          *dock,
-						   const gchar       *identifier);
+						   const gchar       *identifier,
+                                                   gint               preview_size);
 GtkWidget * gimp_dialog_factory_dock_new          (GimpDialogFactory *factory);
 
 void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,

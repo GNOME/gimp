@@ -38,52 +38,52 @@ GimpDialogFactory *global_dock_factory   = NULL;
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
-  { "gimp:toolbox",                dialogs_toolbox_get,         TRUE,  TRUE,  TRUE,  TRUE  },
-  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:device-status-dialog",   dialogs_device_status_get,   TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:palette-select-dialog",  dialogs_palette_select_get,  TRUE,  TRUE,  FALSE, TRUE  },
-  { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:module-browser-dialog",  dialogs_module_browser_get,  TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:undo-history-dialog",    dialogs_undo_history_get,    FALSE, FALSE, FALSE, TRUE  },
-  { "gimp:display-filters-dialog", dialogs_display_filters_get, FALSE, FALSE, FALSE, TRUE  },
-  { "gimp:tips-dialog",            dialogs_tips_get,            TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:about-dialog",           dialogs_about_get,           TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp:toolbox",                dialogs_toolbox_get,         32, TRUE,  TRUE,  TRUE,  TRUE  },
+  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:device-status-dialog",   dialogs_device_status_get,   32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, 32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:palette-select-dialog",  dialogs_palette_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
+  { "gimp:preferences-dialog",     dialogs_preferences_get,     32, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp:input-devices-dialog",   dialogs_input_devices_get,   32, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp:module-browser-dialog",  dialogs_module_browser_get,  32, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp:undo-history-dialog",    dialogs_undo_history_get,    32, FALSE, FALSE, FALSE, TRUE  },
+  { "gimp:display-filters-dialog", dialogs_display_filters_get, 32, FALSE, FALSE, FALSE, TRUE  },
+  { "gimp:tips-dialog",            dialogs_tips_get,            32, TRUE,  FALSE, FALSE, TRUE  },
+  { "gimp:about-dialog",           dialogs_about_get,           32, TRUE,  FALSE, FALSE, TRUE  },
 
-  { "gimp:brush-editor",           dialogs_brush_editor_get,    TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp:gradient-editor",        dialogs_gradient_editor_get, TRUE,  TRUE,  TRUE,  FALSE },
-  { "gimp:palette-editor",         dialogs_palette_editor_get,  TRUE,  TRUE,  TRUE,  FALSE }
+  { "gimp:brush-editor",           dialogs_brush_editor_get,    32, TRUE,  TRUE,  TRUE,  FALSE },
+  { "gimp:gradient-editor",        dialogs_gradient_editor_get, 32, TRUE,  TRUE,  TRUE,  FALSE },
+  { "gimp:palette-editor",         dialogs_palette_editor_get,  32, TRUE,  TRUE,  TRUE,  FALSE }
 };
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
-  { "gimp:image-list",       dialogs_image_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:brush-list",       dialogs_brush_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:pattern-list",     dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:gradient-list",    dialogs_gradient_list_view_new, FALSE, FALSE, FALSE, TRUE },
-  { "gimp:palette-list",     dialogs_palette_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:tool-list",        dialogs_tool_list_view_new,     FALSE, FALSE, FALSE, TRUE },
-  { "gimp:buffer-list",      dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE, TRUE },
+  { "gimp:image-list",       dialogs_image_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:brush-list",       dialogs_brush_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:pattern-list",     dialogs_pattern_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:gradient-list",    dialogs_gradient_list_view_new, 16, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:palette-list",     dialogs_palette_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:tool-list",        dialogs_tool_list_view_new,     24, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:buffer-list",      dialogs_buffer_list_view_new,   32, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:image-grid",       dialogs_image_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:brush-grid",       dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:pattern-grid",     dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:gradient-grid",    dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE, TRUE },
-  { "gimp:palette-grid",     dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:tool-grid",        dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE, TRUE },
-  { "gimp:buffer-grid",      dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE, TRUE },
+  { "gimp:image-grid",       dialogs_image_grid_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:brush-grid",       dialogs_brush_grid_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:pattern-grid",     dialogs_pattern_grid_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:gradient-grid",    dialogs_gradient_grid_view_new, 16, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:palette-grid",     dialogs_palette_grid_view_new,  32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:tool-grid",        dialogs_tool_grid_view_new,     24, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:buffer-grid",      dialogs_buffer_grid_view_new,   32, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:layer-list",       dialogs_layer_list_view_new,    FALSE, FALSE, FALSE, TRUE },
-  { "gimp:channel-list",     dialogs_channel_list_view_new,  FALSE, FALSE, FALSE, TRUE },
-  { "gimp:path-list",        dialogs_path_list_view_new,     TRUE,  FALSE, FALSE, TRUE },
-  { "gimp:indexed-palette",  dialogs_indexed_palette_new,    FALSE, FALSE, FALSE, TRUE },
+  { "gimp:layer-list",       dialogs_layer_list_view_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp:channel-list",     dialogs_channel_list_view_new,  32,FALSE, FALSE, FALSE, TRUE },
+  { "gimp:path-list",        dialogs_path_list_view_new,     32, TRUE,  FALSE, FALSE, TRUE },
+  { "gimp:indexed-palette",  dialogs_indexed_palette_new,    32, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:document-history", dialogs_document_history_new,   FALSE, FALSE, FALSE, TRUE },
+  { "gimp:document-history", dialogs_document_history_new,   48, FALSE, FALSE, FALSE, TRUE },
 
-  { "gimp:error-console",    dialogs_error_console_get,      TRUE,  FALSE, FALSE, TRUE }
+  { "gimp:error-console",    dialogs_error_console_get,      32, TRUE,  FALSE, FALSE, TRUE }
 };
 
 
@@ -108,6 +108,7 @@ dialogs_init (Gimp *gimp)
     gimp_dialog_factory_register_entry (global_dialog_factory,
 					toplevel_entries[i].identifier,
 					toplevel_entries[i].new_func,
+					toplevel_entries[i].preview_size,
 					toplevel_entries[i].singleton,
 					toplevel_entries[i].session_managed,
 					toplevel_entries[i].remember_size,
@@ -117,6 +118,7 @@ dialogs_init (Gimp *gimp)
     gimp_dialog_factory_register_entry (global_dock_factory,
 					dock_entries[i].identifier,
 					dock_entries[i].new_func,
+					dock_entries[i].preview_size,
 					dock_entries[i].singleton,
 					dock_entries[i].session_managed,
 					dock_entries[i].remember_size,
