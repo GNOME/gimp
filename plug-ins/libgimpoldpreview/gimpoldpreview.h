@@ -1,11 +1,11 @@
 /* LIBGIMPOLDPREVIEW
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpmiscui.h
- * Contains all kinds of miscellaneous routines factored out from different
- * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk
- * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
+ * gimpoldpreview.h
+ * This file contains the implementation of the gimpoldpreview widget
+ * witch is used a a few plug-ins.  This shouldn't be used by any 
+ * foreign plug-in, because it uses some deprecated stuff.  We only
+ * used it there since we do not a better preview widget for now.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -47,10 +47,10 @@ typedef struct
   guchar    *even;
   guchar    *odd;
   guchar    *buffer;
-  gint	     width;
-  gint	     height;
+  gint       width;
+  gint       height;
   gint       rowstride;
-  gint       bpp;		/* bpp of the drawable */
+  gint       bpp;          /* bpp of the drawable */
   guchar    *cmap;
   gint       ncolors;
   gdouble    scale_x;
@@ -94,9 +94,6 @@ void gimp_old_preview_get_pixel       (GimpOldPreview *preview,
                                        gint              x,
                                        gint              y,
                                        guchar           *pixel);
-
-gchar   * gimp_plug_in_get_path              (const gchar *path_name,
-                                              const gchar *dir_name);
 
 G_END_DECLS
 

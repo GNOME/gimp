@@ -1,3 +1,8 @@
+2003-12-13  DindinX  <david@dindinx.org>
+
+	* plug-ins/libgimpoldpreview/gimpoldpreview.[ch]: fixed the header
+	part to reflect the new name of these files.
+
 2003-12-12  Manish Singh  <yosh@gimp.org>
 
 	* Makefile.am
