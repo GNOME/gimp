@@ -44,7 +44,7 @@ struct _selection
   int           recalc;          /*  flag to recalculate the selection */
   int           speed;           /*  speed of marching ants            */
   int           hidden;          /*  is the selection hidden?          */
-  gint          timer;           /*  timer for successive draws        */
+  guint         timer;           /*  timer for successive draws        */
   int           cycle;           /*  color cycling turned on           */
   GdkPixmap *   cycle_pix;       /*  cycling pixmap                    */
 
