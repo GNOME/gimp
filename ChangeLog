@@ -1,5 +1,9 @@
 2003-04-14  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.3.14 release.
+
+2003-04-14  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb
 	* tools/pdbgen/pdb/image.pdb: don't request viewable previews with
 	a width or height of 0 and don't crash if no preview is returned.

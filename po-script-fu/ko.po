@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2003-03-23 16:34+0100\n"
+"POT-Creation-Date: 2003-04-12 14:48+0200\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -48,93 +48,85 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1186
-#: plug-ins/script-fu/script-fu-scripts.c:1188
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1230
+#: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
 msgstr "대하여"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1391
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu 폰트 셀렉션"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 패턴 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 색감변화도 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1654
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
-"설정을 검사해보세요\n"
-
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1922
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1980
+#: plug-ins/script-fu/script-fu-scripts.c:1930
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2121
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu 폰트 셀렉션"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2191
+#: plug-ins/script-fu/script-fu-scripts.c:2053
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -228,24 +220,6 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "Script-Fu 파일 셀렉션"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:2
-msgid "Anim-Filter for all Copies"
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:3
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "닫기"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:4
-msgid "Number of Copies"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
@@ -2489,6 +2463,21 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#~ msgid ""
+#~ "At least one font you've choosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
+#~ "설정을 검사해보세요\n"
+
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "Script-Fu 파일 셀렉션"
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "닫기"
 
 #, fuzzy
 #~ msgid "DB Browser (init...)"

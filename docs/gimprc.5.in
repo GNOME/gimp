@@ -442,20 +442,26 @@ certain % character sequences are recognised and expanded as follows:
 .TP
 (show-menubar no)
 
-Sets the default menubar visibility. This can also be toggled with the
-"View->Toggle" Menubar command.  Possible values are yes and no.
+When enabled, the menubar is visible by default. This can also be toggled with
+the "View->Show Menubar" command.  Possible values are yes and no.
 
 .TP
 (show-rulers yes)
 
-Sets the default ruler visibility. This can also be toggled with the
-"View->Toggle Rulers" command.  Possible values are yes and no.
+When enabled, the rulers are visible by default. This can also be toggled with
+the "View->Show Rulers" command.  Possible values are yes and no.
+
+.TP
+(show-scrollbars yes)
+
+When enabled, the scrollbars are visible by default. This can also be toggled
+with the "View->Show Scrollbars" command.  Possible values are yes and no.
 
 .TP
 (show-statusbar yes)
 
 When enabled, the statusbar is visible by default. This can also be toggled
-with the "View->Toggle Statusbar" command.  Possible values are yes and no.
+with the "View->Show Statusbar" command.  Possible values are yes and no.
 
 .TP
 (confirm-on-close yes)
@@ -576,6 +582,18 @@ When enabled, menus can be torn off.  Possible values are yes and no.
 
 When enabled, you can change keyboard shortcuts for menu items on the fly. 
 Possible values are yes and no.
+
+.TP
+(save-accels yes)
+
+Save changed keyboard shortcuts when the GIMP exits.  Possible values are yes
+and no.
+
+.TP
+(restore-accels yes)
+
+Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
+yes and no.
 
 .TP
 (last-opened-size 4)

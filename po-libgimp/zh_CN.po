@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2002-10-17 22:00+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -164,14 +164,44 @@ msgstr ""
 "你将要把 %s 保存为 %s。\n"
 "这样将不会保存可见的图层。"
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "无"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "百分点"
+
+#: libgimpbase/gimputils.c:118
+#, fuzzy, c-format
+msgid "%d Bytes"
+msgstr "字节"
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr ""
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -319,69 +349,69 @@ msgid ""
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "锚点"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 #, fuzzy
 msgid "_Duplicate"
 msgstr "复制"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 #, fuzzy
 msgid "_Edit"
 msgstr "编辑"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr "已链接"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "粘贴为新图像"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr "粘贴进入"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr "字母间距(_L)"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr "行距(_L)"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr "重置大小(_R)"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr "缩放(_S)"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "剪割"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr "旋转(_R)"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr "切变(_S)"
 
@@ -496,9 +526,6 @@ msgstr ""
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "通道(已保存的选区)"
-
-#~ msgid "Bytes"
-#~ msgstr "字节"
 
 #~ msgid "_Time"
 #~ msgstr "时间(_T)"

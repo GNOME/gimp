@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -165,14 +165,44 @@ msgstr ""
 "Du er i ferd med å lagre en kanal (lagret utvalg) som %s.\n"
 "Dette vil ikke lagre synlige lag."
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "Ingen"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "prosent"
+
+#: libgimpbase/gimputils.c:118
+#, c-format
+msgid "%d Bytes"
+msgstr ""
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr ""
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -323,67 +353,67 @@ msgstr ""
 "Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
 "for å velge denne fargen."
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "Anker"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Duplicate"
 msgstr "_Duplikat"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr "Lenket"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "Lim inn som nytt"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr "Lim inn i"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr "_Nullstill"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr "M_ellomrom mellom bokstaver"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr "Mellomrom mellom l_injer"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr "_Klipp"
 

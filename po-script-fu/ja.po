@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2003-03-23 16:34+0100\n"
+"POT-Creation-Date: 2003-04-12 14:48+0200\n"
 "PO-Revision-Date: 2002-03-13 18:32+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -48,87 +48,79 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1186
-#: plug-ins/script-fu/script-fu-scripts.c:1188
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1230
+#: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
 msgstr "このプラグインについて"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1391
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu フォント選択"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1654
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"少なくとも選択したフォント中に一つ以上\n"
-"不正なものがあります.設定を確認して下さい.\n"
-
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Author:"
 msgstr "作者:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 msgid "Copyright:"
 msgstr "著作権表示:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1922
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1980
+#: plug-ins/script-fu/script-fu-scripts.c:1930
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2121
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu フォント選択"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2191
+#: plug-ins/script-fu/script-fu-scripts.c:2053
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -226,22 +218,6 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/動画/選択領域を動画画像化..."
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:2
-msgid "Anim-Filter for all Copies"
-msgstr "全てのコピーに動画フィルタ適用"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:3
-msgid "Fill with BG Color"
-msgstr "背景色で塗りつぶす"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:4
-msgid "Number of Copies"
-msgstr "コピー回数"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -2298,6 +2274,25 @@ msgstr "<Toolbox>/拡張/Web ブラウザ/プラグイン登録所"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"
+
+#~ msgid ""
+#~ "At least one font you've choosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "少なくとも選択したフォント中に一つ以上\n"
+#~ "不正なものがあります.設定を確認して下さい.\n"
+
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/動画/選択領域を動画画像化..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "全てのコピーに動画フィルタ適用"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "背景色で塗りつぶす"
+
+#~ msgid "Number of Copies"
+#~ msgstr "コピー回数"
 
 #~ msgid "DB Browser (init...)"
 #~ msgstr "DB ブラウザ (初期化しています...)"

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2003-02-25 18:10+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -166,14 +166,44 @@ msgstr ""
 "Du kommer att spara en kanal (sparad markering) som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "Ingen"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procent"
+
+#: libgimpbase/gimputils.c:118
+#, fuzzy, c-format
+msgid "%d Bytes"
+msgstr "byte"
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr ""
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -324,67 +354,67 @@ msgstr ""
 "Klicka på pipetten och klicka sedan på en färg någonstans på din skärm för "
 "att välja den färgen."
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "Ankare"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Duplicate"
 msgstr "_Duplicera"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
 msgstr "_Redigera"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr "Länkad"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "Klistra in som ny"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr "Klistra in i"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr "_Luta"
 
@@ -507,9 +537,6 @@ msgstr "Tryck"
 
 #~ msgid "a channel (saved selection)"
 #~ msgstr "en kanal (sparad markering)"
-
-#~ msgid "Bytes"
-#~ msgstr "byte"
 
 #~ msgid "Scale"
 #~ msgstr "Skala"

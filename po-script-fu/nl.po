@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2003-03-23 16:34+0100\n"
+"POT-Creation-Date: 2003-04-12 14:48+0200\n"
 "PO-Revision-Date: 2001-09-17 00:00+2\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -48,87 +48,79 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evaluatiemodus staat alleen een nietinteractieve aanroep toe"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1186
-#: plug-ins/script-fu/script-fu-scripts.c:1188
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1230
+#: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
 msgstr "Info"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr "Scriptargumenten"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-kleurselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-bestandsselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-bestandsselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1391
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu-fontselectie"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-patroonselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-verloopselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penseelselectie"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1654
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"Minstens een van de door u gekozen fonts is ongeldig.\n"
-"Controleer a.u.b. uw instellingen.\n"
-
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Author:"
 msgstr "Auteur:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1922
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1980
+#: plug-ins/script-fu/script-fu-scripts.c:1930
 msgid "Image Types:"
 msgstr "Afbeeldingstypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2121
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu-fontselectie"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2191
+#: plug-ins/script-fu/script-fu-scripts.c:2053
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -226,22 +218,6 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animators/Selectie naar animatiebeeld..."
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:2
-msgid "Anim-Filter for all Copies"
-msgstr "Animatiefilter voor alle kopieën"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:3
-msgid "Fill with BG Color"
-msgstr "Vul met AG-kleur"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:4
-msgid "Number of Copies"
-msgstr "Aantal kopieën"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -2309,6 +2285,25 @@ msgstr "<Toolbox>/Xtns/Webbrowser/Plug-In Registry"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Webbrowser/Gebruikers-FAQ"
+
+#~ msgid ""
+#~ "At least one font you've choosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "Minstens een van de door u gekozen fonts is ongeldig.\n"
+#~ "Controleer a.u.b. uw instellingen.\n"
+
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animators/Selectie naar animatiebeeld..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Animatiefilter voor alle kopieën"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Vul met AG-kleur"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Aantal kopieën"
 
 #~ msgid "DB Browser (init...)"
 #~ msgstr "DB-browser (init...)"

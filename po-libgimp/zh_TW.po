@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.12\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2003-01-29 17:59+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -165,14 +165,44 @@ msgstr ""
 "準備將色版(已儲存的選擇區域)儲存為 %s。\n"
 "本程序不會儲存可見的圖層。"
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "無"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "百分比"
+
+#: libgimpbase/gimputils.c:118
+#, c-format
+msgid "%d Bytes"
+msgstr ""
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr ""
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -321,67 +351,67 @@ msgid ""
 "that color."
 msgstr "按下滴管，然後在畫面中選取任何想要的顏色。"
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "固定"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Duplicate"
 msgstr "複製(_D)"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "貼上至新圖像"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr "重設(_R)"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "可見"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr "字距(_E)"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "裁剪"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr "推移(_S)"
 

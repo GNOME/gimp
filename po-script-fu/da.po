@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2003-03-23 16:34+0100\n"
+"POT-Creation-Date: 2003-04-12 14:48+0200\n"
 "PO-Revision-Date: 2002-12-15 18:51+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -61,86 +61,78 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1186
-#: plug-ins/script-fu/script-fu-scripts.c:1188
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1230
+#: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
 msgstr "Om"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
 msgstr "Programparametre"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1391
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu-skrifttypevælger"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1654
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"En eller flere af de skrifttyper du har valgt\n"
-"er ugyldige. Tjek venligst indstillingerne.\n"
-
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Author:"
 msgstr "Udvikler:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1922
 msgid "Date:"
 msgstr "Dato:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1980
+#: plug-ins/script-fu/script-fu-scripts.c:1930
 msgid "Image Types:"
 msgstr "Billedtyper:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2121
-msgid "Script-Fu Font Selection"
-msgstr "Script-Fu-skrifttypevælger"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2191
+#: plug-ins/script-fu/script-fu-scripts.c:2053
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -233,24 +225,6 @@ msgstr "Søger - vent venligst"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr "Ingen fundet"
-
-# "Selection to AnimImage" dækker over at der laves en ordentlig portion
-# billeder af det markerede
-#: plug-ins/gap/sel-to-anim-img.scm.h:1
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animering/Mangfoldiggør markering..."
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:2
-msgid "Anim-Filter for all Copies"
-msgstr "Animeringsfilter for alle kopier"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:3
-msgid "Fill with BG Color"
-msgstr "Udfyld med baggrundsfarve"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:4
-msgid "Number of Copies"
-msgstr "Antal kopier"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -2357,3 +2331,24 @@ msgstr "<Toolbox>/Udvidelser/Internet/Udvidelsesmodulregistrering"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Udvidelser/Internet/OSS for brugere"
+
+#~ msgid ""
+#~ "At least one font you've choosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "En eller flere af de skrifttyper du har valgt\n"
+#~ "er ugyldige. Tjek venligst indstillingerne.\n"
+
+# "Selection to AnimImage" dækker over at der laves en ordentlig portion
+# billeder af det markerede
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animering/Mangfoldiggør markering..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Animeringsfilter for alle kopier"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Udfyld med baggrundsfarve"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Antal kopier"

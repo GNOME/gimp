@@ -327,18 +327,24 @@
 #
 # (image-status-format "%f-%p.%i (%t)")
 
-# Sets the default menubar visibility. This can also be toggled with the
-# "View->Toggle" Menubar command.  Possible values are yes and no.
+# When enabled, the menubar is visible by default. This can also be toggled
+# with the "View->Show Menubar" command.  Possible values are yes and no.
 #
 # (show-menubar no)
 
-# Sets the default ruler visibility. This can also be toggled with the
-# "View->Toggle Rulers" command.  Possible values are yes and no.
+# When enabled, the rulers are visible by default. This can also be toggled
+# with the "View->Show Rulers" command.  Possible values are yes and no.
 #
 # (show-rulers yes)
 
+# When enabled, the scrollbars are visible by default. This can also be
+# toggled with the "View->Show Scrollbars" command.  Possible values are yes
+# and no.
+#
+# (show-scrollbars yes)
+
 # When enabled, the statusbar is visible by default. This can also be toggled
-# with the "View->Toggle Statusbar" command.  Possible values are yes and no.
+# with the "View->Show Statusbar" command.  Possible values are yes and no.
 #
 # (show-statusbar yes)
 
@@ -442,6 +448,16 @@
 # Possible values are yes and no.
 #
 # (can-change-accels no)
+
+# Save changed keyboard shortcuts when the GIMP exits.  Possible values are
+# yes and no.
+#
+# (save-accels yes)
+
+# Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
+# yes and no.
+#
+# (restore-accels yes)
 
 # How many recently opened image filenames to keep on the File menu.  This is
 # an integer value.

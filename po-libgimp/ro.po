@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-03-23 16:33+0100\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -167,14 +167,44 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "Nimic"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procent"
+
+#: libgimpbase/gimputils.c:118
+#, fuzzy, c-format
+msgid "%d Bytes"
+msgstr "%d Octeþi"
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KOcteþi"
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KOcteþi"
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr "%d KOcteþi"
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MOcteþi"
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MOcteþi"
 
 #: libgimpmodule/gimpmodule.c:174
 #, fuzzy, c-format
@@ -338,78 +368,78 @@ msgid ""
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 #, fuzzy
 msgid "Anchor"
 msgstr "Ancoreazã stratul"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 #, fuzzy
 msgid "_Duplicate"
 msgstr "Cloneazã traseul"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 #, fuzzy
 msgid "_Edit"
 msgstr "Modificã"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 #, fuzzy
 msgid "Linked"
 msgstr "Linear"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr "Insereazã ca nou"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr "Insereazã în"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 #, fuzzy
 msgid "_Reset"
 msgstr "Iniþializeazã"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 #, fuzzy
 msgid "L_etter Spacing"
 msgstr "Spaþiere:"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 #, fuzzy
 msgid "L_ine Spacing"
 msgstr "Salvare de fiºiere"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 #, fuzzy
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:217
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:195
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:213
+#: libgimpwidgets/gimpstock.c:247
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:216
+#: libgimpwidgets/gimpstock.c:250
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:218
+#: libgimpwidgets/gimpstock.c:252
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -533,10 +563,6 @@ msgstr "Presiune"
 #, fuzzy
 #~ msgid "a channel (saved selection)"
 #~ msgstr "/Canal -> Selecþie"
-
-#, fuzzy
-#~ msgid "Bytes"
-#~ msgstr "%d Octeþi"
 
 #, fuzzy
 #~ msgid "_Time"
@@ -1589,21 +1615,6 @@ msgstr "Presiune"
 
 #~ msgid "Gradient Selection"
 #~ msgstr "Selectie Gradient"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f KOcteþi"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f KOcteþi"
-
-#~ msgid "%d KB"
-#~ msgstr "%d KOcteþi"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f MOcteþi"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MOcteþi"
 
 #~ msgid ""
 #~ "The active brush.\n"

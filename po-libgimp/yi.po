@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"POT-Creation-Date: 2003-03-19 14:08-0500\n"
+"POT-Creation-Date: 2003-04-14 21:38+0200\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
 "Language-Team: Yiddish <raphael@cs.uky.edu>\n"
@@ -157,13 +157,43 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
-#: libgimp/gimpmenu.c:580
+#: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
+#: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "קײנע"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
+msgstr ""
+
+#: libgimpbase/gimputils.c:118
+#, c-format
+msgid "%d Bytes"
+msgstr ""
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr ""
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
 msgstr ""
 
 #: libgimpmodule/gimpmodule.c:174
@@ -309,69 +339,71 @@ msgstr ""
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "געב אַ קליק אױף דעם טראָפּירער, און דערנאָך געב אַ קליק אױף אַ פֿאַרב װוּ־ניט־איז אױף דעם עקראַן אױסצוקלײַבן די־אָ פֿאַרב."
+msgstr ""
+"געב אַ קליק אױף דעם טראָפּירער, און דערנאָך געב אַ קליק אױף אַ פֿאַרב װוּ־ניט־איז אױף "
+"דעם עקראַן אױסצוקלײַבן די־אָ פֿאַרב."
 
-#: libgimpwidgets/gimpstock.c:100
+#: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
 msgstr "אַנקאָר"
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:102
 msgid "_Duplicate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
 msgstr "זעעװדיק"
 
-#: libgimpwidgets/gimpstock.c:142
+#: libgimpwidgets/gimpstock.c:155
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:171
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:223
+#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:201
+#: libgimpwidgets/gimpstock.c:229
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:219
+#: libgimpwidgets/gimpstock.c:247
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:222
+#: libgimpwidgets/gimpstock.c:250
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:224
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Shear"
 msgstr ""
 

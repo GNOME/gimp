@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
-"POT-Creation-Date: 2003-03-23 16:34+0100\n"
+"POT-Creation-Date: 2003-04-12 14:48+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -56,100 +56,94 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1186
-#: plug-ins/script-fu/script-fu-scripts.c:1188
+#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1166
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Πρόγραμμα εντολών:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Πρόγραμμα εντολών:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1230
+#: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
 msgstr "Περί"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1218
 #, fuzzy
 msgid "Script Arguments"
 msgstr "Ορίσματα"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1241
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1288
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1391
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1374
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#
+#: plug-ins/script-fu/script-fu-scripts.c:1391
+#, fuzzy
+msgid "Script-Fu Font Selection"
+msgstr "Επιλογή Γραμματοσειράς"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1399
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1406
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1446
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1654
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/script-fu/script-fu-scripts.c:1910
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/script-fu/script-fu-scripts.c:1922
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1980
+#: plug-ins/script-fu/script-fu-scripts.c:1930
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
 
-#
-#: plug-ins/script-fu/script-fu-scripts.c:2121
-#, fuzzy
-msgid "Script-Fu Font Selection"
-msgstr "Επιλογή Γραμματοσειράς"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2191
+#: plug-ins/script-fu/script-fu-scripts.c:2053
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -260,26 +254,6 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
 msgstr ""
-
-#
-#: plug-ins/gap/sel-to-anim-img.scm.h:1
-#, fuzzy
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "Επιλογή Γραμματοσειράς"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:2
-msgid "Anim-Filter for all Copies"
-msgstr ""
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:3
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "Με Χρώμα"
-
-#: plug-ins/gap/sel-to-anim-img.scm.h:4
-#, fuzzy
-msgid "Number of Copies"
-msgstr "Α_ριθμός αντιγράφων:"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -2603,6 +2577,19 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "Επιλογή Γραμματοσειράς"
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "Με Χρώμα"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "Α_ριθμός αντιγράφων:"
 
 #, fuzzy
 #~ msgid "DB Browser (init...)"
