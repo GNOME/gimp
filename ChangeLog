@@ -1,5 +1,10 @@
 2004-04-12  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: cleaned up the check for Xmu. Include <gdk/gdkx.h>
+	when testing for Xmu.h. Fixes bug #139803.
+
+2004-04-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/Makefile.am: remove test-md5 on make clean.
 
 2004-04-11  Manish Singh  <yosh@gimp.org>
