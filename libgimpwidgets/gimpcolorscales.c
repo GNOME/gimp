@@ -491,10 +491,11 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
       gimp_rgb_get_uchar (&selector->rgb, &r, &g, &b);
       g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
-      if ((strlen (hex_color) == 6) &&
-          (g_ascii_strcasecmp (buffer, hex_color) != 0))
+      if (g_ascii_strcasecmp (buffer, hex_color) != 0)
         {
-          if (gimp_rgb_parse_hex (&selector->rgb, hex_color, 6))
+          if ((strlen (hex_color) == 6 &&
+               gimp_rgb_parse_hex (&selector->rgb, hex_color, 6)) ||
+              (gimp_rgb_parse_name (&selector->rgb, hex_color, -1)))
 	    {
               gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
@@ -504,9 +505,9 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
 
               return FALSE;
 	    }
-        }
 
-      gtk_entry_set_text (GTK_ENTRY (widget), buffer);
+          gtk_entry_set_text (GTK_ENTRY (widget), buffer);
+        }
       break;
 
     default:

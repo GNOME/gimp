@@ -1,3 +1,9 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_hex_events):
+	accept SVG color names in the hex entry. Not very intuitive but
+	probably a nice experts feature and it can be improved later.
+
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c (main): use #ifdef GIMP_UNSTABLE instead of looking
