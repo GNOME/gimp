@@ -2,8 +2,6 @@
  *  AlienMap2 (Co-)sine color transformation plug-in (Version 1.01)
  *  Martin Weber (martweb@gmx.net)
  **********************************************************************
- *  Official Homepage: http://diverse.freepage.de/martin.weber
- **********************************************************************
  *  Most code taken from AlienMap by Daniel Cotting
  *  This is not a replacement for AlienMap!
  **********************************************************************    
@@ -962,8 +960,8 @@ query (void)
   gimp_install_procedure ("plug_in_alienmap2",
         		  "AlienMap2 Color Transformation Plug-In",
         		  "No help yet. Just try it and you'll see!",
-        		  "Martin Weber (martweb@gmx.net, http://diverse.freepage.de/martin.weber)",
-        		  "Martin Weber (martweb@gmx.net, http://diverse.freepage.de/martin.weber",
+        		  "Martin Weber (martweb@gmx.net)",
+        		  "Martin Weber (martweb@gmx.net",
         		  "24th April 1998",
         		  N_("<Image>/Filters/Colors/Map/Alien Map 2..."),
         		  "RGB*",
@@ -1593,7 +1591,7 @@ alienmap2_logo_dialog (void)
       gtk_box_pack_start (GTK_BOX (xvbox), xhbox, TRUE, TRUE, 0);
       text = ("\nMartin Weber\n"
 	      "martweb@gmx.net\n"
-	      "http://diverse.freepage.de/martin.weber\n\n"
+	      "\n"
 	      "AlienMap2 Plug-In for the GIMP\n"
 	      "Version 1.0\n");
       xlabel = gtk_label_new (text);
