@@ -1,4 +1,9 @@
-2005-02-02  Sven Neumann  <neumann@jpk.com>
+2005-02-02  Sven Neumann  <sven@gimp.org>
+
+	* *.po: moved translations for messages that are used in code that
+	has been moved from app to libgimp*.
+
+2005-02-02  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added libgimpconfig.
 
