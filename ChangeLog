@@ -1,3 +1,8 @@
+Thu Oct 21 02:08:36 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/xpm.c: fixed a stupid cut'n'paste error I've 
+	introduced
+
 Wed Oct 20 15:33:49 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/psp.c: make it compile

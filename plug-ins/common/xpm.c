@@ -226,7 +226,7 @@ run (char    *name,
       init_gtk ();
 
       image_ID    = param[1].data.d_int32;
-      drawable_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
       
       /*  eventually export the image */ 
       switch (run_mode)
@@ -471,21 +471,20 @@ parse_image (gint32    image_ID,
   
       g_free(buf);
     }
-  
 
-      gimp_drawable_detach (drawable);
+  gimp_drawable_detach (drawable);
 }
 
 
 guint rgbhash (rgbkey *c)
 {
-	  return ((guint)c->r) ^ ((guint)c->g) ^ ((guint)c->b);
+  return ((guint)c->r) ^ ((guint)c->g) ^ ((guint)c->b);
 }
 
 guint compare (rgbkey *c1, 
 	       rgbkey *c2)
 {
-	return (c1->r == c2->r)&&(c1->g == c2->g)&&(c1->b == c2->b);
+  return (c1->r == c2->r)&&(c1->g == c2->g)&&(c1->b == c2->b);
 }
 	
 
@@ -493,45 +492,45 @@ void set_XpmImage (XpmColor *array,
 		   guint     index, 
 		   char     *colorstring)
 {
-	char *p;
-	int i, charnum, indtemp;
-	
-	indtemp=index;
-	array[index].string = p = g_new(char, cpp+1);
-	
-	/*convert the index number to base sizeof(linenoise)-1 */
-	for(i=0; i<cpp; ++i)
-	{
-		charnum = indtemp%(sizeof(linenoise)-1);
-		indtemp = indtemp / (sizeof (linenoise)-1);
-		*p++=linenoise[charnum];
-	}
-	/* *p++=linenoise[indtemp]; */
-	
-	*p='\0'; /* C and its stupid null-terminated strings...*/
-		
-			
-	array[index].symbolic = NULL;
-	array[index].m_color = NULL;
-	array[index].g4_color = NULL;
-	if (color)
-	{
-		array[index].g_color = NULL;
-		array[index].c_color = colorstring;
-	} else {	
-		array[index].c_color = NULL;
-		array[index].g_color = colorstring;
-	}
+  char *p;
+  int i, charnum, indtemp;
+  
+  indtemp=index;
+  array[index].string = p = g_new(char, cpp+1);
+  
+  /*convert the index number to base sizeof(linenoise)-1 */
+  for(i=0; i<cpp; ++i)
+    {
+      charnum = indtemp%(sizeof(linenoise)-1);
+      indtemp = indtemp / (sizeof (linenoise)-1);
+      *p++=linenoise[charnum];
+    }
+  /* *p++=linenoise[indtemp]; */
+  
+  *p='\0'; /* C and its stupid null-terminated strings...*/
+
+  array[index].symbolic = NULL;
+  array[index].m_color = NULL;
+  array[index].g4_color = NULL;
+  if (color)
+    {
+      array[index].g_color = NULL;
+      array[index].c_color = colorstring;
+    } else {	
+      array[index].c_color = NULL;
+      array[index].g_color = colorstring;
+    }
 }
 
 void create_colormap_from_hash (gpointer gkey, 
 				gpointer value, 
 				gpointer user_data)
 {
-	rgbkey *key = gkey;
-	char *string = g_new(char, 8);
-	sprintf(string, "#%02X%02X%02X", (int)key->r, (int)key->g, (int)key->b);
-	set_XpmImage(user_data, *((int *) value), string);
+  rgbkey *key = gkey;
+  char *string = g_new(char, 8);
+
+  sprintf(string, "#%02X%02X%02X", (int)key->r, (int)key->g, (int)key->b);
+  set_XpmImage(user_data, *((int *) value), string);
 }
 
 static gint
@@ -539,18 +538,18 @@ save_image (char   *filename,
             gint32  image_ID,
             gint32  drawable_ID)
 {
-  GDrawable *drawable;
-    
-  int       width;
-  int       height;
-  int       alpha;
-  int 	    ncolors=1;
+  GDrawable *drawable;    
+
+  int        width;
+  int        height;
+  int        alpha;
+  int 	     ncolors=1;
   int	    *indexno;
-  int 	    indexed;
-  
+  int 	     indexed;
+
   XpmColor  *colormap;
   XpmImage  *image;
-    
+
   guint   *ibuff   = NULL;
   /*guint   *mbuff   = NULL;*/
   GPixelRgn  pixel_rgn;
@@ -642,6 +641,7 @@ save_image (char   *filename,
   /* allocate a pixel region to work with */
   if ((buffer = g_new(guchar, gimp_tile_height()*width*drawable->bpp)) == NULL)
     return 0;
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0,
                        width, height,
@@ -695,8 +695,7 @@ save_image (char   *filename,
       
           /* kick the progress bar */
           gimp_progress_update ((double) (i+j) / (double) height);
-        }
-    
+        }    
     } 
   g_free(buffer);
 
