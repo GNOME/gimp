@@ -1,3 +1,10 @@
+Thu Mar 12 18:51:09 PST 1998 Manish Singh <yosh@gimp.org>
+
+        * app/gdisplay.c
+	* app/by_color_select.c: Fix for indexed selection for multiple
+	layers by Ben Jackson. Reenabled select by color for indexed
+	images
+
 Thu Mar 12 21:25:51 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/undo.c (undo_pop_layer_mod): Fixed a desynch bug when

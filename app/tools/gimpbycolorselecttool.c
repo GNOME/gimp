@@ -359,6 +359,8 @@ by_color_select_button_release (Tool           *tool,
 	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0);
 	  tile_ref (tile);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+          gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
+          tile_unref (tile, FALSE);
 	}
       else
 	{
@@ -367,10 +369,9 @@ by_color_select_button_release (Tool           *tool,
 	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
 	  tile_ref (tile);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+          gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
+          tile_unref (tile, FALSE);
 	}
-
-      gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
-      tile_unref (tile, FALSE);
 
       /*  select the area  */
       by_color_select (gdisp->gimage, drawable, col,

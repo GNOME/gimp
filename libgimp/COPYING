@@ -2,7 +2,7 @@
 		       Version 2, June 1991
 
  Copyright (C) 1991 Free Software Foundation, Inc.
-                    675 Mass Ave, Cambridge, MA 02139, USA
+    		    59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
@@ -436,7 +436,7 @@ DAMAGES.
 
 		     END OF TERMS AND CONDITIONS
 
-     Appendix: How to Apply These Terms to Your New Libraries
+           How to Apply These Terms to Your New Libraries
 
   If you develop a new library, and you want it to be of the greatest
 possible use to the public, we recommend making it free software that
@@ -464,7 +464,7 @@ convey the exclusion of warranty; and each file should have at least the
 
     You should have received a copy of the GNU Library General Public
     License along with this library; if not, write to the Free
-    Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Also add information on how to contact you by electronic and paper mail.
 
