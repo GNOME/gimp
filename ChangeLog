@@ -1,3 +1,11 @@
+2004-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: use RINT() instead of ROUND()
+	to calculate the coordinates of the transformed tiles to avoid
+	off-by-one errors when affine-transforming, flipping and rotating
+	drawables with negative offsets.
+	Fixes the off-by-one part of bug #132089.
+
 2004-01-21  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gui/themes.c (themes_list_themes_foreach): Fix undefined

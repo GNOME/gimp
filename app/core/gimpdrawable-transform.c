@@ -227,11 +227,11 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gimp_matrix3_transform_point (&inv, u1, v2, &dx3, &dy3);
       gimp_matrix3_transform_point (&inv, u2, v2, &dx4, &dy4);
 
-      x1 = ROUND (MIN4 (dx1, dx2, dx3, dx4));
-      y1 = ROUND (MIN4 (dy1, dy2, dy3, dy4));
+      x1 = RINT (MIN4 (dx1, dx2, dx3, dx4));
+      y1 = RINT (MIN4 (dy1, dy2, dy3, dy4));
 
-      x2 = ROUND (MAX4 (dx1, dx2, dx3, dx4));
-      y2 = ROUND (MAX4 (dy1, dy2, dy3, dy4));
+      x2 = RINT (MAX4 (dx1, dx2, dx3, dx4));
+      y2 = RINT (MAX4 (dy1, dy2, dy3, dy4));
     }
 
   /*  Get the new temporary buffer for the transformed result  */
@@ -461,13 +461,13 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   switch (flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      new_x = ROUND (-((gdouble) orig_x +
-                       (gdouble) orig_width - axis) + axis);
+      new_x = RINT (-((gdouble) orig_x +
+                      (gdouble) orig_width - axis) + axis);
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      new_y = ROUND (-((gdouble) orig_y +
-                       (gdouble) orig_height - axis) + axis);
+      new_y = RINT (-((gdouble) orig_y +
+                      (gdouble) orig_height - axis) + axis);
       break;
 
     default:
@@ -564,18 +564,18 @@ gimp_drawable_transform_rotate_point (gint              x,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      *new_x = ROUND (center_x - (gdouble) y + center_y);
-      *new_y = ROUND (center_y + (gdouble) x - center_x);
+      *new_x = RINT (center_x - (gdouble) y + center_y);
+      *new_y = RINT (center_y + (gdouble) x - center_x);
       break;
 
     case GIMP_ROTATE_180:
-      *new_x = ROUND (center_x - ((gdouble) x - center_x));
-      *new_y = ROUND (center_y - ((gdouble) y - center_y));
+      *new_x = RINT (center_x - ((gdouble) x - center_x));
+      *new_y = RINT (center_y - ((gdouble) y - center_y));
       break;
 
     case GIMP_ROTATE_270:
-      *new_x = ROUND (center_x + (gdouble) y - center_y);
-      *new_y = ROUND (center_y - (gdouble) x + center_x);
+      *new_x = RINT (center_x + (gdouble) y - center_y);
+      *new_y = RINT (center_y - (gdouble) x + center_x);
       break;
 
     default:
