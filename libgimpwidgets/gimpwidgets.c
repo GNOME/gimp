@@ -41,7 +41,7 @@
 /**
  * gimp_option_menu_new:
  * @menu_only: #TRUE if the function should return a #GtkMenu only.
- * @...: A #NULL terminated @va_list describing the menu items.
+ * @...:       A #NULL terminated @va_list describing the menu items.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
  **/
@@ -139,12 +139,12 @@ gimp_option_menu_new (gboolean            menu_only,
 
 /**
  * gimp_option_menu_new2:
- * @menu_only: #TRUE if the function should return a #GtkMenu only.
+ * @menu_only:          #TRUE if the function should return a #GtkMenu only.
  * @menu_item_callback: The callback each menu item's "activate" signal will
  *                      be connected with.
- * @data: The data which will be passed to gtk_signal_connect().
- * @initial: The @user_data of the initially selected menu item.
- * @...: A #NULL terminated @va_list describing the menu items.
+ * @data:               The data which will be passed to gtk_signal_connect().
+ * @initial:            The @user_data of the initially selected menu item.
+ * @...:                A #NULL terminated @va_list describing the menu items.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
  **/
@@ -238,7 +238,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
  * gimp_option_menu_set_history:
  * @option_menu: A #GtkOptionMenu as returned by gimp_option_menu_new() or
  *               gimp_option_menu_new2().
- * @user_data: The @user_data of the menu item you want to select.
+ * @user_data:   The @user_data of the menu item you want to select.
  **/
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
@@ -272,9 +272,9 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
 
 /**
  * gimp_radio_group_new:
- * @in_frame: #TRUE if you want a #GtkFrame around the radio button group.
+ * @in_frame:    #TRUE if you want a #GtkFrame around the radio button group.
  * @frame_title: The title of the Frame or #NULL if you don't want a title.
- * @...: A #NULL terminated @va_list describing the radio buttons.
+ * @...:         A #NULL terminated @va_list describing the radio buttons.
  *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
  **/
@@ -367,13 +367,17 @@ gimp_radio_group_new (gboolean            in_frame,
 
 /**
  * gimp_radio_group_new2:
- * @in_frame: #TRUE if you want a #GtkFrame around the radio button group.
- * @frame_title: The title of the Frame or #NULL if you don't want a title.
+ * @in_frame:              #TRUE if you want a #GtkFrame around the
+ *                         radio button group.
+ * @frame_title:           The title of the Frame or #NULL if you don't want
+ *                         a title.
  * @radio_button_callback: The callback each button's "toggled" signal will
  *                         be connected with.
- * @data: The data which will be passed to gtk_signal_connect().
- * @initial: The @user_data of the initially pressed radio button.
- * @...: A #NULL terminated @va_list describing the radio buttons.
+ * @data:                  The data which will be passed to
+ *                         gtk_signal_connect().
+ * @initial:               The @user_data of the initially pressed radio button.
+ * @...:                   A #NULL terminated @va_list describing
+ *                         the radio buttons.
  *
  * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
  **/
@@ -461,15 +465,15 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
 /**
  * gimp_spin_button_new:
- * @adjustment: Returns the spinbutton's #GtkAdjustment.
- * @value: The initial value of the spinbutton.
- * @lower: The lower boundary.
- * @upper: The uppper boundary.
+ * @adjustment:     Returns the spinbutton's #GtkAdjustment.
+ * @value:          The initial value of the spinbutton.
+ * @lower:          The lower boundary.
+ * @upper:          The uppper boundary.
  * @step_increment: The spinbutton's step increment.
  * @page_increment: The spinbutton's page increment (mouse button 2).
- * @page_size: The spinbutton's page size.
- * @climb_rate: The spinbutton's climb rate.
- * @digits: The spinbutton's number of decimal digits.
+ * @page_size:      The spinbutton's page size.
+ * @climb_rate:     The spinbutton's climb rate.
+ * @digits:         The spinbutton's number of decimal digits.
  *
  * This function is a shortcut for gtk_adjustment_new() and a subsequent
  * gtk_spin_button_new() and does some more initialisation stuff like
@@ -516,26 +520,27 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
 
 /**
  * gimp_scale_entry_new:
- * @table: The #GtkTable the widgets will be attached to.
- * @column: The column to start with.
- * @row: The row to attach the widgets.
- * @text: The text for the #GtkLabel which will appear left of the #GtkHScale.
- * @scale_usize: The minimum horizontal size of the #GtkHScale.
- * @spinbutton_usize: The minimum horizontal size of the #GtkSpinButton.
- * @value: The initial value.
- * @lower: The lower boundary.
- * @upper: The upper boundary.
- * @step_increment: The step increment.
- * @page_increment: The page increment.
- * @digits: The number of decimal digits.
- * @constrain: #TRUE if the range of possible values of the #GtkSpinButton
- *             should be the same as of the #GtkHScale.
+ * @table:               The #GtkTable the widgets will be attached to.
+ * @column:              The column to start with.
+ * @row:                 The row to attach the widgets.
+ * @text:                The text for the #GtkLabel which will appear
+ *                       left of the #GtkHScale.
+ * @scale_usize:         The minimum horizontal size of the #GtkHScale.
+ * @spinbutton_usize:    The minimum horizontal size of the #GtkSpinButton.
+ * @value:               The initial value.
+ * @lower:               The lower boundary.
+ * @upper:               The upper boundary.
+ * @step_increment:      The step increment.
+ * @page_increment:      The page increment.
+ * @digits:              The number of decimal digits.
+ * @constrain:           #TRUE if the range of possible values of the
+ *                       #GtkSpinButton should be the same as of the #GtkHScale.
  * @unconstrained_lower: The spinbutton's lower boundary
  *                       if @constrain == #FALSE.
  * @unconstrained_upper: The spinbutton's upper boundary
  *                       if @constrain == #FALSE.
- * @tooltip: A tooltip message for the scale and the spinbutton.
- * @help_data: The widgets' help_data (see gimp_help_set_help_data()).
+ * @tooltip:             A tooltip message for the scale and the spinbutton.
+ * @help_data:           The widgets' help_data (see gimp_help_set_help_data()).
  *
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkTable.
@@ -656,21 +661,21 @@ gimp_random_seed_toggle_update (GtkWidget *widget,
   toggle_val = (gint *) data;
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
-					      "time_true");
+    *toggle_val = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
+							"time_true"));
   else
-    *toggle_val = (gint) gtk_object_get_data (GTK_OBJECT (widget),
-					      "time_false");
+    *toggle_val = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (widget),
+							"time_false"));
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
 /**
  * gimp_random_seed_new:
- * @seed: A pointer to the variable which stores the random seed.
- * @use_time: A pointer to the variable which stores the @use_time
- *            toggle boolean.
- * @time_true: The value to write to @use_time if the toggle button is checked.
+ * @seed:       A pointer to the variable which stores the random seed.
+ * @use_time:   A pointer to the variable which stores the @use_time
+ *              toggle boolean.
+ * @time_true:  The value to write to @use_time if the toggle button is checked.
  * @time_false: The value to write to @use_time if the toggle button is
  *              unchecked.
  *
@@ -722,9 +727,9 @@ gimp_random_seed_new (gint       *seed,
                              "randomization"), NULL);
 
   gtk_object_set_data (GTK_OBJECT (button), "time_true",
-		       (gpointer) time_true);
+		       GINT_TO_POINTER (time_true));
   gtk_object_set_data (GTK_OBJECT (button), "time_false",
-		       (gpointer) time_false);
+		       GINT_TO_POINTER (time_false));
 
   gtk_object_set_data (GTK_OBJECT (button), "inverse_sensitive",
 		       spinbutton);
@@ -810,34 +815,35 @@ gimp_coordinates_callback (GtkWidget *widget,
 
 /**
  * gimp_coordinates_new:
- * @unit: The initial unit of the #GimpUnitMenu.
- * @unit_format: The unit format string as passed to gimp_size_entry_new().
- * @menu_show_pixels: #TRUE if the #GimpUnitMenu should contain an item for
- *                    GIMP_UNIT_PIXEL.
- * @menu_show_percent: #TRUE if the #GimpUnitMenu should contain an item for
- *                     GIMP_UNIT_PERCENT.
- * @spinbutton_usize: The horizontal usize of the #GimpSizeEntry's
- *                    #GtkSpinButton's.
- * @update_policy: The update policy for the #GimpSizeEntry.
- * @chainbutton_active: #TRUE if the attached #GimpChainButton should be
- *                      active.
+ * @unit:                   The initial unit of the #GimpUnitMenu.
+ * @unit_format:            The unit format string as passed to
+ *                          gimp_size_entry_new().
+ * @menu_show_pixels:       #TRUE if the #GimpUnitMenu should contain an item for
+ *                          GIMP_UNIT_PIXEL.
+ * @menu_show_percent:      #TRUE if the #GimpUnitMenu should contain an item for
+ *                          GIMP_UNIT_PERCENT.
+ * @spinbutton_usize:       The horizontal usize of the #GimpSizeEntry's
+ *                           #GtkSpinButton's.
+ * @update_policy:          The update policy for the #GimpSizeEntry.
+ * @chainbutton_active:     #TRUE if the attached #GimpChainButton should be
+ *                          active.
  * @chain_constrains_ratio: #TRUE if the chainbutton should constrain the
  *                          fields' aspect ratio. If #FALSE, the values will
  *                          be constrained.
- * @xlabel: The label for the X coordinate.
- * @x: The initial value of the X coordinate.
- * @xres: The horizontal resolution in DPI.
- * @lower_boundary_x: The lower boundary of the X coordinate.
- * @upper_boundary_x: The upper boundary of the X coordinate.
- * @xsize_0: The X value which will be treated as 0%.
- * @xsize_100: The X value which will be treated as 100%.
- * @ylabel: The label for the Y coordinate.
- * @y: The initial value of the Y coordinate.
- * @yres: The vertical resolution in DPI.
- * @lower_boundary_y: The lower boundary of the Y coordinate.
- * @upper_boundary_y: The upper boundary of the Y coordinate.
- * @ysize_0: The Y value which will be treated as 0%.
- * @ysize_100: The Y value which will be treated as 100%.
+ * @xlabel:                 The label for the X coordinate.
+ * @x:                      The initial value of the X coordinate.
+ * @xres:                   The horizontal resolution in DPI.
+ * @lower_boundary_x:       The lower boundary of the X coordinate.
+ * @upper_boundary_x:       The upper boundary of the X coordinate.
+ * @xsize_0:                The X value which will be treated as 0%.
+ * @xsize_100:              The X value which will be treated as 100%.
+ * @ylabel:                 The label for the Y coordinate.
+ * @y:                      The initial value of the Y coordinate.
+ * @yres:                   The vertical resolution in DPI.
+ * @lower_boundary_y:       The lower boundary of the Y coordinate.
+ * @upper_boundary_y:       The upper boundary of the Y coordinate.
+ * @ysize_0:                The Y value which will be treated as 0%.
+ * @ysize_100:              The Y value which will be treated as 100%.
  *
  * Returns: A #GimpSizeEntry with two fields for x/y coordinates/sizes with
  *          a #GimpChainButton attached to constrain either the two fields'
@@ -1056,7 +1062,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
 /**
  * gimp_pixmap_button_new:
  * @xpm_data: The XPM data which will be passed to gimp_pixmap_new().
- * @text: An optional text which will appear right of the pixmap.
+ * @text:     An optional text which will appear right of the pixmap.
  *
  * Returns: A #GtkButton with a #GimpPixmap and an optional #GtkLabel.
  **/
@@ -1152,8 +1158,8 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
 /**
  * gimp_toggle_button_update:
  * @widget: A #GtkToggleButton.
- * @data: A pointer to a #gint variable which will store the value of
- *        gtk_toggle_button_get_active().
+ * @data:   A pointer to a #gint variable which will store the value of
+ *          gtk_toggle_button_get_active().
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
  **/
@@ -1176,8 +1182,8 @@ gimp_toggle_button_update (GtkWidget *widget,
 /**
  * gimp_radio_button_update:
  * @widget: A #GtkRadioButton.
- * @data: A pointer to a #gint variable which will store the value of
- *        (#gint) gtk_object_get_user_data().
+ * @data:   A pointer to a #gint variable which will store the value of
+ *          GPOINTER_TO_INT (gtk_object_get_user_data()).
  *
  * Note that this function calls gimp_toggle_button_sensitive_update().
  **/
@@ -1191,7 +1197,8 @@ gimp_radio_button_update (GtkWidget *widget,
     {
       toggle_val = (gint *) data;
 
-      *toggle_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *toggle_val =
+	GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
     }
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
@@ -1200,8 +1207,8 @@ gimp_radio_button_update (GtkWidget *widget,
 /**
  * gimp_menu_item_update:
  * @widget: A #GtkMenuItem.
- * @data: A pointer to a #gint variable which will store the value of
- *        (#gint) gtk_object_get_user_data().
+ * @data:   A pointer to a #gint variable which will store the value of
+ *          GPOINTER_TO_INT (gtk_object_get_user_data()).
  **/
 void
 gimp_menu_item_update (GtkWidget *widget,
@@ -1211,17 +1218,17 @@ gimp_menu_item_update (GtkWidget *widget,
 
   item_val = (gint *) data;
 
-  *item_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+  *item_val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
 }
 
 /**
  * gimp_int_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data: A pointer to a #gint variable which will store the adjustment's
- *        value.
+ * @data:       A pointer to a #gint variable which will store the
+ *              @adjustment's value.
  *
  * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
- * with (#gint) rint (value).
+ * with RINT().
  **/
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
@@ -1230,14 +1237,14 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
   gint *val;
 
   val = (gint *) data;
-  *val = (gint) rint (adjustment->value);
+  *val = RINT (adjustment->value);
 }
 
 /**
  * gimp_uint_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data: A pointer to a #guint variable which will store the adjustment's
- *        value.
+ * @data:       A pointer to a #guint variable which will store the
+ *              @adjustment's value.
  *
  * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
  * with (#guint) (value + 0.5).
@@ -1255,8 +1262,8 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_float_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data: A pointer to a #gfloat varaiable which willl store the adjustment's
- *        value.
+ * @data:       A pointer to a #gfloat varaiable which willl store the
+ *              @adjustment's value.
  **/
 void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
@@ -1271,8 +1278,8 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_double_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data: A pointer to a #gdouble variable which will store the adjustment's
- *        value.
+ * @data:       A pointer to a #gdouble variable which will store the
+ *              @adjustment's value.
  **/
 void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
@@ -1287,8 +1294,8 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_unit_menu_update:
  * @widget: A #GimpUnitMenu.
- * @data: A pointer to a #GimpUnit variable which will store the unit menu's
- *        value.
+ * @data:   A pointer to a #GimpUnit variable which will store the unit menu's
+ *          value.
  *
  * This callback can set the number of decimal digits of an arbitrary number
  * of #GtkSpinButton's. To use this functionality, attach the spinbuttons
@@ -1328,15 +1335,15 @@ gimp_unit_menu_update (GtkWidget *widget,
 
 /**
  * gimp_table_attach_aligned:
- * @table: The #GtkTable the widgets will be attached to.
- * @column: The column to start with.
- * @row: The row to attach the eidgets.
+ * @table:      The #GtkTable the widgets will be attached to.
+ * @column:     The column to start with.
+ * @row:        The row to attach the eidgets.
  * @label_text: The text for the #GtkLabel which will be attached left of the
  *              widget.
- * @xalign: The horizontal alignment of the #GtkLabel.
- * @yalign: The vertival alignment of the #GtkLabel.
- * @widget: The #GtkWidget to attach right of the label.
- * @colspan: The number of columns the widget will use.
+ * @xalign:     The horizontal alignment of the #GtkLabel.
+ * @yalign:     The vertival alignment of the #GtkLabel.
+ * @widget:     The #GtkWidget to attach right of the label.
+ * @colspan:    The number of columns the widget will use.
  * @left_align: #TRUE if the widget should be left-aligned.
  *
  * Note that the @label_text can be #NULL and that the widget will be attached
