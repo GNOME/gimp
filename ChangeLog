@@ -1,5 +1,11 @@
 2003-10-26  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayout.c: added back "box-unit" property; it
+	makes sense to have an extra unit for it.
+
+2003-10-26  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c	
 	(gimp_config_deserialize_fundamental): handle negative float and
 	double values similar to how this is done for integers and the

@@ -167,7 +167,7 @@ gimp_text_class_init (GimpTextClass *klass)
 				   0);
   /*
    *  We use the name "font-size-unit" for backward compatibility.
-   *  The unit is used for all lengths in the text object.
+   *  The unit is also used for other sizes in the text object.
    */
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
 				 "font-size-unit", NULL,
@@ -249,6 +249,10 @@ gimp_text_class_init (GimpTextClass *klass)
                                    "box-height", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
                                    GIMP_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
+				 "box-unit", NULL,
+				 TRUE, FALSE, GIMP_UNIT_PIXEL,
+				 0);
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,
                                     &identity,
@@ -261,12 +265,6 @@ gimp_text_class_init (GimpTextClass *klass)
                                    "offset-y", NULL,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
                                    GIMP_PARAM_DEFAULTS);
-
-  /* "box-unit" existed for a while but was never used; ignore it */
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
-				 "box-unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 GIMP_PARAM_IGNORE);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -368,7 +366,7 @@ gimp_text_get_property (GObject      *object,
     case PROP_BOX_HEIGHT:
       g_value_set_double (value, text->box_height);
       break;
-    case PROP_BOX_UNIT:  /* GIMP_PARAM_IGNORE */
+    case PROP_BOX_UNIT:
       g_value_set_int (value, text->unit);
       break;
     case PROP_TRANSFORMATION:
@@ -460,7 +458,7 @@ gimp_text_set_property (GObject      *object,
       text->box_height = g_value_get_double (value);
       break;
     case PROP_BOX_UNIT:
-      /* ignore */
+      text->box_unit = g_value_get_int (value);
       break;
     case PROP_TRANSFORMATION:
       matrix = g_value_get_boxed (value);

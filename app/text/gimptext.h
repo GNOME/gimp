@@ -59,6 +59,7 @@ struct _GimpText
   GimpTextBoxMode        box_mode;
   gdouble                box_width;
   gdouble                box_height;
+  GimpUnit               box_unit;
   GimpMatrix2            transformation;
   gdouble                offset_x;
   gdouble                offset_y;

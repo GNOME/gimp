@@ -197,7 +197,7 @@ gimp_text_layout_new (GimpText  *text,
       pango_layout_set_width (layout->layout,
                               gimp_text_layout_pixel_size (image->gimp,
                                                            text->box_width,
-                                                           text->unit,
+                                                           text->box_unit,
                                                            xres));
       break;
     }
@@ -222,7 +222,7 @@ gimp_text_layout_new (GimpText  *text,
       layout->extents.height =
         PANGO_PIXELS (gimp_text_layout_pixel_size (image->gimp,
                                                    text->box_height,
-                                                   text->unit,
+                                                   text->box_unit,
                                                    yres));
       break;
     }
