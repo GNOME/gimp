@@ -1,3 +1,24 @@
+1999-08-21  Tor Lillqvist  <tml@iki.fi>
+
+	* app/errorconsole.c: Also provide a Clear button.
+
+	* app/gimprc.c: Add a missing static function declaration.
+
+	* app/makefile.{cygwin,msc}: Add new files.
+
+	* libgimp/gimp.def: Add new entry points.
+
+	* plug-ins/common/jpeg.c: Must include glib.h first. You don't
+	want to know why.
+
+	* plug-ins/common/psp.c: New file. This plug-in Loads Paint Shop
+	Pro files (.psp and .tub). Doesn't yet save them. Handles only 24-
+	bit images (with or without alpha) correctly so far.
+
+	* plug-ins/makefile.{cygwin,msc}: Build psp. Somebody please add
+	it to the auto* build system, too. I guess a test for zlib (which it
+	needs) is needed in configure.in.
+
 Sat Aug 21 16:53:17 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/jpeg.c:  Preview layers need to be alpha-padded,

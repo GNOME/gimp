@@ -75,6 +75,14 @@ error_console_close_callback (GtkWidget	*widget,
   message_handler = MESSAGE_BOX;
 }
 
+static void
+error_console_clear_callback (GtkWidget	*widget,
+			      gpointer	 data)
+{
+  gtk_editable_delete_text
+    (GTK_EDITABLE (text), 0, gtk_text_get_length (GTK_TEXT (text)));
+}
+
 static gint
 error_console_delete_callback (GtkWidget *widget,
 			       GdkEvent  *event,
@@ -257,6 +265,7 @@ text_clicked_callback (GtkWidget        *widget,
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
+  { N_("Clear"), error_console_clear_callback, NULL, NULL },
   { N_("Close"), error_console_close_callback, NULL, NULL }
 };
 
@@ -282,10 +291,6 @@ error_console_create_window (void)
   gtk_signal_connect (GTK_OBJECT (error_console), "delete_event",
 		      (GdkEventFunc) error_console_delete_callback, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
-
-  /*  Action area  */
-  action_items[0].user_data = error_console;
-  build_action_area (GTK_DIALOG (error_console), action_items, 1, 0);
 
   menu = gtk_menu_new ();
 
@@ -328,6 +333,11 @@ error_console_create_window (void)
   gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vscrollbar);
+
+  /*  Action area  */
+  action_items[0].user_data = error_console;
+  action_items[1].user_data = text;
+  build_action_area (GTK_DIALOG (error_console), action_items, 2, 0);
 
   gtk_widget_show (error_console);
 }

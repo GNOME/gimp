@@ -19,7 +19,7 @@
 
 /*
  *
- * Work in progress! Doesn't do anything at all useful yet.
+ * Work in progress! Doesn't handle saving yet.
  *
  * For a copy of the PSP file format documentation, surf to
  * http://www.jasc.com.
@@ -27,7 +27,7 @@
  */
 
 /* set to the level of debugging output you want, 0 for none */
-#define PSP_DEBUG 2
+#define PSP_DEBUG 0
 
 /* the max number of layers that this plugin should try to load */
 #define MAX_LAYERS 64
@@ -58,17 +58,18 @@
     g_free (_t); \
   } G_STMT_END
 
+/* Note that the upcoming PSP version 6 writes PSP file format version
+ * 4.0, but the documentation for that apparently isn't publicly
+ * available (yet). The format is luckily designed to be somwehat
+ * downward compatible, however. The semantics of many of the
+ * additional fields and block types can be relatively easily reverse
+ * engineered.
+ */
+
 /* The following was cut and pasted from the PSP file format
  * documentation version 3.0.(Minor stylistic changes done.)
  *
- * Note that the upcoming PSP version 6 writes PSP file format version
- * 4.0, but the documentation for that apparently isn't publicly
- * available (yet). The format is designed to be downward compatible,
- * however. The semantics of many of the additional fields and
- * block types can be deduced by reverse engineering.
- */
-
-/*
+ *
  * To be on the safe side, here is the whole copyright notice from the
  * specification:
  *
@@ -122,7 +123,8 @@
  *
  * Jasc reserves the right to amend, modify, change, revoke or
  * withdraw the Specification at any time and from time to time. Jasc
- * shall have no obligation to support or maintain the Specification.  */
+ * shall have no obligation to support or maintain the Specification.
+ */
 
 /* Block identifiers.
  */
@@ -966,9 +968,21 @@ channel_type_name (int type)
   return err_name;
 }
 
+static void *
+psp_zalloc (void *opaque, guint items, guint size)
+{
+  return g_malloc (items*size);
+}
+
 static void
+psp_zfree (void *opaque, void *ptr)
+{
+  g_free (ptr);
+}
+
+static int
 read_channel_data (FILE *f,
-		   PSPCompression compression,
+		   PSPimage *ia,
 		   guchar **pixels,
 		   guint bytespp,
 		   guint offset,
@@ -976,10 +990,12 @@ read_channel_data (FILE *f,
 		   guint32 compressed_len)
 {
   gint i, n, x, y, width = drawable->width, height = drawable->height;
-  guchar *scanline, *p, *q, *endq;
+  gint npixels = width * height;
+  guchar *buf, *buf2, *p, *q, *endq;
   guchar runcount, byte;
+  z_stream zstream;
 
-  switch (compression)
+  switch (ia->compression)
     {
     case PSP_COMP_NONE:
       if (bytespp == 1)
@@ -997,13 +1013,13 @@ read_channel_data (FILE *f,
 	}
       else
 	{
-	  scanline = g_malloc (width);
+	  buf = g_malloc (width);
 	  for (y = 0; y < height; y++)
 	    {
-	      fread (scanline, width, 1, f);
+	      fread (buf, width, 1, f);
 	      if (width % 4)
 		fseek (f, 4 - (width % 4), SEEK_CUR);
-	      p = scanline;
+	      p = buf;
 	      q = pixels[y] + offset;
 	      for (i = 0; i < width; i++)
 		{
@@ -1011,45 +1027,88 @@ read_channel_data (FILE *f,
 		  q += bytespp;
 		}
 	    }
-	  g_free (scanline);
+	  g_free (buf);
 	}
       break;
 
     case PSP_COMP_RLE:
       q = pixels[0] + offset;
-      endq = q + height * width * bytespp;
-      scanline = g_malloc (127);
+      endq = q + npixels * bytespp;
+      buf = g_malloc (127);
       while (q < endq)
 	{
-	  p = scanline;
+	  p = buf;
 	  fread (&runcount, 1, 1, f);
 	  if (runcount > 128)
 	    {
 	      runcount -= 128;
 	      fread (&byte, 1, 1, f);
-	      memset (scanline, byte, runcount);
+	      memset (buf, byte, runcount);
 	    }
 	  else
-	    fread (scanline, runcount, 1, f);
+	    fread (buf, runcount, 1, f);
 	  if (bytespp == 1)
 	    {
-	      memmove (q, scanline, runcount);
+	      memmove (q, buf, runcount);
 	      q += runcount;
 	    }
 	  else
 	    {
+	      p = buf;
 	      for (i = 0; i < runcount; i++)
 		{
-		  *q = scanline[i];
+		  *q = *p++;
 		  q += bytespp;
 		}
 	    }
 	}
-      g_free (scanline);
+      g_free (buf);
       break;
 
     case PSP_COMP_LZ77:
+      buf = g_malloc (compressed_len);
+      fread (buf, compressed_len, 1, f);
+      zstream.next_in = buf;
+      zstream.avail_in = compressed_len;
+      zstream.zalloc = psp_zalloc;
+      zstream.zfree = psp_zfree;
+      zstream.opaque = f;
+      if (inflateInit (&zstream) != Z_OK)
+	{
+	  gimp_message ("PSP: zlib error");
+	  fclose (f);
+	  return -1;
+	}
+      if (bytespp == 1)
+	zstream.next_out = pixels[0];
+      else
+	{
+	  buf2 = g_malloc (npixels);
+	  zstream.next_out = buf2;
+	}
+      zstream.avail_out = npixels;
+      if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
+	{
+	  gimp_message ("PSP: zlib error");
+	  inflateEnd (&zstream);
+	  fclose (f);
+	  return -1;
+	}
+      inflateEnd (&zstream);
+      g_free (buf);
       
+      if (bytespp > 1)
+	{
+	  p = buf2;
+	  q = pixels[0] + offset;
+	  for (i = 0; i < npixels; i++)
+	    {
+	      *q = *p++;
+	      q += bytespp;
+	    }
+	  g_free (buf2);
+	}
+      break;
     }
 }
 
@@ -1189,13 +1248,22 @@ read_layer_block (FILE *f,
       height = saved_image_rect[3] - saved_image_rect[1];
 
       IFDBG(2) gimp_message_printf
-	(("PSP: layer: %s %dx%d (%dx%d) opacity %d blend_mode %s "
+	(("PSP: layer: %s %dx%d (%dx%d) @%d,%d opacity %d blend_mode %s "
 	  "%d bitmaps %d channels",
 	  name,
 	  image_rect[2] - image_rect[0], image_rect[3] - image_rect[1],
 	  width, height,
+	  saved_image_rect[0], saved_image_rect[1],
 	  opacity, blend_mode_name (blend_mode),
 	  bitmap_count, channel_count));
+
+      IFDBG(2) gimp_message_printf
+	(("PSP: mask %dx%d (%dx%d) @%d,%d",
+	  mask_rect[2] - mask_rect[0],
+	  mask_rect[3] - mask_rect[1],
+	  saved_mask_rect[2] - saved_mask_rect[0],
+	  saved_mask_rect[3] - saved_mask_rect[1],
+	  saved_mask_rect[0], saved_mask_rect[1]));
 
       if (width == 0)
 	{
@@ -1337,7 +1405,7 @@ read_layer_block (FILE *f,
 					 bytespp));
 
 	  if (bitmap_type == PSP_DIB_TRANS_MASK)
-	    offset = 4;
+	    offset = 3;
 	  else
 	    offset = channel_type - PSP_CHANNEL_RED;
 
@@ -1349,8 +1417,12 @@ read_layer_block (FILE *f,
 	      }
 	  
 	  if (!null_layer)
-	    read_channel_data (f, ia->compression, pixels,
-			       bytespp, offset, drawable, compressed_len);
+	    if (read_channel_data (f, ia, pixels, bytespp,
+				   offset, drawable, compressed_len) == -1)
+	      {
+		gimp_image_delete (image_ID);
+		return -1;
+	      }
 
 	  if (try_fseek (f, channel_start + channel_total_len, SEEK_SET) < 0)
 	    {
@@ -1483,7 +1555,7 @@ load_image (char *filename)
 						  block_total_len, &ia) == -1)
 	    return -1;
 
-	  IFDBG(3) gimp_message_printf (("PSP: %d dpi %dx%d %s",
+	  IFDBG(2) gimp_message_printf (("PSP: %d dpi %dx%d %s",
 					 (int) ia.resolution,
 					 ia.width, ia.height,
 					 compression_name (ia.compression)));
@@ -1571,7 +1643,9 @@ save_image (char   *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  return 42;
+  gimp_message ("PSP: Saving not implemented yet");
+
+  return 0;
 }
 
 static void

@@ -103,6 +103,11 @@
  * changed.
  */
 
+#include "config.h"		/* configure cares about HAVE_PROGRESSIVE_JPEG */
+
+#include <glib.h>		/* We want glib.h first because of some
+				 * pretty obscure Win32 compilation issues.
+				 */
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -111,7 +116,6 @@
 #include <unistd.h>
 #include <jpeglib.h>
 #include <jerror.h>
-#include "config.h"    /* configure cares about HAVE_PROGRESSIVE_JPEG */
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"

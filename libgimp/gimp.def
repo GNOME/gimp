@@ -90,6 +90,7 @@ EXPORTS
 	gimp_image_find_parasite
 	gimp_image_flatten
 	gimp_image_floating_selection
+	gimp_image_freeze_undo
 	gimp_image_get_active_channel
 	gimp_image_get_active_layer
 	gimp_image_get_channels
@@ -123,6 +124,7 @@ EXPORTS
 	gimp_image_set_filename
 	gimp_image_set_resolution
 	gimp_image_set_unit
+	gimp_image_thaw_undo
 	gimp_image_width
 	gimp_install_cmap
 	gimp_install_procedure
@@ -218,6 +220,8 @@ EXPORTS
 	gimp_tile_ref_zero
 	gimp_tile_unref
 	gimp_tile_width
+	gimp_undo_push_group_end
+	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
 	gimp_unit_get_abbreviation
 	gimp_unit_get_deletion_flag

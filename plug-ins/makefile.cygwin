@@ -25,7 +25,7 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate rotators
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
@@ -217,8 +217,6 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_jpeg
-# Location of jpeg-6b sources
-JPEG = $(TOP)/../jpeg-6b
 EXTRACFLAGS = -I$(JPEG)
 EXTRALIBS = -L $(JPEG) -ljpeg
 endif
@@ -232,10 +230,6 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_png
-# Location of libpng sources
-PNG = $(TOP)/../libpng-1.0.3
-# And zlib
-ZLIB = $(TOP)/../zlib-1.1.3
 EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
 EXTRALIBS = -L $(PNG) -lpng -L $(ZLIB) -lz
 endif
@@ -247,6 +241,11 @@ OBJECTS = \
 	print-pcl.o \
 	print-ps.o \
 	print-util.o
+endif
+
+ifdef EXTRA_psp
+EXTRACFLAGS = -I$(ZLIB)
+EXTRALIBS = -L $(ZLIB) -lz
 endif
 
 ifdef EXTRA_rcm
@@ -295,12 +294,6 @@ OBJECTS = \
 endif
 
 ifdef EXTRA_tiff
-# Location of tiff-3.4 sources
-TIFF = $(TOP)/../tiff-v3.4/libtiff
-# Location of jpeg-6b sources
-JPEG = $(TOP)/../jpeg-6b
-# And zlib
-ZLIB = $(TOP)/../zlib-1.1.3
 EXTRACFLAGS = -I$(TIFF)
 EXTRALIBS = -L $(TIFF) -ltiff -L $(JPEG) -ljpeg -L $(ZLIB) -lz -luser32
 endif
@@ -380,6 +373,15 @@ GLIB_VER = 1.3
 GTK = $(TOP)/../gtk+
 GLIB = $(TOP)/../glib
 INTL = $(TOP)/../intl
+
+# Location of libpng sources
+PNG = $(TOP)/../libpng-1.0.3
+# Location of tiff-3.4 sources
+TIFF = $(TOP)/../tiff-v3.4/libtiff
+# Location of jpeg-6b sources
+JPEG = $(TOP)/../jpeg-6b
+# And zlib
+ZLIB = $(TOP)/../zlib-1.1.3
 
 PLUGINDIR = $(TOP)/plug-ins
 

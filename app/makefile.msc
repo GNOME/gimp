@@ -146,6 +146,7 @@ gimp_OBJECTS = \
 	gimpbrushlist.obj	\
 	gimpbrushpixmap.obj	\
 	gimpcontext.obj		\
+	gimpdnd.obj		\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\

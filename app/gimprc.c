@@ -197,6 +197,7 @@ static inline char* boolean_to_str (gpointer val1p, gpointer val2p);
 static inline char* position_to_str (gpointer val1p, gpointer val2p);
 static inline char* mem_size_to_str (gpointer val1p, gpointer val2p);
 static inline char* image_type_to_str (gpointer val1p, gpointer val2p);
+static inline char* interpolation_type_to_str (gpointer val1p, gpointer val2p);
 static inline char* color_cube_to_str (gpointer val1p, gpointer val2p);
 static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
 static inline char* units_to_str (gpointer val1p, gpointer val2p);
