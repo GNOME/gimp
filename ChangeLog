@@ -1,3 +1,8 @@
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: do as the gtk+ folks did and replace the gtk-doc
+	version check with an all-sh version (#99216).
+
 2002-12-02  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.c (gimp_data_save): don't check filename for

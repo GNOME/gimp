@@ -1,8 +1,9 @@
 *.gmo
 *.mo
+*.pot
+.intltool-merge-cachemake
 Makefile
 Makefile.in
 POTFILES
-*.pot
 messages
-.intltool-merge-cachemake
+po2tbl.sed.in

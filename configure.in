@@ -944,12 +944,20 @@ AC_SUBST(HTML_DIR)
 AC_CHECK_PROG(GTKDOC, gtkdoc-mkdb, true, false)
 
 if $GTKDOC ; then 
-    gtk_doc_version=`gtkdoc-mkdb --version`
-    AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
-    if perl <<EOF ; then
-      exit (("$gtk_doc_version" =~ /^[[0-9]]+\.[[0-9]]+$/) &&
-            ("$gtk_doc_version" >= "$GTKDOC_REQUIRED_VERSION") ? 0 : 1);
-EOF
+   gtk_doc_version=`gtkdoc-mkdb --version`
+   AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
+   IFS="${IFS=         }"; gimp_save_IFS="$IFS"; IFS="."
+   set $gtk_doc_version
+   for min in $gtk_doc_min_version ; do
+      cur=$1; shift
+      if test -z $min ; then break; fi
+      if test -z $cur ; then GTKDOC=false; break; fi
+      if test $cur -gt $min ; then break ; fi
+      if test $cur -lt $min ; then GTKDOC=false; break ; fi
+   done
+   IFS="$gimp_save_IFS"
+
+   if $GTKDOC ; then
       AC_MSG_RESULT(yes)
    else
       AC_MSG_RESULT(no)
