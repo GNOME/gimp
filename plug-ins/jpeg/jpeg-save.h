@@ -832,10 +832,6 @@ load_image (gchar           *filename,
   buf = g_new (guchar, 
 	       tile_height * cinfo.output_width * cinfo.output_components);
   
-  if (preview)
-    padded_buf = g_new (guchar, tile_height * cinfo.output_width *
-			(cinfo.output_components + 1));
-
   rowbuf = g_new (guchar*, tile_height);
 
   for (i = 0; i < tile_height; i++)
@@ -858,12 +854,30 @@ load_image (gchar           *filename,
       layer_type = preview ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
 
+    case 4:
+      if (cinfo.out_color_space == JCS_CMYK)
+	{
+	  image_type = GIMP_RGB;
+	  layer_type = GIMP_RGB_IMAGE;
+	  break;
+	}
+      /*fallthrough*/
+
     default:
-      g_message ("don't know how to load JPEGs\nwith %d color channels",
-		 cinfo.output_components);
+      g_message ("don't know how to load JPEGs\nwith %d color channels\nusing colorspace %d (%d)",
+		 cinfo.output_components, cinfo.out_color_space,
+		 cinfo.jpeg_color_space);
       gimp_quit ();
       break;
     }
+
+  if (preview)
+    padded_buf = g_new (guchar, tile_height * cinfo.output_width *
+			(cinfo.output_components + 1));
+  else if (cinfo.out_color_space == JCS_CMYK)
+    padded_buf = g_new (guchar, tile_height * cinfo.output_width * 3);
+  else
+    padded_buf = NULL;
 
   if (preview) 
     {
@@ -959,7 +973,7 @@ load_image (gchar           *filename,
 	  switch (cinfo.output_components)
 	    {
 	    case 1:
-	      for (i=0; i<num; i++)
+	      for (i = 0; i < num; i++)
 		{
 		  *(dest++) = *(src++);
 		  *(dest++) = 255;
@@ -967,7 +981,7 @@ load_image (gchar           *filename,
 	      break;
 
 	    case 3:
-	      for (i=0; i<num; i++)
+	      for (i = 0; i < num; i++)
 		{
 		  *(dest++) = *(src++);
 		  *(dest++) = *(src++);
@@ -977,12 +991,31 @@ load_image (gchar           *filename,
 	      break;
 
 	    default:
-	      g_warning ("JPEG - shouldn't have gotten here.  Report to adam@gimp.org");
+	      g_warning ("JPEG - shouldn't have gotten here.\nReport to http://bugzilla.gnome.org/");
 	      break;
 	    }
 	}
+      else if (cinfo.out_color_space == JCS_CMYK) /* buf-> RGB in padded_buf */
+	{
+	  guchar *dest = padded_buf;
+	  guchar *src  = buf;
+	  gint    num  = drawable->width * scanlines;
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, preview ? padded_buf : buf,
+	  for (i = 0; i < num; i++)
+	    {
+	      guint r_c, g_m, b_y, a_k;
+
+	      r_c = *(src++);
+	      g_m = *(src++);
+	      b_y = *(src++);
+	      a_k = *(src++);
+	      *(dest++) = (r_c * a_k) / 255;
+	      *(dest++) = (g_m * a_k) / 255;
+	      *(dest++) = (b_y * a_k) / 255;
+	    }
+	}
+
+      gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
 			       0, start, drawable->width, scanlines);
 
       if (runmode != GIMP_RUN_NONINTERACTIVE)
@@ -1007,8 +1040,7 @@ load_image (gchar           *filename,
   /* free up the temporary buffers */
   g_free (rowbuf);
   g_free (buf);
-  if (preview)
-    g_free (padded_buf);
+  g_free (padded_buf);
 
   /* After finish_decompress, we can close the input file.
    * Here we postpone it until after no more JPEG errors are possible,
