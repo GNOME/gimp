@@ -51,25 +51,8 @@ GENPOT = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-packa
 
 MSGMERGE = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --dist
 
-# POTFILES is created from POTFILES.in by stripping comments, empty lines
-# and Intltool tags (enclosed in square brackets), and appending a full
-# relative path to them
-POTFILES: POTFILES.in
-	( if test 'x$(srcdir)' != 'x.'; then \
-	    posrcprefix='$(top_srcdir)/'; \
-	  else \
-	    posrcprefix="../"; \
-	  fi; \
-	  rm -f $@-t $@ \
-	    && (sed -e '/^#/d' 						\
-		    -e "s/^\[.*\] +//" 					\
-		    -e '/^[ 	]*$$/d' 				\
-		    -e "s@.*@	$$posrcprefix& \\\\@" < $(srcdir)/$@.in	\
-		| sed -e '$$s/\\$$//') > $@-t \
-	    && chmod a-w $@-t \
-	    && mv $@-t $@ )
 
-$(srcdir)/$(GETTEXT_PACKAGE)-tips.pot: $(POTFILES)
+$(srcdir)/$(GETTEXT_PACKAGE)-tips.pot: $(tips_in_files)
 	$(GENPOT)
 
 update-po: $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot

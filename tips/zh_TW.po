@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-tips 1.3.22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2003-11-05 21:06+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -46,8 +46,8 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:5
 #, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "在旋轉工具中，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕會將旋轉角度限制為 15°的倍數。"
 
@@ -75,8 +75,8 @@ msgstr ""
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "在偏好設定對話方塊中啟用「可即時更改捷徑鍵設定」後，您可以重新安排選單上的捷"
 "徑鍵。方法是先用滑鼠選取選單的某個項目，然後按下新的捷徑鍵組合。結束 GIMP "
@@ -106,9 +106,9 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:11
 #, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "描畫路徑時（編輯→依選擇區域描邊），可以使用目前的繪畫工具和設定。您可以在漸層"
 "模式中使用「畫筆」，甚至「橡皮擦」或「塗污」工具也可以。"
@@ -125,7 +125,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "絕大多數的增效模組只會對圖像目前的圖層產生效用。在某些情況下，您必須先合併所"
@@ -144,8 +144,8 @@ msgstr ""
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "並非所有效果都適用於各類圖像。當某項功能無法使用時，選單的文字會以淺灰色表"
 "示。如果需要該種效果，可能需要將圖像的色系轉為 RGB (圖像→模式→RGB)、加入透明"
@@ -212,17 +212,6 @@ msgstr ""
 "的交叉點上，得出來的選擇區域便會僅僅接觸到參考線。"
 
 #: tips/gimp-tips.xml.in.h:22
-#, fuzzy
-msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"您可以用「編輯→將選擇區域描邊」來繪畫簡單的矩形或圓形。它會用畫筆描出目前的選"
-"擇區域的邊界。至於更複雜的圖形，可以使用「路徑」工具或者「濾鏡→描繪→Gfig」來"
-"繪畫。"
-
-#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -233,7 +222,7 @@ msgstr ""
 "一點繪畫一條直線到目前的位置。若再按 <tt>Ctrl</tt> 鍵，線條的角度會限制為 15°"
 "的倍數。"
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -244,27 +233,33 @@ msgstr ""
 "式 (延伸檔名為 <tt>.xcf</tt>)。這樣會保留所有圖層及任何圖像的細節。圖像完成"
 "後，可以將圖像另存為 JPEG、PNG、GIF 等等..."
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
-msgstr "您可以透過按下 <tt>Alt</tt> 鍵再拖曳滑鼠來調整及重新放置選擇區域。"
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
+msgstr ""
+"按 <tt>Alt</tt> 鍵再用滑鼠拖曳可以調整和重新放置選擇區域。如果這個組合令視窗"
+"移動，即表示視窗總管已經使用了 <tt>Alt</tt>鍵。這個時候，請試試同時按下 "
+"<tt>Shift</tt> 鍵。"
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr "您可以調整模糊選擇區域的範圍，方法是按下滑鼠按鈕後向左或右拖曳。"
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 #, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
 "您可以使用路徑工具來製作及修改複雜的選擇區域。在「路徑」對話方塊中，您可以同"
 "時處理多個路徑並將它們轉換為選擇區域。"
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -272,7 +267,7 @@ msgstr ""
 "您可以在「圖層」對話方塊中拖曳一個圖層並將之放進工具箱內。這樣會產生一幅只含"
 "有該圖層的圖像。"
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -280,6 +275,17 @@ msgid ""
 msgstr ""
 "GIMP 裡面很多東西都是可以拖曳的。舉個例子，從工具箱或色盤裡拖曳一種顏色出來並"
 "放到圖像上，會將目前的圖像或選擇區域填滿該種顏色。"
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"您可以用「編輯→將選擇區域描邊」來繪畫簡單的矩形或圓形。它會用畫筆描出目前的選"
+"擇區域的邊界。至於更複雜的圖形，可以使用「路徑」工具或者「濾鏡→描繪→Gfig」來"
+"繪畫。"
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -340,14 +346,8 @@ msgstr ""
 "您可以使用繪畫工具來更改選擇區域。按下圖像視窗左下角的「快速遮罩」按鈕。透過"
 "在圖像上繪圖可以更改選擇區域，然後再按一次按鈕可以將之轉換為普通的選擇區域。"
 
-#~ msgid ""
-#~ "You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If "
-#~ "this makes the window move, your window manager uses the <tt>Alt</tt> key "
-#~ "already. Try pressing <tt>Shift</tt> at the same time."
-#~ msgstr ""
-#~ "按 <tt>Alt</tt> 鍵再用滑鼠拖曳可以調整和重新放置選擇區域。如果這個組合令視"
-#~ "窗移動，即表示視窗總管已經使用了 <tt>Alt</tt>鍵。這個時候，請試試同時按下 "
-#~ "<tt>Shift</tt> 鍵。"
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr "您可以透過按下 <tt>Alt</tt> 鍵再拖曳滑鼠來調整及重新放置選擇區域。"
 
 #~ msgid ""
 #~ "If your fonts turn out blocky, that's because they're not scalable fonts. "

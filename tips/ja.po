@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2003-04-04 18:21+0900\n"
 "Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -48,9 +48,10 @@ msgstr ""
 "つぶすことができるよ。"
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "変換ツールの回転モードでは <tt>Ctrl</tt> を押しながらドラッグすると、回転が15"
 "度単位になるんだ。"
@@ -81,8 +82,8 @@ msgstr ""
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "ショートカットキーの割当を変えるには、どんなáニューでもまずそのメニューを呼び"
 "出して、メニューにカーソルを当てた状態で、新しく割り当てるキーの組合せを押す"
@@ -111,10 +112,11 @@ msgstr ""
 "ストがあれば、カーブツール (画像->色->カーブ) で修正することができるよ。"
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "パスをストローク描画 (編集-&gt;ストローク描画) するときは現在の描画ツールの設"
 "定を使うんだ。グラデーションモードの絵筆やパターンを使ったスタンプツールや消"
@@ -129,9 +131,10 @@ msgstr ""
 "道具箱やダイアログを出し入れすることができるんだ。"
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "大半のプラグインは今作業中の画像の有効なレイヤーだけに働くんだ。だから画像全"
@@ -147,11 +150,12 @@ msgstr ""
 "しがきくから、恐れなくても良いし..."
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "全部のプラグインが全ての種類の画像に使えるわけじゃないんだ。作業中の画像に対"
 "して使えないやつは、メニューが灰色になって選択できなくなってるはずだよ。そん"
@@ -225,16 +229,6 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:22
 msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"編集 -&gt; ストローク描画 を使って現在有効なブラシで選択領域の縁に沿って描く"
-"ことができるんだ。正方形や正円を書きたい時には便利だね。もっと複雑な図形を描"
-"きたい時には フィルタ -&gt; 描写 -&gt; Gfig だね。"
-
-#: tips/gimp-tips.xml.in.h:23
-msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
@@ -244,7 +238,7 @@ msgstr ""
 "ながらクリックするとカーソルのところまで直線が引かれるよ。さらに <tt>Ctrl</"
 "tt> を押してやれば、直線が15度単位になるんだ。"
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -255,13 +249,14 @@ msgstr ""
 "は <tt>.xcf</tt>)。これは作業中の全ての状態を記録してくれるんだ。画像を完成さ"
 "せてから、JPEG, PNG, GIF として保存しようね..."
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
 msgstr ""
-"<tt>Alt</tt> を押しながらドラッグすることで、選択領域を置き換えたり調節したり"
-"できるんだ。"
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -269,10 +264,10 @@ msgstr ""
 "ファジー選択ツールではクリックした後に、左右にドラッグする事で選択領域を広げ"
 "たり狭めたりできるんだ。"
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 #, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
@@ -280,7 +275,7 @@ msgstr ""
 "ダイアログの \"パス\" タブでは複数のパスで作業したり選択領域に変換したりでき"
 "るんだ。"
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 #, fuzzy
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
@@ -289,7 +284,7 @@ msgstr ""
 "\"レイヤー, チャンネル＆パス\" ダイアログから道具箱へレイヤーをドラッグして"
 "持っていくこともできるんだ。するとそのレイヤーで新しい画像を作るんだ。"
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -298,6 +293,17 @@ msgstr ""
 "GIMP の色々なものをドラッグ＆ドロップすることができるよ。例えば道具箱や色パ"
 "レットから色をドラッグして画像へドロップすると、その色で画像や選択領域が塗り"
 "つぶされるんだ。"
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"編集 -&gt; ストローク描画 を使って現在有効なブラシで選択領域の縁に沿って描く"
+"ことができるんだ。正方形や正円を書きたい時には便利だね。もっと複雑な図形を描"
+"きたい時には フィルタ -&gt; 描写 -&gt; Gfig だね。"
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -366,6 +372,11 @@ msgstr ""
 "選択領域を変えるために描画ツールを使うことができるよ。画像ウィンドウの左下の"
 "クイックマスクボタンをクリックしよう。描画の変更が終わったらもう一度クリック"
 "してやることでいつもの選択領域に戻るんだ。"
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr ""
+#~ "<tt>Alt</tt> を押しながらドラッグすることで、選択領域を置き換えたり調節し"
+#~ "たりできるんだ。"
 
 #~ msgid ""
 #~ "If your fonts turn out blocky, that's because they're not scalable fonts. "

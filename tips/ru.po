@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-2.0\n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2004-02-14 15:44+0300\n"
 "Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -42,9 +43,10 @@ msgstr ""
 "залить область цветом фона используйте клавишу <tt>Ctrl</tt>."
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "Чтобы повернуть слой или выделенную область на число градусов, кратное 15, "
 "используйте клавишу <tt>Ctrl</tt>."
@@ -72,11 +74,12 @@ msgstr ""
 "находящиеся в окне диалога слоев, или вызовите эти функции из меню."
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "После того, как вы включили в диалоге настройки функцию \"Динамические "
 "быстрые клавиши\", вы можете переопределить сочетания клавиш быстрого "
@@ -106,10 +109,11 @@ msgstr ""
 "\"Кривые\" (Слой-&gt;Цвета-&gt;Кривые)."
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "При обводке по контуру (Правка-&gt;Обвести по контуру), используется "
 "активный на данный момент рисующий инструмент со всеми настройками. Вы "
@@ -125,9 +129,10 @@ msgstr ""
 "изображения, чтобы скрыть или показать панель инструментов и окна диалогов."
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "Большинство плагинов работают с активным слоем активного изображения. В "
@@ -143,11 +148,12 @@ msgstr ""
 "кнопкой мыши. И не волнуйтесь, большинство действий можно отменить..."
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Некоторые эффекты применимы не ко всем типам изображения. Иногда для того, "
 "чтобы воспользоваться тем или иным фильтром, нужно перевести изображение в "
@@ -222,18 +228,6 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:22
 msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"При помощи пункта меню Правка-&gt;Обвести по контуру можно быстро нарисовать "
-"простые геометрические фигуры, такие как квадраты и круги. Данный пункт меню "
-"обводит по контуру созданную выделенную область, используя активную кисть. "
-"Более сложные геометрические фигуры можно нарисовать при помощи функции Gfig "
-"(Фильтры-&gt;Визуализация-&gt;Gfig."
-
-#: tips/gimp-tips.xml.in.h:23
-msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
@@ -243,7 +237,7 @@ msgstr ""
 "<tt>Shift</tt>. Если вы одновременно нажмете <tt>Ctrl</tt>, угол наклона "
 "линий будет кратным 15 градусам."
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -256,13 +250,14 @@ msgstr ""
 "сохранены именно в том виде, в котором вы их оставили. После окончания "
 "работы над изображением его можно сохранить в формате JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
 msgstr ""
-"Границу выделения области можно перемещать при помощи клавиши <tt>Alt</tt>-"
-"drag."
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -270,9 +265,10 @@ msgstr ""
 "Область связанного выделения определяется нажатием левой клавиши мыши и "
 "перемещением вправо и влево."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
@@ -280,7 +276,7 @@ msgstr ""
 "выделения при помощи контуров. В диалоге контуров можно работать с "
 "нсколькими контурами и преобразовывать их в области выделения."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -288,7 +284,7 @@ msgstr ""
 "Если диалога слоев переместиь слой на панель инструментов, то будет создано "
 "новое изображение, состоящее только из этого слоя."
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -297,6 +293,19 @@ msgstr ""
 "В GIMP можно перемещать (drag and drop) многие элементы. Например, если "
 "переместить цвет с панели инструментов или из палитры на изображение, то оно "
 "(или его выделенная область) будет залито этим цветом."
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"При помощи пункта меню Правка-&gt;Обвести по контуру можно быстро нарисовать "
+"простые геометрические фигуры, такие как квадраты и круги. Данный пункт меню "
+"обводит по контуру созданную выделенную область, используя активную кисть. "
+"Более сложные геометрические фигуры можно нарисовать при помощи функции Gfig "
+"(Фильтры-&gt;Визуализация-&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -362,3 +371,8 @@ msgstr ""
 "При редактировании границ выделенной области можно использовать инструменты "
 "для рисования. Для этого надо включить \"Быструю маску\", отредактировать "
 "выделение области рисующим инструментом, а потом выключить \"Быструю маску\"."
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr ""
+#~ "Границу выделения области можно перемещать при помощи клавиши <tt>Alt</"
+#~ "tt>-drag."

@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2004-01-23 15:05+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -45,8 +46,8 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:5
 #, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "Ťahanie s <tt>Ctrl</tt> s nástrojom Otočenie spôsobí otáčanie s 15 "
 "stupňovými krokmi."
@@ -76,8 +77,8 @@ msgstr ""
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "Po povolení \"Dynamické klávesové skratky\" v dialógu Nastavenia, môžete "
 "meniť klávesové skratky. Spraviť to môžete pomocou otvorenia ponuky, "
@@ -109,9 +110,9 @@ msgstr ""
 #: tips/gimp-tips.xml.in.h:11
 #, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "Pri obkresľovaní cesty (Úpravy-&gt;Obresliť výber) sa použijú aktuálne "
 "nastavenia kresliaceho nástroja. Môžete použiť štetec v režime prechodu, "
@@ -129,7 +130,7 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "Väčšina zásuvných modulov pracuje s aktuálnou vrstvou aktuálneho obrázku. V "
@@ -150,8 +151,8 @@ msgstr ""
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Nie každý efekt sa dá použiť na všetky typy obrázkov. Môžete to zistiť podľa "
 "šedej položky v ponuke. Možno bude potrebné zmeniť mód obrázku na RGB "
@@ -226,18 +227,6 @@ msgstr ""
 "vodítok."
 
 #: tips/gimp-tips.xml.in.h:22
-#, fuzzy
-msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Položka Úpravy-&gt;Obresliť výber umožňuje kresliť jednoduché štvorce alebo "
-"kruhy vykreslením čiary aktívnou stopou okolo hraníc aktuálneho výberu. "
-"Zložitejšie tvary je možné kresliť pomocou nástroja Cesta alebo cez Filtre-"
-"&gt;Generovanie-&gt;Gfig."
-
-#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -249,7 +238,7 @@ msgstr ""
 "medzi týmto bodom a posledným kliknutím. Pokiaľ bude tiež stlačená klávesa "
 "<tt>Ctrl</tt>, tak čiara bude kreslená v 15 stupňových krokoch."
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -261,11 +250,17 @@ msgstr ""
 "vrstvy a každý aspekt vašej nedokončenej práce. Po dokončení projektu ho "
 "môžete uložiť ako JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
 msgstr ""
+"Výber môžete upraviť a nahradiť pomocou ťahania s <tt>Alt</tt>. Pokiaľ to "
+"hýbe oknom, kláves <tt>Alt</tt> už používa váš správca okien. Vyskúšajte "
+"súčasne stlačiť aj <tt>Shift</tt>. "
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -273,17 +268,17 @@ msgstr ""
 "Pri použití magickej paličky je možné dolaďovať rozsah výberu pomocou "
 "kliknutia a potiahnutia ľavým a pravým tlačítkom."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 #, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
 "Môžete vytvoriť a upravovať komplexný výber použitím nástroja Cesta. Dialóg "
 "Cesty umožňuje pracovať s viacerými cestami a konvertovať ich do výberu."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -291,7 +286,7 @@ msgstr ""
 "Vrstvu z dialógu Vrstvy môžete chytiť a potiahnuť do panela nástrojov. To "
 "vytvorí nový obrázok, ktorý bude obsahovať iba túto vrstvu."
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -301,6 +296,18 @@ msgstr ""
 "Napríklad ak potiahnete farbu z panela nástrojov alebo z farebnej palety a "
 "pustíte ju do obrázku, tak aktuálny obrázok alebo výber sa vyplní touto "
 "farbou."
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Položka Úpravy-&gt;Obresliť výber umožňuje kresliť jednoduché štvorce alebo "
+"kruhy vykreslením čiary aktívnou stopou okolo hraníc aktuálneho výberu. "
+"Zložitejšie tvary je možné kresliť pomocou nástroja Cesta alebo cez Filtre-"
+"&gt;Generovanie-&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -367,12 +374,3 @@ msgstr ""
 "\"Rýchla maska\" na ľavom spodnom okraji okna. Zmena sa uskutoční kreslením "
 "do obrázku a opätovné stlačenie tlačítka ju skonvertuje späť na normály "
 "výber."
-
-#~ msgid ""
-#~ "You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If "
-#~ "this makes the window move, your window manager uses the <tt>Alt</tt> key "
-#~ "already. Try pressing <tt>Shift</tt> at the same time."
-#~ msgstr ""
-#~ "Výber môžete upraviť a nahradiť pomocou ťahania s <tt>Alt</tt>. Pokiaľ to "
-#~ "hýbe oknom, kláves <tt>Alt</tt> už používa váš správca okien. Vyskúšajte "
-#~ "súčasne stlačiť aj <tt>Shift</tt>. "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2003-09-12 17:47+0800\n"
 "Last-Translator: Xie Yuheng <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -37,9 +37,10 @@ msgid ""
 msgstr "使用油漆桶填充工具时<tt>Ctrl</tt>+点击可以让它使用背景色而不是前景色"
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "使用变换工具的旋转模式时，<tt>Ctrl</tt>+拖动可以控制旋转角度限制在 15 度的整"
 "倍数。"
@@ -63,11 +64,12 @@ msgstr ""
 "击图层对话框中的“新建图层”或者“固定浮动图层”，或者使用菜单也可以。"
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "当你在首选项对话框中启用了“动态快捷键”以后，你就可以重新分配快捷键了。只要弹"
 "出菜单，选择一个菜单项，然后按新的快捷键组合就行了。退出 GIMP 时，这些将会被"
@@ -94,10 +96,11 @@ msgstr ""
 "(图层-&gt;颜色-&gt;曲线)把它们纠正回来。"
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "如果你勾画一个路径(编辑->勾画)，当前的画具和它的设置将被使用。你可以使用渐变"
 "模式的画笔、使用图案的克隆工具或者甚至橡皮还有涂抹工具。"
@@ -111,9 +114,10 @@ msgstr ""
 "具箱和其它的对话框。"
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "大多数插件只对当前图像的当前图层操作。在一些情况下，如果你希望插件对整幅图像"
@@ -128,11 +132,12 @@ msgstr ""
 "误操作……"
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "不是所有的效果都可以应用到所有类型的图像的。这会通过灰掉的菜单项表示出来。你"
 "也许需要将图像模式改变为 RGB (图像-&gt;模式-&gt;RGB)、添加一个 alpha 通道(图"
@@ -200,15 +205,6 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:22
 msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"使用 编辑-&gt;勾画 让你可以用活动的画笔沿着当前的选区的边缘进行描画，以画出简"
-"单的方块或者圆。更复杂的形状可以用 滤镜-&gt;绘制-&gt;Gfig 来画。"
-
-#: tips/gimp-tips.xml.in.h:23
-msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
@@ -218,7 +214,7 @@ msgstr ""
 "光标位置画一条直线。如果你同时还按着<tt>Ctrl</tt>键，直线将被限制到 15 的整倍"
 "数的角度。"
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -229,26 +225,30 @@ msgstr ""
 "扩展名<tt>.xcf</tt>)。这将保存图层还有你的工作进程的每个方面。一但一个项目完"
 "成了，你就可以把它保存为JPEG、PNG、GIF、……"
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
-msgstr "你可以使用<tt>Alt</tt>+拖动来调整和重新放置一个选区。"
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
+msgstr ""
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr "你可以点击并左右拖动鼠标来调整模糊选择的选区范围。"
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
 "你可以用 Bezier 工具创建和编辑复杂的选区。路径对话框允许你同时操作多个路径以"
 "及把它们转换到选区。"
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -256,7 +256,7 @@ msgstr ""
 "你可以从图层对话框中拖动一个图层到工具箱中释放。这样会创建一幅只含有那个图层"
 "的新图像。"
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -264,6 +264,16 @@ msgid ""
 msgstr ""
 "在 GIMP 里你可以拖放很多东西。例如，从工具箱或者从一个色板拖动一种颜色到一幅"
 "图像当中释放，就会以那种颜色填充当前的图像或选区。"
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"使用 编辑-&gt;勾画 让你可以用活动的画笔沿着当前的选区的边缘进行描画，以画出简"
+"单的方块或者圆。更复杂的形状可以用 滤镜-&gt;绘制-&gt;Gfig 来画。"
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -322,6 +332,9 @@ msgid ""
 msgstr ""
 "你可以使用画具来改变选区。点击图像窗口左下角的“快速蒙板”按钮。在图像上涂画来"
 "改变你的选区，然后再次点击按钮把它转换回一个正常的选区。"
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr "你可以使用<tt>Alt</tt>+拖动来调整和重新放置一个选区。"
 
 #~ msgid ""
 #~ "If your fonts turn out blocky, that's because they're not scalable fonts. "

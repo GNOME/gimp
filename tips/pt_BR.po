@@ -8,7 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"POT-Creation-Date: 2003-07-21 00:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-05 00:12+0100\n"
 "PO-Revision-Date: 2003-02-28 02:00-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -46,9 +47,10 @@ msgstr ""
 "cor de fundo em vez da cor de primeiro plano."
 
 #: tips/gimp-tips.xml.in.h:5
+#, fuzzy
 msgid ""
-"<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
-"the rotation to 15 degree angles."
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
 msgstr ""
 "Arrastar-<tt>Ctrl</tt> com a ferramenta de Transformação em modo de rotação "
 "irá restringir a rotação a ângulos de 15 graus."
@@ -80,8 +82,8 @@ msgstr ""
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. This is saved when you "
-"exit GIMP."
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
 msgstr ""
 "Pode redefinir teclas de atalho para qualquer menu fazendo-o aparecer, "
 "selecionando um item do menu, e primindo a nova combinação de teclas de "
@@ -112,10 +114,11 @@ msgstr ""
 "&gt;Cores-&gt;Curvas)."
 
 #: tips/gimp-tips.xml.in.h:11
+#, fuzzy
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
-"settings are used. You can use the Paintbrush in gradient mode, the Clone "
-"tool with a pattern or even the Eraser or the Smudge tool."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
 msgstr ""
 "Se tiver sido desenhado um caminho (Editar-&gt;Pincelar), são utilizadas a "
 "ferramenta de desenho e as suas definições atuais. Pode-se usar o Spray em "
@@ -132,9 +135,10 @@ msgstr ""
 "e outros diálogos."
 
 #: tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
 "A maioria dos plug-ins funciona na camada atual da imagem atual. Em alguns "
@@ -151,11 +155,12 @@ msgstr ""
 "maioria dos erros..."
 
 #: tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha Channel) or "
-"flatten it (Layers-&gt;Flatten Image)."
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Nem todos os efeitos podem ser aplicados a todos os tipos de imagens. Isto é "
 "indicado por uma opção de menu acinzentada. Pode-se ter que modificar o modo "
@@ -233,17 +238,6 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:22
 msgid ""
-"Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
-"painting the edge of your current selection with the active brush. More "
-"complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
-"Usar Editar-&gt;Pincelada permite desenhar quadrados ou círculos simples "
-"pintando a margem da sua seleção atual com o pincel ativo. Formas "
-"geométricas mais complexas podem ser desenhadas com Filtros-&gt;Renderizar-"
-"&gt;Gfig."
-
-#: tips/gimp-tips.xml.in.h:23
-msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
@@ -254,7 +248,7 @@ msgstr ""
 "desenho até à posição atual do cursor. Se também pressionar o <tt>Ctrl</tt>, "
 "a linha será limitada a ângulos de 15 graus."
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -266,12 +260,14 @@ msgstr ""
 "tt>). Isto preserva as camadas e todos os aspectos do seu trabalho-em-curso. "
 "Uma vez completo o projeto, grave-o como JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:25
-msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
 msgstr ""
-"Você pode ajustar e reposicionar a seleção usando <tt>Alt</tt>-arrasto."
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -279,10 +275,10 @@ msgstr ""
 "Pode ajustar o alcance da seleção de uma seleção livre clicando e arrastando "
 "para a esquerda e direita."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 #, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The Paths "
+"You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
@@ -290,7 +286,7 @@ msgstr ""
 "A aba \"Caminhos\" no diálogo \"Camadas, Canais e Caminhos\" permite-lhe "
 "trabalhar em múltiplos caminhos e convertê-los em seleções."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 #, fuzzy
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
@@ -300,7 +296,7 @@ msgstr ""
 "largá-la na caixa de ferramentas. Isto irá criar uma nova imagem contendo "
 "apenas aquela camada."
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -309,6 +305,18 @@ msgstr ""
 "Pode arrastar e largar muitas coisas no GIMP.  Por exemplo, arrastar uma cor "
 "da caixa de ferramentas ou de uma paleta de cores e largá-la numa imagem irá "
 "preencher a imagem atual ou a seleção com essa cor."
+
+#: tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Usar Editar-&gt;Pincelada permite desenhar quadrados ou círculos simples "
+"pintando a margem da sua seleção atual com o pincel ativo. Formas "
+"geométricas mais complexas podem ser desenhadas com Filtros-&gt;Renderizar-"
+"&gt;Gfig."
 
 #: tips/gimp-tips.xml.in.h:30
 msgid ""
@@ -380,6 +388,10 @@ msgstr ""
 "Máscara Rápida no canto inferior esquerdo de uma janela de imagem. Altere a "
 "sua seleção pintando a imagem e clicando novamente no botão para a converter "
 "numa seleção normal."
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr ""
+#~ "Você pode ajustar e reposicionar a seleção usando <tt>Alt</tt>-arrasto."
 
 #~ msgid ""
 #~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
