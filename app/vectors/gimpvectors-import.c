@@ -131,8 +131,8 @@ static gboolean   parse_svg_length    (const gchar  *value,
                                        gdouble      *scale,
                                        gdouble      *length);
 static gboolean   parse_svg_viewbox   (const gchar  *value,
-                                       gdouble       width,
-                                       gdouble       height,
+                                       gdouble      *width,
+                                       gdouble      *height,
                                        GimpMatrix3  *matrix);
 static gboolean   parse_svg_transform (const gchar  *value,
                                        GimpMatrix3  *matrix);
@@ -273,7 +273,8 @@ svg_parser_start_element (GMarkupParseContext *context,
   handler = g_new0 (SvgHandler, 1);
   base    = g_queue_peek_head (parser->stack);
 
-  if (!base->width || !base->height)
+  /* if the element is not rendered, always use the generic handler */
+  if (base->width <= 0.0 || base->height <= 0.0)
     i = G_N_ELEMENTS (svg_handlers);
 
   for (; i < G_N_ELEMENTS (svg_handlers); i++)
@@ -388,9 +389,6 @@ svg_handler_svg (SvgHandler   *handler,
       values++;
     }
 
-  handler->width  = w;
-  handler->height = h;
-
   gimp_matrix3_scale (matrix, xscale, yscale);
 
   if (x || y)
@@ -402,8 +400,13 @@ svg_handler_svg (SvgHandler   *handler,
         gimp_matrix3_translate (matrix, x, y);
     }
 
-  if (viewbox && parse_svg_viewbox (viewbox, w, h, &box))
-    gimp_matrix3_mult (&box, matrix);
+  if (viewbox && parse_svg_viewbox (viewbox, &w, &h, &box))
+    {
+      gimp_matrix3_mult (&box, matrix);
+    }
+
+  handler->width  = w;
+  handler->height = h;
 
   handler->transform = matrix;
 }
@@ -544,7 +547,7 @@ parse_svg_length (const gchar *value,
     default:
       len = len / gimp_unit_get_factor (unit) * resolution;
     case GIMP_UNIT_PIXEL:
-      *scale  = len / reference;
+      *scale  = 1.0;
       *length = len;
       break;
     }
@@ -554,36 +557,57 @@ parse_svg_length (const gchar *value,
 
 static gboolean
 parse_svg_viewbox (const gchar *value,
-                   gdouble      width,
-                   gdouble      height,
+                   gdouble     *width,
+                   gdouble     *height,
                    GimpMatrix3 *matrix)
 {
-  gdouble  args[4];
-  gchar   *ptr;
-  gint     i;
+  gdouble   x, y, w, h;
+  gchar    *tok;
+  gchar    *str     = g_strdup (value);
+  gboolean  success = FALSE;
 
-  for (i = 0; *value && i < 4; i++)
+  x = y = w = h = 0;
+
+  tok = strtok (str, ", \t");
+  if (tok)
     {
-      args[i] = g_ascii_strtod (value, &ptr);
-
-      while (*ptr == ',' || g_ascii_isspace (*ptr))
-        ptr++;
-
-      value = ptr;
+      x = g_ascii_strtod (tok, NULL);
+      tok = strtok (NULL, ", \t");
+      if (tok)
+        {
+          y = g_ascii_strtod (tok, NULL);
+          tok = strtok (NULL, ", \t");
+          if (tok != NULL)
+            {
+              w = g_ascii_strtod (tok, NULL);
+              tok = strtok (NULL, ", \t");
+              if (tok)
+                {
+                  h = g_ascii_strtod (tok, NULL);
+                  success = TRUE;
+                }
+            }
+        }
     }
 
-  if (i < 4)
-    return FALSE;
+  g_free (str);
 
-  gimp_matrix3_identity (matrix);
+  if (success)
+    {
+      gimp_matrix3_identity (matrix);
+      gimp_matrix3_translate (matrix, x, y);
 
-  if (args[0] || args[1])
-    gimp_matrix3_translate (matrix, args[0], args[1]);
+      if (w > 0.0 && h > 0.0)
+        {
+          gimp_matrix3_scale (matrix, *width / w, *height / h);
+        }
+      else  /* disable rendering of the element */
+        {
+          *width = *height = 0.0;
+        }
+    }
 
-  if (args[2] && args[3])
-    gimp_matrix3_scale (matrix, width / args[2], height / args[3]);
-
-  return TRUE;
+  return success;
 }
 
 gboolean
