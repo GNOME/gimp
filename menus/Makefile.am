@@ -30,6 +30,7 @@ menudata_DATA = \
 	qmask-menu.xml			\
 	templates-menu.xml		\
 	tool-options-menu.xml		\
+	tools-menu.xml			\
 	vectors-menu.xml
 
 EXTRA_DIST = \

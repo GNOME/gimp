@@ -1,5 +1,39 @@
 2004-05-10  Michael Natterer  <mitch@gimp.org>
 
+	Started making the toolbox configurable.
+	Addresses bug #105764. Not finished yet.
+
+	* app/core/gimptoolinfo.[ch]: renamed "in_toolbox" to "visible"
+	and made it a GObject property.
+
+	* app/tools/gimp-tools.[ch]: added new function
+	gimp_tools_get_default_order() which returns a GList of tool
+	identifiers.
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: added actions & callbacks for
+	toggling the "visible" boolean and for resetting all tools.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptoolview.[ch]: new widget which allows to
+	toggle a tool's visibility and to reorder the tools.
+
+	* app/widgets/gimptoolbox.[ch]: removed member "GtkWidget *trash"
+	and pack all tool buttons into the same wrap box. Connect to
+	"reoder" of the tool container and to "notify::visible" of all
+	tool infos and update the toolbox accordingly.
+
+	* app/gui/dialogs-constructors.c: create a GimpToolView for the
+	tools list/grid.
+
+	* app/menus/menus.c: register a <Tools> menu for the dialog above.
+
+	* menus/Makefile.am
+	* menus/tools-menu.xml: added the menu.
+
+2004-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpuimanager.c: re-added help for menu items. Still
 	incomplete because there is no fallback help ID yet when pressing
 	F1 over a menu item which has a submenu. Added evil workaround and

@@ -83,6 +83,14 @@ static void       toolbox_tool_changed          (GimpContext    *context,
                                                  GimpToolInfo   *tool_info,
                                                  gpointer        data);
 
+static void       toolbox_tool_reorder          (GimpContainer  *container,
+                                                 GimpToolInfo   *tool_info,
+                                                 gint            index,
+                                                 GtkWidget      *wrap_box);
+static void       toolbox_tool_visible_notify   (GimpToolInfo   *tool_info,
+                                                 GParamSpec     *pspec,
+                                                 GtkWidget      *button);
+
 static void       toolbox_tool_button_toggled   (GtkWidget      *widget,
                                                  GimpToolInfo   *tool_info);
 static gboolean   toolbox_tool_button_press     (GtkWidget      *widget,
@@ -195,12 +203,6 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
-
-  /*  A container that keeps references on the buttons that are not
-   *  added to the toolbox. Just to make sure they are freed on exit.
-   */
-  toolbox->trash = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (vbox), toolbox->trash);
 }
 
 static gboolean
@@ -256,7 +258,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
         {
           tool_info = (GimpToolInfo *) list->data;
 
-          if (tool_info->in_toolbox)
+          if (tool_info->visible)
             n_tools++;
         }
 
@@ -298,8 +300,6 @@ gimp_toolbox_style_set (GtkWidget *widget,
                         GtkStyle  *previous_style)
 {
   Gimp           *gimp;
-  GimpToolInfo   *tool_info;
-  GtkWidget      *tool_button;
   GtkIconSize     tool_icon_size;
   GtkReliefStyle  relief;
   GList          *list;
@@ -321,10 +321,8 @@ gimp_toolbox_style_set (GtkWidget *widget,
        list;
        list = g_list_next (list))
     {
-      tool_info = GIMP_TOOL_INFO (list->data);
-
-      if (! tool_info->in_toolbox)
-        continue;
+      GimpToolInfo *tool_info = list->data;
+      GtkWidget    *tool_button;
 
       tool_button = g_object_get_data (G_OBJECT (tool_info),
                                        TOOL_BUTTON_DATA_KEY);
@@ -632,21 +630,20 @@ toolbox_create_tools (GimpToolbox *toolbox,
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
-      if (tool_info->in_toolbox)
-        {
-          gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->wbox), button,
-                             FALSE, FALSE, FALSE, FALSE);
-          gtk_widget_show (button);
+      gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->wbox), button,
+                         FALSE, FALSE, FALSE, FALSE);
 
-          stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-          image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-          gtk_container_add (GTK_CONTAINER (button), image);
-          gtk_widget_show (image);
-        }
-      else
-        {
-          gtk_container_add (GTK_CONTAINER (toolbox->trash), button);
-        }
+      if (tool_info->visible)
+        gtk_widget_show (button);
+
+      g_signal_connect_object (tool_info, "notify::visible",
+                               G_CALLBACK (toolbox_tool_visible_notify),
+                               button, 0);
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
 
       g_object_set_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY, button);
       g_object_set_data (G_OBJECT (button),    TOOL_INFO_DATA_KEY,   tool_info);
@@ -706,6 +703,10 @@ toolbox_create_tools (GimpToolbox *toolbox,
       gimp_help_set_help_data (button, tool_info->help, tool_info->help_id);
 #endif
     }
+
+  g_signal_connect_object (context->gimp->tool_info_list, "reorder",
+                           G_CALLBACK (toolbox_tool_reorder),
+                           toolbox->wbox, 0);
 }
 
 static void
@@ -795,6 +796,32 @@ toolbox_tool_changed (GimpContext  *context,
 					     tool_info);
 	}
     }
+}
+
+static void
+toolbox_tool_reorder (GimpContainer *container,
+                      GimpToolInfo  *tool_info,
+                      gint           index,
+                      GtkWidget     *wrap_box)
+{
+  if (tool_info)
+    {
+      GtkWidget *button = g_object_get_data (G_OBJECT (tool_info),
+                                             TOOL_BUTTON_DATA_KEY);
+
+      gtk_wrap_box_reorder_child (GTK_WRAP_BOX (wrap_box), button, index);
+    }
+}
+
+static void
+toolbox_tool_visible_notify (GimpToolInfo *tool_info,
+                             GParamSpec   *pspec,
+                             GtkWidget    *button)
+{
+  if (tool_info->visible)
+    gtk_widget_show (button);
+  else
+    gtk_widget_hide (button);
 }
 
 static void

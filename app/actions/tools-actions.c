@@ -27,10 +27,13 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcontainereditor.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "actions/tools-actions.h"
@@ -41,6 +44,9 @@
 
 static GimpActionEntry tools_actions[] =
 {
+  { "tools-popup", GIMP_STOCK_TOOLS, N_("Tools Menu"), NULL, NULL, NULL,
+    GIMP_HELP_TOOLS_DIALOG },
+
   { "tools-menu",           NULL, N_("_Tools")           },
   { "tools-select-menu",    NULL, N_("_Selection Tools") },
   { "tools-paint-menu",     NULL, N_("_Paint Tools")     },
@@ -55,7 +61,21 @@ static GimpActionEntry tools_actions[] =
   { "tools-swap-colors", GIMP_STOCK_SWAP_COLORS,
     N_("S_wap Colors"), "X", NULL,
     G_CALLBACK (tools_swap_colors_cmd_callback),
-    GIMP_HELP_TOOLBOX_SWAP_COLORS }
+    GIMP_HELP_TOOLBOX_SWAP_COLORS },
+
+  { "tools-reset", GIMP_STOCK_RESET,
+    N_("_Reset Order & Visibility"), NULL, NULL,
+    G_CALLBACK (tools_reset_cmd_callback),
+    NULL }
+};
+
+static GimpToggleActionEntry tools_toggle_actions[] =
+{
+  { "tools-visibility", NULL,
+    N_("Show in Toolbox"), NULL, NULL,
+    G_CALLBACK (tools_toggle_visibility_cmd_callback),
+    TRUE,
+    NULL /* FIXME */ }
 };
 
 static GimpStringActionEntry tools_alternative_actions[] =
@@ -81,6 +101,10 @@ tools_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  tools_actions,
                                  G_N_ELEMENTS (tools_actions));
+
+  gimp_action_group_add_toggle_actions (group,
+                                        tools_toggle_actions,
+                                        G_N_ELEMENTS (tools_toggle_actions));
 
   gimp_action_group_add_string_actions (group,
                                         tools_alternative_actions,
@@ -138,4 +162,16 @@ void
 tools_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
+  GimpToolInfo *tool_info = NULL;
+
+  if (GIMP_IS_CONTAINER_EDITOR (data))
+    tool_info =
+      gimp_context_get_tool (GIMP_CONTAINER_EDITOR (data)->view->context);
+
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+
+  SET_ACTIVE ("tools-visibility", tool_info && tool_info->visible);
+
+#undef SET_ACTIVE
 }

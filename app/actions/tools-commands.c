@@ -28,6 +28,10 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpcontainereditor.h"
+#include "widgets/gimpcontainerview.h"
+#include "widgets/gimptoolview.h"
+
 #include "display/gimpdisplay.h"
 
 #include "tools/gimptool.h"
@@ -93,4 +97,33 @@ tools_select_cmd_callback (GtkAction   *action,
 
   if (gdisp)
     tool_manager_initialize_active (gimp, gdisp);
+}
+
+void
+tools_toggle_visibility_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  if (GIMP_IS_CONTAINER_EDITOR (data))
+    {
+      GimpToolInfo *tool_info;
+      gboolean      active;
+
+      tool_info =
+        gimp_context_get_tool (GIMP_CONTAINER_EDITOR (data)->view->context);
+
+      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      if (active != tool_info->visible)
+        g_object_set (tool_info, "visible", active, NULL);
+    }
+}
+
+void
+tools_reset_cmd_callback (GtkAction *action,
+                          gpointer   data)
+{
+  GimpToolView *view = GIMP_TOOL_VIEW (data);
+
+  if (GTK_WIDGET_SENSITIVE (view->reset_button))
+    gtk_button_clicked (GTK_BUTTON (view->reset_button));
 }

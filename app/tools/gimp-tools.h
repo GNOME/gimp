@@ -26,5 +26,7 @@ void   gimp_tools_exit    (Gimp *gimp);
 void   gimp_tools_restore (Gimp *gimp);
 void   gimp_tools_save    (Gimp *gimp);
 
+GList *gimp_tools_get_default_order (Gimp *gimp);
+
 
 #endif  /* __GIMP_TOOLS_H__ */

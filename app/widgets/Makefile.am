@@ -202,6 +202,8 @@ libappwidgets_a_sources = \
 	gimptooldialog.h		\
 	gimptooloptionseditor.c		\
 	gimptooloptionseditor.h		\
+	gimptoolview.c			\
+	gimptoolview.h			\
 	gimpuimanager.c			\
 	gimpuimanager.h			\
 	gimpundoeditor.c		\

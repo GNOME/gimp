@@ -35,10 +35,25 @@
 #include "gimptooloptions.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_VISIBLE
+};
+
+
 static void    gimp_tool_info_class_init      (GimpToolInfoClass *klass);
 static void    gimp_tool_info_init            (GimpToolInfo      *tool_info);
 
 static void    gimp_tool_info_finalize        (GObject           *object);
+static void    gimp_tool_info_get_property    (GObject           *object,
+                                               guint              property_id,
+                                               GValue            *value,
+                                               GParamSpec        *pspec);
+static void    gimp_tool_info_set_property    (GObject           *object,
+                                               guint              property_id,
+                                               const GValue      *value,
+                                               GParamSpec        *pspec);
 static gchar * gimp_tool_info_get_description (GimpViewable      *viewable,
                                                gchar            **tooltip);
 
@@ -83,8 +98,16 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize          = gimp_tool_info_finalize;
+  object_class->get_property      = gimp_tool_info_get_property;
+  object_class->set_property      = gimp_tool_info_set_property;
 
   viewable_class->get_description = gimp_tool_info_get_description;
+
+  g_object_class_install_property (object_class, PROP_VISIBLE,
+                                   g_param_spec_boolean ("visible",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
@@ -105,7 +128,7 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->help_domain       = NULL;
   tool_info->help_id           = NULL;
 
-  tool_info->in_toolbox        = TRUE;
+  tool_info->visible           = TRUE;
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = NULL;
 }
@@ -161,6 +184,44 @@ gimp_tool_info_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_tool_info_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
+
+  switch (property_id)
+    {
+    case PROP_VISIBLE:
+      g_value_set_boolean (value, tool_info->visible);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_info_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
+
+  switch (property_id)
+    {
+    case PROP_VISIBLE:
+      tool_info->visible = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gchar *

@@ -104,6 +104,7 @@ typedef struct _GimpDocumentView        GimpDocumentView;
 typedef struct _GimpFontView            GimpFontView;
 typedef struct _GimpImageView           GimpImageView;
 typedef struct _GimpTemplateView        GimpTemplateView;
+typedef struct _GimpToolView            GimpToolView;
 typedef struct _GimpDataFactoryView     GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
 typedef struct _GimpPatternFactoryView  GimpPatternFactoryView;

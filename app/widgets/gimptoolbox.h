@@ -39,7 +39,6 @@ struct _GimpToolbox
 
   GtkWidget *menu_bar;
   GtkWidget *wbox;
-  GtkWidget *trash;
   GtkWidget *color_area;
   GtkWidget *indicator_area;
 

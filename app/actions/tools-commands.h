@@ -20,13 +20,18 @@
 #define __TOOLS_COMMANDS_H__
 
 
-void   tools_default_colors_cmd_callback (GtkAction   *action,
-					  gpointer     data);
-void   tools_swap_colors_cmd_callback    (GtkAction   *action,
-					  gpointer     data);
-void   tools_select_cmd_callback         (GtkAction   *action,
-                                          const gchar *value,
-					  gpointer     data);
+void   tools_default_colors_cmd_callback    (GtkAction   *action,
+                                             gpointer     data);
+void   tools_swap_colors_cmd_callback       (GtkAction   *action,
+                                             gpointer     data);
+void   tools_select_cmd_callback            (GtkAction   *action,
+                                             const gchar *value,
+                                             gpointer     data);
+
+void   tools_toggle_visibility_cmd_callback (GtkAction   *action,
+                                             gpointer     data);
+void   tools_reset_cmd_callback             (GtkAction   *action,
+                                             gpointer     data);
 
 
 #endif /* __TOOLS_COMMANDS_H__ */

@@ -62,6 +62,7 @@
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
+#include "widgets/gimptoolview.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
@@ -370,10 +371,11 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_tree_view_new (context->gimp->tool_info_list,
-				       context,
-				       preview_size, 0,
-                                       FALSE);
+  view = gimp_tool_view_new (GIMP_VIEW_TYPE_LIST,
+                             context->gimp->tool_info_list,
+                             context,
+                             preview_size, 0,
+                             factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Tools"), NULL,
@@ -579,10 +581,11 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_container_grid_view_new (context->gimp->tool_info_list,
-				       context,
-				       preview_size, 1,
-                                       FALSE);
+  view = gimp_tool_view_new (GIMP_VIEW_TYPE_GRID,
+                             context->gimp->tool_info_list,
+                             context,
+                             preview_size, 1,
+                             factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Tools"), NULL,
