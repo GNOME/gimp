@@ -268,6 +268,10 @@ else
 fi
 AM_CONDITIONAL(HAVE_ASM_MMX, test x$have_asm_mmx = xtrue)
 
+
+dnl build of gimp-remote is disabled for now
+dnl GIMP_REMOTE="gimp-remote"
+
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
 if test "$gdk_target" = x11; then
@@ -275,18 +279,18 @@ if test "$gdk_target" = x11; then
     if test -z "$LIBXMU"; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	  WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt -lSM -lICE',
-	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
+	  WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
+	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
 	  AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	      WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt',
-	      AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
-	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
+	      WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
+	      AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
     fi
   else
      AC_MSG_WARN([ 
 *** Not building for GTK+-X11 (GDK backend is $gdk_target).
-*** Webbrowser plug-in and gimp-remote will not be built.])
+*** Webbrowser plug-in will not be built.])
   fi
 
 dnl Test for libaa
@@ -693,7 +697,7 @@ if test "x$enable_perl" != xno; then
       GIMP_CFLAGS="$GIMP_CFLAGS_NOUI"
       GIMP_LIBS_NOUI="-L\$topdir/../../libgimp/.libs -L\$topdir/../../libgimp -lgimp-$LT_RELEASE -L\$topdir/../../libgimpcolor/.libs -L\$topdir/../../libgimpcolor -lgimpcolor-$LT_RELEASE -L\$topdir/../../libgimpbase/.libs -L\$topdir/../../libgimpbase -lgimpbase-$LT_RELEASE $GLIB_LIBS $LIBS"
       GIMP_LIBS="$GIMP_LIBS_NOUI -lgimpui-$LT_RELEASE"
-      GIMPTOOL="../../gimptool-1.4"
+      GIMPTOOL="../../gimptool-1.3"
       IN_GIMP=1
       EXTENSIVE_TESTS=0
 
@@ -830,7 +834,9 @@ dnl plug-ins/gdyntext/Makefile
 dnl plug-ins/helpbrowser/Makefile
 dnl plug-ins/perl/po/Makefile.in
 AC_OUTPUT([
-gimptool-1.4
+gimptool-1.3
+gimp-1.3.pc
+gimpui-1.3.pc
 gimp.spec
 Makefile
 build/Makefile
@@ -912,10 +918,9 @@ devel-docs/libgimpcolor/Makefile
 devel-docs/libgimpmath/Makefile
 devel-docs/libgimpwidgets/Makefile
 docs/Makefile
-docs/gimp.1
-docs/gimprc.5
-docs/gimptool-1.4.1
-docs/gimp-remote.1
+docs/gimp-1.3.1
+docs/gimprc-1.3.5
+docs/gimptool-1.3.1
 tips/Makefile
 pixmaps/Makefile
 cursors/Makefile
@@ -939,7 +944,7 @@ po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 ],[
-   chmod +x gimptool-1.4
+   chmod +x gimptool-1.3
 
    sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile

@@ -27,7 +27,10 @@ SUBDIRS = \
 	devel-docs		\
 	build
 
-bin_SCRIPTS = gimptool-1.4 @GIMPINSTALL@
+bin_SCRIPTS = gimptool-1.3 @GIMPINSTALL@
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = gimp-1.3.pc gimpui-1.3.pc
 
 EXTRA_SCRIPTS = gimpinstall
 
@@ -62,8 +65,8 @@ gimpinstall:
 
 install-exec-local:
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-config-1.4 \
-	&& $(LN_S) gimptool-1.4 gimp-config-1.4
+	&& rm -f gimp-config-1.3 \
+	&& $(LN_S) gimptool-1.3 gimp-config-1.3
 
 uninstall-local:
-	rm -f $(DESTDIR)$(bindir)/gimp-config-1.4
+	rm -f $(DESTDIR)$(bindir)/gimp-config-1.3

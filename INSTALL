@@ -6,24 +6,22 @@ There are some basic steps to building and installing the GIMP:
 
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
-  2. You need to have installed GTK version 1.3.10 or better. Do not try
+  2. You need to have installed GTK version 1.3.11 or better. Do not try
      to use the stable GTK+ versions 1.2.x, it will not work. GTK+-1.3.x
      are development releases of the upcoming GTK+-2.0 release. GTK+-2.0
      itself needs recent versions of GLib-2.0, Pango and ATK. Grab them
      from ftp://ftp.gtk.org/. GTK+-2.0 and friends can be installed side 
      by side with GTK+-1.2.
-  3. We require PangoFT2, a Pango backend that uses FreeType2. Make you
-     sure you have FreeType2 installed before you compile Pango.
+  3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
+     you have FreeType2 installed before you compile Pango.
   4. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG.
   5. Configure the GIMP by running the `configure' script.
      You may want to pass some options to it, see below.
   6. Build the GIMP by running `make'.
-  7. If you have installed GIMP-1.2 in the same prefix, make a copy of
-     the gimp executable (calling it for example gimp12). Everything but
-     the main gimp executable will be installed in way that it does not
-     clash with files from a GIMP-1.2 installation.
-  7. Install the GIMP by running `make install'.
+  7. Install the GIMP by running `make install'. In order to avoid clashes
+     with an installed stable version of The GIMP, we install a binary
+     called gimp-1.3.
 
 Please make sure you don't have any old GTK+-2.0, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -34,8 +32,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-1.3.0.tar.gz   # unpack the sources
-  % cd gimp-1.3.0                # change to the toplevel directory
+  % tar xvfz gimp-1.3.x.tar.gz   # unpack the sources
+  % cd gimp-1.3.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -99,7 +97,7 @@ recognizes. These are:
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with libgimp.
  - The plug-in programs in the `plug-ins' subdirectory.
- - The main GIMP program in `app/gimp'.
+ - The main GIMP program 'gimp-1.3' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 

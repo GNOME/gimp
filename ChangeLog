@@ -1,3 +1,26 @@
+2001-11-25  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* gimp-1.3.pc.in
+	* gimpui-1.3.pc.in: added pkg-config files for gimp-1.3.
+
+	* gimptool-1.4.in: renamed to gimptool-1.3.in
+
+	* docs/Makefile.am
+	* docs/gimptool-1.4.1.in renamed to docs/gimptool-1.3.1.in.
+	Disabled installation of man-pages; they need to be updated and
+	should probably be renamed.
+
+	* app/Makefile.am: generate binary called gimp-1.3 sp we don't clash
+	with older gimp installations.
+
+	* gimp-1.3.pc.in
+	* gimpui-1.3.pc.in: added pkg-config files for gimp-1.3.
+
+	* INSTALL
+	* NEWS: updated
+
 2001-11-24  Sven Neumann  <sven@gimp.org>
 
 	Clean up after Marc Lehmann who changed tools/pdbgen/pdb/color.pdb

@@ -4,7 +4,7 @@ SUBDIRS = paint-funcs base core xcf file pdb plug-in display tools widgets gui
 
 scriptdata =
 
-bin_PROGRAMS = gimp
+bin_PROGRAMS = gimp-1.3
 
 ##
 ## gui stuff that needs to go to libgimp/, gui/ or /dev/null
@@ -86,7 +86,7 @@ stuff_sources = \
 	libgimp_glue.c		\
 	libgimp_glue.h
 
-gimp_SOURCES = @STRIP_BEGIN@ \
+gimp_1_3_SOURCES = @STRIP_BEGIN@ \
 	$(gui_sources)		\
 	$(core_ui_sources)	\
 	$(core_sources)		\
@@ -112,7 +112,7 @@ else
 REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
-gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
+gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
@@ -128,7 +128,7 @@ INCLUDES = @STRIP_BEGIN@ \
 	-I$(includedir)			\
 @STRIP_END@
 
-gimp_LDADD = @STRIP_BEGIN@ \
+gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	gui/libappgui.a							\
 	tools/libapptools.a						\
 	display/libappdisplay.a						\
