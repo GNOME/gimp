@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-08-27 12:08+0200\n"
-"PO-Revision-Date: 2003-09-04 20:42+0200\n"
+"PO-Revision-Date: 2003-09-04 21:45+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1870,7 +1870,6 @@ msgid "Remove Path"
 msgstr "Rimuovi percorsi"
 
 #: app/core/gimpimage.c:3135
-#, fuzzy
 msgid "Path cannot be raised higher."
 msgstr "Il percorso non può essere alzato ulteriormente."
 
@@ -1887,24 +1886,22 @@ msgid "Lower Path"
 msgstr "Abbassa percorso"
 
 #: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:1048
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
-msgstr "(non è possibile creare file miniatura)"
+msgstr "Non è possibile scrivere i file miniatura per '%s' come '%s': %s"
 
 #: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
-msgstr "Non è possibile aprire \"%s\""
+msgstr "Impossibile impostare i permessi per la miniatura '%s': %s"
 
 #: app/core/gimpimagefile.c:742
-#, fuzzy
 msgid "Remote image"
-msgstr "gimage"
+msgstr "Immagine remota"
 
 #: app/core/gimpimagefile.c:747
-#, fuzzy
 msgid "Failed to open"
-msgstr "impossibile aprire"
+msgstr "Impossibile aprire"
 
 #: app/core/gimpimagefile.c:772
 msgid "No preview available"
@@ -1919,11 +1916,8 @@ msgid "Preview is out of date"
 msgstr ""
 
 #: app/core/gimpimagefile.c:784
-#, fuzzy
 msgid "Cannot create preview"
-msgstr ""
-"Genera\n"
-"anteprima"
+msgstr "Impossibil creare l'anteprima"
 
 #: app/core/gimpimagefile.c:794 app/gui/info-window.c:705
 #, c-format
@@ -1931,34 +1925,31 @@ msgid "%d x %d pixels"
 msgstr "%d x %d pixel"
 
 #: app/core/gimpimagefile.c:812
-#, fuzzy
 msgid "1 Layer"
-msgstr "Livello"
+msgstr "Livello 1"
 
 #: app/core/gimpimagefile.c:814
-#, fuzzy, c-format
+#, c-format
 msgid "%d Layers"
-msgstr "Livelli"
+msgstr "%d livelli"
 
 #: app/core/gimpimagefile.c:893
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open thumbnail file '%s': %s"
-msgstr "Impossibile aprire il file %s"
+msgstr "Impossibile aprire il file miniatura '%s': %s."
 
 #: app/core/gimpimagefile.c:1142
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "(non è possibile creare file miniatura)"
+msgstr "Impossibile creare la cartella miniature '%s'."
 
 #: app/core/gimpitem.c:801
-#, fuzzy
 msgid "Attach Parasite to Item"
-msgstr "attaccate parasite all'immagine"
+msgstr "Allega parasite all'elemento"
 
 #: app/core/gimpitem.c:840 app/core/gimpitem.c:847
-#, fuzzy
 msgid "Remove Parasite from Item"
-msgstr "rimuovi parasite"
+msgstr "Rimuovi parasite dall'elemento"
 
 #: app/core/gimplayer-floating-sel.c:124
 msgid ""
@@ -1983,15 +1974,13 @@ msgid "Layer"
 msgstr "Livello"
 
 #: app/core/gimplayer.c:219
-#, fuzzy
 msgid "Rename Layer"
-msgstr "rinomina livello"
+msgstr "Rinomina livello"
 
 #: app/core/gimplayer.c:387 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
 #: app/tools/gimpeditselectiontool.c:244 app/tools/gimpeditselectiontool.c:996
-#, fuzzy
 msgid "Move Layer"
-msgstr "Nuovo livello"
+msgstr "Sposta livello"
 
 #: app/core/gimplayer.c:498 app/gui/drawable-commands.c:157
 #, fuzzy
@@ -1999,9 +1988,8 @@ msgid "Flip Layer"
 msgstr "Livello"
 
 #: app/core/gimplayer.c:527 app/gui/drawable-commands.c:191
-#, fuzzy
 msgid "Rotate Layer"
-msgstr "Livello Fluttuante"
+msgstr "Ruota livello"
 
 #: app/core/gimplayer.c:836
 #, fuzzy
@@ -2037,35 +2025,32 @@ msgid "%s mask"
 msgstr "%s maschera"
 
 #: app/core/gimplayer.c:1176
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "/Aggiungi canale alpha"
+msgstr "Aggiungi canale alpha"
 
 #: app/core/gimplayer.c:1208
-#, fuzzy
 msgid "Layer to Image Size"
-msgstr "/Livello a Dimensione immagine"
+msgstr "Livello a dimensione dell'immagine"
 
 #: app/core/gimppalette.c:400
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Caricamento palette %s:\n"
-"Palette corrotta:\n"
-"informazioni perse\n"
-"Necessaria la conversione da DOS?"
+"Caricamento palette '%s':\n"
+"palette errata: manca l'intestazione magica\n"
+"Forse è necessaria la conversione da DOS?"
 
 #: app/core/gimppalette.c:406
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Caricamento palette %s:\n"
-"Palette corrotta: informazioni perse"
+"Caricamento palette '%s':\n"
+"Palette errata: manca l'instestazione magica"
 
 #: app/core/gimppalette.c:422 app/core/gimppalette.c:447
 #: app/core/gimppalette.c:475 app/core/gimppalette.c:545
@@ -2080,7 +2065,7 @@ msgstr ""
 #: app/core/gimppalette.c:440
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr ""
+msgstr "Stringa UTF-8 non valida nel file palette '%s'"
 
 #: app/core/gimppalette.c:464
 #, fuzzy, c-format
@@ -2093,40 +2078,40 @@ msgstr ""
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:504
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing RED component in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Perso componente ROSSO"
+"Caricamento palette '%s':\n"
+"Manca componente ROSSA in linea %d."
 
 #: app/core/gimppalette.c:511
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing GREEN component in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Perso componente VERDE"
+"Caricamento palette '%s' :\n"
+"Manca componente VERDE in linea %d."
 
 #: app/core/gimppalette.c:518
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Missing BLUE component in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Perso componente BLU"
+"Caricamento palette '%s':\n"
+"Manca componente BLU in linea %d."
 
 #: app/core/gimppalette.c:527
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "RGB value out of range in line %d."
 msgstr ""
-"Caricamento palette %s (linea %d):\n"
-"Valori RGB fuori campo"
+"Caricamento palette '%s':\n"
+"Valori RGB fuori range in linea %d."
 
 #: app/core/gimppalette.c:701
 msgid "Black"
@@ -2146,14 +2131,14 @@ msgid ""
 msgstr ""
 
 #: app/core/gimppattern.c:398
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file '%s'."
-msgstr "Errore nel file pattern di GIMP \"%s\""
+msgstr "Errore nel file pattern di GIMP '%s'."
 
 #: app/core/gimppattern.c:405
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Errore nel file pattern di GIMP \"%s\""
+msgstr "Errore nel file pattern di GIMP '%s'."
 
 #: app/core/gimppattern.c:424
 #, fuzzy, c-format
@@ -2221,9 +2206,8 @@ msgid "Crosshair only"
 msgstr "Solo crosshair"
 
 #: app/display/display-enums.c:33
-#, fuzzy
 msgid "From Theme"
-msgstr "Dal Server X"
+msgstr "Dal tema"
 
 #: app/display/display-enums.c:34
 #, fuzzy
@@ -2236,9 +2220,8 @@ msgid "Dark Check Color"
 msgstr "Scacchi scuri"
 
 #: app/display/display-enums.c:36
-#, fuzzy
 msgid "Custom Color"
-msgstr "Personalizzata"
+msgstr "Colore personalizzato"
 
 #. create the contents of the right_vbox  ********************************
 #: app/display/gimpdisplayshell.c:777
@@ -2252,7 +2235,7 @@ msgstr ""
 
 #: app/display/gimpdisplayshell.c:798
 msgid "/From Theme"
-msgstr ""
+msgstr "/Dal tema"
 
 #: app/display/gimpdisplayshell.c:801
 #, fuzzy
@@ -2265,23 +2248,21 @@ msgid "/Dark Check Color"
 msgstr "Scacchi scuri"
 
 #: app/display/gimpdisplayshell.c:810
-#, fuzzy
 msgid "/Select Custom Color..."
-msgstr "/Selezione/Per colore..."
+msgstr "/Selezione colore personalizzato..."
 
 #: app/display/gimpdisplayshell.c:814
-#, fuzzy
 msgid "/As in Preferences"
-msgstr "Preferenze"
+msgstr "/Come in preferenze"
 
 #: app/display/gimpdisplayshell.c:839
 msgid "Toggle QuickMask"
-msgstr ""
+msgstr "Abilita/disabilita quickmask"
 
 #: app/display/gimpdisplayshell.c:1709
-#, fuzzy, c-format
+#, c-format
 msgid "Close %s?"
-msgstr "Chiudi"
+msgstr "Chiudere %s?"
 
 #: app/display/gimpdisplayshell.c:1711
 #, c-format
@@ -2293,14 +2274,12 @@ msgstr ""
 "Chiudere ugualmente?"
 
 #: app/display/gimpdisplayshell-dnd.c:65
-#, fuzzy
 msgid "Drop New Layer"
 msgstr "Nuovo livello"
 
 #: app/display/gimpdisplayshell-dnd.c:100
-#, fuzzy
 msgid "Drop New Path"
-msgstr "Nuovo tracciato"
+msgstr "Nuovo percorso"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:125
 msgid "Color Display Filters"
@@ -2319,23 +2298,20 @@ msgid "Remove the selected filter from the list of active filters."
 msgstr ""
 
 #: app/display/gimpdisplayshell-filter-dialog.c:222
-#, fuzzy
 msgid "Move the selected filter up"
-msgstr "Rimuovi la voce selezionata dall'indice"
+msgstr "Muovi il filtro selezionato in alto"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:231
-#, fuzzy
 msgid "Move the selected filter down"
-msgstr "Muovi livelli e selezioni"
+msgstr "Muovi il filtro selezionato in basso"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:257
 msgid "Active Filters"
 msgstr "Filtri attivi"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:289
-#, fuzzy
 msgid "Reset the selected filter to default values"
-msgstr "Rimuovi la voce selezionata dall'indice"
+msgstr "Reimposta il filtro selezionato ai valori predefiniti"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:661
 #, fuzzy, c-format
@@ -2357,19 +2333,16 @@ msgid "Layer Select"
 msgstr "Selezione livello"
 
 #: app/display/gimpdisplayshell-scale.c:474
-#, fuzzy
 msgid "Zoom Ratio"
-msgstr "Scala:"
+msgstr "Zoom"
 
 #: app/display/gimpdisplayshell-scale.c:476
-#, fuzzy
 msgid "Select Zoom Ratio"
-msgstr "Scala:"
+msgstr "Imposta zoom"
 
 #: app/display/gimpdisplayshell-scale.c:505
-#, fuzzy
 msgid "Zoom Ratio:"
-msgstr "Scala:"
+msgstr "Zoom"
 
 #: app/display/gimpdisplayshell-title.c:163
 msgid "RGB-empty"
@@ -2392,9 +2365,8 @@ msgid "indexed"
 msgstr "scala di colore"
 
 #: app/display/gimpdisplayshell-title.c:297
-#, fuzzy
 msgid "(none)"
-msgstr "Nessuno"
+msgstr "(nessuno)"
 
 #: app/display/gimpnavigationview.c:379 app/widgets/widgets-enums.c:116
 msgid "Zoom out"
@@ -2405,14 +2377,12 @@ msgid "Zoom in"
 msgstr "Zoom avanti"
 
 #: app/display/gimpnavigationview.c:395
-#, fuzzy
 msgid "Zoom 1:1"
-msgstr "Zoom avanti"
+msgstr "Zoom 1:1"
 
 #: app/display/gimpnavigationview.c:403
-#, fuzzy
 msgid "Zoom to fit window"
-msgstr "/Visualizza/Zoom avanti"
+msgstr "Zoom a finestra intera"
 
 #: app/display/gimpnavigationview.c:411
 #, fuzzy
@@ -2425,37 +2395,31 @@ msgstr "Operazione in corso"
 
 #: app/display/gimpprogress.c:157 app/display/gimpprogress.c:219
 msgid "Please wait..."
-msgstr "Si prega di aspettare..."
+msgstr "Attendere..."
 
 #: app/display/gimpstatusbar.c:133
 msgid "Cancel"
 msgstr "Cancella"
 
 #: app/file/file-open.c:89 app/file/file-save.c:118
-#, fuzzy
 msgid "Unknown file type"
-msgstr "Tipo di informazione sconosciuta."
+msgstr "Tipo di file sconosciuto"
 
 #: app/file/file-open.c:104 app/file/file-save.c:132
-#, fuzzy
 msgid "Not a regular file"
-msgstr ""
-"%s fallita.\n"
-"%s non è un file regolare."
+msgstr "Non è un file regolare"
 
 #: app/file/file-open.c:156
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr ""
+msgstr "Il plug-in è ritornato con successo ma non ha restituito un'immagine"
 
 #: app/file/file-open.c:164
-#, fuzzy
 msgid "Plug-In could not open image"
-msgstr "Non è possibile aprire \"%s\""
+msgstr "Il plug-in non può aprire l'immagine"
 
 #: app/file/file-save.c:210
-#, fuzzy
 msgid "Plug-In could not save image"
-msgstr "Non è possibile aprire \"%s\""
+msgstr "Il plug-in non può salvare l'immagine"
 
 #: app/file/file-utils.c:106
 #, fuzzy
@@ -2652,7 +2616,7 @@ msgstr "Inverti a vecchi colori"
 
 #: app/gui/color-notebook.c:489
 msgid "Add the current color to the color history"
-msgstr ""
+msgstr "Aggiungi il colore corrente allo storico colori"
 
 #: app/gui/colormap-editor-commands.c:101
 #, fuzzy
@@ -2751,9 +2715,8 @@ msgid "Tool Options"
 msgstr "Opzioni strumenti"
 
 #: app/gui/dialogs-constructors.c:277
-#, fuzzy
 msgid "Devices"
-msgstr "Livelli di ingresso: "
+msgstr "Dispositivi"
 
 #: app/gui/dialogs-constructors.c:277
 msgid "Device Status"
@@ -2761,142 +2724,119 @@ msgstr "Stato dei dispositivi"
 
 #: app/gui/dialogs-constructors.c:299
 msgid "Errors"
-msgstr ""
+msgstr "Errori"
 
 #: app/gui/dialogs-constructors.c:299
-#, fuzzy
 msgid "Error Console"
-msgstr "Errore di console GIMP"
+msgstr "Console di errore"
 
 #: app/gui/dialogs-constructors.c:323 app/gui/dialogs-constructors.c:547
-#, fuzzy
 msgid "Images"
-msgstr "Immagine"
+msgstr "Immagini"
 
 #: app/gui/dialogs-constructors.c:323
-#, fuzzy
 msgid "Image List"
-msgstr "Maschera immagine"
+msgstr "Elenco immagini"
 
 #: app/gui/dialogs-constructors.c:346
-#, fuzzy
 msgid "Brush List"
-msgstr "Editor dei pennelli"
+msgstr "Elenco pennelli"
 
 #: app/gui/dialogs-constructors.c:368
-#, fuzzy
 msgid "Pattern List"
-msgstr "Pattern"
+msgstr "Elenco pattern"
 
 #: app/gui/dialogs-constructors.c:390
-#, fuzzy
 msgid "Gradient List"
-msgstr "Gradienti"
+msgstr "Elenco gradienti"
 
 #: app/gui/dialogs-constructors.c:412
-#, fuzzy
 msgid "Palette List"
-msgstr "Palette"
+msgstr "Elenco palette"
 
 #: app/gui/dialogs-constructors.c:432
-#, fuzzy
 msgid "Font List"
-msgstr "/Strumenti"
+msgstr "Elenco caratteri"
 
 #: app/gui/dialogs-constructors.c:452 app/gui/dialogs-constructors.c:676
-#, fuzzy
 msgid "Tools"
-msgstr "/Strumenti"
+msgstr "Strumenti"
 
 #: app/gui/dialogs-constructors.c:452
-#, fuzzy
 msgid "Tool List"
-msgstr "/Strumenti"
+msgstr "Elenco strumenti"
 
 #: app/gui/dialogs-constructors.c:473 app/gui/dialogs-constructors.c:697
-#, fuzzy
 msgid "Buffers"
-msgstr "/Modifica/Buffer"
+msgstr "Buffer"
 
 #: app/gui/dialogs-constructors.c:473
 msgid "Buffer List"
-msgstr ""
+msgstr "Elenco buffer"
 
 #: app/gui/dialogs-constructors.c:495 app/gui/dialogs-constructors.c:719
-#, fuzzy
 msgid "History"
-msgstr "Istogramma"
+msgstr "Storico"
 
 #: app/gui/dialogs-constructors.c:495
-#, fuzzy
 msgid "Document History List"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "Storico documenti"
 
 #: app/gui/dialogs-constructors.c:523
 msgid "List of Templates"
-msgstr ""
+msgstr "Elenco modelli"
 
 #: app/gui/dialogs-constructors.c:547
-#, fuzzy
 msgid "Image Grid"
-msgstr "/Immagine/Modalità"
+msgstr "Griglia immagine"
 
 #: app/gui/dialogs-constructors.c:570
-#, fuzzy
 msgid "Brush Grid"
-msgstr "Pennello UI"
+msgstr "Griglia pennello"
 
 #: app/gui/dialogs-constructors.c:592
-#, fuzzy
 msgid "Pattern Grid"
-msgstr "Riempimento pattern"
+msgstr "Griglia pattern"
 
 #: app/gui/dialogs-constructors.c:614
-#, fuzzy
 msgid "Gradient Grid"
-msgstr "Gradienti"
+msgstr "Griglia gradienti"
 
 #: app/gui/dialogs-constructors.c:636
-#, fuzzy
 msgid "Palette Grid"
-msgstr "Palette"
+msgstr "Griglia palette"
 
 #: app/gui/dialogs-constructors.c:656
-#, fuzzy
 msgid "Font Grid"
-msgstr "Mostra griglia"
+msgstr "Griglia carattere"
 
 #: app/gui/dialogs-constructors.c:676
-#, fuzzy
 msgid "Tool Grid"
-msgstr "Mostra griglia"
+msgstr "Griglia strumenti"
 
 #: app/gui/dialogs-constructors.c:697
 msgid "Buffer Grid"
-msgstr ""
+msgstr "Griglia buffer"
 
 #: app/gui/dialogs-constructors.c:719
-#, fuzzy
 msgid "Document History Grid"
-msgstr "/Finestre/Storico operazioni..."
+msgstr "Storico operazioni"
 
 #: app/gui/dialogs-constructors.c:754
 msgid "Layers"
 msgstr "Livelli"
 
 #: app/gui/dialogs-constructors.c:754
-#, fuzzy
 msgid "Layer List"
-msgstr "Livelli"
+msgstr "Elenco livelli"
 
 #: app/gui/dialogs-constructors.c:790
 msgid "Channels"
 msgstr "Canali"
 
 #: app/gui/dialogs-constructors.c:790
-#, fuzzy
 msgid "Channel List"
-msgstr "Canali"
+msgstr "Elenco canali"
 
 #: app/gui/dialogs-constructors.c:832 app/pdb/internal_procs.c:158
 #: app/tools/gimpvectortool.c:127
@@ -2904,14 +2844,12 @@ msgid "Paths"
 msgstr "Tracciati"
 
 #: app/gui/dialogs-constructors.c:832
-#, fuzzy
 msgid "Path List"
-msgstr "Tracciati"
+msgstr "Elenco percorsi"
 
 #: app/gui/dialogs-constructors.c:857
-#, fuzzy
 msgid "Colormap"
-msgstr "Colore"
+msgstr "Mappa colore"
 
 #: app/gui/dialogs-constructors.c:857
 msgid "Indexed Palette"
@@ -2922,9 +2860,8 @@ msgid "Selection"
 msgstr "Selezione"
 
 #: app/gui/dialogs-constructors.c:891
-#, fuzzy
 msgid "Selection Editor"
-msgstr "Selezione: "
+msgstr "Editor selezione"
 
 #: app/gui/dialogs-constructors.c:916 app/pdb/internal_procs.c:185
 #: app/widgets/gimpundoeditor.c:122
@@ -2932,28 +2869,24 @@ msgid "Undo"
 msgstr "Annulla"
 
 #: app/gui/dialogs-constructors.c:916
-#, fuzzy
 msgid "Undo History"
-msgstr "Storico operazioni: %s"
+msgstr "Ripristino operazioni"
 
 #: app/gui/dialogs-constructors.c:948
-#, fuzzy
 msgid "Navigation"
-msgstr "Navigazione: %s-%d.%d"
+msgstr "Navigazione"
 
 #: app/gui/dialogs-constructors.c:948
-#, fuzzy
 msgid "Display Navigation"
-msgstr "Settaggi della visualizzazione"
+msgstr "Mostra navigazione"
 
 #: app/gui/dialogs-constructors.c:968
 msgid "FG/BG"
-msgstr ""
+msgstr "Primo piano/Sfondo"
 
 #: app/gui/dialogs-constructors.c:968
-#, fuzzy
 msgid "FG/BG Color"
-msgstr "Colore RGB"
+msgstr "Colore primo piano/sfondo"
 
 #: app/gui/dialogs-constructors.c:990
 msgid "Brush Editor"
@@ -2964,9 +2897,8 @@ msgid "Gradient Editor"
 msgstr "Editor dei gradienti"
 
 #: app/gui/dialogs-constructors.c:1052
-#, fuzzy
 msgid "Palette Editor"
-msgstr "Modifica palette del colore"
+msgstr "Editor palette"
 
 #: app/gui/dialogs-menu.c:61
 #, fuzzy
