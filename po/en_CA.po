@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-14 10:25-0500\n"
-"PO-Revision-Date: 2005-02-14 14:29-0400\n"
+"POT-Creation-Date: 2005-02-22 03:55-0500\n"
+"PO-Revision-Date: 2005-02-22 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,87 +51,87 @@ msgstr "Opening '%s' failed: %s"
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
 msgstr "The batch interpreter '%s' is not available; batch mode disabled."
 
-#: app/main.c:118 tools/gimp-remote.c:78
+#: app/main.c:121 tools/gimp-remote.c:78
 msgid "Show version information and exit"
 msgstr "Show version information and exit"
 
-#: app/main.c:123
+#: app/main.c:126
 msgid "Be more verbose"
 msgstr "Be more verbose"
 
-#: app/main.c:128
+#: app/main.c:131
 msgid "Run without a user interface"
 msgstr "Run without a user interface"
 
-#: app/main.c:133
+#: app/main.c:136
 msgid "Do not load brushes, gradients, palettes, patterns"
 msgstr "Do not load brushes, gradients, palettes, or patterns"
 
-#: app/main.c:138
+#: app/main.c:141
 msgid "Do not load any fonts"
 msgstr "Do not load any fonts"
 
-#: app/main.c:143
+#: app/main.c:146
 msgid "Do not show a startup window"
 msgstr "Do not show a startup window"
 
-#: app/main.c:148
+#: app/main.c:151
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Do not use shared memory between GIMP and plugins"
 
-#: app/main.c:153
+#: app/main.c:156
 msgid "Do not use special CPU acceleration functions"
 msgstr "Do not use special CPU acceleration functions"
 
-#: app/main.c:158
+#: app/main.c:161
 msgid "Use an alternate sessionrc file"
 msgstr "Use an alternate sessionrc file"
 
-#: app/main.c:163
+#: app/main.c:166
 msgid "Use an alternate user gimprc file"
 msgstr "Use an alternate user gimprc file"
 
-#: app/main.c:168
+#: app/main.c:171
 msgid "Use an alternate system gimprc file"
 msgstr "Use an alternate system gimprc file"
 
-#: app/main.c:173
+#: app/main.c:176
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batch command to run (can be used multiple times)"
 
-#: app/main.c:178
+#: app/main.c:181
 msgid "The procedure to process batch commands with"
 msgstr "The procedure to process batch commands with"
 
-#: app/main.c:183
+#: app/main.c:186
 msgid "Send messages to console instead of using a dialog"
 msgstr "Send messages to console instead of using a dialogue box"
 
-#: app/main.c:188
+#: app/main.c:191
 msgid "PDB compatibility mode"
 msgstr "PDB compatibility mode"
 
-#: app/main.c:193
+#: app/main.c:196
 msgid "Debugging mode for fatal signals"
 msgstr "Debugging mode for fatal signals"
 
-#: app/main.c:198
+#: app/main.c:201
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Enable non-fatal debugging signal handlers"
 
-#: app/main.c:203
+#: app/main.c:206
 msgid "Make all warnings fatal"
 msgstr "Make all warnings fatal"
 
-#: app/main.c:208
+#: app/main.c:211
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: app/main.c:243 app/widgets/gimptoolbox.c:565
+#: app/main.c:246 app/widgets/gimptoolbox.c:565
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#: app/main.c:287
+#: app/main.c:290
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -139,7 +139,7 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: app/main.c:438 tools/gimp-remote.c:314
+#: app/main.c:441 tools/gimp-remote.c:314
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -173,7 +173,7 @@ msgstr ""
 "G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:94 app/core/gimp.c:853 app/dialogs/dialogs.c:138
+#: app/actions/actions.c:94 app/core/gimp.c:867 app/dialogs/dialogs.c:138
 #: app/dialogs/preferences-dialog.c:2367 app/pdb/internal_procs.c:92
 msgid "Brushes"
 msgstr "Brushes"
@@ -232,7 +232,7 @@ msgid "File"
 msgstr "File"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:136 app/core/gimp.c:869 app/dialogs/dialogs.c:146
+#: app/actions/actions.c:136 app/core/gimp.c:883 app/dialogs/dialogs.c:146
 #: app/dialogs/preferences-dialog.c:2383 app/pdb/internal_procs.c:128
 msgid "Fonts"
 msgstr "Fonts"
@@ -242,7 +242,7 @@ msgid "Gradient Editor"
 msgstr "Gradient Editor"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:142 app/core/gimp.c:865 app/dialogs/dialogs.c:142
+#: app/actions/actions.c:142 app/core/gimp.c:879 app/dialogs/dialogs.c:142
 #: app/dialogs/preferences-dialog.c:2379 app/pdb/internal_procs.c:140
 msgid "Gradients"
 msgstr "Gradients"
@@ -270,13 +270,13 @@ msgid "Palette Editor"
 msgstr "Palette Editor"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:160 app/core/gimp.c:861 app/dialogs/dialogs.c:144
+#: app/actions/actions.c:160 app/core/gimp.c:875 app/dialogs/dialogs.c:144
 #: app/dialogs/preferences-dialog.c:2375 app/pdb/internal_procs.c:170
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:163 app/core/gimp.c:857 app/dialogs/dialogs.c:140
+#: app/actions/actions.c:163 app/core/gimp.c:871 app/dialogs/dialogs.c:140
 #: app/dialogs/preferences-dialog.c:2371 app/pdb/internal_procs.c:185
 msgid "Patterns"
 msgstr "Patterns"
@@ -294,7 +294,7 @@ msgid "Select"
 msgstr "Select"
 
 #. initialize the template list
-#: app/actions/actions.c:175 app/core/gimp.c:877 app/dialogs/dialogs.c:154
+#: app/actions/actions.c:175 app/core/gimp.c:891 app/dialogs/dialogs.c:154
 msgid "Templates"
 msgstr "Templates"
 
@@ -681,7 +681,7 @@ msgstr "S_wap Colours"
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
 #: app/display/gimpdisplayshell-dnd.c:440 app/widgets/gimplayertreeview.c:767
-#: app/widgets/gimptoolbox-dnd.c:146 app/widgets/gimptoolbox.c:1036
+#: app/widgets/gimptoolbox-dnd.c:146 app/widgets/gimptoolbox.c:1045
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -693,9 +693,9 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1282
-#: app/core/gimppalette-import.c:219 app/core/gimppalette.c:524
-#: app/core/gimppalette.c:635 app/dialogs/palette-import-dialog.c:693
-#: app/pdb/image_cmds.c:3760
+#: app/core/gimppalette-import.c:219 app/core/gimppalette.c:518
+#: app/core/gimppalette.c:629 app/dialogs/palette-import-dialog.c:693
+#: app/pdb/image_cmds.c:3752
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -2110,7 +2110,7 @@ msgstr "Crop Layer"
 msgid "Layer Mask to Selection"
 msgstr "Layer Mask to Selection"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1064
 #: app/dialogs/layer-add-mask-dialog.c:61
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
@@ -3308,7 +3308,7 @@ msgstr "Grain merge"
 msgid "Color erase"
 msgstr "Colour erase"
 
-#: app/base/tile-swap.c:472
+#: app/base/tile-swap.c:474
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -3322,7 +3322,7 @@ msgstr ""
 
 #: app/config/gimpconfig-file.c:66 app/core/gimpbrushgenerated.c:255
 #: app/core/gimpgradient-save.c:51 app/core/gimpgradient-save.c:142
-#: app/core/gimppalette.c:568 app/gui/themes.c:238
+#: app/core/gimppalette.c:562 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:613 app/vectors/gimpvectors-export.c:83
 #: app/xcf/xcf.c:348
 #, c-format
@@ -3489,11 +3489,11 @@ msgid ""
 msgstr ""
 "Sets the level of interpolation used for scaling and other transformations."
 
-#: app/config/gimprc-blurbs.h:177
+#: app/config/gimprc-blurbs.h:180
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "How many recently opened image filenames to keep on the File menu."
 
-#: app/config/gimprc-blurbs.h:180
+#: app/config/gimprc-blurbs.h:183
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -3501,7 +3501,7 @@ msgstr ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 
-#: app/config/gimprc-blurbs.h:184
+#: app/config/gimprc-blurbs.h:187
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -3509,11 +3509,11 @@ msgstr ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 
-#: app/config/gimprc-blurbs.h:188
+#: app/config/gimprc-blurbs.h:191
 msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "When enabled, GIMP will show mnemonics in menus."
 
-#: app/config/gimprc-blurbs.h:191
+#: app/config/gimprc-blurbs.h:194
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
@@ -3521,7 +3521,7 @@ msgstr ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colours allocated for the GIMP."
 
-#: app/config/gimprc-blurbs.h:202
+#: app/config/gimprc-blurbs.h:205
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3531,7 +3531,7 @@ msgstr ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 
-#: app/config/gimprc-blurbs.h:207
+#: app/config/gimprc-blurbs.h:210
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3541,7 +3541,7 @@ msgstr ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 
-#: app/config/gimprc-blurbs.h:212
+#: app/config/gimprc-blurbs.h:215
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
@@ -3551,7 +3551,7 @@ msgstr ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 
-#: app/config/gimprc-blurbs.h:217
+#: app/config/gimprc-blurbs.h:220
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -3559,7 +3559,7 @@ msgstr ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 
-#: app/config/gimprc-blurbs.h:221
+#: app/config/gimprc-blurbs.h:224
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
@@ -3567,7 +3567,7 @@ msgstr ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 
-#: app/config/gimprc-blurbs.h:235
+#: app/config/gimprc-blurbs.h:238
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -3581,7 +3581,7 @@ msgstr ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 
-#: app/config/gimprc-blurbs.h:248
+#: app/config/gimprc-blurbs.h:251
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -3591,7 +3591,7 @@ msgstr ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 
-#: app/config/gimprc-blurbs.h:253
+#: app/config/gimprc-blurbs.h:256
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -3599,7 +3599,7 @@ msgstr ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogues."
 
-#: app/config/gimprc-blurbs.h:257
+#: app/config/gimprc-blurbs.h:260
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
@@ -3607,7 +3607,7 @@ msgstr ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 
-#: app/config/gimprc-blurbs.h:261
+#: app/config/gimprc-blurbs.h:264
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
@@ -3615,22 +3615,22 @@ msgstr ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
 
-#: app/config/gimprc-blurbs.h:265
+#: app/config/gimprc-blurbs.h:268
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Let GIMP try to restore your last saved session on each startup."
 
-#: app/config/gimprc-blurbs.h:268
+#: app/config/gimprc-blurbs.h:271
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Remember the current tool, pattern, colour, and brush across GIMP sessions."
 
-#: app/config/gimprc-blurbs.h:272
+#: app/config/gimprc-blurbs.h:275
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 "Save the positions and sizes of the main dialogues when the GIMP exits."
 
-#: app/config/gimprc-blurbs.h:278
+#: app/config/gimprc-blurbs.h:281
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -3638,7 +3638,7 @@ msgstr ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 
-#: app/config/gimprc-blurbs.h:282
+#: app/config/gimprc-blurbs.h:285
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -3648,7 +3648,7 @@ msgstr ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 
-#: app/config/gimprc-blurbs.h:287
+#: app/config/gimprc-blurbs.h:290
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
@@ -3656,7 +3656,7 @@ msgstr ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
 
-#: app/config/gimprc-blurbs.h:291
+#: app/config/gimprc-blurbs.h:294
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -3664,7 +3664,7 @@ msgstr ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 
-#: app/config/gimprc-blurbs.h:295
+#: app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -3672,7 +3672,7 @@ msgstr ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 
-#: app/config/gimprc-blurbs.h:299
+#: app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -3680,7 +3680,7 @@ msgstr ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 
-#: app/config/gimprc-blurbs.h:303
+#: app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -3688,7 +3688,7 @@ msgstr ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 
-#: app/config/gimprc-blurbs.h:307
+#: app/config/gimprc-blurbs.h:310
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -3696,7 +3696,7 @@ msgstr ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 
-#: app/config/gimprc-blurbs.h:311
+#: app/config/gimprc-blurbs.h:314
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -3704,7 +3704,7 @@ msgstr ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 
-#: app/config/gimprc-blurbs.h:315
+#: app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -3712,7 +3712,7 @@ msgstr ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 
-#: app/config/gimprc-blurbs.h:319
+#: app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -3720,15 +3720,15 @@ msgstr ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 
-#: app/config/gimprc-blurbs.h:323
+#: app/config/gimprc-blurbs.h:326
 msgid "Enable to display a handy GIMP tip on startup."
 msgstr "Enable display of a handy GIMP tip on startup."
 
-#: app/config/gimprc-blurbs.h:326
+#: app/config/gimprc-blurbs.h:329
 msgid "Enable to display tooltips."
 msgstr "Enable to display tooltips."
 
-#: app/config/gimprc-blurbs.h:329
+#: app/config/gimprc-blurbs.h:332
 msgid ""
 "There is always a tradeoff between memory usage and speed.  In most cases, "
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
@@ -3738,7 +3738,7 @@ msgstr ""
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
 "to enable this setting."
 
-#: app/config/gimprc-blurbs.h:334
+#: app/config/gimprc-blurbs.h:337
 msgid ""
 "Sets the swap file location. The gimp uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3754,11 +3754,11 @@ msgstr ""
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 
-#: app/config/gimprc-blurbs.h:343
+#: app/config/gimprc-blurbs.h:346
 msgid "When enabled, menus can be torn off."
 msgstr "When enabled, menus can be torn off."
 
-#: app/config/gimprc-blurbs.h:346
+#: app/config/gimprc-blurbs.h:349
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -3766,15 +3766,15 @@ msgstr ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 
-#: app/config/gimprc-blurbs.h:350
+#: app/config/gimprc-blurbs.h:353
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr "Save changed keyboard shortcuts when the GIMP exits."
 
-#: app/config/gimprc-blurbs.h:353
+#: app/config/gimprc-blurbs.h:356
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Restore saved keyboard shortcuts on each GIMP startup."
 
-#: app/config/gimprc-blurbs.h:356
+#: app/config/gimprc-blurbs.h:359
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -3786,7 +3786,7 @@ msgstr ""
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
 
-#: app/config/gimprc-blurbs.h:368
+#: app/config/gimprc-blurbs.h:371
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -3794,7 +3794,7 @@ msgstr ""
 "Sets the size of the thumbnail shown in the Open dialogue. Note that GIMP "
 "cannot create thumbnails if layer previews are disabled."
 
-#: app/config/gimprc-blurbs.h:372
+#: app/config/gimprc-blurbs.h:375
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -3802,7 +3802,7 @@ msgstr ""
 "The thumbnail in the Open dialogue will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 
-#: app/config/gimprc-blurbs.h:376
+#: app/config/gimprc-blurbs.h:379
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -3814,7 +3814,7 @@ msgstr ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 
-#: app/config/gimprc-blurbs.h:387
+#: app/config/gimprc-blurbs.h:390
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -3822,15 +3822,15 @@ msgstr ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 
-#: app/config/gimprc-blurbs.h:391
+#: app/config/gimprc-blurbs.h:394
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Sets the manner in which transparency is displayed in images."
 
-#: app/config/gimprc-blurbs.h:394
+#: app/config/gimprc-blurbs.h:397
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Sets the size of the checkerboard used to display transparency."
 
-#: app/config/gimprc-blurbs.h:397
+#: app/config/gimprc-blurbs.h:400
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
@@ -3838,7 +3838,7 @@ msgstr ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 
-#: app/config/gimprc-blurbs.h:401
+#: app/config/gimprc-blurbs.h:404
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -3846,7 +3846,7 @@ msgstr ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 
-#: app/config/gimprc-blurbs.h:405
+#: app/config/gimprc-blurbs.h:408
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -3856,15 +3856,15 @@ msgstr ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 
-#: app/config/gimprc-blurbs.h:410
+#: app/config/gimprc-blurbs.h:413
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Sets the size of the previews in the Undo History."
 
-#: app/config/gimprc-blurbs.h:413
+#: app/config/gimprc-blurbs.h:416
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "When enabled, pressing F1 will open the help browser."
 
-#: app/config/gimprc-blurbs.h:416
+#: app/config/gimprc-blurbs.h:419
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -4218,7 +4218,7 @@ msgid "Cut"
 msgstr "Cut"
 
 #: app/core/core-enums.c:758 app/core/core-enums.c:786
-#: app/tools/gimptexttool.c:140 app/widgets/widgets-enums.c:263
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
@@ -4398,30 +4398,34 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #. register all internal procedures
-#: app/core/gimp.c:635
+#: app/core/gimp.c:643
 msgid "Procedural Database"
 msgstr "Procedural Database"
 
-#: app/core/gimp.c:638
+#: app/core/gimp.c:646
+msgid "Plug-In Interpreters"
+msgstr "Plug-In Interpreters"
+
+#: app/core/gimp.c:652
 msgid "Plug-In Environment"
 msgstr "Plug-In Environment"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:849
+#: app/core/gimp.c:863
 msgid "Looking for data files"
 msgstr "Looking for data files"
 
-#: app/core/gimp.c:849
+#: app/core/gimp.c:863
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the document history
-#: app/core/gimp.c:873
+#: app/core/gimp.c:887
 msgid "Documents"
 msgstr "Documents"
 
 #. initialize the module list
-#: app/core/gimp.c:881 app/dialogs/preferences-dialog.c:2395
+#: app/core/gimp.c:895 app/dialogs/preferences-dialog.c:2395
 msgid "Modules"
 msgstr "Modules"
 
@@ -4657,7 +4661,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable-blend.c:238 app/tools/gimpblendtool.c:101
+#: app/core/gimpdrawable-blend.c:244 app/tools/gimpblendtool.c:101
 msgid "Blend"
 msgstr "Blend"
 
@@ -4669,7 +4673,7 @@ msgstr "No patterns available for this operation."
 msgid "Bucket Fill"
 msgstr "Bucket Fill"
 
-#: app/core/gimpdrawable-desaturate.c:98
+#: app/core/gimpdrawable-desaturate.c:65
 msgid "Desaturate"
 msgstr "Desaturate"
 
@@ -4732,27 +4736,27 @@ msgstr "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Invalid UTF-8 string in gradient file '%s'."
 
-#: app/core/gimpgradient-load.c:115
+#: app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr "Fatal parse error in gradient file '%s': File is corrupt."
 
-#: app/core/gimpgradient-load.c:172
+#: app/core/gimpgradient-load.c:166
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Corrupt segment %d in gradient file '%s'."
 
-#: app/core/gimpgradient-load.c:183 app/core/gimpgradient-load.c:197
+#: app/core/gimpgradient-load.c:177 app/core/gimpgradient-load.c:191
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 
-#: app/core/gimpgradient-load.c:281
+#: app/core/gimpgradient-load.c:275
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "No linear gradients found in '%s'"
 
-#: app/core/gimpgradient-load.c:291
+#: app/core/gimpgradient-load.c:285
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Failed to import gradients from '%s': %s"
@@ -4801,23 +4805,23 @@ msgstr "Change Colourmap entry"
 msgid "Add Color to Colormap"
 msgstr "Add Colour to Colourmap"
 
-#: app/core/gimpimage-convert.c:789
+#: app/core/gimpimage-convert.c:810
 msgid "Convert Image to RGB"
 msgstr "Convert Image to RGB"
 
-#: app/core/gimpimage-convert.c:793
+#: app/core/gimpimage-convert.c:814
 msgid "Convert Image to Grayscale"
 msgstr "Convert Image to Grayscale"
 
-#: app/core/gimpimage-convert.c:797
+#: app/core/gimpimage-convert.c:818
 msgid "Convert Image to Indexed"
 msgstr "Convert Image to Indexed"
 
-#: app/core/gimpimage-convert.c:879
+#: app/core/gimpimage-convert.c:900
 msgid "Converting to indexed (stage 2)..."
 msgstr "Converting to indexed (stage 2)..."
 
-#: app/core/gimpimage-convert.c:923
+#: app/core/gimpimage-convert.c:945
 msgid "Converting to indexed (stage 3)..."
 msgstr "Converting to indexed (stage 3)..."
 
@@ -5085,6 +5089,16 @@ msgstr "%d Layers"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Could not open thumbnail '%s': %s"
 
+#: app/core/gimpinterpreterdb.c:297
+#, c-format
+msgid "Bad interpreter referenced in interpreter file %s: %s"
+msgstr "Bad interpreter referenced in interpreter file %s: %s"
+
+#: app/core/gimpinterpreterdb.c:355
+#, c-format
+msgid "Bad binary format string in interpreter file %s"
+msgstr "Bad binary format string in interpreter file %s"
+
 #: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Attach Parasite"
@@ -5145,7 +5159,7 @@ msgstr "Flip Layer"
 msgid "Rotate Layer"
 msgstr "Rotate Layer"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1108
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5160,39 +5174,39 @@ msgstr ""
 "Floating Selection\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1035
+#: app/core/gimplayer.c:1034
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Cannot add layer mask to layer which is not part of an image."
 
-#: app/core/gimplayer.c:1042
+#: app/core/gimplayer.c:1041
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Unable to add a layer mask since the layer already has one."
 
-#: app/core/gimplayer.c:1049
+#: app/core/gimplayer.c:1048
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Cannot add layer mask to a layer with no alpha channel."
 
-#: app/core/gimplayer.c:1059
+#: app/core/gimplayer.c:1058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Cannot add layer mask of different dimensions than specified layer."
 
-#: app/core/gimplayer.c:1163
+#: app/core/gimplayer.c:1162
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer Alpha to Mask"
 
-#: app/core/gimplayer.c:1323
+#: app/core/gimplayer.c:1322
 msgid "Apply Layer Mask"
 msgstr "Apply Layer Mask"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Delete Layer Mask"
 msgstr "Delete Layer Mask"
 
-#: app/core/gimplayer.c:1425
+#: app/core/gimplayer.c:1424
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/core/gimplayer.c:1447
+#: app/core/gimplayer.c:1446
 msgid "Layer to Image Size"
 msgstr "Layer to Image Size"
 
@@ -5224,7 +5238,7 @@ msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "Fatal parse error in palette file '%s': Missing magic header."
 
 #: app/core/gimppalette.c:396 app/core/gimppalette.c:421
-#: app/core/gimppalette.c:451 app/core/gimppalette.c:537
+#: app/core/gimppalette.c:451 app/core/gimppalette.c:531
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "Fatal parse error in palette file '%s': Read error in line %d."
@@ -5244,22 +5258,22 @@ msgstr ""
 "default value."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:485
+#: app/core/gimppalette.c:479
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Reading palette file '%s': Missing RED component in line %d."
 
-#: app/core/gimppalette.c:493
+#: app/core/gimppalette.c:487
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Reading palette '%s': Missing GREEN component in line %d."
 
-#: app/core/gimppalette.c:501
+#: app/core/gimppalette.c:495
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Reading palette file '%s': Missing BLUE component in line %d."
 
-#: app/core/gimppalette.c:511
+#: app/core/gimppalette.c:505
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Reading palette file '%s': RGB value out of range in line %d."
@@ -5551,9 +5565,9 @@ msgid ""
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
-"Remote file save needs to determine the file format from the file "
-"extension. Please enter a file extension that matches the selected file "
-"format or enter no file extension at all."
+"Remote file save needs to determine the file format from the file extension. "
+"Please enter a file extension that matches the selected file format or enter "
+"no file extension at all."
 
 #: app/dialogs/file-save-dialog.c:400
 msgid "Extension Mismatch"
@@ -6120,7 +6134,7 @@ msgstr "Select custom canvas padding colour"
 msgid "Preferences"
 msgstr "Preferences"
 
-#: app/dialogs/preferences-dialog.c:1297 app/dialogs/preferences-dialog.c:2399
+#: app/dialogs/preferences-dialog.c:1297 app/dialogs/preferences-dialog.c:2403
 msgid "Environment"
 msgstr "Environment"
 
@@ -6617,7 +6631,7 @@ msgid "Select Temp Folder"
 msgstr "Select Temp Folder"
 
 #: app/dialogs/preferences-dialog.c:2334
-#: app/dialogs/user-install-dialog.c:1408
+#: app/dialogs/user-install-dialog.c:1434
 msgid "Swap folder:"
 msgstr "Swap folder:"
 
@@ -6694,22 +6708,34 @@ msgid "Select Module Folders"
 msgstr "Select Module Folders"
 
 #: app/dialogs/preferences-dialog.c:2399
+msgid "Interpreters"
+msgstr "Interpreters"
+
+#: app/dialogs/preferences-dialog.c:2399
+msgid "Interpreter Folders"
+msgstr "Interpreter Folders"
+
+#: app/dialogs/preferences-dialog.c:2401
+msgid "Select Interpreter Folders"
+msgstr "Select Interpreter Folders"
+
+#: app/dialogs/preferences-dialog.c:2403
 msgid "Environment Folders"
 msgstr "Environment Folders"
 
-#: app/dialogs/preferences-dialog.c:2401
+#: app/dialogs/preferences-dialog.c:2405
 msgid "Select Environment Folders"
 msgstr "Select Environment Folders"
 
-#: app/dialogs/preferences-dialog.c:2403
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Themes"
 msgstr "Themes"
 
-#: app/dialogs/preferences-dialog.c:2403
+#: app/dialogs/preferences-dialog.c:2407
 msgid "Theme Folders"
 msgstr "Theme Folders"
 
-#: app/dialogs/preferences-dialog.c:2405
+#: app/dialogs/preferences-dialog.c:2409
 msgid "Select Theme Folders"
 msgstr "Select Theme Folders"
 
@@ -6857,7 +6883,7 @@ msgstr "_Next tip"
 msgid "tips-locale:C"
 msgstr "tips-locale:C"
 
-#: app/dialogs/user-install-dialog.c:134
+#: app/dialogs/user-install-dialog.c:135
 msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
@@ -6867,7 +6893,7 @@ msgstr ""
 "behaviour.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
 
-#: app/dialogs/user-install-dialog.c:143
+#: app/dialogs/user-install-dialog.c:144
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
@@ -6875,7 +6901,7 @@ msgstr ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
 
-#: app/dialogs/user-install-dialog.c:149
+#: app/dialogs/user-install-dialog.c:150
 msgid ""
 "Plug-ins and extensions are external programs run by the GIMP which provide "
 "additional functionality.  These programs are searched for at run-time and "
@@ -6887,7 +6913,7 @@ msgstr ""
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
 
-#: app/dialogs/user-install-dialog.c:159
+#: app/dialogs/user-install-dialog.c:160
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
 "of your configuration so it can. be remembered for the next session.  You "
@@ -6899,7 +6925,7 @@ msgstr ""
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
 
-#: app/dialogs/user-install-dialog.c:169
+#: app/dialogs/user-install-dialog.c:170
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
@@ -6909,7 +6935,7 @@ msgstr ""
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogues at "
 "the saved position."
 
-#: app/dialogs/user-install-dialog.c:176
+#: app/dialogs/user-install-dialog.c:177
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
@@ -6917,7 +6943,7 @@ msgstr ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
 
-#: app/dialogs/user-install-dialog.c:182
+#: app/dialogs/user-install-dialog.c:183
 msgid ""
 "The unitrc is used to store your user units database.  You can define "
 "additional units and use them just like you use the built-in units inches, "
@@ -6929,7 +6955,7 @@ msgstr ""
 "millimetres, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
 
-#: app/dialogs/user-install-dialog.c:191
+#: app/dialogs/user-install-dialog.c:192
 msgid ""
 "This folder is used to store user defined brushes. The GIMP checks this "
 "folder in addition to the system-wide GIMP brushes installation when "
@@ -6939,7 +6965,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 
-#: app/dialogs/user-install-dialog.c:199
+#: app/dialogs/user-install-dialog.c:200
 msgid ""
 "This folder is used to store fonts you only want visible in the GIMP. The "
 "GIMP checks this folder in addition to the system-wide GIMP fonts "
@@ -6951,7 +6977,7 @@ msgstr ""
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
 
-#: app/dialogs/user-install-dialog.c:209
+#: app/dialogs/user-install-dialog.c:210
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
@@ -6961,7 +6987,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
 
-#: app/dialogs/user-install-dialog.c:216
+#: app/dialogs/user-install-dialog.c:217
 msgid ""
 "This folder is used to store user defined palettes.  The GIMP checks this "
 "folder in addition to the system-wide GIMP palettes installation when "
@@ -6971,7 +6997,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
 
-#: app/dialogs/user-install-dialog.c:223
+#: app/dialogs/user-install-dialog.c:224
 msgid ""
 "This folder is used to store user defined patterns.  The GIMP checks this "
 "folder in addition to the system-wide GIMP patterns installation when "
@@ -6981,7 +7007,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
 
-#: app/dialogs/user-install-dialog.c:230
+#: app/dialogs/user-install-dialog.c:231
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
@@ -6991,7 +7017,7 @@ msgstr ""
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
 
-#: app/dialogs/user-install-dialog.c:238
+#: app/dialogs/user-install-dialog.c:239
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
@@ -7003,7 +7029,19 @@ msgstr ""
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
 
-#: app/dialogs/user-install-dialog.c:247
+#: app/dialogs/user-install-dialog.c:248
+msgid ""
+"This folder is used to store configuration for user created, temporary, or "
+"otherwise non-system-supported plug-in interpreters.  The GIMP checks this "
+"folder in addition to the system-wide GIMP interpreters folder when "
+"searching for plug-in interpreter configuration files."
+msgstr ""
+"This folder is used to store configuration for user-created, temporary, or "
+"otherwise non-system-supported plug-in interpreters.  The GIMP checks this "
+"folder in addition to the system-wide GIMP interpreters folder when "
+"searching for plug-in interpreter configuration files."
+
+#: app/dialogs/user-install-dialog.c:258
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  The GIMP checks this "
@@ -7015,7 +7053,7 @@ msgstr ""
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
 
-#: app/dialogs/user-install-dialog.c:257
+#: app/dialogs/user-install-dialog.c:268
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
@@ -7025,15 +7063,15 @@ msgstr ""
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 
-#: app/dialogs/user-install-dialog.c:265
+#: app/dialogs/user-install-dialog.c:276
 msgid "This folder is searched for image templates."
 msgstr "This folder is searched for image templates."
 
-#: app/dialogs/user-install-dialog.c:270
+#: app/dialogs/user-install-dialog.c:281
 msgid "This folder is searched for user-installed themes."
 msgstr "This folder is searched for user-installed themes."
 
-#: app/dialogs/user-install-dialog.c:275
+#: app/dialogs/user-install-dialog.c:286
 msgid ""
 "This folder is used to temporarily store undo buffers to reduce memory "
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
@@ -7045,37 +7083,37 @@ msgstr ""
 "<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
 
-#: app/dialogs/user-install-dialog.c:284
+#: app/dialogs/user-install-dialog.c:295
 msgid "This folder is used to store tool options."
 msgstr "This folder is used to store tool options."
 
-#: app/dialogs/user-install-dialog.c:289
+#: app/dialogs/user-install-dialog.c:300
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr "This folder is used to store parameter files for the Curves tool."
 
-#: app/dialogs/user-install-dialog.c:294
+#: app/dialogs/user-install-dialog.c:305
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr "This folder is used to store parameter files for the Levels tool."
 
-#: app/dialogs/user-install-dialog.c:390
+#: app/dialogs/user-install-dialog.c:401
 msgid "Installation successful.  Click \"Continue\" to proceed."
 msgstr "Installation successful.  Click \"Continue\" to proceed."
 
-#: app/dialogs/user-install-dialog.c:396
+#: app/dialogs/user-install-dialog.c:407
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installation failed.  Contact system administrator."
 
-#: app/dialogs/user-install-dialog.c:609
+#: app/dialogs/user-install-dialog.c:627
 msgid "GIMP User Installation"
 msgstr "GIMP User Installation"
 
-#: app/dialogs/user-install-dialog.c:614
+#: app/dialogs/user-install-dialog.c:632
 msgid "Continue"
 msgstr "Continue"
 
 #. GPL_PAGE
 #. version number
-#: app/dialogs/user-install-dialog.c:770
+#: app/dialogs/user-install-dialog.c:788
 #, c-format
 msgid ""
 "Welcome to\n"
@@ -7084,11 +7122,11 @@ msgstr ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 
-#: app/dialogs/user-install-dialog.c:776
+#: app/dialogs/user-install-dialog.c:794
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Click \"Continue\" to enter the GIMP user installation."
 
-#: app/dialogs/user-install-dialog.c:783
+#: app/dialogs/user-install-dialog.c:801
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2004\n"
@@ -7098,7 +7136,7 @@ msgstr ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 
-#: app/dialogs/user-install-dialog.c:793
+#: app/dialogs/user-install-dialog.c:811
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -7110,7 +7148,7 @@ msgstr ""
 "Software Foundation; either version 2 of the Licence, or (at your option) "
 "any later version."
 
-#: app/dialogs/user-install-dialog.c:799
+#: app/dialogs/user-install-dialog.c:817
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -7122,7 +7160,7 @@ msgstr ""
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licence for "
 "more details."
 
-#: app/dialogs/user-install-dialog.c:805
+#: app/dialogs/user-install-dialog.c:823
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -7132,35 +7170,37 @@ msgstr ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: app/dialogs/user-install-dialog.c:815
+#: app/dialogs/user-install-dialog.c:835
 msgid "Migrate User Settings"
 msgstr "Migrate User Settings"
 
-#: app/dialogs/user-install-dialog.c:816
+#: app/dialogs/user-install-dialog.c:836
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr "Click \"Continue\" to proceed with the user installation."
 
-#: app/dialogs/user-install-dialog.c:821
-msgid "It seems you have used GIMP 2.0 before."
-msgstr "It seems you have used GIMP 2.0 before."
+#: app/dialogs/user-install-dialog.c:840
+#, c-format
+msgid "It seems you have used GIMP %s before."
+msgstr "It seems you have used GIMP %s before."
 
-#: app/dialogs/user-install-dialog.c:825
-msgid "_Migrate GIMP 2.0 user settings"
-msgstr "_Migrate GIMP 2.0 user settings"
+#: app/dialogs/user-install-dialog.c:842
+#, c-format
+msgid "_Migrate GIMP %s user settings"
+msgstr "_Migrate GIMP %s user settings"
 
-#: app/dialogs/user-install-dialog.c:828
+#: app/dialogs/user-install-dialog.c:851
 msgid "Do a _fresh user installation"
 msgstr "Do a _fresh user installation"
 
-#: app/dialogs/user-install-dialog.c:856
+#: app/dialogs/user-install-dialog.c:882
 msgid "Personal GIMP Folder"
 msgstr "Personal GIMP Folder"
 
-#: app/dialogs/user-install-dialog.c:857
+#: app/dialogs/user-install-dialog.c:883
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Click \"Continue\" to create your personal GIMP folder."
 
-#: app/dialogs/user-install-dialog.c:901
+#: app/dialogs/user-install-dialog.c:927
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
@@ -7169,7 +7209,7 @@ msgstr ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
 
-#: app/dialogs/user-install-dialog.c:908
+#: app/dialogs/user-install-dialog.c:934
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
@@ -7177,44 +7217,44 @@ msgstr ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 
-#: app/dialogs/user-install-dialog.c:996
+#: app/dialogs/user-install-dialog.c:1022
 msgid "User Installation Log"
 msgstr "User Installation Log"
 
-#: app/dialogs/user-install-dialog.c:997
+#: app/dialogs/user-install-dialog.c:1023
 msgid "Please wait while your personal GIMP folder is being created..."
 msgstr "Please wait while your personal GIMP folder is being created..."
 
-#: app/dialogs/user-install-dialog.c:1004
+#: app/dialogs/user-install-dialog.c:1030
 msgid "GIMP Performance Tuning"
 msgstr "GIMP Performance Tuning"
 
-#: app/dialogs/user-install-dialog.c:1005
+#: app/dialogs/user-install-dialog.c:1031
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Click \"Continue\" to accept the settings above."
 
-#: app/dialogs/user-install-dialog.c:1010
+#: app/dialogs/user-install-dialog.c:1036
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 
-#: app/dialogs/user-install-dialog.c:1070
+#: app/dialogs/user-install-dialog.c:1096
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copying file '%s' from '%s'..."
 
-#: app/dialogs/user-install-dialog.c:1089
+#: app/dialogs/user-install-dialog.c:1115
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creating folder '%s'..."
 
-#: app/dialogs/user-install-dialog.c:1103
+#: app/dialogs/user-install-dialog.c:1129
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Cannot create folder '%s': %s"
 
-#: app/dialogs/user-install-dialog.c:1367
+#: app/dialogs/user-install-dialog.c:1393
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7224,11 +7264,11 @@ msgstr ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 
-#: app/dialogs/user-install-dialog.c:1380
+#: app/dialogs/user-install-dialog.c:1406
 msgid "Tile cache size:"
 msgstr "Tile cache size:"
 
-#: app/dialogs/user-install-dialog.c:1392
+#: app/dialogs/user-install-dialog.c:1418
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7240,7 +7280,7 @@ msgstr ""
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 
-#: app/dialogs/user-install-dialog.c:1403
+#: app/dialogs/user-install-dialog.c:1429
 msgid "Select swap dir"
 msgstr "Select swap dir"
 
@@ -7308,11 +7348,11 @@ msgstr "Dark check colour"
 msgid "Custom color"
 msgstr "Custom colour"
 
-#: app/display/gimpdisplayshell.c:910
+#: app/display/gimpdisplayshell.c:912
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: app/display/gimpdisplayshell.c:930
+#: app/display/gimpdisplayshell.c:932
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -7437,11 +7477,11 @@ msgstr "Shadow type"
 msgid "Style of bevel around the statusbar text"
 msgstr "Style of bevel around the statusbar text"
 
-#: app/display/gimpstatusbar.c:220
+#: app/display/gimpstatusbar.c:224
 msgid "Cancel"
 msgstr "Cancel"
 
-#: app/display/gimpstatusbar.c:443
+#: app/display/gimpstatusbar.c:448
 msgid "Other..."
 msgstr "Other..."
 
@@ -7548,32 +7588,32 @@ msgstr "Blur"
 msgid "Sharpen"
 msgstr "Sharpen"
 
-#: app/pdb/color_cmds.c:139 app/tools/gimpbrightnesscontrasttool.c:85
+#: app/pdb/color_cmds.c:140 app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Brightness-Contrast"
 
-#: app/pdb/color_cmds.c:456 app/tools/gimpposterizetool.c:78
+#: app/pdb/color_cmds.c:458 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterize"
 
-#: app/pdb/color_cmds.c:744 app/pdb/color_cmds.c:869
+#: app/pdb/color_cmds.c:747 app/pdb/color_cmds.c:873
 #: app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Curves"
 
-#: app/pdb/color_cmds.c:994 app/tools/gimpcolorbalancetool.c:95
+#: app/pdb/color_cmds.c:993 app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Colour Balance"
 
-#: app/pdb/color_cmds.c:1119 app/tools/gimpcolorizetool.c:96
+#: app/pdb/color_cmds.c:1113 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colourize"
 
-#: app/pdb/color_cmds.c:1396 app/tools/gimphuesaturationtool.c:110
+#: app/pdb/color_cmds.c:1385 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Hue-Saturation"
 
-#: app/pdb/color_cmds.c:1503 app/tools/gimpthresholdtool.c:89
+#: app/pdb/color_cmds.c:1492 app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Threshold"
 
@@ -7603,11 +7643,7 @@ msgstr "2D Transform..."
 msgid "Blending..."
 msgstr "Blending..."
 
-#: app/pdb/image_cmds.c:3756 app/text/gimptext-parasite.c:167
-msgid "(invalid UTF-8 string)"
-msgstr "(invalid UTF-8 string)"
-
-#: app/pdb/image_cmds.c:3898
+#: app/pdb/image_cmds.c:3889
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7771,12 +7807,12 @@ msgstr "Temporary Procedure"
 msgid "Free Select"
 msgstr "Free Select"
 
-#: app/plug-in/plug-in.c:547 app/plug-in/plug-in.c:580
+#: app/plug-in/plug-in.c:563 app/plug-in/plug-in.c:596
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminating plug-in: '%s'\n"
 
-#: app/plug-in/plug-in.c:733
+#: app/plug-in/plug-in.c:749
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7867,9 +7903,13 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: app/text/gimptext-compat.c:108 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:108 app/tools/gimptexttool.c:697
 msgid "Add Text Layer"
 msgstr "Add Text Layer"
+
+#: app/text/gimptext-parasite.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "(invalid UTF-8 string)"
 
 #: app/text/gimptextlayer.c:168
 msgid "Text Layer"
@@ -8159,11 +8199,11 @@ msgstr "Paint using Patterns or Image Regions"
 msgid "_Clone"
 msgstr "_Clone"
 
-#: app/tools/gimpclonetool.c:265
+#: app/tools/gimpclonetool.c:287
 msgid "Source"
 msgstr "Source"
 
-#: app/tools/gimpclonetool.c:274
+#: app/tools/gimpclonetool.c:296
 msgid "Alignment"
 msgstr "Alignment"
 
@@ -9118,23 +9158,23 @@ msgstr ""
 msgid "Create path from text"
 msgstr "Create path from text"
 
-#: app/tools/gimptexttool.c:141
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Add text to the image"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:144
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: app/tools/gimptexttool.c:730
+#: app/tools/gimptexttool.c:742
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
-#: app/tools/gimptexttool.c:840 app/tools/gimptexttool.c:843
+#: app/tools/gimptexttool.c:852 app/tools/gimptexttool.c:855
 msgid "Confirm Text Editing"
 msgstr "Confirm Text Editing"
 
-#: app/tools/gimptexttool.c:870
+#: app/tools/gimptexttool.c:882
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9973,7 +10013,11 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "You can drop dockable dialogues here."
 
-#: app/widgets/gimpdockable.c:210
+#: app/widgets/gimpdockable.c:197
+msgid "Configure this tab"
+msgstr "Configure this tab"
+
+#: app/widgets/gimpdockable.c:213
 msgid "Close this Tab"
 msgstr "Close this Tab"
 
