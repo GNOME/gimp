@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.0\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2001-12-27 15:07+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -195,6 +195,56 @@ msgstr "Επιλογή Αρχείου"
 msgid "Select File"
 msgstr "Επιλογή Αρχείου"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "ίντσα"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "πίκα"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -261,9 +311,6 @@ msgstr "Byte"
 #~ msgid "pixels"
 #~ msgstr "εικονοστοιχεία"
 
-#~ msgid "inch"
-#~ msgstr "ίντσα"
-
 #~ msgid "inches"
 #~ msgstr "ίντσες"
 
@@ -278,9 +325,6 @@ msgstr "Byte"
 
 #~ msgid "points"
 #~ msgstr "σημεία"
-
-#~ msgid "pica"
-#~ msgstr "πίκα"
 
 #~ msgid "picas"
 #~ msgstr "στιγμές"

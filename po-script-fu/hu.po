@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2001-01-29 15:39+01:00\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -49,61 +49,61 @@ msgstr ""
 "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "Szkriptargumentumok"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Színválasztó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Fájlválasztó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Fájlválasztó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Mintaválasztó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Színátmenet-választó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Ecsetválasztó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr "Alapértékek visszaállítása"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "Névjegy"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -112,29 +112,29 @@ msgstr ""
 "Ellenőrizd a beállításokat!\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Szerző:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Dátum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr "Képtípusok:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Betűkészlet-választó"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -411,24 +411,27 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr ""
+msgstr "Script-Fu Fájlválasztó"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr ""
+msgstr "Script-Fu Betűkészlet-választó"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr ""
+msgstr "Script-Fu Betűkészlet-választó"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
@@ -463,245 +466,305 @@ msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Konzol..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Script-Fu/Kiszolgáló..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
@@ -832,8 +895,9 @@ msgid "Apply Layer Mask (or discard)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "AutoCrop"
-msgstr ""
+msgstr "Szerző:"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -910,8 +974,9 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Bevel Width"
-msgstr ""
+msgstr "Kép szélessége"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
@@ -939,24 +1004,27 @@ msgid "Blur Border"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
+#, fuzzy
 msgid "Blur Horizontally"
-msgstr ""
+msgstr "Vízszintes simítás"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
+#, fuzzy
 msgid "Blur Radius"
-msgstr ""
+msgstr "Sugár"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Type"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
+#, fuzzy
 msgid "Blur Vertically"
-msgstr ""
+msgstr "Függőleges simítás"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
@@ -967,27 +1035,32 @@ msgid "Blur Y"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
+#, fuzzy
 msgid "Border Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "Betűméret (képpont)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Border Size"
-msgstr ""
+msgstr "Keret mérete"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
+#, fuzzy
 msgid "Border X Size"
-msgstr ""
+msgstr "Blokkméret"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
+#, fuzzy
 msgid "Border Y Size"
-msgstr ""
+msgstr "Blokkméret"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
@@ -1003,8 +1076,9 @@ msgid "Bumpmap (Alpha Layer) Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "Burst Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
@@ -1015,12 +1089,14 @@ msgid "Carve White Areas"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
+#, fuzzy
 msgid "Cell Size (pixels)"
-msgstr ""
+msgstr "Betűméret (képpont)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
 msgid "Chalk Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
@@ -1099,8 +1175,9 @@ msgid "Custom Gradient"
 msgstr "Egyéni színátmenet"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "Dark Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
@@ -1155,8 +1232,9 @@ msgid "Down"
 msgstr "Le"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Vetett árnyék színe"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
@@ -1187,33 +1265,40 @@ msgid "Edge Only"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Edge Radius"
-msgstr ""
+msgstr "Sugár"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#, fuzzy
 msgid "Edge Width"
-msgstr ""
+msgstr "Kép szélessége"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
 msgid "Effect Size (pixels * 3)"
-msgstr ""
+msgstr "Eltolás (képpont * 2)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "Effect Size (pixels * 30)"
-msgstr ""
+msgstr "Eltolás (képpont * 2)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "Effect Size (pixels * 4)"
-msgstr ""
+msgstr "Eltolás (képpont * 2)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
 msgid "Effect Size (pixels * 5)"
-msgstr ""
+msgstr "Eltolás (képpont * 2)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
 msgid "Effect Size (pixels)"
-msgstr ""
+msgstr "Betűméret (képpont)"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1272,8 +1357,9 @@ msgid "FG-BG-RGB"
 msgstr "FG-BG-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "FG-Transparent"
-msgstr ""
+msgstr "Átlátszó háttér"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
@@ -1293,8 +1379,9 @@ msgid "Fadeout Width"
 msgstr "Kép szélessége"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "Kép szélessége"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -1323,8 +1410,9 @@ msgstr "Feltöltés háttérszínnel"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Flatten Image"
-msgstr ""
+msgstr "Új kép létrehozása"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
@@ -1445,16 +1533,19 @@ msgstr ""
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "Glow Color"
-msgstr ""
+msgstr "Betű színe"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#, fuzzy
 msgid "Glow Radius"
-msgstr ""
+msgstr "Sugár"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#, fuzzy
 msgid "Glow Size (pixels * 4)"
-msgstr ""
+msgstr "Betűméret (képpont)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1505,8 +1596,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Color"
-msgstr ""
+msgstr "Feltöltés háttérszínnel"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Opacity"
@@ -1581,8 +1673,9 @@ msgid "Invert"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Keep Background"
-msgstr ""
+msgstr "Háttér hozzáadása"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1597,8 +1690,9 @@ msgid "Keep Selection"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
 msgid "Land Height"
-msgstr ""
+msgstr "Oszlop magassága"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1614,28 +1708,33 @@ msgid "Looped"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "Szöveg színe (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Lower Color"
-msgstr ""
+msgstr "Szöveg színe"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "Make New Background"
-msgstr ""
+msgstr "Háttér hozzáadása"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+#, fuzzy
 msgid "Mask Opacity"
-msgstr ""
+msgstr "Átlátszatlanság"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+#, fuzzy
 msgid "Mask Size"
-msgstr ""
+msgstr "Képméret"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
@@ -1654,8 +1753,9 @@ msgid "No Background (only for separate layer)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Szöveg színe (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
@@ -1710,8 +1810,9 @@ msgid "Offset (pixels)"
 msgstr "Eltolás (képpont)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
+#, fuzzy
 msgid "Offset Radius"
-msgstr ""
+msgstr "Eltolás Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1750,8 +1851,9 @@ msgid "Outline Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
+#, fuzzy
 msgid "Outline Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -1759,12 +1861,14 @@ msgid "Outline Size"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "Pad Color"
-msgstr ""
+msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "Pad Opacity"
-msgstr ""
+msgstr "Átlátszatlanság"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Padding Around Text"
@@ -1796,8 +1900,9 @@ msgid "Pattern (Overlay)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "Minta"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1833,8 +1938,9 @@ msgid "Pressed"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "Quarter Size"
-msgstr ""
+msgstr "Képméret"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
@@ -1873,21 +1979,24 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid "Remove Background"
-msgstr ""
+msgstr "Háttér hozzáadása"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Ribbon Width"
-msgstr ""
+msgstr "Kép szélessége"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#, fuzzy
 msgid "Right"
-msgstr ""
+msgstr "Magasság"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -1950,16 +2059,18 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid "Shadow Color"
-msgstr ""
+msgstr "Vetett árnyék színe"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Darkness"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Shadow Depth"
-msgstr ""
+msgstr "Mélység"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Shadow Weight (%)"
@@ -1968,27 +2079,31 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Shadow X Offset"
-msgstr ""
+msgstr "Vettett árnyék X eltolása"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Shadow Y Offset"
-msgstr ""
+msgstr "Vetett árnyék Y eltolása"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "Shadow"
-msgstr ""
+msgstr "Árnyék hozzáadása"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "Shear Length"
-msgstr ""
+msgstr "Oszlop hosszúsága"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2023,8 +2138,9 @@ msgid "Speed (pixels/frame)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "Sphere Color"
-msgstr ""
+msgstr "Keret színe"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density X"
@@ -2178,12 +2294,14 @@ msgid "Up"
 msgstr "Fel"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "Szöveg színe (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Upper Color"
-msgstr ""
+msgstr "Szöveg színe"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
@@ -2198,8 +2316,9 @@ msgid "Use Current Gradient"
 msgstr "Aktuális színátmenet használata"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
+#, fuzzy
 msgid "Use Growing Selection"
-msgstr ""
+msgstr "Script-Fu Színátmenet-választó"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
@@ -2210,8 +2329,9 @@ msgid "Use Pattern for Outline instead of Gradient"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "Aktuális színátmenet használata"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
@@ -2257,15 +2377,8 @@ msgstr "Szélesség"
 msgid "Work on Copy"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu Fájlválasztó"
-
 #~ msgid "NOT SET"
 #~ msgstr "NINCS BEÁLLÍTVA"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Feltöltés háttérszínnel"
 
 #~ msgid "Close"
 #~ msgstr "Bezárás"

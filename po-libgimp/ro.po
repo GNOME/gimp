@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -199,6 +199,58 @@ msgstr "Selecteazã"
 #, fuzzy
 msgid "Select File"
 msgstr "Selecteazã"
+
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "Ancoreazã stratul"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "Cloneazã traseul"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr "Modificã"
+
+#: libgimpwidgets/gimpstock.c:91
+#, fuzzy
+msgid "Linked"
+msgstr "Linear"
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr "Insereazã ca nou"
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr "Insereazã în"
+
+#: libgimpwidgets/gimpstock.c:94
+#, fuzzy
+msgid "_Reset"
+msgstr "Iniþializeazã"
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr "Transformare"
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr "Rotire"
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr "Scalare"
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr "Decupare"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -521,9 +573,6 @@ msgstr ""
 #~ msgid "Add"
 #~ msgstr "Adaugã"
 
-#~ msgid "Edit"
-#~ msgstr "Modificã"
-
 #~ msgid "Edit Indexed Color"
 #~ msgstr "Modificã culoarea indexatã"
 
@@ -720,9 +769,6 @@ msgstr ""
 
 #~ msgid "New Image"
 #~ msgstr "Imagine nouã"
-
-#~ msgid "Reset"
-#~ msgstr "Iniþializeazã"
 
 #~ msgid "Width:"
 #~ msgstr "Lãþime:"
@@ -1157,12 +1203,6 @@ msgstr ""
 #~ msgid "Paste"
 #~ msgstr "Insereazã"
 
-#~ msgid "Paste Into"
-#~ msgstr "Insereazã în"
-
-#~ msgid "Paste as New"
-#~ msgstr "Insereazã ca nou"
-
 #~ msgid "Paste Named Buffer"
 #~ msgstr "Insereazã informaþia memoratã cu nume"
 
@@ -1314,9 +1354,6 @@ msgstr ""
 
 #~ msgid "Right Endpoint Color"
 #~ msgstr "Culoarea punctului din dreapta"
-
-#~ msgid "Linear"
-#~ msgstr "Linear"
 
 #~ msgid "Curved"
 #~ msgstr "Curbat"
@@ -1505,9 +1542,6 @@ msgstr ""
 
 #~ msgid "Duplicate Layer"
 #~ msgstr "Cloneazã stratul"
-
-#~ msgid "Anchor Layer"
-#~ msgstr "Ancoreazã stratul"
 
 #~ msgid "Delete Layer"
 #~ msgstr "Eliminã strat"
@@ -2371,9 +2405,6 @@ msgstr ""
 
 #~ msgid "New Path"
 #~ msgstr "Traseu nou"
-
-#~ msgid "Duplicate Path"
-#~ msgstr "Cloneazã traseul"
 
 #~ msgid "Path to Selection"
 #~ msgstr "Traseul -> Selecþie"
@@ -4227,18 +4258,6 @@ msgstr ""
 
 #~ msgid "This tool has no options."
 #~ msgstr "Aceastã unealtã nu are nici un fel de opþiuni."
-
-#~ msgid "Rotate"
-#~ msgstr "Rotire"
-
-#~ msgid "Scale"
-#~ msgstr "Scalare"
-
-#~ msgid "Shear"
-#~ msgstr "Decupare"
-
-#~ msgid "Transform"
-#~ msgstr "Transformare"
 
 #~ msgid ""
 #~ "Transformations do not work on\n"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -56,71 +56,71 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Πρόγραμμα εντολών:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Πρόγραμμα εντολών:"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 #, fuzzy
 msgid "Script Arguments"
 msgstr "Ορίσματα"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 #, fuzzy
 msgid "Reset to Defaults"
 msgstr "Επαναφορά εξ' ορισμού ρυθμίσεων"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "Περί"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -128,34 +128,34 @@ msgstr ""
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -449,24 +449,29 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr ""
+msgstr "Κλάδεμα Επιλεγμένου"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/selection-round.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr ""
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr ""
 
+#
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr ""
+msgstr "Επιλογή Γραμματοσειράς"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
@@ -831,8 +836,9 @@ msgid "Add Background"
 msgstr "Φόντο"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "Σκιά:"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
@@ -965,8 +971,9 @@ msgid "Bevel Width"
 msgstr "Πλάτος Πλαισίου:"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Θέμα Διαβάθμισης"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
@@ -1129,8 +1136,9 @@ msgid "Chrome Saturation"
 msgstr "Κορεσμός"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
+#, fuzzy
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Αποθήκευση Αρχείου Ως"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
@@ -1255,8 +1263,9 @@ msgid "Down"
 msgstr "Κάτω"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Αραιά βροχή"
 
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
@@ -1265,16 +1274,19 @@ msgid "Drop Shadow Color"
 msgstr "Χρώματα Γραφήματος"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "Σκιά:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "Σκιά:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "Σκιά:"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
@@ -1292,8 +1304,9 @@ msgid "Edge Only"
 msgstr "Ακραίο ταμπλώ"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Edge Radius"
-msgstr ""
+msgstr "Ράδιο"
 
 #
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
@@ -1410,8 +1423,9 @@ msgid "Fade From %"
 msgstr "Εύρος: Από "
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
+#, fuzzy
 msgid "Fade To   %"
-msgstr ""
+msgstr "Εύρος: Από "
 
 #
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
@@ -1419,9 +1433,11 @@ msgstr ""
 msgid "Fadeout Width"
 msgstr "Καθορισμός Πλάτους:"
 
+#
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "Καθορισμός Πλάτους:"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #, fuzzy
@@ -1440,8 +1456,9 @@ msgid "Fill Angle"
 msgstr "Γεμισμένο Τρίγωνο"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Σταθερό πλάτος"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -1608,8 +1625,9 @@ msgstr "Βαθμίδα"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Ιανουάριος"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -1814,9 +1832,11 @@ msgstr "Διαφάνεια:"
 msgid "Mask Size"
 msgstr "Μεγέθος Τετραγωνιδίων"
 
+#
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
+#, fuzzy
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "Μπλούγκρας"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #, fuzzy
@@ -1833,8 +1853,9 @@ msgid "No Background (only for separate layer)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Δεν έχει ξεκινήσει"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -1944,9 +1965,11 @@ msgstr "Προσανατολισμός"
 msgid "Outer Border"
 msgstr "Πλαίσιο"
 
+#
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Μπλούγκρας"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #, fuzzy
@@ -2205,20 +2228,23 @@ msgid "Shadow Depth"
 msgstr "Εμφάνιση Λεπτομερειών"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "Εμφάνιση Λεπτομερειών"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Shadow X Offset"
-msgstr ""
+msgstr "Εμφάνιση Λεπτομερειών"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Shadow Y Offset"
-msgstr ""
+msgstr "Εμφάνιση Λεπτομερειών"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
@@ -2227,8 +2253,9 @@ msgid "Shadow"
 msgstr "Σκιά:"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
+#, fuzzy
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "ανοιχτό πράσινο"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
@@ -2447,8 +2474,9 @@ msgid "Up"
 msgstr "Επάνω"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "Χαμήλωμα σημειώματος"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -2539,10 +2567,6 @@ msgstr "Πλάτος"
 #, fuzzy
 msgid "Work on Copy"
 msgstr "Αφύπνηση σε %s"
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Κλάδεμα Επιλεγμένου"
 
 #, fuzzy
 #~ msgid "Fill with BG Color"

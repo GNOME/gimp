@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2000-11-25 22:01+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -181,6 +181,56 @@ msgstr "ファイル選択"
 msgid "Select File"
 msgstr "ファイル選択"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "インチ"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "パイカ"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "詳細設定..."
@@ -235,9 +285,6 @@ msgstr "MegaBytes"
 #~ msgid "pixels"
 #~ msgstr "ピクセル"
 
-#~ msgid "inch"
-#~ msgstr "インチ"
-
 #~ msgid "inches"
 #~ msgstr "インチ"
 
@@ -252,9 +299,6 @@ msgstr "MegaBytes"
 
 #~ msgid "points"
 #~ msgstr "ポイント"
-
-#~ msgid "pica"
-#~ msgstr "パイカ"
 
 #~ msgid "picas"
 #~ msgstr "パイカ"

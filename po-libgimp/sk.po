@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2002-01-26 15:15GMT+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -182,6 +182,56 @@ msgstr "Výber súboru"
 msgid "Select File"
 msgstr "Výber súboru"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "palcov"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pica"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Viac..."
@@ -235,9 +285,6 @@ msgstr "v megabytoch"
 #~ msgid "pixels"
 #~ msgstr "pixelov"
 
-#~ msgid "inch"
-#~ msgstr "palcov"
-
 #~ msgid "inches"
 #~ msgstr "palcov"
 
@@ -252,9 +299,6 @@ msgstr "v megabytoch"
 
 #~ msgid "points"
 #~ msgstr "body"
-
-#~ msgid "pica"
-#~ msgstr "pica"
 
 #~ msgid "picas"
 #~ msgstr "pica"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-03-08 23:31+0800\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2002-03-08 23:34+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -355,11 +355,6 @@ msgstr "<Image>/Script-Fu/动画/混和..."
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/动画/荡漾..."
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/动画/旋转球..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -821,10 +816,6 @@ msgstr "振幅"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "角度"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1319,10 +1310,6 @@ msgstr "填充角度"
 msgid "Fill BG with Pattern"
 msgstr "以图案填充背景"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr "以背景色填充"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "以背景填充"
@@ -1679,11 +1666,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "颜色数量"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Number of Copies"
-msgstr "线的数量"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2270,6 +2252,17 @@ msgstr "宽度"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "在副本中操作"
+
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/动画/旋转球..."
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "以背景色填充"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "线的数量"
 
 #, fuzzy
 #~ msgid "Script-Fu Directory Selection"

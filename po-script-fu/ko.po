@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -48,64 +48,64 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, fuzzy
 msgid "/Script-Fu/"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, fuzzy, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu 콘솔"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 패턴 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 색감변화도 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 #, fuzzy
 msgid "Reset to Defaults"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "대하여"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -114,33 +114,33 @@ msgstr ""
 "설정을 검사해보세요\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 폰트 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -910,12 +910,14 @@ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Background"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
@@ -1004,8 +1006,9 @@ msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#, fuzzy
 msgid "Background Image"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 #, fuzzy
@@ -1013,8 +1016,9 @@ msgid "Bar Height"
 msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#, fuzzy
 msgid "Bar Length"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
@@ -1102,8 +1106,9 @@ msgstr "닫기"
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1123,8 +1128,9 @@ msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
+#, fuzzy
 msgid "Border"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1295,8 +1301,9 @@ msgid "Down"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
@@ -1304,20 +1311,24 @@ msgid "Drop Shadow Color"
 msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Drop Shadow"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
@@ -1435,8 +1446,9 @@ msgid "Fadeout Width"
 msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -1649,8 +1661,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "Highlight Balance"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
@@ -1659,16 +1672,19 @@ msgid "Highlight Color"
 msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
@@ -1734,8 +1750,9 @@ msgid "Invert"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Keep Background"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1813,8 +1830,9 @@ msgid "No Background (only for separate layer)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
@@ -1906,8 +1924,9 @@ msgid "Outer Border"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #, fuzzy
@@ -2037,21 +2056,24 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid "Remove Background"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Ribbon Width"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#, fuzzy
 msgid "Right"
-msgstr ""
+msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -2108,8 +2130,9 @@ msgid "Sepia"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -2143,8 +2166,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "Shadow"
-msgstr ""
+msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"

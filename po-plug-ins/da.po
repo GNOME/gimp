@@ -28,7 +28,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-02 17:11+0100\n"
+"POT-Creation-Date: 2002-03-07 18:12+0100\n"
 "PO-Revision-Date: 2002-03-02 17:26+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -580,7 +580,9 @@ msgstr ""
 #: plug-ins/FractalExplorer/FractalExplorer.c:1172
 msgid ""
 "fractalexplorer-path misconfigured - the following folders were not found:"
-msgstr "'fractalexplorer-path' fejlagtigt opsat - de følgende mapper kunne ikke findes:"
+msgstr ""
+"'fractalexplorer-path' fejlagtigt opsat - de følgende mapper kunne ikke "
+"findes:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1339
 msgid "My first fractal"

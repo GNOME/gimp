@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-11-09 00:34+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -49,61 +49,61 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "Argumenty skryptu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu: Wybór koloru"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu: Wybór pliku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu: Wybór pliku"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu: Wybór desenia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu: Wybór gradientu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu: Wybór pêdzla"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr "Przywróæ warto¶ci domy¶lne"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "Info"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -112,29 +112,29 @@ msgstr ""
 "Zweryfikuj ustawienia.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr "Typy obrazu:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu: Wybór czcionki"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -989,8 +989,9 @@ msgid "Blend Gradient (Outline)"
 msgstr "Deseñ (otoczka)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "Deseñ (otoczka)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
@@ -1300,8 +1301,9 @@ msgstr "U³o¿enie"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "End Blend"
-msgstr ""
+msgstr "K±t pocz±tkowy"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
@@ -1312,8 +1314,9 @@ msgid "End Y"
 msgstr "Y koñcowe"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Ending Blend"
-msgstr ""
+msgstr "K±t pocz±tkowy"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -1372,8 +1375,9 @@ msgid "Fadeout Width"
 msgstr "Szeroko¶æ krawêdzi"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "Szeroko¶æ krawêdzi"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -2235,12 +2239,14 @@ msgid "Thickness"
 msgstr "Grubo¶æ"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Thread Density"
-msgstr ""
+msgstr "D³ugo¶æ ¶ciêcia"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Thread Intensity"
-msgstr ""
+msgstr "D³ugo¶æ ¶ciêcia"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
@@ -2297,8 +2303,9 @@ msgid "Use Growing Selection"
 msgstr "Zachowanie zaznaczenia"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "Deseñ (tekst)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
@@ -2331,8 +2338,9 @@ msgid "Whirl Angle"
 msgstr "K±t pocz±tkowy"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "Width of Bands"
-msgstr ""
+msgstr "Liczba linii"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"

@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2002-03-02 17:54+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2002-03-02 17:58+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -372,12 +372,6 @@ msgstr "<Image>/Script-Fu/Animering/Bland..."
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr "<Image>/Script-Fu/Animering/Krusninger..."
-
-# "Selection to AnimImage" dækker over at der laves en ordentlig portion
-# billeder af det markerede
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animering/Mangfoldiggør markering..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -872,10 +866,6 @@ msgstr "Amplitude"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Angle"
 msgstr "Vinkel"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Anim-Filter for all Copies"
-msgstr "Animeringsfilter for alle kopier"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
@@ -1378,10 +1368,6 @@ msgstr "Udfyldningsvinkel"
 msgid "Fill BG with Pattern"
 msgstr "Udfyld baggrund med mønster"
 
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Fill with BG Color"
-msgstr "Udfyld med baggrundsfarve"
-
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
 msgstr "Udfyld med baggrund"
@@ -1740,10 +1726,6 @@ msgstr "Antal bånd"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
 msgstr "Antal farver"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "Number of Copies"
-msgstr "Antal kopier"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -2336,3 +2318,17 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Arbejd på kopi"
+
+# "Selection to AnimImage" dækker over at der laves en ordentlig portion
+# billeder af det markerede
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animering/Mangfoldiggør markering..."
+
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Animeringsfilter for alle kopier"
+
+#~ msgid "Fill with BG Color"
+#~ msgstr "Udfyld med baggrundsfarve"
+
+#~ msgid "Number of Copies"
+#~ msgstr "Antal kopier"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.0\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2001-08-21 14:04+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -181,6 +181,56 @@ msgstr "Seleccioneu un fitxer"
 msgid "Select File"
 msgstr "Seleccioneu un fitxer"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "polzada"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pica"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Més..."
@@ -236,9 +286,6 @@ msgstr "Megaoctets"
 #~ msgid "pixels"
 #~ msgstr "píxels"
 
-#~ msgid "inch"
-#~ msgstr "polzada"
-
 #~ msgid "inches"
 #~ msgstr "polzades"
 
@@ -253,9 +300,6 @@ msgstr "Megaoctets"
 
 #~ msgid "points"
 #~ msgstr "punts"
-
-#~ msgid "pica"
-#~ msgstr "pica"
 
 #~ msgid "picas"
 #~ msgstr "picas"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -192,6 +192,56 @@ msgstr "파일 선택"
 msgid "Select File"
 msgstr "파일 선택"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "인치"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "파이카"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "좀 더..."
@@ -243,9 +293,6 @@ msgstr ""
 #~ msgid "pixels"
 #~ msgstr "픽셀"
 
-#~ msgid "inch"
-#~ msgstr "인치"
-
 #~ msgid "inches"
 #~ msgstr "인치"
 
@@ -260,9 +307,6 @@ msgstr ""
 
 #~ msgid "points"
 #~ msgstr "포인트"
-
-#~ msgid "pica"
-#~ msgstr "파이카"
 
 #~ msgid "picas"
 #~ msgstr "파이카"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2001-07-16 06:51+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -181,6 +181,56 @@ msgstr "Dosya Seç"
 msgid "Select File"
 msgstr "Dosya Seç"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "inç"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pika"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Daha fazla..."
@@ -235,9 +285,6 @@ msgstr "Megabayt"
 #~ msgid "pixels"
 #~ msgstr "piksel"
 
-#~ msgid "inch"
-#~ msgstr "inç"
-
 #~ msgid "inches"
 #~ msgstr "inç"
 
@@ -252,9 +299,6 @@ msgstr "Megabayt"
 
 #~ msgid "points"
 #~ msgstr "punto"
-
-#~ msgid "pica"
-#~ msgstr "pika"
 
 #~ msgid "picas"
 #~ msgstr "pika"

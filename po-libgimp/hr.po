@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2000-11-03:33+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -181,6 +181,56 @@ msgstr "Odaberi Datoteku"
 msgid "Select File"
 msgstr "Odaberi Datoteku"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "palac"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pica"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Vi¹e..."
@@ -235,9 +285,6 @@ msgstr "Megabajta"
 #~ msgid "pixels"
 #~ msgstr "piksela"
 
-#~ msgid "inch"
-#~ msgstr "palac"
-
 #~ msgid "inches"
 #~ msgstr "palaca"
 
@@ -252,9 +299,6 @@ msgstr "Megabajta"
 
 #~ msgid "points"
 #~ msgstr "toèaka"
-
-#~ msgid "pica"
-#~ msgstr "pica"
 
 #~ msgid "picas"
 #~ msgstr "pica"

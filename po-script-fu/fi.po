@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-06-16 19:40+0300\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -48,61 +48,61 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu:n evaluointitila sallii ainoastaan ei-interaktiivisen käytön"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "Scriptin parametrit"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu värien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu tiedostojen selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu tiedostojen selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu kuvioiden selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu väriliukumien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu siveltimien selain"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr "Palauta alkuarvot"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "Tietoja"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -111,29 +111,29 @@ msgstr ""
 "Tarkista valintasi uudelleen.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Tekijä:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Päiväys:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr "Kuvatyypit:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu merkistön valinta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -410,24 +410,27 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr ""
+msgstr "Script-Fu tiedostojen selain"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr ""
+msgstr "Script-Fu merkistön valinta"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr ""
+msgstr "Script-Fu merkistön valinta"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
@@ -462,245 +465,305 @@ msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Konsoli..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
+msgstr "<Toolbox>/Lisäykset/Script-Fu/Palvelin..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
@@ -831,8 +894,9 @@ msgid "Apply Layer Mask (or discard)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "AutoCrop"
-msgstr ""
+msgstr "Tekijä:"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -1072,8 +1136,9 @@ msgstr ""
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+#, fuzzy
 msgid "Color"
-msgstr ""
+msgstr "Sulje"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
@@ -1143,8 +1208,9 @@ msgid "Detail in Middle"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#, fuzzy
 msgid "Diameter"
-msgstr ""
+msgstr "Päiväys:"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1535,8 +1601,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
+#, fuzzy
 msgid "Image Size"
-msgstr ""
+msgstr "Kuvatyypit:"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -2193,8 +2260,9 @@ msgid "Use Current Gradient"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
+#, fuzzy
 msgid "Use Growing Selection"
-msgstr ""
+msgstr "Script-Fu väriliukumien selain"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
@@ -2252,15 +2320,8 @@ msgstr ""
 msgid "Work on Copy"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu tiedostojen selain"
-
 #~ msgid "NOT SET"
 #~ msgstr "EI PÄÄLLÄ"
-
-#~ msgid "Close"
-#~ msgstr "Sulje"
 
 #~ msgid "OK"
 #~ msgstr "OK"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2002-02-28 11:16+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2002-02-28 11:20+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -197,38 +197,34 @@ msgid "Linked"
 msgstr "Verknüpft"
 
 #: libgimpwidgets/gimpstock.c:92
-msgid "Paste"
-msgstr "Einfügen"
-
-#: libgimpwidgets/gimpstock.c:93
 msgid "Paste as New"
 msgstr "Einfügen als Neu"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
 msgstr "Einfügen in Auswahl"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
 msgstr "_Rücksetzen"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:144
+#: libgimpwidgets/gimpstock.c:143
 msgid "Transform"
 msgstr "Transformation"
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:146
 msgid "Rotate"
 msgstr "Rotieren"
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:147
 msgid "Scale"
 msgstr "Skalieren"
 
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:148
 msgid "Shear"
 msgstr "Scheren"
 
@@ -280,3 +276,6 @@ msgstr "KiloByte"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MegaByte"
+
+#~ msgid "Paste"
+#~ msgstr "Einfügen"

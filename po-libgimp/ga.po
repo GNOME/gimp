@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Nobody\n"
 "Language-Team: Irish\n"
@@ -175,6 +175,54 @@ msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:88
+msgid "Anchor"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:89
+msgid "Duplicate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
 msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:265

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -49,98 +49,98 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Selecþie culoare"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Selecþie model"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Selecþie pensulã"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 #, fuzzy
 msgid "About"
 msgstr "Automat"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tip imagine"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -254,168 +254,208 @@ msgid "<Image>/Filters/Blur/Tileable Blur..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
@@ -423,8 +463,9 @@ msgid "<Image>/Script-Fu/Selection/Distress Selection..."
 msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 #, fuzzy
@@ -432,8 +473,9 @@ msgid "<Image>/Script-Fu/Selection/Round..."
 msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/select_to_image.scm:0
 #, fuzzy
@@ -441,36 +483,44 @@ msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr ""
+msgstr "Micºoreazã selecþia"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
@@ -802,8 +852,9 @@ msgid "Add Background"
 msgstr "Fundal"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "Umbre"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #, fuzzy
@@ -910,8 +961,9 @@ msgid "Bar Height"
 msgstr "Înãlþime"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#, fuzzy
 msgid "Bar Length"
-msgstr ""
+msgstr "Decupare"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
@@ -939,8 +991,9 @@ msgid "Bevel Width"
 msgstr "Lãþime nouã:"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Model sursã"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
@@ -953,12 +1006,14 @@ msgstr "Amestec:"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "Block Size"
-msgstr ""
+msgstr "Margine:"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Blur Amount"
-msgstr ""
+msgstr "Umple împrejur"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
@@ -1007,8 +1062,9 @@ msgstr "Culoare adevãratã"
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "Margine:"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1063,8 +1119,9 @@ msgid "Chalk Color"
 msgstr "Culoarea pentru noul canal"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Chip Amount"
-msgstr ""
+msgstr "Umple împrejur"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1075,8 +1132,9 @@ msgstr "Balanþa de culori"
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "Chrome Factor"
-msgstr ""
+msgstr "Saturare"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1091,8 +1149,9 @@ msgid "Chrome Saturation"
 msgstr "Saturare"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
+#, fuzzy
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Luminozitate:"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
@@ -1211,24 +1270,29 @@ msgid "Down"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Razã:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Color"
-msgstr ""
+msgstr "Pseudo Culoare"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "Umbre"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "Umbre"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "Umbre"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
@@ -1236,8 +1300,9 @@ msgid "Drop Shadow"
 msgstr "Umbre"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
+#, fuzzy
 msgid "Edge Amount"
-msgstr ""
+msgstr "Dimensiune punct ecran"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #, fuzzy
@@ -1296,8 +1361,9 @@ msgid "End Y"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Ending Blend"
-msgstr ""
+msgstr "Amestec:"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -1316,12 +1382,14 @@ msgid "Erase"
 msgstr "insereazã"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
 msgid "Erase/Fill"
-msgstr ""
+msgstr "insereazã"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
+#, fuzzy
 msgid "Even"
-msgstr ""
+msgstr "Extins"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -1353,8 +1421,9 @@ msgid "Fade From %"
 msgstr "Nu am reuºit sã citesc din %s"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
+#, fuzzy
 msgid "Fade To   %"
-msgstr ""
+msgstr "Nu am reuºit sã citesc din %s"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #, fuzzy
@@ -1362,8 +1431,9 @@ msgid "Fadeout Width"
 msgstr "Laþime strat:"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "Laþime strat:"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #, fuzzy
@@ -1382,8 +1452,9 @@ msgid "Fill Angle"
 msgstr "Tip umplere"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "/Modificare/Umple cu culoarea de fundal"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -1549,8 +1620,9 @@ msgstr "Gradient"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Numai gri"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -1601,12 +1673,14 @@ msgid "Highlight Opacity"
 msgstr "Opacitate umplere:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "Opacitate umplere:"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "Opacitate umplere:"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
@@ -1714,8 +1788,9 @@ msgid "Looped"
 msgstr "Incarcã"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -1723,8 +1798,9 @@ msgid "Lower Color"
 msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
+#, fuzzy
 msgid "Lower-Right color"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
@@ -1742,8 +1818,9 @@ msgid "Mask Size"
 msgstr "Dimensiune"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
+#, fuzzy
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "Razã:"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
@@ -1759,8 +1836,9 @@ msgid "No Background (only for separate layer)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Presiune"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -1768,8 +1846,9 @@ msgid "Not Pressed"
 msgstr "Presiune"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "Number of Bands"
-msgstr ""
+msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1779,12 +1858,14 @@ msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
+#, fuzzy
 msgid "Number of Frames"
-msgstr ""
+msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
+#, fuzzy
 msgid "Number of Lines"
-msgstr ""
+msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy
@@ -1793,13 +1874,15 @@ msgstr "Numar de procesoare utilizat"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Numãrul minim de culori:"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -1815,8 +1898,9 @@ msgid "Odd"
 msgstr "Adaugã"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "Offset (pixels)"
-msgstr ""
+msgstr "Decalaj X:"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
@@ -1840,8 +1924,9 @@ msgid "Offsets (pixels * 2)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
+#, fuzzy
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "Dimensiune"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -1860,8 +1945,9 @@ msgid "Outer Border"
 msgstr "Margine:"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Razã:"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #, fuzzy
@@ -1870,8 +1956,9 @@ msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Outline Size"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 #, fuzzy
@@ -1957,8 +2044,9 @@ msgid "Pressed"
 msgstr "Presiune"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "Quarter Size"
-msgstr ""
+msgstr "Margine:"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
@@ -1977,8 +2065,9 @@ msgstr "Razã:"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
 msgid "Random Seed"
-msgstr ""
+msgstr "Duritate"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
@@ -1994,8 +2083,9 @@ msgid "Relative Length of Shadow"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
+#, fuzzy
 msgid "Relative Radius"
-msgstr ""
+msgstr "Decalaj X:"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -2009,8 +2099,9 @@ msgid "Ribbon Spacing"
 msgstr "Spaþiere:"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Ribbon Width"
-msgstr ""
+msgstr "Lãþimea originalã"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2082,8 +2173,9 @@ msgid "Sepia"
 msgstr "pica"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "Razã:"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -2102,8 +2194,9 @@ msgid "Shadow Depth"
 msgstr "Aratã Calea"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Shadow Weight (%)"
-msgstr ""
+msgstr "Aratã Calea"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -2199,13 +2292,15 @@ msgid "Stains"
 msgstr "Saturare"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
+#, fuzzy
 msgid "Start Angle"
-msgstr ""
+msgstr "Pornesc extensia: "
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "Start Blend"
-msgstr ""
+msgstr "Pornesc extensia: "
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 #, fuzzy
@@ -2228,8 +2323,9 @@ msgid "Supersample"
 msgstr "Supereºantionare adaptivã"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Text Color (Active)"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2311,8 +2407,9 @@ msgid "Thread Intensity"
 msgstr "Intensitate:"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Thread Length"
-msgstr ""
+msgstr "Decupare"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
@@ -2341,8 +2438,9 @@ msgid "Up"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Upper Color (Active)"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #, fuzzy
@@ -2350,8 +2448,9 @@ msgid "Upper Color"
 msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
+#, fuzzy
 msgid "Upper-Left color"
-msgstr ""
+msgstr "Culoare adevãratã"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
@@ -2378,8 +2477,9 @@ msgid "Use Pattern for Outline instead of Gradient"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "Gradient personalizat"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
@@ -2399,8 +2499,9 @@ msgid "Whirl Amount"
 msgstr "Umple împrejur"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "Whirl Angle"
-msgstr ""
+msgstr "Tip umplere"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"
@@ -2433,10 +2534,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Fill with BG Color"
 #~ msgstr "/Modificare/Umple cu culoarea de fundal"
-
-#, fuzzy
-#~ msgid "Number of Copies"
-#~ msgstr "Numãrul minim de culori:"
 
 #~ msgid "Close"
 #~ msgstr "Închide"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp-1.3+\n"
-"POT-Creation-Date: 2002-03-05 18:15+0300\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2002-03-05 18:17+0300\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -198,38 +198,34 @@ msgid "Linked"
 msgstr "Связанные"
 
 #: libgimpwidgets/gimpstock.c:92
-msgid "Paste"
-msgstr "Вставить"
-
-#: libgimpwidgets/gimpstock.c:93
 msgid "Paste as New"
 msgstr "Вставить как новое"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
 msgstr "Вставить в"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
 msgstr "Сбросить"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
 msgstr "Видимый"
 
-#: libgimpwidgets/gimpstock.c:144
+#: libgimpwidgets/gimpstock.c:143
 msgid "Transform"
 msgstr "Преобразовать"
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:146
 msgid "Rotate"
 msgstr "Повернуть"
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:147
 msgid "Scale"
 msgstr "Масштабировать"
 
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:148
 msgid "Shear"
 msgstr "Наклонить"
 
@@ -281,3 +277,6 @@ msgstr "Килобайты"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Мегабайты"
+
+#~ msgid "Paste"
+#~ msgstr "Вставить"

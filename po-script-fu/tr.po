@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2001-07-18 13:43+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -48,61 +48,61 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu deðerlendirme modu sadece etkileþimsiz çaðrýma olanak tanýr"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "Program Argümanlarý"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Desen Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Gradyan Secimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fýrça Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr "Öntanýmlý Deðerlere Döndür"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "Hakkýnda"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -111,29 +111,29 @@ msgstr ""
 "Lütfen ayarlarýný kontrol edin.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Yazar:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr "Telif Hakký:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Tarih:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr "Resim Tipleri:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Yazýtipi Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -609,8 +609,9 @@ msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Çeþitli/Küre..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Alan..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -637,12 +638,14 @@ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Hafif Dönüþlü (döþenebilir)..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Alan..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Desenler/Alan..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."

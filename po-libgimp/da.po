@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-02 17:07+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2002-03-02 17:09+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -201,38 +201,34 @@ msgid "Linked"
 msgstr "Sammenkædet"
 
 #: libgimpwidgets/gimpstock.c:92
-msgid "Paste"
-msgstr "Indsæt"
-
-#: libgimpwidgets/gimpstock.c:93
 msgid "Paste as New"
 msgstr "Indsæt som ny"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
 msgstr "Indsæt i"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
 msgstr "_Nulstil"
 
-#: libgimpwidgets/gimpstock.c:96
+#: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:144
+#: libgimpwidgets/gimpstock.c:143
 msgid "Transform"
 msgstr "Transformér"
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:146
 msgid "Rotate"
 msgstr "Rotér"
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:147
 msgid "Scale"
 msgstr "Skalér"
 
-#: libgimpwidgets/gimpstock.c:149
+#: libgimpwidgets/gimpstock.c:148
 msgid "Shear"
 msgstr "Trapezér"
 
@@ -284,6 +280,9 @@ msgstr "Kilobyte"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Megabyte"
+
+#~ msgid "Paste"
+#~ msgstr "Indsæt"
 
 #~ msgid "OK"
 #~ msgstr "O.k."

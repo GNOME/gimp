@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.29\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-11-24 15:36+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -50,61 +50,61 @@ msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr "Remettre aux valeurs par défaut"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr "À propos"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -113,29 +113,29 @@ msgstr ""
 "Veuillez vérifier vos paramètres.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr "Auteur :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr "Copyright :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -925,8 +925,9 @@ msgid "Bevel Width"
 msgstr "Largeur de la bordure"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Motif (texte)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
@@ -1023,8 +1024,9 @@ msgid "Carve Raised Text"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
+#, fuzzy
 msgid "Carve White Areas"
-msgstr ""
+msgstr "Luminosité du chrome"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
@@ -1249,8 +1251,9 @@ msgstr "Orientation"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
+#, fuzzy
 msgid "End Blend"
-msgstr ""
+msgstr "Angle de départ"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
@@ -1261,8 +1264,9 @@ msgid "End Y"
 msgstr "Fin Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
+#, fuzzy
 msgid "Ending Blend"
-msgstr ""
+msgstr "Angle de départ"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -1321,8 +1325,9 @@ msgid "Fadeout Width"
 msgstr "Largeur de l'image"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
+#, fuzzy
 msgid "Fadeout"
-msgstr ""
+msgstr "Largeur de l'image"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -1530,8 +1535,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "Highlight Balance"
-msgstr ""
+msgstr "Couleur de craie"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
@@ -1540,8 +1546,9 @@ msgid "Highlight Color"
 msgstr "Couleur de craie"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "Décalage de l'ombre en X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
@@ -1796,8 +1803,9 @@ msgstr "Couleur d'explosion"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Outline Size"
-msgstr ""
+msgstr "Taille de bordure"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
@@ -1927,8 +1935,9 @@ msgid "Ribbon Spacing"
 msgstr "Espacement"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Ribbon Width"
-msgstr ""
+msgstr "Largeur de l'image"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2196,12 +2205,14 @@ msgid "Thickness"
 msgstr "Épaisseur"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Thread Density"
-msgstr ""
+msgstr "Longueur de la barre"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
+#, fuzzy
 msgid "Thread Intensity"
-msgstr ""
+msgstr "Longueur de la barre"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
@@ -2258,12 +2269,14 @@ msgid "Use Growing Selection"
 msgstr "Utiliser une sélection croissante"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Use Pattern Overlay"
-msgstr ""
+msgstr "Motif (texte)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "Utiliser le dégradé en cours"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #, fuzzy
@@ -2284,8 +2297,9 @@ msgid "Wheel Radius (hypo < 0 < epi)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
+#, fuzzy
 msgid "Whirl Amount"
-msgstr ""
+msgstr "Angle de départ"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #, fuzzy

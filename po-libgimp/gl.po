@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp cvs\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-09 00:09+0100\n"
 "PO-Revision-Date: 2000-07-07 16:33+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -182,6 +182,56 @@ msgstr "Seleccionar ficheiro"
 msgid "Select File"
 msgstr "Seleccionar ficheiro"
 
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "polgada"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pica"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:143
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:146
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Shear"
+msgstr ""
+
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Máis..."
@@ -237,9 +287,6 @@ msgstr "MegaBytes"
 #~ msgid "pixels"
 #~ msgstr "pixeles"
 
-#~ msgid "inch"
-#~ msgstr "polgada"
-
 #~ msgid "inches"
 #~ msgstr "polgadas"
 
@@ -254,9 +301,6 @@ msgstr "MegaBytes"
 
 #~ msgid "points"
 #~ msgstr "puntos"
-
-#~ msgid "pica"
-#~ msgstr "pica"
 
 #~ msgid "picas"
 #~ msgstr "picas"

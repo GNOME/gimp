@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.23\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-06-20 15:39+0000\n"
 "Last-Translator: Piers Cornwell <piers.cornwell@usa.net>\n"
 "Language-Team: English, British\n"
@@ -47,90 +47,90 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Colour Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Colour Selection"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -401,8 +401,9 @@ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
+#, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr ""
+msgstr "Script-Fu Colour Selection"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
@@ -777,12 +778,14 @@ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Background"
-msgstr ""
+msgstr "Background Colour"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
+#, fuzzy
 msgid "Add Drop-Shadow"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
@@ -869,8 +872,9 @@ msgstr "Background Colour"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
+#, fuzzy
 msgid "Background Image"
-msgstr ""
+msgstr "Background Colour"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
@@ -967,8 +971,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#, fuzzy
 msgid "Border Size"
-msgstr ""
+msgstr "Border Colour"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
@@ -980,8 +985,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
+#, fuzzy
 msgid "Border"
-msgstr ""
+msgstr "Border Colour"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1143,28 +1149,33 @@ msgid "Down"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
 msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Drop Shadow"
-msgstr ""
+msgstr "Drop Shadow Colour"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
@@ -1297,8 +1308,9 @@ msgid "Fill Angle"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Fill BG with Pattern"
-msgstr ""
+msgstr "Fill with BG Colour"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -1488,8 +1500,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#, fuzzy
 msgid "Highlight Balance"
-msgstr ""
+msgstr "Highlight Colour"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
@@ -1497,16 +1510,19 @@ msgid "Highlight Color"
 msgstr "Highlight Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "Highlight Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "Highlight Colour"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
+#, fuzzy
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "Highlight Colour"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
@@ -1569,8 +1585,9 @@ msgid "Invert"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
+#, fuzzy
 msgid "Keep Background"
-msgstr ""
+msgstr "Background Colour"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1642,16 +1659,18 @@ msgid "No Background (only for separate layer)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Text Colour (Active)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#, fuzzy
 msgid "Number of Bands"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1660,26 +1679,31 @@ msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
+#, fuzzy
 msgid "Number of Frames"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
+#, fuzzy
 msgid "Number of Lines"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#, fuzzy
 msgid "Number of Times to Whirl"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
+#, fuzzy
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Number of Colours"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -1734,8 +1758,9 @@ msgid "Outer Border"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Outline Colour"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
@@ -1743,8 +1768,9 @@ msgstr "Outline Colour"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
+#, fuzzy
 msgid "Outline Size"
-msgstr ""
+msgstr "Outline Colour"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
@@ -1861,8 +1887,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#, fuzzy
 msgid "Remove Background"
-msgstr ""
+msgstr "Background Colour"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
@@ -1932,8 +1959,9 @@ msgid "Sepia"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
+#, fuzzy
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "Shadow Colour"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1966,8 +1994,9 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
+#, fuzzy
 msgid "Shadow"
-msgstr ""
+msgstr "Shadow Colour"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
@@ -2243,10 +2272,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Script-Fu Colour Selection"
 
 #~ msgid "Fill with BG Color"
 #~ msgstr "Fill with BG Colour"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
+"POT-Creation-Date: 2002-03-08 09:16+0100\n"
 "PO-Revision-Date: 2000-08-27 00:36+0000\n"
 "Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
 "Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
@@ -47,89 +47,89 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1189
-#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 msgid "/Script-Fu/"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1191
-#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1196
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "Script-Fu: %s"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1218
+#: plug-ins/script-fu/script-fu-scripts.c:1223
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1293
 msgid "Script-Fu Color Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1371
+#: plug-ins/script-fu/script-fu-scripts.c:1376
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1381
 msgid "Script-Fu Folder Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1416
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1418
+#: plug-ins/script-fu/script-fu-scripts.c:1423
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1426
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1474
+#: plug-ins/script-fu/script-fu-scripts.c:1479
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1502
+#: plug-ins/script-fu/script-fu-scripts.c:1507
 msgid "About"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1698
+#: plug-ins/script-fu/script-fu-scripts.c:1703
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:1997
+#: plug-ins/script-fu/script-fu-scripts.c:2002
 msgid "Author:"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2003
+#: plug-ins/script-fu/script-fu-scripts.c:2008
 msgid "Copyright:"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2009
+#: plug-ins/script-fu/script-fu-scripts.c:2014
 msgid "Date:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2017
+#: plug-ins/script-fu/script-fu-scripts.c:2022
 msgid "Image Types:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2162
+#: plug-ins/script-fu/script-fu-scripts.c:2167
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2232
+#: plug-ins/script-fu/script-fu-scripts.c:2237
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -880,8 +880,9 @@ msgid "Bar Length"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
+#, fuzzy
 msgid "Base Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixels)"
@@ -991,8 +992,9 @@ msgid "Bumpmap (Alpha Layer) Blur Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
+#, fuzzy
 msgid "Burst Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
@@ -1007,8 +1009,9 @@ msgid "Cell Size (pixels)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
+#, fuzzy
 msgid "Chalk Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
@@ -1048,16 +1051,19 @@ msgid "Clear Unselected Maskarea"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm:0
+#, fuzzy
 msgid "Color 1"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
+#, fuzzy
 msgid "Color 2"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
+#, fuzzy
 msgid "Color 3"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
@@ -1087,8 +1093,9 @@ msgid "Custom Gradient"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#, fuzzy
 msgid "Dark Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
@@ -1314,8 +1321,9 @@ msgid "Flatten Image"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm:0
+#, fuzzy
 msgid "Font Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1408,8 +1416,9 @@ msgid "Foreground Color"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
+#, fuzzy
 msgid "Frame Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Size"
@@ -1432,8 +1441,9 @@ msgstr ""
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
+#, fuzzy
 msgid "Glow Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
@@ -1605,8 +1615,9 @@ msgid "Lower Color (Active)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Lower Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
@@ -1746,8 +1757,9 @@ msgid "Outline Size"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
+#, fuzzy
 msgid "Pad Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity"
@@ -2074,8 +2086,9 @@ msgstr ""
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
+#, fuzzy
 msgid "Text Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Text Pattern"
@@ -2168,8 +2181,9 @@ msgid "Upper Color (Active)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
+#, fuzzy
 msgid "Upper Color"
-msgstr ""
+msgstr "Druid"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
