@@ -4190,7 +4190,8 @@ initial_sub_region (struct initial_regions_struct *st,
 {
   gint                  h;
   guchar               *s, *d, *m;
-  guchar                buf[512];
+  guchar                buf[MAX (src->w * (src->bytes + 1),
+                                 dest->w * dest->bytes)];
   guchar               *data;
   guint                 opacity;
   GimpLayerModeEffects  mode;
@@ -4203,10 +4204,8 @@ initial_sub_region (struct initial_regions_struct *st,
   affect  = st->affect;
   type    = st->type;
 
-#if 0
-  if (src->w * (src->bytes + 1) > 512)
-    g_printerr ("initial_sub_region:: error :: src->w * (src->bytes + 1) > 512\n");
-#endif
+  if (src->w * (src->bytes + 1) > sizeof (buf))
+    g_error ("initial_sub_region:: error :: src->w * (src->bytes + 1) > sizeof (buf)");
 
   s = src->data;
   d = dest->data;
@@ -4351,7 +4350,8 @@ combine_sub_region (struct combine_regions_struct *st,
   guint                 mode_affect = 0;
   guchar               *s, *s1, *s2;
   guchar               *d, *m;
-  guchar                buf[512];
+  guchar                buf[MAX (src1->w * src1->bytes,
+                                 dest->w * dest->bytes)];
   gboolean              opacity_quickskip_possible;
   gboolean              transparency_quickskip_possible;
   TileRowHint           hint;
@@ -4372,10 +4372,8 @@ combine_sub_region (struct combine_regions_struct *st,
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
-#if 0
-  if (src1->w > 128)
-    g_printerr ("combine_sub_region::src1->w = %d\n", src1->w);
-#endif
+  if (src1->w * src1->bytes > sizeof (buf))
+    g_error ("combine_sub_region::src1->w * src1->bytes > sizeof (buf)");
 
   if (transparency_quickskip_possible || opacity_quickskip_possible)
     {

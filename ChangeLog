@@ -1,5 +1,16 @@
 2002-05-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c: fixed #83418, which was caused by
+	my bogus "fix" for #34849 (initial_sub_region:: error :: src->w *
+	(src->bytes + 1) > 512).
+	The assertions were there because there were local temporary
+	buffers of 512 bytes size. Now the buffers' size is
+	MAX (src->width * src->bytes, dest->width * dest->bytes) which
+	should be enough this time :) Re-enabled the assertions because
+	of paranoia...
+
+2002-05-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppencil.c: don't pass bogus [0..255] opacities to
 	gimp_paint_core_paste_canvas() but use gdouble values in a
 	[0.0..1.0] range. Spotted by Jakub Steiner.
