@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <stdio.h>
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -185,48 +186,48 @@ create_selection_options (ToolType tool_type)
     }
 
   /* Widgets for fixed size select */
-  if (tool_type == RECT_SELECT) {
-	fixed_size_toggle = gtk_check_button_new_with_label("Fixed size");
-	gtk_box_pack_start(GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
-	gtk_signal_connect(GTK_OBJECT(fixed_size_toggle), "toggled",
-					   (GtkSignalFunc)selection_toggle_update,
-					   &options->fixed_size);
+  if (tool_type == RECT_SELECT || ELLIPSE_SELECT) {
+	fixed_size_toggle = gtk_check_button_new_with_label ("Fixed size");
+	gtk_box_pack_start (GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
+	gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
+			    (GtkSignalFunc)selection_toggle_update,
+			    &options->fixed_size);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(fixed_size_toggle),
-								options->fixed_size);
+				    options->fixed_size);
 	gtk_widget_show(fixed_size_toggle);
 	
 
-	hbox = gtk_hbox_new(FALSE, 5);
- 	label = gtk_label_new(" Width: ");
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, 5);
+ 	label = gtk_label_new (" Width: ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
    	fixed_width_entry = gtk_entry_new();
-	gtk_box_pack_start(GTK_BOX(hbox), fixed_width_entry, FALSE, FALSE, 0);
-	gtk_widget_set_usize(fixed_width_entry, FIXED_ENTRY_SIZE, 0);
-	g_snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_width);
-	gtk_entry_set_text(GTK_ENTRY(fixed_width_entry), buffer);
-	gtk_signal_connect(GTK_OBJECT(fixed_width_entry), "changed",
-					   (GtkSignalFunc)selection_entry_update,
-					   &options->fixed_width);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show(label);
-	gtk_widget_show(fixed_width_entry);
-	gtk_widget_show(hbox);
+	gtk_box_pack_start (GTK_BOX (hbox), fixed_width_entry, FALSE, FALSE, 0);
+	gtk_widget_set_usize (fixed_width_entry, FIXED_ENTRY_SIZE, 0);
+	g_snprintf (buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_width);
+	gtk_entry_set_text (GTK_ENTRY(fixed_width_entry), buffer);
+	gtk_signal_connect (GTK_OBJECT(fixed_width_entry), "changed",
+			    (GtkSignalFunc)selection_entry_update,
+			    &options->fixed_width);
+	gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (label);
+	gtk_widget_show (fixed_width_entry);
+	gtk_widget_show (hbox);
 
-	hbox = gtk_hbox_new(FALSE, 5);
- 	label = gtk_label_new("Height: ");
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, 5);
+ 	label = gtk_label_new ("Height: ");
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
    	fixed_height_entry = gtk_entry_new();
-	gtk_box_pack_start(GTK_BOX(hbox), fixed_height_entry, FALSE, FALSE, 0);
-	gtk_widget_set_usize(fixed_height_entry, FIXED_ENTRY_SIZE, 0);
-	g_snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_height);
-	gtk_entry_set_text(GTK_ENTRY(fixed_height_entry), buffer);
-	gtk_signal_connect(GTK_OBJECT(fixed_height_entry), "changed",
-					   (GtkSignalFunc)selection_entry_update,
-					   &options->fixed_height);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show(label);
-	gtk_widget_show(fixed_height_entry);
-	gtk_widget_show(hbox);
+	gtk_box_pack_start (GTK_BOX (hbox), fixed_height_entry, FALSE, FALSE, 0);
+	gtk_widget_set_usize (fixed_height_entry, FIXED_ENTRY_SIZE, 0);
+	g_snprintf (buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_height);
+	gtk_entry_set_text (GTK_ENTRY(fixed_height_entry), buffer);
+	gtk_signal_connect (GTK_OBJECT(fixed_height_entry), "changed",
+			    (GtkSignalFunc)selection_entry_update,
+			    &options->fixed_height);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (label);
+	gtk_widget_show (fixed_height_entry);
+	gtk_widget_show (hbox);
 
   }
 
@@ -315,6 +316,7 @@ rect_select_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   RectSelect * rect_sel;
+  gchar *size;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -324,12 +326,12 @@ rect_select_button_press (Tool           *tool,
 
   rect_sel->x = x;
   rect_sel->y = y;
-  if(rect_options->fixed_size) {
+  if (rect_options->fixed_size) {
 	rect_sel->w = rect_options->fixed_width;
 	rect_sel->h = rect_options->fixed_height;
-  } else {
-	rect_sel->w = 0;
-	rect_sel->h = 0;
+  } else {	
+    rect_sel->w = 0;
+    rect_sel->h = 0;
   }
 
   rect_sel->center = FALSE;
@@ -362,7 +364,13 @@ rect_select_button_press (Tool           *tool,
 	}
       rect_sel->op = REPLACE;
     }
-
+  rect_sel->context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
+						      "selection");
+  size = g_new (gchar, 24);
+  sprintf (size, "Selection: %d x %d", rect_sel->w, rect_sel->h);
+  gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
+		     rect_sel->context_id, size);
+  g_free (size);
   draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
 }
 
@@ -381,6 +389,8 @@ rect_select_button_release (Tool           *tool,
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
 
+  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), 
+		    rect_sel->context_id);
   draw_core_stop (rect_sel->core, tool);
   tool->state = INACTIVE;
 
@@ -437,11 +447,12 @@ rect_select_button_release (Tool           *tool,
 
 void
 rect_select_motion (Tool           *tool,
-					GdkEventMotion *mevent,
-					gpointer        gdisp_ptr)
+		    GdkEventMotion *mevent,
+		    gpointer        gdisp_ptr)
 {
   RectSelect * rect_sel;
   GDisplay * gdisp;
+  gchar *size;
   int ox, oy;
   int x, y;
   int w, h, s;
@@ -470,11 +481,11 @@ rect_select_motion (Tool           *tool,
     }
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-  if(rect_options->fixed_size) {
-	if(mevent->state & GDK_SHIFT_MASK) {
+  if (rect_options->fixed_size) {
+	if (mevent->state & GDK_SHIFT_MASK) {
 
 	  ratio = (double)(rect_options->fixed_height /
-					   (double)rect_options->fixed_width);
+			   (double)rect_options->fixed_width);
 	  th = (int)((x - ox) * ratio);
 	  tw = (int)((y - oy) / ratio);
 
@@ -484,7 +495,7 @@ rect_select_motion (Tool           *tool,
 	   box to.  If you have a better idea either tell me
 	   (email: chap@cc.gatech.edu) or patch this sucker and send it.
 	  *******************************************************/
-	  if(abs(tw - (x - oy)) < abs(th - (y - oy))) {
+	  if (abs(tw - (x - oy)) < abs(th - (y - oy))) {
 		w = tw;
 		h = (int)(w * ratio);
 	  } else {
@@ -547,7 +558,13 @@ rect_select_motion (Tool           *tool,
 
       rect_sel->center = FALSE;
     }
-
+  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), 
+		    rect_sel->context_id);
+  size = g_new (gchar, 24);
+  sprintf (size, "Selection: %d x %d", rect_sel->w, rect_sel->h);
+  gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
+		     rect_sel->context_id, size);
+  g_free (size);
   draw_core_resume (rect_sel->core, tool);
 }
 
