@@ -81,22 +81,26 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      alienmap2               (GimpDrawable  *drawable);
-static void      transform               (guchar        *r,
-                                          guchar        *g,
-                                          guchar        *b);
+static void      alienmap2                (GimpDrawable  *drawable);
+static void      transform                (guchar        *r,
+                                           guchar        *g,
+                                           guchar        *b);
+static gint      alienmap2_dialog         (void);
+static void      dialog_update_preview    (void);
+static void      dialog_scale_update      (GtkAdjustment *adjustment,
+                                           gdouble       *value);
+static void      dialog_response          (GtkWidget     *widget,
+                                           gint           response_id,
+                                           gpointer       data);
+static void      alienmap2_toggle_update  (GtkWidget     *widget,
+                                           gpointer       data);
+static void      alienmap2_radio_update   (GtkWidget     *widget,
+                                           gpointer       data);
 
-static gint      alienmap2_dialog        (void);
-static void      dialog_update_preview   (void);
-static void      dialog_scale_update     (GtkAdjustment *adjustment,
-                                          gdouble       *value);
-static void      dialog_response         (GtkWidget     *widget,
-                                          gint           response_id,
-                                          gpointer       data);
-static void      alienmap2_toggle_update (GtkWidget     *widget,
-                                          gpointer       data);
-static void      alienmap2_radio_update  (GtkWidget     *widget,
-                                          gpointer       data);
+static void      alienmap2_set_labels     (void);
+static void      alienmap2_set_sensitive  (void);
+static void      alienmap2_get_label_size (void);
+
 
 /***** Variables *****/
 
@@ -130,16 +134,46 @@ static alienmap2_vals_t wvals =
   TRUE,
 };
 
-static GimpDrawable *drawable        = NULL;
-static GtkWidget    *label_freq_rh   = NULL;
-static GtkWidget    *label_freq_gs   = NULL;
-static GtkWidget    *label_freq_bl   = NULL;
-static GtkWidget    *label_phase_rh  = NULL;
-static GtkWidget    *label_phase_gs  = NULL;
-static GtkWidget    *label_phase_bl  = NULL;
-static GtkWidget    *label_modify_rh = NULL;
-static GtkWidget    *label_modify_gs = NULL;
-static GtkWidget    *label_modify_bl = NULL;
+static GimpDrawable *drawable         = NULL;
+
+static GtkWidget    *toggle_modify_rh = NULL;
+static GtkWidget    *toggle_modify_gs = NULL;
+static GtkWidget    *toggle_modify_bl = NULL;
+
+static GtkWidget    *label_freq_rh    = NULL;
+static GtkWidget    *label_freq_gs    = NULL;
+static GtkWidget    *label_freq_bl    = NULL;
+static GtkWidget    *label_phase_rh   = NULL;
+static GtkWidget    *label_phase_gs   = NULL;
+static GtkWidget    *label_phase_bl   = NULL;
+
+static GtkObject    *entry_freq_rh    = NULL;
+static GtkObject    *entry_freq_gs    = NULL;
+static GtkObject    *entry_freq_bl    = NULL;
+static GtkObject    *entry_phase_rh   = NULL;
+static GtkObject    *entry_phase_gs   = NULL;
+static GtkObject    *entry_phase_bl   = NULL;
+
+
+static const gchar *ctext[][2] =
+{
+  { N_("_Modify Red Channel"),   N_("_Modify Hue Channel")        },
+  { N_("Mo_dify Green Channel"), N_("Mo_dify Saturation Channel") },
+  { N_("Mod_ify Blue Channel"),  N_("Mod_ify Luminosity Channel") }
+};
+
+static const gchar *etext[][2] =
+{
+  { N_("Red _Frequency:"),       N_("Hue _Frequency:")            },
+  { N_("Green Fr_equency:"),     N_("Saturation Fr_equency:")     },
+  { N_("Blue Freq_uency:"),      N_("Luminosity Freq_uency:")     },
+
+  { N_("Red _Phaseshift:"),      N_("Hue _Phaseshift:")           },
+  { N_("Green Ph_aseshift:"),    N_("Saturation Ph_aseshift:")    },
+  { N_("Blue Pha_seshift:"),     N_("Luminosity Pha_seshift:")    },
+};
+static gint elabel_maxwidth = 0;
+
 
 /***** Functions *****/
 
@@ -164,8 +198,6 @@ query (void)
     { GIMP_PDB_INT8,     "greenmode",      "Green/saturation application mode (TRUE, FALSE)" },
     { GIMP_PDB_INT8,     "bluemode",       "Blue/luminance application mode (TRUE, FALSE)" },
   };
-  static GimpParamDef *return_vals = NULL;
-  static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_alienmap2",
                           "AlienMap2 Color Transformation Plug-In",
@@ -176,8 +208,8 @@ query (void)
                           N_("<Image>/Filters/Colors/Map/Alien Map _2..."),
                           "RGB*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), nreturn_vals,
-                          args, return_vals);
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -302,7 +334,7 @@ run (const gchar      *name,
 
           /* Set the tile cache size */
           gimp_tile_cache_ntiles (2 * (drawable->width /
-                                       gimp_tile_width () + 1));
+				       gimp_tile_width () + 1));
 
           /* Run! */
 
@@ -313,7 +345,7 @@ run (const gchar      *name,
           /* Store data */
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data ("plug_in_alienmap2",
-                           &wvals, sizeof(alienmap2_vals_t));
+			   &wvals, sizeof(alienmap2_vals_t));
         }
       else
         {
@@ -365,7 +397,6 @@ alienmap2_dialog (void)
   GtkWidget *toggle_vbox;
   GtkWidget *sep;
   GtkWidget *table;
-  GtkWidget *hbox;
   GtkObject *adj;
 
   gimp_ui_init ("alienmap2", TRUE);
@@ -414,67 +445,73 @@ alienmap2_dialog (void)
                     GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Red _Frequency:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.redfrequency, 0, 20.0, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              _("Number of cycles covering full value range"),
-                              NULL);
+  entry_freq_rh = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.redfrequency, 0, 20.0, 0.1, 1, 2,
+			  TRUE, 0, 0,
+			  _("Number of cycles covering full value range"),
+			  NULL);
   label_freq_rh = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redfrequency);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("Red _Phaseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.redangle, 0, 360.0, 1, 15, 2,
-                              TRUE, 0, 0,
-                              _("Phase angle, range 0-360"),
-                              NULL);
+  entry_phase_rh = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.redangle, 0, 360.0, 1, 15, 2,
+			  TRUE, 0, 0,
+			  _("Phase angle, range 0-360"),
+			  NULL);
   label_phase_rh = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redangle);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                              _("Green Fr_equency:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.greenfrequency, 0, 20.0, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              _("Number of cycles covering full value range"),
-			      NULL);
+  entry_freq_gs = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.greenfrequency, 0, 20.0, 0.1, 1, 2,
+			  TRUE, 0, 0,
+			  _("Number of cycles covering full value range"),
+			  NULL);
   label_freq_gs = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenfrequency);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                              _("Green Ph_aseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.redangle, 0, 360.0, 1, 15, 2,
-                              TRUE, 0, 0,
-                              _("Phase angle, range 0-360"),
-                              NULL);
+  entry_phase_gs = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.redangle, 0, 360.0, 1, 15, 2,
+			  TRUE, 0, 0,
+			  _("Phase angle, range 0-360"),
+			  NULL);
   label_phase_gs = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenangle);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                              _("Blue Freq_uency:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.bluefrequency, 0, 20.0, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              _("Number of cycles covering full value range"),
-			      NULL);
+  entry_freq_bl = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.bluefrequency, 0, 20.0, 0.1, 1, 2,
+			  TRUE, 0, 0,
+			  _("Number of cycles covering full value range"),
+			  NULL);
   label_freq_bl = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.bluefrequency);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                              _("Blue Pha_seshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              wvals.blueangle, 0, 360.0, 1, 15, 2,
-                              TRUE, 0, 0,
-                              _("Phase angle, range 0-360"),
-                              NULL);
+  entry_phase_bl = adj =
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
+			  wvals.blueangle, 0, 360.0, 1, 15, 2,
+			  TRUE, 0, 0,
+			  _("Phase angle, range 0-360"),
+			  NULL);
   label_phase_bl = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -499,12 +536,8 @@ alienmap2_dialog (void)
   gtk_box_pack_start (GTK_BOX (toggle_vbox), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  toggle_modify_rh = toggle = gtk_check_button_new_with_mnemonic (NULL);
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
   gtk_widget_show (toggle);
 
@@ -512,18 +545,8 @@ alienmap2_dialog (void)
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.redmode);
 
-  label_modify_rh = gtk_label_new_with_mnemonic (_("_Modify Red Channel"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label_modify_rh), toggle);
-  gtk_box_pack_start (GTK_BOX (hbox), label_modify_rh, FALSE, FALSE, 0);
-  gtk_widget_show (label_modify_rh);
-
-
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  toggle_modify_gs = toggle = gtk_check_button_new_with_mnemonic (NULL);
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
   gtk_widget_show (toggle);
 
@@ -531,18 +554,8 @@ alienmap2_dialog (void)
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.greenmode);
 
-  label_modify_gs = gtk_label_new_with_mnemonic (_("Mo_dify Green Channel"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label_modify_gs), toggle);
-  gtk_box_pack_start (GTK_BOX (hbox), label_modify_gs, FALSE, FALSE, 0);
-  gtk_widget_show (label_modify_gs);
-
-
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  toggle_modify_bl = toggle = gtk_check_button_new_with_mnemonic (NULL);
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
   gtk_widget_show (toggle);
 
@@ -550,18 +563,16 @@ alienmap2_dialog (void)
                     G_CALLBACK (alienmap2_toggle_update),
                     &wvals.bluemode);
 
-  label_modify_bl = gtk_label_new_with_mnemonic (_("Mod_ify Blue Channel"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label_modify_bl), toggle);
-  gtk_box_pack_start (GTK_BOX (hbox), label_modify_bl, FALSE, FALSE, 0);
-  gtk_widget_show (label_modify_bl);
-
   gtk_widget_show (frame);
-
   gtk_widget_show (dialog);
+
+  alienmap2_get_label_size ();
+  alienmap2_set_labels ();
+  alienmap2_set_sensitive ();
+
   dialog_update_preview ();
 
   gtk_main ();
-  gdk_flush ();
 
   return wint.run;
 }
@@ -578,7 +589,7 @@ dialog_scale_update (GtkAdjustment *adjustment,
 {
   gimp_double_adjustment_update (adjustment, value);
 
-  dialog_update_preview ();
+  dialog_update_preview();
 }
 
 static void
@@ -603,6 +614,8 @@ alienmap2_toggle_update (GtkWidget *widget,
 {
   gimp_toggle_button_update (widget, data);
 
+  alienmap2_set_sensitive ();
+
   dialog_update_preview ();
 }
 
@@ -610,55 +623,70 @@ static void
 alienmap2_radio_update (GtkWidget *widget,
                         gpointer   data)
 {
-  gint option;
-
   gimp_radio_button_update (widget, data);
 
-  option = *((gint *) data);
-
-  if (option == RGB_MODEL)
-    {
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_rh),
-                                        _("Red _Frequency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_gs),
-                                        _("Green Fr_equency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_bl),
-                                        _("Blue Freq_uency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_rh),
-                                        _("Red _Phaseshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_gs),
-                                        _("Green Ph_aseshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_bl),
-                                        _("Blue Pha_seshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_rh),
-                                        _("_Modify Red Channel"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_gs),
-                                        _("Mo_dify Green Channel"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_bl),
-                                        _("Mod_ify Blue Channel"));
-    }
-  else
-    {
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_rh),
-                                        _("Hue _Frequency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_gs),
-                                        _("Saturation Fr_equency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_bl),
-                                        _("Luminosity Freq_uency:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_rh),
-                                        _("Hue _Phaseshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_gs),
-                                        _("Saturation Ph_aseshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_bl),
-                                        _("Luminosity Pha_seshift:"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_rh),
-                                        _("_Modify Hue Channel"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_gs),
-                                        _("Mo_dify Saturation Channel"));
-      gtk_label_set_text_with_mnemonic (GTK_LABEL (label_modify_bl),
-                                        _("Mod_ify Luminosity Channel"));
-    }
+  alienmap2_set_labels ();
 
   dialog_update_preview ();
 }
 
+
+static void
+alienmap2_set_sensitive (void)
+{
+  gimp_scale_entry_set_sensitive (entry_freq_rh,  wvals.redmode);
+  gimp_scale_entry_set_sensitive (entry_phase_rh, wvals.redmode);
+  gimp_scale_entry_set_sensitive (entry_freq_gs,  wvals.greenmode);
+  gimp_scale_entry_set_sensitive (entry_phase_gs, wvals.greenmode);
+  gimp_scale_entry_set_sensitive (entry_freq_bl,  wvals.bluemode);
+  gimp_scale_entry_set_sensitive (entry_phase_bl, wvals.bluemode);
+}
+
+
+static void
+alienmap2_set_labels (void)
+{
+  gint i = (wvals.colormodel == RGB_MODEL) ? 0 : 1;
+
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_rh), gettext (ctext[0][i]));
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_gs), gettext (ctext[1][i]));
+  gtk_button_set_label (GTK_BUTTON (toggle_modify_bl), gettext (ctext[2][i]));
+
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_rh),
+                                    gettext (etext[0][i]));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_gs),
+                                    gettext (etext[1][i]));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_bl),
+                                    gettext (etext[2][i]));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_rh),
+                                    gettext (etext[3][i]));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_gs),
+                                    gettext (etext[4][i]));
+  gtk_label_set_text_with_mnemonic (GTK_LABEL (label_phase_bl),
+                                    gettext (etext[5][i]));
+
+  gtk_widget_set_size_request (label_freq_rh, elabel_maxwidth, -1);
+}
+
+
+static void
+alienmap2_get_label_size (void)
+{
+  PangoLayout *layout;
+  gint         width;
+  gint         i, j;
+
+  elabel_maxwidth = 0;
+
+  for (i = 0; i < 6; i++)
+    for (j = 0; j < 2; j++)
+      {
+        gtk_label_set_text_with_mnemonic (GTK_LABEL (label_freq_rh),
+                                          gettext (etext[i][j]));
+        layout = gtk_label_get_layout (GTK_LABEL (label_freq_rh));
+        pango_layout_get_pixel_size (layout, &width, NULL);
+
+        if (width > elabel_maxwidth)
+          elabel_maxwidth = width;
+      }
+}
