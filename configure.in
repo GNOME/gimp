@@ -867,7 +867,6 @@ devel-docs/libgimpbase/Makefile
 devel-docs/libgimpcolor/Makefile
 devel-docs/libgimpmath/Makefile
 devel-docs/libgimpwidgets/Makefile
-devel-docs/pdb/Makefile
 docs/Makefile
 pixmaps/Makefile
 data/Makefile
