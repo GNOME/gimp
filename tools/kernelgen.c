@@ -1,11 +1,11 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * kernel_gen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org>
- *    Simple hack to create subsampling kernels for the brushes
- *    as used in app/paint_core.c.
- *    If you want to play with it, change some of the #defines at the
- *    top and copy the output to apps/tools/paint_core_kernels.h.
+ * kernelgen -- Copyright (C) 2000 Sven Neumann <sven@gimp.org>
+ *
+ *    Simple hack to create brush subsampling kernels.  If you want to
+ *    play with it, change some of the #defines at the top and copy
+ *    the output to app/paint/gimppaintcore-kernels.h.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
