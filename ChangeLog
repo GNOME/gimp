@@ -1,3 +1,10 @@
+2003-01-01  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/menus.c (image_entries): changed some menu entries as
+	suggested in bug #101974.
+
+	* app/display/gimpdisplayshell.c: changed accordingly. 
+
 2003-01-01  Hans Breuer  <hans@breuer.org>
 
 	* libgimpbase/gimpdatafiles.c : when checking for

@@ -1232,26 +1232,27 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   SET_SENSITIVE ("/View/Navigation Window...", gdisp);
   SET_SENSITIVE ("/View/Display Filters...",   gdisp);
 
-  SET_SENSITIVE ("/View/Toggle Selection",      gdisp);
-  SET_ACTIVE    ("/View/Toggle Selection",      gdisp && ! shell->select->hidden);
-  SET_SENSITIVE ("/View/Toggle Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Toggle Layer Boundary", gdisp && ! shell->select->layer_hidden);
+  SET_SENSITIVE ("/View/Show Selection",      gdisp);
+  SET_ACTIVE    ("/View/Show Selection",      gdisp && ! shell->select->hidden);
+  SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
+  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && ! shell->select->layer_hidden);
 
-  SET_SENSITIVE ("/View/Toggle Guides",  gdisp);
-  SET_ACTIVE    ("/View/Toggle Guides",  gdisp && gdisp->draw_guides);
+  SET_SENSITIVE ("/View/Show Guides",  gdisp);
+  SET_ACTIVE    ("/View/Show Guides",  gdisp && gdisp->draw_guides);
   SET_SENSITIVE ("/View/Snap to Guides", gdisp);
   SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
 
-  SET_SENSITIVE ("/View/Toggle Menubar", gdisp);
-  SET_ACTIVE    ("/View/Toggle Menubar",
-                 gdisp && GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget));
+  SET_SENSITIVE ("/View/Show Menubar", gdisp);
+  SET_ACTIVE    ("/View/Show Menubar",
+                 gdisp &&
+		 GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget));
 
-  SET_SENSITIVE ("/View/Toggle Rulers", gdisp);
-  SET_ACTIVE    ("/View/Toggle Rulers",
+  SET_SENSITIVE ("/View/Show Rulers", gdisp);
+  SET_ACTIVE    ("/View/Show Rulers",
                  gdisp && GTK_WIDGET_VISIBLE (shell->hrule));
 
-  SET_SENSITIVE ("/View/Toggle Statusbar", gdisp);
-  SET_ACTIVE    ("/View/Toggle Statusbar",
+  SET_SENSITIVE ("/View/Show Statusbar", gdisp);
+  SET_ACTIVE    ("/View/Show Statusbar",
                  gdisp && GTK_WIDGET_VISIBLE (shell->statusbar));
 
   SET_SENSITIVE ("/View/New View",    gdisp);
