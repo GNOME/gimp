@@ -4,3 +4,5 @@ Makefile.in
 .libs
 *.lo
 libappconfig.la
+test-config
+foorc

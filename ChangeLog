@@ -1,5 +1,27 @@
 2001-12-09  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: check for pkg.m4.
+	
+	* configure.in: removed logic to extract GLIB CFLAGS and LDFLAGS 
+	from the GTK CFLAGS and LDFLAGS. Use AM_PATH_GLIB_2_0() instead. 
+	This change will break things on awfully misconfigured systems.
+	Simplified the checks and moved version numbers to the top to ease
+	maintainance. Check if gtk-doc is suffiently new.
+
+	* app/main.c: removed the GimpConfig test code.
+
+	* app/config/Makefile.am
+	* app/config/test-config.c: added a (yet very small) standalone test 
+	suite for GimpConfig.
+
+	* app/config/gimpconfig.[ch] 
+	* app/config/gimpconfig-deserialize.[ch]: allow to specify if
+	unknown tokens should be stored or should cause a parser error. 
+	Changed code to store unknown tokens to use a list since a hash 
+	table seems to be overkill here.
+
+2001-12-09  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-params.[ch]
 	* app/config/gimpconfig-types.[ch]: added new param_spec 
 	GIMP_PARAM_PATH with value_type GIMP_PATH_TYPE.

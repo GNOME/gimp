@@ -30,15 +30,18 @@
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
 
-#define GIMP_CONFIG_UNKNOWN_TOKENS "gimp-config-unknown-tokens"
 
+/* 
+ * The GimpConfig serialization and deserialization interface.
+ */
 
 static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
 
 static void      gimp_config_iface_serialize    (GObject  *object,
                                                  FILE     *file);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
-                                                 GScanner *scanner);
+                                                 GScanner *scanner,
+                                                 gboolean  store_unknown);
 
 
 GType
@@ -83,9 +86,12 @@ gimp_config_iface_serialize (GObject *object,
 
 static gboolean
 gimp_config_iface_deserialize (GObject  *object,
-                               GScanner *scanner)
+                               GScanner *scanner,
+                               gboolean  store_unknown)
 {
-  return gimp_config_deserialize_properties (object, scanner);
+  return gimp_config_deserialize_properties (object, 
+                                             scanner, 
+                                             store_unknown);
 }
 
 gboolean
@@ -116,7 +122,8 @@ gimp_config_serialize (GObject     *object,
 
 gboolean
 gimp_config_deserialize (GObject     *object,
-                         const gchar *filename)
+                         const gchar *filename,
+                         gboolean     store_unknown)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
@@ -143,7 +150,7 @@ gimp_config_deserialize (GObject     *object,
   g_scanner_input_file (scanner, fd);
   scanner->input_name = filename;
 
-  success = gimp_config_iface->deserialize (object, scanner);
+  success = gimp_config_iface->deserialize (object, scanner, store_unknown);
 
   g_scanner_destroy (scanner);
   close (fd);
@@ -151,80 +158,135 @@ gimp_config_deserialize (GObject     *object,
   return success;
 }
 
-void
-gimp_config_add_unknown_token (GObject *object,
-                               gchar   *key,
-                               gchar   *value)
+
+/* 
+ * Code to store and lookup unknown tokens (string key/value pairs).
+ */
+
+#define GIMP_CONFIG_UNKNOWN_TOKENS "gimp-config-unknown-tokens"
+
+typedef struct
 {
-  GHashTable *unknown_tokens;
+  gchar *key;
+  gchar *value;
+} GimpConfigToken;
+
+static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
+
+
+void
+gimp_config_add_unknown_token (GObject     *object,
+                               const gchar *key,
+                               const gchar *value)
+{
+  GimpConfigToken *token;
+  GSList          *unknown_tokens;
+  GSList          *last;
+  GSList          *list;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (key != NULL);
   g_return_if_fail (value != NULL);
 
-  unknown_tokens = 
-    (GHashTable *) g_object_get_data (object, GIMP_CONFIG_UNKNOWN_TOKENS);
+  unknown_tokens = (GSList *) g_object_get_data (object, 
+                                                 GIMP_CONFIG_UNKNOWN_TOKENS);
 
-  if (!unknown_tokens)
+  for (last = NULL, list = unknown_tokens; 
+       list; 
+       last = list, list = g_slist_next (list))
     {
-      unknown_tokens = g_hash_table_new_full (g_str_hash, g_str_equal, 
-                                              g_free, g_free);
-      g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
-                              unknown_tokens, 
-                              (GDestroyNotify) g_hash_table_destroy);
+      token = (GimpConfigToken *) list->data;
+
+      if (strcmp (token->key, key) == 0)
+        {
+          /* FIXME: should we emit a warning here ?? */
+          g_free (token->value);
+          token->value = g_strdup (value);
+          return;
+        }
     }
 
-  g_hash_table_replace (unknown_tokens, key, value);
+  token = g_new (GimpConfigToken, 1);
+  token->key   = g_strdup (key);
+  token->value = g_strdup (value); 
+
+  if (last)
+    {
+      g_slist_append (last, token);
+    }
+  else
+    {
+      unknown_tokens = g_slist_append (NULL, token);
+ 
+      g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
+                              unknown_tokens, 
+             (GDestroyNotify) gimp_config_destroy_unknown_tokens);
+    }
 }
 
 const gchar *
 gimp_config_lookup_unknown_token (GObject     *object,
                                   const gchar *key)
 {
-  GHashTable *unknown_tokens;
+  GimpConfigToken *token;
+  GSList          *unknown_tokens;
+  GSList          *list;
 
   g_return_val_if_fail (G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (key != NULL, NULL);
   
-  unknown_tokens = 
-    (GHashTable *) g_object_get_data (object, GIMP_CONFIG_UNKNOWN_TOKENS);
+  unknown_tokens = (GSList *) g_object_get_data (object, 
+                                                 GIMP_CONFIG_UNKNOWN_TOKENS);
   
-  if (!unknown_tokens)
-    return NULL;
+  for (list = unknown_tokens; list; list = g_slist_next (list))
+    {
+      token = (GimpConfigToken *) list->data;
 
-  return (const gchar *) g_hash_table_lookup (unknown_tokens, key);
+      if (strcmp (token->key, key) == 0)
+        return token->value;
+    }
+
+  return NULL;
 }
 
-/* for debugging only */
-
 void
-gimp_config_debug_notify_callback (GObject    *object,
-                                   GParamSpec *pspec)
+gimp_config_foreach_unknown_token (GObject               *object,
+                                   GimpConfigForeachFunc  func,
+                                   gpointer               user_data)
 {
+  GimpConfigToken *token;
+  GSList          *unknown_tokens;
+  GSList          *list;
+
   g_return_if_fail (G_IS_OBJECT (object));
-  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+  g_return_if_fail (func != NULL);
+  
+  unknown_tokens = (GSList *) g_object_get_data (object, 
+                                                 GIMP_CONFIG_UNKNOWN_TOKENS);
 
-  if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
+  for (list = unknown_tokens; list; list = g_slist_next (list))
     {
-      GValue  src  = { 0, };
-      GValue  dest = { 0, };
+      token = (GimpConfigToken *) list->data;
+      
+      func (token->key, token->value, user_data);
+    }  
+}
 
-      g_value_init (&src,  pspec->value_type);
-      g_object_get_property (object, pspec->name, &src);
 
-      g_value_init (&dest, G_TYPE_STRING);      
-      g_value_transform (&src, &dest);
+static void
+gimp_config_destroy_unknown_tokens (GSList *unknown_tokens)
+{
+  GimpConfigToken *token;
+  GSList          *list;
 
-      g_print ("%s::%s -> %s\n", 
-               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name, 
-               g_value_get_string (&dest));
-
-      g_value_unset (&src);
-      g_value_unset (&dest);
-    }
-  else
+  for (list = unknown_tokens; list; list = g_slist_next (list))
     {
-      g_print ("%s: %s changed\n", 
-               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name);
+      token = (GimpConfigToken *) list->data;
+      
+      g_free (token->key);
+      g_free (token->value);
+      g_free (token);
     }
+  
+  g_slist_free (unknown_tokens);
 }

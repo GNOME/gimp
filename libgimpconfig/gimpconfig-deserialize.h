@@ -24,7 +24,8 @@
 
 
 gboolean gimp_config_deserialize_properties (GObject  *object,
-                                             GScanner *scanner);
+                                             GScanner *scanner,
+                                             gboolean  store_unknown_tokens);
 
 
 #endif /* __GIMP_CONFIG_DESERIALIZE_H__ */

@@ -29,3 +29,14 @@ INCLUDES = @STRIP_BEGIN@ 		\
 	$(GLIB_CFLAGS)			\
 	-I$(includedir)			\
 @STRIP_END@
+
+#
+# test programs, not to be installed
+#
+noinst_PROGRAMS = test-config
+
+test_config_DEPENDENCIES = \
+	libappconfig.a		\
+        ../base/libappbase.a
+
+test_config_LDADD = $(GLIB_LIBS) $(test_config_DEPENDENCIES)

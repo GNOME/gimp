@@ -91,7 +91,7 @@ esac
 if test -z "$ACLOCAL_FLAGS"; then
 
         acdir=`aclocal --print-ac-dir`
-        m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4"
+        m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 pkg.m4"
 
         for file in $m4list
         do

@@ -64,7 +64,8 @@ static GTokenType  gimp_config_deserialize_any         (GValue     *value,
 
 gboolean
 gimp_config_deserialize_properties (GObject  *object,
-                                    GScanner *scanner)
+                                    GScanner *scanner,
+                                    gboolean  store_unknown_tokens)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -102,11 +103,9 @@ gimp_config_deserialize_properties (GObject  *object,
     {
       next = g_scanner_peek_next_token (scanner);
 
-      /* if we expected a symbol, but got an identifier,
-         try parsing it with gimp_config_deserialize_unknown */
-
       if (next != token &&
-         ! (token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
+         ! (store_unknown_tokens &&
+            token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
         {
           break;
         }
@@ -165,8 +164,9 @@ gimp_config_deserialize_unknown (GObject  *object,
 
   g_scanner_get_next_token (scanner);
   
-  gimp_config_add_unknown_token (object, 
-                                 key, g_strdup (scanner->value.v_string));
+  gimp_config_add_unknown_token (object, key, scanner->value.v_string);
+
+  g_free (key);
  
   return G_TOKEN_RIGHT_PAREN;
 }

@@ -37,8 +37,13 @@ struct _GimpConfigInterface
   void     (* serialize)   (GObject  *object,
                             FILE     *fd);
   gboolean (* deserialize) (GObject  *object,
-                            GScanner *scanner);
+                            GScanner *scanner,
+                            gboolean  store_unknown);
 };
+
+typedef void  (*GimpConfigForeachFunc) (const gchar *key,
+                                        const gchar *value,
+                                        gpointer     user_data);
 
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
@@ -46,17 +51,17 @@ GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 gboolean      gimp_config_serialize             (GObject     *object,
                                                  const gchar *filename);
 gboolean      gimp_config_deserialize           (GObject     *object,
-                                                 const gchar *filename);
+                                                 const gchar *filename,
+                                                 gboolean     store_unknown);
 
 void          gimp_config_add_unknown_token     (GObject     *object,
-                                                 gchar       *key,
-                                                 gchar       *value);
+                                                 const gchar *key,
+                                                 const gchar *value);
 const gchar * gimp_config_lookup_unknown_token  (GObject     *object,
                                                  const gchar *key);
-
-/* for debugging only */
-void          gimp_config_debug_notify_callback (GObject     *object,
-                                                 GParamSpec  *pspec);
+void          gimp_config_foreach_unknown_token (GObject     *object,
+                                                 GimpConfigForeachFunc  func,
+                                                 gpointer     user_data);
 
 
 #endif  /* __GIMP_CONFIG_H__ */
