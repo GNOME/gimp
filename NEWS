@@ -1,3 +1,12 @@
+Overview of Changes in GIMP 1.2.6
+=================================
+- Fixes to the PSD, JPEG, PS, GIF and screenshot plug-ins.
+- Some bug fixes in the core.
+- Changed AM_PATH_GIMP (from gimp.m4) to use gimptool-1.2.
+
+Contributors: Adam D. Moss, Tor Lillqvist, Manish Singh, Sven Neumann
+
+
 Overview of Changes in GIMP 1.2.5
 =================================
 
@@ -12,6 +21,7 @@ Overview of Changes in GIMP 1.2.5
 Contributors: Sven Neumann, Raphael Quinet, Tor Lillqvist, Pedro
 Gimeno, Maurits Rijk, Henning Makholm and several others listed in the
 ChangeLog file.
+
 
 Overview of Changes in GIMP 1.2.4
 =================================
@@ -55,6 +65,7 @@ Contributors: Sven Neumann, Manish Singh, Tor Lilliqvist, Dave Neary,
 Raphael Quinet, Michael Natterer, Pedro Gimeno, Garry R. Osgood and
 several others listed in the ChangeLog file.
 
+
 Overview of Changes in GIMP 1.2.3
 =================================
 
@@ -80,6 +91,7 @@ Overview of Changes in GIMP 1.2.3
 Contributors: Sven Neumann, Tor Lillqvist, Manish Singh, Abel Cheung,
 Raphael Quinet, Daniel Egger, Nick Lamb and many others.
 
+
 Overview of Changes in GIMP 1.2.1 and 1.2.2
 ===========================================
 
@@ -90,6 +102,7 @@ ChangeLog file for details.
 Contributors: Sven Neumann, Michael Natterer, Stanislav Brabec, Manish
 Singh, Tor Lillqvist, Iccii, Daniel Egger, Martin Weber, Peter
 Kirchgessner, Austin Donnelly, Simon Budig and many others.
+
 
 Overview of Changes in GIMP 1.2.0 and older versions
 ====================================================
