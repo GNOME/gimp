@@ -434,7 +434,7 @@ load_rsvg_pixbuf (const gchar  *filename,
 
   handle = rsvg_handle_new ();
 
-  rsvg_handle_set_dpi (handle, vals->resolution);
+  rsvg_handle_set_dpi_x_y (handle, vals->resolution, vals->resolution);
   rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
 
   while (success && status != G_IO_STATUS_EOF)
@@ -530,7 +530,7 @@ load_rsvg_size (const gchar  *filename,
 
   handle = rsvg_handle_new ();
 
-  rsvg_handle_set_dpi (handle, vals->resolution);
+  rsvg_handle_set_dpi_x_y (handle, vals->resolution, vals->resolution);
   rsvg_handle_set_size_callback (handle, load_get_size_callback, vals, NULL);
 
   while (success && status != G_IO_STATUS_EOF && vals->resolution > 0.0)

@@ -1,3 +1,9 @@
+2005-03-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* configure.in: raise required librsvg version to 2.8.0
+	* plug-ins/common/svg.c: change deprecated librsvg api,
+	fixes bug #147662.
+	
 2005-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/sparkle.c
