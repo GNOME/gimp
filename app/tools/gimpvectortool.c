@@ -228,7 +228,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->sel_anchor     = NULL;
   vector_tool->sel_stroke     = NULL;
 
-  vector_tool->saved_mode     = GIMP_VECTOR_MODE_CREATE;
+  vector_tool->saved_mode     = GIMP_VECTOR_MODE_DESIGN;
 }
 
 
@@ -820,7 +820,7 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
 
       if (state & INSDEL_MASK)
         {
-          button_mode = GIMP_VECTOR_MODE_ADJUST;
+          button_mode = GIMP_VECTOR_MODE_EDIT;
         }
       else if (state & MOVE_MASK)
         {
@@ -900,7 +900,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
 
   switch (options->edit_mode)
     {
-    case GIMP_VECTOR_MODE_CREATE:
+    case GIMP_VECTOR_MODE_DESIGN:
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
           if (on_vectors)
@@ -970,7 +970,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
 
       break;
 
-    case GIMP_VECTOR_MODE_ADJUST:
+    case GIMP_VECTOR_MODE_EDIT:
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
           if (on_vectors)

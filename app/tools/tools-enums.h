@@ -110,9 +110,9 @@ GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_VECTOR_MODE_CREATE,      /*< desc="Extend Stroke/Move Nodes" >*/
-  GIMP_VECTOR_MODE_ADJUST,      /*< desc="Insert/Delete Nodes"      >*/
-  GIMP_VECTOR_MODE_MOVE,        /*< desc="Move Stroke/Path"         >*/
+  GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
+  GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
+  GIMP_VECTOR_MODE_MOVE,        /*< desc="Move"   >*/
 } GimpVectorMode;
 
 

@@ -70,9 +70,9 @@ gimp_transform_type_get_type (void)
 
 static const GEnumValue gimp_vector_mode_enum_values[] =
 {
-  { GIMP_VECTOR_MODE_CREATE, N_("Extend Stroke/Move Nodes"), "create" },
-  { GIMP_VECTOR_MODE_ADJUST, N_("Insert/Delete Nodes"), "adjust" },
-  { GIMP_VECTOR_MODE_MOVE, N_("Move Stroke/Path"), "move" },
+  { GIMP_VECTOR_MODE_DESIGN, N_("Design"), "design" },
+  { GIMP_VECTOR_MODE_EDIT, N_("Edit"), "edit" },
+  { GIMP_VECTOR_MODE_MOVE, N_("Move"), "move" },
   { 0, NULL, NULL }
 };
 

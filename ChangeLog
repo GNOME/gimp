@@ -1,3 +1,18 @@
+2003-09-18  Simon Budig  <simon@gimp.org>
+
+	* app/tools/tools-enums.h: Renamed the modes of the vector tools:
+	    - Design  (creative stuff: placing of new anchors /
+	                               moving anchors/segments)
+	    - Edit    (technical stuff: inserting/deleting anchors/segments)
+	    - Move    (moving strokes/vectors)
+	
+	Jimmac: These need icons...  :-)
+
+	* app/tools/tools-enums.c: regenerated
+
+	* app/tools/gimpvectoroptions.c
+	* app/tools/gimpvectortool.c: changed accordingly.
+
 2003-09-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/Makefile.am

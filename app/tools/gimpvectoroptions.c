@@ -104,7 +104,7 @@ gimp_vector_options_class_init (GimpVectorOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_VECTORS_EDIT_MODE,
                                  "vectors-edit-mode", NULL,
                                  GIMP_TYPE_VECTOR_MODE,
-                                 GIMP_VECTOR_MODE_CREATE,
+                                 GIMP_VECTOR_MODE_DESIGN,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VECTORS_POLYGONAL,
