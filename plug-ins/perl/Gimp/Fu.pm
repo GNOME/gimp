@@ -80,6 +80,7 @@ sub PF_BRUSH	() { PARAM_END+6	};
 sub PF_PATTERN	() { PARAM_END+7	};
 sub PF_GRADIENT	() { PARAM_END+8	};
 sub PF_RADIO	() { PARAM_END+9	};
+sub PF_CUSTOM	() { PARAM_END+10	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
@@ -103,6 +104,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
          &PF_SPINNER	=> 'integer',
          &PF_ADJUSTMENT	=> 'integer',
          &PF_RADIO	=> 'string',
+         &PF_CUSTOM	=> 'string',
          &PF_IMAGE	=> 'NYI',
          &PF_LAYER	=> 'NYI',
          &PF_CHANNEL	=> 'NYI',
@@ -113,7 +115,7 @@ sub Gimp::RUN_FULLINTERACTIVE (){ Gimp::RUN_INTERACTIVE+100 };	# you don't want 
             PF_STRING PF_COLOR PF_COLOUR PF_TOGGLE PF_IMAGE
             PF_DRAWABLE PF_FONT PF_LAYER PF_CHANNEL PF_BOOL
             PF_SLIDER PF_INT PF_SPINNER PF_ADJUSTMENT
-            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO);
+            PF_BRUSH PF_PATTERN PF_GRADIENT PF_RADIO PF_CUSTOM);
 
 @EXPORT = (qw(register main),@_params);
 @EXPORT_OK = qw(interact $run_mode save_image);
@@ -313,7 +315,7 @@ sub interact($$$@) {
            my $res;
            $a=new Gtk::HBox (0,5);
            my $b=new Gtk::OptionMenu;
-           $b->set_menu(new Gimp::UI::ImageMenu(sub {1},-1,$res));
+           $b->set_menu(new Gimp::UI::ImageMenu(sub {1},-1,\$res));
            $a->pack_start ($b,1,1,0);
            push(@setvals,sub{});
            push(@getvals,sub{$res});
@@ -328,21 +330,21 @@ sub interact($$$@) {
         } elsif($type == PF_LAYER) {
            my $res;
            $a=new Gtk::OptionMenu;
-           $a->set_menu(new Gimp::UI::LayerMenu(sub {1},-1,$res));
+           $a->set_menu(new Gimp::UI::LayerMenu(sub {1},-1,\$res));
            push(@setvals,sub{});
            push(@getvals,sub{$res});
            
         } elsif($type == PF_CHANNEL) {
            my $res;
            $a=new Gtk::OptionMenu;
-           $a->set_menu(new Gimp::UI::ChannelMenu(sub {1},-1,$res));
+           $a->set_menu(new Gimp::UI::ChannelMenu(sub {1},-1,\$res));
            push(@setvals,sub{});
            push(@getvals,sub{$res});
            
         } elsif($type == PF_DRAWABLE) {
-           my $res;
+           my $res=13;
            $a=new Gtk::OptionMenu;
-           $a->set_menu(new Gimp::UI::DrawableMenu(sub {1},-1,$res));
+           $a->set_menu(new Gimp::UI::DrawableMenu(sub {1},-1,\$res));
            push(@setvals,sub{});
            push(@getvals,sub{$res});
            
@@ -372,6 +374,11 @@ sub interact($$$@) {
               push(@setvals,sub{$a->set('active',$default)});
               push(@getvals,sub{$a->get('active')});
            }
+           
+        } elsif($type == PF_CUSTOM) {
+           $a=$extra->[0];
+           push(@setvals,$extra->[1]);
+           push(@getvals,$extra->[2]);
            
         } else {
            $label="Unsupported argumenttype $type";
@@ -472,6 +479,7 @@ sub string2pf($$) {
       || $type==PF_FONT
       || $type==PF_PATTERN
       || $type==PF_BRUSH
+      || $type==PF_CUSTOM
       || $type==PF_RADIO	# for now! #d#
       || $type==PF_GRADIENT) {
       $s;
@@ -588,6 +596,7 @@ sub query {
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_BRUSH;
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_PATTERN;
                                       $_->[0]=PARAM_STRING	if $_->[0] == PF_GRADIENT;
+                                      $_->[0]=PARAM_STRING	if $_->[0] == PF_CUSTOM;
                                       $_;
                                    } @$params],
                                    $results);
@@ -761,6 +770,24 @@ In older Gimp-Versions a user-supplied string is returned.
 
 Lets the user select a brush/pattern/gradient whose name is returned as a
 string. The default brush/pattern/gradient-name can be preset.
+
+=item PF_CUSTOM
+
+PF_CUSTOM is for those of you requiring some non-standard-widget. Just supply an array reference
+with three elements as extra argument:
+
+ [widget, settor, gettor]
+
+C<widget> is Gtk widget that should be used.
+
+C<settor> is a function that takes a single argument, the new value for
+the widget (the widget should be updated accordingly).
+
+C<gettor> is a function that should return the current value of the widget.
+
+While the values can be of any type (as long as it fits into a scalar),
+you should be prepared to get a string when the script is started from the
+commandline.
 
 =back
 

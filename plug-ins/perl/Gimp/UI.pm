@@ -23,10 +23,10 @@ reimplement all of it in perl.
 
 =over 4
 
- $option_menu = new Gimp::UI::ImageMenu;
- $option_menu = new Gimp::UI::LayerMenu;
- $option_menu = new Gimp::UI::ChannelMenu;
- $option_menu = new Gimp::UI::DrawableMenu;
+ $option_menu = new Gimp::UI::ImageMenu
+ $option_menu = new Gimp::UI::LayerMenu
+ $option_menu = new Gimp::UI::ChannelMenu
+ $option_menu = new Gimp::UI::DrawableMenu (constraint_func, active_element, \var);
  
  $button = new Gimp::UI::PatternSelect;
  $button = new Gimp::UI::BrushSelect;
@@ -67,24 +67,24 @@ sub Gimp::UI::DrawableMenu::_items {
 }
 
 sub new($$$$) {
-   my($class,$constraint,$active)=@_;
+   my($class,$constraint,$active,$var)=@_;
    my(@items)=$class->_items;
    my $menu = new Gtk::Menu;
    for(@items) {
       my($constraints,$result,$name)=@$_;
       next unless $constraint->(@{$constraints});
       my $item = new Gtk::MenuItem $name;
-      $item->show;
-      $item->signal_connect(activate => sub { $_[3]=$result });
+      $item->signal_connect(activate => sub { $$var=$result });
       $menu->append($item);
    }
    if (@items) {
-      $_[3]=$items[0]->[1];
+      $$var=$items[0]->[1];
    } else {
       my $item = new Gtk::MenuItem "(none)";
-      $item->show;
       $menu->append($item);
+      $$var=undef;
    }
+   $menu->show_all;
    $menu;
 }
 

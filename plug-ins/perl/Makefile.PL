@@ -1,4 +1,4 @@
-require 5.004_04;
+require 5.004;
 
 use ExtUtils::MakeMaker;
 use Config;
