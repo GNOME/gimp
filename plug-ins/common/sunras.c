@@ -437,7 +437,7 @@ load_image (char *filename)
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_strdup_printf (temp, _("Loading %s:"), filename);
+    temp = g_strdup_printf (_("Loading %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -1727,7 +1727,7 @@ show_message (char *message)
   if (l_run_mode == RUN_INTERACTIVE)
     gimp_message (message);
   else
-    fprintf (stderr, _("sunras: %s\n"), message);
+    fprintf (stderr, "sunras: %s\n", message);
 }
 
 static int 

@@ -99,9 +99,9 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
                long *offs_x, long *offs_y)
 {
   static t_arr_arg  argv[4];
-  gint  cnt;
-  char *title;
-  char  hline[100];
+  gint   cnt;
+  gchar *title;
+  gchar *hline;
   gint   l_width;
   gint   l_height;
   gint   l_rc;
@@ -142,7 +142,7 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   {
     case ASIZ_CROP:
       title = _("Crop AnimFrames (all)");
-      sprintf(hline, _("Crop (original %dx%d)"), l_width, l_height);
+      hline = g_strdup_printf (_("Crop (original %dx%d)"), l_width, l_height);
       argv[0].int_max   = l_width;
       argv[0].constraint = TRUE;
       argv[1].int_max   = l_height;
@@ -153,14 +153,14 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
       break;
     case ASIZ_RESIZE:
       title = _("Resize AnimFrames (all)");
-      sprintf(hline, _("Resize (original %dx%d)"), l_width, l_height);
+      hline = g_strdup_printf (_("Resize (original %dx%d)"), l_width, l_height);
       argv[2].int_min    = -l_width;
       argv[3].int_min    = -l_height;
      cnt = 4;
       break;
     default:
       title = _("Scale AnimFrames (all)");
-      sprintf(hline, _("Scale (original %dx%d)"), l_width, l_height);
+      hline = g_strdup_printf (_("Scale (original %dx%d)"), l_width, l_height);
       cnt = 2;
       break;
   }
@@ -175,7 +175,8 @@ p_anim_sizechange_dialog(t_anim_info *ainfo_ptr, t_gap_asiz asiz_mode,
   if(asiz_mode == ASIZ_CROP)
   {
     l_rc = p_array_dialog(title, hline, cnt, argv);
-
+    g_free (hline);
+    
       *size_x = (long)(argv[0].int_ret);
       *size_y = (long)(argv[1].int_ret);
       *offs_x = (long)(argv[2].int_ret);
@@ -1432,16 +1433,17 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
   gint       l_nlayers;
   gint32    *l_layers_list;
   gdouble    l_percentage, l_percentage_step;  
-  static  char l_buff[50];
-  int          l_rc;
+  gchar     *l_buff;
+  int        l_rc;
   
 
   l_rc = 0;
   l_percentage = 0.0;  
   if(ainfo_ptr->run_mode == RUN_INTERACTIVE)
   {
-    sprintf(l_buff, _("Removing Layer (pos:%ld) from Frames .."), position); 
+    l_buff = g_strdup_printf (_("Removing Layer (pos:%ld) from Frames .."), position); 
     gimp_progress_init(l_buff);
+    g_free (l_buff);
   }
  
 

@@ -218,13 +218,13 @@ static long
 p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char *extension, gint len_ext)
 {
   static t_arr_arg  argv[4];
-  char   buf[128];
+  gchar   *buf;
   
-  sprintf(buf, _("%s\n%s\n(%s_0001.%s)\n"),
-          _("Make a frame (diskfile) from each Layer"),
-          _("frames are named: base_nr.extension"),
-           ainfo_ptr->basename, extension);
- 
+  buf = g_strdup_printf (_("%s\n%s\n(%s_0001.%s)\n"),
+			 _("Make a frame (diskfile) from each Layer"),
+			 _("frames are named: base_nr.extension"),
+			 ainfo_ptr->basename, extension);
+  
   p_init_arr_arg(&argv[0], WGT_LABEL);
   argv[0].label_txt = &buf[0];
 
@@ -248,13 +248,15 @@ p_split_dialog(t_anim_info *ainfo_ptr, gint *inverse_order, gint *no_alpha, char
                                  _("Split Settings :"), 
                                   4, argv))
   {
-       *inverse_order = argv[2].int_ret;
-       *no_alpha      = argv[3].int_ret;
-       return 0;
+    g_free (buf);
+    *inverse_order = argv[2].int_ret;
+    *no_alpha      = argv[3].int_ret;
+    return 0;
   }
   else
   {
-     return -1;
+    g_free (buf);
+    return -1;
   }
 }		/* end p_split_dialog */
 

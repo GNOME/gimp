@@ -277,7 +277,7 @@ doit (GDrawable * drawable)
   bytes = drawable->bpp;
 
   if (3 != bytes && 4 != bytes) {
-    fprintf(stderr, _("only works with three or four channels, not %d.\n"), bytes);
+    fprintf(stderr, "only works with three or four channels, not %d.\n", bytes);
     return;
   }
 

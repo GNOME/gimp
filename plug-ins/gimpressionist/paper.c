@@ -71,7 +71,7 @@ void selectpaper(GtkWidget *wg, GtkWidget *p)
 
   gtk_label_get(GTK_LABEL(GTK_BIN(tmpw)->child), &l);
 
-  sprintf(fname, _("Paper/%s"), l);
+  sprintf(fname, "Paper/%s", l);
   strcpy(pcvals.selectedpaper, fname);
   updatepaperprev(fname);
 }
@@ -84,17 +84,14 @@ void create_paperpage(GtkNotebook *notebook)
   GtkWidget *labelbox, *menubox;
   GtkWidget *scrolled_win, *list;
   GtkWidget *tmpw;
-  char title[100];
-
-  sprintf(title, _("Paper"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Paper"));
   gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(labelbox);
 
   menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Paper"));
   gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(menubox);
 

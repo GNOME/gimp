@@ -86,7 +86,7 @@ static void charmap_init(CharMap *cm)
 	GtkWidget *button;
 	guint x, y, i;
 	gchar clabel[2];
-	gchar tip[20];
+	gchar *tip;
 	GtkTooltips *tooltips;
 
 	cm->width = 8;
@@ -113,8 +113,9 @@ static void charmap_init(CharMap *cm)
 			gtk_signal_connect_after(GTK_OBJECT(button), "toggled",
 				GTK_SIGNAL_FUNC(on_charmap_char_toggled), cm);
 		  gtk_widget_show(button);
-			sprintf(tip, _("Char: %c, %d, 0x%02x"), i < 32 ? ' ' : i, i, i);
+			tip = g_strdup_printf (_("Char: %c, %d, 0x%02x"), i < 32 ? ' ' : i, i, i);
 			gtk_tooltips_set_tip(tooltips, button, tip, NULL);
+			g_free (tip);
 		}
 }
 

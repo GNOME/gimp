@@ -45,18 +45,15 @@ void create_colorpage(GtkNotebook *notebook)
   GtkWidget *box0, *box1, *box2, *box3, *thispage;
   GtkWidget *labelbox, *menubox;
   GtkWidget *tmpw;
-  char title[100];
   int i;
 
-  sprintf(title, _("Color"));
-
   labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Color"));
   gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(labelbox);
 
   menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Color"));
   gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(menubox);
 

@@ -206,7 +206,7 @@ static void do_zcrop(GDrawable *drawable, gint32 image_id)
   if (((livingcols==0) || (livingrows==0)) ||
       ((livingcols==width) && (livingrows==height)))
     {
-      printf(_("ZealousCrop(tm): Nothing to be done.\n"));
+      printf("ZealousCrop(tm): Nothing to be done.\n");
       return;
     }
 

@@ -129,17 +129,14 @@ void create_generalpage(GtkNotebook *notebook)
   GtkWidget *box1, *box2, *box3, *box4, *thispage;
   GtkWidget *labelbox, *menubox;
   GtkWidget *tmpw, *colbutton;
-  char title[100];
-
-  sprintf(title, _("General"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("General"));
   gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(labelbox);
 
   menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("General"));
   gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(menubox);
 

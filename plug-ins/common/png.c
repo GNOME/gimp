@@ -390,7 +390,7 @@ load_image (char *filename)	/* I - File to load */
   if (strrchr(filename, '/') != NULL)
     progress = g_strdup_printf (_("Loading %s:"), strrchr(filename, '/') + 1);
   else
-    progress = g_strdup_printf (progress, _("Loading %s:"), filename);
+    progress = g_strdup_printf (_("Loading %s:"), filename);
 
   gimp_progress_init(progress);
   g_free (progress);

@@ -435,7 +435,7 @@ void
 edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj, 
 			   gboolean add)
 {
-   char title[64];
+   gchar *title;
 
    object_unlock(dialog->obj);
    object_lock(obj);
@@ -455,9 +455,10 @@ edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
    dialog->geometry_cb_id = 
       object_list_add_geometry_cb(obj->list, geometry_changed, dialog);
 
-   sprintf(title, _("Area #%d Settings"), 
-	   object_get_position_in_list(obj) + 1);
+   title = g_strdup_printf (_("Area #%d Settings"), 
+			    object_get_position_in_list(obj) + 1);
    default_dialog_set_title(dialog->dialog, title);
+   g_free (title);
    default_dialog_show(dialog->dialog);
 }
 

@@ -152,8 +152,8 @@ indexed_norma(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf(_("normalize: cmap was NULL!  Quitting...\n"));
-      gimp_quit();
+      printf ("normalize: cmap was NULL!  Quitting...\n");
+      return;
     }
 
   for (i=0;i<ncols;i++)

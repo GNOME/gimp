@@ -273,7 +273,7 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID, drawable_ID;
   int compose_by_drawable;
-  char msg[256];
+  gchar *msg;
 
   INIT_I18N_UI ();
 
@@ -302,9 +302,10 @@ run (char    *name,
         layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
         if ((layer_list == NULL) || (nlayers <= 0))
         {
-          sprintf (msg, "compose: Could not get layers for image %d",
-                   (int)param[1].data.d_int32);
+	  msg = g_strdup_printf (_("compose: Could not get layers for image %d"),
+				 (int)param[1].data.d_int32);
           show_message (msg);
+	  g_free (msg);
           return;
         }
         drawable_ID = layer_list[0];
@@ -418,7 +419,7 @@ compose (char   *compose_type,
 	  if (   (width != (int)gimp_drawable_width (compose_ID[j]))
 		 || (height != (int)gimp_drawable_height (compose_ID[j])))
 	    {
-	      show_message ("compose: drawables have different size");
+	      show_message (_("Compose: Drawables have different size"));
 	      return -1;
 	    }
 	}
@@ -435,7 +436,7 @@ compose (char   *compose_type,
 	  if (   (width != (int)gimp_image_width (compose_ID[j]))
 		 || (height != (int)gimp_image_height (compose_ID[j])))
 	    {
-	      show_message ("compose: images have different size");
+	      show_message (_("Compose: Images have different size"));
 	      return -1;
 	    }
 	}
@@ -448,7 +449,7 @@ compose (char   *compose_type,
 	g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
 	if ((g32 == NULL) || (num_layers <= 0))
 	  {
-	    show_message ("compose: error in getting layer IDs");
+	    show_message (_("Compose: Error in getting layer IDs"));
 	    return (-1);
 	  }
 	
@@ -464,11 +465,13 @@ compose (char   *compose_type,
       /* Check bytes per pixel */
       incr_src[j] = drawable_src[j]->bpp;
       if ((incr_src[j] != 1) && (incr_src[j] != 2))
-	{char msg[256];
-	sprintf (msg, _("compose: image is not a gray image (bpp=%d)"),
-		 incr_src[j]);
-	show_message (msg);
-	return (-1);
+	{
+	  gchar *msg;
+	  g_strdup_printf (_("Compose: Image is not a gray image (bpp=%d)"), 
+			   incr_src[j]);
+	  show_message (msg);
+	  g_free (msg);
+	  return (-1);
 	}
       
       /* Get pixel region */
@@ -478,11 +481,6 @@ compose (char   *compose_type,
       /* Get memory for retrieving information */
       src[j] = (unsigned char *)g_malloc (tile_height * width
 					  * drawable_src[j]->bpp);
-      if (src[j] == NULL)
-	{
-	  show_message (_("compose: not enough memory"));
-	  return (-1);
-	}
     }
   
   /* Create new image */
@@ -492,13 +490,6 @@ compose (char   *compose_type,
 				   width, height, gdtype_dst,
 				   &layer_ID_dst, &drawable_dst, &pixel_rgn_dst);
   dst = (unsigned char *)g_malloc (tile_height * width * drawable_dst->bpp);
-  if (dst == NULL)
-    {
-      for (j = 0; j < num_images; j++) 
-	g_free (src[j]);
-      show_message (_("compose: not enough memory"));
-      return (-1);
-    }
   
   /* Do the composition */
   i = 0;

@@ -109,8 +109,8 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
                       char *step_backup_file, gint len_step_backup_file,
 		      gint32 layer_idx)
 {
-  char *l_env;
-  char  l_msg[512];
+  gchar *l_env;
+  gchar *l_msg;
   static t_but_arg  l_but_argv[3];
   gint              l_but_argc;
   gint              l_argc;
@@ -150,17 +150,19 @@ static gint p_pitstop(GRunModeType run_mode, char *plugin_name, gint text_flag,
       }
       if(text_flag == 0)
       {
-         sprintf(l_msg, _("2.nd call of %s\n(define end-settings)"), plugin_name);
+         l_msg = g_strdup_printf (_("2.nd call of %s\n(define end-settings)"), plugin_name);
       }
       else
       {
-         sprintf(l_msg, _("Non-Interactive call of %s\n(for all layers inbetween)"), plugin_name);
+         l_msg = g_strdup_printf (_("Non-Interactive call of %s\n(for all layers inbetween)"), plugin_name);
          l_but_argc = 3;
          l_argc = 1;
       }
       l_continue = p_array_std_dialog (_("Animated Filter apply"), l_msg,
                                        l_argc,     l_argv, 
                                        l_but_argc, l_but_argv, 0);
+      g_free (l_msg);
+      
       if(l_continue < 0) return -1;
       else               return l_continue;
       
@@ -188,7 +190,7 @@ static void p_visibilty_restore(gint32 image_id, gint nlayers, int *visible_tab,
       }
       else
       {
-        printf( _("Error: Plugin %s has changed Nr. of layers from %d to %d\ncould not restore Layer visibilty.\n"),
+        printf ("Error: Plugin %s has changed Nr. of layers from %d to %d\ncould not restore Layer visibilty.\n",
                 plugin_name, (int)nlayers, (int)l_nlayers2);
       }
 
@@ -204,12 +206,12 @@ static gint32 p_get_indexed_layerid(gint32 image_id, gint *nlayers, gint32 idx, 
   l_layers_list = gimp_image_get_layers(image_id, &l_nlayers2);
   if(l_layers_list == NULL)
   {
-      printf( _("Warning: cant get layers (maybe the image was closed)\n"));
+      printf ("Warning: cant get layers (maybe the image was closed)\n");
       return -1;
   }
   if((l_nlayers2 != *nlayers) && (*nlayers > 0))
   {
-     printf( _("Error: Plugin %s has changed Nr. of layers from %d to %d\nAnim Filter apply stopped.\n"), 
+     printf ("Error: Plugin %s has changed Nr. of layers from %d to %d\nAnim Filter apply stopped.\n", 
             plugin_name, (int)*nlayers, (int)l_nlayers2);
       return -1;
   }
@@ -260,7 +262,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   l_rc = p_procedure_available(plugin_name, PTYP_CAN_OPERATE_ON_DRAWABLE);
   if(l_rc < 0)
   {
-     fprintf(stderr, _("ERROR: Plugin not available or wrong type %s\n"), plugin_name);
+     fprintf(stderr, "ERROR: Plugin not available or wrong type %s\n", plugin_name);
      return -1;
   }
 
@@ -279,7 +281,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
   {
     if(l_nlayers < 1)
     {
-       fprintf(stderr, _("ERROR: need at 1 Layers to apply plugin !\n"));
+       fprintf(stderr, "ERROR: need at least 1 Layers to apply plugin !\n");
     }
     else
     {
@@ -309,7 +311,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
         l_child_pid = 0; /* fork(); */
         if(l_child_pid < 0)
         {
-           fprintf(stderr, _("ERROR: fork failed !\n"));
+           fprintf(stderr, "ERROR: fork failed !\n");
            return -1;
         }
 
@@ -497,7 +499,7 @@ int p_foreach_multilayer(GRunModeType run_mode, gint32 image_id,
              /* check if to save each step to backup file */	  
 	     if((l_step_backup_file[0] != '\0') && (l_step_backup_file[0] != ' '))
 	     {
-	       printf( _("Saving image to backupfile:%s step = %d\n"),
+	       printf ("Saving image to backupfile:%s step = %d\n",
 	               l_step_backup_file, (int)l_idx);
 	       p_save_xcf(image_id, l_step_backup_file);
 	     }

@@ -672,7 +672,7 @@ pair_flt_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
        if((*arr_ptr->flt_format != '%') 
        || (arr_ptr->flt_format[strlen(arr_ptr->flt_format) -1] != 'f'))
        {
-          printf( _("pair_flt_create_value: Bad FloatFormat ignored %s\n"), arr_ptr->flt_format);
+          printf( "pair_flt_create_value: Bad FloatFormat ignored %s\n", arr_ptr->flt_format);
           arr_ptr->flt_format = "%0.2f";
        }
     }
@@ -825,7 +825,7 @@ pair_int_create_value(t_pair *pair, char *title, GtkTable *table, int row, t_arr
        if((*arr_ptr->int_format != '%') 
        || (arr_ptr->int_format[strlen(arr_ptr->int_format) -1] != 'd'))
        {
-          printf( _("pair_int_create_value: Bad IntFormat ignored %s\n"), arr_ptr->int_format);
+          printf ("pair_int_create_value: Bad IntFormat ignored %s\n", arr_ptr->int_format);
           arr_ptr->int_format = "%d";
        }
     }
@@ -1056,10 +1056,10 @@ gint p_array_std_dialog(char *title_txt,
             label_create_value(l_label_txt, GTK_TABLE(table), (l_idx + 1),  arr_ptr);
             break;
          case WGT_ACT_BUTTON:
-            printf( _("WGT_ACT_BUTTON not implemented yet, widget type ignored\n"));
+            printf ("WGT_ACT_BUTTON not implemented yet, widget type ignored\n");
             break;
          default:     /* undefined widget type */
-            printf( _("Unknown widget type %d ignored\n"), arr_ptr->widget_type);
+            printf ("Unknown widget type %d ignored\n", arr_ptr->widget_type);
             break;
 
        }   /* end switch */

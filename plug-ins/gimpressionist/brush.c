@@ -81,7 +81,7 @@ void brushdmenuselect(gint32 id, gpointer data)
 
   rowstride = p->width * 3;
 
-  src_row = (guchar *)safemalloc((x2 - x1) * bpp);
+  src_row = g_new (guchar, (x2 - x1) * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, x2-x1, y2-y1, FALSE, FALSE);
  
@@ -131,7 +131,7 @@ void brushdmenuselect(gint32 id, gpointer data)
       }
     }  
   }  
-  free(src_row);
+  g_free (src_row);
 
   if(bpp >= 3) pcvals.colorbrushes = 1;
   else pcvals.colorbrushes = 0;
@@ -346,17 +346,14 @@ void create_brushpage(GtkNotebook *notebook)
   GtkWidget *scrolled_win, *list;
   GtkWidget *tmpw;
   GtkWidget *dmenu;
-  char title[100];
-
-  sprintf(title, "Brush");
 
   labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Brush"));
   gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(labelbox);
 
   menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Brush"));
   gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(menubox);
 

@@ -801,6 +801,7 @@ ReadImage (FILE *fd,
   gint v;
   gint i, j;
   gchar *framename;
+  gchar *framename_ptr;
   gboolean alpha_frame = FALSE;
   int nreturn_vals;
   static int previous_disposal;
@@ -894,15 +895,30 @@ ReadImage (FILE *fd,
 
       switch (previous_disposal)
 	{
-	case 0x00: break; /* 'don't care' */
-	case 0x01: framename = g_strconcat (framename, _(" (combine)"), NULL); break;
-	case 0x02: framename = g_strconcat (framename, _(" (replace)"), NULL); break;
-	case 0x03: framename = g_strconcat (framename, _(" (combine)"), NULL); break;
+	case 0x00: 
+	  break; /* 'don't care' */
+	case 0x01: 
+	  framename_ptr = framename;
+	  framename = g_strconcat (framename, " (combine)", NULL);
+	  g_free (framename_ptr);
+	  break;
+	case 0x02: 
+	  framename_ptr = framename;
+	  framename = g_strconcat (framename, " (replace)", NULL); 
+	  g_free (framename_ptr);
+	  break;
+	case 0x03: 
+	  framename_ptr = framename;
+	  framename = g_strconcat (framename, " (combine)", NULL); 
+	  g_free (framename_ptr);
+	  break;
 	case 0x04:
 	case 0x05:
 	case 0x06:
 	case 0x07:
-	  framename = g_strconcat (framename, _(" (unknown disposal)"), NULL);
+	  framename_ptr = framename;
+	  framename = g_strconcat (framename, " (unknown disposal)", NULL);
+	  g_free (framename_ptr);
 	  g_message ("GIF: Hmm... please forward this GIF to the "
 		     "GIF plugin author!\n  (adam@foxbox.org)\n");
 	  break;

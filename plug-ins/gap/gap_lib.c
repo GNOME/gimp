@@ -1790,9 +1790,9 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
   int rc;
   t_anim_info *ainfo_ptr;
 
-  long           l_dest;
-  char           l_hline[50];
-  char           l_title[50];
+  long            l_dest;
+  gchar          *l_hline;
+  gchar          *l_title;
 
   rc = -1;
   ainfo_ptr = p_alloc_ainfo(image_id, run_mode);
@@ -1804,18 +1804,21 @@ int gap_goto(GRunModeType run_mode, gint32 image_id, int nr)
 
       if(run_mode == RUN_INTERACTIVE)
       {
-        sprintf(l_title, _("Goto Frame (%ld/%ld)")
-                , ainfo_ptr->curr_frame_nr
-                , ainfo_ptr->frame_cnt);
-        sprintf(l_hline, _("Destination Frame Number (%ld  - %ld)")
-                , ainfo_ptr->first_frame_nr
-                , ainfo_ptr->last_frame_nr);
+        l_title = g_strdup_printf (_("Goto Frame (%ld/%ld)")
+				   , ainfo_ptr->curr_frame_nr
+				   , ainfo_ptr->frame_cnt);
+        l_hline =  g_strdup_printf (_("Destination Frame Number (%ld  - %ld)")
+				    , ainfo_ptr->first_frame_nr
+				    , ainfo_ptr->last_frame_nr);
 
         l_dest = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
                 , ainfo_ptr->first_frame_nr
                 , ainfo_ptr->last_frame_nr
                 , ainfo_ptr->curr_frame_nr
                 , TRUE);
+
+	g_free (l_title);
+	g_free (l_hline);
                 
         if(l_dest < 0)
         {
@@ -1856,8 +1859,8 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
 
   long           l_cnt;
   long           l_max;
-  char           l_hline[50];
-  char           l_title[50];
+  gchar         *l_hline;
+  gchar         *l_title;
 
   rc = -1;
   ainfo_ptr = p_alloc_ainfo(image_id, run_mode);
@@ -1869,11 +1872,11 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
       
       if(run_mode == RUN_INTERACTIVE)
       {
-        sprintf(l_title, _("Delete Frames (%ld/%ld)")
-                , ainfo_ptr->curr_frame_nr
-                , ainfo_ptr->frame_cnt);
-        sprintf(l_hline, _("Delete Frames from %ld to (Number)")
-                , ainfo_ptr->curr_frame_nr);
+        l_title = g_strdup_printf (_("Delete Frames (%ld/%ld)")
+				   , ainfo_ptr->curr_frame_nr
+				   , ainfo_ptr->frame_cnt);
+        l_hline = g_strdup_printf (_("Delete Frames from %ld to (Number)")
+				   , ainfo_ptr->curr_frame_nr);
 
         l_max = ainfo_ptr->last_frame_nr;
         if(l_max == ainfo_ptr->curr_frame_nr)
@@ -1891,6 +1894,9 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
               , ainfo_ptr->curr_frame_nr
               , TRUE);
                 
+	g_free (l_title);
+	g_free (l_hline);
+	
         if(l_cnt >= 0)
         {
            l_cnt = 1 + l_cnt - ainfo_ptr->curr_frame_nr;
@@ -1930,11 +1936,11 @@ int gap_del(GRunModeType run_mode, gint32 image_id, int nr)
 int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
 {
   static t_arr_arg  argv[3];
-  char           l_title[50];
+  gchar            *l_title;
 
-  sprintf(l_title, _("Duplicate Frames (%ld/%ld)")
-          , ainfo_ptr->curr_frame_nr
-          , ainfo_ptr->frame_cnt);
+  l_title = g_strdup_printf (_("Duplicate Frames (%ld/%ld)")
+			     , ainfo_ptr->curr_frame_nr
+			     , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
   argv[0].label_txt = _("From :");
@@ -1961,13 +1967,16 @@ int p_dup_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[2].help_txt  = _("Copy selected Range n-times  \n(you may type in Values > 99)");
   
   if(TRUE == p_array_dialog(l_title, _("Duplicate Framerange"),  3, argv))
-  {   *range_from = (long)(argv[0].int_ret);
-      *range_to   = (long)(argv[1].int_ret);
+  { 
+    g_free (l_title);
+    *range_from = (long)(argv[0].int_ret);
+    *range_to   = (long)(argv[1].int_ret);
        return (int)(argv[2].int_ret);
   }
   else
   {
-     return -1;
+    g_free (l_title);
+    return -1;
   }
    
 
@@ -2039,8 +2048,7 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
 
   long           l_dest;
   long           l_initial;
-  char           l_hline[50];
-  char           l_title[50];
+  gchar         *l_title;
 
   rc = -1;
   l_initial = 1;
@@ -2061,16 +2069,16 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
          {
            l_initial = ainfo_ptr->last_frame_nr; 
          }
-         sprintf(l_title, _("Exchange current Frame (%ld)")
-                 , ainfo_ptr->curr_frame_nr);
-         sprintf(l_hline, _("With Frame (Number)"));
+         l_title = g_strdup_printf (_("Exchange current Frame (%ld)")
+				    , ainfo_ptr->curr_frame_nr);
 
-         l_dest = p_slider_dialog(l_title, l_hline, _("Number :"), NULL
-              , ainfo_ptr->first_frame_nr 
-              , ainfo_ptr->last_frame_nr
-              , l_initial
-              , TRUE);
-                
+         l_dest = p_slider_dialog(l_title, _("With Frame (Number)"), _("Number :"), NULL
+				  , ainfo_ptr->first_frame_nr 
+				  , ainfo_ptr->last_frame_nr
+				  , l_initial
+				  , TRUE);
+	 g_free (l_title);
+				  
          if(0 != p_chk_framechange(ainfo_ptr))
          {
             l_dest = -1;
@@ -2103,11 +2111,11 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr)
 int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
 {
   static t_arr_arg  argv[3];
-  char           l_title[50];
+  gchar            *l_title;
 
-  sprintf(l_title, _("Framesequence Shift (%ld/%ld)")
-          , ainfo_ptr->curr_frame_nr
-          , ainfo_ptr->frame_cnt);
+  l_title = g_strdup_printf (_("Framesequence Shift (%ld/%ld)")
+			     , ainfo_ptr->curr_frame_nr
+			     , ainfo_ptr->frame_cnt);
 
   p_init_arr_arg(&argv[0], WGT_INT_PAIR);
   argv[0].label_txt = _("From :");
@@ -2134,13 +2142,16 @@ int p_shift_dialog(t_anim_info *ainfo_ptr, long *range_from, long *range_to)
   argv[2].help_txt  = _("Renumber the affected framesequence     \n(numbers are shifted in circle by N)");
   
   if(TRUE == p_array_dialog(l_title, _("Framesequence shift"),  3, argv))
-  {   *range_from = (long)(argv[0].int_ret);
-      *range_to   = (long)(argv[1].int_ret);
-       return (int)(argv[2].int_ret);
+  { 
+    g_free (l_title);
+    *range_from = (long)(argv[0].int_ret);
+    *range_to   = (long)(argv[1].int_ret);
+    return (int)(argv[2].int_ret);
   }
   else
   {
-     return 0;
+    g_free (l_title);
+    return 0;
   }
    
 

@@ -50,7 +50,7 @@ int loadoldpreset(char *fname)
 
   f = fopen(fname, "rb");
   if(!f) {
-    fprintf(stderr, _("Error opening file \"%s\" for reading!%c\n"), fname, 7);
+    fprintf(stderr, "Error opening file \"%s\" for reading!%c\n", fname, 7);
     return -1;
   }
   len = fread(&pcvals, 1, sizeof(pcvals), f);
@@ -260,7 +260,7 @@ int loadpreset(char *fn)
 
   f = fopen(fn, "rt");
   if(!f) {
-    fprintf(stderr, _("Error opening file \"%s\" for reading!\n"), fn);
+    fprintf(stderr, "Error opening file \"%s\" for reading!\n", fn);
     return -1;
   }
   fgets(line,10,f);
@@ -425,7 +425,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   storevals();
 
   if(!thispath) {
-    fprintf(stderr, _("Internal error: (savepreset) thispath == NULL"));
+    fprintf(stderr, "Internal error: (savepreset) thispath == NULL");
     return;
   }
 
@@ -433,7 +433,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
 
   f = fopen(fname, "wt");
   if(!f) {
-    fprintf(stderr, _("Error opening file \"%s\" for writing!%c\n"), fname, 7);
+    fprintf(stderr, "Error opening file \"%s\" for writing!%c\n", fname, 7);
     return;
   }
   fprintf(f, "%s\n", PRESETMAGIC);
@@ -567,20 +567,16 @@ void create_presetpage(GtkNotebook *notebook)
   GtkWidget *labelbox, *menubox;
   GtkWidget *scrolled_win, *list;
   GtkWidget *tmpw;
-  char title[100];
-
-  sprintf(title, _("Presets"));
 
   labelbox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new (_("Presets"));
   gtk_box_pack_start(GTK_BOX(labelbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(labelbox);
 
   menubox = gtk_hbox_new (FALSE, 0);
-  tmpw = gtk_label_new(title);
+  tmpw = gtk_label_new ( _("Presets"));
   gtk_box_pack_start(GTK_BOX(menubox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show_all(menubox);
-
 
   presetlist = list = gtk_list_new ();
 

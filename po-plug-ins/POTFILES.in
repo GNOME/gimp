@@ -119,7 +119,6 @@ plug-ins/gimpressionist/orientation.c
 plug-ins/gimpressionist/orientmap.c
 plug-ins/gimpressionist/paper.c
 plug-ins/gimpressionist/placement.c
-plug-ins/gimpressionist/ppmtool.c
 plug-ins/gimpressionist/presets.c
 plug-ins/gimpressionist/preview.c
 plug-ins/gimpressionist/repaint.c

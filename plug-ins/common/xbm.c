@@ -710,7 +710,7 @@ not_bw_dialog (void)
 
   if (!gtk_initialized)
     {
-      fprintf (stderr, _("XBM: can only save two color indexed images\n"));
+      fprintf (stderr, "XBM: can only save two color indexed images\n");
       return;
     }
 

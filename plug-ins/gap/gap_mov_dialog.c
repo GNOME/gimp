@@ -89,6 +89,8 @@ extern      int gap_debug; /* ==0  ... dont print debug infos */
 		       GDK_BUTTON1_MOTION_MASK
 
 
+#define LABEL_LENGTH 32
+
 typedef struct {
   gint run;
 } t_mov_interface;
@@ -121,12 +123,12 @@ typedef struct
   GtkAdjustment *opacity_adj;
   GtkEntry      *rotation_ent;
   GtkAdjustment *rotation_adj;
-  char           X_Label[20];
-  char           Y_Label[20];
-  char           Opacity_Label[30];
-  char           Wresize_Label[30];
-  char           Hresize_Label[30];
-  char           Rotation_Label[30];
+  char           X_Label[LABEL_LENGTH];
+  char           Y_Label[LABEL_LENGTH];
+  char           Opacity_Label[LABEL_LENGTH];
+  char           Wresize_Label[LABEL_LENGTH];
+  char           Hresize_Label[LABEL_LENGTH];
+  char           Rotation_Label[LABEL_LENGTH];
   GtkWidget     *X_LabelPtr;
   GtkWidget     *Y_LabelPtr;
   GtkWidget     *Opacity_LabelPtr;
@@ -1078,13 +1080,13 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
 }
 
 void p_update_point_labels(t_mov_path_preview *path_ptr)
-{
-  sprintf(&path_ptr->X_Label[0], _("X [%d]: "), pvals->point_idx + 1);
-  sprintf(&path_ptr->Y_Label[0], _("Y [%d]: "), pvals->point_idx + 1);
-  sprintf(&path_ptr->Opacity_Label[0], _("Opacity [%d]: "), pvals->point_idx + 1);
-  sprintf(&path_ptr->Wresize_Label[0], _("Width [%d]: "), pvals->point_idx + 1);
-  sprintf(&path_ptr->Hresize_Label[0], _("Height [%d]: "), pvals->point_idx + 1);
-  sprintf(&path_ptr->Rotation_Label[0], _("Rotate deg[%d]: "), pvals->point_idx + 1);
+{ 
+  snprintf(&path_ptr->X_Label[0], LABEL_LENGTH, _("X [%d]: "), pvals->point_idx + 1);
+  snprintf(&path_ptr->Y_Label[0], LABEL_LENGTH, _("Y [%d]: "), pvals->point_idx + 1);
+  snprintf(&path_ptr->Opacity_Label[0], LABEL_LENGTH, _("Opacity [%d]: "), pvals->point_idx + 1);
+  snprintf(&path_ptr->Wresize_Label[0], LABEL_LENGTH, _("Width [%d]: "), pvals->point_idx + 1);
+  snprintf(&path_ptr->Hresize_Label[0], LABEL_LENGTH, _("Height [%d]: "), pvals->point_idx + 1);
+  snprintf(&path_ptr->Rotation_Label[0], LABEL_LENGTH, _("Rotate deg[%d]: "), pvals->point_idx + 1);
 
 
   if(NULL != path_ptr->X_LabelPtr)

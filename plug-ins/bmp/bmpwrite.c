@@ -168,8 +168,7 @@ WriteBMP (char   *filename,
   
   if (interactive_bmp)
     {
-      temp_buf = g_malloc (strlen (filename) + 11);
-      sprintf (temp_buf, _("Saving %s:"), filename);
+      temp_buf = g_strdup_printf (_("Saving %s:"), filename);
       gimp_progress_init (temp_buf);
       g_free (temp_buf);
     }

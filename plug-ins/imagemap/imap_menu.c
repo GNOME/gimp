@@ -234,14 +234,15 @@ make_file_menu(GtkWidget *menu_bar)
 static void
 command_list_changed(Command_t *command, gpointer data)
 {
-   char scratch[64];
+   gchar *scratch;
 
    /* Set undo entry */
    if (_menu.undo)
       gtk_widget_destroy(_menu.undo);
-   sprintf(scratch, _("Undo %s"), (command) ? command->name : "");
+   scratch = g_strdup_printf (_("Undo %s"), (command) ? command->name : "");
    _menu.undo = insert_item_with_label(_menu.edit_menu, 1, scratch,
 				       menu_command, &_menu.cmd_undo);
+   g_free (scratch);
    add_accelerator(_menu.undo, 'Z', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(_menu.undo, (command != NULL));
 
@@ -249,9 +250,10 @@ command_list_changed(Command_t *command, gpointer data)
    command = command_list_get_redo_command();
    if (_menu.redo)
       gtk_widget_destroy(_menu.redo);
-   sprintf(scratch, _("Redo %s"), (command) ? command->name : "");
+   scratch = g_strdup_printf (_("Redo %s"), (command) ? command->name : "");
    _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
 				       menu_command, &_menu.cmd_redo);
+   g_free (scratch);
    add_accelerator(_menu.redo, 'R', GDK_CONTROL_MASK);
    gtk_widget_set_sensitive(_menu.redo, (command != NULL));
 }

@@ -13,7 +13,6 @@
 #include <math.h>
 #include "ppmtool.h"
 #include "gimpressionist.h"
-#include <libgimp/stdplugins-intl.h>
 
 int readline(FILE *f, char *buffer, int len)
 {
@@ -32,16 +31,6 @@ void fatal(char *s)
 {
   fprintf(stderr, "%s\n", s);
   exit(1);
-}
-
-void *safemalloc(int len)
-{
-  void *p = g_malloc(len);
-  if(!p) {
-    fprintf(stderr, _("(When allocating %u bytes.)\n"), len);
-    fatal( _("Out of memory!\n"));
-  }
-  return p;
 }
 
 void killppm(struct ppm *p)
@@ -64,7 +53,7 @@ void newppm(struct ppm *p, int xs, int ys)
 
   p->width = xs;
   p->height = ys;
-  p->col = safemalloc(xs * 3 * ys);
+  p->col = g_malloc(xs * 3 * ys);
   for(x = 0; x < xs * 3 * ys; x += 3) {
     p->col[x+0] = bgcol[0];
     p->col[x+1] = bgcol[1];
@@ -212,7 +201,7 @@ void loadgbr(char *fn, struct ppm *p)
   if(p->col) killppm(p);
 
   if(!f) {
-    fprintf(stderr, _("loadgbr: Unable to open file \"%s\"!\n"), fn);
+    fprintf(stderr, "loadgbr: Unable to open file \"%s\"!\n", fn);
     newppm(p, 10,10);
     return;
   }
@@ -224,7 +213,7 @@ void loadgbr(char *fn, struct ppm *p)
 
   newppm(p, hdr.width, hdr.height);
 
-  ptr = safemalloc(hdr.width);
+  ptr = g_malloc(hdr.width);
   fseek(f, hdr.header_size, SEEK_SET);
   for(y = 0; y < p->height; y++) {
     fread(ptr, p->width, 1, f);
@@ -254,7 +243,7 @@ void loadppm(char *fn, struct ppm *p)
   if(p->col) killppm(p);
 
   if(!f) {
-    fprintf(stderr, _("loadppm: Unable to open file \"%s\"!\n"), fn);
+    fprintf(stderr, "loadppm: Unable to open file \"%s\"!\n", fn);
     newppm(p, 10,10);
     return;
     /* fatal("Aborting!"); */
@@ -264,7 +253,7 @@ void loadppm(char *fn, struct ppm *p)
   if(strcmp(line, "P6")) {
     if(strcmp(line, "P5")) {
       fclose(f);
-      printf( _("loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n"), fn, line, 7);
+      printf( "loadppm: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
       newppm(p, 10,10);
       return;
       /* fatal("Aborting!"); */
@@ -276,17 +265,17 @@ void loadppm(char *fn, struct ppm *p)
   p->height = atoi(strchr(line, ' ')+1);
   readline(f, line, 200);
   if(strcmp(line, "255")) {
-    printf( _("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n"), fn, line, 7);
+    printf ("loadppm: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n", fn, line, 7);
     newppm(p, 10,10);
     return;
     /* fatal("Aborting!"); */
   }
-  p->col = safemalloc(p->height * p->width * 3);
+  p->col = g_malloc(p->height * p->width * 3);
 
   if(!pgm) {
     fread(p->col, p->height * 3 * p->width, 1, f);
   } else {
-    guchar *tmpcol = safemalloc(p->width * p->height);
+    guchar *tmpcol = g_malloc(p->width * p->height);
     fread(tmpcol, p->height * p->width, 1, f);
     for(y = 0; y < p->width * p->height * 3; y++) {
       p->col[y] = tmpcol[y/3];
@@ -323,7 +312,7 @@ void copyppm(struct ppm *s, struct ppm *p)
     killppm(p);
   p->width = s->width;
   p->height = s->height;
-  p->col = safemalloc(p->width * 3 * p->height);
+  p->col = g_malloc(p->width * 3 * p->height);
   memcpy(p->col, s->col, p->width * 3 * p->height);
 }
 

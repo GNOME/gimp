@@ -139,7 +139,7 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
   }
 
   if(!brlist) {
-    fprintf(stderr, _("What!? No brushes?!\n"));
+    fprintf(stderr, "What!? No brushes?!\n");
     return 0;
   }
 
@@ -279,7 +279,7 @@ void repaint(struct ppm *p, struct ppm *a)
   /* Shouldn't be necessary, but... */
   if(img_has_alpha)
     if((p->width != a->width) || (p->height != a->height)) {
-      fprintf(stderr, _("Huh? Image size != alpha size?\n"));
+      fprintf(stderr, "Huh? Image size != alpha size?\n");
       return;
     }
 
@@ -295,11 +295,11 @@ void repaint(struct ppm *p, struct ppm *a)
 
   bgamma = runningvals.brushgamma;
 
-  brushes = safemalloc(numbrush * sizeof(struct ppm));
-  brushsum = safemalloc(numbrush * sizeof(double));
+  brushes = g_malloc (numbrush * sizeof(struct ppm));
+  brushsum = g_malloc (numbrush * sizeof(double));
 
   if(dropshadow)
-    shadows = safemalloc(numbrush * sizeof(struct ppm));
+    shadows = g_malloc (numbrush * sizeof(struct ppm));
   else
     shadows = NULL;
 
@@ -583,8 +583,8 @@ void repaint(struct ppm *p, struct ppm *a)
 
   if(runningvals.placetype == 1) {
     int j;
-    xpos = safemalloc(i * sizeof(int));
-    ypos = safemalloc(i * sizeof(int));
+    xpos = g_new (int, i);
+    ypos = g_new (int, i);
     for(j = 0; j < i; j++) {
       int factor = (int)(tmp.width * density / maxbrushwidth + 0.5);
       if(factor < 1) factor = 1;
@@ -664,7 +664,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 6: /* Adaptive */
       break; /* Handled below */
     default:
-      fprintf(stderr, _("Internal error; Unknown orientationtype\n"));
+      fprintf(stderr, "Internal error; Unknown orientationtype\n");
       on = 0;
       break;
     }
@@ -684,7 +684,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 6: /* Adaptive */
       break; /* Handled below */
     default:
-      fprintf(stderr, _("Internal error; Unknown sizetype\n"));
+      fprintf(stderr, "Internal error; Unknown sizetype\n");
       sn = 0;
       break;
     }
@@ -784,10 +784,16 @@ void repaint(struct ppm *p, struct ppm *a)
   for(i = 0; i < numbrush; i++) {
     killppm(&brushes[i]);
   }
-  free(brushes);
+  g_free(brushes);
   if(shadows)
-    free(shadows);
-  free(brushsum);
+    g_free(shadows);
+  g_free(brushsum);
+
+  if (xpos)
+    g_free (xpos);
+  if (ypos)
+    g_free (ypos);
+  
 
   if(runningvals.generalpaintedges) {
     crop(&tmp, maxbrushwidth, maxbrushheight, tmp.width - maxbrushwidth, tmp.height - maxbrushheight);

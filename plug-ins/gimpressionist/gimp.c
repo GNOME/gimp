@@ -214,7 +214,7 @@ void grabarea(void)
 
   rowstride = p->width * 3;
 
-  src_row = (guchar *)safemalloc((x2 - x1) * bpp);
+  src_row = g_new (guchar, (x2 - x1) * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, x2-x1, y2-y1, FALSE, FALSE);
 
@@ -268,7 +268,7 @@ void grabarea(void)
       }
     }
   }
-  free(src_row);
+  g_free (src_row);
 }
 
 void gimpressionist_main(void)
@@ -289,7 +289,7 @@ void gimpressionist_main(void)
   has_alpha = gimp_drawable_has_alpha (drawable->id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
 
-  dest_row = (guchar *)safemalloc((x2 - x1) * bpp);
+  dest_row = g_new (guchar, (x2 - x1) * bpp);
 
   gimp_progress_init( _("Painting..."));
 
@@ -370,7 +370,7 @@ void gimpressionist_main(void)
     }
   }
 
-  free(dest_row);
+  g_free (dest_row);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);

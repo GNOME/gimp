@@ -45,8 +45,7 @@ ReadBMP (char *name)
   
   if (interactive_bmp)
     {
-      temp_buf = g_malloc (strlen (name) + 11);
-      sprintf (temp_buf, _("Loading %s:"), name);
+      temp_buf = g_strdup_printf (_("Loading %s:"), name);
       gimp_progress_init (temp_buf);
       g_free (temp_buf);
     }

@@ -7,7 +7,6 @@ struct ppm {
 };
 
 void fatal(char *s);
-void *safemalloc(int len);
 void killppm(struct ppm *p);
 void newppm(struct ppm *p, int xs, int ys);
 void getrgb(struct ppm *s, float xo, float yo, unsigned char *d);

@@ -515,7 +515,7 @@ int p_mpeg2encode_gen_parfile(t_anim_info *ainfo_ptr, t_mpg_par *mp_ptr)
   l_fp = fopen(mp_ptr->parfile, "w");
   if(l_fp == NULL)
   {
-     fprintf(stderr, _("cant open MPEG Paramfile %s for write\n"), mp_ptr->parfile);
+     fprintf(stderr, "cant open MPEG Paramfile %s for write\n", mp_ptr->parfile);
      return -1;
   }
 
@@ -1007,7 +1007,7 @@ int gap_mpeg_encode(GRunModeType run_mode,
          }
          else
          {
-             printf ( _("sorry folks, NON_INTERACTIVE call .. not implemented yet\n"));
+             printf ("sorry folks, NON_INTERACTIVE call .. not implemented yet\n");
              l_rc = -1;
          }
 

@@ -78,8 +78,6 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
   static t_but_arg  b_argv[2];
   gint   l_rc;
 
-  static char   l_buf[MAX_LAYERNAME];
-
   /* Layer select modes */
   static char *sel_args[7]    = { N_("Pattern is equal to LayerName"),
                                   N_("Pattern is Start of LayerName"),
@@ -143,8 +141,6 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
 
   l_rc = -1;
   
-  sprintf(l_buf, _("Perform function on one or more Layer(s)\nin all frames of the selected framerange\n"));
-  
   /* the 3 Action Buttons */
     b_argv[0].but_txt  = _("OK");
     b_argv[0].but_val  = 0;
@@ -152,7 +148,7 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
     b_argv[1].but_val  = -1;
   
   p_init_arr_arg(&argv[0], WGT_LABEL);
-  argv[0].label_txt = &l_buf[0];
+  argv[0].label_txt = _("Perform function on one or more Layer(s)\nin all frames of the selected framerange\n");
 
   p_init_arr_arg(&argv[1], WGT_INT_PAIR);
   argv[1].constraint = TRUE;
@@ -249,8 +245,8 @@ int p_layer_modify_dialog(t_anim_info *ainfo_ptr,
 static gint
 p_pitstop_dialog(gint text_flag, char *filter_procname)
 {
-  char *l_env;
-  char  l_msg[512];
+  gchar *l_env;
+  gchar *l_msg;
   static t_but_arg  l_but_argv[2];
   gint              l_but_argc;
   gint              l_argc;
@@ -279,16 +275,17 @@ p_pitstop_dialog(gint text_flag, char *filter_procname)
   }
   if(text_flag == 0)
   {
-     sprintf(l_msg, _("2.nd call of %s\n(define end-settings)"), filter_procname);
+     l_msg = g_strdup_printf (_("2.nd call of %s\n(define end-settings)"), filter_procname);
   }
   else
   {
-     sprintf(l_msg, _("Non-Interactive call of %s\n(for all selected layers)"), filter_procname);
+     l_msg = g_strdup_printf ( _("Non-Interactive call of %s\n(for all selected layers)"), filter_procname);
   }
   l_continue = p_array_std_dialog ( _("Animated Filter apply"), l_msg,
   				   l_argc,     l_argv, 
   				   l_but_argc, l_but_argv, 0);
-
+  g_free (l_msg);
+  
   return (l_continue);
     
 }	/* end p_pitstop_dialog */

@@ -1,3 +1,50 @@
+Thu Dec 30 19:45:13 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/normalize.c
+	* plug-ins/common/png.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/zealouscrop.c
+	* plug-ins/fits/fits.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_filter_foreach.c
+	* plug-ins/gap/gap_lib.c
+	* plug-ins/gap/gap_mod_layer.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_mpege.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/gap/gap_split.c
+	* plug-ins/gdyntext/charmap.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/color.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/ppmtool.c
+	* plug-ins/gimpressionist/ppmtool.h
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/repaint.c
+	* plug-ins/gimpressionist/size.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_cmd_guides.c
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/print/print.c
+	* po-plug-ins/POTFILES.in
+	
+	Got rid of all occurences of sprintf together with gettext and removed
+	translation tags from console output.
+	
+	In a few places I also changed malloc to g_malloc and friends.
+
 Thu Dec 30 15:21:29 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: PDB interface patch

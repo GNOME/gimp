@@ -1104,26 +1104,25 @@ diff (GDrawable *drawable,
 
 
   /*  allocate row buffers for source & dest. data  */
-  /* P.S. Hey, what happens if malloc returns NULL, hmmm..? */
 
-  prev_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  cur_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  next_row = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
+  prev_row = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  cur_row  = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  next_row = g_new (guchar, (x2 - x1 + 2) * src_bytes);
 
-  prev_row_g = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  cur_row_g = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
-  next_row_g = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);
+  prev_row_g = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  cur_row_g  = g_new (guchar, (x2 - x1 + 2) * src_bytes);
+  next_row_g = g_new (guchar, (x2 - x1 + 2) * src_bytes);
 
-  cur_row_v = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);  /* vector map */
-  cur_row_m = (guchar *) malloc ((x2 - x1 + 2) * src_bytes);  /* magnitude map */
+  cur_row_v = g_new (guchar, (x2 - x1 + 2) * src_bytes);  /* vector map */
+  cur_row_m = g_new (guchar, (x2 - x1 + 2) * src_bytes);  /* magnitude map */
 
-  destx = (guchar *) malloc ((x2 - x1) * dest_bytes);
-  desty = (guchar *) malloc ((x2 - x1) * dest_bytes);
+  destx = g_new (guchar, (x2 - x1) * dest_bytes);
+  desty = g_new (guchar, (x2 - x1) * dest_bytes);
 
   if ((desty==NULL) || (destx==NULL) || (cur_row_m==NULL) || (cur_row_v==NULL)
     || (next_row_g==NULL) || (cur_row_g==NULL) || (prev_row_g==NULL)
     || (next_row==NULL) || (cur_row==NULL) || (prev_row==NULL)) {
-   fprintf(stderr, _("Warp diff: error allocating memory.\n"));
+   fprintf(stderr, "Warp diff: error allocating memory.\n");
    exit(1);
   }
 
@@ -1315,17 +1314,17 @@ diff (GDrawable *drawable,
   gimp_progress_init ( _("Smoothing Y gradient..."));
   blur16(draw_yd);
 
-  free (prev_row);  /* row buffers allocated at top of fn. */
-  free (cur_row);
-  free (next_row);
-  free (prev_row_g);  /* row buffers allocated at top of fn. */
-  free (cur_row_g);
-  free (next_row_g);
-  free (cur_row_v);
-  free (cur_row_m);
+  g_free (prev_row);  /* row buffers allocated at top of fn. */
+  g_free (cur_row);
+  g_free (next_row);
+  g_free (prev_row_g);  /* row buffers allocated at top of fn. */
+  g_free (cur_row_g);
+  g_free (next_row_g);
+  g_free (cur_row_v);
+  g_free (cur_row_m);
 
-  free (destx);
-  free (desty);
+  g_free (destx);
+  g_free (desty);
 
   *xl_id = xlayer_id;  /* pass back the X and Y layer ID numbers */
   *yl_id = ylayer_id;

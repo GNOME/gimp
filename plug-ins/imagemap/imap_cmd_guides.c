@@ -91,7 +91,7 @@ recalc_bounds(GtkWidget *widget, gpointer data)
    GuidesDialog_t *param = (GuidesDialog_t*) data;
    gint width, height, left, top, hspace, vspace, rows, cols;
    gint bound_w, bound_h;
-   char bounds[128];
+   gchar *bounds;
 
    width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->width));
    height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->height));
@@ -107,8 +107,8 @@ recalc_bounds(GtkWidget *widget, gpointer data)
    bound_w = (width + hspace) * cols - hspace;
    bound_h = (height + vspace) * rows - vspace;
 
-   sprintf(bounds, _("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
-	   left, top, left + bound_w, top + bound_h, rows * cols);
+   bounds = g_strdup_printf (_("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
+			     left, top, left + bound_w, top + bound_h, rows * cols);
    if (left + bound_w > get_image_width() || 
        top + bound_h > get_image_height()) {
       default_dialog_set_ok_sensitivity(param->dialog, FALSE);
@@ -116,6 +116,7 @@ recalc_bounds(GtkWidget *widget, gpointer data)
       default_dialog_set_ok_sensitivity(param->dialog, TRUE);
    }
    gtk_label_set_text(GTK_LABEL(param->guide_bounds), bounds);
+   g_free (bounds);
 }
 
 static GuidesDialog_t*
@@ -216,12 +217,13 @@ make_guides_dialog()
 static void
 init_guides_dialog(GuidesDialog_t *dialog, ObjectList_t *list)
 {
-   char dimension[128];
+   gchar *dimension;
 
    dialog->list = list;
-   sprintf(dimension, _("Image dimensions: %d x %d"), get_image_width(),
-	   get_image_height());
+   dimension = g_strdup_printf (_("Image dimensions: %d x %d"), get_image_width(),
+			       get_image_height());
    gtk_label_set_text(GTK_LABEL(dialog->image_dimensions), dimension);
+   g_free (dimension);
    gtk_label_set_text(GTK_LABEL(dialog->guide_bounds), 
 		      _("Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"));
    gtk_widget_grab_focus(dialog->width);
