@@ -22,7 +22,7 @@ import gimpenums
 import gtk
 import string
 
-pars = filter(lambda x: x[:6] == 'PARAM_', dir(gimpenums))
+pars = filter(lambda x: x[:6] == 'PDB_', dir(gimpenums))
 partypes = [''] * len(pars)
 for i in pars:
 	partypes[gimpenums.__dict__[i]] = i[6:]

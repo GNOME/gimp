@@ -51,31 +51,31 @@ pdb = gimp.pdb
 
 error = "gimpfu.error"
 
-PF_INT8        = PARAM_INT8
-PF_INT16       = PARAM_INT16
-PF_INT32       = PARAM_INT32
+PF_INT8        = PDB_INT8
+PF_INT16       = PDB_INT16
+PF_INT32       = PDB_INT32
 PF_INT         = PF_INT32
-PF_FLOAT       = PARAM_FLOAT
-PF_STRING      = PARAM_STRING
+PF_FLOAT       = PDB_FLOAT
+PF_STRING      = PDB_STRING
 PF_VALUE       = PF_STRING
-PF_INT8ARRAY   = PARAM_INT8ARRAY
-PF_INT16ARRAY  = PARAM_INT16ARRAY
-PF_INT32ARRAY  = PARAM_INT32ARRAY
+PF_INT8ARRAY   = PDB_INT8ARRAY
+PF_INT16ARRAY  = PDB_INT16ARRAY
+PF_INT32ARRAY  = PDB_INT32ARRAY
 PF_INTARRAY    = PF_INT32ARRAY
-PF_FLOATARRAY  = PARAM_FLOATARRAY
-PF_STRINGARRAY = PARAM_STRINGARRAY
-PF_COLOR       = PARAM_COLOR
+PF_FLOATARRAY  = PDB_FLOATARRAY
+PF_STRINGARRAY = PDB_STRINGARRAY
+PF_COLOR       = PDB_COLOR
 PF_COLOUR      = PF_COLOR
-PF_REGION      = PARAM_REGION
-#PF_DISPLAY     = PARAM_DISPLAY
-PF_IMAGE       = PARAM_IMAGE
-PF_LAYER       = PARAM_LAYER
-PF_CHANNEL     = PARAM_CHANNEL
-PF_DRAWABLE    = PARAM_DRAWABLE
-#PF_SELECTION   = PARAM_SELECTION
-#PF_BOUNDARY    = PARAM_BOUNDARY
-#PF_PATH        = PARAM_PATH
-#PF_STATUS      = PARAM_STATUS
+PF_REGION      = PDB_REGION
+#PF_DISPLAY     = PDB_DISPLAY
+PF_IMAGE       = PDB_IMAGE
+PF_LAYER       = PDB_LAYER
+PF_CHANNEL     = PDB_CHANNEL
+PF_DRAWABLE    = PDB_DRAWABLE
+#PF_SELECTION   = PDB_SELECTION
+#PF_BOUNDARY    = PDB_BOUNDARY
+#PF_PATH        = PDB_PATH
+#PF_STATUS      = PDB_STATUS
 
 PF_TOGGLE      = 1000
 PF_BOOL        = PF_TOGGLE
@@ -90,32 +90,32 @@ PF_PATTERN     = 1006
 PF_GRADIENT    = 1007
 
 _type_mapping = {
-	PF_INT8        : PARAM_INT8,
-	PF_INT16       : PARAM_INT16,
-	PF_INT32       : PARAM_INT32,
-	PF_FLOAT       : PARAM_FLOAT,
-	PF_STRING      : PARAM_STRING,
-	PF_INT8ARRAY   : PARAM_INT8ARRAY,
-	PF_INT16ARRAY  : PARAM_INT16ARRAY,
-	PF_INT32ARRAY  : PARAM_INT32ARRAY,
-	PF_FLOATARRAY  : PARAM_FLOATARRAY,
-	PF_STRINGARRAY : PARAM_STRINGARRAY,
-	PF_COLOUR      : PARAM_COLOR,
-	PF_REGION      : PARAM_REGION,
-	PF_IMAGE       : PARAM_IMAGE,
-	PF_LAYER       : PARAM_LAYER,
-	PF_CHANNEL     : PARAM_CHANNEL,
-	PF_DRAWABLE    : PARAM_DRAWABLE,
+	PF_INT8        : PDB_INT8,
+	PF_INT16       : PDB_INT16,
+	PF_INT32       : PDB_INT32,
+	PF_FLOAT       : PDB_FLOAT,
+	PF_STRING      : PDB_STRING,
+	PF_INT8ARRAY   : PDB_INT8ARRAY,
+	PF_INT16ARRAY  : PDB_INT16ARRAY,
+	PF_INT32ARRAY  : PDB_INT32ARRAY,
+	PF_FLOATARRAY  : PDB_FLOATARRAY,
+	PF_STRINGARRAY : PDB_STRINGARRAY,
+	PF_COLOUR      : PDB_COLOR,
+	PF_REGION      : PDB_REGION,
+	PF_IMAGE       : PDB_IMAGE,
+	PF_LAYER       : PDB_LAYER,
+	PF_CHANNEL     : PDB_CHANNEL,
+	PF_DRAWABLE    : PDB_DRAWABLE,
 
-	PF_TOGGLE      : PARAM_INT32,
-	PF_SLIDER      : PARAM_FLOAT,
-	PF_SPINNER     : PARAM_INT32,
+	PF_TOGGLE      : PDB_INT32,
+	PF_SLIDER      : PDB_FLOAT,
+	PF_SPINNER     : PDB_INT32,
 	
-	PF_FONT        : PARAM_STRING,
-	PF_FILE        : PARAM_STRING,
-	PF_BRUSH       : PARAM_STRING,
-	PF_PATTERN     : PARAM_STRING,
-	PF_GRADIENT    : PARAM_STRING
+	PF_FONT        : PDB_STRING,
+	PF_FILE        : PDB_STRING,
+	PF_BRUSH       : PDB_STRING,
+	PF_PATTERN     : PDB_STRING,
+	PF_GRADIENT    : PDB_STRING
 }
 
 _registered_plugins_ = {}
@@ -148,9 +148,9 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 		if not letterCheck(ent[1]):
 			raise error,"result name contains ilegal characters"
 	if menupath[:8] == '<Image>/':
-		plugin_type = PROC_PLUG_IN
+		plugin_type = PLUGIN
 	elif menupath[:10] == '<Toolbox>/':
-		plugin_type = PROC_EXTENSION
+		plugin_type = EXTENSION
 	else:
 		raise error, "menu path must start with <Image> or <Toolbox>"
 
@@ -173,12 +173,12 @@ def _query():
 		fn = lambda x: (_type_mapping[x[0]], x[1], x[2])
 		params = map(fn, params)
 		# add the run mode argument ...
-		params.insert(0, (PARAM_INT32, "run_mode",
+		params.insert(0, (PDB_INT32, "run_mode",
 				  "Interactive, Non-Interactive"))
-		if plugin_type == PROC_PLUG_IN:
-			params.insert(1, (PARAM_IMAGE, "image",
+		if plugin_type == PLUGIN:
+			params.insert(1, (PDB_IMAGE, "image",
 					  "The image to work on"))
-			params.insert(2, (PARAM_DRAWABLE, "drawable",
+			params.insert(2, (PDB_DRAWABLE, "drawable",
 					  "The drawable to work on"))
 		results = map(fn, results)
 		gimp.install_procedure(plugin, blurb, help, author, copyright,
@@ -392,7 +392,7 @@ def _run(func_name, params):
 	plugin_type = _registered_plugins_[func_name][7]
 	func = _registered_plugins_[func_name][10]
 
-	if plugin_type == PROC_PLUG_IN:
+	if plugin_type == PLUGIN:
 		start_params = params[1:3]
 		extra_params = params[3:]
 	else:
