@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
-"POT-Creation-Date: 2000-03-06 22:27+0100\n"
-"PO-Revision-Date: 2000-03-06 22:30+01:00\n"
+"POT-Creation-Date: 2000-03-09 13:26+0100\n"
+"PO-Revision-Date: 2000-03-09 13:28+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,13 +68,13 @@ msgstr "O programu"
 #: plug-ins/common/iwarp.c:1080 plug-ins/common/jigsaw.c:2316
 #: plug-ins/common/jpeg.c:1607 plug-ins/common/lic.c:1020
 #: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:338
-#: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:783
+#: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:784
 #: plug-ins/common/newsprint.c:1230 plug-ins/common/nlfilt.c:359
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
 #: plug-ins/common/plasma.c:295 plug-ins/common/png.c:934
-#: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:942
+#: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2278 plug-ins/common/ps.c:2459
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
 #: plug-ins/common/ripple.c:596 plug-ins/common/scatter_hsv.c:392
@@ -89,20 +89,19 @@ msgstr "O programu"
 #: plug-ins/common/unsharp.c:794 plug-ins/common/video.c:2175
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
-#: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1144
-#: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
-#: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
-#: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1008 plug-ins/gap/gap_decode_xanim.c:177
-#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
-#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:188 plug-ins/gdyntext/gdyntext_ui.c:503
-#: plug-ins/gfig/gfig.c:4106 plug-ins/gfig/gfig.c:4451
-#: plug-ins/gfig/gfig.c:4534 plug-ins/gfig/gfig.c:4880
-#: plug-ins/gflare/gflare.c:2465 plug-ins/gflare/gflare.c:3475
-#: plug-ins/gfli/gfli.c:857 plug-ins/gfli/gfli.c:926
-#: plug-ins/gimpressionist/gimpressionist.c:360
+#: plug-ins/common/wind.c:719 plug-ins/common/wmf.c:938
+#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:799
+#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
+#: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1008
+#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_mov_dialog.c:452 plug-ins/gap/gap_mpege.c:191
+#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:188
+#: plug-ins/gdyntext/gdyntext_ui.c:503 plug-ins/gfig/gfig.c:4106
+#: plug-ins/gfig/gfig.c:4451 plug-ins/gfig/gfig.c:4534
+#: plug-ins/gfig/gfig.c:4880 plug-ins/gflare/gflare.c:2472
+#: plug-ins/gflare/gflare.c:3482 plug-ins/gfli/gfli.c:857
+#: plug-ins/gfli/gfli.c:926 plug-ins/gimpressionist/gimpressionist.c:360
 #: plug-ins/gimpressionist/gimpressionist.c:482
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
@@ -112,7 +111,7 @@ msgstr "O programu"
 #: plug-ins/print/print.c:1253 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/sel2path/sel2path.c:347 plug-ins/sgi/sgi.c:655
 #: plug-ins/sinus/sinus.c:753 plug-ins/struc/struc.c:261
-#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:796
+#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:800
 msgid "OK"
 msgstr "OK"
 
@@ -150,13 +149,13 @@ msgstr "OK"
 #: plug-ins/common/jigsaw.c:2318 plug-ins/common/jpeg.c:1609
 #: plug-ins/common/lic.c:1022 plug-ins/common/mail.c:506
 #: plug-ins/common/mapcolor.c:340 plug-ins/common/max_rgb.c:268
-#: plug-ins/common/mblur.c:785 plug-ins/common/newsprint.c:1232
+#: plug-ins/common/mblur.c:786 plug-ins/common/newsprint.c:1232
 #: plug-ins/common/nlfilt.c:361 plug-ins/common/noisify.c:335
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
 #: plug-ins/common/png.c:936 plug-ins/common/pnm.c:952
-#: plug-ins/common/polar.c:944 plug-ins/common/ps.c:2280
+#: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2280
 #: plug-ins/common/ps.c:2461 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
 #: plug-ins/common/scatter_hsv.c:394 plug-ins/common/screenshot.c:400
@@ -171,7 +170,7 @@ msgstr "OK"
 #: plug-ins/common/unsharp.c:796 plug-ins/common/video.c:2177
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
-#: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
+#: plug-ins/common/wind.c:721 plug-ins/common/wmf.c:940
 #: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
@@ -183,8 +182,8 @@ msgstr "OK"
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3959
 #: plug-ins/gfig/gfig.c:4106 plug-ins/gfig/gfig.c:4453
 #: plug-ins/gfig/gfig.c:4536 plug-ins/gfig/gfig.c:5088
-#: plug-ins/gflare/gflare.c:2467 plug-ins/gflare/gflare.c:3376
-#: plug-ins/gflare/gflare.c:3477 plug-ins/gfli/gfli.c:859
+#: plug-ins/gflare/gflare.c:2474 plug-ins/gflare/gflare.c:3383
+#: plug-ins/gflare/gflare.c:3484 plug-ins/gfli/gfli.c:859
 #: plug-ins/gfli/gfli.c:928 plug-ins/gimpressionist/gimpressionist.c:491
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
@@ -195,7 +194,7 @@ msgstr "OK"
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
 #: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
-#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:798
+#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:802
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -440,12 +439,12 @@ msgstr "O cizím mapování 2"
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:313
 #: plug-ins/common/fractaltrace.c:759 plug-ins/common/nlfilt.c:586
-#: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
+#: plug-ins/common/polar.c:964 plug-ins/common/ps.c:2597
 #: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
 #: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
 #: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1060
-#: plug-ins/gfig/gfig.c:3982 plug-ins/gflare/gflare.c:2492
-#: plug-ins/gflare/gflare.c:3500 plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/gfig/gfig.c:3982 plug-ins/gflare/gflare.c:2499
+#: plug-ins/gflare/gflare.c:3507 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -503,9 +502,9 @@ msgstr "Krok dál"
 #.
 #. *  Scales
 #.
-#: plug-ins/FractalExplorer/Dialogs.c:437 plug-ins/gflare/gflare.c:2895
-#: plug-ins/gflare/gflare.c:3736 plug-ins/gflare/gflare.c:3846
-#: plug-ins/gflare/gflare.c:3988
+#: plug-ins/FractalExplorer/Dialogs.c:437 plug-ins/gflare/gflare.c:2902
+#: plug-ins/gflare/gflare.c:3743 plug-ins/gflare/gflare.c:3853
+#: plug-ins/gflare/gflare.c:3995
 msgid "Parameters"
 msgstr "Parametry"
 
@@ -843,7 +842,7 @@ msgid "Rendering Fractal..."
 msgstr "Poèítá se fraktál..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5079
-#: plug-ins/gflare/gflare.c:3367
+#: plug-ins/gflare/gflare.c:3374
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -858,8 +857,8 @@ msgstr "Smazat fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:1403 plug-ins/gfig/gfig.c:3557
-#: plug-ins/gfig/gfig.c:5088 plug-ins/gflare/gflare.c:3100
-#: plug-ins/gflare/gflare.c:3376 plug-ins/gimpressionist/presets.c:648
+#: plug-ins/gfig/gfig.c:5088 plug-ins/gflare/gflare.c:3107
+#: plug-ins/gflare/gflare.c:3383 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:801 plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
 msgid "Delete"
@@ -1078,7 +1077,7 @@ msgstr "Poloha"
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:745
 #: plug-ins/common/nova.c:494 plug-ins/common/papertile.c:283
-#: plug-ins/gap/gap_mov_dialog.c:1554 plug-ins/gflare/gflare.c:2874
+#: plug-ins/gap/gap_mov_dialog.c:1554 plug-ins/gflare/gflare.c:2881
 #: plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
 msgstr "X:"
@@ -1096,7 +1095,7 @@ msgstr "Poloha X svìtelného zdroje v prostoru XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
 #: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1572
-#: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
+#: plug-ins/gflare/gflare.c:2885 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
 
@@ -1187,7 +1186,7 @@ msgstr "Nastavení mapování vyvý¹ení"
 msgid "Bumpmap Image:"
 msgstr "Obrázek vyvý¹ení:"
 
-#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:804
+#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:805
 #: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
 msgstr "Lineární"
@@ -1400,7 +1399,7 @@ msgstr "Velikost"
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:763
 #: plug-ins/common/nlfilt.c:421 plug-ins/common/nova.c:399
 #: plug-ins/common/unsharp.c:819 plug-ins/common/whirlpinch.c:898
-#: plug-ins/gfig/gfig.c:3166 plug-ins/gflare/gflare.c:2909
+#: plug-ins/gfig/gfig.c:3166 plug-ins/gflare/gflare.c:2916
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
 msgstr "Polomìr:"
@@ -1409,7 +1408,7 @@ msgstr "Polomìr:"
 msgid "Cylinder radius"
 msgstr "Polomìr válce"
 
-#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:824
+#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:825
 msgid "Length:"
 msgstr "Délka:"
 
@@ -1448,7 +1447,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
-#: plug-ins/xjt/xjt.c:3238
+#: plug-ins/xjt/xjt.c:3253
 #, c-format
 msgid "Loading %s:"
 msgstr "Ète se %s:"
@@ -1493,7 +1492,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/psd.c:2088 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
+#: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2358
 #: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
@@ -1523,7 +1522,7 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
-#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
 #, c-format
 msgid "Saving %s:"
 msgstr "Zapisuje se %s:"
@@ -2093,10 +2092,6 @@ msgstr "Zapsat jako text"
 msgid "Data Formatting"
 msgstr "Formátování dat"
 
-#: plug-ins/common/align_layers.c:149 plug-ins/common/align_layers.c:150
-msgid "Align visible layers"
-msgstr "Zarovnat viditelné vrstvy"
-
 #: plug-ins/common/align_layers.c:154
 msgid "<Image>/Layers/Align Visible Layers..."
 msgstr "<Image>/Vrstvy/Zarovnat viditelné vrstvy..."
@@ -2127,7 +2122,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
 #: plug-ins/common/plasma.c:309 plug-ins/common/png.c:945
-#: plug-ins/common/polar.c:983 plug-ins/common/randomize.c:728
+#: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
 #: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
@@ -2135,9 +2130,9 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/sparkle.c:370 plug-ins/common/threshold_alpha.c:285
 #: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
-#: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:772
+#: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:733
 #: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
-#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:808
+#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:812
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
 
@@ -2167,7 +2162,7 @@ msgid "Left Edge"
 msgstr "Levá hrana"
 
 #: plug-ins/common/align_layers.c:468 plug-ins/common/align_layers.c:501
-#: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2862
+#: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2869
 msgid "Center"
 msgstr "Støed"
 
@@ -2367,7 +2362,7 @@ msgstr "<Image>/Filtry/Rozostøení/Rozostøení..."
 
 #: plug-ins/common/blur.c:657 plug-ins/common/plasma.c:324
 #: plug-ins/common/randomize.c:745 plug-ins/common/snoise.c:556
-#: plug-ins/gflare/gflare.c:4100 plug-ins/sinus/sinus.c:862
+#: plug-ins/gflare/gflare.c:4107 plug-ins/sinus/sinus.c:862
 msgid "Random Seed:"
 msgstr "Hnízdo náhodných èísel:"
 
@@ -2779,8 +2774,8 @@ msgstr "Zapsat alfa kanál (RGBA/RGB)"
 #. table col, row
 #: plug-ins/common/csource.c:774 plug-ins/common/sparkle.c:450
 #: plug-ins/common/tileit.c:606 plug-ins/gap/gap_mov_dialog.c:1624
-#: plug-ins/gflare/gflare.c:3602 plug-ins/gflare/gflare.c:3632
-#: plug-ins/gflare/gflare.c:3662
+#: plug-ins/gflare/gflare.c:3609 plug-ins/gflare/gflare.c:3639
+#: plug-ins/gflare/gflare.c:3669
 msgid "Opacity:"
 msgstr "Krytí:"
 
@@ -2839,7 +2834,7 @@ msgid "Curve Bend"
 msgstr "Zkøivení"
 
 #: plug-ins/common/curve_bend.c:1383 plug-ins/gfig/gfig.c:2850
-#: plug-ins/gfig/gfig.c:5349 plug-ins/gflare/gflare.c:3099
+#: plug-ins/gfig/gfig.c:5349 plug-ins/gflare/gflare.c:3106
 #: plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:287 plug-ins/imagemap/imap_toolbar.c:132
@@ -4052,10 +4047,6 @@ msgstr "Sní¾it sytosti"
 msgid "Blacken"
 msgstr "Èernání"
 
-#: plug-ins/common/illusion.c:110 plug-ins/common/illusion.c:111
-msgid "produce illusion"
-msgstr "vytváøí iluze"
-
 #: plug-ins/common/illusion.c:115
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/Filtry/Mapování/Iluze..."
@@ -4147,7 +4138,7 @@ msgstr "Práh"
 #. parameter settings
 #: plug-ins/common/iwarp.c:1039 plug-ins/common/sample_colorize.c:1399
 #: plug-ins/gap/gap_mod_layer.c:219 plug-ins/gfig/gfig.c:3993
-#: plug-ins/gflare/gflare.c:3039 plug-ins/sinus/sinus.c:898
+#: plug-ins/gflare/gflare.c:3046 plug-ins/sinus/sinus.c:898
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -4259,11 +4250,11 @@ msgstr "Náhled obrázku"
 msgid "Preview (in Image Window)"
 msgstr "Náhled (v oknì obrázku)"
 
-#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:839
+#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:843
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:848
+#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:852
 msgid "Smoothing:"
 msgstr "Vyhlazování:"
 
@@ -4275,7 +4266,7 @@ msgstr "Restartovací znaèky"
 msgid "Restart Frequency (Rows):"
 msgstr "Èetnost restartovacích znaèek (øádky):"
 
-#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:819
+#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:823
 msgid "Optimize"
 msgstr "Optimalizovat"
 
@@ -4503,50 +4494,38 @@ msgstr "Podr¾et nejvy¹¹í kanály"
 msgid "Hold the Minimal Channels"
 msgstr "Podr¾et nejni¾¹í kanály"
 
-#: plug-ins/common/mblur.c:165
-msgid "Motion blur of image"
-msgstr "Rozmáznutí pohybem na obrázku"
-
-#: plug-ins/common/mblur.c:166
-msgid ""
-"This plug-in simulates the effect seen when photographing a moving object at "
-"a slow shutter speed. Done by adding multiple displaced copies."
-msgstr ""
-"Tento modul simuluje efekt pøi fotografování pohybujících objektù pøi pomalé "
-"závìrce. Vytvoøeno vícenásobným posunutými kopiemi."
-
-#: plug-ins/common/mblur.c:170
+#: plug-ins/common/mblur.c:171
 msgid "<Image>/Filters/Blur/Motion Blur..."
 msgstr "<Image>/Filtry/Rozostøení/Rozmáznout pohybem..."
 
-#: plug-ins/common/mblur.c:632 plug-ins/common/unsharp.c:288
+#: plug-ins/common/mblur.c:633 plug-ins/common/unsharp.c:288
 msgid "Blurring..."
 msgstr "Rozostøuje se..."
 
-#: plug-ins/common/mblur.c:778
+#: plug-ins/common/mblur.c:779
 msgid "Motion Blur"
 msgstr "Rozmáznutí pohybem"
 
-#: plug-ins/common/mblur.c:800
+#: plug-ins/common/mblur.c:801
 msgid "Blur Type"
 msgstr "Typ rozmáznutí"
 
-#: plug-ins/common/mblur.c:805 plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/common/mblur.c:806 plug-ins/gimpressionist/orientation.c:161
 #: plug-ins/gimpressionist/size.c:160
 msgid "Radial"
 msgstr "Radiální"
 
-#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
+#: plug-ins/common/mblur.c:807 plug-ins/flame/flame.c:1034
 #: plug-ins/imagemap/imap_popup.c:141
 msgid "Zoom"
 msgstr "Pøiblí¾ení"
 
-#: plug-ins/common/mblur.c:812
+#: plug-ins/common/mblur.c:813
 msgid "Blur Parameters"
 msgstr "Parametry rozostøení"
 
 #. Angle
-#: plug-ins/common/mblur.c:833 plug-ins/common/newsprint.c:1025
+#: plug-ins/common/mblur.c:834 plug-ins/common/newsprint.c:1025
 #: plug-ins/common/warp.c:693 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:554
 msgid "Angle:"
@@ -4611,7 +4590,7 @@ msgstr "Výstupní LPI:"
 
 #. screen settings
 #: plug-ins/common/newsprint.c:1306 plug-ins/gap/gap_mov_dialog.c:242
-#: plug-ins/gflare/gflare.c:590
+#: plug-ins/gflare/gflare.c:597
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -4802,15 +4781,6 @@ msgstr "Barva pozadí"
 #: plug-ins/common/sparkle.c:535
 msgid "Background Color"
 msgstr "Barva pozadí"
-
-#: plug-ins/common/papertile.c:866
-msgid "Cuts an image into paper tiles, and slides each paper tile."
-msgstr "Rozøe¾e obrázek do papírových dla¾dic a ka¾dou z nich posune."
-
-#: plug-ins/common/papertile.c:867
-msgid "This plug-in cuts an image into paper tiles and slides each paper tile."
-msgstr ""
-"Tento modul rozøe¾e obrázek do papírových dla¾dic a ka¾dou z nich posune."
 
 #: plug-ins/common/papertile.c:870
 msgid "September 31, 1999"
@@ -5049,51 +5019,41 @@ msgstr "Binární"
 msgid "Ascii"
 msgstr "Ascii"
 
-#: plug-ins/common/polar.c:210
-msgid "Converts and image to and from polar coords"
-msgstr "Convertuje obrázek do polárních souøadnic a z polárních souøadnic"
-
-#: plug-ins/common/polar.c:211
-msgid ""
-"Remaps and image from rectangular coordinates to polar coordinats or vice "
-"versa"
-msgstr "Pøemapuje obrázek z kartézských souøadníc do polárních a naopak"
-
-#: plug-ins/common/polar.c:215
+#: plug-ins/common/polar.c:216
 msgid "<Image>/Filters/Distorts/Polar Coords..."
 msgstr "<Image>/Filtry/Zkreslení/Polární souøadnice..."
 
-#: plug-ins/common/polar.c:409
+#: plug-ins/common/polar.c:410
 msgid "Polarizing..."
 msgstr "Polarizuje se..."
 
-#: plug-ins/common/polar.c:937
+#: plug-ins/common/polar.c:938
 msgid "Polarize"
 msgstr "Polarizace"
 
-#: plug-ins/common/polar.c:999
+#: plug-ins/common/polar.c:1000
 msgid "Circle Depth in Percent:"
 msgstr "Hloubka kru¾nice v procentech:"
 
-#: plug-ins/common/polar.c:1008
+#: plug-ins/common/polar.c:1009
 msgid "Offset Angle:"
 msgstr "Úhel posunu:"
 
-#: plug-ins/common/polar.c:1020
+#: plug-ins/common/polar.c:1021
 msgid "Map Backwards"
 msgstr "Zpìtné mapování"
 
-#: plug-ins/common/polar.c:1028
+#: plug-ins/common/polar.c:1029
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Pøi za¹krtnutí zaène mapování napravo stranì namísto nalevo."
 
-#: plug-ins/common/polar.c:1032
+#: plug-ins/common/polar.c:1033
 msgid "Map from Top"
 msgstr "Mapování shora"
 
-#: plug-ins/common/polar.c:1040
+#: plug-ins/common/polar.c:1041
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5101,11 +5061,11 @@ msgstr ""
 "Bez za¹krtnutí zaène pokládat dolní øadu doprostøed a horní øadu ven. Pøi "
 "za¹krtnutí to bude naopak."
 
-#: plug-ins/common/polar.c:1045
+#: plug-ins/common/polar.c:1046
 msgid "To Polar"
 msgstr "Do polárních"
 
-#: plug-ins/common/polar.c:1053
+#: plug-ins/common/polar.c:1054
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5372,11 +5332,6 @@ msgstr "Bohu¾el, kanály a masky nelze rotovat."
 msgid "Rotating..."
 msgstr "Rotuje se..."
 
-#: plug-ins/common/sample_colorize.c:302
-msgid ""
-"Colorize the contents of the specified drawable similar to sample drawable"
-msgstr "Obarví obsah zadané obrazovky podobnì vzorové obrazovce"
-
 #: plug-ins/common/sample_colorize.c:307
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr "<Image>/Filtry/Barvy/Mapování/Vzor vybarvení..."
@@ -5466,10 +5421,6 @@ msgstr "Analýza vzorkù..."
 msgid "Remap Colorized..."
 msgstr "Pøemapování vybarvení..."
 
-#: plug-ins/common/scatter_hsv.c:139 plug-ins/common/scatter_hsv.c:140
-msgid "Scattering pixel values in HSV space"
-msgstr "Roztøepení hodnot pixelù v prostoru HSV"
-
 #: plug-ins/common/scatter_hsv.c:144
 msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/Filtry/©um/Roztøepení HSV..."
@@ -5489,24 +5440,6 @@ msgstr "Náhled (1:4) - skok pravým klepnutím"
 #: plug-ins/common/scatter_hsv.c:458
 msgid "Holdness:"
 msgstr "Zadr¾ení:"
-
-#: plug-ins/common/screenshot.c:135
-msgid "Creates a screenshot of a single window or the whole screen"
-msgstr "Vytváøí snímek jednoho okna nebo celé pracovní plochy"
-
-#: plug-ins/common/screenshot.c:136
-msgid ""
-"This extension serves as a simple frontend to the X-window utility xwd and "
-"the xwd-file-plug-in. After specifying some options, xwd is called, the user "
-"selects a window, and the resulting image is loaded into the gimp. "
-"Alternatively the whole screen can be grabbed. When called non-interactively "
-"it may grab the root window or use the window-id passed as a parameter."
-msgstr ""
-"Toto roz¹íøení pracuje jako jednoduché u¾ivatelské rozhraní k X-window "
-"pomùcce xwd a xwd-file-plug-in. Po zadání pøíslu¹ných voleb je vyvolán xwd, "
-"u¾ivatel zvolí okno a výsledný obrázek je nahrán do gimpu. Volitelnì je "
-"nabrána celá pracovní plocha. Pøi neinteraktivním volání mù¾e nabrat "
-"základní okno nebo okno identifikované pøedaným parametrem."
 
 #: plug-ins/common/screenshot.c:146 plug-ins/winsnap/winsnap.c:1042
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5565,14 +5498,6 @@ msgstr "<Image>/Filtry/Barvy/Èásteèné zplo¹tìní..."
 #: plug-ins/common/semiflatten.c:128
 msgid "Semi-Flatten..."
 msgstr "Èásteèné zplo¹tìní..."
-
-#: plug-ins/common/sharpen.c:163
-msgid "Sharpen filter, typically used to 'sharpen' a photographic image."
-msgstr "Filtr doostøení je pou¾íván typicky k 'doostøení' fotografií."
-
-#: plug-ins/common/sharpen.c:164
-msgid "This plug-in selectively performs a convolution filter on an image."
-msgstr "Tento modul selektivnì provádí na obrázku konvoluèní filtr."
 
 #: plug-ins/common/sharpen.c:168
 msgid "<Image>/Filters/Enhance/Sharpen..."
@@ -6073,7 +5998,7 @@ msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
 #: plug-ins/common/threshold_alpha.c:297 plug-ins/common/unsharp.c:837
-#: plug-ins/common/wind.c:857 plug-ins/gflare/gflare.c:3022
+#: plug-ins/common/wind.c:818 plug-ins/gflare/gflare.c:3029
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -6234,7 +6159,7 @@ msgstr ""
 "souboru programu GIMP."
 
 #: plug-ins/common/uniteditor.c:546
-msgid "How man units make up an inch."
+msgid "How many units make up an inch."
 msgstr "Poèet jednotek na palec."
 
 #: plug-ins/common/uniteditor.c:547
@@ -6436,17 +6361,13 @@ msgstr "Více krytí"
 msgid "More Transparent"
 msgstr "Prùhlednìj¹í"
 
-#: plug-ins/common/vpropagate.c:213 plug-ins/common/vpropagate.c:214
-msgid "Propagate values of the layer"
-msgstr "Roz¹iøuje hodnoty vrstvy"
-
 #: plug-ins/common/vpropagate.c:218
 msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/Filtry/Zkreslení/Roz¹íøit hodnotu..."
 
 #: plug-ins/common/vpropagate.c:365
-msgid "value propagating..."
-msgstr "roz¹iøuje se hodnota..."
+msgid "Value propagating..."
+msgstr "Roz¹iøuje se hodnota..."
 
 #: plug-ins/common/vpropagate.c:938
 msgid "Value Propagate"
@@ -6661,86 +6582,81 @@ msgstr "Vlo¾ené"
 msgid "Pasting ..."
 msgstr "Vkládá se..."
 
-#: plug-ins/common/wind.c:163
+#: plug-ins/common/wind.c:160
 msgid "<Image>/Filters/Distorts/Wind..."
 msgstr "<Image>/Filtry/Zkreslení/Vítr..."
 
-#: plug-ins/common/wind.c:253
+#: plug-ins/common/wind.c:250
 msgid "Rendering Wind..."
 msgstr "Poèítá se vítr..."
 
-#: plug-ins/common/wind.c:259
+#: plug-ins/common/wind.c:256
 msgid "Rendering Blast..."
 msgstr "Poèítá se výbuch..."
 
-#: plug-ins/common/wind.c:698 plug-ins/common/wind.c:753
-#: plug-ins/common/wind.c:798
+#: plug-ins/common/wind.c:687
+msgid "Wind Strength must be greater than 0."
+msgstr "Síla vìtru musí být vìt¹í ne¾ 0."
+
+#: plug-ins/common/wind.c:714 plug-ins/common/wind.c:759
 msgid "Wind"
 msgstr "Vítr"
-
-#: plug-ins/common/wind.c:726
-msgid ""
-"\n"
-"   Wind Strength must be greater than 0.   \n"
-msgstr ""
-"\n"
-"   Síla vìtru musí být vìt¹í ne¾ 0.   \n"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:794
+#: plug-ins/common/wind.c:755
 msgid "Style"
 msgstr "Styl"
 
-#: plug-ins/common/wind.c:799
+#: plug-ins/common/wind.c:760
 msgid "Blast"
 msgstr "Výbuch"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/wind.c:811 plug-ins/struc/struc.c:284
+#: plug-ins/common/wind.c:772 plug-ins/struc/struc.c:284
 msgid "Direction"
 msgstr "Smìr"
 
-#: plug-ins/common/wind.c:815
+#: plug-ins/common/wind.c:776
 msgid "Left"
 msgstr "Doleva"
 
-#: plug-ins/common/wind.c:816
+#: plug-ins/common/wind.c:777
 msgid "Right"
 msgstr "Doprava"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:828
+#: plug-ins/common/wind.c:789
 msgid "Edge Affected"
 msgstr "S vlivem na hrany"
 
-#: plug-ins/common/wind.c:832
+#: plug-ins/common/wind.c:793
 msgid "Leading"
 msgstr "Poèátek"
 
-#: plug-ins/common/wind.c:833
+#: plug-ins/common/wind.c:794
 msgid "Trailing"
 msgstr "Ukonèení"
 
-#: plug-ins/common/wind.c:834
+#: plug-ins/common/wind.c:795
 msgid "Both"
 msgstr "Obojí"
 
-#: plug-ins/common/wind.c:861
+#: plug-ins/common/wind.c:822
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Vy¹¹í hodnoty omezují efekt na men¹í oblasti obrázku"
 
-#: plug-ins/common/wind.c:871 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:832 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr "Pevnost:"
 
-#: plug-ins/common/wind.c:875
+#: plug-ins/common/wind.c:836
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Vy¹¹í hodnota znamená zesiluje efekt"
 
@@ -6814,7 +6730,7 @@ msgstr "Velikost (protokol 2):"
 msgid "Interpreting %s:"
 msgstr "Interpretuje se %s:"
 
-#: plug-ins/common/wmf.c:2355
+#: plug-ins/common/wmf.c:2354
 msgid "Transferring image"
 msgstr "Pøená¹í se stránka"
 
@@ -7650,9 +7566,9 @@ msgstr "Výbìr rozsahu políèek"
 #: plug-ins/gap/gap_decode_xanim.c:539
 #, c-format
 msgid ""
-"cant find any extracted frames,\n"
+"can't find any extracted frames,\n"
 "%s\n"
-"maybe xanim has failed or was canclled"
+"maybe xanim has failed or was cancelled"
 msgstr ""
 "nelze nalézt ¾ádná získaná políèka\n"
 "%s\n"
@@ -7730,8 +7646,8 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1134
 msgid ""
-"cant find any extracted frames,\n"
-"xanim has failed or was canclled"
+"can't find any extracted frames,\n"
+"xanim has failed or was cancelled"
 msgstr ""
 "nelze nalézt ¾ádná získaná políèka,\n"
 "xanim selhal nebo byl zastaven"
@@ -8198,7 +8114,7 @@ msgid ""
 msgstr ""
 "Øetìzec k identifikaci jmen vrstev    \n"
 "nebo pozièních èísel v zásobníku vrstev\n"
-"0, 3-5"
+"0,3-5"
 
 #: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:660
 msgid "Case sensitive"
@@ -8273,7 +8189,7 @@ msgid "No selected Layer in start frame\n"
 msgstr "Není vybrána vrstva v poèáteèním políèku\n"
 
 #: plug-ins/gap/gap_mov_dialog.c:239 plug-ins/gfig/gfig.c:3308
-#: plug-ins/gflare/gflare.c:587 plug-ins/gimpressionist/orientmap.c:590
+#: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "Normální"
 
@@ -8285,7 +8201,7 @@ msgstr "Rozpou¹tìní"
 msgid "Multiply"
 msgstr "Násobení"
 
-#: plug-ins/gap/gap_mov_dialog.c:243 plug-ins/gflare/gflare.c:589
+#: plug-ins/gap/gap_mov_dialog.c:243 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr "Pøekrytí"
@@ -8294,7 +8210,7 @@ msgstr "Pøekrytí"
 msgid "Difference"
 msgstr "Diference"
 
-#: plug-ins/gap/gap_mov_dialog.c:245 plug-ins/gflare/gflare.c:588
+#: plug-ins/gap/gap_mov_dialog.c:245 plug-ins/gflare/gflare.c:595
 msgid "Addition"
 msgstr "Souèet"
 
@@ -8418,8 +8334,8 @@ msgstr "Zásobník vrstev:"
 #: plug-ins/gap/gap_mov_dialog.c:565
 msgid ""
 "How to insert SrcLayer into the\n"
-"Dst.Frame's Layerstack\n"
-"0 means on top i.e in front"
+"Dst. Frame's Layerstack\n"
+"0 means on top i.e. in front"
 msgstr ""
 "Zpùsob vlo¾ení zdrojové vrstvy\n"
 "do zásobníku vrstev cíle\n"
@@ -8504,7 +8420,7 @@ msgstr "Ovládání:"
 #: plug-ins/gap/gap_mov_dialog.c:1478
 msgid ""
 "How to place the SrcLayer at   \n"
-"Controlpoint Koordinates"
+"Controlpoint Coordinates"
 msgstr ""
 "Zpùsob umístìní zdrojové vrstvy   \n"
 "na souøadnice øídícího bodu"
@@ -9064,10 +8980,6 @@ msgstr ""
 #: plug-ins/gap/gap_navigator_dialog.c:390
 msgid "Goto last Frame"
 msgstr "Jít na poslední políèko"
-
-#: plug-ins/gap/gap_navigator_dialog.c:443
-msgid "GAP video navigator dialog"
-msgstr "Dialog video navigátoru GAP"
 
 #: plug-ins/gap/gap_navigator_dialog.c:448
 msgid "<Image>/Video/VCR Navigator..."
@@ -9714,7 +9626,7 @@ msgid ""
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
 "Podr¾ení Pøeøaïovaèe bìhem stisknutí tohoto tlaèítka pøinutí GDynText ke "
-"zmìnì jména vrstvy jako u  programu GIMP 1.0."
+"zmìnì jména vrstvy jako u programu GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:920
 #, c-format
@@ -9751,7 +9663,7 @@ msgstr "Pøedchozí"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1929 plug-ins/gfig/gfig.c:5362
-#: plug-ins/gflare/gflare.c:3098 plug-ins/imagemap/imap_menu.c:277
+#: plug-ins/gflare/gflare.c:3105 plug-ins/imagemap/imap_menu.c:277
 #: plug-ins/imagemap/imap_selection.c:171
 msgid "Edit"
 msgstr "Úpravy"
@@ -9901,7 +9813,7 @@ msgstr "Pùvodní"
 
 #. Window radiobutton
 #: plug-ins/gfig/gfig.c:2788 plug-ins/gfig/gfig.c:3547
-#: plug-ins/gflare/gflare.c:3097 plug-ins/ifscompose/ifscompose.c:799
+#: plug-ins/gflare/gflare.c:3104 plug-ins/ifscompose/ifscompose.c:799
 #: plug-ins/webbrowser/webbrowser.c:345
 msgid "New"
 msgstr "Nový"
@@ -10277,33 +10189,33 @@ msgstr "Chyba pøi ètení souboru"
 msgid "Hey where has the object gone ?"
 msgstr "A kde je ten objekt?"
 
-#: plug-ins/gflare/gflare.c:819
+#: plug-ins/gflare/gflare.c:826
 msgid "<Image>/Filters/Light Effects/GFlare..."
 msgstr "<Image>/Filtry/Efekty se svìtlem/P-záøe..."
 
-#: plug-ins/gflare/gflare.c:935
+#: plug-ins/gflare/gflare.c:942
 msgid "Gradient Flare..."
 msgstr "Záøe z pøechodu..."
 
-#: plug-ins/gflare/gflare.c:947
+#: plug-ins/gflare/gflare.c:954
 msgid "GFlare: cannot operate on indexed color images"
 msgstr "P-záøe: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/gflare/gflare.c:1002
+#: plug-ins/gflare/gflare.c:1009
 msgid "gflare-path misconfigured - the following directories were not found"
 msgstr "gflare-path ¹patnì nastavena - následující adresáøe nebyly nalezeny"
 
-#: plug-ins/gflare/gflare.c:1354
+#: plug-ins/gflare/gflare.c:1361
 #, c-format
 msgid "not valid GFlare file: %s"
 msgstr "neplatný soubor P-záøe: %s"
 
-#: plug-ins/gflare/gflare.c:1414
+#: plug-ins/gflare/gflare.c:1421
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "neplatnì formátovaný soubor P-záøe: %s\n"
 
-#: plug-ins/gflare/gflare.c:1516
+#: plug-ins/gflare/gflare.c:1523
 #, c-format
 msgid ""
 "GFlare `%s' is not saved.\tIf you add a new entry in gimprc, like:\n"
@@ -10317,129 +10229,129 @@ msgstr ""
 "a vytvoøte adresáø ~/.gimp-1.1/gflare, a zapi¹tì svou vlastní P-záøi\n"
 "do tohoto adresáøe."
 
-#: plug-ins/gflare/gflare.c:1544
+#: plug-ins/gflare/gflare.c:1551
 #, c-format
 msgid "could not open \"%s\""
 msgstr "nelze otevøít \"%s\""
 
-#: plug-ins/gflare/gflare.c:1734
+#: plug-ins/gflare/gflare.c:1741
 #, c-format
 msgid "error reading GFlare directory \"%s\""
 msgstr "chyba pøi ètení adresáøe P-záøí \"%s\""
 
-#: plug-ins/gflare/gflare.c:2460
+#: plug-ins/gflare/gflare.c:2467
 msgid "GFlare"
 msgstr "Záøe z pøechodu"
 
-#: plug-ins/gflare/gflare.c:2575
+#: plug-ins/gflare/gflare.c:2582
 msgid "`Default' is created."
 msgstr "Byl vytvoøen ,Implicitní'."
 
-#: plug-ins/gflare/gflare.c:2576
+#: plug-ins/gflare/gflare.c:2583
 msgid "Default"
 msgstr "Implicitní"
 
-#: plug-ins/gflare/gflare.c:2922 plug-ins/gflare/gflare.c:3761
-#: plug-ins/gflare/gflare.c:3871 plug-ins/gflare/gflare.c:4013
+#: plug-ins/gflare/gflare.c:2929 plug-ins/gflare/gflare.c:3768
+#: plug-ins/gflare/gflare.c:3878 plug-ins/gflare/gflare.c:4020
 msgid "Rotation:"
 msgstr "Rotace:"
 
-#: plug-ins/gflare/gflare.c:2934 plug-ins/gflare/gflare.c:3773
-#: plug-ins/gflare/gflare.c:3884 plug-ins/gflare/gflare.c:4026
+#: plug-ins/gflare/gflare.c:2941 plug-ins/gflare/gflare.c:3780
+#: plug-ins/gflare/gflare.c:3891 plug-ins/gflare/gflare.c:4033
 msgid "Hue Rotation:"
 msgstr "Rotace odstínu:"
 
-#: plug-ins/gflare/gflare.c:2946
+#: plug-ins/gflare/gflare.c:2953
 msgid "Vector Angle:"
 msgstr "Úhel vektoru:"
 
-#: plug-ins/gflare/gflare.c:2958
+#: plug-ins/gflare/gflare.c:2965
 msgid "Vector Length:"
 msgstr "Délka vektoru:"
 
-#: plug-ins/gflare/gflare.c:2984
+#: plug-ins/gflare/gflare.c:2991
 msgid "Adaptive Supersampling"
 msgstr "Adaptivní pøevzorkování"
 
-#: plug-ins/gflare/gflare.c:3010
+#: plug-ins/gflare/gflare.c:3017
 msgid "Max Depth:"
 msgstr "Nejvìt¹í hloubka:"
 
-#: plug-ins/gflare/gflare.c:3027
+#: plug-ins/gflare/gflare.c:3034
 msgid "Auto Update Preview"
 msgstr "Automatická aktualizace náhledu"
 
-#: plug-ins/gflare/gflare.c:3151
+#: plug-ins/gflare/gflare.c:3158
 msgid "Selector"
 msgstr "Selektor"
 
-#: plug-ins/gflare/gflare.c:3240
+#: plug-ins/gflare/gflare.c:3247
 msgid "New GFlare"
 msgstr "Nová P-záøe"
 
-#: plug-ins/gflare/gflare.c:3243
+#: plug-ins/gflare/gflare.c:3250
 msgid "Enter a Name for the New GFlare:"
 msgstr "Zadejte jméno pro novou P-záøi:"
 
-#: plug-ins/gflare/gflare.c:3244
+#: plug-ins/gflare/gflare.c:3251
 msgid "untitled"
 msgstr "bez názvu"
 
-#: plug-ins/gflare/gflare.c:3262 plug-ins/gflare/gflare.c:3335
+#: plug-ins/gflare/gflare.c:3269 plug-ins/gflare/gflare.c:3342
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Jméno ,%s' je ji¾ pou¾ito!"
 
-#: plug-ins/gflare/gflare.c:3311
+#: plug-ins/gflare/gflare.c:3318
 msgid "Copy GFlare"
 msgstr "Kopírovat P-záøi"
 
-#: plug-ins/gflare/gflare.c:3314
+#: plug-ins/gflare/gflare.c:3321
 msgid "Enter a Name for the Copied GFlare:"
 msgstr "Zadejte jméno pro zkopírovanou P-záøi:"
 
-#: plug-ins/gflare/gflare.c:3361
+#: plug-ins/gflare/gflare.c:3368
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Nelze smazat. Musí zde být alespoò jedna P-záøe."
 
-#: plug-ins/gflare/gflare.c:3371
+#: plug-ins/gflare/gflare.c:3378
 msgid "Delete GFlare"
 msgstr "Smazat P-záøi"
 
-#: plug-ins/gflare/gflare.c:3428
+#: plug-ins/gflare/gflare.c:3435
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s nebylo nalezeno v seznam_p_záøí"
 
-#: plug-ins/gflare/gflare.c:3468
+#: plug-ins/gflare/gflare.c:3475
 msgid "GFlare Editor"
 msgstr "Editor P-záøí"
 
-#: plug-ins/gflare/gflare.c:3473
+#: plug-ins/gflare/gflare.c:3480
 msgid "Rescan Gradients"
 msgstr "Zaktualizovat pøechody"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3590
+#: plug-ins/gflare/gflare.c:3597
 msgid "Glow Paint Options"
 msgstr "Volby kreslení ¾áru"
 
-#: plug-ins/gflare/gflare.c:3615 plug-ins/gflare/gflare.c:3645
-#: plug-ins/gflare/gflare.c:3675
+#: plug-ins/gflare/gflare.c:3622 plug-ins/gflare/gflare.c:3652
+#: plug-ins/gflare/gflare.c:3682
 msgid "Paint Mode:"
 msgstr "Re¾im kreslení:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3620
+#: plug-ins/gflare/gflare.c:3627
 msgid "Rays Paint Options"
 msgstr "Volby kreslení paprskù"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3650
+#: plug-ins/gflare/gflare.c:3657
 msgid "Second Flares Paint Options"
 msgstr "Volby kreslení druhé záøe"
 
-#: plug-ins/gflare/gflare.c:3682 plug-ins/gimpressionist/general.c:134
+#: plug-ins/gflare/gflare.c:3689 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "General"
@@ -10448,84 +10360,84 @@ msgstr "V¹eobecné"
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3708 plug-ins/gflare/gflare.c:3816
-#: plug-ins/gflare/gflare.c:3960
+#: plug-ins/gflare/gflare.c:3715 plug-ins/gflare/gflare.c:3823
+#: plug-ins/gflare/gflare.c:3967
 msgid "Gradients"
 msgstr "Pøechody"
 
-#: plug-ins/gflare/gflare.c:3720 plug-ins/gflare/gflare.c:3830
-#: plug-ins/gflare/gflare.c:3972
+#: plug-ins/gflare/gflare.c:3727 plug-ins/gflare/gflare.c:3837
+#: plug-ins/gflare/gflare.c:3979
 msgid "Radial Gradient:"
 msgstr "Paprskovitý pøechod:"
 
-#: plug-ins/gflare/gflare.c:3724 plug-ins/gflare/gflare.c:3834
+#: plug-ins/gflare/gflare.c:3731 plug-ins/gflare/gflare.c:3841
 msgid "Angular Gradient:"
 msgstr "Úhlový pøechod:"
 
-#: plug-ins/gflare/gflare.c:3728 plug-ins/gflare/gflare.c:3838
+#: plug-ins/gflare/gflare.c:3735 plug-ins/gflare/gflare.c:3845
 msgid "Angular Size Gradient:"
 msgstr "Pøechod úhlové velikosti:"
 
-#: plug-ins/gflare/gflare.c:3749 plug-ins/gflare/gflare.c:3859
-#: plug-ins/gflare/gflare.c:4001
+#: plug-ins/gflare/gflare.c:3756 plug-ins/gflare/gflare.c:3866
+#: plug-ins/gflare/gflare.c:4008
 msgid "Size (%):"
 msgstr "Velikost (%):"
 
-#: plug-ins/gflare/gflare.c:3790
+#: plug-ins/gflare/gflare.c:3797
 msgid "Glow"
 msgstr "®ár"
 
-#: plug-ins/gflare/gflare.c:3896
+#: plug-ins/gflare/gflare.c:3903
 msgid "# of Spikes:"
 msgstr "Poèet hrotù:"
 
-#: plug-ins/gflare/gflare.c:3908
+#: plug-ins/gflare/gflare.c:3915
 msgid "Spike Thickness:"
 msgstr "Tlou¹»ka hrotù:"
 
-#: plug-ins/gflare/gflare.c:3925
+#: plug-ins/gflare/gflare.c:3932
 msgid "Rays"
 msgstr "Paprsky"
 
-#: plug-ins/gflare/gflare.c:3976
+#: plug-ins/gflare/gflare.c:3983
 msgid "Size Factor Gradient:"
 msgstr "Pøechod faktoru velikosti:"
 
-#: plug-ins/gflare/gflare.c:3980
+#: plug-ins/gflare/gflare.c:3987
 msgid "Probability Gradient:"
 msgstr "Pøechod pravdìpodobnosti:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:4043
+#: plug-ins/gflare/gflare.c:4050
 msgid "Shape of Second Flares"
 msgstr "Tvar druhé záøe"
 
-#: plug-ins/gflare/gflare.c:4052 plug-ins/imagemap/imap_circle.c:60
+#: plug-ins/gflare/gflare.c:4059 plug-ins/imagemap/imap_circle.c:60
 #: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
 msgid "Circle"
 msgstr "Kruh"
 
-#: plug-ins/gflare/gflare.c:4068 plug-ins/imagemap/imap_menu.c:389
+#: plug-ins/gflare/gflare.c:4075 plug-ins/imagemap/imap_menu.c:389
 #: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
 msgstr "Polygon"
 
-#: plug-ins/gflare/gflare.c:4127
+#: plug-ins/gflare/gflare.c:4134
 msgid "Second Flares"
 msgstr "Druhá záøe"
 
-#: plug-ins/gflare/gflare.c:4734
+#: plug-ins/gflare/gflare.c:4741
 msgid "none"
 msgstr "nic"
 
-#: plug-ins/gflare/gflare.c:4747
+#: plug-ins/gflare/gflare.c:4754
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
 msgstr "\"%s\" nebylo nalezeno: namísto nìj pou¾ito \"%s\""
 
-#: plug-ins/gflare/gflare.c:4817
+#: plug-ins/gflare/gflare.c:4824
 msgid "More..."
 msgstr "Více..."
 
@@ -10707,10 +10619,6 @@ msgstr "Práh odchylky:"
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
 msgstr "Pomocná hodnota pro adaptivní výbìry"
-
-#: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
-msgid "Performs various artistic operations on an image"
-msgstr "Provádí na obrázku rùzné umìlecké práce"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
@@ -12787,79 +12695,79 @@ msgstr "Nabrat celou pracovní plochu"
 msgid "No data captured"
 msgstr "®ádná data nebyla získána"
 
-#: plug-ins/xjt/xjt.c:660
+#: plug-ins/xjt/xjt.c:664
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT soubor obsahuje neznámý re¾im vrstvy %d"
 
-#: plug-ins/xjt/xjt.c:690
+#: plug-ins/xjt/xjt.c:694
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varování: nepodporovaný re¾im vrstvy %d ulo¾en do XJT"
 
-#: plug-ins/xjt/xjt.c:706
+#: plug-ins/xjt/xjt.c:710
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT soubor obsahuje neznámý typ cesty %d"
 
-#: plug-ins/xjt/xjt.c:722
+#: plug-ins/xjt/xjt.c:726
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varování: nepodporovaný typ cesty %d ulo¾en do XJT"
 
-#: plug-ins/xjt/xjt.c:742
+#: plug-ins/xjt/xjt.c:746
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT soubor obsahuje neznámý druh jednotek %d"
 
-#: plug-ins/xjt/xjt.c:763
+#: plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Varování: nepodporovaný druh jednotek %d ulo¾en do XJT"
 
-#: plug-ins/xjt/xjt.c:791
+#: plug-ins/xjt/xjt.c:795
 msgid "Save as XJT"
 msgstr "Zapsat jako XJT"
 
-#: plug-ins/xjt/xjt.c:828
+#: plug-ins/xjt/xjt.c:832
 msgid "Clear Transparent"
 msgstr "Vymazat prùhledné"
 
-#: plug-ins/xjt/xjt.c:1223
+#: plug-ins/xjt/xjt.c:1227
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Nelze otevøít (zápis): %s"
 
-#: plug-ins/xjt/xjt.c:1615
+#: plug-ins/xjt/xjt.c:1626
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/xjt/xjt.c:1619
+#: plug-ins/xjt/xjt.c:1630
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: neumí pracovat s neznámými typy obrázku"
 
-#: plug-ins/xjt/xjt.c:1634 plug-ins/xjt/xjt.c:3248
+#: plug-ins/xjt/xjt.c:1645 plug-ins/xjt/xjt.c:3263
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Nelze vytvoøit pracovní adresáø: %s"
 
-#: plug-ins/xjt/xjt.c:1643
+#: plug-ins/xjt/xjt.c:1654
 #, c-format
 msgid "Can't open : %s"
 msgstr "Nelze otevøít: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2463 plug-ins/xjt/xjt.c:2470
+#: plug-ins/xjt/xjt.c:2475 plug-ins/xjt/xjt.c:2482
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Nelze otevøít (ètení): %s"
 
-#: plug-ins/xjt/xjt.c:3111
+#: plug-ins/xjt/xjt.c:3126
 #, c-format
-msgid "Error: Cant read XJT propertyfile %s"
+msgid "Error: Can't read XJT propertyfile %s"
 msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 
-#: plug-ins/xjt/xjt.c:3116
+#: plug-ins/xjt/xjt.c:3131
 #, c-format
-msgid "Error,XJT propertyfile %s is empty"
+msgid "Error, XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor %s XJT vlastností je prázdný"
