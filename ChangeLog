@@ -1,3 +1,9 @@
+2000-02-05  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/FractalExplorer/FractalExplorer.c (fractalexplorer_load): 
+	* plug-ins/FractalExplorer/Dialogs.c (explorer_load): Use "rt","wt" with fopen() for
+	OS/2, Win portability.
+
 Sat Feb  5 17:49:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.[ch]: cleanup to make it documentable

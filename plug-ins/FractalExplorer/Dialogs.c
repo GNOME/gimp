@@ -1574,7 +1574,7 @@ save_callback (void)
 
   savename = filename;
 
-  fp = fopen (savename, "w+");
+  fp = fopen (savename, "wt+");
 
   if (!fp) 
     {
@@ -1970,7 +1970,7 @@ explorer_load (void)
   gchar  load_buf[MAX_LOAD_LINE];
 
   g_assert (filename != NULL); 
-  fp = fopen (filename, "r");
+  fp = fopen (filename, "rt");
 
   if (!fp)
     {

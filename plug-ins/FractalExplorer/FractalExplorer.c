@@ -1243,7 +1243,7 @@ fractalexplorer_load (gchar *filename,
   gchar load_buf[MAX_LOAD_LINE];
 
   g_assert (filename != NULL);
-  fp = fopen (filename, "r");
+  fp = fopen (filename, "rt");
   if (!fp)
     {
       g_warning ("Error opening: %s", filename);
