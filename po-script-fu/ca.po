@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
 "POT-Creation-Date: 2003-06-26 22:18+0200\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
-"Last-Translator: Softcatal‡ <tradgnome@softcatala.org>\n"
+"Last-Translator: Softcatal√† <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "L'Script-Fu en mode de consola nomÈs permet la invocaciÛ interactiva"
+msgstr "L'Script-Fu en mode de consola nom√©s permet la invocaci√≥ interactiva"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
@@ -47,7 +47,7 @@ msgstr "No es pot obrir el conducte de sortida SIOD"
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
-"El mode d'avaluaciÛ de l'Script-Fu nomÈs permet la invocaciÛ no interactiva"
+"El mode d'avaluaci√≥ de l'Script-Fu nom√©s permet la invocaci√≥ no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1112
@@ -67,7 +67,7 @@ msgstr "Quant a..."
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "Script Arguments"
-msgstr "Arguments de la seq¸Ëncia"
+msgstr "Arguments de la seq√º√®ncia"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
@@ -78,32 +78,32 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1239
 msgid "Script-Fu Color Selection"
-msgstr "SelecciÛ del color de l'Script-Fu"
+msgstr "Selecci√≥ del color de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
-msgstr "SelecciÛ del fitxer de l'Script-Fu"
+msgstr "Selecci√≥ del fitxer de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1324
 #, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "SelecciÛ del fitxer de l'Script-Fu"
+msgstr "Selecci√≥ del fitxer de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
-msgstr "SelecciÛ de tipus de lletra de l'Script-Fu"
+msgstr "Selecci√≥ de tipus de lletra de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1349
 msgid "Script-fu Pattern Selection"
-msgstr "SelecciÛ del patrÛ de l'Script-Fu"
+msgstr "Selecci√≥ del patr√≥ de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1356
 msgid "Script-Fu Gradient Selection"
-msgstr "SelecciÛ de la gradaciÛ de l'Script-Fu"
+msgstr "Selecci√≥ de la gradaci√≥ de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1364
 msgid "Script-Fu Brush Selection"
-msgstr "SelecciÛ del pinzell de l'Script-Fu"
+msgstr "Selecci√≥ del pinzell de l'Script-Fu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 #: plug-ins/script-fu/script-fu-scripts.c:1858
@@ -131,7 +131,7 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
-"S'ha produÔt un error de l'Script-Fu durant l'execuciÛ\n"
+"S'ha produ√Øt un error de l'Script-Fu durant l'execuci√≥\n"
 " %s\n"
 "%s"
 
@@ -157,7 +157,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Servidor..."
 
 #: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
-msgstr "Torna a llegir totes les seq¸Ëncies disponibles"
+msgstr "Torna a llegir totes les seq√º√®ncies disponibles"
 
 #: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
@@ -241,7 +241,7 @@ msgstr "radi de difuminat del Bumpmap (Capa alfa)"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default Bumpmap Settings"
-msgstr "ConfiguraciÛ del Bumpmap per defecte"
+msgstr "Configuraci√≥ del Bumpmap per defecte"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
@@ -324,7 +324,7 @@ msgstr "Tipus de lletra"
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font Size (pixels)"
-msgstr "Mida del tipus de lletra (pÌxels)"
+msgstr "Mida del tipus de lletra (p√≠xels)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
@@ -344,21 +344,21 @@ msgstr "Patrons"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 msgid "Shadow Blur Radius"
-msgstr "Radi de difuminaciÛ de les ombres"
+msgstr "Radi de difuminaci√≥ de les ombres"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X Offset"
-msgstr "DesplaÁament en X de les ombres"
+msgstr "Despla√ßament en X de les ombres"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y Offset"
-msgstr "DesplaÁament en Y de les ombres"
+msgstr "Despla√ßament en Y de les ombres"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
@@ -454,12 +454,12 @@ msgstr "Finalitza la barreja"
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X Tiles"
-msgstr "N˙meor de mosaics en X"
+msgstr "N√∫meor de mosaics en X"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y Tiles"
-msgstr "N˙mero de mosaics en Y"
+msgstr "N√∫mero de mosaics en Y"
 
 #
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
@@ -485,7 +485,7 @@ msgstr "<Imatge>/Script-Fu/Decor/Afegeix biselat..."
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep Bump Layer"
-msgstr "MantÈ la capa Bump"
+msgstr "Mant√© la capa Bump"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -494,7 +494,7 @@ msgstr "MantÈ la capa Bump"
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
-msgstr "Treballa a la cÚpia"
+msgstr "Treballa a la c√≤pia"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add Border..."
@@ -523,7 +523,7 @@ msgstr "Valor delta del color"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Lluentor extranya/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Lluentor extranya/"
 "Fletxa..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
@@ -562,7 +562,7 @@ msgstr "Esquerra"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
-msgstr "OrientaciÛ"
+msgstr "Orientaci√≥"
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
@@ -585,7 +585,7 @@ msgstr "Amunt"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Lluentor extranya/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Lluentor extranya/"
 "Regla de la H..."
 
 #
@@ -601,7 +601,7 @@ msgstr "Barra horitzontal"
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Lluentor extranya/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Lluentor extranya/"
 "Bala..."
 
 #
@@ -615,13 +615,13 @@ msgstr "Radi"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Lluentor extranya/"
-"BotÛ..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Lluentor extranya/"
+"Bot√≥..."
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
-msgstr "Radi d'incandescËncia"
+msgstr "Radi d'incandesc√®ncia"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
@@ -656,16 +656,16 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Lluentor extrany..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 msgid "Glow Size (pixels * 4)"
-msgstr "Mida de la incandescËncia (pÌxels * 4)"
+msgstr "Mida de la incandesc√®ncia (p√≠xels * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Imatge>/Script-Fu/Alfa a logotip/NeÛ extrany..."
+msgstr "<Imatge>/Script-Fu/Alfa a logotip/Ne√≥ extrany..."
 
 #
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/NeÛ AliË..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Ne√≥ Ali√®..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
@@ -691,12 +691,12 @@ msgstr ""
 #
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/⁄tils/D'ASCII a imatge..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/√ötils/D'ASCII a imatge..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
-msgstr "Quantitat de memÚria intermitja (% d'alÁada del text)"
+msgstr "Quantitat de mem√≤ria intermitja (% d'al√ßada del text)"
 
 #
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
@@ -719,7 +719,7 @@ msgstr "<Imatge>/Script-Fu/Alfa a logotip/Basic I..."
 #
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/B‡sic I..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/B√†sic I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
@@ -728,12 +728,12 @@ msgstr "<Imatge>/Script-Fu/Alfa a logo/Basic II..."
 #
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/B‡sic II..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/B√†sic II..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/BotÛ biselat senzill..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/Bot√≥ biselat senzill..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
@@ -761,40 +761,40 @@ msgstr "Color superior esquerra"
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/PatrÛ biselat/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Patr√≥ biselat/"
 "Fletxa..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/PatrÛ biselat/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Patr√≥ biselat/"
 "Bala..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
-msgstr "Di‡metre"
+msgstr "Di√†metre"
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/PatrÛ biselat/"
-"BotÛ..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Patr√≥ biselat/"
+"Bot√≥..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/PatrÛ biselat/"
-"EncapÁalament..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Patr√≥ biselat/"
+"Encap√ßalament..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/PatrÛ biselat/"
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Patr√≥ biselat/"
 "Regla de la H..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
@@ -803,7 +803,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
-msgstr "AlÁada"
+msgstr "Al√ßada"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
@@ -823,7 +823,7 @@ msgstr "Marcs intermitjos"
 #
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
-msgstr "En cabar torna a coenÁar"
+msgstr "En cabar torna a coen√ßar"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Max. Blur Radius"
@@ -845,7 +845,7 @@ msgstr "Mode barreja"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Custom Gradient"
-msgstr "GradaciÛ personalitzada"
+msgstr "Gradaci√≥ personalitzada"
 
 #
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -874,7 +874,7 @@ msgstr "Degradat"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
 msgid "Offset (pixels)"
-msgstr "DesplaÁament (pÌxels)"
+msgstr "Despla√ßament (p√≠xels)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
@@ -976,7 +976,7 @@ msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Talla-ho..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
-msgstr "¿rees blanques esculpides"
+msgstr "√Ärees blanques esculpides"
 
 #
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
@@ -1041,7 +1041,7 @@ msgstr "Perdre ombres"
 #
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Omple el fons amb un patrÛ"
+msgstr "Omple el fons amb un patr√≥"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
@@ -1050,7 +1050,7 @@ msgstr "Inverteix"
 #
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Keep Background"
-msgstr "mantÈ el fons"
+msgstr "mant√© el fons"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
@@ -1060,7 +1060,7 @@ msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Croma-ho..."
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome Balance"
-msgstr "BalanÁ de color"
+msgstr "Balan√ß de color"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
@@ -1078,11 +1078,11 @@ msgstr "Lluminositat del croma"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Chrome Saturation"
-msgstr "SaturaciÛ del croma"
+msgstr "Saturaci√≥ del croma"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome White Areas"
-msgstr "¿rees blanques del croma"
+msgstr "√Ärees blanques del croma"
 
 #
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
@@ -1095,7 +1095,7 @@ msgstr "Mapa de l'entorn"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight Balance"
-msgstr "Resalta el balanÁ"
+msgstr "Resalta el balan√ß"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
@@ -1108,7 +1108,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
-msgstr "DesplaÁaments (pÌxels * 2)"
+msgstr "Despla√ßaments (p√≠xels * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "<Image>/Script-Fu/Render/Circuit..."
@@ -1124,7 +1124,7 @@ msgstr "Desgranar el circuit"
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep Selection"
-msgstr "MantÈ la selecciÛ"
+msgstr "Mant√© la selecci√≥"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No Background (only for separate layer)"
@@ -1132,14 +1132,14 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify Mask Size"
-msgstr "Mida de la m‡scara oliosa"
+msgstr "Mida de la m√†scara oliosa"
 
 #
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate Layer"
-msgstr "SeparaciÛ de la capa"
+msgstr "Separaci√≥ de la capa"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
@@ -1170,19 +1170,19 @@ msgstr "Profunditat"
 #: plug-ins/script-fu/scripts/clothify.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
-msgstr "ElevaciÛ"
+msgstr "Elevaci√≥"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Imatge>/Script-Fu/Decor/Taca de cafË..."
+msgstr "<Imatge>/Script-Fu/Decor/Taca de caf√®..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
-"NomÈs fosc\n"
-"(Millor, perÚ nomÈs per imatges amb molt de blanc)"
+"Nom√©s fosc\n"
+"(Millor, per√≤ nom√©s per imatges amb molt de blanc)"
 
 #
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1191,12 +1191,12 @@ msgstr "Taques"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Llibre de cÚmic..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Llibre de c√≤mic..."
 
 #
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llibre de cÚmic..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llibre de c√≤mic..."
 
 #
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:7
@@ -1220,7 +1220,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Metall fred..."
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect Size (pixels)"
-msgstr "Mida de l'efecte (pÌxels)"
+msgstr "Mida de l'efecte (p√≠xels)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy Visible"
@@ -1234,12 +1234,12 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Vidre..."
 #
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Imatge>/Script-Fu/SelecciÛ/SelecciÛ de senyal de socors..."
+msgstr "<Imatge>/Script-Fu/Selecci√≥/Selecci√≥ de senyal de socors..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
-msgstr "Granularitat (1 Ès baix)"
+msgstr "Granularitat (1 √©s baix)"
 
 #
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
@@ -1258,7 +1258,7 @@ msgstr "Escampar"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "Llindar (MÈs gran 1<-->255 MÈs petit)"
+msgstr "Llindar (M√©s gran 1<-->255 M√©s petit)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
@@ -1290,13 +1290,13 @@ msgstr "Color"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
-msgstr "DesplaÁament en X"
+msgstr "Despla√ßament en X"
 
 #
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
-msgstr "DesplaÁament en Y"
+msgstr "Despla√ßament en Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
@@ -1349,12 +1349,12 @@ msgstr "Files/Columnes"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Imatge>/Script-Fu/SelecciÛ/Decolorar el contorn..."
+msgstr "<Imatge>/Script-Fu/Selecci√≥/Decolorar el contorn..."
 
 #
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
-msgstr "Aplica una m‡scara de capa generada"
+msgstr "Aplica una m√†scara de capa generada"
 
 #
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
@@ -1365,7 +1365,7 @@ msgstr "Mida de la vora"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
 msgid "Clear Unselected Maskarea"
-msgstr "Netejar l'‡rea de m‡scara no seleccionada"
+msgstr "Netejar l'√†rea de m√†scara no seleccionada"
 
 #
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
@@ -1381,7 +1381,7 @@ msgstr "Esvair cap a  %"
 #
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
-msgstr "Utilitza la selecciÛ de creixement"
+msgstr "Utilitza la selecci√≥ de creixement"
 
 #
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
@@ -1398,7 +1398,7 @@ msgstr "Nivell detallat"
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image Height"
-msgstr "AlÁada de la imatge"
+msgstr "Al√ßada de la imatge"
 
 #
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
@@ -1409,7 +1409,7 @@ msgstr "Amplada de la imatge"
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random Seed"
-msgstr "Desgranar aleatÚriament"
+msgstr "Desgranar aleat√≤riament"
 
 #
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
@@ -1426,7 +1426,7 @@ msgstr "Escala en Y"
 #
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/⁄tils/Mapa de tipus de lletra..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/√ötils/Mapa de tipus de lletra..."
 
 #
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
@@ -1470,20 +1470,20 @@ msgstr "Pes de les ombres (%)"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/CapÁalera "
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Cap√ßalera "
 "gran..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/CapÁalera "
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Cap√ßalera "
 "petita..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
-msgstr "EscapÁar"
+msgstr "Escap√ßar"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
@@ -1500,13 +1500,13 @@ msgstr "Resalta el color"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index Image"
-msgstr "Imatge Ìndex"
+msgstr "Imatge √≠ndex"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of Colors"
-msgstr "Nombre mÌnim de colors:"
+msgstr "Nombre m√≠nim de colors:"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
@@ -1518,7 +1518,7 @@ msgstr "Suprimeix el fons"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-By-Color Threshold"
-msgstr "Llindar de la selecciÛ del color"
+msgstr "Llindar de la selecci√≥ del color"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
@@ -1531,29 +1531,29 @@ msgstr "Ombres del color"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/Etiquetes "
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Etiquetes "
 "del conducte general..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/Etiqueta "
-"del botÛ del conducte..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Etiqueta "
+"del bot√≥ del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/Etiqueta "
-"del subbotÛ del conducte..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Etiqueta "
+"del subbot√≥ del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de p‡gina web/Gimp.org/Etiqueta "
-"del subsubbotÛ del conducte..."
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de p√†gina web/Gimp.org/Etiqueta "
+"del subsubbot√≥ del conducte..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
@@ -1566,22 +1566,22 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Glossari..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
-msgstr "GradaciÛ de la barreja (Contorn)"
+msgstr "Gradaci√≥ de la barreja (Contorn)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend Gradient (Text)"
-msgstr "GradaciÛ de la barreja (Text)"
+msgstr "Gradaci√≥ de la barreja (Text)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (Outline)"
-msgstr "PatrÛ (Contorn)"
+msgstr "Patr√≥ (Contorn)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Overlay)"
-msgstr "PatrÛ ("
+msgstr "Patr√≥ ("
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
@@ -1597,15 +1597,15 @@ msgstr "Ombres"
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Use Pattern Overlay"
-msgstr "Utilitza la superposiciÛ del patrÛ"
+msgstr "Utilitza la superposici√≥ del patr√≥"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Utilitza el patrÛ pel contorn en comptes de degradar"
+msgstr "Utilitza el patr√≥ pel contorn en comptes de degradar"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Utilitza el patrÛ pel text en comptes de degradar"
+msgstr "Utilitza el patr√≥ pel text en comptes de degradar"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
@@ -1618,7 +1618,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Brillantor intensa..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect Size (pixels * 3)"
-msgstr "Mida de l'efecte (pÌxels * 3)"
+msgstr "Mida de l'efecte (p√≠xels * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
@@ -1631,18 +1631,18 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Biselat de gradient..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "Bevel Height (Sharpness)"
-msgstr "Biselat vertical (NÌtid)"
+msgstr "Biselat vertical (N√≠tid)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Border Size (pixels)"
-msgstr "Mida de la vora (pÌxels)"
+msgstr "Mida de la vora (p√≠xels)"
 
 #
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/⁄tils/Gradient personalitzat..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/√ötils/Gradient personalitzat..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 #, fuzzy
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Imatge>/Script-Fu/Utils/Dibuixa un gr‡fic HSV..."
+msgstr "<Imatge>/Script-Fu/Utils/Dibuixa un gr√†fic HSV..."
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
@@ -1681,7 +1681,7 @@ msgstr ""
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "Graph Scale"
-msgstr "Escala del gr‡fic"
+msgstr "Escala del gr√†fic"
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
@@ -1695,7 +1695,7 @@ msgstr "Y inicial"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Utilitza la selecciÛ del lÌmit en comptes d'avall"
+msgstr "Utilitza la selecci√≥ del l√≠mit en comptes d'avall"
 
 #
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
@@ -1719,7 +1719,7 @@ msgstr "<Imatge>/Script-Fu/Utils/Mostra l'estructura de la imatge..."
 #
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
-msgstr "Aplica una m‡scara de capa (o descarta)"
+msgstr "Aplica una m√†scara de capa (o descarta)"
 
 #
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
@@ -1773,12 +1773,12 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Terra..."
 #
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
-msgstr "AlÁada del terra"
+msgstr "Al√ßada del terra"
 
 #
 #: plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea Depth"
-msgstr "Profunditat m‡xima"
+msgstr "Profunditat m√†xima"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "<Image>/Script-Fu/Render/Lava..."
@@ -1802,21 +1802,21 @@ msgstr "Utilitza el degradat actual"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr "<Imatge>/Script-Fu/Render/Nova de la lÌnia..."
+msgstr "<Imatge>/Script-Fu/Render/Nova de la l√≠nia..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Number of Lines"
-msgstr "N˙mero de lÌnies"
+msgstr "N√∫mero de l√≠nies"
 
 #
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Offset Radius"
-msgstr "Radi de desplaÁament"
+msgstr "Radi de despla√ßament"
 
 #
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Randomness"
-msgstr "Car‡cter aleatori"
+msgstr "Car√†cter aleatori"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Sharpness (degrees)"
@@ -1825,12 +1825,12 @@ msgstr "Nitidesa (graus)"
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El∑liptic, ploma..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El¬∑liptic, ploma..."
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El∑lÌptic..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El¬∑l√≠ptic..."
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
@@ -1846,7 +1846,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/Rectangular..."
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Description"
-msgstr "DescripciÛ"
+msgstr "Descripci√≥"
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:6
@@ -1861,12 +1861,12 @@ msgstr "Espaiat"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/NeÛ..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Ne√≥..."
 
 #
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/NeÛ..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Ne√≥..."
 
 #
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
@@ -1875,17 +1875,17 @@ msgstr "Crea ombres"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect Size (pixels * 5)"
-msgstr "Mida de l'efecte (pÌxels * 5)"
+msgstr "Mida de l'efecte (p√≠xels * 5)"
 
 #
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Logotip/Text d'impressiÛ de notÌcies..."
+"<Quadre d'eines>/Extensions/Script-Fu/Logotip/Text d'impressi√≥ de not√≠cies..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
-msgstr "Mida de la cel∑la (pÌxels)"
+msgstr "Mida de la cel¬∑la (p√≠xels)"
 
 #
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -1927,7 +1927,7 @@ msgstr "Interpola"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative Distance of Horizon"
-msgstr "Dist‡ncia relativa de l'horitzÛ"
+msgstr "Dist√†ncia relativa de l'horitz√≥"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative Length of Shadow"
@@ -1944,12 +1944,12 @@ msgstr "Quantitat d'arestes"
 #
 #: plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel Amount"
-msgstr "Quantitat de pÌxels"
+msgstr "Quantitat de p√≠xels"
 
 #
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
-msgstr "PÌxelitza"
+msgstr "P√≠xelitza"
 
 #
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
@@ -1968,7 +1968,7 @@ msgstr "Color inferior (Actiu)"
 #
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
 msgid "Not Pressed"
-msgstr "PressiÛ"
+msgstr "Pressi√≥"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Not Pressed (Active)"
@@ -1985,7 +1985,7 @@ msgstr "Omplenar en Y"
 #
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round Ratio"
-msgstr "R‡tio d'arrodoniment"
+msgstr "R√†tio d'arrodoniment"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text Color (Active)"
@@ -2021,7 +2021,7 @@ msgstr "Mosaic"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/OndulaciÛ..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Ondulaci√≥..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
@@ -2036,11 +2036,11 @@ msgstr "Comportament"
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
-msgstr "N˙mero de marcs"
+msgstr "N√∫mero de marcs"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
-msgstr "Forma de rÌnxol"
+msgstr "Forma de r√≠nxol"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 #, fuzzy
@@ -2062,7 +2062,7 @@ msgstr "Afegeix el fons"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
 msgid "Add Drop-Shadow"
-msgstr "Afegeix decrËixer ombres"
+msgstr "Afegeix decr√®ixer ombres"
 
 #
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
@@ -2071,7 +2071,7 @@ msgstr "Radi de l'aresta"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr "<Imatge>/Script-Fu/SelecciÛ/per pintar..."
+msgstr "<Imatge>/Script-Fu/Selecci√≥/per pintar..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 #, fuzzy
@@ -2081,12 +2081,12 @@ msgstr "Pinzell UI"
 #
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "<Imatge>/Script-Fu/SelecciÛ/Per imatge"
+msgstr "<Imatge>/Script-Fu/Selecci√≥/Per imatge"
 
 #
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Imatge>/Script-Fu/SelecciÛ/Arrodonir..."
+msgstr "<Imatge>/Script-Fu/Selecci√≥/Arrodonir..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
@@ -2094,7 +2094,7 @@ msgstr "Radi relatiu"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Imatge>/Script-Fu/Decor/TransparËncia..."
+msgstr "<Imatge>/Script-Fu/Decor/Transpar√®ncia..."
 
 #
 #: plug-ins/script-fu/scripts/slide.scm.h:3
@@ -2104,7 +2104,7 @@ msgstr "Color del tipus de lletra"
 #
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr "N˙mero"
+msgstr "N√∫mero"
 
 #
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -2114,25 +2114,25 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma SOTA..."
 #
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Text r‡pid..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Text r√†pid..."
 
 #
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Miscel∑l‡nia/Esfera..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Miscel¬∑l√†nia/Esfera..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
-msgstr "Il∑luminaciÛ (graus)"
+msgstr "Il¬∑luminaci√≥ (graus)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
-msgstr "Radi (pÌxels)"
+msgstr "Radi (p√≠xels)"
 
 #
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "Sphere Color"
-msgstr "Color esfËric"
+msgstr "Color esf√®ric"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
@@ -2145,7 +2145,7 @@ msgstr "Marcs"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "Õndex a n colors (0 = rom‡ en RGB)"
+msgstr "√çndex a n colors (0 = rom√† en RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
@@ -2195,12 +2195,12 @@ msgstr "Encercla amb triangles"
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 #, fuzzy
 msgid "Hexagon"
-msgstr "Hex‡gons"
+msgstr "Hex√†gons"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 #, fuzzy
 msgid "Hole Ratio"
-msgstr "R‡tio de l'escala:"
+msgstr "R√†tio de l'escala:"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 #, fuzzy
@@ -2214,7 +2214,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 #, fuzzy
 msgid "Margin (pixels)"
-msgstr "Radi (pÌxels)"
+msgstr "Radi (p√≠xels)"
 
 #
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
@@ -2230,7 +2230,7 @@ msgstr "Llapis"
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 #, fuzzy
 msgid "Pentagon"
-msgstr "OrientaciÛ"
+msgstr "Orientaci√≥"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
@@ -2304,7 +2304,7 @@ msgstr "Color d'impulsos"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Effect Size (pixels * 30)"
-msgstr "Mida de l'efecte (pÌxels * 30)"
+msgstr "Mida de l'efecte (p√≠xels * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
@@ -2317,7 +2317,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cua d'estel..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
-msgstr "Mida de l'efecte (pÌxels * 4)"
+msgstr "Mida de l'efecte (p√≠xels * 4)"
 
 #
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -2327,7 +2327,7 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Mosaic de remolins..."
 #
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
-msgstr "Quantitat de rÌnxols"
+msgstr "Quantitat de r√≠nxols"
 
 #
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
@@ -2339,7 +2339,7 @@ msgstr ""
 #
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
-msgstr "N˙mero de vegades que fa remolins"
+msgstr "N√∫mero de vegades que fa remolins"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter Size"
@@ -2348,16 +2348,16 @@ msgstr "Mida un quart"
 #
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl Angle"
-msgstr "Angle del remolÌ"
+msgstr "Angle del remol√≠"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/TraÁa de partÌcula..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Tra√ßa de part√≠cula..."
 
 #
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/TraÁa de partÌcula..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Tra√ßa de part√≠cula..."
 
 #
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -2367,7 +2367,7 @@ msgstr "Color base"
 #
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge Only"
-msgstr "NomÈs aresta"
+msgstr "Nom√©s aresta"
 
 #
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
@@ -2405,11 +2405,11 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Texturitzat..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
-msgstr "S'est‡ finalitzant la barreja"
+msgstr "S'est√† finalitzant la barreja"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr "Hex‡gons"
+msgstr "Hex√†gons"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
@@ -2417,7 +2417,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr "Oct‡gons"
+msgstr "Oct√†gons"
 
 #
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
@@ -2432,7 +2432,7 @@ msgstr "S'estan iniciant les barreges"
 #
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text Pattern"
-msgstr "PatrÛ del text"
+msgstr "Patr√≥ del text"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "<Image>/Filters/Blur/Tileable Blur..."
@@ -2465,7 +2465,7 @@ msgstr "RLE"
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Logotips/CapÁalera de tÌtol de web..."
+"<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cap√ßalera de t√≠tol de web..."
 
 #
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
@@ -2484,7 +2484,7 @@ msgstr "<Imatge>/Script-Fu/Alquimia/Mpascara desafilada..."
 #
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
-msgstr "Opacitat de la m‡scara"
+msgstr "Opacitat de la m√†scara"
 
 #
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
@@ -2502,7 +2502,7 @@ msgstr "Amplia"
 #
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
-msgstr "DirecciÛ d'inversiÛ"
+msgstr "Direcci√≥ d'inversi√≥"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
@@ -2564,11 +2564,11 @@ msgstr "Perdre opacitat de les ombres"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop Shadow X Offset"
-msgstr "Perdre desplaÁament en X de les ombres"
+msgstr "Perdre despla√ßament en X de les ombres"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop Shadow Y Offset"
-msgstr "Perdre desplaÁament en Y de les ombres"
+msgstr "Perdre despla√ßament en Y de les ombres"
 
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
@@ -2578,23 +2578,23 @@ msgstr "Resalta la opacitat"
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight X Offset"
-msgstr "Resaltar el desplaÁament en X"
+msgstr "Resaltar el despla√ßament en X"
 
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
-msgstr "Resalta el desplaÁament en Y"
+msgstr "Resalta el despla√ßament en Y"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 msgstr ""
 "<Quadre d'eines>/Extensions/Navegador web/Desenvolupador de les preguntes "
-"mÈs freq¸ents"
+"m√©s freq√ºents"
 
 #: plug-ins/webbrowser/web-browser.scm.h:2
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 msgstr ""
-"<Quadre d'eines>/Extensions/Navegador web/Errors de programaciÛ del GIMP"
+"<Quadre d'eines>/Extensions/Navegador web/Errors de programaci√≥ del GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:3
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
@@ -2610,11 +2610,11 @@ msgstr "<Quadre d'eines>/Extensions/Navegador web/Tutorials del GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:6
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/DocumentaciÛ"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Documentaci√≥"
 
 #: plug-ins/webbrowser/web-browser.scm.h:7
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Desc‡rrega"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Desc√†rrega"
 
 #: plug-ins/webbrowser/web-browser.scm.h:8
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
@@ -2626,7 +2626,7 @@ msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm.h:10
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/EnllaÁos"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Enlla√ßos"
 
 #: plug-ins/webbrowser/web-browser.scm.h:11
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
@@ -2651,14 +2651,14 @@ msgstr "<Quadre d'eines>/Extensions/Navegador web/'Grokking' el GIMP"
 #: plug-ins/webbrowser/web-browser.scm.h:16
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr ""
-"<Quadre d'eines>/Extensions/Navegador web/Registre de la integraciÛ "
-"autom‡tica"
+"<Quadre d'eines>/Extensions/Navegador web/Registre de la integraci√≥ "
+"autom√†tica"
 
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
-"<Quadre d'eines>/Extensions/Navegador web/Usuari de les preguntes mÈs "
-"freq¸ents"
+"<Quadre d'eines>/Extensions/Navegador web/Usuari de les preguntes m√©s "
+"freq√ºents"
 
 #~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 #~ msgstr "<Imatge>/Script-Fu/Render/Fer un sistema de graella..."
@@ -2675,7 +2675,7 @@ msgstr ""
 #~ "<Quadre d'eines>/Extensions/Script-Fu/Patrons/corves de cercles girants..."
 
 #~ msgid "Base Radius (pixels)"
-#~ msgstr "Radi base (pÌxels)"
+#~ msgstr "Radi base (p√≠xels)"
 
 #~ msgid "Erase before Draw"
 #~ msgstr "Esborra abans de dibuixar"
@@ -2694,14 +2694,14 @@ msgstr ""
 #~ "At least one font you've choosen is invalid.\n"
 #~ "Please check your settings.\n"
 #~ msgstr ""
-#~ "Com a mÌnim un dels tipus de lletra que heu triat no Ès v‡lid.\n"
-#~ "Si us plau, reviseu els par‡metres.\n"
+#~ "Com a m√≠nim un dels tipus de lletra que heu triat no √©s v√†lid.\n"
+#~ "Si us plau, reviseu els par√†metres.\n"
 
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Imatge>/Script-Fu/Alfa a logo/SelecciÛ a imatge animada..."
+#~ msgstr "<Imatge>/Script-Fu/Alfa a logo/Selecci√≥ a imatge animada..."
 
 #~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtre d'animaciÛ per a totes les cÚpies"
+#~ msgstr "Filtre d'animaci√≥ per a totes les c√≤pies"
 
 #
 #~ msgid "Fill with BG Color"
@@ -2709,7 +2709,7 @@ msgstr ""
 
 #
 #~ msgid "Number of Copies"
-#~ msgstr "Nombre mÌnim de colors:"
+#~ msgstr "Nombre m√≠nim de colors:"
 
 #~ msgid "Close"
 #~ msgstr "Tanca"
@@ -2721,13 +2721,13 @@ msgstr ""
 #~ msgstr "D'acord"
 
 #~ msgid "Cancel"
-#~ msgstr "Cancel∑la"
+#~ msgstr "Cancel¬∑la"
 
 #~ msgid "NOT SET"
 #~ msgstr "NO DEFINIT"
 
 #~ msgid "DB Browser (init...)"
-#~ msgstr "Base de dades del Navegador DB (s'est‡ iniciant...)"
+#~ msgstr "Base de dades del Navegador DB (s'est√† iniciant...)"
 
 #~ msgid "Apply"
 #~ msgstr "Aplica"
@@ -2742,16 +2742,16 @@ msgstr ""
 #~ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #~ msgid "Version %s brought to you by"
-#~ msgstr "La versiÛ %s que us porta"
+#~ msgstr "La versi√≥ %s que us porta"
 
 #~ msgid "Please visit http://www.gimp.org/ for more info"
-#~ msgstr "Si us plau, visiteu http://www.gimp.org/ per a mÈs informaciÛ"
+#~ msgstr "Si us plau, visiteu http://www.gimp.org/ per a m√©s informaci√≥"
 
 #~ msgid "Rate:"
 #~ msgstr "Velocitat:"
 
 #~ msgid "Pressure:"
-#~ msgstr "PressiÛ:"
+#~ msgstr "Pressi√≥:"
 
 #~ msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 #~ msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
@@ -2769,13 +2769,13 @@ msgstr ""
 #~ msgstr "Inici del GIMP"
 
 #~ msgid "parsing \"%s\"\n"
-#~ msgstr "an‡lisi \"%s\"\n"
+#~ msgstr "an√†lisi \"%s\"\n"
 
 #~ msgid "Looking for data files"
 #~ msgstr "S'estan buscant els fitxers de dades"
 
 #~ msgid "Parasites"
-#~ msgstr "Par‡sits"
+#~ msgstr "Par√†sits"
 
 #~ msgid "Palettes"
 #~ msgstr "Paletes"
@@ -2799,7 +2799,7 @@ msgstr ""
 #~ msgstr "Surt"
 
 #~ msgid "Bezier path already closed."
-#~ msgstr "El camÌ de Bezier ja Ès tancat."
+#~ msgstr "El cam√≠ de Bezier ja √©s tancat."
 
 #~ msgid "Corrupt curve"
 #~ msgstr "Corba corrupta"
@@ -2811,7 +2811,7 @@ msgstr ""
 #~ msgstr "No s'ha pogut pintar amb el pinzell"
 
 #~ msgid "Offset:"
-#~ msgstr "CompensaciÛ:"
+#~ msgstr "Compensaci√≥:"
 
 #~ msgid "FG to Transparent"
 #~ msgstr "De primer terme a transparent"
@@ -2829,19 +2829,19 @@ msgstr ""
 #~ msgstr "Radial"
 
 #~ msgid "Conical (symmetric)"
-#~ msgstr "CÚnic (simËtric)"
+#~ msgstr "C√≤nic (sim√®tric)"
 
 #~ msgid "Conical (asymmetric)"
-#~ msgstr "CÚnic (asimËtric)"
+#~ msgstr "C√≤nic (asim√®tric)"
 
 #~ msgid "Shapeburst (angular)"
-#~ msgstr "AdaptaciÛ a la forma (angular)"
+#~ msgstr "Adaptaci√≥ a la forma (angular)"
 
 #~ msgid "Shapeburst (spherical)"
-#~ msgstr "AdaptaciÛ a la forma (esfËrica)"
+#~ msgstr "Adaptaci√≥ a la forma (esf√®rica)"
 
 #~ msgid "Shapeburst (dimpled)"
-#~ msgstr "AdaptaciÛ a la forma (foradada)"
+#~ msgstr "Adaptaci√≥ a la forma (foradada)"
 
 #~ msgid "Spiral (clockwise)"
 #~ msgstr "Espiral (en el sentit de les agulles del rellotge)"
@@ -2868,7 +2868,7 @@ msgstr ""
 #~ msgstr "Llindar:"
 
 #~ msgid "Blend: Invalid for indexed images."
-#~ msgstr "Barreja: No Ès v‡lida per a imatges indexades."
+#~ msgstr "Barreja: No √©s v√†lida per a imatges indexades."
 
 #~ msgid "Blend: 0, 0"
 #~ msgstr "Barreja: 0, 0"
@@ -2883,7 +2883,7 @@ msgstr ""
 #~ msgstr "Brillantor-Contrast"
 
 #~ msgid "Brightness-Contrast does not operate on indexed drawables."
-#~ msgstr "L'opciÛ Brillantor-contrast no funciona en imatges indexades."
+#~ msgstr "L'opci√≥ Brillantor-contrast no funciona en imatges indexades."
 
 #~ msgid "Reset"
 #~ msgstr "Reinicialitza"
@@ -2895,7 +2895,7 @@ msgstr ""
 #~ msgstr "Contrast:"
 
 #~ msgid "Preview"
-#~ msgstr "Vista prËvia"
+#~ msgstr "Vista pr√®via"
 
 #~ msgid "Brush Editor"
 #~ msgstr "Editor del pinzell"
@@ -2904,7 +2904,7 @@ msgstr ""
 #~ msgstr "Duresa:"
 
 #~ msgid "Aspect Ratio:"
-#~ msgstr "R‡tio de l'aspecte:"
+#~ msgstr "R√†tio de l'aspecte:"
 
 #~ msgid "Angle:"
 #~ msgstr "Angle:"
@@ -2952,16 +2952,16 @@ msgstr ""
 #~ msgstr "No s'ha pogut omplir amb el cubell."
 
 #~ msgid "No available patterns for this operation."
-#~ msgstr "No hi ha patrons per a aquesta operaciÛ."
+#~ msgstr "No hi ha patrons per a aquesta operaci√≥."
 
 #~ msgid "By Color Selection"
-#~ msgstr "Amb la selecciÛ de color"
+#~ msgstr "Amb la selecci√≥ de color"
 
 #~ msgid "Inactive"
 #~ msgstr "Inactiu"
 
 #~ msgid "Selection Mode"
-#~ msgstr "Mode de selecciÛ"
+#~ msgstr "Mode de selecci√≥"
 
 #~ msgid "Replace"
 #~ msgstr "Substitueix"
@@ -2976,19 +2976,19 @@ msgstr ""
 #~ msgstr "Tot"
 
 #~ msgid "copy"
-#~ msgstr "cÚpia"
+#~ msgstr "c√≤pia"
 
 #~ msgid "%s copy"
-#~ msgstr "%s cÚpia"
+#~ msgstr "%s c√≤pia"
 
 #~ msgid "Selection Mask"
-#~ msgstr "M‡scara de la selecciÛ"
+#~ msgstr "M√†scara de la selecci√≥"
 
 #~ msgid "Y:"
 #~ msgstr "Y:"
 
 #~ msgid "Offset by (x/2),(y/2)"
-#~ msgstr "CompensaciÛ amb (x/2),(y/2)"
+#~ msgstr "Compensaci√≥ amb (x/2),(y/2)"
 
 #~ msgid "New Channel"
 #~ msgstr "Canal nou"
@@ -3013,7 +3013,7 @@ msgstr ""
 #~ msgstr "Suprimeix el canal"
 
 #~ msgid "Empty Channel Copy"
-#~ msgstr "Buida el canal cÚpia"
+#~ msgstr "Buida el canal c√≤pia"
 
 #~ msgid "Red"
 #~ msgstr "Vermell"
@@ -3046,7 +3046,7 @@ msgstr ""
 #~ msgstr "Origen"
 
 #~ msgid "Alignment"
-#~ msgstr "AlineaciÛ"
+#~ msgstr "Alineaci√≥"
 
 #~ msgid "Non Aligned"
 #~ msgstr "No alineat"
@@ -3058,10 +3058,10 @@ msgstr ""
 #~ msgstr "Registrat"
 
 #~ msgid "No patterns available for this operation."
-#~ msgstr "No hi ha patrons disponibles per a aquesta operaciÛ."
+#~ msgstr "No hi ha patrons disponibles per a aquesta operaci√≥."
 
 #~ msgid "Color balance operates only on RGB color drawables."
-#~ msgstr "El balanÁ de color nomÈs funciona en dibuixos amb colors RGB."
+#~ msgstr "El balan√ß de color nom√©s funciona en dibuixos amb colors RGB."
 
 #~ msgid "Midtones"
 #~ msgstr "Tons mitjans"
@@ -3109,7 +3109,7 @@ msgstr ""
 #~ msgstr "Trio hexadecimal:"
 
 #~ msgid "Index:"
-#~ msgstr "Õndex:"
+#~ msgstr "√çndex:"
 
 #~ msgid "Hex Triplet"
 #~ msgstr "Trio hexadecimal"
@@ -3142,36 +3142,36 @@ msgstr ""
 #~ msgstr "cap"
 
 #~ msgid "Feather Selection"
-#~ msgstr "SelecciÛ de la ploma"
+#~ msgstr "Selecci√≥ de la ploma"
 
 #~ msgid "Feather Selection by:"
-#~ msgstr "SelecciÛ de la ploma per:"
+#~ msgstr "Selecci√≥ de la ploma per:"
 
 #~ msgid "Shrink Selection by:"
-#~ msgstr "SelecciÛ de l'encongiment per:"
+#~ msgstr "Selecci√≥ de l'encongiment per:"
 
 #~ msgid "Shrink from image border"
 #~ msgstr "Encongeix des de la vora de la imatge"
 
 #~ msgid "Grow Selection by:"
-#~ msgstr "SelecciÛ de l'augment per:"
+#~ msgstr "Selecci√≥ de l'augment per:"
 
 #~ msgid "Border Selection by:"
-#~ msgstr "SelecciÛ del contorn per:"
+#~ msgstr "Selecci√≥ del contorn per:"
 
 #~ msgid "Resize Error: Both width and height must be greater than zero."
 #~ msgstr ""
-#~ "S'ha produÔt un error en el canvi de la mida: tant l'amplada com l'alÁada "
-#~ "han de ser mÈs grans de zero."
+#~ "S'ha produ√Øt un error en el canvi de la mida: tant l'amplada com l'al√ßada "
+#~ "han de ser m√©s grans de zero."
 
 #~ msgid "Indexed Color Conversion"
-#~ msgstr "ConversiÛ indexada de color"
+#~ msgstr "Conversi√≥ indexada de color"
 
 #~ msgid "General Palette Options"
 #~ msgstr "Opcions de la paleta general"
 
 #~ msgid "Generate Optimal Palette:"
-#~ msgstr "Genera la paleta Úptima:"
+#~ msgstr "Genera la paleta √≤ptima:"
 
 #~ msgid "# of Colors:"
 #~ msgstr "Nombre de colors:"
@@ -3192,22 +3192,22 @@ msgstr ""
 #~ msgstr "Utilitza la paleta blanc/negre (1 bit)"
 
 #~ msgid "No Color Dithering"
-#~ msgstr "Sense simulaciÛ de color"
+#~ msgstr "Sense simulaci√≥ de color"
 
 #~ msgid "Positioned Color Dithering"
-#~ msgstr "SimulaciÛ de color posicionat"
+#~ msgstr "Simulaci√≥ de color posicionat"
 
 #~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-#~ msgstr "SimulaciÛ de color Floyd-Steinberg (barreja reduÔda de color)"
+#~ msgstr "Simulaci√≥ de color Floyd-Steinberg (barreja redu√Øda de color)"
 
 #~ msgid "Floyd-Steinberg Color Dithering (Normal)"
-#~ msgstr "SimulaciÛ de color Floyd-Steinberg (normal)"
+#~ msgstr "Simulaci√≥ de color Floyd-Steinberg (normal)"
 
 #~ msgid "Enable Dithering of Transparency"
-#~ msgstr "Habilita la simulaciÛ de la transparËncia"
+#~ msgstr "Habilita la simulaci√≥ de la transpar√®ncia"
 
 #~ msgid "[ Warning ]"
-#~ msgstr "[ AdvertËncia ]"
+#~ msgstr "[ Advert√®ncia ]"
 
 #~ msgid ""
 #~ "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
@@ -3217,7 +3217,7 @@ msgstr ""
 #~ msgstr ""
 #~ "Esteu intentant convertir una imatge amb alfa/capes de RGB/Gris a "
 #~ "INDEXAT.\n"
-#~ "No haurieu de generar una paleta amb mÈs de 255 colors si voleu crear un "
+#~ "No haurieu de generar una paleta amb m√©s de 255 colors si voleu crear un "
 #~ "fitxer transparent o un GIF animat amb aquesta imatge."
 
 #~ msgid "Select Custom Palette"
@@ -3230,10 +3230,10 @@ msgstr ""
 #~ msgstr "Afinar"
 
 #~ msgid "Crop & Resize"
-#~ msgstr "EscapÁa i canvia la mida"
+#~ msgstr "Escap√ßa i canvia la mida"
 
 #~ msgid "Current Layer only"
-#~ msgstr "NomÈs la capa actual"
+#~ msgstr "Nom√©s la capa actual"
 
 #~ msgid "Allow Enlarging"
 #~ msgstr "Permet les ampliacions"
@@ -3245,13 +3245,13 @@ msgstr ""
 #~ msgstr "Canvi de mida"
 
 #~ msgid "Crop: "
-#~ msgstr "EscapÁa: "
+#~ msgstr "Escap√ßa: "
 
 #~ msgid "Crop: 0 x 0"
-#~ msgstr "EscapÁar: 0 x 0"
+#~ msgstr "Escap√ßar: 0 x 0"
 
 #~ msgid "Crop & Resize Information"
-#~ msgstr "InformaciÛ d'escapÁat i canvi de mida"
+#~ msgstr "Informaci√≥ d'escap√ßat i canvi de mida"
 
 #~ msgid "Origin X:"
 #~ msgstr "Origen X:"
@@ -3260,10 +3260,10 @@ msgstr ""
 #~ msgstr "Amplada:"
 
 #~ msgid "Height:"
-#~ msgstr "AlÁada:"
+#~ msgstr "Al√ßada:"
 
 #~ msgid "From Selection"
-#~ msgstr "Des de la selecciÛ"
+#~ msgstr "Des de la selecci√≥"
 
 #~ msgid "Auto Shrink"
 #~ msgstr "Autoencongiment"
@@ -3296,7 +3296,7 @@ msgstr ""
 #~ msgstr "Carrega/Desa les corbes"
 
 #~ msgid "Desaturate operates only on RGB color drawables."
-#~ msgstr "La desaturaciÛ nomÈs funciona en dibuixables de color RGB."
+#~ msgstr "La desaturaci√≥ nom√©s funciona en dibuixables de color RGB."
 
 #~ msgid "Device Status"
 #~ msgstr "Estat del dispositiu"
@@ -3305,13 +3305,13 @@ msgstr ""
 #~ msgstr "Capa enganxada"
 
 #~ msgid "Remove the selected entry from the index"
-#~ msgstr "Elimina de l'Ìndex les entrades seleccionades"
+#~ msgstr "Elimina de l'√≠ndex les entrades seleccionades"
 
 #~ msgid "Document Index"
-#~ msgstr "Õndex del document"
+#~ msgstr "√çndex del document"
 
 #~ msgid "Exposure:"
-#~ msgstr "ExposiciÛ:"
+#~ msgstr "Exposici√≥:"
 
 #~ msgid "Dodge"
 #~ msgstr "Esvair"
@@ -3356,7 +3356,7 @@ msgstr ""
 #~ msgstr "Escriu tots els errors al fitxer..."
 
 #~ msgid "Write selection to file..."
-#~ msgstr "Escriu la selecciÛ al fitxer..."
+#~ msgstr "Escriu la selecci√≥ al fitxer..."
 
 #~ msgid ""
 #~ "You are trying to create an image which\n"
@@ -3372,25 +3372,25 @@ msgstr ""
 #~ "preferences dialog."
 #~ msgstr ""
 #~ "Esteu intentant de crear una imatge que\n"
-#~ "tÈ una mida inicial de %s.\n"
+#~ "t√© una mida inicial de %s.\n"
 #~ "\n"
 #~ "Seleccioneu D'acord si voleu crear aquesta imatge.\n"
-#~ "Seleccioneu Cancel∑lar si no voleu\n"
+#~ "Seleccioneu Cancel¬∑lar si no voleu\n"
 #~ "crear una imatge tan gran.\n"
 #~ "\n"
-#~ "Per tal d'evitar l'apariciÛ d'aquest di‡leg,\n"
-#~ "augmenteu el par‡metre \"Mida m‡xima de la imatge\"\n"
+#~ "Per tal d'evitar l'aparici√≥ d'aquest di√†leg,\n"
+#~ "augmenteu el par√†metre \"Mida m√†xima de la imatge\"\n"
 #~ "(actualment %s) en el\n"
-#~ "di‡leg de preferËncies."
+#~ "di√†leg de prefer√®ncies."
 
 #~ msgid "Confirm Image Size"
 #~ msgstr "Confirmeu la mida de la imatge"
 
 #~ msgid "Resolution X:"
-#~ msgstr "ResoluciÛ en X:"
+#~ msgstr "Resoluci√≥ en X:"
 
 #~ msgid "pixels/%a"
-#~ msgstr "pÌxels/%a"
+#~ msgstr "p√≠xels/%a"
 
 #~ msgid "Load Image"
 #~ msgstr "Carrega la imatge"
@@ -3403,10 +3403,10 @@ msgstr ""
 #~ "Preview"
 #~ msgstr ""
 #~ "Genera una\n"
-#~ "previsualitzaciÛ"
+#~ "previsualitzaci√≥"
 
 #~ msgid "No Selection."
-#~ msgstr "Cap selecciÛ."
+#~ msgstr "Cap selecci√≥."
 
 #~ msgid ""
 #~ "Save failed.\n"
@@ -3432,7 +3432,7 @@ msgstr ""
 #~ "No hi ha cap nom de fitxer associat a aquesta imatge"
 
 #~ msgid "Yes"
-#~ msgstr "SÌ"
+#~ msgstr "S√≠"
 
 #~ msgid "No"
 #~ msgstr "No"
@@ -3441,13 +3441,13 @@ msgstr ""
 #~ msgstr "Obre"
 
 #~ msgid "(This thumbnail may be out of date)"
-#~ msgstr "(…s possible que aquesta miniatura sigui obsoleta)"
+#~ msgstr "(√âs possible que aquesta miniatura sigui obsoleta)"
 
 #~ msgid "(No Information)"
-#~ msgstr "(Sense informaciÛ)"
+#~ msgstr "(Sense informaci√≥)"
 
 #~ msgid "(Thumbnail saving is disabled)"
-#~ msgstr "(S'ha inhabilitat l'opciÛ de desar miniatures)"
+#~ msgstr "(S'ha inhabilitat l'opci√≥ de desar miniatures)"
 
 #~ msgid "(Could not write thumbnail file)"
 #~ msgstr "(No s'ha pogut escriure el fitxer de miniatures)"
@@ -3456,7 +3456,7 @@ msgstr ""
 #~ msgstr "(No s'ha escrit el fitxer de miniatures)"
 
 #~ msgid "No preview available"
-#~ msgstr "No hi ha cap previsualitzaciÛ disponible"
+#~ msgstr "No hi ha cap previsualitzaci√≥ disponible"
 
 #~ msgid "(could not make preview)"
 #~ msgstr "(No s'ha pogut previsualitzar)"
@@ -3491,17 +3491,17 @@ msgstr ""
 #~ "Cannot anchor this layer because\n"
 #~ "it is not a floating selection."
 #~ msgstr ""
-#~ "No es pot ancorar aquesta capa perquË\n"
-#~ "no Ès una selecciÛ flotant"
+#~ "No es pot ancorar aquesta capa perqu√®\n"
+#~ "no √©s una selecci√≥ flotant"
 
 #~ msgid ""
 #~ "Cannot create a new layer from the floating\n"
 #~ "selection because it belongs to a\n"
 #~ "layer mask or channel."
 #~ msgstr ""
-#~ "No es pot crear una capa nova a partir de la selecciÛ\n"
-#~ "flotant perquË pertany a una\n"
-#~ "m‡scara de capa o canal."
+#~ "No es pot crear una capa nova a partir de la selecci√≥\n"
+#~ "flotant perqu√® pertany a una\n"
+#~ "m√†scara de capa o canal."
 
 #~ msgid "RGB-empty"
 #~ msgstr "RGB-buit"
@@ -3528,7 +3528,7 @@ msgstr ""
 #~ msgstr "Configura"
 
 #~ msgid "Color Display Filters"
-#~ msgstr "Filtres de visualitzaciÛ de colors"
+#~ msgstr "Filtres de visualitzaci√≥ de colors"
 
 #~ msgid "Available Filters"
 #~ msgstr "Filtres disponibles"
@@ -3547,11 +3547,11 @@ msgstr ""
 #~ "Unable to cut/copy because the selected\n"
 #~ "region is empty."
 #~ msgstr ""
-#~ "No s'ha pogut retallar/copiar perquË l'‡rea\n"
-#~ "seleccionada est‡ buida."
+#~ "No s'ha pogut retallar/copiar perqu√® l'√†rea\n"
+#~ "seleccionada est√† buida."
 
 #~ msgid "Float Selection: No selection to float."
-#~ msgstr "SelecciÛ flotant: no hi ha res seleccionat per flotar."
+#~ msgstr "Selecci√≥ flotant: no hi ha res seleccionat per flotar."
 
 #~ msgid "Floated Layer"
 #~ msgstr "Capa flotant"
@@ -3560,18 +3560,18 @@ msgstr ""
 #~ "The active layer has no alpha channel\n"
 #~ "to convert to a selection."
 #~ msgstr ""
-#~ "La capa activa no tÈ cap el canal alfa\n"
-#~ "per convertir-ho en una selecciÛ."
+#~ "La capa activa no t√© cap el canal alfa\n"
+#~ "per convertir-ho en una selecci√≥."
 
 #~ msgid ""
 #~ "The active layer has no mask\n"
 #~ "to convert to a selection."
 #~ msgstr ""
-#~ "La capa activa no tÈ cap m‡scara\n"
-#~ "per convertir en una selecciÛ."
+#~ "La capa activa no t√© cap m√†scara\n"
+#~ "per convertir en una selecci√≥."
 
 #~ msgid "No selection to stroke!"
-#~ msgstr "No hi ha res seleccionat per traÁar!"
+#~ msgstr "No hi ha res seleccionat per tra√ßar!"
 
 #~ msgid "Unnamed"
 #~ msgstr "Sense nom"
@@ -3580,17 +3580,17 @@ msgstr ""
 #~ "Warning: Failed to load brush\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "AdvertËncia: No s'ha pogut carregar el pinzell\n"
+#~ "Advert√®ncia: No s'ha pogut carregar el pinzell\n"
 #~ "\"%s\""
 
 #~ msgid "Can't fill unknown image type."
 #~ msgstr "No es pot omplir el tipus d'imatge desconegut."
 
 #~ msgid "parasite attach to drawable"
-#~ msgstr "par‡sit adjunt al dibuix"
+#~ msgstr "par√†sit adjunt al dibuix"
 
 #~ msgid "detach parasite from drawable"
-#~ msgstr "extreure par‡sit del dibuix"
+#~ msgstr "extreure par√†sit del dibuix"
 
 #~ msgid "unnamed"
 #~ msgstr "sense nom"
@@ -3604,83 +3604,83 @@ msgstr ""
 #~ "you don't have GtkXmHTML installed."
 #~ msgstr ""
 #~ "No es pot trobar el procediment per navegar en\n"
-#~ "l'ajuda del GIMP. …s probable que no fos compilat\n"
-#~ "per quË no heu instal∑lat el GtkXmHTML."
+#~ "l'ajuda del GIMP. √âs probable que no fos compilat\n"
+#~ "per qu√® no heu instal¬∑lat el GtkXmHTML."
 
 #~ msgid "Layer cannot be raised any further"
-#~ msgstr "No es pot situar la capa mÈs amunt"
+#~ msgstr "No es pot situar la capa m√©s amunt"
 
 #~ msgid "Layer cannot be lowered any further"
-#~ msgstr "No es pot situar la capa mÈs avall"
+#~ msgstr "No es pot situar la capa m√©s avall"
 
 #~ msgid "Layer is already on top"
-#~ msgstr "La capa ja Ès a dalt de tot"
+#~ msgstr "La capa ja √©s a dalt de tot"
 
 #~ msgid "Can't raise Layer without alpha"
 #~ msgstr "No es pot pujar la capa sense alfa"
 
 #~ msgid "Layer is already on bottom"
-#~ msgstr "La capa ja Ès al capdavall"
+#~ msgstr "La capa ja √©s al capdavall"
 
 #~ msgid "BG has no alpha, layer was placed above"
-#~ msgstr "El BG no tÈ alfa, s'ha situat la capa al damunt"
+#~ msgstr "El BG no t√© alfa, s'ha situat la capa al damunt"
 
 #~ msgid ""
 #~ "There are not enough visible layers for a merge.\n"
 #~ "There must be at least two."
 #~ msgstr ""
-#~ "No hi ha prou capes visibles per una combinaciÛ.\n"
+#~ "No hi ha prou capes visibles per una combinaci√≥.\n"
 #~ "Almenys n'hi ha d'haver dues."
 
 #~ msgid "There are not enough visible layers for a merge down."
-#~ msgstr "No hi ha prou capes visibles per a una combinaciÛ."
+#~ msgstr "No hi ha prou capes visibles per a una combinaci√≥."
 
 #~ msgid ""
 #~ "Unable to add a layer mask since\n"
 #~ "the layer already has one."
 #~ msgstr ""
 #~ "No s'ha pogut afegir una capa de\n"
-#~ "m‡scara perquË la capa ja en tÈ una."
+#~ "m√†scara perqu√® la capa ja en t√© una."
 
 #~ msgid ""
 #~ "Unable to add a layer mask to a\n"
 #~ "layer in an indexed image."
 #~ msgstr ""
-#~ "No es pot afegir una capa de m‡scara a\n"
+#~ "No es pot afegir una capa de m√†scara a\n"
 #~ "una capa en una imatge indexada."
 
 #~ msgid ""
 #~ "Cannot add layer mask to a layer\n"
 #~ "with no alpha channel."
 #~ msgstr ""
-#~ "No es pot afegir una capa de m‡scara\n"
+#~ "No es pot afegir una capa de m√†scara\n"
 #~ "a una capa sense canal alfa."
 
 #~ msgid "Cannot add layer mask of different dimensions than specified layer."
 #~ msgstr ""
-#~ "No es pot afegir una capa de m‡scara de dimensions diferents de la capa "
+#~ "No es pot afegir una capa de m√†scara de dimensions diferents de la capa "
 #~ "especificada"
 
 #~ msgid "Channel cannot be raised any further"
-#~ msgstr "El canal no es pot apujar mÈs"
+#~ msgstr "El canal no es pot apujar m√©s"
 
 #~ msgid "Channel cannot be lowered any further"
-#~ msgstr "El canal no es pot abaixar mÈs"
+#~ msgstr "El canal no es pot abaixar m√©s"
 
 #~ msgid "Untitled"
-#~ msgstr "Sense tÌtol"
+#~ msgstr "Sense t√≠tol"
 
 #~ msgid "Progress"
-#~ msgstr "En procÈs"
+#~ msgstr "En proc√©s"
 
 #~ msgid "Please wait..."
 #~ msgstr "Espereu..."
 
 #~ msgid "error parsing: \"%s\"\n"
-#~ msgstr "an‡lisi d'errors: \"%s\"\n"
+#~ msgstr "an√†lisi d'errors: \"%s\"\n"
 
 #~ msgid "  at line %d column %d\n"
-#~ msgstr "  a la lÌnia %d columna %d\n"
+#~ msgstr "  a la l√≠nia %d columna %d\n"
 
 #~ msgid "  unexpected token: %s\n"
 #~ msgstr "  testimoni inesperat: %s\n"
@@ -3713,19 +3713,19 @@ msgstr ""
 #~ "Too many open message dialogs.\n"
 #~ "Messages are redirected to stderr."
 #~ msgstr ""
-#~ "AdvertËncia:\n"
-#~ "Hi ha massa di‡legs de missatges\n"
-#~ "oberts. Els missatges sÛn redireccionats\n"
+#~ "Advert√®ncia:\n"
+#~ "Hi ha massa di√†legs de missatges\n"
+#~ "oberts. Els missatges s√≥n redireccionats\n"
 #~ "cap el fitxer stderr."
 
 #~ msgid "GIMP Message"
 #~ msgstr "Missatge del GIMP"
 
 #~ msgid "pixel"
-#~ msgstr "pÌxel"
+#~ msgstr "p√≠xel"
 
 #~ msgid "pixels"
-#~ msgstr "pÌxels"
+#~ msgstr "p√≠xels"
 
 #~ msgid "inch"
 #~ msgstr "polzada"
@@ -3734,7 +3734,7 @@ msgstr ""
 #~ msgstr "polzades"
 
 #~ msgid "millimeters"
-#~ msgstr "mil∑lÌmetres"
+#~ msgstr "mil¬∑l√≠metres"
 
 #~ msgid "picas"
 #~ msgstr "piques"
@@ -3752,31 +3752,31 @@ msgstr ""
 #~ msgstr "Enganxa com a nou"
 
 #~ msgid "Paste Named Buffer"
-#~ msgstr "Enganxa la memÚria intermËdia"
+#~ msgstr "Enganxa la mem√≤ria interm√®dia"
 
 #~ msgid "Select a buffer to paste:"
-#~ msgstr "Selecciona una memÚria intermËdia per enganxar:"
+#~ msgstr "Selecciona una mem√≤ria interm√®dia per enganxar:"
 
 #~ msgid "Cut Named"
-#~ msgstr "Talla allÚ designat"
+#~ msgstr "Talla all√≤ designat"
 
 #~ msgid "Enter a name for this buffer"
-#~ msgstr "Entra un nom per a aquesta memÚria intermËdia"
+#~ msgstr "Entra un nom per a aquesta mem√≤ria interm√®dia"
 
 #~ msgid "Copy Named"
-#~ msgstr "Copia allÚ designat"
+#~ msgstr "Copia all√≤ designat"
 
 #~ msgid "Curved"
 #~ msgstr "Corbat"
 
 #~ msgid "Sinusoidal"
-#~ msgstr "SinusoÔdal"
+#~ msgstr "Sinuso√Ødal"
 
 #~ msgid "Spherical (increasing)"
-#~ msgstr "EsfËric (incrementant-se)"
+#~ msgstr "Esf√®ric (incrementant-se)"
 
 #~ msgid "Spherical (decreasing)"
-#~ msgstr "EsfËric (decreixent)"
+#~ msgstr "Esf√®ric (decreixent)"
 
 #~ msgid "Plain RGB"
 #~ msgstr "RGB simple"
@@ -3809,7 +3809,7 @@ msgstr ""
 #~ msgstr "Zoom total"
 
 #~ msgid "Instant update"
-#~ msgstr "ActualitzaciÛ immediata"
+#~ msgstr "Actualitzaci√≥ immediata"
 
 #~ msgid "Default"
 #~ msgstr "Per defecte"
@@ -3849,7 +3849,7 @@ msgstr ""
 #~ "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
 #~ "0.3f)    Opacity: %0.3f"
 #~ msgstr ""
-#~ "PosiciÛ: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
+#~ "Posici√≥: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
 #~ "0.3f)   Opacitat: %0.3f"
 
 #~ msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
@@ -3859,58 +3859,58 @@ msgstr ""
 #~ msgstr "Color de fons a RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #~ msgid "Drag: move    Shift+drag: move & compress"
-#~ msgstr "Arrossegar: moure   Maj˙scules+arrossegar: moure i comprimir"
+#~ msgstr "Arrossegar: moure   Maj√∫scules+arrossegar: moure i comprimir"
 
 #~ msgid "Click: select    Shift+click: extend selection"
-#~ msgstr "Clic: seleccionar   Maj˙scules+clic: estendre la selecciÛ"
+#~ msgstr "Clic: seleccionar   Maj√∫scules+clic: estendre la selecci√≥"
 
 #~ msgid "Click: select    Shift+click: extend selection    Drag: move"
 #~ msgstr ""
-#~ "Clic: seleccionar   Maj˙scules+clic: estendre la selecciÛ   Arrossegar: "
+#~ "Clic: seleccionar   Maj√∫scules+clic: estendre la selecci√≥   Arrossegar: "
 #~ "moure"
 
 #~ msgid ""
 #~ "Click: select    Shift+click: extend selection    Drag: move    Shift"
 #~ "+drag: move & compress"
 #~ msgstr ""
-#~ "Clic: seleccionar   Maj˙scules+clic: estendre la selecciÛ   Arrossegar: "
-#~ "moure Maj˙scules+arrossegar: moure i comprimir"
+#~ "Clic: seleccionar   Maj√∫scules+clic: estendre la selecci√≥   Arrossegar: "
+#~ "moure Maj√∫scules+arrossegar: moure i comprimir"
 
 #~ msgid "Handle position: %0.6f"
-#~ msgstr "PosiciÛ de la nansa: %0.6f"
+#~ msgstr "Posici√≥ de la nansa: %0.6f"
 
 #~ msgid "Distance: %0.6f"
-#~ msgstr "Dist‡ncia: %0.6f"
+#~ msgstr "Dist√†ncia: %0.6f"
 
 #~ msgid "Left endpoint's color"
-#~ msgstr "Color del lÌmit esquerre"
+#~ msgstr "Color del l√≠mit esquerre"
 
 #~ msgid "Load from"
 #~ msgstr "Carregar de"
 
 #~ msgid "Left neighbor's right endpoint"
-#~ msgstr "L'esquerra Ès a prop del lÌmit dret"
+#~ msgstr "L'esquerra √©s a prop del l√≠mit dret"
 
 #~ msgid "Right endpoint"
-#~ msgstr "LÌmit dret"
+#~ msgstr "L√≠mit dret"
 
 #~ msgid "Save to"
 #~ msgstr "Desar a"
 
 #~ msgid "Right endpoint's color"
-#~ msgstr "Color del lÌmit dret"
+#~ msgstr "Color del l√≠mit dret"
 
 #~ msgid "Right neighbor's left endpoint"
-#~ msgstr "La dreta Ès a prop del lÌmit esquerre"
+#~ msgstr "La dreta √©s a prop del l√≠mit esquerre"
 
 #~ msgid "Left endpoint"
-#~ msgstr "LÌmit esquerre"
+#~ msgstr "L√≠mit esquerre"
 
 #~ msgid "Selection operations"
-#~ msgstr "Operacions de selecciÛ"
+#~ msgstr "Operacions de selecci√≥"
 
 #~ msgid "Blending function for segment"
-#~ msgstr "S'est‡ mesclant la funciÛ per al segment"
+#~ msgstr "S'est√† mesclant la funci√≥ per al segment"
 
 #~ msgid "Coloring type for segment"
 #~ msgstr "Tipus d'acolorit del segment"
@@ -3937,10 +3937,10 @@ msgstr ""
 #~ msgstr "Replicar el segment"
 
 #~ msgid "Blending function for selection"
-#~ msgstr "S'est‡ mesclant la funciÛ per a la selecciÛ"
+#~ msgstr "S'est√† mesclant la funci√≥ per a la selecci√≥"
 
 #~ msgid "Coloring type for selection"
-#~ msgstr "Tipus d'acolorit per la selecciÛ"
+#~ msgstr "Tipus d'acolorit per la selecci√≥"
 
 #~ msgid "Split segments at midpoints"
 #~ msgstr "Partir el segment pel mig"
@@ -3949,19 +3949,19 @@ msgstr ""
 #~ msgstr "Partir el segment uniformement"
 
 #~ msgid "Delete selection"
-#~ msgstr "Suprimir la selecciÛ"
+#~ msgstr "Suprimir la selecci√≥"
 
 #~ msgid "Re-center midpoints in selection"
-#~ msgstr "Centrar el punt mig a la selecciÛ"
+#~ msgstr "Centrar el punt mig a la selecci√≥"
 
 #~ msgid "Re-distribute handles in selection"
-#~ msgstr "Distribuir les nanses en la selecciÛ"
+#~ msgstr "Distribuir les nanses en la selecci√≥"
 
 #~ msgid "Flip selection"
-#~ msgstr "Inverteix la selecciÛ"
+#~ msgstr "Inverteix la selecci√≥"
 
 #~ msgid "Replicate selection"
-#~ msgstr "Replicar la selecciÛ"
+#~ msgstr "Replicar la selecci√≥"
 
 #~ msgid "FG color"
 #~ msgstr "Color de fons"
@@ -3979,10 +3979,10 @@ msgstr ""
 #~ msgstr "Seleccioneu el nombre de parts uniformes"
 
 #~ msgid "in which you want to split the selected segment"
-#~ msgstr "en quË vulgueu partir el segment seleccionat"
+#~ msgstr "en qu√® vulgueu partir el segment seleccionat"
 
 #~ msgid "in which you want to split the segments in the selection"
-#~ msgstr "en quË vulgueu partir els segments de la selecciÛ"
+#~ msgstr "en qu√® vulgueu partir els segments de la selecci√≥"
 
 #~ msgid "Blend endpoints' colors"
 #~ msgstr "Combinar els colors dels extrems"
@@ -4000,7 +4000,7 @@ msgstr ""
 #~ msgstr "voleu replicar el segment seleccionat"
 
 #~ msgid "you want to replicate the selection"
-#~ msgstr "voleu replicar la selecciÛ"
+#~ msgstr "voleu replicar la selecci√≥"
 
 #~ msgid "Histogram"
 #~ msgstr "Histograma"
@@ -4018,22 +4018,22 @@ msgstr ""
 #~ msgstr "Mediana:"
 
 #~ msgid "Pixels:"
-#~ msgstr "PÌxels:"
+#~ msgstr "P√≠xels:"
 
 #~ msgid "Percentile:"
 #~ msgstr "Percentil:"
 
 #~ msgid "Information on Channel:"
-#~ msgstr "InformaciÛ del canal:"
+#~ msgstr "Informaci√≥ del canal:"
 
 #~ msgid "Hue-Saturation"
-#~ msgstr "SaturaciÛ del color"
+#~ msgstr "Saturaci√≥ del color"
 
 #~ msgid "Hue-Saturation operates only on RGB color drawables."
-#~ msgstr "La saturaciÛ de color nomÈs Ès operativa en monitors en color RGB."
+#~ msgstr "La saturaci√≥ de color nom√©s √©s operativa en monitors en color RGB."
 
 #~ msgid "Master"
-#~ msgstr "M‡ster"
+#~ msgstr "M√†ster"
 
 #~ msgid "Y"
 #~ msgstr "G"
@@ -4045,18 +4045,18 @@ msgstr ""
 #~ msgstr "M"
 
 #~ msgid "Hue / Lightness / Saturation Adjustments"
-#~ msgstr "Color / Lluminositat / Ajustaments de la saturaciÛ"
+#~ msgstr "Color / Lluminositat / Ajustaments de la saturaci√≥"
 
 #~ msgid "Saturation:"
-#~ msgstr "SaturaciÛ:"
+#~ msgstr "Saturaci√≥:"
 
 #~ msgid ""
 #~ "Image resolution is out of bounds,\n"
 #~ "using the default resolution instead."
 #~ msgstr ""
-#~ "La resoluciÛ de la imatge est‡ fora\n"
+#~ "La resoluci√≥ de la imatge est√† fora\n"
 #~ "de limits, en el seu lloc es fa servir\n"
-#~ "la resoluciÛ per defecte."
+#~ "la resoluci√≥ per defecte."
 
 #~ msgid "White"
 #~ msgstr "Blanc"
@@ -4084,30 +4084,30 @@ msgstr ""
 #~ "Click to open the Brushes Dialog."
 #~ msgstr ""
 #~ "El pinzell actiu.\n"
-#~ "Feu clic per obrir el di‡leg de pinzells."
+#~ "Feu clic per obrir el di√†leg de pinzells."
 
 #~ msgid ""
 #~ "The active pattern.\n"
 #~ "Click to open the Patterns Dialog."
 #~ msgstr ""
-#~ "El patrÛ actiu.\n"
-#~ "Feu clic per obrir el di‡leg de patrons."
+#~ "El patr√≥ actiu.\n"
+#~ "Feu clic per obrir el di√†leg de patrons."
 
 #~ msgid ""
 #~ "The active gradient.\n"
 #~ "Click to open the Gradients Dialog."
 #~ msgstr ""
 #~ "El degradat actiu.\n"
-#~ "Feu clic per obrir el di‡leg de degradats."
+#~ "Feu clic per obrir el di√†leg de degradats."
 
 #~ msgid "General"
 #~ msgstr "General"
 
 #~ msgid "Static Gray"
-#~ msgstr "Gris est‡tic"
+#~ msgstr "Gris est√†tic"
 
 #~ msgid "Static Color"
-#~ msgstr "Color est‡tic"
+#~ msgstr "Color est√†tic"
 
 #~ msgid "R:"
 #~ msgstr "R:"
@@ -4125,10 +4125,10 @@ msgstr ""
 #~ msgstr "Dimensions (ample x alt):"
 
 #~ msgid "Resolution:"
-#~ msgstr "ResoluciÛ:"
+#~ msgstr "Resoluci√≥:"
 
 #~ msgid "Display Type:"
-#~ msgstr "Tipus de visualitzaciÛ:"
+#~ msgstr "Tipus de visualitzaci√≥:"
 
 #~ msgid "Visual Class:"
 #~ msgstr "Classe visual:"
@@ -4137,10 +4137,10 @@ msgstr ""
 #~ msgstr "Profunditat visual:"
 
 #~ msgid "Info: %s-%d.%d"
-#~ msgstr "InformaciÛ: %s-%d.%d"
+#~ msgstr "Informaci√≥: %s-%d.%d"
 
 #~ msgid "%d x %d pixels"
-#~ msgstr "%d x %d pÌxels"
+#~ msgstr "%d x %d p√≠xels"
 
 #~ msgid "%g x %g dpi"
 #~ msgstr "%g x %g dpi"
@@ -4161,7 +4161,7 @@ msgstr ""
 #~ msgstr "Sensibilitat"
 
 #~ msgid "Tilt:"
-#~ msgstr "InclinaciÛ:"
+#~ msgstr "Inclinaci√≥:"
 
 #~ msgid ""
 #~ "Foreground & background colors.  The black and white squares reset "
@@ -4170,7 +4170,7 @@ msgstr ""
 #~ msgstr ""
 #~ "Colors en primer terme i de fons. Els quadrats blancs i negres "
 #~ "restableixen els colors. Les fletxes canvien els colors. Feu doble clic "
-#~ "per seleccionar un color del men˙ de colors."
+#~ "per seleccionar un color del men√∫ de colors."
 
 #~ msgid "Internal Procedures"
 #~ msgstr "Procediments interns"
@@ -4191,7 +4191,7 @@ msgstr ""
 #~ msgstr "Procediments dels dibuixos"
 
 #~ msgid "Edit procedures"
-#~ msgstr "Procediments de l'ediciÛ"
+#~ msgstr "Procediments de l'edici√≥"
 
 #~ msgid "File Operations"
 #~ msgstr "Operacions amb el fitxers"
@@ -4203,7 +4203,7 @@ msgstr ""
 #~ msgstr "Procediments del Gimprc"
 
 #~ msgid "Gradient UI"
-#~ msgstr "IU de gradaciÛ"
+#~ msgstr "IU de gradaci√≥"
 
 #~ msgid "Guide procedures"
 #~ msgstr "Procediments de guia"
@@ -4218,28 +4218,28 @@ msgstr ""
 #~ msgstr "Capa"
 
 #~ msgid "Interface"
-#~ msgstr "InterfÌcie"
+#~ msgstr "Interf√≠cie"
 
 #~ msgid "Miscellaneous"
-#~ msgstr "Miscel∑l‡nia"
+#~ msgstr "Miscel¬∑l√†nia"
 
 #~ msgid "Palette"
 #~ msgstr "Paleta"
 
 #~ msgid "Parasite procedures"
-#~ msgstr "Procediments par‡sits"
+#~ msgstr "Procediments par√†sits"
 
 #~ msgid "Paths"
 #~ msgstr "Camins"
 
 #~ msgid "Plug-in"
-#~ msgstr "ExtensiÛ"
+#~ msgstr "Extensi√≥"
 
 #~ msgid "Procedural database"
 #~ msgstr "Base de dades processal"
 
 #~ msgid "Image mask"
-#~ msgstr "M‡scara d'imatge"
+#~ msgstr "M√†scara d'imatge"
 
 #~ msgid "Text procedures"
 #~ msgstr "Procediments de text"
@@ -4248,25 +4248,25 @@ msgstr ""
 #~ msgstr "Procediments d'eines"
 
 #~ msgid "Undo"
-#~ msgstr "DesfÈs"
+#~ msgstr "Desf√©s"
 
 #~ msgid "Units"
 #~ msgstr "Unitats"
 
 #~ msgid "Invert does not operate on indexed drawables."
-#~ msgstr "La inversiÛ no funciona amb dibuixos indexats."
+#~ msgstr "La inversi√≥ no funciona amb dibuixos indexats."
 
 #~ msgid "Invert operation failed."
 #~ msgstr "No s'ha pogut invertir."
 
 #~ msgid "Zero width or height layers not allowed."
-#~ msgstr "No hi pot haver capes d'amplada o alÁ‡ria zero."
+#~ msgstr "No hi pot haver capes d'amplada o al√ß√†ria zero."
 
 #~ msgid "%s mask"
-#~ msgstr "m‡scara %s"
+#~ msgstr "m√†scara %s"
 
 #~ msgid "Layer Select"
-#~ msgstr "SelecciÛ de capa"
+#~ msgstr "Selecci√≥ de capa"
 
 #~ msgid "New Layer"
 #~ msgstr "Capa nova"
@@ -4310,22 +4310,22 @@ msgstr ""
 #~ msgstr "Sobreposar"
 
 #~ msgid "Difference"
-#~ msgstr "DiferËncia"
+#~ msgstr "Difer√®ncia"
 
 #~ msgid "Addition"
-#~ msgstr "AddiciÛ"
+#~ msgstr "Addici√≥"
 
 #~ msgid "Darken Only"
-#~ msgstr "NomÈs enfosquir"
+#~ msgstr "Nom√©s enfosquir"
 
 #~ msgid "Keep Trans."
 #~ msgstr "Deixa trans."
 
 #~ msgid "Empty Layer Copy"
-#~ msgstr "Buida la cÚpia de la capa"
+#~ msgstr "Buida la c√≤pia de la capa"
 
 #~ msgid "Floating Selection"
-#~ msgstr "SelecciÛ movible"
+#~ msgstr "Selecci√≥ movible"
 
 #~ msgid "New Layer Options"
 #~ msgstr "Opcions per a una nova capa"
@@ -4337,16 +4337,16 @@ msgstr ""
 #~ msgstr "Tipus d'emplenat de capa"
 
 #~ msgid "Edit Layer Attributes"
-#~ msgstr "EdiciÛ dels atributs de la capa"
+#~ msgstr "Edici√≥ dels atributs de la capa"
 
 #~ msgid "Layer name:"
 #~ msgstr "Nom de la capa:"
 
 #~ msgid "Add Mask Options"
-#~ msgstr "Afegeix opcions de m‡scara"
+#~ msgstr "Afegeix opcions de m√†scara"
 
 #~ msgid "Initialize Layer Mask to:"
-#~ msgstr "Inicialitza la m‡scara de capa a:"
+#~ msgstr "Inicialitza la m√†scara de capa a:"
 
 #~ msgid "White (Full Opacity)"
 #~ msgstr "Blanc (opac del tot)"
@@ -4361,8 +4361,8 @@ msgstr ""
 #~ "Invalid width or height.\n"
 #~ "Both must be positive."
 #~ msgstr ""
-#~ "L'amplada o l'alÁ‡ria no\n"
-#~ "sÛn v‡lides. Totes dues han\n"
+#~ "L'amplada o l'al√ß√†ria no\n"
+#~ "s√≥n v√†lides. Totes dues han\n"
 #~ "de ser positives."
 
 #~ msgid "Layer Merge Options"
@@ -4423,7 +4423,7 @@ msgstr ""
 #~ msgstr "Redueix el zoom"
 
 #~ msgid "GIMP version"
-#~ msgstr "VersiÛ del GIMP"
+#~ msgstr "Versi√≥ del GIMP"
 
 #~ msgid ""
 #~ "\n"
@@ -4431,18 +4431,18 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "\n"
-#~ "UtilitzaciÛ: %s [opciÛ...] [fitxers...]\n"
+#~ "Utilitzaci√≥: %s [opci√≥...] [fitxers...]\n"
 #~ "\n"
 
 #~ msgid "  -b, --batch <commands>   Run in batch mode.\n"
-#~ msgstr "  -b, --batch <instruccions> ExecuciÛ en processament per lots.\n"
+#~ msgstr "  -b, --batch <instruccions> Execuci√≥ en processament per lots.\n"
 
 #~ msgid ""
 #~ "  -c, --console-messages   Display warnings to console instead of a "
 #~ "dialog box.\n"
 #~ msgstr ""
 #~ "  -c, --console-messages    Mostra els avisos a la consola en comptes "
-#~ "d'usar un quadre de di‡leg\n"
+#~ "d'usar un quadre de di√†leg\n"
 
 #~ msgid ""
 #~ "  -d, --no-data            Do not load brushes, gradients, palettes, "
@@ -4452,7 +4452,7 @@ msgstr ""
 #~ "pinzells.\n"
 
 #~ msgid "  -i, --no-interface       Run without a user interface.\n"
-#~ msgstr "  -i, --no-interface        ExecuciÛ sense interfÌcie d'usuari.\n"
+#~ msgstr "  -i, --no-interface        Execuci√≥ sense interf√≠cie d'usuari.\n"
 
 #~ msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 #~ msgstr "  -g, --gimprc <gimprc>     Utilitza un fitxer gimprc alternatiu.\n"
@@ -4461,7 +4461,7 @@ msgstr ""
 #~ msgstr "  -h, --help                Escriu aquesta ajuda.\n"
 
 #~ msgid "  -r, --restore-session    Try to restore saved session.\n"
-#~ msgstr "  -r, --restore-session     Intenta recuperar una sessiÛ desada.\n"
+#~ msgstr "  -r, --restore-session     Intenta recuperar una sessi√≥ desada.\n"
 
 #~ msgid "  -s, --no-splash          Do not show the startup window.\n"
 #~ msgstr "  -s, --no-splash           No mostris la finestra inicial.\n"
@@ -4473,7 +4473,7 @@ msgstr ""
 #~ "inicial.\n"
 
 #~ msgid "  -v, --version            Output version information.\n"
-#~ msgstr "  -v, --version            Escriu la informaciÛ de la versiÛ.\n"
+#~ msgstr "  -v, --version            Escriu la informaci√≥ de la versi√≥.\n"
 
 #~ msgid "  --verbose                Show startup messages.\n"
 #~ msgstr "  --verbose                Mostra els missatges inicials.\n"
@@ -4482,19 +4482,19 @@ msgstr ""
 #~ "  --no-shm                 Do not use shared memory between GIMP and "
 #~ "plugins.\n"
 #~ msgstr ""
-#~ "  --no-shm                  No usis la memÚria compartida entre GIMP i "
+#~ "  --no-shm                  No usis la mem√≤ria compartida entre GIMP i "
 #~ "les seves extensions.\n"
 
 #~ msgid ""
 #~ "  --no-xshm                Do not use the X Shared Memory extension.\n"
 #~ msgstr ""
-#~ "  --no-xshm                 No usis l'extensiÛ de la memÚria compartida "
+#~ "  --no-xshm                 No usis l'extensi√≥ de la mem√≤ria compartida "
 #~ "X.\n"
 
 #~ msgid ""
 #~ "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 #~ msgstr ""
-#~ "  --debug-handlers          Activa la depuraciÛ dels gestors de senyals.\n"
+#~ "  --debug-handlers          Activa la depuraci√≥ dels gestors de senyals.\n"
 
 #~ msgid "  --display <display>      Use the designated X display.\n"
 #~ msgstr "  --display <monitor>       Utilitza el monitor X indicat.\n"
@@ -4504,16 +4504,16 @@ msgstr ""
 #~ "  --system-gimprc <gimprc>  Usa un fitxer gimprc del sistema alternatiu.\n"
 
 #~ msgid "(This console window will close in ten seconds)\n"
-#~ msgstr "(Aquesta consola finestra es tancar‡ en deu segons)\n"
+#~ msgstr "(Aquesta consola finestra es tancar√† en deu segons)\n"
 
 #~ msgid "Measure Tool"
 #~ msgstr "Eina de mesura"
 
 #~ msgid "Use Info Window"
-#~ msgstr "Utilitza la finestra d'informaciÛ"
+#~ msgstr "Utilitza la finestra d'informaci√≥"
 
 #~ msgid "Distance:"
-#~ msgstr "Dist‡ncia:"
+#~ msgstr "Dist√†ncia:"
 
 #~ msgid "degrees"
 #~ msgstr "graus"
@@ -4531,43 +4531,43 @@ msgstr ""
 #~ msgstr "/Fitxer/Adquireix"
 
 #~ msgid "/File/Preferences..."
-#~ msgstr "/Fitxer/PreferËncies..."
+#~ msgstr "/Fitxer/Prefer√®ncies..."
 
 #~ msgid "/File/Dialogs/Layers, Channels & Paths..."
-#~ msgstr "/Fitxer/Di‡legs/Capes, canals i camins..."
+#~ msgstr "/Fitxer/Di√†legs/Capes, canals i camins..."
 
 #~ msgid "/File/Dialogs/Tool Options..."
-#~ msgstr "/Fitxer/Di‡legs/Opcions d'eina..."
+#~ msgstr "/Fitxer/Di√†legs/Opcions d'eina..."
 
 #~ msgid "/File/Dialogs/Brushes..."
-#~ msgstr "/Fitxer/Di‡legs/Pinzells..."
+#~ msgstr "/Fitxer/Di√†legs/Pinzells..."
 
 #~ msgid "/File/Dialogs/Patterns..."
-#~ msgstr "/Fitxer/Di‡legs/Patrons..."
+#~ msgstr "/Fitxer/Di√†legs/Patrons..."
 
 #~ msgid "/File/Dialogs/Gradients..."
-#~ msgstr "/Fitxer/Di‡legs/Gradients..."
+#~ msgstr "/Fitxer/Di√†legs/Gradients..."
 
 #~ msgid "/File/Dialogs/Palette..."
-#~ msgstr "/Fitxer/Di‡legs/Paleta..."
+#~ msgstr "/Fitxer/Di√†legs/Paleta..."
 
 #~ msgid "/File/Dialogs/Indexed Palette..."
-#~ msgstr "/Fitxer/Di‡legs/Paleta indexada..."
+#~ msgstr "/Fitxer/Di√†legs/Paleta indexada..."
 
 #~ msgid "/File/Dialogs/Input Devices..."
-#~ msgstr "/Fitxer/Di‡legs/Dispositius d'entrada..."
+#~ msgstr "/Fitxer/Di√†legs/Dispositius d'entrada..."
 
 #~ msgid "/File/Dialogs/Device Status..."
-#~ msgstr "/Fitxer/Di‡legs/Estat del dispositiu..."
+#~ msgstr "/Fitxer/Di√†legs/Estat del dispositiu..."
 
 #~ msgid "/File/Dialogs/Document Index..."
-#~ msgstr "/Fitxer/Di‡legs/Õndex del document..."
+#~ msgstr "/Fitxer/Di√†legs/√çndex del document..."
 
 #~ msgid "/File/Dialogs/Error Console..."
-#~ msgstr "/Fitxer/Di‡legs/Consola d'error..."
+#~ msgstr "/Fitxer/Di√†legs/Consola d'error..."
 
 #~ msgid "/File/Dialogs/Display Filters..."
-#~ msgstr "/Fitxer/Di‡legs/Visualitza els filtres..."
+#~ msgstr "/Fitxer/Di√†legs/Visualitza els filtres..."
 
 #~ msgid "/File/Quit"
 #~ msgstr "/Fitxer/Surt"
@@ -4576,7 +4576,7 @@ msgstr ""
 #~ msgstr "/_Xtensions"
 
 #~ msgid "/Xtns/Module Browser..."
-#~ msgstr "/Extensions/Navegador de mÚduls..."
+#~ msgstr "/Extensions/Navegador de m√≤duls..."
 
 #~ msgid "/Help/Help..."
 #~ msgstr "/Ajuda/Ajuda..."
@@ -4591,7 +4591,7 @@ msgstr ""
 #~ msgstr "/Ajuda/Quant a..."
 
 #~ msgid "/Help/Dump Items (Debug)"
-#~ msgstr "/Ajuda/Pila d'Ìtems (Depurar)"
+#~ msgstr "/Ajuda/Pila d'√≠tems (Depurar)"
 
 #~ msgid "/File/Save As..."
 #~ msgstr "/Fitxer/Anomena i desa..."
@@ -4600,10 +4600,10 @@ msgstr ""
 #~ msgstr "/Fitxer/Tanca"
 
 #~ msgid "/Edit/Undo"
-#~ msgstr "/Edita/DesfÈs"
+#~ msgstr "/Edita/Desf√©s"
 
 #~ msgid "/Edit/Redo"
-#~ msgstr "/Edita/RefÈs"
+#~ msgstr "/Edita/Ref√©s"
 
 #~ msgid "/Edit/Cut"
 #~ msgstr "/Edita/Retalla"
@@ -4621,13 +4621,13 @@ msgstr ""
 #~ msgstr "/Edita/Enganxa com a nou"
 
 #~ msgid "/Edit/Buffer/Cut Named..."
-#~ msgstr "/Edita/MemÚria intermËdia/Retalla l'objecte designat..."
+#~ msgstr "/Edita/Mem√≤ria interm√®dia/Retalla l'objecte designat..."
 
 #~ msgid "/Edit/Buffer/Copy Named..."
-#~ msgstr "/Edita/MemÚria intermËdia/Copia l'objecte designat..."
+#~ msgstr "/Edita/Mem√≤ria interm√®dia/Copia l'objecte designat..."
 
 #~ msgid "/Edit/Buffer/Paste Named..."
-#~ msgstr "/Edita/MemÚria intermËdia/Enganxa l'objecte designat..."
+#~ msgstr "/Edita/Mem√≤ria interm√®dia/Enganxa l'objecte designat..."
 
 #~ msgid "/Edit/Clear"
 #~ msgstr "/Edita/Buida"
@@ -4636,7 +4636,7 @@ msgstr ""
 #~ msgstr "/Edita/Omple amb el color de fons"
 
 #~ msgid "/Edit/Stroke"
-#~ msgstr "/Edita/TraÁa"
+#~ msgstr "/Edita/Tra√ßa"
 
 #~ msgid "/Select/Invert"
 #~ msgstr "/Selecciona/Inverteix"
@@ -4705,13 +4705,13 @@ msgstr ""
 #~ msgstr "/Visualitza/Punt per punt"
 
 #~ msgid "/View/Info Window..."
-#~ msgstr "/Visualitza/Finestra d'informaciÛ..."
+#~ msgstr "/Visualitza/Finestra d'informaci√≥..."
 
 #~ msgid "/View/Nav. Window..."
-#~ msgstr "/Visualitza/Finestra de navegaciÛ..."
+#~ msgstr "/Visualitza/Finestra de navegaci√≥..."
 
 #~ msgid "/View/Toggle Selection"
-#~ msgstr "/Visualitza/Commuta selecciÛ"
+#~ msgstr "/Visualitza/Commuta selecci√≥"
 
 #~ msgid "/View/Toggle Rulers"
 #~ msgstr "/Visualitza/Commuta les regles"
@@ -4723,7 +4723,7 @@ msgstr ""
 #~ msgstr "/Visualitza/Commuta les guies"
 
 #~ msgid "/View/Snap to Guides"
-#~ msgstr "/Visualitza/DesplaÁa a les guies"
+#~ msgstr "/Visualitza/Despla√ßa a les guies"
 
 #~ msgid "/View/New View"
 #~ msgstr "/Visualitza/Vista nova"
@@ -4747,7 +4747,7 @@ msgstr ""
 #~ msgstr "/Imatge/Colors/Invertir"
 
 #~ msgid "/Image/Colors/Auto/Equalize"
-#~ msgstr "/Imatge/Colors/Autom‡tic/Iguala"
+#~ msgstr "/Imatge/Colors/Autom√†tic/Iguala"
 
 #~ msgid "/Image/Alpha/Add Alpha Channel"
 #~ msgstr "/Imatge/Alfa/Afegir canal alfa"
@@ -4759,7 +4759,7 @@ msgstr ""
 #~ msgstr "/Imatge/Transforma/Gira"
 
 #~ msgid "/Image/Canvas Size..."
-#~ msgstr "/Imatge/Mida de l'‡rea de dibuix..."
+#~ msgstr "/Imatge/Mida de l'√†rea de dibuix..."
 
 #~ msgid "/Image/Scale Image..."
 #~ msgstr "/Imatge/Escala la imatge..."
@@ -4777,7 +4777,7 @@ msgstr ""
 #~ msgstr "/Capes/Pila/Capa anterior"
 
 #~ msgid "/Layers/Stack/Next Layer"
-#~ msgstr "/Capes/Pila/Capa seg¸ent"
+#~ msgstr "/Capes/Pila/Capa seg√ºent"
 
 #~ msgid "/Layers/Stack/Raise Layer"
 #~ msgstr "/Capes/Pila/Relleva la capa"
@@ -4804,13 +4804,13 @@ msgstr ""
 #~ msgstr "/Capes/Aplanar la imatge"
 
 #~ msgid "/Layers/Mask to Selection"
-#~ msgstr "/Capes/M‡scara a la selecciÛ"
+#~ msgstr "/Capes/M√†scara a la selecci√≥"
 
 #~ msgid "/Layers/Add Alpha Channel"
 #~ msgstr "/Capes/Afegeix el canal alfa"
 
 #~ msgid "/Layers/Alpha to Selection"
-#~ msgstr "/Capes/Alfa a la selecciÛ"
+#~ msgstr "/Capes/Alfa a la selecci√≥"
 
 #~ msgid "/Tools/Toolbox"
 #~ msgstr "/Eines/Caixa d'eines"
@@ -4822,49 +4822,49 @@ msgstr ""
 #~ msgstr "/Eines/Intercanvia els colors"
 
 #~ msgid "/Dialogs/Layers, Channels & Paths..."
-#~ msgstr "/Di‡legs/Capes, canals i camins..."
+#~ msgstr "/Di√†legs/Capes, canals i camins..."
 
 #~ msgid "/Dialogs/Tool Options..."
-#~ msgstr "/Di‡legs/Opcions de l'eina..."
+#~ msgstr "/Di√†legs/Opcions de l'eina..."
 
 #~ msgid "/Dialogs/Brushes..."
-#~ msgstr "/Di‡legs/Pinzells..."
+#~ msgstr "/Di√†legs/Pinzells..."
 
 #~ msgid "/Dialogs/Patterns..."
-#~ msgstr "/Di‡legs/Patrons..."
+#~ msgstr "/Di√†legs/Patrons..."
 
 #~ msgid "/Dialogs/Gradients..."
-#~ msgstr "/Di‡legs/Gradients..."
+#~ msgstr "/Di√†legs/Gradients..."
 
 #~ msgid "/Dialogs/Palette..."
-#~ msgstr "/Di‡legs/Paleta..."
+#~ msgstr "/Di√†legs/Paleta..."
 
 #~ msgid "/Dialogs/Indexed Palette..."
-#~ msgstr "/Di‡legs/Paleta indexada..."
+#~ msgstr "/Di√†legs/Paleta indexada..."
 
 #~ msgid "/Dialogs/Input Devices..."
-#~ msgstr "/Di‡legs/Dispositius d'entrada..."
+#~ msgstr "/Di√†legs/Dispositius d'entrada..."
 
 #~ msgid "/Dialogs/Device Status..."
-#~ msgstr "/Di‡legs/Estat del dispositiu..."
+#~ msgstr "/Di√†legs/Estat del dispositiu..."
 
 #~ msgid "/Dialogs/Document Index..."
-#~ msgstr "/Di‡legs/Õndex del document..."
+#~ msgstr "/Di√†legs/√çndex del document..."
 
 #~ msgid "/Dialogs/Error Console..."
-#~ msgstr "/Di‡legs/Consola d'error..."
+#~ msgstr "/Di√†legs/Consola d'error..."
 
 #~ msgid "/Dialogs/Display Filters..."
-#~ msgstr "/Di‡legs/Visualitza els filtres..."
+#~ msgstr "/Di√†legs/Visualitza els filtres..."
 
 #~ msgid "/Dialogs/Undo History..."
-#~ msgstr "/Di‡legs/DesfÈs l'historial..."
+#~ msgstr "/Di√†legs/Desf√©s l'historial..."
 
 #~ msgid "/Filters/Repeat Last"
-#~ msgstr "/Filtres/Repeteix l'˙ltim"
+#~ msgstr "/Filtres/Repeteix l'√∫ltim"
 
 #~ msgid "/Filters/Re-Show Last"
-#~ msgstr "/Filtres/Torna a ensenyar l'˙ltim"
+#~ msgstr "/Filtres/Torna a ensenyar l'√∫ltim"
 
 #~ msgid "/Filters/Blur"
 #~ msgstr "/Filtres/Desenfoca"
@@ -4876,13 +4876,13 @@ msgstr ""
 #~ msgstr "/Filtres/Soroll"
 
 #~ msgid "/Filters/Edge-Detect"
-#~ msgstr "/Filtres/DetecciÛ dels contorns"
+#~ msgstr "/Filtres/Detecci√≥ dels contorns"
 
 #~ msgid "/Filters/Enhance"
 #~ msgstr "/Filtres/Destaca"
 
 #~ msgid "/Filters/Generic"
-#~ msgstr "/Filtres/GenËric"
+#~ msgstr "/Filtres/Gen√®ric"
 
 #~ msgid "/Filters/Glass Effects"
 #~ msgstr "/Filtres/Efectes de vidre"
@@ -4894,19 +4894,19 @@ msgstr ""
 #~ msgstr "/Filtres/Distorsions"
 
 #~ msgid "/Filters/Artistic"
-#~ msgstr "/Filtres/ArtÌstic"
+#~ msgstr "/Filtres/Art√≠stic"
 
 #~ msgid "/Filters/Map"
 #~ msgstr "/Filtres/Mapa"
 
 #~ msgid "/Filters/Render"
-#~ msgstr "/Filtres/RepresentaciÛ"
+#~ msgstr "/Filtres/Representaci√≥"
 
 #~ msgid "/Filters/Web"
 #~ msgstr "/Filtres/Web"
 
 #~ msgid "/Filters/Animation"
-#~ msgstr "/Filtres/AnimaciÛ"
+#~ msgstr "/Filtres/Animaci√≥"
 
 #~ msgid "/Filters/Combine"
 #~ msgstr "/Filtres/Combina"
@@ -4915,10 +4915,10 @@ msgstr ""
 #~ msgstr "/Filtres/Joguines"
 
 #~ msgid "/Automatic"
-#~ msgstr "/Autom‡tic"
+#~ msgstr "/Autom√†tic"
 
 #~ msgid "/By Extension"
-#~ msgstr "/Per extensiÛ"
+#~ msgstr "/Per extensi√≥"
 
 #~ msgid "/New Layer..."
 #~ msgstr "/Capa nova..."
@@ -4963,19 +4963,19 @@ msgstr ""
 #~ msgstr "/Aplana la imatge"
 
 #~ msgid "/Add Layer Mask..."
-#~ msgstr "/Afegeix una m‡scara de capa..."
+#~ msgstr "/Afegeix una m√†scara de capa..."
 
 #~ msgid "/Delete Layer Mask"
-#~ msgstr "/Suprimeix la m‡scara de capa"
+#~ msgstr "/Suprimeix la m√†scara de capa"
 
 #~ msgid "/Mask to Selection"
-#~ msgstr "/M‡scara cap a la selecciÛ"
+#~ msgstr "/M√†scara cap a la selecci√≥"
 
 #~ msgid "/Add Alpha Channel"
 #~ msgstr "/Afegir un canal alfa"
 
 #~ msgid "/Alpha to Selection"
-#~ msgstr "/Alfa cap a la selecciÛ"
+#~ msgstr "/Alfa cap a la selecci√≥"
 
 #~ msgid "/Edit Layer Attributes..."
 #~ msgstr "/Edita els atributs de la capa..."
@@ -4993,13 +4993,13 @@ msgstr ""
 #~ msgstr "/Duplica el Canal"
 
 #~ msgid "/Channel to Selection"
-#~ msgstr "/Canal per a la selecciÛ"
+#~ msgstr "/Canal per a la selecci√≥"
 
 #~ msgid "/Add to Selection"
-#~ msgstr "/Afegeix a la selecciÛ"
+#~ msgstr "/Afegeix a la selecci√≥"
 
 #~ msgid "/Subtract from Selection"
-#~ msgstr "/Treu des de la selecciÛ"
+#~ msgstr "/Treu des de la selecci√≥"
 
 #~ msgid "/Delete Channel"
 #~ msgstr "/Suprimeix el canal"
@@ -5008,43 +5008,43 @@ msgstr ""
 #~ msgstr "/Edita els atributs del canal..."
 
 #~ msgid "/New Path"
-#~ msgstr "/CamÌ nou"
+#~ msgstr "/Cam√≠ nou"
 
 #~ msgid "/Duplicate Path"
-#~ msgstr "/Duplica el camÌ"
+#~ msgstr "/Duplica el cam√≠"
 
 #~ msgid "/Path to Selection"
-#~ msgstr "/CamÌ de la selecciÛ"
+#~ msgstr "/Cam√≠ de la selecci√≥"
 
 #~ msgid "/Selection to Path"
-#~ msgstr "/SelecciÛ cap al camÌ"
+#~ msgstr "/Selecci√≥ cap al cam√≠"
 
 #~ msgid "/Stroke Path"
-#~ msgstr "/Talla el camÌ"
+#~ msgstr "/Talla el cam√≠"
 
 #~ msgid "/Delete Path"
-#~ msgstr "/Suprimeix el camÌ"
+#~ msgstr "/Suprimeix el cam√≠"
 
 #~ msgid "/Copy Path"
-#~ msgstr "/Copia el camÌ"
+#~ msgstr "/Copia el cam√≠"
 
 #~ msgid "/Paste Path"
-#~ msgstr "/Enganxa el camÌ"
+#~ msgstr "/Enganxa el cam√≠"
 
 #~ msgid "/Import Path..."
-#~ msgstr "/Importa el camÌ..."
+#~ msgstr "/Importa el cam√≠..."
 
 #~ msgid "/Export Path..."
-#~ msgstr "/Exporta el camÌ..."
+#~ msgstr "/Exporta el cam√≠..."
 
 #~ msgid "/Edit Path Attributes..."
-#~ msgstr "/Edita els atributs del camÌ..."
+#~ msgstr "/Edita els atributs del cam√≠..."
 
 #~ msgid "Error opening file: %s\n"
-#~ msgstr "S'ha produÔt un error en obrir el fitxer: %s\n"
+#~ msgstr "S'ha produ√Øt un error en obrir el fitxer: %s\n"
 
 #~ msgid "Module error"
-#~ msgstr "Error del mÚdul"
+#~ msgstr "Error del m√≤dul"
 
 #~ msgid "Loaded OK"
 #~ msgstr "S'ha carregat correctament"
@@ -5053,31 +5053,31 @@ msgstr ""
 #~ msgstr "No s'ha pogut carregar"
 
 #~ msgid "Unload requested"
-#~ msgstr "Desc‡rrega sol∑licitada"
+#~ msgstr "Desc√†rrega sol¬∑licitada"
 
 #~ msgid "Unloaded OK"
 #~ msgstr "S'ha descarregat correctament"
 
 #~ msgid "Module DB"
-#~ msgstr "MÚdul de base de dades"
+#~ msgstr "M√≤dul de base de dades"
 
 #~ msgid "load module: \"%s\"\n"
-#~ msgstr "carrega el mÚdul: \"%s\"\n"
+#~ msgstr "carrega el m√≤dul: \"%s\"\n"
 
 #~ msgid "skipping module: \"%s\"\n"
-#~ msgstr "s'est‡ saltant el mÚdul: \"%s\"\n"
+#~ msgstr "s'est√† saltant el m√≤dul: \"%s\"\n"
 
 #~ msgid "module load error: %s: %s"
-#~ msgstr "error de c‡rrega del mÚdul: %s: %s"
+#~ msgstr "error de c√†rrega del m√≤dul: %s: %s"
 
 #~ msgid "<No modules>"
-#~ msgstr "<Cap mÚdul>"
+#~ msgstr "<Cap m√≤dul>"
 
 #~ msgid "on disk"
 #~ msgstr "al disc"
 
 #~ msgid "only in memory"
-#~ msgstr "nomÈs a la memÚria"
+#~ msgstr "nom√©s a la mem√≤ria"
 
 #~ msgid "nowhere (click 'refresh')"
 #~ msgstr "enlloc (feu clic a 'refresca')"
@@ -5089,10 +5089,10 @@ msgstr ""
 #~ msgstr "Finalitat:"
 
 #~ msgid "Version:"
-#~ msgstr "VersiÛ:"
+#~ msgstr "Versi√≥:"
 
 #~ msgid "Location:"
-#~ msgstr "UbicaciÛ:"
+#~ msgstr "Ubicaci√≥:"
 
 #~ msgid "Autoload during startup"
 #~ msgstr "Autocarrega a l'inici"
@@ -5130,17 +5130,17 @@ msgstr ""
 #~ "missing magic header\n"
 #~ "Does this file need converting from DOS?"
 #~ msgstr ""
-#~ "S'est‡ carregant la paleta %s:\n"
+#~ "S'est√† carregant la paleta %s:\n"
 #~ "Paleta corrupta:\n"
-#~ "S'est‡ perdent l'encapÁalament m‡gic\n"
+#~ "S'est√† perdent l'encap√ßalament m√†gic\n"
 #~ "S'ha de convertir aquest fitxer des del DOS?"
 
 #~ msgid ""
 #~ "Loading palette %s:\n"
 #~ "Corrupt palette: missing magic header"
 #~ msgstr ""
-#~ "S'est‡ carregant la paleta %s:\n"
-#~ "Paleta corrupta: s'est‡ perdent l'encapÁalament m‡gic"
+#~ "S'est√† carregant la paleta %s:\n"
+#~ "Paleta corrupta: s'est√† perdent l'encap√ßalament m√†gic"
 
 #~ msgid ""
 #~ "Loading palette %s (line %d):\n"
@@ -5175,7 +5175,7 @@ msgstr ""
 #~ "RGB value out of range"
 #~ msgstr ""
 #~ "Carregant la paleta %s (line %d):\n"
-#~ "Valor RGB fora de lÌmits"
+#~ "Valor RGB fora de l√≠mits"
 
 #~ msgid "Can't save palette \"%s\"\n"
 #~ msgstr "No es pot desar la paleta \"%s\"\n"
@@ -5193,13 +5193,13 @@ msgstr ""
 #~ msgstr "Suprimeix la paleta"
 
 #~ msgid "Merge Palette"
-#~ msgstr "Paleta de fusiÛ"
+#~ msgstr "Paleta de fusi√≥"
 
 #~ msgid "Enter a name for merged palette"
 #~ msgstr "Introdueix un nom per a la paleta fusionada"
 
 #~ msgid "Color Palette Edit"
-#~ msgstr "EdiciÛ de la paleta de color"
+#~ msgstr "Edici√≥ de la paleta de color"
 
 #~ msgid "Select"
 #~ msgstr "Selecciona"
@@ -5211,16 +5211,16 @@ msgstr ""
 #~ msgstr "Opcions de la paleta"
 
 #~ msgid "Import"
-#~ msgstr "ImportaciÛ"
+#~ msgstr "Importaci√≥"
 
 #~ msgid "Merge"
-#~ msgstr "FusiÛ"
+#~ msgstr "Fusi√≥"
 
 #~ msgid "Import Palette"
 #~ msgstr "Importar una paleta"
 
 #~ msgid "new_import"
-#~ msgstr "_ImportaciÛ nova"
+#~ msgstr "_Importaci√≥ nova"
 
 #~ msgid "Source:"
 #~ msgstr "Origen:"
@@ -5232,25 +5232,25 @@ msgstr ""
 #~ msgstr "Interval:"
 
 #~ msgid "Palette Selection"
-#~ msgstr "SelecciÛ de la paleta"
+#~ msgstr "Selecci√≥ de la paleta"
 
 #~ msgid "New Path"
-#~ msgstr "CamÌ nou"
+#~ msgstr "Cam√≠ nou"
 
 #~ msgid "Duplicate Path"
-#~ msgstr "CamÌ duplicat"
+#~ msgstr "Cam√≠ duplicat"
 
 #~ msgid "Path to Selection"
-#~ msgstr "CamÌ cap a la selecciÛ"
+#~ msgstr "Cam√≠ cap a la selecci√≥"
 
 #~ msgid "Selection to Path"
-#~ msgstr "SelecciÛ cap al camÌ"
+#~ msgstr "Selecci√≥ cap al cam√≠"
 
 #~ msgid "Stroke Path"
-#~ msgstr "CamÌ de tecleig"
+#~ msgstr "Cam√≠ de tecleig"
 
 #~ msgid "Delete Path"
-#~ msgstr "Suprimeix el camÌ"
+#~ msgstr "Suprimeix el cam√≠"
 
 #~ msgid "New Point"
 #~ msgstr "Punt nou"
@@ -5262,22 +5262,22 @@ msgstr ""
 #~ msgstr "Edita un punt"
 
 #~ msgid "Path %d"
-#~ msgstr "CamÌ %d"
+#~ msgstr "Cam√≠ %d"
 
 #~ msgid "Edit Path Attributes"
-#~ msgstr "Edita els atributs del camÌ"
+#~ msgstr "Edita els atributs del cam√≠"
 
 #~ msgid "Enter a new name for the path"
-#~ msgstr "Introdueix un nom nou per al camÌ"
+#~ msgstr "Introdueix un nom nou per al cam√≠"
 
 #~ msgid "Failed to read path from %s"
-#~ msgstr "No s'ha pogut llegir el camÌ des de %s"
+#~ msgstr "No s'ha pogut llegir el cam√≠ des de %s"
 
 #~ msgid "No points specified in path file %s"
-#~ msgstr "No s'han especificat punts al fitxer de camÌ %s"
+#~ msgstr "No s'han especificat punts al fitxer de cam√≠ %s"
 
 #~ msgid "Failed to read path points from %s"
-#~ msgstr "No s'han pogut llegir els punts del camÌ des de %s"
+#~ msgstr "No s'han pogut llegir els punts del cam√≠ des de %s"
 
 #~ msgid "open failed on %s: %s\n"
 #~ msgstr "No s'ha pogut obrir a %s: %s\n"
@@ -5286,13 +5286,13 @@ msgstr ""
 #~ msgstr "Carregar/Desar corbes de Bezier"
 
 #~ msgid "Load Path"
-#~ msgstr "Carregar el camÌ"
+#~ msgstr "Carregar el cam√≠"
 
 #~ msgid "Store Path"
-#~ msgstr "Desar el camÌ"
+#~ msgstr "Desar el cam√≠"
 
 #~ msgid "Perspective Transform Information"
-#~ msgstr "InformaciÛ de la transformaciÛ de la perspectiva"
+#~ msgstr "Informaci√≥ de la transformaci√≥ de la perspectiva"
 
 #~ msgid "Matrix:"
 #~ msgstr "Matriu:"
@@ -5301,7 +5301,7 @@ msgstr ""
 #~ msgstr "Perspectiva..."
 
 #~ msgid "Resource configuration"
-#~ msgstr "ConfiguraciÛ de recursos"
+#~ msgstr "Configuraci√≥ de recursos"
 
 #~ msgid "Plug-ins"
 #~ msgstr "Extensions"
@@ -5316,51 +5316,51 @@ msgstr ""
 #~ msgstr "Extensions"
 
 #~ msgid "Unable to locate Plug-In: \"%s\""
-#~ msgstr "No es pot localitzar l'extensiÛ: \"%s\""
+#~ msgstr "No es pot localitzar l'extensi√≥: \"%s\""
 
 #~ msgid "Posterize does not operate on indexed drawables."
-#~ msgstr "La conversiÛ a cartell no funciona amb els dibuixos indexats"
+#~ msgstr "La conversi√≥ a cartell no funciona amb els dibuixos indexats"
 
 #~ msgid "Posterize"
-#~ msgstr "ConversiÛ a cartell"
+#~ msgstr "Conversi√≥ a cartell"
 
 #~ msgid "Posterize Levels:"
-#~ msgstr "Nivells de conversiÛ a cartell:"
+#~ msgstr "Nivells de conversi√≥ a cartell:"
 
 #~ msgid "Error: Levels of undo must be zero or greater."
-#~ msgstr "Error: els nivells per desfer han de ser zero o mÈs."
+#~ msgstr "Error: els nivells per desfer han de ser zero o m√©s."
 
 #~ msgid "Error: Marching speed must be 50 or greater."
-#~ msgstr "Error: la velocitat de funcionament ha de ser 50 o mÈs."
+#~ msgstr "Error: la velocitat de funcionament ha de ser 50 o m√©s."
 
 #~ msgid "Error: Default width must be one or greater."
-#~ msgstr "Error: l'amplada per defecte ha de ser 1 o mÈs."
+#~ msgstr "Error: l'amplada per defecte ha de ser 1 o m√©s."
 
 #~ msgid "Error: Default height must be one or greater."
-#~ msgstr "Error: l'alÁada per defecte ha de ser 1 o mÈs."
+#~ msgstr "Error: l'al√ßada per defecte ha de ser 1 o m√©s."
 
 #~ msgid "Error: Default unit must be within unit range."
-#~ msgstr "Error: la unitat per defecte ha d'estar dins del lÌmit d'unitat"
+#~ msgstr "Error: la unitat per defecte ha d'estar dins del l√≠mit d'unitat"
 
 #~ msgid "Error: Default resolution must not be zero."
-#~ msgstr "Error: la resoluciÛ per defecte no ha de ser zero."
+#~ msgstr "Error: la resoluci√≥ per defecte no ha de ser zero."
 
 #~ msgid "Error: Default resolution unit must be within unit range."
 #~ msgstr ""
-#~ "Error: la unitat de la resoluciÛ per defecte ha d'estar dins del lÌmit "
+#~ "Error: la unitat de la resoluci√≥ per defecte ha d'estar dins del l√≠mit "
 #~ "d'unitat."
 
 #~ msgid "Error: Monitor resolution must not be zero."
-#~ msgstr "Error: la resoluciÛ del monitor no pot ser zero."
+#~ msgstr "Error: la resoluci√≥ del monitor no pot ser zero."
 
 #~ msgid "Error: Image title format must not be NULL."
-#~ msgstr "El format del tÌtol d'imatge no ha de ser NUL."
+#~ msgstr "El format del t√≠tol d'imatge no ha de ser NUL."
 
 #~ msgid "Error: Number of processors must be between 1 and 30."
 #~ msgstr "Error: el nombre de processadors ha d'estar entre 1 i 30."
 
 #~ msgid "Save Preferences ?"
-#~ msgstr "Voleu desar les preferËncies?"
+#~ msgstr "Voleu desar les prefer√®ncies?"
 
 #~ msgid ""
 #~ "At least one of the changes you made will only\n"
@@ -5371,22 +5371,22 @@ msgstr ""
 #~ "and the critical parts of your changes will not\n"
 #~ "be applied."
 #~ msgstr ""
-#~ "Almenys un dels canvis que heu fet nomÈs\n"
-#~ "tindr‡ efecte un cop hagueu reiniciat el GIMP.\n"
+#~ "Almenys un dels canvis que heu fet nom√©s\n"
+#~ "tindr√† efecte un cop hagueu reiniciat el GIMP.\n"
 #~ "\n"
 #~ "Ara podeu escollir 'Desa' per fer els canvis\n"
-#~ "permanents i poder reiniciar el GIMP o prÈmer\n"
-#~ "'Tanca' perquË les parts crÌtiques dels\n"
+#~ "permanents i poder reiniciar el GIMP o pr√©mer\n"
+#~ "'Tanca' perqu√® les parts cr√≠tiques dels\n"
 #~ "vostres canvis no es duguin a terme."
 
 #~ msgid "You will need to restart GIMP for these changes to take effect."
-#~ msgstr "Cal que reinicialitzeu el GIMP perquË els canvis tinguin efecte."
+#~ msgstr "Cal que reinicialitzeu el GIMP perqu√® els canvis tinguin efecte."
 
 #~ msgid "The default comment is limited to %d characters."
-#~ msgstr "El comentari per defecte est‡ limitat a %d car‡cters."
+#~ msgstr "El comentari per defecte est√† limitat a %d car√†cters."
 
 #~ msgid "Preferences"
-#~ msgstr "PreferËncies"
+#~ msgstr "Prefer√®ncies"
 
 #~ msgid "Categories"
 #~ msgstr "Categories"
@@ -5398,7 +5398,7 @@ msgstr ""
 #~ msgstr "Mida de la imatge i de la unitat per defecte"
 
 #~ msgid "Default Image Resolution and Resolution Unit"
-#~ msgstr "ResoluciÛ de la imatge per defecte i de la unitat de resoluciÛ"
+#~ msgstr "Resoluci√≥ de la imatge per defecte i de la unitat de resoluci√≥"
 
 #~ msgid "dpi"
 #~ msgstr "Punts per polzada"
@@ -5407,7 +5407,7 @@ msgstr ""
 #~ msgstr "Tipus d'imatge per defecte"
 
 #~ msgid "Maximum Image Size:"
-#~ msgstr "Mida m‡xima d'imatge:"
+#~ msgstr "Mida m√†xima d'imatge:"
 
 #~ msgid "Comment Used for New Images"
 #~ msgstr "Comentari utilitzat per a les noves imatges"
@@ -5416,7 +5416,7 @@ msgstr ""
 #~ msgstr "Pantalla"
 
 #~ msgid "Transparency"
-#~ msgstr "TransparËncia"
+#~ msgstr "Transpar√®ncia"
 
 #~ msgid "Light Checks"
 #~ msgstr "Comprovacions de la llum"
@@ -5428,19 +5428,19 @@ msgstr ""
 #~ msgstr "Comprovacions de foscor"
 
 #~ msgid "White Only"
-#~ msgstr "NomÈs blanc"
+#~ msgstr "Nom√©s blanc"
 
 #~ msgid "Black Only"
-#~ msgstr "NomÈs negre"
+#~ msgstr "Nom√©s negre"
 
 #~ msgid "Transparency Type:"
-#~ msgstr "Tipus de transparËncia:"
+#~ msgstr "Tipus de transpar√®ncia:"
 
 #~ msgid "Small"
 #~ msgstr "Petit"
 
 #~ msgid "Medium"
-#~ msgstr "Mitj‡"
+#~ msgstr "Mitj√†"
 
 #~ msgid "Large"
 #~ msgstr "Gran"
@@ -5449,10 +5449,10 @@ msgstr ""
 #~ msgstr "Pantalla de 8-bits"
 
 #~ msgid "Install Colormap"
-#~ msgstr "Instal∑la el mapa de colors"
+#~ msgstr "Instal¬∑la el mapa de colors"
 
 #~ msgid "Colormap Cycling"
-#~ msgstr "El mapa de colors est‡ activat"
+#~ msgstr "El mapa de colors est√† activat"
 
 #~ msgid "Tiny"
 #~ msgstr "Menut"
@@ -5461,24 +5461,24 @@ msgstr ""
 #~ msgstr "Enorme"
 
 #~ msgid "Preview Size:"
-#~ msgstr "Mida de previsualitzaciÛ:"
+#~ msgstr "Mida de previsualitzaci√≥:"
 
 #~ msgid "Nav Preview Size:"
-#~ msgstr "Mida de previsualitzaciÛ del Navegador:"
+#~ msgstr "Mida de previsualitzaci√≥ del Navegador:"
 
 #~ msgid "Recent Documents List Size:"
 #~ msgstr "Mida de la llista de documents recents:"
 
 #~ msgid "Display Brush, Pattern and Gradient Indicators"
 #~ msgstr ""
-#~ "Mostra els indicadors del pinzell, del patrÛ i del degradat a la barra "
+#~ "Mostra els indicadors del pinzell, del patr√≥ i del degradat a la barra "
 #~ "d'eines"
 
 #~ msgid "Navigation Window per Display"
-#~ msgstr "NavegaciÛ de la finestra per pantalla"
+#~ msgstr "Navegaci√≥ de la finestra per pantalla"
 
 #~ msgid "Info Window Follows Mouse"
-#~ msgstr "InformaciÛ del seguiment per la finestra del ratolÌ"
+#~ msgstr "Informaci√≥ del seguiment per la finestra del ratol√≠"
 
 #~ msgid "Help System"
 #~ msgstr "Sistema d'ajuda"
@@ -5499,7 +5499,7 @@ msgstr ""
 #~ msgstr "Ajuda del navegador a l'usuari:"
 
 #~ msgid "Appearance"
-#~ msgstr "AparenÁa"
+#~ msgstr "Aparen√ßa"
 
 #~ msgid "Use \"Dot for Dot\" by default"
 #~ msgstr "Useu \"Punt a punt\" per defecte"
@@ -5520,28 +5520,28 @@ msgstr ""
 #~ msgstr "Personalitzar"
 
 #~ msgid "Standard"
-#~ msgstr "Est‡ndard"
+#~ msgstr "Est√†ndard"
 
 #~ msgid "Show zoom percentage"
 #~ msgstr "Mostrar el percentatge del zoom"
 
 #~ msgid "Show zoom ratio"
-#~ msgstr "Mostrar la r‡tio del zoom"
+#~ msgstr "Mostrar la r√†tio del zoom"
 
 #~ msgid "Show reversed zoom ratio"
-#~ msgstr "Mostrar la r‡tio inversa del zoom"
+#~ msgstr "Mostrar la r√†tio inversa del zoom"
 
 #~ msgid "Image Title Format:"
-#~ msgstr "Format de tÌtol d'imatge:"
+#~ msgstr "Format de t√≠tol d'imatge:"
 
 #~ msgid "Pointer Movement Feedback"
-#~ msgstr "TraÁa del moviment del punter"
+#~ msgstr "Tra√ßa del moviment del punter"
 
 #~ msgid "Perfect-but-Slow Pointer Tracking"
-#~ msgstr "Seguiment perfecte, perÚ lent, del punter"
+#~ msgstr "Seguiment perfecte, per√≤ lent, del punter"
 
 #~ msgid "Disable Cursor Updating"
-#~ msgstr "Desactivar l'actualitzaciÛ del cursor"
+#~ msgstr "Desactivar l'actualitzaci√≥ del cursor"
 
 #~ msgid "Tool Options"
 #~ msgstr "Opcions d'eina"
@@ -5553,31 +5553,31 @@ msgstr ""
 #~ msgstr "Usa les opcions de pintat globals"
 
 #~ msgid "Finding Contiguous Regions"
-#~ msgstr "Cerca les regions contÌg¸es"
+#~ msgstr "Cerca les regions cont√≠g√ºes"
 
 #~ msgid "Resource Consumption"
 #~ msgstr "Consum dels recursos"
 
 #~ msgid "Conservative Memory Usage"
-#~ msgstr "UtilitzaciÛ conservadora de la memÚria"
+#~ msgstr "Utilitzaci√≥ conservadora de la mem√≤ria"
 
 #~ msgid "Levels of Undo:"
 #~ msgstr "Nivells de desfer:"
 
 #~ msgid "Tile Cache Size:"
-#~ msgstr "Mida de la memÚria cau en mosaic:"
+#~ msgstr "Mida de la mem√≤ria cau en mosaic:"
 
 #~ msgid "Scaling"
 #~ msgstr "Escalat"
 
 #~ msgid "Nearest Neighbor (Fast)"
-#~ msgstr "VeÌ mes proper (R‡pid)"
+#~ msgstr "Ve√≠ mes proper (R√†pid)"
 
 #~ msgid "Cubic (Slow)"
-#~ msgstr "C˙bic (lent)"
+#~ msgstr "C√∫bic (lent)"
 
 #~ msgid "File Saving"
-#~ msgstr "S'est‡ desant el fitxer"
+#~ msgstr "S'est√† desant el fitxer"
 
 #~ msgid "Always"
 #~ msgstr "Sempre"
@@ -5589,16 +5589,16 @@ msgstr ""
 #~ msgstr "Prova d'escriure un arxiu amb miniatura:"
 
 #~ msgid "Only when Modified"
-#~ msgstr "NomÈs quan s'hagi modificat"
+#~ msgstr "Nom√©s quan s'hagi modificat"
 
 #~ msgid "\"File > Save\" Saves the Image:"
 #~ msgstr "\"Fitxer > Desa\" Desa la imatge:"
 
 #~ msgid "Session Management"
-#~ msgstr "GestiÛ de la sessiÛ"
+#~ msgstr "Gesti√≥ de la sessi√≥"
 
 #~ msgid "Session"
-#~ msgstr "SessiÛ"
+#~ msgstr "Sessi√≥"
 
 #~ msgid "Window Positions"
 #~ msgstr "Posicions de la finestra"
@@ -5610,7 +5610,7 @@ msgstr ""
 #~ msgstr "Esborra ara les posicions de finestra desades"
 
 #~ msgid "Always Try to Restore Session"
-#~ msgstr "Intenta sempre restaurar la sessiÛ"
+#~ msgstr "Intenta sempre restaurar la sessi√≥"
 
 #~ msgid "Devices"
 #~ msgstr "Dispositius"
@@ -5622,13 +5622,13 @@ msgstr ""
 #~ msgstr "Monitor"
 
 #~ msgid "Get Monitor Resolution"
-#~ msgstr "Recupera la resoluciÛ del monitor"
+#~ msgstr "Recupera la resoluci√≥ del monitor"
 
 #~ msgid "(Currently %d x %d dpi)"
 #~ msgstr "(Actualment %d x %d ppp)"
 
 #~ msgid "Calibrate"
-#~ msgstr "CalibraciÛ"
+#~ msgstr "Calibraci√≥"
 
 #~ msgid "Manually:"
 #~ msgstr "Manualment:"
@@ -5691,13 +5691,13 @@ msgstr ""
 #~ msgstr "Selecciona el directori de les extensions"
 
 #~ msgid "Modules"
-#~ msgstr "MÚduls"
+#~ msgstr "M√≤duls"
 
 #~ msgid "Modules Directories"
-#~ msgstr "Directoris dels mÚduls"
+#~ msgstr "Directoris dels m√≤duls"
 
 #~ msgid "Select Modules Dir"
-#~ msgstr "Selecciona el directori del mÚduls"
+#~ msgstr "Selecciona el directori del m√≤duls"
 
 #~ msgid "Procedural Database"
 #~ msgstr "Base de dades processal"
@@ -5713,16 +5713,16 @@ msgstr ""
 #~ "Argument %d to '%s' should be a %s, but got passed a %s"
 #~ msgstr ""
 #~ "Els arguments incorrectes s'han enviat al procedural_db_run_proc:\n"
-#~ "L'argument %d a '%s' hauria de ser un %s, perÚ ha passat a %s"
+#~ "L'argument %d a '%s' hauria de ser un %s, per√≤ ha passat a %s"
 
 #~ msgid "Internal GIMP procedure"
 #~ msgstr "Procediment intern del GIMP"
 
 #~ msgid "GIMP Plug-In"
-#~ msgstr "ExtensiÛ per al GIMP"
+#~ msgstr "Extensi√≥ per al GIMP"
 
 #~ msgid "GIMP Extension"
-#~ msgstr "ExtensiÛ del GIMP"
+#~ msgstr "Extensi√≥ del GIMP"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "Procediment temporal"
@@ -5731,31 +5731,31 @@ msgstr ""
 #~ msgstr "Edita els atributs del Qmask"
 
 #~ msgid "Selection: ADD"
-#~ msgstr "SelecciÛ: AFEGIR"
+#~ msgstr "Selecci√≥: AFEGIR"
 
 #~ msgid "Selection: SUBTRACT"
-#~ msgstr "SelecciÛ: SOSTREURE"
+#~ msgstr "Selecci√≥: SOSTREURE"
 
 #~ msgid "Selection: INTERSECT"
-#~ msgstr "SelecciÛ: CREUAR"
+#~ msgstr "Selecci√≥: CREUAR"
 
 #~ msgid "Selection: REPLACE"
-#~ msgstr "SelecciÛ: REEMPLA«AR"
+#~ msgstr "Selecci√≥: REEMPLA√áAR"
 
 #~ msgid "Selection: "
-#~ msgstr "SelecciÛ: "
+#~ msgstr "Selecci√≥: "
 
 #~ msgid "Scale Image"
 #~ msgstr "Escala la imatge"
 
 #~ msgid "Set Layer Boundary Size"
-#~ msgstr "Par‡metres del tamany frontera de la capa"
+#~ msgstr "Par√†metres del tamany frontera de la capa"
 
 #~ msgid "Set Canvas Size"
-#~ msgstr "Par‡metres de la mida de l'oli"
+#~ msgstr "Par√†metres de la mida de l'oli"
 
 #~ msgid "Ratio X:"
-#~ msgstr "R‡tio X:"
+#~ msgstr "R√†tio X:"
 
 #~ msgid "X:"
 #~ msgstr "X:"
@@ -5765,7 +5765,7 @@ msgstr ""
 
 #~ msgid "Scale Error: Both width and height must be greater than zero."
 #~ msgstr ""
-#~ "Error en l'escala: tant l'alÁada com l'amplada han de ser mÈs grans de "
+#~ "Error en l'escala: tant l'al√ßada com l'amplada han de ser m√©s grans de "
 #~ "zero."
 
 #~ msgid "Layer Too Small"
@@ -5776,15 +5776,15 @@ msgstr ""
 #~ "some layers completely away.\n"
 #~ "Is this what you want?"
 #~ msgstr ""
-#~ "El tamany de capa escollida far‡\n"
-#~ "encongir tambÈ algunes capes\n"
-#~ "completament. …s aixÚ el que voleu?"
+#~ "El tamany de capa escollida far√†\n"
+#~ "encongir tamb√© algunes capes\n"
+#~ "completament. √âs aix√≤ el que voleu?"
 
 #~ msgid "Calibrate Monitor Resolution"
-#~ msgstr "Calibra la resoluciÛ del monitor"
+#~ msgstr "Calibra la resoluci√≥ del monitor"
 
 #~ msgid "Measure the rulers and enter their lengths below."
-#~ msgstr "Mesura els regles i entra'n la llargada a continuaciÛ."
+#~ msgstr "Mesura els regles i entra'n la llargada a continuaci√≥."
 
 #~ msgid "Horizontal:"
 #~ msgstr "Horitzontal:"
@@ -5793,7 +5793,7 @@ msgstr ""
 #~ msgstr "Vertical:"
 
 #~ msgid "Rotation Information"
-#~ msgstr "InformaciÛ de la rotaciÛ"
+#~ msgstr "Informaci√≥ de la rotaci√≥"
 
 #~ msgid "Center X:"
 #~ msgstr "Centre X:"
@@ -5802,28 +5802,28 @@ msgstr ""
 #~ msgstr "Girant..."
 
 #~ msgid "Scaling Information"
-#~ msgstr "InformaciÛ de l'escala"
+#~ msgstr "Informaci√≥ de l'escala"
 
 #~ msgid "Scale Ratio X:"
-#~ msgstr "Escala de la r‡tio X:"
+#~ msgstr "Escala de la r√†tio X:"
 
 #~ msgid "Scaling..."
-#~ msgstr "S'est‡ escalant..."
+#~ msgstr "S'est√† escalant..."
 
 #~ msgid "Shear Information"
-#~ msgstr "InformaciÛ de retall"
+#~ msgstr "Informaci√≥ de retall"
 
 #~ msgid "Shear Magnitude X:"
 #~ msgstr "Magnitud del retall en X:"
 
 #~ msgid "Shearing..."
-#~ msgstr "S'est‡ retallant..."
+#~ msgstr "S'est√† retallant..."
 
 #~ msgid "Text Tool"
 #~ msgstr "Eina de text"
 
 #~ msgid "Use Dynamic Text"
-#~ msgstr "Utilitza el text din‡mic"
+#~ msgstr "Utilitza el text din√†mic"
 
 #~ msgid "Font '%s' not found."
 #~ msgstr "No s'ha trobat el tipus de lletra '%s'."
@@ -5862,28 +5862,28 @@ msgstr ""
 #~ msgstr "Consell anterior"
 
 #~ msgid "Next Tip"
-#~ msgstr "Consell seg¸ent"
+#~ msgstr "Consell seg√ºent"
 
 #~ msgid "This tool has no options."
-#~ msgstr "Aquesta eina no tÈ opcions."
+#~ msgstr "Aquesta eina no t√© opcions."
 
 #~ msgid "Rectangular Selection"
-#~ msgstr "SelecciÛ rectangular"
+#~ msgstr "Selecci√≥ rectangular"
 
 #~ msgid "Free-Hand Selection"
-#~ msgstr "SelecciÛ lliure"
+#~ msgstr "Selecci√≥ lliure"
 
 #~ msgid "Fuzzy Selection"
-#~ msgstr "SelecciÛ difusa"
+#~ msgstr "Selecci√≥ difusa"
 
 #~ msgid "Intelligent Scissors"
-#~ msgstr "Tisores intel∑ligents"
+#~ msgstr "Tisores intel¬∑ligents"
 
 #~ msgid "By-Color Selection"
-#~ msgstr "SelecciÛ per color"
+#~ msgstr "Selecci√≥ per color"
 
 #~ msgid "Fixed Size / Aspect Ratio"
-#~ msgstr "Mida fixa / R‡tio d'aspecte"
+#~ msgstr "Mida fixa / R√†tio d'aspecte"
 
 #~ msgid "Unit:"
 #~ msgstr "Unitat:"
@@ -5919,55 +5919,55 @@ msgstr ""
 #~ msgstr "Incremental"
 
 #~ msgid "Pressure Sensitivity"
-#~ msgstr "Sensibilitat de la pressiÛ"
+#~ msgstr "Sensibilitat de la pressi√≥"
 
 #~ msgid "Rect Select"
 #~ msgstr "Selecciona rectangle"
 
 #~ msgid "/Tools/Select Tools/Rect Select"
-#~ msgstr "/Eines/Eines de selecciÛ/SelecciÛ de rectangle"
+#~ msgstr "/Eines/Eines de selecci√≥/Selecci√≥ de rectangle"
 
 #~ msgid "Select rectangular regions"
 #~ msgstr "Selecciona regions rectangulars"
 
 #~ msgid "Ellipse Select"
-#~ msgstr "Selecciona l'el∑lipse"
+#~ msgstr "Selecciona l'el¬∑lipse"
 
 #~ msgid "/Tools/Select Tools/Ellipse Select"
-#~ msgstr "/Eines/Eines de selecciÛ/SelecciÛ d'el∑lipse"
+#~ msgstr "/Eines/Eines de selecci√≥/Selecci√≥ d'el¬∑lipse"
 
 #~ msgid "Select elliptical regions"
-#~ msgstr "Selecciona les regions el∑lÌptiques"
+#~ msgstr "Selecciona les regions el¬∑l√≠ptiques"
 
 #~ msgid "Free Select"
-#~ msgstr "SelecciÛ lliure"
+#~ msgstr "Selecci√≥ lliure"
 
 #~ msgid "/Tools/Select Tools/Free Select"
-#~ msgstr "/Eines/Eines de selecciÛ/SelecciÛ lliure"
+#~ msgstr "/Eines/Eines de selecci√≥/Selecci√≥ lliure"
 
 #~ msgid "Select hand-drawn regions"
-#~ msgstr "Selecciona les regions dibuixades a m‡"
+#~ msgstr "Selecciona les regions dibuixades a m√†"
 
 #~ msgid "Fuzzy Select"
-#~ msgstr "SelecciÛ difusa"
+#~ msgstr "Selecci√≥ difusa"
 
 #~ msgid "/Tools/Select Tools/Fuzzy Select"
-#~ msgstr "/Eines/Eines de selecciÛ/SelecciÛ difusa"
+#~ msgstr "/Eines/Eines de selecci√≥/Selecci√≥ difusa"
 
 #~ msgid "Select contiguous regions"
-#~ msgstr "Selecciona les regions contÌnues"
+#~ msgstr "Selecciona les regions cont√≠nues"
 
 #~ msgid "Bezier Select"
 #~ msgstr "Selecciona Bezier"
 
 #~ msgid "/Tools/Select Tools/Bezier Select"
-#~ msgstr "/Eines/Eines de selecciÛ/SelecciÛ Bezier"
+#~ msgstr "/Eines/Eines de selecci√≥/Selecci√≥ Bezier"
 
 #~ msgid "Select regions using Bezier curves"
 #~ msgstr "Selecciona les regions utilitzant corbes Bezier"
 
 #~ msgid "/Tools/Select Tools/Intelligent Scissors"
-#~ msgstr "/Eines/Eines de selecciÛ/Tisores intel∑ligents"
+#~ msgstr "/Eines/Eines de selecci√≥/Tisores intel¬∑ligents"
 
 #~ msgid "Select shapes from image"
 #~ msgstr "Selecciona les formes de la imatge"
@@ -5976,7 +5976,7 @@ msgstr ""
 #~ msgstr "Mou"
 
 #~ msgid "/Tools/Transform Tools/Move"
-#~ msgstr "/Eines/Eines de transformaciÛ/Mou"
+#~ msgstr "/Eines/Eines de transformaci√≥/Mou"
 
 #~ msgid "Move layers & selections"
 #~ msgstr "Mou les capes i les seleccions"
@@ -5985,34 +5985,34 @@ msgstr ""
 #~ msgstr "Augmenta"
 
 #~ msgid "/Tools/Transform Tools/Magnify"
-#~ msgstr "/Eines/Eines de transformaciÛ/Augmenta"
+#~ msgstr "/Eines/Eines de transformaci√≥/Augmenta"
 
 #~ msgid "Zoom in & out"
 #~ msgstr "Amplia i redueix el zoom"
 
 #~ msgid "/Tools/Transform Tools/Crop & Resize"
-#~ msgstr "/Eines/Eines de transformaciÛ/EscapÁa i canvia la mida"
+#~ msgstr "/Eines/Eines de transformaci√≥/Escap√ßa i canvia la mida"
 
 #~ msgid "Crop or resize the image"
-#~ msgstr "EscapÁa o canvia la mida de la imatge"
+#~ msgstr "Escap√ßa o canvia la mida de la imatge"
 
 #~ msgid "Transform"
 #~ msgstr "Transforma"
 
 #~ msgid "/Tools/Transform Tools/Transform"
-#~ msgstr "/Eines/Eines de transformaciÛ/Transforma"
+#~ msgstr "/Eines/Eines de transformaci√≥/Transforma"
 
 #~ msgid "Rotation, scaling, shearing, perspective."
-#~ msgstr "RotaciÛ, escalatge, retall i perspectiva"
+#~ msgstr "Rotaci√≥, escalatge, retall i perspectiva"
 
 #~ msgid "Flip"
 #~ msgstr "Volteja"
 
 #~ msgid "/Tools/Transform Tools/Flip"
-#~ msgstr "/Eines/Eines de transformaciÛ/Volteja"
+#~ msgstr "/Eines/Eines de transformaci√≥/Volteja"
 
 #~ msgid "Flip the layer or selection"
-#~ msgstr "Volteja la capa o la selecciÛ"
+#~ msgstr "Volteja la capa o la selecci√≥"
 
 #~ msgid "/Tools/Text"
 #~ msgstr "/Eines/Text"
@@ -6039,25 +6039,25 @@ msgstr ""
 #~ msgstr "/Eines/Eines de pintura/Llapis"
 
 #~ msgid "Draw sharp pencil strokes"
-#~ msgstr "Dibuixa amb pinzells de traÁ afinat"
+#~ msgstr "Dibuixa amb pinzells de tra√ß afinat"
 
 #~ msgid "/Tools/Paint Tools/Paintbrush"
 #~ msgstr "/Eines/Eines de pintura/Pinzell"
 
 #~ msgid "Paint fuzzy brush strokes"
-#~ msgstr "Pinta amb pinzells de traÁ dif˙s"
+#~ msgstr "Pinta amb pinzells de tra√ß dif√∫s"
 
 #~ msgid "/Tools/Paint Tools/Eraser"
 #~ msgstr "/Eines/Eines de pintura/Goma d'esborrar"
 
 #~ msgid "Erase to background or transparency"
-#~ msgstr "Esborra al fons o la transparËncia"
+#~ msgstr "Esborra al fons o la transpar√®ncia"
 
 #~ msgid "/Tools/Paint Tools/Airbrush"
 #~ msgstr "/Eines/Eines de pintura/Esprai"
 
 #~ msgid "Airbrush with variable pressure"
-#~ msgstr "Esprai amb pressiÛ variable"
+#~ msgstr "Esprai amb pressi√≥ variable"
 
 #~ msgid "Clone"
 #~ msgstr "Clona"
@@ -6099,10 +6099,10 @@ msgstr ""
 #~ msgstr "/Eines/Mesura"
 
 #~ msgid "Measure distances and angles"
-#~ msgstr "Mesura les dist‡ncies i els angles"
+#~ msgstr "Mesura les dist√†ncies i els angles"
 
 #~ msgid "By Color Select"
-#~ msgstr "SelecciÛ per color"
+#~ msgstr "Selecci√≥ per color"
 
 #~ msgid "/Select/By Color..."
 #~ msgstr "/Selecciona/Per color..."
@@ -6111,10 +6111,10 @@ msgstr ""
 #~ msgstr "Selecciona les regions per color"
 
 #~ msgid "/Image/Colors/Color Balance..."
-#~ msgstr "/Imatge/Colors/BalanÁ de colors..."
+#~ msgstr "/Imatge/Colors/Balan√ß de colors..."
 
 #~ msgid "Adjust color balance"
-#~ msgstr "Ajusta el balanÁ de color"
+#~ msgstr "Ajusta el balan√ß de color"
 
 #~ msgid "/Image/Colors/Brightness-Contrast..."
 #~ msgstr "/Imatge/Colors/Brillantor-Contrast..."
@@ -6123,10 +6123,10 @@ msgstr ""
 #~ msgstr "Ajusta la brillantor i el contrast"
 
 #~ msgid "/Image/Colors/Hue-Saturation..."
-#~ msgstr "/Imatge/Colors/SaturaciÛ de color..."
+#~ msgstr "/Imatge/Colors/Saturaci√≥ de color..."
 
 #~ msgid "Adjust hue and saturation"
-#~ msgstr "Ajusta el buit i la saturaciÛ"
+#~ msgstr "Ajusta el buit i la saturaci√≥"
 
 #~ msgid "/Image/Colors/Posterize..."
 #~ msgstr "/Imatge/Colors/Convertir a cartell..."
@@ -6163,13 +6163,13 @@ msgstr ""
 #~ "layers that contain layer masks."
 #~ msgstr ""
 #~ "Les transformacions no funcionen en\n"
-#~ "capes que continguin m‡scares de capa."
+#~ "capes que continguin m√†scares de capa."
 
 #~ msgid "Transformation"
-#~ msgstr "TransformaciÛ"
+#~ msgstr "Transformaci√≥"
 
 #~ msgid "Transform Tool"
-#~ msgstr "Eina de transformaciÛ"
+#~ msgstr "Eina de transformaci√≥"
 
 #~ msgid "Perspective"
 #~ msgstr "Perspectiva"
@@ -6184,10 +6184,10 @@ msgstr ""
 #~ msgstr "Correctiu"
 
 #~ msgid "Show Grid"
-#~ msgstr "Mostra la quadrÌcula"
+#~ msgstr "Mostra la quadr√≠cula"
 
 #~ msgid "Smoothing"
-#~ msgstr "S'est‡ suavitzant"
+#~ msgstr "S'est√† suavitzant"
 
 #~ msgid "Clip Result"
 #~ msgstr "Posa el resultat al porta-retalls"
@@ -6205,7 +6205,7 @@ msgstr ""
 #~ msgstr "mod de la imatge"
 
 #~ msgid "mask"
-#~ msgstr "m‡scara"
+#~ msgstr "m√†scara"
 
 #~ msgid "layer move"
 #~ msgstr "moviment de la capa"
@@ -6226,16 +6226,16 @@ msgstr ""
 #~ msgstr "mod de la capa"
 
 #~ msgid "add layer mask"
-#~ msgstr "afegeix una m‡scara de capa"
+#~ msgstr "afegeix una m√†scara de capa"
 
 #~ msgid "delete layer mask"
-#~ msgstr "suprimeix la m‡scara de capa"
+#~ msgstr "suprimeix la m√†scara de capa"
 
 #~ msgid "rename layer"
 #~ msgstr "canvia el nom de la capa"
 
 #~ msgid "layer reposition"
-#~ msgstr "reposiciÛ de la capa"
+#~ msgstr "reposici√≥ de la capa"
 
 #~ msgid "new channel"
 #~ msgstr "canal nou"
@@ -6265,7 +6265,7 @@ msgstr ""
 #~ msgstr "text"
 
 #~ msgid "float selection"
-#~ msgstr "selecciÛ flotant"
+#~ msgstr "selecci√≥ flotant"
 
 #~ msgid "paste"
 #~ msgstr "enganxa"
@@ -6283,22 +6283,22 @@ msgstr ""
 #~ msgstr "capa flotant"
 
 #~ msgid "linked layer"
-#~ msgstr "capa enllaÁada"
+#~ msgstr "capa enlla√ßada"
 
 #~ msgid "apply layer mask"
-#~ msgstr "aplica la m‡scara de la capa"
+#~ msgstr "aplica la m√†scara de la capa"
 
 #~ msgid "layer merge"
-#~ msgstr "fusiÛ de la capa"
+#~ msgstr "fusi√≥ de la capa"
 
 #~ msgid "FS anchor"
-#~ msgstr "FS ‡ncora"
+#~ msgstr "FS √†ncora"
 
 #~ msgid "gimage mod"
 #~ msgstr "mod de la gimatge"
 
 #~ msgid "crop"
-#~ msgstr "escapÁa"
+#~ msgstr "escap√ßa"
 
 #~ msgid "layer scale"
 #~ msgstr "escala de la capa"
@@ -6307,16 +6307,16 @@ msgstr ""
 #~ msgstr "canvia la mida de la capa"
 
 #~ msgid "quickmask"
-#~ msgstr "m‡scara r‡pida"
+#~ msgstr "m√†scara r√†pida"
 
 #~ msgid "attach parasite"
-#~ msgstr "adjunta el par‡sit"
+#~ msgstr "adjunta el par√†sit"
 
 #~ msgid "remove parasite"
-#~ msgstr "suprimeix el par‡sit"
+#~ msgstr "suprimeix el par√†sit"
 
 #~ msgid "resolution change"
-#~ msgstr "canvi de resoluciÛ"
+#~ msgstr "canvi de resoluci√≥"
 
 #~ msgid "image scale"
 #~ msgstr "escala de la imatge"
@@ -6325,33 +6325,33 @@ msgstr ""
 #~ msgstr "canvia la mida de la imatge"
 
 #~ msgid "misc"
-#~ msgstr "miscel∑l‡nia"
+#~ msgstr "miscel¬∑l√†nia"
 
 #~ msgid "Undo History: %s"
-#~ msgstr "DesfÈs l'historial: %s"
+#~ msgstr "Desf√©s l'historial: %s"
 
 #~ msgid "[ base image ]"
 #~ msgstr "[ imatge base ]"
 
 #~ msgid "Redo"
-#~ msgstr "RefÈs"
+#~ msgstr "Ref√©s"
 
 #~ msgid "The GIMP is not properly installed for the current user\n"
 #~ msgstr ""
-#~ "No s'ha instal∑lat correctament el GIMP per part de l'usuari actual\n"
+#~ "No s'ha instal¬∑lat correctament el GIMP per part de l'usuari actual\n"
 
 #~ msgid ""
 #~ "User installation was skipped because the '--nointerface' flag was "
 #~ "encountered\n"
 #~ msgstr ""
-#~ "S'ha omËs la instal∑laciÛ perquË s'ha trobat el commutador '--no "
+#~ "S'ha om√®s la instal¬∑laci√≥ perqu√® s'ha trobat el commutador '--no "
 #~ "interface\n"
 
 #~ msgid ""
 #~ "To perform user installation, run the GIMP without the '--nointerface' "
 #~ "flag\n"
 #~ msgstr ""
-#~ "Per fer la instal∑laciÛ, executeu el GIMP sense el commutador '--"
+#~ "Per fer la instal¬∑laci√≥, executeu el GIMP sense el commutador '--"
 #~ "nointerface'\n"
 
 #~ msgid ""
@@ -6361,18 +6361,18 @@ msgstr ""
 #~ "patterns, plug-ins and modules can also configured\n"
 #~ "here."
 #~ msgstr ""
-#~ "El gimprc s'utilitza per emmagatzemar les preferËncies\n"
+#~ "El gimprc s'utilitza per emmagatzemar les prefer√®ncies\n"
 #~ "personals que poden afectar al comportament per defecte\n"
 #~ "del GIMP.\n"
 #~ "Els camins per buscar pinzells, paletes, gradients,\n"
-#~ "patrons, extensions i mÚduls tambÈ es poden configurar aquÌ."
+#~ "patrons, extensions i m√≤duls tamb√© es poden configurar aqu√≠."
 
 #~ msgid ""
 #~ "GIMP uses an additional gtkrc file so you can\n"
 #~ "configure it to look differently than other GTK apps."
 #~ msgstr ""
 #~ "El GIMP fa servir un fitxet gtkrc addicional per a\n"
-#~ "configurar l'aparenÁa diferent a d'altres aplicacions GTK."
+#~ "configurar l'aparen√ßa diferent a d'altres aplicacions GTK."
 
 #~ msgid ""
 #~ "Plug-ins and extensions are external programs run\n"
@@ -6382,12 +6382,12 @@ msgstr ""
 #~ "is cached in this file.  This file is intended to\n"
 #~ "be GIMP-readable only, and should not be edited."
 #~ msgstr ""
-#~ "Les extensions sÛn programes externs executats pel\n"
+#~ "Les extensions s√≥n programes externs executats pel\n"
 #~ "GIMP que proporcionen una funcionalitat addicional.\n"
 #~ "Aquests programes es cerquen en executar el programa i\n"
-#~ "la informaciÛ sobre la seva funcionalitat i temps mod\n"
+#~ "la informaci√≥ sobre la seva funcionalitat i temps mod\n"
 #~ "s'emmagatzema en aquest fitxer. Se suposa que aquest fitxer\n"
-#~ "nomÈs es pot llegir des del GIMP i no s'ha d'editar."
+#~ "nom√©s es pot llegir des del GIMP i no s'ha d'editar."
 
 #~ msgid ""
 #~ "Key shortcuts can be dynamically redefined in The GIMP.\n"
@@ -6398,9 +6398,9 @@ msgstr ""
 #~ "restore the default shortcuts."
 #~ msgstr ""
 #~ "Les dreceres del teclat es poden redefinir en el GIMP.\n"
-#~ "El menurc Ès un buidatge de la vostra configuraciÛ; es pot\n"
-#~ "recuperar per a la sessiÛ seg¸ent. Podeu editar aquest\n"
-#~ "fitxer, si voleu, perÚ Ès molt mÈs f‡cil definir \n"
+#~ "El menurc √©s un buidatge de la vostra configuraci√≥; es pot\n"
+#~ "recuperar per a la sessi√≥ seg√ºent. Podeu editar aquest\n"
+#~ "fitxer, si voleu, per√≤ √©s molt m√©s f√†cil definir \n"
 #~ "el teclat des del GIMP. Si suprimiu aquest fitxer\n"
 #~ "es restauraran les dreceres per defecte."
 
@@ -6410,8 +6410,8 @@ msgstr ""
 #~ "The GIMP to reopen these dialogs at the saved position."
 #~ msgstr ""
 #~ "La sessionrc es fa servir per emmagatzemar les finestres\n"
-#~ "de di‡leg obertes l'˙ltim cop que vau sortir del GIMP. Podeu configurar\n"
-#~ "el GIMP per obrir-les de nou en la posiciÛ desada."
+#~ "de di√†leg obertes l'√∫ltim cop que vau sortir del GIMP. Podeu configurar\n"
+#~ "el GIMP per obrir-les de nou en la posici√≥ desada."
 
 #~ msgid ""
 #~ "The unitrc is used to store your user units database.\n"
@@ -6422,7 +6422,7 @@ msgstr ""
 #~ msgstr ""
 #~ "L'unitrc s'utilitza per emmagatzemar la vostra base\n"
 #~ "de dades de les unitats. Podeu definir unitats addicionals\n"
-#~ "i utilitzar-les tal com utilitzeu les polzades, mil∑lÌmetres,\n"
+#~ "i utilitzar-les tal com utilitzeu les polzades, mil¬∑l√≠metres,\n"
 #~ "punts i piques que ja venen predefinits. Aquest fitxer\n"
 #~ "se sobrescriu cada vegada que sortiu del GIMP."
 
@@ -6435,8 +6435,8 @@ msgstr ""
 #~ msgstr ""
 #~ "Es tracta d'un subdirectori que pot utilitzar-se per\n"
 #~ "emmagatzemar pinzells definits per l'usuari. El fitxer\n"
-#~ "gimprc per defecte comprova aquest subdirectori a mÈs\n"
-#~ "dels pinzells instal∑lats al gimp quan es busquen\n"
+#~ "gimprc per defecte comprova aquest subdirectori a m√©s\n"
+#~ "dels pinzells instal¬∑lats al gimp quan es busquen\n"
 #~ "pinzells."
 
 #~ msgid ""
@@ -6460,7 +6460,7 @@ msgstr ""
 #~ "Es tracta d'un subdirectori que es pot utilitzar per\n"
 #~ "emmagatzemar degradats definits per l'usuari. El\n"
 #~ "fitxer gimprc per defecte comprova aquest subdirectori\n"
-#~ "a mÈs dels degradats instal∑lats al gimp quan es\n"
+#~ "a m√©s dels degradats instal¬∑lats al gimp quan es\n"
 #~ "busquen degradats."
 
 #~ msgid ""
@@ -6475,11 +6475,11 @@ msgstr ""
 #~ msgstr ""
 #~ "Es tracta d'un sudirectori que es pot utilitzar per emmagatzemar\n"
 #~ "paletes definides per l'usuari. El fitxer gimprc per defecte\n"
-#~ "comprova nomÈs aquest subdirectori (no tota la instal∑laciÛ\n"
-#~ "del sistema) quan busca paletes. Durant la instal∑laciÛ,\n"
-#~ "les paletes del sistema es copien aquÌ.\n"
-#~ "AixÚ es fa per permetre que les modificacions fetes en les\n"
-#~ "paletes durant l'execuciÛ del GIMP es mantinguin entre sessions."
+#~ "comprova nom√©s aquest subdirectori (no tota la instal¬∑laci√≥\n"
+#~ "del sistema) quan busca paletes. Durant la instal¬∑laci√≥,\n"
+#~ "les paletes del sistema es copien aqu√≠.\n"
+#~ "Aix√≤ es fa per permetre que les modificacions fetes en les\n"
+#~ "paletes durant l'execuci√≥ del GIMP es mantinguin entre sessions."
 
 #~ msgid ""
 #~ "This is a subdirectory which can be used to store\n"
@@ -6490,7 +6490,7 @@ msgstr ""
 #~ msgstr ""
 #~ "Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
 #~ "patrons definits per l'usuari. El fitxer gimprc per defecte\n"
-#~ "comprova aquest subdirectori a mÈs dels patrons de la instal∑laciÛ\n"
+#~ "comprova aquest subdirectori a m√©s dels patrons de la instal¬∑laci√≥\n"
 #~ "del sistema gimp quan es busquen patrons."
 
 #~ msgid ""
@@ -6503,7 +6503,7 @@ msgstr ""
 #~ "Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
 #~ "extensions creades per l'usuari, temporals o en general no suportades\n"
 #~ "pel sistema. El fitxer gimprc per defecte comprova\n"
-#~ "aquest subdirectori a mÈs dels directoris d'extensions\n"
+#~ "aquest subdirectori a m√©s dels directoris d'extensions\n"
 #~ "del sistema GIMP quan es busquen extensions."
 
 #~ msgid ""
@@ -6514,11 +6514,11 @@ msgstr ""
 #~ "when searching for modules to load when initializing."
 #~ msgstr ""
 #~ "Es tracta d'un subdirectori que es pot utilitzar per emmagatzemar\n"
-#~ "mÚduls DLL creats per l'usuari, temporals o en general no suportats\n"
+#~ "m√≤duls DLL creats per l'usuari, temporals o en general no suportats\n"
 #~ "pel sistema. El fitxer gimprc per defecte comprova\n"
-#~ "aquest subdirectori a mÈs del directori de mÚduls del sistema\n"
-#~ "GIMP quan es busquen mÚduls que s'han de carregar en la\n"
-#~ "inicialitzaciÛ."
+#~ "aquest subdirectori a m√©s del directori de m√≤duls del sistema\n"
+#~ "GIMP quan es busquen m√≤duls que s'han de carregar en la\n"
+#~ "inicialitzaci√≥."
 
 #~ msgid ""
 #~ "This subdirectory is used by the GIMP to store user\n"
@@ -6527,8 +6527,8 @@ msgstr ""
 #~ "GIMP scripts subdirectory when searching for scripts"
 #~ msgstr ""
 #~ "El GIMP utilitza aquest subdirectori per emmagatzemar \n"
-#~ "scripts creats i instal∑lats per l'usuari. El fitxer gimprc per\n"
-#~ "defecte comprova aquest subdirectori a mÈs del\n"
+#~ "scripts creats i instal¬∑lats per l'usuari. El fitxer gimprc per\n"
+#~ "defecte comprova aquest subdirectori a m√©s del\n"
 #~ "subdirectori de scripts per defecte del sistema quan es\n"
 #~ "busquen scripts."
 
@@ -6540,24 +6540,24 @@ msgstr ""
 #~ "GIMP sessions and can be destroyed with impunity."
 #~ msgstr ""
 #~ "El GIMP utilitza aquest subdirectori per emmagatzemar\n"
-#~ "temporalment informaciÛ en memÚria intermËdia per limitar\n"
-#~ "l'˙s de memÚria. Si el GIMP s'interromp de manera anÚmala,\n"
+#~ "temporalment informaci√≥ en mem√≤ria interm√®dia per limitar\n"
+#~ "l'√∫s de mem√≤ria. Si el GIMP s'interromp de manera an√≤mala,\n"
 #~ "poden quedar fitxers en aquest directori amb la forma\n"
-#~ "seg¸ent: gimp<#>.<#>. SÛn fitxers in˙tils per a les\n"
-#~ "sessions GIMP i es poden eliminar tranquil∑lament."
+#~ "seg√ºent: gimp<#>.<#>. S√≥n fitxers in√∫tils per a les\n"
+#~ "sessions GIMP i es poden eliminar tranquil¬∑lament."
 
 #~ msgid ""
 #~ "This subdirectory is used to store parameter files for\n"
 #~ "the Curves tool."
 #~ msgstr ""
-#~ "Aquest subdirectory Ès utilitzat per emmagatzemar fitxers\n"
+#~ "Aquest subdirectory √©s utilitzat per emmagatzemar fitxers\n"
 #~ "per a l'eina Curves."
 
 #~ msgid ""
 #~ "This subdirectory is used to store parameter files for\n"
 #~ "the Levels tool."
 #~ msgstr ""
-#~ "Aquest subdirectory Ès utilitzat per emmagatzemar fitxers\n"
+#~ "Aquest subdirectory √©s utilitzat per emmagatzemar fitxers\n"
 #~ "per a l'eina Levels."
 
 #~ msgid ""
@@ -6567,10 +6567,10 @@ msgstr ""
 #~ "in addition to the systemwide GIMP FractalExplorer\n"
 #~ "installation when searching for fractals."
 #~ msgstr ""
-#~ "…s un subdirectori que es pot utilitzar per emmagatzemar\n"
-#~ "fractals definits per l'usuari per utilitzar amb l'extensiÛ\n"
+#~ "√âs un subdirectori que es pot utilitzar per emmagatzemar\n"
+#~ "fractals definits per l'usuari per utilitzar amb l'extensi√≥\n"
 #~ "FractalExplorer. El fitxer gimprc per defecte comprova\n"
-#~ "aquest subdirectori a mÈs de la instal∑laciÛ de\n"
+#~ "aquest subdirectori a m√©s de la instal¬∑laci√≥ de\n"
 #~ "FractalExplorer del GIMP quan es busquen fractals."
 
 #~ msgid ""
@@ -6580,10 +6580,10 @@ msgstr ""
 #~ "addition to the systemwide GIMP GFig installation\n"
 #~ "when searching for gfig figures."
 #~ msgstr ""
-#~ "…s un subdirectori que es pot utilizar per emmagatzemar\n"
-#~ "figures definides per l'usuari per utilitzar amb l'extensiÛ\n"
+#~ "√âs un subdirectori que es pot utilizar per emmagatzemar\n"
+#~ "figures definides per l'usuari per utilitzar amb l'extensi√≥\n"
 #~ "GFig. El fitxer gimprc per defecte comprova aquest\n"
-#~ "subdirectori a mÈs de la instal∑laciÛ GFig del GIMP quan\n"
+#~ "subdirectori a m√©s de la instal¬∑laci√≥ GFig del GIMP quan\n"
 #~ "es busquen figures gfig."
 
 #~ msgid ""
@@ -6593,10 +6593,10 @@ msgstr ""
 #~ "addition to the systemwide GIMP GFlares installation\n"
 #~ "when searching for gflares."
 #~ msgstr ""
-#~ "…s un subdirectori que es pot utilitzar per emmagatzemar\n"
-#~ "gflares definits per l'usuari que utilitza l'extensiÛ\n"
+#~ "√âs un subdirectori que es pot utilitzar per emmagatzemar\n"
+#~ "gflares definits per l'usuari que utilitza l'extensi√≥\n"
 #~ "GFlare. El fitxer gimprc per defecte comprova aquest\n"
-#~ "subdirectori a mÈs de la instal∑laciÛ del GFlares del GIMP\n"
+#~ "subdirectori a m√©s de la instal¬∑laci√≥ del GFlares del GIMP\n"
 #~ "quan es busquen gflares."
 
 #~ msgid ""
@@ -6606,10 +6606,10 @@ msgstr ""
 #~ "in addition to the systemwide GIMP Gimpressionist\n"
 #~ "installation when searching for data."
 #~ msgstr ""
-#~ "…s un subdirectori que pot utilitzar-se per emmagatzemar\n"
-#~ "dades definides per l'usuari que utilitza l'extensiÛ\n"
+#~ "√âs un subdirectori que pot utilitzar-se per emmagatzemar\n"
+#~ "dades definides per l'usuari que utilitza l'extensi√≥\n"
 #~ "Gimpressionist. El fitxer gimprc per defecte comprova\n"
-#~ "aquest subdirectori a mÈs de la instal∑laciÛ del Gimpressionist\n"
+#~ "aquest subdirectori a m√©s de la instal¬∑laci√≥ del Gimpressionist\n"
 #~ "del GIMP quan es busquen dades."
 
 #~ msgid ""
@@ -6620,7 +6620,7 @@ msgstr ""
 #~ "directori personal GIMP..."
 
 #~ msgid "GIMP User Installation"
-#~ msgstr "Instal∑laciÛ d'usuari del GIMP"
+#~ msgstr "Instal¬∑laci√≥ d'usuari del GIMP"
 
 #~ msgid "Continue"
 #~ msgstr "Continua"
@@ -6633,11 +6633,11 @@ msgstr ""
 #~ "The GIMP User Installation"
 #~ msgstr ""
 #~ "Benvingut a\n"
-#~ "la instal∑laciÛ d'usuari del GIMP"
+#~ "la instal¬∑laci√≥ d'usuari del GIMP"
 
 #~ msgid "Click \"Continue\" to enter the GIMP user installation."
 #~ msgstr ""
-#~ "Feu un clic a \"Continua\" per entrar a la instal∑laciÛ d'usuari del GIMP."
+#~ "Feu un clic a \"Continua\" per entrar a la instal¬∑laci√≥ d'usuari del GIMP."
 
 #~ msgid ""
 #~ "The GIMP - GNU Image Manipulation Program\n"
@@ -6654,11 +6654,11 @@ msgstr ""
 #~ "the Free Software Foundation; either version 2 of the License, or\n"
 #~ "(at your option) any later version."
 #~ msgstr ""
-#~ "Aquest programa Ès de lliure distribuciÛ; el podeu distribuir i/o\n"
-#~ "modificar sota els termes de la llicËncia p˙blica general de GNU "
+#~ "Aquest programa √©s de lliure distribuci√≥; el podeu distribuir i/o\n"
+#~ "modificar sota els termes de la llic√®ncia p√∫blica general de GNU "
 #~ "publicada\n"
-#~ "per la Free Software Foundation, ja sigui la versiÛ 2 de la LlicËncia o\n"
-#~ "(com desitgeu) qualsevol versiÛ posterior."
+#~ "per la Free Software Foundation, ja sigui la versi√≥ 2 de la Llic√®ncia o\n"
+#~ "(com desitgeu) qualsevol versi√≥ posterior."
 
 #~ msgid ""
 #~ "This program is distributed in the hope that it will be useful,\n"
@@ -6666,10 +6666,10 @@ msgstr ""
 #~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 #~ "See the GNU General Public License for more details."
 #~ msgstr ""
-#~ "Aquest programa es distribueix esperant que ser‡ ˙til,\n"
-#~ "perÚ SENSE CAP GARANTIA; ni tan sols garanties implÌcites de\n"
-#~ "COMERCIALITZACI” o ADEQUACI” A UN ⁄S DETERMINAT.\n"
-#~ "Consulteu la llicËncia p˙blica general de GNU per a mÈs informaciÛ."
+#~ "Aquest programa es distribueix esperant que ser√† √∫til,\n"
+#~ "per√≤ SENSE CAP GARANTIA; ni tan sols garanties impl√≠cites de\n"
+#~ "COMERCIALITZACI√ì o ADEQUACI√ì A UN √öS DETERMINAT.\n"
+#~ "Consulteu la llic√®ncia p√∫blica general de GNU per a m√©s informaci√≥."
 
 #~ msgid ""
 #~ "You should have received a copy of the GNU General Public License\n"
@@ -6677,8 +6677,8 @@ msgstr ""
 #~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 #~ "MA 02111-1307, USA."
 #~ msgstr ""
-#~ "Heu d'haver rebut una cÚpia de la llicËncia p˙blica general de GNU\n"
-#~ "amb aquest programa; si no Ès aixÌ, demaneu-la a la Free Software\n"
+#~ "Heu d'haver rebut una c√≤pia de la llic√®ncia p√∫blica general de GNU\n"
+#~ "amb aquest programa; si no √©s aix√≠, demaneu-la a la Free Software\n"
 #~ "Foundation, Inc. , 59 Temple Place - Suite 330, Boston,\n"
 #~ "MA 02111-1307, EUA."
 
@@ -6694,7 +6694,7 @@ msgstr ""
 #~ "For a proper GIMP installation, a subdirectory named\n"
 #~ "%s needs to be created."
 #~ msgstr ""
-#~ "Per instal∑lar el GIMP correctament, cal crear\n"
+#~ "Per instal¬∑lar el GIMP correctament, cal crear\n"
 #~ "un subdirectori anomenat %s."
 
 #~ msgid ""
@@ -6702,26 +6702,26 @@ msgstr ""
 #~ "Click on one of the files or subdirectories in the tree\n"
 #~ "to get more information about the selected item."
 #~ msgstr ""
-#~ "Aquest subdirectori contindr‡ un nombre important de fitxers.\n"
+#~ "Aquest subdirectori contindr√† un nombre important de fitxers.\n"
 #~ "Feu un clic en un d'aquests fitxers o subdirectoris de\n"
-#~ "l'arbre per aconseguir mÈs informaciÛ sobre l'Ìtem seleccionat."
+#~ "l'arbre per aconseguir m√©s informaci√≥ sobre l'√≠tem seleccionat."
 
 #~ msgid "User Installation Log"
-#~ msgstr "Registre d'instal∑laciÛ de l'usuari"
+#~ msgstr "Registre d'instal¬∑laci√≥ de l'usuari"
 
 #~ msgid "GIMP Performance Tuning"
 #~ msgstr "Ajust del rendiment del GIMP"
 
 #~ msgid "Click \"Continue\" to accept the settings above."
-#~ msgstr "Feu un clic a \"Continua\" per acceptar els par‡metres anteriors."
+#~ msgstr "Feu un clic a \"Continua\" per acceptar els par√†metres anteriors."
 
 #~ msgid "For optimal GIMP performance, some settings may have to be adjusted."
 #~ msgstr ""
-#~ "PerquË el GIMP rendeixi de manera Úptima, potser cal ajustar alguns "
-#~ "par‡metres."
+#~ "Perqu√® el GIMP rendeixi de manera √≤ptima, potser cal ajustar alguns "
+#~ "par√†metres."
 
 #~ msgid "Monitor Resolution"
-#~ msgstr "ResoluciÛ del monitor"
+#~ msgstr "Resoluci√≥ del monitor"
 
 #~ msgid "Click \"Continue\" to start The GIMP."
 #~ msgstr "Feu clic a \"Continua\" per iniciar el GIMP."
@@ -6731,16 +6731,16 @@ msgstr ""
 #~ "resolution."
 #~ msgstr ""
 #~ "Per visualitzar les imatges en mida natural, el GIMP ha de saber\n"
-#~ "quina Ès la resoluciÛ del monitor."
+#~ "quina √©s la resoluci√≥ del monitor."
 
 #~ msgid "Aborting Installation..."
-#~ msgstr "S'est‡ avortant la instal∑laciÛ..."
+#~ msgstr "S'est√† avortant la instal¬∑laci√≥..."
 
 #~ msgid "does not exist.  Cannot install."
-#~ msgstr "no existeix. No es pot realitzar la instal∑laciÛ."
+#~ msgstr "no existeix. No es pot realitzar la instal¬∑laci√≥."
 
 #~ msgid "has invalid permissions.  Cannot install."
-#~ msgstr "tÈ permisos que no sÛn v‡lids. No es pot realitzar la instal∑laciÛ."
+#~ msgstr "t√© permisos que no s√≥n v√†lids. No es pot realitzar la instal¬∑laci√≥."
 
 #~ msgid ""
 #~ "Did you notice any error messages in the console window?\n"
@@ -6748,8 +6748,8 @@ msgstr ""
 #~ "Otherwise, quit and investigate the possible reason..."
 #~ msgstr ""
 #~ "Heu observat algun missatge d'error a la finestra de\n"
-#~ "la consola? En cas negatiu, la instal∑laciÛ s'ha\n"
-#~ "completat correctament! Si no Ès aixÌ, sortiu del programa\n"
+#~ "la consola? En cas negatiu, la instal¬∑laci√≥ s'ha\n"
+#~ "completat correctament! Si no √©s aix√≠, sortiu del programa\n"
 #~ "i intenteu esbrinar les possibles causes..."
 
 #~ msgid ""
@@ -6757,17 +6757,17 @@ msgstr ""
 #~ "If not, installation was successful!\n"
 #~ "Otherwise, quit and investigate the possible reason..."
 #~ msgstr ""
-#~ "Heu observat algun missatge d'error a les lÌnies superiors?\n"
-#~ "En cas negatiu, la instal∑laciÛ s'ha\n"
-#~ "completat correctament! Si no Ès aixÌ, sortiu del programa\n"
+#~ "Heu observat algun missatge d'error a les l√≠nies superiors?\n"
+#~ "En cas negatiu, la instal¬∑laci√≥ s'ha\n"
+#~ "completat correctament! Si no √©s aix√≠, sortiu del programa\n"
 #~ "i busqueu les causes possibles..."
 
 #~ msgid "Click \"Continue\" to complete GIMP installation."
-#~ msgstr "Feu clic a \"Continua\" per completar la instal∑laciÛ del GIMP."
+#~ msgstr "Feu clic a \"Continua\" per completar la instal¬∑laci√≥ del GIMP."
 
 #~ msgid "Installation failed.  Contact system administrator."
 #~ msgstr ""
-#~ "Ha fallat la instal∑laciÛ. Poseu-vos en contacte amb l'administrador del "
+#~ "Ha fallat la instal¬∑laci√≥. Poseu-vos en contacte amb l'administrador del "
 #~ "sistema."
 
 #~ msgid ""
@@ -6777,11 +6777,11 @@ msgstr ""
 #~ "with enough free space (several hundred MB). On a UNIX system, you\n"
 #~ "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 #~ msgstr ""
-#~ "Totes les imatges i les dades per desfer que no caben en la memÚria "
+#~ "Totes les imatges i les dades per desfer que no caben en la mem√≤ria "
 #~ "s'escriuen\n"
 #~ "en un fitxer d'intercanvi. Caldria posar-lo en un fitxer de sistema "
 #~ "local\n"
-#~ "amb prou memÚria lliure (alguns centenars de MB). En sistemes UNIX, "
+#~ "amb prou mem√≤ria lliure (alguns centenars de MB). En sistemes UNIX, "
 #~ "potser\n"
 #~ "voldreu fer servir el directori temporal del sistema (\"/tmp\" o \"/var/"
 #~ "tmp\")."
@@ -6790,34 +6790,34 @@ msgstr ""
 #~ msgstr "Directori d'intercanvi:"
 
 #~ msgid "Alternatively, you can set the monitor resolution manually."
-#~ msgstr "Altrament, podeu configurar la resoluciÛ del monitor manualment."
+#~ msgstr "Altrament, podeu configurar la resoluci√≥ del monitor manualment."
 
 #~ msgid "Monitor Resolution X:"
-#~ msgstr "ResoluciÛ del monitor X:"
+#~ msgstr "Resoluci√≥ del monitor X:"
 
 #~ msgid ""
 #~ "You can also press the \"Calibrate\" button to open a window\n"
 #~ "which lets you determine your monitor resolution interactively."
 #~ msgstr ""
-#~ "TambÈ podeu fer clic al botÛ \"CalibraciÛ\" per obrir una\n"
-#~ "finestra que us permeti determinar la resoluciÛ del vostre\n"
+#~ "Tamb√© podeu fer clic al bot√≥ \"Calibraci√≥\" per obrir una\n"
+#~ "finestra que us permeti determinar la resoluci√≥ del vostre\n"
 #~ "monitor interactivament."
 
 #~ msgid "XCF error: unsupported XCF file version %d encountered"
-#~ msgstr "Error XCF: s'ha trobat %d una versiÛ del fitxer XCF no suportada"
+#~ msgstr "Error XCF: s'ha trobat %d una versi√≥ del fitxer XCF no suportada"
 
 #~ msgid ""
 #~ "XCF warning: version 0 of XCF file format\n"
 #~ "did not save indexed colormaps correctly.\n"
 #~ "Substituting grayscale map."
 #~ msgstr ""
-#~ "AdvertËncia del XCF: la versiÛ 0 del format de\n"
+#~ "Advert√®ncia del XCF: la versi√≥ 0 del format de\n"
 #~ "fitxer XCF no ha desat correctament els\n"
-#~ "mapes de color indexats. S'est‡ substituÔnt\n"
+#~ "mapes de color indexats. S'est√† substitu√Ønt\n"
 #~ "el mapa d'escala de grisos."
 
 #~ msgid "Gamma color display filter"
-#~ msgstr "Filtre de visualitzaciÛ de color gamma"
+#~ msgstr "Filtre de visualitzaci√≥ de color gamma"
 
 #~ msgid "Gamma"
 #~ msgstr "Gamma"
@@ -6833,33 +6833,33 @@ msgstr ""
 #~ "Selector de color d'estil de pintura com a selector de color addicional"
 
 #~ msgid "Watercolor style color selector as a pluggable module"
-#~ msgstr "Selector de color d'estil d'aquarel∑la com a mÚdul addicional"
+#~ msgstr "Selector de color d'estil d'aquarel¬∑la com a m√≤dul addicional"
 
 #~ msgid "Watercolor"
-#~ msgstr "Aquarel∑la"
+#~ msgstr "Aquarel¬∑la"
 
 #~ msgid "Color History"
 #~ msgstr "Historial del color"
 
 #~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Error al fitxer de pinzell GIMP... s'est‡ avortant."
+#~ msgstr "Error al fitxer de pinzell GIMP... s'est√† avortant."
 
 #~ msgid ""
 #~ "Warning: Failed to load pixmap brush\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "AdvertËncia: No s'ha pogut carregar el pinzell del mapa de pÌxels\n"
+#~ "Advert√®ncia: No s'ha pogut carregar el pinzell del mapa de p√≠xels\n"
 #~ "\"%s\""
 
 #~ msgid ""
 #~ "Warning: Failed to load pixmap pipe\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "AdvertËncia: No s'ha pogut carregar la paleta del mapa de pÌxels\n"
+#~ "Advert√®ncia: No s'ha pogut carregar la paleta del mapa de p√≠xels\n"
 #~ "\"%s\""
 
 #~ msgid "Failed to load pixmap brush."
-#~ msgstr "No s'ha pogut carregar el pinzell del mapa de pÌxels."
+#~ msgstr "No s'ha pogut carregar el pinzell del mapa de p√≠xels."
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Aquest fitxer no es pot pujar."
@@ -6880,16 +6880,16 @@ msgstr ""
 #~ msgstr "Obre un fitxer"
 
 #~ msgid "Close the Document Index"
-#~ msgstr "Tanca l'Ìndex del document"
+#~ msgstr "Tanca l'√≠ndex del document"
 
 #~ msgid "GTK successfully started"
-#~ msgstr "El GTK s'ha iniciat amb Ëxit"
+#~ msgstr "El GTK s'ha iniciat amb √®xit"
 
 #~ msgid "attach parasite to image"
-#~ msgstr "adjuntar par‡sit a la imatge"
+#~ msgstr "adjuntar par√†sit a la imatge"
 
 #~ msgid "detach parasite from image"
-#~ msgstr "extreure par‡sit de la imatge"
+#~ msgstr "extreure par√†sit de la imatge"
 
 #~ msgid "Pattern load failed"
 #~ msgstr "No s'ha pogut carregar el model"
@@ -6901,7 +6901,7 @@ msgstr ""
 #~ msgstr "/Eines/Augmenta"
 
 #~ msgid "Version "
-#~ msgstr "VersiÛ "
+#~ msgstr "Versi√≥ "
 
 #~ msgid "killing stray timer, please report to lewing@gimp.org"
 #~ msgstr "eliminant el temporitzador perdut, informeu lewing@gimp.org"
@@ -6926,22 +6926,22 @@ msgstr ""
 #~ "please write your own or try back tomorrow\n"
 #~ msgstr ""
 #~ "Ja s'han exhaurit els editors de pinzells,\n"
-#~ "escriviu-ne un de propi o torneu-ho a intentar dem‡\n"
+#~ "escriviu-ne un de propi o torneu-ho a intentar dem√†\n"
 
 #~ msgid "Wilber says: \"I don't know how to delete that brush.\""
-#~ msgstr "En Wilber diu:\"No sÈ com suprimir aquest pinzell.\""
+#~ msgstr "En Wilber diu:\"No s√© com suprimir aquest pinzell.\""
 
 #~ msgid "Fill Options"
 #~ msgstr "Opcions d'omplenat"
 
 #~ msgid "Color Balance Options"
-#~ msgstr "Opcions del balanÁ de color"
+#~ msgstr "Opcions del balan√ß de color"
 
 #~ msgid "Color Picker Options"
 #~ msgstr "Opcions del capturador de color"
 
 #~ msgid "Crop & Resize Options"
-#~ msgstr "Opcions d'escapÁat i canvi de mida"
+#~ msgstr "Opcions d'escap√ßat i canvi de mida"
 
 #~ msgid "devices_rc_update called multiple times for not present device\n"
 #~ msgstr ""
@@ -6997,11 +6997,11 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "# parasiterc del GIMP\n"
-#~ "# Aquest fitxer es reescriur‡ totalment cada cop que sortiu del GIMP.\n"
+#~ "# Aquest fitxer es reescriur√† totalment cada cop que sortiu del GIMP.\n"
 #~ "\n"
 
 #~ msgid "transform_path(): gimprc token referenced but not defined: %s"
-#~ msgstr "transform_path(): testimoni gimprc referenciat perÚ no definit: %s"
+#~ msgstr "transform_path(): testimoni gimprc referenciat per√≤ no definit: %s"
 
 #~ msgid ""
 #~ "# GIMP unitrc\n"
@@ -7013,9 +7013,9 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "# GIMP unitrc\n"
-#~ "# Aquest fitxer contÈ la vostra base de dades d'unitats.\n"
+#~ "# Aquest fitxer cont√© la vostra base de dades d'unitats.\n"
 #~ "# La podeu modificar amb l'editor d'unitats. Se suposa que no\n"
-#~ "# ho fareu manualment, perÚ -per descomptat- ho podeu fer.\n"
+#~ "# ho fareu manualment, per√≤ -per descomptat- ho podeu fer.\n"
 #~ "# El fitxer es reescriu completament cada cop que\n"
 #~ "# sortiu del GIMP.\n"
 
@@ -7037,7 +7037,7 @@ msgstr ""
 #~ msgid ""
 #~ "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
 #~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): no es troba el degradat quË se li ha de "
+#~ "ed_do_rename_gradient_callback(): no es troba el degradat qu√® se li ha de "
 #~ "canviar el nom"
 
 #~ msgid "Delete gradient"
@@ -7055,7 +7055,7 @@ msgstr ""
 #~ msgstr "control_motion(): Intent de moure la nansa falsa %d"
 
 #~ msgid "grad_load_gradient(): invalid number of segments in \"%s\""
-#~ msgstr "grad_load_gradient(): nombre de segments no v‡lids a \"%s\""
+#~ msgstr "grad_load_gradient(): nombre de segments no v√†lids a \"%s\""
 
 #~ msgid ""
 #~ "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- "
@@ -7073,14 +7073,14 @@ msgstr ""
 
 #~ msgid "seg_get_segment_at(): No matching segment for position %0.15f"
 #~ msgstr ""
-#~ "seg_get_segment_at(): No hi ha cap segment que lligui amb la posiciÛ %"
+#~ "seg_get_segment_at(): No hi ha cap segment que lligui amb la posici√≥ %"
 #~ "0.15f"
 
 #~ msgid "Histogram Options"
 #~ msgstr "Opcions de l'histograma"
 
 #~ msgid "Hue-Saturation Options"
-#~ msgstr "Opcions de saturaciÛ de color"
+#~ msgstr "Opcions de saturaci√≥ de color"
 
 #~ msgid "image depth change, unable to restore original image"
 #~ msgstr ""
@@ -7090,7 +7090,7 @@ msgstr ""
 #~ msgstr "Tipus de camp info_dialing desconegut."
 
 #~ msgid "%s: Window Info"
-#~ msgstr "%s: Finestra d'informaciÛ"
+#~ msgstr "%s: Finestra d'informaci√≥"
 
 #~ msgid "Shades:"
 #~ msgstr "Ombres:"
@@ -7111,7 +7111,7 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ " s'ha de crear.  Aquest\n"
-#~ "subdirectori contindr‡ diversos fitxers importants:\n"
+#~ "subdirectori contindr√† diversos fitxers importants:\n"
 #~ "\n"
 
 #~ msgid "gimprc\n"
@@ -7151,7 +7151,7 @@ msgstr ""
 #~ msgstr "extensions\n"
 
 #~ msgid "modules\n"
-#~ msgstr "mÚduls\n"
+#~ msgstr "m√≤duls\n"
 
 #~ msgid "scripts\n"
 #~ msgstr "scripts\n"
@@ -7160,20 +7160,20 @@ msgstr ""
 #~ msgstr "tmp\n"
 
 #~ msgid "Install"
-#~ msgstr "Instal∑lar"
+#~ msgstr "Instal¬∑lar"
 
 #~ msgid "Ignore"
 #~ msgstr "Ignorar"
 
 #~ msgid "Installation Log"
-#~ msgstr "Registre de la instal∑laciÛ"
+#~ msgstr "Registre de la instal¬∑laci√≥"
 
 #~ msgid ""
 #~ "\n"
 #~ "Installation successful!\n"
 #~ msgstr ""
 #~ "\n"
-#~ "Instal∑laciÛ completa!\n"
+#~ "Instal¬∑laci√≥ completa!\n"
 
 #~ msgid "layer_copy: could not allocate new layer"
 #~ msgstr "layer_copy: no s'ha pogut assignar una capa nova"
@@ -7185,13 +7185,13 @@ msgstr ""
 #~ msgstr "/Pila/Capa anterior"
 
 #~ msgid "/Stack/Next Layer"
-#~ msgstr "/Pila/Capa seg¸ent"
+#~ msgstr "/Pila/Capa seg√ºent"
 
 #~ msgid "/Resize Layer"
 #~ msgstr "/Redimensiona la capa"
 
 #~ msgid "Layer Mask Options"
-#~ msgstr "Opcions de la m‡scara de la capa"
+#~ msgstr "Opcions de la m√†scara de la capa"
 
 #~ msgid "Discard"
 #~ msgstr "Descarta"
@@ -7200,7 +7200,7 @@ msgstr ""
 #~ msgstr "Opcions dels nivells"
 
 #~ msgid "Magnify Options"
-#~ msgstr "Opcions de l'ampliaciÛ"
+#~ msgstr "Opcions de l'ampliaci√≥"
 
 #~ msgid "sighup caught"
 #~ msgstr "S'ha rebut un sighup"
@@ -7248,7 +7248,7 @@ msgstr ""
 #~ msgstr "/Fitxer/tearoff1"
 
 #~ msgid "/File/Dialogs/tearoff1"
-#~ msgstr "/Fitxer/Di‡legs/tearoff1"
+#~ msgstr "/Fitxer/Di√†legs/tearoff1"
 
 #~ msgid "/Xtns/tearoff1"
 #~ msgstr "/Extensions/tearoff1"
@@ -7263,10 +7263,10 @@ msgstr ""
 #~ msgstr "/Fitxer/---mogut"
 
 #~ msgid "/Edit/tearoff1"
-#~ msgstr "/EdiciÛ/tearoff1"
+#~ msgstr "/Edici√≥/tearoff1"
 
 #~ msgid "/Edit/---"
-#~ msgstr "/EdiciÛ/---"
+#~ msgstr "/Edici√≥/---"
 
 #~ msgid "/Select/tearoff1"
 #~ msgstr "/Selecciona/tearoff1"
@@ -7323,53 +7323,53 @@ msgstr ""
 #~ msgstr "/Script-Fu/tearoff1"
 
 #~ msgid "/Dialogs/tearoff1"
-#~ msgstr "/Di‡legs/tearoff1"
+#~ msgstr "/Di√†legs/tearoff1"
 
 #~ msgid "/File/MRU%02d"
 #~ msgstr "/Fitxer/MRU%02d"
 
 #~ msgid "tearoff menu not in top level window"
-#~ msgstr "el men˙ tearoff no est‡ a la finestra del nivell superior"
+#~ msgstr "el men√∫ tearoff no est√† a la finestra del nivell superior"
 
 #~ msgid "can't unregister tearoff menu top level window"
-#~ msgstr "no puc eliminar el men˙ tearoff de la finestra del nivell superior"
+#~ msgstr "no puc eliminar el men√∫ tearoff de la finestra del nivell superior"
 
 #~ msgid "missing module_init() symbol"
-#~ msgstr "s'est‡ perdent el sÌmbol de module_init()"
+#~ msgstr "s'est√† perdent el s√≠mbol de module_init()"
 
 #~ msgid "%s: module_init() symbol not found"
-#~ msgstr "%s: el sÌmbol de module_init() no es troba"
+#~ msgstr "%s: el s√≠mbol de module_init() no es troba"
 
 #~ msgid "%s: Window Navigation"
-#~ msgstr "%s: Finestra de navegaciÛ"
+#~ msgstr "%s: Finestra de navegaci√≥"
 
 #~ msgid "set_undo_tiles: undo_tiles is null"
-#~ msgstr "set_undo_tiles: undo_tiles Ès zero"
+#~ msgstr "set_undo_tiles: undo_tiles √©s zero"
 
 #~ msgid "get_active_pattern(): Specified default pattern not found!"
 #~ msgstr ""
 #~ "get_active_pattern(): No s'ha trobat el model especificat per defecte!"
 
 #~ msgid "New File Settings"
-#~ msgstr "Par‡metres del fitxer nou"
+#~ msgstr "Par√†metres del fitxer nou"
 
 #~ msgid "Display Settings"
-#~ msgstr "Par‡metres de la pantalla"
+#~ msgstr "Par√†metres de la pantalla"
 
 #~ msgid "Cubic"
-#~ msgstr "C˙bic"
+#~ msgstr "C√∫bic"
 
 #~ msgid "Interface Settings"
-#~ msgstr "Par‡metres de la interfÌcie"
+#~ msgstr "Par√†metres de la interf√≠cie"
 
 #~ msgid "Image Windows Settings"
-#~ msgstr "Par‡metres de les finestres de la imatge"
+#~ msgstr "Par√†metres de les finestres de la imatge"
 
 #~ msgid "Tool Options Settings"
-#~ msgstr "Par‡metres de les opcions de l'eina"
+#~ msgstr "Par√†metres de les opcions de l'eina"
 
 #~ msgid "Environment Settings"
-#~ msgstr "Par‡metres de l'entorn"
+#~ msgstr "Par√†metres de l'entorn"
 
 #~ msgid "Bytes"
 #~ msgstr "Octets"
@@ -7381,10 +7381,10 @@ msgstr ""
 #~ msgstr "Megaoctets"
 
 #~ msgid "Monitor Information"
-#~ msgstr "InformaciÛ del monitor"
+#~ msgstr "Informaci√≥ del monitor"
 
 #~ msgid "Directories Settings"
-#~ msgstr "ConfiguraciÛ dels directoris"
+#~ msgstr "Configuraci√≥ dels directoris"
 
 #~ msgid "Resize Layer"
 #~ msgstr "Canvia la mida de la capa"
@@ -7400,13 +7400,13 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "# GIMP sessionrc\n"
-#~ "# Aquest arxiu agafa informaciÛ especÌfica de la sessiÛ\n"
-#~ "# (Ès a dir, informaciÛ que potser voleu conservar\n"
+#~ "# Aquest arxiu agafa informaci√≥ espec√≠fica de la sessi√≥\n"
+#~ "# (√©s a dir, informaci√≥ que potser voleu conservar\n"
 #~ "# entre dues sessions del GIMP). No l'haurieu d'editar\n"
-#~ "# manualment, perÚ naturalment podeu fer-ho. Aquest arxiu\n"
-#~ "# es reescriur‡ sencer cada vegada que sortiu del gimp.\n"
+#~ "# manualment, per√≤ naturalment podeu fer-ho. Aquest arxiu\n"
+#~ "# es reescriur√† sencer cada vegada que sortiu del gimp.\n"
 #~ "# Si no es troba aquest arxiu, s'utilitzaran els\n"
-#~ "# par‡metres predeterminats.\n"
+#~ "# par√†metres predeterminats.\n"
 #~ "\n"
 
 #~ msgid "Cannot convert from indexed color."
@@ -7414,16 +7414,16 @@ msgstr ""
 
 #~ msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
 #~ msgstr ""
-#~ "S'ha produÔt un error en posar la memÚria intermËdia temporal a la "
-#~ "memÚria cau: \"%s\" Ès un directori (no es pot sobreescriure)"
+#~ "S'ha produ√Øt un error en posar la mem√≤ria interm√®dia temporal a la "
+#~ "mem√≤ria cau: \"%s\" √©s un directori (no es pot sobreescriure)"
 
 #~ msgid "Cannot write \"%s\""
 #~ msgstr "No es pot escriure \"%s\""
 
 #~ msgid "Error in temp buf caching: information swapped to disk was lost!"
 #~ msgstr ""
-#~ "S'ha produÔt un error en posar la memÚria intermËdia temporal a la "
-#~ "memÚria cau: la informaciÛ intercanviada al disc s'ha perdut!"
+#~ "S'ha produ√Øt un error en posar la mem√≤ria interm√®dia temporal a la "
+#~ "mem√≤ria cau: la informaci√≥ intercanviada al disc s'ha perdut!"
 
 #~ msgid "Text Tool Options"
 #~ msgstr "Opcions de l'eina de text"
@@ -7438,14 +7438,14 @@ msgstr ""
 #~ msgstr "Opcions del llindar"
 
 #~ msgid "starting tile preswapper\n"
-#~ msgstr "s'est‡ iniciant el mosaic preswapper\n"
+#~ msgstr "s'est√† iniciant el mosaic preswapper\n"
 
 #~ msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
 #~ msgstr ""
 #~ "no s'ha pogut obrir l'arxiu intercanviat... AVIAT SUCCEIRAN COSES DOLENTES"
 
 #~ msgid "unable to seek to tile location on disk: %d"
-#~ msgstr "no s'ha pogut cercar la ubicaciÛ del mosaic en el disc: %d"
+#~ msgstr "no s'ha pogut cercar la ubicaci√≥ del mosaic en el disc: %d"
 
 #~ msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
 #~ msgstr ""
@@ -7458,19 +7458,19 @@ msgstr ""
 #~ "escrits"
 
 #~ msgid "Fuzzy Selection Options"
-#~ msgstr "Opcions de selecciÛ de desenfocament"
+#~ msgstr "Opcions de selecci√≥ de desenfocament"
 
 #~ msgid "Bezier Selection Options"
-#~ msgstr "Opcions de la selecciÛ de Bezier"
+#~ msgstr "Opcions de la selecci√≥ de Bezier"
 
 #~ msgid "Intelligent Scissors Options"
-#~ msgstr "Opcions de la tisora intel∑ligent"
+#~ msgstr "Opcions de la tisora intel¬∑ligent"
 
 #~ msgid "By-Color Select Options"
-#~ msgstr "Opcions de la selecciÛ pel color"
+#~ msgstr "Opcions de la selecci√≥ pel color"
 
 #~ msgid "ERROR: Unknown Selection Type"
-#~ msgstr "ERROR: Tipus de selecciÛ desconeguda"
+#~ msgstr "ERROR: Tipus de selecci√≥ desconeguda"
 
 #~ msgid "Bucket Fill Options"
 #~ msgstr "Opcions d'emplenament de la paperera"
@@ -7497,7 +7497,7 @@ msgstr ""
 #~ msgstr "Opcions de la tinta"
 
 #~ msgid "Dodge or Burn Options"
-#~ msgstr "Opcions de l'esvaÔment o cremat"
+#~ msgstr "Opcions de l'esva√Øment o cremat"
 
 #~ msgid "Smudge Options"
 #~ msgstr "Opcions de les taques"
@@ -7512,7 +7512,7 @@ msgstr ""
 #~ msgstr "/Eines/Mou"
 
 #~ msgid "Transform the layer or selection"
-#~ msgstr "Transforma la capa o la selecciÛ"
+#~ msgstr "Transforma la capa o la selecci√≥"
 
 #~ msgid "/Tools/Flip"
 #~ msgstr "/Eines/Volteja"
@@ -7533,41 +7533,41 @@ msgstr ""
 #~ msgstr "Esprai natural"
 
 #~ msgid "Path"
-#~ msgstr "CamÌ"
+#~ msgstr "Cam√≠"
 
 #~ msgid "/Tools/Path"
-#~ msgstr "/Eines/CamÌ"
+#~ msgstr "/Eines/Cam√≠"
 
 #~ msgid "Manipulate paths"
 #~ msgstr "Manipula els camins"
 
 #~ msgid "homogeneous coordinate = 0...\n"
-#~ msgstr "coordenada homogËnia = 0...\n"
+#~ msgstr "coordenada homog√®nia = 0...\n"
 
 #~ msgid "Transform Tool Options"
-#~ msgstr "Opcions de l'eina de transformaciÛ"
+#~ msgstr "Opcions de l'eina de transformaci√≥"
 
 #~ msgid "xcf: zlib compression unimplemented"
-#~ msgstr "xcf: compressiÛ zlib no implementada"
+#~ msgstr "xcf: compressi√≥ zlib no implementada"
 
 #~ msgid "xcf: fractal compression unimplemented"
-#~ msgstr "xcf: compressiÛ fractal no implementada"
+#~ msgstr "xcf: compressi√≥ fractal no implementada"
 
 #~ msgid "xcf: uh oh! xcf rle tile saving error: %d"
-#~ msgstr "xcf: s'ha produÔt un error en desar el mosaic xcf rle: %d"
+#~ msgstr "xcf: s'ha produ√Øt un error en desar el mosaic xcf rle: %d"
 
 #~ msgid "unknown compression type: %d"
-#~ msgstr "tipus de compressiÛ desconeguda: %d"
+#~ msgstr "tipus de compressi√≥ desconeguda: %d"
 
 #~ msgid "Warning, resolution out of range in XCF file"
-#~ msgstr "AdvertËncia, resoluciÛ fora del rang en el fitxer XCF"
+#~ msgstr "Advert√®ncia, resoluci√≥ fora del rang en el fitxer XCF"
 
 #~ msgid "Error detected while loading an image's parasites"
-#~ msgstr "Error detectat mentre es carregaven uns par‡sits de la imatge"
+#~ msgstr "Error detectat mentre es carregaven uns par√†sits de la imatge"
 
 #~ msgid "Warning, unit out of range in XCF file, falling back to inches"
 #~ msgstr ""
-#~ "AdvertËncia, unitat fora de rang en el fitxer XCF, s'est‡ retrocedint a "
+#~ "Advert√®ncia, unitat fora de rang en el fitxer XCF, s'est√† retrocedint a "
 #~ "polsades"
 
 #~ msgid "unexpected/unknown image property: %d (skipping)"
@@ -7583,7 +7583,7 @@ msgstr ""
 #~ msgstr "no s'han trobat suficients mosaics en el nivell"
 
 #~ msgid "xcf: uh oh! xcf rle tile loading error: %d"
-#~ msgstr "xcf: s'ha produÔt un error en carregar el mosaic xcf rle: %d"
+#~ msgstr "xcf: s'ha produ√Øt un error en carregar el mosaic xcf rle: %d"
 
 #~ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 #~ msgstr ""
@@ -7594,17 +7594,17 @@ msgstr ""
 #~ msgstr "Selecciona el fitxer"
 
 #~ msgid "warning: no home directory."
-#~ msgstr "advertËncia: no hi ha el directori d'inici."
+#~ msgstr "advert√®ncia: no hi ha el directori d'inici."
 
 #~ msgid "unit-menu-format string ended within %%-sequence"
-#~ msgstr "cadena unit-menu-format finalitzada dins la seq¸Ëncia-%%"
+#~ msgstr "cadena unit-menu-format finalitzada dins la seq√º√®ncia-%%"
 
 #~ msgid "unit-menu-format contains unknown format sequence '%%%c'"
 #~ msgstr ""
-#~ "la unit-menu-format contÈ una seq¸Ëncia de format desconeguda '%%%c'"
+#~ "la unit-menu-format cont√© una seq√º√®ncia de format desconeguda '%%%c'"
 
 #~ msgid "Unit Selection"
-#~ msgstr "SelecciÛ d'unitat"
+#~ msgstr "Selecci√≥ d'unitat"
 
 #~ msgid "Unit "
 #~ msgstr "Unitat "
@@ -7616,45 +7616,45 @@ msgstr ""
 #~ msgstr "Uneix les capes visibles"
 
 #~ msgid "can only handle layers as animation frames"
-#~ msgstr "nomÈs es poden manejar les capes com a marcs animats"
+#~ msgstr "nom√©s es poden manejar les capes com a marcs animats"
 
 #~ msgid "Save as animation"
-#~ msgstr "Desa com una animaciÛ"
+#~ msgstr "Desa com una animaci√≥"
 
 #~ msgid "can't handle transparency"
-#~ msgstr "no es pot manejar la transparËncia"
+#~ msgstr "no es pot manejar la transpar√®ncia"
 
 #~ msgid "can only handle RGB images"
-#~ msgstr "nomÈs es poden manejar les imatges RGB"
+#~ msgstr "nom√©s es poden manejar les imatges RGB"
 
 #~ msgid "Convert to RGB"
 #~ msgstr "Converteix a RGB"
 
 #~ msgid "can only handle grayscale images"
-#~ msgstr "nomÈs es poden tractar les imatges en escala de grisos"
+#~ msgstr "nom√©s es poden tractar les imatges en escala de grisos"
 
 #~ msgid "Convert to grayscale"
 #~ msgstr "Converteix a escala de grisos"
 
 #~ msgid "can only handle indexed images"
-#~ msgstr "nomÈs es poden tractar les imatges indexades"
+#~ msgstr "nom√©s es poden tractar les imatges indexades"
 
 #~ msgid ""
 #~ "Convert to indexed using default settings\n"
 #~ "(Do it manually to tune the result)"
 #~ msgstr ""
-#~ "Converteix a indexada utilitzant els par‡metres per defecte\n"
+#~ "Converteix a indexada utilitzant els par√†metres per defecte\n"
 #~ "(Feu-ho manualment per afinar els resultats)"
 
 #~ msgid "can only handle RGB or grayscale images"
 #~ msgstr ""
-#~ "nomÈs es poden tractar les imatges RGB o les imatges en escala de grisos"
+#~ "nom√©s es poden tractar les imatges RGB o les imatges en escala de grisos"
 
 #~ msgid "can only handle RGB or indexed images"
-#~ msgstr "nomÈs es poden tractar les imatges RGB o les indexades"
+#~ msgstr "nom√©s es poden tractar les imatges RGB o les indexades"
 
 #~ msgid "can only handle grayscale or indexed images"
-#~ msgstr "nomÈs es pot tractar l'escala de grisos o les imatges indexades"
+#~ msgstr "nom√©s es pot tractar l'escala de grisos o les imatges indexades"
 
 #~ msgid "needs an alpha channel"
 #~ msgstr "es necessita un canal alfa"
@@ -7672,8 +7672,8 @@ msgstr ""
 #~ "Your image should be exported before it can be saved for the following "
 #~ "reasons:"
 #~ msgstr ""
-#~ "S'ha d'exportar la imatge abans de poder-la desar per les seg¸ents raons:"
+#~ "S'ha d'exportar la imatge abans de poder-la desar per les seg√ºents raons:"
 
 #~ msgid "The export conversion won't modify your original image."
 #~ msgstr ""
-#~ "La conversiÛ de l'exportaciÛ no modificar‡ la vostra imatge original."
+#~ "La conversi√≥ de l'exportaci√≥ no modificar√† la vostra imatge original."

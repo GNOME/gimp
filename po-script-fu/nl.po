@@ -10,7 +10,7 @@ msgstr ""
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
@@ -542,7 +542,7 @@ msgstr "Links"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
-msgstr "Oriëntatie"
+msgstr "OriÃ«ntatie"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
@@ -1125,7 +1125,7 @@ msgstr "Effectgrootte (pixels)"
 # What does this function do?
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy Visible"
-msgstr "<Image>/Bewerken/Zichtbare kopiëren"
+msgstr "<Image>/Bewerken/Zichtbare kopiÃ«ren"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -1666,7 +1666,7 @@ msgstr "Vervaging"
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
-msgstr "Spatiëring"
+msgstr "SpatiÃ«ring"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
@@ -2003,7 +2003,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 #, fuzzy
 msgid "Pentagon"
-msgstr "Oriëntatie"
+msgstr "OriÃ«ntatie"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
@@ -2421,13 +2421,13 @@ msgstr "<Toolbox>/Xtns/Webbrowser/Gebruikers-FAQ"
 #~ msgstr "<Image>/Script-Fu/Animators/Selectie naar animatiebeeld..."
 
 #~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Animatiefilter voor alle kopieën"
+#~ msgstr "Animatiefilter voor alle kopieÃ«n"
 
 #~ msgid "Fill with BG Color"
 #~ msgstr "Vul met AG-kleur"
 
 #~ msgid "Number of Copies"
-#~ msgstr "Aantal kopieën"
+#~ msgstr "Aantal kopieÃ«n"
 
 #~ msgid "DB Browser (init...)"
 #~ msgstr "DB-browser (init...)"

@@ -6,7 +6,7 @@ msgstr ""
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: sab giu 10 03:02:00 EDT 2000\n"
 "From: Daniele Medri <madrid@linux.it>\n"
@@ -15,7 +15,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
-"La modalit‡ console Script-Fu permette solamente invocazioni interattive"
+"La modalit√† console Script-Fu permette solamente invocazioni interattive"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
@@ -46,7 +46,7 @@ msgstr "Impossibile aprire un pipe SIOD di uscita"
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
-"La modalit‡ di valutazione Script-Fu permette invocazioni non interattive"
+"La modalit√† di valutazione Script-Fu permette invocazioni non interattive"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1112
@@ -642,11 +642,11 @@ msgstr "Larghezza dell'intervallo"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Script-Fu/Utilit‡/ASCII a livello immagine..."
+msgstr "<Image>/Script-Fu/Utilit√†/ASCII a livello immagine..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Utilit‡/ASCII a immagine..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Utilit√†/ASCII a immagine..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -770,7 +770,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Blended..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
-msgstr "Modalit‡ armonizzata"
+msgstr "Modalit√† armonizzata"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Custom Gradient"
@@ -812,11 +812,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Bovination..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density X"
-msgstr "Densit‡ macchie X"
+msgstr "Densit√† macchie X"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density Y"
-msgstr "Densit‡ macchie Y"
+msgstr "Densit√† macchie Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
@@ -875,7 +875,7 @@ msgstr "Colore 3"
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 msgid "Granularity"
-msgstr "Granularit‡"
+msgstr "Granularit√†"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -978,7 +978,7 @@ msgstr "Fattore di cromatura"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome Lightness"
-msgstr "Luminosit‡ cromatura"
+msgstr "Luminosit√† cromatura"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
@@ -998,7 +998,7 @@ msgstr "Mappa ambiente"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight Balance"
-msgstr "Bilanciamento luminosit‡"
+msgstr "Bilanciamento luminosit√†"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
@@ -1018,7 +1018,7 @@ msgstr "<Image>/Script-Fu/Render/Circuiti..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
-msgstr "Casualit‡ circuiti"
+msgstr "Casualit√† circuiti"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1070,7 +1070,7 @@ msgstr "Elevazione"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Script-Fu/Decorazioni/Macchie di caffË..."
+msgstr "<Image>/Script-Fu/Decorazioni/Macchie di caff√®..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
@@ -1129,7 +1129,7 @@ msgstr "<Image>/Script-Fu/Selection/Distress Selection..."
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
-msgstr "Granularit‡ (1 Ë bassa)"
+msgstr "Granularit√† (1 √® bassa)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
@@ -1184,7 +1184,7 @@ msgstr "Sposta Y"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
-msgstr "Opacit‡"
+msgstr "Opacit√†"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
@@ -1281,7 +1281,7 @@ msgstr "Larghezza immagine"
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random Seed"
-msgstr "Seme casualit‡"
+msgstr "Seme casualit√†"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
 #: plug-ins/script-fu/scripts/land.scm.h:8
@@ -1295,7 +1295,7 @@ msgstr "Scala Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Utilit‡/Mappa caratteri..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Utilit√†/Mappa caratteri..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Border"
@@ -1477,7 +1477,7 @@ msgstr "Dimensione bordo (pixel)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Utilit‡/Gradiente personale..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Utilit√†/Gradiente personale..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 #, fuzzy
@@ -1494,11 +1494,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Image>/Script-Fu/Utilit‡/Disegna grafico HSV..."
+msgstr "<Image>/Script-Fu/Utilit√†/Disegna grafico HSV..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG Opacity"
-msgstr "Opacit‡ sfondo"
+msgstr "Opacit√† sfondo"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "End X"
@@ -1542,7 +1542,7 @@ msgstr "Dimensione frame"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr "<Image>/Script-Fu/Utilit‡/Mostra struttura immagine..."
+msgstr "<Image>/Script-Fu/Utilit√†/Mostra struttura immagine..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
@@ -1570,7 +1570,7 @@ msgstr "Colore Pad"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
 msgid "Pad Opacity"
-msgstr "Opacit‡ Pad"
+msgstr "Opacit√† Pad"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
 msgid "Padding for Transparent Regions"
@@ -1604,7 +1604,7 @@ msgstr "<Image>/Script-Fu/Render/Lava..."
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
-msgstr "Ruvidit‡"
+msgstr "Ruvidit√†"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
@@ -1628,7 +1628,7 @@ msgstr "Raggio spostamento"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Randomness"
-msgstr "Casualit‡"
+msgstr "Casualit√†"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Sharpness (degrees)"
@@ -1691,7 +1691,7 @@ msgstr "Dimensione celle (pixel)"
 #: plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
-msgstr "Densit‡ (%)"
+msgstr "Densit√† (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
@@ -1898,7 +1898,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Varie/Sfera..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
-msgstr "Luminosit‡ (angolazione)"
+msgstr "Luminosit√† (angolazione)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
@@ -1967,7 +1967,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 #, fuzzy
 msgid "Hole Ratio"
-msgstr "Valore tonalit‡"
+msgstr "Valore tonalit√†"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Inner Teeth"
@@ -2215,7 +2215,7 @@ msgstr "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
-msgstr "Maschera opacit‡"
+msgstr "Maschera opacit√†"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask Size"
@@ -2251,7 +2251,7 @@ msgstr "Larghezza nastro"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow Darkness"
-msgstr "Oscurit‡ ombra"
+msgstr "Oscurit√† ombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow Depth"
@@ -2259,11 +2259,11 @@ msgstr "Definizione ombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread Density"
-msgstr "Densit‡ filo"
+msgstr "Densit√† filo"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread Intensity"
-msgstr "Intensit‡ filo"
+msgstr "Intensit√† filo"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread Length"
@@ -2283,7 +2283,7 @@ msgstr "Colore ombra rilievo"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop Shadow Opacity"
-msgstr "Opacit‡ ombra rilievo"
+msgstr "Opacit√† ombra rilievo"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop Shadow X Offset"
@@ -2295,7 +2295,7 @@ msgstr "Sposta Y ombra rilievo"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Opacity"
-msgstr "Opacit‡ illuminazione"
+msgstr "Opacit√† illuminazione"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight X Offset"
@@ -2396,7 +2396,7 @@ msgstr "<Toolbox>/Xtns/Web Browser/FAQ Utente"
 #~ "At least one font you've choosen is invalid.\n"
 #~ "Please check your settings.\n"
 #~ msgstr ""
-#~ "Il carattere che avete scelto Ë invalido.\n"
+#~ "Il carattere che avete scelto √® invalido.\n"
 #~ "Si prega di controllare le vostre configurazioni.\n"
 
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
