@@ -1,3 +1,10 @@
+Wed May 10 04:58:13 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * app/plug_in.c: Fix endless loop problem for certain image_types,
+        added a warning.
+        * plug-ins/script-fu/scripts/asc2img.scm: Change image_types argument
+        from "bar" to "".
+
 2000-05-08  Jay Cox  <jaycox@earthlink.net>
 
 	* app/image_map.[ch]: new function image_map_clear that removes

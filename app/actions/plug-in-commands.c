@@ -3315,6 +3315,7 @@ plug_in_args_destroy (Argument *args,
 gint
 plug_in_image_types_parse (gchar *image_types)
 {
+  gchar *type_spec = image_types;
   gint types = 0;
 
   /* 
@@ -3388,10 +3389,11 @@ plug_in_image_types_parse (gchar *image_types)
 	    }
 	  else
 	    {
+              g_warning ("image_type contains unrecognizable parts: '%s'", type_spec);
 	      while (*image_types &&
-		     (*image_types != 'R') &&
-		     (*image_types != 'G') &&
-		     (*image_types != 'I'))
+                     ((*image_types != ' ') ||
+                      (*image_types != '\t') ||
+                      (*image_types != ',')))
 		image_types++;
 	    }
 	}
