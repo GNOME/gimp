@@ -1,3 +1,7 @@
+2004-09-02  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Add «nb» to ALL_LINGUAS.
+
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:
