@@ -1,5 +1,15 @@
 2003-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-save.[ch] (file_save_as): added "gboolean
+	set_image_clean" and call gimp_image_clean_all() only if it
+	was passed as TRUE.
+	(file_save): pass TRUE.
+
+	* app/gui/file-save-dialog.c: pass TRUE from the "Save as" and
+	FALSE from the "Save a Copy" dialog (bug #109464).
+
+2003-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_remove_channel): say
 	"Remove Channel" when pushing the undo, not "Remove Layer".
 

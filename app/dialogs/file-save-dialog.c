@@ -70,7 +70,8 @@ static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
                                                  const gchar     *uri,
                                                  const gchar     *raw_filename,
                                                  PlugInProcDef   *save_proc,
-                                                 gboolean         set_uri_and_proc);
+                                                 gboolean         set_uri_and_proc,
+                                                 gboolean         set_image_clean);
 
 
 static GtkWidget     *filesave         = NULL;
@@ -78,6 +79,7 @@ static GtkWidget     *filesave         = NULL;
 static PlugInProcDef *save_file_proc   = NULL;
 static GimpImage     *the_gimage       = NULL;
 static gboolean       set_uri_and_proc = TRUE;
+static gboolean       set_image_clean  = TRUE;
 
 
 /*  public functions  */
@@ -106,6 +108,7 @@ file_save_dialog_show (GimpImage       *gimage,
 
   the_gimage       = gimage;
   set_uri_and_proc = TRUE;
+  set_image_clean  = TRUE;
 
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
@@ -153,6 +156,7 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
 
   the_gimage       = gimage;
   set_uri_and_proc = FALSE;
+  set_image_clean  = FALSE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -292,7 +296,8 @@ file_save_ok_callback (GtkWidget *widget,
                                    uri,
                                    raw_filename,
                                    save_file_proc,
-                                   set_uri_and_proc);
+                                   set_uri_and_proc,
+                                   set_image_clean);
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
@@ -366,7 +371,8 @@ file_save_overwrite_callback (GtkWidget *widget,
                                    overwrite_data->uri,
                                    overwrite_data->raw_filename,
                                    save_file_proc,
-                                   set_uri_and_proc);
+                                   set_uri_and_proc,
+                                   set_image_clean);
     }
 
   gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);
@@ -382,7 +388,8 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                              const gchar   *uri,
                              const gchar   *raw_filename,
                              PlugInProcDef *save_proc,
-                             gboolean       set_uri_and_proc)
+                             gboolean       set_uri_and_proc,
+                             gboolean       set_image_clean)
 {
   GimpPDBStatusType  status;
   GError            *error = NULL;
@@ -393,6 +400,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                          save_proc,
                          GIMP_RUN_INTERACTIVE,
                          set_uri_and_proc,
+                         set_image_clean,
                          &error);
 
   if (status != GIMP_PDB_SUCCESS &&

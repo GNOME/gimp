@@ -79,7 +79,8 @@ file_save (GimpImage    *gimage,
 
   file_proc = gimp_image_get_save_proc (gimage);
 
-  return file_save_as (gimage, uri, uri, file_proc, run_mode, FALSE, error);
+  return file_save_as (gimage, uri, uri, file_proc, run_mode,
+                       FALSE, TRUE, error);
 }
 
 GimpPDBStatusType
@@ -89,6 +90,7 @@ file_save_as (GimpImage      *gimage,
               PlugInProcDef  *file_proc,
               GimpRunMode     run_mode,
               gboolean        set_uri_and_proc,
+              gboolean        set_image_clean,
               GError        **error)
 {
   ProcRecord        *proc;
@@ -170,8 +172,11 @@ file_save_as (GimpImage      *gimage,
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
 
-      /*  set this image to clean  */
-      gimp_image_clean_all (gimage);
+      if (set_image_clean)
+        {
+          /*  set this image to clean  */
+          gimp_image_clean_all (gimage);
+        }
 
       documents = GIMP_DOCUMENT_LIST (gimage->gimp->documents);
       imagefile = gimp_document_list_add_uri (documents, uri);
