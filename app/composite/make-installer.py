@@ -317,6 +317,8 @@ def gimp_composite_regression(fpout, function_tables, options):
   #pp.pprint(function_tables)
 
   generic_table = function_tables
+
+  composite_modes.sort();
   
   for mode in composite_modes:
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
@@ -368,6 +370,8 @@ def gimp_composite_regression(fpout, function_tables, options):
             print >>fpout, '  ft0 = gimp_composite_regression_time_function (iterations, %s, &generic_ctx);' % ("gimp_composite_dispatch")
             print >>fpout, '  ft1 = gimp_composite_regression_time_function (iterations, %s, &special_ctx);' % (generic_table[key][0])
             print >>fpout, '  if (gimp_composite_regression_compare_contexts ("%s", &generic_ctx, &special_ctx)) {' % (mode_name(mode))
+            
+            print >>fpout, '    printf("%s failed\\n");' % (mode_name(mode))
             print >>fpout, '    return (1);'
             print >>fpout, '  }'
             print >>fpout, '  gimp_composite_regression_timer_report ("%s", ft0, ft1);' % (mode_name(mode))
@@ -518,7 +522,7 @@ op.add_option('-t', '--test', action='store_true',                 dest='test', 
               help='generate regression testing code')
 op.add_option('-i', '--iterations', action='store', type='int',    dest='iterations', default=1,
               help='number of iterations in regression tests')
-op.add_option('-n', '--n-pixels', action='store',   type="int",    dest='n_pixels',   default=1024*1024+1,
+op.add_option('-n', '--n-pixels', action='store',   type="int",    dest='n_pixels',   default=64*2049+16*2049+1,
               help='number of pixels in each regression test iteration')
 op.add_option('-r', '--requires', action='append',  type='string', dest='requires',   default=[],
               help='cpp #if conditionals')

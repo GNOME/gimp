@@ -127,7 +127,6 @@ gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContex
 #endif
   }
 
-
   return (0);
 }
 

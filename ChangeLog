@@ -1,3 +1,20 @@
+2003-09-15  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* gimp-composite-mmx-{test,installer}.c
+	* gimp-composite-sse-{test,installer}.c
+	* gimp-composite-sse2-{test,installer}.c
+	* make-installer.py: sort test output by mode name
+
+	* gimp-composite-sse2.[ch]: New compositing mode implementations
+	  darken
+	  difference
+	  grain_extract
+	  lighten
+
+	* gimp-composite-x86.h: added
+
+	* gimp-composite-{sse,mmx,sse2}.[ch]: Tightening declarations of clobbered registers.
+                                                                                                                                               
 2003-09-16  Manish Singh  <yosh@gimp.org>
 
 	* app/Makefile.am: use -u to prevent garbage collection of symbols
