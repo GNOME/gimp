@@ -188,6 +188,7 @@ run (gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      gimp_undo_push_group_start (image_ID);
       /*  Add alpha if not present */
       gimp_layer_add_alpha (drawable->id);
       drawable = gimp_drawable_get (drawable->id);
@@ -200,14 +201,20 @@ run (gchar      *name,
 	    gimp_progress_init (_("Removing color..."));
              
 	  toalpha (drawable);
-	  gimp_displays_flush ();
 	}
+      gimp_drawable_detach (drawable);
+      gimp_undo_push_group_end (image_ID);
+      gimp_displays_flush ();
     }
+  else
+    {
+      gimp_drawable_detach (drawable);
+    }
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_set_data ("plug_in_colortoalpha", &pvals, sizeof (pvals));
 
   values[0].data.d_status = status;
-  gimp_drawable_detach (drawable);
 }
 
 static void
