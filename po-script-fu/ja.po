@@ -3,14 +3,15 @@
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
+# Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:55+0200\n"
-"PO-Revision-Date: 2003-04-08 13:11+0900\n"
-"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
+"POT-Creation-Date: 2003-09-13 12:49+0900\n"
+"PO-Revision-Date: 2003-09-12 18:36+0900\n"
+"Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +37,7 @@ msgstr "現在実行しているコマンド"
 
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Browse..."
-msgstr "場所を指定..."
+msgstr "参照..."
 
 #: plug-ins/script-fu/script-fu-console.c:582
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -148,23 +149,20 @@ msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
 #: plug-ins/script-fu/script-fu.c:120
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
-msgstr "<Toolbox>/拡張/Script-Fu/コンソール..."
+msgstr "<Toolbox>/拡張/Script-Fu/コンソール(_C)..."
 
 #: plug-ins/script-fu/script-fu.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
-msgstr "<Toolbox>/拡張/Script-Fu/サーバ..."
+msgstr "<Toolbox>/拡張/Script-Fu/サーバ(_S)..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "全てのスクリプトを再読み込み"
 
 #: plug-ins/script-fu/script-fu.c:274
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
-msgstr "<Toolbox>/拡張/Script-Fu/再読み込み"
+msgstr "<Toolbox>/拡張/Script-Fu/再読み込み(_R)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
@@ -179,7 +177,7 @@ msgstr "名前で検索(_N)"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:126
 #: plug-ins/dbbrowser/dbbrowser_utils.c:145
 msgid "Search by _Blurb"
-msgstr "説明で検索(_B)\""
+msgstr "説明で検索(_B)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:211
 msgid "_Search:"
@@ -222,14 +220,12 @@ msgid "No matches"
 msgstr "該当なし"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/立体縁取り..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/立体縁取り(_O)..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/立体縁取り..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/立体縁取り(_O)..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -394,9 +390,8 @@ msgid "Text"
 msgstr "文字"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/立体曲線タイル..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/立体曲線タイル(_D)..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -467,9 +462,8 @@ msgid "Thickness"
 msgstr "厚さ"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-msgstr "<Image>/Script-Fu/装飾/ベベル追加..."
+msgstr "<Image>/Script-Fu/装飾/ベベル追加(_E)..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
@@ -486,9 +480,8 @@ msgid "Work on Copy"
 msgstr "コピーで作業する"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr "<Image>/Script-Fu/装飾/枠追加..."
+msgstr "<Image>/Script-Fu/装飾/枠追加(_B)..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border Color"
@@ -507,9 +500,8 @@ msgid "Delta Value on Color"
 msgstr "色の三角値"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/矢印..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/矢印(_A)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -564,9 +556,8 @@ msgid "Up"
 msgstr "上"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/水平線..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/水平線(_H)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -577,9 +568,8 @@ msgid "Bar Length"
 msgstr "棒の長さ"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/小球..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/小球(_B)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -593,11 +583,12 @@ msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
 msgstr ""
+"\n"
+"\t\t    SF-ADJUSTMENT _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/ボタン..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/エイリアン発光/ボタン(_U)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -630,30 +621,28 @@ msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
 msgstr ""
+"\n"
+"\t\t    SF-COLOR      _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/エイリアン発光..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/エイリアン発光(_G)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアン発光..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアン発光(_G)..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 msgid "Glow Size (pixels * 4)"
 msgstr "発光サイズ (ピクセル * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/エイリアンネオン..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/エイリアンネオン(_N)..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアンネオン..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/エイリアンネオン(_N)..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
@@ -676,9 +665,8 @@ msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr "<Image>/Script-Fu/ユーティリティ/ASCII を画像レイヤーに..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/ASCII を画像に..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/ASCII を画像に(_A)..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -698,29 +686,24 @@ msgid "Transparent Background"
 msgstr "透過背景"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/基本 I..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/基本 I(_B)..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 I..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 I(_B)..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/基本 II..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/基本 II(_A)..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 II..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/基本 II(_A)..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr "<Toolbox>/拡張/Script-Fu/ボタン/単純面取りボタン..."
+msgstr "<Toolbox>/拡張/Script-Fu/ボタン/単純面取りボタン(_B)..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -743,33 +726,28 @@ msgid "Upper-Left color"
 msgstr "左上色"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/矢印..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/矢印(_A)..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/小球..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/小球(_B)..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "直径"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/ボタン..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/ボタン(_U)..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/見出し..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/見出し(_E)..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/水平線..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/面取りパターン/水平線(_H)..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -787,9 +765,8 @@ msgid "Width"
 msgstr "幅"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Blend..."
-msgstr "<Image>/Script-Fu/動画/ブレンド..."
+msgstr "<Image>/Script-Fu/動画/ブレンド(_B)..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
@@ -804,14 +781,12 @@ msgid "Max. Blur Radius"
 msgstr "最大ぼかし半径"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/ブレンド..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/ブレンド(_D)..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ブレンド..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ブレンド(_D)..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
@@ -823,15 +798,15 @@ msgstr "カスタムグラデーション"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-HSV"
-msgstr "前景色-背景色-HSV"
+msgstr "描画色-背景色-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-RGB"
-msgstr "前景色-背景色-RGB"
+msgstr "描画色-背景色-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-Transparent"
-msgstr "前景色-透明"
+msgstr "描画色-透明"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
@@ -849,23 +824,20 @@ msgstr "グラデーション"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient Reverse"
-msgstr "グラデーション"
+msgstr "グラデーションの反転"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
 msgstr "オフセット (ピクセル)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/牛模様..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/牛模様(_V)..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/牛模様..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/牛模様(_V)..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density X"
@@ -885,7 +857,7 @@ msgstr "発光の残像"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "通電テスト: 二つのレイヤーが必要です!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona Width"
@@ -908,9 +880,8 @@ msgid "Speed (pixels/frame)"
 msgstr "速さ(ピクセル/フレーム)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/迷彩..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/迷彩(_C)..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -940,9 +911,8 @@ msgid "Smooth"
 msgstr "滑らか"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
-msgstr "<Image>/Script-Fu/ステンシル操作/彫刻化..."
+msgstr "<Image>/Script-Fu/ステンシル操作/彫刻化(_A)..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
@@ -970,28 +940,24 @@ msgid "Padding Around Text"
 msgstr "文字周りの空間"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/チョーク..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/チョーク(_C)..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/チョーク..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/チョーク(_C)..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Chalk Color"
 msgstr "チョークの色"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/かじり取り..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/かじり取り(_Y)..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/かじり取り..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/かじり取り(_Y)..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
@@ -1018,9 +984,8 @@ msgid "Keep Background"
 msgstr "背景を残す"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr "<Image>/Script-Fu/ステンシル操作/クロームメタル化..."
+msgstr "<Image>/Script-Fu/ステンシル操作/クロームメタル化(_H)..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
@@ -1059,23 +1024,20 @@ msgid "Highlight Balance"
 msgstr "ハイライトバランス"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/クローム..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/クローム(_H)..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/クローム..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/クローム(_H)..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
 msgstr "オフセット (ピクセル * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Circuit..."
-msgstr "<Image>/Script-Fu/下塗り/回路..."
+msgstr "<Image>/Script-Fu/下塗り/回路(_C)..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
@@ -1103,9 +1065,8 @@ msgid "Separate Layer"
 msgstr "レイヤーに分ける"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<Image>/Script-Fu/魔術/覆布化..."
+msgstr "<Image>/Script-Fu/魔術/覆布化(_C)..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1131,9 +1092,8 @@ msgid "Elevation"
 msgstr "高度"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-msgstr "<Image>/Script-Fu/装飾/コーヒーの染み..."
+msgstr "<Image>/Script-Fu/装飾/コーヒーの染み(_C)..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
@@ -1148,14 +1108,12 @@ msgid "Stains"
 msgstr "しみ数"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/コミック本..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/コミック本(_K)..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/コミック本..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/コミック本(_K)..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
@@ -1167,14 +1125,12 @@ msgid "Outline Size"
 msgstr "輪郭サイズ"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/冷たい金属..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/冷たい金属(_M)..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/冷たい金属..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/冷たい金属(_M)..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1182,18 +1138,16 @@ msgid "Effect Size (pixels)"
 msgstr "効果サイズ (ピクセル)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "<Image>/Edit/Copy _Visible"
-msgstr "<Image>/編集/レイヤを 1 つにしてコピー"
+msgstr "<Image>/編集/見えている物をコピー(_V)"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/水晶..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr "<Image>/Script-Fu/選択/ふらふら選択..."
+msgstr "<Image>/Script-Fu/選択/ふらふら選択(_D)..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
@@ -1214,12 +1168,11 @@ msgstr "拡散"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "閾値 (大きい 1<-->255 小さい)"
+msgstr "しきい値 (大きい 1<-->255 小さい)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<Image>/Script-Fu/影/影付け..."
+msgstr "<Image>/Script-Fu/影/影付け(_D)..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1257,9 +1210,8 @@ msgid "Opacity"
 msgstr "不透明度"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<Image>/Script-Fu/魔術/一行おきに消す..."
+msgstr "<Image>/Script-Fu/魔術/一行おきに消す(_E)..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1298,9 +1250,8 @@ msgid "Rows/Cols"
 msgstr "行/列"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Script-Fu/選択/フェード化..."
+msgstr "<Image>/Script-Fu/選択/フェード化(_F)..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1331,9 +1282,8 @@ msgid "Use Growing Selection"
 msgstr "拡大した選択領域の使用"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/平野地形図..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/平野地形図(_F)..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
@@ -1366,41 +1316,36 @@ msgid "Scale Y"
 msgstr "Y 拡大縮小"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/フォントマップ..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/フォントマップ(_F)..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Border (pixels)"
 msgstr "枠の大きさ (ピクセル)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Filter (regexp)"
-msgstr ""
+msgstr "フィルタ (正規表現)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Labels"
-msgstr ""
+msgstr "ラベル"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "Use Font Name as Text"
-msgstr ""
+msgstr "テキストにフォント名を使う"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/霜..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/霜(_F)..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/霜..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/霜(_F)..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-msgstr "<Image>/Script-Fu/装飾/ファジー縁取り..."
+msgstr "<Image>/Script-Fu/装飾/ファジー縁取り(_F)..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add Shadow"
@@ -1416,14 +1361,12 @@ msgid "Shadow Weight (%)"
 msgstr "影の幅 (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/大見出し..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/大見出し(_B)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/小見出し..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/小見出し(_S)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1464,39 +1407,35 @@ msgid "Shadow Color"
 msgstr "影の色"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル..."
+msgstr ""
+"<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル(_U)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル..."
+"<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル(_E)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/汎用管ラベル..."
+msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/汎用管ラベル(_G)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管ボタンラベル..."
+msgstr ""
+"<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管ボタンラベル(_T)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/光沢..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/光沢(_S)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/光沢..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/光沢(_S)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
@@ -1507,9 +1446,8 @@ msgid "Blend Gradient (Text)"
 msgstr "ブレンドグラデーション (文字)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
-#, fuzzy
 msgid "Outline Gradient Reverse"
-msgstr "輪郭ぼかし半径"
+msgstr "輪郭グラデーションの反転"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
@@ -1530,7 +1468,7 @@ msgstr "影"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "テキストグラデーションの反転"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
@@ -1545,28 +1483,24 @@ msgid "Use Pattern for Text instead of Gradient"
 msgstr "グラデーションの代わりにパターンを文字に使う"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/白熱の輝き..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/白熱の輝き(_W)..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/白熱の輝き..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/白熱の輝き(_W)..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect Size (pixels * 3)"
 msgstr "効果サイズ (ピクセル * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/グラデーション面取り..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/グラデーション面取り(_L)..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/グラデーション面取り..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/グラデーション面取り(_L)..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Bevel Height (Sharpness)"
@@ -1579,27 +1513,24 @@ msgid "Border Size (pixels)"
 msgstr "枠の大きさ (ピクセル)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/カスタムグラデーション..."
+msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ/カスタムグラデーション(_G)..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr "<Image>/Script-Fu/下塗り/回路..."
+msgstr "<Image>/Script-Fu/下塗り/格子(_G)..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "X 分割数"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "Y 分割数"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr "<Image>/Script-Fu/ユーティリティ/HSV グラフ描画..."
+msgstr "<Image>/Script-Fu/ユーティリティ/HSV グラフ描画(_H)..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG Opacity"
@@ -1646,9 +1577,8 @@ msgid "Frame Size"
 msgstr "枠サイズ"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
-msgstr "<Image>/Script-Fu/ユーティリティ/画像構造表示..."
+msgstr "<Image>/Script-Fu/ユーティリティ/画像構造表示(_S)..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
@@ -1691,9 +1621,8 @@ msgid "Space Between Layers"
 msgstr "レイヤー間の間隔"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/地形図..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/地形図(_L)..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
@@ -1704,9 +1633,8 @@ msgid "Sea Depth"
 msgstr "海の深さ"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Lava..."
-msgstr "<Image>/Script-Fu/下塗り/溶岩..."
+msgstr "<Image>/Script-Fu/下塗り/溶岩(_L)..."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1722,9 +1650,8 @@ msgid "Use Current Gradient"
 msgstr "カレントグラデーションを使う"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr "<Image>/Script-Fu/下塗り/集中線..."
+msgstr "<Image>/Script-Fu/下塗り/集中線(_N)..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Number of Lines"
@@ -1748,6 +1675,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1755,6 +1685,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1762,26 +1695,25 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"    (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた楕円形..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた楕円形(_P)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた矩形..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/ぼけた矩形(_C)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
-msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/楕円形..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/楕円形(_E)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/矩形..."
+msgstr "<Toolbox>/拡張/Script-Fu/ブラシ作成/矩形(_R)..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:14
 msgid "Description"
@@ -1797,14 +1729,12 @@ msgid "Spacing"
 msgstr "間隔"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/ネオン..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/ネオン(_E)..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ネオン..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ネオン(_E)..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create Shadow"
@@ -1829,9 +1759,8 @@ msgid "Density (%)"
 msgstr "密度 (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Old Photo..."
-msgstr "<Image>/Script-Fu/装飾/古い写真..."
+msgstr "<Image>/Script-Fu/装飾/古い写真(_O)..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
@@ -1846,9 +1775,8 @@ msgid "Sepia"
 msgstr "セピア色"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-msgstr "<Image>/Script-Fu/影/遠近法..."
+msgstr "<Image>/Script-Fu/影/遠近法(_P)..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -1867,9 +1795,8 @@ msgid "Relative Length of Shadow"
 msgstr "影の相対的な長さ"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-msgstr "<Image>/Script/魔術/プレデター..."
+msgstr "<Image>/Script/魔術/プレデター(_P)..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge Amount"
@@ -1884,9 +1811,8 @@ msgid "Pixelize"
 msgstr "ピクセル化"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-msgstr "<Toolbox>/拡張/Script-Fu/ボタン/丸ボタン..."
+msgstr "<Toolbox>/拡張/Script-Fu/ボタン/丸ボタン(_R)..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower Color"
@@ -1929,9 +1855,8 @@ msgid "Upper Color (Active)"
 msgstr "上の色 (アクティブ)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/地図..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/地図(_M)..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -1946,9 +1871,8 @@ msgid "Tile"
 msgstr "タイル状"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
-msgstr "<Image>/Script-Fu/動画/波紋..."
+msgstr "<Image>/Script-Fu/動画/波紋(_R)..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
@@ -1976,9 +1900,8 @@ msgid "Wrap"
 msgstr "折り返す"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-msgstr "<Image>/Script-Fu/装飾/角丸め..."
+msgstr "<Image>/Script-Fu/装飾/角丸め(_R)..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
 msgid "Add Background"
@@ -1998,34 +1921,33 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
-msgstr "<Image>/Script-Fu/選択/ブラシ化..."
+msgstr "<Image>/Script-Fu/選択/ブラシ化(_B)..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "Brush Name"
 msgstr "ブラシの名前"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr "<Image>/Script-Fu/選択/画像化"
+msgstr "<Image>/Script-Fu/選択/画像化(_I)"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Script-Fu/選択/丸める..."
+msgstr "<Image>/Script-Fu/選択/丸める(_R)..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
 msgstr "相対的な半径"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr "<Image>/Script-Fu/装飾/スライド化..."
+msgstr "<Image>/Script-Fu/装飾/スライド化(_S)..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font Color"
@@ -2044,9 +1966,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/スピード文字..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-msgstr "<Toolbox>/拡張/Script-Fu/その他/球..."
+msgstr "<Toolbox>/拡張/Script-Fu/その他/球(_S)..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2061,9 +1982,8 @@ msgid "Sphere Color"
 msgstr "球体色"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-msgstr "<Image>/Script-Fu/動画/回転球..."
+msgstr "<Image>/Script-Fu/動画/回転球(_S)..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2079,108 +1999,97 @@ msgstr "左から右に回転"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
-msgstr ""
+msgstr "エアブラシ"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-#, fuzzy
 msgid "Brush"
-msgstr "使用するブラシ"
+msgstr "ブラシ"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-#, fuzzy
 msgid "Circle"
-msgstr "タイル状"
+msgstr "円"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-#, fuzzy
 msgid "Color Method"
-msgstr "色 3"
+msgstr "色の塗り方"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Epitrochoid"
-msgstr ""
+msgstr "外トロコイド"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid "Frame"
-msgstr "コマ数"
+msgstr "画面"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "グラデーション: ノコギリ歯のループ"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "グラデーション: 三角形のループ"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Hexagon"
 msgstr "六角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
-#, fuzzy
 msgid "Hole Ratio"
-msgstr "色相変化率"
+msgstr "穴の変化率"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Inner Teeth"
-msgstr ""
+msgstr "内枠"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Lissajous"
-msgstr ""
+msgstr "リサージュ図形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-#, fuzzy
 msgid "Margin (pixels)"
-msgstr "半径 (ピクセル)"
+msgstr "マージン (ピクセル)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-#, fuzzy
 msgid "Outer Teeth"
 msgstr "外枠"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Pencil"
-msgstr ""
+msgstr "鉛筆"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-#, fuzzy
 msgid "Pentagon"
-msgstr "方向"
+msgstr "五角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "十角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "七角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "八角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "九角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Shape"
-msgstr ""
+msgstr "形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-#, fuzzy
 msgid "Solid Color"
-msgstr "空間の色"
+msgstr "単色"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spyrograph"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-#, fuzzy
 msgid "Square"
 msgstr "四角形"
 
@@ -2191,27 +2100,23 @@ msgstr "開始角度"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Tool"
-msgstr ""
+msgstr "道具"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#, fuzzy
 msgid "Triangle"
-msgstr "タイル状"
+msgstr "三角形"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
-#, fuzzy
 msgid "Type"
-msgstr "ぼかしタイプ"
+msgstr "種類"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/超新星爆発..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/超新星爆発(_U)..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/超新星爆発..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/超新星爆発(_U)..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
@@ -2222,32 +2127,28 @@ msgid "Effect Size (pixels * 30)"
 msgstr "効果サイズ (ピクセル * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/星のきらめき..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/星のきらめき(_R)..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/星のきらめき..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/星のきらめき(_R)..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
 msgstr "効果サイズ (ピクセル * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻タイル..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻タイル(_T)..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
 msgstr "回転量"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻 (タイル化可能)..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻 (タイル化可能)(_S)..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2262,14 +2163,12 @@ msgid "Whirl Angle"
 msgstr "回転角"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/粒子の軌跡..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/粒子の軌跡(_P)..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/粒子の軌跡..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/粒子の軌跡(_P)..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
@@ -2300,14 +2199,12 @@ msgid "Fill Angle"
 msgstr "充てん角度"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-msgstr "<Image>/Script-Fu/透明度をロゴに/テクスチャ..."
+msgstr "<Image>/Script-Fu/透明度をロゴに/テクスチャ(_T)..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/テクスチャ..."
+msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/テクスチャ(_T)..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
@@ -2338,9 +2235,8 @@ msgid "Text Pattern"
 msgstr "文字パターン"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
-msgstr "<Image>/フィルタ/ぼかし/タイル化可能ぼかし..."
+msgstr "<Image>/フィルタ/ぼかし/タイル化可能ぼかし(_T)..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur Horizontally"
@@ -2367,18 +2263,16 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/Web タイトル見出し..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/曲線タイル..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/曲線タイル(_R)..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
-msgstr "前景色"
+msgstr "描画色"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-msgstr "<Image>/Script-Fu/魔術/非シャープ化マスク..."
+msgstr "<Image>/Script-Fu/魔術/非シャープ化マスク(_U)..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
@@ -2389,9 +2283,8 @@ msgid "Mask Size"
 msgstr "マスクサイズ"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Waves..."
-msgstr "<Image>/Script-Fu/動画/波..."
+msgstr "<Image>/Script-Fu/動画/波(_W)..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
@@ -2406,9 +2299,8 @@ msgid "Wavelength"
 msgstr "波長"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
-msgstr "<Image>/Script-Fu/魔術/織物..."
+msgstr "<Image>/Script-Fu/魔術/織物(_W)..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon Spacing"
@@ -2439,9 +2331,8 @@ msgid "Thread Length"
 msgstr "糸の長さ"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-msgstr "<Image>/Script-Fu/影/Xach 効果..."
+msgstr "<Image>/Script-Fu/影/Xach 効果(_X)..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop Shadow Blur Radius"
