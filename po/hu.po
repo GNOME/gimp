@@ -2,12 +2,13 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Balazs Nagy <julian7@kva.hu>, 1998.
 # Andras Timar <timar@gnome.hu>, 2000.
+# Gabor Suveg <gsuveg@sgsystem.com>, 2001.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2001-01-29 13:41+0100\n"
-"PO-Revision-Date: 2001-01-28 22:05+0100\n"
-"Last-Translator: Andras Timar <timar@gnome.hu>\n"
+"POT-Creation-Date: 2001-05-15 13:06+0200\n"
+"PO-Revision-Date: 2001-05-15 13:07+02:00\n"
+"Last-Translator: Gabor Suveg <gsuveg@sgsystem.com>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
@@ -37,7 +38,7 @@ msgstr "Sûrûség:"
 
 #: app/airbrush.c:158 modules/colorsel_water.c:691
 msgid "Pressure:"
-msgstr "Nyomás: "
+msgstr "Nyomás:"
 
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:272
@@ -280,7 +281,7 @@ msgstr "A Fényerõ-kontraszt beállítás nem mûködik indexelt rajzfelületen."
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -320,7 +321,7 @@ msgstr "Ecsetszerkesztõ"
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:288 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -350,7 +351,7 @@ msgstr "Dõlésszög:"
 msgid "Brush Selection"
 msgstr "Ecset kiválasztása"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Frissítés"
@@ -552,17 +553,17 @@ msgid "Empty Channel Copy"
 msgstr "Üres csatorna másolása"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:316 app/levels.c:379
 msgid "Red"
 msgstr "Vörös"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
 msgid "Green"
 msgstr "Zöld"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
 msgid "Blue"
 msgstr "Kék"
 
@@ -618,7 +619,7 @@ msgstr "Igazított"
 
 #: app/clone.c:160
 msgid "Registered"
-msgstr ""
+msgstr "Regisztrált"
 
 #: app/clone.c:273
 msgid "No patterns available for this operation."
@@ -718,7 +719,7 @@ msgstr "Index:"
 msgid "Hex Triplet"
 msgstr "Hexa hármas"
 
-#: app/color_picker.c:278 app/histogram_tool.c:265
+#: app/color_picker.c:278 app/histogram_tool.c:272
 msgid "Intensity:"
 msgstr "Intenzitás:"
 
@@ -766,7 +767,7 @@ msgstr "Színezet"
 msgid "Saturation"
 msgstr "Telítettség"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:315
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -803,7 +804,7 @@ msgstr "Kijelölés szûkítése ennyivel:"
 
 #: app/commands.c:388
 msgid "Shrink from image border"
-msgstr ""
+msgstr "Kijelölés szûkítése a keretbõl"
 
 #: app/commands.c:410
 msgid "Grow Selection"
@@ -1013,7 +1014,7 @@ msgstr "Sima"
 msgid "Free"
 msgstr "Szabadkézi"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "Betöltés"
 
@@ -1395,7 +1396,7 @@ msgstr "A fájl már létezik!"
 msgid "Revert"
 msgstr "Visszaállítás"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1500,26 +1501,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Nincs körberajzolható kijelölés!"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr ""
+msgstr "Ismeretlen ecset #%d formátum a \"%s\"-ban. "
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Hiba a GIMP ecsetfájlban: \"%s\""
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Névtelen"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "A GIMP ecsetfájl megszakadt: \"%s\""
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "A GIMP ecsetfájl sérült: \"%s\""
@@ -1540,14 +1541,14 @@ msgid ""
 "\"%s\""
 msgstr ""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
 msgstr ""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -2164,7 +2165,7 @@ msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
 msgid "Histogram"
 msgstr "Hisztogram"
 
@@ -2172,31 +2173,31 @@ msgstr "Hisztogram"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "A hisztogram nem mûködik indexelt rajzfelületen."
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:268
 msgid "Mean:"
 msgstr "Átlag:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:269
 msgid "Std Dev:"
 msgstr "Szórás:"
 
-#: app/histogram_tool.c:263
+#: app/histogram_tool.c:270
 msgid "Median:"
 msgstr "Medián:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:271
 msgid "Pixels:"
 msgstr "Képpont:"
 
-#: app/histogram_tool.c:266
+#: app/histogram_tool.c:273
 msgid "Count:"
 msgstr "Szám:"
 
-#: app/histogram_tool.c:267
+#: app/histogram_tool.c:274
 msgid "Percentile:"
 msgstr "Százalék:"
 
-#: app/histogram_tool.c:300
+#: app/histogram_tool.c:307
 msgid "Information on Channel:"
 msgstr "Csatornainformáció:"
 
@@ -2343,7 +2344,7 @@ msgstr "True Color"
 
 #: app/info_window.c:75
 msgid "Direct Color"
-msgstr ""
+msgstr "Direkt szín"
 
 #: app/info_window.c:167
 msgid "R:"
@@ -2351,24 +2352,24 @@ msgstr "Vörös:"
 
 #: app/info_window.c:173
 msgid "G:"
-msgstr ""
+msgstr "Zöld:"
 
 #: app/info_window.c:179
 msgid "B:"
-msgstr ""
+msgstr "Kék:"
 
 #: app/info_window.c:185
 msgid "A:"
-msgstr ""
+msgstr "Alfa:"
 
 #: app/info_window.c:217
 msgid "Extended"
-msgstr ""
+msgstr "Kiterjesztett"
 
 #. add the information fields
 #: app/info_window.c:280
 msgid "Dimensions (w x h):"
-msgstr ""
+msgstr "Méret (mag. x szél.)"
 
 #: app/info_window.c:284
 msgid "Resolution:"
@@ -2384,12 +2385,11 @@ msgstr "Képernyõ típusa:"
 
 #: app/info_window.c:290
 msgid "Visual Class:"
-msgstr ""
+msgstr "Színek osztálya:"
 
 #: app/info_window.c:292
-#, fuzzy
 msgid "Visual Depth:"
-msgstr "Max. mélység:"
+msgstr "Színmélység:"
 
 #. create the info dialog
 #: app/info_window.c:320
@@ -2418,7 +2418,7 @@ msgstr "Indexelt szín"
 
 #: app/info_window.c:543
 msgid "colors"
-msgstr "szín"
+msgstr "színek"
 
 #. adjust sliders
 #: app/ink.c:296
@@ -2794,11 +2794,11 @@ msgstr "Szintek"
 
 #: app/levels.c:244
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr ""
+msgstr "Az indexelt rajznál nem lehet szinteket állítani."
 
 #: app/levels.c:370
 msgid "Modify Levels for Channel:"
-msgstr ""
+msgstr "Szintek változtatása a csatornában:"
 
 #: app/levels.c:394
 msgid "Input Levels:"
@@ -3346,9 +3346,8 @@ msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Rétegek/Rétegek, csatornák és útvonalak..."
 
 #: app/menus.c:424
-#, fuzzy
 msgid "/Layers/Layer to Imagesize"
-msgstr "/Rétegek/Egy réteggé"
+msgstr "/Rétegek/Réteg kép méretûvé"
 
 #. <Image>/Layers/Stack
 #: app/menus.c:429
@@ -3591,7 +3590,7 @@ msgstr ""
 #: app/menus.c:640
 #, fuzzy
 msgid "/Layer to Imagesize"
-msgstr "/Rétegek/Egy réteggé"
+msgstr "/Rétegek/Réteg kép méretüvé"
 
 #: app/menus.c:642
 msgid "/Scale Layer..."
@@ -3746,74 +3745,74 @@ msgstr ""
 msgid "Unloaded OK"
 msgstr "Sikeres eltávolítás"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Moduladatbázis"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "modul betöltése: \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr ""
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "modulbetöltési hiba: %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<Nincsenek modulok>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "lemezen"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "csak a memóriában"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "sehol (kattints a 'frissítésre')"
 
-#: app/module_db.c:887
+#: app/module_db.c:883
 msgid "Unload"
 msgstr "Eltávolítás"
 
-#: app/module_db.c:903
+#: app/module_db.c:899
 msgid "Purpose:"
 msgstr "Cél:"
 
-#: app/module_db.c:904
+#: app/module_db.c:900
 msgid "Author:"
 msgstr "Szerzõ:"
 
-#: app/module_db.c:905
+#: app/module_db.c:901
 msgid "Version:"
 msgstr "Verzió:"
 
-#: app/module_db.c:906
+#: app/module_db.c:902
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:907
+#: app/module_db.c:903
 msgid "Date:"
 msgstr "Dátum:"
 
-#: app/module_db.c:908
+#: app/module_db.c:904
 msgid "Location:"
 msgstr "Hely:"
 
-#: app/module_db.c:909
+#: app/module_db.c:905
 msgid "State:"
 msgstr "Állapot:"
 
-#: app/module_db.c:928
+#: app/module_db.c:924
 msgid "Autoload during startup"
 msgstr "Automatikus betöltés indításkor"
 
@@ -4140,17 +4139,17 @@ msgstr "Minta kiválasztása"
 msgid "No Patterns available"
 msgstr "Nincsenek felhasználható minták"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr ""
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Hiba ebben a GIMP mintafájlban: \"%s\""
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "A GIMP mintafájl megszakadt: \"%s\""
@@ -4215,13 +4214,13 @@ msgstr ""
 "A biztonság kedvéért mentsd el a képeidet, és indítsd újra a\n"
 "GIMP-et."
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "Poszter"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "A Poszter nem mûködik indexelt rajzfelületen."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "Poszter"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
