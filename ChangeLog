@@ -1,5 +1,12 @@
 2004-03-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c (run): corrected check for number of PDB
+	parameters. Fxes bug #136403.
+
+	* app/widgets/gimpfontview.c: removed unused variables.
+
+2004-03-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpquerybox.c (query_box_disconnect): disconnect
 	the response handler to avoid that the query_box callback is being
 	called multiple times. Fixes bug #136371.

@@ -294,8 +294,8 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, "file_tiff_save") == 0
-           || strcmp (name, "file_tiff_save2") == 0 )
+  else if (strcmp (name, "file_tiff_save") == 0 ||
+           strcmp (name, "file_tiff_save2") == 0)
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
       image = orig_image = param[1].data.d_int32;
@@ -353,11 +353,7 @@ run (const gchar      *name,
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          if (nparams != 6 || nparams != 7)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else
+          if (nparams == 6 || nparams == 7)
             {
               switch (param[5].data.d_int32)
                 {
@@ -373,6 +369,10 @@ run (const gchar      *name,
                 tsvals.save_transp_pixels = param[6].data.d_int32;
               else
                 tsvals.save_transp_pixels = TRUE;
+            }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
             }
           break;
 
