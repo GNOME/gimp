@@ -1,3 +1,8 @@
+Mon May  3 21:30:46 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+        * configure.in: changed order of cflags and library path in
+        GIMP_CLFAGS and GIMP_LIBS.
+
 Mon May  3 12:04:47 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/plug_in.pdb
