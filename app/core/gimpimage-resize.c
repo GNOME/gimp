@@ -2249,6 +2249,7 @@ gimp_image_remove_layer_mask (GimpImage *gimage, Layer *layer, int mode)
 		      drawable_height (GIMP_DRAWABLE(layer)));
     }
 
+  gdisplays_flush ();
   return NULL;
 }
 
