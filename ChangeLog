@@ -1,3 +1,9 @@
+2003-12-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-flip.c (gimp_image_flip): no need to
+	reallocate the image's projection (the image size doesn't change
+	when flipping).
+
 2003-12-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c (gimp_colormap_adjustment_changed):
