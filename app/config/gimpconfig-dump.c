@@ -29,14 +29,12 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimplimits.h"
-#include "libgimpbase/gimpversion.h"
-#include "libgimpbase/gimpbasetypes.h"
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "config-types.h"
 
 #include "gimpconfig.h"
+#include "gimpconfig-dump.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
@@ -44,16 +42,7 @@
 #include "gimprc.h"
 
 
-typedef enum
-{
-  DUMP_NONE,
-  DUMP_DEFAULT,
-  DUMP_COMMENT,
-  DUMP_MANPAGE
-} DumpFormat;
 
-
-static gint    dump_gimprc          (DumpFormat        format);
 static void    dump_gimprc_system   (GimpConfig       *rc,
 				     GimpConfigWriter *writer,
                                      gint              fd);
@@ -65,89 +54,41 @@ static void    dump_with_linebreaks (gint              fd,
 				     const gchar      *text);
 
 
-int
-main (int   argc,
-      char *argv[])
-{
-  DumpFormat  format = DUMP_DEFAULT;
-
-  if (argc > 1)
-    {
-      if (strcmp (argv[1], "--system-gimprc") == 0)
-	{
-	  format = DUMP_COMMENT;
-	}
-      else if (strcmp (argv[1], "--man-page") == 0)
-	{
-	  format = DUMP_MANPAGE;
-	}
-      else if (strcmp (argv[1], "--version") == 0)
-	{
-	  g_printerr ("gimpconfig-dump version %s\n",  GIMP_VERSION);
-	  return EXIT_SUCCESS;
-	}
-      else
-	{
-	  g_printerr ("gimpconfig-dump version %s\n\n",  GIMP_VERSION);
-	  g_printerr ("Usage: %s [option ... ]\n\n", argv[0]);
-	  g_printerr ("Options:\n"
-		      "  --man-page        create a gimprc manual page\n"
-		      "  --system-gimprc   create a commented system gimprc with default values\n"
-		      "  --help            output usage information\n"
-		      "  --version         output version information\n"
-		      "\n");
-
-	  if (strcmp (argv[1], "--help") == 0)
-	    return EXIT_SUCCESS;
-	  else
-	    return EXIT_FAILURE;
-	}
-    }
-
-  return dump_gimprc (format);
-}
-
-static gint
-dump_gimprc (DumpFormat format)
+gboolean
+gimp_config_dump (GimpConfigDumpFormat  format)
 {
   GimpConfigWriter *writer;
   GimpConfig       *rc;
-  gint              fd = 1;
-
-  if (format == DUMP_NONE)
-    return EXIT_SUCCESS;
-
-  g_type_init ();
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);
-
-  writer = gimp_config_writer_new_fd (fd);
+  writer = gimp_config_writer_new_fd (1);
 
   switch (format)
     {
-    case DUMP_DEFAULT:
+    case GIMP_CONFIG_DUMP_NONE:
+      break;
+
+    case GIMP_CONFIG_DUMP_GIMPRC:
       gimp_config_writer_comment (writer,
 				  "Dump of the GIMP default configuration");
       gimp_config_writer_linefeed (writer);
-
       gimp_config_serialize_properties (rc, writer);
-      g_print ("\n");
+      gimp_config_writer_linefeed (writer);
       break;
-    case DUMP_COMMENT:
-      dump_gimprc_system (rc, writer, fd);
+
+    case GIMP_CONFIG_DUMP_GIMPRC_SYSTEM:
+      dump_gimprc_system (rc, writer, 1);
       break;
-    case DUMP_MANPAGE:
-      dump_gimprc_manpage (rc, writer, fd);
-      break;
-    default:
+
+    case GIMP_CONFIG_DUMP_GIMPRC_MANPAGE:
+      dump_gimprc_manpage (rc, writer, 1);
       break;
     }
 
   gimp_config_writer_finish (writer, NULL, NULL);
-
   g_object_unref (rc);
 
-  return EXIT_SUCCESS;
+  return TRUE;
 }
 
 
@@ -566,35 +507,4 @@ dump_with_linebreaks (gint         fd,
       text += i;
       len  -= i;
     }
-}
-
-
-/*
- * some dummy funcs so we can properly link this beast
- */
-
-const gchar *
-gimp_unit_get_identifier (GimpUnit unit)
-{
-  switch (unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      return "pixels";
-    case GIMP_UNIT_INCH:
-      return "inches";
-    case GIMP_UNIT_MM:
-      return "millimeters";
-    case GIMP_UNIT_POINT:
-      return "points";
-    case GIMP_UNIT_PICA:
-      return "picas";
-    default:
-      return NULL;
-    }
-}
-
-gint
-gimp_unit_get_number_of_units (void)
-{
-  return GIMP_UNIT_END;
 }

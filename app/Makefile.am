@@ -153,3 +153,11 @@ if ENABLE_GIMP_CONSOLE
 	rm -f $(DESTDIR)$(bindir)/gimp-console-$(EXEEXT)
 endif
 endif
+
+
+# hooks to assure that the system gimprc and the gimprc manpage are
+# uptodate when a release is made
+
+dist-hook: gimp-1.3
+	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
+	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc-$(LT_RELEASE).5.in

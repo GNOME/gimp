@@ -42,7 +42,10 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "config/gimpconfig-dump.h"
+
 #include "core/core-types.h"
+#include "core/gimp.h"
 
 #include "app_procs.h"
 #include "errors.h"
@@ -60,7 +63,7 @@ static void   gimp_sigchld_handler   (gint         sig_num);
 
 static void   gimp_show_version      (void);
 static void   gimp_show_help         (const gchar *progname);
-static void   gimp_text_console_exit (gboolean     fail);
+static void   gimp_text_console_exit (gint         status);
 
 
 /*
@@ -136,23 +139,48 @@ main (int    argc,
    */
   for (i = 1; i < argc; i++)
     {
-      if ((strcmp (argv[i], "--no-interface") == 0) ||
-	  (strcmp (argv[i], "-i") == 0))
+      const gchar *arg = argv[i];
+
+      if (arg[0] != '-')
+        continue;
+
+      if ((strcmp (arg, "--no-interface") == 0) ||
+	  (strcmp (arg, "-i") == 0))
 	{
 	  no_interface = TRUE;
 	}
-      else if ((strcmp (argv[i], "--version") == 0) ||
-               (strcmp (argv[i], "-v") == 0))
+      else if ((strcmp (arg, "--version") == 0) ||
+               (strcmp (arg, "-v") == 0))
 	{
 	  gimp_show_version ();
-	  gimp_text_console_exit (FALSE);
+	  gimp_text_console_exit (EXIT_SUCCESS);
 	}
-      else if ((strcmp (argv[i], "--help") == 0) ||
-	       (strcmp (argv[i], "-h") == 0))
+      else if ((strcmp (arg, "--help") == 0) ||
+	       (strcmp (arg, "-h") == 0))
 	{
 	  gimp_show_help (full_prog_name);
-	  gimp_text_console_exit (FALSE);
+	  gimp_text_console_exit (EXIT_SUCCESS);
 	}
+      else if (strncmp (arg, "--dump-gimprc", 13) == 0)
+        {
+          GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
+
+          if (strcmp (arg, "--dump-gimprc") == 0)
+            format = GIMP_CONFIG_DUMP_GIMPRC;
+          if (strcmp (arg, "--dump-gimprc-system") == 0)
+            format = GIMP_CONFIG_DUMP_GIMPRC_SYSTEM;
+          else if (strcmp (arg, "--dump-gimprc-manpage") == 0)
+            format = GIMP_CONFIG_DUMP_GIMPRC_MANPAGE;
+
+          if (format)
+            {
+              g_type_init ();
+              the_gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+
+              gimp_text_console_exit (gimp_config_dump (format) ?
+                                      EXIT_SUCCESS : EXIT_FAILURE);
+            }
+        }
     }
 
   if (no_interface)
@@ -173,7 +201,7 @@ main (int    argc,
               "Make sure a proper setup for your display environment exists.");
       g_print ("%s\n\n", msg);
 
-      gimp_text_console_exit (TRUE);
+      gimp_text_console_exit (EXIT_FAILURE);
     }
 
   g_set_application_name (_("The GIMP"));
@@ -182,7 +210,7 @@ main (int    argc,
   use_shm = TRUE;
 #endif
 
-  batch_cmds    = g_new (char *, argc);
+  batch_cmds    = g_new (gchar *, argc);
   batch_cmds[0] = NULL;
 
   for (i = 1; i < argc; i++)
@@ -345,7 +373,7 @@ main (int    argc,
   if (show_help)
     {
       gimp_show_help (full_prog_name);
-      gimp_text_console_exit (TRUE);
+      gimp_text_console_exit (EXIT_FAILURE);
     }
 
 #ifndef G_OS_WIN32
@@ -405,6 +433,8 @@ main (int    argc,
             stack_trace_mode,
             restore_session);
 
+  g_free (batch_cmds);
+
   return EXIT_SUCCESS;
 }
 
@@ -443,7 +473,7 @@ gimp_show_help (const gchar *progname)
 }
 
 static void
-gimp_text_console_exit (gboolean fail)
+gimp_text_console_exit (gint status)
 {
 #ifdef G_OS_WIN32
   /* Give them time to read the message if it was printed in a
@@ -462,7 +492,7 @@ gimp_text_console_exit (gboolean fail)
     }
 #endif
 
-  exit (fail ? EXIT_FAILURE : EXIT_SUCCESS);
+  exit (status);
 }
 
 

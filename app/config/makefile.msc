@@ -19,6 +19,7 @@ OBJECTS = \
 	gimpbaseconfig.obj \
 	gimpconfig.obj \
 	gimpconfig-deserialize.obj \
+	gimpconfig-dump.obj \
 	gimpconfig-error.obj \
 	gimpconfig-params.obj \
 	gimpconfig-path.obj \

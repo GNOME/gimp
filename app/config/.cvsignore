@@ -4,8 +4,5 @@ Makefile.in
 .libs
 *.lo
 foorc
-gimprc
-gimprc-1.3.5.in
-gimpconfig-dump
 libappconfig.la
 test-config

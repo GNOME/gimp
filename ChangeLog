@@ -1,3 +1,13 @@
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/main.c
+	* app/config/Makefile.am
+	* app/config/makefile.msc
+	* app/config/gimpconfig-dump.[ch]: removed the separate
+	gimpconfig-dump binary and moved the functionality into gimp
+	itself. It became a mess to build and seems cleaner this way.
+
 2003-10-13  Dave Neary  <bolsh@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.c: Added gtk-docs to a few functions. 
