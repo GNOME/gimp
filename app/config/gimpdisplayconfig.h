@@ -27,6 +27,10 @@
 #include "config/gimpcoreconfig.h"
 
 
+#define GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT  "%D*%f-%p.%i (%t, %L) %wx%h"
+#define GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
+
+
 #define GIMP_TYPE_DISPLAY_CONFIG            (gimp_display_config_get_type ())
 #define GIMP_DISPLAY_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_CONFIG, GimpDisplayConfig))
 #define GIMP_DISPLAY_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_CONFIG, GimpDisplayConfigClass))

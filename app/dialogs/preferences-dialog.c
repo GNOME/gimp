@@ -1792,33 +1792,34 @@ prefs_dialog_new (Gimp       *gimp,
     const gchar *format_strings[] =
     {
       NULL,
-      "%f-%p.%i (%t)",
+      NULL,
       "%f-%p.%i (%t) %z%%",
       "%f-%p.%i (%t) %d:%s",
-      "%f-%p.%i (%t) %wx%h",
-      "%f-%p.%i (%t) %m"
+      "%f-%p.%i (%t) %wx%h"
     };
 
     const gchar *format_names[] =
     {
-      N_("Default"),
-      N_("Simple"),
+      N_("Current format"),
+      N_("Default format"),
       N_("Show zoom percentage"),
       N_("Show zoom ratio"),
-      N_("Show image size"),
-      N_("Show memory usage")
+      N_("Show image size")
     };
 
     struct
     {
       gchar       *current_setting;
+      const gchar *default_setting;
       const gchar *title;
       const gchar *property_name;
     }
     formats[] =
     {
-      { NULL, N_("Image Title Format"),     "image-title-format"  },
-      { NULL, N_("Image Statusbar Format"), "image-status-format" }
+      { NULL, GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
+        N_("Image Title Format"),     "image-title-format"  },
+      { NULL, GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
+        N_("Image Statusbar Format"), "image-status-format" }
     };
 
     gint format;
@@ -1838,6 +1839,7 @@ prefs_dialog_new (Gimp       *gimp,
         gint              i;
 
         format_strings[0] = formats[format].current_setting;
+        format_strings[1] = formats[format].default_setting;
 
         vbox2 = prefs_frame_new (gettext (formats[format].title),
                                  GTK_CONTAINER (vbox), TRUE);

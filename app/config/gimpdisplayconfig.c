@@ -61,8 +61,6 @@ static void  gimp_display_config_fullscreen_notify (GObject    *object,
                                                     gpointer    data);
 
 
-#define DEFAULT_IMAGE_TITLE_FORMAT  "%D*%f-%p.%i (%t, %L) %wx%h"
-#define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
 #define DEFAULT_ACTIVATE_ON_FOCUS   TRUE
 
 
@@ -208,12 +206,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
                                    IMAGE_TITLE_FORMAT_BLURB,
-                                   DEFAULT_IMAGE_TITLE_FORMAT,
+                                   GIMP_CONFIG_DEFAULT_IMAGE_TITLE_FORMAT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
                                    "image-status-format",
                                    IMAGE_STATUS_FORMAT_BLURB,
-                                   DEFAULT_IMAGE_STATUS_FORMAT,
+                                   GIMP_CONFIG_DEFAULT_IMAGE_STATUS_FORMAT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,

@@ -1,5 +1,11 @@
 2005-01-16  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpdisplayconfig.[ch]
+	* app/dialogs/preferences-dialog.c: also list the default image
+	title and statusbar formats.
+
+2005-01-16  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: renamed default image title
 	and statusbar format as suggested in bug #150679.
 
