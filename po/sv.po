@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-29 12:00+0900\n"
-"PO-Revision-Date: 2004-11-29 12:03+0900\n"
+"POT-Creation-Date: 2004-12-03 14:37+0900\n"
+"PO-Revision-Date: 2004-12-03 14:39+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr ""
 "GIMP kunde inte initiera det grafiska användargränssnittet.\n"
 "Kontrollera att det finns en korrekt konfiguration för din displaymiljö."
 
-#: app/main.c:222 app/widgets/gimptoolbox.c:553
+#: app/main.c:222 app/widgets/gimptoolbox.c:559
 #: data/misc/gimp.desktop.in.in.h:3
 msgid "The GIMP"
 msgstr "GIMP"
@@ -207,7 +207,7 @@ msgstr ""
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <kommandon>  Kör kommandon i flerjobbsläge.\n"
 
-#: app/sanity.c:200
+#: app/sanity.c:194
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -218,7 +218,7 @@ msgstr ""
 "\n"
 "Kontrollera värdet på miljövariabeln G_FILENAME_ENCODING."
 
-#: app/sanity.c:219
+#: app/sanity.c:213
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -5819,7 +5819,7 @@ msgstr "Kommentar"
 
 #: app/dialogs/info-window.c:248 app/dialogs/info-window.c:634
 #: app/display/gimpdisplayshell-title.c:337
-#: app/display/gimpdisplayshell-title.c:349
+#: app/display/gimpdisplayshell-title.c:349 app/widgets/gimpactiongroup.c:806
 msgid "(none)"
 msgstr "(ingen)"
 
@@ -7330,11 +7330,11 @@ msgstr "Mörk rutfärg"
 msgid "Custom color"
 msgstr "Egen färg"
 
-#: app/display/gimpdisplayshell.c:939
+#: app/display/gimpdisplayshell.c:943
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när förnsterstorlek ändras"
 
-#: app/display/gimpdisplayshell.c:959
+#: app/display/gimpdisplayshell.c:963
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
@@ -7482,7 +7482,7 @@ msgstr "Insticksmodulen kunde inte öppna bild"
 msgid "Image doesn't contain any visible layers"
 msgstr "Bilden har inga synliga lager"
 
-#: app/file/file-save.c:213
+#: app/file/file-save.c:220
 msgid "Plug-In could not save image"
 msgstr "Insticksmodulen kunde inte spara bild"
 
@@ -7495,7 +7495,7 @@ msgstr "Ogiltig teckensekvens i URI"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Ta bort  \"%s\" misslyckades: %s"
 
-#: app/gui/splash.c:102
+#: app/gui/splash.c:135
 msgid "GIMP Startup"
 msgstr "Uppstart av GIMP"
 
@@ -9475,7 +9475,7 @@ msgstr "Inga slingor funna i bufferten"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Misslyckades med att importera slinga från \"%s\": %s"
 
-#: app/widgets/gimpactiongroup.c:801
+#: app/widgets/gimpactiongroup.c:803
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10424,7 +10424,7 @@ msgstr ""
 "Den aktiva färgskalan.\n"
 "Klicka för att öppna färgskaledialogen."
 
-#: app/widgets/gimptoolbox.c:848
+#: app/widgets/gimptoolbox.c:854
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -10444,6 +10444,14 @@ msgstr "Återställ alternativ från..."
 #: app/widgets/gimptooloptionseditor.c:201
 msgid "Delete saved options..."
 msgstr "Ta bort sparade alternativ..."
+
+#: app/widgets/gimpuimanager.c:495
+msgid "Your GIMP installation is incomplete:"
+msgstr "Din GIMP-installation är klar:"
+
+#: app/widgets/gimpuimanager.c:497
+msgid "Plase make sure the menu XML files are correctly installed."
+msgstr "Se till att XML-filerna för menyer är korrekt installerade."
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
