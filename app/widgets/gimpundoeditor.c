@@ -110,7 +110,7 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
                                                     NULL,
                                                     GIMP_PREVIEW_SIZE_MEDIUM,
                                                     FALSE, 3, 3);
-  gtk_box_pack_start (GTK_BOX (undo_editor), undo_editor->view, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
   gtk_widget_show (undo_editor->view);
 
   g_signal_connect (undo_editor->view, "select_item",
@@ -132,8 +132,6 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
                             G_CALLBACK (gimp_undo_editor_redo_clicked),
                             NULL,
                             undo_editor);
-
-  gtk_widget_set_sensitive (GTK_WIDGET (undo_editor), FALSE);
 }
 
 static void

@@ -16,7 +16,7 @@ Overview of Changes in GIMP 1.3.13
 - Added a full-screen mode for the image window [Sven, Mitch]
 - Added a simple config file writer to GimpConfig [Sven]
 - Moved gimp-perl into it's own CVS module [Yosh]
-- Started to migrate core dialogs from GtkList to GtkTreeView [Mitch]
+- Migrated all core dialogs from GtkList to GtkTreeView [Mitch]
 - Refactored the GimpDisplayShell update/draw code [Mitch, Sven]
 - Rewrote the Undo History as a GimpDockable [Mitch]
 - Lots of bug fixes

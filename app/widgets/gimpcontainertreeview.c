@@ -165,8 +165,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (tree_view->scrolled_win), 
                                   GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (tree_view), tree_view->scrolled_win,
-		      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (tree_view), tree_view->scrolled_win);
   gtk_widget_show (tree_view->scrolled_win);
 
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW
@@ -194,6 +193,7 @@ gimp_container_tree_view_constructor (GType                  type,
   tree_view->view =
     GTK_TREE_VIEW (gtk_tree_view_new_with_model (tree_view->model));
   g_object_unref (list);
+
   gtk_tree_view_set_headers_visible (tree_view->view, FALSE);
   gtk_container_add (GTK_CONTAINER (tree_view->scrolled_win),
                      GTK_WIDGET (tree_view->view));

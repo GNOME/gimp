@@ -539,8 +539,6 @@ file_new_confirm_dialog (NewImageInfo *info)
   gchar *max_size;
   gchar *text;
 
-  gtk_widget_set_sensitive (info->dialog, FALSE);
-
   size     = gimp_image_new_get_memsize_string (info->size);
   max_size = gimp_image_new_get_memsize_string (GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size);
 
@@ -571,6 +569,11 @@ file_new_confirm_dialog (NewImageInfo *info)
   g_free (text);
   g_free (max_size);
   g_free (size);
+
+  gtk_window_set_transient_for (GTK_WINDOW (info->confirm_dialog),
+				GTK_WINDOW (info->dialog));
+
+  gtk_widget_set_sensitive (info->dialog, FALSE);
 
   gtk_widget_show (info->confirm_dialog);
 }

@@ -296,8 +296,8 @@ file_revert_cmd_callback (GtkWidget *widget,
 
       text = g_strdup_printf (_("Revert '%s' to\n"
 				"'%s'?\n\n"
-				"(You will lose all your changes,\n"
-				"including all undo information)"),
+				"You will lose all your changes, "
+				"including all undo information."),
 			      basename, uri);
 
       g_free (basename);
@@ -317,6 +317,9 @@ file_revert_cmd_callback (GtkWidget *widget,
 
       g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
 			 query_box);
+
+      gtk_window_set_transient_for (GTK_WINDOW (query_box),
+                                    GTK_WINDOW (gdisp->shell));
 
       gtk_widget_show (query_box);
     }

@@ -1,5 +1,18 @@
 2003-03-20  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-new.c (gimp_image_new_values_new): default
+	the fill_type to GIMP_BACKGROUND_FILL (as in gimp_initialize()).
+
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c: made more dialogs transient for their
+	parent window.
+
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpimageeditor.c
+	* app/widgets/gimpundoeditor.c: simplified a little bit.
+
+2003-03-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpbutton.[ch]: pass the modifier mask as
 	GdkModifierType instead of guint.
 	

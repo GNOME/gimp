@@ -106,16 +106,9 @@ static void
 gimp_image_editor_real_set_image (GimpImageEditor *editor,
                                   GimpImage       *gimage)
 {
-  if (! editor->gimage && gimage)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-    }
-  else if (editor->gimage && ! gimage)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
-    }
-
   editor->gimage = gimage;
+
+  gtk_widget_set_sensitive (GTK_WIDGET (editor), gimage != NULL);
 }
 
 

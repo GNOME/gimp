@@ -60,6 +60,8 @@ gimp_image_new_values_new (Gimp      *gimp,
 
       if (values->type == GIMP_INDEXED)
         values->type = GIMP_RGB; /* no indexed images */
+      
+      values->fill_type = GIMP_BACKGROUND_FILL;
     }
   else
     {
