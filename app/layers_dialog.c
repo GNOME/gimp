@@ -2666,6 +2666,18 @@ layer_widget_preview_events (GtkWidget *widget,
   else
     return FALSE;
 
+  switch (preview_type)
+    {
+    case LAYER_PREVIEW:
+      pixmap = &layer_widget->layer_pixmap;
+      valid = GIMP_DRAWABLE (layer_widget->layer)->preview_valid;
+      break;
+    case MASK_PREVIEW:
+      pixmap = &layer_widget->mask_pixmap;
+      valid = GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
+      break;
+    }
+
   if (layer_is_floating_sel (layer_widget->layer))
     preview_type = FS_PREVIEW;
 
@@ -2716,18 +2728,6 @@ layer_widget_preview_events (GtkWidget *widget,
 	layer_widget_no_preview_redraw (layer_widget, preview_type);
       else
 	{
-	  switch (preview_type)
-	    {
-	    case LAYER_PREVIEW:
-	      pixmap = &layer_widget->layer_pixmap;
-	      valid = GIMP_DRAWABLE (layer_widget->layer)->preview_valid;
-	      break;
-	    case MASK_PREVIEW:
-	      pixmap = &layer_widget->mask_pixmap;
-	      valid = GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
-	      break;
-	    }
-
 	  if (!valid || !*pixmap)
 	    {
 	      layer_widget_preview_redraw (layer_widget, preview_type);
