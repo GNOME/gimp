@@ -75,9 +75,9 @@ gimp_image_resize (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      GimpChannel *channel = list->data;
+      GimpItem *item = list->data;
 
-      gimp_channel_resize (channel, new_width, new_height, offset_x, offset_y);
+      gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
     }
 
   /*  Reposition or remove any guides  */
@@ -115,8 +115,8 @@ gimp_image_resize (GimpImage *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_channel_resize (gimage->selection_mask,
-		       new_width, new_height, offset_x, offset_y);
+  gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
+                    new_width, new_height, offset_x, offset_y);
   gimp_image_mask_invalidate (gimage);
 
   /*  Reposition all layers  */

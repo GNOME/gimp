@@ -312,7 +312,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
   if (gimp_layer_is_floating_sel (active_layer))
     floating_sel_relax (active_layer, TRUE);
 
-  gimp_layer_resize (active_layer, x2 - x1, y2 - y1, off_x, off_y);
+  gimp_item_resize (GIMP_ITEM (active_layer), x2 - x1, y2 - y1, off_x, off_y);
 
   if (gimp_layer_is_floating_sel (active_layer))
     floating_sel_rigor (active_layer, TRUE);
@@ -1029,22 +1029,26 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
       if (gimage)
 	{
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
-                                       _("Resize Layer"));
+	  if (gimp_layer_is_floating_sel (layer))
+            {
+              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                                           _("Resize Layer"));
+
+              floating_sel_relax (layer, TRUE);
+            }
+
+	  gimp_item_resize (GIMP_ITEM (layer),
+                            options->resize->width,
+                            options->resize->height,
+                            options->resize->offset_x,
+                            options->resize->offset_y);
 
 	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_relax (layer, TRUE);
+            {
+              floating_sel_rigor (layer, TRUE);
 
-	  gimp_layer_resize (layer,
-			     options->resize->width,
-			     options->resize->height,
-			     options->resize->offset_x,
-			     options->resize->offset_y);
-
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_rigor (layer, TRUE);
-
-	  gimp_image_undo_group_end (gimage);
+              gimp_image_undo_group_end (gimage);
+            }
 
           gimp_image_flush (gimage);
 	}

@@ -81,6 +81,11 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_offset_x,
                                                  gint                new_offset_y,
                                                  GimpInterpolationType  interp_type);
+static void       gimp_layer_resize             (GimpItem           *item,
+                                                 gint                new_width,
+                                                 gint                new_height,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -192,6 +197,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->duplicate              = gimp_layer_duplicate;
   item_class->rename                 = gimp_layer_rename;
   item_class->scale                  = gimp_layer_scale;
+  item_class->resize                 = gimp_layer_resize;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
 
@@ -362,8 +368,7 @@ gimp_layer_scale (GimpItem              *item,
   GimpLayer *layer;
   GimpImage *gimage;
 
-  layer = GIMP_LAYER (item);
-
+  layer  = GIMP_LAYER (item);
   gimage = gimp_item_get_image (item);
 
   if (layer->mask)
@@ -383,6 +388,40 @@ gimp_layer_scale (GimpItem              *item,
                        new_width, new_height,
                        new_offset_x, new_offset_y,
                        interpolation_type);
+
+      gimp_image_undo_group_end (gimage);
+    }
+
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
+}
+
+static void
+gimp_layer_resize (GimpItem *item,
+		   gint      new_width,
+		   gint      new_height,
+		   gint      offset_x,
+		   gint      offset_y)
+{
+  GimpLayer *layer;
+  GimpImage *gimage;
+
+  layer  = GIMP_LAYER (item);
+  gimage = gimp_item_get_image (item);
+
+  if (layer->mask)
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_RESIZE,
+                                 _("Resize Layer"));
+
+  gimp_image_undo_push_layer_mod (gimage, _("Resize Layer"), layer);
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+                                          offset_x, offset_y);
+
+  if (layer->mask)
+    {
+      gimp_item_resize (GIMP_ITEM (layer->mask),
+                        new_width, new_height, offset_x, offset_y);
 
       gimp_image_undo_group_end (gimage);
     }
@@ -1181,131 +1220,6 @@ gimp_layer_scale_by_origin (GimpLayer             *layer,
 }
 
 void
-gimp_layer_resize (GimpLayer *layer,
-		   gint       new_width,
-		   gint       new_height,
-		   gint       offx,
-		   gint       offy)
-{
-  PixelRegion  srcPR, destPR;
-  TileManager *new_tiles;
-  gint         w, h;
-  gint         x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (new_width < 1 || new_height < 1)
-    return;
-
-  x1 = CLAMP (offx, 0, new_width);
-  y1 = CLAMP (offy, 0, new_height);
-  x2 = CLAMP ((offx + GIMP_DRAWABLE(layer)->width),  0, new_width);
-  y2 = CLAMP ((offy + GIMP_DRAWABLE(layer)->height), 0, new_height);
-  w = x2 - x1;
-  h = y2 - y1;
-
-  if (offx > 0)
-    {
-      x1 = 0;
-      x2 = offx;
-    }
-  else
-    {
-      x1 = -offx;
-      x2 = 0;
-    }
-
-  if (offy > 0)
-    {
-      y1 = 0;
-      y2 = offy;
-    }
-  else
-    {
-      y1 = -offy;
-      y2 = 0;
-    }
-
-  /*  Update the old layer position  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_DRAWABLE (layer)->width,
-			GIMP_DRAWABLE (layer)->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
-		     x1, y1, 
-		     w, h, 
-		     FALSE);
-
-  /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, 
-				GIMP_DRAWABLE (layer)->bytes);
-  pixel_region_init (&destPR, new_tiles, 
-		     0, 0, 
-		     new_width, new_height, 
-		     TRUE);
-
-  /*  fill with the fill color  */
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      /*  Set to transparent and black  */
-      guchar bg[4] = {0, 0, 0, 0};
-
-      color_region (&destPR, bg);
-    }
-  else
-    {
-      guchar bg[3];
-
-      gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)),
-				 GIMP_DRAWABLE (layer), bg);
-      color_region (&destPR, bg);
-    }
-
-  pixel_region_init (&destPR, new_tiles, 
-		     x2, y2, 
-		     w, h, 
-		     TRUE);
-
-  /*  copy from the old to the new  */
-  if (w && h)
-    copy_region (&srcPR, &destPR);
-
-  /*  Push the layer on the undo stack  */
-  gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)),
-                                  _("Resize Layer"),
-                                  layer);
-
-  /*  Configure the new layer  */
-  GIMP_DRAWABLE (layer)->tiles = new_tiles;
-  GIMP_DRAWABLE (layer)->offset_x = x1 + GIMP_DRAWABLE (layer)->offset_x - x2;
-  GIMP_DRAWABLE (layer)->offset_y = y1 + GIMP_DRAWABLE (layer)->offset_y - y2;
-  GIMP_DRAWABLE (layer)->width = new_width;
-  GIMP_DRAWABLE (layer)->height = new_height;
-
-  /*  If there is a layer mask, make sure it gets resized also  */
-  if (layer->mask)
-    {
-      GIMP_DRAWABLE (layer->mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-      GIMP_DRAWABLE (layer->mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
-      gimp_channel_resize (GIMP_CHANNEL (layer->mask),
-			   new_width, new_height, offx, offy);
-    }
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
-
-  /*  update the new layer area  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_DRAWABLE (layer)->width,
-			GIMP_DRAWABLE (layer)->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
-}
-
-void
 gimp_layer_resize_to_image (GimpLayer *layer)
 {
   GimpImage *gimage;
@@ -1324,7 +1238,8 @@ gimp_layer_resize_to_image (GimpLayer *layer)
     floating_sel_relax (layer, TRUE);
 
    gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
-   gimp_layer_resize (layer, gimage->width, gimage->height, offset_x, offset_y);
+   gimp_item_resize (GIMP_ITEM (layer), gimage->width, gimage->height,
+                     offset_x, offset_y);
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_rigor (layer, TRUE);

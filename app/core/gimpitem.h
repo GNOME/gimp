@@ -65,6 +65,11 @@ struct _GimpItemClass
                             gint                   new_offset_x,
                             gint                   new_offset_y,
                             GimpInterpolationType  interpolation_type);
+  void       (* resize)    (GimpItem              *item,
+                            gint                   new_width,
+                            gint                   new_height,
+                            gint                   offset_x,
+                            gint                   offset_y);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -92,6 +97,12 @@ void            gimp_item_scale           (GimpItem       *item,
                                            gint            new_offset_x,
                                            gint            new_offset_y,
                                            GimpInterpolationType  interp_type);
+void            gimp_item_resize          (GimpItem       *item,
+                                           gint            new_width,
+                                           gint            new_height,
+                                           gint            offset_x,
+                                           gint            offset_y);
+void            gimp_item_resize_to_image (GimpItem       *item);
 
 gint            gimp_item_get_ID          (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,

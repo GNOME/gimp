@@ -92,12 +92,6 @@ gboolean        gimp_channel_get_show_masked    (GimpChannel       *channel);
 void            gimp_channel_set_show_masked    (GimpChannel       *channel,
                                                  gboolean           show_masked);
 
-void            gimp_channel_resize             (GimpChannel       *channel, 
-                                                 gint               new_width,
-                                                 gint               new_height,
-                                                 gint               offx,
-                                                 gint               offy);
-
 
 /*  selection mask functions  */
 

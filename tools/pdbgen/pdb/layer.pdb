@@ -103,7 +103,7 @@ HELP
 			     "gimp_layer_scale_by_origin (layer, new_width, new_height, gimp->config->interpolation_type, $args);");
     } else {
         &layer_change_invoke("LAYER_\U$op\E", 'Resize Layer',
-			     "gimp_layer_$op (layer, new_width, new_height, $args);");
+			     "gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, $args);");
     }
 }
 

@@ -131,7 +131,7 @@ gimp_image_crop (GimpImage *gimage,
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
 
-	  gimp_layer_resize (layer, width, height, off_x, off_y);
+	  gimp_item_resize (GIMP_ITEM (layer), width, height, off_x, off_y);
 
 	  if (gimp_layer_is_floating_sel (layer))
 	    floating_sel_rigor (layer, TRUE);
@@ -163,11 +163,12 @@ gimp_image_crop (GimpImage *gimage,
 	    {
 	      channel = (GimpChannel *) list->data;
 
-	      gimp_channel_resize (channel, width, height, -x1, -y1);
+	      gimp_item_resize (GIMP_ITEM (channel), width, height, -x1, -y1);
 	    }
 
 	  /*  Don't forget the selection mask!  */
-	  gimp_channel_resize (gimage->selection_mask, width, height, -x1, -y1);
+	  gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
+                            width, height, -x1, -y1);
 	  gimp_image_mask_invalidate (gimage);
 
 	  /*  crop all layers  */
@@ -199,9 +200,9 @@ gimp_image_crop (GimpImage *gimage,
 		  height = ly2 - ly1;
 
 		  if (width && height)
-		    gimp_layer_resize (layer, width, height,
-				       -(lx1 - off_x),
-				       -(ly1 - off_y));
+		    gimp_item_resize (GIMP_ITEM (layer), width, height,
+                                      -(lx1 - off_x),
+                                      -(ly1 - off_y));
 		  else
 		    gimp_image_remove_layer (gimage, layer);
 		}

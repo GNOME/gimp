@@ -80,6 +80,11 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_offset_x,
                                                     gint               new_offset_y,
                                                     GimpInterpolationType interp_type);
+static void       gimp_drawable_resize             (GimpItem          *item,
+                                                    gint               new_width,
+                                                    gint               new_height,
+                                                    gint               offset_x,
+                                                    gint               offset_y);
 
 
 /*  private variables  */
@@ -152,6 +157,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   item_class->duplicate              = gimp_drawable_duplicate;
   item_class->scale                  = gimp_drawable_scale;
+  item_class->resize                 = gimp_drawable_resize;
 
   klass->visibility_changed          = NULL;
 }
@@ -340,6 +346,117 @@ gimp_drawable_scale (GimpItem              *item,
   drawable->offset_y = new_offset_y;
 
   /*  Update the new position  */
+  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
+}
+
+static void
+gimp_drawable_resize (GimpItem *item,
+                      gint      new_width,
+                      gint      new_height,
+                      gint      offset_x,
+                      gint      offset_y)
+{
+  GimpDrawable *drawable;
+  PixelRegion   srcPR, destPR;
+  TileManager  *new_tiles;
+  gint          w, h;
+  gint          x1, y1, x2, y2;
+
+  drawable = GIMP_DRAWABLE (item);
+
+  x1 = CLAMP (offset_x, 0, new_width);
+  y1 = CLAMP (offset_y, 0, new_height);
+  x2 = CLAMP (offset_x + drawable->width,  0, new_width);
+  y2 = CLAMP (offset_y + drawable->height, 0, new_height);
+
+  w = x2 - x1;
+  h = y2 - y1;
+
+  if (offset_x > 0)
+    {
+      x1 = 0;
+      x2 = offset_x;
+    }
+  else
+    {
+      x1 = -offset_x;
+      x2 = 0;
+    }
+
+  if (offset_y > 0)
+    {
+      y1 = 0;
+      y2 = offset_y;
+    }
+  else
+    {
+      y1 = -offset_y;
+      y2 = 0;
+    }
+
+  /*  Update the old position  */
+  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+
+  /*  Configure the pixel regions  */
+  pixel_region_init (&srcPR, drawable->tiles,
+		     x1, y1,
+		     w, h,
+		     FALSE);
+
+  /*  Allocate the new tile manager, configure dest region  */
+  new_tiles = tile_manager_new (new_width, new_height,
+				drawable->bytes);
+
+  /*  Determine whether the new tiles need to be initially cleared  */
+  if ((new_width  > drawable->width)  ||
+      (new_height > drawable->height) ||
+      (x2 || y2))
+    {
+      pixel_region_init (&destPR, new_tiles,
+                         0, 0,
+                         new_width, new_height,
+                         TRUE);
+
+      /*  fill with the fill color  */
+      if (gimp_drawable_has_alpha (drawable) ||
+          GIMP_IS_CHANNEL (drawable) /* EEK */)
+        {
+          /*  Set to transparent and black  */
+          guchar bg[4] = { 0, 0, 0, 0 };
+
+          color_region (&destPR, bg);
+        }
+      else
+        {
+          guchar bg[3];
+
+          gimp_image_get_background (gimp_item_get_image (item),
+                                     drawable, bg);
+          color_region (&destPR, bg);
+        }
+    }
+
+  /*  copy from the old to the new  */
+  if (w && h)
+    {
+      pixel_region_init (&destPR, new_tiles,
+                         x2, y2,
+                         w, h,
+                         TRUE);
+
+      copy_region (&srcPR, &destPR);
+    }
+
+  /*  Configure the new drawable  */
+  drawable->tiles    = new_tiles;
+  drawable->offset_x = x1 + drawable->offset_x - x2;
+  drawable->offset_y = y1 + drawable->offset_y - y2;
+  drawable->width    = new_width;
+  drawable->height   = new_height;
+
+  /*  update the new area  */
   gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));

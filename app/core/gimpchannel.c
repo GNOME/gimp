@@ -64,6 +64,11 @@ static void       gimp_channel_scale       (GimpItem         *item,
                                             gint              new_offset_x,
                                             gint              new_offset_y,
                                             GimpInterpolationType  interp_type);
+static void       gimp_channel_resize      (GimpItem         *item,
+                                            gint              new_width,
+                                            gint              new_height,
+                                            gint              offx,
+                                            gint              offy);
 
 static void       gimp_channel_push_undo   (GimpChannel      *mask,
                                             const gchar      *undo_desc);
@@ -125,6 +130,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   item_class->duplicate            = gimp_channel_duplicate;
   item_class->scale                = gimp_channel_scale;
+  item_class->resize               = gimp_channel_resize;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
 }
@@ -244,6 +250,28 @@ gimp_channel_scale (GimpItem              *item,
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
                                          new_offset_x, new_offset_y,
                                          interpolation_type);
+
+  /*  bounds are now unknown  */
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_resize (GimpItem *item,
+		     gint      new_width,
+		     gint      new_height,
+		     gint      offset_x,
+		     gint      offset_y)
+{
+  GimpChannel *channel;
+
+  channel = GIMP_CHANNEL (item);
+
+  gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
+                                    _("Resize Channel"),
+                                    channel);
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+                                          offset_x, offset_y);
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
@@ -449,114 +477,6 @@ gimp_channel_set_show_masked (GimpChannel *channel,
 			    GIMP_DRAWABLE (channel)->width,
 			    GIMP_DRAWABLE (channel)->height);
     }
-}
-
-void
-gimp_channel_resize (GimpChannel *channel,
-		     gint         new_width,
-		     gint         new_height,
-		     gint         offx,
-		     gint         offy)
-{
-  PixelRegion  srcPR, destPR;
-  TileManager *new_tiles;
-  guchar       bg = 0;
-  gint         clear;
-  gint         w, h;
-  gint         x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  if (new_width == 0 || new_height == 0)
-    return;
-
-  x1 = CLAMP (offx, 0, new_width);
-  y1 = CLAMP (offy, 0, new_height);
-  x2 = CLAMP ((offx + GIMP_DRAWABLE (channel)->width), 0, new_width);
-  y2 = CLAMP ((offy + GIMP_DRAWABLE (channel)->height), 0, new_height);
-
-  w = x2 - x1;
-  h = y2 - y1;
-
-  if (offx > 0)
-    {
-      x1 = 0;
-      x2 = offx;
-    }
-  else
-    {
-      x1 = -offx;
-      x2 = 0;
-    }
-
-  if (offy > 0)
-    {
-      y1 = 0;
-      y2 = offy;
-    }
-  else
-    {
-      y1 = -offy;
-      y2 = 0;
-    }
-
-  /*  Update the old channel position  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-		     x1, y1, w, h, FALSE);
-
-  /*  Determine whether the new channel needs to be initially cleared  */
-  if ((new_width  > GIMP_DRAWABLE (channel)->width) ||
-      (new_height > GIMP_DRAWABLE (channel)->height) ||
-      (x2 || y2))
-    clear = TRUE;
-  else
-    clear = FALSE;
-
-  /*  Allocate the new channel, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, 1);
-
-  /*  Set to black (empty--for selections)  */
-  if (clear)
-    {
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0,
-                         new_width, new_height,
-                         TRUE);
-
-      color_region (&destPR, &bg);
-    }
-
-  /*  copy from the old to the new  */
-  pixel_region_init (&destPR, new_tiles, x2, y2, w, h, TRUE);
-  if (w && h)
-    copy_region (&srcPR, &destPR);
-
-  /*  Push the channel on the undo stack  */
-  gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)),
-                                    _("Resize Channel"),
-                                    channel);
-
-  /*  Configure the new channel  */
-  GIMP_DRAWABLE (channel)->tiles  = new_tiles;
-  GIMP_DRAWABLE (channel)->width  = new_width;
-  GIMP_DRAWABLE (channel)->height = new_height;
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
-
-  /*  update the new channel area  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
 }
 
 

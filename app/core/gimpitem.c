@@ -133,6 +133,8 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->removed                  = NULL;
   klass->duplicate                = gimp_item_real_duplicate;
   klass->rename                   = gimp_item_real_rename;
+  klass->scale                    = NULL;
+  klass->resize                   = NULL;
 }
 
 static void
@@ -334,13 +336,32 @@ gimp_item_scale (GimpItem              *item,
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (new_width == 0 || new_height == 0)
+  if (new_width < 1 || new_height < 1)
     return;
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
                      interpolation_type);
+}
+
+void
+gimp_item_resize (GimpItem *item,
+                  gint      new_width,
+                  gint      new_height,
+                  gint      offset_x,
+                  gint      offset_y)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (new_width < 1 || new_height < 1)
+    return;
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  item_class->resize (item, new_width, new_height, offset_x, offset_y);
 }
 
 gint

@@ -1,5 +1,28 @@
 2003-05-07  Michael Natterer  <mitch@gimp.org>
 
+	More transform stuff virtualization:
+
+	* app/core/gimpitem.[ch]: added new virtual function
+	GimpItem::resize().
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimplayer.[ch]: removed public resize functions
+	and implement resize() instead.
+
+	* app/core/gimpdrawable.c: implement resize() which contains
+	the common parts of layer/channel resizing.
+
+	* app/vectors/gimpvectors.c: added empty resize() implementation.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/gui/layers-commands.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+2003-05-07  Michael Natterer  <mitch@gimp.org>
+
 	Started to abstract item transformation so we can easily
 	transform multiple linked items later:
 

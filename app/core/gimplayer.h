@@ -116,11 +116,7 @@ void            gimp_layer_scale_by_origin     (GimpLayer            *layer,
                                                 gint                  new_height,
                                                 GimpInterpolationType interpolation_type,
                                                 gboolean              local_origin);
-void            gimp_layer_resize              (GimpLayer            *layer,
-                                                gint                  new_width,
-                                                gint                  new_height,
-                                                gint                  offx,
-                                                gint                  offy);
+
 void            gimp_layer_resize_to_image     (GimpLayer            *layer);
 BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer, 
                                                 gint                 *num_segs);

@@ -502,7 +502,7 @@ layer_resize_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  gimp_layer_resize (layer, new_width, new_height, offx, offy);
+	  gimp_item_resize (GIMP_ITEM (layer), new_width, new_height, offx, offy);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
