@@ -1094,7 +1094,7 @@ save_image (gchar    *filename,
 	      /* Pack INTBITS pixels into an integer. */
 	      if (save_mask)
 		{
-		  c |= ((data[rowoffset + k + 1] < 128) ? 1 : 0) << (thisbit ++);
+		  c |= ((data[rowoffset + k + 1] < 128) ? 0 : 1) << (thisbit ++);
 		}
 	      else
 		{

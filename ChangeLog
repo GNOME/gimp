@@ -1,3 +1,7 @@
+2000-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/xbm.c: Don't save the mask inverted.
+
 Mon Jun  5 12:48:10 BST 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Fix old bug which could
