@@ -1,4 +1,8 @@
-2000-02-03  Christophe Merlet  <redfox@eikonex.org>
+2001-02-08  Daniel Egger <egger@suse.de>
+
+	* it.po: Applied fix for #37716 from Domenico Rotiroti.
+
+2001-02-03  Christophe Merlet  <redfox@eikonex.org>
 
 	* fr.po: Updated French translation with suggestions from
 	Gérard Delafond <g.delafond@medsyn.fr>.
