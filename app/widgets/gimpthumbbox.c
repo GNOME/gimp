@@ -260,6 +260,7 @@ gimp_thumb_box_new (Gimp *gimp)
   box->progress = gtk_progress_bar_new ();
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "foo");
   gtk_box_pack_end (GTK_BOX (vbox2), box->progress, FALSE, FALSE, 0);
+  gtk_widget_set_no_show_all (box->progress, TRUE);
   /* don't gtk_widget_show (box->progress); */
 
   /* eek */

@@ -645,7 +645,7 @@ vectors_import_response (GtkWidget *dialog,
       const gchar *filename;
       GError      *error = NULL;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, &error))
         {
@@ -667,34 +667,37 @@ static void
 vectors_import_query (GimpImage *gimage,
                       GtkWidget *parent)
 {
-  GtkFileSelection *filesel;
+  GtkFileChooser *chooser;
 
-  filesel =
-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Import Paths from SVG")));
+  chooser = GTK_FILE_CHOOSER
+    (gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
+                                  GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  g_object_weak_ref (G_OBJECT (gimage),
-                     (GWeakNotify) gtk_widget_destroy, filesel);
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-  gtk_window_set_screen (GTK_WINDOW (filesel),
+                                  NULL));
+
+     g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
+                     chooser);
+
+  gtk_window_set_screen (GTK_WINDOW (chooser),
                          gtk_widget_get_screen (parent));
 
-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-import");
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-import");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
-
-  g_signal_connect (filesel, "response",
+  g_signal_connect (chooser, "response",
                     G_CALLBACK (vectors_import_response),
                     gimage);
-  g_signal_connect (filesel, "delete_event",
+  g_signal_connect (chooser, "delete_event",
                     G_CALLBACK (gtk_true),
                     NULL);
 
   /*  FIXME: add a proper file selector
       and controls for merge and scale options  */
 
-  gtk_widget_show (GTK_WIDGET (filesel));
+  gtk_widget_show (GTK_WIDGET (chooser));
 }
 
 
@@ -712,7 +715,7 @@ vectors_export_response (GtkWidget *dialog,
       const gchar *filename;
       GError      *error = NULL;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
         {
@@ -731,29 +734,32 @@ vectors_export_query (GimpImage   *gimage,
                       GimpVectors *vectors,
                       GtkWidget   *parent)
 {
-  GtkFileSelection *filesel;
+  GtkFileChooser *chooser;
 
-  filesel =
-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Export Path to SVG")));
+  chooser = GTK_FILE_CHOOSER
+    (gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
+                                  GTK_FILE_CHOOSER_ACTION_SAVE,
 
-  g_object_weak_ref (G_OBJECT (gimage),
-                     (GWeakNotify) gtk_widget_destroy, filesel);
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-  gtk_window_set_screen (GTK_WINDOW (filesel),
+                                  NULL));
+
+  g_object_weak_ref (G_OBJECT (gimage), (GWeakNotify) gtk_widget_destroy,
+                     chooser);
+
+  gtk_window_set_screen (GTK_WINDOW (chooser),
                          gtk_widget_get_screen (parent));
 
-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-export");
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-vectors-export");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
-
-  g_signal_connect (filesel, "response",
+  g_signal_connect (chooser, "response",
                     G_CALLBACK (vectors_export_response),
                     gimage);
-  g_signal_connect (filesel, "delete_event",
+  g_signal_connect (chooser, "delete_event",
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  gtk_widget_show (GTK_WIDGET (filesel));
+  gtk_widget_show (GTK_WIDGET (chooser));
 }

@@ -352,7 +352,7 @@ static void
 gimp_text_editor_load (GtkWidget      *widget,
                        GimpTextEditor *editor)
 {
-  GtkFileSelection *filesel;
+  GtkFileChooser *chooser;
 
   if (editor->file_dialog)
     {
@@ -360,27 +360,33 @@ gimp_text_editor_load (GtkWidget      *widget,
       return;
     }
 
-  filesel =
-    GTK_FILE_SELECTION (gtk_file_selection_new (_("Open Text File (UTF-8)")));
+  editor->file_dialog =
+    gtk_file_chooser_dialog_new (_("Open Text File (UTF-8)"),
+                                 GTK_WINDOW (editor),
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-text-load-file");
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
+                                 NULL);
 
-  gtk_window_set_transient_for (GTK_WINDOW (filesel), GTK_WINDOW (editor));
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (filesel), TRUE);
+  chooser = GTK_FILE_CHOOSER (editor->file_dialog);
 
-  g_signal_connect (filesel, "response",
-                    G_CALLBACK (gimp_text_editor_load_response),
-                    editor);
-
-  editor->file_dialog = GTK_WIDGET (filesel);
-  g_object_add_weak_pointer (G_OBJECT (filesel),
+  g_object_add_weak_pointer (G_OBJECT (chooser),
                              (gpointer) &editor->file_dialog);
 
-  gtk_widget_show (GTK_WIDGET (filesel));
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-text-load-file");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
+
+  g_signal_connect (chooser, "response",
+                    G_CALLBACK (gimp_text_editor_load_response),
+                    editor);
+  g_signal_connect (chooser, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
+
+  gtk_widget_show (GTK_WIDGET (chooser));
 }
 
 static void
@@ -390,12 +396,17 @@ gimp_text_editor_load_response (GtkWidget      *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
+      gchar *filename;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_text_editor_load_file (editor, filename))
-        return;
+        {
+          g_free (filename);
+          return;
+        }
+
+      g_free (filename);
     }
 
   gtk_widget_destroy (dialog);

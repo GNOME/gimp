@@ -288,8 +288,8 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
                                      entry);
 
   if (entry->file_dialog)
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
-				     filename);
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (entry->file_dialog),
+                                   filename);
 
   g_free (filename);
   g_free (utf8);
@@ -313,16 +313,17 @@ gimp_file_entry_entry_focus_out (GtkWidget     *widget,
 
 /*  local callback of gimp_file_entry_browse_clicked()  */
 static void
-gimp_file_entry_filesel_response (GtkWidget     *dialog,
+gimp_file_entry_chooser_response (GtkWidget     *dialog,
                                   gint           response_id,
                                   GimpFileEntry *entry)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
+      gchar *filename;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
       gimp_file_entry_set_filename (entry, filename);
+      g_free (filename);
     }
 
   gtk_widget_hide (dialog);
@@ -332,8 +333,9 @@ static void
 gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
-  gchar *utf8;
-  gchar *filename;
+  GtkFileChooser *chooser;
+  gchar          *utf8;
+  gchar          *filename;
 
   utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
@@ -341,58 +343,55 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
   if (! entry->file_dialog)
     {
-      GtkFileSelection *filesel;
+      const gchar *title = entry->title;
 
-      if (entry->dir_only)
-	{
-          entry->file_dialog = gtk_file_selection_new (entry->title ?
-                                                       entry->title :
-                                                       _("Select Folder"));
-
-	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
-	   *  easier than creating my own directory browser -- michael
-	   */
-	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (entry->file_dialog)->fileop_del_file);
-	  gtk_widget_hide
-	    (GTK_FILE_SELECTION (entry->file_dialog)->file_list->parent);
-	}
-      else
+      if (! title)
         {
-          entry->file_dialog = gtk_file_selection_new (entry->title ?
-                                                       entry->title :
-                                                       _("Select File"));
+          if (entry->dir_only)
+            title = _("Select Folder");
+          else
+            title = _("Select File");
         }
 
-      filesel = GTK_FILE_SELECTION (entry->file_dialog);
+      entry->file_dialog =
+        gtk_file_chooser_dialog_new (title, NULL,
+                                     entry->dir_only ?
+                                     GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER :
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-      gtk_window_set_position (GTK_WINDOW (entry->file_dialog),
-			       GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (entry->file_dialog),
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
+
+      gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+      gtk_window_set_role (GTK_WINDOW (chooser),
                            "gimp-file-entry-file-dialog");
 
-      gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-      gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
-
-      g_signal_connect (filesel, "response",
-                        G_CALLBACK (gimp_file_entry_filesel_response),
+      g_signal_connect (chooser, "response",
+                        G_CALLBACK (gimp_file_entry_chooser_response),
                         entry);
-      g_signal_connect (filesel, "delete_event",
+      g_signal_connect (chooser, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
 
       g_signal_connect_swapped (entry, "unmap",
                                 G_CALLBACK (gtk_widget_hide),
-                                filesel);
+                                chooser);
+    }
+  else
+    {
+      chooser = GTK_FILE_CHOOSER (entry->file_dialog);
     }
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_dialog),
-                                   filename);
+  gtk_file_chooser_set_filename (chooser, filename);
 
-  gtk_window_set_screen (GTK_WINDOW (entry->file_dialog),
-                         gtk_widget_get_screen (widget));
+  g_free (filename);
 
-  gtk_window_present (GTK_WINDOW (entry->file_dialog));
+  gtk_window_set_screen (GTK_WINDOW (chooser), gtk_widget_get_screen (widget));
+  gtk_window_present (GTK_WINDOW (chooser));
 }
 
 static void

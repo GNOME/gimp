@@ -147,6 +147,7 @@ file_save_dialog_create (Gimp            *gimp,
   GtkWidget *save_dialog;
 
   save_dialog = gimp_file_dialog_new (gimp, gimp->save_procs,
+                                      GTK_FILE_CHOOSER_ACTION_SAVE,
                                       menu_factory, "<Save>",
                                       _("Save Image"), "gimp-file-save",
                                       GTK_STOCK_SAVE,
@@ -168,10 +169,9 @@ file_save_dialog_response (GtkWidget *save_dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GtkFileSelection *fs;
-  const gchar      *filename;
-  const gchar      *raw_filename;
-  gchar            *uri;
+  GtkFileChooser *chooser = GTK_FILE_CHOOSER (save_dialog);
+  gchar          *uri;
+  gchar          *filename;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -179,34 +179,13 @@ file_save_dialog_response (GtkWidget *save_dialog,
       return;
     }
 
-  fs = GTK_FILE_SELECTION (save_dialog);
+  uri = gtk_file_chooser_get_uri (chooser);
 
-  filename     = gtk_file_selection_get_filename (fs);
-  raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
-
-  g_assert (filename && raw_filename);
-
-  uri = g_filename_to_uri (filename, NULL, NULL);
+  filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
-	{
-	  if (filename[strlen (filename) - 1] != G_DIR_SEPARATOR)
-	    {
-	      gchar *s = g_strconcat (filename, G_DIR_SEPARATOR_S, NULL);
-	      gtk_file_selection_set_filename (fs, s);
-	      g_free (s);
-	    }
-	  else
-            {
-              gtk_file_selection_set_filename (fs, filename);
-            }
-	}
-      else
-	{
-	  file_save_overwrite (save_dialog, uri, raw_filename);
-	}
+      file_save_overwrite (save_dialog, uri, uri);
     }
   else
     {
@@ -217,7 +196,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
       if (file_save_dialog_save_image (save_dialog,
                                        dialog->gimage,
                                        uri,
-                                       raw_filename,
+                                       uri,
                                        dialog->file_proc,
                                        dialog->set_uri_and_proc,
                                        dialog->set_image_clean))
@@ -229,6 +208,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
 
   g_free (uri);
+  g_free (filename);
 }
 
 typedef struct _OverwriteData OverwriteData;

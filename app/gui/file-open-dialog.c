@@ -86,8 +86,6 @@ file_open_dialog_show (Gimp            *gimp,
     gtk_window_set_screen (GTK_WINDOW (fileload),
                            gtk_widget_get_screen (parent));
 
-  gtk_widget_grab_focus (GTK_FILE_SELECTION (fileload)->selection_entry);
-
   gtk_window_present (GTK_WINDOW (fileload));
 }
 
@@ -101,12 +99,13 @@ file_open_dialog_create (Gimp            *gimp,
   GtkWidget *dialog;
 
   dialog = gimp_file_dialog_new (gimp, gimp->load_procs,
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
                                  menu_factory, "<Load>",
                                  _("Open Image"), "gimp-file-open",
                                  GTK_STOCK_OPEN,
                                  GIMP_HELP_FILE_OPEN);
 
-  gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (dialog), TRUE);
+  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
   gimp_dialog_factory_add_foreign (global_dialog_factory,
                                    "gimp-file-open-dialog",
@@ -124,11 +123,8 @@ file_open_dialog_response (GtkWidget *open_dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GtkFileSelection  *fs;
-  gchar            **selections;
-  gchar             *uri;
-  const gchar       *entered_filename;
-  gint               i;
+  GSList   *uris;
+  GSList   *list;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -136,83 +132,33 @@ file_open_dialog_response (GtkWidget *open_dialog,
       return;
     }
 
-  fs = GTK_FILE_SELECTION (open_dialog);
-
-  selections = gtk_file_selection_get_selections (fs);
-
-  if (selections == NULL)
-    return;
-
-  entered_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
-
-  if (g_file_test (selections[0], G_FILE_TEST_IS_DIR))
-    {
-      if (selections[0][strlen (selections[0]) - 1] != G_DIR_SEPARATOR)
-        {
-          gchar *s = g_strconcat (selections[0], G_DIR_SEPARATOR_S, NULL);
-          gtk_file_selection_set_filename (fs, s);
-          g_free (s);
-        }
-      else
-        {
-          gtk_file_selection_set_filename (fs, selections[0]);
-        }
-
-      g_strfreev (selections);
-
-      return;
-    }
-
-  if (strstr (entered_filename, "://"))
-    {
-      /* try with the entered filename if it looks like an URI */
-
-      uri = g_strdup (entered_filename);
-    }
-  else
-    {
-      uri = g_filename_to_uri (selections[0], NULL, NULL);
-    }
+  uris = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (open_dialog));
 
   gtk_widget_set_sensitive (open_dialog, FALSE);
 
-  if (file_open_dialog_open_image (open_dialog,
-                                   gimp,
-                                   uri,
-                                   entered_filename,
-                                   GIMP_FILE_DIALOG (open_dialog)->file_proc))
+  for (list = uris; list; list = g_slist_next (list))
     {
-      gtk_widget_hide (open_dialog);
-    }
+      gchar *filename = g_filename_from_uri (list->data, NULL, NULL);
 
-  g_free (uri);
-
-  /*
-   * Now deal with multiple selections from the filesel list
-   */
-
-  for (i = 1; selections[i] != NULL; i++)
-    {
-      if (g_file_test (selections[i], G_FILE_TEST_IS_REGULAR))
-	{
-          uri = g_filename_to_uri (selections[i], NULL, NULL);
-
-	  if (file_open_dialog_open_image (open_dialog,
+      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          if (file_open_dialog_open_image (open_dialog,
                                            gimp,
-                                           uri,
-                                           uri,
+                                           list->data,
+                                           list->data,
                                            GIMP_FILE_DIALOG (open_dialog)->file_proc))
             {
               gtk_widget_hide (open_dialog);
             }
+        }
 
-          g_free (uri);
-	}
+      g_free (filename);
     }
 
-  g_strfreev (selections);
-
   gtk_widget_set_sensitive (open_dialog, TRUE);
+
+  g_slist_foreach (uris, (GFunc) g_free, NULL);
+  g_slist_free (uris);
 }
 
 static gboolean

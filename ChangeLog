@@ -1,5 +1,23 @@
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch]: derive it from GtkFileChooser
+	instead of GtkFileSelection.
+
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/widgets/gimpthumbbox.c: changed accordingly.
+
+	* app/gui/gradients-commands.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpimagemaptool.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimptexteditor.c
+	* libgimpwidgets/gimpfileentry.c: use file choosers instead of
+	file selectors.
+
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: depend on glib 2.4.0, gtk+ 2.4.0, pangoft2 1.4.0
 
 	* app/sanity.c: changed accordingly.

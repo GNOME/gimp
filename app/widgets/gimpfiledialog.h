@@ -37,7 +37,7 @@ typedef struct _GimpFileDialogClass  GimpFileDialogClass;
 
 struct _GimpFileDialog
 {
-  GtkFileSelection  parent_instance;
+  GtkFileChooserDialog  parent_instance;
 
   Gimp             *gimp;
   GimpItemFactory  *item_factory;
@@ -52,23 +52,24 @@ struct _GimpFileDialog
 
 struct _GimpFileDialogClass
 {
-  GtkFileSelectionClass  parent_class;
+  GtkFileChooserDialogClass  parent_class;
 };
 
 
 GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_file_dialog_new           (Gimp            *gimp,
-                                            GSList          *file_procs,
-                                            GimpMenuFactory *menu_factory,
-                                            const gchar     *menu_identifier,
-                                            const gchar     *title,
-                                            const gchar     *role,
-                                            const gchar     *stock_id,
-                                            const gchar     *help_id);
+GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
+                                            GSList               *file_procs,
+                                            GtkFileChooserAction  action,
+                                            GimpMenuFactory      *menu_factory,
+                                            const gchar          *menu_identifier,
+                                            const gchar          *title,
+                                            const gchar          *role,
+                                            const gchar          *stock_id,
+                                            const gchar          *help_id);
 
-void        gimp_file_dialog_set_file_proc (GimpFileDialog  *dialog,
-                                            PlugInProcDef   *file_proc);
+void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
+                                            PlugInProcDef        *file_proc);
 
 void        gimp_file_dialog_set_uri       (GimpFileDialog  *dialog,
                                             GimpImage       *gimage,

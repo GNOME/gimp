@@ -338,7 +338,7 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
                                      GdkModifierType   state,
                                      GimpErrorConsole *console)
 {
-  GtkFileSelection *filesel;
+  GtkFileChooser *chooser;
 
   if (! gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                               NULL, NULL) &&
@@ -354,32 +354,39 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
       return;
     }
 
-  console->file_dialog = gtk_file_selection_new (_("Save Error Log to File"));
+  console->file_dialog =
+    gtk_file_chooser_dialog_new (_("Save Error Log to File"), NULL,
+                                 GTK_FILE_CHOOSER_ACTION_SAVE,
+
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                 NULL);
 
   console->save_selection = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
 
   g_object_add_weak_pointer (G_OBJECT (console->file_dialog),
                              (gpointer *) &console->file_dialog);
 
-  filesel = GTK_FILE_SELECTION (console->file_dialog);
+  chooser = GTK_FILE_CHOOSER (console->file_dialog);
 
-  gtk_window_set_screen (GTK_WINDOW (filesel),
+  gtk_window_set_screen (GTK_WINDOW (chooser),
                          gtk_window_get_screen (GTK_WINDOW (console)));
 
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-save-errors");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-save-errors");
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
-
-  g_signal_connect (filesel, "response",
+  g_signal_connect (chooser, "response",
 		    G_CALLBACK (gimp_error_console_save_response),
 		    console);
+  g_signal_connect (chooser, "delete_event",
+		    G_CALLBACK (gtk_true),
+		    NULL);
 
-  gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
 		     GIMP_HELP_ERRORS_DIALOG, NULL);
 
-  gtk_widget_show (GTK_WIDGET (filesel));
+  gtk_widget_show (GTK_WIDGET (chooser));
 }
 
 static void
@@ -389,17 +396,20 @@ gimp_error_console_save_response (GtkWidget        *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
+      gchar *filename;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_error_console_write_file (console->text_buffer, filename,
                                            console->save_selection))
         {
           g_message (_("Error writing file '%s':\n%s"),
                      gimp_filename_to_utf8 (filename), g_strerror (errno));
+          g_free (filename);
           return;
         }
+
+      g_free (filename);
     }
 
   gtk_widget_destroy (dialog);

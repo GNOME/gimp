@@ -61,9 +61,9 @@ gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
 static void
 gradients_save_as_pov_query (GimpContainerEditor *editor)
 {
-  GimpGradient     *gradient;
-  GtkFileSelection *filesel;
-  gchar            *title;
+  GimpGradient   *gradient;
+  GtkFileChooser *chooser;
+  gchar          *title;
 
   gradient = gimp_context_get_gradient (editor->view->context);
 
@@ -73,34 +73,41 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
   title = g_strdup_printf (_("Save '%s' as POV-Ray"),
 			   GIMP_OBJECT (gradient)->name);
 
-  filesel = GTK_FILE_SELECTION (gtk_file_selection_new (title));
+  chooser = GTK_FILE_CHOOSER
+    (gtk_file_chooser_dialog_new (title, NULL,
+                                  GTK_FILE_CHOOSER_ACTION_SAVE,
+
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                  NULL));
 
   g_free (title);
 
-  gtk_window_set_screen (GTK_WINDOW (filesel),
+  gtk_window_set_screen (GTK_WINDOW (chooser),
                          gtk_widget_get_screen (GTK_WIDGET (editor)));
 
-  gtk_window_set_role (GTK_WINDOW (filesel), "gimp-gradient-save-pov");
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-gradient-save-pov");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
 
-  gtk_container_set_border_width (GTK_CONTAINER (filesel), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 4);
-
-  g_signal_connect (filesel, "response",
+  g_signal_connect (chooser, "response",
                     G_CALLBACK (gradients_save_as_pov_response),
                     gradient);
+  g_signal_connect (chooser, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
 
   g_object_ref (gradient);
 
-  g_signal_connect_object (filesel, "destroy",
+  g_signal_connect_object (chooser, "destroy",
                            G_CALLBACK (g_object_unref),
                            gradient,
                            G_CONNECT_SWAPPED);
 
-  gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (chooser), gimp_standard_help_func,
 		     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL);
 
-  gtk_widget_show (GTK_WIDGET (filesel));
+  gtk_widget_show (GTK_WIDGET (chooser));
 }
 
 static void
@@ -113,7 +120,7 @@ gradients_save_as_pov_response (GtkWidget    *dialog,
       const gchar *filename;
       GError      *error = NULL;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_gradient_save_as_pov (gradient, filename, &error))
         {

@@ -533,10 +533,10 @@ settings_dialog_response (GtkWidget        *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      FILE        *file;
+      gchar *filename;
+      FILE  *file;
 
-      filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       file = fopen (filename, save ? "wt" : "rt");
 
@@ -547,6 +547,7 @@ settings_dialog_response (GtkWidget        *dialog,
                      _("Could not open '%s' for reading: %s"),
                      gimp_filename_to_utf8 (filename),
 		     g_strerror (errno));
+          g_free (filename);
           return;
         }
 
@@ -565,6 +566,7 @@ settings_dialog_response (GtkWidget        *dialog,
         }
 
       fclose (file);
+      g_free (filename);
     }
 
   if (save)
@@ -601,7 +603,7 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                                      gboolean          save)
 {
   GimpImageMapOptions *options;
-  GtkFileSelection    *dialog;
+  GtkFileChooser      *chooser;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
 
@@ -616,34 +618,42 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
   else
     gtk_widget_set_sensitive (tool->save_button, FALSE);
 
-  tool->settings_dialog = gtk_file_selection_new (title);
+  tool->settings_dialog =
+    gtk_file_chooser_dialog_new (title, GTK_WINDOW (tool->shell),
+                                 save ?
+                                 GTK_FILE_CHOOSER_ACTION_SAVE :
+                                 GTK_FILE_CHOOSER_ACTION_OPEN,
 
-  dialog = GTK_FILE_SELECTION (tool->settings_dialog);
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 save ? GTK_STOCK_SAVE : GTK_STOCK_OPEN,
+                                 GTK_RESPONSE_OK,
 
-  g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
+                                 NULL);
 
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-load-save-settings");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  chooser = GTK_FILE_CHOOSER (tool->settings_dialog);
 
-  gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->button_area), 4);
+  g_object_set_data (G_OBJECT (chooser), "save", GINT_TO_POINTER (save));
 
-  g_object_add_weak_pointer (G_OBJECT (dialog),
+  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-load-save-settings");
+  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
+
+  g_object_add_weak_pointer (G_OBJECT (chooser),
                              (gpointer) &tool->settings_dialog);
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                GTK_WINDOW (tool->shell));
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
 
-  g_signal_connect (dialog, "response",
+  g_signal_connect (chooser, "response",
                     G_CALLBACK (settings_dialog_response),
                     tool);
+  g_signal_connect (chooser, "delete_event",
+                    G_CALLBACK (gtk_true),
+                    NULL);
 
   options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
   if (options->settings)
     {
-      gtk_file_selection_set_filename (dialog, options->settings);
+      gtk_file_chooser_set_filename (chooser, options->settings);
     }
   else if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name)
     {
@@ -654,7 +664,7 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                               G_DIR_SEPARATOR_S,
                               NULL);
 
-      gtk_file_selection_set_filename (dialog, tmp);
+      gtk_file_chooser_set_filename (chooser, tmp);
       g_free (tmp);
     }
 
