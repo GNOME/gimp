@@ -1,3 +1,7 @@
+2004-08-01  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Really fix WINDRES logic.
+
 2004-08-01  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/scatter_hsv.c: ported to GimpPreviewArea.
