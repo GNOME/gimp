@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gui-types.h"
 
@@ -39,6 +40,7 @@ typedef struct
   gint            height;
   GtkWidget      *progress;
   GdkPixmap      *pixmap;
+  GdkGC          *gc;
   PangoLayout    *upper;
   gint            upper_x, upper_y;
   PangoLayout    *lower;
@@ -48,10 +50,13 @@ typedef struct
 static GimpSplash *splash = NULL;
 
 
-static void      splash_map         (void);
-static gboolean  splash_area_expose (GtkWidget      *widget,
-                                     GdkEventExpose *event,
-                                     GimpSplash     *splash);
+static void      splash_map            (void);
+static gboolean  splash_area_expose    (GtkWidget      *widget,
+                                        GdkEventExpose *event,
+                                        GimpSplash     *splash);
+static gboolean  splash_average_bottom (GtkWidget      *widget,
+                                        GdkPixbuf      *pixbuf,
+                                        GdkColor       *color);
 
 
 /*  public functions  */
@@ -64,6 +69,7 @@ splash_create (void)
   GdkPixbuf      *pixbuf;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
+  GdkGCValues     values;
   gchar          *filename;
 
   g_return_if_fail (splash == NULL);
@@ -118,6 +124,7 @@ splash_create (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+  /*  prepare the drawing area  */
   splash->area = gtk_drawing_area_new ();
   gtk_box_pack_start_defaults (GTK_BOX (vbox), splash->area);
   gtk_widget_show (splash->area);
@@ -125,9 +132,14 @@ splash_create (void)
   gtk_widget_set_size_request (splash->area, splash->width, splash->height);
 
   gtk_widget_realize (splash->area);
+
+  splash_average_bottom (splash->area, pixbuf, &values.foreground);
+  splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
+                                       GDK_GC_FOREGROUND);
+
   splash->pixmap = gdk_pixmap_new (splash->area->window,
                                    splash->width, splash->height, -1);
-  gdk_draw_pixbuf (splash->pixmap, splash->area->style->black_gc,
+  gdk_draw_pixbuf (splash->pixmap, splash->gc,
                    pixbuf, 0, 0, 0, 0, splash->width, splash->height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
   g_object_unref (pixbuf);
@@ -136,6 +148,7 @@ splash_create (void)
                     G_CALLBACK (splash_area_expose),
                     splash);
 
+  /*  create the pango layouts  */
   splash->upper = gtk_widget_create_pango_layout (splash->area, "");
   splash->lower = gtk_widget_create_pango_layout (splash->area, "");
 
@@ -148,6 +161,7 @@ splash_create (void)
   pango_layout_set_attributes (splash->upper, attrs);
   pango_attr_list_unref (attrs);
 
+  /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
   gtk_widget_show (splash->progress);
@@ -166,6 +180,7 @@ splash_destroy (void)
 
   gtk_widget_destroy (splash->window);
 
+  g_object_unref (splash->gc);
   g_object_unref (splash->pixmap);
   g_object_unref (splash->upper);
   g_object_unref (splash->lower);
@@ -230,6 +245,65 @@ splash_update (const gchar *text1,
 /*  private functions  */
 
 
+/* This function chooses black or white for the text color, based on
+ * the average intensity of the lower 60 rows of the splash image.
+ */
+static gboolean
+splash_average_bottom (GtkWidget *widget,
+                       GdkPixbuf *pixbuf,
+                       GdkColor  *color)
+{
+  const guchar *pixels;
+  gint          x, y;
+  gint          width, height;
+  gint          rowstride;
+  gint          channels;
+  guint         count;
+  guint         sum[3] = { 0, 0, 0 };
+  guchar        intensity;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
+  g_return_val_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8, FALSE);
+
+  width     = gdk_pixbuf_get_width (pixbuf);
+  height    = gdk_pixbuf_get_height (pixbuf);
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  channels  = gdk_pixbuf_get_n_channels (pixbuf);
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+
+  y = MAX (0, height - 60);
+  count = width * (height - y);
+
+  pixels += y * rowstride;
+
+  for (; y < height; y++)
+    {
+      const guchar *src = pixels;
+
+      for (x = 0; x < width; x++)
+        {
+          sum[0] += src[0];
+          sum[1] += src[1];
+          sum[2] += src[2];
+
+          src += channels;
+        }
+
+      pixels += rowstride;
+    }
+
+  intensity = GIMP_RGB_INTENSITY (sum[0] / count,
+                                  sum[1] / count,
+                                  sum[2] / count);
+
+  color->red = color->green = color->blue = (intensity & 0x80
+                                             ? 0
+                                             : (1 << 16) - 1);
+
+  return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
+                                   color, FALSE, TRUE);
+}
+
 static gboolean
 splash_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event,
@@ -238,20 +312,17 @@ splash_area_expose (GtkWidget      *widget,
   gint x = (widget->allocation.width  - splash->width)  / 2;
   gint y = (widget->allocation.height - splash->height) / 2;
 
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, &event->area);
+  gdk_gc_set_clip_rectangle (splash->gc, &event->area);
 
-  gdk_draw_drawable (widget->window,
-                     widget->style->black_gc,
+  gdk_draw_drawable (widget->window, splash->gc,
                      splash->pixmap, 0, 0,
                      x, y, splash->width, splash->height);
 
-  gdk_draw_layout (widget->window, widget->style->black_gc,
+  gdk_draw_layout (widget->window, splash->gc,
                    x + splash->upper_x, y + splash->upper_y, splash->upper);
 
-  gdk_draw_layout (widget->window, widget->style->black_gc,
+  gdk_draw_layout (widget->window, splash->gc,
                    x + splash->lower_x, y + splash->lower_y, splash->lower);
-
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
 
   return FALSE;
 }
