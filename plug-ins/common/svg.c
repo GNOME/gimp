@@ -19,7 +19,7 @@
 /* SVG loading file filter for the GIMP
  * -Dom Lachowicz <cinamod@hotmail.com> 2003
  *
- * TODO: 
+ * TODO:
  * *) image preview
  */
 
@@ -63,12 +63,12 @@ typedef struct
 /* TODO: remove me, initialize gimp i18n services */
 #define _(String) (String)
 
-static void     query                     (void);
-static void     run                       (const gchar            *name,
-					   gint              nparams,
-					   const GimpParam        *param,
-					   gint             *nreturn_vals,
-					   GimpParam       **return_vals);
+static void     query  (void);
+static void     run    (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO = {
   NULL,                         /* init_proc  */
@@ -92,18 +92,25 @@ check_load_vals (void)
  * 'load_image()' - Load a SVG image into a new image window.
  */
 static gint32
-load_image (gchar       *filename, 	/* I - File to load */ 
-	    GimpRunMode  runmode, 
+load_image (const gchar *filename, 	/* I - File to load */
+	    GimpRunMode  runmode,
 	    gboolean     preview)
 {
   gint32        image;	        /* Image */
   gint32	layer;		/* Layer */
   GimpDrawable *drawable;	/* Drawable for layer */
   GimpPixelRgn	pixel_rgn;	/* Pixel region for layer */
-  GdkPixbuf    *pixbuf;        /* SVG, rasterized */
+  GdkPixbuf    *pixbuf;         /* SVG, rasterized */
   gchar        *status;
+  gchar        *buf;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          i;
 
-  pixbuf = rsvg_pixbuf_from_file_at_zoom (filename, load_vals.scale, load_vals.scale, NULL);
+  pixbuf = rsvg_pixbuf_from_file_at_zoom (filename,
+                                          load_vals.scale, load_vals.scale,
+                                          NULL);
 
   if (!pixbuf)
     {
@@ -111,16 +118,15 @@ load_image (gchar       *filename, 	/* I - File to load */
       gimp_quit ();
     }
 
-  if (runmode != GIMP_RUN_NONINTERACTIVE)
-    {
-      status = g_strdup_printf (_("Loading %s:"), filename);
-      gimp_progress_init (status);
-      g_free (status);
-    }
+  status = g_strdup_printf (_("Loading %s:"), filename);
+  gimp_progress_init (status);
+  g_free (status);
 
-  image = gimp_image_new (gdk_pixbuf_get_width (pixbuf), 
-			  gdk_pixbuf_get_height (pixbuf),
-			  GIMP_RGB);
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  image = gimp_image_new (width, height, GIMP_RGB);
+
   if (image == -1)
     {
       g_message ("Can't allocate new image: %s\n", filename);
@@ -129,21 +135,33 @@ load_image (gchar       *filename, 	/* I - File to load */
 
   gimp_image_set_filename (image, filename);
 
-  layer = gimp_layer_new (image, _("Background"),
-			  gdk_pixbuf_get_width (pixbuf), 
-			  gdk_pixbuf_get_height (pixbuf),
-			  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-  
+  layer = gimp_layer_new (image, _("Rendered SVG"), width, height,
+                          GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+
   drawable = gimp_drawable_get (layer);
+
+  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height, TRUE, FALSE);
 
-  gimp_pixel_rgn_set_rect (&pixel_rgn, gdk_pixbuf_get_pixels (pixbuf),
-			   0, 0, 
-			   gdk_pixbuf_get_width (pixbuf),
-			   gdk_pixbuf_get_height (pixbuf));
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  buf       = gdk_pixbuf_get_pixels (pixbuf);
+
+  for (i = 0; i < height; i++)
+    {
+      gimp_pixel_rgn_set_row (&pixel_rgn, buf, 0, i, width);
+      buf += rowstride;
+
+      if (i % 100 == 0)
+        gimp_progress_update ((gdouble) i / (gdouble) height);
+    }
 
   g_object_unref (G_OBJECT(pixbuf));
+
+  gimp_drawable_detach (drawable);
+
+  gimp_progress_update (1.0);
 
   /* Tell the GIMP to display the image.
    */
@@ -168,7 +186,7 @@ load_ok_callback (GtkWidget *widget,
 }
 
 static gint
-load_dialog (gchar *file_name)
+load_dialog (const gchar *file_name)
 {
   LoadDialogVals *vals;
   GtkWidget *frame;
@@ -302,10 +320,10 @@ query (void)
  */
 static void
 run (const gchar      *name,
-     gint        nparams,
+     gint              nparams,
      const GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -333,7 +351,7 @@ run (const gchar      *name,
 	  if (!load_dialog (param[1].data.d_string))
 	    status = GIMP_PDB_CANCEL;
 	  break;
-	  
+
 	case GIMP_RUN_NONINTERACTIVE:
 	  gimp_get_data ("file_svg_load", &load_vals);
 	  break;
@@ -348,7 +366,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  check_load_vals ();
-	  
+
 	  image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
 	  gimp_set_data ("file_svg_load", &load_vals, sizeof (load_vals));
 
