@@ -1,3 +1,8 @@
+2003-04-01  Nathan Summers  <rock@gimp.org>
+
+	* app/photoshop/*: committed full source to Adobe Photoshop for IRIX.
+	Thanks, Adobe!
+
 2003-04-01  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/menus.c: turns out we can override the XSetting.. do so.
