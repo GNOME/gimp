@@ -79,6 +79,7 @@ PDB_WRAPPERS_C = \
 	gimpedit_pdb.c			\
 	gimpfileops_pdb.c		\
 	gimpfloatingsel_pdb.c		\
+	gimpfonts_pdb.c			\
 	gimpfontselect_pdb.c		\
 	gimpgimprc_pdb.c		\
 	gimpgradients_pdb.c		\
@@ -119,6 +120,7 @@ PDB_WRAPPERS_H = \
 	gimpedit_pdb.h			\
 	gimpfileops_pdb.h		\
 	gimpfloatingsel_pdb.h		\
+	gimpfonts_pdb.h			\
 	gimpfontselect_pdb.h		\
 	gimpgimprc_pdb.h		\
 	gimpgradients_pdb.h		\

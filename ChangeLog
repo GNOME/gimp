@@ -1,5 +1,9 @@
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/Makefile.am: forgot to add gimpfonts_pdb.[ch].
+
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/font-map.scm (script-fu-font-map):
 	Keep text layers instead of merging them down. Allow to specify a
 	text to render in place of the font names.
