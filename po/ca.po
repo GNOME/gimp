@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-05-05 20:42+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Softcatala <xbea@pie.xtec.es>\n"
@@ -270,8 +270,8 @@ msgstr "Desplaçament dibuixable"
 msgid "Document History"
 msgstr "Llista de l'historial"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 #, fuzzy
 msgid "Drawable"
 msgstr "Desplaçament dibuixable"
@@ -529,7 +529,7 @@ msgstr "Duplica el canal"
 msgid "_Delete Channel"
 msgstr "/_Suprimeix el canal"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 #, fuzzy
 msgid "Delete channel"
 msgstr "Suprimeix el canal"
@@ -1169,7 +1169,7 @@ msgstr "/Suprimeix les e_ntrades penjades"
 msgid "Remove dangling entries"
 msgstr "/Suprimeix les e_ntrades penjades"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1518,7 +1518,7 @@ msgstr "Tornar-ho a fer"
 msgid "_Quit"
 msgstr "/Fitxer/_Surt"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1529,38 +1529,38 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Desa la imatge"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Desa una còpia de la imatge"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Crea nova plantilla"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Anomena aquesta plantilla"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "No es pot tornar endarrere. No hi ha cap nom de fitxer associat a aquesta "
 "imatge."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Deixa imatge com abans"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 #, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
@@ -1571,20 +1571,20 @@ msgstr ""
 "\n"
 "Perdreu tots els canvis incloent-hi tota la informació per desfer."
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "Obre imatge"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Obre imatge"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sense nom)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2254,7 +2254,7 @@ msgstr "Duplica capa"
 msgid "_Delete Layer"
 msgstr "/_Suprimeix la capa"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "Suprimeix la capa"
@@ -2457,7 +2457,7 @@ msgstr "Escapça  la capa"
 msgid "Layer Mask to Selection"
 msgstr "Màscara de capa a selecció"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Afegeix una màscara de capa"
@@ -3439,7 +3439,7 @@ msgid "Path to Selection"
 msgstr "Camí a selecció"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Traça camí"
 
@@ -4782,293 +4782,298 @@ msgstr "Endavant (tradicional)"
 msgid "Backward (corrective)"
 msgstr "Endarrere (correctiu)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<invàlid>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "Escala la imatge"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "Canvia la mida de la imatge"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "Volteja la imatge"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "Gira la imatge"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "Escapça la imatge"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "Converteix la imatge"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "Fusiona les capes"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "Fusiona els vectors"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "Màscara ràpida"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Graella"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Guia"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Procediments dibuixables"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "Màscara de selecció"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "Visibilitat de l'element"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "Element enllaçat"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "Propietats de l'element"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "Mou element"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "Escala la imatge"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "Canvia la mida de la imatge"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "Afegeix una màscara de capa"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "Aplica una màscara de capa"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "Selecció flotant a capa"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "Flota selecció"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "Ancora selecció flotant"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "Selecció flotant"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Enganxa"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Retalla"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Transforma"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Pinta"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "Adjunta paràsit"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "Suprimeix paràsit"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "Importa camí"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Connector"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 #, fuzzy
 msgid "Image type"
 msgstr "Tipus d'imatge"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "Mida de la imatge"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "Canvi de resolució"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Canvia paleta indexada"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "Reanomena l'element"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Defineix element enllaçat"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "Nova capa"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Capa de reposició"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "Defineix el mode de la capa"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "Defineix opacitat de la capa"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "Preserva la transparència"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Només quan s'hagi modificat"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "Nou canal"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Canal de reposició"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "Color del canal"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "Nous vectors"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "Suprimeix els vectors"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Mod dels vextors"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Vectors de reposició"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "FS a la capa"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "Rigor FS"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 #, fuzzy
 msgid "FS relax"
 msgstr "Relax FS"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Tinta"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "S'ha produït un error: No es pot desfer"
 
@@ -5198,7 +5203,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Hi ha una cadena de text UTF-8 invàlida en el fitxer de pinzell '%s'"
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Sense nom"
@@ -5378,11 +5383,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "còpia"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "còpia de %s"
@@ -5845,15 +5850,15 @@ msgstr "%d capes"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "No s'ha pogut obrir la miniatura '%s': %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Adjunta paràsit"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Adjunta paràsit a l'element"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Suprimeix paràsit de l'element"
 
@@ -5906,7 +5911,7 @@ msgstr "Volteja la capa"
 msgid "Rotate Layer"
 msgstr "Gira la capa"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5919,42 +5924,42 @@ msgid ""
 "(%s)"
 msgstr "Selecció flotant"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "No es pot afegir una màscara de capa a una capa que no és part d'una imatge."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No es pot afegir una  màscara de capa ja que la capa ja en té una."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "No es pot afegir una  màscara de capa a una capa sense un canal alfa."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una màscara de capa de dimensions diferents que la capa "
 "especificada"
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Transfereix alfa a màscara"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Aplica una màscara de capa"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Suprimeix la màscara de capa"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Afegeix canal alfa"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Capa a mida de la imatge"
 
@@ -6327,22 +6332,22 @@ msgstr "Ubicació:"
 msgid "Enter location (URI):"
 msgstr "Interpolació:"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 #, fuzzy
 msgid "File exists"
 msgstr "El fitxer ja existeix"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "Replica"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6430,7 +6435,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -8369,10 +8374,6 @@ msgstr "Esvaeix/crema"
 msgid "Eraser"
 msgstr "Goma d'esborrar"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Tinta"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Pinzell"
@@ -8515,7 +8516,7 @@ msgstr "Pinzell:"
 msgid "Brush UI"
 msgstr "Interfície del pinzell"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8952,7 +8953,7 @@ msgstr "Desplaçament:"
 msgid "Shape:"
 msgstr "Ombra:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Repeteix:"
 
@@ -9785,7 +9786,7 @@ msgstr "Mode:"
 msgid "Brush:"
 msgstr "Pinzell:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Degradat:"
 
@@ -9799,32 +9800,32 @@ msgstr "Vora dura"
 msgid "Pressure sensitivity"
 msgstr "Sensibilitat de la pressió"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Opacitat"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Duresa"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Proporció"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Mida"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "Fon"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Longitut:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Utilitza color del degradat"
@@ -10386,39 +10387,39 @@ msgstr "Suprimeix àncora"
 msgid "There is no active layer or channel to stroke to"
 msgstr "No hi ha cap capa ni canal actiu on traçar"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Camí"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Reanomena el camí"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Mou camí"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Escala camí"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Redimensiona camí"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Volteja camí"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Gira camí"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Transforma camí"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "No es pot traçar un camí buit."
 
@@ -11007,7 +11008,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Podeu deixar el diàlegs desplegables aquí."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Tanca aquesta pestanya"
 
@@ -11034,12 +11035,12 @@ msgstr ""
 msgid "By Extension"
 msgstr "/Per extensió"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 #, fuzzy
 msgid "All Files"
 msgstr "Filtres disponibles"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "Manera d'omplir  %s"

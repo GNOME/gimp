@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-12-20 08:24+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
@@ -291,8 +291,8 @@ msgstr "Agganciabile"
 msgid "Document History"
 msgstr "Cronologia documenti"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "Disegnabile"
 
@@ -518,7 +518,7 @@ msgstr "Duplica il canale"
 msgid "_Delete Channel"
 msgstr "_Elimina canale"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "Elimina canale"
 
@@ -1049,7 +1049,7 @@ msgstr "Rimuovi voci sco_nnesse"
 msgid "Remove dangling entries"
 msgstr "Rimuovi voci sconnesse"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1350,7 +1350,7 @@ msgstr "In_verti..."
 msgid "_Quit"
 msgstr "_Esci"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1361,36 +1361,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare '%s' a '%s'?"
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1398,19 +1398,19 @@ msgstr ""
 "Ricaricando l'immagine allo stato salvato su disco, perderai tutti i "
 "cambiamenti, incluse tutte le informazioni di annullamento."
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 msgid "Open Image as Layer"
 msgstr "Apri immagine come livello"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2004,7 +2004,7 @@ msgstr "Duplica livello"
 msgid "_Delete Layer"
 msgstr "_Elimina livello"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 msgid "Delete layer"
 msgstr "Cancella livello"
 
@@ -2174,7 +2174,7 @@ msgstr "Ritaglia livello"
 msgid "Layer Mask to Selection"
 msgstr "Maschera livello a selezione"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
@@ -3013,7 +3013,7 @@ msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Disegna tracciato"
 
@@ -4295,244 +4295,249 @@ msgstr "In avanti (tradizionale)"
 msgid "Backward (corrective)"
 msgstr "Indietro (correttivo)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<invalido>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 msgid "Scale image"
 msgstr "Scala immagine"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 msgid "Resize image"
 msgstr "Ridimensiona immagine"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 msgid "Flip image"
 msgstr "Rifletti immagine"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 msgid "Rotate image"
 msgstr "Ruota immagine"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 msgid "Crop image"
 msgstr "Ritaglia immagine"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 msgid "Convert image"
 msgstr "Converti immagine"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 msgid "Merge layers"
 msgstr "Fondi i livelli"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 msgid "Merge vectors"
 msgstr "Fondi vettori"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 msgid "Quick Mask"
 msgstr "Maschera veloce"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Griglia"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Guida"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 msgid "Drawable mod"
 msgstr "Mod disegnabile"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 msgid "Selection mask"
 msgstr "Maschera di selezione"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 msgid "Item visibility"
 msgstr "Visibilità elemento"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 msgid "Linked item"
 msgstr "Elemento collegato"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 msgid "Item properties"
 msgstr "Proprietà dell'elemento"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 msgid "Move item"
 msgstr "Sposta elemento"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 msgid "Scale item"
 msgstr "Scala elemento"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 msgid "Resize item"
 msgstr "Ridimensiona elemento"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 msgid "Add layer mask"
 msgstr "Aggiungi maschera di livello"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 msgid "Apply layer mask"
 msgstr "Applica maschera di livello"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 msgid "Floating selection to layer"
 msgstr "Selezione fluttuante al livello"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 msgid "Float selection"
 msgstr "Selezione fluttuante"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 msgid "Anchor floating selection"
 msgstr "Àncora selezione fluttuante"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 msgid "Remove floating selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Incolla"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Taglia"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Testo"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Trasforma"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Disegna"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 msgid "Attach parasite"
 msgstr "Allega parasite"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 msgid "Remove parasite"
 msgstr "Rimuovi parasite"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-in"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 msgid "Image type"
 msgstr "Tipo di immagine"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 msgid "Image size"
 msgstr "Dimensione immagine"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 msgid "Resolution change"
 msgstr "Cambia risoluzione"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 msgid "Change indexed palette"
 msgstr "Cambia tavolozza indicizzata"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 msgid "Rename item"
 msgstr "Rinomina elemento"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 msgid "Set item linked"
 msgstr "Imposta elemento come collegato"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 msgid "New layer"
 msgstr "Nuovo livello"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 msgid "Delete layer mask"
 msgstr "Elimina maschera di livello"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 msgid "Reposition layer"
 msgstr "Riposizionamento dei livelli"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 msgid "Set layer mode"
 msgstr "Imposta modalità livello"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 msgid "Set layer opacity"
 msgstr "Imposta opacità livello"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 msgid "Set preserve trans"
 msgstr "Conserva le trasparenze"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 msgid "Text modified"
 msgstr "Testo modificato"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 msgid "New channel"
 msgstr "Nuovo canale"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 msgid "Reposition channel"
 msgstr "Riposiziona canale"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 msgid "Channel color"
 msgstr "Colore canale"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 msgid "New vectors"
 msgstr "Nuovi vettori"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 msgid "Delete vectors"
 msgstr "Elimina vettori"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 msgid "Vectors mod"
 msgstr "Mod vettori"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 msgid "Reposition vectors"
 msgstr "Riposizionamento vettori"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 msgid "FS to layer"
 msgstr "FS a livello"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 msgid "FS rigor"
 msgstr "FS rigoroso"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 msgid "FS relax"
 msgstr "FS rilassato"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Stilo"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "Impossibile annullare!"
 
@@ -4655,7 +4660,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Senza nome"
@@ -4832,11 +4837,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "copia"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s copia"
@@ -5288,15 +5293,15 @@ msgstr "%d livelli"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Allega parasite"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Allega parasite all'elemento"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Rimuovi parasite dall'elemento"
 
@@ -5349,7 +5354,7 @@ msgstr "Rifletti livello"
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5364,46 +5369,46 @@ msgstr ""
 "Selezione fluttuante\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Impossibile aggiungere una maschera di livello ad un livello che non è parte "
 "di un'immagine."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Impossibile aggiungere una maschera di livello dato che il livello ne ha già "
 "una."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Impossibile aggiungere una maschera livello ad un livello senza canale alfa."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
 "specificato."
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Applica maschera di livello"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Elimina maschera di livello"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Aggiunta canale alfa"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione dell'immagine"
 
@@ -5765,20 +5770,20 @@ msgstr "Apri indirizzo"
 msgid "Enter location (URI):"
 msgstr "Inserisci indirizzo (URI):"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 msgid "File exists"
 msgstr "File esistente"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 msgid "_Replace"
 msgstr "_Rimpiazza"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un file di nome '%s' esiste già."
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Volete rimpiazzarlo con l'immagine che stavate salvando?"
 
@@ -5869,7 +5874,7 @@ msgid "Is this what you want to do?"
 msgstr "Sei sicuro di quello che sta per fare?"
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -7677,10 +7682,6 @@ msgstr "Scherma/Brucia"
 msgid "Eraser"
 msgstr "Gomma"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Stilo"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Pennello"
@@ -7817,7 +7818,7 @@ msgstr "Pennello"
 msgid "Brush UI"
 msgstr "Pennello UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8229,7 +8230,7 @@ msgstr "Compensato:"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Ripeti"
 
@@ -9002,7 +9003,7 @@ msgstr "Modalità:"
 msgid "Brush:"
 msgstr "Pennello:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Gradiente:"
 
@@ -9014,31 +9015,31 @@ msgstr "Margine netto"
 msgid "Pressure sensitivity"
 msgstr "Sensibilità pressione"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Opacità"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Durezza"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Ammontare"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Dimensione"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 msgid "Fade out"
 msgstr "Sfumatura in uscita"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Lunghezza:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 msgid "Use color from gradient"
 msgstr "Usa colore del gradiente"
 
@@ -9565,39 +9566,39 @@ msgstr "Elimina àncora"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Tracciato"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Rinomina tracciato"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Sposta tracciato"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Scala tracciato"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Ridimensiona tracciato"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Rifletti tracciato"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Ruota tracciato"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Trasforma tracciato"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "Impossibile tratteggiare un tracciato vuoto."
 
@@ -10170,7 +10171,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Puoi rilasciare qui le finestre di dialogo agganciabili."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Chiudi questa scheda"
 
@@ -10195,11 +10196,11 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "Tutti i file"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"

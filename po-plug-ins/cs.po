@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:33+0100\n"
 "PO-Revision-Date: 2004-12-26 23:48+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -374,10 +374,10 @@ msgstr "_Fraktály"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2001
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
-#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
+#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:861
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1498
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -413,10 +413,10 @@ msgstr "Zapsat parametry fraktálu"
 #: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
-#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:913
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
+#: plug-ins/common/jpeg.c:946 plug-ins/common/jpeg.c:2607
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:432
@@ -760,7 +760,7 @@ msgid "Bumpm_ap image:"
 msgstr "O_brázek vyvýšení:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Lineární"
@@ -769,12 +769,12 @@ msgstr "Lineární"
 msgid "Logarithmic"
 msgstr "Logaritmický"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "Sinusoidní"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "Kulový"
@@ -943,7 +943,7 @@ msgstr "Povolit vyhl_azování"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Povolení/zákaz odstraňování zubatých hran (vyhlazování)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1174,7 +1174,7 @@ msgstr "Špatná barevná mapa"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
+#: plug-ins/common/jpeg.c:953 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:437
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
@@ -1203,19 +1203,19 @@ msgstr "'%s' není platný soubor BMP"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
-#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
+#: plug-ins/bmp/bmpread.c:442 plug-ins/bmp/bmpread.c:477
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neznámý nebo neplatný formát komprese BMP."
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:482 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
-#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1113
+#: plug-ins/common/jpeg.c:2474 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:517
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
@@ -1246,7 +1246,7 @@ msgstr "Nemohu pracovat s neznámými typy obrázků."
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
+#: plug-ins/common/jpeg.c:1453 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:814
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
@@ -2130,69 +2130,69 @@ msgstr "_Tloušťka:"
 msgid "_Bucket size:"
 msgstr "Velikost vě_dra:"
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 msgid "_Bump Map..."
 msgstr "Ma_pa vyvýšení..."
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "Mapuji vyvýšení..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 msgid "Bump Map"
 msgstr "Mapa vyvýšení"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 msgid "_Bump map:"
 msgstr "_Mapa vyvýšení:"
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 msgid "_Map type:"
 msgstr "_Druh mapy:"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 msgid "Co_mpensate for darkening"
 msgstr "_Kompenzovat tmavnutí"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 msgid "I_nvert bumpmap"
 msgstr "I_nvertovat mapu vyvýšení"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 msgid "_Tile bumpmap"
 msgstr "_Opakovat mapu vyvýšení"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 msgid "_Elevation:"
 msgstr "Zdv_ih:"
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 msgid "_X offset:"
 msgstr "Posun _X:"
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 msgid "_Y offset:"
 msgstr "Posun _Y:"
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 msgid "_Waterlevel:"
 msgstr "Výška hladin_y:"
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 msgid "A_mbient:"
 msgstr "_Okolí:"
 
@@ -2739,150 +2739,150 @@ msgstr "Použít barvu _pozadí"
 msgid "Cubistic Transformation..."
 msgstr "Kubistická transformace..."
 
-#: plug-ins/common/curve_bend.c:572
+#: plug-ins/common/curve_bend.c:567
 msgid "_Curve Bend..."
 msgstr "_Zkřivit..."
 
-#: plug-ins/common/curve_bend.c:708
+#: plug-ins/common/curve_bend.c:703
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Pracuje pouze s vrstvami (ale bylo voláno na kanál nebo masku)."
 
-#: plug-ins/common/curve_bend.c:726
+#: plug-ins/common/curve_bend.c:721
 msgid "Cannot operate on layers with masks."
 msgstr "Nemohu pracovat na vrstvách s maskami."
 
-#: plug-ins/common/curve_bend.c:741
+#: plug-ins/common/curve_bend.c:736
 msgid "Cannot operate on empty selections."
 msgstr "Nemohu pracovat s prázdnými výběry."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/curve_bend.c:1239
 msgid "Curve Bend"
 msgstr "Zkřivení"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1268 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437
 msgid "Preview"
 msgstr "Náhled"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1307
+#: plug-ins/common/curve_bend.c:1297
 msgid "_Preview once"
 msgstr "_Náhled jednou"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1316
+#: plug-ins/common/curve_bend.c:1306
 msgid "Automatic pre_view"
 msgstr "_Automatický náhled"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/curve_bend.c:1316 plug-ins/common/mosaic.c:529
 #: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "Volby"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/curve_bend.c:1330
 msgid "Rotat_e:"
 msgstr "R_otovat:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1348
 msgid "Smoo_thing"
 msgstr "_Vyhlazování"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:823
+#: plug-ins/common/curve_bend.c:1358 plug-ins/common/gqbist.c:823
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1368
 msgid "Work on cop_y"
 msgstr "_Pracovat na kopii"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1378
 msgid "Modify Curves"
 msgstr "Upravit křivky"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1406
 msgid "Curve for Border"
 msgstr "Křivka hranic"
 
-#: plug-ins/common/curve_bend.c:1420
+#: plug-ins/common/curve_bend.c:1410
 msgid "_Upper"
 msgstr "_Horní"
 
-#: plug-ins/common/curve_bend.c:1421
+#: plug-ins/common/curve_bend.c:1411
 msgid "_Lower"
 msgstr "_Dolní"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve Type"
 msgstr "Typ křivky"
 
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1425
 msgid "Smoot_h"
 msgstr "_Plynulá"
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Free"
 msgstr "_Volná"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1451
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Copy"
 msgstr "_Kopírovat"
 
-#: plug-ins/common/curve_bend.c:1456
+#: plug-ins/common/curve_bend.c:1446
 msgid "Copy the active curve to the other border"
 msgstr "Kopírovat aktivní křivku na druhou hranici"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1463
+#: plug-ins/common/curve_bend.c:1453
 msgid "_Mirror"
 msgstr "_Zrcadlit"
 
-#: plug-ins/common/curve_bend.c:1468
+#: plug-ins/common/curve_bend.c:1458
 msgid "Mirror the active curve to the other border"
 msgstr "Zrcadlit aktivní křivku na druhou hranici"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1476
+#: plug-ins/common/curve_bend.c:1466
 msgid "S_wap"
 msgstr "Pro_hodit"
 
-#: plug-ins/common/curve_bend.c:1481
+#: plug-ins/common/curve_bend.c:1471
 msgid "Swap the two curves"
 msgstr "Prohodit tyto dvě křivky"
 
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1483
 msgid "Reset the active curve"
 msgstr "Obnovit aktivní křivku"
 
-#: plug-ins/common/curve_bend.c:1510
+#: plug-ins/common/curve_bend.c:1500
 msgid "Load the curves from a file"
 msgstr "Načtení křivek ze souboru"
 
-#: plug-ins/common/curve_bend.c:1522
+#: plug-ins/common/curve_bend.c:1512
 msgid "Save the curves to a file"
 msgstr "Uložení křivek do souboru"
 
-#: plug-ins/common/curve_bend.c:2057
+#: plug-ins/common/curve_bend.c:2047
 msgid "Load Curve Points from file"
 msgstr "Načtení bodů křivky ze souboru"
 
-#: plug-ins/common/curve_bend.c:2084
+#: plug-ins/common/curve_bend.c:2074
 msgid "Save Curve Points to file"
 msgstr "Uložení bodů křivky do souboru"
 
-#: plug-ins/common/curve_bend.c:2969
+#: plug-ins/common/curve_bend.c:2941
 msgid "Curve Bend..."
 msgstr "Zkřivení..."
 
@@ -4545,110 +4545,110 @@ msgstr "Kusy mají rovné strany"
 msgid "Each piece has curved sides"
 msgstr "Kusy mají zaoblené strany"
 
-#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
+#: plug-ins/common/jpeg.c:384 plug-ins/common/jpeg.c:422
 msgid "JPEG image"
 msgstr "Obrázek JPEG"
 
-#: plug-ins/common/jpeg.c:516
+#: plug-ins/common/jpeg.c:528
 msgid "Export Preview"
 msgstr "Náhled exportu"
 
-#: plug-ins/common/jpeg.c:880
+#: plug-ins/common/jpeg.c:892
 msgid "EXIF data will be ignored."
 msgstr "Data EXIF budou ignorována."
 
-#: plug-ins/common/jpeg.c:1094
+#: plug-ins/common/jpeg.c:1106
 msgid "JPEG preview"
 msgstr "JPEG náhled"
 
-#: plug-ins/common/jpeg.c:1356
+#: plug-ins/common/jpeg.c:1368
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Velikost souboru: %02.01f kB"
 
-#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1861 plug-ins/common/jpeg.c:1961
 msgid "File size: unknown"
 msgstr "Velikost souboru: neznámá"
 
-#: plug-ins/common/jpeg.c:1874
+#: plug-ins/common/jpeg.c:1926
 msgid "Save as JPEG"
 msgstr "Zapsat jako JPEG"
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1947
 msgid "_Quality:"
 msgstr "_Kvalita:"
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1951
 msgid "JPEG quality parameter"
 msgstr "Parametr kvality JPEG"
 
-#: plug-ins/common/jpeg.c:1918
+#: plug-ins/common/jpeg.c:1970
 msgid "Show _Preview in image window"
 msgstr "Zobrazit _náhled v okně obrázku"
 
-#: plug-ins/common/jpeg.c:1931
+#: plug-ins/common/jpeg.c:1983
 msgid "_Advanced Options"
 msgstr "_Pokročilá nastavení"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:2011
 msgid "_Smoothing:"
 msgstr "_Vyhlazování:"
 
-#: plug-ins/common/jpeg.c:1972
+#: plug-ins/common/jpeg.c:2024
 msgid "Frequency (rows):"
 msgstr "Frekvence (řádky):"
 
-#: plug-ins/common/jpeg.c:1986
+#: plug-ins/common/jpeg.c:2038
 msgid "Use restart markers"
 msgstr "Používat restartovací značky"
 
-#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2053 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "Optimalizovat"
 
-#: plug-ins/common/jpeg.c:2015
+#: plug-ins/common/jpeg.c:2067
 msgid "Progressive"
 msgstr "Progresivní"
 
-#: plug-ins/common/jpeg.c:2034
+#: plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
 msgstr "Vnutit základní JPEG"
 
-#: plug-ins/common/jpeg.c:2050
+#: plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
 msgstr "Uložit data EXIF"
 
-#: plug-ins/common/jpeg.c:2064
+#: plug-ins/common/jpeg.c:2119
 msgid "Save thumbnail"
 msgstr "Uložit miniaturu"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2078
+#: plug-ins/common/jpeg.c:2136
 msgid "Subsampling:"
 msgstr "Podvzorkování:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2163
 msgid "DCT method:"
 msgstr "Metoda DCT:"
 
-#: plug-ins/common/jpeg.c:2111
+#: plug-ins/common/jpeg.c:2169
 msgid "Fast Integer"
 msgstr "Rychlé celočíselné"
 
-#: plug-ins/common/jpeg.c:2112
+#: plug-ins/common/jpeg.c:2170
 msgid "Integer"
 msgstr "Celočíselné"
 
-#: plug-ins/common/jpeg.c:2113
+#: plug-ins/common/jpeg.c:2171
 msgid "Floating-Point"
 msgstr "V plovoucí řádové čárce"
 
-#: plug-ins/common/jpeg.c:2127
+#: plug-ins/common/jpeg.c:2185
 msgid "Comment"
 msgstr "Komentář"
 
-#: plug-ins/common/jpeg.c:2280
+#: plug-ins/common/jpeg.c:2338
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Otevírám miniaturu pro '%s'..."
@@ -6039,54 +6039,54 @@ msgstr "Planární (RRR,GGG,BBB)"
 msgid "Indexed Palette Type"
 msgstr "Typ indexované palety"
 
-#: plug-ins/common/retinex.c:167
+#: plug-ins/common/retinex.c:168
 #, fuzzy
 msgid "_Retinex..."
 msgstr "_Rozvlnit..."
 
-#: plug-ins/common/retinex.c:250
+#: plug-ins/common/retinex.c:251
 #, fuzzy
 msgid "Retinex..."
 msgstr "Rotuji..."
 
-#: plug-ins/common/retinex.c:252
+#: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
 msgstr ""
 
-#: plug-ins/common/retinex.c:289
+#: plug-ins/common/retinex.c:290
 #, fuzzy
 msgid "Retinex Image Enhancement"
 msgstr "_Vylepšení hran"
 
-#: plug-ins/common/retinex.c:310
+#: plug-ins/common/retinex.c:311
 msgid "Level"
 msgstr "Úroveň"
 
-#: plug-ins/common/retinex.c:314
+#: plug-ins/common/retinex.c:315
 msgid "_Uniform"
 msgstr "_Rovnoměrná"
 
-#: plug-ins/common/retinex.c:316
+#: plug-ins/common/retinex.c:317
 msgid "_Low"
 msgstr "_Nízká"
 
-#: plug-ins/common/retinex.c:318
+#: plug-ins/common/retinex.c:319
 msgid "_High"
 msgstr "_Vysoká"
 
-#: plug-ins/common/retinex.c:343
+#: plug-ins/common/retinex.c:344
 msgid "_Scale:"
 msgstr "_Měřítko:"
 
-#: plug-ins/common/retinex.c:358
+#: plug-ins/common/retinex.c:359
 msgid "_Scale division:"
 msgstr "_Dělení měřítka:"
 
-#: plug-ins/common/retinex.c:373
+#: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
 msgstr "_Dynamické:"
 
-#: plug-ins/common/retinex.c:647
+#: plug-ins/common/retinex.c:648
 #, fuzzy
 msgid "Retinex: Filtering..."
 msgstr "Rozmázávám pohybem..."
@@ -10154,15 +10154,15 @@ msgstr "Chyba při otevírání souboru"
 msgid "Load Imagemap"
 msgstr "Načíst obrázkovou mapu"
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:117
 msgid "File already exists"
 msgstr "Soubor již existuje"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:118
 msgid "Do you really want to overwrite?"
 msgstr "Opravdu jej chcete přepsat?"
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr "Zapsat obrázkovou mapu"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-11-18 20:06+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -277,8 +277,8 @@ msgstr "Prikačiv"
 msgid "Document History"
 msgstr "Istorijat dokumenta"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "Crtež"
 
@@ -504,7 +504,7 @@ msgstr "Dupliraj kanal"
 msgid "_Delete Channel"
 msgstr "_Obriši kanal"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "Obriši kanal"
 
@@ -1035,7 +1035,7 @@ msgstr "Ukloni suv_išne unose"
 msgid "Remove dangling entries"
 msgstr "Ukloni suvišne unose"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1337,7 +1337,7 @@ msgstr "Po_vrati..."
 msgid "_Quit"
 msgstr "_Izađi"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1348,38 +1348,38 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Sačuvaj sliku"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Sačuvaj kopiju slike"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Napravi novu mustru"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Unesi ime za ovu mustru"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Vraćanje u prvobitan ovlik neuspelo. Nijedna datoteka nije povezana sa ovom "
 "slikom."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Vrati sliku u prvobitni oblik"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Vrati „%s“ na „%s“?"
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1387,19 +1387,19 @@ msgstr ""
 "Vraćanjem slike u oblik sačuvan na disku ćete izgubiti sve izmene, "
 "uključujući podatke za poništavanje."
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 msgid "Open Image as Layer"
 msgstr "Otvori sliku kao sloj"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Otvori sliku"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Neimenovana mustra)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1993,7 +1993,7 @@ msgstr "Dupliraj sloj"
 msgid "_Delete Layer"
 msgstr "O_briši sloj"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 msgid "Delete layer"
 msgstr "Obriši sloj"
 
@@ -2163,7 +2163,7 @@ msgstr "Iseci sloj"
 msgid "Layer Mask to Selection"
 msgstr "Maska sloja u izbor"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Dodaj masku za slojeve"
@@ -3004,7 +3004,7 @@ msgid "Path to Selection"
 msgstr "Putanja u izbor"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Nacrtaj putanju"
 
@@ -4268,245 +4268,250 @@ msgstr "Unapred (tradicionalno)"
 msgid "Backward (corrective)"
 msgstr "Unazad (ispravljajuće)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<neispravno>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 msgid "Scale image"
 msgstr "Razmera slike"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 msgid "Resize image"
 msgstr "Promeni veličinu slike"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 msgid "Flip image"
 msgstr "Obrni sliku"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 msgid "Rotate image"
 msgstr "Rotiraj sliku"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 msgid "Crop image"
 msgstr "Iseci sliku"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 msgid "Convert image"
 msgstr "Pretvori sliku"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 msgid "Merge layers"
 msgstr "Spoji slojeve"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 msgid "Merge vectors"
 msgstr "Spoji vektore"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 msgid "Quick Mask"
 msgstr "Brza maska"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Mreža"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Vođice"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 msgid "Drawable mod"
 msgstr "Režim crteža"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 msgid "Selection mask"
 msgstr "Maska izbora"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 msgid "Item visibility"
 msgstr "Vidljivost predmeta"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 msgid "Linked item"
 msgstr "Vezan predmet"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 msgid "Item properties"
 msgstr "Svojstva predmeta"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 msgid "Move item"
 msgstr "Premesti predmet"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 msgid "Scale item"
 msgstr "Razmera predmeta"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 msgid "Resize item"
 msgstr "Promeni veličinu predmeta"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 msgid "Add layer mask"
 msgstr "Dodaj masku sloja"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 msgid "Apply layer mask"
 msgstr "Primeni masku sloja"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 msgid "Floating selection to layer"
 msgstr "Plutajući izbor u sloj"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 msgid "Float selection"
 msgstr "Plutajući izbor"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 msgid "Anchor floating selection"
 msgstr "Usidri plutajući izbor"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 msgid "Remove floating selection"
 msgstr "Ukloni plutajući izbor"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Ubaci"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Iseci"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekst"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Transformacija"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Crtaj"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 msgid "Attach parasite"
 msgstr "Prikači parazita"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 msgid "Remove parasite"
 msgstr "Odstrani parazita"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 msgid "Import paths"
 msgstr "Uvezi putanje"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Dodatak"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 msgid "Image type"
 msgstr "Vrsta slike"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 msgid "Image size"
 msgstr "Veličina slike"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 msgid "Resolution change"
 msgstr "Promena rezolucije"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 msgid "Change indexed palette"
 msgstr "Promena indeksirane palete"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 msgid "Rename item"
 msgstr "Preimenuj predmet"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 msgid "Set item linked"
 msgstr "Postavi vezani predmet"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 msgid "New layer"
 msgstr "Novi sloj"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 msgid "Delete layer mask"
 msgstr "Ukloni masku sloja"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 msgid "Reposition layer"
 msgstr "Premesti sloj"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 msgid "Set layer mode"
 msgstr "Postavi režim sloja"
 
 # postavljanjem neprovidnosti postavljamo i providnost
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 msgid "Set layer opacity"
 msgstr "Postavi providnost sloja"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 msgid "Set preserve trans"
 msgstr "Postavi očuvanje providnosti"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 msgid "Text modified"
 msgstr "Tekst izmenjen"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 msgid "New channel"
 msgstr "Novi kanal"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 msgid "Reposition channel"
 msgstr "Premesti kanal"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 msgid "Channel color"
 msgstr "Boja kanala"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 msgid "New vectors"
 msgstr "Novi vektori"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 msgid "Delete vectors"
 msgstr "Ukloni vektore"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 msgid "Vectors mod"
 msgstr "Režim vektora"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 msgid "Reposition vectors"
 msgstr "Premesti vektore"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 msgid "FS to layer"
 msgstr "FS na sloj"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 msgid "FS rigor"
 msgstr "FS ukrućenost"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 msgid "FS relax"
 msgstr "FS opuštanje"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Mastilo"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "EEK: ne mogu da poništim"
 
@@ -4630,7 +4635,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neispravna UTF-8 niska u datoteci sa četkama „%s“."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Neimenovano"
@@ -4807,11 +4812,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "umnožak"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "Umnožak %s"
@@ -5257,15 +5262,15 @@ msgstr "Slojeva: %d"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nisam mogao da otvorim umanjeni prikaz „%s“: %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Prikači parazita"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Prikači parazita predmetu"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Skloni parazita sa predmeta"
 
@@ -5317,7 +5322,7 @@ msgstr "Okreni sloj"
 msgid "Rotate Layer"
 msgstr "Rotiraj sloj"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5332,39 +5337,39 @@ msgstr ""
 "Plutajući izbor\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Ne mogu da dodam masku sloju koji očigledno nije deo slike."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ne mogu da dodam masku jer sloj već ima jednu."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Ne mogu da dodam masku sloju koji nema alfa kanal."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ne mogu da dodam masku sa različitim dimenzijama od izabranog sloja."
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi providnost u masku"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Primeni Masku za slojeve"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Izbriši masku za slojeve"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Dodaj Alfa kanal"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Izjednači veličinu sloja i slike"
 
@@ -5720,20 +5725,20 @@ msgstr "Otvori putanju"
 msgid "Enter location (URI):"
 msgstr "Unesite putanju (adresu):"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 msgid "File exists"
 msgstr "Datoteka postoji"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 msgid "_Replace"
 msgstr "Pre_snimi"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Datoteka „%s“ već postoji."
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Želite li da je presnimite datotekom koju čuvate?"
 
@@ -5822,7 +5827,7 @@ msgid "Is this what you want to do?"
 msgstr "Da li je to ono što želite?"
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -7626,10 +7631,6 @@ msgstr "Smakni/spali"
 msgid "Eraser"
 msgstr "Brisač"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Mastilo"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Četka"
@@ -7764,7 +7765,7 @@ msgstr "Četka"
 msgid "Brush UI"
 msgstr "Korisničko sučelje četke"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8173,7 +8174,7 @@ msgstr "Odstupanje:"
 msgid "Shape:"
 msgstr "Oblik:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Ponavljanje:"
 
@@ -8948,7 +8949,7 @@ msgstr "Režim:"
 msgid "Brush:"
 msgstr "Četka:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Preliv:"
 
@@ -8960,31 +8961,31 @@ msgstr "Tvrda ivica"
 msgid "Pressure sensitivity"
 msgstr "Osetljivost pritiska"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Neprovidnost"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Tvrdoća"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Brzina"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Veličina"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 msgid "Fade out"
 msgstr "Izbleđivanje"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Dužina"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 msgid "Use color from gradient"
 msgstr "Koristi boju iz preliva"
 
@@ -9510,39 +9511,39 @@ msgstr "Obriši veze"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Nema aktivnog sloja ili kanala za crtanje"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Putanja"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Promeni naziv putanji"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Pomeri putanju"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Promeni veličinu putanje"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Promeni veličinu putanje"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Okreni putanju"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Rotiraj putanju"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Transformiši putanju"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "Ne može da crta po praznoj putanji."
 
@@ -10116,7 +10117,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Ovde možete prikačiti pristanišne prozore."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Zatvori ovaj list"
 
@@ -10141,11 +10142,11 @@ msgstr "Samoprepoznavanje"
 msgid "By Extension"
 msgstr "Po ekstenziji"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "Sve datoteke"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Izaberite vrstu _datoteke (%s)"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:33+0100\n"
 "PO-Revision-Date: 2004-11-29 12:03+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -380,10 +380,10 @@ msgstr "_Fraktaler"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2001
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
-#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
+#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:861
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1498
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -419,10 +419,10 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
-#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:913
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
+#: plug-ins/common/jpeg.c:946 plug-ins/common/jpeg.c:2607
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:432
@@ -765,7 +765,7 @@ msgid "Bumpm_ap image:"
 msgstr "Bumpm_ap-bild:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Linjär"
@@ -774,12 +774,12 @@ msgstr "Linjär"
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "Sinusformad"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "Sfärisk"
@@ -950,7 +950,7 @@ msgstr "Använd _kantutjämning"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Använd/använd inte borttagning av ojämna kanter (kantutjämning)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1182,7 +1182,7 @@ msgstr "Felaktig färgkarta"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
+#: plug-ins/common/jpeg.c:953 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:437
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
@@ -1211,19 +1211,19 @@ msgstr "\"%s\" är inte en giltig BMP-fil"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Fel vid läsning av BMP-filhuvud från \"%s\""
 
-#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
+#: plug-ins/bmp/bmpread.c:442 plug-ins/bmp/bmpread.c:477
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Oigenkänt eller felaktigt BMP-packningsformat."
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:482 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
-#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1113
+#: plug-ins/common/jpeg.c:2474 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:517
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
@@ -1254,7 +1254,7 @@ msgstr "Kan inte arbeta med okända bildtyper."
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
+#: plug-ins/common/jpeg.c:1453 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:814
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
@@ -2137,70 +2137,70 @@ msgstr "_Tjocklek:"
 msgid "_Bucket size:"
 msgstr "_Hinkstorlek:"
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 msgid "_Bump Map..."
 msgstr "_Bumpmap..."
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "Bumpmappar..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 msgid "Bump Map"
 msgstr "Bumpmap"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 msgid "_Bump map:"
 msgstr "_Bumpmap:"
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 msgid "_Map type:"
 msgstr "_Maptyp:"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 msgid "Co_mpensate for darkening"
 msgstr "Ko_mpensera för förmörkandet"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 msgid "I_nvert bumpmap"
 msgstr "I_nvertera Bumpmap"
 
 # Osäker
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 msgid "_Tile bumpmap"
 msgstr "_Plattlägg Bumpmap"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 msgid "_Elevation:"
 msgstr "_Höjd:"
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 msgid "_X offset:"
 msgstr "_X offset:"
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 "Offset kan justeras genom att dra förhandsgranskningen med mittenmusknappen."
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 msgid "_Y offset:"
 msgstr "_Y offset:"
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 msgid "_Waterlevel:"
 msgstr "_Vattennivå:"
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 msgid "A_mbient:"
 msgstr "O_mgivande:"
 
@@ -2750,41 +2750,41 @@ msgstr "_Använd Bakgrundsfärg"
 msgid "Cubistic Transformation..."
 msgstr "Kubistisk transformation..."
 
-#: plug-ins/common/curve_bend.c:572
+#: plug-ins/common/curve_bend.c:567
 msgid "_Curve Bend..."
 msgstr "Böj efter _kurva..."
 
-#: plug-ins/common/curve_bend.c:708
+#: plug-ins/common/curve_bend.c:703
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Kan arbeta endast med lager (men aktiverades på en kanal eller mask)"
 
-#: plug-ins/common/curve_bend.c:726
+#: plug-ins/common/curve_bend.c:721
 msgid "Cannot operate on layers with masks."
 msgstr "Kan inte arbeta med lager med masker."
 
-#: plug-ins/common/curve_bend.c:741
+#: plug-ins/common/curve_bend.c:736
 msgid "Cannot operate on empty selections."
 msgstr "Kan inte arbeta med tomma urklipp."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/curve_bend.c:1239
 msgid "Curve Bend"
 msgstr "Böj efter kurva"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1268 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437
 msgid "Preview"
 msgstr "Förhandsgranska"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1307
+#: plug-ins/common/curve_bend.c:1297
 msgid "_Preview once"
 msgstr "_Förhandsgranska en gång"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1316
+#: plug-ins/common/curve_bend.c:1306
 msgid "Automatic pre_view"
 msgstr "Automatisk _förhandsgranskning"
 
@@ -2792,109 +2792,109 @@ msgstr "Automatisk _förhandsgranskning"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/curve_bend.c:1316 plug-ins/common/mosaic.c:529
 #: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "Alternativ"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/curve_bend.c:1330
 msgid "Rotat_e:"
 msgstr "R_otera:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1348
 msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:823
+#: plug-ins/common/curve_bend.c:1358 plug-ins/common/gqbist.c:823
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1368
 msgid "Work on cop_y"
 msgstr "Arbeta med _kopian"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1378
 msgid "Modify Curves"
 msgstr "Ändra kurvor"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1406
 msgid "Curve for Border"
 msgstr "Kurva för ram:"
 
-#: plug-ins/common/curve_bend.c:1420
+#: plug-ins/common/curve_bend.c:1410
 msgid "_Upper"
 msgstr "_Övre"
 
-#: plug-ins/common/curve_bend.c:1421
+#: plug-ins/common/curve_bend.c:1411
 msgid "_Lower"
 msgstr "_Lägre"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve Type"
 msgstr "kurvtyp:"
 
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1425
 msgid "Smoot_h"
 msgstr "_Jämn"
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Free"
 msgstr "_Ledigt"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1451
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Copy"
 msgstr "_Kopiera"
 
-#: plug-ins/common/curve_bend.c:1456
+#: plug-ins/common/curve_bend.c:1446
 msgid "Copy the active curve to the other border"
 msgstr "Kopiera den aktiva kurvan till andra kanten"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1463
+#: plug-ins/common/curve_bend.c:1453
 msgid "_Mirror"
 msgstr "_Spegla"
 
-#: plug-ins/common/curve_bend.c:1468
+#: plug-ins/common/curve_bend.c:1458
 msgid "Mirror the active curve to the other border"
 msgstr "Spegla den aktiva kurvan på andra kanten"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1476
+#: plug-ins/common/curve_bend.c:1466
 msgid "S_wap"
 msgstr "Vä_xla"
 
-#: plug-ins/common/curve_bend.c:1481
+#: plug-ins/common/curve_bend.c:1471
 msgid "Swap the two curves"
 msgstr "Byt plats på kurvorna"
 
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1483
 msgid "Reset the active curve"
 msgstr "Återställ den aktiva kurvan"
 
-#: plug-ins/common/curve_bend.c:1510
+#: plug-ins/common/curve_bend.c:1500
 msgid "Load the curves from a file"
 msgstr "Läs in kurvorna från fil"
 
-#: plug-ins/common/curve_bend.c:1522
+#: plug-ins/common/curve_bend.c:1512
 msgid "Save the curves to a file"
 msgstr "Spara kurvorna till fil"
 
-#: plug-ins/common/curve_bend.c:2057
+#: plug-ins/common/curve_bend.c:2047
 msgid "Load Curve Points from file"
 msgstr "Ladda kurvlägen från fil"
 
-#: plug-ins/common/curve_bend.c:2084
+#: plug-ins/common/curve_bend.c:2074
 msgid "Save Curve Points to file"
 msgstr "Spara kurvälgen till fil"
 
-#: plug-ins/common/curve_bend.c:2969
+#: plug-ins/common/curve_bend.c:2941
 msgid "Curve Bend..."
 msgstr "Böj efter kurva..."
 
@@ -4556,111 +4556,111 @@ msgstr "Varje pusselbit har raka sidor"
 msgid "Each piece has curved sides"
 msgstr "Varje pusselbit har avrundade sidor"
 
-#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
+#: plug-ins/common/jpeg.c:384 plug-ins/common/jpeg.c:422
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: plug-ins/common/jpeg.c:516
+#: plug-ins/common/jpeg.c:528
 msgid "Export Preview"
 msgstr "Förhandsgranska export"
 
-#: plug-ins/common/jpeg.c:880
+#: plug-ins/common/jpeg.c:892
 msgid "EXIF data will be ignored."
 msgstr "EXIF-data kommer att ignoreras."
 
-#: plug-ins/common/jpeg.c:1094
+#: plug-ins/common/jpeg.c:1106
 msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
-#: plug-ins/common/jpeg.c:1356
+#: plug-ins/common/jpeg.c:1368
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Filstorlek: %02.01f kB"
 
-#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1861 plug-ins/common/jpeg.c:1961
 msgid "File size: unknown"
 msgstr "Filstorlek: okänd"
 
-#: plug-ins/common/jpeg.c:1874
+#: plug-ins/common/jpeg.c:1926
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1947
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1951
 msgid "JPEG quality parameter"
 msgstr "JPEG kvalitetsparameter"
 
-#: plug-ins/common/jpeg.c:1918
+#: plug-ins/common/jpeg.c:1970
 msgid "Show _Preview in image window"
 msgstr "_Förhandsgranska i bildfönstret"
 
-#: plug-ins/common/jpeg.c:1931
+#: plug-ins/common/jpeg.c:1983
 msgid "_Advanced Options"
 msgstr "_Avancerade inställningar"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:2011
 msgid "_Smoothing:"
 msgstr "_Utjämnande:"
 
-#: plug-ins/common/jpeg.c:1972
+#: plug-ins/common/jpeg.c:2024
 msgid "Frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1986
+#: plug-ins/common/jpeg.c:2038
 msgid "Use restart markers"
 msgstr "Använd omstartsmarkörer"
 
-#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2053 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "Optimera"
 
-#: plug-ins/common/jpeg.c:2015
+#: plug-ins/common/jpeg.c:2067
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:2034
+#: plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
 msgstr "Tvinga grundläggande JPEG"
 
-#: plug-ins/common/jpeg.c:2050
+#: plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
 msgstr "Spara EXIF-data"
 
-#: plug-ins/common/jpeg.c:2064
+#: plug-ins/common/jpeg.c:2119
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2078
+#: plug-ins/common/jpeg.c:2136
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2163
 msgid "DCT method:"
 msgstr "DCT-metod:"
 
-#: plug-ins/common/jpeg.c:2111
+#: plug-ins/common/jpeg.c:2169
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: plug-ins/common/jpeg.c:2112
+#: plug-ins/common/jpeg.c:2170
 msgid "Integer"
 msgstr "Heltal"
 
-#: plug-ins/common/jpeg.c:2113
+#: plug-ins/common/jpeg.c:2171
 msgid "Floating-Point"
 msgstr "Flyttal"
 
 # src/sidebar.c:107
-#: plug-ins/common/jpeg.c:2127
+#: plug-ins/common/jpeg.c:2185
 msgid "Comment"
 msgstr "Kommentar"
 
-#: plug-ins/common/jpeg.c:2280
+#: plug-ins/common/jpeg.c:2338
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Öppnar miniatyrbild för \"%s\"..."
@@ -6056,51 +6056,51 @@ msgstr "Platt (RRR,GGG,BBB)"
 msgid "Indexed Palette Type"
 msgstr "Indexerad palettyp"
 
-#: plug-ins/common/retinex.c:167
+#: plug-ins/common/retinex.c:168
 msgid "_Retinex..."
 msgstr "_Retinex..."
 
-#: plug-ins/common/retinex.c:250
+#: plug-ins/common/retinex.c:251
 msgid "Retinex..."
 msgstr "Retinex..."
 
-#: plug-ins/common/retinex.c:252
+#: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
 msgstr "Retinex (4/4): uppdaterad..."
 
-#: plug-ins/common/retinex.c:289
+#: plug-ins/common/retinex.c:290
 msgid "Retinex Image Enhancement"
 msgstr "Retinex bildförbättring"
 
-#: plug-ins/common/retinex.c:310
+#: plug-ins/common/retinex.c:311
 msgid "Level"
 msgstr "Nivå"
 
-#: plug-ins/common/retinex.c:314
+#: plug-ins/common/retinex.c:315
 msgid "_Uniform"
 msgstr "_Enhetlig"
 
-#: plug-ins/common/retinex.c:316
+#: plug-ins/common/retinex.c:317
 msgid "_Low"
 msgstr "_Låg"
 
-#: plug-ins/common/retinex.c:318
+#: plug-ins/common/retinex.c:319
 msgid "_High"
 msgstr "_Hög"
 
-#: plug-ins/common/retinex.c:343
+#: plug-ins/common/retinex.c:344
 msgid "_Scale:"
 msgstr "_Skala:"
 
-#: plug-ins/common/retinex.c:358
+#: plug-ins/common/retinex.c:359
 msgid "_Scale division:"
 msgstr "_Skaldelning:"
 
-#: plug-ins/common/retinex.c:373
+#: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
 msgstr "_Dynamisk:"
 
-#: plug-ins/common/retinex.c:647
+#: plug-ins/common/retinex.c:648
 msgid "Retinex: Filtering..."
 msgstr "Retinex: filtrering..."
 
@@ -10173,15 +10173,15 @@ msgstr "Fel vid öppnande av fil"
 msgid "Load Imagemap"
 msgstr "Läs in bildkarta"
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:117
 msgid "File already exists"
 msgstr "Filen finns redan"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:118
 msgid "Do you really want to overwrite?"
 msgstr "Vill du verkligen skriva över?"
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr "Spara bildkarta"
 

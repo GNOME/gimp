@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-18 20:48+0200\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2005-01-18 20:57+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -10309,7 +10309,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr ""
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Uždaryti šią kortelę"
 

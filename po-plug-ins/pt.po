@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:33+0100\n"
 "PO-Revision-Date: 2004-03-21 20:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -379,10 +379,10 @@ msgstr "_Fractais"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2001
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
-#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
+#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:861
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1498
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -418,10 +418,10 @@ msgstr "Gravas Parâmetros Fractais"
 #: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
-#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:913
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
+#: plug-ins/common/jpeg.c:946 plug-ins/common/jpeg.c:2607
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:432
@@ -788,7 +788,7 @@ msgid "Bumpm_ap image:"
 msgstr "Imagem de Mapa de S_aliências:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "Linear"
@@ -797,12 +797,12 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarítmico"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "Sinusoidal"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "Esférico"
@@ -985,7 +985,7 @@ msgstr "Habilitar _Antialiazing"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Habilitar/desabilitar remoção de margens serradas (antialiasing)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1222,7 +1222,7 @@ msgstr "Mapa de cor inadequado"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
+#: plug-ins/common/jpeg.c:953 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:437
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
@@ -1251,19 +1251,19 @@ msgstr "'%s' não é um ficheiro BMP válido"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Erro ao ler cabeçalho do ficheiro BMP de '%s'"
 
-#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
+#: plug-ins/bmp/bmpread.c:442 plug-ins/bmp/bmpread.c:477
 msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:482 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
-#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1113
+#: plug-ins/common/jpeg.c:2474 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:517
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
@@ -1294,7 +1294,7 @@ msgstr "Incapaz de operar em tipos de imagens desconhecidos."
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
+#: plug-ins/common/jpeg.c:1453 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:814
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
@@ -2259,76 +2259,76 @@ msgstr "_Espessura:"
 msgid "_Bucket size:"
 msgstr "Tamanho do Preenc_himento:"
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 #, fuzzy
 msgid "_Bump Map..."
 msgstr "Ma_pa de Saliências"
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "A Mapear Saliências..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 msgid "Bump Map"
 msgstr "Mapa Saliências"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 #, fuzzy
 msgid "_Bump map:"
 msgstr "Ma_pa de Saliências:"
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 #, fuzzy
 msgid "_Map type:"
 msgstr "Tipo Mapa"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 #, fuzzy
 msgid "Co_mpensate for darkening"
 msgstr "Co_mpensar para Escurecimento"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 #, fuzzy
 msgid "I_nvert bumpmap"
 msgstr "I_nverter Mapa de Saliências"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 #, fuzzy
 msgid "_Tile bumpmap"
 msgstr "Mapa de Saliências em _Mosaico"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "_Azimute:"
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 msgid "_Elevation:"
 msgstr "_Elevação:"
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 #, fuzzy
 msgid "_X offset:"
 msgstr "Deslocamento _X:"
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 #, fuzzy
 msgid "_Y offset:"
 msgstr "Deslocamento _Y:"
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 msgid "_Waterlevel:"
 msgstr "Ní_vel d'água:"
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 msgid "A_mbient:"
 msgstr "A_mbiente:"
 
@@ -2902,44 +2902,44 @@ msgstr "_Utilizar Cor de Fundo"
 msgid "Cubistic Transformation..."
 msgstr "Transformação Cubística"
 
-#: plug-ins/common/curve_bend.c:572
+#: plug-ins/common/curve_bend.c:567
 #, fuzzy
 msgid "_Curve Bend..."
 msgstr "Curvar..."
 
-#: plug-ins/common/curve_bend.c:708
+#: plug-ins/common/curve_bend.c:703
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Apenas funciona em camadas (mas foi chamado no canal ou máscara)."
 
-#: plug-ins/common/curve_bend.c:726
+#: plug-ins/common/curve_bend.c:721
 #, fuzzy
 msgid "Cannot operate on layers with masks."
 msgstr "Incapaz de operar em imagens de cores indexadas."
 
-#: plug-ins/common/curve_bend.c:741
+#: plug-ins/common/curve_bend.c:736
 msgid "Cannot operate on empty selections."
 msgstr "Incapaz de operar em selecções vazias."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/curve_bend.c:1239
 msgid "Curve Bend"
 msgstr "Curva"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1268 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437
 msgid "Preview"
 msgstr "Antever"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1307
+#: plug-ins/common/curve_bend.c:1297
 #, fuzzy
 msgid "_Preview once"
 msgstr "_Antever Uma Vez"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1316
+#: plug-ins/common/curve_bend.c:1306
 #, fuzzy
 msgid "Automatic pre_view"
 msgstr "Ante_visão Automática"
@@ -2947,110 +2947,110 @@ msgstr "Ante_visão Automática"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/curve_bend.c:1316 plug-ins/common/mosaic.c:529
 #: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "Opções"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/curve_bend.c:1330
 msgid "Rotat_e:"
 msgstr "_Girar:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1348
 msgid "Smoo_thing"
 msgstr "Unif_ormizar"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:823
+#: plug-ins/common/curve_bend.c:1358 plug-ins/common/gqbist.c:823
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1368
 #, fuzzy
 msgid "Work on cop_y"
 msgstr "Trabal_har sobre Cópia"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1378
 msgid "Modify Curves"
 msgstr "Modificar Curvas"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1406
 msgid "Curve for Border"
 msgstr "Curva para Margem"
 
-#: plug-ins/common/curve_bend.c:1420
+#: plug-ins/common/curve_bend.c:1410
 msgid "_Upper"
 msgstr "_Acima"
 
-#: plug-ins/common/curve_bend.c:1421
+#: plug-ins/common/curve_bend.c:1411
 msgid "_Lower"
 msgstr "A_baixo"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve Type"
 msgstr "Tipo Curva"
 
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1425
 msgid "Smoot_h"
 msgstr "Uni_forme"
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Free"
 msgstr "_Livre"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1451
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Copy"
 msgstr "_Copiar"
 
-#: plug-ins/common/curve_bend.c:1456
+#: plug-ins/common/curve_bend.c:1446
 msgid "Copy the active curve to the other border"
 msgstr "Copiar a curva activa para a outra margem"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1463
+#: plug-ins/common/curve_bend.c:1453
 msgid "_Mirror"
 msgstr "_Espelhar"
 
-#: plug-ins/common/curve_bend.c:1468
+#: plug-ins/common/curve_bend.c:1458
 msgid "Mirror the active curve to the other border"
 msgstr "Espelhar a curva activa para a outra margem"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1476
+#: plug-ins/common/curve_bend.c:1466
 msgid "S_wap"
 msgstr "_Trocar"
 
-#: plug-ins/common/curve_bend.c:1481
+#: plug-ins/common/curve_bend.c:1471
 msgid "Swap the two curves"
 msgstr "Trocar as duas curvas"
 
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1483
 msgid "Reset the active curve"
 msgstr "Redefinir a curva activa"
 
-#: plug-ins/common/curve_bend.c:1510
+#: plug-ins/common/curve_bend.c:1500
 msgid "Load the curves from a file"
 msgstr "Ler as curvas de ficheiro"
 
-#: plug-ins/common/curve_bend.c:1522
+#: plug-ins/common/curve_bend.c:1512
 msgid "Save the curves to a file"
 msgstr "Gravar as curvas para ficheiro"
 
-#: plug-ins/common/curve_bend.c:2057
+#: plug-ins/common/curve_bend.c:2047
 msgid "Load Curve Points from file"
 msgstr "Ler Pontos de Curva do ficheiro"
 
-#: plug-ins/common/curve_bend.c:2084
+#: plug-ins/common/curve_bend.c:2074
 msgid "Save Curve Points to file"
 msgstr "Gravar Pontos de Curva para ficheiro"
 
-#: plug-ins/common/curve_bend.c:2969
+#: plug-ins/common/curve_bend.c:2941
 msgid "Curve Bend..."
 msgstr "Curvar..."
 
@@ -4828,120 +4828,120 @@ msgstr "Cada peça tem lados rectos"
 msgid "Each piece has curved sides"
 msgstr "Cada peça tem lados curvos"
 
-#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
+#: plug-ins/common/jpeg.c:384 plug-ins/common/jpeg.c:422
 #, fuzzy
 msgid "JPEG image"
 msgstr "Antevisão JPEG"
 
-#: plug-ins/common/jpeg.c:516
+#: plug-ins/common/jpeg.c:528
 msgid "Export Preview"
 msgstr "Exportar Antevisão"
 
-#: plug-ins/common/jpeg.c:880
+#: plug-ins/common/jpeg.c:892
 msgid "EXIF data will be ignored."
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1094
+#: plug-ins/common/jpeg.c:1106
 msgid "JPEG preview"
 msgstr "Antevisão JPEG"
 
-#: plug-ins/common/jpeg.c:1356
+#: plug-ins/common/jpeg.c:1368
 #, fuzzy, c-format
 msgid "File size: %02.01f kB"
 msgstr "Tamanho: %ld bytes (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1861 plug-ins/common/jpeg.c:1961
 #, fuzzy
 msgid "File size: unknown"
 msgstr "Tamanho: desconhecido"
 
-#: plug-ins/common/jpeg.c:1874
+#: plug-ins/common/jpeg.c:1926
 msgid "Save as JPEG"
 msgstr "Gravar como JPEG"
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1947
 #, fuzzy
 msgid "_Quality:"
 msgstr "Qualidade:"
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1951
 #, fuzzy
 msgid "JPEG quality parameter"
 msgstr "Parâmetros"
 
-#: plug-ins/common/jpeg.c:1918
+#: plug-ins/common/jpeg.c:1970
 #, fuzzy
 msgid "Show _Preview in image window"
 msgstr "Capturar uma única janela"
 
-#: plug-ins/common/jpeg.c:1931
+#: plug-ins/common/jpeg.c:1983
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "Opções de Pacote de Filtro Avançadas"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:2011
 #, fuzzy
 msgid "_Smoothing:"
 msgstr "A Uniformizar:"
 
-#: plug-ins/common/jpeg.c:1972
+#: plug-ins/common/jpeg.c:2024
 #, fuzzy
 msgid "Frequency (rows):"
 msgstr "Reiniciar frequência (filas):"
 
-#: plug-ins/common/jpeg.c:1986
+#: plug-ins/common/jpeg.c:2038
 #, fuzzy
 msgid "Use restart markers"
 msgstr "Reiniciar marcadores"
 
-#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2053 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "Optimizar"
 
-#: plug-ins/common/jpeg.c:2015
+#: plug-ins/common/jpeg.c:2067
 msgid "Progressive"
 msgstr "Progressivo"
 
-#: plug-ins/common/jpeg.c:2034
+#: plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:2050
+#: plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
 msgstr "Gravar dados EXIF"
 
-#: plug-ins/common/jpeg.c:2064
+#: plug-ins/common/jpeg.c:2119
 #, fuzzy
 msgid "Save thumbnail"
 msgstr "Gravar Ficheiro"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2078
+#: plug-ins/common/jpeg.c:2136
 msgid "Subsampling:"
 msgstr "Sub-amostragem:"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2163
 msgid "DCT method:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:2111
+#: plug-ins/common/jpeg.c:2169
 msgid "Fast Integer"
 msgstr "Inteiro Rápido"
 
-#: plug-ins/common/jpeg.c:2112
+#: plug-ins/common/jpeg.c:2170
 msgid "Integer"
 msgstr "Inteiro"
 
-#: plug-ins/common/jpeg.c:2113
+#: plug-ins/common/jpeg.c:2171
 msgid "Floating-Point"
 msgstr "Ponto Flutuante"
 
-#: plug-ins/common/jpeg.c:2127
+#: plug-ins/common/jpeg.c:2185
 msgid "Comment"
 msgstr "Comentar"
 
-#: plug-ins/common/jpeg.c:2280
+#: plug-ins/common/jpeg.c:2338
 #, fuzzy, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "A Abrir '%s'..."
@@ -6448,59 +6448,59 @@ msgstr ""
 msgid "Indexed Palette Type"
 msgstr "Tipo Padrão RGB"
 
-#: plug-ins/common/retinex.c:167
+#: plug-ins/common/retinex.c:168
 #, fuzzy
 msgid "_Retinex..."
 msgstr "A Ondular..."
 
-#: plug-ins/common/retinex.c:250
+#: plug-ins/common/retinex.c:251
 #, fuzzy
 msgid "Retinex..."
 msgstr "A Rodar..."
 
-#: plug-ins/common/retinex.c:252
+#: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
 msgstr ""
 
-#: plug-ins/common/retinex.c:289
+#: plug-ins/common/retinex.c:290
 #, fuzzy
 msgid "Retinex Image Enhancement"
 msgstr "R_ealce de Margem"
 
-#: plug-ins/common/retinex.c:310
+#: plug-ins/common/retinex.c:311
 msgid "Level"
 msgstr ""
 
-#: plug-ins/common/retinex.c:314
+#: plug-ins/common/retinex.c:315
 #, fuzzy
 msgid "_Uniform"
 msgstr "Editor Unidades"
 
-#: plug-ins/common/retinex.c:316
+#: plug-ins/common/retinex.c:317
 #, fuzzy
 msgid "_Low"
 msgstr "A_baixo"
 
-#: plug-ins/common/retinex.c:318
+#: plug-ins/common/retinex.c:319
 #, fuzzy
 msgid "_High"
 msgstr "_Altura:"
 
-#: plug-ins/common/retinex.c:343
+#: plug-ins/common/retinex.c:344
 #, fuzzy
 msgid "_Scale:"
 msgstr "Escala:"
 
-#: plug-ins/common/retinex.c:358
+#: plug-ins/common/retinex.c:359
 #, fuzzy
 msgid "_Scale division:"
 msgstr "_Divisão:"
 
-#: plug-ins/common/retinex.c:373
+#: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
 msgstr ""
 
-#: plug-ins/common/retinex.c:647
+#: plug-ins/common/retinex.c:648
 #, fuzzy
 msgid "Retinex: Filtering..."
 msgstr "Desfoc. Movimento..."
@@ -10802,19 +10802,19 @@ msgstr "Erro ao abrir ficheiro"
 msgid "Load Imagemap"
 msgstr "Ler Mapa de Imagens"
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:117
 #, fuzzy
 msgid "File already exists"
 msgstr "Ficheiro existe!"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:118
 #, fuzzy
 msgid "Do you really want to overwrite?"
 msgstr ""
 "Ficheiro já existe.\n"
 "  Deseja mesmo sobrepo-lo?  "
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr "Gravar Mapa de Imagens"
 

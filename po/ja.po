@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-03-28 05:20+0900\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -262,8 +262,8 @@ msgstr "描画対象"
 msgid "Document History"
 msgstr "文書履歴（一覧）"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "描画対象"
 
@@ -520,7 +520,7 @@ msgstr "チャンネル複製"
 msgid "_Delete Channel"
 msgstr "/チャンネルの削除(_D)"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 #, fuzzy
 msgid "Delete channel"
 msgstr "チャンネルの削除"
@@ -1158,7 +1158,7 @@ msgstr "/不要なエントリの削除(_n)"
 msgid "Remove dangling entries"
 msgstr "/不要なエントリの削除(_n)"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1507,7 +1507,7 @@ msgstr "復帰"
 msgid "_Quit"
 msgstr "/ファイル/終了(_Q)"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1518,36 +1518,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "画像のコピーを保存"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "新しいテンプレートを作成"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "このテンプレートに対する名前を入力して下さい"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr "復帰に失敗しました. この画像に対するファイル名がありません."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "画像の復帰"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 #, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
@@ -1558,20 +1558,20 @@ msgstr ""
 "\n"
 "(アンドゥ情報も含めた全ての変更が失われます)"
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "画像を開く"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "画像を開く"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(名前の無いテンプレート)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2239,7 +2239,7 @@ msgstr "レイヤーを複製"
 msgid "_Delete Layer"
 msgstr "/レイヤーを削除(_D)"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "レイヤー削除"
@@ -2443,7 +2443,7 @@ msgstr "レイヤーの切り抜き"
 msgid "Layer Mask to Selection"
 msgstr "レイヤーマスクを選択領域に"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "レイヤーマスク追加"
@@ -3429,7 +3429,7 @@ msgid "Path to Selection"
 msgstr "パスを選択領域へ"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "パスをストローク描画"
 
@@ -4741,293 +4741,298 @@ msgstr "正変換 (忠実)"
 msgid "Backward (corrective)"
 msgstr "逆変換 (矯正)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<不正>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "画像拡大縮小"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "画像のサイズ変更"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "画像の反転"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "画像の回転"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "画像の切り抜き"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "画像の変換"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "レイヤーの統合"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "ベクタの統合"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "クイックマスク"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "グリッド"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "ガイド"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "描画対象操作"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "選択マスク"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "アイテムの表示"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "リンクされたアイテム"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "アイテムのプロパティ"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "アイテムの移動"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "画像拡大縮小"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "画像のサイズ変更"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "レイヤーマスク追加"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "レイヤーマスクの適用"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "フローティング選択領域をレイヤーに"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "フローティング選択領域"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "フローティング選択領域を固定"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "フローティング選択領域"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "貼り付け"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "切り取り"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "文字"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "変換"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "描画"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "パラサイト付加"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "パラサイト削除"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "パスのインポート"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "プラグイン"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 #, fuzzy
 msgid "Image type"
 msgstr "画像の種類"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "画像のサイズ"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "解像度変更"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "インデックスパレット変更"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "アイテム名の変更"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "アイテムをリンクさせる"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "新規レイヤー"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "レイヤーマスク削除"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "レイヤーの再配置"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "レイヤーモードの設定"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "レイヤー透明度の設定"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "変換保存の設定"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "変更があった時だけ"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "新規チャンネル"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "チャンネルの再配置"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "チャンネルカラー"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "新規ベクタ"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "ベクタの削除"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "ベクタ操作"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "ベクタの再配置"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "フロート選択をレイヤーへ"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "フロート選択くくりつけ"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 #, fuzzy
 msgid "FS relax"
 msgstr "フロート選択解放"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "インク"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "EEK: アンドゥできません"
 
@@ -5146,7 +5151,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "ブラシファイル '%s' 中に不適切な UTF-8 文字列があります."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "名前なし"
@@ -5318,11 +5323,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "コピー"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
@@ -5775,15 +5780,15 @@ msgstr "%d 枚のレイヤー"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "サムネイルファイル '%s' が開けません: %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "パラサイト付加"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "アイテムにパラサイト付加"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "アイテムからパラサイト削除"
 
@@ -5836,7 +5841,7 @@ msgstr "レイヤーを反転"
 msgid "Rotate Layer"
 msgstr "レイヤーを回転"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5849,42 +5854,42 @@ msgid ""
 "(%s)"
 msgstr "フローティング選択領域"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "画像の一部分でないレイヤーにレイヤーマスクを付加する事はできません."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "既にレイヤーマスクがあるのでこれ以上レイヤーマスクを付加する事はできません."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "アルファチャンネルを持たないレイヤーにレイヤーマスクを付加する事はできません."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "アルファチャンネルをマスクに変換"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "レイヤーマスクの適用"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "レイヤーマスク削除"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "レイヤーを画像サイズに合わせる"
 
@@ -6237,22 +6242,22 @@ msgstr "場所:"
 msgid "Enter location (URI):"
 msgstr "補間の種類:"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 #, fuzzy
 msgid "File exists"
 msgstr "ファイルは存在します!"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "複製"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6340,7 +6345,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -8255,10 +8260,6 @@ msgstr "暗室"
 msgid "Eraser"
 msgstr "消しゴム"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "インク"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "絵筆"
@@ -8399,7 +8400,7 @@ msgstr "ブラシ:"
 msgid "Brush UI"
 msgstr "ブラシ UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8829,7 +8830,7 @@ msgstr "オフセット:"
 msgid "Shape:"
 msgstr "形状:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "反復:"
 
@@ -9662,7 +9663,7 @@ msgstr "モード:"
 msgid "Brush:"
 msgstr "ブラシ:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "グラデーション:"
 
@@ -9676,32 +9677,32 @@ msgstr "ハードエッジ"
 msgid "Pressure sensitivity"
 msgstr "圧力感度"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "不透明度"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "強度"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "割合"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "大きさ"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "フェードアウト"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "長さ:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "グラデーションの色を使う"
@@ -10259,39 +10260,39 @@ msgstr "アンカーの削除"
 msgid "There is no active layer or channel to stroke to"
 msgstr "ストロークするためのアクティブレイヤーやアクティブパスがありません"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "パス"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "パス名変更"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "パスの移動"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "パスの拡大・縮小"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "パスのサイズ変更"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "パスの反転"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "パスの回転"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "パスの変換"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "空のパスはストロークできません."
 
@@ -10880,7 +10881,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "ここにドッキング可能なダイアログをドロップできます."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "このタブを削除"
 
@@ -10907,12 +10908,12 @@ msgstr ""
 msgid "By Extension"
 msgstr "/拡張子で判別"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 #, fuzzy
 msgid "All Files"
 msgstr "利用可能なフィルタ"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "塗りつぶし方法  %s"

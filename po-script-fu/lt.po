@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:42+0100\n"
+"POT-Creation-Date: 2005-01-08 02:10+0100\n"
 "PO-Revision-Date: 2005-01-18 21:03+0200\n"
 "Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -66,6 +66,7 @@ msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
+#. some languages want an extra space here
 #: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
@@ -155,8 +156,7 @@ msgstr "Serverio žurnalo byla:"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsolė"
 
-#: plug-ins/script-fu/script-fu.c:129
-#: plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #: plug-ins/script-fu/script-fu.c:290
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr ""
@@ -2158,7 +2158,9 @@ msgid "Color method"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
@@ -2520,4 +2522,3 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
-

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:33+0100\n"
 "PO-Revision-Date: 2005-01-09 19:30+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -365,10 +365,10 @@ msgstr "分形(_F)"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2001
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
-#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
+#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:861
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1498
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -404,10 +404,10 @@ msgstr "保存分形参数"
 #: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
-#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:913
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
+#: plug-ins/common/jpeg.c:946 plug-ins/common/jpeg.c:2607
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:432
@@ -750,7 +750,7 @@ msgid "Bumpm_ap image:"
 msgstr "凹凸贴图图像(_A)："
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "线性"
@@ -759,12 +759,12 @@ msgstr "线性"
 msgid "Logarithmic"
 msgstr "对数"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "正弦"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "球形"
@@ -933,7 +933,7 @@ msgstr "启用反锯齿化(_A)"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "启用/禁用锯齿状边缘的平滑处理(反锯齿化)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 msgid "_Depth:"
@@ -1164,7 +1164,7 @@ msgstr "错误的颜色表"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
+#: plug-ins/common/jpeg.c:953 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:437
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
@@ -1193,19 +1193,19 @@ msgstr "“%s”不是有效的 BMP 文件"
 msgid "Error reading BMP file header from '%s'"
 msgstr "从“%s”读 BMP 文件头出错"
 
-#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
+#: plug-ins/bmp/bmpread.c:442 plug-ins/bmp/bmpread.c:477
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "无法识别或无效的 BMP 压缩格式。"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:482 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
-#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1113
+#: plug-ins/common/jpeg.c:2474 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:517
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
@@ -1236,7 +1236,7 @@ msgstr "无法对未知的图像类型操作。"
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
+#: plug-ins/common/jpeg.c:1453 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:814
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
@@ -2120,68 +2120,68 @@ msgstr "宽度(_T)："
 msgid "_Bucket size:"
 msgstr "油漆桶大小(_B)："
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 msgid "_Bump Map..."
 msgstr "凹凸贴图(_B)..."
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "正在凹凸贴图..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 msgid "Bump Map"
 msgstr "凹凸贴图"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 msgid "_Bump map:"
 msgstr "凹凸贴图(_B)："
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 msgid "_Map type:"
 msgstr "映射类型(_M)："
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 msgid "Co_mpensate for darkening"
 msgstr "亮度补偿(_M)"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 msgid "I_nvert bumpmap"
 msgstr "反向凹凸贴图(_N)"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 msgid "_Tile bumpmap"
 msgstr "平铺凹凸贴图(_T)"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 msgid "_Azimuth:"
 msgstr "极角(_A)："
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 msgid "_Elevation:"
 msgstr "仰角(_E)："
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 msgid "_X offset:"
 msgstr "X 位移(_X)："
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr "可以用鼠标中键拖动预览来调整位移。"
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 msgid "_Y offset:"
 msgstr "Y 位移(_Y)："
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 msgid "_Waterlevel:"
 msgstr "水平(_W)："
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 msgid "A_mbient:"
 msgstr "环境(_M)："
 
@@ -2727,150 +2727,150 @@ msgstr "使用背景色(_U)"
 msgid "Cubistic Transformation..."
 msgstr "立体派艺术变换..."
 
-#: plug-ins/common/curve_bend.c:572
+#: plug-ins/common/curve_bend.c:567
 msgid "_Curve Bend..."
 msgstr "曲线扭曲(_C)..."
 
-#: plug-ins/common/curve_bend.c:708
+#: plug-ins/common/curve_bend.c:703
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "只能对图层进行操作(但在通道或蒙板中被调用)。"
 
-#: plug-ins/common/curve_bend.c:726
+#: plug-ins/common/curve_bend.c:721
 msgid "Cannot operate on layers with masks."
 msgstr "无法对带蒙板的图层进行操作。"
 
-#: plug-ins/common/curve_bend.c:741
+#: plug-ins/common/curve_bend.c:736
 msgid "Cannot operate on empty selections."
 msgstr "无法对空选区进行操作。"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/curve_bend.c:1239
 msgid "Curve Bend"
 msgstr "曲线扭曲"
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1268 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437
 msgid "Preview"
 msgstr "预览"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1307
+#: plug-ins/common/curve_bend.c:1297
 msgid "_Preview once"
 msgstr "预览一下(_P)"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1316
+#: plug-ins/common/curve_bend.c:1306
 msgid "Automatic pre_view"
 msgstr "自动更新预览(_V)"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/curve_bend.c:1316 plug-ins/common/mosaic.c:529
 #: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "选项"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/curve_bend.c:1330
 msgid "Rotat_e:"
 msgstr "旋转(_E)："
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1348
 msgid "Smoo_thing"
 msgstr "平滑(_T)"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:823
+#: plug-ins/common/curve_bend.c:1358 plug-ins/common/gqbist.c:823
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 msgid "_Antialiasing"
 msgstr "边缘平滑(_A)"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1368
 msgid "Work on cop_y"
 msgstr "在副本中操作(_Y)"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1378
 msgid "Modify Curves"
 msgstr "修改曲线"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1406
 msgid "Curve for Border"
 msgstr "曲线对应的边缘"
 
-#: plug-ins/common/curve_bend.c:1420
+#: plug-ins/common/curve_bend.c:1410
 msgid "_Upper"
 msgstr "上部(_U)"
 
-#: plug-ins/common/curve_bend.c:1421
+#: plug-ins/common/curve_bend.c:1411
 msgid "_Lower"
 msgstr "下部(_L)"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve Type"
 msgstr "曲线类型"
 
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1425
 msgid "Smoot_h"
 msgstr "平滑(_H)"
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Free"
 msgstr "自由(_F)"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1451
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Copy"
 msgstr "复制(_C)"
 
-#: plug-ins/common/curve_bend.c:1456
+#: plug-ins/common/curve_bend.c:1446
 msgid "Copy the active curve to the other border"
 msgstr "将活动曲线复制至对边"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1463
+#: plug-ins/common/curve_bend.c:1453
 msgid "_Mirror"
 msgstr "镜像(_M)"
 
-#: plug-ins/common/curve_bend.c:1468
+#: plug-ins/common/curve_bend.c:1458
 msgid "Mirror the active curve to the other border"
 msgstr "将活动曲线镜像至对边"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1476
+#: plug-ins/common/curve_bend.c:1466
 msgid "S_wap"
 msgstr "交换(_W)"
 
-#: plug-ins/common/curve_bend.c:1481
+#: plug-ins/common/curve_bend.c:1471
 msgid "Swap the two curves"
 msgstr "交换两条曲线"
 
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1483
 msgid "Reset the active curve"
 msgstr "重置活动曲线"
 
-#: plug-ins/common/curve_bend.c:1510
+#: plug-ins/common/curve_bend.c:1500
 msgid "Load the curves from a file"
 msgstr "从文件中加载曲线"
 
-#: plug-ins/common/curve_bend.c:1522
+#: plug-ins/common/curve_bend.c:1512
 msgid "Save the curves to a file"
 msgstr "将曲线保存到文件"
 
-#: plug-ins/common/curve_bend.c:2057
+#: plug-ins/common/curve_bend.c:2047
 msgid "Load Curve Points from file"
 msgstr "从文件中加载曲线的点"
 
-#: plug-ins/common/curve_bend.c:2084
+#: plug-ins/common/curve_bend.c:2074
 msgid "Save Curve Points to file"
 msgstr "将曲线的点保存到文件中"
 
-#: plug-ins/common/curve_bend.c:2969
+#: plug-ins/common/curve_bend.c:2941
 msgid "Curve Bend..."
 msgstr "曲线扭曲..."
 
@@ -4523,110 +4523,110 @@ msgstr "小块的边缘是直的"
 msgid "Each piece has curved sides"
 msgstr "小块的边缘是弯曲的"
 
-#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
+#: plug-ins/common/jpeg.c:384 plug-ins/common/jpeg.c:422
 msgid "JPEG image"
 msgstr "JPEG 图像"
 
-#: plug-ins/common/jpeg.c:516
+#: plug-ins/common/jpeg.c:528
 msgid "Export Preview"
 msgstr "导出预览"
 
-#: plug-ins/common/jpeg.c:880
+#: plug-ins/common/jpeg.c:892
 msgid "EXIF data will be ignored."
 msgstr "EXIF 数据将被忽略。"
 
-#: plug-ins/common/jpeg.c:1094
+#: plug-ins/common/jpeg.c:1106
 msgid "JPEG preview"
 msgstr "JPEG 预览"
 
-#: plug-ins/common/jpeg.c:1356
+#: plug-ins/common/jpeg.c:1368
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "文件大小：%02.01f kB"
 
-#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1861 plug-ins/common/jpeg.c:1961
 msgid "File size: unknown"
 msgstr "文件大小：未知"
 
-#: plug-ins/common/jpeg.c:1874
+#: plug-ins/common/jpeg.c:1926
 msgid "Save as JPEG"
 msgstr "保存为 JPEG"
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1947
 msgid "_Quality:"
 msgstr "质量(_Q)："
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1951
 msgid "JPEG quality parameter"
 msgstr "JPEG 质量参数"
 
-#: plug-ins/common/jpeg.c:1918
+#: plug-ins/common/jpeg.c:1970
 msgid "Show _Preview in image window"
 msgstr "在图像窗口中显示预览(_P)"
 
-#: plug-ins/common/jpeg.c:1931
+#: plug-ins/common/jpeg.c:1983
 msgid "_Advanced Options"
 msgstr "高级选项(_A)"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:2011
 msgid "_Smoothing:"
 msgstr "平滑(_S)："
 
-#: plug-ins/common/jpeg.c:1972
+#: plug-ins/common/jpeg.c:2024
 msgid "Frequency (rows):"
 msgstr "频率(行)："
 
-#: plug-ins/common/jpeg.c:1986
+#: plug-ins/common/jpeg.c:2038
 msgid "Use restart markers"
 msgstr "使用重新开始标记"
 
-#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2053 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "优化"
 
-#: plug-ins/common/jpeg.c:2015
+#: plug-ins/common/jpeg.c:2067
 msgid "Progressive"
 msgstr "渐进"
 
-#: plug-ins/common/jpeg.c:2034
+#: plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
 msgstr "强制基线(baseline) JPEG"
 
-#: plug-ins/common/jpeg.c:2050
+#: plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
 msgstr "保存 EXIF 数据"
 
-#: plug-ins/common/jpeg.c:2064
+#: plug-ins/common/jpeg.c:2119
 msgid "Save thumbnail"
 msgstr "保存缩略图"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2078
+#: plug-ins/common/jpeg.c:2136
 msgid "Subsampling:"
 msgstr "子采样："
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2163
 msgid "DCT method:"
 msgstr "DCT 方法："
 
-#: plug-ins/common/jpeg.c:2111
+#: plug-ins/common/jpeg.c:2169
 msgid "Fast Integer"
 msgstr "快速整数"
 
-#: plug-ins/common/jpeg.c:2112
+#: plug-ins/common/jpeg.c:2170
 msgid "Integer"
 msgstr "整数"
 
-#: plug-ins/common/jpeg.c:2113
+#: plug-ins/common/jpeg.c:2171
 msgid "Floating-Point"
 msgstr "浮点数"
 
-#: plug-ins/common/jpeg.c:2127
+#: plug-ins/common/jpeg.c:2185
 msgid "Comment"
 msgstr "注释"
 
-#: plug-ins/common/jpeg.c:2280
+#: plug-ins/common/jpeg.c:2338
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "正在打开“%s”的缩略图..."
@@ -6005,59 +6005,59 @@ msgstr ""
 msgid "Indexed Palette Type"
 msgstr "索引色板类型"
 
-#: plug-ins/common/retinex.c:167
+#: plug-ins/common/retinex.c:168
 #, fuzzy
 msgid "_Retinex..."
 msgstr "正在绘制波纹..."
 
-#: plug-ins/common/retinex.c:250
+#: plug-ins/common/retinex.c:251
 #, fuzzy
 msgid "Retinex..."
 msgstr "旋转..."
 
-#: plug-ins/common/retinex.c:252
+#: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
 msgstr ""
 
-#: plug-ins/common/retinex.c:289
+#: plug-ins/common/retinex.c:290
 #, fuzzy
 msgid "Retinex Image Enhancement"
 msgstr "边缘增强(_E)"
 
-#: plug-ins/common/retinex.c:310
+#: plug-ins/common/retinex.c:311
 msgid "Level"
 msgstr ""
 
-#: plug-ins/common/retinex.c:314
+#: plug-ins/common/retinex.c:315
 #, fuzzy
 msgid "_Uniform"
 msgstr "单位编辑器"
 
-#: plug-ins/common/retinex.c:316
+#: plug-ins/common/retinex.c:317
 #, fuzzy
 msgid "_Low"
 msgstr "下部(_L)"
 
-#: plug-ins/common/retinex.c:318
+#: plug-ins/common/retinex.c:319
 #, fuzzy
 msgid "_High"
 msgstr "高度(_H)："
 
-#: plug-ins/common/retinex.c:343
+#: plug-ins/common/retinex.c:344
 #, fuzzy
 msgid "_Scale:"
 msgstr "缩放："
 
-#: plug-ins/common/retinex.c:358
+#: plug-ins/common/retinex.c:359
 #, fuzzy
 msgid "_Scale division:"
 msgstr "分裂(_D)："
 
-#: plug-ins/common/retinex.c:373
+#: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
 msgstr ""
 
-#: plug-ins/common/retinex.c:647
+#: plug-ins/common/retinex.c:648
 #, fuzzy
 msgid "Retinex: Filtering..."
 msgstr "正在动态模糊..."
@@ -10106,15 +10106,15 @@ msgstr "打开文件出错"
 msgid "Load Imagemap"
 msgstr "载入图像映像"
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:117
 msgid "File already exists"
 msgstr "文件已存在"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:118
 msgid "Do you really want to overwrite?"
 msgstr "您真的要覆盖它吗？"
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr "保存图像映像"
 

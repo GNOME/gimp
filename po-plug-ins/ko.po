@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:33+0100\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -383,10 +383,10 @@ msgstr "파일이름:"
 #: plug-ins/Lighting/lighting_ui.c:1109 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2001
 #: plug-ins/common/channel_mixer.c:1044 plug-ins/common/compressor.c:404
-#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:866
+#: plug-ins/common/compressor.c:535 plug-ins/common/curve_bend.c:861
 #: plug-ins/common/dicom.c:647 plug-ins/common/gbr.c:586
 #: plug-ins/common/gif.c:994 plug-ins/common/gih.c:1254
-#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1496
+#: plug-ins/common/gtm.c:225 plug-ins/common/jpeg.c:1498
 #: plug-ins/common/mng.c:557 plug-ins/common/mng.c:941
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:585
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:1178
@@ -424,10 +424,10 @@ msgstr "파라미터 저장"
 #: plug-ins/FractalExplorer/Dialogs.c:2094
 #: plug-ins/Lighting/lighting_ui.c:1247 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2216
-#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:918
+#: plug-ins/common/channel_mixer.c:966 plug-ins/common/curve_bend.c:913
 #: plug-ins/common/dicom.c:290 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:296 plug-ins/common/gih.c:648
-#: plug-ins/common/jpeg.c:934 plug-ins/common/jpeg.c:2549
+#: plug-ins/common/jpeg.c:946 plug-ins/common/jpeg.c:2607
 #: plug-ins/common/mng.c:1112 plug-ins/common/pat.c:300
 #: plug-ins/common/pcx.c:302 plug-ins/common/pix.c:332
 #: plug-ins/common/png.c:674 plug-ins/common/pnm.c:432
@@ -805,7 +805,7 @@ msgid "Bumpm_ap image:"
 msgstr "충돌(Bump) 맵 이미지:"
 
 #. Map type menu
-#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:896
+#: plug-ins/Lighting/lighting_ui.c:758 plug-ins/common/bumpmap.c:898
 #: plug-ins/flame/flame.c:733
 msgid "Linear"
 msgstr "선형"
@@ -814,12 +814,12 @@ msgstr "선형"
 msgid "Logarithmic"
 msgstr "대수"
 
-#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:898
+#: plug-ins/Lighting/lighting_ui.c:760 plug-ins/common/bumpmap.c:900
 #: plug-ins/flame/flame.c:734
 msgid "Sinusoidal"
 msgstr "사인곡선"
 
-#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:897
+#: plug-ins/Lighting/lighting_ui.c:761 plug-ins/common/bumpmap.c:899
 #: plug-ins/flame/flame.c:735
 msgid "Spherical"
 msgstr "구"
@@ -1021,7 +1021,7 @@ msgstr "앤티앨리어싱 가능"
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "톱니 같은 들쑥날쑥한 것 제거 가능/불가능 (앤티앨리어싱)"
 
-#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:980
+#: plug-ins/MapObject/mapobject_ui.c:602 plug-ins/common/bumpmap.c:979
 #: plug-ins/common/emboss.c:509 plug-ins/common/fractaltrace.c:791
 #: plug-ins/common/struc.c:1318
 #, fuzzy
@@ -1287,7 +1287,7 @@ msgstr "%s: 잘못된 컬러맵\n"
 #: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:295 plug-ins/common/gbr.c:332
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:653
-#: plug-ins/common/jpeg.c:941 plug-ins/common/pat.c:305
+#: plug-ins/common/jpeg.c:953 plug-ins/common/pat.c:305
 #: plug-ins/common/pcx.c:307 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:681 plug-ins/common/pnm.c:437
 #: plug-ins/common/postscript.c:996 plug-ins/common/psd.c:1764
@@ -1316,19 +1316,19 @@ msgstr "%s: BMP파일 %s가 정확치 않습니다.\n"
 msgid "Error reading BMP file header from '%s'"
 msgstr "%s: BMP 파일 해더 읽기 애러\n"
 
-#: plug-ins/bmp/bmpread.c:439 plug-ins/bmp/bmpread.c:474
+#: plug-ins/bmp/bmpread.c:442 plug-ins/bmp/bmpread.c:477
 msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:479 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:482 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:273
 #: plug-ins/common/compose.c:625 plug-ins/common/decompose.c:595
 #: plug-ins/common/dicom.c:442 plug-ins/common/film.c:946
-#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1101
-#: plug-ins/common/jpeg.c:2416 plug-ins/common/pcx.c:334
+#: plug-ins/common/gifload.c:865 plug-ins/common/jpeg.c:1113
+#: plug-ins/common/jpeg.c:2474 plug-ins/common/pcx.c:334
 #: plug-ins/common/pcx.c:340 plug-ins/common/pix.c:374
 #: plug-ins/common/png.c:808 plug-ins/common/pnm.c:517
 #: plug-ins/common/psd.c:2173 plug-ins/common/raw.c:677
@@ -1361,7 +1361,7 @@ msgstr "모르는 그림형식에서는 동작할 수 없습니다"
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:591 plug-ins/common/gif.c:1001
 #: plug-ins/common/gih.c:1259 plug-ins/common/gtm.c:245
-#: plug-ins/common/jpeg.c:1451 plug-ins/common/pat.c:438
+#: plug-ins/common/jpeg.c:1453 plug-ins/common/pat.c:438
 #: plug-ins/common/pcx.c:545 plug-ins/common/pix.c:521
 #: plug-ins/common/png.c:1185 plug-ins/common/pnm.c:814
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
@@ -2357,80 +2357,80 @@ msgstr "두깨"
 msgid "_Bucket size:"
 msgstr "버킷 크기:"
 
-#: plug-ins/common/bumpmap.c:341
+#: plug-ins/common/bumpmap.c:343
 #, fuzzy
 msgid "_Bump Map..."
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:490
+#: plug-ins/common/bumpmap.c:492
 msgid "Bump-mapping..."
 msgstr "충돌(Bump)-매핑..."
 
-#: plug-ins/common/bumpmap.c:834
+#: plug-ins/common/bumpmap.c:836
 #, fuzzy
 msgid "Bump Map"
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:893
+#: plug-ins/common/bumpmap.c:895
 #, fuzzy
 msgid "_Bump map:"
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:908
+#: plug-ins/common/bumpmap.c:907
 #, fuzzy
 msgid "_Map type:"
 msgstr "미디어 유형:"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:913
+#: plug-ins/common/bumpmap.c:912
 #, fuzzy
 msgid "Co_mpensate for darkening"
 msgstr "어두움 보정"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:927
+#: plug-ins/common/bumpmap.c:926
 #, fuzzy
 msgid "I_nvert bumpmap"
 msgstr "충돌(bump) 맵 반대로(invert)"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:940
 #, fuzzy
 msgid "_Tile bumpmap"
 msgstr "충돌(Bump) 맵"
 
-#: plug-ins/common/bumpmap.c:956 plug-ins/common/emboss.c:485
+#: plug-ins/common/bumpmap.c:955 plug-ins/common/emboss.c:485
 #, fuzzy
 msgid "_Azimuth:"
 msgstr "방위"
 
-#: plug-ins/common/bumpmap.c:968
+#: plug-ins/common/bumpmap.c:967
 #, fuzzy
 msgid "_Elevation:"
 msgstr "앙각"
 
-#: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
+#: plug-ins/common/bumpmap.c:993 plug-ins/common/postscript.c:3137
 #, fuzzy
 msgid "_X offset:"
 msgstr "X 옵셋:"
 
-#: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
+#: plug-ins/common/bumpmap.c:996 plug-ins/common/bumpmap.c:1010
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
+#: plug-ins/common/bumpmap.c:1007 plug-ins/common/postscript.c:3146
 #, fuzzy
 msgid "_Y offset:"
 msgstr "Y 옵셋:"
 
-#: plug-ins/common/bumpmap.c:1022
+#: plug-ins/common/bumpmap.c:1021
 #, fuzzy
 msgid "_Waterlevel:"
 msgstr "수평면"
 
-#: plug-ins/common/bumpmap.c:1034
+#: plug-ins/common/bumpmap.c:1033
 #, fuzzy
 msgid "A_mbient:"
 msgstr "환경:"
@@ -3037,45 +3037,45 @@ msgstr "배경 색상 사용"
 msgid "Cubistic Transformation..."
 msgstr "입체적 변환"
 
-#: plug-ins/common/curve_bend.c:572
+#: plug-ins/common/curve_bend.c:567
 #, fuzzy
 msgid "_Curve Bend..."
 msgstr "빨간색"
 
-#: plug-ins/common/curve_bend.c:708
+#: plug-ins/common/curve_bend.c:703
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:726
+#: plug-ins/common/curve_bend.c:721
 #, fuzzy
 msgid "Cannot operate on layers with masks."
 msgstr "PS: 알수 없는 이미지 유형은 작동되지 않습니다."
 
-#: plug-ins/common/curve_bend.c:741
+#: plug-ins/common/curve_bend.c:736
 #, fuzzy
 msgid "Cannot operate on empty selections."
 msgstr "모르는 그림형식에서는 동작할 수 없습니다"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/curve_bend.c:1239
 msgid "Curve Bend"
 msgstr ""
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/common/curve_bend.c:1268 plug-ins/gimpressionist/orientmap.c:567
 #: plug-ins/gimpressionist/sizemap.c:437
 msgid "Preview"
 msgstr "미리보기"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1307
+#: plug-ins/common/curve_bend.c:1297
 #, fuzzy
 msgid "_Preview once"
 msgstr "미리보기"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1316
+#: plug-ins/common/curve_bend.c:1306
 #, fuzzy
 msgid "Automatic pre_view"
 msgstr "경로 이동 미리보기"
@@ -3083,126 +3083,126 @@ msgstr "경로 이동 미리보기"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
+#: plug-ins/common/curve_bend.c:1316 plug-ins/common/mosaic.c:529
 #: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1209
 msgid "Options"
 msgstr "옵션"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1340
+#: plug-ins/common/curve_bend.c:1330
 #, fuzzy
 msgid "Rotat_e:"
 msgstr "회전하기"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1358
+#: plug-ins/common/curve_bend.c:1348
 #, fuzzy
 msgid "Smoo_thing"
 msgstr "부드럽게"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1368 plug-ins/common/gqbist.c:823
+#: plug-ins/common/curve_bend.c:1358 plug-ins/common/gqbist.c:823
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:510
 #, fuzzy
 msgid "_Antialiasing"
 msgstr "앤티앨리어싱"
 
 #. The work_on_copy toggle
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1368
 msgid "Work on cop_y"
 msgstr ""
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1378
 #, fuzzy
 msgid "Modify Curves"
 msgstr "읽기"
 
-#: plug-ins/common/curve_bend.c:1416
+#: plug-ins/common/curve_bend.c:1406
 #, fuzzy
 msgid "Curve for Border"
 msgstr "테두리"
 
-#: plug-ins/common/curve_bend.c:1420
+#: plug-ins/common/curve_bend.c:1410
 #, fuzzy
 msgid "_Upper"
 msgstr "페이퍼"
 
-#: plug-ins/common/curve_bend.c:1421
+#: plug-ins/common/curve_bend.c:1411
 #, fuzzy
 msgid "_Lower"
 msgstr "선형"
 
-#: plug-ins/common/curve_bend.c:1431
+#: plug-ins/common/curve_bend.c:1421
 #, fuzzy
 msgid "Curve Type"
 msgstr "미디어 유형:"
 
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1425
 #, fuzzy
 msgid "Smoot_h"
 msgstr "부드럽게"
 
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1426
 #, fuzzy
 msgid "_Free"
 msgstr "녹색"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1451
+#: plug-ins/common/curve_bend.c:1441
 #, fuzzy
 msgid "_Copy"
 msgstr "잘라내기"
 
-#: plug-ins/common/curve_bend.c:1456
+#: plug-ins/common/curve_bend.c:1446
 msgid "Copy the active curve to the other border"
 msgstr ""
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1463
+#: plug-ins/common/curve_bend.c:1453
 msgid "_Mirror"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1468
+#: plug-ins/common/curve_bend.c:1458
 msgid "Mirror the active curve to the other border"
 msgstr ""
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1476
+#: plug-ins/common/curve_bend.c:1466
 #, fuzzy
 msgid "S_wap"
 msgstr "왜곡되게"
 
-#: plug-ins/common/curve_bend.c:1481
+#: plug-ins/common/curve_bend.c:1471
 #, fuzzy
 msgid "Swap the two curves"
 msgstr "전체 이미지 회전하기"
 
-#: plug-ins/common/curve_bend.c:1493
+#: plug-ins/common/curve_bend.c:1483
 msgid "Reset the active curve"
 msgstr ""
 
-#: plug-ins/common/curve_bend.c:1510
+#: plug-ins/common/curve_bend.c:1500
 #, fuzzy
 msgid "Load the curves from a file"
 msgstr "파일에서 포인트 경로 읽기"
 
-#: plug-ins/common/curve_bend.c:1522
+#: plug-ins/common/curve_bend.c:1512
 #, fuzzy
 msgid "Save the curves to a file"
 msgstr "파일에서 포인트 경로 저장"
 
-#: plug-ins/common/curve_bend.c:2057
+#: plug-ins/common/curve_bend.c:2047
 #, fuzzy
 msgid "Load Curve Points from file"
 msgstr "파일에서 포인트 경로 읽기"
 
-#: plug-ins/common/curve_bend.c:2084
+#: plug-ins/common/curve_bend.c:2074
 #, fuzzy
 msgid "Save Curve Points to file"
 msgstr "파일에서 포인트 경로 저장"
 
-#: plug-ins/common/curve_bend.c:2969
+#: plug-ins/common/curve_bend.c:2941
 #, fuzzy
 msgid "Curve Bend..."
 msgstr "빨간색"
@@ -5079,127 +5079,127 @@ msgstr ""
 msgid "Each piece has curved sides"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:372 plug-ins/common/jpeg.c:410
+#: plug-ins/common/jpeg.c:384 plug-ins/common/jpeg.c:422
 #, fuzzy
 msgid "JPEG image"
 msgstr "JPEG 미리보기"
 
-#: plug-ins/common/jpeg.c:516
+#: plug-ins/common/jpeg.c:528
 #, fuzzy
 msgid "Export Preview"
 msgstr "페이퍼 미리보기"
 
-#: plug-ins/common/jpeg.c:880
+#: plug-ins/common/jpeg.c:892
 msgid "EXIF data will be ignored."
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1094
+#: plug-ins/common/jpeg.c:1106
 msgid "JPEG preview"
 msgstr "JPEG 미리보기"
 
-#: plug-ins/common/jpeg.c:1356
+#: plug-ins/common/jpeg.c:1368
 #, fuzzy, c-format
 msgid "File size: %02.01f kB"
 msgstr "크기: %lu 바이트 (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1809 plug-ins/common/jpeg.c:1909
+#: plug-ins/common/jpeg.c:1861 plug-ins/common/jpeg.c:1961
 #, fuzzy
 msgid "File size: unknown"
 msgstr "크기: 알수없음"
 
-#: plug-ins/common/jpeg.c:1874
+#: plug-ins/common/jpeg.c:1926
 #, fuzzy
 msgid "Save as JPEG"
 msgstr "BMP로 저장"
 
-#: plug-ins/common/jpeg.c:1895
+#: plug-ins/common/jpeg.c:1947
 #, fuzzy
 msgid "_Quality:"
 msgstr "특성"
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1951
 #, fuzzy
 msgid "JPEG quality parameter"
 msgstr "파라미터"
 
-#: plug-ins/common/jpeg.c:1918
+#: plug-ins/common/jpeg.c:1970
 #, fuzzy
 msgid "Show _Preview in image window"
 msgstr "미리보기 (이미지 창에서)"
 
-#: plug-ins/common/jpeg.c:1931
+#: plug-ins/common/jpeg.c:1983
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "진보된 설정"
 
-#: plug-ins/common/jpeg.c:1959
+#: plug-ins/common/jpeg.c:2011
 #, fuzzy
 msgid "_Smoothing:"
 msgstr "부드럽게"
 
-#: plug-ins/common/jpeg.c:1972
+#: plug-ins/common/jpeg.c:2024
 #, fuzzy
 msgid "Frequency (rows):"
 msgstr "빈도 재시작 (열)"
 
-#: plug-ins/common/jpeg.c:1986
+#: plug-ins/common/jpeg.c:2038
 #, fuzzy
 msgid "Use restart markers"
 msgstr "메이커 재시작"
 
-#: plug-ins/common/jpeg.c:2001 plug-ins/xjt/xjt.c:860
+#: plug-ins/common/jpeg.c:2053 plug-ins/xjt/xjt.c:860
 msgid "Optimize"
 msgstr "최적화"
 
-#: plug-ins/common/jpeg.c:2015
+#: plug-ins/common/jpeg.c:2067
 msgid "Progressive"
 msgstr "진보적"
 
-#: plug-ins/common/jpeg.c:2034
+#: plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:2050
+#: plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:2064
+#: plug-ins/common/jpeg.c:2119
 #, fuzzy
 msgid "Save thumbnail"
 msgstr "서버 로그파일:"
 
 #. Subsampling
-#: plug-ins/common/jpeg.c:2078
+#: plug-ins/common/jpeg.c:2136
 #, fuzzy
 msgid "Subsampling:"
 msgstr "슈퍼샘플링"
 
 #. DCT method
-#: plug-ins/common/jpeg.c:2105
+#: plug-ins/common/jpeg.c:2163
 #, fuzzy
 msgid "DCT method:"
 msgstr "발단규모(Threshold):"
 
-#: plug-ins/common/jpeg.c:2111
+#: plug-ins/common/jpeg.c:2169
 #, fuzzy
 msgid "Fast Integer"
 msgstr "빠른 정수"
 
-#: plug-ins/common/jpeg.c:2112
+#: plug-ins/common/jpeg.c:2170
 msgid "Integer"
 msgstr "정수"
 
-#: plug-ins/common/jpeg.c:2113
+#: plug-ins/common/jpeg.c:2171
 #, fuzzy
 msgid "Floating-Point"
 msgstr "유동적-포인트"
 
-#: plug-ins/common/jpeg.c:2127
+#: plug-ins/common/jpeg.c:2185
 #, fuzzy
 msgid "Comment"
 msgstr "GIF 설명: "
 
-#: plug-ins/common/jpeg.c:2280
+#: plug-ins/common/jpeg.c:2338
 #, fuzzy, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "%s 저장중:"
@@ -6795,59 +6795,59 @@ msgstr ""
 msgid "Indexed Palette Type"
 msgstr ""
 
-#: plug-ins/common/retinex.c:167
+#: plug-ins/common/retinex.c:168
 #, fuzzy
 msgid "_Retinex..."
 msgstr "잘라내는 중..."
 
-#: plug-ins/common/retinex.c:250
+#: plug-ins/common/retinex.c:251
 #, fuzzy
 msgid "Retinex..."
 msgstr "회전중..."
 
-#: plug-ins/common/retinex.c:252
+#: plug-ins/common/retinex.c:253
 msgid "Retinex (4/4): updated..."
 msgstr ""
 
-#: plug-ins/common/retinex.c:289
+#: plug-ins/common/retinex.c:290
 msgid "Retinex Image Enhancement"
 msgstr ""
 
-#: plug-ins/common/retinex.c:310
+#: plug-ins/common/retinex.c:311
 #, fuzzy
 msgid "Level"
 msgstr "바깥 :"
 
-#: plug-ins/common/retinex.c:314
+#: plug-ins/common/retinex.c:315
 #, fuzzy
 msgid "_Uniform"
 msgstr "크기 맵 편집기"
 
-#: plug-ins/common/retinex.c:316
+#: plug-ins/common/retinex.c:317
 #, fuzzy
 msgid "_Low"
 msgstr "선형"
 
-#: plug-ins/common/retinex.c:318
+#: plug-ins/common/retinex.c:319
 #, fuzzy
 msgid "_High"
 msgstr "높이:"
 
-#: plug-ins/common/retinex.c:343
+#: plug-ins/common/retinex.c:344
 #, fuzzy
 msgid "_Scale:"
 msgstr "스케일:"
 
-#: plug-ins/common/retinex.c:358
+#: plug-ins/common/retinex.c:359
 #, fuzzy
 msgid "_Scale division:"
 msgstr "나누기"
 
-#: plug-ins/common/retinex.c:373
+#: plug-ins/common/retinex.c:374
 msgid "_Dynamic:"
 msgstr ""
 
-#: plug-ins/common/retinex.c:647
+#: plug-ins/common/retinex.c:648
 #, fuzzy
 msgid "Retinex: Filtering..."
 msgstr "색상화 중..."
@@ -11399,16 +11399,16 @@ msgstr "읽기위해 \"%s\" 파일을 열수 없습니다!\n"
 msgid "Load Imagemap"
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:114
+#: plug-ins/imagemap/imap_file.c:117
 #, fuzzy
 msgid "File already exists"
 msgstr "타일 높이:"
 
-#: plug-ins/imagemap/imap_file.c:115
+#: plug-ins/imagemap/imap_file.c:118
 msgid "Do you really want to overwrite?"
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:166
+#: plug-ins/imagemap/imap_file.c:165
 msgid "Save Imagemap"
 msgstr ""
 

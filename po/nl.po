@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2005-01-03 00:27+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <nl@vrijschrift.org>\n"
@@ -270,8 +270,8 @@ msgstr "Aankoppelbaar"
 msgid "Document History"
 msgstr "Documentgeschiedenis"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "Tekengebied"
 
@@ -498,7 +498,7 @@ msgstr "Kanaal dupliceren"
 msgid "_Delete Channel"
 msgstr "Kanaal _verwijderen"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "Kanaal verwijderen"
 
@@ -1042,7 +1042,7 @@ msgstr "Losse i_ngangen verwijderen"
 msgid "Remove dangling entries"
 msgstr "Losse ingangen verwijderen"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1350,7 +1350,7 @@ msgstr "_Terugdraaien..."
 msgid "_Quit"
 msgstr "Sl_uiten"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1361,39 +1361,39 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Afbeelding opslaan"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Kopie van de afbeelding opslaan"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Nieuwe sjabloon aanmaken"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Geef een naam voor deze sjabloon"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Terughalen lukte niet. Geen bestandsnaam aan deze afbeelding verbonden."
 
 # terughalen
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Afbeelding terugzetten"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "'%s' terugzetten naar '%s'?"
 
 # terugdraaien/terugzetten/herstellen
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1402,19 +1402,19 @@ msgstr ""
 "opgeslagen zult u alle wijzigingen verliezen, inclusief alle informatie over "
 "ongedaan maken."
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 msgid "Open Image as Layer"
 msgstr "Afbeelding openen als laag"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Afbeelding openen"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Naamloze sjabloon)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2020,7 +2020,7 @@ msgstr "Laag dupliceren"
 msgid "_Delete Layer"
 msgstr "Laag _verwijderen"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 msgid "Delete layer"
 msgstr "Laag verwijderen"
 
@@ -2192,7 +2192,7 @@ msgstr "Laag snijden"
 msgid "Layer Mask to Selection"
 msgstr "Laagmasker naar selectie"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Laagmaskter toevoegen"
@@ -3059,7 +3059,7 @@ msgid "Path to Selection"
 msgstr "Pad naar selectie"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Pad naar lijn"
 
@@ -4385,269 +4385,274 @@ msgstr "Voorwaarts (traditioneel)"
 msgid "Backward (corrective)"
 msgstr "Achterwaarts (corrigerend)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<ongeldig>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 msgid "Scale image"
 msgstr "Afbeelding schalen"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 msgid "Resize image"
 msgstr "Afbeelding herschalen"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 msgid "Flip image"
 msgstr "Afbeelding spiegelen"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 msgid "Rotate image"
 msgstr "Afbeelding draaien"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 msgid "Crop image"
 msgstr "Afbeelding snijden"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 msgid "Convert image"
 msgstr "Afbeelding converteren"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 msgid "Merge layers"
 msgstr "Lagen samenvoegen"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "Vectoren samenvoegen"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 msgid "Quick Mask"
 msgstr "Snelmasker"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Raster"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Hulplijn"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Tekengebiedaanpassing"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 msgid "Selection mask"
 msgstr "Selectiemasker"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 msgid "Item visibility"
 msgstr "Zichtbaarheid item"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 msgid "Linked item"
 msgstr "Gekoppeld item"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 msgid "Item properties"
 msgstr "Eigenschappen item"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 msgid "Move item"
 msgstr "Item verplaatsen"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 msgid "Scale item"
 msgstr "Item schalen"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 msgid "Resize item"
 msgstr "Item herschalen"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 msgid "Add layer mask"
 msgstr "Laagmaskter toevoegen"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 msgid "Apply layer mask"
 msgstr "Laagmasker toepassen"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 msgid "Floating selection to layer"
 msgstr "Drijvende selectie naar laag"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 msgid "Float selection"
 msgstr "Drijvende selectie"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 msgid "Anchor floating selection"
 msgstr "Drijvende selectie verankeren"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 msgid "Remove floating selection"
 msgstr "Drijvende selectie verwijderen"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Plakken"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Knippen"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekst"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Transformeren"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Schilderen"
 
 # aanhangen/vastmaken/bijvoegen
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 msgid "Attach parasite"
 msgstr "Parasiet aanhangen"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 msgid "Remove parasite"
 msgstr "Parasiet verwijderen"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 msgid "Import paths"
 msgstr "Paden importeren"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-in"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 msgid "Image type"
 msgstr "Afbeeldingstype"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "Afbeeldingsgrootte"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "Resolutiewijziging"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Geïndexeerd palet veranderen"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "Item hernoemen"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Item op gekoppeld instellen"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "Nieuwe laag"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "Laagmasker verwijderen"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Laag herpositioneren"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "Laagmodus instellen"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "Ondoorzichtigheid laag instellen"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "'Behoudt transparantie' instellen"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Tekst gewijzigd"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "Nieuw kanaal"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Kanaal herpositioneren"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "Kanaalkleur"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "Nieuwe vectoren"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "Vectoren verwijderen"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Vectorwijziging"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Vectoren herpositioneren"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "DS naar laag"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "DS anker"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 #, fuzzy
 msgid "FS relax"
 msgstr "DS drijvend"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Inkt"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "Eek: kan niet ongedaan maken"
 
@@ -4767,7 +4772,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ongeldige UTF-8-tekenreeks in penseelbestand '%s'."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Naamloos"
@@ -4943,11 +4948,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "kopiëren"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s kopiëren"
@@ -5407,15 +5412,15 @@ msgstr "%d lagen"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kon miniatuurbestand '%s' niet openen: %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Parasiet aanhangen"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Parasiet aan item koppelen"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Parasiet van item verwijderen"
 
@@ -5467,7 +5472,7 @@ msgstr "Laag spiegelen"
 msgid "Rotate Layer"
 msgstr "Laag draaien"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5480,43 +5485,43 @@ msgid ""
 "(%s)"
 msgstr "Drijvende Selectie"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Kan geen laagmasker toevoegen aan een laag die niet deel is van een "
 "afbeelding."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan geen laagmasker toevoegen, omdat de laag er al een heeft."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan geen laagmasker toevoegen aan een laag zonder alphakanaal."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan geen laagmasker toevoegen met andere afmetingen dan de gespecificeerde "
 "laag"
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha naar masker verplaatsen"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Laagmasker toepassen"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Laagmasker verwijderen"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Alphakanaal toevoegen"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
@@ -5882,20 +5887,20 @@ msgstr "Locatie openen"
 msgid "Enter location (URI):"
 msgstr "Locatie invoeren (URI):"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 msgid "File exists"
 msgstr "Bestand bestaat"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 msgid "_Replace"
 msgstr "_Vervangen"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Een bestand genaamd '%s' bestaat al."
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Wilt u het vervangen door de afbeelding die u aan het opslaan bent?"
 
@@ -5985,7 +5990,7 @@ msgid "Is this what you want to do?"
 msgstr "Is dit wat u wilt doen?"
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -7844,10 +7849,6 @@ msgstr "Tegenhouden of doordrukken"
 msgid "Eraser"
 msgstr "Gom"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Inkt"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Penseel"
@@ -7984,7 +7985,7 @@ msgstr "Penseel"
 msgid "Brush UI"
 msgstr "Penseel-UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8400,7 +8401,7 @@ msgstr "Verspringing:"
 msgid "Shape:"
 msgstr "Vorm:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Herhaal:"
 
@@ -9196,7 +9197,7 @@ msgstr "Modus:"
 msgid "Brush:"
 msgstr "Penseel:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Verloop:"
 
@@ -9208,31 +9209,31 @@ msgstr "Harde rand"
 msgid "Pressure sensitivity"
 msgstr "Drukgevoeligheid"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Ondoorzichtigheid"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Hardheid"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Mate"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Grootte"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 msgid "Fade out"
 msgstr "Uitvloeien"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Lengte:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Gebruik kleur uit verloop"
@@ -9777,39 +9778,39 @@ msgstr "Ankers verwijderen"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Er is geen actieve laag of kanaal om op te tekenen"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Pad"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Pad hernoemen"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Pad verplaatsen"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Pad schalen"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Pad herschalen"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Pad spiegelen"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Pad draaien"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Pad transformeren"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "Kan geen leeg pad tekenen."
 
@@ -10382,7 +10383,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "U kunt hier dokbare dialoogvensters plaatsen."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Deze tab sluiten"
 
@@ -10408,11 +10409,11 @@ msgstr "Automatisch opgemerkt"
 msgid "By Extension"
 msgstr "Volgens extensie"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Selecteer bestands_type ( %s)"

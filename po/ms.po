@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2003-11-04 09:00+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -260,8 +260,8 @@ msgstr "Ofset Boleh lukis"
 msgid "Document History"
 msgstr "Sejarah Dokumen"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 #, fuzzy
 msgid "Drawable"
 msgstr "Ofset Boleh lukis"
@@ -519,7 +519,7 @@ msgstr "Buat Duplikasi Saluran"
 msgid "_Delete Channel"
 msgstr "/_Hapuskan Saluran"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 #, fuzzy
 msgid "Delete channel"
 msgstr "Hapuskan Saluran"
@@ -1160,7 +1160,7 @@ msgstr "/Keluarkan E_ntri Tergantung"
 msgid "Remove dangling entries"
 msgstr "/Keluarkan E_ntri Tergantung"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1514,7 +1514,7 @@ msgstr "Kembali"
 msgid "_Quit"
 msgstr "/Fail/_Keluar"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1525,39 +1525,39 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Simpan Imej"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Simpan Salinan Imej"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Wujudkan Templat Baru"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Masukkan nama bagi templat ini"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 #, fuzzy
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Kembalikan gagal.\n"
 "Tiada nama fail dikaitkan dengan imej ini."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Kembalikan Imej"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 #, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
@@ -1569,20 +1569,20 @@ msgstr ""
 "Anda akan hilang semua perubahan yang dibuat, termasuk semua maklumat buat "
 "asal."
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "Buka Imej"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Buka Imej"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Templat Tanpa nama)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2250,7 +2250,7 @@ msgstr "Buat Duplikasi Lapisan"
 msgid "_Delete Layer"
 msgstr "/_Hapuskan Lapisan"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "Hapuskan Lapisan"
@@ -2454,7 +2454,7 @@ msgstr "Potong Lapisan"
 msgid "Layer Mask to Selection"
 msgstr "Topeng Lapisan ke Pemilihan"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Tambahkan Topeng Lapisan"
@@ -3456,7 +3456,7 @@ msgid "Path to Selection"
 msgstr "Laluan ke Pemilihan"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Tandakan Laluan"
 
@@ -4786,293 +4786,298 @@ msgstr "Ke depan (Tradisional)"
 msgid "Backward (corrective)"
 msgstr "Ke belakang (Pembetulan)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<tak sah>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "Skalakan Imej"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "Ubah saiz Imej"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "Terbalikkan Imej"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "Putarkan Imej"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "Potong Imej"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "Tukarkan Imej"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "Cantumkan Lapisan"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "Vektor Baru"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "QuickMask"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Grid"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Panduan"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Prosedur boleh lukis"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "Topeng Pemilihan"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "Kejelasan Item"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "Item yang Dipautkan"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "Ciri Item"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "Alihkan Item"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "Skalakan Imej"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "Ubah saiz Imej"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "Tambahkan Topeng Lapisan"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "gunakan Topeng Lapisan"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "Pemilihan Apung ke Lapisan"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "Apungkan Pemilihan"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "Tambat Pemilihan Apung"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "Pemilihan Apung"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Tampal"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Potong"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Teks"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Jelma"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Cat"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "Lampirkan Parasit"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "Keluarkan Parasit"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "Import Laluan"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 #, fuzzy
 msgid "Image type"
 msgstr "Jenis Imej"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "Saiz Imej"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "Perubahan Resolusi"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Ubah Pelet Berindeks"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "Namakan semula Imej"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Setkan Pautan Item"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "Lapisan Baru"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "Hapuskan Topeng Lapisan"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Tempatkan semula Lapisan"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "Setkan Mod Lapisan"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "Setkan Kelegapan Lapisan"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "Setkan Pengekalan Trans"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Hanya apabila Diubah suai"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "Saluran Baru"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Tempatkan semula Saluran"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "Warna Saluran"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "Vektor Baru"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "Hapuskan Vektor"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Mod Vektor"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Tempatkan semula Vektor"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "FS ke Lapisan"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "FS Rapi"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 #, fuzzy
 msgid "FS relax"
 msgstr "FS Santai"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Dakwat"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "EEK: tidak boleh buat asal"
 
@@ -5204,7 +5209,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Rentetan UTF-8 tak sah dalam fail berus '%s'."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Tanpa nama"
@@ -5376,11 +5381,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "salin"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "salinan %s "
@@ -5844,15 +5849,15 @@ msgstr "%d Lapisan"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Gagal membuka fail saiz kecil '%s': %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Lampirkan Parasit"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Lampirkan Parasit ke Item"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Alihkan Parasit ke Item"
 
@@ -5910,7 +5915,7 @@ msgstr "Terbalikkan Lapisan"
 msgid "Rotate Layer"
 msgstr "Putarkan Lapisan"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5923,44 +5928,44 @@ msgid ""
 "(%s)"
 msgstr "Pemilihan Apung"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Tidak dapat menambahkan topeng lapisan ke lapisan yang bukan sebahagian "
 "daripada imej."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Tidak dapat menambahkan topeng lapisan kerana lapisan telah mempunyainya"
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Tidak dapat menambahkan topeng lapisan ke lapisan tanpa saluran alfa"
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Tidak dapat menambahkan topeng lapisan bagi dimensi yang berlainan daripada "
 "lapisan yang ditentukan. "
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "gunakan Topeng Lapisan"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Hapuskan Topeng Lapisan"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Tambahkan Saluran Alfa"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Lapisan ke Saiz Imej"
 
@@ -6331,22 +6336,22 @@ msgstr "Lokasi:"
 msgid "Enter location (URI):"
 msgstr "Sisipan:"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 #, fuzzy
 msgid "File exists"
 msgstr "Fail Wujud!"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "Ulang sama"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6435,7 +6440,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -8420,10 +8425,6 @@ msgstr "Tepis/Lebur"
 msgid "Eraser"
 msgstr "Pemadam"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Dakwat"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Berus cat"
@@ -8567,7 +8568,7 @@ msgstr "Berus:"
 msgid "Brush UI"
 msgstr "Berus UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -9002,7 +9003,7 @@ msgstr "Ofset:"
 msgid "Shape:"
 msgstr "Bentuk:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Ulang:"
 
@@ -9841,7 +9842,7 @@ msgstr "Mod:"
 msgid "Brush:"
 msgstr "Berus:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Kecerunan:"
 
@@ -9855,32 +9856,32 @@ msgstr "Tepi Keras"
 msgid "Pressure sensitivity"
 msgstr "Kepekaan Tekanan"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Kelegapan"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Kekerasan"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Kadar"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Saiz"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "Semakin Lenyap"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Panjang:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Gunakan Warna dari Kecerunan"
@@ -10451,39 +10452,39 @@ msgstr "Hapuskan Penambat"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Tidak ada lapisan atau saluran aktif untuk ditandakan"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Laluan"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Namakan semula Laluan"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Alihkan Laluan"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Skalakan Laluan"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Ubah saiz Laluan"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Terbalikkan Laluan"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Putarkan Laluan"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Jelmakan Laluan"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "Tidak boleh menanda laluan kosong."
 
@@ -11075,7 +11076,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Anda boleh menggugurkan dialog boleh dok di sini."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Tutup Tab ini"
 
@@ -11102,12 +11103,12 @@ msgstr ""
 msgid "By Extension"
 msgstr "/Dengan Sambungan"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 #, fuzzy
 msgid "All Files"
 msgstr "Penapis yang Ada"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "Jenis Isian  %s"

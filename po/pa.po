@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-12-10 11:34+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -253,8 +253,8 @@ msgstr "ਤਰਨਯੋਗ"
 msgid "Document History"
 msgstr "ਦਸਤਾਵੇਜ਼ ਅਤੀਤ"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "ਉਲੀਕਣਯੋਗ"
 
@@ -480,7 +480,7 @@ msgstr "ਨਕਲੀ ਚੈਨਲ"
 msgid "_Delete Channel"
 msgstr "ਚੈਨਲ ਹਟਾਉ(_D)"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "ਚੈਨਲ ਹਟਾਉ"
 
@@ -1013,7 +1013,7 @@ msgstr "ਲਟਕਦੇ ਇੰਦਰਾਜ਼ ਹਟਾਓ(_n)"
 msgid "Remove dangling entries"
 msgstr "ਲਟਕਦੇ ਇੰਦਰਾਜ਼ ਹਟਾਓ"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1315,7 +1315,7 @@ msgstr "ਪੁਨਰ-ਪ੍ਰਾਪਤ..."
 msgid "_Quit"
 msgstr "ਬਾਹਰ(_Q)"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1326,54 +1326,54 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "ਚਿੱਤਰ ਸੰਭਾਲੋ"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr ""
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "ਨਵਾਂ ਨਮੂਨਾ ਬਣਾਉ"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "ਇਸ ਨਮੂਨੇ ਦਾ ਨਾਂ ਭਰੋ"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr ""
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 msgid "Open Image as Layer"
 msgstr "ਚਿੱਤਰ ਪਰਤ ਵਾਂਗ ਖੋਲ੍ਹੋ"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "ਚਿੱਤਰ ਖੋਲ੍ਹੋ"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(ਬਿਨਾਂ ਨਾਂ ਨਮੂਨਾ)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -1962,7 +1962,7 @@ msgstr "ਨਕਲ ਪਰਤ"
 msgid "_Delete Layer"
 msgstr "ਪਰਤ ਹਟਾਓ"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "ਪਰਤ ਹਟਾਉ"
@@ -2165,7 +2165,7 @@ msgstr ""
 msgid "Layer Mask to Selection"
 msgstr ""
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "ਪਰਤ ਮਖੋਟਾ ਜੋੜ੍ਹੋ"
@@ -3143,7 +3143,7 @@ msgid "Path to Selection"
 msgstr "ਚੋਣ ਲਈ ਰਸਤਾ"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "ਛੋਹ ਰਸਤਾ"
 
@@ -4379,288 +4379,293 @@ msgstr "ਅੱਗੇ (ਮੂਲ਼)"
 msgid "Backward (corrective)"
 msgstr "ਪਿੱਛੇ (ਸਹੀ)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<ਗਲਤ>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "ਚਿੱਤਰ ਪੈਮਾਨਾ"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "ਚਿੱਤਰ ਮੁਡ਼-ਅਕਾਰ"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "ਚਿੱਤਰ ਝਟਕੋ"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "ਚਿੱਤਰ ਘੁੰਮਾਉ"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "ਚਿੱਤਰ ਫੈਲਾਉ"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "ਚਿੱਤਰ ਤਬਦੀਲ"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "ਪਰਤਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "ਵੈਕਟਰਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "ਤੇਜ਼ ਮਖੌਟਾ"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "ਗਰਿੱਡ"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "ਦਿਸ਼ਾ-ਨਿਰਦੇਸ਼ਨ"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "ਉਲੀਕਣਯੋਗ ਮੋਡ"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "ਮਖੋਟਾ ਚੋਣ"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "ਇਕਾਈ ਦਿੱਖ"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "ਸੰਬੰਧਿਤ ਇਕਾਈ"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "ਇਕਾਈ ਵਿਸ਼ੇਸਤਾ"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "ਇਕਾਈ ਏਧਰ-ਓਧਰ"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "ਰਸਤਾ ਪੈਮਾਨਾ"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "ਰਸਤਾ ਨੂੰ ਮੁਡ਼-ਅਕਾਰ ਦਿਉ"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "ਪਰਤ ਮਖੋਟਾ ਜੋੜ੍ਹੋ"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "ਪਰਤ ਲਈ ਤਰਦੀ ਚੋਣ"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "ਤਰਦੀ ਚੋਣ"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "ਸਹਾਰਾ ਤਰਦੀ ਚੋਣ"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "ਅਸਥਿਰ ਚੋਣ ਹਟਾਉ"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "ਚਿਪਕਾਉ"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "ਕੱਟੋ"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "ਪਾਠ"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "ਤਬਦੀਲ"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "ਪੇਟ"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 msgid "Attach parasite"
 msgstr ""
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "ਰਸਤਾ ਹਟਾਉ"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "ਰਸਤਾ ਲਿਆਉ"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "ਪਲੱਗਇੰਨ"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 #, fuzzy
 msgid "Image type"
 msgstr "ਚਿੱਤਰ ਕਿਸਮ"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "ਚਿੱਤਰ ਕਿਸਮ"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ ਤਬਦੀਲ"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "ਤਤਕਰਾ ਰੰਗ-ਪੱਟੀ ਤਬਦੀਲ"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "ਇਕਾਈ ਦਾ ਨਾਂ-ਤਬਦੀਲ"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "ਇਕਾਈ ਸੰਬੰਧ ਨਿਰਧਾਰਨ"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "ਨਵੀ ਪਰਤ"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਉ"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "ਪਰਤ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "ਪਰਤ ਮੋਡ ਨਿਰਧਾਰਿਤ ਕਰੋ"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "ਪਰਤ ਧੁੰਦਲਾਪਨ ਨਿਧਾਰਿਤ ਕਰੋ"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 msgid "Set preserve trans"
 msgstr ""
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 msgid "Text modified"
 msgstr ""
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "ਨਵਾਂ ਚੈਨਲ"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "ਚੈਨਲ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "ਚੈਨਲ ਰੰਗ"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "ਨਵੈ ਵੈਕਟਰ"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "ਵੈਕਟਰ ਹਟਾਉ"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "ਵੈਕਟਰ ਹਟਾਉ"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "ਵੈਕਟਰਾਂ ਨੂੰ ਮੁਡ਼-ਸਥਾਪਿਤ ਕਰੋ"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "FS ਤੋ ਪਰਤ"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 msgid "FS rigor"
 msgstr ""
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 msgid "FS relax"
 msgstr ""
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "ਸਿਆਹੀ"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "EEK: ਮੁਡ਼ ਪਹਿਲਾਂ ਨਹੀ ਕਰ ਸਕਿਆ"
 
@@ -4778,7 +4783,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਗਲਤ ਯੂਟੀਐਫ-8 ਸਤਰ"
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "ਬੇ-ਨਾਮ"
@@ -4948,11 +4953,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "ਨਕਲ"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s ਨਕਲ"
@@ -5401,15 +5406,15 @@ msgstr "%d ਪਰਤਾਂ"
 msgid "Could not open thumbnail '%s': %s"
 msgstr ""
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr ""
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr ""
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr ""
 
@@ -5459,7 +5464,7 @@ msgstr "ਪਰਤ ਝਟਕਾ"
 msgid "Rotate Layer"
 msgstr "ਪਰਤ ਘੁੰਮਾਉ"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5472,39 +5477,39 @@ msgid ""
 "(%s)"
 msgstr "ਤਰਦੀ ਚੋਣ"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "ਐਲਫਾ ਨੂੰ ਮਖੌਟੇ ਵਿੱਚ ਤਬਦੀਲ ਕਰੋ"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "ਪਰਤ ਮਖੌਟਾ ਹਟਾਉ"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "ਐਲਫਾ ਚੈਨਲ ਜੋੜ੍ਹੋ"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "ਪਰਤ ਨੂੰ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਅਨੁਸਾਰ ਕਰੋ"
 
@@ -5850,22 +5855,22 @@ msgstr "ਥਾਂ:"
 msgid "Enter location (URI):"
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 #, fuzzy
 msgid "File exists"
 msgstr "ਫਾਇਲ ਮੌਜੂਦ ਹੈ!"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "ਨਮੂਨੇ"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -5950,7 +5955,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -7758,10 +7763,6 @@ msgstr ""
 msgid "Eraser"
 msgstr "ਰਬਡ਼"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "ਸਿਆਹੀ"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "ਪੇਟ-ਬੁਰਸ਼"
@@ -7901,7 +7902,7 @@ msgstr "ਬੁਰਸ਼:"
 msgid "Brush UI"
 msgstr "ਬੁਰਸ਼ UI"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8315,7 +8316,7 @@ msgstr ""
 msgid "Shape:"
 msgstr "ਖਾਕਾ"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "ਦੁਹਰਾਉ:"
 
@@ -9143,7 +9144,7 @@ msgstr "ਮੋਡ:"
 msgid "Brush:"
 msgstr "ਬੁਰਸ਼:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "ਢਾਲਵਾਂ:"
 
@@ -9157,32 +9158,32 @@ msgstr "ਸਖਤ ਕਿਨਾਰਾ"
 msgid "Pressure sensitivity"
 msgstr "ਦਬਾਉ ਸ਼ੰਵੇਦਨਸ਼ੀਲਤਾ"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "ਧੁੰਦਲਾਪਨ"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "ਸਖਤ"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "ਮੁੱਲ"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "ਅਕਾਰ"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "ਫਿੱਕਾ ਕਰੋ"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "ਲੰਬਾਈ:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "ਢਾਲਚੇ ਤੋ ਰੰਗ ਵਰਤੋ"
@@ -9731,39 +9732,39 @@ msgstr "ਸਹਾਰਾ ਹਟਾਉ"
 msgid "There is no active layer or channel to stroke to"
 msgstr "ਛੋਹਣ ਲਈ ਕੋਈ ਸਰਗਰਮ ਪਰਤ ਜਾਂ ਚੈਨਲ ਨਹੀ ਹੈ"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "ਰਸਤਾ"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "ਰਸਤਾ  ਨਾਂ-ਤਬਦੀਲ"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "ਰਸਤਾਂ ਏਧਰ-ਓਧਰ"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "ਰਸਤਾ ਪੈਮਾਨਾ"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "ਰਸਤਾ ਨੂੰ ਮੁਡ਼-ਅਕਾਰ ਦਿਉ"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "ਰਸਤਾ ਨੂੰ ਝਟਕੋ"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "ਰਸਤਾ ਘੁੰਮਾਉ"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "ਰਸਤਾ ਤਬਦੀਲ"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "ਖਾਲੀ ਰਸਤੇ ਨੂੰ ਛੋਹਿਆ ਨਹੀ ਜਾ ਸਕਦਾ"
 
@@ -10342,7 +10343,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "ਤੁਸੀ ਡੋਕਬਲ ਤਖਤੀਆਂ ਇਥੇ ਰੱਖ ਸਕਦੇ ਹੋ।"
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "ਇਹ ਟੈਬ ਹਟਾਉ"
 
@@ -10368,11 +10369,11 @@ msgstr "ਸਵੈਚਾਲਿਤ ਖੋਜ"
 msgid "By Extension"
 msgstr "ਐਕਸ਼ਟੇਸ਼ਨ ਨਾਲ"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "ਸਭ ਫਾਇਲਾਂ"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "ਫਾਇਲ ਕਿਸਮ (%s) ਚੁਣੋ"

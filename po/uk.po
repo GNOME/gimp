@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-04-16 17:59+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -267,8 +267,8 @@ msgstr "Малювання"
 msgid "Document History"
 msgstr "Історія зображення"
 
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 msgid "Drawable"
 msgstr "Малювання"
 
@@ -525,7 +525,7 @@ msgstr "Дублювання каналу"
 msgid "_Delete Channel"
 msgstr "/В_идалити канал"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 #, fuzzy
 msgid "Delete channel"
 msgstr "Видалення каналу"
@@ -1163,7 +1163,7 @@ msgstr "/Видалити застарілі е_лементи"
 msgid "Remove dangling entries"
 msgstr "/Видалити застарілі е_лементи"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1512,7 +1512,7 @@ msgstr "Відновити"
 msgid "_Quit"
 msgstr "/Файл/Ви_йти"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1523,36 +1523,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Збереження зображення"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr "Збереження копії зображення"
 
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Створення нового шаблону"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Введіть назву цього шаблону"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr "Не вдається відновити. Немає пов'язаної з цим зображенням назви файлу."
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 msgid "Revert Image"
 msgstr "Відновити зображення"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 #, fuzzy
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
@@ -1563,20 +1563,20 @@ msgstr ""
 "\n"
 "(Ви втратите всі зміни включаючи всю інформацію про скасування операцій)"
 
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "Відкривання зображення"
 
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
 msgstr "Відкривання зображення"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 msgid "(Unnamed Template)"
 msgstr "(Неназваний шаблон)"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2245,7 +2245,7 @@ msgstr "Дублювати шар"
 msgid "_Delete Layer"
 msgstr "/В_идалити шар"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "Видалення шару"
@@ -2449,7 +2449,7 @@ msgstr "Кадрування шару"
 msgid "Layer Mask to Selection"
 msgstr "Маска шару -> Виділене"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Додавання маску шару"
@@ -3435,7 +3435,7 @@ msgid "Path to Selection"
 msgstr "Контур -> Виділену ділянку"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 msgid "Stroke Path"
 msgstr "Обвести за контуром"
 
@@ -4765,293 +4765,298 @@ msgstr "Вперед (Традиційне)"
 msgid "Backward (corrective)"
 msgstr "Назад (коригуюче)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "Масштабування зображення"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "Зміна розміру зображення"
 
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "Віддзеркалення зображення"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "Обертання зображення"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "Кадрування зображення"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "Перетворення зображення"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "Об'єднання шарів"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "Поєднання векторів"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Сітка"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Напрямна"
 
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Режим малювання"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "Маска виділеної ділянки"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "Видимість елемента"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "Пов'язаний елемент"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "Властивості елемента"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "Переміщення елемента"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "Масштабування елемента"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "Зміна розміру елемента"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "Додавання маску шару"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "Застосування маску шару"
 
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "Плаваюче виділення у шар"
 
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "Плаваюче виділення"
 
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "Прикріплення плаваючого виділення"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "Видалення плаваючого виділення"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Вставлення"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Вирізання"
 
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Текст"
 
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Перетворення"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Малювання"
 
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "Долучення шуму"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "Видалення шуму"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "Імпортування контуру"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Доповнення"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 #, fuzzy
 msgid "Image type"
 msgstr "Тип зображення"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 #, fuzzy
 msgid "Image size"
 msgstr "Розмір зображення"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 #, fuzzy
 msgid "Resolution change"
 msgstr "Зміна роздільної здатності"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Зміна індексованої палітри"
 
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 #, fuzzy
 msgid "Rename item"
 msgstr "Перейменування елементу"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Встановлення зв'язку з елементом"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "Створення шару"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "Видалення маску шару"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Переставлення шарів"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "Встановлення режиму шару"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "Встановлення непрозорості шару"
 
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "Збереження непрозорості"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Текст змінено"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "Створення каналу"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Зсув каналу"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "Колір каналу"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "Створення вектору"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "Видалення вектору"
 
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Режим векторів"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Переміщення векторів"
 
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "Плав.виділ. у шар"
 
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "Захоплення плав.виділення"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 #, fuzzy
 msgid "FS relax"
 msgstr "Відпускання плав.виділення"
 
-#: app/core/core-enums.c:1102
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Перо"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "Не вдається скасувати"
 
@@ -5169,7 +5174,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі пензля '%s'."
 
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Неназваний"
@@ -5342,11 +5347,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "копія"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "копія %s"
@@ -5798,15 +5803,15 @@ msgstr "%d шарів"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдається відкрити файл мініатюри '%s': %s"
 
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Долучення шуму"
 
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 msgid "Attach Parasite to Item"
 msgstr "Долучення шуму до елемента"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 msgid "Remove Parasite from Item"
 msgstr "Видалення шуму з елемента"
 
@@ -5858,7 +5863,7 @@ msgstr "Віддзеркалення шару"
 msgid "Rotate Layer"
 msgstr "Обертання шару"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5871,40 +5876,40 @@ msgid ""
 "(%s)"
 msgstr "Плаваюче виділення"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Не можна додавати маску до шару, який не є частиною зображення."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не вдається додати маску шару, бо шар вже має маску."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Не можна додавати маску до шару, який не має альфа-каналу."
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr "Перетворення альфа-каналу у маску"
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Застосування маску шару"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Видалення маску шару"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 msgid "Add Alpha Channel"
 msgstr "Додавання альфа-каналу"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
 
@@ -6268,22 +6273,22 @@ msgstr "Розташування:"
 msgid "Enter location (URI):"
 msgstr "Інтерполяція:"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 #, fuzzy
 msgid "File exists"
 msgstr "Файл існує!"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 #, fuzzy
 msgid "_Replace"
 msgstr "Розмножити"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6371,7 +6376,7 @@ msgid "Is this what you want to do?"
 msgstr ""
 
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -8297,10 +8302,6 @@ msgstr "Освітлення/затемнення"
 msgid "Eraser"
 msgstr "Гумка"
 
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Перо"
-
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Пензель"
@@ -8443,7 +8444,7 @@ msgstr "Пензель:"
 msgid "Brush UI"
 msgstr "UI пензлі"
 
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8868,7 +8869,7 @@ msgstr "Зсув:"
 msgid "Shape:"
 msgstr "Форма:"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Повтор:"
 
@@ -9701,7 +9702,7 @@ msgstr "Режим:"
 msgid "Brush:"
 msgstr "Пензель:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Градієнт:"
 
@@ -9715,32 +9716,32 @@ msgstr "Чіткі краї"
 msgid "Pressure sensitivity"
 msgstr "Чутливість до натиску"
 
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 msgid "Hardness"
 msgstr "Твердість"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Швидкість"
 
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Розмір"
 
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "Поступовий перехід"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Довжина:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Використати колір з градієнта"
@@ -10306,39 +10307,39 @@ msgstr "Видалення точки"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Немає активного шару або каналу для обведення"
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Контур"
 
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 msgid "Rename Path"
 msgstr "Перейменування контуру"
 
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 msgid "Move Path"
 msgstr "Перейменування контуру"
 
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Масштабування контуру"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Зміна розміру контуру"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Віддзеркалення контуру"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 msgid "Rotate Path"
 msgstr "Обертання контуру"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 msgid "Transform Path"
 msgstr "Перетворення контуру"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr "Неможливо обвести порожній контур."
 
@@ -10927,7 +10928,7 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Сюди можна прикріпити панелі діалогових вікон."
 
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Закрити цей діалог"
 
@@ -10954,12 +10955,12 @@ msgstr ""
 msgid "By Extension"
 msgstr "/За розширенням"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 #, fuzzy
 msgid "All Files"
 msgstr "Всі файли"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, fuzzy, c-format
 msgid "Select File _Type (%s)"
 msgstr "Тип заповнення  %s"

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-09 22:36+0100\n"
+"POT-Creation-Date: 2005-01-22 17:32+0100\n"
 "PO-Revision-Date: 2004-11-08 17:04+0200\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <nls@tux.hellug.gr>\n"
@@ -270,8 +270,8 @@ msgid "Document History"
 msgstr "Ιστορικό Εγγράφου"
 
 #
-#: app/actions/actions.c:120 app/core/core-enums.c:1040
-#: app/core/core-enums.c:1070
+#: app/actions/actions.c:120 app/core/core-enums.c:1041
+#: app/core/core-enums.c:1071
 #, fuzzy
 msgid "Drawable"
 msgstr "Καθορισμός Στρώματος"
@@ -524,7 +524,7 @@ msgstr "Δημιουργία Αντιγράφου Καναλιού"
 msgid "_Delete Channel"
 msgstr "_Διαγραφή Καναλιού"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:1089
 msgid "Delete channel"
 msgstr "Διαγραφή καναλιού"
 
@@ -1147,7 +1147,7 @@ msgstr ""
 msgid "Remove dangling entries"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
+#: app/actions/documents-commands.c:251 app/actions/file-commands.c:170
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
 #: app/dialogs/file-open-location-dialog.c:193
 #: app/display/gimpdisplayshell-dnd.c:334 app/widgets/gimplayertreeview.c:804
@@ -1493,7 +1493,7 @@ msgstr "Επαναφορά"
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
+#: app/actions/file-commands.c:215 app/dialogs/file-save-dialog.c:281
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1504,61 +1504,61 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/file-commands.c:231 app/dialogs/file-save-dialog.c:77
+#: app/actions/file-commands.c:238 app/dialogs/file-save-dialog.c:78
 msgid "Save Image"
 msgstr "Αποθήκευση Εικόνας"
 
-#: app/actions/file-commands.c:247
+#: app/actions/file-commands.c:254
 msgid "Save a Copy of the Image"
 msgstr ""
 
 #
-#: app/actions/file-commands.c:258
+#: app/actions/file-commands.c:265
 msgid "Create New Template"
 msgstr "Δημιουργία Νέου Πρότυπου"
 
-#: app/actions/file-commands.c:262
+#: app/actions/file-commands.c:269
 msgid "Enter a name for this template"
 msgstr "Εισάγετε ένα όνομα για αυτό το πρότυπο"
 
-#: app/actions/file-commands.c:284
+#: app/actions/file-commands.c:291
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 
-#: app/actions/file-commands.c:296
+#: app/actions/file-commands.c:303
 #, fuzzy
 msgid "Revert Image"
 msgstr "Επαναφορά Εικόνας;"
 
-#: app/actions/file-commands.c:317
+#: app/actions/file-commands.c:324
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr ""
 
-#: app/actions/file-commands.c:323
+#: app/actions/file-commands.c:330
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 
 #
-#: app/actions/file-commands.c:372
+#: app/actions/file-commands.c:380
 #, fuzzy
 msgid "Open Image as Layer"
 msgstr "Νέα Εικόνα"
 
 #
-#: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
+#: app/actions/file-commands.c:385 app/dialogs/file-open-dialog.c:74
 #, fuzzy
 msgid "Open Image"
 msgstr "Νέα Εικόνα"
 
-#: app/actions/file-commands.c:444
+#: app/actions/file-commands.c:451
 #, fuzzy
 msgid "(Unnamed Template)"
 msgstr "Επικολλημένο Στρώμα"
 
-#: app/actions/file-commands.c:493
+#: app/actions/file-commands.c:500
 #, fuzzy, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2263,7 +2263,7 @@ msgstr "Δημιουργία Αντιγράφου Στρώματος"
 msgid "_Delete Layer"
 msgstr "Διαγραφή Στρώματος"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:1079
 #, fuzzy
 msgid "Delete layer"
 msgstr "Διαγραφή Στρώματος"
@@ -2479,7 +2479,7 @@ msgstr "Βύθιση Στρώματος"
 msgid "Layer Mask to Selection"
 msgstr "Αντ_ιστρφή επιλογής"
 
-#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
+#: app/actions/layers-commands.c:904 app/core/gimplayer.c:1065
 #: app/dialogs/layer-add-mask-dialog.c:62
 msgid "Add Layer Mask"
 msgstr "Προσθήκη Μάσκας Στρωμάτων"
@@ -3502,7 +3502,7 @@ msgid "Path to Selection"
 msgstr "Αντιγραφή ημερομηνίας στο επιλεγμένο"
 
 #: app/actions/vectors-commands.c:370 app/tools/gimpvectortool.c:1923
-#: app/vectors/gimpvectors.c:239
+#: app/vectors/gimpvectors.c:237
 #, fuzzy
 msgid "Stroke Path"
 msgstr "Διαγραμμένα"
@@ -4747,305 +4747,311 @@ msgstr "Εμπρός (Παραδοσιακό)"
 msgid "Backward (corrective)"
 msgstr "Πίσω (Διορθωτικό)"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1029
 msgid "<<invalid>>"
 msgstr "<<Μη έγκυρο>>"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1030
 #, fuzzy
 msgid "Scale image"
 msgstr "Μεγέθυνση/Σμίκρυνση Εικόνας"
 
-#: app/core/core-enums.c:1030
+#: app/core/core-enums.c:1031
 #, fuzzy
 msgid "Resize image"
 msgstr "Αλλαγή Μεγέθους Εικόνας"
 
 #
-#: app/core/core-enums.c:1031
+#: app/core/core-enums.c:1032
 #, fuzzy
 msgid "Flip image"
 msgstr "Αναστροφή Εικόνας"
 
-#: app/core/core-enums.c:1032
+#: app/core/core-enums.c:1033
 #, fuzzy
 msgid "Rotate image"
 msgstr "Περιστροφή Εικόνας"
 
 #
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1034
 #, fuzzy
 msgid "Crop image"
 msgstr "Φόρτωση Εικόνας"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1035
 #, fuzzy
 msgid "Convert image"
 msgstr "Μετατροπή Εικόνας"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1036
 #, fuzzy
 msgid "Merge layers"
 msgstr "Συγχώνευση Στρωμάτων"
 
-#: app/core/core-enums.c:1036
+#: app/core/core-enums.c:1037
 #, fuzzy
 msgid "Merge vectors"
 msgstr "Συγχώνευση Ανυσμάτων"
 
-#: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
+#: app/core/core-enums.c:1038 app/core/gimpchannel.c:383
 #, fuzzy
 msgid "Quick Mask"
 msgstr "ΤαχυΜάσκα"
 
-#: app/core/core-enums.c:1038 app/core/core-enums.c:1067
+#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
 #: app/core/gimpimage-grid.c:59 app/dialogs/grid-dialog.c:144
 #: app/tools/tools-enums.c:175
 msgid "Grid"
 msgstr "Πλέγμα"
 
-#: app/core/core-enums.c:1039 app/core/core-enums.c:1068
+#: app/core/core-enums.c:1040 app/core/core-enums.c:1069
 msgid "Guide"
 msgstr "Οδηγός"
 
 #
-#: app/core/core-enums.c:1041 app/core/core-enums.c:1071
+#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
 #, fuzzy
 msgid "Drawable mod"
 msgstr "Καθορισμός Στρώματος"
 
-#: app/core/core-enums.c:1042 app/core/core-enums.c:1072
+#: app/core/core-enums.c:1043 app/core/core-enums.c:1073
 #, fuzzy
 msgid "Selection mask"
 msgstr "Μάσκα Επιλογής"
 
-#: app/core/core-enums.c:1043 app/core/core-enums.c:1075
+#: app/core/core-enums.c:1044 app/core/core-enums.c:1076
 #, fuzzy
 msgid "Item visibility"
 msgstr "Ορατότητα Αντικειμένου"
 
-#: app/core/core-enums.c:1044
+#: app/core/core-enums.c:1045
 #, fuzzy
 msgid "Linked item"
 msgstr "Συνδεδεμένο Αντικείμενο"
 
-#: app/core/core-enums.c:1045
+#: app/core/core-enums.c:1046
 #, fuzzy
 msgid "Item properties"
 msgstr "Ιδιότητες Aντικειμένου"
 
-#: app/core/core-enums.c:1046 app/core/core-enums.c:1074
+#: app/core/core-enums.c:1047 app/core/core-enums.c:1075
 #, fuzzy
 msgid "Move item"
 msgstr "Μετακίνηση Αντικειμένου"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1048
 #, fuzzy
 msgid "Scale item"
 msgstr "Μεγένθυνση/Σμίκρυνση Εικόνας"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1049
 #, fuzzy
 msgid "Resize item"
 msgstr "Αλλαγή Μεγέθους Εικόνας"
 
-#: app/core/core-enums.c:1049 app/core/core-enums.c:1079
+#: app/core/core-enums.c:1050 app/core/core-enums.c:1080
 #, fuzzy
 msgid "Add layer mask"
 msgstr "Προσθήκη Μάσκας Στρωμάτων"
 
-#: app/core/core-enums.c:1050
+#: app/core/core-enums.c:1051
 #, fuzzy
 msgid "Apply layer mask"
 msgstr "Εφαρμογή Μάσκας Στρωμάτων"
 
 #
-#: app/core/core-enums.c:1051
+#: app/core/core-enums.c:1052
 #, fuzzy
 msgid "Floating selection to layer"
 msgstr "Επιπλέουσα Επιλογή στο Στρώμα"
 
 #
-#: app/core/core-enums.c:1052
+#: app/core/core-enums.c:1053
 #, fuzzy
 msgid "Float selection"
 msgstr "Επίπλευση Επιλογής"
 
 #
-#: app/core/core-enums.c:1053
+#: app/core/core-enums.c:1054
 #, fuzzy
 msgid "Anchor floating selection"
 msgstr "Αγκύρωση Επιπλέουσας Επιλογής"
 
 #
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1055
 #, fuzzy
 msgid "Remove floating selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
 #
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
+#: app/core/core-enums.c:1057 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Αποκοπή"
 
 #
-#: app/core/core-enums.c:1057 app/core/core-enums.c:1085
+#: app/core/core-enums.c:1058 app/core/core-enums.c:1086
 #: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Κείμενο"
 
 #
-#: app/core/core-enums.c:1058 app/core/core-enums.c:1098
+#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
 #: app/core/gimpdrawable-transform.c:867
 msgid "Transform"
 msgstr "Μετασχηματισμός"
 
-#: app/core/core-enums.c:1059 app/core/core-enums.c:1099
-#: app/paint/gimppaintcore.c:344
+#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Βαφή"
 
 #
-#: app/core/core-enums.c:1060 app/core/core-enums.c:1100
+#: app/core/core-enums.c:1061 app/core/core-enums.c:1102
 #, fuzzy
 msgid "Attach parasite"
 msgstr "Προσκόλληση Παρασίτου"
 
-#: app/core/core-enums.c:1061 app/core/core-enums.c:1101
+#: app/core/core-enums.c:1062 app/core/core-enums.c:1103
 #, fuzzy
 msgid "Remove parasite"
 msgstr "Αφαίρεση Παρασίτου"
 
-#: app/core/core-enums.c:1062
+#: app/core/core-enums.c:1063
 #, fuzzy
 msgid "Import paths"
 msgstr "Εισαγωγή Διαδρομών"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1064 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Αρθρώματα"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1065
 msgid "Image type"
 msgstr "Τύπος εικόνας"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1066
 msgid "Image size"
 msgstr "Μέγεθος εικόνας"
 
 #
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1067
 msgid "Resolution change"
 msgstr "Αλλαγή ανάλυσης"
 
-#: app/core/core-enums.c:1069
+#: app/core/core-enums.c:1070
 #, fuzzy
 msgid "Change indexed palette"
 msgstr "Αλλαγής Παλέττας με Δείκτη"
 
 #
-#: app/core/core-enums.c:1073
+#: app/core/core-enums.c:1074
 msgid "Rename item"
 msgstr "Μετονομασία αντικειμένου"
 
-#: app/core/core-enums.c:1076
+#: app/core/core-enums.c:1077
 #, fuzzy
 msgid "Set item linked"
 msgstr "Λιγότερες Επιλογές"
 
-#: app/core/core-enums.c:1077
+#: app/core/core-enums.c:1078
 #, fuzzy
 msgid "New layer"
 msgstr "Νέο Στρώμα"
 
-#: app/core/core-enums.c:1080
+#: app/core/core-enums.c:1081
 #, fuzzy
 msgid "Delete layer mask"
 msgstr "Διαγραφή Μάσκας Στρωμάτων"
 
-#: app/core/core-enums.c:1081
+#: app/core/core-enums.c:1082
 #, fuzzy
 msgid "Reposition layer"
 msgstr "Αλλαγή θέσης Στρώματος"
 
-#: app/core/core-enums.c:1082
+#: app/core/core-enums.c:1083
 #, fuzzy
 msgid "Set layer mode"
 msgstr "Καθορισμός Κατάστασης Στρώματος"
 
-#: app/core/core-enums.c:1083
+#: app/core/core-enums.c:1084
 #, fuzzy
 msgid "Set layer opacity"
 msgstr "Καθορισμός Αδιαφάνειας Στρώματος"
 
 #
-#: app/core/core-enums.c:1084
+#: app/core/core-enums.c:1085
 #, fuzzy
 msgid "Set preserve trans"
 msgstr "Καθορισμός Διατήρησης Μετασχηματισμών"
 
-#: app/core/core-enums.c:1086
+#: app/core/core-enums.c:1087
 #, fuzzy
 msgid "Text modified"
 msgstr "Ημερομηνία Τροποποίησης"
 
-#: app/core/core-enums.c:1087
+#: app/core/core-enums.c:1088
 #, fuzzy
 msgid "New channel"
 msgstr "Νέο Κανάλι"
 
-#: app/core/core-enums.c:1089
+#: app/core/core-enums.c:1090
 #, fuzzy
 msgid "Reposition channel"
 msgstr "Αλλαγή θέσης Καναλιού"
 
-#: app/core/core-enums.c:1090
+#: app/core/core-enums.c:1091
 #, fuzzy
 msgid "Channel color"
 msgstr "Χρώμα Καναλιού"
 
-#: app/core/core-enums.c:1091
+#: app/core/core-enums.c:1092
 #, fuzzy
 msgid "New vectors"
 msgstr "Νέα Ανύσματα"
 
-#: app/core/core-enums.c:1092
+#: app/core/core-enums.c:1093
 #, fuzzy
 msgid "Delete vectors"
 msgstr "Διαγραφή Ανυσμάτων"
 
 #
-#: app/core/core-enums.c:1093
+#: app/core/core-enums.c:1094
 #, fuzzy
 msgid "Vectors mod"
 msgstr "Μεταβολή Ανυσμάτων"
 
-#: app/core/core-enums.c:1094
+#: app/core/core-enums.c:1095
 #, fuzzy
 msgid "Reposition vectors"
 msgstr "Αλλαγή θέσης Ανυσμάτων"
 
 #
-#: app/core/core-enums.c:1095
+#: app/core/core-enums.c:1096
 #, fuzzy
 msgid "FS to layer"
 msgstr "Καθορισμός Στρώματος"
 
 #
-#: app/core/core-enums.c:1096
+#: app/core/core-enums.c:1097
 #, fuzzy
 msgid "FS rigor"
 msgstr "Ανάθεση προτεραιότητας"
 
-#: app/core/core-enums.c:1097
+#: app/core/core-enums.c:1098
 msgid "FS relax"
 msgstr ""
 
-#: app/core/core-enums.c:1102
+#
+#: app/core/core-enums.c:1101 app/paint/gimpink.c:102
+#: app/tools/gimpinktool.c:62
+msgid "Ink"
+msgstr "Μελάνι"
+
+#: app/core/core-enums.c:1104
 msgid "EEK: can't undo"
 msgstr "Ωχ: αδυναμία ακύρωσης προηγούμενης ενέργειας"
 
@@ -5174,7 +5180,7 @@ msgstr "Μη έγκυρη συμβολοσειρά UTF-8 στο αρχείο π�
 
 #
 #: app/core/gimpbrush.c:640 app/core/gimpcontext.c:1299
-#: app/core/gimpitem.c:480 app/core/gimppattern.c:400
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:400
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:339
 msgid "Unnamed"
 msgstr "Χωρίς όνομα"
@@ -5360,11 +5366,11 @@ msgstr ""
 
 #
 #: app/core/gimpdatafactory.c:411 app/core/gimpdatafactory.c:414
-#: app/core/gimpitem.c:275 app/core/gimpitem.c:278
+#: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "αντιγραφή"
 
-#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:287
+#: app/core/gimpdatafactory.c:423 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s αντίγραφο"
@@ -5868,17 +5874,17 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Αδύνατο το άνοιγμα αρχείου: %s"
 
 #
-#: app/core/gimpitem.c:1103
+#: app/core/gimpitem.c:1091
 msgid "Attach Parasite"
 msgstr "Προσκόλληση Παρασίτου"
 
 #
-#: app/core/gimpitem.c:1113
+#: app/core/gimpitem.c:1101
 #, fuzzy
 msgid "Attach Parasite to Item"
 msgstr "Επισύναψη αρχείου"
 
-#: app/core/gimpitem.c:1152 app/core/gimpitem.c:1159
+#: app/core/gimpitem.c:1140 app/core/gimpitem.c:1147
 #, fuzzy
 msgid "Remove Parasite from Item"
 msgstr "Αφαίρεση του στοιχείου"
@@ -5935,7 +5941,7 @@ msgstr "Αναστροφή Στρώματος"
 msgid "Rotate Layer"
 msgstr "Περιστροφή Στρώματος"
 
-#: app/core/gimplayer.c:339 app/core/gimplayer.c:1110
+#: app/core/gimplayer.c:339 app/core/gimplayer.c:1109
 #: app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -5949,42 +5955,42 @@ msgid ""
 "(%s)"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: app/core/gimplayer.c:1036
+#: app/core/gimplayer.c:1035
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Αδυναμία προσθήκης μάσκας στρωμάτων σε στρώμα που δεν είναι τμήμα της "
 "εικόνας."
 
-#: app/core/gimplayer.c:1043
+#: app/core/gimplayer.c:1042
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Αδυναμία προσθήκης μάσκας στρωμάτων αφού το στρώμα έχει ήδη μία."
 
-#: app/core/gimplayer.c:1050
+#: app/core/gimplayer.c:1049
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 
-#: app/core/gimplayer.c:1060
+#: app/core/gimplayer.c:1059
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/core/gimplayer.c:1164
+#: app/core/gimplayer.c:1163
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1324
+#: app/core/gimplayer.c:1323
 msgid "Apply Layer Mask"
 msgstr "Εφαρμογή Μάσκας Στρωμάτων"
 
-#: app/core/gimplayer.c:1325
+#: app/core/gimplayer.c:1324
 msgid "Delete Layer Mask"
 msgstr "Διαγραφή Μάσκας Στρωμάτων"
 
-#: app/core/gimplayer.c:1426
+#: app/core/gimplayer.c:1425
 #, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Προσθήκη στο ταμπλώ"
 
-#: app/core/gimplayer.c:1448
+#: app/core/gimplayer.c:1447
 #, fuzzy
 msgid "Layer to Image Size"
 msgstr "Νέα Εικόνα"
@@ -6348,20 +6354,20 @@ msgstr "Άνοιγμα Τοποθεσίας"
 msgid "Enter location (URI):"
 msgstr "Εισαγωγή τοποθεσίας (URI):"
 
-#: app/dialogs/file-save-dialog.c:163
+#: app/dialogs/file-save-dialog.c:184
 msgid "File exists"
 msgstr "Το αρχείο υπάρχει"
 
-#: app/dialogs/file-save-dialog.c:168
+#: app/dialogs/file-save-dialog.c:189
 msgid "_Replace"
 msgstr "_Αντικατάσταση"
 
-#: app/dialogs/file-save-dialog.c:178
+#: app/dialogs/file-save-dialog.c:199
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:183
+#: app/dialogs/file-save-dialog.c:204
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6451,7 +6457,7 @@ msgstr ""
 
 #
 #. General
-#: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1543
+#: app/dialogs/info-dialog.c:377 app/dialogs/preferences-dialog.c:1543
 #: app/dialogs/preferences-dialog.c:1697
 #: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
@@ -8371,11 +8377,6 @@ msgid "Eraser"
 msgstr "Γόμα"
 
 #
-#: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
-msgid "Ink"
-msgstr "Μελάνι"
-
-#
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Πινέλο"
@@ -8530,7 +8531,7 @@ msgid "Brush UI"
 msgstr ""
 
 #
-#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:284
+#: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:283
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
@@ -8991,7 +8992,7 @@ msgstr "Μετατόπιση"
 msgid "Shape:"
 msgstr "Σχήμα"
 
-#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:418
+#: app/tools/gimpblendoptions.c:261 app/tools/gimppaintoptions-gui.c:417
 msgid "Repeat:"
 msgstr "Επανάληψη:"
 
@@ -9920,7 +9921,7 @@ msgstr "Κατάσταση:"
 msgid "Brush:"
 msgstr "Πινέλο:"
 
-#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:395
+#: app/tools/gimppaintoptions-gui.c:135 app/tools/gimppaintoptions-gui.c:394
 msgid "Gradient:"
 msgstr "Διαβάθμιση:"
 
@@ -9935,36 +9936,36 @@ msgid "Pressure sensitivity"
 msgstr "Ευαισ_θησία"
 
 #
-#: app/tools/gimppaintoptions-gui.c:237
+#: app/tools/gimppaintoptions-gui.c:236
 #, fuzzy
 msgid "Opacity"
 msgstr "Διαφάνεια:"
 
-#: app/tools/gimppaintoptions-gui.c:251
+#: app/tools/gimppaintoptions-gui.c:250
 #, fuzzy
 msgid "Hardness"
 msgstr "Υλικό"
 
-#: app/tools/gimppaintoptions-gui.c:262
+#: app/tools/gimppaintoptions-gui.c:261
 msgid "Rate"
 msgstr "Ρυθμός"
 
 #
-#: app/tools/gimppaintoptions-gui.c:275
+#: app/tools/gimppaintoptions-gui.c:274
 msgid "Size"
 msgstr "Μέγεθος"
 
 # sysdeps/names/swap.c:45
-#: app/tools/gimppaintoptions-gui.c:314
+#: app/tools/gimppaintoptions-gui.c:313
 #, fuzzy
 msgid "Fade out"
 msgstr "Εξερχ. Σελίδα"
 
-#: app/tools/gimppaintoptions-gui.c:334 app/tools/gimppaintoptions-gui.c:404
+#: app/tools/gimppaintoptions-gui.c:333 app/tools/gimppaintoptions-gui.c:403
 msgid "Length:"
 msgstr "Μήκος:"
 
-#: app/tools/gimppaintoptions-gui.c:368
+#: app/tools/gimppaintoptions-gui.c:367
 #, fuzzy
 msgid "Use color from gradient"
 msgstr "Προσαρμοσμένη Διαβάθμιση"
@@ -10566,46 +10567,46 @@ msgstr "Διαγραφή επιλεγμένου"
 msgid "There is no active layer or channel to stroke to"
 msgstr ""
 
-#: app/vectors/gimpvectors.c:231
+#: app/vectors/gimpvectors.c:229
 msgid "Path"
 msgstr "Διαδρομή"
 
 #
-#: app/vectors/gimpvectors.c:232
+#: app/vectors/gimpvectors.c:230
 #, fuzzy
 msgid "Rename Path"
 msgstr "Μετονομασία διαβάθμισης"
 
 #
-#: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:373
+#: app/vectors/gimpvectors.c:231 app/vectors/gimpvectors.c:356
 #, fuzzy
 msgid "Move Path"
 msgstr "Μετονομασία διαβάθμισης"
 
 #
-#: app/vectors/gimpvectors.c:234
+#: app/vectors/gimpvectors.c:232
 msgid "Scale Path"
 msgstr "Μεγένθυνση/Σμίκρυνση Διαδρομής"
 
-#: app/vectors/gimpvectors.c:235
+#: app/vectors/gimpvectors.c:233
 msgid "Resize Path"
 msgstr "Αλλαγή Μεγέθους Διαδρομής"
 
-#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:464
+#: app/vectors/gimpvectors.c:234 app/vectors/gimpvectors.c:447
 msgid "Flip Path"
 msgstr "Αναστροφή Διαδρομής"
 
-#: app/vectors/gimpvectors.c:237 app/vectors/gimpvectors.c:508
+#: app/vectors/gimpvectors.c:235 app/vectors/gimpvectors.c:491
 #, fuzzy
 msgid "Rotate Path"
 msgstr "Επικόλληση Έργου"
 
-#: app/vectors/gimpvectors.c:238 app/vectors/gimpvectors.c:539
+#: app/vectors/gimpvectors.c:236 app/vectors/gimpvectors.c:522
 #, fuzzy
 msgid "Transform Path"
 msgstr "Πληροφορίες Τροχιάς"
 
-#: app/vectors/gimpvectors.c:568
+#: app/vectors/gimpvectors.c:551
 msgid "Cannot stroke empty path."
 msgstr ""
 
@@ -11235,7 +11236,7 @@ msgid "You can drop dockable dialogs here."
 msgstr ""
 
 #
-#: app/widgets/gimpdockable.c:209
+#: app/widgets/gimpdockable.c:210
 msgid "Close this Tab"
 msgstr "Κλείσιμο αυτής της Καρτέλας"
 
@@ -11262,11 +11263,11 @@ msgstr "Εντοπίστηκε Αυτόματα"
 msgid "By Extension"
 msgstr "Κατά Επέκταση"
 
-#: app/widgets/gimpfiledialog.c:496
+#: app/widgets/gimpfiledialog.c:469
 msgid "All Files"
 msgstr "Όλα τα Αρχεία"
 
-#: app/widgets/gimpfiledialog.c:635
+#: app/widgets/gimpfiledialog.c:608
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Επιλογή _Τύπου Αρχείου (%s)"
