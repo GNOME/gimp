@@ -3234,43 +3234,43 @@ msgstr ""
 
 #: app/menus.c:90
 msgid "/Xtns/Script-Fu"
-msgstr "/Laajennukset/Script-Fu"
+msgstr "/Lisäykset/Script-Fu"
 
 #: app/menus.c:91
 msgid "/Xtns/Script-Fu/Logos"
-msgstr "/Laajennukset/Script-Fu/Logot"
+msgstr "/Lisäykset/Script-Fu/Logot"
 
 #: app/menus.c:92
 msgid "/Xtns/Script-Fu/Patterns"
-msgstr ""
+msgstr "/Lisäykset/Script-Fu/Kuviot"
 
 #: app/menus.c:93
 msgid "/Xtns/Script-Fu/Web Page Themes"
-msgstr ""
+msgstr "/Lisäykset/Script-Fu/Webbisivuaiheet"
 
 #: app/menus.c:94
 msgid "/Xtns/Script-Fu/Utils"
-msgstr ""
+msgstr "/Lisäykset/Script-Fu/Hyödyllistä"
 
 #: app/menus.c:95
 msgid "/Xtns/Script-Fu/Buttons"
-msgstr "/Laajennukset/Script-Fu/Painikkeet"
+msgstr "/Lisäykset/Script-Fu/Painikkeet"
 
 #: app/menus.c:96
 msgid "/Xtns/Script-Fu/Make Brush"
-msgstr ""
+msgstr "/Lisäykset/Script-Fu/Tee sivellin"
 
 #: app/menus.c:97
 msgid "/Xtns/Script-Fu/Misc"
-msgstr "/Laajennukset/Script-Fu/Sekalaiset"
+msgstr "/Lisäykset/Script-Fu/Sekalaiset"
 
 #: app/menus.c:98
 msgid "/Xtns/Script-Fu/Test"
-msgstr "/Laajennukset/Script-Fu/Testit"
+msgstr "/Lisäykset/Script-Fu/Testit"
 
 #: app/menus.c:99
 msgid "/Xtns/Web Browser"
-msgstr ""
+msgstr "/Lisäykset/Webbiselain"
 
 #. <Image>
 #: app/menus.c:102
@@ -3421,11 +3421,11 @@ msgstr "/Tiedosto/Poistu"
 #. <Toolbox>/Xtns
 #: app/menus.c:202
 msgid "/Xtns"
-msgstr "/Laajennukset"
+msgstr "/Lisäykset"
 
 #: app/menus.c:204
 msgid "/Xtns/Module Browser..."
-msgstr "/Laajennukset/Moduuliselain..."
+msgstr "/Lisäykset/Moduuliselain..."
 
 #. <Toolbox>/Help
 #: app/menus.c:212
@@ -4593,7 +4593,7 @@ msgstr ""
 
 #: app/plug_in.c:378
 msgid "Extensions"
-msgstr "Laajennukset"
+msgstr "Lisäykset"
 
 #: app/plug_in.c:735
 #, c-format
