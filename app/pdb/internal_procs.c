@@ -171,7 +171,7 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Plug-in"), 0.81);
   register_plug_in_procs (gimp);
 
-  (* status_callback) (NULL, _("Procedural database"), 0.827);
+  (* status_callback) (NULL, _("Procedural database"), 0.824);
   register_procedural_db_procs (gimp);
 
   (* status_callback) (NULL, _("Image mask"), 0.85);

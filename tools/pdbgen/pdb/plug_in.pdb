@@ -17,21 +17,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub andy_pdb_misc {
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
-}
-
-sub mitch_misc {
-    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
-    $date = '2000';
-}
-
-sub neo_pdb_misc {
-    $author = $copyright = 'Sven Neumann';
-    $date = '2000';
-}
-
 # The defs
 
 sub progress_init {
@@ -99,36 +84,13 @@ CODE
     );
 }
 
-sub temp_PDB_name {
-    $blurb = 'Generates a unique temporary PDB name.';
-
-    $help = <<'HELP';
-This procedure generates a temporary PDB entry name that is guaranteed to be
-unique. It is many used by the interactive popup dialogs to generate a PDB
-entry name.
-HELP
-
-    &andy_pdb_misc;
-
-    @outargs = (
-	{ name => 'temp_name', type => 'string',
-	  desc => 'A unique temporary name for a temporary PDB entry' }
-    );
-
-    %invoke = (
-	vars => [ 'static gint proc_number = 0' ],
-	code => <<'CODE'
-temp_name = g_strdup_printf ("temp_plugin_number_%d", proc_number++);
-CODE
-    );
-}
-
 sub plugins_query {
     $blurb = 'Queries the plugin database for its contents.';
 
     $help = 'This procedure queries the contents of the plugin database.';
 
-    &andy_pdb_misc;
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
 
     @inargs = (
 	{ name  => 'search_string', type => 'string',
@@ -261,7 +223,8 @@ in the query function of a plug-in and it has to be called before any
 procedure is installed.
 HELP
 
-    &neo_pdb_misc;
+    $author = $copyright = 'Sven Neumann';
+    $date = '2000';
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
@@ -297,7 +260,8 @@ subsequent calls of gimp_help from this plug-in will be interpreted relative
 to this rootdir.
 HELP
 
-    &mitch_misc;
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2000';
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
@@ -337,9 +301,9 @@ CODE
               "plug-in/plug-in-def.h" "plug-in/plug-in-proc.h"
               "plug-in/plug-in-progress.h");
 
-@procs = qw(progress_init progress_update temp_PDB_name plugins_query
+@procs = qw(progress_init progress_update plugins_query
 	    plugin_domain_register plugin_help_register);
-%exports = (app => [@procs], lib => [@procs[0..2,4,5]]);
+%exports = (app => [@procs], lib => [@procs[0,1,3,4]]);
 
 $desc = 'Plug-in';
 

@@ -28,6 +28,36 @@
 #include "gimp.h"
 
 /**
+ * gimp_procedural_db_temp_name:
+ *
+ * Generates a unique temporary PDB name.
+ *
+ * This procedure generates a temporary PDB entry name that is
+ * guaranteed to be unique. It is many used by the interactive popup
+ * dialogs to generate a PDB entry name.
+ *
+ * Returns: A unique temporary name for a temporary PDB entry.
+ */
+gchar *
+gimp_procedural_db_temp_name (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *temp_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_procedural_db_temp_name",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    temp_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return temp_name;
+}
+
+/**
  * gimp_procedural_db_dump:
  * @filename: The dump filename.
  *

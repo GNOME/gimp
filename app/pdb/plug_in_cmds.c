@@ -48,7 +48,6 @@
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;
-static ProcRecord temp_PDB_name_proc;
 static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
@@ -58,7 +57,6 @@ register_plug_in_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &progress_init_proc);
   procedural_db_register (gimp, &progress_update_proc);
-  procedural_db_register (gimp, &temp_PDB_name_proc);
   procedural_db_register (gimp, &plugins_query_proc);
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
@@ -172,47 +170,6 @@ static ProcRecord progress_update_proc =
   0,
   NULL,
   { { progress_update_invoker } }
-};
-
-static Argument *
-temp_PDB_name_invoker (Gimp     *gimp,
-                       Argument *args)
-{
-  Argument *return_args;
-  gchar *temp_name;
-  static gint proc_number = 0;
-
-  temp_name = g_strdup_printf ("temp_plugin_number_%d", proc_number++);
-
-  return_args = procedural_db_return_args (&temp_PDB_name_proc, TRUE);
-  return_args[1].value.pdb_pointer = temp_name;
-
-  return return_args;
-}
-
-static ProcArg temp_PDB_name_outargs[] =
-{
-  {
-    GIMP_PDB_STRING,
-    "temp_name",
-    "A unique temporary name for a temporary PDB entry"
-  }
-};
-
-static ProcRecord temp_PDB_name_proc =
-{
-  "gimp_temp_PDB_name",
-  "Generates a unique temporary PDB name.",
-  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  temp_PDB_name_outargs,
-  { { temp_PDB_name_invoker } }
 };
 
 static Argument *

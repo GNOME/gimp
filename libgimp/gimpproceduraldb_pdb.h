@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gchar*   gimp_procedural_db_temp_name     (void);
 gboolean gimp_procedural_db_dump          (const gchar       *filename);
 gboolean gimp_procedural_db_query         (const gchar       *name,
 					   const gchar       *blurb,

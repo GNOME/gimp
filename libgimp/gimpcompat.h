@@ -92,6 +92,8 @@ G_BEGIN_DECLS
 
 #define gimp_palette_refresh                    gimp_palettes_refresh
 
+#define gimp_temp_PDB_name                      gimp_procedural_db_temp_name
+
 #define gimp_undo_push_group_start              gimp_image_undo_group_start
 #define gimp_undo_push_group_end                gimp_image_undo_group_end
 

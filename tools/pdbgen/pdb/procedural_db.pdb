@@ -104,6 +104,31 @@ CODE
 
 # The defs
 
+sub procedural_db_temp_name {
+    $blurb = 'Generates a unique temporary PDB name.';
+
+    $help = <<'HELP';
+This procedure generates a temporary PDB entry name that is guaranteed to be
+unique. It is many used by the interactive popup dialogs to generate a PDB
+entry name.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+
+    @outargs = (
+	{ name => 'temp_name', type => 'string',
+	  desc => 'A unique temporary name for a temporary PDB entry' }
+    );
+
+    %invoke = (
+	vars => [ 'static gint proc_number = 0' ],
+	code => <<'CODE'
+temp_name = g_strdup_printf ("temp_procedure_number_%d", proc_number++);
+CODE
+    );
+}
+
 sub procedural_db_dump {
     $blurb = 'Dumps the current contents of the procedural database';
 
@@ -645,7 +670,8 @@ pdb_type_name (gint type)
 }
 CODE
 
-@procs = qw(procedural_db_dump procedural_db_query procedural_db_proc_info
+@procs = qw(procedural_db_temp_name procedural_db_dump
+            procedural_db_query procedural_db_proc_info
 	    procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
 	    procedural_db_set_data);

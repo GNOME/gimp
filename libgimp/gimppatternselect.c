@@ -76,7 +76,7 @@ gimp_pattern_select_new (const gchar            *title,
                                           "[0 = No, 1 = Yes]" },
   };
 
-  gchar *pattern_callback = gimp_temp_PDB_name ();
+  gchar *pattern_callback = gimp_procedural_db_temp_name ();
 
   gimp_install_temp_proc (pattern_callback,
 			  "Temporary pattern popup callback procedure",

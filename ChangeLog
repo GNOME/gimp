@@ -1,5 +1,24 @@
 2003-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb: renamed gimp_temp_PDB_name()
+	* tools/pdbgen/pdb/procedural_db.pdb: to gimp_procedurab_db_temp_name()
+
+	* app/pdb/procedural_db.c
+	* libgimp/gimpcompat.h: added compat cruft.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/plug_in_cmds.c
+	* app/pdb/procedural_db_cmds.c
+	* libgimp/gimpplugin_pdb.[ch]
+	* libgimp/gimpproceduraldb_pdb.[ch]: regenerated.
+
+	* libgimp/gimpbrushselect.c
+	* libgimp/gimpfontselect.c
+	* libgimp/gimpgradientselect.c
+	* libgimp/gimppatternselect.c: changed accordingly.
+
+2003-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpcompat.h: added some missing #defines.
 
 2003-12-18  Michael Natterer  <mitch@gimp.org>

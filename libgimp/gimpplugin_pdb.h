@@ -31,7 +31,6 @@ G_BEGIN_DECLS
 
 gboolean gimp_progress_init          (const gchar *message);
 gboolean gimp_progress_update        (gdouble      percentage);
-gchar*   gimp_temp_PDB_name          (void);
 gboolean gimp_plugin_domain_register (const gchar *domain_name,
 				      const gchar *domain_path);
 gboolean gimp_plugin_help_register   (const gchar *domain_name,

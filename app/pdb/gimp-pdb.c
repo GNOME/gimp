@@ -148,6 +148,7 @@ procedural_db_init_procs (Gimp               *gimp,
     { "gimp_layer_set_visible",        "gimp_drawable_set_visible"      },
     { "gimp_palette_refresh",          "gimp_palettes_refresh"          },
     { "gimp_patterns_list",            "gimp_patterns_get_list"         },
+    { "gimp_temp_PDB_name",            "gimp_procedural_db_temp_name"   },
     { "gimp_undo_push_group_start",    "gimp_image_undo_group_start"    },
     { "gimp_undo_push_group_end",      "gimp_image_undo_group_end"      }
   };

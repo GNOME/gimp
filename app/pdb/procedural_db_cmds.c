@@ -113,6 +113,7 @@ static const gchar * const type_str[] =
   "GIMP_PDB_END"
 };
 
+static ProcRecord procedural_db_temp_name_proc;
 static ProcRecord procedural_db_dump_proc;
 static ProcRecord procedural_db_query_proc;
 static ProcRecord procedural_db_proc_info_proc;
@@ -125,6 +126,7 @@ static ProcRecord procedural_db_set_data_proc;
 void
 register_procedural_db_procs (Gimp *gimp)
 {
+  procedural_db_register (gimp, &procedural_db_temp_name_proc);
   procedural_db_register (gimp, &procedural_db_dump_proc);
   procedural_db_register (gimp, &procedural_db_query_proc);
   procedural_db_register (gimp, &procedural_db_proc_info_proc);
@@ -332,6 +334,47 @@ pdb_type_name (gint type)
     * get the name of a PDB type that doesn't exist, should you.
     */
 }
+
+static Argument *
+procedural_db_temp_name_invoker (Gimp     *gimp,
+                                 Argument *args)
+{
+  Argument *return_args;
+  gchar *temp_name;
+  static gint proc_number = 0;
+
+  temp_name = g_strdup_printf ("temp_procedure_number_%d", proc_number++);
+
+  return_args = procedural_db_return_args (&procedural_db_temp_name_proc, TRUE);
+  return_args[1].value.pdb_pointer = temp_name;
+
+  return return_args;
+}
+
+static ProcArg procedural_db_temp_name_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "temp_name",
+    "A unique temporary name for a temporary PDB entry"
+  }
+};
+
+static ProcRecord procedural_db_temp_name_proc =
+{
+  "gimp_procedural_db_temp_name",
+  "Generates a unique temporary PDB name.",
+  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  procedural_db_temp_name_outargs,
+  { { procedural_db_temp_name_invoker } }
+};
 
 static Argument *
 procedural_db_dump_invoker (Gimp     *gimp,
