@@ -26,7 +26,6 @@
 /*
   TO DO:
   - antialiasing
-  - preview image
   - adjustable (R, G, B and A) filter
   - optimize for speed!
   - refraction index warning dialog box when value < 1.0
@@ -58,7 +57,8 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static void      drawlens    (GimpDrawable *drawable);
+static void      drawlens    (GimpDrawable *drawable,
+                              GimpPreview  *preview);
 static gboolean  lens_dialog (GimpDrawable *drawable);
 
 
@@ -147,7 +147,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_applylens", &lvals);
-      if(!lens_dialog (drawable))
+      if (!lens_dialog (drawable))
         return;
       break;
 
@@ -177,7 +177,7 @@ run (const gchar      *name,
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
   gimp_progress_init (_("Applying lens..."));
-  drawlens (drawable);
+  drawlens (drawable, NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -222,31 +222,61 @@ find_projected_pos (gfloat  a2,
 }
 
 static void
-drawlens (GimpDrawable *drawable)
+drawlens (GimpDrawable *drawable,
+          GimpPreview  *preview)
 {
-  GimpImageType drawtype = gimp_drawable_type (drawable->drawable_id);
-  GimpPixelRgn  srcPR, destPR;
-  gint     width, height;
-  gint     bytes;
-  gint     row;
-  gint     x1, y1, x2, y2;
-  guchar  *src, *dest;
-  gint     i, col;
-  gfloat   regionwidth, regionheight, dx, dy, xsqr, ysqr;
-  gfloat   a, b, c, asqr, bsqr, csqr, x, y;
-  glong    pixelpos, pos;
-  GimpRGB  background;
-  guchar   bgr_red, bgr_blue, bgr_green;
-  guchar   alphaval;
+  GimpImageType  drawtype = gimp_drawable_type (drawable->drawable_id);
+  GimpPixelRgn   srcPR, destPR;
+  gint           width, height;
+  gint           bytes;
+  gint           row;
+  gint           x1, y1, x2, y2;
+  guchar        *src, *dest;
+  gint           i, col;
+  gfloat         regionwidth, regionheight, dx, dy, xsqr, ysqr;
+  gfloat         a, b, c, asqr, bsqr, csqr, x, y;
+  glong          pixelpos, pos;
+  GimpRGB        background;
+  guchar         bgr_red, bgr_blue, bgr_green;
+  guchar         alphaval;
 
   gimp_context_get_background (&background);
   gimp_rgb_get_uchar (&background,
                       &bgr_red, &bgr_green, &bgr_blue);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  regionwidth = x2 - x1;
+  bytes = drawable->bpp;
+
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bytes);
+      regionwidth  = width;
+      regionheight = height;
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      regionwidth = x2 - x1;
+      regionheight = y2 - y1;
+      width = drawable->width;
+      height = drawable->height;
+      gimp_pixel_rgn_init (&srcPR, drawable,
+                           0, 0, width, height, FALSE, FALSE);
+      gimp_pixel_rgn_init (&destPR, drawable,
+                           0, 0, width, height, TRUE, TRUE);
+
+      src  = g_new (guchar, regionwidth * regionheight * bytes);
+      gimp_pixel_rgn_get_rect (&srcPR, src,
+                               x1, y1, regionwidth, regionheight);
+    }
+
+  dest = g_new (guchar, regionwidth * regionheight * bytes);
+
   a = regionwidth / 2;
-  regionheight = y2 - y1;
   b = regionheight / 2;
 
   c = MIN (a, b);
@@ -254,17 +284,6 @@ drawlens (GimpDrawable *drawable)
   asqr = a * a;
   bsqr = b * b;
   csqr = c * c;
-
-  width = drawable->width;
-  height = drawable->height;
-  bytes = drawable->bpp;
-
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-  src  = g_malloc ((x2 - x1) * (y2 - y1) * bytes);
-  dest = g_malloc ((x2 - x1) * (y2 - y1) * bytes);
-  gimp_pixel_rgn_get_rect (&srcPR, src, x1, y1, regionwidth, regionheight);
 
   for (col = 0; col < regionwidth; col++)
     {
@@ -328,26 +347,39 @@ drawlens (GimpDrawable *drawable)
             }
         }
 
-      if (((gint) (regionwidth-col) % 5) == 0)
-        gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
+      if (!preview)
+        {
+          if (((gint) (regionwidth-col) % 5) == 0)
+            gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
+        }
     }
 
-  gimp_pixel_rgn_set_rect (&destPR, dest, x1, y1, regionwidth, regionheight);
+  if (preview)
+    {
+      gimp_preview_draw_buffer (preview, dest, bytes * regionwidth);
+    }
+  else
+    {
+      gimp_pixel_rgn_set_rect (&destPR, dest, x1, y1,
+                               regionwidth, regionheight);
+
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+    }
+
   g_free (src);
   g_free (dest);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static gboolean
 lens_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -355,23 +387,30 @@ lens_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("apply_lens", FALSE);
 
-  dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-applylens",
+  dialog = gimp_dialog_new (_("Lens Effect"), "apply_lens",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-applylens",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_aspect_preview_new (drawable, NULL);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (drawlens),
+                            drawable);
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (NULL, _("_Keep original surroundings"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.keep_surr);
   gtk_widget_show (toggle);
 
@@ -384,7 +423,7 @@ lens_dialog (GimpDrawable *drawable)
      gimp_drawable_is_indexed (drawable->drawable_id)
      ? _("_Set surroundings to index 0")
      : _("_Set surroundings to background color"));
-  gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
 
@@ -396,7 +435,7 @@ lens_dialog (GimpDrawable *drawable)
     {
       toggle = gtk_radio_button_new_with_mnemonic_from_widget
         (GTK_RADIO_BUTTON (toggle), _("_Make surroundings transparent"));
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     lvals.set_transparent);
       gtk_widget_show (toggle);
@@ -407,7 +446,7 @@ lens_dialog (GimpDrawable *drawable)
   }
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new_with_mnemonic (_("_Lens refraction index:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -423,13 +462,16 @@ lens_dialog (GimpDrawable *drawable)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &lvals.refraction);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (hbox);
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
