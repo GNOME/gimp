@@ -188,6 +188,7 @@ app/tools/gimpbycolorselecttool.c
 app/tools/gimpclonetool.c
 app/tools/gimpcolorbalancetool.c
 app/tools/gimpcolorizetool.c
+app/tools/gimpcoloroptions.c
 app/tools/gimpcolorpickeroptions.c
 app/tools/gimpcolorpickertool.c
 app/tools/gimpconvolvetool.c

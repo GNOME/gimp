@@ -1,5 +1,7 @@
 2003-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcolortool.c: removed unneeded includes.
+
 	* app/tools/gimpcurvestool.c: simplified by using the functions
 	inherited from GimpColorTool.
 

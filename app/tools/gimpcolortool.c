@@ -30,15 +30,12 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"
 #include "core/gimpmarshal.h"
-#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"
 #include "gimptoolcontrol.h"
-
-#include "gimp-intl.h"
 
 
 enum
