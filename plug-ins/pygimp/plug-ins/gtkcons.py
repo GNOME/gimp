@@ -298,5 +298,6 @@ def gtk_console(ns, title='Python', menu=None):
     gtk.main()
 
 if __name__ == '__main__':
-    gtk_console({'__builtins__': __builtins__, '__name__': '__main__',
-		 '__doc__': None})
+    if len(sys.argv) < 2 or sys.argv[1] != '-gimp':
+        gtk_console({'__builtins__': __builtins__, '__name__': '__main__',
+		     '__doc__': None})

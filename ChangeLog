@@ -1,3 +1,9 @@
+2003-07-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/gtkcons.py: don't do anything if run
+	standalone and given a -gimp command line option. (Sanity against
+	#117074)
+
 2003-07-09  Dave Neary  <bolsh@gimp.org> 
 
 	* devel-docs/pat.txt: Documented the pat version 1 file
