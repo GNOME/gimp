@@ -173,7 +173,7 @@ preset_create_filename (const gchar *basename,
 }
 
 
-static void addfactorydefaults (void)
+static void add_factory_defaults (void)
 {
   GtkTreeIter iter;
 
@@ -187,14 +187,14 @@ static void addfactorydefaults (void)
 
 }
 
-static void presetsrefresh(void)
+static void preset_refresh_presets(void)
 {
   gtk_list_store_clear (store);
-  addfactorydefaults ();
+  add_factory_defaults ();
   preset_read_dir_into_list ();
 }
 
-static int loadoldpreset (const gchar *fname)
+static int load_old_preset (const gchar *fname)
 {
   FILE *f;
   int len;
@@ -218,7 +218,7 @@ static unsigned int hexval (char c)
   return 0;
 }
 
-static char *parsergbstring (const gchar *s)
+static char *parse_rgb_string (const gchar *s)
 {
   static char col[3];
   col[0] = (hexval(s[0]) << 4) | hexval(s[1]);
@@ -227,7 +227,7 @@ static char *parsergbstring (const gchar *s)
   return col;
 }
 
-static void setorientvector (const gchar *str)
+static void set_orient_vector (const gchar *str)
 {
   const gchar *tmps = str;
   int n;
@@ -257,7 +257,7 @@ static void setorientvector (const gchar *str)
 
 }
 
-static void setsizevector (const gchar *str)
+static void set_size_vector (const gchar *str)
 {
   const gchar *tmps = str;
   int n;
@@ -278,7 +278,7 @@ static void setsizevector (const gchar *str)
 
 }
 
-static void parsedesc (const gchar *str, gchar *d, gssize d_len)
+static void parse_desc (const gchar *str, gchar *d, gssize d_len)
 {
   gchar *dest = g_strcompress (str);
 
@@ -287,10 +287,10 @@ static void parsedesc (const gchar *str, gchar *d, gssize d_len)
   g_free (dest);
 }
 
-static void setval (const gchar *key, const gchar *val)
+static void set_values (const gchar *key, const gchar *val)
 {
   if(!strcmp(key, "desc"))
-    parsedesc(val, presetdesc, sizeof (presetdesc));
+    parse_desc(val, presetdesc, sizeof (presetdesc));
   else if(!strcmp(key, "orientnum"))
     pcvals.orientnum = atoi(val);
   else if(!strcmp(key, "orientfirst"))
@@ -362,14 +362,14 @@ static void setval (const gchar *key, const gchar *val)
     g_strlcpy (pcvals.selectedpaper, val, sizeof (pcvals.selectedpaper));
 
   else if(!strcmp(key, "color")){
-    char *c = parsergbstring(val);
+    char *c = parse_rgb_string(val);
     gimp_rgba_set_uchar(&pcvals.color, c[0], c[1], c[2], 255);
   }
 
   else if(!strcmp(key, "numorientvector"))
     pcvals.numorientvector = atoi(val);
   else if(!strcmp(key, "orientvector"))
-    setorientvector(val);
+    set_orient_vector(val);
   else if(!strcmp(key, "orientangoff"))
    pcvals.orientangoff = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orientstrexp"))
@@ -380,7 +380,7 @@ static void setval (const gchar *key, const gchar *val)
   else if(!strcmp(key, "numsizevector"))
     pcvals.numsizevector = atoi(val);
   else if(!strcmp(key, "sizevector"))
-    setsizevector(val);
+    set_size_vector(val);
   else if(!strcmp(key, "sizestrexp"))
    pcvals.sizestrexp = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "sizevoronoi"))
@@ -392,7 +392,7 @@ static void setval (const gchar *key, const gchar *val)
     pcvals.colornoise = g_ascii_strtod (val, NULL);
 }
 
-static int loadpreset(const gchar *fn)
+static int load_preset(const gchar *fn)
 {
   char line[1024] = "";
   FILE *f;
@@ -405,7 +405,7 @@ static int loadpreset(const gchar *fn)
   fgets(line,10,f);
   if(strncmp(line,PRESETMAGIC,4)) {
     fclose(f);
-    return loadoldpreset(fn);
+    return load_old_preset(fn);
   }
   restore_default_values();
   while(!feof(f)) {
@@ -418,7 +418,7 @@ static int loadpreset(const gchar *fn)
       continue;
     *tmps = '\0';
     tmps++;
-    setval(line, tmps);
+    set_values(line, tmps);
   }
   fclose(f);
   return 0;
@@ -441,7 +441,7 @@ int select_preset(const gchar *preset)
 
         if (abs)
           {
-            if (loadpreset (abs))
+            if (load_preset (abs))
               {
                 ret = SELECT_PRESET_LOAD_FAILED;
               }
@@ -463,7 +463,7 @@ int select_preset(const gchar *preset)
     return ret;
 }
 
-static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
+static void apply_preset(GtkWidget *w, GtkTreeSelection *selection)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -485,7 +485,7 @@ static void applypreset(GtkWidget *w, GtkTreeSelection *selection)
     }
 }
 
-static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
+static void delete_preset(GtkWidget *w, GtkTreeSelection *selection)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -515,16 +515,16 @@ static void deletepreset(GtkWidget *w, GtkTreeSelection *selection)
               g_free (abs);
             }
 
-          presetsrefresh ();
+          preset_refresh_presets ();
 
           g_free (preset);
         }
     }
 }
 
-static void savepreset(void);
+static void save_preset(void);
 
-static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
+static void preset_desc_callback(GtkTextBuffer *buffer, gpointer data)
 {
   char *str;
   GtkTextIter start, end;
@@ -536,18 +536,18 @@ static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
 }
 
 static void
-savepresetresponse (GtkWidget *widget,
+save_preset_response (GtkWidget *widget,
                     gint       response_id,
                     gpointer   data)
 {
   gtk_widget_destroy (widget);
 
   if (response_id == GTK_RESPONSE_OK)
-    savepreset ();
+    save_preset ();
 }
 
 static void
-create_savepreset (void)
+create_save_preset (void)
 {
   static GtkWidget *window = NULL;
   GtkWidget *box, *label;
@@ -571,7 +571,7 @@ create_savepreset (void)
                      NULL);
 
   g_signal_connect (window, "response",
-                    G_CALLBACK (savepresetresponse),
+                    G_CALLBACK (save_preset_response),
                     NULL);
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -597,7 +597,7 @@ create_savepreset (void)
 
   buffer = gtk_text_buffer_new (NULL);
   g_signal_connect (buffer, "changed",
-                    G_CALLBACK (presetdesccallback), NULL);
+                    G_CALLBACK (preset_desc_callback), NULL);
   gtk_text_buffer_set_text (buffer, presetdesc, -1);
 
   text = gtk_text_view_new_with_buffer (buffer);
@@ -608,7 +608,7 @@ create_savepreset (void)
   gtk_widget_show (window);
 }
 
-static void savepreset(void)
+static void save_preset(void)
 {
   const gchar *preset_name;
   gchar *fname, *presets_dir_path;
@@ -626,7 +626,7 @@ static void savepreset(void)
 
   if (!thispath)
     {
-      g_printerr ("Internal error: (savepreset) thispath == NULL");
+      g_printerr ("Internal error: (save_preset) thispath == NULL");
       return;
     }
 
@@ -777,13 +777,13 @@ static void savepreset(void)
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.colornoise));
 
   fclose (f);
-  presetsrefresh ();
+  preset_refresh_presets ();
   reselect (presetlist, fname);
 
   g_free (fname);
 }
 
-static void readdesc(const char *fn)
+static void read_description(const char *fn)
 {
   char *rel_fname;
   char *fname;
@@ -821,7 +821,7 @@ static void readdesc(const char *fn)
           fgets(line, 4095, f);
           if (!strncmp (line, "desc=", 5))
             {
-              parsedesc (line + 5, tmplabel, sizeof (tmplabel));
+              parse_desc (line + 5, tmplabel, sizeof (tmplabel));
               set_preset_description_text (tmplabel);
               fclose (f);
               return;
@@ -833,7 +833,8 @@ static void readdesc(const char *fn)
   set_preset_description_text ("");
 }
 
-static void selectpreset(GtkTreeSelection *selection, gpointer data)
+static void presets_list_select_preset (GtkTreeSelection *selection,
+                                        gpointer data)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -858,16 +859,14 @@ static void selectpreset(GtkTreeSelection *selection, gpointer data)
           selected_preset_orig_name = g_strdup (preset_name);
           selected_preset_filename = g_strdup(selected_preset_filename);
         }
-      readdesc (preset_filename);
+      read_description (preset_filename);
       g_free (preset_name);
       g_free (preset_filename);
     }
 }
 
 static GtkWidget *
-create_presets_list(GtkWidget *parent,
-                    void (*changed_cb)
-                    (GtkTreeSelection *selection, gpointer data))
+create_presets_list(GtkWidget *parent)
 {
   GtkListStore *store;
   GtkTreeSelection *selection;
@@ -906,7 +905,8 @@ create_presets_list(GtkWidget *parent,
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb),
+  g_signal_connect (selection, "changed", 
+                    G_CALLBACK (presets_list_select_preset),
                     NULL);
 
   return view;
@@ -938,7 +938,7 @@ void create_presetpage(GtkNotebook *notebook)
   presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current..."));
   gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(create_savepreset), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(create_save_preset), NULL);
   gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
@@ -946,10 +946,10 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  presetlist = view = create_presets_list (box1, selectpreset);
+  presetlist = view = create_presets_list (box1);
   store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-  addfactorydefaults ();
+  add_factory_defaults ();
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (box1), vbox, FALSE, FALSE, 0);
@@ -966,20 +966,20 @@ void create_presetpage(GtkNotebook *notebook)
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(applypreset), selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(apply_preset), selection);
   gimp_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
   tmpw = delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(deletepreset), selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(delete_preset), selection);
   gimp_help_set_help_data (tmpw, _("Deletes the selected Preset"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(presetsrefresh), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(preset_refresh_presets), NULL);
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new (NULL);
