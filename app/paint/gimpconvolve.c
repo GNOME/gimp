@@ -167,7 +167,7 @@ convolve_options_new (void)
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  frame = tool_options_radio_buttons_new (N_("Convolve Type"), 
+  frame = tool_options_radio_buttons_new (_("Convolve Type"), 
 					  &options->type,
 					   options->type_w,
 					   type_label,

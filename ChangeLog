@@ -1,5 +1,14 @@
 1999-08-22  Tomas Ogren  <stric@ing.umu.se>
 
+	* app/bucket_fill.c
+	* app/clone.c
+	* app/convolve.c
+	* app/flip_tool.c
+	* app/measure.c
+	* app/pixmapbrush.c: i18n fixes
+
+1999-08-22  Tomas Ogren  <stric@ing.umu.se>
+
 	* app/tool_options.c: Remember kids, "Options" is spelled "Options",
 	not "Ootions"
 

@@ -200,7 +200,8 @@ clone_options_new (void)
   group = NULL;  
   for (i = 0; i < n_align_names; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, align_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group,
+						      gettext(align_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) align_type_callback,
