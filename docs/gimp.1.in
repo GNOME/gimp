@@ -143,8 +143,6 @@ config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
-@gimpsysconfdir@/menurc - system wide set of keybindings.
-
 \fB$HOME\fP/@gimpdir@/parasiterc - Description of all available GIMP
 parasites. This is file is recreated everytime GIMP starts up.
 
@@ -224,8 +222,9 @@ files.
 
 \fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
 
-@gimpdatadir@/images/gimp_splash.png - image used for the GIMP splash
-screen.
+@gimpdatadir@/images/gimp-splash.png - image used for the GIMP splash
+screen. If a file called gimp-splash.png is found in
+\fB$HOME\fP/@gimpdir@/, then that image is used instead.
 
 @gimpdatadir@/images/gimp_logo.png - image used in the GIMP about
 dialog.
