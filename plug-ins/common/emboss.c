@@ -255,34 +255,47 @@ EmbossRow (guchar *src,
            guint   bypp,
            gint    alpha)
 {
-  glong Nx, Ny, NdotL;
-  guchar *s1, *s2, *s3;
-  gint x, shade, b;
-  gint bytes;
+  glong   Nx, Ny, NdotL;
+  guchar *s[3];
+  gint    i, j, x, shade, b;
+  gint    bytes;
+  gdouble M[3][3];
+  gdouble a;
 
   /* mung pixels, avoiding edge pixels */
-  s1 = src + bypp;
-  s2 = s1 + (xSize * bypp);
-  s3 = s2 + (xSize * bypp);
+  s[0] = src + bypp;
+  s[1] = s[0] + (xSize * bypp);
+  s[2] = s[1] + (xSize * bypp);
   dst += bypp;
 
   bytes = (alpha) ? bypp - 1 : bypp;
 
   if (texture)
-    texture += bypp;
+    texture += (xSize + 1) * bypp;
 
-  for (x = 1; x < xSize - 1; x++, s1 += bypp, s2 += bypp, s3 += bypp)
+  for (x = 1; x < xSize - 1; x++)
     {
-      /*
-       * compute the normal from the src map. the type of the
-       * expression before the cast is compiler dependent. in
-       * some cases the sum is unsigned, in others it is
-       * signed. ergo, cast to signed.
-       */
-      Nx = (int) (s1[-(int)bypp] + s2[-(int)bypp] + s3[-(int)bypp]
-                  - s1[bypp] - s2[bypp] - s3[bypp]);
-      Ny = (int) (s3[-(int)bypp] + s3[0] + s3[bypp] - s1[-(int)bypp]
-                  - s1[0] - s1[bypp]);
+      for (i = 0; i < 3; i++)
+        s[i] += bypp;
+
+      for (i = 0; i < 3; i++)
+        for (j = 0; j < 3; j++)
+          M[i][j] = 0;
+
+      for (b = 0; b < bytes; b++)
+        for (i = 0; i < 3; i++)
+          for (j = 0; j < 3; j++)
+            {
+              if (alpha)
+                a = s[i][(j - 1) * bypp + bytes] / (gdouble) 255;
+              else
+                a = 1;
+
+              M[i][j] += a * s[i][(j - 1) * bypp + b];
+            }
+
+      Nx = M[0][0] + M[1][0] + M[2][0] - M[0][2] - M[1][2] - M[2][2];
+      Ny = M[2][0] + M[2][1] + M[2][2] - M[0][0] - M[0][1] - M[0][2];
 
       /* shade with distant light source */
       if ( Nx == 0 && Ny == 0 )
@@ -301,7 +314,7 @@ EmbossRow (guchar *src,
             }
           if (alpha)
             {
-              *dst++ = s2[bytes]; /* preserve the alpha */
+              *dst++ = s[1][bytes]; /* preserve the alpha */
               texture++;
             }
         }
@@ -312,7 +325,7 @@ EmbossRow (guchar *src,
               *dst++ = shade;
             }
           if (alpha)
-            *dst++ = s2[bytes]; /* preserve the alpha */
+            *dst++ = s[1][bytes]; /* preserve the alpha */
         }
     }
   if (texture)
