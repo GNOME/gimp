@@ -1,3 +1,17 @@
+2000-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/disp_callbacks.c: s/0/FALSE/
+
+	* app/gdisplay_ops.c (gdisplay_shrink_wrap): removed all the
+	gtk_drawing_area_size(), show/hide and gtk_main_iteration() stuff
+	and don't touch the drawing area at all.
+
+	Instead, use brute force on gdisp->shell:
+	1. gtk_widget_size_allocate(gdisp->shell)
+	2. gdk_window_resize(gdisp->shell->window)
+
+	(tested with Sawmill, Enlightenment and twm)
+
 2000-04-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpdialog.c: fixed a compiler warning.
