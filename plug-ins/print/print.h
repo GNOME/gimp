@@ -1,8 +1,9 @@
 /*
+ * "$Id$"
  *
  *   Print plug-in header file for the GIMP.
  *
- *   Copyright 1997-1999 Michael Sweet (mike@easysw.com) and
+ *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
  *	Robert Krawitz (rlk@alum.mit.edu)
  *
  *   This program is free software; you can redistribute it and/or modify it
@@ -25,9 +26,22 @@
  */
 
 /*
+ *
+ * This file must not include any gimp, glib, gtk, etc. headers.
+ *
+ * Eventually I intend to port this to GhostScript and/or CUPS.  The only
+ * file that should have GIMP-specific code is print.c.  The rest of this
+ * program should be completely generic.
+ *
+ * rlk 20000112
+ */
+
+/*
  * Include necessary header files...
  */
-#include "config.h"
+#ifndef HAVE_UNISTD_H
+#define HAVE_UNISTD_H
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,17 +53,10 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
-
-
 /*
  * Constants...
  */
 
-
-#define PLUG_IN_VERSION         "3.0.1 - 05 Dec 1999" 
-#define PLUG_IN_NAME            "Print"
 #define OUTPUT_GRAY		0	/* Grayscale output */
 #define OUTPUT_COLOR		1	/* Color output */
 
@@ -229,3 +236,6 @@ extern void	indexed_to_gray(unsigned char *, unsigned char *, int, int,
 				lut_t *, unsigned char *, float);
 #endif
 
+/*
+ * End of "$Id$".
+ */

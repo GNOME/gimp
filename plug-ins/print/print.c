@@ -3,7 +3,7 @@
  *
  *   Print plug-in for the GIMP.
  *
- *   Copyright 1997-1999 Michael Sweet (mike@easysw.com) and
+ *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
  *	Robert Krawitz (rlk@alum.mit.edu)
  *
  *   This program is free software; you can redistribute it and/or modify it
@@ -47,6 +47,10 @@
 /*
  * All Gimp-specific code is in this file.
  */
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#define PLUG_IN_VERSION		"3.0.5 - 13 Jan 2000"
+#define PLUG_IN_NAME		"Print"
 
 #include <math.h>
 #include <signal.h>
@@ -56,8 +60,38 @@
 #include <os2.h>
 #endif
 
-#include "libgimp/gimpui.h"
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/gimpui.h>
+#if 0
+#include <libgimp/stdplugins-intl.h>
+#else
+#include <libgimp/gimpintl.h>
+#include <locale.h>
+
+#ifndef LOCALEDIR
+#define LOCALEDIR g_strconcat (gimp_data_directory (), \
+			       G_DIR_SEPARATOR_S, \
+			       "locale", \
+			       NULL)
+#endif
+#ifdef HAVE_LC_MESSAGES
+#define INIT_I18N() \
+  setlocale(LC_MESSAGES, ""); \
+  bindtextdomain("gimp-std-plugins", LOCALEDIR); \
+  textdomain("gimp-std-plugins")
+#define INIT_I18N_UI() \
+  gtk_set_locale(); \
+  setlocale (LC_NUMERIC, "C"); \
+  INIT_I18N();
+#else
+#define INIT_I18N() \
+  bindtextdomain("gimp-std-plugins", LOCALEDIR); \
+  textdomain("gimp-std-plugins")
+#define INIT_I18N_UI() \
+  gtk_set_locale(); \
+  setlocale (LC_NUMERIC, "C"); \
+  INIT_I18N();
+#endif
+#endif
 
 /*
  * Constants for GUI...
@@ -236,7 +270,7 @@ printer_t	printers[] =		/* List of supported printer types */
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
   { N_("EPSON Stylus Photo EX"),	"escp2-ex",	1,	7,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { N_("EPSON Stylus Photo EX"),	"escp2-photo",	1,	8,	0.585,	0.646,
+  { N_("EPSON Stylus Photo"),	"escp2-photo",	1,	8,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
 };
 
@@ -797,7 +831,7 @@ do_print_dialog(void)
   * Top-level table for dialog...
   */
 
-  table = gtk_table_new(9, 4, FALSE);
+  table = gtk_table_new(17, 4, FALSE);
   gtk_container_border_width(GTK_CONTAINER(table), 6);
   gtk_table_set_col_spacings(GTK_TABLE(table), 4);
   gtk_table_set_row_spacings(GTK_TABLE(table), 8);
@@ -956,6 +990,15 @@ do_print_dialog(void)
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
+  label = gtk_label_new(_("Density:"));
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach(GTK_TABLE(table), label, 2, 3, 7, 8, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(label);
+
+  box = gtk_hbox_new(FALSE, 8);
+  gtk_table_attach(GTK_TABLE(table), box, 3, 4, 7, 8, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(box);
+
   linear_off = button = gtk_radio_button_new_with_label(NULL, _("Normal scale"));
   linear_group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (vars.linear == 0)
@@ -966,7 +1009,7 @@ do_print_dialog(void)
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  linear_on = button = gtk_radio_button_new_with_label(linear_group, _("Linear scale"));
+  linear_on = button = gtk_radio_button_new_with_label(linear_group, _("Experimental linear scale"));
   if (vars.linear == 1)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
@@ -981,11 +1024,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Scaling:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 7, 8, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 8, 9, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 7, 8, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 8, 9, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   if (vars.scaling < 0.0)
@@ -1037,11 +1080,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Brightness:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 8, 9, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 9, 10, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 8, 9, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 9, 10, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   brightness_adjustment = scale_data =
@@ -1072,11 +1115,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Gamma:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 9, 10, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 10, 11, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 9, 10, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 10, 11, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   gamma_adjustment = scale_data =
@@ -1115,10 +1158,10 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Contrast:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 10, 11, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 11, 12, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 10, 11, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 11, 12, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   contrast_adjustment = scale_data =
@@ -1149,11 +1192,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Red:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 11, 12, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 12, 13, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 11, 12, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 12, 13, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   red_adjustment = scale_data =
@@ -1184,11 +1227,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Green:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 12, 13, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 13, 14, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 12, 13, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 13, 14, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   green_adjustment = scale_data =
@@ -1219,11 +1262,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Blue:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 13, 14, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 14, 15, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 13, 14, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 14, 15, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   blue_adjustment = scale_data =
@@ -1254,11 +1297,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Saturation:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 14, 15, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 15, 16, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 14, 15, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 15, 16, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   saturation_adjustment = scale_data =
@@ -1289,11 +1332,11 @@ do_print_dialog(void)
 
   label = gtk_label_new(_("Density:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 15, 16, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 16, 17, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
 
   box = gtk_hbox_new(FALSE, 8);
-  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 15, 16, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), box, 1, 4, 16, 17, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
   density_adjustment = scale_data =
@@ -1367,13 +1410,8 @@ do_print_dialog(void)
   * Print, cancel buttons...
   */
 
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
   gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
-
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE,FALSE, 0);
-  gtk_widget_show (hbbox);
+  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->action_area), 0);
 
   button = gtk_button_new_with_label (_("Print"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -3166,8 +3204,8 @@ get_printers(void)
       for (i = 1; i <= pnum; i++)
 	{
 	  sprintf(plist[plist_count].name, "LPT%d:", i);
-	  sprintf(plist[plist_count].v.output_to, "PRINT /D:LPT%d /B ", i);
-          strcpy(plist[plist_count].v.driver, "ps2");
+	  sprintf(plist[plist_count].output_to, "PRINT /D:LPT%d /B ", i);
+          strcpy(plist[plist_count].driver, "ps2");
 	  initialize_printer(&plist[plist_count]);
           plist_count ++;
 	}

@@ -3,7 +3,7 @@
  *
  *   Print plug-in EPSON ESC/P2 driver for the GIMP.
  *
- *   Copyright 1997-1999 Michael Sweet (mike@easysw.com) and
+ *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
  *	Robert Krawitz (rlk@alum.mit.edu)
  *
  *   This program is free software; you can redistribute it and/or modify it
@@ -31,46 +31,38 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.12  1999/12/16 19:44:01  olofk
- *   Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
+ *   Revision 1.13  2000/01/26 16:00:47  neo
+ *   updated print plug-in
  *
- *           Fix of KDE/Kwm  selection add/sub/inter problem
- *           NOTE: This is a workaround, not a real fix.
- *           Many Thanks to Matthias Ettrich
  *
- *           * app/disp_callbacks.c
+ *   --Sven
  *
- *           Updated unsharp-mask to version 0.10
+ *   Revision 1.39.2.1  2000/01/13 03:32:34  rlk
+ *   silliness
  *
- *           * plug-ins/unsharp/dialog_f.c
- *           * plug-ins/unsharp/dialog_f.h
- *           * plug-ins/unsharp/dialog_i.c
- *           * plug-ins/unsharp/dialog_i.h
- *           * plug-ins/unsharp/unsharp.c
+ *   Revision 1.39  2000/01/13 03:25:31  rlk
+ *   bug fix from mainline
  *
- *           Updated print plug-in to version 3.0.1
+ *   Revision 1.38  2000/01/08 23:27:54  rlk
+ *   Rearrange setup code; more printers to support softweave
  *
- *           * plug-ins/print/README (new file)
- *           * plug-ins/print/print-escp2.c
- *           * plug-ins/print/print-pcl.c
- *           * plug-ins/print/print-ps.c
- *           * plug-ins/print/print-util.c
- *           * plug-ins/print/print.c
- *           * plug-ins/print/print.h
+ *   Revision 1.37  1999/12/19 14:36:18  rlk
+ *   Make 'em big enough
  *
- *           Updated all files in the help/C/dialogs dir. This is
- *           a first alpha glimpse of the help system. Please give
- *           me feedback of the content. However since it's in alpha
- *           stage it means that there is spell, grammatical, etc errors.
- *           There is may also be pure errors which I hope "you" will
- *           report to either olof@gimp.org or karin@gimp.org. Please
- *           don't report spell, grammatical, etc error at this stage in dev.
+ *   Revision 1.36  1999/12/18 23:08:28  rlk
+ *   comments, mostly
  *
- *           If you have any plans to commit to the help system please write
- *           to olof@gimp.org. (This is mandatory not a please ;-).
+ *   Revision 1.35  1999/12/11 15:26:27  rlk
+ *   hopefully get borders right
  *
- *           * help/C/welcome.html
- *           * help/C/dialogs/about.html ..............
+ *   Revision 1.34  1999/12/11 04:52:35  rlk
+ *   bug fixes
+ *
+ *   Revision 1.33  1999/12/11 04:25:23  rlk
+ *   various other print modes
+ *
+ *   Revision 1.32  1999/12/11 01:46:13  rlk
+ *   Better weaving code -- not absolutely complete yet
  *
  *   Revision 1.31  1999/12/05 22:10:53  rlk
  *   minor, prep for release
@@ -330,7 +322,8 @@
 
 static void escp2_write(FILE *, unsigned char *, int, int, int, int, int,
 			int, int);
-static void initialize_weave(int jets, int separation, int horizontal);
+static void initialize_weave(int jets, int separation,
+			     int oversample, int horizontal);
 static void escp2_flush(int model, int width, int hoffset, int ydpi,
 			int xdpi, FILE *prn);
 static void
@@ -349,43 +342,50 @@ escp2_write_weave(FILE *, int, int, int, int, int, int,
  * Various classes of printer capabilities are represented by bitmasks.
  */
 
-typedef unsigned int model_cap_t;
+typedef unsigned long long model_cap_t;
 typedef model_cap_t model_featureset_t;
 typedef model_cap_t model_class_t;
 
-#define MODEL_PAPER_SIZE_MASK	0x3
-#define MODEL_PAPER_SMALL 	0x0
-#define MODEL_PAPER_LARGE 	0x1
-#define MODEL_PAPER_1200	0x2
+#define MODEL_PAPER_SIZE_MASK	0x300
+#define MODEL_PAPER_SMALL 	0x000
+#define MODEL_PAPER_LARGE 	0x100
+#define MODEL_PAPER_1200	0x200
 
-#define MODEL_IMAGEABLE_MASK	0xc
-#define MODEL_IMAGEABLE_DEFAULT	0x0
-#define MODEL_IMAGEABLE_PHOTO	0x4
-#define MODEL_IMAGEABLE_600	0x8
+#define MODEL_IMAGEABLE_MASK	0xc00
+#define MODEL_IMAGEABLE_DEFAULT	0x000
+#define MODEL_IMAGEABLE_PHOTO	0x400
+#define MODEL_IMAGEABLE_600	0x800
 
-#define MODEL_INIT_MASK		0xf0
-#define MODEL_INIT_COLOR	0x00
-#define MODEL_INIT_PRO		0x10
-#define MODEL_INIT_1500		0x20
-#define MODEL_INIT_600		0x30
-#define MODEL_INIT_PHOTO	0x40
+#define MODEL_INIT_MASK		0xf000
+#define MODEL_INIT_COLOR	0x0000
+#define MODEL_INIT_PRO		0x1000
+#define MODEL_INIT_1500		0x2000
+#define MODEL_INIT_600		0x3000
+#define MODEL_INIT_PHOTO	0x4000
 
-#define MODEL_HASBLACK_MASK	0x100
-#define MODEL_HASBLACK_YES	0x000
-#define MODEL_HASBLACK_NO	0x100
+#define MODEL_HASBLACK_MASK	0x10000
+#define MODEL_HASBLACK_YES	0x00000
+#define MODEL_HASBLACK_NO	0x10000
 
-#define MODEL_6COLOR_MASK	0x200
-#define MODEL_6COLOR_NO		0x000
-#define MODEL_6COLOR_YES	0x200
+#define MODEL_6COLOR_MASK	0x20000
+#define MODEL_6COLOR_NO		0x00000
+#define MODEL_6COLOR_YES	0x20000
 
-#define MODEL_720DPI_MODE_MASK	0xc00
-#define MODEL_720DPI_DEFAULT	0x000
-#define MODEL_720DPI_600	0x400
-#define MODEL_720DPI_PHOTO	0x400 /* 0x800 for experimental stuff */
+#define MODEL_720DPI_MODE_MASK	0xc0000
+#define MODEL_720DPI_DEFAULT	0x00000
+#define MODEL_720DPI_600	0x40000
+#define MODEL_720DPI_PHOTO	0x40000 /* 0x80000 for experimental stuff */
 
-#define MODEL_1440DPI_MASK	0x1000
-#define MODEL_1440DPI_NO	0x0000
-#define MODEL_1440DPI_YES	0x1000
+#define MODEL_1440DPI_MASK	0x100000
+#define MODEL_1440DPI_NO	0x000000
+#define MODEL_1440DPI_YES	0x100000
+
+#define MODEL_NOZZLES_MASK	0xff000000
+#define MODEL_MAKE_NOZZLES(x) 	((long long) ((x)) << 24)
+#define MODEL_GET_NOZZLES(x) 	(((x) & MODEL_NOZZLES_MASK) >> 24)
+#define MODEL_SEPARATION_MASK	0xf00000000ll
+#define MODEL_MAKE_SEPARATION(x) 	(((long long) (x)) << 32)
+#define MODEL_GET_SEPARATION(x)	(((x) & MODEL_SEPARATION_MASK) >> 32)
 
 /*
  * SUGGESTED SETTINGS FOR STYLUS PHOTO EX:
@@ -413,44 +413,68 @@ typedef model_cap_t model_class_t;
  * The green and blue will vary somewhat with different inks
  */
 
+
 model_cap_t model_capabilities[] =
 {
   /* Stylus Color */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_DEFAULT | MODEL_INIT_COLOR
    | MODEL_HASBLACK_YES | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(1) | MODEL_MAKE_SEPARATION(1)),
   /* Stylus Color Pro/Pro XL/400/500 */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_DEFAULT | MODEL_INIT_PRO
    | MODEL_HASBLACK_YES | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(1) | MODEL_MAKE_SEPARATION(1)),
   /* Stylus Color 1500 */
   (MODEL_PAPER_LARGE | MODEL_IMAGEABLE_DEFAULT | MODEL_INIT_1500
    | MODEL_HASBLACK_NO | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(1) | MODEL_MAKE_SEPARATION(1)),
   /* Stylus Color 600 */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_600 | MODEL_INIT_600
    | MODEL_HASBLACK_YES | MODEL_6COLOR_NO | MODEL_720DPI_600
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(1) | MODEL_MAKE_SEPARATION(1)),
   /* Stylus Color 800 */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_600 | MODEL_INIT_600
    | MODEL_HASBLACK_YES | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(64) | MODEL_MAKE_SEPARATION(8)),
   /* Stylus Color 1520/3000 */
   (MODEL_PAPER_LARGE | MODEL_IMAGEABLE_600 | MODEL_INIT_600
    | MODEL_HASBLACK_YES | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(64) | MODEL_MAKE_SEPARATION(8)),
   /* Stylus Photo 700 */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_PHOTO | MODEL_INIT_PHOTO
    | MODEL_HASBLACK_YES | MODEL_6COLOR_YES | MODEL_720DPI_PHOTO
-   | MODEL_1440DPI_YES),
+   | MODEL_1440DPI_YES | MODEL_MAKE_NOZZLES(32) | MODEL_MAKE_SEPARATION(8)),
   /* Stylus Photo EX */
   (MODEL_PAPER_LARGE | MODEL_IMAGEABLE_PHOTO | MODEL_INIT_PHOTO
    | MODEL_HASBLACK_YES | MODEL_6COLOR_YES | MODEL_720DPI_PHOTO
-   | MODEL_1440DPI_YES),
+   | MODEL_1440DPI_YES | MODEL_MAKE_NOZZLES(32) | MODEL_MAKE_SEPARATION(8)),
   /* Stylus Photo */
   (MODEL_PAPER_SMALL | MODEL_IMAGEABLE_PHOTO | MODEL_INIT_PHOTO
    | MODEL_HASBLACK_YES | MODEL_6COLOR_YES | MODEL_720DPI_PHOTO
-   | MODEL_1440DPI_NO),
+   | MODEL_1440DPI_NO | MODEL_MAKE_NOZZLES(32) | MODEL_MAKE_SEPARATION(8)),
+};
+
+typedef struct {
+  const char name[65];
+  int hres;
+  int vres;
+  int softweave;
+  int horizontal_passes;
+  int vertical_passes;
+} res_t;
+
+res_t reslist[] = {
+  { "360 DPI", 360, 360, 0, 1, 1 },
+  { "720 DPI Microweave", 720, 720, 0, 1, 1 },
+  { "720 DPI Softweave", 720, 720, 1, 1, 1 },
+  { "720 DPI High Quality", 720, 720, 1, 1, 2 },
+  { "720 DPI Highest Quality", 720, 720, 1, 1, 4 },
+  { "1440 x 720 DPI Microweave", 1440, 720, 0, 1, 1 },
+  { "1440 x 720 DPI Softweave", 1440, 720, 1, 2, 2 },
+  { "1440 x 720 DPI Highest Quality", 1440, 720, 1, 2, 4 },
+  { "1440 x 720 DPI Two-pass", 2880, 720, 1, 2, 4 },
+  { "1440 x 720 DPI Two-pass Microweave", 2880, 720, 0, 1, 1 },
+  { "", 0, 0, 0, 0, 0 }
 };
 
 static int
@@ -465,6 +489,18 @@ escp2_cap(int model, model_featureset_t featureset)
   return (model_capabilities[model] & featureset);
 }
 
+static int
+escp2_nozzles(int model)
+{
+  return MODEL_GET_NOZZLES(model_capabilities[model]);
+}
+
+static int
+escp2_nozzle_separation(int model)
+{
+  return MODEL_GET_SEPARATION(model_capabilities[model]);
+}
+
 /*
  * 'escp2_parameters()' - Return the parameter values for the given parameter.
  */
@@ -476,8 +512,7 @@ escp2_parameters(int  model,		/* I - Printer model */
                  int  *count)		/* O - Number of values */
 {
   int		i;
-  char		**p,
-		**valptrs;
+  char		**valptrs;
   static char	*media_sizes[] =
 		{
 		  ("Letter"),
@@ -487,17 +522,6 @@ escp2_parameters(int  model,		/* I - Printer model */
 		  ("A3"),
 		  ("12x18")
 		};
-  static char	*resolutions[] =
-		{
-		  ("360 DPI"),
-		  ("720 DPI Microweave"),
-		  ("720 DPI Softweave"),
-		  ("1440 x 720 DPI"),
-		  ("1440 x 720 DPI Microweave"),
-		  ("1440 x 720 DPI Two-pass"),
-		  ("1440 x 720 DPI Two-pass Microweave")
-		};
-
 
   if (count == NULL)
     return (NULL);
@@ -514,28 +538,43 @@ escp2_parameters(int  model,		/* I - Printer model */
     else
       *count = 3;
 
-    p = media_sizes;
+    valptrs = malloc(*count * sizeof(char *));
+    for (i = 0; i < *count; i ++)
+      {
+	/* strdup doesn't appear to be POSIX... */
+	valptrs[i] = malloc(strlen(media_sizes[i]) + 1);
+	strcpy(valptrs[i], media_sizes[i]);
+      }
+    return (valptrs);
   }
   else if (strcmp(name, "Resolution") == 0)
   {
-    if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES))
-      *count = 7;
-    else
-      *count = 3;
-    p = resolutions;
+    res_t *res = &(reslist[0]);
+    valptrs = malloc(sizeof(char *) * sizeof(reslist) / sizeof(res_t));
+    *count = 0;
+    while(res->hres)
+      {
+	if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES) ||
+	    (res->hres <= 720 && res->vres <= 720))
+	  {
+	    int nozzles = escp2_nozzles(model);
+	    int separation = escp2_nozzle_separation(model);
+	    int max_weave = nozzles / separation;
+	    if (! res->softweave ||
+		(nozzles > 1 && res->vertical_passes <= max_weave))
+	      {
+		valptrs[*count] = malloc(strlen(res->name) + 1);
+		strcpy(valptrs[*count], res->name);
+		(*count)++;
+	      }
+	  }
+	res++;
+      }
+    return (valptrs);
   }
   else
     return (NULL);
 
-  valptrs = malloc(*count * sizeof(char *));
-  for (i = 0; i < *count; i ++)
-    {
-      /* strdup doesn't appear to be POSIX... */
-      valptrs[i] = malloc(strlen(p[i]) + 1);
-      strcpy(valptrs[i], p[i]);
-    }
-
-  return (valptrs);
 }
 
 
@@ -563,7 +602,7 @@ escp2_imageable_area(int  model,	/* I - Printer model */
         *left   = 9;
         *right  = width - 9;
         *top    = length;
-        *bottom = 49;
+        *bottom = 80;
         break;
 
   case MODEL_IMAGEABLE_600:
@@ -642,6 +681,8 @@ escp2_print(int       model,		/* I - Model */
   int		nozzles = 1;
   int		nozzle_separation = 1;
   int		horizontal_passes = 1;
+  int		vertical_passes = 1;
+  res_t 	*res;
 
  /*
   * Setup a read-only pixel region for the entire image...
@@ -683,61 +724,22 @@ escp2_print(int       model,		/* I - Model */
  /*
   * Figure out the output resolution...
   */
-
-  xdpi = ydpi = atoi(resolution);
-  if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES))
+  for (res = &reslist[0];;res++)
     {
-      if (xdpi == 1440)
+      if (!strcmp(resolution, res->name))
 	{
-	  use_softweave = 1;
-	  ydpi = 720;
-	  if (!strcmp(resolution, "1440 x 720 DPI Two-pass") ||
-	      !strcmp(resolution, "1440 x 720 DPI Two-pass Microweave"))
-	    {
-	      xdpi = 2880;
-	      horizontal_passes = 4;
-	      if (!strcmp(resolution, "1440 x 720 DPI Two-pass"))
-		{
-		  nozzles = 32;
-		  nozzle_separation = 8;
-		}
-	      else
-		{
-		  nozzles = 1;
-		  nozzle_separation = 1;
-		}
-	    }
-	  else
-	    {
-	      horizontal_passes = 2;
-	      if (!strcmp(resolution, "1440 x 720 DPI"))
-		{
-		  nozzles = 32;
-		  nozzle_separation = 8;
-		}
-	      else
-		{
-		  nozzles = 1;
-		  nozzle_separation = 1;
-		}
-	    }
+	  use_softweave = res->softweave;
+	  horizontal_passes = res->horizontal_passes;
+	  vertical_passes = res->vertical_passes;
+	  xdpi = res->hres;
+	  ydpi = res->vres;
+	  nozzles = escp2_nozzles(model);
+	  nozzle_separation = escp2_nozzle_separation(model);
+	  break;
 	}
-    }
-  else if (ydpi == 1440)
-    {
-      ydpi = 720;
-      xdpi = 720;
-    }
-  if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
-    {
-      if (!strcmp(resolution, "720 DPI Softweave") || xdpi > 720)
+      else if (!strcmp(resolution, ""))
 	{
-	  if (!strcmp(resolution, "720 DPI Softweave"))
-	    {
-	      nozzles = 32;
-	      nozzle_separation = 8;
-	    }
-	  use_softweave = 1;
+	  return;	  
 	}
     }
 
@@ -897,24 +899,27 @@ escp2_print(int       model,		/* I - Model */
         break;
   }
 
+  if (use_softweave)
+    initialize_weave(nozzles, nozzle_separation, horizontal_passes,
+		     vertical_passes);
   switch (escp2_cap(model, MODEL_INIT_MASK)) /* Printer specific initialization */
   {
     case MODEL_INIT_COLOR : /* ESC */
-        if (output_type == OUTPUT_COLOR && ydpi > 360)
+        if (output_type == OUTPUT_COLOR && ydpi > 360 && !use_softweave)
       	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case MODEL_INIT_PRO : /* ESC Pro, Pro XL, 400, 500 */
         fwrite("\033(e\002\000\000\001", 7, 1, prn);	/* Small dots */
 
-        if (ydpi > 360)
+        if (ydpi > 360 && !use_softweave)
       	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case MODEL_INIT_1500 : /* ESC 1500 */
         fwrite("\033(e\002\000\000\001", 7, 1, prn);	/* Small dots */
 
-        if (ydpi > 360)
+        if (ydpi > 360 && !use_softweave)
       	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
@@ -926,43 +931,25 @@ escp2_print(int       model,		/* I - Model */
 
         fwrite("\033(e\002\000\000\002", 7, 1, prn);	/* Small dots */
 
-        if (ydpi > 360)
+        if (ydpi > 360 && !use_softweave)
       	  fwrite("\033(i\001\000\001", 6, 1, prn);	/* Microweave mode on */
         break;
 
     case MODEL_INIT_PHOTO:
-        if (ydpi > 360)
-	  {
-	    if (use_softweave)
-	      {
-		if (horizontal_passes > 1)
-		  fwrite("\033U\000", 3, 1, prn); /* Unidirectional */
-		else
-		  fwrite("\033U\000", 3, 1, prn); /* Unidirectional */
-		fwrite("\033(i\001\000\000", 6, 1, prn); /* Microweave off! */
-		initialize_weave(nozzles, nozzle_separation, horizontal_passes);
-		fwrite("\033(e\002\000\000\004", 7, 1, prn);	/* Microdots */
-	      }
-	    else
-	      {
-		fwrite("\033U\000", 3, 1, prn); /* Unidirectional */
-		fwrite("\033(i\001\000\001", 6, 1, prn); /* Microweave on */
-		fwrite("\033(e\002\000\000\004", 7, 1, prn);	/* Microdots */
-	      }
-#if 0
-	    fwrite("\033\0311", 3, 1, prn); /* ??? */
-#endif
-	  }
-	else
-	  fwrite("\033(e\002\000\000\003", 7, 1, prn);	/* Whatever dots */
-        break;
-
-#if 0
 	if (output_type == OUTPUT_GRAY)
 	  fwrite("\033(K\002\000\000\001", 7, 1, prn);	/* Fast black printing */
 	else
 	  fwrite("\033(K\002\000\000\002", 7, 1, prn);	/* Color printing */
-#endif
+        if (ydpi > 360)
+	  {
+	    fwrite("\033U\000", 3, 1, prn); /* Unidirectional */
+	    if (!use_softweave)
+	      fwrite("\033(i\001\000\001", 6, 1, prn); /* Microweave on */
+	    fwrite("\033(e\002\000\000\004", 7, 1, prn);	/* Microdots */
+	  }
+	else
+	  fwrite("\033(e\002\000\000\003", 7, 1, prn);	/* Whatever dots */
+        break;
   }
 
   fwrite("\033(C\002\000", 5, 1, prn);		/* Page length */
@@ -975,6 +962,8 @@ escp2_print(int       model,		/* I - Model */
   putc(n & 255, prn);
   putc(n >> 8, prn);
   n = ydpi * (page_length - page_bottom) / 72;
+  if (use_softweave)
+    n += 320 * ydpi / 720;
   putc(n & 255, prn);
   putc(n >> 8, prn);
 
@@ -1043,10 +1032,6 @@ escp2_print(int       model,		/* I - Model */
     
     for (x = 0; x < out_height; x ++)
     {
-#if 0
-      printf("escp2_print: x = %d, line = %d, val = %d, mod = %d, height = %d\n",
-             x, errline, errval, errmod, out_height);
-#endif
       if ((x & 255) == 0)
 	Image_note_progress(image, x, out_height);
 
@@ -1091,12 +1076,21 @@ escp2_print(int       model,		/* I - Model */
       {
         dither_cmyk(out, x, image_height, out_width, cyan, 0, magenta, 0,
 		      yellow, 0, black, horizontal_passes);
-
-        escp2_write(prn, cyan, length, 0, 2, ydpi, model, out_width, left);
-        escp2_write(prn, magenta, length, 0, 1, ydpi, model, out_width, left);
-        escp2_write(prn, yellow, length, 0, 4, ydpi, model, out_width, left);
-        if (black != NULL)
-          escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+	if (use_softweave)
+	  escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+			    cyan, magenta, yellow, black, NULL, NULL);
+	else
+	  {
+	    escp2_write(prn, cyan, length, 0, 2, ydpi, model, out_width,
+			left);
+	    escp2_write(prn, magenta, length, 0, 1, ydpi, model, out_width,
+			left);
+	    escp2_write(prn, yellow, length, 0, 4, ydpi, model, out_width,
+			left);
+	    if (black != NULL)
+	      escp2_write(prn, black, length, 0, 0, ydpi, model, out_width,
+			  left);
+	  }
       }
 
       if (!use_softweave)
@@ -1126,11 +1120,6 @@ escp2_print(int       model,		/* I - Model */
     
     for (y = 0; y < out_height; y ++)
     {
-#if 0
-      printf("escp2_print: y = %d, line = %d, val = %d, mod = %d, height = %d, length = %d\n",
-             y, errline, errval, errmod, out_height, length);
-#endif
-
       if ((y & 255) == 0)
 	Image_note_progress(image, y, out_height);
 
@@ -1174,12 +1163,21 @@ escp2_print(int       model,		/* I - Model */
       {
         dither_cmyk(out, y, image_width, out_width, cyan, 0, magenta, 0,
 		      yellow, 0, black, horizontal_passes);
-
-        escp2_write(prn, cyan, length, 0, 2, ydpi, model, out_width, left);
-        escp2_write(prn, magenta, length, 0, 1, ydpi, model, out_width, left);
-        escp2_write(prn, yellow, length, 0, 4, ydpi, model, out_width, left);
-        if (black != NULL)
-          escp2_write(prn, black, length, 0, 0, ydpi, model, out_width, left);
+	if (use_softweave)
+	  escp2_write_weave(prn, length, ydpi, model, out_width, left, xdpi,
+			    cyan, magenta, yellow, black, NULL, NULL);
+	else
+	  {
+	    escp2_write(prn, cyan, length, 0, 2, ydpi, model, out_width,
+			left);
+	    escp2_write(prn, magenta, length, 0, 1, ydpi, model, out_width,
+			left);
+	    escp2_write(prn, yellow, length, 0, 4, ydpi, model, out_width,
+			left);
+	    if (black != NULL)
+	      escp2_write(prn, black, length, 0, 0, ydpi, model, out_width,
+			  left);
+	  }
       }
 
       if (!use_softweave)
@@ -1324,7 +1322,7 @@ escp2_write(FILE          *prn,	/* I - Print file or command */
 	     int           width,	/* I - Printed width */
 	     int           offset)	/* I - Offset from left side */
 {
-  unsigned char	comp_buf[1536],		/* Compression buffer */
+  unsigned char	comp_buf[3072],		/* Compression buffer */
     *comp_ptr;
   static int    last_density = 0;       /* Last density printed */
   static int	last_plane = 0;		/* Last color plane printed */
@@ -1358,7 +1356,7 @@ escp2_write(FILE          *prn,	/* I - Print file or command */
       fprintf(prn, "\033r%c", plane);
   }
 
-  if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
+  if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES))
     fprintf(prn, "\033(\\%c%c%c%c%c%c", 4, 0, 160, 5,
 	    (offset * 1440 / ydpi) & 255, (offset * 1440 / ydpi) >> 8);
   else
@@ -1465,6 +1463,19 @@ escp2_write(FILE          *prn,	/* I - Print file or command */
  * lets me use all of the nozzles, except near the top and bottom of the
  * page.
  *
+ * This still produces some banding, though.  Even better quality can be
+ * achieved by using multiple nozzles on the same line.  How do we do this?
+ * In 1440x720 mode, we're printing two output lines at the same vertical
+ * position.  However, if we want four passes, we have to effectively print
+ * each line twice.  Actually doing this would increase the density, so
+ * what we do is print half the dots on each pass.  This produces near-perfect
+ * output, and it's far faster than using "MicroWeave".
+ *
+ * The current algorithm is not completely general.  The number of passes
+ * is limited to (nozzles / gap).  On the Photo EX class printers, that limits
+ * it to 4 -- 32 nozzles, an inter-nozzle gap of 8 lines.  Furthermore, there
+ * are a number of routines that are only coded up to 4 passes.
+ *
  * The routine initialize_weave calculates the basic parameters, given
  * the number of jets and separation between jets, in rows.
  *
@@ -1555,6 +1566,10 @@ static int weavespan;		/* How many rows total are bracketed by */
 static int horizontal_weave;	/* Number of horizontal passes required */
 				/* This is > 1 for some of the ultra-high */
 				/* resolution modes */
+static int vertical_subpasses;	/* Number of passes per line (for better */
+				/* quality) */
+static int vmod;		/* Number of banks of passes */
+static int oversample;		/* Excess precision per row */
 
 /*
  * Mapping between color and linear index.  The colors are
@@ -1580,7 +1595,7 @@ get_color_by_params(int plane, int density)
  * Initialize the weave parameters
  */
 static void
-initialize_weave(int jets, int sep, int horizontal_passes)
+initialize_weave(int jets, int sep, int osample, int v_subpasses)
 {
   int i;
   int k;
@@ -1592,11 +1607,15 @@ initialize_weave(int jets, int sep, int horizontal_passes)
   else
     separation = sep;
   njets = jets;
-  if (horizontal_passes <= 0)
-    horizontal_passes = 1;
-  horizontal_weave = horizontal_passes;
+  if (v_subpasses <= 0)
+    v_subpasses = 1;
+  oversample = osample;
+  vertical_subpasses = v_subpasses;
+  njets /= vertical_subpasses;
+  vmod = separation * vertical_subpasses;
+  horizontal_weave = 1;
 
-  weavefactor = jets / separation;
+  weavefactor = njets / separation;
   jetsused = ((weavefactor) * separation);
   initialoffset = (jetsused - weavefactor - 1) * separation;
   jetsleftover = njets - jetsused + 1;
@@ -1605,15 +1624,15 @@ initialize_weave(int jets, int sep, int horizontal_passes)
   last_pass_offset = 0;
   last_pass = -1;
 
-  linebufs = malloc(6 * 1536 * separation * jetsused * horizontal_passes);
-  lineoffsets = malloc(separation * sizeof(lineoff_t) * horizontal_passes);
-  linebases = malloc(separation * sizeof(linebufs_t) * horizontal_passes);
-  passes = malloc(separation * sizeof(pass_t));
-  linecounts = malloc(separation * sizeof(int));
+  linebufs = malloc(6 * 3072 * vmod * jets * horizontal_weave);
+  lineoffsets = malloc(vmod * sizeof(lineoff_t) * horizontal_weave);
+  linebases = malloc(vmod * sizeof(linebufs_t) * horizontal_weave);
+  passes = malloc(vmod * sizeof(pass_t));
+  linecounts = malloc(vmod * sizeof(int));
 
   bufbase = linebufs;
   
-  for (i = 0; i < separation; i++)
+  for (i = 0; i < vmod; i++)
     {
       int j;
       passes[i].pass = -1;
@@ -1621,35 +1640,11 @@ initialize_weave(int jets, int sep, int horizontal_passes)
 	{
 	  for (j = 0; j < 6; j++)
 	    {
-	      linebases[i * horizontal_weave + k].v[j] = bufbase;
-	      bufbase += 1536 * jetsused;
+	      linebases[k * vmod + i].v[j] = bufbase;
+	      bufbase += 3072 * jets;
 	    }
 	}
     }
-}
-
-static lineoff_t *
-get_lineoffsets(int row)
-{
-  return &(lineoffsets[horizontal_weave * (row % separation)]);
-}
-
-static int *
-get_linecount(int row)
-{
-  return &(linecounts[row % separation]);
-}
-
-static const linebufs_t *
-get_linebases(int row)
-{
-  return &(linebases[horizontal_weave * (row % separation)]);
-}
-
-static pass_t *
-get_pass(int row_or_pass)
-{
-  return &(passes[row_or_pass % separation]);
 }
 
 /*
@@ -1659,33 +1654,96 @@ get_pass(int row_or_pass)
  */
 
 static void
-weave_parameters_by_row(int row, weave_t *w)
+weave_parameters_by_row(int row, int vertical_subpass, weave_t *w)
 {
   int passblockstart = (row + initialoffset) / jetsused;
-  int internaljetsused = jetsused;
-  int internallogicalpassstart;
+  int internaljetsused = jetsused * vertical_subpasses;
+  int subpass_adjustment;
+
   w->row = row;
   w->pass = (passblockstart - (separation - 1)) +
     (separation + row - passblockstart - 1) % separation;
-  internallogicalpassstart = (w->pass * jetsused) - initialoffset +
+  subpass_adjustment = ((w->pass + 1) / separation) % vertical_subpasses;
+  subpass_adjustment = vertical_subpasses - subpass_adjustment - 1;
+  vertical_subpass = (vertical_subpass + subpass_adjustment) % vertical_subpasses;
+  w->pass += separation * vertical_subpass;
+  w->logicalpassstart = (w->pass * jetsused) - initialoffset +
     (w->pass % separation);
-  if (internallogicalpassstart < 0)
-    {
-      internaljetsused -=
-	(((separation - 1) - internallogicalpassstart) / separation);
-      internallogicalpassstart += separation *
-	(((separation - 1) - internallogicalpassstart) / separation);
-    }
-  w->logicalpassstart =  internallogicalpassstart;
   w->jet = ((row - w->logicalpassstart) / separation);
-  if (internallogicalpassstart >= 0)
-    w->physpassstart = internallogicalpassstart;
+  w->jet += jetsused * (vertical_subpasses - 1);
+  w->logicalpassstart = w->row - (w->jet * separation);
+  if (w->logicalpassstart >= 0)
+    w->physpassstart = w->logicalpassstart;
   else
-    w->physpassstart = internallogicalpassstart +
-      (separation * ((separation - internallogicalpassstart) / separation));
+    w->physpassstart = w->logicalpassstart +
+      (separation * ((separation - 1 - w->logicalpassstart) / separation));
   w->physpassend = (internaljetsused - 1) * separation +
-    internallogicalpassstart;
+    w->logicalpassstart;
   w->missingstartrows = (w->physpassstart - w->logicalpassstart) / separation;
+  if (w->pass < 0)
+    {
+      w->logicalpassstart -= w->pass * separation;
+      w->physpassend -= w->pass * separation;
+      w->jet += w->pass;
+      w->missingstartrows += w->pass;
+    }
+  w->pass++;
+}
+
+static lineoff_t *
+get_lineoffsets(int row, int subpass)
+{
+  weave_t w;
+  weave_parameters_by_row(row, subpass, &w);
+  return &(lineoffsets[w.pass % vmod]);
+}
+
+static int *
+get_linecount(int row, int subpass)
+{
+  weave_t w;
+  weave_parameters_by_row(row, subpass, &w);
+  return &(linecounts[w.pass % vmod]);
+}
+
+static const linebufs_t *
+get_linebases(int row, int subpass)
+{
+  weave_t w;
+  weave_parameters_by_row(row, subpass, &w);
+  return &(linebases[w.pass % vmod]);
+}
+
+static pass_t *
+get_pass_by_row(int row, int subpass)
+{
+  weave_t w;
+  weave_parameters_by_row(row, subpass, &w);
+  return &(passes[w.pass % vmod]);
+}
+
+static lineoff_t *
+get_lineoffsets_by_pass(int pass)
+{
+  return &(lineoffsets[pass % vmod]);
+}
+
+static int *
+get_linecount_by_pass(int pass)
+{
+  return &(linecounts[pass % vmod]);
+}
+
+static const linebufs_t *
+get_linebases_by_pass(int pass)
+{
+  return &(linebases[pass % vmod]);
+}
+
+static pass_t *
+get_pass_by_pass(int pass)
+{
+  return &(passes[pass % vmod]);
 }
 
 /*
@@ -1699,14 +1757,15 @@ weave_parameters_by_row(int row, weave_t *w)
  */
 
 static void
-fillin_start_rows(int row, int width, int missingstartrows)
+fillin_start_rows(int row, int subpass, int width, int missingstartrows)
 {
-  lineoff_t *offsets = get_lineoffsets(row);
-  const linebufs_t *bufs = get_linebases(row);
+  lineoff_t *offsets = get_lineoffsets(row, subpass);
+  const linebufs_t *bufs = get_linebases(row, subpass);
   int i = 0;
   int k = 0;
   int j;
   int m;
+  width = (width + (oversample - 1)) / oversample;
   for (k = 0; k < missingstartrows; k++)
     {
       int bytes_to_fill = width;
@@ -1761,24 +1820,28 @@ static void
 initialize_row(int row, int width)
 {
   weave_t w;
-  weave_parameters_by_row(row, &w);
-  if (w.physpassstart == row)
+  int i;
+  for (i = 0; i < vertical_subpasses; i++)
     {
-      lineoff_t *lineoffs = get_lineoffsets(row);
-      int *linecount = get_linecount(row);
-      int j, k;
-      pass_t *pass = get_pass(row);
-      pass->pass = w.pass;
-      pass->missingstartrows = w.missingstartrows;
-      pass->logicalpassstart = w.logicalpassstart;
-      pass->physpassstart = w.physpassstart;
-      pass->physpassend = w.physpassend;
-      for (k = 0; k < horizontal_weave; k++)
-	for (j = 0; j < 6; j++)
-	  lineoffs[k].v[j] = 0;
-      *linecount = 0;
-      if (w.missingstartrows > 0)
-	fillin_start_rows(row, width, w.missingstartrows);
+      weave_parameters_by_row(row, i, &w);
+      if (w.physpassstart == row)
+	{
+	  lineoff_t *lineoffs = get_lineoffsets(row, i);
+	  int *linecount = get_linecount(row, i);
+	  int j, k;
+	  pass_t *pass = get_pass_by_row(row, i);
+	  pass->pass = w.pass;
+	  pass->missingstartrows = w.missingstartrows;
+	  pass->logicalpassstart = w.logicalpassstart;
+	  pass->physpassstart = w.physpassstart;
+	  pass->physpassend = w.physpassend;
+	  for (k = 0; k < horizontal_weave; k++)
+	    for (j = 0; j < 6; j++)
+	      lineoffs[k].v[j] = 0;
+	  *linecount = 0;
+	  if (w.missingstartrows > 0)
+	    fillin_start_rows(row, i, width, w.missingstartrows);
+	}
     }
 }
 
@@ -1793,22 +1856,16 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
 {
   int j;
   int k;
-  lineoff_t *lineoffs = get_lineoffsets(passno);
-  const linebufs_t *bufs = get_linebases(passno);
-  pass_t *pass = get_pass(passno);
-  int *linecount = get_linecount(passno);
-  int lwidth = (width + (horizontal_weave - 1)) / horizontal_weave;
-#if 0
-  fprintf(stderr, "Flushing pass %d start %d last %d\n", passno, pass->physpassstart, last_pass_offset);
-#endif
+  lineoff_t *lineoffs = get_lineoffsets_by_pass(passno);
+  const linebufs_t *bufs = get_linebases_by_pass(passno);
+  pass_t *pass = get_pass_by_pass(passno);
+  int *linecount = get_linecount_by_pass(passno);
+  int lwidth = (width + (oversample - 1)) / oversample;
   if (pass->physpassstart > last_pass_offset)
     {
       int advance = pass->logicalpassstart - last_pass_offset;
       int alo = advance % 256;
       int ahi = advance / 256;
-#if 0
-      fprintf(stderr, "  advancing %d lines\n", advance);
-#endif
       fprintf(prn, "\033(v\002%c%c%c", 0, alo, ahi);
       last_pass_offset = pass->logicalpassstart;
     }
@@ -1818,22 +1875,22 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
 	{
 	  if (lineoffs[k].v[j] == 0)
 	    continue;
-	  if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES))
-	    {
-	      fprintf(prn, "\033(r\002%c%c%c", 0, densities[j], colors[j]);
-	      /* FIXME need a more general way of specifying column */
-	      /* separation */
-	      fprintf(prn, "\033(\\%c%c%c%c%c%c", 4, 0, 160, 5,
-		      ((hoffset * 1440 / ydpi) +
-		       (k & (horizontal_weave >> 1))) & 255,
-		      ((hoffset * 1440 / ydpi) +
-		       (k & (horizontal_weave >> 1))) >> 8);
-	    }
+	  if (escp2_has_cap(model, MODEL_6COLOR_MASK, MODEL_6COLOR_YES))
+	    fprintf(prn, "\033(r\002%c%c%c", 0, densities[j], colors[j]);
 	  else if (densities[j] > 0)
 	    continue;
 	  else
+	    fprintf(prn, "\033r%c", colors[j]);
+	  if (escp2_has_cap(model, MODEL_1440DPI_MASK, MODEL_1440DPI_YES))
 	    {
-	      fprintf(prn, "\033r%c", colors[j]);
+	      /* FIXME need a more general way of specifying column */
+	      /* separation */
+	      fprintf(prn, "\033(\\%c%c%c%c%c%c", 4, 0, 160, 5,
+		      ((hoffset * 1440 / ydpi) + (k & oversample)) & 255,
+		      ((hoffset * 1440 / ydpi) + (k & oversample)) >> 8);
+	    }
+	  else
+	    {
 	      fprintf(prn, "\033\\%c%c", hoffset & 255, hoffset >> 8);
 	    }
 	  switch (ydpi)				/* Raster graphics header */
@@ -1859,11 +1916,6 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
 	  putc(lwidth & 255, prn);	/* Width of raster line in pixels */
 	  putc(lwidth >> 8, prn);
 	  fwrite(bufs[k].v[j], lineoffs[k].v[j], 1, prn);
-#if 0
-	  fprintf(stderr, "Sending %d bytes, plane %d, density %d, lines %d, x %d\n",
-		  lineoffs[k].v[j], colors[j], densities[j],
-		  *linecount + pass->missingstartrows, k);
-#endif
 	  putc('\r', prn);
 	}
       fwrite("\033\006", 2, 1, prn);
@@ -1874,30 +1926,33 @@ flush_pass(int passno, int model, int width, int hoffset, int ydpi,
 
 static void
 add_to_row(int row, unsigned char *buf, size_t nbytes, int plane, int density,
-	   int horizontal)
+	   int subpass)
 {
   weave_t w;
   int color = get_color_by_params(plane, density);
-  lineoff_t *lineoffs = get_lineoffsets(row);
-  const linebufs_t *bufs = get_linebases(row);
-  weave_parameters_by_row(row, &w);
-  memcpy(bufs[horizontal].v[color] + lineoffs[horizontal].v[color],
-	 buf, nbytes);
-  lineoffs[horizontal].v[color] += nbytes;
+  lineoff_t *lineoffs = get_lineoffsets(row, subpass);
+  const linebufs_t *bufs = get_linebases(row, subpass);
+  weave_parameters_by_row(row, subpass, &w);
+  memcpy(bufs[0].v[color] + lineoffs[0].v[color], buf, nbytes);
+  lineoffs[0].v[color] += nbytes;
 }
 
 static void
 finalize_row(int row, int model, int width, int hoffset, int ydpi, int xdpi,
 	     FILE *prn)
 {
-  weave_t w;
-  int *lines = get_linecount(row);
-  weave_parameters_by_row(row, &w);
-  (*lines)++;
-  if (w.physpassend == row)
+  int i;
+  for (i = 0; i < vertical_subpasses; i++)
     {
-      pass_t *pass = get_pass(row);
-      flush_pass(pass->pass, model, width, hoffset, ydpi, xdpi, prn);
+      weave_t w;
+      int *lines = get_linecount(row, i);
+      weave_parameters_by_row(row, i, &w);
+      (*lines)++;
+      if (w.physpassend == row)
+	{
+	  pass_t *pass = get_pass_by_row(row, i);
+	  flush_pass(pass->pass, model, width, hoffset, ydpi, xdpi, prn);
+	}
     }
 }
 
@@ -1906,12 +1961,47 @@ escp2_flush(int model, int width, int hoffset, int ydpi, int xdpi, FILE *prn)
 {
   while (1)
     {
-      pass_t *pass = get_pass(last_pass + 1);
+      pass_t *pass = get_pass_by_pass(last_pass + 1);
       if (pass->pass < 0)
 	return;
       flush_pass(pass->pass, model, width, hoffset, ydpi, xdpi, prn);
     }
 }
+
+static void
+escp2_split_2(int length,
+	      const unsigned char *in,
+	      unsigned char *outlo,
+	      unsigned char *outhi)
+{
+  int i;
+  for (i = 0; i < length; i++)
+    {
+      unsigned char inbyte = in[i];
+      outlo[i] = inbyte & 0x55;
+      outhi[i] = inbyte & 0xaa;
+    }
+}
+
+static void
+escp2_split_4(int length,
+	      const unsigned char *in,
+	      unsigned char *out0,
+	      unsigned char *out1,
+	      unsigned char *out2,
+	      unsigned char *out3)
+{
+  int i;
+  for (i = 0; i < length; i++)
+    {
+      unsigned char inbyte = in[i];
+      out0[i] = inbyte & 0x11;
+      out1[i] = inbyte & 0x22;
+      out2[i] = inbyte & 0x44;
+      out3[i] = inbyte & 0x88;
+    }
+}
+
 
 static void
 escp2_unpack_2(int length,
@@ -2050,154 +2140,70 @@ escp2_write_weave(FILE          *prn,	/* I - Print file or command */
 		  unsigned char *M)
 {
   static int lineno = 0;
-  static unsigned char s[4][1536];
-  static unsigned char comp_buf[1536];
+  static unsigned char s[4][3072];
+  static unsigned char comp_buf[3072];
   unsigned char *comp_ptr;
-  int i;
+  int i, j;
+  unsigned char *cols[6];
+  cols[0] = k;
+  cols[1] = m;
+  cols[2] = c;
+  cols[3] = y;
+  cols[4] = M;
+  cols[5] = C;
 
   initialize_row(lineno, width);
   
-  if (c)
+  for (j = 0; j < 6; j++)
     {
-      if (horizontal_weave > 1)
+      if (cols[j])
 	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, c, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, c, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
+	  if (vertical_subpasses > 1)
 	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 2, 0, i);
+	      switch (oversample)
+		{
+		case 2:
+		  escp2_unpack_2(length, cols[j], s[0], s[1]);
+		  break;
+		case 4:
+		  escp2_unpack_4(length, cols[j], s[0], s[1], s[2], s[3]);
+		  break;
+		}
+	      switch (vertical_subpasses / oversample)
+		{
+		case 4:
+		  escp2_split_4(length, cols[j], s[0], s[1], s[2], s[3]);
+		  break;
+		case 2:
+		  if (oversample == 1)
+		    {		    
+		      escp2_split_2(length, cols[j], s[0], s[1]);
+		    }
+		  else
+		    {		    
+		      escp2_split_2(length, s[1], s[1], s[3]);
+		      escp2_split_2(length, s[0], s[0], s[2]);
+		    }
+		  break;
+		}
+	      for (i = 0; i < vertical_subpasses; i++)
+		{
+		  escp2_pack(s[i], ((length + oversample - 1) / oversample),
+			     comp_buf, &comp_ptr);
+		  add_to_row(lineno, comp_buf, comp_ptr - comp_buf,
+			     colors[j], densities[j], i);
+		}
+	    }
+	  else
+	    {
+	      escp2_pack(cols[j], length, comp_buf, &comp_ptr);
+	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf,
+			 colors[j], densities[j], 0);
 	    }
 	}
-      else
-	{
-	  escp2_pack(c, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 2, 0, 0);
-	}
     }
-
-  if (m)
-    {
-      if (horizontal_weave > 1)
-	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, m, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, m, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
-	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 1, 0, i);
-	    }
-	}
-      else
-	{
-	  escp2_pack(m, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 1, 0, 0);
-	}
-    }
-
-  if (y)
-    {
-      if (horizontal_weave > 1)
-	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, y, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, y, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
-	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 4, 0, i);
-	    }
-	}
-      else
-	{
-	  escp2_pack(y, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 4, 0, 0);
-	}
-    }
-
-  if (k)
-    {
-      if (horizontal_weave > 1)
-	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, k, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, k, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
-	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 0, 0, i);
-	    }
-	}
-      else
-	{
-	  escp2_pack(k, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 0, 0, 0);
-	}
-    }
-
-  if (C)
-    {
-      if (horizontal_weave > 1)
-	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, C, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, C, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
-	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 2, 1, i);
-	    }
-	}
-      else
-	{
-	  escp2_pack(C, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 2, 1, 0);
-	}
-    }
-
-  if (M)
-    {
-      if (horizontal_weave > 1)
-	{
-	  if (horizontal_weave == 2)
-	    escp2_unpack_2(length, M, s[0], s[1]);
-	  else
-	    escp2_unpack_4(length, M, s[0], s[1], s[2], s[3]);
-	  for (i = 0; i < horizontal_weave; i++)
-	    {
-	      escp2_pack(s[i],
-			 (length + horizontal_weave - 1) / horizontal_weave,
-			 comp_buf, &comp_ptr);
-	      add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 1, 1, i);
-	    }
-	}
-      else
-	{
-	  escp2_pack(M, length, comp_buf, &comp_ptr);
-	  add_to_row(lineno, comp_buf, comp_ptr - comp_buf, 1, 1, 0);
-	}
-    }
-
   finalize_row(lineno, model, width, offset, ydpi, xdpi, prn);
   lineno++;
-
 }
 
 /*

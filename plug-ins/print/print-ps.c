@@ -3,7 +3,7 @@
  *
  *   Print plug-in Adobe PostScript driver for the GIMP.
  *
- *   Copyright 1997-1999 Michael Sweet (mike@easysw.com) and
+ *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
  *	Robert Krawitz (rlk@alum.mit.edu)
  *
  *   This program is free software; you can redistribute it and/or modify it
@@ -33,49 +33,17 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.16  1999/12/19 20:28:15  asbjoer
- *   use g_strcasecmp()
+ *   Revision 1.17  2000/01/26 16:00:48  neo
+ *   updated print plug-in
  *
- *   Revision 1.15  1999/12/16 19:44:01  olofk
- *   Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
  *
- *           Fix of KDE/Kwm  selection add/sub/inter problem
- *           NOTE: This is a workaround, not a real fix.
- *           Many Thanks to Matthias Ettrich
+ *   --Sven
  *
- *           * app/disp_callbacks.c
+ *   Revision 1.12  2000/01/08 23:30:56  rlk
+ *   Y2K copyright
  *
- *           Updated unsharp-mask to version 0.10
- *
- *           * plug-ins/unsharp/dialog_f.c
- *           * plug-ins/unsharp/dialog_f.h
- *           * plug-ins/unsharp/dialog_i.c
- *           * plug-ins/unsharp/dialog_i.h
- *           * plug-ins/unsharp/unsharp.c
- *
- *           Updated print plug-in to version 3.0.1
- *
- *           * plug-ins/print/README (new file)
- *           * plug-ins/print/print-escp2.c
- *           * plug-ins/print/print-pcl.c
- *           * plug-ins/print/print-ps.c
- *           * plug-ins/print/print-util.c
- *           * plug-ins/print/print.c
- *           * plug-ins/print/print.h
- *
- *           Updated all files in the help/C/dialogs dir. This is
- *           a first alpha glimpse of the help system. Please give
- *           me feedback of the content. However since it's in alpha
- *           stage it means that there is spell, grammatical, etc errors.
- *           There is may also be pure errors which I hope "you" will
- *           report to either olof@gimp.org or karin@gimp.org. Please
- *           don't report spell, grammatical, etc error at this stage in dev.
- *
- *           If you have any plans to commit to the help system please write
- *           to olof@gimp.org. (This is mandatory not a please ;-).
- *
- *           * help/C/welcome.html
- *           * help/C/dialogs/about.html ..............
+ *   Revision 1.11  2000/01/03 13:25:13  rlk
+ *   Fix from Salvador Pinto Abreu <spa@khromeleque.dmat.uevora.pt>
  *
  *   Revision 1.10  1999/11/23 02:11:37  rlk
  *   Rationalize variables, pass 3
@@ -477,10 +445,10 @@ ps_parameters(int  model,	/* I - Printer model */
     if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (g_strcasecmp(lname, name) == 0)
+    if (strcasecmp(lname, name) == 0)
     {
-      valptrs[(*count)] = malloc(strlen(media_sizes[*count]) + 1);
-      strcpy(valptrs[(*count)], media_sizes[*count]);
+      valptrs[(*count)] = malloc(strlen(loption) + 1);
+      strcpy(valptrs[(*count)], loption);
       (*count) ++;
     }
   }
@@ -1156,7 +1124,7 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     if (line[0] != '*')
       continue;
 
-    if (g_strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
+    if (strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
     {
       sscanf(line, "%*s%d", order);
       continue;
@@ -1164,8 +1132,8 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     else if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (g_strcasecmp(lname, name) == 0 &&
-        g_strcasecmp(loption, option) == 0)
+    if (strcasecmp(lname, name) == 0 &&
+        strcasecmp(loption, option) == 0)
     {
       opt = strchr(line, ':') + 1;
       while (*opt == ' ' || *opt == '\t')

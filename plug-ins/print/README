@@ -1,4 +1,4 @@
-Print plugin for the Gimp.  Version 3.0 by Robert Krawitz
+Print plugin for the Gimp.  Version 3.0.5 by Robert Krawitz
 <rlk@alum.mit.edu> based on version 2.0 by Michael Sweet
 <mike@easysw.com>.
 
@@ -69,13 +69,11 @@ Some tips on tuning the output:
 
 * One group of settings you might want to start with is:
 
-  Brightness 110
-  Gamma 1.3
-  Contrast 80
-  Green 94
-  Blue 89
-  Saturation 1.15
-  Density 1.6
+  Brightness 45
+  Gamma 1.5
+  Contrast 105
+  Saturation 1.4
+  Density 0.8
 
 
 Makefile.standalone enables you to build this plugin as a standalone
@@ -84,4 +82,4 @@ plugin, without reference to a Gimp source tree.
 
 Enjoy!
 
--Robert Krawitz, November 14, 1999
+-Robert Krawitz, January 13, 2000
