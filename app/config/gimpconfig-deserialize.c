@@ -110,8 +110,7 @@ scanner_string_utf8_valid (GScanner    *scanner,
 gboolean
 gimp_config_deserialize_properties (GimpConfig *config,
                                     GScanner   *scanner,
-                                    gint        nest_level,
-                                    gboolean    unused)
+                                    gint        nest_level)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;

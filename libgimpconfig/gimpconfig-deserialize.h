@@ -25,8 +25,7 @@
 
 gboolean    gimp_config_deserialize_properties (GimpConfig *config,
                                                 GScanner   *scanner,
-                                                gint        nest_level,
-                                                gboolean    unused);
+                                                gint        nest_level);
 GTokenType  gimp_config_deserialize_property   (GimpConfig *config,
                                                 GScanner   *scanner,
                                                 gint        nest_level);

@@ -117,8 +117,7 @@ gimp_config_iface_deserialize (GimpConfig *config,
                                gint        nest_level,
                                gpointer    data)
 {
-  return gimp_config_deserialize_properties (config,
-                                             scanner, nest_level, FALSE);
+  return gimp_config_deserialize_properties (config, scanner, nest_level);
 }
 
 static GimpConfig *
