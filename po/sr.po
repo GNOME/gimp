@@ -7,17 +7,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3\n"
+"Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:22+0100\n"
-"PO-Revision-Date: 2004-01-06 00:12+0100\n"
+"POT-Creation-Date: 2004-01-10 03:36+0100\n"
+"PO-Revision-Date: 2004-01-10 03:58+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: app/app_procs.c:180
 msgid ""
@@ -609,7 +608,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:219
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Запамти текућу алатку, одсечак, боју и четку у ГИМП сесијама."
+msgstr "Запамти текућу алатку, мустру, боју и четку у ГИМП сесијама."
 
 #: app/config/gimprc-blurbs.h:223
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -892,7 +891,7 @@ msgstr "Попуњавање бојом позадине"
 
 #: app/core/core-enums.c:59
 msgid "Pattern Fill"
-msgstr "Попуњавање исечком"
+msgstr "Попуњавање мустром"
 
 #: app/core/core-enums.c:77
 msgid "Add to the current selection"
@@ -953,7 +952,7 @@ msgstr "Транспарентна"
 
 #: app/core/core-enums.c:192 app/core/core-enums.c:262
 msgid "Pattern"
-msgstr "Исечак"
+msgstr "Мустра"
 
 #: app/core/core-enums.c:193 app/core/core-enums.c:457
 msgid "None"
@@ -1069,7 +1068,7 @@ msgstr "Густе тачке"
 
 #: app/core/core-enums.c:328
 msgid "Stipples"
-msgstr ""
+msgstr "Тачкасто"
 
 #: app/core/core-enums.c:329
 msgid "Dash Dot..."
@@ -1102,12 +1101,12 @@ msgid "Indexed-Alpha"
 msgstr "Индексирана палета - Алфа"
 
 #: app/core/core-enums.c:391 app/gui/preferences-dialog.c:1714
-#: app/gui/user-install-dialog.c:1292
+#: app/gui/user-install-dialog.c:1300
 msgid "Horizontal"
 msgstr "Водоравно"
 
 #: app/core/core-enums.c:392 app/gui/preferences-dialog.c:1716
-#: app/gui/user-install-dialog.c:1294
+#: app/gui/user-install-dialog.c:1302
 msgid "Vertical"
 msgstr "Усправно"
 
@@ -1459,9 +1458,8 @@ msgid "Fill with Transparency"
 msgstr "Попуни провидношћу"
 
 #: app/core/gimp-edit.c:248
-#, fuzzy
 msgid "Fill with Pattern"
-msgstr "/Уређивање/Попуни бојом ис_ечцима"
+msgstr "Попуни мустром"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -1501,7 +1499,7 @@ msgstr "Четке"
 #: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:2051
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
-msgstr "Исечци"
+msgstr "Мустре"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:892 app/gui/dialogs-constructors.c:338
@@ -1754,7 +1752,7 @@ msgstr "Стапање"
 
 #: app/core/gimpdrawable-bucket-fill.c:87 app/paint/gimpclone.c:211
 msgid "No patterns available for this operation."
-msgstr "Нема доступних исечака за ову операцију."
+msgstr "Нема доступних мустри за ову операцију."
 
 #: app/core/gimpdrawable-bucket-fill.c:272 app/tools/gimpbucketfilltool.c:89
 msgid "Bucket Fill"
@@ -2255,17 +2253,13 @@ msgstr "Црна"
 #: app/core/gimppattern.c:424
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr ""
-"Кобна грешка при обради датотеке са одсечком „%s“: не могу да учитам %d "
-"бајтова: %s"
+msgstr "Кобна грешка при обради датотеке са мустром „%s“: не могу да учитам %d бајтова: %s"
 
 #: app/core/gimppattern.c:372
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
-"Кобна грешка при обради датотеке са одсечком „%s“: непознато издање одсечака "
-"%d."
+msgstr "Кобна грешка при обради датотеке са мустром „%s“: непознато издање одсечака %d."
 
 #: app/core/gimppattern.c:382
 #, c-format
@@ -2273,14 +2267,13 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Кобна грешка при обради датотеке са одсечком „%s“: неподржана дубина одсечка "
-"%d.\n"
-"ГИМП одсечци морају бити СИВИ или RGB."
+"Кобна грешка при обради датотеке са мустром „%s“: неподржана дубина мустре %d.\n"
+"ГИМП мустре морају бити СИВИ или RGB."
 
 #: app/core/gimppattern.c:406
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Неисправна УТФ-8 ниска у датотеци са одсечком „%s“."
+msgstr "Неисправна УТФ-8 ниска у датотеци са мустром „%s“."
 
 #: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:247
 #: app/tools/gimpeditselectiontool.c:1031 app/tools/gimpmoveoptions.c:184
@@ -2611,6 +2604,10 @@ msgstr "Преводили"
 #: app/gui/about-dialog.c:56
 msgid "translator-credits"
 msgstr ""
+"Бранко Ивановић\n"
+"Данило Шеган\n"
+"\n"
+"Prevod.org — превод на српски језик"
 
 #: app/gui/about-dialog.c:61
 msgid "Contributions by"
@@ -4459,7 +4456,7 @@ msgstr "/Прозорчићи/Направи нови усидрен/Слоје�
 
 #: app/gui/image-menu.c:933
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/Прозорчићи/Направи нови усидрен/Четке, исечци и преливи"
+msgstr "/Прозорчићи/Направи нови усидрен/Четке, мустре и преливи"
 
 #: app/gui/image-menu.c:937
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
@@ -4627,7 +4624,7 @@ msgstr "/Филтери/Исцртавање/_Природу"
 
 #: app/gui/image-menu.c:1099
 msgid "/Filters/Render/_Pattern"
-msgstr "/Филтери/Исцртавање/_Одсечак"
+msgstr "/Филтери/Исцртавање/_Мустра"
 
 #: app/gui/image-menu.c:1100
 msgid "/Filters/_Web"
@@ -4716,7 +4713,7 @@ msgid "Extended"
 msgstr "Додатно"
 
 #: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1696
-#: app/gui/user-install-dialog.c:1277 app/widgets/gimpgrideditor.c:266
+#: app/gui/user-install-dialog.c:1285 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
 msgstr "Тачака"
@@ -4801,7 +4798,7 @@ msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
-#: app/gui/user-install-dialog.c:1296
+#: app/gui/user-install-dialog.c:1304
 msgid "dpi"
 msgstr "тпи"
 
@@ -4963,12 +4960,12 @@ msgid "/Al_pha to Selection"
 msgstr "/Изабери Алфа канал"
 
 #: app/gui/layers-menu.c:161
-msgid "/Merge Visible Layers..."
-msgstr "/Споји видљиве слојеве..."
+msgid "/Merge _Visible Layers..."
+msgstr "/Споји _видљиве слојеве..."
 
 #: app/gui/layers-menu.c:166
-msgid "/Flatten Image"
-msgstr "/Споји у један све слојеве"
+msgid "/_Flatten Image"
+msgstr "/_Изравнај слику"
 
 #: app/gui/menus.c:113
 msgid "Toolbox Menu"
@@ -5008,11 +5005,11 @@ msgstr "Мени за четке"
 
 #: app/gui/menus.c:177
 msgid "Patterns Menu"
-msgstr "Мени исечака Исечци"
+msgstr "Мени мустри"
 
 #: app/gui/menus.c:184
 msgid "Gradients Menu"
-msgstr "Мени за преливи"
+msgstr "Мени за преливе"
 
 #: app/gui/menus.c:191
 msgid "Palettes Menu"
@@ -5313,27 +5310,27 @@ msgstr "/Ос_вежи палете"
 #: app/gui/pattern-select.c:252
 msgid ""
 "Unable to run pattern callback. The corresponding plug-in may have crashed."
-msgstr "Не могу да опозовем исечак. Можда је отказао одговарајући додатак."
+msgstr "Не могу да опозовем мустру. Можда је отказао одговарајући додатак."
 
 #: app/gui/patterns-menu.c:45
-msgid "/Edit Pattern..."
-msgstr "/Измени исечак..."
+msgid "/_Edit Pattern..."
+msgstr "/_Уреди мустру..."
 
 #: app/gui/patterns-menu.c:53
-msgid "/New Pattern"
-msgstr "/Нови исечак"
+msgid "/_New Pattern"
+msgstr "/_Нова мустра"
 
 #: app/gui/patterns-menu.c:58
-msgid "/Duplicate Pattern"
-msgstr "/Дуплирај исечак"
+msgid "/D_uplicate Pattern"
+msgstr "/_Дуплирај мустру..."
 
 #: app/gui/patterns-menu.c:63
-msgid "/Delete Pattern..."
-msgstr "/Обриши исечак..."
+msgid "/_Delete Pattern..."
+msgstr "/_Обриши мустру..."
 
 #: app/gui/patterns-menu.c:71
-msgid "/Refresh Patterns"
-msgstr "/Освежи исечке"
+msgid "/_Refresh Patterns"
+msgstr "/О_свежи мустре"
 
 #: app/gui/plug-in-menus.c:339
 #, c-format
@@ -5697,7 +5694,7 @@ msgstr "Најмањи број боја"
 msgid "Install Colormap"
 msgstr "Угради мапу боја"
 
-#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:960
+#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:962
 msgid "Monitor Resolution"
 msgstr "Резолуција монитора"
 
@@ -5767,7 +5764,7 @@ msgstr "Најмањи број нивоа за поништавање:"
 msgid "Maximum Undo Memory:"
 msgstr "Највећи број нивоа zа поништавање:"
 
-#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1169
+#: app/gui/preferences-dialog.c:1846 app/gui/user-install-dialog.c:1173
 msgid "Tile Cache Size:"
 msgstr "Величина оставе за делиће:"
 
@@ -5877,7 +5874,7 @@ msgstr "Изабери Директоријум за привремене дат
 msgid "Swap Dir:"
 msgstr "Директоријум"
 
-#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1191
+#: app/gui/preferences-dialog.c:2014 app/gui/user-install-dialog.c:1196
 msgid "Select Swap Dir"
 msgstr "Изабери Swap директоријум"
 
@@ -5891,11 +5888,11 @@ msgstr "Изабери директоријуме са четкама"
 
 #: app/gui/preferences-dialog.c:2051
 msgid "Pattern Folders"
-msgstr "Директоријуми са одсечцима"
+msgstr "Директоријуми са мустрама"
 
 #: app/gui/preferences-dialog.c:2053
 msgid "Select Pattern Folders"
-msgstr "Изабери директоријуме са одсечцима"
+msgstr "Изабери директоријуме са мустрама"
 
 #: app/gui/preferences-dialog.c:2055
 msgid "Palette Folders"
@@ -6185,33 +6182,33 @@ msgstr "Уписујем „%s“\n"
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Додајем тему „%s“ (%s)\n"
 
-#: app/gui/tips-dialog.c:94
+#: app/gui/tips-dialog.c:93
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr "<b>Чини се да недостаје ваша датотека са ГИМП саветима!</b>"
 
-#: app/gui/tips-dialog.c:96
+#: app/gui/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
 "Требало би да постоји датотека „%s“. Молим, проверите вашу инсталацију."
 
-#: app/gui/tips-dialog.c:102
+#: app/gui/tips-dialog.c:101
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>Нисам могао да обрадим датотеку са ГИМП саветима!</b>"
 
-#: app/gui/tips-dialog.c:133
+#: app/gui/tips-dialog.c:134
 msgid "GIMP Tip of the Day"
 msgstr "ГИМП савет дана"
 
-#: app/gui/tips-dialog.c:197
+#: app/gui/tips-dialog.c:198
 msgid "Show tip next time GIMP starts"
 msgstr "Покажи савет приследећем подизању ГИМПа"
 
-#: app/gui/tips-dialog.c:221
+#: app/gui/tips-dialog.c:222
 msgid "_Previous Tip"
 msgstr "_Претходни савет"
 
-#: app/gui/tips-dialog.c:231
+#: app/gui/tips-dialog.c:232
 msgid "_Next Tip"
 msgstr "_Следећи савет"
 
@@ -6246,28 +6243,28 @@ msgid "Enter a new name for the saved options"
 msgstr "Унесите ново име за сачуване опције алата"
 
 #: app/gui/tool-options-menu.c:57
-msgid "/Save Options to/New Entry..."
-msgstr "/Сачувај опције у/Нови унос..."
+msgid "/_Save Options to/_New Entry..."
+msgstr "/_Сачувај опције у/_Нови унос..."
 
 #: app/gui/tool-options-menu.c:68
-msgid "/Restore Options from/(None)"
-msgstr "/Извуци опције из/(ништа)"
+msgid "/_Restore Options from/(None)"
+msgstr "/_Извуци опције из/(ништа)"
 
 #: app/gui/tool-options-menu.c:74
-msgid "/Rename Saved Options/(None)"
-msgstr "/Преименуј сачуване опције/(ништа)"
+msgid "/Re_name Saved Options/(None)"
+msgstr "/Преи_менуј сачуване опције/(ништа)"
 
 #: app/gui/tool-options-menu.c:80
-msgid "/Delete Saved Options/(None)"
-msgstr "/Уклони сачуване опције/(ништа)"
+msgid "/_Delete Saved Options/(None)"
+msgstr "/_Уклони сачуване опције/(ништа)"
 
 #: app/gui/tool-options-menu.c:89
-msgid "/Reset Tool Options"
-msgstr "/Врати опције алата"
+msgid "/R_eset Tool Options"
+msgstr "/_Врати опције алата"
 
 #: app/gui/tool-options-menu.c:94
-msgid "/Reset all Tool Options..."
-msgstr "/Врати опције свих алата..."
+msgid "/Reset _all Tool Options..."
+msgstr "/Врати опције _свих алата..."
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
@@ -6293,7 +6290,7 @@ msgstr "/Датотека/Прозорчићи/Направи нови усид�
 
 #: app/gui/toolbox-menu.c:99
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/Датотека/Прозорчићи/Направи нови усидрен/Четке, исечци и преливи"
+msgstr "/Датотека/Прозорчићи/Направи нови усидрен/Четке, мустре и преливи"
 
 #: app/gui/toolbox-menu.c:103
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
@@ -6423,274 +6420,165 @@ msgstr "/Помоћ/_О програму"
 
 #: app/gui/user-install-dialog.c:132
 msgid ""
-"The gimprc is used to store personal preferences\n"
-"that affect GIMP's default behavior.\n"
-"Paths to search for brushes, palettes, gradients,\n"
-"patterns, plug-ins and modules can also configured\n"
-"here."
-msgstr ""
-"Датотека gimprc служи за чување личних подешавања\n"
-"које се тичу ГИМПовог подразумеваног понашања.\n"
-"Путање претраге за четке, палете, преливе, \n"
-"одсечке, додатке и модуле се такође могу подесити \n"
-"овде."
+"The gimprc is used to store personal preferences that affect GIMP's default "
+"behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
+"ins and modules can also configured here."
+msgstr "Датотека gimprc служи за чување личних подешавања које се тичу ГИМПовог подразумеваног понашања. Путање претраге за четке, палете, преливе,  мустре, додатке и модуле се такође могу подесити овде."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
-"GIMP uses an additional gtkrc file so you can\n"
-"configure it to look differently than other GTK apps."
-msgstr ""
-"ГИМП користи додатну gtkrc датотеку тако да можете\n"
-"подесити да изгледа другачије од осталих ГТК програма."
+"GIMP uses an additional gtkrc file so you can configure it to look "
+"differently than other GTK apps."
+msgstr "ГИМП користи додатну gtkrc датотеку тако да можете подесити да изгледа другачије од осталих ГТК програма."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
-"Plug-ins and extensions are external programs run\n"
-"by the GIMP which provide additional functionality.\n"
-"These programs are searched for at run-time and\n"
-"information about their functionality and mod-times\n"
-"is cached in this file.  This file is intended to\n"
-"be GIMP-readable only, and should not be edited."
-msgstr ""
-"Додаци и проширења су спољни програми које покреће\n"
-"ГИМП и који обезбеђују додатну функционалност.\n"
-"Ови програми се претражују по покретању и\n"
-"информације о њиховим функционалностима и настанку\n"
-"се складиште у овој датотеци. Ова датотеку би\n"
-"требало да чита само ГИМП и не треба је мењати."
+"Plug-ins and extensions are external programs run by the GIMP which provide "
+"additional functionality.  These programs are searched for at run-time and "
+"information about their functionality and mod-times is cached in this file.  "
+"This file is intended to be GIMP-readable only, and should not be edited."
+msgstr "Додаци и проширења су спољни програми које покреће ГИМП и који обезбеђују додатну функционалност. Ови програми се претражују по покретању и информације о њиховим функционалностима и настанку се складиште у овој датотеци. Ова датотеку би требало да чита само ГИМП и не треба је мењати."
 
 #: app/gui/user-install-dialog.c:157
 msgid ""
-"Key shortcuts can be dynamically redefined in The GIMP.\n"
-"The menurc is a dump of your configuration so it can.\n"
-"be remembered for the next session.  You may edit this\n"
-"file if you wish, but it is much easier to define the\n"
-"keys from within The GIMP.  Deleting this file will\n"
-"restore the default shortcuts."
-msgstr ""
-"Кључне пречице могу се динамички подесити у ГИМПу.\n"
-"Датотека menurc је скуп ваших подешавања, па се може\n"
-"сачувати за следећу сесију. Можете мењати ову датотеку\n"
-"по жељи, али је много лакше подесити пречице из ГИМПа.\n"
-"Брисање ове датотеке ће вратити у употребу\n"
-"подразмеване пречице."
+"Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
+"of your configuration so it can. be remembered for the next session.  You "
+"may edit this file if you wish, but it is much easier to define the keys "
+"from within The GIMP.  Deleting this file will restore the default shortcuts."
+msgstr "Кључне пречице могу се динамички подесити у ГИМПу. Датотека menurc је скуп ваших подешавања, па се може сачувати за следећу сесију. Можете мењати ову датотеку по жељи, али је много лакше подесити пречице из ГИМПа. Брисање ове датотеке ће вратити у употребу подразмеване пречице."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
-"The sessionrc is used to store what dialog windows were\n"
-"open the last time you quit The GIMP.  You can configure\n"
-"The GIMP to reopen these dialogs at the saved position."
-msgstr ""
-"Датотека sessionrc се користи за смештање податка о томе који\n"
-"прозор је био отворен када сте последњи пут затворили ГИМП.\n"
-"Можете подесити ГИМП да поново отвори ове прозоре."
+"The sessionrc is used to store what dialog windows were open the last time "
+"you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
+"the saved position."
+msgstr "Датотека sessionrc се користи за смештање податка о томе који прозор је био отворен када сте последњи пут затворили ГИМП. Можете подесити ГИМП да поново отвори ове прозоре."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
-"This file holds a collection of standard media sizes that\n"
-"serve as image templates."
-msgstr ""
-"Ова датотека чува скуп стандардних величина које служе као\n"
-"мусте за слике."
+"This file holds a collection of standard media sizes that serve as image "
+"templates."
+msgstr "Ова датотека чува скуп стандардних величина које служе као мусте за слике."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
-"The unitrc is used to store your user units database.\n"
-"You can define additional units and use them just\n"
-"like you use the built-in units inches, millimeters,\n"
-"points and picas.  This file is overwritten each time\n"
-"you quit the GIMP."
-msgstr ""
-"Датотека unitrc се користи за чување базе корисничких јединица.\n"
-"Можете дефинисати додатне јединице и користити их исто као\n"
-"и уграђене инче, милиметре, штампарске тачке...\n"
-"Ова датотека се преписује сваки пут кад\n"
-"напустите ГИМП."
+"The unitrc is used to store your user units database.  You can define "
+"additional units and use them just like you use the built-in units inches, "
+"millimeters, points and picas.  This file is overwritten each time you quit "
+"the GIMP."
+msgstr "Датотека unitrc се користи за чување базе корисничких јединица. Можете дефинисати додатне јединице и користити их исто као и уграђене инче, милиметре, штампарске тачке... Ова датотека се преписује сваки пут кад напустите ГИМП."
 
 #: app/gui/user-install-dialog.c:189
 msgid ""
-"This folder is used to store user defined brushes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP brushes installation when searching for\n"
-"brushes."
-msgstr ""
-"Овај директоријум чува четке које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП четкама када претражује инсталиране\n"
-"четке."
+"This folder is used to store user defined brushes. The GIMP checks this "
+"folder in addition to the system-wide GIMP brushes installation when "
+"searching for brushes."
+msgstr "Овај директоријум чува четке које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП четкама када претражује инсталиране четке."
 
 #: app/gui/user-install-dialog.c:197
 msgid ""
-"This folder is used to store fonts you only want\n"
-"visible in the GIMP. The GIMP checks this folder in\n"
-"addition to the system-wide GIMP fonts installation\n"
-"when searching for fonts. Use this only if you really\n"
-"want to have GIMP-only fonts, otherwise put things\n"
-"in your global font directory."
-msgstr ""
-"Овај директоријум чува фонтове које желите да видите \n"
-"само у ГИМП-у. ГИМП проверава овај директоријум уз \n"
-"системске директоријуме ГИМП-а када тражи фонтове.\n"
-"Ово користите једино уколико желите да имате фонтове\n"
-"само за ГИМП, иначе ставите ствари у општи директоријум\n"
-"за фонтове."
+"This folder is used to store fonts you only want visible in the GIMP. The "
+"GIMP checks this folder in addition to the system-wide GIMP fonts "
+"installation when searching for fonts. Use this only if you really want to "
+"have GIMP-only fonts, otherwise put things in your global font directory."
+msgstr "Овај директоријум чува фонтове које желите да видите само у ГИМП-у. ГИМП проверава овај директоријум уз системске директоријуме ГИМП-а када тражи фонтове. Ово користите једино уколико желите да имате фонтове само за ГИМП, иначе ставите ствари у општи директоријум за фонтове."
 
 #: app/gui/user-install-dialog.c:207
 msgid ""
-"This folder is used to store user defined gradients.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP gradients installation when searching for\n"
-"gradients."
-msgstr ""
-"Овај директоријум чува преливе које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП преливима када претражује инсталиране\n"
-"преливе."
+"This folder is used to store user defined gradients.  The GIMP checks this "
+"folder in addition to the system-wide GIMP gradients installation when "
+"searching for gradients."
+msgstr "Овај директоријум чува преливе које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП преливима када претражује инсталиране преливе."
 
-#: app/gui/user-install-dialog.c:215
+#: app/gui/user-install-dialog.c:214
 msgid ""
-"This folder is used to store user defined palettes.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP palettes installation when searching for\n"
-"palettes."
-msgstr ""
-"Овај директоријум чува палете које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП палетама када претражује инсталиране\n"
-"палете."
+"This folder is used to store user defined palettes.  The GIMP checks this "
+"folder in addition to the system-wide GIMP palettes installation when "
+"searching for palettes."
+msgstr "Овај директоријум чува палете које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП палетама када претражује инсталиране палете."
 
-#: app/gui/user-install-dialog.c:223
+#: app/gui/user-install-dialog.c:221
 msgid ""
-"This folder is used to store user defined patterns.\n"
-"The GIMP checks this folder in addition to the system-\n"
-"wide GIMP patterns installation when searching for\n"
-"patterns."
-msgstr ""
-"Овај директоријум чува одсечке које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП одсечцима када претражује инсталиране\n"
-"одсечке."
+"This folder is used to store user defined patterns.  The GIMP checks this "
+"folder in addition to the system-wide GIMP patterns installation when "
+"searching for patterns."
+msgstr "Овај директоријум чува мустре које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП одсечцима када претражује инсталиране мустре."
 
-#: app/gui/user-install-dialog.c:231
+#: app/gui/user-install-dialog.c:228
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported plug-ins.  The GIMP\n"
-"checks this folder in addition to the system-wide\n"
-"GIMP plug-in folder when searching for plug-ins."
-msgstr ""
-"Овај директоријум чува привремене, друге \n"
-"несистемске или додатке које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП додацима када претражује инсталиране додатке."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported plug-ins.  The GIMP checks this folder in addition to the "
+"system-wide GIMP plug-in folder when searching for plug-ins."
+msgstr "Овај директоријум чува привремене, друге несистемске или додатке које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП додацима када претражује инсталиране додатке."
 
-#: app/gui/user-install-dialog.c:239
+#: app/gui/user-install-dialog.c:236
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported DLL modules.  The\n"
-"GIMP checks this folder in addition to the system-wide\n"
-"GIMP module folder when searching for modules to load\n"
-"during initialization."
-msgstr ""
-"Овај директоријум чува привремене, друге \n"
-"несистемске или DLL модуле које је направио корисник.\n"
-"ГИМП проверава овај директоријум као додатак системским\n"
-"ГИМП модулима када тражи модуле које треба учитати."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported DLL modules.  The GIMP checks this folder in addition to "
+"the system-wide GIMP module folder when searching for modules to load during "
+"initialization."
+msgstr "Овај директоријум чува привремене, друге несистемске или DLL модуле које је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП модулима када тражи модуле које треба учитати."
 
-#: app/gui/user-install-dialog.c:248
+#: app/gui/user-install-dialog.c:245
 msgid ""
-"This folder is used to store user created, temporary,\n"
-"or otherwise non-system-supported additions to the\n"
-"plug-in environment.  The GIMP checks this folder in\n"
-"addition to the system-wide GIMP environment folder\n"
-"when searching for plug-in environment modification\n"
-"files."
-msgstr ""
-"Овај директоријум чува привремене, друге \n"
-"несистемске или допуне окружења за додаткекоје је направио корисник. ГИМП "
-"проверава\n"
-"овај директоријум као додатак системским ГИМП\n"
-"директоријуму окружења када тражи датотеке са изменама\n"
-"окружења додатака."
+"This folder is used to store user created, temporary, or otherwise non-"
+"system-supported additions to the plug-in environment.  The GIMP checks this "
+"folder in addition to the system-wide GIMP environment folder when searching "
+"for plug-in environment modification files."
+msgstr "Овај директоријум чува привремене, друге несистемске или допуне окружења за додаткекоје је направио корисник. ГИМП проверава овај директоријум као додатак системским ГИМП директоријуму окружења када тражи датотеке са изменама окружења додатака."
 
-#: app/gui/user-install-dialog.c:258
+#: app/gui/user-install-dialog.c:255
 msgid ""
-"This folder is used to store user created and installed\n"
-"scripts.  The GIMP checks this folder in addition to\n"
-"the systemwide GIMP scripts folder when searching for\n"
-"scripts."
-msgstr ""
-"Овај директоријум чува скрипте које је направио и\n"
-"инсталирао корисник. ГИМП проверава овај директоријум\n"
-"као додатак системским ГИМП скриптама када претражује\n"
-"скрипте."
+"This folder is used to store user created and installed scripts.  The GIMP "
+"checks this folder in addition to the systemwide GIMP scripts folder when "
+"searching for scripts."
+msgstr "Овај директоријум чува скрипте које је направио и инсталирао корисник. ГИМП проверава овај директоријум као додатак системским ГИМП скриптама када претражује скрипте."
 
-#: app/gui/user-install-dialog.c:266
+#: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
 msgstr "Овај директоријум садржи мустре за слике."
 
-#: app/gui/user-install-dialog.c:271
+#: app/gui/user-install-dialog.c:268
 msgid "This folder is searched for user-installed themes."
 msgstr "Овај директоријум садржи теме инсталиране од стране корисника."
 
-#: app/gui/user-install-dialog.c:276
+#: app/gui/user-install-dialog.c:273
 msgid ""
-"This folder is used to temporarily store undo buffers\n"
-"to reduce memory usage.  If The GIMP is unceremoniously\n"
-"killed, files of the form: gimp<#>.<#> may persist in\n"
-"this folder.  These files are useless across GIMP\n"
+"This folder is used to temporarily store undo buffers to reduce memory "
+"usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
+"<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
-msgstr ""
-"Овај директоријум се користи као привремена остава бафера\n"
-"за поништавање, као би се смањило коришћење меморије. Ако\n"
-"је ГИМП непрописно убијен, даототеке типа: gimp<#>.<#> могу\n"
-"остати у њему. Ове датотеке су бескорисне и могу се\n"
-"слободно избрисати."
+msgstr "Овај директоријум се користи као привремена остава бафера за поништавање, као би се смањило коришћење меморије. Ако је ГИМП непрописно убијен, даототеке типа: gimp<#>.<#> могу остати у њему. Ове датотеке су бескорисне и могу се слободно избрисати."
 
-#: app/gui/user-install-dialog.c:285
+#: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
 msgstr "Овај директоријум чува опције алатки."
 
-#: app/gui/user-install-dialog.c:290
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Curves tool."
-msgstr ""
-"Овај директоријум чува датотеке са параметрима за\n"
-"алатку Кривине."
+#: app/gui/user-install-dialog.c:287
+msgid "This folder is used to store parameter files for the Curves tool."
+msgstr "Овај директоријум чува датотеке са параметрима за алатку Кривине."
 
-#: app/gui/user-install-dialog.c:296
-msgid ""
-"This folder is used to store parameter files for the\n"
-"Levels tool."
-msgstr ""
-"Овај директоријум служи за смештање параметарских датотека\n"
-"алатке за нивое."
+#: app/gui/user-install-dialog.c:292
+msgid "This folder is used to store parameter files for the Levels tool."
+msgstr "Овај директоријум служи за смештање параметарских датотека алатке за нивое."
 
-#: app/gui/user-install-dialog.c:397
-msgid ""
-"Installation successful.\n"
-"Click \"Continue\" to proceed."
-msgstr ""
-"Успешна инсталација.\n"
-"Кликните на „Настави“ за даљи рад."
+#: app/gui/user-install-dialog.c:392
+msgid "Installation successful.  Click \"Continue\" to proceed."
+msgstr "Успешна инсталација. Кликните на „Настави“ за даљи рад."
 
-#: app/gui/user-install-dialog.c:403
-msgid ""
-"Installation failed.\n"
-"Contact system administrator."
-msgstr ""
-"Неуспешна инсталација.\n"
-"Позовите систем администратора."
+#: app/gui/user-install-dialog.c:398
+msgid "Installation failed.  Contact system administrator."
+msgstr "Неуспешна инсталација. Позовите систем администратора."
 
-#: app/gui/user-install-dialog.c:595
+#: app/gui/user-install-dialog.c:591
 msgid "GIMP User Installation"
 msgstr "ГИМП корисничка инсталација"
 
-#: app/gui/user-install-dialog.c:600
+#: app/gui/user-install-dialog.c:596
 msgid "Continue"
 msgstr "Настави"
 
-#: app/gui/user-install-dialog.c:750
+#: app/gui/user-install-dialog.c:748
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -6698,94 +6586,71 @@ msgstr ""
 "Добродошли у\n"
 "ГИМП корисничку инсталацију"
 
-#: app/gui/user-install-dialog.c:752
+#: app/gui/user-install-dialog.c:750
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Кликните на „Настави“ да бисте ушли у ГИМП корисничку инсталацију."
 
-#: app/gui/user-install-dialog.c:757
+#: app/gui/user-install-dialog.c:755
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Copyright (C) 1995-2003\n"
+"Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"<b>The GIMP - GNU Image Manipulation Program</b>\n"
-"Сва права задржана (C) 1995-2002\n"
-"Спенсер Кимбол, Питер Матис и ГИМП развојни тим."
+"<b>ГИМП — Гнуов програм за обраду слика (GNU Image Manipulation Program)</b>\n"
+"Сва права задржана ©1995–2004\n"
+"Спенсер Кимбол (Spencer Kimball), Питер Матис (Peter Mattis) и ГИМП развојни тим."
 
-#: app/gui/user-install-dialog.c:767
+#: app/gui/user-install-dialog.c:765
 msgid ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version."
-msgstr ""
-"Овај програм је бесплатан софтвер; можете га делити и/или мењати\n"
-"у складу са условима ГНУ Опште Јавне Лиценце објављеном од стране\n"
-"Free Software Foundation; или верзијом 2 Лиценце, или\n"
-"(по вешем избору) било које новије верзије."
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2 of the License, or (at your option) "
+"any later version."
+msgstr "Овај програм је бесплатан софтвер; можете га делити и/или мењати у складу са условима ГНУ Опште Јавне Лиценце објављеном од стране Free Software Foundation; или верзијом 2 Лиценце, или (по вешем избору) било које новије верзије."
 
-#: app/gui/user-install-dialog.c:773
+#: app/gui/user-install-dialog.c:771
 msgid ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details."
-msgstr ""
-"Овај програм је дат са надом да ће бити користан, али\n"
-"БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; чак и без наговештене гаранције\n"
-"ПРОДAВЦА или ПОДЕСНОСТИ ЗА ОДРЕћЕНУ УПОТРЕБУ.\n"
-"Погледати ГНУ Општу Јавну Лиценцу за више детаља."
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details."
+msgstr "Овај програм је дат са надом да ће бити користан, али БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; чак и без наговештене гаранције ПРОДAВЦА или ПОДЕСНОСТИ ЗА ОДРЕЂЕНУ УПОТРЕБУ. Погледати ГНУ Општу Јавну Лиценцу за више детаља."
 
-#: app/gui/user-install-dialog.c:779
+#: app/gui/user-install-dialog.c:777
 msgid ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
-msgstr ""
-"Требало би да сте добили и копију ГНУ Опште Јавне Лиценце\n"
-"заједно са овим програмом; ако нисте, пишите на адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
-"Boston, MA 02111-1307, USA."
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
+msgstr "Требало би да сте добили и примерак ГНУ Опште Јавне Лиценце заједно са овим програмом; ако нисте, пишите на адресу: Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:804
+#: app/gui/user-install-dialog.c:802
 msgid "Personal GIMP Folder"
 msgstr "Лични ГИМП директоријум"
 
-#: app/gui/user-install-dialog.c:805
+#: app/gui/user-install-dialog.c:803
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Кликните на „Настави“ да направите ваш лични ГИМП директоријум."
 
-#: app/gui/user-install-dialog.c:849
+#: app/gui/user-install-dialog.c:847
 #, c-format
 msgid ""
-"For a proper GIMP installation, a folder named\n"
-"'<b>%s</b>' needs to be created."
-msgstr ""
-"За прописну ГИМП инсталацију, директоријум под именом\n"
-"„<b>%s</b>“ мора бити направљен."
+"For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
+"created."
+msgstr "За прописну ГИМП инсталацију, директоријум под именом „<b>%s</b>“ мора бити направљен."
 
-#: app/gui/user-install-dialog.c:856
+#: app/gui/user-install-dialog.c:854
 msgid ""
-"This folder will contain a number of important files.\n"
-"Click on one of the files or folders in the tree\n"
-"to get more information about the selected item."
-msgstr ""
-"Овај директоријум ће садржати више битних датотека.\n"
-"Кликните на датотеку или директоријум у стаблу\n"
-"да добијете више података о изабраној ставци."
+"This folder will contain a number of important files.  Click on one of the "
+"files or folders in the tree to get more information about the selected item."
+msgstr "Овај директоријум ће садржати више битних датотека. Кликните на датотеку или директоријум у стаблу да добијете више података о изабраној ставци."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
 msgstr "Дневник корисничке инсталације"
 
 #: app/gui/user-install-dialog.c:943
-msgid ""
-"Please wait while your personal\n"
-"GIMP folder is being created..."
-msgstr ""
-"Молим сачекајте док ваш лични\n"
-"ГИМП директоријум не буде направљен..."
+msgid "Please wait while your personal GIMP folder is being created..."
+msgstr "Молим сачекајте док ваш лични ГИМП директоријум не буде направљен..."
 
 #: app/gui/user-install-dialog.c:950
 msgid "GIMP Performance Tuning"
@@ -6795,18 +6660,18 @@ msgstr "ГИМП подешавање перформанси"
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Кликните на „Настави“ да прихватите наведена подешавања."
 
-#: app/gui/user-install-dialog.c:955
+#: app/gui/user-install-dialog.c:956
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>За најбоље ГИМП перформансе, нека подешавања ће можда требати променити.</"
 "b>"
 
-#: app/gui/user-install-dialog.c:961
+#: app/gui/user-install-dialog.c:963
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Кликните на „Настави“ да покренете ГИМП."
 
-#: app/gui/user-install-dialog.c:965
+#: app/gui/user-install-dialog.c:968
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
@@ -6814,88 +6679,71 @@ msgstr ""
 "<b>За приказ слика у природној величини, ГИМП мора знати резолуцију вашег "
 "монитора.</b>"
 
-#: app/gui/user-install-dialog.c:970
+#: app/gui/user-install-dialog.c:973
 msgid "Aborting Installation..."
 msgstr "Прекидам Инсталацију..."
 
-#: app/gui/user-install-dialog.c:1053 app/gui/user-install-dialog.c:1086
+#: app/gui/user-install-dialog.c:1056 app/gui/user-install-dialog.c:1089
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Правим директоријум „%s“..."
 
-#: app/gui/user-install-dialog.c:1067
+#: app/gui/user-install-dialog.c:1070
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Не могу да направим директоријум „%s“: %s"
 
-#: app/gui/user-install-dialog.c:1099
+#: app/gui/user-install-dialog.c:1102
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "Не могу да направим директоријум: %s"
 
-#: app/gui/user-install-dialog.c:1111
+#: app/gui/user-install-dialog.c:1114
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Умножавам датотеку „%s“ из „%s“..."
 
-#: app/gui/user-install-dialog.c:1157
+#: app/gui/user-install-dialog.c:1160
 msgid ""
-"GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
+"GIMP uses a limited amount of memory to store image data, the so-called "
+"\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
-msgstr ""
-"ГИМП користи ограничену количину меморије за складиштење података о сликама\n"
-"тзв. „Оставу за делиће“. Требате подесити њену величину како би стала у "
-"меморију.\n"
-"Мислите и на меморију потребну за остале процесе на систему."
+msgstr "ГИМП користи ограничену количину меморије за складиштење података о сликама тзв. „Оставу за делиће“. Требате подесити њену величину како би стала у меморију. Мислите и на меморију потребну за остале процесе на систему."
 
-#: app/gui/user-install-dialog.c:1181
+#: app/gui/user-install-dialog.c:1185
 msgid ""
-"All image and undo data which doesn't fit into the Tile Cache will be\n"
-"written to a swap file. This file should be located on a local filesystem\n"
-"with enough free space (several hundred MB). On a UNIX system, you\n"
-"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr ""
-"Све слике и подаци о поништавању који не стану у оставу за делиће биће\n"
-"уписани у swap датотеку. Ова датотека траба бити на локалном систему "
-"датотека\n"
-"са довољно слободног простора (неколико десетина MB). На UNIX систему,\n"
-"можете користити системски привремени директоријум („/tmp“ или „/var/tmp“)."
+"All image and undo data which doesn't fit into the Tile Cache will be "
+"written to a swap file.  This file should be located on a local filesystem "
+"with enough free space (several hundred MB). On a UNIX system, you may want "
+"to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+msgstr "Све слике и подаци о поништавању који не стану у оставу за делиће биће уписани у swap датотеку. Ова датотека траба бити на локалном систему датотека са довољно слободног простора (неколико десетина MB). На UNIX систему, можете користити системски привремени директоријум („/tmp“ или „/var/tmp“)."
 
-#: app/gui/user-install-dialog.c:1196
+#: app/gui/user-install-dialog.c:1201
 msgid "Swap Folder:"
 msgstr "Swap директоријум:"
 
-#: app/gui/user-install-dialog.c:1247
+#: app/gui/user-install-dialog.c:1252
 msgid ""
-"GIMP can obtain this information from the windowing system.\n"
-"However, usually this does not give useful values."
-msgstr ""
-"ГИМП може добити овај податак од система.\n"
-"Ипак, то обично не даје добре резултате."
+"GIMP can obtain this information from the windowing system.  However, "
+"usually this does not give useful values."
+msgstr "ГИМП може добити овај податак од система. Ипак, то обично не даје добре резултате."
 
-#: app/gui/user-install-dialog.c:1255
+#: app/gui/user-install-dialog.c:1260
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Узми резолуцију од система (Тренутно %d x %d тпи)"
 
-#: app/gui/user-install-dialog.c:1275
-msgid ""
-"Alternatively, you can set\n"
-"the monitor resolution manually."
-msgstr ""
-"Или можете ручно подесити\n"
-"резолуцију монитора."
+#: app/gui/user-install-dialog.c:1279
+msgid "Alternatively, you can set the monitor resolution manually."
+msgstr "Или можете ручно подесити резолуцију монитора."
 
-#: app/gui/user-install-dialog.c:1320
+#: app/gui/user-install-dialog.c:1328
 msgid ""
-"You can also press the \"Calibrate\" button to open a window\n"
-"which lets you determine your monitor resolution interactively."
-msgstr ""
-"Мо=ете такође притиснути „Калибриши“ дугме за отварање прозора\n"
-"који вам омогучава интерактивно утврђивање резолуције монитора."
+"You can also press the \"Calibrate\" button to open a window which lets you "
+"determine your monitor resolution interactively."
+msgstr "Можете такође притиснути „Калибриши“ дугме за отварање прозора који вам омогучава интерактивно утврђивање резолуције монитора."
 
-#: app/gui/user-install-dialog.c:1323
+#: app/gui/user-install-dialog.c:1332
 msgid "Calibrate"
 msgstr "Калибриши"
 
@@ -7040,7 +6888,7 @@ msgstr "Извор слике"
 
 #: app/paint/paint-enums.c:14
 msgid "Pattern Source"
-msgstr "Извор одсечка"
+msgstr "Извор мустре"
 
 #: app/paint/paint-enums.c:32
 msgid "Non Aligned"
@@ -7199,7 +7047,7 @@ msgstr "Процедуре паразита"
 
 #: app/pdb/internal_procs.c:161
 msgid "Pattern UI"
-msgstr "Корисничко сучеље одсечака"
+msgstr "Корисничко сучеље мустре"
 
 #: app/pdb/internal_procs.c:167
 msgid "Plug-in"
@@ -7614,7 +7462,7 @@ msgstr "Спојени узорак"
 
 #: app/tools/gimpbucketfilltool.c:90
 msgid "Fill with a color or pattern"
-msgstr "Попуни бојом или одсечком"
+msgstr "Попуни бојом или мустром"
 
 #: app/tools/gimpbucketfilltool.c:91
 msgid "/Tools/Paint Tools/_Bucket Fill"
@@ -7634,7 +7482,7 @@ msgstr "/Алати/Алатке за селекције/Избор по бој�
 
 #: app/tools/gimpclonetool.c:102
 msgid "Paint using Patterns or Image Regions"
-msgstr "Сликај користећи одсечак или део слике"
+msgstr "Сликај користећи мустру или део слике"
 
 #: app/tools/gimpclonetool.c:103
 msgid "/Tools/Paint Tools/_Clone"
@@ -8253,11 +8101,11 @@ msgstr "Четка:"
 
 #: app/tools/gimppaintoptions-gui.c:162
 msgid "Open the pattern selection dialog"
-msgstr "Отвори прозор за одабир одсечака"
+msgstr "Отвори прозор за одабир мустре"
 
 #: app/tools/gimppaintoptions-gui.c:165
 msgid "Pattern:"
-msgstr "Одсечак"
+msgstr "Мустра:"
 
 #: app/tools/gimppaintoptions-gui.c:186
 msgid "Open the gradient selection dialog"
@@ -9573,8 +9421,8 @@ msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
-"Активни одсечак.\n"
-"Кликните да отворите прозор за одсечке."
+"Активна мустра.\n"
+"Кликните да отворите прозор за мустре."
 
 #: app/widgets/gimptoolbox-indicator-area.c:211
 msgid ""
