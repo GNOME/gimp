@@ -44,7 +44,7 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   GArray      *coords;
   GimpCoords   point;
   GimpStroke  *cur_stroke = NULL;
-  gdouble      xscale, yscale, xres, yres;
+  gdouble      xscale, yscale;
   gint         x, y;
   guchar      *data;
   gboolean     closed;

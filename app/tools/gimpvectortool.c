@@ -113,7 +113,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                 FALSE,
                 "gimp-vector-tool",
                 _("Vectors"),
-                _("Vector angles and lengths"),
+                _("the most promising path tool prototype... :-)"),
                 N_("/Tools/Vectors"), NULL,
                 NULL, "tools/vector.html",
                 GIMP_STOCK_TOOL_PATH,
@@ -266,13 +266,20 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                               GIMP_HANDLE_CIRCLE,
                                               anchor->position.x,
                                               anchor->position.y,
-                                              TARGET, TARGET,
+                                              TARGET,
+                                              TARGET,
                                               GTK_ANCHOR_CENTER,
                                               FALSE))
         {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+
           vector_tool->function = VECTORS_MOVING;
           vector_tool->cur_stroke = stroke;
           vector_tool->cur_anchor = anchor;
+          if (anchor->type == ANCHOR_HANDLE)
+            gimp_stroke_anchor_select (stroke, anchor, TRUE);
+          
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
         }
 
     }
@@ -292,6 +299,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       vector_tool->cur_stroke = stroke;
       vector_tool->cur_anchor = anchor;
+      gimp_stroke_anchor_select (stroke, anchor, TRUE);
+
       vector_tool->function = VECTORS_MOVING;
 
       /*  set the gdisplay  */
@@ -316,7 +325,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 	}
 
       anchor = gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (vector_tool->cur_stroke), coords, vector_tool->cur_anchor);
-      vector_tool->cur_anchor = anchor;
+      if (anchor)
+        {
+          vector_tool->cur_anchor = anchor;
+          if (anchor->type == ANCHOR_HANDLE)
+            gimp_stroke_anchor_select (stroke, anchor, TRUE);
+        }
 
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
@@ -374,7 +388,8 @@ gimp_vector_tool_motion (GimpTool        *tool,
   switch (vector_tool->function)
     {
     case VECTORS_MOVING:
-      /*  if we are moving the start point and only have two, make it the end point  */
+      /* if we are moving the start point and only have two,
+       * make it the end point  */
       anchor = vector_tool->cur_anchor;
 
       if (anchor)
@@ -413,7 +428,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
                                               GIMP_HANDLE_CIRCLE,
                                               anchor->position.x,
                                               anchor->position.y,
-                                              TARGET, TARGET,
+                                              TARGET,
+                                              TARGET,
                                               GTK_ANCHOR_CENTER,
                                               FALSE))
         {
@@ -438,6 +454,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
   GimpVectors     *vectors;
   GArray          *coords;
   gboolean         closed;
+  GList           *draw_anchors, *ptr;
 
   vector_tool = GIMP_VECTOR_TOOL (draw_tool);
   tool        = GIMP_TOOL (draw_tool);
@@ -446,21 +463,70 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
   while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
     {
+      /* anchor handles */
       cur_anchor = NULL;
-      while ((cur_anchor = gimp_stroke_anchor_get_next (cur_stroke, cur_anchor)))
+      draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
+      ptr = draw_anchors;
+
+      while (ptr) 
         {
+          cur_anchor = (GimpAnchor *) ptr->data;
+
+          if (cur_anchor->type == ANCHOR_HANDLE)
+            {
+              gimp_draw_tool_draw_handle (draw_tool,
+                                          cur_anchor->selected ?
+                                            GIMP_HANDLE_CIRCLE:
+                                            GIMP_HANDLE_FILLED_CIRCLE,
+                                          cur_anchor->position.x,
+                                          cur_anchor->position.y,
+                                          TARGET,
+                                          TARGET,
+                                          GTK_ANCHOR_CENTER,
+                                          FALSE);
+            }
+          ptr = ptr->next;
+        }
+
+      g_list_free (draw_anchors);
+
+      /* control handles */
+      draw_anchors = gimp_stroke_get_draw_controls (cur_stroke,
+                                                   vector_tool->cur_anchor);
+      ptr = draw_anchors;
+
+      while (ptr) 
+        {
+          cur_anchor = (GimpAnchor *) ptr->data;
+
           gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CIRCLE,
+                                      GIMP_HANDLE_SQUARE,
                                       cur_anchor->position.x,
                                       cur_anchor->position.y,
-                                      TARGET,
-                                      TARGET,
+                                      TARGET-1,
+                                      TARGET-1,
                                       GTK_ANCHOR_CENTER,
                                       FALSE);
+          ptr = ptr->next;
         }
-      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
 
-      g_printerr ("Got %d coords from gimp_stroke_interpolate\n", coords->len);
+      g_list_free (draw_anchors);
+
+      /* the lines to the control handles */
+      coords = gimp_stroke_get_draw_lines (cur_stroke, vector_tool->cur_anchor);
+      
+      if (coords->len % 2 == 0)
+        {
+          gint i;
+          for (i=0; i < coords->len; i += 2)
+            gimp_draw_tool_draw_strokes (draw_tool,
+                                       &(g_array_index (coords, GimpCoords, i)),
+                                       2, FALSE, FALSE);
+        }
+      g_array_free (coords, TRUE);
+
+      /* the stroke itself */
+      coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
 
       if (coords->len)
         gimp_draw_tool_draw_strokes (draw_tool,

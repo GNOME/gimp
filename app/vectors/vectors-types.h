@@ -27,6 +27,12 @@
 
 typedef struct _GimpAnchor GimpAnchor;
 
+typedef enum
+{
+  ANCHOR_HANDLE,
+  CONTROL_HANDLE,
+} GimpAnchorType;
+
 typedef struct _GimpStroke            GimpStroke;
 typedef struct _GimpStrokeClass       GimpStrokeClass;
 typedef struct _GimpBezierStroke      GimpBezierStroke;

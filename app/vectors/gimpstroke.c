@@ -114,6 +114,10 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->temp_anchor_fix	     = NULL;
 
   klass->make_bezier		     = NULL;
+
+  klass->get_draw_anchors            = NULL;
+  klass->get_draw_controls           = NULL;
+  klass->get_draw_lines              = NULL;
 }
 
 static void
@@ -211,6 +215,40 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
     return (GimpAnchor *) listitem->data;
  
   return NULL;
+}
+
+
+void
+gimp_stroke_anchor_select (GimpStroke        *stroke,
+                           GimpAnchor        *anchor,
+                           gboolean           exclusive)
+{
+  GimpStrokeClass *stroke_class;
+
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
+
+  if (stroke_class->anchor_select)
+    stroke_class->anchor_select (stroke, anchor, exclusive);
+  else
+    {
+      GList *cur_ptr;
+
+      cur_ptr = stroke->anchors;
+
+      if (exclusive)
+        {
+          while (cur_ptr)
+            {
+              ((GimpAnchor *) cur_ptr->data)->selected = FALSE;
+              cur_ptr = g_list_next (cur_ptr);
+            }
+        }
+      
+      if ((cur_ptr = g_list_find (stroke->anchors, anchor)) != NULL)
+        ((GimpAnchor *) cur_ptr->data)->selected = TRUE;
+    }
 }
 
 
@@ -431,4 +469,123 @@ gimp_stroke_make_bezier (const GimpStroke *stroke)
 
 
 
+GList *
+gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
+{
+  GimpStrokeClass *stroke_class;
+
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
+
+  if (stroke_class->get_draw_anchors)
+    return stroke_class->get_draw_anchors (stroke);
+  else
+    {
+      GList *cur_ptr, *ret_list = NULL;
+
+      cur_ptr = stroke->anchors;
+
+      while (cur_ptr)
+        {
+          if (((GimpAnchor *) cur_ptr->data)->type == ANCHOR_HANDLE)
+            ret_list = g_list_append (ret_list, cur_ptr->data);
+          cur_ptr = g_list_next (cur_ptr);
+        }
+
+      return ret_list;
+    }
+
+}
+
+
+GList *
+gimp_stroke_get_draw_controls (const GimpStroke  *stroke,
+                               const GimpAnchor  *active)
+{
+  GimpStrokeClass *stroke_class;
+
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
+
+  if (stroke_class->get_draw_controls)
+    return stroke_class->get_draw_controls (stroke, active);
+  else
+    {
+      GList *cur_ptr, *ret_list = NULL;
+
+      cur_ptr = stroke->anchors;
+
+      while (cur_ptr)
+        {
+          if (((GimpAnchor *) cur_ptr->data)->type == CONTROL_HANDLE)
+            {
+              if (cur_ptr->next &&
+                  ((GimpAnchor *) cur_ptr->next->data)->type == ANCHOR_HANDLE &&
+                  ((GimpAnchor *) cur_ptr->next->data)->selected)
+                ret_list = g_list_append (ret_list, cur_ptr->data);
+              else if (cur_ptr->prev &&
+                  ((GimpAnchor *) cur_ptr->prev->data)->type == ANCHOR_HANDLE &&
+                  ((GimpAnchor *) cur_ptr->prev->data)->selected)
+                ret_list = g_list_append (ret_list, cur_ptr->data);
+            }
+          cur_ptr = g_list_next (cur_ptr);
+        }
+
+      return ret_list;
+    }
+
+  return NULL;
+}
+          
+GArray *
+gimp_stroke_get_draw_lines (const GimpStroke  *stroke,
+                            const GimpAnchor  *active)
+{
+  GimpStrokeClass *stroke_class;
+
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
+
+  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
+
+  if (stroke_class->get_draw_lines)
+    return stroke_class->get_draw_lines (stroke, active);
+  else
+    {
+      GList *cur_ptr;
+      GArray *ret_lines = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+
+      cur_ptr = stroke->anchors;
+
+      while (cur_ptr)
+        {
+          if (((GimpAnchor *) cur_ptr->data)->type == ANCHOR_HANDLE &&
+              ((GimpAnchor *) cur_ptr->data)->selected)
+            {
+              if (cur_ptr->next)
+                {
+                  ret_lines = g_array_append_val (ret_lines, 
+                                ((GimpAnchor *) cur_ptr->data)->position);
+
+                  ret_lines = g_array_append_val (ret_lines, 
+                                ((GimpAnchor *) cur_ptr->next->data)->position);
+
+                }
+              if (cur_ptr->prev)
+                {
+                  ret_lines = g_array_append_val (ret_lines, 
+                                ((GimpAnchor *) cur_ptr->data)->position);
+
+                  ret_lines = g_array_append_val (ret_lines, 
+                                ((GimpAnchor *) cur_ptr->prev->data)->position);
+
+                }
+            }
+          cur_ptr = g_list_next (cur_ptr);
+        }
+
+      return ret_lines;
+    }
+}
 

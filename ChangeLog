@@ -1,3 +1,20 @@
+2002-12-30  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpanchor.h
+	* app/vectors/vectors-types.h: Anchors now have an enum as type and
+	have the "selected" property.
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpvectors-preview.c: Additional functions to get
+	information about the graphical representation of the stroke and be
+	able to select anchors.
+
+	* app/tools/gimpvectortool.c: semi-usable interface, better graphical
+	representation of what is going on. Also make use of the "selected"
+	property of the anhors to just display a subset of the control
+	handles.
+
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimppluginconfig.[ch]

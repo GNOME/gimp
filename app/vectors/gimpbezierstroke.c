@@ -30,14 +30,14 @@
 #include "gimpbezierstroke.h"
 
 #define INPUT_RESOLUTION 256
-#define DETAIL 0.25
 
 
 /*  private variables  */
 
-
 static GimpStrokeClass *parent_class = NULL;
 
+
+/* local prototypes */
 
 static void gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass);
 static void gimp_bezier_stroke_init       (GimpBezierStroke      *bezier_stroke);
@@ -51,6 +51,44 @@ static void gimp_bezier_coords_average    (GimpCoords            *a,
 static void gimp_bezier_coords_subdivide  (GimpCoords            *beziercoords,
                                            const gdouble          precision,
                                            GArray               **ret_coords);
+
+static void gimp_bezier_coords_mix        (gdouble                amul,
+                                           GimpCoords            *a,
+                                           gdouble                bmul,
+                                           GimpCoords            *b,
+                                           GimpCoords            *ret_val);
+
+static void gimp_bezier_coords_average    (GimpCoords            *a,
+                                           GimpCoords            *b,
+                                           GimpCoords            *ret_average);
+
+static void gimp_bezier_coords_difference (GimpCoords          *a,
+                                           GimpCoords          *b,
+                                           GimpCoords          *ret_difference);
+
+static void gimp_bezier_coords_scale      (gdouble                f,
+                                           GimpCoords            *a,
+                                           GimpCoords            *ret_multiply);
+
+static void gimp_bezier_coords_subdivide  (GimpCoords            *beziercoords,
+                                           const gdouble          precision,
+                                           GArray               **ret_coords);
+
+static void gimp_bezier_coords_subdivide2 (GimpCoords            *beziercoords,
+                                           const gdouble          precision,
+                                           GArray               **ret_coords,
+                                           gint                   depth);
+
+static gdouble  gimp_bezier_coords_scalarprod  (GimpCoords       *a,
+                                                GimpCoords       *b);
+                                              
+static gdouble  gimp_bezier_coords_length      (GimpCoords       *a);
+                                                                
+static gdouble  gimp_bezier_coords_length2     (GimpCoords       *a);
+
+static gboolean gimp_bezier_coords_is_straight (GimpCoords       *beziercoords,
+                                                gdouble           precision);
+
 
 GType
 gimp_bezier_stroke_get_type (void)
@@ -133,7 +171,8 @@ gimp_bezier_stroke_new (const GimpCoords *start)
 
   g_printerr ("Adding at %f, %f\n", start->x, start->y);
   
-  anchor->type = 0;    /* FIXME */
+  anchor->type = ANCHOR_HANDLE;
+  anchor->selected = FALSE;
 
   stroke->anchors = g_list_append (stroke->anchors, anchor);
   return stroke;
@@ -177,32 +216,31 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
   GimpStroke       *stroke;
   GList            *listneighbor;
   gint              loose_end;
+  GimpAnchorType    ntype1 = -1, ntype2 = -1;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (bezier_stroke), NULL);
   g_return_val_if_fail ((neighbor != NULL), NULL);
 
   stroke = GIMP_STROKE (bezier_stroke);
 
-  listneighbor = g_list_last (stroke->anchors);
-
   loose_end = 0;
-
-  if (listneighbor->data != neighbor)
+  listneighbor = g_list_last (stroke->anchors);
+  if (listneighbor->data == neighbor)
+    {
+      loose_end = 1;
+    }
+  else
     {
       listneighbor = g_list_first (stroke->anchors);
-      if (listneighbor->data != neighbor)
+      if (listneighbor->data == neighbor)
+        {
+          loose_end = -1;
+        }
+      else
         {
           listneighbor = NULL;
           loose_end = 0;
         }
-      else
-        {
-          loose_end = -1;
-        }
-    }
-  else
-    {
-      loose_end = 1;
     }
 
   if (loose_end)
@@ -210,29 +248,59 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
       anchor = g_new0 (GimpAnchor, 1);
       anchor->position.x = coords->x;
       anchor->position.y = coords->y;
-      anchor->position.pressure = 1;
+      anchor->position.pressure = 1.0;
       anchor->position.xtilt = 0.5;
       anchor->position.ytilt = 0.5;
       anchor->position.wheel = 0.5;
 
-      /* FIXME */
-      if (((GimpAnchor *) listneighbor->data)->type == 0)
-        anchor->type = 1;
-      else
-        anchor->type = 0;
+      anchor->selected = FALSE;
 
-      g_printerr ("Extending at %f, %f, type %d\n", coords->x, coords->y, anchor->type);
+      /* We have to detect the type of the newly added point... */
+
+      ntype1 = ((GimpAnchor *) listneighbor->data)->type;
+      if (loose_end == 1 && listneighbor->prev)
+        {
+          ntype2 = ((GimpAnchor *) listneighbor->prev->data)->type;
+        }
+      else if (loose_end == -1 && listneighbor->next)
+        {
+          ntype2 = ((GimpAnchor *) listneighbor->next->data)->type;
+        }
+      else
+        {
+          anchor->type = CONTROL_HANDLE;
+        }
+
+      if (ntype1 == ANCHOR_HANDLE)
+        {
+          anchor->type = CONTROL_HANDLE;
+        }
+      else
+        {
+          if (ntype2 == CONTROL_HANDLE)
+            {
+              anchor->type = ANCHOR_HANDLE;
+            }
+          else
+            {
+              anchor->type = CONTROL_HANDLE;
+            }
+        }
+
+      g_printerr ("Extending at %f, %f, type %d\n",
+                  coords->x, coords->y, anchor->type);
+
+      if (loose_end == 1)
+        stroke->anchors = g_list_append (stroke->anchors, anchor);
+
+      if (loose_end == -1)
+        stroke->anchors = g_list_prepend (stroke->anchors, anchor);
+
+      return anchor;
     }
   else
-    anchor = NULL;
+    return NULL;   /* No loose end to add an anchor to... */
 
-  if (loose_end == 1)
-    stroke->anchors = g_list_append (stroke->anchors, anchor);
-
-  if (loose_end == -1)
-    stroke->anchors = g_list_prepend (stroke->anchors, anchor);
-
-  return anchor;
 }
 
 
@@ -254,8 +322,11 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
   count = 0;
 
-  for (anchorlist = stroke->anchors; anchorlist;
-       anchorlist = g_list_next (anchorlist))
+  for (anchorlist = stroke->anchors;
+       anchorlist && ((GimpAnchor *) anchorlist->data)->type != ANCHOR_HANDLE;
+       anchorlist = g_list_next (anchorlist));
+
+  for ( ; anchorlist; anchorlist = g_list_next (anchorlist))
     {
       anchor = anchorlist->data;
 
@@ -394,7 +465,8 @@ gimp_bezier_coords_length (GimpCoords *a)
  */
 
 static gboolean
-gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
+gimp_bezier_coords_is_straight (GimpCoords *beziercoords,
+                                gdouble precision)
 {
   GimpCoords line, tan1, tan2, d1, d2;
   gdouble l2, s1, s2;
@@ -403,7 +475,7 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
                                  &(beziercoords[0]),
                                  &line);
 
-  if (gimp_bezier_coords_length2 (&line) < DETAIL * DETAIL)
+  if (gimp_bezier_coords_length2 (&line) < precision * precision)
     {
       gimp_bezier_coords_difference (&(beziercoords[1]),
                                      &(beziercoords[0]),
@@ -411,8 +483,8 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
       gimp_bezier_coords_difference (&(beziercoords[2]),
                                      &(beziercoords[3]),
                                      &tan2);
-      if ((gimp_bezier_coords_length2 (&tan1) < DETAIL * DETAIL) &&
-          (gimp_bezier_coords_length2 (&tan2) < DETAIL * DETAIL))
+      if ((gimp_bezier_coords_length2 (&tan1) < precision * precision) &&
+          (gimp_bezier_coords_length2 (&tan2) < precision * precision))
         {
           return 1;
         }
@@ -446,8 +518,8 @@ gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
       gimp_bezier_coords_mix (1.0, &tan1, - s1, &line, &d1);
       gimp_bezier_coords_mix (1.0, &tan2, - s2, &line, &d2);
 
-      if ((gimp_bezier_coords_length2 (&d1) > DETAIL * DETAIL) ||
-          (gimp_bezier_coords_length2 (&d2) > DETAIL * DETAIL))
+      if ((gimp_bezier_coords_length2 (&d1) > precision * precision) ||
+          (gimp_bezier_coords_length2 (&d2) > precision * precision))
         {
           /* The control points are too far away from the baseline */
           /* g_printerr ("Zu grosser Abstand zur Basislinie\n"); */
@@ -505,8 +577,8 @@ gimp_bezier_coords_subdivide2 (GimpCoords     *beziercoords,
    * if the stroke is sufficiently close to a straight line.
    */
 
-  if (!depth ||
-      gimp_bezier_coords_is_straight (&(subdivided[0]))) /* 1st half */
+  if (!depth || gimp_bezier_coords_is_straight (&(subdivided[0]),
+                                                precision)) /* 1st half */
     {
       *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[0]), 3);
     }
@@ -516,8 +588,8 @@ gimp_bezier_coords_subdivide2 (GimpCoords     *beziercoords,
                                      ret_coords, depth-1);
     }
 
-  if (!depth ||
-      gimp_bezier_coords_is_straight (&(subdivided[3]))) /* 2nd half */
+  if (!depth || gimp_bezier_coords_is_straight (&(subdivided[3]),
+                                                precision)) /* 2nd half */
     {
       *ret_coords = g_array_append_vals (*ret_coords, &(subdivided[3]), 3);
     }

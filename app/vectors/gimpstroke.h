@@ -59,6 +59,10 @@ struct _GimpStrokeClass
   GimpAnchor  * (* anchor_get_next)      (const GimpStroke  *stroke,
                                           const GimpAnchor  *prev);
               
+  void          (* anchor_select)        (GimpStroke        *stroke,
+                                          GimpAnchor        *anchor,
+                                          gboolean           exclusive);
+
   void          (* anchor_move_relative) (GimpStroke        *stroke,
                                           GimpAnchor        *anchor,
                                           const GimpCoords  *deltacoord,
@@ -82,7 +86,7 @@ struct _GimpStrokeClass
                                           const gdouble      precision,
                                           gboolean          *ret_closed);
                                                           
-                                                          
+
   GimpAnchor  * (* temp_anchor_get)      (const GimpStroke  *stroke);
                                                           
   GimpAnchor  * (* temp_anchor_set)      (GimpStroke        *stroke,
@@ -92,6 +96,14 @@ struct _GimpStrokeClass
 
   GimpStroke  * (* make_bezier)          (const GimpStroke  *stroke);
 
+                                                          
+  GList       * (* get_draw_anchors)     (const GimpStroke  *stroke);
+  
+  GList       * (* get_draw_controls)    (const GimpStroke  *stroke,
+                                          const GimpAnchor  *active);
+  
+  GArray      * (* get_draw_lines)       (const GimpStroke  *stroke,
+                                          const GimpAnchor  *active);
 };
 
 
@@ -103,26 +115,30 @@ GType           gimp_stroke_get_type           (void) G_GNUC_CONST;
 /* accessing / modifying the anchors */
 
 GimpAnchor    * gimp_stroke_anchor_get         (const GimpStroke  *stroke,
-                                                 const GimpCoords   *coord);
+                                                const GimpCoords  *coord);
                                                                     
 /* prev == NULL: "first" anchor */                                  
 GimpAnchor    * gimp_stroke_anchor_get_next    (const GimpStroke  *stroke,
-                                                 const GimpAnchor   *prev);
+                                                const GimpAnchor  *prev);
                                                                     
                                                                     
+void            gimp_stroke_anchor_select      (GimpStroke        *stroke,
+                                                GimpAnchor        *anchor,
+                                                gboolean           exclusive);
+
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
  */
 void            gimp_stroke_anchor_move_relative (GimpStroke        *stroke,
-                                                   GimpAnchor       *anchor,
-                                                   const GimpCoords *deltacoord,
-                                                   const gint        type);
+                                                  GimpAnchor        *anchor,
+                                                  const GimpCoords  *deltacoord,
+                                                  const gint         type);
 
 void            gimp_stroke_anchor_move_absolute (GimpStroke        *stroke,
-                                                   GimpAnchor       *anchor,
-                                                   const GimpCoords *coord,
-                                                   const gint        type);
+                                                  GimpAnchor        *anchor,
+                                                  const GimpCoords  *coord,
+                                                  const gint         type);
 
 void            gimp_stroke_anchor_delete      (GimpStroke          *stroke,
                                                 GimpAnchor          *anchor);
@@ -155,7 +171,15 @@ gboolean        gimp_stroke_temp_anchor_fix    (GimpStroke          *stroke);
 
 /* creates a bezier approximation. */
 
-GimpStroke   * gimp_stroke_make_bezier        (const GimpStroke     *stroke);
+GimpStroke   * gimp_stroke_make_bezier         (const GimpStroke     *stroke);
 
+
+GList        * gimp_stroke_get_draw_anchors    (const GimpStroke  *stroke);
+           
+GList        * gimp_stroke_get_draw_controls   (const GimpStroke  *stroke,
+                                                const GimpAnchor  *active);
+           
+GArray       * gimp_stroke_get_draw_lines      (const GimpStroke  *stroke,
+                                                const GimpAnchor  *active);
 
 #endif /* __GIMP_STROKE_H__ */
