@@ -31,21 +31,25 @@
 #include "gimpdockbook.h"
 
 
-static void        gimp_dockable_class_init     (GimpDockableClass *klass);
-static void        gimp_dockable_init           (GimpDockable      *dockable);
+static void        gimp_dockable_class_init       (GimpDockableClass *klass);
+static void        gimp_dockable_init             (GimpDockable      *dockable);
 
-static void        gimp_dockable_destroy             (GtkObject    *object);
-static void        gimp_dockable_style_set           (GtkWidget    *widget,
-						      GtkStyle     *prev_style);
+static void        gimp_dockable_destroy             (GtkObject      *object);
+static void        gimp_dockable_size_request        (GtkWidget      *widget,
+                                                      GtkRequisition *requisition);
+static void        gimp_dockable_size_allocate       (GtkWidget      *widget,
+                                                      GtkAllocation  *allocation);
+static void        gimp_dockable_style_set           (GtkWidget      *widget,
+						      GtkStyle       *prev_style);
 
-static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
-						      GimpDockbook *dockbook,
-						      GtkIconSize   size);
-static void        gimp_dockable_real_set_context    (GimpDockable *dockable,
-						      GimpContext  *context);
+static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable   *dockable,
+						      GimpDockbook   *dockbook,
+						      GtkIconSize     size);
+static void        gimp_dockable_real_set_context    (GimpDockable   *dockable,
+						      GimpContext    *context);
 
 
-static GtkVBoxClass *parent_class = NULL;
+static GtkBinClass *parent_class = NULL;
 
 
 GType
@@ -68,7 +72,7 @@ gimp_dockable_get_type (void)
         (GInstanceInitFunc) gimp_dockable_init,
       };
 
-      dockable_type = g_type_register_static (GTK_TYPE_VBOX,
+      dockable_type = g_type_register_static (GTK_TYPE_BIN,
                                               "GimpDockable",
                                               &dockable_info, 0);
     }
@@ -87,23 +91,17 @@ gimp_dockable_class_init (GimpDockableClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy   = gimp_dockable_destroy;
+  object_class->destroy       = gimp_dockable_destroy;
 
-  widget_class->style_set = gimp_dockable_style_set;
+  widget_class->size_request  = gimp_dockable_size_request;
+  widget_class->size_allocate = gimp_dockable_size_allocate;
+  widget_class->style_set     = gimp_dockable_style_set;
 
-  klass->get_tab_widget   = gimp_dockable_real_get_tab_widget;
-  klass->set_context      = gimp_dockable_real_set_context;
+  klass->get_tab_widget       = gimp_dockable_real_get_tab_widget;
+  klass->set_context          = gimp_dockable_real_set_context;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content_border",
-                                                             NULL, NULL,
-                                                             0,
-                                                             G_MAXINT,
-                                                             0,
-                                                             G_PARAM_READABLE));
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("content_spacing",
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
@@ -156,19 +154,61 @@ gimp_dockable_destroy (GtkObject *object)
 }
 
 static void
+gimp_dockable_size_request (GtkWidget      *widget,
+                            GtkRequisition *requisition)
+{
+  GtkBin *bin = GTK_BIN (widget);
+
+  requisition->width  = GTK_CONTAINER (widget)->border_width * 2;
+  requisition->height = GTK_CONTAINER (widget)->border_width * 2;
+
+  if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+    {
+      GtkRequisition child_requisition;
+      
+      gtk_widget_size_request (bin->child, &child_requisition);
+
+      requisition->width  += child_requisition.width;
+      requisition->height += child_requisition.height;
+    }
+}
+
+static void
+gimp_dockable_size_allocate (GtkWidget     *widget,
+                             GtkAllocation *allocation)
+{
+  GtkBin *bin = GTK_BIN (widget);
+
+  widget->allocation = *allocation;
+
+  if (bin->child)
+    {
+      GtkAllocation  child_allocation;
+
+      child_allocation.x      = allocation->x;
+      child_allocation.y      = allocation->y;
+      child_allocation.width  = MAX (allocation->width  -
+                                     GTK_CONTAINER (widget)->border_width * 2,
+                                     0);
+      child_allocation.height = MAX (allocation->height -
+                                     GTK_CONTAINER (widget)->border_width * 2,
+                                     0);
+
+      gtk_widget_size_allocate (bin->child, &child_allocation);
+    }
+}
+
+static void
 gimp_dockable_style_set (GtkWidget *widget,
 			 GtkStyle  *prev_style)
 {
   gint content_border;
-  gint content_spacing;
 
   gtk_widget_style_get (widget,
-                        "content_border",  &content_border,
-                        "content_spacing", &content_spacing,
+                        "content_border", &content_border,
 			NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
-  gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);

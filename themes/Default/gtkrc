@@ -45,7 +45,6 @@ style "gimp-default-style"
   GimpDockbook::tab_border         = 0
   GimpDockbook::tab_size           = button
   GimpDockable::content_border     = 2
-  GimpDockable::content_spacing    = 2
   GimpEditor::content_spacing      = 2
   GimpEditor::button_spacing       = 2
   GimpEditor::button_icon_size     = menu

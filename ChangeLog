@@ -1,3 +1,12 @@
+2003-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.[ch]: derive it from GtkBin, not from
+	GtkVBox. Removed "content_spacing" style property.
+
+	* app/widgets/gimpcontainerview-utils.c
+	* etc/gtkrc_user
+	* themes/Default/gtkrc: changed accordingly.
+
 2003-04-11  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/flame/flame.c (dialog): restore the original input

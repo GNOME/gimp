@@ -46,7 +46,7 @@ typedef struct _GimpDockableClass GimpDockableClass;
 
 struct _GimpDockable
 {
-  GtkVBox       parent_instance;
+  GtkBin        parent_instance;
 
   gchar        *name;
   gchar        *short_name;
@@ -63,7 +63,7 @@ struct _GimpDockable
 
 struct _GimpDockableClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBinClass  parent_class;
 
   GtkWidget * (* get_tab_widget) (GimpDockable *dockable,
 				  GimpDockbook *dockbook,

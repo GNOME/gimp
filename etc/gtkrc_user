@@ -29,7 +29,6 @@ style "gimp-small-style"
   GimpDockbook::tab_border         = 0
   GimpDockbook::tab_icon_size      = menu
   GimpDockable::content_border     = 1
-  GimpDockable::content_spacing    = 1
   GimpEditor::content_spacing      = 1
   GimpEditor::button_spacing       = 1
   GimpEditor::button_icon_size     = menu
@@ -53,7 +52,7 @@ binding "gimp-help-binding"
 # class "GtkWidget" binding "gimp-help-binding"
 
 
-# The dock separator is configurable using it's name.
+# The dock separator is configurable using its name.
 # Note that it uses the bg color of the selected state.
 
 style "gimp-red-separator-style"

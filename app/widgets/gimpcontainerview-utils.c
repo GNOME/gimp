@@ -33,21 +33,21 @@
 GimpContainerView *
 gimp_container_view_get_by_dockable (GimpDockable *dockable)
 {
+  GtkBin *bin;
+
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
-  if (GTK_BOX (dockable)->children)
+  bin = GTK_BIN (dockable);
+
+  if (bin->child)
     {
-      GtkWidget *child;
-
-      child = ((GtkBoxChild *) GTK_BOX (dockable)->children->data)->widget;
-
-      if (GIMP_IS_CONTAINER_EDITOR (child))
+      if (GIMP_IS_CONTAINER_EDITOR (bin->child))
         {
-          return GIMP_CONTAINER_EDITOR (child)->view;
+          return GIMP_CONTAINER_EDITOR (bin->child)->view;
         }
-      else if (GIMP_IS_CONTAINER_VIEW (child))
+      else if (GIMP_IS_CONTAINER_VIEW (bin->child))
         {
-          return GIMP_CONTAINER_VIEW (child);
+          return GIMP_CONTAINER_VIEW (bin->child);
         }
     }
 
