@@ -51,6 +51,7 @@
 
 /*  this needs to go away  */
 #include "tools/paint_core.h"
+#include "gimpbrushpipe.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -65,7 +66,7 @@ enum
 static void        gimp_brush_class_init       (GimpBrushClass *klass);
 static void        gimp_brush_init             (GimpBrush      *brush);
 static void        gimp_brush_destroy          (GtkObject      *object);
-static TempBuf   * gimp_brush_preview          (GimpViewable   *viewable,
+static TempBuf   * gimp_brush_preview_new      (GimpViewable   *viewable,
 						gint            width,
 						gint            height);
 
@@ -126,7 +127,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   object_class->destroy = gimp_brush_destroy;
 
-  viewable_class->preview = gimp_brush_preview;
+  viewable_class->preview_new = gimp_brush_preview_new;
 
   klass->dirty            = NULL;
 
@@ -166,18 +167,206 @@ gimp_brush_destroy (GtkObject *object)
 }
 
 static TempBuf *
-gimp_brush_preview (GimpViewable *viewable,
-		    gint          width,
-		    gint          height)
+gimp_brush_preview_new (GimpViewable *viewable,
+			gint          width,
+			gint          height)
 {
-  GimpBrush *brush;
+  GimpBrush   *brush;
+  gboolean     is_popup   = FALSE;
+
+  gboolean     scale      = FALSE;
+  gint         brush_width;
+  gint         brush_height;
+  gint         offset_x;
+  gint         offset_y;
+  TempBuf     *mask_buf   = NULL;
+  TempBuf     *pixmap_buf = NULL;
+  TempBuf     *return_buf = NULL;
+  guchar       white[3] = { 255, 255, 255 };
+  guchar      *mask;
+  guchar      *buf;
+  guchar      *b;
+  guchar       bg;
+  gint         x, y;
 
   brush = GIMP_BRUSH (viewable);
 
-  if (brush->pixmap)
-    return brush->pixmap;
+  mask_buf     = gimp_brush_get_mask (brush);
+  pixmap_buf   = gimp_brush_get_pixmap (brush);
 
-  return brush->mask;
+  brush_width  = mask_buf->width;
+  brush_height = mask_buf->height;
+
+  if (brush_width > width || brush_height > height)
+    {
+      gdouble ratio_x = (gdouble) brush_width  / width;
+      gdouble ratio_y = (gdouble) brush_height / height;
+
+      brush_width  = (gdouble) brush_width  / MAX (ratio_x, ratio_y) + 0.5; 
+      brush_height = (gdouble) brush_height / MAX (ratio_x, ratio_y) + 0.5;
+
+      mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
+
+      if (pixmap_buf)
+        {
+          /* TODO: the scale function should scale the pixmap and the
+	   *  mask in one run
+	   */
+          pixmap_buf =
+	    brush_scale_pixmap (pixmap_buf, brush_width, brush_height);
+        }
+
+      scale = TRUE;
+    }
+
+  offset_x = (width  - brush_width)  / 2;
+  offset_y = (height - brush_height) / 2;
+
+  return_buf = temp_buf_new (width, height, 3, 0, 0, white);
+
+  mask = temp_buf_data (mask_buf);
+  buf  = temp_buf_data (return_buf);
+
+  b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
+
+  if (pixmap_buf)
+    {
+      guchar *pixmap = temp_buf_data (pixmap_buf);
+
+      for (y = 0; y < brush_height; y++)
+        {
+          for (x = 0; x < brush_width ; x++)
+            {
+              bg = (255 - *mask);
+
+              *b++ = bg + (*mask * *pixmap++) / 255;
+              *b++ = bg + (*mask * *pixmap++) / 255; 
+              *b++ = bg + (*mask * *pixmap++) / 255;
+
+              mask++;
+            }
+
+	  b += (return_buf->width - brush_width) * return_buf->bytes;
+        }
+    }
+  else
+    {
+      for (y = 0; y < brush_height; y++)
+        {
+          for (x = 0; x < brush_width ; x++)
+            {
+              bg = 255 - *mask++;
+
+              *b++ = bg;
+              *b++ = bg;
+              *b++ = bg;
+            }
+
+	  b += (return_buf->width - brush_width) * return_buf->bytes;
+        }
+    }
+
+#define indicator_width  7
+#define indicator_height 7
+
+#define WHT { 255, 255, 255 }
+#define BLK {   0,   0,   0 }
+#define RED { 255, 127, 127 }
+
+  if (scale)
+    {
+      static const guchar scale_indicator_bits[7][7][3] = 
+      {
+	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
+	{ WHT, BLK, BLK, BLK, BLK, BLK, WHT },
+	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, BLK, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT }
+      };
+
+      static const guchar scale_pipe_indicator_bits[7][7][3] = 
+      {
+	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, BLK, WHT, WHT, RED },
+	{ WHT, WHT, WHT, BLK, WHT, RED, RED },
+	{ WHT, BLK, BLK, BLK, BLK, BLK, RED },
+	{ WHT, WHT, WHT, BLK, RED, RED, RED },
+	{ WHT, WHT, RED, BLK, RED, RED, RED },
+	{ WHT, RED, RED, RED, RED, RED, RED }
+      };
+
+      offset_x = width  - indicator_width;
+      offset_y = height - indicator_height;
+
+      b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
+
+      for (y = 0; y < indicator_height; y++)
+	{
+	  for (x = 0; x < indicator_height; x++)
+	    {
+	      if (GIMP_IS_BRUSH_PIPE (brush))
+		{
+		  *b++ = scale_pipe_indicator_bits[y][x][0];
+		  *b++ = scale_pipe_indicator_bits[y][x][1];
+		  *b++ = scale_pipe_indicator_bits[y][x][2];
+		}
+	      else
+		{
+		  *b++ = scale_indicator_bits[y][x][0];
+		  *b++ = scale_indicator_bits[y][x][1];
+		  *b++ = scale_indicator_bits[y][x][2];
+		}
+	    }
+
+	  b += (return_buf->width - indicator_width) * return_buf->bytes;
+	}
+
+      temp_buf_free (mask_buf);
+
+      if (pixmap_buf)
+        temp_buf_free (pixmap_buf);
+    }
+  else if (!is_popup && GIMP_IS_BRUSH_PIPE (brush))
+    {
+      static const guchar pipe_indicator_bits[7][7][3] = 
+      {
+	{ WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+	{ WHT, WHT, WHT, WHT, WHT, WHT, RED },
+	{ WHT, WHT, WHT, WHT, WHT, RED, RED },
+	{ WHT, WHT, WHT, WHT, RED, RED, RED },
+	{ WHT, WHT, WHT, RED, RED, RED, RED },
+	{ WHT, WHT, RED, RED, RED, RED, RED },
+	{ WHT, RED, RED, RED, RED, RED, RED }
+      };
+
+      offset_x = width  - indicator_width;
+      offset_y = height - indicator_height;
+
+      b = buf + (offset_y * return_buf->width + offset_x) * return_buf->bytes;
+
+      for (y = 0; y < indicator_height; y++)
+	{
+	  for (x = 0; x < indicator_height; x++)
+	    {
+	      *b++ = pipe_indicator_bits[y][x][0];
+	      *b++ = pipe_indicator_bits[y][x][1];
+	      *b++ = pipe_indicator_bits[y][x][2];
+	    }
+
+	  b += (return_buf->width - indicator_width) * return_buf->bytes;
+	}
+    }
+
+#undef indicator_width
+#undef indicator_height
+
+#undef WHT
+#undef BLK
+#undef RED
+
+  return return_buf;
 }
 
 GimpBrush *

@@ -144,6 +144,11 @@ gimp_preview_new (GimpViewable *viewable,
 					 GTK_SIGNAL_FUNC (gimp_preview_paint),
 					 GTK_OBJECT (preview));
 
+  gtk_signal_connect_while_alive (GTK_OBJECT (viewable), "destroy",
+				  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+				  &preview->viewable,
+				  GTK_OBJECT (preview));
+
   gtk_preview_size (GTK_PREVIEW (preview), width, height);
 
   return GTK_WIDGET (preview);
@@ -193,6 +198,9 @@ gimp_preview_idle_paint (GimpPreview *preview)
   gint     channel;
 
   preview->idle_id = 0;
+
+  if (! preview->viewable)
+    return FALSE;
 
   temp_buf = gimp_viewable_preview_new (preview->viewable,
 					GTK_WIDGET (preview)->allocation.width,

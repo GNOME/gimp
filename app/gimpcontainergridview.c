@@ -29,7 +29,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainergridview.h"
 #include "gimppreview.h"
-#include "gtkhwrapbox.h"
+#include "gimpconstrainedhwrapbox.h"
 
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
@@ -107,27 +107,29 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win), 
-                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_NEVER,
 				  GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (grid_view), scrolled_win, TRUE, TRUE, 0);
 
-  grid_view->wrapbox = gtk_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_hspacing (GTK_WRAP_BOX (grid_view->wrapbox), 2);
-  gtk_wrap_box_set_vspacing (GTK_WRAP_BOX (grid_view->wrapbox), 2);
+  grid_view->wrap_box = gimp_constrained_hwrap_box_new (FALSE);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box), 256);
+  gtk_wrap_box_set_hspacing (GTK_WRAP_BOX (grid_view->wrap_box), 2);
+  gtk_wrap_box_set_vspacing (GTK_WRAP_BOX (grid_view->wrap_box), 2);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         grid_view->wrapbox);
+                                         grid_view->wrap_box);
 
   gtk_widget_set_style
-    (grid_view->wrapbox->parent,
+    (grid_view->wrap_box->parent,
      GIMP_CONTAINER_GRID_VIEW_CLASS (GTK_OBJECT (grid_view)->klass)->white_style);
 
   gtk_container_set_focus_vadjustment
-    (GTK_CONTAINER (grid_view->wrapbox),
-     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+    (GTK_CONTAINER (grid_view->wrap_box),
+    gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  gtk_widget_show (grid_view->wrapbox);
+  gtk_widget_show (grid_view->wrap_box);
   gtk_widget_show (scrolled_win);
 }
 
@@ -180,10 +182,11 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
   preview = gimp_preview_new (viewable,
 			      view->preview_width,
 			      view->preview_height);
-  gtk_container_add (GTK_CONTAINER (grid_view->wrapbox), preview);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
+		     FALSE, FALSE, FALSE, FALSE);
 
   if (index != -1)
-    gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrapbox),
+    gtk_wrap_box_reorder_child (GTK_WRAP_BOX (grid_view->wrap_box),
 				preview, index);
 
   gtk_widget_show (preview);
@@ -204,7 +207,7 @@ gimp_container_grid_view_remove_item (GimpContainerView *view,
 
   if (preview)
     {
-      gtk_container_remove (GTK_CONTAINER (grid_view->wrapbox), preview);
+      gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), preview);
     }
 }
 
@@ -215,9 +218,9 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  while (GTK_WRAP_BOX (grid_view->wrapbox)->children)
-    gtk_container_remove (GTK_CONTAINER (grid_view->wrapbox),
-			  GTK_WRAP_BOX (grid_view->wrapbox)->children->widget);
+  while (GTK_WRAP_BOX (grid_view->wrap_box)->children)
+    gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
+			  GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
 }
 
 static void
@@ -228,7 +231,7 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  for (child = GTK_WRAP_BOX (grid_view->wrapbox)->children;
+  for (child = GTK_WRAP_BOX (grid_view->wrap_box)->children;
        child;
        child = child->next)
     {
@@ -237,5 +240,5 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
 			view->preview_height);
     }
 
-  gtk_widget_queue_resize (grid_view->wrapbox);
+  gtk_widget_queue_resize (grid_view->wrap_box);
 }

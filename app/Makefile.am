@@ -282,22 +282,24 @@ gimp_SOURCES = \
 	tile_swap.c		\
 	tile_swap.h		\
 	\
-	gimpcontainergridview.h	\
-	gimpcontainergridview.c	\
-	gimpcontainerlistview.h	\
-	gimpcontainerlistview.c	\
-	gimpcontainerview.h	\
-	gimpcontainerview.c	\
-	gimppreview.h		\
-	gimppreview.c		\
-	gtkwrapbox.c		\
-	gtkwrapbox.h		\
-	gtkhwrapbox.c		\
-	gtkhwrapbox.h		\
-	gtkvwrapbox.c		\
-	gtkvwrapbox.h		\
-	histogramwidget.c	\
-	histogramwidget.h	\
+	gimpcontainergridview.h		\
+	gimpcontainergridview.c		\
+	gimpcontainerlistview.h		\
+	gimpcontainerlistview.c		\
+	gimpcontainerview.h		\
+	gimpcontainerview.c		\
+	gimppreview.h			\
+	gimppreview.c			\
+	gtkwrapbox.c			\
+	gtkwrapbox.h			\
+	gtkhwrapbox.c			\
+	gtkhwrapbox.h			\
+	gtkvwrapbox.c			\
+	gtkvwrapbox.h			\
+	gimpconstrainedhwrapbox.c	\
+	gimpconstrainedhwrapbox.h	\
+	histogramwidget.c		\
+	histogramwidget.h		\
 	\
 	marching_ants.h		\
 	pixmaps.h		\

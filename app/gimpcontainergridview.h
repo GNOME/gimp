@@ -36,14 +36,14 @@ struct _GimpContainerGridView
 {
   GimpContainerView  parent_instance;
 
-  GtkWidget         *wrapbox;
+  GtkWidget         *wrap_box;
 };
 
 struct _GimpContainerGridViewClass
 {
   GimpContainerViewClass  parent_class;
 
-  GtkStyle *white_style;
+  GtkStyle               *white_style;
 };
 
 

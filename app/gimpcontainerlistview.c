@@ -110,11 +110,14 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
   list_view->gtk_list = gtk_list_new ();
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
                                          list_view->gtk_list);
+
   gtk_list_set_selection_mode (GTK_LIST (list_view->gtk_list),
                                GTK_SELECTION_BROWSE);
+
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (list_view->gtk_list),
      gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 

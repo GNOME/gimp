@@ -1,3 +1,22 @@
+2001-02-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpconstrainedhwrapbox.[ch]: A bad hack on top of another
+	hack: The GtkHWrapBox "size_request" method _always_ wants a
+	maximal requisition height, which it of course gets from a
+	container like the scrolled window, yielding in wrong vscrollbar
+	calculation.
+
+	* app/gimpbrush.c: create a nice preview with scale and pipe
+	indicators.
+
+	* app/gimpcontainergridview.[ch]: use the GimpConstrainderHWrapBox.
+
+	* app/commands.c
+	* app/gimpcontainerlistview.c
+	* app/gimppreview.c: cleanup, fixed a crash in the preview idle
+	rendering function.
+
 2001-02-06  Sven Neumann  <sven@gimp.org>
 
 	* data/brushes/hsparks.gih

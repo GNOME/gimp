@@ -75,10 +75,13 @@
 #include "undo.h"
 #include "undo_history.h"
 
+
+/* for the example dialogs */
 #include "brushes.h"
 #include "patterns.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontainergridview.h"
+
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
@@ -1412,7 +1415,7 @@ void
 dialogs_test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (FALSE, "Brush Grid", global_brush_list, 24, 24);
+  container_view_new (FALSE, "Brush Grid", global_brush_list, 32, 32);
 }
 
 /*****  Help  *****/
