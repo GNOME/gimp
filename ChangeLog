@@ -1,3 +1,9 @@
+2004-06-18  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/film.c: Don't use deprecated gimp_text functions,
+	clean up font name string handling a bit, default is now "Monospace"
+	instead of "Courier".
+
 2004-06-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollers.c (gimp_controllers_event_mapped):

@@ -43,6 +43,8 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 #define COLOR_BUTTON_WIDTH  50
 #define COLOR_BUTTON_HEIGHT 20
 
+#define FONT_LEN            256
+
 /* Define how the plug-in works. Values marked (r) are with regard */
 /* to film_height (i.e. it should be a value from 0.0 to 1.0) */
 typedef struct
@@ -58,7 +60,7 @@ typedef struct
   gdouble  number_height;         /* height of picture numbering (r) */
   gint     number_start;          /* number for first picture */
   GimpRGB  number_color;          /* color of number */
-  gchar    number_fontf[256];     /* font family to use for numbering */
+  gchar    number_font[FONT_LEN]; /* font family to use for numbering */
   gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
   gint     keep_height;           /* flag if to keep max. image height */
   gint     num_images;            /* number of images */
@@ -185,7 +187,7 @@ static FilmVals filmvals =
   0.052,           /* Image number height */
   1,               /* Start index of numbering */
   { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
-  "Courier",       /* Font family for numbering */
+  "Monospace",     /* Font family for numbering */
   { TRUE, TRUE },  /* Numbering on top and bottom */
   0,               /* Dont keep max. image height */
   0,               /* Number of images */
@@ -216,7 +218,7 @@ query (void)
     { GIMP_PDB_INT32, "film_height", "Height of film (0: fit to images)" },
     { GIMP_PDB_COLOR, "film_color", "Color of the film" },
     { GIMP_PDB_INT32, "number_start", "Start index for numbering" },
-    { GIMP_PDB_STRING, "number_fontf", "Font family for drawing numbers" },
+    { GIMP_PDB_STRING, "number_font", "Font for drawing numbers" },
     { GIMP_PDB_COLOR, "number_color", "Color for numbers" },
     { GIMP_PDB_INT32, "at_top", "Flag for drawing numbers at top of film" },
     { GIMP_PDB_INT32, "at_bottom", "Flag for drawing numbers at bottom of film" },
@@ -295,9 +297,7 @@ run (const gchar      *name,
 					128 : param[3].data.d_int32);
 	  filmvals.film_color        = param[4].data.d_color;
           filmvals.number_start      = param[5].data.d_int32;
-          k = sizeof (filmvals.number_fontf);
-          strncpy (filmvals.number_fontf, param[6].data.d_string, k);
-          filmvals.number_fontf[k-1] = '\0';
+          g_strlcpy (filmvals.number_font, param[6].data.d_string, FONT_LEN);
 	  filmvals.number_color      = param[7].data.d_color;
           filmvals.number_pos[0]     = param[8].data.d_int32;
           filmvals.number_pos[1]     = param[9].data.d_int32;
@@ -567,8 +567,8 @@ check_filmvals (void)
   if (filmvals.number_start < 0)
     filmvals.number_start = 0;
 
-  if (filmvals.number_fontf[0] == '\0')
-    strcpy (filmvals.number_fontf, "courier");
+  if (filmvals.number_font[0] == '\0')
+    strcpy (filmvals.number_font, "Monospace");
 
   if (filmvals.num_images < 1)
     return FALSE;
@@ -878,7 +878,7 @@ draw_number (gint32 layer_ID,
   gint32 image_ID;
   gint32 text_layer_ID;
   gint   text_width, text_height, text_ascent, descent;
-  gchar *family = filmvals.number_fontf;
+  gchar *fontname = filmvals.number_font;
 
   g_snprintf (buf, sizeof (buf), "%d", num);
 
@@ -890,51 +890,34 @@ draw_number (gint32 layer_ID,
     max_delta = 1;
 
   /* Numbers dont need the descent. Inquire it and move the text down */
-  for (k = 0; k < max_delta*2 + 1; k++)
-    { /* Try different font sizes if inquire of extent failed */
+  for (k = 0; k < max_delta * 2 + 1; k++)
+    {
+      /* Try different font sizes if inquire of extent failed */
+      gboolean success;
+
       delta = (k+1) / 2;
-      if ((k & 1) == 0) delta = -delta;
 
-      gimp_text_get_extents (buf,
-			     height+delta,
-			     GIMP_PIXELS,
-			     "*",       /* foundry */
-			     family,    /* family */
-			     "*",       /* weight */
-			     "*",       /* slant */
-			     "*",       /* set_width */
-			     "*",       /* spacing */
-			     "*",
-			     "*",
-			     &text_width,
-			     &text_height,
-			     &text_ascent,
-			     &descent);
+      if ((k & 1) == 0)
+	delta = -delta;
 
-      if (text_width)   /*  FIXME:  use return_value of gimp_text_get_extens  */
+      success = gimp_text_get_extents_fontname (buf,
+						height + delta, GIMP_PIXELS,
+						fontname,
+						&text_width, &text_height,
+						&text_ascent, &descent);
+
+      if (success)
 	{
 	  height += delta;
 	  break;
 	}
     }
 
-  text_layer_ID = gimp_text (image_ID,
-			     layer_ID,
-			     x,
-			     y+descent/2,
-			     buf,
-			     1,           /* border */
-			     FALSE,       /* antialias */
-			     height,
-			     GIMP_PIXELS,
-			     "*",         /* foundry */
-			     family,      /* family */
-			     "*",         /* weight */
-			     "*",         /* slant */
-			     "*",         /* set_width */
-			     "*",         /* spacing */
-			     "*",
-			     "*");
+  text_layer_ID = gimp_text_fontname (image_ID, layer_ID,
+				      x, y + descent / 2,
+				      buf, 1, FALSE,
+				      height, GIMP_PIXELS,
+				      fontname);
 
   if (text_layer_ID == -1)
     g_message ("draw_number: Error in drawing text\n");
@@ -1283,7 +1266,7 @@ create_selection_tab (GtkWidget *notebook,
 
   /* Fontfamily for numbering */
   font_sel = gimp_font_select_widget_new (NULL,
-                                          filmvals.number_fontf,
+                                          filmvals.number_font,
                                           film_font_select_callback,
                                           &filmvals);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -1543,6 +1526,5 @@ film_font_select_callback (const gchar *name,
 {
   FilmVals *vals = (FilmVals *) data;
 
-  strncpy (vals->number_fontf, name, sizeof (vals->number_fontf));
-  vals->number_fontf[sizeof (vals->number_fontf) - 1] = '\0';
+  g_strlcpy (vals->number_font, name, FONT_LEN);
 }
