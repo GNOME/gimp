@@ -97,10 +97,16 @@ static GimpAnchor * gimp_stroke_real_anchor_insert   (GimpStroke       *stroke,
 static gboolean     gimp_stroke_real_is_extendable   (GimpStroke       *stroke,
                                                       GimpAnchor       *neighbor);
 
-static GimpAnchor * gimp_stroke_real_extend          (GimpStroke           *stroke,
-                                                      const GimpCoords     *coords,
-                                                      GimpAnchor           *neighbor,
-                                                      GimpVectorExtendMode  extend_mode);
+static GimpAnchor * gimp_stroke_real_extend (GimpStroke           *stroke,
+                                             const GimpCoords     *coords,
+                                             GimpAnchor           *neighbor,
+                                             GimpVectorExtendMode  extend_mode);
+
+gboolean     gimp_stroke_real_connect_stroke (GimpStroke          *stroke,
+                                              GimpAnchor          *anchor,
+                                              GimpStroke          *extension,
+                                              GimpAnchor          *neighbor);
+
 
 static gboolean     gimp_stroke_real_is_empty        (const GimpStroke *stroke);
 
@@ -210,6 +216,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->anchor_insert           = gimp_stroke_real_anchor_insert;
   klass->is_extendable           = gimp_stroke_real_is_extendable;
   klass->extend                  = gimp_stroke_real_extend;
+  klass->connect_stroke          = gimp_stroke_real_connect_stroke;
 
   klass->is_empty                = gimp_stroke_real_is_empty;
   klass->get_length              = gimp_stroke_real_get_length;
@@ -248,6 +255,9 @@ gimp_stroke_finalize (GObject *object)
 
   for (list = stroke->anchors; list; list = list->next)
     gimp_anchor_free (GIMP_ANCHOR (list->data));
+
+  g_list_free (stroke->anchors);
+  stroke->anchors = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -687,7 +697,31 @@ gimp_stroke_real_extend (GimpStroke           *stroke,
                          GimpAnchor           *neighbor,
                          GimpVectorExtendMode  extend_mode)
 {
+  g_printerr ("gimp_stroke_extend: default implementation\n");
   return NULL;
+}
+
+gboolean
+gimp_stroke_connect_stroke (GimpStroke *stroke,
+                            GimpAnchor *anchor,
+                            GimpStroke *extension,
+                            GimpAnchor *neighbor)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE (extension), FALSE);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->connect_stroke (stroke, anchor,
+                                                         extension, neighbor);
+}
+
+gboolean
+gimp_stroke_real_connect_stroke (GimpStroke *stroke,
+                                 GimpAnchor *anchor,
+                                 GimpStroke *extension,
+                                 GimpAnchor *neighbor)
+{
+  g_printerr ("gimp_stroke_connect_stroke: default implementation\n");
+  return FALSE;
 }
 
 gboolean

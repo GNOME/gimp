@@ -1,3 +1,15 @@
+2003-08-27  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: Implemented function to
+	connect two strokes.
+
+	* app/tools/gimpvectortool.[ch]: Use it. Right now you have
+	to click on one endpoint, and then SHIFT+CTRL+ALT-Click on
+	the other endpoint.
+
+	Suggestions on how to solve that more sanely are welcome...
+
 2003-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/composite/gimp-composite-generic.c

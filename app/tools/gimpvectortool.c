@@ -428,16 +428,34 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           if (vector_tool->function == VECTORS_MOVE_HANDLE)
             gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_CONTROL,
                                         gdisp, &anchor, &stroke);
-
-          /* hackish */
-          if (state & GDK_MOD1_MASK)
-            gimp_stroke_close (stroke);
         }
       vector_tool->cur_stroke = stroke;
       vector_tool->cur_anchor = anchor;
 
       break;  /* here it is...  :-)  */
 
+    case VECTORS_CONNECT_STROKES:
+      gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
+                                  gdisp, &anchor, &stroke);
+      if (anchor && stroke &&
+          vector_tool->cur_anchor && vector_tool->cur_stroke &&
+          anchor != vector_tool->cur_anchor &&
+          gimp_stroke_is_extendable (stroke, anchor) &&
+          gimp_stroke_is_extendable (vector_tool->cur_stroke,
+                                     vector_tool->cur_anchor))
+        {
+          gimp_stroke_connect_stroke (vector_tool->cur_stroke,
+                                      vector_tool->cur_anchor,
+                                      stroke, anchor);
+          if (stroke != vector_tool->cur_stroke
+              && gimp_stroke_is_empty (stroke))
+            gimp_vectors_stroke_remove (vector_tool->vectors, stroke);
+
+          vector_tool->cur_anchor = anchor;
+          vector_tool->function = VECTORS_MOVE_ANCHOR;
+        }
+      break;
+      
     case VECTORS_MOVE_CURVE:
       if (gimp_vector_tool_on_curve (tool, coords, gdisp,
                                      NULL, &pos, &segment_start, &stroke)
@@ -813,7 +831,10 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
         {
           if (state & GDK_SHIFT_MASK)
             {
-              vector_tool->function = VECTORS_CONVERT_EDGE;
+              if (state & GDK_MOD1_MASK)
+                vector_tool->function = VECTORS_CONNECT_STROKES;
+              else
+                vector_tool->function = VECTORS_CONVERT_EDGE;
             }
           else
             {
@@ -855,7 +876,10 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
             }
           else
             {
-              vector_tool->function = VECTORS_MOVE_CURVE;
+              if (!options->polygonal)
+                vector_tool->function = VECTORS_MOVE_CURVE;
+              else
+                vector_tool->function = VECTORS_ADD_ANCHOR;
             }
         }
       else
@@ -919,6 +943,9 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     case VECTORS_MOVE_ANCHOR:
     case VECTORS_MOVE_CURVE:
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+      break;
+    case VECTORS_CONNECT_STROKES:
+      cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
       break;
     default:
       cursor = GIMP_BAD_CURSOR;

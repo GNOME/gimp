@@ -89,13 +89,20 @@ static gboolean gimp_bezier_stroke_anchor_is_insertable
 static GimpAnchor * gimp_bezier_stroke_anchor_insert (GimpStroke       *stroke,
                                                       GimpAnchor       *predec,
                                                       gdouble           position);
-static gboolean gimp_bezier_stroke_is_extendable    (GimpStroke *stroke,
-                                                     GimpAnchor *neighbor);
+static gboolean gimp_bezier_stroke_is_extendable    (GimpStroke      *stroke,
+                                                     GimpAnchor      *neighbor);
+static gboolean gimp_bezier_stroke_connect_stroke   (GimpStroke      *stroke,
+                                                     GimpAnchor      *anchor,
+                                                     GimpStroke      *extension,
+                                                     GimpAnchor      *neighbor);
 static GArray *   gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                                   const gdouble      precision,
                                                   gboolean          *closed);
 
 static void gimp_bezier_stroke_finalize   (GObject               *object);
+
+
+static GList * gimp_bezier_stroke_get_anchor_listitem (GList     *list);
 
 static void gimp_bezier_coords_mix        (const gdouble          amul,
                                            const GimpCoords      *a,
@@ -189,6 +196,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
   stroke_class->is_extendable        = gimp_bezier_stroke_is_extendable;
   stroke_class->extend               = gimp_bezier_stroke_extend;
+  stroke_class->connect_stroke       = gimp_bezier_stroke_connect_stroke;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
 }
 
@@ -1051,6 +1059,54 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
     }
 }
 
+static gboolean
+gimp_bezier_stroke_connect_stroke (GimpStroke *stroke,
+                                   GimpAnchor *anchor,
+                                   GimpStroke *extension,
+                                   GimpAnchor *neighbor)
+{
+  GList *list1, *list2;
+  
+  g_return_val_if_fail (stroke->closed == FALSE &&
+                        extension->closed == FALSE, FALSE);
+
+  list1 = g_list_find (stroke->anchors, anchor);
+  list1 = gimp_bezier_stroke_get_anchor_listitem (list1);
+  list2 = g_list_find (extension->anchors, neighbor);
+  list2 = gimp_bezier_stroke_get_anchor_listitem (list2);
+
+  g_return_val_if_fail (list1 != NULL && list2 != NULL, FALSE);
+
+  if (stroke == extension)
+    {
+      g_return_val_if_fail ((list1->prev && list1->prev->prev == NULL &&
+                             list2->next && list2->next->next == NULL) || 
+                            (list1->next && list1->next->next == NULL &&
+                             list2->prev && list2->prev->prev == NULL), FALSE);
+      gimp_stroke_close (stroke);
+      return TRUE;
+    }
+
+  if (list1->prev && list1->prev->prev == NULL)
+    {
+      stroke->anchors = g_list_reverse (stroke->anchors);
+    }
+
+  g_return_val_if_fail (list1->next && list1->next->next == NULL, FALSE);
+
+  if (list2->next && list2->next->next == NULL)
+    {
+      extension->anchors = g_list_reverse (extension->anchors);
+    }
+
+  g_return_val_if_fail (list2->prev && list2->prev->prev == NULL, FALSE);
+
+  stroke->anchors = g_list_concat (stroke->anchors, extension->anchors);
+  extension->anchors = NULL;
+
+  return TRUE;
+}
+
 
 static void
 gimp_bezier_stroke_anchor_move_relative (GimpStroke            *stroke,
@@ -1249,6 +1305,25 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
   *ret_closed = stroke->closed;
 
   return ret_coords;
+}
+
+
+static GList *
+gimp_bezier_stroke_get_anchor_listitem (GList *list)
+{
+  if (!list)
+    return NULL;
+
+  if (GIMP_ANCHOR (list->data)->type == GIMP_ANCHOR_ANCHOR)
+    return list;
+
+  if (list->prev && GIMP_ANCHOR (list->prev->data)->type == GIMP_ANCHOR_ANCHOR)
+    return list->prev;
+
+  if (list->next && GIMP_ANCHOR (list->next->data)->type == GIMP_ANCHOR_ANCHOR)
+    return list->next;
+
+  g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);
 }
 
 
