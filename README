@@ -1,26 +1,12 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is GIMP version 2.0, a stable release of the GNU Image
-Manipulation Program. GIMP 2.0 installs side-by-side with GIMP 1.2 so
-there's no need to uninstall GIMP 1.2 (but sooner or later you will
-not be using it any longer...).
+This is the development branch of The GIMP. Here's where new features
+are being added. Somewhen this summer the next stable GIMP release,
+GIMP 2.2, will emerge out of this.
 
-Some features that were present in GIMP 1.2 are not included in this
-release. The perl bindings as well as all the perl scripts are not any
-longer included in this source tree. They have been moved into its own
-module called gimp-perl and there's a pre-release available at
-ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/perl/.
-
-GAP, a set of plug-ins that used to live in the
-Video submenu has also become a separate package and can be downloaded
-from ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/gap/.
-
-This release does also not contain any user documentation to be used
-by the built-in help system. Help files for GIMP 2.0 are being worked
-on and you can find snapshots at ftp://ftp.gimp.org/pub/gimp/help/.
-
-For detailed installation instructions, see the file INSTALL.
+If you want to hack on The GIMP, please read the file HACKING. For
+detailed installation instructions, see the file INSTALL.
 
 
 1. Web Resources

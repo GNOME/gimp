@@ -1,44 +1,7 @@
-The GNU Image Manipulation Program Version 2.0
+The GNU Image Manipulation Program Version 2.1
 ----------------------------------------------
 
-This is the stable branch of GIMP 2.0. Only bug-fixes are applied
-here. New features are being added in the HEAD branch that is supposed
-to be released as GIMP version 2.2 in a not too distant future.
+This is the development branch of The GIMP. Here's where new features
+are being added. Somewhen this summer the next stable GIMP release,
+GIMP 2.2, will emerge out of this.
 
-
-Bugs fixed in GIMP 2.0.1
-========================
-- don't leak file descriptor for the POSIX shm implementation (Yosh)
-- fixed path tool undo (#138086, Mitch)
-- don't transform drawables away (#138117, Mitch)
-- fixed issues with guillotine plug-in (#138314, Joao, Mitch)
-- fixed Slide script-fu (#138310, Nils Philippsen)
-- don't allow removed items to be accessed thru the PDB (#138311, Mitch)
-- skip fonts with invalid names (workaround for #132366, Sven)
-- fixed Spinning Globe script-fu (#138253, Sven)
-- fixed a bug in the IFSCompose plug-in (#138212, David Necas)
-- fixed undo corruption with floating selections (Pedro, Mitch)
-- fixed gimprc man-page (Sven)
-- align JPEG setjump buffer on 16-byte boundary for ia64 (#138357, Yosh)
-- fixed Alien Glow Arrow script-fu (#138524, Sven)
-- fixed code that suppresses the transform tool grid (Simon)
-- push an undo for changing the text layer modification flag (#137767, Mitch)
-- make the user installation work with pixmap themes (#138379, Sven)
-- register .jpe as extension for JPEG images (#138776, Bolsh)
-- fixed issues with the Lighting Effects plug-in (#138788, William Skaggs)
-- don't crash on color corrections on empty selections (#138973, Sven)
-- made gimptool-2.0 create missing directories (#138980, Yosh)
-- made undo names translatable (#139000, Sven)
-- optimized grid drawing (#138081, Sven)
-- don't create a gimptool link to gimptool-2.0 (#139024, Sven)
-- sanitize rectangle and ellipse selection (#138237, #138103, Pedro)
-- fixed problems with Copy-Visible and Drop-Shadow scripts (#138662, Pedro)
-- fixed X server authentification problems with gimp-remote (#139158, Sven)
-- let Script-Fu PDB marshallers handle NULL strings (#139386, Kevin Cozens)
-- fixed rounding error in transformation code (#120490, William Skaggs)
-- fixed winclipboard plug-in (Hans Breuer)
-- fixed Python Slice script (Yosh)
-- fixed configure check for Xmu (#139803, Sven)
-- fixed crash when scaling up a floating selection (#138356, Mitch)
-- use LC_MESSAGE for help localization (#139917, Sven)
-- fixed imagemap file parsers (#139894)

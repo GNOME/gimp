@@ -1,5 +1,10 @@
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
+	* NEWS
+	* README: mention that this is the development branch.
+
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.[ch]: 
 	* app/paint-funcs/paint-funcs-generic.h: header cleanup, added
 	some const qualifiers, converted tabs to spaces. Fixes bug #140115
