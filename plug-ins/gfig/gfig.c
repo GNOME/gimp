@@ -3053,6 +3053,35 @@ static GtkWidget *page_menu_bg;
 static GtkWidget *page_menu_layers;
 
 static void
+gfig_brush_pane_activate (GtkWidget *widget, gpointer data)
+{
+  gint flag = (gint)data;
+
+  if (flag) {
+    gtk_widget_show (brush_page_widget);
+  } else {
+    gtk_widget_hide (brush_page_widget);
+  }
+
+  gtk_widget_set_sensitive (brush_page_widget, flag);
+}
+
+static void
+gfig_select_pane_activate (GtkWidget *widget, gpointer data)
+{
+  gint flag = (gint)data;
+
+  if (flag) {
+    gtk_widget_show (select_page_widget);
+  } else {
+    gtk_widget_hide (select_page_widget);
+  }
+
+  gtk_widget_set_sensitive (select_page_widget, flag);
+}
+
+
+static void
 paint_menu_callback (GtkWidget *widget, gpointer data)
 {
   gint mtype = (gint)data;
@@ -3182,6 +3211,13 @@ paint_page_menu_type(void)
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) paint_menu_callback,
 		      (gpointer)PAINT_TYPE_MENU);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_brush_pane_activate,
+		      (gpointer) 1);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_select_pane_activate,
+		      (gpointer) 0);
+
   gtk_widget_show (menuitem);
   gtk_menu_append (GTK_MENU (menu), menuitem);
 
@@ -3190,6 +3226,12 @@ paint_page_menu_type(void)
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) paint_menu_callback,
 		      (gpointer)PAINT_TYPE_MENU);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_brush_pane_activate,
+		      (gpointer) 0);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_select_pane_activate,
+		      (gpointer) 1);
   gtk_widget_show (menuitem);
   gtk_menu_append (GTK_MENU (menu), menuitem);
 
@@ -3198,6 +3240,12 @@ paint_page_menu_type(void)
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) paint_menu_callback,
 		      (gpointer)PAINT_TYPE_MENU);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_brush_pane_activate,
+		      (gpointer) 0);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  (GtkSignalFunc)gfig_select_pane_activate,
+		      (gpointer) 1);
   gtk_widget_show (menuitem);
   gtk_menu_append (GTK_MENU (menu), menuitem);
 
@@ -4937,7 +4985,7 @@ gfig_dialog ()
   gtk_widget_show(label);
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), select_page_widget, label);
-  gtk_widget_show(select_page_widget);
+  /* gtk_widget_show(select_page_widget); */
   gtk_widget_set_sensitive(select_page_widget,FALSE);
 
 
