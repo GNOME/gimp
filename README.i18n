@@ -7,8 +7,8 @@ Actually this one is maintained by me, that is Daniel Egger
 
  Many persons from many countries start to get used to Linux.
  Unfortunately not everyone is able to understand English. But
- even those people some times like to use good software without
- needing a dictionary beneath them.
+ even those people some times like to use good and free software 
+ without using a dictionary to get the unknown words.
  So why not simply localise the software to make it available to 
  the mass which isn't wholly English native?
 
@@ -19,18 +19,23 @@ Actually this one is maintained by me, that is Daniel Egger
  of the program into that one of the users if a necessary catalog is
  provided. Gettext therefor provides some easy tools to create and maintain
  such catalogs and a few functions which can be called by the program to
- enable automatic translation. The program gets linked to gettext and
- everything is fine.
+ enable automatic translation at runtime. The program gets linked to the 
+ gettext library or glibc2 which already provides that functionality
+ and everything is fine.
  By the way: gettext is a fixed part of glibc2 but will be shipped with
  GIMP and so can be automatically compiled on every platform GIMP itself
  runs on.
 
 3. Deep inside...
 
- GIMP provides a header file called gimpintl.h in the libgimp directory this
- one checks whether gettext is available on the system and will deactivate
- language support if it's not.
- If it is useable it will define 3 functions which will be described below.
+ GIMP provides header files called gimpintl.h and stdplugins-intl.h in the 
+ libgimp directory which check whether gettext is available on the system 
+ which GIMP is compiled on and will deactivate language support if it's not.
+ You CAN use such a compiled GIMP even without the catalogs or on a system
+ which dosen't enable language support.
+
+ If the gettext system is there it will declare 3 functions which will be 
+ described below.
 
 3.1 _() [more correctly: char * _( char * )]
 
@@ -38,7 +43,7 @@ Actually this one is maintained by me, that is Daniel Egger
  wrapped that is directly called directly in a function. If you use it the
  given string will be tried to get translated in the native language of the
  user according to his/her environmental settings. 
- The gettext function will do a lookup in the hashed gimp.mo which contains 
+ The gettext() function will do a lookup in the hashed gimp.mo which contains 
  all the translated texts.
 
  - If it is found a pointer to the string will be returned to the caller.
@@ -49,6 +54,12 @@ Actually this one is maintained by me, that is Daniel Egger
 
  Please note that it is important to use _() directly (and not gettext())
  for simple messages because of reasons that will be mentioned below.
+
+ NOTE: I know some of the developer like short functions like _() but
+ for a better source understanding I suggest to use it consistently only
+ for text (like _("That's text!") ) and not for variables (like _(text) BUT
+ gettext(text) instead)
+ 
 
 3.2 N_() [more correctly: void ( void ) ]
 
@@ -73,8 +84,8 @@ Actually this one is maintained by me, that is Daniel Egger
 3.3 gettext()
 
  This function is the same as that mcaro in 3.1. But there is one big
- difference: It is ignored by the gettext program which will create message
- templates for us. 
+ difference: The _()'s and N_()'s are the only expressions which get parsed
+ by the template generator. 
  If you have strings that should be translated but are unfortunately in a
  structure you have to do that on your own which means that you have to
  parse the fields with the messages in a loop and translate the texts with
@@ -110,7 +121,7 @@ Actually this one is maintained by me, that is Daniel Egger
  [language].mo:
 
  This file is a compiled version of [language.po] which will be
- automatically compiled by the Makefile and installed in the locale
+ automatically compiled by the Makefile system and installed in the locale
  directory of the system. It contains everything that the .po file
  contains except not translated messages, comments and other overhead.
  For maximum speed it is also hashed to allow gettext a faster search.
@@ -120,15 +131,15 @@ Actually this one is maintained by me, that is Daniel Egger
  As mentioned the to get translated string are extracted directly from the
  source and written to the template. 
  I guess many of you will now ask if it is necessary to add new strings
- directly from the template or if there's a tool to achieve that. 
- I think I can calm down those one who fear of lots of had work just to
+ directly to the template or if there's a tool to achieve that. 
+ I think I can calm down those of you who fear lots of had work just to
  update the language files. There's a program called msgmerge which will 
  add all strings that are in the template but not in the uncompiled catalog 
- to it. Msgmerge does this job very nicely and also tries to apply some kind
- of fuzzy search method for already translated string for possible
- programmers work reduction: If a original string seems similar to a new one 
+ to it. Msgmerge does this job very nicely and also tries to use some kind
+ of fuzzy logic method for already translated strings for possible reduction
+ of programmers work: If a original string seems similar to a new one 
  and it already has a translation, it will be taken over to the new catalog
- together with a remark that this one mustn't necessarily fit.
+ together with a remark that this one may not necessarily fit.
  
 6. And more?
 
