@@ -122,7 +122,7 @@ query (void)
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "May 1998",
                           "<Save>/CEL",
-                          "INDEXEDA",
+			  "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -145,8 +145,11 @@ run (const gchar      *name,
 {
   static GimpParam   values[2]; /* Return values */
   GimpRunMode        run_mode;
+  gint32             image_ID;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -206,16 +209,43 @@ run (const gchar      *name,
     }
   else if (strcmp (name, "file_cel_save") == 0)
     {
-      if (! save_image (param[3].data.d_string, param[4].data.d_string,
-                        param[1].data.d_int32, param[2].data.d_int32))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-      else
+      image_ID      = param[1].data.d_int32;
+      drawable_ID   = param[2].data.d_int32;
+      
+      /*  eventually export the image */
+      switch (run_mode)
+	{
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
+	  gimp_ui_init ("CEL", FALSE);
+	  export = gimp_export_image (&image_ID, &drawable_ID, "CEL",
+				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				       GIMP_EXPORT_CAN_HANDLE_ALPHA |
+				       GIMP_EXPORT_CAN_HANDLE_INDEXED 
+				       ));
+	  if (export == GIMP_EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
+      if (save_image (param[3].data.d_string, param[4].data.d_string,
+		      image_ID, drawable_ID))
         {
           gimp_set_data ("file_cel_save:length", &data_length, sizeof (gsize));
           gimp_set_data ("file_cel_save:data", palette_file, data_length);
         }
+      else
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      if (export == GIMP_EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
   else
     {

@@ -1,3 +1,10 @@
+2004-01-11  Dov Grobgeld  <dov@imagic.weizmann.ac.il>
+
+	* plug-ins/common/CEL.c: fixed bug in registration
+	of supported file types for writing and enabled use of 
+	export functionality for the unsupported formats (gray
+	level).
+
 2004-01-11  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_scale):
