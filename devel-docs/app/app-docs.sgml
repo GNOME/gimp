@@ -42,13 +42,13 @@
     <xi:include href="xml/base-types.xml"/>
     <xi:include href="xml/base-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-base-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/base.xml"/>
       <xi:include href="xml/cpu-accel.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-base-utils">
       <title>Base Utilities</title>
       <xi:include href="xml/boundary.xml"/>
       <xi:include href="xml/brush-scale.xml"/>
@@ -58,7 +58,7 @@
       <xi:include href="xml/temp-buf.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-base-operators">
       <title>Operators</title>
       <xi:include href="xml/color-balance.xml"/>
       <xi:include href="xml/colorize.xml"/>
@@ -69,14 +69,14 @@
       <xi:include href="xml/threshold.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-base-pixel-regions">
       <title>Pixel Regions &amp; Iterators</title>
       <xi:include href="xml/pixel-region.xml"/>
       <xi:include href="xml/pixel-processor.xml"/>
       <xi:include href="xml/pixel-surround.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-base-tile-management">
       <title>Tile Management</title>
       <xi:include href="xml/tile.xml"/>
       <xi:include href="xml/tile-swap.xml"/>
@@ -90,7 +90,7 @@
 
   <part id="app-config-part">
     <title>Config</title>
-    <chapter>
+    <chapter id="app-config-interface">
       <title>The GimpConfig Interface</title>
       <xi:include href="xml/gimpconfig.xml"/>
       <xi:include href="xml/gimpconfig-serialize.xml"/>
@@ -102,7 +102,7 @@
       <xi:include href="xml/gimpconfig-utils.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-config-objects">
       <title>The Actual Config Objects</title>
       <xi:include href="xml/gimpbaseconfig.xml"/>
       <xi:include href="xml/gimpcoreconfig.xml"/>
@@ -112,7 +112,7 @@
       <xi:include href="xml/gimprc.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-config-lowlevel">
       <title>Lowlevel Serializing/Deserializing Functions</title>
       <xi:include href="xml/gimpconfigwriter.xml"/>
       <xi:include href="xml/gimpscanner.xml"/>
@@ -124,7 +124,7 @@
     <xi:include href="xml/core-types.xml"/>
     <xi:include href="xml/core-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-core-base">
       <title>Base Classes</title>
       <xi:include href="xml/gimpobject.xml"/>
       <xi:include href="xml/gimpviewable.xml"/>
@@ -133,7 +133,7 @@
       <xi:include href="xml/gimpitem-linked.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-containers">
       <title>Object Containers</title>
       <xi:include href="xml/gimpcontainer.xml"/>
       <xi:include href="xml/gimpcontainer-filter.xml"/>
@@ -142,7 +142,7 @@
       <xi:include href="xml/gimpdocumentlist.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-gimp">
       <title>The GIMP Application Instance Object</title>
       <xi:include href="xml/gimp.xml"/>
       <xi:include href="xml/gimp-documents.xml"/>
@@ -154,7 +154,7 @@
       <xi:include href="xml/gimpunits.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-data">
       <title>GimpData Objects</title>
       <xi:include href="xml/gimpbrush.xml"/>
       <xi:include href="xml/gimpbrush-header.xml"/>
@@ -167,19 +167,19 @@
       <xi:include href="xml/gimppattern-header.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-context">
       <title>GimpContext Objects</title>
       <xi:include href="xml/gimpcontext.xml"/>
       <xi:include href="xml/gimptooloptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-info">
       <title>Info Objects</title>
       <xi:include href="xml/gimppaintinfo.xml"/>
       <xi:include href="xml/gimptoolinfo.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-drawable">
       <title>Drawable Objects</title>
       <xi:include href="xml/gimpdrawable.xml"/>
       <xi:include href="xml/gimpdrawable-blend.xml"/>
@@ -199,7 +199,7 @@
       <xi:include href="xml/gimplayer-floating-sel.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-image">
       <title>The GimpImage Object</title>
       <xi:include href="xml/gimpimage.xml"/>
       <xi:include href="xml/gimpimage-colorhash.xml"/>
@@ -227,14 +227,14 @@
       <xi:include href="xml/gimpimage-undo.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-undo">
       <title>The Image Undo System</title>
       <xi:include href="xml/gimpundo.xml"/>
       <xi:include href="xml/gimpundostack.xml"/>
       <xi:include href="xml/gimpitemundo.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-misc-objects">
       <title>Misc. Objects</title>
       <xi:include href="xml/gimpbuffer.xml"/>
       <xi:include href="xml/gimpimagefile.xml"/>
@@ -246,7 +246,7 @@
       <xi:include href="xml/gimpgrid.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-core-misc-utils">
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimp-utils.xml"/>
       <xi:include href="xml/gimpmarshal.xml"/>
@@ -276,14 +276,14 @@
 
   <part id="app-xcf-part">
     <title>XCF</title>
-    <chapter>
+    <chapter id="app-xcf-highlevel">
       <title>Initialization, Loading &amp; Saving</title>
       <xi:include href="xml/xcf.xml"/>
       <xi:include href="xml/xcf-load.xml"/>
       <xi:include href="xml/xcf-save.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-xcf-lowlevel">
       <title>Lowlevel File Access</title>
       <xi:include href="xml/xcf-read.xml"/>
       <xi:include href="xml/xcf-write.xml"/>
@@ -303,7 +303,7 @@
     <title>Plug-Ins</title>
     <xi:include href="xml/plug-in-types.xml"/>
 
-    <chapter>
+    <chapter id="app-plug-in-management">
       <title>Initialization &amp; Plug-In Management</title>
       <xi:include href="xml/plug-ins.xml"/>
       <xi:include href="xml/plug-in-def.xml"/>
@@ -311,7 +311,7 @@
       <xi:include href="xml/plug-in-rc.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-plug-in-execution">
       <title>Plug-In Execution</title>
       <xi:include href="xml/plug-in.xml"/>   
       <xi:include href="xml/plug-in-debug.xml"/>
@@ -329,7 +329,7 @@
     <xi:include href="xml/paint-enums.xml"/>
     <xi:include href="xml/paint.xml"/>
 
-    <chapter>
+    <chapter id="app-paint-paint-core">
       <title>The Paint Core &amp; Options</title>
       <xi:include href="xml/gimppaintcore.xml"/>
       <xi:include href="xml/gimppaintcore-kernels.xml"/>
@@ -338,7 +338,7 @@
       <xi:include href="xml/gimppaintoptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-paint-implementations">
       <title>Paint Implementations</title>
       <xi:include href="xml/gimpairbrush.xml"/>
       <xi:include href="xml/gimpairbrushoptions.xml"/>
@@ -362,14 +362,14 @@
     <title>Text</title>
     <xi:include href="xml/text-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-text-fonts">
       <title>Initialization &amp; Font Management</title>
       <xi:include href="xml/gimpfonts.xml"/>
       <xi:include href="xml/gimpfont.xml"/>
       <xi:include href="xml/gimpfontlist.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-text-text">
       <title>The GimpText Object</title>
       <xi:include href="xml/gimptext.xml"/>
       <xi:include href="xml/gimptext-bitmap.xml"/>
@@ -379,13 +379,13 @@
       <xi:include href="xml/gimptext-xlfd.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-text-layout">
       <title>The GimpTextLayout Object</title>
       <xi:include href="xml/gimptextlayout.xml"/>
       <xi:include href="xml/gimptextlayout-render.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-text-layer">
       <title>The GimpTextLayer Object</title>
       <xi:include href="xml/gimptextlayer.xml"/>
       <xi:include href="xml/gimptextlayer-transform.xml"/>
@@ -396,7 +396,7 @@
     <title>Display</title>
     <xi:include href="xml/display-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-display-display">
       <title>The GimpDisplay Object</title>
       <xi:include href="xml/gimpdisplay.xml"/>
       <xi:include href="xml/gimpdisplay-area.xml"/>
@@ -404,7 +404,7 @@
       <xi:include href="xml/gimpdisplay-handlers.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-display-shell">
       <title>The GimpDisplayShell Widget</title>
       <xi:include href="xml/gimpdisplayshell.xml"/>
       <xi:include href="xml/gimpdisplayshell-appearance.xml"/>
@@ -423,7 +423,7 @@
       <xi:include href="xml/gimpdisplayshell-transform.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-display-utils">
       <title>Misc. Widgets &amp; Utilities</title>
       <xi:include href="xml/gimpnavigationview.xml"/>
       <xi:include href="xml/gimpstatusbar.xml"/>
@@ -436,32 +436,32 @@
     <xi:include href="xml/tools-types.xml"/>
     <xi:include href="xml/tools-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-tools-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/tools.xml"/>
       <xi:include href="xml/tool_manager.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-tool">
       <title>The GimpTool Object</title>
       <xi:include href="xml/gimptool.xml"/>
       <xi:include href="xml/gimptoolcontrol.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-base">
       <title>Base Classes</title>
       <xi:include href="xml/gimpdrawtool.xml"/>
       <xi:include href="xml/gimpcolortool.xml"/>
       <xi:include href="xml/gimpcoloroptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-options-gui">
       <title>GUI Constructors for Core Tool Options</title>
       <xi:include href="xml/gimppaintoptions-gui.xml"/>
       <xi:include href="xml/gimptooloptions-gui.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-selection">
       <title>Selection Tools</title>
       <xi:include href="xml/gimpselectionoptions.xml"/>
       <xi:include href="xml/gimpselectiontool.xml"/>
@@ -473,7 +473,7 @@
       <xi:include href="xml/gimpiscissorstool.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-paint">
       <title>Paint Tools</title>
       <xi:include href="xml/gimppainttool.xml"/>
       <xi:include href="xml/gimpairbrushtool.xml"/>
@@ -486,14 +486,14 @@
       <xi:include href="xml/gimpsmudgetool.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tool-ink">
       <title>The Ink Tool</title>
       <xi:include href="xml/gimpinktool.xml"/>
       <xi:include href="xml/gimpinktool-blob.xml"/>
       <xi:include href="xml/gimpinkoptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tool-color-applying">
       <title>Misc. Color Applying Tools</title>
       <xi:include href="xml/gimpblendtool.xml"/>
       <xi:include href="xml/gimpblendoptions.xml"/>
@@ -501,7 +501,7 @@
       <xi:include href="xml/gimpbucketfilloptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-color-correction">
       <title>Color Correction Tools</title>
       <xi:include href="xml/gimpimagemaptool.xml"/>
       <xi:include href="xml/gimpbrightnesscontrasttool.xml"/>
@@ -515,7 +515,7 @@
       <xi:include href="xml/gimpthresholdtool.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-transform">
       <title>Transform Tools</title>
       <xi:include href="xml/gimpmovetool.xml"/>
       <xi:include href="xml/gimpmoveoptions.xml"/>
@@ -533,7 +533,7 @@
       <xi:include href="xml/gimpsheartool.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-misc">
       <title>Text and Vector Tools</title>
       <xi:include href="xml/gimptexttool.xml"/>
       <xi:include href="xml/gimptextoptions.xml"/>
@@ -541,7 +541,7 @@
       <xi:include href="xml/gimpvectoroptions.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-tools-non-modifying">
       <title>Tools which don't Modify the Image</title>
       <xi:include href="xml/gimpcolorpickertool.xml"/>
       <xi:include href="xml/gimpcolorpickeroptions.xml"/>
@@ -557,13 +557,13 @@
     <xi:include href="xml/widgets-types.xml"/>
     <xi:include href="xml/widgets-enums.xml"/>
 
-    <chapter>
+    <chapter id="app-widgets-devices">
       <title>Input Device Management</title>
       <xi:include href="xml/gimpdevices.xml"/>
       <xi:include href="xml/gimpdeviceinfo.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-docks">
       <title>Dock Windows &amp; Widgets</title>
       <xi:include href="xml/gimpdock.xml"/>
       <xi:include href="xml/gimpimagedock.xml"/>
@@ -575,7 +575,7 @@
       <xi:include href="xml/gimpdockable.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-editors">
       <title>GimpEditor Widgets</title>
       <xi:include href="xml/gimpeditor.xml"/>
       <xi:include href="xml/gimpcoloreditor.xml"/>
@@ -584,7 +584,7 @@
       <xi:include href="xml/gimptemplateeditor.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-data-editors">
       <title>GimpDataEditor Widgets</title>
       <xi:include href="xml/gimpdataeditor.xml"/>
       <xi:include href="xml/gimpbrusheditor.xml"/>
@@ -592,7 +592,7 @@
       <xi:include href="xml/gimppaletteeditor.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-image-editor">
       <title>GimpImageEditor Widgets</title>
       <xi:include href="xml/gimpimageeditor.xml"/>
       <xi:include href="xml/gimpcomponenteditor.xml"/>
@@ -601,7 +601,7 @@
       <xi:include href="xml/gimpundoeditor.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-container-views">
       <title>GimpContainerView Widgets</title>
       <xi:include href="xml/gimpcontainerview.xml"/>
       <xi:include href="xml/gimpcontainerview-utils.xml"/>
@@ -615,13 +615,13 @@
       <xi:include href="xml/gimpvectorstreeview.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-container-menus">
       <title>GimpContainerMenu Widgets</title>
       <xi:include href="xml/gimpcontainermenu.xml"/>
       <xi:include href="xml/gimpcontainermenuimpl.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-container-editors">
       <title>GimpContainerEditor Widgets</title>
       <xi:include href="xml/gimpcontainereditor.xml"/>
       <xi:include href="xml/gimpbufferview.xml"/>
@@ -630,20 +630,20 @@
       <xi:include href="xml/gimptemplateview.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-data-factory-views">
       <title>GimpDataFactoryView Widgets</title>
       <xi:include href="xml/gimpdatafactoryview.xml"/>
       <xi:include href="xml/gimpbrushfactoryview.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-menus">
       <title>Menus</title>
       <xi:include href="xml/gimpitemfactory.xml"/>
       <xi:include href="xml/gimpmenufactory.xml"/>
       <xi:include href="xml/gimpmenuitem.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
       <xi:include href="xml/gimpcolorpanel.xml"/>
       <xi:include href="xml/gimpcontainerpopup.xml"/>
@@ -656,14 +656,14 @@
       <xi:include href="xml/gimpviewabledialog.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-previews">
       <title>Previews</title>
       <xi:include href="xml/gimppreview.xml"/>
       <xi:include href="xml/gimppreview-popup.xml"/>
       <xi:include href="xml/gimpnavigationpreview.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-preview-renderers">
       <title>Preview Renderers</title>
       <xi:include href="xml/gimppreviewrenderer.xml"/>
       <xi:include href="xml/gimppreviewrenderer-utils.xml"/>
@@ -674,20 +674,20 @@
       <xi:include href="xml/gimppreviewrendererlayer.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-cell-renderers">
       <title>Cell Renderers for GtkTreeView</title>
       <xi:include href="xml/gimpcellrenderertoggle.xml"/>
       <xi:include href="xml/gimpcellrendererviewable.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-constructors">
       <title>Convenience Constructors</title>
       <xi:include href="xml/gimpenummenu.xml"/>
       <xi:include href="xml/gimppropwidgets.xml"/>
       <xi:include href="xml/gimpwidgets-constructors.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-misc-utilities">
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimpcursor.xml"/>
       <xi:include href="xml/gimpdialogfactory.xml"/>
@@ -696,18 +696,18 @@
       <xi:include href="xml/gimpwidgets-utils.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-widgets-misplaced">
       <title>Stuff that Should not be here</title>
+      <xi:include href="xml/gtkwrapbox.xml"/>
       <xi:include href="xml/gtkhwrapbox.xml"/>
       <xi:include href="xml/gtkvwrapbox.xml"/>
-      <xi:include href="xml/gtkwrapbox.xml"/>
     </chapter>
   </part>
 
   <part id="app-gui-part">
     <title>GUI</title>
 
-    <chapter>
+    <chapter id="app-gui-glue">
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/gui.xml"/>
       <xi:include href="xml/session.xml"/>
@@ -715,7 +715,7 @@
       <xi:include href="xml/dialogs-constructors.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-dialogs">
       <title>Dialogs</title>
       <xi:include href="xml/about-dialog.xml"/>
       <xi:include href="xml/color-notebook.xml"/>
@@ -741,7 +741,7 @@
       <xi:include href="xml/user-install-dialog.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-pdb-dialogs">
       <title>PDB-Controllable Selection Dialogs</title>
       <xi:include href="xml/brush-select.xml"/>
       <xi:include href="xml/font-select.xml"/>
@@ -750,12 +750,12 @@
       <xi:include href="xml/pattern-select.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-menus">
       <title>Menus &amp; Callbacks</title>
       <xi:include href="xml/menus.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-toolbox-and-image-menus">
       <title>
         The &lt;Toolbox&gt;, &lt;Image&gt;, &lt;Open&gt; &amp; &lt;Save&gt;
         Menus &amp; Callbacks
@@ -781,7 +781,7 @@
       <xi:include href="xml/plug-in-commands.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-layers-channels-and-vectors-menus">
       <title>
         The &lt;Layers&gt;, &lt;Channels&gt; &amp; &lt;Vectors&gt;
         Menus &amp; Callbacks
@@ -797,7 +797,7 @@
       <xi:include href="xml/vectors-commands.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-data-factory-menus">
       <title>Data Factory Menus &amp; Callbacks</title>
       <xi:include href="xml/brushes-menu.xml"/>
       <xi:include href="xml/patterns-menu.xml"/>
@@ -808,7 +808,7 @@
       <xi:include href="xml/data-commands.xml"/>
     </chapter>
 
-    <chapter>
+    <chapter id="app-gui-misc-menus">
       <title>Other Menus &amp; Callbacks</title>
       <xi:include href="xml/buffers-menu.xml"/>
       <xi:include href="xml/buffers-commands.xml"/>

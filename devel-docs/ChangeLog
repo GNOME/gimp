@@ -1,5 +1,10 @@
 2003-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/app-docs.sgml: added IDs to all <chapter>s so they are
+	generated with useful names instead of chxx.html.
+
+2003-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/app-docs.sgml
 	* app/app-sections.txt: removed references to "appenv.h".
 
