@@ -19,13 +19,13 @@
 # define printf PerlIO_stdoutf
 #endif
 
+#include "../perl-intl.h"
+
 #if HAVE_PDL
 
 # include <pdlcore.h>
 # undef croak
 # define croak Perl_croak
-
-#include "../perl-intl.h"
 
 #if 0
 /* hack, undocumented, argh! */

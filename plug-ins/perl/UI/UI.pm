@@ -133,7 +133,6 @@ sub GTK_OBJECT_GET_ARG {
 }
 
 sub GTK_OBJECT_INIT {
-   shift unless ref $self; # care for "old" Gtk modules
    my $self = shift;
    (my $label = new Gtk::Label "")->show;
    $self->add($label);
@@ -196,8 +195,12 @@ package Gimp::UI::PatternSelect;
 
 use Gtk;
 use Gimp '__';
-use base Gimp::UI::PreviewSelect;
 use Gimp::basewidget Gtk::Button;
+
+sub GTK_CLASS_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_CLASS_INIT     }
+sub GTK_OBJECT_SET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_SET_ARG }
+sub GTK_OBJECT_GET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_GET_ARG }
+sub GTK_OBJECT_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_INIT    }
 
 sub get_title { __"Pattern Selection Dialog" }
 sub get_list { Gimp->patterns_list }
@@ -241,8 +244,12 @@ package Gimp::UI::BrushSelect;
 
 use Gtk;
 use Gimp '__';
-use base Gimp::UI::PreviewSelect;
 use Gimp::basewidget Gtk::Button;
+
+sub GTK_CLASS_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_CLASS_INIT     }
+sub GTK_OBJECT_SET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_SET_ARG }
+sub GTK_OBJECT_GET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_GET_ARG }
+sub GTK_OBJECT_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_INIT    }
 
 sub get_title { __"Brush Selection Dialog" }
 sub get_list { Gimp->brushes_list }
@@ -281,8 +288,12 @@ package Gimp::UI::GradientSelect;
 
 use Gtk;
 use Gimp '__';
-use base Gimp::UI::PreviewSelect;
 use Gimp::basewidget Gtk::Button;
+
+sub GTK_CLASS_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_CLASS_INIT     }
+sub GTK_OBJECT_SET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_SET_ARG }
+sub GTK_OBJECT_GET_ARG	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_GET_ARG }
+sub GTK_OBJECT_INIT	{ goto &Gimp::UI::PreviewSelect::GTK_OBJECT_INIT    }
 
 sub get_title { __"Gradient Selection Dialog" }
 sub get_list { keys %gradients }

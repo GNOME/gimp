@@ -38,6 +38,7 @@ Revision history for Gimp-Perl extension.
         - deprecate use of included scripts with gimp-1.0 in configure.in.
         - fix the ColorSelectButton ro work with newer versions of Gtk.
         - updated logulator from scheme sources. oh yeah :(
+        - Net.xs didn't compile without PDL.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.
