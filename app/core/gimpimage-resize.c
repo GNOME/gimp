@@ -2282,7 +2282,15 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
 {
   GSList *layer_list;
   GSList *merge_list = NULL;
+  gboolean had_floating_sel = FALSE;
   Layer *layer;
+
+  /* if there's a floating selection, anchor it */
+  if (gimp_image_floating_sel (gimage))
+    {
+      floating_sel_anchor (gimage->floating_sel);
+      had_floating_sel = TRUE;
+    }
 
   layer_list = gimage->layers;
   while (layer_list)
@@ -2304,8 +2312,15 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
     }
   else
     {
-      g_message (_("There are not enough visible layers for a merge.\nThere must be at least two."));
       g_slist_free (merge_list);
+
+      /* If there was a floating selection, we have done something.
+	 No need to warn the user. Return the active layer instead */
+      if (had_floating_sel)
+	return layer;
+      else
+	g_message (_("There are not enough visible layers for a merge.\nThere must be at least two."));
+
       return NULL;
     }
 }
@@ -2318,6 +2333,10 @@ gimp_image_flatten (GimpImage *gimage)
   Layer *layer;
 
   gimp_add_busy_cursors ();
+
+  /* if there's a floating selection, anchor it */
+  if (gimp_image_floating_sel (gimage))
+    floating_sel_anchor (gimage->floating_sel);
 
   layer_list = gimage->layers;
   while (layer_list)

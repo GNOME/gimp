@@ -1,3 +1,11 @@
+Wed Jan  5 11:35:10 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpimage.c: In gimp_image_merge_visible_layers and 
+	gimp_image_flatten handle a floating selection by anchoring it.
+	This functions can't be called from the UI if a floating selection
+	exists, but you can call them via the PDB. This is why
+	gimp_export_image used to crash when called with a floating_sel.
+
 Tue Jan  4 17:19:22 EST 2000 Adrian Likins <adrian@gimp.org>
 
 	* PLUGIN_MAINTAINERS: I claim mail.c as mine
