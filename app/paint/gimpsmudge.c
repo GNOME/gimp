@@ -207,13 +207,35 @@ gimp_smudge_start (GimpPaintCore *paint_core,
 
   if (!area) 
     return FALSE;
-  
+
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
   /*  Allocate the accumulation buffer */
   smudge->accumPR.bytes = gimp_drawable_bytes (drawable);
-  smudge->accum_data    = g_malloc0 (w * h * smudge->accumPR.bytes);
+  smudge->accum_data    = g_malloc (w * h * smudge->accumPR.bytes);
+
+  /*  If clipped, fill the smudge buffer with the color at the brush position.  */
+  if (x != area->x || y != area-> || w != area->widht || h != area->height)
+    {
+      guchar *fill;
+
+      fill = gimp_drawable_get_color_at (drawable,
+                                         CLAMP ((gint) paint_core->cur_coords.x,
+                                                0, gimp_item_width (GIMP_ITEM (drawable)) - 1),
+                                         CLAMP ((gint) paint_core->cur_coords.y,
+                                                0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
+      g_return_val_if_fail (fill != NULL, FALSE);
+
+      srcPR.w         = w;
+      srcPR.h         = h;
+      srcPR.bytes     = smudge->accumPR.bytes;
+      srcPR.rowstride = srcPR.bytes * w;
+      srcPR.data      = smudge->accum_data;
+      
+      color_region (&srcPR, fill);
+      g_free (fill);
+    }
 
   smudge->accumPR.x         = area->x - x; 
   smudge->accumPR.y         = area->y - y;
