@@ -101,8 +101,8 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
   N_("/Script-Fu/Shadow"),
   N_("/Script-Fu/Render"),
   N_("/Guides"),
-  N_("Video"),
-  N_("Video/Encode")
+  N_("/Video"),
+  N_("/Video/Encode")
 };
 
 static GSList *last_opened_raw_filenames = NULL;
@@ -1692,6 +1692,11 @@ menu_translate (const gchar *path,
       menupath = g_strconcat (factory, path, NULL);
 
       retval = dgettext ("gimp-std-plugins", menupath) + strlen (factory);
+
+      if (!strcmp (path, retval))
+	{
+	  retval = dgettext ("gimp-perl", menupath) + strlen (factory);
+	}
     }
 
   return retval;

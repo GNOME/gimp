@@ -1,3 +1,14 @@
+1999-11-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c: bind the "gimp-perl" textdomain.
+
+	* app/menus.c: try to find a plugin's name in the "gimp-perl"
+	domain if searching in "gimp-std-plugins" fails.
+
+	* app/preferences_dialog.c: factored out a small frame+vbox
+	creation function from the huge dialog constructor and did some
+	small changes. Didn't change the logic.
+
 Sat Nov 27 04:08:32 MET 1999  Sven Neuman <sven@gimp.org>
 
 	* app/fileops.c: I might break it again, but loading a single

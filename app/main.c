@@ -120,12 +120,13 @@ main (int argc, char **argv)
 
   /* Initialize i18n support */
 
-  INIT_LOCALE("gimp");
-  bindtextdomain("gimp-std-plugins", LOCALEDIR);
+  INIT_LOCALE ("gimp");
+  bindtextdomain ("gimp-std-plugins", LOCALEDIR);
+  bindtextdomain ("gimp-perl", LOCALEDIR);
 
   gtk_init (&argc, &argv);
 
-  setlocale(LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
+  setlocale (LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
