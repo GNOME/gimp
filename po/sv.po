@@ -1,15 +1,15 @@
 # Swedish messages for the GIMP.
-# Copyright (C) 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
-# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
+# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 #
 # $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-12-30 20:53+0100\n"
-"PO-Revision-Date: 2002-12-27 00:33+0100\n"
+"POT-Creation-Date: 2003-01-03 22:21+0100\n"
+"PO-Revision-Date: 2003-01-03 22:22+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -156,206 +156,210 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
-#: app/undo.c:3573
+#: app/undo.c:3579
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
 
-#: app/undo.c:3599
+#: app/undo.c:3605
 msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
-#: app/gui/resize-dialog.c:201 app/undo.c:3600
+#: app/undo.c:3606 app/gui/resize-dialog.c:201
 msgid "Scale Image"
 msgstr "Skala bild"
 
-#: app/undo.c:3601
+#: app/undo.c:3607
 msgid "Resize Image"
 msgstr "Ändra storlek på bild"
 
-#: app/undo.c:3602
+#: app/undo.c:3608
 msgid "Convert Image"
 msgstr "Konvertera bild"
 
-#: app/undo.c:3603
+#: app/undo.c:3609
 msgid "Crop Image"
 msgstr "Beskär bild"
 
-#: app/gui/image-commands.c:308 app/undo.c:3604
+#: app/undo.c:3610 app/gui/image-commands.c:308
 msgid "Merge Layers"
 msgstr "Sammanfoga lager"
 
-#: app/undo.c:3605 app/undo.c:3629
+#: app/undo.c:3611 app/undo.c:3636
 msgid "QuickMask"
 msgstr "Snabbmask"
 
-#: app/undo.c:3606 app/undo.c:3630
+#: app/undo.c:3612 app/undo.c:3637
 msgid "Guide"
 msgstr "Hjälplinje"
 
-#: app/undo.c:3607
+#: app/undo.c:3613
 msgid "Layer Properties"
 msgstr "Lageregenskaper"
 
-#: app/gui/resize-dialog.c:193 app/undo.c:3608
+#: app/undo.c:3614 app/gui/resize-dialog.c:193
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
-#: app/undo.c:3609
+#: app/undo.c:3615
 msgid "Resize Layer"
 msgstr "Ändra storlek på lager"
 
-#: app/undo.c:3610
+#: app/undo.c:3616
 msgid "Move Layer"
 msgstr "Flytta lager"
 
-#: app/undo.c:3611
+#: app/undo.c:3617
 msgid "Apply Layer Mask"
 msgstr "Applicera lagermask"
 
-#: app/undo.c:3612
+#: app/undo.c:3618
 msgid "Linked Layer"
 msgstr "Länkat lager"
 
-#: app/undo.c:3613
+#: app/undo.c:3619
 msgid "Float Selection"
 msgstr "Flytande markering"
 
-#: app/undo.c:3614
+#: app/undo.c:3620
 msgid "Anchor Floating Selection"
 msgstr "Ankra flytande markering"
 
-#: app/undo.c:3615 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3621 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Klistra in"
 
-#: app/undo.c:3616
+#: app/undo.c:3622
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: app/tools/gimptexttool.c:150 app/undo.c:3617
+#: app/undo.c:3623
+msgid "Copy"
+msgstr "Kopiera"
+
+#: app/undo.c:3624 app/tools/gimptexttool.c:150
 msgid "Text"
 msgstr "Text"
 
-#: app/undo.c:3618 app/undo.c:3651
+#: app/undo.c:3625 app/undo.c:3658
 msgid "Transform"
 msgstr "Transformera"
 
-#: app/undo.c:3619 app/undo.c:3652
+#: app/undo.c:3626 app/undo.c:3659
 msgid "Paint"
 msgstr "Måla"
 
-#: app/undo.c:3620 app/undo.c:3653
+#: app/undo.c:3627 app/undo.c:3660
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
-#: app/undo.c:3621 app/undo.c:3654
+#: app/undo.c:3628 app/undo.c:3661
 msgid "Remove Parasite"
 msgstr "Ta bort parasit"
 
-#: app/undo.c:3622
+#: app/undo.c:3629
 msgid "Plug-In"
 msgstr "Insticksmodul"
 
-#: app/pdb/internal_procs.c:124 app/undo.c:3624
+#: app/undo.c:3631 app/pdb/internal_procs.c:124
 msgid "Image"
 msgstr "Bild"
 
-#: app/undo.c:3625
+#: app/undo.c:3632
 msgid "Image Mod"
 msgstr "Bildmod"
 
-#: app/gui/file-new-dialog.c:373 app/undo.c:3626
+#: app/undo.c:3633 app/gui/file-new-dialog.c:373
 msgid "Image Type"
 msgstr "Bildtyp"
 
 #. Image size frame
-#: app/gui/file-new-dialog.c:143 app/undo.c:3627
+#: app/undo.c:3634 app/gui/file-new-dialog.c:143
 msgid "Image Size"
 msgstr "Bildstorlek"
 
-#: app/undo.c:3628
+#: app/undo.c:3635
 msgid "Resolution Change"
 msgstr "Ändring av upplösning"
 
-#: app/core/gimpchannel.c:505 app/undo.c:3631
+#: app/undo.c:3638 app/core/gimpchannel.c:505
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
-#: app/undo.c:3632
+#: app/undo.c:3639
 msgid "Rename Item"
 msgstr "Byt namn på objekt"
 
-#: app/gui/layers-commands.c:607 app/gui/layers-commands.c:639 app/undo.c:3633
+#: app/undo.c:3640 app/gui/layers-commands.c:607 app/gui/layers-commands.c:639
 msgid "New Layer"
 msgstr "Nytt lager"
 
-#: app/undo.c:3634
+#: app/undo.c:3641
 msgid "Delete Layer"
 msgstr "Ta bort lager"
 
-#: app/undo.c:3635
+#: app/undo.c:3642
 msgid "Layer Mod"
 msgstr "Lagermod"
 
-#: app/gui/layers-commands.c:894 app/undo.c:3636
+#: app/undo.c:3643 app/gui/layers-commands.c:894
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
 
-#: app/undo.c:3637
+#: app/undo.c:3644
 msgid "Delete Layer Mask"
 msgstr "Ta bort lagermask"
 
-#: app/undo.c:3638
+#: app/undo.c:3645
 msgid "Layer Reposition"
 msgstr "Ompositionering av lager"
 
-#: app/undo.c:3639
+#: app/undo.c:3646
 msgid "Layer Move"
 msgstr "Lagerflytt"
 
-#: app/gui/channels-commands.c:322 app/gui/channels-commands.c:359
-#: app/undo.c:3640
+#: app/undo.c:3647 app/gui/channels-commands.c:322
+#: app/gui/channels-commands.c:359
 msgid "New Channel"
 msgstr "Ny kanal"
 
-#: app/undo.c:3641
+#: app/undo.c:3648
 msgid "Delete Channel"
 msgstr "Ta bort kanal"
 
-#: app/undo.c:3642
+#: app/undo.c:3649
 msgid "Channel Mod"
 msgstr "Kanalmod"
 
-#: app/undo.c:3643
+#: app/undo.c:3650
 msgid "Channel Reposition"
 msgstr "Ompositionering av kanal"
 
-#: app/undo.c:3644
+#: app/undo.c:3651
 msgid "New Vectors"
 msgstr "Nya vektorer"
 
-#: app/undo.c:3645
+#: app/undo.c:3652
 msgid "Delete Vectors"
 msgstr "Ta bort vektorer"
 
-#: app/undo.c:3646
+#: app/undo.c:3653
 msgid "Vectors Mod"
 msgstr "Vektormod"
 
-#: app/undo.c:3647
+#: app/undo.c:3654
 msgid "Vectors Reposition"
 msgstr "Ompositionering av vektorer"
 
-#: app/undo.c:3648
+#: app/undo.c:3655
 msgid "FS to Layer"
 msgstr "FS till lager"
 
-#: app/undo.c:3649
+#: app/undo.c:3656
 msgid "FS Rigor"
 msgstr "FS rigor"
 
-#: app/undo.c:3650
+#: app/undo.c:3657
 msgid "FS Relax"
 msgstr "FS relax"
 
@@ -364,15 +368,15 @@ msgstr "FS relax"
 msgid "Undo History: %s"
 msgstr "Ångringshistorik: %s"
 
-#: app/undo_history.c:529
+#: app/undo_history.c:531
 msgid "[ base image ]"
 msgstr "[ grundbild ]"
 
-#: app/undo_history.c:803
+#: app/undo_history.c:806
 msgid "Undo History"
 msgstr "Ångringshistorik"
 
-#: app/undo_history.c:805
+#: app/undo_history.c:808
 msgid "Image Undo History"
 msgstr "Bildångringshistorik"
 
@@ -484,11 +488,9 @@ msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde \"%ld\" för element %s"
 
 #: app/config/gimpconfig-deserialize.c:537
-#, fuzzy, c-format
+#, c-format
 msgid "while parsing token %s: %s"
-msgstr ""
-"Fel vid tolkning av \"%s\" på rad %d:\n"
-"%s"
+msgstr "vid tolkning av elementet %s: %s"
 
 #: app/config/gimpconfig-deserialize.c:645
 #, c-format
@@ -498,7 +500,7 @@ msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
 #: app/config/gimpconfig-path.c:126
 #, c-format
 msgid "can not expand ${%s}"
-msgstr ""
+msgstr "kan inte expandera ${%s}"
 
 #: app/config/gimpconfig.c:221
 #, c-format
@@ -665,7 +667,6 @@ msgid "Spiral (anticlockwise)"
 msgstr "Spiral (moturs)"
 
 #: app/core/core-enums.c:148 app/core/core-enums.c:168
-#: app/display/gimpdisplayshell.c:2470
 msgid "RGB"
 msgstr "RGB"
 
@@ -916,7 +917,7 @@ msgstr "Inga mönster tillgängliga för denna åtgärd."
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/core/gimpedit.c:183 app/core/gimpedit.c:260
+#: app/core/gimpedit.c:189 app/core/gimpedit.c:266
 msgid "Pasted Layer"
 msgstr "Inklistrat lager"
 
@@ -1052,33 +1053,33 @@ msgstr "%.1f MB"
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: app/core/gimpimage.c:1050 app/core/gimppalette-import.c:203
+#: app/core/gimpimage.c:1062 app/core/gimppalette-import.c:203
 #: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: app/core/gimpimage.c:2824
+#: app/core/gimpimage.c:2844
 msgid "Layer cannot be raised higher."
 msgstr "Lagret kan inte höjas mer."
 
-#: app/core/gimpimage.c:2848
+#: app/core/gimpimage.c:2868
 msgid "Layer cannot be lowered more."
 msgstr "Lagret kan inte sänkas mer."
 
-#: app/core/gimpimage.c:2869
+#: app/core/gimpimage.c:2889
 msgid "Layer is already on top."
 msgstr "Lagret är redan överst."
 
-#: app/core/gimpimage.c:2875
+#: app/core/gimpimage.c:2895
 msgid "Cannot raise a layer without alpha."
 msgstr "Kan inte höja lager utan alfakanal."
 
-#: app/core/gimpimage.c:2899
+#: app/core/gimpimage.c:2919
 msgid "Layer is already on the bottom."
 msgstr "Lagret är redan nederst."
 
-#: app/core/gimpimage.c:2946
+#: app/core/gimpimage.c:2966
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1087,19 +1088,19 @@ msgstr ""
 "Lagret \"%s\" har ingen alfakanal.\n"
 "Lagret placerades ovanför det."
 
-#: app/core/gimpimage.c:3089
+#: app/core/gimpimage.c:3109
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan inte höjas mer."
 
-#: app/core/gimpimage.c:3109
+#: app/core/gimpimage.c:3129
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan inte sänkas mer."
 
-#: app/core/gimpimage.c:3270
+#: app/core/gimpimage.c:3290
 msgid "Path cannot be raised higher."
 msgstr "Slingan kan inte höjas mer."
 
-#: app/core/gimpimage.c:3290
+#: app/core/gimpimage.c:3310
 msgid "Path cannot be lowered more."
 msgstr "Slingan kan inte sänkas mer."
 
@@ -1426,82 +1427,62 @@ msgid "Custom Color"
 msgstr "Egen färg"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:669
+#: app/display/gimpdisplayshell.c:659
 msgid "Set Canvas Padding Color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:678
+#: app/display/gimpdisplayshell.c:668
 msgid "Set canvas padding color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:690
+#: app/display/gimpdisplayshell.c:680
 msgid "/From Theme"
 msgstr "/Från tema"
 
-#: app/display/gimpdisplayshell.c:693
+#: app/display/gimpdisplayshell.c:683
 msgid "/Light Check Color"
 msgstr "/Ljus rutfärg"
 
-#: app/display/gimpdisplayshell.c:696
+#: app/display/gimpdisplayshell.c:686
 msgid "/Dark Check Color"
 msgstr "/Mörk rutfärg"
 
-#: app/display/gimpdisplayshell.c:702
+#: app/display/gimpdisplayshell.c:692
 msgid "/Select Custom Color..."
 msgstr "/Välj egen färg..."
 
-#: app/display/gimpdisplayshell.c:706
+#: app/display/gimpdisplayshell.c:696
 msgid "/As in Preferences"
 msgstr "/Som i inställningarna"
 
-#: app/display/gimpdisplayshell.c:731
+#: app/display/gimpdisplayshell.c:721
 msgid "Toggle QuickMask"
 msgstr "Visa snabbmask"
 
-#: app/display/gimpdisplayshell.c:1170
+#: app/display/gimpdisplayshell.c:976
 #, c-format
 msgid "Undo %s"
 msgstr "Ångra %s"
 
-#: app/display/gimpdisplayshell.c:1173
+#: app/display/gimpdisplayshell.c:979
 #, c-format
 msgid "Redo %s"
 msgstr "Gör om %s"
 
-#: app/display/gimpdisplayshell.c:1175 app/pdb/internal_procs.c:181
+#: app/display/gimpdisplayshell.c:981 app/pdb/internal_procs.c:181
 msgid "Undo"
 msgstr "Ångra"
 
-#: app/display/gimpdisplayshell.c:1176
+#: app/display/gimpdisplayshell.c:982
 msgid "Redo"
 msgstr "Gör om"
 
-#: app/display/gimpdisplayshell.c:2470
-msgid "RGB-empty"
-msgstr "RGB-tom"
-
-#: app/display/gimpdisplayshell.c:2473
-msgid "grayscale-empty"
-msgstr "gråskala-tom"
-
-#: app/display/gimpdisplayshell.c:2473
-msgid "grayscale"
-msgstr "gråskala"
-
-#: app/display/gimpdisplayshell.c:2476
-msgid "indexed-empty"
-msgstr "indexerad-tom"
-
-#: app/display/gimpdisplayshell.c:2476
-msgid "indexed"
-msgstr "indexerad"
-
-#: app/display/gimpdisplayshell.c:2685
+#: app/display/gimpdisplayshell.c:2045
 #, c-format
 msgid "Close %s?"
 msgstr "Stänga %s?"
 
-#: app/display/gimpdisplayshell.c:2687
+#: app/display/gimpdisplayshell.c:2047
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1725,56 +1706,56 @@ msgstr "Redigera indexerad färg"
 msgid "Edit Indexed Image Palette Color"
 msgstr "Redigera palettfärg för indexerad bild"
 
-#: app/gui/convert-dialog.c:131
+#: app/gui/convert-dialog.c:128
 msgid "Indexed Color Conversion"
 msgstr "Konvertering av indexerad färg"
 
-#: app/gui/convert-dialog.c:134
+#: app/gui/convert-dialog.c:131
 msgid "Convert Image to Indexed Colors"
 msgstr "Konvertera bild indexerad färg"
 
-#: app/gui/convert-dialog.c:156
+#: app/gui/convert-dialog.c:153
 msgid "General Palette Options"
 msgstr "Standardpalettalternativ"
 
-#: app/gui/convert-dialog.c:170
+#: app/gui/convert-dialog.c:167
 msgid "Generate Optimum Palette:"
 msgstr "Generera optimal palett:"
 
-#: app/gui/convert-dialog.c:195
+#: app/gui/convert-dialog.c:192
 msgid "Max. Number of Colors:"
 msgstr "Maximalt antal färger:"
 
-#: app/gui/convert-dialog.c:218
+#: app/gui/convert-dialog.c:215
 msgid "Use WWW-Optimized Palette"
 msgstr "Använd WWW-optimerad palett"
 
-#: app/gui/convert-dialog.c:236
+#: app/gui/convert-dialog.c:233
 msgid "Use Black and White (1-Bit) Palette"
 msgstr "Använd svartvit (1-bit) palett"
 
-#: app/gui/convert-dialog.c:252
+#: app/gui/convert-dialog.c:249
 msgid "Remove Unused Colors from Final Palette"
 msgstr "Ta bort oanvända färger från den slutgiltiga paletten"
 
-#: app/gui/convert-dialog.c:265
+#: app/gui/convert-dialog.c:262
 msgid "Use Custom Palette:"
 msgstr "Använd egen palett:"
 
 #. the dither type
-#: app/gui/convert-dialog.c:305
+#: app/gui/convert-dialog.c:302
 msgid "Dithering Options"
 msgstr "Ditheringalternativ"
 
-#: app/gui/convert-dialog.c:325
+#: app/gui/convert-dialog.c:322
 msgid "Enable Dithering of Transparency"
 msgstr "Använd dithering av transparens"
 
-#: app/gui/convert-dialog.c:339
+#: app/gui/convert-dialog.c:336
 msgid "[ Warning ]"
 msgstr "[ Varning ]"
 
-#: app/gui/convert-dialog.c:349
+#: app/gui/convert-dialog.c:346
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
@@ -1785,7 +1766,7 @@ msgstr ""
 "Du bör inte generera en palett på mer än 255 färger om du vill skapa en "
 "transparent eller animerad GIF-fil."
 
-#: app/gui/convert-dialog.c:529
+#: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
 msgstr "Välj egen palett"
 
@@ -1982,19 +1963,19 @@ msgstr "Kan inte använda invert på indexerade bilder."
 msgid "Equalize does not operate on indexed drawables."
 msgstr "Jämna ut fungerar inte på indexerade bilder."
 
-#: app/gui/edit-commands.c:210
+#: app/gui/edit-commands.c:193
 msgid "Cut Named"
 msgstr "Klipp ut namngiven"
 
-#: app/gui/edit-commands.c:213 app/gui/edit-commands.c:231
+#: app/gui/edit-commands.c:196 app/gui/edit-commands.c:214
 msgid "Enter a name for this buffer"
 msgstr "Ange namn för denna buffert"
 
-#: app/gui/edit-commands.c:228
+#: app/gui/edit-commands.c:211
 msgid "Copy Named"
 msgstr "Kopiera namngiven"
 
-#: app/gui/edit-commands.c:307 app/gui/edit-commands.c:336
+#: app/gui/edit-commands.c:290 app/gui/edit-commands.c:319
 msgid "(Unnamed Buffer)"
 msgstr "(Namnlös buffert)"
 
@@ -2084,20 +2065,20 @@ msgstr "Skapa en ny bild"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:162 app/gui/file-new-dialog.c:180
-#: app/tools/gimpcroptool.c:1010 app/tools/selection_options.c:402
+#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:402
 msgid "Width:"
 msgstr "Bredd:"
 
 #: app/gui/file-new-dialog.c:168 app/gui/file-new-dialog.c:186
 #: app/gui/layers-commands.c:651 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
-#: app/tools/gimpcroptool.c:1013 app/tools/gimpscaletool.c:173
+#: app/tools/gimpcroptool.c:1014 app/tools/gimpscaletool.c:173
 #: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:415
 msgid "Height:"
 msgstr "Höjd:"
 
 #: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:1014
-#: app/gui/preferences-dialog.c:1027 app/gui/user-install-dialog.c:1263
+#: app/gui/preferences-dialog.c:1027 app/gui/user-install-dialog.c:1271
 msgid "Pixels"
 msgstr "Bildpunkter"
 
@@ -2108,13 +2089,14 @@ msgstr "Upplösning X:"
 
 #: app/gui/file-new-dialog.c:305 app/gui/info-window.c:165
 #: app/gui/resize-dialog.c:377 app/gui/resize-dialog.c:476
-#: app/gui/resize-dialog.c:625 app/tools/gimpcroptool.c:996
+#: app/gui/resize-dialog.c:625 app/tools/gimpcroptool.c:997
 #: app/tools/gimprotatetool.c:197 app/tools/gimpscaletool.c:199
 #: app/tools/gimpsheartool.c:175
 msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
+#, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
@@ -2982,15 +2964,15 @@ msgid "/View/Display Filters..."
 msgstr "/Fönster/Visningsfilter..."
 
 #: app/gui/menus.c:622
-msgid "/View/Toggle Selection"
+msgid "/View/Show Selection"
 msgstr "/Visa/Visa markering"
 
 #: app/gui/menus.c:626
-msgid "/View/Toggle Layer Boundary"
+msgid "/View/Show Layer Boundary"
 msgstr "/Visa/Visa lagergräns"
 
 #: app/gui/menus.c:630
-msgid "/View/Toggle Guides"
+msgid "/View/Show Guides"
 msgstr "/Visa/Visa hjälplinjer"
 
 #: app/gui/menus.c:634
@@ -2998,15 +2980,15 @@ msgid "/View/Snap to Guides"
 msgstr "/Visa/Snäpp mot hjälplinjer"
 
 #: app/gui/menus.c:641
-msgid "/View/Toggle Menubar"
+msgid "/View/Show Menubar"
 msgstr "/Visa/Visa menyrad"
 
 #: app/gui/menus.c:645
-msgid "/View/Toggle Rulers"
+msgid "/View/Show Rulers"
 msgstr "/Visa/Visa linjaler"
 
 #: app/gui/menus.c:649
-msgid "/View/Toggle Statusbar"
+msgid "/View/Show Statusbar"
 msgstr "/Visa/Visa statusrad"
 
 #: app/gui/menus.c:656
@@ -4283,17 +4265,17 @@ msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standardbildstorlek och -måttenhet"
 
 #: app/gui/preferences-dialog.c:1042 app/gui/preferences-dialog.c:1612
-#: app/gui/user-install-dialog.c:1276 app/tools/gimpfliptool.c:297
+#: app/gui/user-install-dialog.c:1284 app/tools/gimpfliptool.c:297
 msgid "Horizontal"
 msgstr "Horisontell"
 
 #: app/gui/preferences-dialog.c:1044 app/gui/preferences-dialog.c:1614
-#: app/gui/user-install-dialog.c:1278 app/tools/gimpfliptool.c:301
+#: app/gui/user-install-dialog.c:1286 app/tools/gimpfliptool.c:301
 msgid "Vertical"
 msgstr "Vertikal"
 
 #: app/gui/preferences-dialog.c:1046 app/gui/preferences-dialog.c:1616
-#: app/gui/user-install-dialog.c:1280
+#: app/gui/user-install-dialog.c:1288
 msgid "dpi"
 msgstr "punkter/tum"
 
@@ -4618,7 +4600,7 @@ msgstr "Konservativ minnesanvändning"
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/gui/preferences-dialog.c:1711 app/gui/user-install-dialog.c:1158
+#: app/gui/preferences-dialog.c:1711 app/gui/user-install-dialog.c:1166
 msgid "Tile Cache Size:"
 msgstr "Bildblockscachestorlek:"
 
@@ -4663,7 +4645,7 @@ msgstr "Välj tempkatalog"
 msgid "Swap Dir:"
 msgstr "Växlingskatalog:"
 
-#: app/gui/preferences-dialog.c:1758 app/gui/user-install-dialog.c:1179
+#: app/gui/preferences-dialog.c:1758 app/gui/user-install-dialog.c:1187
 msgid "Select Swap Dir"
 msgstr "Välj växlingskatalog"
 
@@ -4945,7 +4927,7 @@ msgstr "Återställ sparade inställningar"
 msgid "Reset"
 msgstr "Återställ"
 
-#: app/gui/user-install-dialog.c:134
+#: app/gui/user-install-dialog.c:138
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -4958,7 +4940,7 @@ msgstr ""
 "Sökvägar till penslar, färgkartor, färgskalor, mönster,\n"
 "insticksmoduler och moduler konfigureras även här."
 
-#: app/gui/user-install-dialog.c:143
+#: app/gui/user-install-dialog.c:147
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -4967,7 +4949,7 @@ msgstr ""
 "kan få den att se annorlunda ut jämfört med andra\n"
 "GTK-program."
 
-#: app/gui/user-install-dialog.c:149
+#: app/gui/user-install-dialog.c:153
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -4983,7 +4965,7 @@ msgstr ""
 "i denna fil.  Denna fil är endast avsedd för GIMP och bör\n"
 "inte modifieras."
 
-#: app/gui/user-install-dialog.c:159
+#: app/gui/user-install-dialog.c:163
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -4998,7 +4980,7 @@ msgstr ""
 "om du vill, men det är mycket enklare att ändra det inifrån\n"
 "GIMP. Om du tar bort denna fil så återställs standardvärdena."
 
-#: app/gui/user-install-dialog.c:169
+#: app/gui/user-install-dialog.c:173
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -5008,7 +4990,7 @@ msgstr ""
 "placerade på skärmen när du senast använde GIMP. Du kan\n"
 "konfigurera GIMP att öppna dessa dialoger på samma ställe."
 
-#: app/gui/user-install-dialog.c:176
+#: app/gui/user-install-dialog.c:180
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5022,11 +5004,11 @@ msgstr ""
 "punkter och picas. Denna fil skrivs över varje gång du\n"
 "avslutar GIMP."
 
-#: app/gui/user-install-dialog.c:185
+#: app/gui/user-install-dialog.c:189
 msgid "This folder is searched for user-installed themes."
-msgstr ""
+msgstr "Denna mapp används för att söka efter användarinstallerade teman."
 
-#: app/gui/user-install-dialog.c:190
+#: app/gui/user-install-dialog.c:194
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5037,7 +5019,7 @@ msgstr ""
 "penslar. GIMP kontrollerar denna mapp utöver systemets\n"
 "instalation av GIMP-penslar när den söker efter penslar."
 
-#: app/gui/user-install-dialog.c:198
+#: app/gui/user-install-dialog.c:202
 msgid ""
 "This folder is used to store user defined gradients\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5049,7 +5031,7 @@ msgstr ""
 "installation av GIMP-färgskalor när den söker efter\n"
 "färgskalor."
 
-#: app/gui/user-install-dialog.c:206
+#: app/gui/user-install-dialog.c:210
 msgid ""
 "This folder is used to store user defined palettes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5061,7 +5043,7 @@ msgstr ""
 "installation av GIMP-paletter när den söker efter\n"
 "paletter."
 
-#: app/gui/user-install-dialog.c:214
+#: app/gui/user-install-dialog.c:218
 msgid ""
 "This folder is used to store user defined patterns.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5073,7 +5055,7 @@ msgstr ""
 "installation av GIMP-mönster när den söker efter\n"
 "mönster."
 
-#: app/gui/user-install-dialog.c:222
+#: app/gui/user-install-dialog.c:226
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported plug-ins.  The GIMP\n"
@@ -5086,7 +5068,7 @@ msgstr ""
 "systemets mapp för insticksmoduler när den söker\n"
 "efter insticksmoduler."
 
-#: app/gui/user-install-dialog.c:230
+#: app/gui/user-install-dialog.c:234
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported DLL modules.  The\n"
@@ -5100,7 +5082,7 @@ msgstr ""
 "GIMP-modulmapp när den söker efter moduler att läsa in\n"
 "vid start."
 
-#: app/gui/user-install-dialog.c:239
+#: app/gui/user-install-dialog.c:243
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported additions to the\n"
@@ -5115,7 +5097,7 @@ msgstr ""
 "mapp utöver systemets GIMP-miljömapp när den söker\n"
 "efter modifieringsfiler till insticksmodulmiljön."
 
-#: app/gui/user-install-dialog.c:249
+#: app/gui/user-install-dialog.c:253
 msgid ""
 "This folder is used to store user created and installed\n"
 "scripts.  The GIMP checks this folder in addition to\n"
@@ -5126,7 +5108,7 @@ msgstr ""
 "installerade skript. GIMP söker i denna mapp utöver\n"
 "systemets GIMP-skriptmapp när den söker efter skript."
 
-#: app/gui/user-install-dialog.c:257
+#: app/gui/user-install-dialog.c:261
 msgid ""
 "This folder is used to temporarily store undo buffers\n"
 "to reduce memory usage.  If The GIMP is unceremoniously\n"
@@ -5140,7 +5122,7 @@ msgstr ""
 "gimp<#>.<#>. Dessa filer är värdelösa mellan olika\n"
 "GIMP-sessioner och kan tas bort."
 
-#: app/gui/user-install-dialog.c:266
+#: app/gui/user-install-dialog.c:270
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
@@ -5148,7 +5130,7 @@ msgstr ""
 "Denna mapp används för att lagra parameterfiler för\n"
 "kurvverktyget."
 
-#: app/gui/user-install-dialog.c:272
+#: app/gui/user-install-dialog.c:276
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
@@ -5156,7 +5138,7 @@ msgstr ""
 "Denna mapp används för att lagra parameterfiler för\n"
 "nivåverktyget."
 
-#: app/gui/user-install-dialog.c:278
+#: app/gui/user-install-dialog.c:282
 msgid ""
 "This is folder used to store user defined fractals to\n"
 "be used by the FractalExplorer plug-in.  The GIMP\n"
@@ -5169,7 +5151,7 @@ msgstr ""
 "mapp utöver systemets FractalExplorer-installation när\n"
 "den söker efter fraktaler."
 
-#: app/gui/user-install-dialog.c:286
+#: app/gui/user-install-dialog.c:290
 msgid ""
 "This folder is used to store user defined figures to\n"
 "be used by the GFig plug-in.  The GIMP checks this\n"
@@ -5181,7 +5163,7 @@ msgstr ""
 "GIMP söker i denna mapp utöver systemets\n"
 "GFig-installation när den söker efter GFig-figurer."
 
-#: app/gui/user-install-dialog.c:294
+#: app/gui/user-install-dialog.c:298
 msgid ""
 "This folder is used to store user defined gflares to\n"
 "be used by the GFlare plug-in.  The GIMP checks this\n"
@@ -5193,7 +5175,7 @@ msgstr ""
 "GIMP söker i denna mapp utöver systemets\n"
 "GFlarea-installation när den söker efter gflares."
 
-#: app/gui/user-install-dialog.c:302
+#: app/gui/user-install-dialog.c:306
 msgid ""
 "This folder is used to store user defined data to be\n"
 "used by the Gimpressionist plug-in.  The GIMP checks\n"
@@ -5205,28 +5187,31 @@ msgstr ""
 "söker i denna mapp utöver systemets\n"
 "Gimpressionist-installation när den söker efter data."
 
-#: app/gui/user-install-dialog.c:372
+#: app/gui/user-install-dialog.c:376
 msgid ""
 "Installation successful.\n"
 "Click \"Continue\" to proceed."
 msgstr ""
+"Installationen lyckades.\n"
+"Klicka på \"Fortsätt\" för att fortsätta."
 
-#: app/gui/user-install-dialog.c:378
-#, fuzzy
+#: app/gui/user-install-dialog.c:382
 msgid ""
 "Installation failed.\n"
 "Contact system administrator."
-msgstr "Installationen misslyckades. Kontakta systemadministratör."
+msgstr ""
+"Installationen misslyckades.\n"
+"Kontakta systemadministratör."
 
-#: app/gui/user-install-dialog.c:570
+#: app/gui/user-install-dialog.c:574
 msgid "GIMP User Installation"
 msgstr "Användarinstallation av GIMP"
 
-#: app/gui/user-install-dialog.c:578
+#: app/gui/user-install-dialog.c:582
 msgid "Continue"
 msgstr "Fortsätt"
 
-#: app/gui/user-install-dialog.c:728
+#: app/gui/user-install-dialog.c:732
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -5234,11 +5219,11 @@ msgstr ""
 "Välkommen till\n"
 "GIMPs användarinstallation"
 
-#: app/gui/user-install-dialog.c:730
+#: app/gui/user-install-dialog.c:734
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Tryck på \"Fortsätt\" för att starta GIMPs användarinstallation."
 
-#: app/gui/user-install-dialog.c:734
+#: app/gui/user-install-dialog.c:738
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2002\n"
@@ -5248,7 +5233,7 @@ msgstr ""
 "Copyright © 1995-2002\n"
 "Spencer Kimball, Peter Mattis och GIMPs utvecklingsteam."
 
-#: app/gui/user-install-dialog.c:744
+#: app/gui/user-install-dialog.c:748
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -5260,7 +5245,7 @@ msgstr ""
 "av Free Software Foundation, antingen version 2 eller (om du så vill)\n"
 "någon senare version."
 
-#: app/gui/user-install-dialog.c:750
+#: app/gui/user-install-dialog.c:754
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -5272,7 +5257,7 @@ msgstr ""
 "om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL.\n"
 "Se GNU General Public License för ytterligare information."
 
-#: app/gui/user-install-dialog.c:756
+#: app/gui/user-install-dialog.c:760
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -5283,24 +5268,24 @@ msgstr ""
 "med detta program. Om inte, skriv till Free Software Foundation,\n"
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:780
+#: app/gui/user-install-dialog.c:784
 msgid "Personal GIMP Folder"
 msgstr "Personlig GIMP-mapp"
 
-#: app/gui/user-install-dialog.c:781
+#: app/gui/user-install-dialog.c:785
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Tryck på \"Fortsätt\" för att skapa din personliga GIMP-mapp."
 
-#: app/gui/user-install-dialog.c:818
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:822
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
 "'%s' needs to be created."
 msgstr ""
 "För att kunna installera GIMP korrekt måste mappen\n"
-"%s skapas."
+"\"%s\" skapas."
 
-#: app/gui/user-install-dialog.c:824
+#: app/gui/user-install-dialog.c:828
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -5310,11 +5295,11 @@ msgstr ""
 "Klicka på någon av filerna eller mapparna i trädet för\n"
 "att få mer information om det valda objektet."
 
-#: app/gui/user-install-dialog.c:895
+#: app/gui/user-install-dialog.c:899
 msgid "User Installation Log"
 msgstr "Logg över användarinstallation"
 
-#: app/gui/user-install-dialog.c:896
+#: app/gui/user-install-dialog.c:900
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -5322,27 +5307,27 @@ msgstr ""
 "Var god vänta medans din personliga\n"
 "GIMP-mapp skapas..."
 
-#: app/gui/user-install-dialog.c:902
+#: app/gui/user-install-dialog.c:906
 msgid "GIMP Performance Tuning"
 msgstr "Prestandaavstämning av GIMP"
 
-#: app/gui/user-install-dialog.c:903
+#: app/gui/user-install-dialog.c:907
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Tryck på \"Fortsätt\" för att acceptera inställningarna ovan."
 
-#: app/gui/user-install-dialog.c:906
+#: app/gui/user-install-dialog.c:910
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "För optimal prestanda i GIMP måste du kanske förändra vissa saker."
 
-#: app/gui/user-install-dialog.c:915
+#: app/gui/user-install-dialog.c:919
 msgid "Monitor Resolution"
 msgstr "Bildskärmsupplösning"
 
-#: app/gui/user-install-dialog.c:916
+#: app/gui/user-install-dialog.c:920
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Tryck på \"Fortsätt\" för att starta GIMP."
 
-#: app/gui/user-install-dialog.c:919
+#: app/gui/user-install-dialog.c:923
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -5350,60 +5335,60 @@ msgstr ""
 "För att kunna visa bilder i sin naturliga storlek måste GIMP känna till "
 "upplösningen på din bildskärm."
 
-#: app/gui/user-install-dialog.c:928
+#: app/gui/user-install-dialog.c:932
 msgid "Aborting Installation..."
 msgstr "Avbryter installation..."
 
-#: app/gui/user-install-dialog.c:956
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:960
+#, c-format
 msgid "Cannot open '%s' for reading: %s"
-msgstr "Kan inte öppna %s för läsning"
+msgstr "Kan inte öppna \"%s\" för läsning: %s"
 
-#: app/gui/user-install-dialog.c:965
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:969
+#, c-format
 msgid "Cannot open '%s' for writing: %s"
-msgstr "Kan inte öppna %s för skrivning"
+msgstr "Kan inte öppna \"%s\" för skrivning: %s"
 
-#: app/gui/user-install-dialog.c:976 app/gui/user-install-dialog.c:999
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:980 app/gui/user-install-dialog.c:1003
+#, c-format
 msgid "Error while writing '%s': %s"
-msgstr "Fel vid skrivande av %s"
+msgstr "Fel vid skrivande av \"%s\": %s"
 
-#: app/gui/user-install-dialog.c:987
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:991
+#, c-format
 msgid "Error while reading '%s': %s"
-msgstr "Fel vid läsning av %s"
+msgstr "Fel vid läsning av \"%s\": %s"
 
-#: app/gui/user-install-dialog.c:1037 app/gui/user-install-dialog.c:1067
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:1041 app/gui/user-install-dialog.c:1075
+#, c-format
 msgid "Creating folder '%s'\n"
-msgstr "Skapar katalogen %s\n"
+msgstr "Skapar mappen \"%s\"\n"
 
-#: app/gui/user-install-dialog.c:1047
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:1055
+#, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Kan inte skapa katalog -- %s"
+msgstr "Kan inte skapa mappen \"%s\": %s"
 
-#: app/gui/user-install-dialog.c:1051 app/gui/user-install-dialog.c:1119
+#: app/gui/user-install-dialog.c:1059 app/gui/user-install-dialog.c:1127
 msgid "  Success\n"
 msgstr "  Lyckades\n"
 
-#: app/gui/user-install-dialog.c:1081
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:1089
+#, c-format
 msgid "Cannot create folder: %s"
-msgstr "Kan inte skapa katalog -- %s"
+msgstr "Kan inte skapa mapp: %s"
 
-#: app/gui/user-install-dialog.c:1102
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:1110
+#, c-format
 msgid "Copying file '%s' from '%s'\n"
-msgstr "Kopierar filen %s från %s\n"
+msgstr "Kopierar filen \"%s\" från \"%s\"\n"
 
-#: app/gui/user-install-dialog.c:1126
-#, fuzzy, c-format
+#: app/gui/user-install-dialog.c:1134
+#, c-format
 msgid "  Failure: %s\n"
-msgstr "  Misslyckades -- %s\n"
+msgstr "  Misslyckades: %s\n"
 
-#: app/gui/user-install-dialog.c:1146
+#: app/gui/user-install-dialog.c:1154
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -5413,7 +5398,7 @@ msgstr ""
 "\"block-cache\". Du bör justera det så det får plats i minnet. Tänk\n"
 "på mängden minne som används av andra körande program."
 
-#: app/gui/user-install-dialog.c:1169
+#: app/gui/user-install-dialog.c:1177
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -5425,11 +5410,11 @@ msgstr ""
 "tillräckligt mycket ledigt utrymme (flera 100 MB). På ett UNIX-system så\n"
 "kan du vilja ställa in systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1184
+#: app/gui/user-install-dialog.c:1192
 msgid "Swap Folder:"
 msgstr "Växlingsmapp:"
 
-#: app/gui/user-install-dialog.c:1231
+#: app/gui/user-install-dialog.c:1239
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -5437,17 +5422,17 @@ msgstr ""
 "GIMP kan hämta den här informationen från fönstersystemet.\n"
 "Normalt returneras dock inga vettiga värden."
 
-#: app/gui/user-install-dialog.c:1239
+#: app/gui/user-install-dialog.c:1247
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 "Hämta upplösning från fönstersystem (För tillfället %d × %d punkter/tum)"
 
-#: app/gui/user-install-dialog.c:1257
+#: app/gui/user-install-dialog.c:1265
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du ställa in upplösningen manuellt."
 
-#: app/gui/user-install-dialog.c:1303
+#: app/gui/user-install-dialog.c:1311
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -5455,7 +5440,7 @@ msgstr ""
 "Du kan även trycka på \"Kalibrera\" nedan för att öppna ett\n"
 "fönster som låter dig kalibrera bildskärmsupplösningen interaktivt."
 
-#: app/gui/user-install-dialog.c:1310
+#: app/gui/user-install-dialog.c:1318
 msgid "Calibrate"
 msgstr "Kalibrera"
 
@@ -5777,31 +5762,31 @@ msgstr "Flöde:"
 msgid "Pressure:"
 msgstr "Tryck:"
 
-#: app/tools/gimpbezierselecttool.c:282
+#: app/tools/gimpbezierselecttool.c:283
 msgid "Bezier Select"
 msgstr "Beziermarkera"
 
-#: app/tools/gimpbezierselecttool.c:283
+#: app/tools/gimpbezierselecttool.c:284
 msgid "Select regions using Bezier curves"
 msgstr "Markera regioner genom att använda Bezierkurvor"
 
-#: app/tools/gimpbezierselecttool.c:284
+#: app/tools/gimpbezierselecttool.c:285
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Verktyg/Markeringsverktyg/Beziermarkera"
 
-#: app/tools/gimpbezierselecttool.c:1210
+#: app/tools/gimpbezierselecttool.c:1211
 msgid "Bezier path already closed."
 msgstr "Bezierslingan redan stängd."
 
-#: app/tools/gimpbezierselecttool.c:1232
+#: app/tools/gimpbezierselecttool.c:1233
 msgid "Corrupt curve"
 msgstr "Trasig kurva"
 
-#: app/tools/gimpbezierselecttool.c:3184
+#: app/tools/gimpbezierselecttool.c:3185
 msgid "Curve not closed!"
 msgstr "Kurvan är inte stängd!"
 
-#: app/tools/gimpbezierselecttool.c:3468
+#: app/tools/gimpbezierselecttool.c:3469
 msgid "Paintbrush operation failed."
 msgstr "Målarpenselåtgärd misslyckades."
 
@@ -6093,57 +6078,57 @@ msgstr "/Verktyg/Målarverktyg/Konvolvera"
 msgid "Convolve Type  %s"
 msgstr "Konvolveringstyp %s"
 
-#: app/tools/gimpcroptool.c:174
+#: app/tools/gimpcroptool.c:175
 msgid "Crop & Resize"
 msgstr "Beskär och Ändra storlek"
 
-#: app/tools/gimpcroptool.c:175
+#: app/tools/gimpcroptool.c:176
 msgid "Crop or Resize an image"
 msgstr "Beskär eller ändra storlek på en bild"
 
-#: app/tools/gimpcroptool.c:176
+#: app/tools/gimpcroptool.c:177
 msgid "/Tools/Transform Tools/Crop & Resize"
 msgstr "/Verktyg/Transformeringsverktyg/Beskär och ändra storlek"
 
-#: app/tools/gimpcroptool.c:563
+#: app/tools/gimpcroptool.c:564
 msgid "Crop: "
 msgstr "Beskär: "
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:947
+#: app/tools/gimpcroptool.c:948
 msgid "Crop: 0 x 0"
 msgstr "Beskär: 0 × 0"
 
-#: app/tools/gimpcroptool.c:976
+#: app/tools/gimpcroptool.c:977
 msgid "Crop & Resize Information"
 msgstr "Information om Beskär och ändra storlek"
 
 #. add the information fields
-#: app/tools/gimpcroptool.c:993
+#: app/tools/gimpcroptool.c:994
 msgid "Origin X:"
 msgstr "Start X:"
 
-#: app/tools/gimpcroptool.c:1036
+#: app/tools/gimpcroptool.c:1037
 msgid "From Selection"
 msgstr "Från markering"
 
-#: app/tools/gimpcroptool.c:1044
+#: app/tools/gimpcroptool.c:1045
 msgid "Auto Shrink"
 msgstr "Krymp automatiskt"
 
 #. tool toggle
-#: app/tools/gimpcroptool.c:1300 app/tools/gimpfliptool.c:290
-#: app/tools/gimpmagnifytool.c:467 app/tools/gimpmovetool.c:694
+#: app/tools/gimpcroptool.c:1301 app/tools/gimpfliptool.c:290
+#: app/tools/gimpmagnifytool.c:467 app/tools/gimpmovetool.c:695
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Verktygsväxel %s"
 
-#: app/tools/gimpcroptool.c:1317
+#: app/tools/gimpcroptool.c:1318
 msgid "Current Layer only"
 msgstr "Endast aktuellt lager"
 
 #. enlarge toggle
-#: app/tools/gimpcroptool.c:1329
+#: app/tools/gimpcroptool.c:1330
 #, c-format
 msgid "Allow Enlarging  %s"
 msgstr "Tillåt förstoring %s"
@@ -6236,11 +6221,11 @@ msgid "Exposure:"
 msgstr "Exponering:"
 
 #. initialize the statusbar display
-#: app/tools/gimpeditselectiontool.c:302
+#: app/tools/gimpeditselectiontool.c:303
 msgid "Move: 0, 0"
 msgstr "Flytta: 0, 0"
 
-#: app/tools/gimpeditselectiontool.c:552
+#: app/tools/gimpeditselectiontool.c:553
 msgid "Move: "
 msgstr "Flytta: "
 
@@ -6303,15 +6288,15 @@ msgstr "Markerar frihand"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Verktyg/Markeringsverktyg/Fri markering"
 
-#: app/tools/gimpfuzzyselecttool.c:95
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
 msgstr "Luddig markering"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
 msgstr "Markerar kontinuerliga ytor"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Verktyg/Markeringsverktyg/Luddig markering"
 
@@ -6623,37 +6608,37 @@ msgstr "grader"
 msgid "Use Info Window"
 msgstr "Använd informationsfönster"
 
-#: app/tools/gimpmovetool.c:121
+#: app/tools/gimpmovetool.c:122
 msgid "Move"
 msgstr "Flytta"
 
-#: app/tools/gimpmovetool.c:122
+#: app/tools/gimpmovetool.c:123
 msgid "Move layers & selections"
 msgstr "Flytta lager och markeringar"
 
-#: app/tools/gimpmovetool.c:123
+#: app/tools/gimpmovetool.c:124
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Verktyg/Transformeringsverktyg/Flytta"
 
-#: app/tools/gimpmovetool.c:701
+#: app/tools/gimpmovetool.c:702
 msgid "Pick a Layer to Move"
 msgstr "Välj ett lager att flytta"
 
-#: app/tools/gimpmovetool.c:705
+#: app/tools/gimpmovetool.c:706
 msgid "Move Current Layer"
 msgstr "Flytta aktuellt lager"
 
 #. move mask
-#: app/tools/gimpmovetool.c:716
+#: app/tools/gimpmovetool.c:717
 #, c-format
 msgid "Move Mode  %s"
 msgstr "Flyttläge %s"
 
-#: app/tools/gimpmovetool.c:723
+#: app/tools/gimpmovetool.c:724
 msgid "Move Pixels"
 msgstr "Flytta bildpunkter"
 
-#: app/tools/gimpmovetool.c:727
+#: app/tools/gimpmovetool.c:728
 msgid "Move Selection Outline"
 msgstr "Flytta markeringskant"
 
@@ -6865,48 +6850,48 @@ msgstr "Skriv text i bilden"
 msgid "/Tools/Text"
 msgstr "/Verktyg/Text"
 
-#: app/tools/gimptexttool.c:342
+#: app/tools/gimptexttool.c:341
 msgid "No font chosen or font invalid."
 msgstr "Inget typsnitt valt eller typsnittet ogiltigt."
 
-#: app/tools/gimptexttool.c:439
+#: app/tools/gimptexttool.c:438
 msgid "Font:"
 msgstr "Typsnitt:"
 
-#: app/tools/gimptexttool.c:443
+#: app/tools/gimptexttool.c:442
 msgid "_Size:"
 msgstr "_Storlek:"
 
-#: app/tools/gimptexttool.c:456
+#: app/tools/gimptexttool.c:455
 msgid "_Border:"
 msgstr "_Kant:"
 
-#: app/tools/gimptexttool.c:472 app/tools/selection_options.c:430
+#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:430
 msgid "Unit:"
 msgstr "Enhet:"
 
-#: app/tools/gimptexttool.c:559
+#: app/tools/gimptexttool.c:558
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: app/tools/gimptexttool.c:584
+#: app/tools/gimptexttool.c:583
 msgid "Load Text from File"
 msgstr "Läs in text från fil"
 
-#: app/tools/gimptexttool.c:588
+#: app/tools/gimptexttool.c:587
 msgid "Clear all Text"
 msgstr "Töm all text"
 
-#: app/tools/gimptexttool.c:629
+#: app/tools/gimptexttool.c:628
 msgid "Open Text File (UTF-8)"
 msgstr "Öppna textfil (UTF-8)"
 
-#: app/tools/gimptexttool.c:679
+#: app/tools/gimptexttool.c:678
 #, c-format
 msgid "Error opening file '%s': %s"
 msgstr "Fel vid öppnande av filen \"%s\": %s"
 
-#: app/tools/gimptexttool.c:708
+#: app/tools/gimptexttool.c:707
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ogiltig UTF-8-data i filen \"%s\"."
@@ -6953,7 +6938,7 @@ msgstr "Vektorer"
 
 #: app/tools/gimpvectortool.c:116
 msgid "the most promising path tool prototype... :-)"
-msgstr ""
+msgstr "den mest lovande slingverktygsprotypen... :-)"
 
 #: app/tools/gimpvectortool.c:117
 msgid "/Tools/Vectors"
@@ -7501,7 +7486,7 @@ msgstr ""
 "Den aktiva färgskalan.\n"
 "Klicka för att öppna färgskaledialogen."
 
-#: app/widgets/gimptoolbox.c:726
+#: app/widgets/gimptoolbox.c:727
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7704,19 +7689,45 @@ msgid "Resize"
 msgstr "Ändra storlek"
 
 #~ msgid ""
+#~ "Installation failed.\n"
+#~ "Contact the system administrator."
+#~ msgstr ""
+#~ "Installationen misslyckades.\n"
+#~ "Kontakta systemadministratören."
+
+#~ msgid "RGB-empty"
+#~ msgstr "RGB-tom"
+
+#~ msgid "grayscale-empty"
+#~ msgstr "gråskala-tom"
+
+#~ msgid "grayscale"
+#~ msgstr "gråskala"
+
+#~ msgid "indexed-empty"
+#~ msgstr "indexerad-tom"
+
+#~ msgid "indexed"
+#~ msgstr "indexerad"
+
+#~ msgid "/View/Toggle Guides"
+#~ msgstr "/Visa/Visa hjälplinjer"
+
+#~ msgid "/View/Toggle Menubar"
+#~ msgstr "/Visa/Visa menyrad"
+
+#~ msgid ""
 #~ "This folder is used to store brushes that are created\n"
 #~ "with the brush editor."
 #~ msgstr ""
 #~ "Denna mapp används för att lagra penslar som skapas med\n"
 #~ "penselredigeraren."
 
-#, fuzzy
 #~ msgid "Error writing to '%s': %s"
-#~ msgstr "Fel vid skrivande av XCF: %s"
+#~ msgstr "Fel vid skrivande till \"%s\": %s"
 
-#, fuzzy
 #~ msgid "Error reading from '%s': %s"
-#~ msgstr "Fel vid öppnande av filen \"%s\": %s"
+#~ msgstr "Fel vid läsande från \"%s\": %s"
 
 #~ msgid "does not exist.  Cannot install."
 #~ msgstr "finns inte. Kan inte installera."
