@@ -302,6 +302,8 @@ gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
   docked_iface->set_context  = gimp_color_editor_set_docked_context;
 }
 
+#define AUX_INFO_CURRENT_PAGE "current-page"
+
 static void
 gimp_color_editor_set_aux_info (GimpDocked *docked,
                                 GList      *aux_info)
@@ -314,7 +316,7 @@ gimp_color_editor_set_aux_info (GimpDocked *docked,
     {
       GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (aux->name, "current-page"))
+      if (! strcmp (aux->name, AUX_INFO_CURRENT_PAGE))
         {
           GList *children;
           GList *child;
@@ -353,7 +355,7 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
     {
       GimpSessionInfoAux *aux;
 
-      aux = gimp_session_info_aux_new ("current-page",
+      aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_PAGE,
                                        G_OBJECT_TYPE_NAME (notebook->cur_page));
       aux_info = g_list_append (aux_info, aux);
     }

@@ -169,6 +169,8 @@ gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
   docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
 }
 
+#define AUX_INFO_CURRENT_DATA "current-data"
+
 static void
 gimp_data_editor_set_aux_info (GimpDocked *docked,
                                GList      *aux_info)
@@ -180,7 +182,7 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
     {
       GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (aux->name, "current-data"))
+      if (! strcmp (aux->name, AUX_INFO_CURRENT_DATA))
         {
           GimpData *data;
 
@@ -207,7 +209,7 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
 
       value = gimp_object_get_name (GIMP_OBJECT (editor->data));
 
-      aux = gimp_session_info_aux_new ("current-data", value);
+      aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_DATA, value);
       aux_info = g_list_append (aux_info, aux);
     }
 

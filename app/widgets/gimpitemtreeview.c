@@ -367,6 +367,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 static void
 gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
+  docked_iface->get_preview = NULL;
   docked_iface->set_context = gimp_item_tree_view_set_docked_context;
 }
 

@@ -291,6 +291,9 @@ gimp_image_dock_setup (GimpDock       *dock,
     }
 }
 
+#define AUX_INFO_SHOW_IMAGE_MENU     "show-image-menu"
+#define AUX_INFO_FOLLOW_ACTIVE_IMAGE "follow-active-image"
+
 static void
 gimp_image_dock_set_aux_info (GimpDock *dock,
                               GList    *aux_info)
@@ -304,11 +307,11 @@ gimp_image_dock_set_aux_info (GimpDock *dock,
     {
       GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (aux->name, "show-image-menu"))
+      if (! strcmp (aux->name, AUX_INFO_SHOW_IMAGE_MENU))
         {
           menu_shown = ! g_ascii_strcasecmp (aux->value, "true");
         }
-      else if (! strcmp (aux->name, "follow-active-image"))
+      else if (! strcmp (aux->name, AUX_INFO_FOLLOW_ACTIVE_IMAGE))
         {
           auto_follow = ! g_ascii_strcasecmp (aux->value, "true");
         }
@@ -328,12 +331,12 @@ gimp_image_dock_get_aux_info (GimpDock *dock)
   GList              *aux_info   = NULL;
   GimpSessionInfoAux *aux;
 
-  aux = gimp_session_info_aux_new ("show-image-menu",
+  aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
                                    image_dock->show_image_menu ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
-  aux = gimp_session_info_aux_new ("follow-auctive-image",
+  aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
                                    image_dock->auto_follow_active ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);

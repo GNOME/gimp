@@ -1,3 +1,21 @@
+2003-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c
+	(gimp_item_tree_view_docked_iface_init): need to set
+	docked_iface->get_preview to NULL explicitly now that the
+	interface vtable inheriting is fixed (the layers, channels and
+	paths dialogs can't show preview tabs because they don't always
+	have a container).
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_get_aux_info):
+	fixed typo: s/auctive/active/. Added #defines for the magic
+	aux-info identifiers to avoid bugs like that.
+
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimppaletteeditor.c. addef #defines for aux-info
+	identifiers here, too.
+
 2003-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/templates-commands.[ch] (templates_new_template_dialog):

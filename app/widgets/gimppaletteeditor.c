@@ -376,6 +376,8 @@ gimp_palette_editor_docked_iface_init (GimpDockedInterface *docked_iface)
   docked_iface->get_aux_info = gimp_palette_editor_get_aux_info;
 }
 
+#define AUX_INFO_ZOOM_FACTOR "zoom-factor"
+
 static void
 gimp_palette_editor_set_aux_info (GimpDocked *docked,
                                   GList      *aux_info)
@@ -390,7 +392,7 @@ gimp_palette_editor_set_aux_info (GimpDocked *docked,
     {
       GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (aux->name, "zoom-factor"))
+      if (! strcmp (aux->name, AUX_INFO_ZOOM_FACTOR))
         {
           gdouble zoom_factor;
 
@@ -417,7 +419,7 @@ gimp_palette_editor_get_aux_info (GimpDocked *docked)
 
       g_ascii_formatd (value, sizeof (value), "%.2f", editor->zoom_factor);
 
-      aux = gimp_session_info_aux_new ("zoom-factor", value);
+      aux = gimp_session_info_aux_new (AUX_INFO_ZOOM_FACTOR, value);
       aux_info = g_list_append (aux_info, aux);
     }
 
