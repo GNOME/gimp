@@ -1,3 +1,17 @@
+2003-07-10  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimpbrush-header.h
+	* app/core/gimppattern-header.h: Replace guint by guint32
+	just in case we're on a platform with 16 bit ints.
+
+	* app/core/gimppattern.c: Uncomment a check for
+	colourdepth of the pattern. There are no other values
+	possible outside the range 1-4, but it serves as a
+	sanity check in case people do odd things.
+
+	* configure.in: Add a --enable-profile configure flag to
+	allow profiling support. Adds -pg to the CFLAGS.
+
 2003-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-transform.[ch]: added new function
