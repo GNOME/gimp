@@ -99,7 +99,7 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   seg = 0;
   n_points = 0;
 
-  points[n_points].x = (gdouble) (stroke_segs[0].x1 + offset_y);
+  points[n_points].x = (gdouble) (stroke_segs[0].x1 + offset_x);
   points[n_points].y = (gdouble) (stroke_segs[0].y1 + offset_y);
 
   n_points++;

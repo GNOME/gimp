@@ -1,3 +1,9 @@
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-stroke.c (gimp_drawable_stroke_boundary):
+	fixed cut'n'paste bug: always use offset_x, not offset_y for x
+	coordinates (spotted by Olivier Gondouin).
+
 2003-12-21  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Updated NEWS.
