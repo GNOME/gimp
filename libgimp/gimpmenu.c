@@ -21,8 +21,14 @@
 
 #include <string.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include "gimp.h"
 #include "gimpui.h"
+
 
 #define MENU_THUMBNAIL_WIDTH   24
 #define MENU_THUMBNAIL_HEIGHT  24

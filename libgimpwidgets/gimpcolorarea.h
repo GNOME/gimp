@@ -28,24 +28,7 @@
 #ifndef __GIMP_COLOR_AREA_H__
 #define __GIMP_COLOR_AREA_H__
 
-#ifdef GTK_DISABLE_DEPRECATED
-/* eeek... really bad hack for the time being */
-typedef enum
-{
-  GTK_PREVIEW_COLOR,
-  GTK_PREVIEW_GRAYSCALE
-} GtkPreviewType;
-
-#undef GTK_DISABLE_DEPRECATED
-#define GIMP_IGNORE_ME_PLEASE_FOOBAR
-#endif
-
-#include <gtk/gtkpreview.h>
-
-#ifdef GIMP_IGNORE_ME_PLEASE_FOOBAR
-#undef GIMP_IGNORE_ME_PLEASE_FOOBAR
-#define GTK_DISABLE_DEPRECATED
-#endif 
+#include <gtk/gtkdrawingarea.h>
 
 G_BEGIN_DECLS
 
@@ -62,17 +45,22 @@ typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
 struct _GimpColorArea
 {
-  GtkPreview         parent_instance;
+  GtkDrawingArea       parent_instance;
 
   /*< private >*/
-  GimpColorAreaType  type;
-  GimpRGB            color;
-  guint              idle_id;
+  guchar              *buf;
+  guint                width;
+  guint                height;
+  guint                rowstride;
+
+  GimpColorAreaType    type;
+  GimpRGB              color;
+  guint                idle_id;
 };
 
 struct _GimpColorAreaClass
 {
-  GtkPreviewClass  parent_class;
+  GtkDrawingAreaClass  parent_class;
 
   void (* color_changed) (GimpColorArea *gca);
 };

@@ -6,6 +6,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

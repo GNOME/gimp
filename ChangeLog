@@ -1,5 +1,94 @@
 2002-01-30  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.[ch]: derive from GtkDrawingArea
+	instead of deprecated GtkPreview.
+
+	* app/nav_window.c
+	* app/gui/brush-editor.c
+	* app/gui/buffers-commands.c
+	* app/gui/color-select.c
+	* app/gui/colormap-dialog.c
+	* app/gui/device-status-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-open-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/indicator-area.c
+	* app/gui/info-window.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palettes-commands.c
+	* app/gui/test-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimppreview.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpmenu.c
+	* libgimp/gimppatternmenu.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/video.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/rcm/rcm_dialog.c: define GTK_DISABLE_DEPRECATED to make
+	it compile.
+
+	We really need a generic plug-in preview system that doesn't use
+	GtkPreview.
+
+2002-01-30  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: depend on glib-1.3.13, pango-0.24 and gtk+-1.3.13.
 	Bumped our version number to 1.3.3.
 

@@ -21,6 +21,11 @@
 
 #include "config.h"
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -40,12 +45,6 @@
 #include "gimpdnd.h"
 #include "gimpimagepreview.h"
 #include "gimplistitem.h"
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtklist.h>
 
 #include "libgimp/gimpintl.h"
 

@@ -40,6 +40,11 @@ static char ident[] = "@(#) GIMP mapcolor plug-in v1.03  22-May-00";
 #include <string.h>
 #include <time.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>

@@ -1,28 +1,32 @@
-#ifdef HAVE_CONFIG_H
+
 #include "config.h"
-#else
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <gtk/gtk.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-#include <libgimp/stdplugins-intl.h>
-#include <math.h>
-#include "gimpressionist.h"
-#include "ppmtool.h"
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
 #undef GTK_DISABLE_DEPRECATED
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include <libgimpmath/gimpmath.h>
+
 #include <gtk/gtklist.h>
+#include <gtk/gtkpreview.h>
+
+#include "gimpressionist.h"
+#include "ppmtool.h"
+
+#include <libgimp/stdplugins-intl.h>
+
 
 GtkWidget *brushlist = NULL;
 GtkWidget *brushprev = NULL;

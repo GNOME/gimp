@@ -62,6 +62,11 @@
 #include <time.h>  /* For random seeding */
 #include <string.h> /* memcpy */
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
