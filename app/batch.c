@@ -191,14 +191,6 @@ batch_run_cmd (char *cmd)
   if (!cmdname)
     return;
 
-  t = cmdname;
-  while (*t)
-    {
-      if (*t == '-')
-	*t = '_';
-      t++;
-    }
-
   proc = procedural_db_lookup (cmdname);
   if (!proc)
     {
