@@ -52,6 +52,7 @@
 #include "procedural_db.h"
 #include "gimprc.h"
 #include "docindex.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -828,8 +829,13 @@ file_revert_callback (GtkWidget *w,
       filename = gimage_filename (gdisplay->gimage);
       raw_filename = g_basename (filename);
 
-      if ((gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE)) != NULL)
-        gdisplay_reconnect (gdisplay, gimage);
+      gimage = file_open_image (filename, raw_filename, RUN_INTERACTIVE);
+
+      if (gimage != NULL)
+	{
+	  undo_free (gimage);
+	  gdisplay_reconnect (gdisplay, gimage);
+	}
       else
         g_message (_("Revert failed."));
     }

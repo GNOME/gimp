@@ -643,8 +643,6 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
 void
 gdisplay_flush (GDisplay *gdisp)
 {
-  g_warning("gdisplay_flush");
-
   /* Redraw on idle time */
   gdisplay_flush_whenever (gdisp, FALSE);
 }
@@ -652,8 +650,6 @@ gdisplay_flush (GDisplay *gdisp)
 void
 gdisplay_flush_now (GDisplay *gdisp)
 {
-  g_warning("gdisplay_flush_now");
-
   /* Redraw NOW */
   gdisplay_flush_whenever (gdisp, TRUE);
 }
@@ -2073,14 +2069,12 @@ gdisplays_flush_whenever (gboolean now)
 void
 gdisplays_flush (void)
 {
-  g_warning("gdisplays_flush");
   gdisplays_flush_whenever (FALSE);
 }
 
 void
 gdisplays_flush_now (void)
 {
-  g_warning("gdisplays_flush_now");
   gdisplays_flush_whenever (TRUE);
 }
 
