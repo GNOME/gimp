@@ -51,8 +51,7 @@ sub channel_get_prop_proc {
 
 	$invoke{code} = <<'CODE'
 {
-  color = g_new (GimpRGB, 1);
-  *color = channel->color;
+  color = channel->color;
 }
 CODE
     }
@@ -84,7 +83,7 @@ sub channel_set_prop_proc {
 	%invoke = (
 	    code => <<'CODE'
 {
-  GimpRGB rgb_color = *color;
+  GimpRGB rgb_color = color;
 
   rgb_color.a = channel->color.a;
   channel_set_color(channel, &rgb_color);
@@ -159,7 +158,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpRGB rgb_color = *color;
+  GimpRGB rgb_color = color;
 
   rgb_color.a = opacity / 100.0;
   channel = channel_new (gimage, width, height, name, &rgb_color);
@@ -244,7 +243,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("libgimpcolor/gimpcolor.h" "channel.h");
+@headers = qw("channel.h");
 
 unshift @procs, qw(channel_new channel_copy channel_delete);
 %exports = (app => [@procs], lib => [@procs]);

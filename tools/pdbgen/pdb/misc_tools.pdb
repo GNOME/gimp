@@ -283,8 +283,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("libgimpcolor/gimpcolor.h" 
-	                "tools/by_color_select.h") ],
+        headers => [ qw("tools/by_color_select.h") ],
 	vars => [ 'GimpImage *gimage', 'guchar fixme[3]' ],
 	code => <<'CODE'
 {
@@ -413,8 +412,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("libgimpcolor/gimpcolor.h"
-                        "tools/color_picker.h") ],
+	headers => [ qw("tools/color_picker.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -427,8 +425,7 @@ HELP
 			  save_color);
   if (success)
     {
-      color = g_new (GimpRGB, 1);
-      gimp_rgba_set_uchar (color, 
+      gimp_rgba_set_uchar (&color, 
 		           col_value[RED_PIX],
 		           col_value[GREEN_PIX],
 		           col_value[BLUE_PIX],

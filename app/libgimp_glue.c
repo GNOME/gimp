@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -29,41 +29,41 @@
 
 
 gboolean
-gimp_palette_set_foreground (const GimpRGB *rgb)
+gimp_palette_set_foreground (const GimpRGB *color)
 {
-  g_return_val_if_fail (rgb != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_set_foreground (NULL, rgb);
+  gimp_context_set_foreground (NULL, color);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_get_foreground (GimpRGB *rgb)
+gimp_palette_get_foreground (GimpRGB *color)
 {
-  g_return_val_if_fail (rgb != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_get_foreground (NULL, rgb);
+  gimp_context_get_foreground (NULL, color);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_set_background (const GimpRGB *rgb)
+gimp_palette_set_background (const GimpRGB *color)
 {
-  g_return_val_if_fail (rgb != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_set_background (NULL, rgb);
+  gimp_context_set_background (NULL, color);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_get_background (GimpRGB *rgb)
+gimp_palette_get_background (GimpRGB *color)
 {
-  g_return_val_if_fail (rgb != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_get_background (NULL, rgb);
+  gimp_context_get_background (NULL, color);
 
   return TRUE;
 }

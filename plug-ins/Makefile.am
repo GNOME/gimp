@@ -28,6 +28,11 @@ EXTRA_DIST = \
 ## pygimp=
 ## endif
 
+## gimp-perl is disabled for the moment
+## until it has catched up with the API 
+## changes in libgimp
+GIMP_PERL= 
+
 SUBDIRS = 			\
 	libgck			\
 	dbbrowser		\

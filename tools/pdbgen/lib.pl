@@ -67,6 +67,7 @@ sub generate {
 
 	my $rettype = $argtype->{type};
 	$rettype =~ s/int32/int/ unless exists $arg->{keep_size};
+	$rettype .= '*' if exists $argtype->{struct};
 	return $rettype;
     }
 

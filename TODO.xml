@@ -58,7 +58,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="50%" target="1.4">
+    <entry size="medium" difficulty="medium" status="80%" target="1.4">
       <title>Unify color data types</title>
       <description>
 	<p>
@@ -173,7 +173,7 @@
   <section>
     <title>LibGimp</title>
 
-    <entry size="medium" difficulty="medium" status="10%" target="1.4">
+    <entry size="medium" difficulty="medium" status="40%" target="1.4">
       <title>Restructure LibGimp</title>
       <description>
 	<p>

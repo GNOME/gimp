@@ -537,7 +537,7 @@ by_color_select_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpRGB *color;
+  GimpRGB color;
   gint32 threshold;
   gint32 operation;
   gboolean antialias;
@@ -551,7 +551,7 @@ by_color_select_invoker (Argument *args)
   if (drawable == NULL)
     success = FALSE;
 
-  color = (GimpRGB *) args[1].value.pdb_pointer;
+  color = args[1].value.pdb_color;
 
   threshold = args[2].value.pdb_int;
   if (threshold < 0 || threshold > 255)
@@ -812,7 +812,7 @@ color_picker_invoker (Argument *args)
   gboolean sample_average;
   gdouble average_radius;
   gboolean save_color;
-  GimpRGB *color = NULL;
+  GimpRGB color;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -846,8 +846,7 @@ color_picker_invoker (Argument *args)
 			      save_color);
       if (success)
 	{
-	  color = g_new (GimpRGB, 1);
-	  gimp_rgba_set_uchar (color, 
+	  gimp_rgba_set_uchar (&color, 
 			       col_value[RED_PIX],
 			       col_value[GREEN_PIX],
 			       col_value[BLUE_PIX],
@@ -858,7 +857,7 @@ color_picker_invoker (Argument *args)
   return_args = procedural_db_return_args (&color_picker_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = color;
+    return_args[1].value.pdb_color = color;
 
   return return_args;
 }

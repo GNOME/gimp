@@ -56,13 +56,12 @@ static Argument *
 palette_get_foreground_invoker (Argument *args)
 {
   Argument *return_args;
-  GimpRGB *color;
+  GimpRGB color;
 
-  color = g_new (GimpRGB, 1);
-  gimp_context_get_foreground (NULL, color);
+  gimp_context_get_foreground (NULL, &color);
 
   return_args = procedural_db_return_args (&palette_get_foreground_proc, TRUE);
-  return_args[1].value.pdb_pointer = color;
+  return_args[1].value.pdb_color = color;
 
   return return_args;
 }
@@ -96,13 +95,12 @@ static Argument *
 palette_get_background_invoker (Argument *args)
 {
   Argument *return_args;
-  GimpRGB *color;
+  GimpRGB color;
 
-  color = g_new (GimpRGB, 1);
-  gimp_context_get_background (NULL, color);
+  gimp_context_get_background (NULL, &color);
 
   return_args = procedural_db_return_args (&palette_get_background_proc, TRUE);
-  return_args[1].value.pdb_pointer = color;
+  return_args[1].value.pdb_color = color;
 
   return return_args;
 }
@@ -135,14 +133,12 @@ static ProcRecord palette_get_background_proc =
 static Argument *
 palette_set_foreground_invoker (Argument *args)
 {
-  GimpRGB *color;
-  GimpRGB rgb_color;
+  GimpRGB color;
 
-  color = (GimpRGB *) args[0].value.pdb_pointer;
+  color = args[0].value.pdb_color;
 
-  rgb_color = *color;
-  rgb_color.a = 1.0;
-  gimp_context_set_foreground (NULL, &rgb_color);
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_foreground (NULL, &color);
 
   return procedural_db_return_args (&palette_set_foreground_proc, TRUE);
 }
@@ -175,14 +171,12 @@ static ProcRecord palette_set_foreground_proc =
 static Argument *
 palette_set_background_invoker (Argument *args)
 {
-  GimpRGB *color;
-  GimpRGB rgb_color;
+  GimpRGB color;
 
-  color = (GimpRGB *) args[0].value.pdb_pointer;
+  color = args[0].value.pdb_color;
 
-  rgb_color = *color;
-  rgb_color.a = 1.0;
-  gimp_context_set_background (NULL, &rgb_color);
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_background (NULL, &color);
 
   return procedural_db_return_args (&palette_set_background_proc, TRUE);
 }

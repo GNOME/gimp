@@ -76,7 +76,7 @@ channel_new_invoker (Argument *args)
   gint32 height;
   gchar *name;
   gdouble opacity;
-  GimpRGB *color;
+  GimpRGB color;
   Channel *channel = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -99,11 +99,11 @@ channel_new_invoker (Argument *args)
   if (opacity < 0.0 || opacity > 100.0)
     success = FALSE;
 
-  color = (GimpRGB *) args[5].value.pdb_pointer;
+  color = args[5].value.pdb_color;
 
   if (success)
     {
-      GimpRGB rgb_color = *color;
+      GimpRGB rgb_color = color;
     
       rgb_color.a = opacity / 100.0;
       channel = channel_new (gimage, width, height, name, &rgb_color);
@@ -693,7 +693,7 @@ channel_get_color_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   Channel *channel;
-  GimpRGB *color = NULL;
+  GimpRGB color;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -701,14 +701,13 @@ channel_get_color_invoker (Argument *args)
 
   if (success)
     {
-      color = g_new (GimpRGB, 1);
-      *color = channel->color;
+      color = channel->color;
     }
 
   return_args = procedural_db_return_args (&channel_get_color_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = color;
+    return_args[1].value.pdb_color = color;
 
   return return_args;
 }

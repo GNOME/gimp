@@ -27,9 +27,9 @@
 
 
 gboolean   gimp_palette_set_foreground (const GimpRGB *color);
-gboolean   gimp_palette_get_foreground (GimpRGB       *rgb);
+gboolean   gimp_palette_get_foreground (GimpRGB       *color);
 gboolean   gimp_palette_set_background (const GimpRGB *color);
-gboolean   gimp_palette_get_background (GimpRGB       *rgb);
+gboolean   gimp_palette_get_background (GimpRGB       *color);
 
 
 #endif /* __LIBGIMP_GLUE_H__ */

@@ -37,8 +37,7 @@ sub invoke_get {
 	headers => [ qw("gimpimage.h" "gimpcontext.h") ],
 	code => <<CODE
 {
-  color = g_new (GimpRGB, 1);
-  gimp_context_get_@{[shift]}ground (NULL, color);
+  gimp_context_get_@{[shift]}ground (NULL, &color);
 }
 CODE
     );
@@ -47,12 +46,10 @@ CODE
 sub invoke_set {
     %invoke = (
 	headers => [ qw("gimpimage.h") ],
-	vars => [ 'GimpRGB rgb_color' ],
 	code => <<CODE
 {
-  rgb_color = *color;
-  rgb_color.a = 1.0;
-  gimp_context_set_@{[shift]}ground (NULL, &rgb_color);
+  gimp_rgb_set_alpha (&color, 1.0);
+  gimp_context_set_@{[shift]}ground (NULL, &color);
 }
 CODE
     );
@@ -172,7 +169,7 @@ CODE
     );
 }
 
-@headers = qw("libgimpcolor/gimpcolor.h" "gimpcontext.h" "palette.h");
+@headers = qw("gimpcontext.h" "palette.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

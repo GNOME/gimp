@@ -1,5 +1,25 @@
 2001-01-25  Sven Neumann  <sven@gimp.org>
 
+	* app/libgimp_glue.[ch]: cleanup
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/tools_cmds.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/tools.pdb: fixed pdbgen code for color type. Seems
+	to actually work now.
+
+	* TODO.xml: updated
+
+	* plug-ins/Makefile.am: disabled build of gimp-perl until it has 
+	catched up with the API changes in libgimp 
+
+2001-01-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_mem_size_entry_new): merged fix 
 	from gimp-1-2 branch 
 
@@ -9,8 +29,8 @@
 	* tools/pdbgen/pdb.pl
 	* tools/pdbgen/pdb/channel.pdb
 	* tools/pdbgen/pdb/palette.pdb
-	* tools/pdbgen/pdb/tools.pdb: changed these with the help of 
-	Yosh. PDB functions take GimpRGB as color type now.
+	* tools/pdbgen/pdb/tools.pdb: changed these with the help of Yosh. 
+	PDB functions take GimpRGB as color type now.
 
 	* app/plug_in.c
 	* app/pdb/channel_cmds.c

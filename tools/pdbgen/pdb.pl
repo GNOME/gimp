@@ -31,8 +31,10 @@ package Gimp::CodeGen::pdb;
     floatarray  => { name  => 'FLOATARRAY' , type  => 'gdouble *', array => 1 },
     stringarray => { name  => 'STRINGARRAY', type  => 'gchar **' , array => 1 },
 
-    color  => { name => 'COLOR' , type => 'GimpRGB *', struct => 1 },
-
+    color      => { name => 'COLOR' , 
+		    type => 'GimpRGB ',
+		    headers => [ qw("libgimpcolor/gimpcolor.h") ],
+		    struct => 1 },
     display    => { name => 'DISPLAY',
 		    type => 'GDisplay *',
 		    headers => [ qw("gdisplay.h") ],
@@ -138,6 +140,7 @@ sub arg_ptype {
 	elsif ($arg->{type} =~ /GimpUnit/) { 'int'     }
 	elsif ($arg->{type} =~ /int/)      { 'int'     }
 	elsif ($arg->{type} =~ /double/)   { 'float'   }
+	elsif ($arg->{type} =~ /GimpRGB/)  { 'color'   }
 	else                               { 'pointer' }
     };
 }

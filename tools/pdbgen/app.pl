@@ -139,7 +139,8 @@ sub declare_args {
 		my $type = exists $_->{no_id_lookup} ? 'gint32 ' : $arg->{type};
 
 		$result .= ' ' x 2 . $type . &arg_vname($_);
-		if (!exists $_->{no_init} && exists $_->{init}) {
+		if (!exists $_->{no_init} && exists $_->{init} && 
+		    !exists $arg->{struct}) {
 		    for ($arg->{type}) {
 			/\*$/     && do { $result .= ' = NULL';  last };
 			/boolean/ && do { $result .= ' = FALSE'; last };
