@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-11 19:00+0200\n"
-"PO-Revision-Date: 2000-04-11 18:59+02:00\n"
+"POT-Creation-Date: 2000-04-18 14:21+0200\n"
+"PO-Revision-Date: 2000-04-18 14:23+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -204,10 +204,6 @@ msgstr "<Image>/Skript-Fu/Alchimie/Weben..."
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
 msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "<Image>/Script-Fu/Animators/Color Cycling..."
-msgstr "<Image>/Skript-Fu/Animation/Farben rotieren..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
@@ -731,10 +727,14 @@ msgstr "HG Deckkraft"
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
+#: plug-ins/script-fu/scripts/blended-logo.scm:0
+msgid "Background Gradient"
+msgstr "Hintergrund Farbverlauf"
+
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "Background Image"
-msgstr "Hintergrundbild"
+msgstr "Hintergrund Bild"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
@@ -778,18 +778,6 @@ msgstr "Art des Farbverlaufs"
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Block Size"
 msgstr "Blockgröße"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Blue Color Mode (sin:0/cos:1/none:2)"
-msgstr "Blauer Farbmodus (sin:0/cos:1/kein:2)"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Blue Inversion after Transformation"
-msgstr "Blau nach Transformation invertieren"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Blue Inversion before Transformation"
-msgstr "Blau vor Transformation invertieren"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Blur Amount"
@@ -1047,42 +1035,6 @@ msgstr "Ende X"
 msgid "End Y"
 msgstr "Ende Y"
 
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Blue Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Blue Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Blue Phase Displacement (RAD)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Green Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Green Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Green Phase Displacement (RAD)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Red Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Red Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "End: Red Phase Displacement (RAD)"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
 msgstr ""
@@ -1106,12 +1058,12 @@ msgid "Fade Away"
 msgstr "Ausblenden"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Fade From (100%-0%)"
-msgstr "Überblenden von (100%-0%)"
+msgid "Fade From %"
+msgstr "Überblenden von %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Fade To   (0%-100%)"
-msgstr "Überblenden nach (0%-100%)"
+msgid "Fade To   %"
+msgstr "Überblenden nach %"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
@@ -1291,18 +1243,6 @@ msgstr "Körnigkeit"
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
 msgstr "Graphenskalierung"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Green Color Mode (sin:0/cos:1/none:2)"
-msgstr "Grüner Farbmodus (sin:0/cos:1/kein:2)"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Green Inversion after Transformation"
-msgstr "Grün nach Transformation invertieren"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Green Inversion before Transformation"
-msgstr "Grün vor Transformation invertieren"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
@@ -1487,7 +1427,6 @@ msgstr "Anzahl der Farben"
 msgid "Number of Copies"
 msgstr "Anzahl der Kopien"
 
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
@@ -1652,18 +1591,6 @@ msgstr "Init-Zahl für Zufallsgenerator"
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
 msgstr "Zufälligkeit"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Red Color Mode (sin:0/cos:1/none:2)"
-msgstr "Roter Farbmodus (sin:0/cos:1/kein:2)"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Red Inversion after Transformation"
-msgstr "Rot nach Transformation invertieren"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Red Inversion before Transformation"
-msgstr "Rot vor Transformation invertieren"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
@@ -1838,42 +1765,6 @@ msgstr "Start X"
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start Y"
 msgstr "Start Y"
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Blue Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Blue Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Blue Phase Displacement (RAD)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Green Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Green Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Green Phase Displacement (RAD)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Red Frequency (> 0)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Red Intensity Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/color-cycling.scm:0
-msgid "Start: Red Phase Displacement (RAD)"
-msgstr ""
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"

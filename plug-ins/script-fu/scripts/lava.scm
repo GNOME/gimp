@@ -67,8 +67,8 @@
 						100
 						NORMAL)))
 	  
-	  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
 	  (gimp-image-add-layer image lava-layer -1)
+	  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
 	  (gimp-selection-none image)
 	  (gimp-edit-clear lava-layer)
 	  
@@ -107,9 +107,9 @@
 		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE    _"Seed" "2"
-		    SF-VALUE    _"Size" "10"
-		    SF-VALUE    _"Roughness" "7"
+		    SF-ADJUSTMENT _"Seed" '(10 1 30000 1 10 0 1)
+		    SF-ADJUSTMENT _"Size" '(10 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Roughness" '(7 3 50 1 10 0 0)
 		    SF-GRADIENT _"Gradient" "German_flag_smooth"
 		    SF-TOGGLE   _"Keep Selection" TRUE
 		    SF-TOGGLE   _"Separate Layer" TRUE

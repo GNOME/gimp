@@ -27,7 +27,7 @@
 	((<= brush-size 13) "Circle (13)")
 	((<= brush-size 15) "Circle (15)")
 	((<= brush-size 17) "Circle (17)")
-	(else "Circle Fuzzy (19)")))
+	((>  brush-size 17) "Circle Fuzzy (19)")))
 
 (define (shadows val)
   (/ (* 0.96 val) 2.55))
@@ -193,7 +193,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE  _"Chrome Factor" "1.0"
+		    SF-ADJUSTMENT  _"Chrome Factor" '(1.0 0.2 4 0.1 1 1 0)
 		    SF-STRING _"Text" "Crystal"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT   _"Font" "-*-Engraver-*-r-*-*-24-*-*-*-p-*-*-*"

@@ -1,4 +1,27 @@
 2000-04-18  Sven Neumann  <sven@gimp.org>
+
+        * INSTALL: we require gtk+-1.2.6 and we would like to have the 
+	freefont package installed.
+	( This change is not gimp-cornwell-000415-0, since IMHO this patch
+	  makes things worse. )
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/color-cycling.scm: removed since it
+	didn't work at all and even after fixing it the effect wasn't
+	worth distributing it
+	
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	* plug-ins/script-fu/scripts/addborder.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/fade-outline.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/lava.scm: 
+	applied gimp-simon-20000417-0, a patch by Simon Budig, which makes
+	more scripts use SF-ADJUSTMENT instead of SF-VALUE.
+
+2000-04-18  Sven Neumann  <sven@gimp.org>
 	
 	* plug-ins/FractalExplorer/Dialogs.c: i18n fix
 	* plug-ins/gdyntext/gdyntext_ui.c: ditto, plus indentation

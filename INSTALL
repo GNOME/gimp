@@ -1,15 +1,19 @@
 There are six basic steps to building and installing the
 GIMP:
 
-  1. You need to have installed GTK version 1.2.1 or better
+  1. You need to have installed GTK version 1.2.6 or better. We strongly
+     recommend you use 1.2.7 or better.
   2. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
-  3. Configure the GIMP by running the `configure' script.
+  3. You may want to install the freefont package so you have the fonts
+     most scripts use by default. 
+     Grab it from ftp://ftp.gimp.org/pub/gimp/fonts/
+  4. Configure the GIMP by running the `configure' script.
      You may want to pass some options to it, see below.
-  4. Build the GIMP by running `make'.
-  5. Install the GIMP by running `make install' or `make install-strip'.
-  6. Optionally install the separate gimp-data-extras package.
+  5. Build the GIMP by running `make'.
+  6. Install the GIMP by running `make install' or `make install-strip'.
+  7. Optionally install the separate gimp-data-extras package.
 
 Please make sure you don't have any old GTK, jpeg, etc. libraries lying
 around on your system, otherwise configure will fail to find the new

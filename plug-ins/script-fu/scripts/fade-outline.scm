@@ -194,9 +194,9 @@
     "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
-    SF-VALUE _"Border Size" "10"
-    SF-VALUE _"Fade From (100%-0%)" "100"
-    SF-VALUE _"Fade To   (0%-100%)" "0"
+    SF-ADJUSTMENT _"Border Size" '(10 1 300 1 10 0 1)
+    SF-ADJUSTMENT _"Fade From %" '(100 0 100 1 10 0 0)
+    SF-ADJUSTMENT _"Fade To   %" '(0 0 100 1 10 0 0)
     SF-TOGGLE _"Use Growing Selection" FALSE
     SF-TOGGLE _"Apply Generated Layermask" FALSE
     SF-TOGGLE _"Clear Unselected Maskarea" TRUE

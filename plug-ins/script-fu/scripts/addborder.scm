@@ -170,7 +170,8 @@
 		    "RGB*"
 		    SF-IMAGE "Input Image" 0
 		    SF-DRAWABLE "Input Drawable" 0
-		    SF-VALUE _"Border X Size" "12"
-		    SF-VALUE _"Border Y Size" "12"
+		    SF-ADJUSTMENT _"Border X Size" '(12 1 250 1 10 0 1)
+		    SF-ADJUSTMENT _"Border Y Size" '(12 1 250 1 10 0 1)
 		    SF-COLOR _"Border Color" '(38 31 207)
-		    SF-VALUE _"Delta Value on Color" "25")
+		    SF-ADJUSTMENT _"Delta Value on Color" '(25 1 255 1 10 0 1)
+		    )

@@ -36,7 +36,6 @@ scriptdata_DATA = \
 	circuit.scm				\
 	clothify.scm				\
 	coffee.scm				\
-	color-cycling.scm			\
 	comic-logo.scm				\
 	coolmetal-logo.scm			\
 	copy-visible.scm			\

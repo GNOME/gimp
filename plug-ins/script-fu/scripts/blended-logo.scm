@@ -7,7 +7,8 @@
 
 (define (scale size percent) (* size percent))
 
-(define (script-fu-blended-logo blend-mode text size font bg-color text-color blend-fg blend-bg)
+;(define (script-fu-blended-logo blend-mode text size font bg-color text-color blend-fg blend-bg)
+(define (script-fu-blended-logo text size font bg-color text-color bg-gradient)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (b-size (scale size 0.1))
 	 (b-size-2 (scale size 0.05))
@@ -24,7 +25,8 @@
 	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Drop Shadow" 100 MULTIPLY)))
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer BLACK-MASK)))
 	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (old-bg (car (gimp-palette-get-background)))
+	 (old-grad (car (gimp-gradients-get-active))))
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img shadow-layer 1)
@@ -34,6 +36,7 @@
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)
     (gimp-edit-clear drop-shadow-layer)
+    (gimp-edit-clear blend-layer)
     (gimp-palette-set-foreground text-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FG-IMAGE-FILL)
@@ -54,9 +57,10 @@
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-blend text-shadow-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 0 0 1 1)
     (gimp-selection-none img)
-    (gimp-palette-set-foreground blend-fg)
-    (gimp-palette-set-background blend-bg)
-    (gimp-blend blend-layer blend-mode NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 width 0)
+    ; (gimp-palette-set-foreground blend-fg)
+    ; (gimp-palette-set-background blend-bg)
+    (gimp-gradients-set-active bg-gradient)
+    (gimp-blend blend-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 width 0)
     (gimp-layer-translate text-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
     (gimp-layer-translate text-shadow-layer (- ts-size) (- ts-size))
@@ -70,6 +74,7 @@
     (gimp-layer-set-name text-layer text)
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
+    (gimp-gradients-set-active old-grad)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -80,11 +85,13 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-VALUE      _"Blend Mode" "FG-BG-RGB"
+		    ; SF-VALUE      _"Blend Mode" "FG-BG-RGB"
 		    SF-STRING     _"Text" "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
 		    SF-FONT       _"Font" "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-COLOR      _"Text Color" '(124 174 255)
-		    SF-COLOR      _"Start Blend" '(22 9 129)
-		    SF-COLOR      _"End Blend" '(129 9 82))
+		    SF-GRADIENT   _"Background Gradient" "Golden"
+		    ; SF-COLOR      _"Start Blend" '(22 9 129)
+		    ; SF-COLOR      _"End Blend" '(129 9 82)
+		    )
