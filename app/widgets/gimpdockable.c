@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
@@ -174,7 +176,7 @@ gimp_dockable_size_request (GtkWidget      *widget,
   if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
     {
       GtkRequisition child_requisition;
-      
+
       gtk_widget_size_request (bin->child, &child_requisition);
 
       requisition->width  += child_requisition.width;
@@ -249,6 +251,8 @@ gimp_dockable_new (const gchar                *name,
   dockable->get_preview_func = get_preview_func;
   dockable->get_preview_data = get_preview_data;
   dockable->set_context_func = set_context_func;
+
+  gimp_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
 
   return GTK_WIDGET (dockable);
 }

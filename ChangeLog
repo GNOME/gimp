@@ -1,3 +1,12 @@
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/grid-dialog.c: use GIMP_HELP_IMAGE_GRID.
+
+	* app/gui/image-menu.c: fixed some help ID copy & paste bugs.
+
+	* app/widgets/gimpdockable.c: forgot to actually set the help ID
+	with gimp_help_set_help_data().
+
 2003-08-26  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]

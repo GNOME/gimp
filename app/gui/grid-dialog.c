@@ -42,6 +42,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimppropwidgets.h"
 
@@ -115,7 +116,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                      _("Configure Grid"), "configure_grid",
                                      GIMP_STOCK_GRID, _("Configure Image Grid"),
                                      gimp_standard_help_func,
-                                     "dialogs/configure_grid.html",
+                                     GIMP_HELP_IMAGE_GRID,
 
                                      GIMP_STOCK_RESET, reset_callback,
                                      NULL, NULL, NULL, FALSE, FALSE,
