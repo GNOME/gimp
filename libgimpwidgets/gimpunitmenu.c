@@ -104,6 +104,12 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  /**
+   * GimpUnitMenu::unit-changed:
+   *
+   * This signal is emitted whenever the user selects a #GimpUnit from
+   * the #GimpUnitMenu.
+   **/
   gimp_unit_menu_signals[UNIT_CHANGED] =
     g_signal_new ("unit_changed",
 		  G_TYPE_FROM_CLASS (klass),

@@ -90,8 +90,7 @@ gimp_coordinates_new()
 
 <!-- ##### SIGNAL GimpUnitMenu::unit-changed ##### -->
 <para>
-This signal is emitted whenever the user selects a #GimpUnit from the
-#GimpUnitMenu.
+
 </para>
 
 @gimpunitmenu: the object which received the signal.

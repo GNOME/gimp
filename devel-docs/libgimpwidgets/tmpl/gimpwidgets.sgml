@@ -301,6 +301,7 @@ Returns the #GtkAdjustment of the random_seed's #GtkSpinButton.
 </para>
 
 @seed: 
+@random_seed: 
 @Returns: 
 
 

@@ -104,6 +104,11 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  /**
+   * GimpFileEntry::filename-changed:
+   *
+   * This signal is emitted whenever the user changes the filename.
+   **/
   gimp_file_entry_signals[FILENAME_CHANGED] =
     g_signal_new ("filename_changed",
 		  G_TYPE_FROM_CLASS (klass),

@@ -1,3 +1,15 @@
+2003-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpfileentry.c
+	* libgimpwidgets/gimppatheditor.c
+	* libgimpwidgets/gimpunitmenu.c (*_class_init): moved signal
+	documentation from the gtk-doc templates to comments.
+
+	* libgimpwidgets/gimppatheditor.c (gimp_path_editor_set_path):
+	emit the "path-changed" signal.
+
+	* libgimpwidgets/gimppatheditor.[ch]: s/gpe/editor/g.
+
 2003-12-17  Dave Neary  <bolsh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.[ch]: Change randomize boolean to 

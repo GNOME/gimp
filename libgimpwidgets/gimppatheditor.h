@@ -63,7 +63,7 @@ struct _GimpPathEditorClass
 {
   GtkVBoxClass  parent_class;
 
-  void (* path_changed) (GimpPathEditor *gpe);
+  void (* path_changed) (GimpPathEditor *editor);
 };
 
 
@@ -74,8 +74,8 @@ GType       gimp_path_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
 				       const gchar    *path);
 
-gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
-void        gimp_path_editor_set_path (GimpPathEditor *gpe,
+gchar     * gimp_path_editor_get_path (GimpPathEditor *editor);
+void        gimp_path_editor_set_path (GimpPathEditor *editor,
                                        const gchar    *path);
 
 

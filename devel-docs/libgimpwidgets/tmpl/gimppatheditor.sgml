@@ -51,8 +51,10 @@ the search path, the "path_changed" signal will be emitted.
 
 </para>
 
-@gpe: 
+@editor: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@gpe: 
 
 
 <!-- ##### FUNCTION gimp_path_editor_set_path ##### -->
@@ -60,14 +62,15 @@ the search path, the "path_changed" signal will be emitted.
 
 </para>
 
-@gpe: 
+@editor: 
 @path: 
+<!-- # Unused Parameters # -->
+@gpe: 
 
 
 <!-- ##### SIGNAL GimpPathEditor::path-changed ##### -->
 <para>
-This signal is emitted whenever the user adds, deletes, modifies or
-reorders an element of the search path.
+
 </para>
 
 @gimppatheditor: the object which received the signal.
