@@ -68,7 +68,6 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimplimits.h>
 
 #include "libgimp/stdplugins-intl.h"
 

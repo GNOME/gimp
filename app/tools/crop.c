@@ -244,19 +244,23 @@ crop_button_press (Tool           *tool,
     {
       /*  If the cursor is in either the upper left or lower right boxes,
 	  The new function will be to resize the current crop area        */
-      if (bevent->x == BOUNDS (bevent->x, crop->x1, crop->x1 + crop->srw) &&
-	  bevent->y == BOUNDS (bevent->y, crop->y1, crop->y1 + crop->srh))
+      if (bevent->x == CLAMP (bevent->x, crop->x1, crop->x1 + crop->srw) &&
+	  bevent->y == CLAMP (bevent->y, crop->y1, crop->y1 + crop->srh))
 	crop->function = RESIZING_LEFT;
-      else if (bevent->x == BOUNDS (bevent->x, crop->x2 - crop->srw, crop->x2) &&
-	       bevent->y == BOUNDS (bevent->y, crop->y2 - crop->srh, crop->y2))
+      else if (bevent->x == CLAMP (bevent->x, crop->x2 - crop->srw, crop->x2) &&
+	       bevent->y == CLAMP (bevent->y, crop->y2 - crop->srh, crop->y2))
 	crop->function = RESIZING_RIGHT;
 
       /*  If the cursor is in either the upper right or lower left boxes,
 	  The new function will be to translate the current crop area     */
-      else if  ((bevent->x == BOUNDS (bevent->x, crop->x1, crop->x1 + crop->srw) &&
-		 bevent->y == BOUNDS (bevent->y, crop->y2 - crop->srh, crop->y2)) ||
-		(bevent->x == BOUNDS (bevent->x, crop->x2 - crop->srw, crop->x2) &&
-		 bevent->y == BOUNDS (bevent->y, crop->y1, crop->y1 + crop->srh)))
+      else if  ((bevent->x == CLAMP (bevent->x,
+				     crop->x1, crop->x1 + crop->srw) &&
+		 bevent->y == CLAMP (bevent->y,
+				     crop->y2 - crop->srh, crop->y2)) ||
+		(bevent->x == CLAMP (bevent->x,
+				     crop->x2 - crop->srw, crop->x2) &&
+		 bevent->y == CLAMP (bevent->y,
+				     crop->y1, crop->y1 + crop->srh)))
 	crop->function = MOVING;
 
       /*  If the pointer is in the rectangular region, crop or resize it!  */
@@ -439,10 +443,10 @@ crop_motion (Tool           *tool,
     case CREATING :
       if (!crop_options->allow_enlarge)
 	{
-	  x1 = BOUNDS (x1, min_x, max_x);
-	  y1 = BOUNDS (y1, min_y, max_y);
-	  x2 = BOUNDS (x2, min_x, max_x);
-	  y2 = BOUNDS (y2, min_y, max_y);
+	  x1 = CLAMP (x1, min_x, max_x);
+	  y1 = CLAMP (y1, min_y, max_y);
+	  x2 = CLAMP (x2, min_x, max_x);
+	  y2 = CLAMP (y2, min_y, max_y);
 	}
       break;
 
@@ -451,11 +455,11 @@ crop_motion (Tool           *tool,
       y1 = crop->ty1 + inc_y;
       if (!crop_options->allow_enlarge)
 	{
-	  x1 = BOUNDS (x1, min_x, max_x);
-	  y1 = BOUNDS (y1, min_y, max_y);
+	  x1 = CLAMP (x1, min_x, max_x);
+	  y1 = CLAMP (y1, min_y, max_y);
 	}
-      x2 = MAXIMUM (x1, crop->tx2);
-      y2 = MAXIMUM (y1, crop->ty2);
+      x2 = MAX (x1, crop->tx2);
+      y2 = MAX (y1, crop->ty2);
       crop->startx = curx;
       crop->starty = cury;
       break;
@@ -465,11 +469,11 @@ crop_motion (Tool           *tool,
       y2 = crop->ty2 + inc_y;
       if (!crop_options->allow_enlarge)
 	{
-	  x2 = BOUNDS (x2, min_x, max_x);
-	  y2 = BOUNDS (y2, min_y, max_y);
+	  x2 = CLAMP (x2, min_x, max_x);
+	  y2 = CLAMP (y2, min_y, max_y);
 	}
-      x1 = MINIMUM (crop->tx1, x2);
-      y1 = MINIMUM (crop->ty1, y2);
+      x1 = MIN (crop->tx1, x2);
+      y1 = MIN (crop->ty1, y2);
       crop->startx = curx;
       crop->starty = cury;
       break;
@@ -477,8 +481,8 @@ crop_motion (Tool           *tool,
     case MOVING :
       if (!crop_options->allow_enlarge)
 	{
-	  inc_x = BOUNDS (inc_x, min_x - crop->tx1, max_x - crop->tx2);
-	  inc_y = BOUNDS (inc_y, min_y - crop->ty1, max_y - crop->ty2);
+	  inc_x = CLAMP (inc_x, min_x - crop->tx1, max_x - crop->tx2);
+	  inc_y = CLAMP (inc_y, min_y - crop->ty1, max_y - crop->ty2);
 	}
       x1 = crop->tx1 + inc_x;
       x2 = crop->tx2 + inc_x;
@@ -490,10 +494,10 @@ crop_motion (Tool           *tool,
     }
 
   /*  make sure that the coords are in bounds  */
-  crop->tx1 = MINIMUM (x1, x2);
-  crop->ty1 = MINIMUM (y1, y2);
-  crop->tx2 = MAXIMUM (x1, x2);
-  crop->ty2 = MAXIMUM (y1, y2);
+  crop->tx1 = MIN (x1, x2);
+  crop->ty1 = MIN (y1, y2);
+  crop->tx2 = MAX (x1, x2);
+  crop->ty2 = MAX (y1, y2);
 
   crop->lastx = curx;
   crop->lasty = cury;
@@ -545,17 +549,17 @@ crop_cursor_update (Tool           *tool,
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp_ptr != gdisp_ptr))
     ctype = GDK_CROSS;
-  else if (mevent->x == BOUNDS (mevent->x, crop->x1, crop->x1 + crop->srw) &&
-      mevent->y == BOUNDS (mevent->y, crop->y1, crop->y1 + crop->srh))
+  else if (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
+	   mevent->y == CLAMP (mevent->y, crop->y1, crop->y1 + crop->srh))
     ctype = GDK_TOP_LEFT_CORNER;
-  else if (mevent->x == BOUNDS (mevent->x, crop->x2 - crop->srw, crop->x2) &&
-	   mevent->y == BOUNDS (mevent->y, crop->y2 - crop->srh, crop->y2))
+  else if (mevent->x == CLAMP (mevent->x, crop->x2 - crop->srw, crop->x2) &&
+	   mevent->y == CLAMP (mevent->y, crop->y2 - crop->srh, crop->y2))
     ctype = GDK_BOTTOM_RIGHT_CORNER;
-  else if  (mevent->x == BOUNDS (mevent->x, crop->x1, crop->x1 + crop->srw) &&
-	    mevent->y == BOUNDS (mevent->y, crop->y2 - crop->srh, crop->y2))
+  else if  (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
+	    mevent->y == CLAMP (mevent->y, crop->y2 - crop->srh, crop->y2))
     ctype = GDK_FLEUR;
-  else if  (mevent->x == BOUNDS (mevent->x, crop->x2 - crop->srw, crop->x2) &&
-	    mevent->y == BOUNDS (mevent->y, crop->y1, crop->y1 + crop->srh))
+  else if  (mevent->x == CLAMP (mevent->x, crop->x2 - crop->srw, crop->x2) &&
+	    mevent->y == CLAMP (mevent->y, crop->y1, crop->y1 + crop->srh))
     ctype = GDK_FLEUR;
   else if (mevent->x > crop->x1 && mevent->x < crop->x2 &&
 	   mevent->y > crop->y1 && mevent->y < crop->y2)
@@ -626,18 +630,20 @@ crop_arrow_keys_func (Tool        *tool,
 	  crop->ty2 = crop->ty2 + inc_y;
 	  if (!crop_options->allow_enlarge)
 	    {
-	      crop->tx2 = BOUNDS (crop->tx2, min_x, max_x);
-	      crop->ty2 = BOUNDS (crop->ty2, min_y, max_y);
+	      crop->tx2 = CLAMP (crop->tx2, min_x, max_x);
+	      crop->ty2 = CLAMP (crop->ty2, min_y, max_y);
 	    }
-	  crop->tx1 = MINIMUM (crop->tx1, crop->tx2);
-	  crop->ty1 = MINIMUM (crop->ty1, crop->ty2);
+	  crop->tx1 = MIN (crop->tx1, crop->tx2);
+	  crop->ty1 = MIN (crop->ty1, crop->ty2);
 	}
       else
 	{
 	  if (!crop_options->allow_enlarge)
 	    {	  
-	      inc_x = BOUNDS (inc_x, -crop->tx1, gdisp->gimage->width - crop->tx2);
-	      inc_y = BOUNDS (inc_y, -crop->ty1, gdisp->gimage->height - crop->ty2);
+	      inc_x = CLAMP (inc_x,
+			     -crop->tx1, gdisp->gimage->width - crop->tx2);
+	      inc_y = CLAMP (inc_y,
+			     -crop->ty1, gdisp->gimage->height - crop->ty2);
 	    }
 	  crop->tx1 += inc_x;
 	  crop->tx2 += inc_x;
@@ -887,10 +893,12 @@ crop_image (GImage *gimage,
 	  {
 	    drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-	    lx1 = BOUNDS (off_x, 0, gimage->width);
-	    ly1 = BOUNDS (off_y, 0, gimage->height);
-	    lx2 = BOUNDS ((drawable_width (GIMP_DRAWABLE (layer)) + off_x), 0, gimage->width);
-	    ly2 = BOUNDS ((drawable_height (GIMP_DRAWABLE (layer)) + off_y), 0, gimage->height);
+	    lx1 = CLAMP (off_x, 0, gimage->width);
+	    ly1 = CLAMP (off_y, 0, gimage->height);
+	    lx2 = CLAMP ((drawable_width (GIMP_DRAWABLE (layer)) + off_x),
+			 0, gimage->width);
+	    ly2 = CLAMP ((drawable_height (GIMP_DRAWABLE (layer)) + off_y),
+			 0, gimage->height);
 	    width = lx2 - lx1;
 	    height = ly2 - ly1;
 	    

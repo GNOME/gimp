@@ -750,9 +750,9 @@ resize_bound_off_x (Resize *resize,
   private = (ResizePrivate *) resize->private_part;
 
   if (private->old_width <= resize->width)
-    off_x = BOUNDS (off_x, 0, (resize->width - private->old_width));
+    off_x = CLAMP (off_x, 0, (resize->width - private->old_width));
   else
-    off_x = BOUNDS (off_x, (resize->width - private->old_width), 0);
+    off_x = CLAMP (off_x, (resize->width - private->old_width), 0);
 
   return off_x;
 }
@@ -766,9 +766,9 @@ resize_bound_off_y (Resize *resize,
   private = (ResizePrivate *) resize->private_part;
 
   if (private->old_height <= resize->height)
-    off_y = BOUNDS (off_y, 0, (resize->height - private->old_height));
+    off_y = CLAMP (off_y, 0, (resize->height - private->old_height));
   else
-    off_y = BOUNDS (off_y, (resize->height - private->old_height), 0);
+    off_y = CLAMP (off_y, (resize->height - private->old_height), 0);
 
   return off_y;
 }
@@ -881,13 +881,13 @@ size_callback (GtkWidget *widget,
 	{
 	  ratio_y = ratio_x;
 	  height = (double) private->old_height * ratio_y;
-	  height = BOUNDS (height, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+	  height = CLAMP (height, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 	}
       else
 	{
 	  ratio_x = ratio_y;
 	  width = (double) private->old_width * ratio_x;
-	  width = BOUNDS (width, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+	  width = CLAMP (width, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 	}
     }
 
@@ -926,10 +926,10 @@ ratio_callback (GtkWidget *widget,
 	}
     }
 
-  width = BOUNDS (private->old_width * ratio_x,
+  width = CLAMP (private->old_width * ratio_x,
+		 GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+  height = CLAMP (private->old_height * ratio_y,
 		  GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
-  height = BOUNDS (private->old_height * ratio_y,
-		   GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   size_update (resize, width, height, ratio_x, ratio_y);
 }
@@ -1028,10 +1028,10 @@ printsize_update (GtkWidget *widget,
    *  meaningless for the "print size" widgets) to calculate the new
    *  resolution.
    */
-  res_x = BOUNDS (resize->resolution_x * width / print_width,
-		  GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-  res_y = BOUNDS (resize->resolution_y * height / print_height,
-		  GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  res_x = CLAMP (resize->resolution_x * width / print_width,
+		 GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  res_y = CLAMP (resize->resolution_y * height / print_height,
+		 GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
     {

@@ -162,14 +162,16 @@ rect_select_button_press (Tool           *tool,
   tool->gdisp_ptr = gdisp_ptr;
 
   switch (rect_sel->op)
-  {
-   case SELECTION_MOVE_MASK:
-     init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
-     return;
-   case SELECTION_MOVE:
-     init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
-     return;
-  }
+    {
+    case SELECTION_MOVE_MASK:
+      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+      return;
+    case SELECTION_MOVE:
+      init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+      return;
+    default:
+      break;
+    }
 
   /* initialize the statusbar display */
   rect_sel->context_id =
@@ -343,7 +345,7 @@ rect_select_motion (Tool           *tool,
   /*  If the shift key is down, then make the rectangle square (or ellipse circular) */
   if ((mevent->state & GDK_SHIFT_MASK) && !rect_sel->fixed_size)
     {
-      s = MAXIMUM(abs(w), abs(h));
+      s = MAX (abs (w), abs (h));
 	  
       if (w < 0)
 		w = -s;
@@ -432,10 +434,10 @@ rect_select_draw (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
-  x1 = MINIMUM (rect_sel->x, rect_sel->x + rect_sel->w);
-  y1 = MINIMUM (rect_sel->y, rect_sel->y + rect_sel->h);
-  x2 = MAXIMUM (rect_sel->x, rect_sel->x + rect_sel->w);
-  y2 = MAXIMUM (rect_sel->y, rect_sel->y + rect_sel->h);
+  x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
+  y1 = MIN (rect_sel->y, rect_sel->y + rect_sel->h);
+  x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
+  y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
 
   gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, 0);
   gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, 0);

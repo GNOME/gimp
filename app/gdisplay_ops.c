@@ -192,8 +192,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = MINIMUM (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
-      y = MINIMUM (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
+      x = MIN (shell_x, CLAMP (s_width - shell_width, border_x, s_width));
+      y = MIN (shell_y, CLAMP (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -208,8 +208,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   else if ((width > disp_width || height > disp_height) &&
 	   (disp_width < max_auto_width || disp_height < max_auto_height))
     {
-      max_auto_width = MINIMUM (max_auto_width, width);
-      max_auto_height = MINIMUM (max_auto_height, height);
+      max_auto_width = MIN (max_auto_width, width);
+      max_auto_height = MIN (max_auto_height, height);
       
       if (width < gdisp->statusarea->requisition.width) 
         { 
@@ -233,8 +233,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = MINIMUM (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
-      y = MINIMUM (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
+      x = MIN (shell_x, CLAMP (s_width - shell_width, border_x, s_width));
+      y = MIN (shell_y, CLAMP (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -269,8 +269,8 @@ gdisplay_resize_image (GDisplay *gdisp)
   /*  Calculate the width and height of the new canvas  */
   sx = SCALEX (gdisp, gdisp->gimage->width);
   sy = SCALEY (gdisp, gdisp->gimage->height);
-  width = MINIMUM (sx, gdisp->disp_width);
-  height = MINIMUM (sy, gdisp->disp_height);
+  width = MIN (sx, gdisp->disp_width);
+  height = MIN (sy, gdisp->disp_height);
 
   /* if the new dimensions of the ximage are different than the old...resize */
   if (width != gdisp->disp_width || height != gdisp->disp_height)

@@ -226,8 +226,8 @@ magnify_button_release (Tool           *tool,
 
       /* these change the user zoom level, so should not be changed to
        * the resolution-aware scale macros -- austin */
-      scalesrc = SCALESRC(gdisp);
-      scaledest = SCALEDEST(gdisp);
+      scalesrc = SCALESRC (gdisp);
+      scaledest = SCALEDEST (gdisp);
 
       win_width = gdisp->disp_width;
       win_height = gdisp->disp_height;
@@ -237,7 +237,7 @@ magnify_button_release (Tool           *tool,
       if (!w || !h)
 	scale = 1;
       else
-	scale = MINIMUM ((width / w), (height / h));
+	scale = MIN ((width / w), (height / h));
 
       switch (magnify->op)
 	{

@@ -300,14 +300,14 @@ gimp_brush_generated_generate (GimpBrushGenerated *brush)
   /* compute the range of the brush. should do a better job than this? */
   s = sin (brush->angle*G_PI/180.0);
   c = cos (brush->angle*G_PI/180.0);
-  tx = MAXIMUM (fabs (c*ceil (brush->radius) - s*ceil (brush->radius)
-		      / brush->aspect_ratio), 
-	       fabs (c*ceil (brush->radius) + s*ceil (brush->radius)
-		     / brush->aspect_ratio));
-  ty = MAXIMUM (fabs (s*ceil (brush->radius) + c*ceil (brush->radius)
-		      / brush->aspect_ratio),
-	       fabs (s*ceil (brush->radius) - c*ceil (brush->radius)
-		     / brush->aspect_ratio));
+  tx = MAX (fabs (c*ceil (brush->radius) - s*ceil (brush->radius)
+		  / brush->aspect_ratio), 
+	    fabs (c*ceil (brush->radius) + s*ceil (brush->radius)
+		  / brush->aspect_ratio));
+  ty = MAX (fabs (s*ceil (brush->radius) + c*ceil (brush->radius)
+		  / brush->aspect_ratio),
+	    fabs (s*ceil (brush->radius) - c*ceil (brush->radius)
+		  / brush->aspect_ratio));
   if (brush->radius > tx)
     width = ceil (tx);
   else

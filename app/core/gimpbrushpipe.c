@@ -159,13 +159,13 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 	  ix = pipe->index[i];
 	  break;
 	}
-      pipe->index[i] = BOUNDS (ix, 0, pipe->rank[i]-1);
+      pipe->index[i] = CLAMP (ix, 0, pipe->rank[i]-1);
       brushix += pipe->stride[i] * pipe->index[i];
       /* g_print ("ix at %d: %d, brushix: %d\n", i, ix, brushix); */
     }
 
   /* Make sure is inside bounds */
-  brushix = BOUNDS (brushix, 0, pipe->nbrushes-1);
+  brushix = CLAMP (brushix, 0, pipe->nbrushes-1);
 
   pipe->current = pipe->brushes[brushix];
 

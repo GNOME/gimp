@@ -164,7 +164,7 @@ add_lut_new(double ammount, int nchannels)
   return lut;
 }
 
-/* ---------------- intersect (MINIMUM(pixel, value)) ------------------ */
+/* ---------------- intersect (MIN (pixel, value)) ------------------ */
 
 static float
 intersect_lut_func(double *min,
@@ -174,7 +174,7 @@ intersect_lut_func(double *min,
   if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
     return value;
 
-  return MIN(value, *min);
+  return MIN (value, *min);
 }
 
 void

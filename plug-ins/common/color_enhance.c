@@ -30,13 +30,14 @@
    and preserves hue. Most code is taken from autostretch_hsv */
 
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
-#include "libgimp/gimp.h"
 
-#include "config.h"
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
-#include "libgimp/gimpcolorspace.h"
 
 /* Declare local functions.
  */

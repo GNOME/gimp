@@ -460,7 +460,7 @@ get_portion_height (PixelRegionIterator *PRI)
 	  if (PRH->PR->tiles)
 	    {
 	      height = TILE_HEIGHT - (PRH->PR->y % TILE_HEIGHT);
-	      height = BOUNDS (height, 0, (PRI->region_height - (PRH->PR->y - PRH->starty)));
+	      height = CLAMP (height, 0, (PRI->region_height - (PRH->PR->y - PRH->starty)));
 	    }
 	  else
 	    height = (PRI->region_height - (PRH->PR->y - PRH->starty));
@@ -502,7 +502,7 @@ get_portion_width (PixelRegionIterator *PRI)
 	  if (PRH->PR->tiles)
 	    {
 	      width = TILE_WIDTH - (PRH->PR->x % TILE_WIDTH);
-	      width = BOUNDS (width, 0, (PRI->region_width - (PRH->PR->x - PRH->startx)));
+	      width = CLAMP (width, 0, (PRI->region_width - (PRH->PR->x - PRH->startx)));
 	    }
 	  else
 	    width = (PRI->region_width - (PRH->PR->x - PRH->startx));

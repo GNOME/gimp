@@ -2230,8 +2230,8 @@ bezier_convert (BezierSelect *bezier_sel,
 */
             {
 	      /*  bounds checking  */
-	      x = BOUNDS (x, 0, width);
-	      x2 = BOUNDS ((long) list->data, 0, width);
+	      x = CLAMP (x, 0, width);
+	      x2 = CLAMP ((long) list->data, 0, width);
 
 	      w = x2 - x;
 

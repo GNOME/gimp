@@ -401,10 +401,10 @@ bucket_fill (GimpImage      *gimage,
 
 	  /*  Limit the channel bounds to the drawable's extents  */
 	  drawable_offsets (drawable, &off_x, &off_y);
-	  x1 = BOUNDS (x1, off_x, (off_x + drawable_width (drawable)));
-	  y1 = BOUNDS (y1, off_y, (off_y + drawable_height (drawable)));
-	  x2 = BOUNDS (x2, off_x, (off_x + drawable_width (drawable)));
-	  y2 = BOUNDS (y2, off_y, (off_y + drawable_height (drawable)));
+	  x1 = CLAMP (x1, off_x, (off_x + drawable_width (drawable)));
+	  y1 = CLAMP (y1, off_y, (off_y + drawable_height (drawable)));
+	  x2 = CLAMP (x2, off_x, (off_x + drawable_width (drawable)));
+	  y2 = CLAMP (y2, off_y, (off_y + drawable_height (drawable)));
 
 	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)), 
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);

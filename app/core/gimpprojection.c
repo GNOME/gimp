@@ -421,17 +421,17 @@ gdisplay_process_area_list (GSList *list,
       ga2 = (GArea *) l->data;
       area1 = (ga1->x2 - ga1->x1) * (ga1->y2 - ga1->y1) + OVERHEAD;
       area2 = (ga2->x2 - ga2->x1) * (ga2->y2 - ga2->y1) + OVERHEAD;
-      area3 = (MAXIMUM (ga2->x2, ga1->x2) - MINIMUM (ga2->x1, ga1->x1)) *
-	(MAXIMUM (ga2->y2, ga1->y2) - MINIMUM (ga2->y1, ga1->y1)) + OVERHEAD;
+      area3 = (MAX (ga2->x2, ga1->x2) - MIN (ga2->x1, ga1->x1)) *
+	(MAX (ga2->y2, ga1->y2) - MIN (ga2->y1, ga1->y1)) + OVERHEAD;
 
       if ((area1 + area2) < area3)
 	new_list = g_slist_prepend (new_list, ga2);
       else
 	{
-	  ga1->x1 = MINIMUM (ga1->x1, ga2->x1);
-	  ga1->y1 = MINIMUM (ga1->y1, ga2->y1);
-	  ga1->x2 = MAXIMUM (ga1->x2, ga2->x2);
-	  ga1->y2 = MAXIMUM (ga1->y2, ga2->y2);
+	  ga1->x1 = MIN (ga1->x1, ga2->x1);
+	  ga1->y1 = MIN (ga1->y1, ga2->y1);
+	  ga1->x2 = MAX (ga1->x2, ga2->x2);
+	  ga1->y2 = MAX (ga1->y2, ga2->y2);
 
 	  g_free (ga2);
 	}
@@ -1180,10 +1180,10 @@ gdisplay_add_update_area (GDisplay *gdisp,
   GArea * ga;
 
   ga = (GArea *) g_malloc (sizeof (GArea));
-  ga->x1 = BOUNDS (x, 0, gdisp->gimage->width);
-  ga->y1 = BOUNDS (y, 0, gdisp->gimage->height);
-  ga->x2 = BOUNDS (x + w, 0, gdisp->gimage->width);
-  ga->y2 = BOUNDS (y + h, 0, gdisp->gimage->height);
+  ga->x1 = CLAMP (x, 0, gdisp->gimage->width);
+  ga->y1 = CLAMP (y, 0, gdisp->gimage->height);
+  ga->x2 = CLAMP (x + w, 0, gdisp->gimage->width);
+  ga->y2 = CLAMP (y + h, 0, gdisp->gimage->height);
 
   gdisp->update_areas = gdisplay_process_area_list (gdisp->update_areas, ga);
 }
@@ -1200,10 +1200,10 @@ gdisplay_add_display_area (GDisplay *gdisp,
 
   ga = (GArea *) g_malloc (sizeof (GArea));
 
-  ga->x1 = BOUNDS (x, 0, gdisp->disp_width);
-  ga->y1 = BOUNDS (y, 0, gdisp->disp_height);
-  ga->x2 = BOUNDS (x + w, 0, gdisp->disp_width);
-  ga->y2 = BOUNDS (y + h, 0, gdisp->disp_height);
+  ga->x1 = CLAMP (x, 0, gdisp->disp_width);
+  ga->y1 = CLAMP (y, 0, gdisp->disp_height);
+  ga->x2 = CLAMP (x + w, 0, gdisp->disp_width);
+  ga->y2 = CLAMP (y + h, 0, gdisp->disp_height);
 
   gdisp->display_areas = gdisplay_process_area_list (gdisp->display_areas, ga);
 }
@@ -1219,10 +1219,10 @@ gdisplay_paint_area (GDisplay *gdisp,
   int x1, y1, x2, y2;
 
   /*  Bounds check  */
-  x1 = BOUNDS (x, 0, gdisp->gimage->width);
-  y1 = BOUNDS (y, 0, gdisp->gimage->height);
-  x2 = BOUNDS (x + w, 0, gdisp->gimage->width);
-  y2 = BOUNDS (y + h, 0, gdisp->gimage->height);
+  x1 = CLAMP (x, 0, gdisp->gimage->width);
+  y1 = CLAMP (y, 0, gdisp->gimage->height);
+  x2 = CLAMP (x + w, 0, gdisp->gimage->width);
+  y2 = CLAMP (y + h, 0, gdisp->gimage->height);
   x = x1;
   y = y1;
   w = (x2 - x1);
@@ -1267,10 +1267,10 @@ gdisplay_display_area (GDisplay *gdisp,
   sy = SCALEY (gdisp, gdisp->gimage->height);
 
   /*  Bounds check  */
-  x1 = BOUNDS (x, 0, gdisp->disp_width);
-  y1 = BOUNDS (y, 0, gdisp->disp_height);
-  x2 = BOUNDS (x + w, 0, gdisp->disp_width);
-  y2 = BOUNDS (y + h, 0, gdisp->disp_height);
+  x1 = CLAMP (x, 0, gdisp->disp_width);
+  y1 = CLAMP (y, 0, gdisp->disp_height);
+  x2 = CLAMP (x + w, 0, gdisp->disp_width);
+  y2 = CLAMP (y + h, 0, gdisp->disp_height);
 
   if (y1 < gdisp->disp_yoffset)
     {
@@ -1386,15 +1386,15 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 	{
 	  *x1 = off_x;
 	  *y1 = off_y;
-	  *x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
-	  *y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
+	  *x2 = off_x + drawable_width (GIMP_DRAWABLE (layer));
+	  *y2 = off_y + drawable_height (GIMP_DRAWABLE (layer));
 	}
       else
 	{
-	  *x1 = MINIMUM (off_x, *x1);
-	  *y1 = MINIMUM (off_y, *y1);
-	  *x2 = MAXIMUM (off_x + drawable_width (GIMP_DRAWABLE(layer)), *x2);
-	  *y2 = MAXIMUM (off_y + drawable_height (GIMP_DRAWABLE(layer)), *y2);
+	  *x1 = MIN (off_x, *x1);
+	  *y1 = MIN (off_y, *y1);
+	  *x2 = MAX (off_x + drawable_width (GIMP_DRAWABLE (layer)), *x2);
+	  *y2 = MAX (off_y + drawable_height (GIMP_DRAWABLE (layer)), *y2);
 	}
     }
   else if (! channel_bounds (gimage_get_mask (gdisp->gimage), x1, y1, x2, y2))
@@ -1404,10 +1404,10 @@ gdisplay_mask_bounds (GDisplay *gdisp,
   gdisplay_transform_coords (gdisp, *x2, *y2, x2, y2, 0);
 
   /*  Make sure the extents are within bounds  */
-  *x1 = BOUNDS (*x1, 0, gdisp->disp_width);
-  *y1 = BOUNDS (*y1, 0, gdisp->disp_height);
-  *x2 = BOUNDS (*x2, 0, gdisp->disp_width);
-  *y2 = BOUNDS (*y2, 0, gdisp->disp_height);
+  *x1 = CLAMP (*x1, 0, gdisp->disp_width);
+  *y1 = CLAMP (*y1, 0, gdisp->disp_height);
+  *x2 = CLAMP (*x2, 0, gdisp->disp_width);
+  *y2 = CLAMP (*y2, 0, gdisp->disp_height);
 
   return TRUE;
 }

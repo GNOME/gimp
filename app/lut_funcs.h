@@ -47,7 +47,7 @@ GimpLut *invert_lut_new   (int nchannels);
 void     add_lut_setup (GimpLut *lut, double ammount, int nchannels);
 GimpLut *add_lut_new   (double ammount, int nchannels);
 
-/* intersect (MINIMUM(pixel, value)) */
+/* intersect (MIN (pixel, value)) */
 void     intersect_lut_setup (GimpLut *lut, double value, int nchannels);
 GimpLut *intersect_lut_new   (double value, int nchannels);
 

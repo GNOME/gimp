@@ -419,8 +419,8 @@ iscissors_button_press (Tool           *tool,
       if (! (bevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
-      iscissors->x = BOUNDS (iscissors->x, 0, gdisp->gimage->width - 1);
-      iscissors->y = BOUNDS (iscissors->y, 0, gdisp->gimage->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
       iscissors->ix = iscissors->x;
       iscissors->iy = iscissors->y;
@@ -700,8 +700,8 @@ iscissors_motion (Tool           *tool,
       if (! (mevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
-      iscissors->x = BOUNDS (iscissors->x, 0, gdisp->gimage->width - 1);
-      iscissors->y = BOUNDS (iscissors->y, 0, gdisp->gimage->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
       if (iscissors->first_point)
 	{
@@ -715,8 +715,8 @@ iscissors_motion (Tool           *tool,
       if (! (mevent->state & GDK_SHIFT_MASK))
 	find_max_gradient (iscissors, gdisp->gimage,
 			   &iscissors->x, &iscissors->y);
-      iscissors->x = BOUNDS (iscissors->x, 0, gdisp->gimage->width - 1);
-      iscissors->y = BOUNDS (iscissors->y, 0, gdisp->gimage->height - 1);
+      iscissors->x = CLAMP (iscissors->x, 0, gdisp->gimage->width - 1);
+      iscissors->y = CLAMP (iscissors->y, 0, gdisp->gimage->height - 1);
 
       iscissors->nx = iscissors->x;
       iscissors->ny = iscissors->y;
@@ -1197,14 +1197,14 @@ calculate_curve (Tool *tool, ICurve *curve)
   iscissors = (Iscissors *) tool->private;
 
   /*  Get the bounding box  */
-  xs = BOUNDS (curve->x1, 0, gdisp->gimage->width - 1);
-  ys = BOUNDS (curve->y1, 0, gdisp->gimage->height - 1);
-  xe = BOUNDS (curve->x2, 0, gdisp->gimage->width - 1);
-  ye = BOUNDS (curve->y2, 0, gdisp->gimage->height - 1);
-  x1 = MINIMUM (xs, xe);
-  y1 = MINIMUM (ys, ye);
-  x2 = MAXIMUM (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
-  y2 = MAXIMUM (ys, ye) + 1;
+  xs = CLAMP (curve->x1, 0, gdisp->gimage->width - 1);
+  ys = CLAMP (curve->y1, 0, gdisp->gimage->height - 1);
+  xe = CLAMP (curve->x2, 0, gdisp->gimage->width - 1);
+  ye = CLAMP (curve->y2, 0, gdisp->gimage->height - 1);
+  x1 = MIN (xs, xe);
+  y1 = MIN (ys, ye);
+  x2 = MAX (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
+  y2 = MAX (ys, ye) + 1;
 
   /*  expand the boundaries past the ending points by 
    *  some percentage of width and height.  This serves the following purpose:
@@ -1217,13 +1217,13 @@ calculate_curve (Tool *tool, ICurve *curve)
   eheight = (y2 - y1) * EXTEND_BY + FIXED;
 
   if (xe >= xs)
-    x2 += BOUNDS (ewidth, 0, gdisp->gimage->width - x2);
+    x2 += CLAMP (ewidth, 0, gdisp->gimage->width - x2);
   else
-    x1 -= BOUNDS (ewidth, 0, x1);
+    x1 -= CLAMP (ewidth, 0, x1);
   if (ye >= ys)
-    y2 += BOUNDS (eheight, 0, gdisp->gimage->height - y2);
+    y2 += CLAMP (eheight, 0, gdisp->gimage->height - y2);
   else
-    y1 -= BOUNDS (eheight, 0, y1);
+    y1 -= CLAMP (eheight, 0, y1);
 
   /* blow away any previous points list we might have */
   if (curve->points)
@@ -1723,14 +1723,14 @@ find_max_gradient (Iscissors *iscissors, GImage *gimage, int *x, int *y)
   radius = GRADIENT_SEARCH >> 1;
 
   /*  calculate the extent of the search  */
-  cx = BOUNDS (*x, 0, gimage->width);
-  cy = BOUNDS (*y, 0, gimage->height);
+  cx = CLAMP (*x, 0, gimage->width);
+  cy = CLAMP (*y, 0, gimage->height);
   sx = cx - radius;
   sy = cy - radius;
-  x1 = BOUNDS (cx - radius, 0, gimage->width);
-  y1 = BOUNDS (cy - radius, 0, gimage->height);
-  x2 = BOUNDS (cx + radius, 0, gimage->width);
-  y2 = BOUNDS (cy + radius, 0, gimage->height);
+  x1 = CLAMP (cx - radius, 0, gimage->width);
+  y1 = CLAMP (cy - radius, 0, gimage->height);
+  x2 = CLAMP (cx + radius, 0, gimage->width);
+  y2 = CLAMP (cy + radius, 0, gimage->height);
   /*  calculate the factor to multiply the distance from the cursor by  */
 
   max_gradient = 0;

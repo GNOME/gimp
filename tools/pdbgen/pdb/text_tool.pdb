@@ -314,7 +314,7 @@ text_xlfd_insert_size (gchar    *fontname,
       xresolution /= yresolution / (double) (int) yresolution;
 
       /*  finally, if xres became invalid by the above calculations  */
-      xresolution = BOUNDS (xresolution, 1.0, GIMP_MAX_RESOLUTION);
+      xresolution = CLAMP (xresolution, 1.0, GIMP_MAX_RESOLUTION);
     }
 
   sprintf (size_buffer, "%d", (int) size);

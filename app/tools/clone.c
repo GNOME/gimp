@@ -470,12 +470,12 @@ clone_motion (PaintCore            *paint_core,
        */
       if (src_drawable != drawable)
 	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (src_drawable));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (src_drawable));
-	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (src_drawable));
-	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (src_drawable));
+	  x1 = CLAMP (area->x + offset_x, 0, drawable_width (src_drawable));
+	  y1 = CLAMP (area->y + offset_y, 0, drawable_height (src_drawable));
+	  x2 = CLAMP (area->x + offset_x + area->width,
+		      0, drawable_width (src_drawable));
+	  y2 = CLAMP (area->y + offset_y + area->height,
+		      0, drawable_height (src_drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;
@@ -484,12 +484,12 @@ clone_motion (PaintCore            *paint_core,
 	}
       else
 	{
-	  x1 = BOUNDS (area->x + offset_x, 0, drawable_width (drawable));
-	  y1 = BOUNDS (area->y + offset_y, 0, drawable_height (drawable));
-	  x2 = BOUNDS (area->x + offset_x + area->width,
-		       0, drawable_width (drawable));
-	  y2 = BOUNDS (area->y + offset_y + area->height,
-		       0, drawable_height (drawable));
+	  x1 = CLAMP (area->x + offset_x, 0, drawable_width (drawable));
+	  y1 = CLAMP (area->y + offset_y, 0, drawable_height (drawable));
+	  x2 = CLAMP (area->x + offset_x + area->width,
+		      0, drawable_width (drawable));
+	  y2 = CLAMP (area->y + offset_y + area->height,
+		      0, drawable_height (drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;

@@ -58,7 +58,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimplimits.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
@@ -136,10 +136,10 @@ static void dialog_ok_callback    (GtkWidget *widget, gpointer data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc */
-  NULL,   /* quit_proc */
+  NULL,   /* init_proc  */
+  NULL,   /* quit_proc  */
   query,  /* query_proc */
-  run     /* run_proc */
+  run     /* run_proc   */
 };
 
 static whirl_pinch_vals_t wpvals =
@@ -187,11 +187,8 @@ query (void)
     { PARAM_FLOAT,    "pinch",     "Pinch amount" },
     { PARAM_FLOAT,    "radius",    "Radius (1.0 is the largest circle that fits in the image, "
       "and 2.0 goes all the way to the corners)" }
-  }; /* args */
-
-  static GParamDef *return_vals  = NULL;
-  static int        nargs        = sizeof(args) / sizeof(args[0]);
-  static int        nreturn_vals = 0;
+  };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -204,10 +201,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Whirl and Pinch..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -236,12 +231,12 @@ run (gchar   *name,
   /* Get the active drawable info */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width(drawable->id);
-  img_height    = gimp_drawable_height(drawable->id);
-  img_bpp       = gimp_drawable_bpp(drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width     = gimp_drawable_width (drawable->id);
+  img_height    = gimp_drawable_height (drawable->id);
+  img_bpp       = gimp_drawable_bpp (drawable->id);
+  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
 
-  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   /* Calculate scaling parameters */
 
@@ -276,17 +271,17 @@ run (gchar   *name,
 
   if (sel_width > sel_height)
     {
-      pwidth  = MIN(sel_width, PREVIEW_SIZE);
+      pwidth  = MIN (sel_width, PREVIEW_SIZE);
       pheight = sel_height * pwidth / sel_width;
     }
   else
     {
-      pheight = MIN(sel_height, PREVIEW_SIZE);
+      pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
 
-  preview_width  = MAX(pwidth, 2); /* Min size is 2 */
-  preview_height = MAX(pheight, 2);
+  preview_width  = MAX (pwidth, 2); /* Min size is 2 */
+  preview_height = MAX (pheight, 2);
 
   /* See how we will run */
 
@@ -354,7 +349,7 @@ run (gchar   *name,
 
   values[0].data.d_status = status;
 
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 }
 
 static void

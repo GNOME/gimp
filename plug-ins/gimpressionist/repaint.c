@@ -16,7 +16,6 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpmath.h>
 
 #include "gimpressionist.h"
 #include "ppmtool.h"

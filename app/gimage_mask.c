@@ -87,12 +87,12 @@ gimage_mask_boundary (GImage    *gimage,
     {
       int off_x, off_y;
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      x1 = BOUNDS (off_x, 0, gimage->width);
-      y1 = BOUNDS (off_y, 0, gimage->height);
-      x2 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(layer)), 0,
-		   gimage->width);
-      y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), 0,
-		   gimage->height);
+      x1 = CLAMP (off_x, 0, gimage->width);
+      y1 = CLAMP (off_y, 0, gimage->height);
+      x2 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE(layer)), 0,
+		  gimage->width);
+      y2 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE(layer)), 0,
+		  gimage->height);
 
       return channel_boundary (gimage_get_mask (gimage),
 			       segs_in, segs_out,

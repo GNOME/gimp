@@ -2902,9 +2902,9 @@ control_motion (gint x)
       pos = control_calc_g_pos (x);
 
       if (!g_editor->control_compress)
-	seg->prev->right = seg->left = BOUNDS (pos,
-					       seg->prev->middle + EPSILON,
-					       seg->middle - EPSILON);
+	seg->prev->right = seg->left = CLAMP (pos,
+					      seg->prev->middle + EPSILON,
+					      seg->middle - EPSILON);
       else
 	control_compress_left (g_editor->control_sel_l,
 			       g_editor->control_sel_r,
@@ -2917,7 +2917,7 @@ control_motion (gint x)
 
     case GRAD_DRAG_MIDDLE:
       pos = control_calc_g_pos (x);
-      seg->middle = BOUNDS (pos, seg->left + EPSILON, seg->right - EPSILON);
+      seg->middle = CLAMP (pos, seg->left + EPSILON, seg->right - EPSILON);
 
       str = g_strdup_printf (_("Handle position: %0.6f"), seg->middle);
       ed_set_hint (str);
@@ -3028,7 +3028,7 @@ control_compress_left (grad_segment_t *range_l,
 
   /* Calculate position */
 
-  pos = BOUNDS (pos, lbound, rbound);
+  pos = CLAMP (pos, lbound, rbound);
 
   /* Compress segments to the left of the handle */
 
@@ -3298,7 +3298,7 @@ control_draw (GdkPixmap *pixmap,
 
   g_pos = control_calc_g_pos (g_editor->control_last_x);
 
-  seg_get_closest_handle (curr_gradient, BOUNDS(g_pos, 0.0, 1.0), &seg, &handle);
+  seg_get_closest_handle (curr_gradient, CLAMP (g_pos, 0.0, 1.0), &seg, &handle);
 
   switch (handle)
     {
@@ -6050,7 +6050,7 @@ seg_get_segment_at (gradient_t *grad,
   g_assert (grad != NULL);
 
   /* handle FP imprecision at the edges of the gradient */
-  pos = BOUNDS (pos, 0.0, 1.0);
+  pos = CLAMP (pos, 0.0, 1.0);
 
   if (grad->last_visited)
     seg = grad->last_visited;

@@ -24,14 +24,12 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <time.h>
 
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimplimits.h>
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -660,8 +660,8 @@ display_pattern (PatternSelect *psp,
   offset_y = row * psp->cell_height + ((cell_height - height) >> 1)
     - psp->scroll_offset + MARGIN_HEIGHT;
 
-  ystart = BOUNDS (offset_y, 0, psp->preview->allocation.height);
-  yend = BOUNDS (offset_y + height, 0, psp->preview->allocation.height);
+  ystart = CLAMP (offset_y, 0, psp->preview->allocation.height);
+  yend = CLAMP (offset_y + height, 0, psp->preview->allocation.height);
 
   /*  Get the pointer into the pattern mask data  */
   rowstride = pattern_buf->width * pattern_buf->bytes;
@@ -752,8 +752,8 @@ pattern_select_show_selected (PatternSelect *psp,
       offset_x = psp->old_col * psp->cell_width;
       offset_y = psp->old_row * psp->cell_height - psp->scroll_offset;
 
-      ystart = BOUNDS (offset_y , 0, psp->preview->allocation.height);
-      yend = BOUNDS (offset_y + psp->cell_height, 0, psp->preview->allocation.height);
+      ystart = CLAMP (offset_y , 0, psp->preview->allocation.height);
+      yend = CLAMP (offset_y + psp->cell_height, 0, psp->preview->allocation.height);
 
       /*  set the buf to white  */
       memset (buf, 255, 3 * psp->cell_width);
@@ -783,8 +783,8 @@ pattern_select_show_selected (PatternSelect *psp,
   offset_x = col * psp->cell_width;
   offset_y = row * psp->cell_height - psp->scroll_offset;
 
-  ystart = BOUNDS (offset_y , 0, psp->preview->allocation.height);
-  yend = BOUNDS (offset_y + psp->cell_height, 0, psp->preview->allocation.height);
+  ystart = CLAMP (offset_y , 0, psp->preview->allocation.height);
+  yend = CLAMP (offset_y + psp->cell_height, 0, psp->preview->allocation.height);
 
   /*  set the buf to black  */
   memset (buf, 0, psp->cell_width * 3);

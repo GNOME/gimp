@@ -399,10 +399,10 @@ dodgeburn_motion (PaintCore            *paint_core,
 
   {
       gint x1, y1, x2, y2;
-      x1 = BOUNDS (area->x, 0, drawable_width (drawable));
-      y1 = BOUNDS (area->y, 0, drawable_height (drawable));
-      x2 = BOUNDS (area->x + area->width, 0, drawable_width (drawable));
-      y2 = BOUNDS (area->y + area->height, 0, drawable_height (drawable));
+      x1 = CLAMP (area->x, 0, drawable_width (drawable));
+      y1 = CLAMP (area->y, 0, drawable_height (drawable));
+      x2 = CLAMP (area->x + area->width, 0, drawable_width (drawable));
+      y2 = CLAMP (area->y + area->height, 0, drawable_height (drawable));
 
       if (!(x2 - x1) || !(y2 - y1))
 	return;

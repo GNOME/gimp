@@ -964,10 +964,10 @@ paint_core_get_paint_area (PaintCore    *paint_core,
   dwidth = drawable_width (drawable);
   dheight = drawable_height (drawable);
 
-  x1 = BOUNDS (x - 1, 0, dwidth);
-  y1 = BOUNDS (y - 1, 0, dheight);
-  x2 = BOUNDS (x + bwidth + 1, 0, dwidth);
-  y2 = BOUNDS (y + bheight + 1, 0, dheight);
+  x1 = CLAMP (x - 1, 0, dwidth);
+  y1 = CLAMP (y - 1, 0, dheight);
+  x2 = CLAMP (x + bwidth + 1, 0, dwidth);
+  y2 = CLAMP (y + bheight + 1, 0, dheight);
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
@@ -999,10 +999,10 @@ paint_core_get_orig_image (PaintCore    *paint_core,
   dwidth = drawable_width (drawable);
   dheight = drawable_height (drawable);
 
-  x1 = BOUNDS (x1, 0, dwidth);
-  y1 = BOUNDS (y1, 0, dheight);
-  x2 = BOUNDS (x2, 0, dwidth);
-  y2 = BOUNDS (y2, 0, dheight);
+  x1 = CLAMP (x1, 0, dwidth);
+  y1 = CLAMP (y1, 0, dheight);
+  x2 = CLAMP (x2, 0, dwidth);
+  y2 = CLAMP (y2, 0, dheight);
 
   /*  configure the pixel regions  */
   pixel_region_init (&srcPR, drawable_data (drawable), x1, y1,
@@ -1191,7 +1191,7 @@ paint_core_subsample_mask (MaskBuf *mask,
 	      while (s--)
 		{
 		  new_val = *d + ((*m * *k++ + 128) >> 8);
-		  *d++ = MINIMUM (new_val, 255);
+		  *d++ = MIN (new_val, 255);
 		}
 	    }
 	  m++;
@@ -1497,10 +1497,10 @@ paint_core_paste (PaintCore	      *paint_core,
 		      canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
-  paint_core->x1 = MINIMUM (paint_core->x1, canvas_buf->x);
-  paint_core->y1 = MINIMUM (paint_core->y1, canvas_buf->y);
-  paint_core->x2 = MAXIMUM (paint_core->x2, (canvas_buf->x + canvas_buf->width));
-  paint_core->y2 = MAXIMUM (paint_core->y2, (canvas_buf->y + canvas_buf->height));
+  paint_core->x1 = MIN (paint_core->x1, canvas_buf->x);
+  paint_core->y1 = MIN (paint_core->y1, canvas_buf->y);
+  paint_core->x2 = MAX (paint_core->x2, (canvas_buf->x + canvas_buf->width));
+  paint_core->y2 = MAX (paint_core->y2, (canvas_buf->y + canvas_buf->height));
 
   /*  Update the gimage--it is important to call gdisplays_update_area
    *  instead of drawable_update because we don't want the drawable
@@ -1591,10 +1591,10 @@ paint_core_replace (PaintCore		*paint_core,
 			canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
-  paint_core->x1 = MINIMUM (paint_core->x1, canvas_buf->x);
-  paint_core->y1 = MINIMUM (paint_core->y1, canvas_buf->y);
-  paint_core->x2 = MAXIMUM (paint_core->x2, (canvas_buf->x + canvas_buf->width));
-  paint_core->y2 = MAXIMUM (paint_core->y2, (canvas_buf->y + canvas_buf->height));
+  paint_core->x1 = MIN (paint_core->x1, canvas_buf->x);
+  paint_core->y1 = MIN (paint_core->y1, canvas_buf->y);
+  paint_core->x2 = MAX (paint_core->x2, (canvas_buf->x + canvas_buf->width));
+  paint_core->y2 = MAX (paint_core->y2, (canvas_buf->y + canvas_buf->height));
 
   /*  Update the gimage--it is important to call gdisplays_update_area
    *  instead of drawable_update because we don't want the drawable

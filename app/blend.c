@@ -830,7 +830,7 @@ gradient_calc_conical_sym_factor (double  dist,
 	rat = acos(rat) / G_PI;
 	rat = pow(rat, (offset / 10) + 1);
 
-	rat = BOUNDS(rat, 0.0, 1.0);
+	rat = CLAMP(rat, 0.0, 1.0);
       }
     else
       rat = 0.5;
@@ -869,7 +869,7 @@ gradient_calc_conical_asym_factor (double  dist,
 	  rat = ang / (2.0 * G_PI);
 	  rat = pow(rat, (offset / 10) + 1);
 
-	  rat = BOUNDS(rat, 0.0, 1.0);
+	  rat = CLAMP(rat, 0.0, 1.0);
 	}
       else
 	rat = 0.5; /* We are on middle point */
@@ -898,7 +898,7 @@ gradient_calc_square_factor (double dist,
 
       offset = offset / 100.0;
 
-      r   = MAXIMUM(abs(x), abs(y));
+      r   = MAX (abs (x), abs (y));
       rat = r / dist;
 
       if (rat < offset)
@@ -1061,8 +1061,8 @@ gradient_calc_shapeburst_angular_factor (double x,
   Tile *tile;
   float value;
 
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
+  ix = (int) CLAMP (x, 0, distR.w);
+  iy = (int) CLAMP (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = 1.0 - *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   tile_release (tile, FALSE);
@@ -1079,8 +1079,8 @@ gradient_calc_shapeburst_spherical_factor (double x,
   Tile *tile;
   float value;
 
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
+  ix = (int) CLAMP (x, 0, distR.w);
+  iy = (int) CLAMP (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = 1.0 - sin (0.5 * G_PI * value);
@@ -1098,8 +1098,8 @@ gradient_calc_shapeburst_dimpled_factor (double x,
   Tile *tile;
   float value;
 
-  ix = (int) BOUNDS (x, 0, distR.w);
-  iy = (int) BOUNDS (y, 0, distR.h);
+  ix = (int) CLAMP (x, 0, distR.w);
+  iy = (int) CLAMP (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = cos (0.5 * G_PI * value);
@@ -1111,7 +1111,7 @@ gradient_calc_shapeburst_dimpled_factor (double x,
 static double
 gradient_repeat_none (double val)
 {
-  return BOUNDS(val, 0.0, 1.0);
+  return CLAMP(val, 0.0, 1.0);
 }
 
 static double
@@ -1441,7 +1441,7 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     case SQUARE:
-      rbd.dist = MAXIMUM(fabs(ex - sx), fabs(ey - sy));
+      rbd.dist = MAX (fabs (ex - sx), fabs (ey - sy));
       break;
 
     case CONICAL_SYMMETRIC:

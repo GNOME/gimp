@@ -21,13 +21,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "fp.h"

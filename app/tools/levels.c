@@ -676,7 +676,7 @@ levels_calculate_transfers (LevelsDialog *ld)
 	  else
 	    inten = (double) (i - ld->low_input[j]);
 
-	  inten = BOUNDS (inten, 0.0, 1.0);
+	  inten = CLAMP (inten, 0.0, 1.0);
 	  if (ld->gamma[j] != 0.0)
 	    inten = pow (inten, (1.0 / ld->gamma[j]));
 	  ld->input[j][i] = (unsigned char) (inten * 255.0 + 0.5);
@@ -1167,7 +1167,7 @@ levels_low_input_adjustment_update (GtkAdjustment *adjustment,
   ld = (LevelsDialog *) data;
 
   value = (gint) (adjustment->value + 0.5);
-  value = BOUNDS (value, 0, ld->high_input[ld->channel]);
+  value = CLAMP (value, 0, ld->high_input[ld->channel]);
 
   /*  enforce a consistent displayed value (low_input <= high_input)  */
   gtk_adjustment_set_value (adjustment, value);
@@ -1210,7 +1210,7 @@ levels_high_input_adjustment_update (GtkAdjustment *adjustment,
   ld = (LevelsDialog *) data;
 
   value = (gint) (adjustment->value + 0.5);
-  value = BOUNDS (value, ld->low_input[ld->channel], 255);
+  value = CLAMP (value, ld->low_input[ld->channel], 255);
 
   /*  enforce a consistent displayed value (high_input >= low_input)  */
   gtk_adjustment_set_value (adjustment, value);
@@ -1338,15 +1338,15 @@ levels_input_da_events (GtkWidget    *widget,
 	{
 	case 0:  /*  low input  */
 	  ld->low_input[ld->channel] = ((double) x / (double) DA_WIDTH) * 255.0;
-	  ld->low_input[ld->channel] = BOUNDS (ld->low_input[ld->channel], 0,
-					       ld->high_input[ld->channel]);
+	  ld->low_input[ld->channel] = CLAMP (ld->low_input[ld->channel], 0,
+					      ld->high_input[ld->channel]);
 	  break;
 
 	case 1:  /*  gamma  */
 	  width = (double) (ld->slider_pos[2] - ld->slider_pos[0]) / 2.0;
 	  mid = ld->slider_pos[0] + width;
 
-	  x = BOUNDS (x, ld->slider_pos[0], ld->slider_pos[2]);
+	  x = CLAMP (x, ld->slider_pos[0], ld->slider_pos[2]);
 	  tmp = (double) (x - mid) / width;
 	  ld->gamma[ld->channel] = 1.0 / pow (10, tmp);
 
@@ -1357,8 +1357,8 @@ levels_input_da_events (GtkWidget    *widget,
 
 	case 2:  /*  high input  */
 	  ld->high_input[ld->channel] = ((double) x / (double) DA_WIDTH) * 255.0;
-	  ld->high_input[ld->channel] = BOUNDS (ld->high_input[ld->channel],
-						ld->low_input[ld->channel], 255);
+	  ld->high_input[ld->channel] = CLAMP (ld->high_input[ld->channel],
+					       ld->low_input[ld->channel], 255);
 	  break;
 	}
 
@@ -1433,12 +1433,14 @@ levels_output_da_events (GtkWidget    *widget,
 	{
 	case 3:  /*  low output  */
 	  ld->low_output[ld->channel] = ((double) x / (double) DA_WIDTH) * 255.0;
-	  ld->low_output[ld->channel] = BOUNDS (ld->low_output[ld->channel], 0, 255);
+	  ld->low_output[ld->channel] = CLAMP (ld->low_output[ld->channel],
+					       0, 255);
 	  break;
 
 	case 4:  /*  high output  */
 	  ld->high_output[ld->channel] = ((double) x / (double) DA_WIDTH) * 255.0;
-	  ld->high_output[ld->channel] = BOUNDS (ld->high_output[ld->channel], 0, 255);
+	  ld->high_output[ld->channel] = CLAMP (ld->high_output[ld->channel],
+						0, 255);
 	  break;
 	}
 

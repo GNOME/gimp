@@ -230,8 +230,8 @@ offset (GimpImage         *gimage,
     }
   else
     {
-      offset_x = BOUNDS (offset_x, -width, width);
-      offset_y = BOUNDS (offset_y, -height, height);
+      offset_x = CLAMP (offset_x, -width, width);
+      offset_y = CLAMP (offset_y, -height, height);
     }
 
   if (offset_x == 0 && offset_y == 0)
@@ -242,26 +242,26 @@ offset (GimpImage         *gimage,
     {
       src_x = 0;
       dest_x = offset_x;
-      width = BOUNDS ((width - offset_x), 0, width);
+      width = CLAMP ((width - offset_x), 0, width);
     }
   else
     {
       src_x = -offset_x;
       dest_x = 0;
-      width = BOUNDS ((width + offset_x), 0, width);
+      width = CLAMP ((width + offset_x), 0, width);
     }
 
   if (offset_y >= 0)
     {
       src_y = 0;
       dest_y = offset_y;
-      height = BOUNDS ((height - offset_y), 0, height);
+      height = CLAMP ((height - offset_y), 0, height);
     }
   else
     {
       src_y = -offset_y;
       dest_y = 0;
-      height = BOUNDS ((height + offset_y), 0, height);
+      height = CLAMP ((height + offset_y), 0, height);
     }
 
   /*  Copy the center region  */

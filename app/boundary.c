@@ -136,7 +136,7 @@ find_empty_segs (PixelRegion  *maskPR,
 	  dstep = tile_bpp(tile);
 	}
       endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
-      endx = MINIMUM(end, endx);
+      endx = MIN (end, endx);
       if (type == IgnoreBounds && (endx > x1 || x < x2))
 	for (; x < endx; x++)
 	{
@@ -295,8 +295,8 @@ make_horiz_segs (int start,
 	process_horiz_seg (start, scanline, end, scanline, top);
       else if ((e_s > start && e_s < end) ||
 	       (e_e < end && e_e > start))
-	process_horiz_seg (MAXIMUM (e_s, start), scanline,
-			   MINIMUM (e_e, end), scanline, top);
+	process_horiz_seg (MAX (e_s, start), scanline,
+			   MIN (e_e, end), scanline, top);
     }
 }
 

@@ -26,7 +26,6 @@
 #include <gdk/gdk.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpmath.h>
 
 #include "ifscompose.h"
 

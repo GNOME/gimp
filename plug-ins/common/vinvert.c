@@ -25,13 +25,13 @@
  *     Is not undoable when operating on indexed images - GIMP's fault.
  */
 
-
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
+
+#include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.

@@ -26,13 +26,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -62,62 +60,13 @@ static void     OK_CALLBACK (GtkWidget *widget, gpointer   data);
 #define PROGRESS_UPDATE_NUM	100
 #define ENTRY_WIDTH	100
 #define SCALE_WIDTH	120
-/*
-static void
-gtkW_gint_update (GtkWidget *widget, gpointer   data);
-static void
-gtkW_scale_update (GtkAdjustment *adjustment, double   *data);
-*/
-/*
-static void
-gtkW_toggle_update (GtkWidget *widget, gpointer   data);
-*/
+
 static void
 gtkW_iscale_update (GtkAdjustment *adjustment,
 		    gpointer       data);
 static void
 gtkW_ientry_update (GtkWidget *widget,
 		    gpointer   data);
-/*
-static void
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x1,
-		       gint	x2,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value);
-*/
-/*
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value);
-*/
-/*
-static void
-gtkW_table_add_gint (GtkWidget	*table,
-		     gchar	*name,
-		     gint	x,
-		     gint	y, 
-		     GtkSignalFunc	update,
-		     gint	*value,
-		     gchar	*buffer);
-*/
-/*
-static void
-gtkW_table_add_scale (GtkWidget	*table,
-		      gchar	*name,
-		      gint	x1,
-		      gint	y,
-		      GtkSignalFunc update,
-		      gdouble *value,
-		      gdouble min,
-		      gdouble max,
-		      gdouble step);
-*/
 static void
 gtkW_table_add_iscale_entry (GtkWidget	*table,
 			     gchar	*name,
@@ -142,10 +91,10 @@ GtkWidget *gtkW_vbox_new (GtkWidget *parent);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,				/* init_proc  */
-  NULL,				/* quit_proc */
-  query,			/* query_proc */
-  run,				/* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 typedef struct
@@ -168,7 +117,7 @@ static Interface INTERFACE = { FALSE };
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args [] =
   {
@@ -177,9 +126,7 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_INT32, "threshold", "Threshold" },
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "",
@@ -190,8 +137,8 @@ query ()
 			  N_("<Image>/Image/Alpha/Threshold Alpha..."),
 			  "RGBA,GRAYA",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -209,11 +156,14 @@ run (char	*name,
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
-  if (run_mode != RUN_INTERACTIVE) {
-    INIT_I18N();
-  } else {
-    INIT_I18N_UI();
-  }
+  if (run_mode != RUN_INTERACTIVE)
+    {
+      INIT_I18N();
+    }
+  else
+    {
+      INIT_I18N_UI();
+    }
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -420,41 +370,6 @@ OK_CALLBACK (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-/* VFtext interface functions  */
-/*
-static void
-gtkW_gint_update (GtkWidget *widget,
-		  gpointer   data)
-{
-  *(gint *)data = (gint)atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-*/
-
-/*
-static void
-gtkW_scale_update (GtkAdjustment *adjustment,
-		   gdouble	 *scale_val)
-{
-  *scale_val = (gdouble) adjustment->value;
-}
-*/
-
-/*
-static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-*/
-
 GtkWidget *
 gtkW_table_new (GtkWidget *parent, gint col, gint row)
 {
@@ -527,117 +442,6 @@ gtkW_frame_new (GtkWidget *parent,
   gtk_widget_show (frame);
   return frame;
 }
-
-/*
-static void
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x1,
-		       gint	x2,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_check_button_new_with_label(name);
-  gtk_table_attach (GTK_TABLE (table), toggle, x1, x2, y, y+1,
-		    GTK_FILL|GTK_EXPAND, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-}
-*/
-
-/*
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_radio_button_new_with_label(group, name);
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update, value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-  return group;
-}
-*/
-
-/*
-static void
-gtkW_table_add_gint (GtkWidget	*table,
-		     gchar	*name,
-		     gint	x,
-		     gint	y, 
-		     GtkSignalFunc	update,
-		     gint	*value,
-		     gchar	*buffer)
-{
-  GtkWidget *label, *entry;
-  
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_widget_show(label);
-
-  entry = gtk_entry_new();
-  gtk_table_attach (GTK_TABLE(table), entry, x+1, x+2, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 10, 0);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buffer, "%d", *(gint *)value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) update, value);
-  gtk_widget_show(entry);
-}
-*/
-
-/*
-static void
-gtkW_table_add_scale (GtkWidget	*table,
-		      gchar	*name,
-		      gint	x,
-		      gint	y,
-		      GtkSignalFunc update,
-		      gdouble *value,
-		      gdouble min,
-		      gdouble max,
-		      gdouble step)
-{
-  GtkObject *scale_data;
-  GtkWidget *label, *scale;
-  
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 5, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, x+1, x+2, y, y+1, 
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 10, 5);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) update, value);
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-}
-*/
 
 static void
 gtkW_table_add_iscale_entry (GtkWidget	*table,
@@ -732,5 +536,3 @@ gtkW_ientry_update (GtkWidget *widget,
 	}
     }
 }
-
-/* end of threshold_alpha.c */

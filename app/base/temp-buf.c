@@ -36,7 +36,6 @@
  
 #include "appenv.h"
 #include "drawable.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "general.h"
 #include "gimprc.h"
@@ -288,10 +287,10 @@ temp_buf_copy_area (TempBuf *src,
     }
 
   /*  some bounds checking  */
-  x1 = BOUNDS (x, 0, src->width);
-  y1 = BOUNDS (y, 0, src->height);
-  x2 = BOUNDS (x + w, 0, src->width);
-  y2 = BOUNDS (y + h, 0, src->height);
+  x1 = CLAMP (x, 0, src->width);
+  y1 = CLAMP (y, 0, src->height);
+  x2 = CLAMP (x + w, 0, src->width);
+  y2 = CLAMP (y + h, 0, src->height);
 
   if (!(x2 - x1) || !(y2 - y1))
     return dest;

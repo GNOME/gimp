@@ -1207,8 +1207,8 @@ display_brush (BrushSelect *bsp,
   offset_x = col * bsp->cell_width + ((cell_width - width) >> 1) + MARGIN_WIDTH;
   offset_y = row * bsp->cell_height + ((cell_height - height) >> 1) - bsp->scroll_offset + MARGIN_HEIGHT;
 
-  ystart = BOUNDS (offset_y, 0, bsp->preview->allocation.height);
-  yend   = BOUNDS (offset_y + height, 0, bsp->preview->allocation.height);
+  ystart = CLAMP (offset_y, 0, bsp->preview->allocation.height);
+  yend   = CLAMP (offset_y + height, 0, bsp->preview->allocation.height);
 
   mask = temp_buf_data (mask_buf) + (ystart - offset_y) * mask_buf->width;
   buf = g_new (guchar, 3 * cell_width);
@@ -1336,8 +1336,8 @@ brush_select_show_selected (BrushSelect *bsp,
       offset_x = bsp->old_col * bsp->cell_width;
       offset_y = bsp->old_row * bsp->cell_height - bsp->scroll_offset;
 
-      ystart = BOUNDS (offset_y , 0, bsp->preview->allocation.height);
-      yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
+      ystart = CLAMP (offset_y , 0, bsp->preview->allocation.height);
+      yend = CLAMP (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
       /*  set the buf to white  */
       memset (buf, 255, 3 * bsp->cell_width);
@@ -1370,8 +1370,8 @@ brush_select_show_selected (BrushSelect *bsp,
   offset_x = col * bsp->cell_width;
   offset_y = row * bsp->cell_height - bsp->scroll_offset;
 
-  ystart = BOUNDS (offset_y , 0, bsp->preview->allocation.height);
-  yend = BOUNDS (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
+  ystart = CLAMP (offset_y , 0, bsp->preview->allocation.height);
+  yend = CLAMP (offset_y + bsp->cell_height, 0, bsp->preview->allocation.height);
 
   /*  set the buf to black  */
   memset (buf, 0, bsp->cell_width * 3);

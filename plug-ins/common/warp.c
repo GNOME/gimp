@@ -75,7 +75,6 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 

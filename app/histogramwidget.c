@@ -195,7 +195,7 @@ histogram_widget_events (HistogramWidget *histogram,
 
       histogram_widget_draw (histogram, RANGE);
 
-      histogram->start = BOUNDS ((((bevent->x - 1) * 256) / width), 0, 255);
+      histogram->start = CLAMP ((((bevent->x - 1) * 256) / width), 0, 255);
       histogram->end = histogram->start;
 
       histogram_widget_draw (histogram, RANGE);
@@ -217,7 +217,7 @@ histogram_widget_events (HistogramWidget *histogram,
 
       histogram_widget_draw (histogram, RANGE);
 
-      histogram->start = BOUNDS ((((mevent->x - 1) * 256) / width), 0, 255);
+      histogram->start = CLAMP ((((mevent->x - 1) * 256) / width), 0, 255);
 
       histogram_widget_draw (histogram, RANGE);
       break;

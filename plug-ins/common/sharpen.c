@@ -40,6 +40,25 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.17  2000/01/25 23:05:59  mitch
+ *   2000-01-25  Michael Natterer  <mitch@gimp.org>
+ *
+ *   	* app/appenv.h: removed BOUNDS, MINIMUM and MAXIMUM. No need to
+ *   	include both <glib.h> and <gtk/gtk.h>.
+ *
+ *   	* app/*
+ *   	* tools/pdbgen/pdb/text_tool.pdb: s/BOUNDS/CLAMP/,
+ *   	same for MIN and MAX.
+ *
+ *   	* app/preferences_dialog.c: the "Check Size" widget was connected
+ *   	to the transparency_type variable.
+ *
+ *   	* plug-ins/common/sobel.c: removed definitions of MIN and ROUND.
+ *
+ *   	* libgimp/gimp.h: #include "gimplimits.h" and "gimpcolorspace.h".
+ *
+ *   	* plug-ins/*: don't include the two files.
+ *
  *   Revision 1.16  2000/01/15 15:32:28  mitch
  *   2000-01-15  Michael Natterer  <mitch@gimp.org>
  *
@@ -201,7 +220,6 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimplimits.h>
 
 #include "libgimp/stdplugins-intl.h"
 

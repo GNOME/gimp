@@ -60,10 +60,10 @@ redraw (GDisplay *gdisp,
   y1 = y;
   x2 = (x+w);
   y2 = (y+h);
-  x1 = BOUNDS (x1, 0, gdisp->disp_width);
-  y1 = BOUNDS (y1, 0, gdisp->disp_height);
-  x2 = BOUNDS (x2, 0, gdisp->disp_width);
-  y2 = BOUNDS (y2, 0, gdisp->disp_height);
+  x1 = CLAMP (x1, 0, gdisp->disp_width);
+  y1 = CLAMP (y1, 0, gdisp->disp_height);
+  x2 = CLAMP (x2, 0, gdisp->disp_width);
+  y2 = CLAMP (y2, 0, gdisp->disp_height);
   if ((x2 - x1) && (y2 - y1))
     {
       gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));

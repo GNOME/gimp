@@ -422,7 +422,7 @@ draw_segments (PixelRegion *destPR,
   int tmp, i, length;
   unsigned char *line;
 
-  length = MAXIMUM (destPR->w, destPR->h);
+  length = MAX (destPR->w, destPR->h);
   line = paint_funcs_get_buffer (length);
   memset (line, opacity, length);
 
@@ -449,10 +449,10 @@ draw_segments (PixelRegion *destPR,
 	}
 
       /*  render segment  */
-      x1 = BOUNDS (x1, 0, destPR->w - 1);
-      y1 = BOUNDS (y1, 0, destPR->h - 1);
-      x2 = BOUNDS (x2, 0, destPR->w - 1);
-      y2 = BOUNDS (y2, 0, destPR->h - 1);
+      x1 = CLAMP (x1, 0, destPR->w - 1);
+      y1 = CLAMP (y1, 0, destPR->h - 1);
+      x2 = CLAMP (x2, 0, destPR->w - 1);
+      y2 = CLAMP (y2, 0, destPR->h - 1);
 
       if (x1 == x2)
 	{
@@ -744,7 +744,7 @@ darken_pixels (const unsigned char *src1,
   int b, alpha;
   unsigned char s1, s2;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length--)
     {
@@ -780,7 +780,7 @@ lighten_pixels (const unsigned char *src1,
   int b, alpha;
   unsigned char s1, s2;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length--)
     {
@@ -909,7 +909,7 @@ multiply_pixels (const unsigned char *src1,
 {
   int alpha, b;
   int tmp;
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   if (has_alpha1 && has_alpha2)
     while (length --)
@@ -960,14 +960,15 @@ divide_pixels (const unsigned char *src1,
 {
   int alpha, b, result;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
-      for (b = 0; b < alpha; b++) {
-	result = ((src1[b] * 256) / (1+src2[b]));
-        dest[b] = MINIMUM(result, 255);
-      }
+      for (b = 0; b < alpha; b++)
+	{
+	  result = ((src1[b] * 256) / (1+src2[b]));
+	  dest[b] = MIN (result, 255);
+	}
 
       if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
@@ -994,7 +995,7 @@ screen_pixels (const unsigned char *src1,
   int alpha, b;
   int tmp;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -1026,7 +1027,7 @@ overlay_pixels (const unsigned char *src1,
   int alpha, b;
   int tmp;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -1069,7 +1070,7 @@ add_pixels (const unsigned char *src1,
   int alpha, b;
   /* int sum; */
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -1107,7 +1108,7 @@ subtract_pixels (const unsigned char *src1,
   int alpha, b;
   int diff;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -1142,7 +1143,7 @@ difference_pixels (const unsigned char *src1,
   int alpha, b;
   int diff;
 
-  alpha = (has_alpha1 || has_alpha2) ? MAXIMUM (bytes1, bytes2) - 1 : bytes1;
+  alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
   while (length --)
     {
@@ -2718,7 +2719,7 @@ replace_inten_pixels (const unsigned char *src1,
   else
     m = &no_mask;
 
-  bytes = MINIMUM (bytes1, bytes2);
+  bytes = MIN (bytes1, bytes2);
   while (length --)
     {
       mask_alpha = INT_MULT(*m, opacity, tmp);
@@ -2763,7 +2764,7 @@ replace_indexed_pixels (const unsigned char *src1,
   else
     m = &no_mask;
 
-  bytes = MINIMUM (bytes1, bytes2);
+  bytes = MIN (bytes1, bytes2);
   while (length --)
     {
       mask_alpha = INT_MULT(*m, opacity, tmp);
@@ -3616,7 +3617,7 @@ gaussian_blur_region (PixelRegion *srcR,
   if (radius_x == 0.0 && radius_y == 0.0) return;    /* zero blur is a no-op */
 
   /*  allocate the result buffer  */
-  length = MAXIMUM (srcR->w, srcR->h) * srcR->bytes;
+  length = MAX (srcR->w, srcR->h) * srcR->bytes;
   data = paint_funcs_get_buffer (length * 2);
   src = data;
   dest = data + length;
@@ -3626,7 +3627,7 @@ gaussian_blur_region (PixelRegion *srcR,
   bytes = srcR->bytes;
   alpha = bytes - 1;
 
-  buf = g_malloc (sizeof (int) * MAXIMUM (width, height) * 2);
+  buf = g_malloc (sizeof (int) * MAX (width, height) * 2);
 
   if (radius_y != 0.0)
     {
@@ -4369,9 +4370,9 @@ shapeburst_region (PixelRegion *srcPR,
 
       for (j = 0; j < srcPR->w; j++)
 	{
-	  min_prev = MINIMUM (distp_cur[j-1], distp_prev[j]);
-	  min_left = MINIMUM ((srcPR->w - j - 1), (srcPR->h - i - 1));
-	  min = (int) MINIMUM (min_left, min_prev);
+	  min_prev = MIN (distp_cur[j-1], distp_prev[j]);
+	  min_left = MIN ((srcPR->w - j - 1), (srcPR->h - i - 1));
+	  min = (int) MIN (min_left, min_prev);
 	  fraction = 255;
 
 	  /*  This might need to be changed to 0 instead of k = (min) ? (min - 1) : 0  */
@@ -4385,8 +4386,9 @@ shapeburst_region (PixelRegion *srcPR,
 		{
 		  tile = tile_manager_get_tile (srcPR->tiles, x, y, TRUE, FALSE);
 		  tile_data = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
-		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile_ewidth(tile) - (x % TILE_WIDTH) - 1));
-		  boundary = MINIMUM (boundary, (y - end)) + 1;
+		  boundary = MIN ((y % TILE_HEIGHT),
+				  (tile_ewidth(tile) - (x % TILE_WIDTH) - 1));
+		  boundary = MIN (boundary, (y - end)) + 1;
 		  inc = 1 - tile_ewidth (tile);
 
 		  while (boundary--)
@@ -4420,7 +4422,7 @@ shapeburst_region (PixelRegion *srcPR,
 		  prev_frac = (int) (255 * (min_prev - min));
 		  if (prev_frac == 255)
 		    prev_frac = 0;
-		  fraction = MINIMUM (fraction, prev_frac);
+		  fraction = MIN (fraction, prev_frac);
 		}
 	      min++;
 	    }

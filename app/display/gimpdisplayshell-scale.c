@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
-#include "errors.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
@@ -28,23 +28,23 @@
 void
 bounds_checking (GDisplay *gdisp)
 {
-  int sx, sy;
+  gint sx, sy;
 
-  sx = SCALEX(gdisp, gdisp->gimage->width);
-  sy = SCALEY(gdisp, gdisp->gimage->height);
+  sx = SCALEX (gdisp, gdisp->gimage->width);
+  sy = SCALEY (gdisp, gdisp->gimage->height);
 
-  gdisp->offset_x = BOUNDS (gdisp->offset_x, 0,
-			    LOWPASS (sx - gdisp->disp_width));
+  gdisp->offset_x = CLAMP (gdisp->offset_x, 0,
+			   LOWPASS (sx - gdisp->disp_width));
 
-  gdisp->offset_y = BOUNDS (gdisp->offset_y, 0,
-			    LOWPASS (sy - gdisp->disp_height));
+  gdisp->offset_y = CLAMP (gdisp->offset_y, 0,
+			   LOWPASS (sy - gdisp->disp_height));
 }
 
 
 void
 resize_display (GDisplay *gdisp,
-		int       resize_window,
-		int       redisplay)
+		gint      resize_window,
+		gint      redisplay)
 {
   /* freeze the active tool */
   active_tool_control (PAUSE, (void *) gdisp);
@@ -89,18 +89,18 @@ shrink_wrap_display (GDisplay *gdisp)
 
 void
 change_scale (GDisplay *gdisp,
-	      int       dir)
+	      gint      dir)
 {
-  unsigned char scalesrc, scaledest;
-  double offset_x, offset_y;
-  long sx, sy;
+  guchar scalesrc, scaledest;
+  gdouble offset_x, offset_y;
+  glong sx, sy;
 
   /* user zoom control, so resolution versions not needed -- austin */
-  scalesrc = SCALESRC(gdisp);
-  scaledest = SCALEDEST(gdisp);
+  scalesrc = SCALESRC (gdisp);
+  scaledest = SCALEDEST (gdisp);
 
-  offset_x = gdisp->offset_x + (gdisp->disp_width/2.0);
-  offset_y = gdisp->offset_y + (gdisp->disp_height/2.0);
+  offset_x = gdisp->offset_x + (gdisp->disp_width / 2.0);
+  offset_y = gdisp->offset_y + (gdisp->disp_height / 2.0);
 
   offset_x *= ((double) scalesrc / (double) scaledest);
   offset_y *= ((double) scalesrc / (double) scaledest);
@@ -113,16 +113,16 @@ change_scale (GDisplay *gdisp,
       else
 	if (scaledest < 0x10)
 	  scaledest++;
-
       break;
+
     case ZOOMOUT :
       if (scaledest > 1)
 	scaledest--;
       else
 	if (scalesrc < 0x10)
 	  scalesrc++;
-
       break;
+
     default :
       scalesrc = dir%100;
       if (scalesrc < 1)
@@ -163,7 +163,9 @@ change_scale (GDisplay *gdisp,
 /* 27/Feb/1999 I tried inlining this, but the result was slightly
  * slower (poorer cache locality, probably) -- austin */
 static gdouble
-img2real (GDisplay *gdisp, gboolean xdir, gdouble a)
+img2real (GDisplay *gdisp,
+	  gboolean  xdir,
+	  gdouble   a)
 {
   gdouble res;
 
@@ -187,10 +189,10 @@ setup_scale (GDisplay *gdisp)
   gfloat sx, sy;
   gfloat stepx, stepy;
 
-  sx = SCALEX(gdisp, gdisp->gimage->width);
-  sy = SCALEY(gdisp, gdisp->gimage->height);
-  stepx = SCALEFACTOR_X(gdisp);
-  stepy = SCALEFACTOR_Y(gdisp);
+  sx = SCALEX (gdisp, gdisp->gimage->width);
+  sy = SCALEY (gdisp, gdisp->gimage->height);
+  stepx = SCALEFACTOR_X (gdisp);
+  stepy = SCALEFACTOR_Y (gdisp);
 
   gdisp->hsbdata->value = gdisp->offset_x;
   gdisp->hsbdata->upper = sx;
@@ -212,21 +214,21 @@ setup_scale (GDisplay *gdisp)
 
   hruler->lower = 0;
   hruler->upper = img2real (gdisp, TRUE, FUNSCALEX (gdisp, gdisp->disp_width));
-  hruler->max_size = img2real (gdisp, TRUE, MAXIMUM (gdisp->gimage->width,
-						     gdisp->gimage->height));
+  hruler->max_size = img2real (gdisp, TRUE, MAX (gdisp->gimage->width,
+						 gdisp->gimage->height));
 
   vruler->lower = 0;
   vruler->upper = img2real(gdisp, FALSE, FUNSCALEY(gdisp, gdisp->disp_height));
-  vruler->max_size = img2real (gdisp, FALSE, MAXIMUM (gdisp->gimage->width,
-						      gdisp->gimage->height));
+  vruler->max_size = img2real (gdisp, FALSE, MAX (gdisp->gimage->width,
+						  gdisp->gimage->height));
 
   if (sx < gdisp->disp_width)
     {
       gdisp->disp_xoffset = (gdisp->disp_width - sx) / 2;
       hruler->lower -= img2real(gdisp, TRUE,
-				FUNSCALEX(gdisp,(double) gdisp->disp_xoffset));
+				FUNSCALEX (gdisp, (double) gdisp->disp_xoffset));
       hruler->upper -= img2real(gdisp, TRUE,
-				FUNSCALEX(gdisp,(double) gdisp->disp_xoffset));
+				FUNSCALEX (gdisp, (double) gdisp->disp_xoffset));
     }
   else
     {
@@ -241,9 +243,9 @@ setup_scale (GDisplay *gdisp)
     {
       gdisp->disp_yoffset = (gdisp->disp_height - sy) / 2;
       vruler->lower -= img2real(gdisp, FALSE,
-				FUNSCALEY(gdisp,(double) gdisp->disp_yoffset));
+				FUNSCALEY (gdisp, (double) gdisp->disp_yoffset));
       vruler->upper -= img2real(gdisp, FALSE,
-				FUNSCALEY(gdisp,(double) gdisp->disp_yoffset));
+				FUNSCALEY (gdisp, (double) gdisp->disp_yoffset));
     }
   else
     {

@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpcolorspace.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "fp.h"
 
 extern FP_Params Current;

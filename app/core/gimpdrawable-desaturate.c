@@ -74,10 +74,10 @@ desaturate (GimpDrawable *drawable)
 
 	  for (j = 0; j < srcPR.w; j++)
 	    {
-	      max = MAXIMUM (s[RED_PIX], s[GREEN_PIX]);
-	      max = MAXIMUM (max, s[BLUE_PIX]);
-	      min = MINIMUM (s[RED_PIX], s[GREEN_PIX]);
-	      min = MINIMUM (min, s[BLUE_PIX]);
+	      max = MAX (s[RED_PIX], s[GREEN_PIX]);
+	      max = MAX (max, s[BLUE_PIX]);
+	      min = MIN (s[RED_PIX], s[GREEN_PIX]);
+	      min = MIN (min, s[BLUE_PIX]);
 
 	      lightness = (max + min) / 2;
 

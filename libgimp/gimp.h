@@ -20,11 +20,13 @@
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
-
 #include <glib.h>
+
 #include "libgimp/gimpenums.h"
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h"

@@ -39,7 +39,6 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -184,12 +183,14 @@ run (gchar    *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
-	  bvals.vertical = (param[5].data.d_int32) ? TRUE : FALSE;
-	  bvals.keep_sign = (param[6].data.d_int32) ? TRUE : FALSE;
+	  bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
+	  bvals.keep_sign  = (param[6].data.d_int32) ? TRUE : FALSE;
 	}
       break;
 
@@ -339,10 +340,6 @@ sobel_prepare_row (GPixelRgn *pixel_rgn,
 
 #define SIGN(a) (((a) > 0) ? 1 : -1)
 #define RMS(a,b) (sqrt (pow ((a),2) + pow ((b), 2)))
-#ifndef MAX
-#define MAX(a,b) (((a) > (b)) ? (a) : (b))
-#endif
-#define ROUND_TO_INT(val) ((val) + 0.5)
 
 static void
 sobel (GDrawable *drawable,
@@ -417,9 +414,9 @@ sobel (GDrawable *drawable,
 			   (pr[col + bytes] + 2 * cr[col + bytes] + nr[col + bytes]))
 			  : 0);
 	  gradient = (do_vertical && do_horizontal) ?
-	    (ROUND_TO_INT (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
-	    : (keep_sign ? (127 + (ROUND_TO_INT ((hor_gradient + ver_gradient) / 8.0)))
-	       : (ROUND_TO_INT (abs (hor_gradient + ver_gradient) / 4.0)));
+	    (ROUND (RMS (hor_gradient, ver_gradient)) / 5.66) /* always >0 */
+	    : (keep_sign ? (127 + (ROUND ((hor_gradient + ver_gradient) / 8.0)))
+	       : (ROUND (abs (hor_gradient + ver_gradient) / 4.0)));
 
 	  if (alpha && (((col + 1) % bytes) == 0))
 	    { /* the alpha channel */

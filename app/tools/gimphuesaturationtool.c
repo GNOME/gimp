@@ -119,7 +119,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 
 	/*  Lightness  */
 	value = (hsd->lightness[0] + hsd->lightness[hue + 1]) * 127.0 / 100.0;
-	value = BOUNDS (value, -255, 255);
+	value = CLAMP (value, -255, 255);
 	if (value < 0)
 	  lightness_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
 	else
@@ -127,7 +127,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 
 	/*  Saturation  */
 	value = (hsd->saturation[0] + hsd->saturation[hue + 1]) * 255.0 / 100.0;
-	value = BOUNDS (value, -255, 255);
+	value = CLAMP (value, -255, 255);
 
 	/* This change affects the way saturation is computed. With the
 	   old code (different code for value < 0), increasing the
@@ -137,7 +137,7 @@ hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 	   the new behavior is exactly what you want. It's hard for me
 	   to imagine a case in which the old behavior is better.
 	*/
-	saturation_transfer[hue][i] = BOUNDS((i * (255 + value)) / 255, 0, 255);
+	saturation_transfer[hue][i] = CLAMP ((i * (255 + value)) / 255, 0, 255);
       }
 }
 

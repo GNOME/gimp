@@ -59,14 +59,12 @@ static char rcsid[] = "$Id$";
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpmath.h>
-#include <libgimp/gimplimits.h>
-#include <libgimp/gimpcolorspace.h>
+#include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "asupsample.h"
 #include "gtkmultioptionmenu.h"
-
-#include "libgimp/stdplugins-intl.h"
 
 /* #define DEBUG */
 

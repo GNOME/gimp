@@ -743,10 +743,10 @@ render_preview (TempBuf   *preview_buf,
   else
     buf = empty_buf;
 
-  x1 = BOUNDS (preview_buf->x, 0, width);
-  y1 = BOUNDS (preview_buf->y, 0, height);
-  x2 = BOUNDS (preview_buf->x + preview_buf->width, 0, width);
-  y2 = BOUNDS (preview_buf->y + preview_buf->height, 0, height);
+  x1 = CLAMP (preview_buf->x, 0, width);
+  y1 = CLAMP (preview_buf->y, 0, height);
+  x2 = CLAMP (preview_buf->x + preview_buf->width, 0, width);
+  y2 = CLAMP (preview_buf->y + preview_buf->height, 0, height);
 
   src = temp_buf_data (preview_buf) + (y1 - preview_buf->y) * rowstride +
     (x1 - preview_buf->x) * preview_buf->bytes;

@@ -126,8 +126,8 @@ crop_buffer (TileManager *tiles,
 	}
     }
 
-  x2 = BOUNDS (x2 + 1, 0, tiles->width);
-  y2 = BOUNDS (y2 + 1, 0, tiles->height);
+  x2 = CLAMP (x2 + 1, 0, tiles->width);
+  y2 = CLAMP (y2 + 1, 0, tiles->height);
 
   empty = (x1 == tiles->width && y1 == tiles->height);
 

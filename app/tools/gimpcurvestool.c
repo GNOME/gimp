@@ -216,8 +216,8 @@ curves_colour_update (Tool           *tool,
   if (is_indexed)
     curves_dialog->col_value [HISTOGRAM_ALPHA] = color[4];
 
-  maxval = MAXIMUM(color[RED_PIX],color[GREEN_PIX]);
-  curves_dialog->col_value[HISTOGRAM_VALUE] = MAXIMUM(maxval,color[BLUE_PIX]);
+  maxval = MAX (color[RED_PIX], color[GREEN_PIX]);
+  curves_dialog->col_value[HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
 
   g_free (color);
 }
@@ -1037,8 +1037,8 @@ curves_plot_curve (CurvesDialog *cd,
   dy2 = deltas[2][1];
   dy3 = deltas[3][1];
 
-  lastx = BOUNDS (x, 0, 255);
-  lasty = BOUNDS (y, 0, 255);
+  lastx = CLAMP (x, 0, 255);
+  lasty = CLAMP (y, 0, 255);
 
   cd->curve[cd->channel][lastx] = lasty;
 
@@ -1412,8 +1412,8 @@ curves_graph_events (GtkWidget    *widget,
 
   /*  get the pointer position  */
   gdk_window_get_pointer (cd->graph->window, &tx, &ty, NULL);
-  x = BOUNDS ((tx - RADIUS), 0, 255);
-  y = BOUNDS ((ty - RADIUS), 0, 255);
+  x = CLAMP ((tx - RADIUS), 0, 255);
+  y = CLAMP ((ty - RADIUS), 0, 255);
 
   distance = G_MAXINT;
   for (i = 0; i < 17; i++)

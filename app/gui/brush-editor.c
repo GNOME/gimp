@@ -97,7 +97,7 @@ brush_edit_brush_dirty_callback (GimpBrush                *brush,
   xo = begw->preview->requisition.width/2 - brush->mask->width/(2*scale);
   ystart = begw->preview->requisition.height/2 - brush->mask->height/(2*scale);
   yend = ystart + brush->mask->height/(scale);
-  width = BOUNDS (brush->mask->width/scale, 0, begw->preview->requisition.width);
+  width = CLAMP (brush->mask->width/scale, 0, begw->preview->requisition.width);
 
   buf = g_new (gchar, width);
   src = (gchar *) temp_buf_data (brush->mask);

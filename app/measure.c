@@ -512,8 +512,8 @@ measure_tool_cursor_update (Tool           *tool,
 	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
 				     &x[i], &y[i], FALSE);      
 	  
-	  if (mevent->x == BOUNDS (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
-	      mevent->y == BOUNDS (mevent->y, y[i] - TARGET, y[i] + TARGET))
+	  if (mevent->x == CLAMP (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
+	      mevent->y == CLAMP (mevent->y, y[i] - TARGET, y[i] + TARGET))
 	    {
 	      if (mevent->state & GDK_CONTROL_MASK)
 		{

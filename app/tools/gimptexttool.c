@@ -974,7 +974,7 @@ text_set_resolution (gchar   **fontname,
   xresolution /= yresolution / (double) (int) yresolution;
 
   /* finally, if xres became invalid by the above calculations */
-  xresolution = BOUNDS (xresolution, 1.0, GIMP_MAX_RESOLUTION);
+  xresolution = CLAMP (xresolution, 1.0, GIMP_MAX_RESOLUTION);
 
   /* slice the font spec around the resolution fields */
   text_field_edges (*fontname, XRESOLUTION, &xres_str, &end);

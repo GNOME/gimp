@@ -30,7 +30,6 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <libgimp/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -109,9 +108,9 @@ static void OK_CALLBACK (GtkWidget *widget, gpointer   data);
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
-  NULL,  /* quit_proc */
+  NULL,  /* quit_proc  */
   query, /* query_proc */
-  run,   /* run_proc */
+  run,   /* run_proc   */
 };
 
 /* dialog variables */
@@ -201,9 +200,7 @@ query (void)
     { PARAM_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
     { PARAM_INT32, "use-bottom", "use the bottom layer as the base of alignment"},
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
   
@@ -216,8 +213,8 @@ query (void)
 			  N_("<Image>/Layers/Align Visible Layers..."),
 			  "RGB*,GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -227,7 +224,7 @@ run (gchar   *name,
      gint    *nreturn_vals,
      GParam **return_vals)
 {
-  static GParam	 values[1];
+  static GParam	values[1];
   GStatusType	status = STATUS_EXECUTION_ERROR;
   GRunModeType	run_mode;
   gint		image_id, layer_num;
