@@ -193,6 +193,8 @@ gimp_tool_info_preview_render (GimpPreview *preview)
           }
         
         gimp_preview_render_and_flush (preview, render_buf, -1);
+
+        temp_buf_free (render_buf);
       }
       break;
 

@@ -316,6 +316,7 @@ gimp_drawable_copy (GimpDrawable *drawable,
                            gimp_drawable_height (drawable),
                            new_image_type,
                            new_name);
+  g_free (new_name);
 
   new_drawable->offset_x = drawable->offset_x;
   new_drawable->offset_y = drawable->offset_y;

@@ -154,15 +154,17 @@ tool_manager_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
+  tool_manager_set (gimp, NULL);
 
   g_object_unref (G_OBJECT (tool_manager->global_tool_context));
 
   gimp_container_remove_handler (gimp->images,
 				 tool_manager->image_dirty_handler_id);
 
-  g_free (tool_manager);
+  if (tool_manager->active_tool)
+    g_object_unref (G_OBJECT (tool_manager->active_tool));
 
-  tool_manager_set (gimp, NULL);
+  g_free (tool_manager);
 }
 
 GimpTool *

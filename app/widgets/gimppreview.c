@@ -272,8 +272,13 @@ gimp_preview_destroy (GtkObject *object)
   if (preview->viewable)
     gimp_preview_set_viewable (preview, NULL);
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  if (preview->buffer)
+    {
+      g_free (preview->buffer);
+      preview->buffer = NULL;
+    }
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

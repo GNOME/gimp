@@ -459,6 +459,7 @@ plug_ins_def_add (PlugInDef *plug_in_def)
 	    }
 
 	  g_free (basename2);
+	  g_free (basename1);
 
 	  return;
 	}

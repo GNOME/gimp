@@ -1,5 +1,17 @@
 2002-03-22  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimptoolinfopreview.c: plugged a couple of mem leaks
+	found using valgrind.
+
+	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_expose): don't draw
+	anything if an idle update is pending.
+	
+2002-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/appenv.h: moved use_shm declaration here, added use_mmx.
 	
 	* app/main.c: added --no-mmx commandline option, removed --no-xshm

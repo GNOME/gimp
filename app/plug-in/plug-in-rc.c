@@ -174,6 +174,7 @@ plug_in_def_deserialize (GScanner *scanner)
     return G_TOKEN_STRING;
 
   plug_in_def = plug_in_def_new (name);
+  g_free (name);
 
   if (!parse_int (scanner, (gint *) &plug_in_def->mtime))
     {

@@ -218,7 +218,10 @@ gimp_image_duplicate (GimpImage *gimage)
   /* Copy parasites */
   parasites = gimage->parasites;
   if (parasites)
-    new_gimage->parasites = gimp_parasite_list_copy (parasites);
+    {
+      g_object_unref (new_gimage->parasites);
+      new_gimage->parasites = gimp_parasite_list_copy (parasites);
+    }
 
   /* Copy paths */
   paths = gimp_image_get_paths (gimage);
