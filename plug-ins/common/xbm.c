@@ -703,11 +703,9 @@ load_image (const gchar *filename)
   gint    y_hot = 0;
   gint    c, i, j, k;
   gint    tileheight, rowoffset;
+  gchar  *comment;
 
-  gchar *name_buf;
-  gchar *comment;
-
-  guchar cmap[] =
+  const guchar cmap[] =
   {
     0x00, 0x00, 0x00,		/* black */
     0xff, 0xff, 0xff		/* white */
@@ -721,10 +719,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   comment = fgetcomment (fp);
 

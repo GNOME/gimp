@@ -336,13 +336,10 @@ load_image (const gchar *filename)
   XpmImage  xpm_image;
   guchar   *cmap;
   gint32    image_ID;
-  gchar    *name;
 
-  /* put up a progress bar */
-  name = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name);
-  g_free (name);
 
   /* read the raw file */
   switch (XpmReadFileToXpmImage ((char *) filename, &xpm_image, NULL))
@@ -621,15 +618,9 @@ save_image (const gchar *filename,
 
   hash = g_hash_table_new ((GHashFunc) rgbhash, (GCompareFunc) compare);
 
-  /* put up a progress bar */
-  {
-    gchar *name;
-
-    name = g_strdup_printf (_("Saving '%s'..."),
-                            gimp_filename_to_utf8 (filename));
-    gimp_progress_init (name);
-    g_free (name);
-  }
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   ncolors = alpha ? 1 : 0;
 

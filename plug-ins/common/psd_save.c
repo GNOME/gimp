@@ -1573,11 +1573,10 @@ gint
 save_image (const gchar *filename,
             gint32       image_id)
 {
-  FILE  *fd;
-  gchar *name_buf;
+  FILE   *fd;
   gint32 *layers;
-  int nlayers;
-  int i;
+  gint    nlayers;
+  gint    i;
   GimpDrawable *drawable;
 
   IFDBG printf (" Function: save_image\n");
@@ -1614,10 +1613,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   IFDBG g_print ("      File \"%s\" has been opened\n",
                  gimp_filename_to_utf8 (filename));

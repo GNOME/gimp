@@ -121,7 +121,7 @@ gimp_progress_pulse (void)
 }
 
 /**
- * gimp_progress_set_text:
+ * _gimp_progress_set_text:
  * @message: Message to use in the progress dialog.
  *
  * Changes the text in the progress bar for the current plug-in.
@@ -135,7 +135,7 @@ gimp_progress_pulse (void)
  * Since: GIMP 2.4
  */
 gboolean
-gimp_progress_set_text (const gchar *message)
+_gimp_progress_set_text (const gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

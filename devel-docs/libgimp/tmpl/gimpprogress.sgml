@@ -81,7 +81,8 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 </para>
 
-@message: 
+@format: 
+@Varargs: 
 @Returns: 
 
 

@@ -195,15 +195,13 @@ load_image (const gchar *filename)
   gint   bperrow = MAX_COLS/8;	/* bytes per bit row */
   gchar *bitmap;		/* MAX_ROWS by (bperrow) bytes */
   gchar *bp;			/* bitmap pointer */
-  gchar *name;
   gint	 row;
   gint	 max_rows;		/* max. rows allocated */
   gint 	 col, hcol;		/* column, highest column ever used */
 
-  name = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name);
-  g_free (name);
 
   /* initialize lookup trees */
   build_tree( &white, t_white );

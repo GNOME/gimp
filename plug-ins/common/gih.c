@@ -630,7 +630,6 @@ gih_load_one_brush (gint   fd,
 static gint32
 gih_load_image (const gchar *filename)
 {
-  gchar   *temp;
   gint     fd;
   gint     i;
   gint32   image_ID;
@@ -650,10 +649,9 @@ gih_load_image (const gchar *filename)
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   /* The file format starts with a painfully simple text header */
 

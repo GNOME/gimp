@@ -1282,7 +1282,6 @@ ifs_compose (GimpDrawable *drawable)
   gint           height = drawable->height;
   gint           num_bands, band_height, band_y, band_no;
   gint           i, j;
-  gchar         *buffer;
   guchar        *data;
   guchar        *mask = NULL;
   guchar        *nhits;
@@ -1317,10 +1316,9 @@ ifs_compose (GimpDrawable *drawable)
 
       gpointer pr;
 
-      buffer = g_strdup_printf (_("Rendering IFS (%d/%d)..."),
-                                band_no+1, num_bands);
-      gimp_progress_init (buffer);
-      g_free (buffer);
+      gimp_progress_init (NULL);
+      gimp_progress_set_text (_("Rendering IFS (%d/%d)..."),
+                              band_no+1, num_bands);
 
       /* render the band to a buffer */
       if (band_y + band_height > height)
@@ -1336,11 +1334,9 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-
-      buffer = g_strdup_printf (_("Copying IFS to image (%d/%d)..."),
-                                band_no+1, num_bands);
-      gimp_progress_init (buffer);
-      g_free (buffer);
+      gimp_progress_init (NULL);
+      gimp_progress_set_text (_("Copying IFS to image (%d/%d)..."),
+                              band_no+1, num_bands);
 
       progress = 0;
       max_progress = band_height * width;

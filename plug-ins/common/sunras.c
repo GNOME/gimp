@@ -372,7 +372,6 @@ load_image (const gchar *filename)
 {
   gint32 image_ID;
   FILE *ifp;
-  char *temp = ident; /* Just to satisfy gcc/lint */
   L_SUNFILEHEADER sunhdr;
   guchar *suncolmap = NULL;
 
@@ -433,10 +432,9 @@ load_image (const gchar *filename)
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   switch (sunhdr.l_ras_depth)
     {
@@ -483,7 +481,6 @@ save_image (const gchar *filename,
   FILE* ofp;
   GimpImageType drawable_type;
   gint retval;
-  char *temp;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -515,10 +512,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp,image_ID, drawable_ID, 0, (int)psvals.rle);

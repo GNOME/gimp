@@ -119,7 +119,6 @@ uri_backend_load_image (const gchar  *uri,
       gchar    *memsize;
       gchar    *message;
       gchar    *timeout_msg;
-      gchar    *progress;
 
 #define DEBUG(x) if (debug) g_printerr (x)
 
@@ -153,10 +152,9 @@ uri_backend_load_image (const gchar  *uri,
 
       timeout_msg = g_strdup_printf (_("(timeout is %s seconds)"), TIMEOUT);
 
-      progress = g_strdup_printf ("%s %s",
-                                  _("Connecting to server..."), timeout_msg);
-      gimp_progress_init (progress);
-      g_free (progress);
+      gimp_progress_init (NULL);
+      gimp_progress_set_text ("%s %s",
+                              _("Connecting to server..."), timeout_msg);
 
     read_connect:
       if (fgets (buf, sizeof (buf), input) == NULL)
@@ -179,10 +177,8 @@ uri_backend_load_image (const gchar  *uri,
       DEBUG (buf);
 
       /*  The fourth line is either the network request or an error  */
-      progress = g_strdup_printf ("%s %s",
-                                  _("Opening URI..."), timeout_msg);
-      gimp_progress_init (progress);
-      g_free (progress);
+
+      gimp_progress_set_text ("%s %s", _("Opening URI..."), timeout_msg);
 
       if (fgets (buf, sizeof (buf), input) == NULL)
         {
@@ -251,9 +247,7 @@ uri_backend_load_image (const gchar  *uri,
       message = g_strdup_printf (_("Downloading %s of image data..."),
                                  memsize);
 
-      progress = g_strdup_printf ("%s %s", message, timeout_msg);
-      gimp_progress_init (progress);
-      g_free (progress);
+      gimp_progress_set_text ("%s %s", message, timeout_msg);
 
       g_free (message);
       g_free (memsize);

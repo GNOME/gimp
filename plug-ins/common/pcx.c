@@ -291,7 +291,6 @@ load_image (const gchar *filename)
   FILE *fd;
   GimpDrawable *drawable;
   GimpPixelRgn pixel_rgn;
-  gchar *message;
   gint offset_x, offset_y, height, width;
   gint32 image, layer;
   guchar *dest, cmap[768];
@@ -304,10 +303,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  message = g_strdup_printf (_("Opening '%s'..."),
-                             gimp_filename_to_utf8 (filename));
-  gimp_progress_init (message);
-  g_free (message);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   if (fread (&pcx_header, 128, 1, fd) == 0)
     {
@@ -532,7 +530,6 @@ save_image (const gchar *filename,
   GimpImageType drawable_type;
   guchar *cmap= NULL, *pixels;
   gint offset_x, offset_y, width, height;
-  gchar *message;
   int colors, i;
 
   drawable = gimp_drawable_get (layer);
@@ -542,10 +539,9 @@ save_image (const gchar *filename,
   height = drawable->height;
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  message = g_strdup_printf (_("Saving '%s'..."),
-                             gimp_filename_to_utf8 (filename));
-  gimp_progress_init (message);
-  g_free (message);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   pcx_header.manufacturer = 0x0a;
   pcx_header.version = 5;

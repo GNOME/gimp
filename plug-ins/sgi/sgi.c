@@ -306,7 +306,6 @@ load_image (const gchar *filename)  /* I - File to load */
                 *pixel,       /* Pixel data */
                 *pptr;        /* Current pixel */
   gushort      **rows;        /* SGI image data */
-  gchar         *progress;    /* Title for progress display... */
 
  /*
   * Open the file for reading...
@@ -320,17 +319,16 @@ load_image (const gchar *filename)  /* I - File to load */
       return -1;
     };
 
-  progress = g_strdup_printf (_("Opening '%s'..."),
-                               gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
    */
 
   bytes = sgip->zsize;
-  
+
   switch (sgip->zsize)
     {
     case 1 :	/* Grayscale */
@@ -352,7 +350,7 @@ load_image (const gchar *filename)  /* I - File to load */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
       break;
-    
+
     default:
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
@@ -498,7 +496,6 @@ save_image (const gchar *filename,
              *pixel,       /* Pixel data */
              *pptr;        /* Current pixel */
   gushort   **rows;        /* SGI image data */
-  gchar      *progress;    /* Title for progress display... */
 
   /*
    * Get the drawable for the current image...
@@ -542,10 +539,9 @@ save_image (const gchar *filename,
       return FALSE;
     };
 
-  progress = g_strdup_printf (_("Saving '%s'..."),
-                               gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /*
    * Allocate memory for "tile_height" rows...

@@ -196,7 +196,6 @@ save_image (const gchar *filename,
   guchar   *temp, *t;
   guchar   *data;
   guchar   *src, *s;
-  gchar    *name;
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
@@ -212,10 +211,9 @@ save_image (const gchar *filename,
 
   if (!preview)
     {
-      name = g_strdup_printf (_("Saving '%s'..."),
+      gimp_progress_init (NULL);
+      gimp_progress_set_text (_("Saving '%s'..."),
                               gimp_filename_to_utf8 (filename));
-      gimp_progress_init (name);
-      g_free (name);
     }
 
   /* Step 1: allocate and initialize JPEG compression object */

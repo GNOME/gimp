@@ -753,7 +753,6 @@ iwarp (void)
   gint     i;
   gint32   layerID;
   gint32  *animlayers;
-  gchar   *st;
   gdouble  delta;
 
   if (image_bpp == 1 || image_bpp == 3)
@@ -780,7 +779,8 @@ iwarp (void)
       frame_number = 0;
       for (i = 0; i < animate_num_frames; i++)
         {
-          st = g_strdup_printf (_("Frame %d"), i);
+          gchar *st = g_strdup_printf (_("Frame %d"), i);
+
           animlayers[i] = gimp_layer_copy (layerID);
           gimp_layer_add_alpha (animlayers[i]);
           gimp_drawable_set_name (animlayers[i], st);
@@ -790,9 +790,8 @@ iwarp (void)
 
           destdrawable = gimp_drawable_get (animlayers[i]);
 
-          st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
-          gimp_progress_init (st);
-          g_free (st);
+          gimp_progress_init (NULL);
+          gimp_progress_set_text (_("Warping Frame No. %d..."), frame_number);
 
           if (animate_deform_value > 0.0)
             iwarp_frame ();
@@ -800,14 +799,15 @@ iwarp (void)
           animate_deform_value = animate_deform_value + delta;
           frame_number++;
         }
+
       if (do_animate_ping_pong)
         {
-          st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
           gimp_progress_init (_("Ping pong"));
-          g_free (st);
 
           for (i = 0; i < animate_num_frames; i++)
             {
+              gchar *st;
+
               gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
               layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]);
 

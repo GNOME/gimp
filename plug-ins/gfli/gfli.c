@@ -443,7 +443,6 @@ load_image (const gchar *filename,
 	    gint32       to_frame)
 {
   FILE *file;
-  gchar *name_buf;
   GimpDrawable *drawable;
   gint32 image_id, layer_ID;
 
@@ -462,10 +461,9 @@ load_image (const gchar *filename,
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                               gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)
@@ -524,7 +522,8 @@ load_image (const gchar *filename,
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-      name_buf = g_strdup_printf (_("Frame (%i)"), cnt);
+      gchar *name_buf = g_strdup_printf (_("Frame (%i)"), cnt);
+
       layer_ID = gimp_layer_new (image_id, name_buf,
 				 fli_header.width, fli_header.height,
 				 GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
@@ -581,7 +580,6 @@ save_image (const gchar *filename,
 	    gint32       to_frame)
 {
   FILE *file;
-  gchar *name_buf;
   GimpDrawable *drawable;
   gint32 *framelist;
   gint nframes;
@@ -679,10 +677,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."),
-                               gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /*
    * First build the fli header.

@@ -306,7 +306,6 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  gchar             *temp;
   gchar             *name;
   gint               fd;
   BrushHeader        bh;
@@ -329,10 +328,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   if (read (fd, &bh, sizeof (BrushHeader)) != sizeof (BrushHeader))
     {
@@ -385,7 +383,7 @@ load_image (const gchar *filename)
 
   if ((bn_size = (bh.header_size - sizeof (BrushHeader))) > 0)
     {
-      temp = g_new (gchar, bn_size);
+      gchar *temp = g_new (gchar, bn_size);
 
       if ((read (fd, temp, bn_size)) < bn_size)
 	{
@@ -570,7 +568,6 @@ save_image (const gchar *filename,
   gint          line;
   gint          x;
   GimpPixelRgn  pixel_rgn;
-  gchar        *temp;
 
   if (gimp_drawable_type (drawable_ID) != GIMP_GRAY_IMAGE &&
       gimp_drawable_type (drawable_ID) != GIMP_RGBA_IMAGE)
@@ -588,10 +585,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   drawable = gimp_drawable_get (drawable_ID);
 

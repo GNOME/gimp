@@ -931,7 +931,6 @@ SaveICO (const gchar *filename,
          gint32       image)
 {
   MsIcon             ico;
-  gchar             *temp_buf;
   gint              *icon_depths = NULL;
   gint               num_icons;
   GimpPDBStatusType  exit_state;
@@ -954,10 +953,9 @@ SaveICO (const gchar *filename,
   if ((icon_depths = ico_show_icon_dialog (image, &num_icons)) == NULL)
     return GIMP_PDB_CANCEL;
 
-  temp_buf = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /* Okay, let's actually save the thing with the depths the
      user specified. */

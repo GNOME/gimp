@@ -400,7 +400,6 @@ static gint32
 load_image (const gchar *filename)
 {
   FILE     *fp;
-  gchar    *name_buf;
   tga_info  info;
   guchar    header[18];
   guchar    footer[26];
@@ -417,10 +416,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   if (!fseek (fp, -26L, SEEK_END)) { /* Is file big enough for a footer? */
     if (fread (footer, sizeof (footer), 1, fp) != 1)
@@ -1005,7 +1003,6 @@ save_image (const gchar *filename,
   gint           height;
 
   FILE     *fp;
-  gchar    *name_buf;
   gint      tileheight;
   gint      out_bpp = 0;
   gboolean  status  = TRUE;
@@ -1032,10 +1029,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name_buf = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   header[0] = 0; /* No image identifier / description */
 

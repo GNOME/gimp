@@ -1736,7 +1736,6 @@ load_image (const gchar *name)
 {
   FILE *fd;
   gboolean want_aux;
-  char *name_buf;
   guchar *cmykbuf;
   guchar *dest = NULL, *temp;
   long channels, nguchars;
@@ -1761,10 +1760,9 @@ load_image (const gchar *name)
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (name));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (name));
 
   read_whole_file (fd);
 

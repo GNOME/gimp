@@ -137,11 +137,9 @@ load_image (const gchar *filename,
 
   if (!preview)
     {
-      gchar *name = g_strdup_printf (_("Opening '%s'..."),
-                                     gimp_filename_to_utf8 (filename));
-
-      gimp_progress_init (name);
-      g_free (name);
+      gimp_progress_init (NULL);
+      gimp_progress_set_text (_("Opening '%s'..."),
+                              gimp_filename_to_utf8 (filename));
     }
 
   image_ID = -1;
@@ -568,12 +566,9 @@ load_thumbnail_image (const gchar *filename,
   jerr.pub.emit_message   = my_emit_message;
   jerr.pub.output_message = my_output_message;
 
-  {
-    gchar *name = g_strdup_printf (_("Opening thumbnail for '%s'..."),
-                                   gimp_filename_to_utf8 (filename));
-    gimp_progress_init (name);
-    g_free (name);
-  }
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening thumbnail for '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /* Establish the setjmp return context for my_error_exit to use. */
   if (setjmp (jerr.setjmp_buffer))

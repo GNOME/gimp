@@ -418,7 +418,6 @@ load_image (const gchar *filename)
   gint32 layer_ID;
   GimpDrawable *drawable;
   int fd;			/* File descriptor */
-  char *temp;
   char buf[BUFLEN];		/* buffer for random things like scanning */
   PNMInfo *pnminfo;
   PNMScanner * volatile scan;
@@ -434,10 +433,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);

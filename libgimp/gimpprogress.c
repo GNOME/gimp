@@ -178,6 +178,42 @@ gimp_progress_uninstall (const gchar *progress_callback)
   return user_data;
 }
 
+/**
+ * gimp_progress_set_text:
+ * @format: a standard printf() format string
+ * @Varargs: arguments for @format
+ *
+ * Changes the text in the progress bar for the current plug-in.
+ *
+ * This function allows to change the text in the progress bar for the
+ * current plug-in. Unlike gimp_progress_init() it does not change the
+ * displayed value.
+ *
+ * Returns: %TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_progress_set_text (const gchar *format,
+                        ...)
+{
+  gchar    *text;
+  gboolean  retval;
+  va_list   args;
+
+  g_return_if_fail (format != NULL);
+
+  va_start (args, format);
+  text = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  retval = _gimp_progress_set_text (text);
+
+  g_free (text);
+
+  return retval;
+}
+
 
 /*  private functions  */
 

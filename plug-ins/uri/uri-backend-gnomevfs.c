@@ -220,15 +220,12 @@ copy_uri (const gchar  *src_uri,
 
   memsize = gimp_memsize_to_string (file_size);
 
-  if (file_size > 0)
-    message = g_strdup_printf (copying_format_str, memsize);
-  else
-    message = g_strdup_printf (copied_format_str, memsize);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (file_size > 0 ?
+                          copying_format_str : copied_format_str,
+                          memsize);
 
   g_free (memsize);
-
-  gimp_progress_init (message);
-  g_free (message);
 
   while (TRUE)
     {

@@ -500,7 +500,6 @@ load_image (const gchar *filename)
   gint          i, j;
   gint          ilayer;
   gboolean      worst_case = FALSE;
-  gchar        *name;
 
   TiffSaveVals  save_vals;
   GimpParasite *parasite;
@@ -516,6 +515,7 @@ load_image (const gchar *filename)
 
   gboolean      uselayername = FALSE;
   guchar       *tmp_name;
+  gchar        *name;
 
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
@@ -531,10 +531,9 @@ load_image (const gchar *filename)
       gimp_quit ();
     }
 
-  name = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name);
-  g_free (name);
 
   /* We will loop through the all pages in case of multipage TIFF
      and load every page as a separate layer. */
@@ -1892,7 +1891,6 @@ save_image (const gchar *filename,
   GimpPixelRgn   pixel_rgn;
   gint           tile_height;
   gint           y, yend;
-  gchar         *name;
   gboolean       is_bw = FALSE, invert = TRUE;
   guchar         bw_map[] = { 0, 0, 0, 255, 255, 255 };
   guchar         wb_map[] = { 255, 255, 255, 0, 0, 0 };
@@ -1921,10 +1919,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  name = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name);
-  g_free (name);
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);

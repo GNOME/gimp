@@ -1,3 +1,22 @@
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprogress.c (gimp_progress_start): accept an empty
+	string.
+
+	* app/plug-in/plug-in-progress.c: if NULL is passed as message to
+	plug_in_progress_start(), set an empty string on the progress.
+
+	* tools/pdbgen/pdb/progress.pdb:
+	* libgimp/gimpprogress.[ch]: wrap the new gimp_progress_set_text()
+	PDP function with a function that accepts printf-like arguments.
+
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* lots of plug-ins, most of them file plug-ins:
+	use gimp_progress_init(NULL) followed by gimp_progress_set_text()
+	to initialize the progress using the new API instead of constructing
+	a temporary string.
+
 2005-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/file-save-dialog.c (file_save_dialog_response): use

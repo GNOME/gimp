@@ -136,7 +136,6 @@ gint32
 ReadBMP (const gchar *name)
 {
   FILE     *fd;
-  gchar    *temp_buf;
   guchar    buffer[64];
   gint      ColormapSize, rowbytes, Maps;
   gboolean  Grey;
@@ -155,10 +154,9 @@ ReadBMP (const gchar *name)
       return -1;
     }
 
-  temp_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (name));
-  gimp_progress_init (temp_buf);
-  g_free (temp_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (name));
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 

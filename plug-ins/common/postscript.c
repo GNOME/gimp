@@ -993,10 +993,9 @@ load_image (const gchar *filename)
     }
   fclose (ifp);
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf,
                  &ChildPid);
@@ -1089,7 +1088,6 @@ save_image (const gchar *filename,
   FILE* ofp;
   GimpImageType drawable_type;
   gint retval;
-  char *temp = ident; /* Just to satisfy lint/gcc */
 
   /* initialize */
 
@@ -1125,10 +1123,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   save_ps_header (ofp, filename);
 

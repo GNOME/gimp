@@ -53,9 +53,6 @@ plug_in_progress_start (PlugIn      *plug_in,
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  if (! message)
-    message = plug_in->prog;
-
   if (! proc_frame->progress)
     {
       proc_frame->progress = gimp_new_progress (plug_in->gimp, display_ID);
@@ -78,14 +75,17 @@ plug_in_progress_start (PlugIn      *plug_in,
 
       if (gimp_progress_is_active (proc_frame->progress))
         {
-          gimp_progress_set_text (proc_frame->progress, message);
+          if (message)
+            gimp_progress_set_text (proc_frame->progress, message);
 
           if (gimp_progress_get_value (proc_frame->progress) > 0.0)
             gimp_progress_set_value (proc_frame->progress, 0.0);
         }
       else
         {
-          gimp_progress_start (proc_frame->progress, message, TRUE);
+          gimp_progress_start (proc_frame->progress,
+                               message ? message : "",
+                               TRUE);
         }
     }
 }

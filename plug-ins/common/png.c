@@ -630,7 +630,6 @@ load_image (const gchar *filename,
   png_infop info;               /* PNG info pointers */
   guchar **pixels,              /* Pixel rows */
    *pixel;                      /* Pixel data */
-  gchar *progress;              /* Title for progress display... */
   guchar alpha[256],            /* Index -> Alpha */
    *alpha_ptr;                  /* Temporary pointer */
 
@@ -678,10 +677,9 @@ load_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  progress = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
@@ -1092,7 +1090,6 @@ save_image (const gchar *filename,
   guchar **pixels,              /* Pixel rows */
    *fixed,                      /* Fixed-up pixel data */
    *pixel;                      /* Pixel data */
-  gchar *progress;              /* Title for progress display... */
   gdouble xres, yres;           /* GIMP resolution (dpi) */
   png_color_16 background;      /* Background color */
   png_time mod_time;            /* Modification time (ie NOW) */
@@ -1182,10 +1179,9 @@ save_image (const gchar *filename,
 
   png_init_io (pp, fp);
 
-  progress = g_strdup_printf (_("Saving '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progress);
-  g_free (progress);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /*
    * Get the drawable for the current image...

@@ -311,7 +311,6 @@ load_image (const gchar *filename)
 {
   gint       i, j, tile_height, row;
   FILE      *file = NULL;
-  gchar     *progMessage = ident;  /*  only to suppress compiler warnings  */
   guchar    *dest;
   guchar    *dest_base;
   GimpDrawable *drawable;
@@ -334,11 +333,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  /* Set up progress display */
-  progMessage = g_strdup_printf (_("Opening '%s'..."),
-                                 gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progMessage);
-  g_free (progMessage);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /* Read header information */
   width  = get_short (file);
@@ -494,7 +491,6 @@ save_image (const gchar *filename,
   gboolean   savingColor = TRUE;
   guchar    *src;
   guchar    *src_base;
-  gchar     *progMessage;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
   FILE      *file;
@@ -517,11 +513,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  /* Set up progress display */
-  progMessage = g_strdup_printf (_("Saving '%s'..."),
-                                 gimp_filename_to_utf8 (filename));
-  gimp_progress_init (progMessage);
-  g_free (progMessage);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   /* Write the image header */
   PIX_DEBUG_PRINT ("Width %hu\n", drawable->width);

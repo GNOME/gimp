@@ -625,7 +625,6 @@ load_image (gchar *filename)
   GimpImageBaseType  itype    = GIMP_RGB_IMAGE;
   gint32             size;
   gint               bpp = 0;
-  gchar             *name_buf;
 
   data = g_new0 (RawGimpData, 1);
 
@@ -637,10 +636,9 @@ load_image (gchar *filename)
       return -1;
     }
 
-  name_buf = g_strdup_printf (_("Opening '%s'..."),
-                              gimp_filename_to_utf8 (filename));
-  gimp_progress_init (name_buf);
-  g_free (name_buf);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   size = get_file_info (filename);
 

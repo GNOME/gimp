@@ -938,7 +938,6 @@ load_image (const gchar *filename)
   gint32	layer;
   GimpDrawable *drawable;
   GimpPixelRgn	pixel_rgn;
-  gchar        *status;
   gint          i, rowstride;
 
   guchar       *pixels, *buf;
@@ -954,10 +953,9 @@ load_image (const gchar *filename)
       gimp_quit ();
     }
 
-  status = g_strdup_printf (_("Opening '%s'..."),
-                            gimp_filename_to_utf8 (filename));
-  gimp_progress_init (status);
-  g_free (status);
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
+                          gimp_filename_to_utf8 (filename));
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_set_filename (image, filename);

@@ -498,14 +498,12 @@ ico_to_gimp (MsIcon *ico)
 gint32
 LoadICO (const gchar *filename)
 {
-  gchar  *temp;
   gint32  image_ID;
   MsIcon  ico;
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   if (! ico_init (filename, &ico))
     return -1;

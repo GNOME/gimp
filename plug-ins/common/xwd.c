@@ -411,7 +411,6 @@ load_image (const gchar *filename)
 {
   FILE            *ifp;
   gint             depth, bpp;
-  gchar           *temp;
   gint32           image_ID;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
@@ -472,10 +471,9 @@ load_image (const gchar *filename)
         }
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   depth = xwdhdr.l_pixmap_depth;
   bpp   = xwdhdr.l_bits_per_pixel;
@@ -523,17 +521,10 @@ load_image (const gchar *filename)
     g_free (xwdcolmap);
 
   if (image_ID == -1)
-    {
-      temp = g_strdup_printf (_("XWD-file %s has format %d, depth %d\n"
-                                "and bits per pixel %d.\n"
-                                "Currently this is not supported."),
-                              gimp_filename_to_utf8 (filename),
-                              (gint) xwdhdr.l_pixmap_format, depth, bpp);
-      g_message (temp);
-      g_free (temp);
-
-      return -1;
-    }
+    g_message (_("XWD-file %s has format %d, depth %d and bits per pixel %d. "
+                 "Currently this is not supported."),
+               gimp_filename_to_utf8 (filename),
+               (gint) xwdhdr.l_pixmap_format, depth, bpp);
 
   return image_ID;
 }

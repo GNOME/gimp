@@ -280,10 +280,10 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  gchar            *temp;
   gint              fd;
   PatternHeader     ph;
   gchar            *name;
+  gchar            *temp;
   guchar           *buffer;
   gint32            image_ID;
   gint32            layer_ID;
@@ -302,10 +302,9 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  temp = g_strdup_printf (_("Opening '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
     {
@@ -424,7 +423,6 @@ save_image (const gchar *filename,
   GimpDrawable *drawable;
   gint          line;
   GimpPixelRgn  pixel_rgn;
-  gchar        *temp;
 
   fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
 
@@ -435,10 +433,9 @@ save_image (const gchar *filename,
       return FALSE;
     }
 
-  temp = g_strdup_printf (_("Saving '%s'..."),
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Saving '%s'..."),
                           gimp_filename_to_utf8 (filename));
-  gimp_progress_init (temp);
-  g_free (temp);
 
   drawable = gimp_drawable_get (drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
