@@ -33,6 +33,7 @@
 #include "core/gimpbrushgenerated.h"
 
 #include "gimpbrusheditor.h"
+#include "gimpenumwidgets.h"
 #include "gimppreview.h"
 
 #include "gimp-intl.h"
@@ -51,6 +52,8 @@ static void   gimp_brush_editor_set_data     (GimpDataEditor       *editor,
                                               GimpData             *data);
 
 static void   gimp_brush_editor_update_brush (GtkAdjustment        *adjustment,
+                                              GimpBrushEditor      *editor);
+static void   gimp_brush_editor_update_brush_shape (GtkWidget      *widget,
                                               GimpBrushEditor      *editor);
 static void   gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
                                               GParamSpec           *pspec,
@@ -101,7 +104,7 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
 static void
 gimp_brush_editor_init (GimpBrushEditor *editor)
 {
-  GtkWidget *frame;
+  GtkWidget *frame, *box;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -119,6 +122,8 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);
 
+  editor->shape_group = NULL;
+
   /* table for sliders/labels */
   editor->options_table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (editor->options_table), 2);
@@ -126,10 +131,23 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->options_table, FALSE, FALSE, 0);
   gtk_widget_show (editor->options_table);
 
+  /* Stock Box for the brush shape */
+  box = gimp_enum_stock_box_new (GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                 "gimp-brush-generated",
+                                 GTK_ICON_SIZE_MENU,
+                                 G_CALLBACK (gimp_brush_editor_update_brush_shape),
+                                 editor,
+                                 &editor->shape_group);
+  gimp_table_attach_aligned (GTK_TABLE (editor->options_table),
+                             0, 0,
+                             _("Shape:"), 0.0, 0.5,
+                             box, 2, TRUE);
+  gtk_widget_show (box);
+
   /*  brush radius scale  */
   editor->radius_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 0,
+                                          0, 1,
                                           _("Radius:"), -1, 5,
                                           0.0, 1.0, 1000.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -142,7 +160,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush hardness scale  */
   editor->hardness_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 1,
+                                          0, 2,
                                           _("Hardness:"), -1, 5,
                                           0.0, 0.0, 1.0, 0.01, 0.1, 2,
                                           TRUE, 0.0, 0.0,
@@ -155,7 +173,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush aspect ratio scale  */
   editor->aspect_ratio_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 2,
+                                          0, 3,
                                           _("Aspect ratio:"), -1, 5,
                                           0.0, 1.0, 20.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -168,7 +186,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   /*  brush angle scale  */
   editor->angle_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
-                                          0, 3,
+                                          0, 4,
                                           _("Angle:"), -1, 5,
                                           0.0, 0.0, 180.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
@@ -183,11 +201,12 @@ static void
 gimp_brush_editor_set_data (GimpDataEditor *editor,
                             GimpData       *data)
 {
-  GimpBrushEditor *brush_editor;
-  gdouble          radius   = 0.0;
-  gdouble          hardness = 0.0;
-  gdouble          ratio    = 0.0;
-  gdouble          angle    = 0.0;
+  GimpBrushEditor         *brush_editor;
+  GimpBrushGeneratedShape  shape = GIMP_BRUSH_GENERATED_CIRCLE;
+  gdouble                  radius   = 0.0;
+  gdouble                  hardness = 0.0;
+  gdouble                  ratio    = 0.0;
+  gdouble                  angle    = 0.0;
 
   brush_editor = GIMP_BRUSH_EDITOR (editor);
 
@@ -210,6 +229,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
     {
       GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (editor->data);
 
+      shape    = gimp_brush_generated_get_shape        (brush);
       radius   = gimp_brush_generated_get_radius       (brush);
       hardness = gimp_brush_generated_get_hardness     (brush);
       ratio    = gimp_brush_generated_get_aspect_ratio (brush);
@@ -219,6 +239,8 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gtk_widget_set_sensitive (brush_editor->options_table,
                             editor->data_editable);
 
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (brush_editor->shape_group),
+                                   shape);
   gtk_adjustment_set_value (brush_editor->radius_data,       radius);
   gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
   gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
@@ -296,6 +318,26 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
 }
 
 static void
+gimp_brush_editor_update_brush_shape (GtkWidget       *widget,
+                                      GimpBrushEditor *editor)
+{
+  GimpBrushGeneratedShape shape;
+  GimpBrushGenerated *brush;
+
+  if (! GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
+    return;
+
+  brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
+
+  shape = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                              "gimp-item-data"));
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
+      gimp_brush_generated_get_shape (brush) != shape)
+    gimp_brush_generated_set_shape (brush, shape);
+}
+
+static void
 gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
                                 GParamSpec           *pspec,
                                 GimpBrushEditor      *editor)
@@ -303,7 +345,23 @@ gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
   GtkAdjustment *adj   = NULL;
   gdouble        value = 0.0;
 
-  if (! strcmp (pspec->name, "radius"))
+  if (! strcmp (pspec->name, "shape"))
+    {
+      g_signal_handlers_block_by_func (editor->shape_group,
+                                       G_CALLBACK (gimp_brush_editor_update_brush_shape),
+                                       editor);
+
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (editor->shape_group),
+                                       brush->shape);
+
+      g_signal_handlers_unblock_by_func (editor->shape_group,
+                                         G_CALLBACK (gimp_brush_editor_update_brush_shape),
+                                         editor);
+
+      adj   = editor->radius_data;
+      value = brush->radius;
+    }
+  else if (! strcmp (pspec->name, "radius"))
     {
       adj   = editor->radius_data;
       value = brush->radius;

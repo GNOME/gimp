@@ -32,6 +32,9 @@ WILBER_VARIABLES = \
 ## Below are compiled in stock icons 
 
 STOCK_MENU_IMAGES = \
+	stock-brush-generated-circle-16.png		\
+	stock-brush-generated-diamond-16.png		\
+	stock-brush-generated-square-16.png		\
 	stock-cap-butt-16.png				\
 	stock-cap-round-16.png				\
 	stock-cap-square-16.png				\

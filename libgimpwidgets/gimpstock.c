@@ -237,6 +237,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_BRUSH_GENERATED_CIRCLE,   NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_BRUSH_GENERATED_DIAMOND,  NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_BRUSH_GENERATED_SQUARE,   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CAP_BUTT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CAP_ROUND,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CAP_SQUARE,               NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -556,6 +559,10 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_TOILET_PAPER,                   stock_toilet_paper_16             },
   { GIMP_STOCK_WEB,                      stock_web_16                      },
   { GIMP_STOCK_VIDEO,                    stock_video_16                    },
+
+  { GIMP_STOCK_BRUSH_GENERATED_CIRCLE,   stock_brush_generated_circle_16   },
+  { GIMP_STOCK_BRUSH_GENERATED_DIAMOND,  stock_brush_generated_diamond_16  },
+  { GIMP_STOCK_BRUSH_GENERATED_SQUARE,   stock_brush_generated_square_16   },
 
   { GIMP_STOCK_CAP_BUTT,                 stock_cap_butt_16                 },
   { GIMP_STOCK_CAP_ROUND,                stock_cap_round_16                },

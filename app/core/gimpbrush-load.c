@@ -111,8 +111,8 @@ gimp_brush_get_type (void)
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) gimp_brush_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
         sizeof (GimpBrush),
         0,              /* n_preallocs    */
         (GInstanceInitFunc) gimp_brush_init,
@@ -268,10 +268,10 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
       if (pixmap_buf)
         {
           /* TODO: the scale function should scale the pixmap and the
-	   *  mask in one run
-	   */
+           *  mask in one run
+           */
           pixmap_buf =
-	    brush_scale_pixmap (pixmap_buf, brush_width, brush_height);
+            brush_scale_pixmap (pixmap_buf, brush_width, brush_height);
         }
 
       scale = TRUE;
@@ -349,7 +349,9 @@ gimp_brush_new (const gchar *name,
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return gimp_brush_generated_new (name, 5.0, 0.5, 1.0, 0.0,
+  return gimp_brush_generated_new (name,
+                                   GIMP_BRUSH_GENERATED_CIRCLE,
+                                   5.0, 0.5, 1.0, 0.0,
                                    stingy_memory_use);
 }
 
@@ -484,7 +486,7 @@ gimp_brush_get_spacing (const GimpBrush *brush)
 
 void
 gimp_brush_set_spacing (GimpBrush *brush,
-			gint       spacing)
+                        gint       spacing)
 {
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
@@ -528,7 +530,7 @@ gimp_brush_load_brush (gint          fd,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Could not read %d bytes from '%s': %s"),
                    (gint) sizeof (header),
-		   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -588,14 +590,14 @@ gimp_brush_load_brush (gint          fd,
       name = g_new (gchar, bn_size);
 
       if ((read (fd, name, bn_size)) < bn_size)
-	{
-	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "File appears truncated."),
                        gimp_filename_to_utf8 (filename));
-	  g_free (name);
-	  return NULL;
-	}
+          g_free (name);
+          return NULL;
+        }
 
       utf8 = gimp_any_to_utf8 (name, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),

@@ -347,6 +347,25 @@ gimp_icon_type_get_type (void)
 }
 
 GType
+gimp_brush_generated_shape_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_BRUSH_GENERATED_CIRCLE, N_("Circle"), "circle" },
+    { GIMP_BRUSH_GENERATED_SQUARE, N_("Square"), "square" },
+    { GIMP_BRUSH_GENERATED_DIAMOND, N_("Diamond"), "diamond" },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    type = g_enum_register_static ("GimpBrushGeneratedShape", values);
+
+  return type;
+}
+
+GType
 gimp_orientation_type_get_type (void)
 {
   static const GEnumValue values[] =

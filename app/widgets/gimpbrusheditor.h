@@ -42,6 +42,7 @@ struct _GimpBrushEditor
 
   GtkWidget      *preview;
 
+  GtkWidget      *shape_group;
   GtkWidget      *options_table;
   GtkAdjustment  *radius_data;
   GtkAdjustment  *hardness_data;

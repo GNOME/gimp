@@ -208,6 +208,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WEB                      "gimp-web"
 #define GIMP_STOCK_VIDEO                    "gimp-video"
 
+#define GIMP_STOCK_BRUSH_GENERATED_CIRCLE   "gimp-brush-generated-circle"
+#define GIMP_STOCK_BRUSH_GENERATED_DIAMOND  "gimp-brush-generated-diamond"
+#define GIMP_STOCK_BRUSH_GENERATED_SQUARE   "gimp-brush-generated-square"
+
 #define GIMP_STOCK_CAP_BUTT                 "gimp-cap-butt"
 #define GIMP_STOCK_CAP_ROUND                "gimp-cap-round"
 #define GIMP_STOCK_CAP_SQUARE               "gimp-cap-square"

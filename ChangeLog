@@ -1,3 +1,21 @@
+2004-08-01  Simon Budig  <simon@gimp.org>
+
+	* app/core/core-enums.h
+	* app/core/gimpbrushgenerated.[ch]: Implement three different
+	brush shapes for generated brushes.
+
+	* app/core/gimpbrush.c: changed accordingly.
+	* app/core/core-enums.c: regenerated.
+
+	* app/widgets/gimpbrusheditor.[ch]: Add toggles for the shape.
+	* themes/Default/images/stock-brush-generated-*-16.png: New stock
+	icons for the brush shapes.
+
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: changed accordingly
+
+	untabified the files touched.
+
 2004-08-01  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/iwarp.c: ported to GimpPreviewArea.

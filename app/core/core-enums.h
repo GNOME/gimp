@@ -264,6 +264,18 @@ typedef enum
 } GimpIconType;
 
 
+#define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
+
+GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_BRUSH_GENERATED_CIRCLE,  /*< desc="Circle"  >*/
+  GIMP_BRUSH_GENERATED_SQUARE,  /*< desc="Square"  >*/
+  GIMP_BRUSH_GENERATED_DIAMOND  /*< desc="Diamond" >*/
+} GimpBrushGeneratedShape;
+
+
 #define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
 
 GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
@@ -548,21 +560,21 @@ typedef enum  /*< pdb-skip, skip >*/
 
   /*  aliases  */
   GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
-				   GIMP_CONTEXT_BACKGROUND_MASK |
-				   GIMP_CONTEXT_OPACITY_MASK    |
-				   GIMP_CONTEXT_PAINT_MODE_MASK |
-				   GIMP_CONTEXT_BRUSH_MASK      |
-				   GIMP_CONTEXT_PATTERN_MASK    |
-				   GIMP_CONTEXT_GRADIENT_MASK),
+                                   GIMP_CONTEXT_BACKGROUND_MASK |
+                                   GIMP_CONTEXT_OPACITY_MASK    |
+                                   GIMP_CONTEXT_PAINT_MODE_MASK |
+                                   GIMP_CONTEXT_BRUSH_MASK      |
+                                   GIMP_CONTEXT_PATTERN_MASK    |
+                                   GIMP_CONTEXT_GRADIENT_MASK),
   GIMP_CONTEXT_ALL_PROPS_MASK   = (GIMP_CONTEXT_IMAGE_MASK      |
-				   GIMP_CONTEXT_DISPLAY_MASK    |
-				   GIMP_CONTEXT_TOOL_MASK       |
-				   GIMP_CONTEXT_PALETTE_MASK    |
-				   GIMP_CONTEXT_FONT_MASK       |
-				   GIMP_CONTEXT_BUFFER_MASK     |
-				   GIMP_CONTEXT_IMAGEFILE_MASK  |
-				   GIMP_CONTEXT_TEMPLATE_MASK   |
-				   GIMP_CONTEXT_PAINT_PROPS_MASK)
+                                   GIMP_CONTEXT_DISPLAY_MASK    |
+                                   GIMP_CONTEXT_TOOL_MASK       |
+                                   GIMP_CONTEXT_PALETTE_MASK    |
+                                   GIMP_CONTEXT_FONT_MASK       |
+                                   GIMP_CONTEXT_BUFFER_MASK     |
+                                   GIMP_CONTEXT_IMAGEFILE_MASK  |
+                                   GIMP_CONTEXT_TEMPLATE_MASK   |
+                                   GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
 
 typedef enum  /*< skip >*/

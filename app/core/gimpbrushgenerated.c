@@ -48,6 +48,7 @@
 enum
 {
   PROP_0,
+  PROP_SHAPE,
   PROP_RADIUS,
   PROP_HARDNESS,
   PROP_ASPECT_RATIO,
@@ -92,8 +93,8 @@ gimp_brush_generated_get_type (void)
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) gimp_brush_generated_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
         sizeof (GimpBrushGenerated),
         0,              /* n_preallocs    */
         (GInstanceInitFunc) gimp_brush_generated_init,
@@ -123,6 +124,12 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   data_class->get_extension  = gimp_brush_generated_get_extension;
   data_class->duplicate      = gimp_brush_generated_duplicate;
 
+  g_object_class_install_property (object_class, PROP_SHAPE,
+                                   g_param_spec_enum ("shape", NULL, NULL,
+                                                      GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                                      GIMP_BRUSH_GENERATED_CIRCLE,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL, NULL,
                                                         1.0, 1000.0, 5.0,
@@ -149,6 +156,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
 static void
 gimp_brush_generated_init (GimpBrushGenerated *brush)
 {
+  brush->shape        = GIMP_BRUSH_GENERATED_CIRCLE;
   brush->radius       = 5.0;
   brush->hardness     = 0.0;
   brush->aspect_ratio = 1.0;
@@ -165,6 +173,9 @@ gimp_brush_generated_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_SHAPE:
+      gimp_brush_generated_set_shape (brush, g_value_get_enum (value));
+      break;
     case PROP_RADIUS:
       gimp_brush_generated_set_radius (brush, g_value_get_double (value));
       break;
@@ -193,6 +204,9 @@ gimp_brush_generated_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_SHAPE:
+      g_value_set_enum (value, brush->shape);
+      break;
     case PROP_RADIUS:
       g_value_set_double (value, brush->angle);
       break;
@@ -226,7 +240,7 @@ gimp_brush_generated_save (GimpData  *data,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (data->filename),
-		   g_strerror (errno));
+                   g_strerror (errno));
       return FALSE;
     }
 
@@ -234,10 +248,25 @@ gimp_brush_generated_save (GimpData  *data,
   fprintf (file, "GIMP-VBR\n");
 
   /* write version */
-  fprintf (file, "1.0\n");
+  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE)
+    fprintf (file, "1.5\n");
+  else
+    fprintf (file, "1.0\n");
 
   /* write name */
   fprintf (file, "%.255s\n", GIMP_OBJECT (brush)->name);
+
+  if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE)
+    {
+      GEnumClass *enum_class;
+      GEnumValue *shape_val;
+
+      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
+
+      /* write shape */
+      shape_val = g_enum_get_value (enum_class, brush->shape);
+      fprintf (file, "%s\n", shape_val->value_nick);
+    }
 
   /* write brush spacing */
   fprintf (file, "%s\n",
@@ -282,10 +311,11 @@ gimp_brush_generated_duplicate (GimpData *data,
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
 
   return gimp_brush_generated_new (GIMP_OBJECT (brush)->name,
+                                   brush->shape,
                                    brush->radius,
-				   brush->hardness,
-				   brush->aspect_ratio,
-				   brush->angle,
+                                   brush->hardness,
+                                   brush->aspect_ratio,
+                                   brush->angle,
                                    stingy_memory_use);
 }
 
@@ -337,14 +367,27 @@ gimp_brush_generated_dirty (GimpData *data)
   gbrush->y_axis.x =        s * short_radius;
   gbrush->y_axis.y =        c * short_radius;
 
-  width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
-                       gbrush->y_axis.x * gbrush->y_axis.x));
-  height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
-                       gbrush->y_axis.y * gbrush->y_axis.y));
+  switch (brush->shape)
+    {
+      case GIMP_BRUSH_GENERATED_CIRCLE:
+        width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
+                             gbrush->y_axis.x * gbrush->y_axis.x));
+        height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
+                             gbrush->y_axis.y * gbrush->y_axis.y));
+        break;
+      case GIMP_BRUSH_GENERATED_SQUARE:
+        width  = ceil (fabs (gbrush->x_axis.x) + fabs (gbrush->y_axis.x));
+        height = ceil (fabs (gbrush->x_axis.y) + fabs (gbrush->y_axis.y));
+        break;
+      case GIMP_BRUSH_GENERATED_DIAMOND:
+        width  = ceil (MAX (fabs (gbrush->x_axis.x), fabs (gbrush->y_axis.x)));
+        height = ceil (MAX (fabs (gbrush->x_axis.y), fabs (gbrush->y_axis.y)));
+        break;
+    }
 
   gbrush->mask = temp_buf_new (width  * 2 + 1,
-			       height * 2 + 1,
-			       1, width, height, 0);
+                               height * 2 + 1,
+                               1, width, height, 0);
 
   centerp = temp_buf_data (gbrush->mask) + height * gbrush->mask->width + width;
 
@@ -366,9 +409,9 @@ gimp_brush_generated_dirty (GimpData *data)
       d = fabs ((x + 0.5) / OVERSAMPLING - 0.5);
 
       if (d > brush->radius)
-	buffer[x] = 0.0;
+        buffer[x] = 0.0;
       else
-	buffer[x] = gauss (pow (d / brush->radius, exponent));
+        buffer[x] = gauss (pow (d / brush->radius, exponent));
 
       sum += buffer[x];
     }
@@ -378,9 +421,9 @@ gimp_brush_generated_dirty (GimpData *data)
       sum -= buffer[x % OVERSAMPLING];
 
       if (d > brush->radius)
-	buffer[x % OVERSAMPLING] = 0.0;
+        buffer[x % OVERSAMPLING] = 0.0;
       else
-	buffer[x % OVERSAMPLING] = gauss (pow (d / brush->radius, exponent));
+        buffer[x % OVERSAMPLING] = gauss (pow (d / brush->radius, exponent));
 
       sum += buffer[x % OVERSAMPLING];
       lookup[x++] = RINT (sum * (255.0 / OVERSAMPLING));
@@ -395,22 +438,33 @@ gimp_brush_generated_dirty (GimpData *data)
   for (y = 0; y <= height; y++)
     {
       for (x = -width; x <= width; x++)
-	{
+        {
           gdouble tx, ty;
 
-	  tx = c*x - s*y;
-	  ty = c*y + s*x;
-	  ty *= brush->aspect_ratio;
-	  d = sqrt (tx*tx + ty*ty);
+          tx = c*x - s*y;
+          ty = c*y + s*x;
+          ty *= brush->aspect_ratio;
+          switch (brush->shape)
+            {
+              case GIMP_BRUSH_GENERATED_CIRCLE:
+                d = sqrt (tx*tx + ty*ty);
+                break;
+              case GIMP_BRUSH_GENERATED_SQUARE:
+                d = MAX (fabs (tx), fabs (ty));
+                break;
+              case GIMP_BRUSH_GENERATED_DIAMOND:
+                d = fabs (tx) + fabs (ty);
+                break;
+            }
 
-	  if (d < brush->radius + 1)
-	    a = lookup[(gint) RINT (d * OVERSAMPLING)];
-	  else
-	    a = 0;
+          if (d < brush->radius + 1)
+            a = lookup[(gint) RINT (d * OVERSAMPLING)];
+          else
+            a = 0;
 
-	  centerp[     y * gbrush->mask->width + x] = a;
-	  centerp[-1 * y * gbrush->mask->width - x] = a;
-	}
+          centerp[     y * gbrush->mask->width + x] = a;
+          centerp[-1 * y * gbrush->mask->width - x] = a;
+        }
     }
 
   g_free (lookup);
@@ -420,18 +474,20 @@ gimp_brush_generated_dirty (GimpData *data)
 }
 
 GimpData *
-gimp_brush_generated_new (const gchar *name,
-                          gfloat       radius,
-			  gfloat       hardness,
-			  gfloat       aspect_ratio,
-			  gfloat       angle,
-                          gboolean     stingy_memory_use)
+gimp_brush_generated_new (const gchar             *name,
+                          GimpBrushGeneratedShape  shape,
+                          gfloat                   radius,
+                          gfloat                   hardness,
+                          gfloat                   aspect_ratio,
+                          gfloat                   angle,
+                          gboolean                 stingy_memory_use)
 {
   GimpBrushGenerated *brush;
 
   g_return_val_if_fail (name != NULL, NULL);
 
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
+                        "shape",        shape,
                         "name",         name,
                         "radius",       radius,
                         "hardness",     hardness,
@@ -455,15 +511,17 @@ gimp_brush_generated_load (const gchar  *filename,
                            gboolean      stingy_memory_use,
                            GError      **error)
 {
-  GimpBrushGenerated *brush;
-  FILE               *file;
-  gchar               string[256];
-  gchar              *name = NULL;
-  gdouble             spacing;
-  gdouble             radius;
-  gdouble             hardness;
-  gdouble             aspect_ratio;
-  gdouble             angle;
+  GimpBrushGenerated      *brush;
+  FILE                    *file;
+  gchar                    string[256];
+  gchar                   *name = NULL;
+  GimpBrushGeneratedShape  shape = GIMP_BRUSH_GENERATED_CIRCLE;
+  gboolean                 have_shape = FALSE;
+  gdouble                  spacing;
+  gdouble                  radius;
+  gdouble                  hardness;
+  gdouble                  aspect_ratio;
+  gdouble                  angle;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
@@ -500,11 +558,18 @@ gimp_brush_generated_load (const gchar  *filename,
 
   if (strncmp (string, "1.0", 3))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in brush file '%s': "
-                     "Unknown GIMP brush version."),
-                   gimp_filename_to_utf8 (filename));
-      return NULL;
+      if (strncmp (string, "1.5", 3))
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Fatal parse error in brush file '%s': "
+                         "Unknown GIMP brush version."),
+                       gimp_filename_to_utf8 (filename));
+          return NULL;
+        }
+      else
+        {
+          have_shape = TRUE;
+        }
     }
 
   /* read name */
@@ -516,6 +581,33 @@ gimp_brush_generated_load (const gchar  *filename,
   name = gimp_any_to_utf8 (string, -1,
                            _("Invalid UTF-8 string in brush file '%s'."),
                            gimp_filename_to_utf8 (filename));
+
+  if (have_shape)
+    {
+      GEnumClass *enum_class;
+      GEnumValue *shape_val;
+
+      enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
+
+      /* read shape */
+      errno = 0;
+      if (! fgets (string, sizeof (string), file))
+        goto failed;
+
+      g_strstrip (string);
+      shape_val = g_enum_get_value_by_nick (enum_class, string);
+
+      if (!shape_val)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Fatal parse error in brush file '%s': "
+                         "Unknown GIMP brush shape."),
+                       gimp_filename_to_utf8 (filename));
+          return NULL;
+        }
+
+      shape = shape_val->value;
+    }
 
   /* read brush spacing */
   errno = 0;
@@ -551,6 +643,7 @@ gimp_brush_generated_load (const gchar  *filename,
 
   /* create new brush */
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
+                        "shape",        shape,
                         "name",         name,
                         "radius",       radius,
                         "hardness",     hardness,
@@ -582,9 +675,27 @@ gimp_brush_generated_load (const gchar  *filename,
   return NULL;
 }
 
+GimpBrushGeneratedShape
+gimp_brush_generated_set_shape (GimpBrushGenerated      *brush,
+                                GimpBrushGeneratedShape  shape)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush),
+                        GIMP_BRUSH_GENERATED_CIRCLE);
+
+  if (brush->shape != shape)
+    {
+      brush->shape = shape;
+
+      g_object_notify (G_OBJECT (brush), "shape");
+      gimp_data_dirty (GIMP_DATA (brush));
+    }
+
+  return brush->shape;
+}
+
 gfloat
 gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
-				 gfloat              radius)
+                                 gfloat              radius)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -603,7 +714,7 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
 
 gfloat
 gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
-				   gfloat              hardness)
+                                   gfloat              hardness)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -622,7 +733,7 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
 
 gfloat
 gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
-				       gfloat              ratio)
+                                       gfloat              ratio)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -641,7 +752,7 @@ gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
 
 gfloat
 gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
-				gfloat              angle)
+                                gfloat              angle)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
@@ -659,6 +770,15 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
     }
 
   return brush->angle;
+}
+
+GimpBrushGeneratedShape
+gimp_brush_generated_get_shape (const GimpBrushGenerated *brush)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush),
+                        GIMP_BRUSH_GENERATED_CIRCLE);
+
+  return brush->shape;
 }
 
 gfloat
