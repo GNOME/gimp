@@ -1,5 +1,12 @@
 2005-02-08  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: added automake conditional GIMP_UNSTABLE.
+
+	* plug-ins/script-fu/scripts/Makefile.am: install test-sphere.scm
+	in unstable releases only.
+
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpcolorconfig-enums.[ch]: gimp-mkenums doesn't
 	seem to like newlines in enum definitions.
 

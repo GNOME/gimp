@@ -4,7 +4,7 @@ SUBDIRS = images
 
 scriptdatadir = $(gimpdatadir)/scripts
 
-scriptdata_DATA = \
+scripts = \
 	3d-outline.scm			\
 	3dTruchet.scm			\
 	add-bevel.scm			\
@@ -101,8 +101,17 @@ scriptdata_DATA = \
 	waves-anim.scm			\
 	weave.scm			\
 	web-browser.scm			\
-	xach-effect.scm			\
-	\
+	xach-effect.scm
+
+test_scripts = \
 	test-sphere.scm
 
-EXTRA_DIST = $(scriptdata_DATA)
+
+if GIMP_UNSTABLE
+scriptdata_DATA = $(scripts) $(test_scripts)
+else
+scriptdata_DATA = $(scripts)
+endif
+
+
+EXTRA_DIST = $(scripts) $(test_scripts)
