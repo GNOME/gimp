@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-19 20:02+0100\n"
-"PO-Revision-Date: 2004-11-19 20:04+0100\n"
+"PO-Revision-Date: 2004-11-19 20:05+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5808,7 +5808,7 @@ msgstr "Seiten:"
 
 #: plug-ins/common/postscript.c:2983
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "Seiten zu laden (z.B. 1-4 oder 1,3,5-7)"
 
 #: plug-ins/common/postscript.c:2985
 msgid "Try Bounding Box"
