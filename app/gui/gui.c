@@ -54,6 +54,7 @@
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "actions/actions.h"
 #include "actions/dialogs-commands.h"
 
 #include "color-history.h"
@@ -314,6 +315,7 @@ gui_restore_callback (Gimp               *gimp,
 		    NULL);
     }
 
+  actions_init (gimp);
   menus_init (gimp);
   render_init (gimp);
 
@@ -440,6 +442,7 @@ gui_exit_after_callback (Gimp     *gimp,
   image_item_factory = NULL;
 
   menus_exit (gimp);
+  actions_exit (gimp);
   render_exit (gimp);
 
   dialogs_exit (gimp);

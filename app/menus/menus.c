@@ -102,8 +102,6 @@ menus_init (Gimp *gimp)
 
   menus_initialized = TRUE;
 
-  actions_init (gimp);
-
   /* We need to make sure the property is installed before using it */
   g_type_class_ref (GTK_TYPE_MENU);
 
@@ -426,8 +424,6 @@ menus_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         menu_can_change_accels,
                                         NULL);
-
-  actions_exit (gimp);
 }
 
 void
@@ -466,9 +462,9 @@ void
 menus_open_recent_add (GimpUIManager *manager,
                        const gchar   *ui_path)
 {
-  gint n_entries;
-  gint merge_id;
-  gint i;
+  gint  n_entries;
+  guint merge_id;
+  gint  i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
