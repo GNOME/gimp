@@ -6273,7 +6273,7 @@ msgstr "Множина"
 
 #: plug-ins/common/uniteditor.c:630
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "Створити нову одиницю"
 
 #: plug-ins/common/uniteditor.c:632
 msgid "Duplicate Unit"
@@ -6289,7 +6289,7 @@ msgstr "Не збер╕гати одиницю"
 
 #: plug-ins/common/uniteditor.c:649
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr ""
+msgstr "Не збер╕гати вибрану одиницю до виходу з GIMP."
 
 #: plug-ins/common/uniteditor.c:654
 msgid "Save Unit"
@@ -6297,7 +6297,7 @@ msgstr "Зберегти одиницю"
 
 #: plug-ins/common/uniteditor.c:661
 msgid "Save the currently selected unit before GIMP exits."
-msgstr ""
+msgstr "Зберегти вибран╕ одиниц╕ до виходу з GIMP."
 
 #: plug-ins/common/unsharp.c:185
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -6309,7 +6309,7 @@ msgstr "Зливання..."
 
 #: plug-ins/common/unsharp.c:781
 msgid "Unsharp Mask"
-msgstr ""
+msgstr "Неч╕тка маска"
 
 #: plug-ins/common/video.c:44
 msgid "Staggered"
@@ -6337,15 +6337,15 @@ msgstr "3x3"
 
 #: plug-ins/common/video.c:50
 msgid "Large 3x3"
-msgstr ""
+msgstr "Велике 3x3"
 
 #: plug-ins/common/video.c:51
 msgid "Hex"
-msgstr ""
+msgstr "Шестикутник"
 
 #: plug-ins/common/video.c:52
 msgid "Dots"
-msgstr ""
+msgstr "Крапки"
 
 #: plug-ins/common/video.c:1836
 msgid "<Image>/Filters/Distorts/Video..."
@@ -6362,15 +6362,15 @@ msgstr "В╕део"
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2177
 msgid "RGB Pattern Type"
-msgstr ""
+msgstr "Тип RGB-шаблону"
 
 #: plug-ins/common/video.c:2188
 msgid "Additive"
-msgstr ""
+msgstr "Доповнюючий"
 
 #: plug-ins/common/video.c:2196 plug-ins/rcm/rcm_dialog.c:118
 msgid "Rotated"
-msgstr ""
+msgstr "Повернутий"
 
 #: plug-ins/common/vinvert.c:91
 msgid "<Image>/Filters/Colors/Value Invert"
@@ -6402,11 +6402,11 @@ msgstr "Лише тло"
 
 #: plug-ins/common/vpropagate.c:177
 msgid "More Opaque"
-msgstr ""
+msgstr "Менш прозорий"
 
 #: plug-ins/common/vpropagate.c:180
 msgid "More Transparent"
-msgstr ""
+msgstr "Б╕льш прозорий"
 
 #: plug-ins/common/vpropagate.c:217
 msgid "<Image>/Filters/Distorts/Value Propagate..."
@@ -6439,19 +6439,19 @@ msgstr ""
 
 #: plug-ins/common/vpropagate.c:1016
 msgid "To Left"
-msgstr ""
+msgstr "Л╕воруч"
 
 #: plug-ins/common/vpropagate.c:1019
 msgid "To Right"
-msgstr ""
+msgstr "Праворуч"
 
 #: plug-ins/common/vpropagate.c:1022
 msgid "To Top"
-msgstr ""
+msgstr "Вгору"
 
 #: plug-ins/common/vpropagate.c:1025
 msgid "To Bottom"
-msgstr ""
+msgstr "Вниз"
 
 #: plug-ins/common/vpropagate.c:1038
 msgid "Propagating Alpha Channel"
@@ -6498,11 +6498,11 @@ msgstr "Розм╕р зм╕шування:"
 
 #: plug-ins/common/warp.c:586
 msgid "Rotation Angle:"
-msgstr ""
+msgstr "Кут обертання:"
 
 #: plug-ins/common/warp.c:595
 msgid "Substeps:"
-msgstr ""
+msgstr "П╕дкроки:"
 
 #. Magnitude map menu
 #: plug-ins/common/warp.c:602
@@ -6529,7 +6529,7 @@ msgstr ""
 
 #: plug-ins/common/warp.c:676
 msgid "Vector Mag:"
-msgstr ""
+msgstr "Довжина вектора:"
 
 #: plug-ins/common/warp.c:702
 msgid "Fixed-direction-vector map selection menu"
@@ -6543,21 +6543,21 @@ msgstr ""
 #. make sure layer is visible
 #: plug-ins/common/warp.c:1163
 msgid "Smoothing X gradient..."
-msgstr ""
+msgstr "Згладжування X град╕╓нта..."
 
 #: plug-ins/common/warp.c:1165
 msgid "Smoothing Y gradient..."
-msgstr ""
+msgstr "Згладжування Y град╕╓нта..."
 
 #. calculate new X,Y Displacement image maps
 #: plug-ins/common/warp.c:1220
 msgid "Finding XY gradient..."
-msgstr ""
+msgstr "Пошук XY град╕╓нта..."
 
 #: plug-ins/common/warp.c:1244
 #, c-format
 msgid "Flow Step %d..."
-msgstr ""
+msgstr "Поточний крок %d..."
 
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
@@ -6569,19 +6569,19 @@ msgstr "Хвил╕"
 
 #: plug-ins/common/waves.c:391
 msgid "Reflective"
-msgstr ""
+msgstr "В╕дбиваються"
 
 #: plug-ins/common/waves.c:420
 msgid "Phase:"
-msgstr ""
+msgstr "Фаза:"
 
 #: plug-ins/common/waves.c:429
 msgid "Wavelength:"
-msgstr ""
+msgstr "Довжина хвил╕:"
 
 #: plug-ins/common/waves.c:649
 msgid "Waving..."
-msgstr ""
+msgstr "Створення хвиль..."
 
 #: plug-ins/common/whirlpinch.c:206
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
@@ -6635,15 +6635,15 @@ msgstr "<Image>/Ф╕льтри/Спотворення/В╕тер..."
 
 #: plug-ins/common/wind.c:416
 msgid "Rendering Blast..."
-msgstr ""
+msgstr "В╕дображення пориву в╕тру..."
 
 #: plug-ins/common/wind.c:547
 msgid "Rendering Wind..."
-msgstr ""
+msgstr "В╕дображення в╕тру..."
 
 #: plug-ins/common/wind.c:961
 msgid "Wind Strength must be greater than 0."
-msgstr ""
+msgstr "Сила в╕тру ма╓ бути б╕льше 0."
 
 #: plug-ins/common/wind.c:1002 plug-ins/common/wind.c:1069
 msgid "Wind"
@@ -6658,7 +6658,7 @@ msgstr "Стиль"
 
 #: plug-ins/common/wind.c:1070
 msgid "Blast"
-msgstr ""
+msgstr "Порив в╕тру"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
@@ -6680,19 +6680,19 @@ msgstr "Праворуч"
 #. **************************************************
 #: plug-ins/common/wind.c:1101
 msgid "Edge Affected"
-msgstr ""
+msgstr "Захоплюються кра╖"
 
 #: plug-ins/common/wind.c:1105
 msgid "Leading"
-msgstr ""
+msgstr "Головний"
 
 #: plug-ins/common/wind.c:1106
 msgid "Trailing"
-msgstr ""
+msgstr "Хвостовий"
 
 #: plug-ins/common/wind.c:1107
 msgid "Both"
-msgstr ""
+msgstr "Обидва"
 
 #: plug-ins/common/wind.c:1137
 msgid "Higher values restrict the effect to fewer areas of the image"
@@ -6928,11 +6928,11 @@ msgstr "Помилка за запису RGB-зображення"
 
 #: plug-ins/common/zealouscrop.c:72
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr "<Image>/Зображення/Перетворення/Zealous Crop"
+msgstr "<Image>/Зображення/Перетворення/Zealous-кадрування"
 
 #: plug-ins/common/zealouscrop.c:118
 msgid "ZealousCropping(tm)..."
-msgstr "ZealousCropping(tm)..."
+msgstr "Zealous-кадрування..."
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
@@ -7009,7 +7009,7 @@ msgstr ""
 
 #: plug-ins/fits/fits.c:982
 msgid "Load FITS File"
-msgstr ""
+msgstr "Завантаження файлу формату FITS"
 
 #: plug-ins/fits/fits.c:1004
 msgid "BLANK/NaN Pixel Replacement"
