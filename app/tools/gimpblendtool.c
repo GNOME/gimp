@@ -52,8 +52,7 @@
 
 
 /*  target size  */
-#define  TARGET_HEIGHT    15
-#define  TARGET_WIDTH     15
+#define  TARGET_SIZE      15
 
 #define  STATUSBAR_SIZE  128
 
@@ -494,46 +493,31 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool      *tool;
   GimpBlendTool *blend_tool;
-  gint           tx1, ty1, tx2, ty2;
 
-  tool       = GIMP_TOOL (draw_tool);
   blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  gdisplay_transform_coords (tool->gdisp,
-			     blend_tool->startx, blend_tool->starty,
-			     &tx1, &ty1,
-                             TRUE);
-  gdisplay_transform_coords (tool->gdisp,
-			     blend_tool->endx, blend_tool->endy,
-			     &tx2, &ty2,
-                             TRUE);
-
   /*  Draw start target  */
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 tx1 - (TARGET_WIDTH >> 1), ty1,
-		 tx1 + (TARGET_WIDTH >> 1), ty1);
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 tx1, ty1 - (TARGET_HEIGHT >> 1),
-		 tx1, ty1 + (TARGET_HEIGHT >> 1));
+  gimp_draw_tool_draw_cross (draw_tool,
+                             floor (blend_tool->startx) + 0.5,
+                             floor (blend_tool->starty) + 0.5,
+                             TARGET_SIZE,
+                             TRUE);
 
   /*  Draw end target  */
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 tx2 - (TARGET_WIDTH >> 1), ty2,
-		 tx2 + (TARGET_WIDTH >> 1), ty2);
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 tx2, ty2 - (TARGET_HEIGHT >> 1),
-		 tx2, ty2 + (TARGET_HEIGHT >> 1));
+  gimp_draw_tool_draw_cross (draw_tool,
+                             floor (blend_tool->endx) + 0.5,
+                             floor (blend_tool->endy) + 0.5,
+                             TARGET_SIZE,
+                             TRUE);
 
   /*  Draw the line between the start and end coords  */
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 tx1, ty1, tx2, ty2);
+  gimp_draw_tool_draw_line (draw_tool,
+                            floor (blend_tool->startx) + 0.5,
+                            floor (blend_tool->starty) + 0.5,
+                            floor (blend_tool->endx) + 0.5,
+                            floor (blend_tool->endy) + 0.5,
+                            TRUE);
 }
 
 static BlendOptions *

@@ -88,37 +88,55 @@ void          path_free_curve      (PathCurve *);
 void          path_free_segment    (PathSegment *);
 void          path_delete_segment  (PathSegment *);
 void          path_print           (NPath *);
-void          path_offset_active   (NPath *, gdouble, gdouble);
-void          path_set_flags       (GimpPathTool *,
+void          path_offset_active   (NPath *,
+                                    gdouble,
+                                    gdouble);
+void          path_set_flags       (GimpPathTool *path_tool,
 				    NPath *,
 				    PathCurve *,
 				    PathSegment *,
 				    guint32,
 				    guint32);
 
-gdouble  gimp_path_tool_on_curve   (GimpPathTool *, gint, gint, gint,
-		                    NPath**, PathCurve**, PathSegment**);
-gboolean gimp_path_tool_on_anchors (GimpPathTool *, gint, gint, gint,
-		                    NPath**, PathCurve**, PathSegment**);
-gint     gimp_path_tool_on_handles (GimpPathTool *, gint, gint, gint,
-		                    NPath **, PathCurve **, PathSegment **);
+gdouble  gimp_path_tool_on_curve   (GimpPathTool *path_tool,
+                                    gint,
+                                    gint,
+                                    gint,
+		                    NPath**,
+                                    PathCurve**,
+                                    PathSegment**);
+gboolean gimp_path_tool_on_anchors (GimpPathTool *path_tool,
+                                    gint,
+                                    gint,
+                                    gint,
+		                    NPath**,
+                                    PathCurve**,
+                                    PathSegment**);
+gint     gimp_path_tool_on_handles (GimpPathTool *path_tool,
+                                    gint,
+                                    gint,
+                                    gint,
+		                    NPath **,
+                                    PathCurve **,
+                                    PathSegment **);
 
-gint     path_tool_cursor_position (NPath *path,
-                                    gdouble x,
-                                    gdouble y,
-                                    gint halfwidth,
-                                    gint halfheight,
-                                    NPath **pathP,
-                                    PathCurve **curveP,
-                                    PathSegment **segmentP,
-                                    gdouble *positionP,
-                                    gint *handle_idP);
+gint     path_tool_cursor_position (NPath         *path,
+                                    gdouble        x,
+                                    gdouble        y,
+                                    gint           halfwidth,
+                                    gint           halfheight,
+                                    NPath        **pathP,
+                                    PathCurve    **curveP,
+                                    PathSegment  **segmentP,
+                                    gdouble       *positionP,
+                                    gint          *handle_idP);
+
 
 /* High level image-manipulation functions */
 
-void path_stroke                   (GimpPathTool *,
+void path_stroke                   (GimpPathTool *path_tool,
 				    NPath *);
-void path_to_selection             (GimpPathTool *,
+void path_to_selection             (GimpPathTool *path_tool,
 				    NPath *);
 
 

@@ -601,13 +601,15 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
 static void
 selection_transform_segs (GimpEditSelectionTool *edit_select,
-			  GimpDisplay           *gdisp,
 			  BoundSeg              *src_segs,
 			  GdkSegment            *dest_segs,
 			  gint                   num_segs)
 {
-  gint x, y;
-  gint i;
+  GimpDisplay *gdisp;
+  gint         x, y;
+  gint         i;
+
+  gdisp = GIMP_TOOL (edit_select)->gdisp;
 
   for (i = 0; i < num_segs; i++)
     {
@@ -641,7 +643,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   gboolean               floating_sel;
   gint                   x1, y1, x2, y2;
   gint                   x3, y3, x4, y4;
-  gint                   off_x, off_y;
   GdkSegment            *segs_copy;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
@@ -661,7 +662,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
           segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
 
           selection_transform_segs (edit_select,
-                                    gdisp,
                                     edit_select->segs_in,
                                     segs_copy,
                                     edit_select->num_segs_in);
@@ -676,7 +676,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
 
       selection_transform_segs (edit_select,
-				gdisp,
 				edit_select->segs_out,
 				segs_copy,
 				edit_select->num_segs_out);
@@ -689,25 +688,21 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case EDIT_MASK_TO_LAYER_TRANSLATE:
-      gdisplay_transform_coords (gdisp, 
-				 edit_select->x1, edit_select->y1, 
-				 &x1, &y1, TRUE);
-      gdisplay_transform_coords (gdisp, 
-				 edit_select->x2, edit_select->y2, 
-				 &x2, &y2, TRUE);
-      gdk_draw_rectangle (draw_tool->win,
-			  draw_tool->gc, 0,
-			  x1, y1,
-			  x2 - x1 + 1, y2 - y1 + 1);
+      gimp_draw_tool_draw_rectangle (draw_tool,
+                                     FALSE,
+                                     edit_select->x1,
+                                     edit_select->y1,
+                                     edit_select->x2 - edit_select->x1,
+                                     edit_select->y2 - edit_select->y1,
+                                     TRUE);
       break;
 
     case EDIT_LAYER_TRANSLATE:
-      gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, TRUE);
-      gdisplay_transform_coords
-	(gdisp,
-	 gimp_drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
-	 gimp_drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
-	 &x2, &y2, TRUE);
+      gimp_drawable_offsets (GIMP_DRAWABLE (gdisp->gimage->active_layer),
+                             &x1, &y1);
+
+      x2 = x1 + gimp_drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer));
+      y2 = y1 + gimp_drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer));
 
       /*  Now, expand the rectangle to include all linked layers as well  */
       for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
@@ -719,13 +714,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 	  if ((layer != gdisp->gimage->active_layer) &&
 	      gimp_layer_get_linked (layer))
 	    {
-	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-	      gdisplay_transform_coords (gdisp, off_x, off_y, &x3, &y3, FALSE);
-	      gdisplay_transform_coords
-		(gdisp,
-		 off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)),
-		 off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)),
-		 &x4, &y4, FALSE);
+	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
+
+              x4 = x3 + gimp_drawable_width (GIMP_DRAWABLE (layer));
+              y4 = y3 + gimp_drawable_height (GIMP_DRAWABLE (layer));
 
 	      if (x3 < x1)
 		x1 = x3;
@@ -738,10 +730,11 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 	    }
 	}
 
-      gdk_draw_rectangle (draw_tool->win,
-			  draw_tool->gc, FALSE,
-			  x1, y1,
-			  x2 - x1, y2 - y1);
+      gimp_draw_tool_draw_rectangle (draw_tool,
+                                     FALSE,
+                                     x1, y1,
+                                     x2 - x1, y2 - y1,
+                                     FALSE);
       break;
 
     case EDIT_FLOATING_SEL_TRANSLATE:
@@ -753,7 +746,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
        */
 
       selection_transform_segs (edit_select,
-				gdisp,
 				edit_select->segs_in,
 				segs_copy,
 				edit_select->num_segs_in);

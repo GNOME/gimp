@@ -1,3 +1,36 @@
+2001-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: use
+	gimp_display_shell_[install|remove]_override_cursor() to set the
+	middle mouse button move cursor so we get the original cursor back
+	after scrolling.
+
+	* app/tools/gimpdrawtool.[ch]: added lots of drawing functions
+	(gimp_draw_tool_draw_rectangle() etc.) which work in image (or
+	active drawable) coordinates.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptransformtool.[ch]
+	* app/tools/path_tool.[ch]: use the new functions. Removed tons of
+	gdk_draw_foo() and gdisplay_transform_foo() calls. Most drawing
+	functions look *much* nicer now. Ported some tools to detect
+	handle clicks in display coordinates while I was on it, misc
+	fixes.
+
+	* app/tools/gimpmovetool.[ch]: derive from GimpDrawTool instead
+	of drawing manually.
+
 2001-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb.pl: oops, this should have been checked in

@@ -485,21 +485,15 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
 	case 2:
           state |= GDK_BUTTON2_MASK;
-          {
-            GdkCursor *cursor;
 
-            scrolling      = TRUE;
-            scroll_start_x = bevent->x + shell->offset_x;
-            scroll_start_y = bevent->y + shell->offset_y;
+          scrolling = TRUE;
 
-            gtk_grab_add (canvas);
+          scroll_start_x = bevent->x + shell->offset_x;
+          scroll_start_y = bevent->y + shell->offset_y;
 
-            cursor = gimp_cursor_new (GDK_FLEUR,
-                                      GIMP_TOOL_CURSOR_NONE,
-                                      GIMP_CURSOR_MODIFIER_NONE);
-            gdk_window_set_cursor (canvas->window, cursor);
-            gdk_cursor_unref (cursor);
-          }
+          gtk_grab_add (canvas);
+
+          gimp_display_shell_install_override_cursor (shell, GDK_FLEUR);
 	  break;
 
 	case 3:
@@ -577,8 +571,15 @@ gimp_display_shell_canvas_events (GtkWidget        *canvas,
 
 	case 2:
 	  state &= ~GDK_BUTTON2_MASK;
+
 	  scrolling = FALSE;
+
+          scroll_start_x = 0;
+          scroll_start_y = 0;
+
 	  gtk_grab_remove (canvas);
+
+          gimp_display_shell_remove_override_cursor (shell);
 	  break;
 
 	case 3:

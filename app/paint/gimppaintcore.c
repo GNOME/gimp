@@ -65,9 +65,7 @@
 #include "gimppainttool_kernels.h"
 
 
-/*  target size  */
-#define  TARGET_HEIGHT  15
-#define  TARGET_WIDTH   15
+#define  TARGET_SIZE 15
 
 #define  EPSILON  0.00001
 
@@ -669,8 +667,8 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	  gdouble dx, dy, d;
 
 	  /*  Get the current coordinates */
-          paint_tool->curx = ROUND (coords->x);
-          paint_tool->cury = ROUND (coords->y);
+          paint_tool->curx = coords->x;
+          paint_tool->cury = coords->y;
 
 	  dx = paint_tool->curx - paint_tool->lastx;
 	  dy = paint_tool->cury - paint_tool->lasty;
@@ -706,7 +704,8 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	  if (gdisp->dot_for_dot)
 	    {
 	      d = sqrt (SQR (dx) + SQR (dy));
-	      g_snprintf (status_str, STATUSBAR_SIZE, "%.1f %s", d, _("pixels"));
+	      g_snprintf (status_str, sizeof (status_str), "%.1f %s",
+                          d, _("pixels"));
 	    }
 	  else
 	    {
@@ -718,7 +717,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 		   sqrt (SQR (dx / gdisp->gimage->xresolution) +
 			 SQR (dy / gdisp->gimage->yresolution)));
 
-	      g_snprintf (status_str, STATUSBAR_SIZE, format_str, d);
+	      g_snprintf (status_str, sizeof (status_str), format_str, d);
 	      g_free (format_str);
 	    }
 
@@ -778,72 +777,37 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  GimpPaintTool    *paint_tool;
-  GimpTool         *tool;
-  gint              tx1, ty1, tx2, ty2;
-
-  paint_tool = GIMP_PAINT_TOOL (draw_tool);
-  tool       = GIMP_TOOL (draw_tool);
+  GimpPaintTool *paint_tool;
 
   /* if shift was never used, draw_tool->gc is NULL
    * and we don't care about a redraw
    */
-  if (draw_tool->gc)
-    {
-      gdisp = tool->gdisp;
+  if (! draw_tool->gc)
+    return;
 
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  paint_tool = GIMP_PAINT_TOOL (draw_tool);
 
-      gdisplay_transform_coords (gdisp,
-                                 paint_tool->lastx, paint_tool->lasty,
-				 &tx1, &ty1,
-                                 TRUE);
-      gdisplay_transform_coords (gdisp,
-                                 paint_tool->curx, paint_tool->cury,
-				 &tx2, &ty2,
-                                 TRUE);
+  /*  Draw start target  */
+  gimp_draw_tool_draw_cross (draw_tool,
+                             floor (paint_tool->lastx) + 0.5,
+                             floor (paint_tool->lasty) + 0.5,
+                             TARGET_SIZE,
+                             TRUE);
 
-      /*  Only draw line if it's in the visible area
-       *  thus preventing from drawing rubbish
-       */
+  /*  Draw end target  */
+  gimp_draw_tool_draw_cross (draw_tool,
+                             floor (paint_tool->curx) + 0.5,
+                             floor (paint_tool->cury) + 0.5,
+                             TARGET_SIZE,
+                             TRUE);
 
-      if (tx2 > 0 && ty2 > 0)
-        {
-	  gint offx, offy;
-
-	  /* Adjust coords to start drawing from center of pixel if zoom > 1 */
-	  offx = (gint) SCALEFACTOR_X (gdisp) >> 1;
-	  offy = (gint) SCALEFACTOR_Y (gdisp) >> 1;
-	  tx1 += offx;
-	  ty1 += offy;
-	  tx2 += offx;
-	  ty2 += offy;
-
-	  /*  Draw start target  */
-	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
-                         tx1 - (TARGET_WIDTH >> 1), ty1,
-                         tx1 + (TARGET_WIDTH >> 1), ty1);
-	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
-                         tx1, ty1 - (TARGET_HEIGHT >> 1),
-                         tx1, ty1 + (TARGET_HEIGHT >> 1));
-
-	  /*  Draw end target  */
-	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
-                         tx2 - (TARGET_WIDTH >> 1), ty2,
-                         tx2 + (TARGET_WIDTH >> 1), ty2);
-	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
-                         tx2, ty2 - (TARGET_HEIGHT >> 1),
-                         tx2, ty2 + (TARGET_HEIGHT >> 1));
-
-	  /*  Draw the line between the start and end coords  */
-	  gdk_draw_line (shell->canvas->window, draw_tool->gc,
-                         tx1, ty1, tx2, ty2);
-	}
-    }
-
-  return;
+  /*  Draw the line between the start and end coords  */
+  gimp_draw_tool_draw_line (draw_tool,
+                            floor (paint_tool->lastx) + 0.5,
+                            floor (paint_tool->lasty) + 0.5,
+                            floor (paint_tool->curx) + 0.5,
+                            floor (paint_tool->cury) + 0.5,
+                            TRUE);
 }
 
 /***********************************************************************/

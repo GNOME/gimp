@@ -222,8 +222,8 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  rect_sel->x = coords->x;
-  rect_sel->y = coords->y;
+  rect_sel->x = RINT (coords->x);
+  rect_sel->y = RINT (coords->y);
 
   rect_sel->fixed_size   = sel_options->fixed_size;
   rect_sel->fixed_width  = sel_options->fixed_width;
@@ -359,6 +359,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       x2 = x1 + w;
       y2 = y1 + h;
 
+      g_print ("rect_select: %d x %d\n", w, h);
+
       gimp_rect_select_tool_rect_select (rect_sel,
                                          x1, y1, (x2 - x1), (y2 - y1));
 
@@ -419,8 +421,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 	{
 	  ratio = ((gdouble) rect_sel->fixed_height /
                    (gdouble) rect_sel->fixed_width);
-	  tw = ROUND (coords->x) - ox;
-	  th = ROUND (coords->y) - oy;
+	  tw = RINT (coords->x) - ox;
+	  th = RINT (coords->y) - oy;
 
           /* This is probably an inefficient way to do it, but it gives
 	   * nicer, more predictable results than the original agorithm
@@ -445,17 +447,17 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 	}
       else
 	{
-	  w = (ROUND (coords->x) - ox > 0 ?
+	  w = (RINT (coords->x) - ox > 0 ?
                rect_sel->fixed_width  : -rect_sel->fixed_width);
 
-	  h = (ROUND (coords->y) - oy > 0 ?
+	  h = (RINT (coords->y) - oy > 0 ?
                rect_sel->fixed_height : -rect_sel->fixed_height);
 	}
     }
   else
     {
-      w = (ROUND (coords->x) - ox);
-      h = (ROUND (coords->y) - oy);
+      w = (RINT (coords->x) - ox);
+      h = (RINT (coords->y) - oy);
     }
 
   /* If the shift key is down, then make the rectangle square (or
@@ -549,24 +551,16 @@ static void
 gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectSelectTool *rect_sel;
-  GimpTool           *tool;
-  gint                x1, y1;
-  gint                x2, y2;
 
   rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  tool     = GIMP_TOOL (draw_tool);
 
-  x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
-  y1 = MIN (rect_sel->y, rect_sel->y + rect_sel->h);
-  x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
-  y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
-
-  gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
-
-  gdk_draw_rectangle (draw_tool->win,
-		      draw_tool->gc, 0,
-		      x1, y1, (x2 - x1), (y2 - y1));
+  gimp_draw_tool_draw_rectangle (draw_tool,
+                                 FALSE,
+                                 rect_sel->x,
+                                 rect_sel->y,
+                                 rect_sel->w,
+                                 rect_sel->h,
+                                 FALSE);
 }
 
 static void

@@ -76,6 +76,8 @@ enum
   LAST_SIGNAL
 };
 
+#define HANDLE 10
+
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * (jk + dx * (j1k - jk)) + \
 		    dy  * (jk1 + dx * (j1k1 - jk1)))
@@ -364,14 +366,16 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 			          GimpDisplay     *gdisp)
 {
   GimpTransformTool *gt_tool;
+  GimpDrawTool      *draw_tool;
   GimpDisplayShell  *shell;
   GimpDrawable      *drawable;
-  gint               dist;
-  gint               closest_dist;
+  gdouble            dist;
+  gdouble            closest_dist;
   gint               i;
   gint               off_x, off_y;
 
-  gt_tool = GIMP_TRANSFORM_TOOL (tool);
+  gt_tool   = GIMP_TRANSFORM_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -393,32 +397,42 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), shell->canvas->window);
 
-      closest_dist = SQR (coords->x - gt_tool->tx1) + SQR (coords->y - gt_tool->ty1);
+      closest_dist = gimp_draw_tool_calc_distance (draw_tool, gdisp,
+                                                   coords->x, coords->y,
+                                                   gt_tool->tx1, gt_tool->ty1);
       gt_tool->function = TRANSFORM_HANDLE_1;
 
-      dist = SQR (coords->x - gt_tool->tx2) + SQR (coords->y - gt_tool->ty2);
+      dist = gimp_draw_tool_calc_distance (draw_tool, gdisp,
+                                           coords->x, coords->y,
+                                           gt_tool->tx2, gt_tool->ty2);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_2;
 	}
 
-      dist = SQR (coords->x - gt_tool->tx3) + SQR (coords->y - gt_tool->ty3);
+      dist = gimp_draw_tool_calc_distance (draw_tool, gdisp,
+                                           coords->x, coords->y,
+                                           gt_tool->tx3, gt_tool->ty3);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_3;
 	}
 
-      dist = SQR (coords->x - gt_tool->tx4) + SQR (coords->y - gt_tool->ty4);
+      dist = gimp_draw_tool_calc_distance (draw_tool, gdisp,
+                                           coords->x, coords->y,
+                                           gt_tool->tx4, gt_tool->ty4);
       if (dist < closest_dist)
 	{
 	  closest_dist = dist;
 	  gt_tool->function = TRANSFORM_HANDLE_4;
 	}
 
-      if ((SQR (coords->x - gt_tool->tcx) +
-	   SQR (coords->y - gt_tool->tcy)) <= 100)
+      if (gimp_draw_tool_in_radius (draw_tool, gdisp,
+                                    coords->x, coords->y,
+                                    gt_tool->tcx, gt_tool->tcy,
+                                    HANDLE >> 1))
 	{
 	  gt_tool->function = TRANSFORM_HANDLE_CENTER;
 	}
@@ -436,7 +450,6 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       tool->state = ACTIVE;
       return;
     }
-
 
   /*  Initialisation stuff: if the cursor is clicked inside the current
    *  selection, show the bounding box and handles...
@@ -797,48 +810,30 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_transform_tool_draw (GimpDrawTool *dr_tool)
+gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpDisplay        *gdisp;
-  GimpTransformTool  *tr_tool;
-  GimpTool           *tool;
-  gint                x1, y1, x2, y2, x3, y3, x4, y4;
-  gint                srw, srh;
-  gint                i, k, gci;
-  gint                xa, ya, xb, yb;
+  GimpTransformTool *tr_tool;
+  gint               i, k, gci;
 
-  tr_tool = GIMP_TRANSFORM_TOOL (dr_tool);
-  tool    = GIMP_TOOL (dr_tool);
-
-  gdisp   = tool->gdisp;
-
-  gdisplay_transform_coords (gdisp, tr_tool->tx1, tr_tool->ty1,
-			     &tr_tool->sx1, &tr_tool->sy1, FALSE);
-  gdisplay_transform_coords (gdisp, tr_tool->tx2, tr_tool->ty2,
-			     &tr_tool->sx2, &tr_tool->sy2, FALSE);
-  gdisplay_transform_coords (gdisp, tr_tool->tx3, tr_tool->ty3,
-			     &tr_tool->sx3, &tr_tool->sy3, FALSE);
-  gdisplay_transform_coords (gdisp, tr_tool->tx4, tr_tool->ty4,
-			     &tr_tool->sx4, &tr_tool->sy4, FALSE);
-
-  x1 = tr_tool->sx1;  y1 = tr_tool->sy1;
-  x2 = tr_tool->sx2;  y2 = tr_tool->sy2;
-  x3 = tr_tool->sx3;  y3 = tr_tool->sy3;
-  x4 = tr_tool->sx4;  y4 = tr_tool->sy4;
-
-  /*  find the handles' width and height  */
-  srw = 10;
-  srh = 10;
+  tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
 
   /*  draw the bounding box  */
-  gdk_draw_line (dr_tool->win, dr_tool->gc,
-		 x1, y1, x2, y2);
-  gdk_draw_line (dr_tool->win, dr_tool->gc,
-		 x2, y2, x4, y4);
-  gdk_draw_line (dr_tool->win, dr_tool->gc,
-		 x3, y3, x4, y4);
-  gdk_draw_line (dr_tool->win, dr_tool->gc,
-		 x3, y3, x1, y1);
+  gimp_draw_tool_draw_line (draw_tool,
+                            tr_tool->tx1, tr_tool->ty1,
+                            tr_tool->tx2, tr_tool->ty2,
+                            FALSE);
+  gimp_draw_tool_draw_line (draw_tool,
+                            tr_tool->tx2, tr_tool->ty2,
+                            tr_tool->tx4, tr_tool->ty4,
+                            FALSE);
+  gimp_draw_tool_draw_line (draw_tool,
+                            tr_tool->tx3, tr_tool->ty3,
+                            tr_tool->tx4, tr_tool->ty4,
+                            FALSE);
+  gimp_draw_tool_draw_line (draw_tool,
+                            tr_tool->tx3, tr_tool->ty3,
+                            tr_tool->tx1, tr_tool->ty1,
+                            FALSE);
 
   /*  Draw the grid */
 
@@ -853,40 +848,40 @@ gimp_transform_tool_draw (GimpDrawTool *dr_tool)
 
       for (i = 0; i < k; i++)
 	{
-	  gdisplay_transform_coords (gdisp, tr_tool->tgrid_coords[gci],
-				     tr_tool->tgrid_coords[gci+1],
-				     &xa, &ya, FALSE);
-	  gdisplay_transform_coords (gdisp, tr_tool->tgrid_coords[gci+2],
-				     tr_tool->tgrid_coords[gci+3],
-				     &xb, &yb, FALSE);
-
-	  gdk_draw_line (dr_tool->win, dr_tool->gc,
-			 xa, ya, xb, yb);
+          gimp_draw_tool_draw_line (draw_tool,
+                                    tr_tool->tgrid_coords[gci],
+                                    tr_tool->tgrid_coords[gci + 1],
+                                    tr_tool->tgrid_coords[gci + 2],
+                                    tr_tool->tgrid_coords[gci + 3],
+                                    FALSE);
 	  gci += 4;
 	}
     }
 
   /*  draw the tool handles  */
-  gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
-		      x1 - (srw >> 1), y1 - (srh >> 1), srw, srh);
-  gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
-		      x2 - (srw >> 1), y2 - (srh >> 1), srw, srh);
-  gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
-		      x3 - (srw >> 1), y3 - (srh >> 1), srw, srh);
-  gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
-		      x4 - (srw >> 1), y4 - (srh >> 1), srw, srh);
+  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
+                                           tr_tool->tx1, tr_tool->ty1,
+                                           HANDLE, HANDLE,
+                                           FALSE);
+  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
+                                           tr_tool->tx2, tr_tool->ty2,
+                                           HANDLE, HANDLE,
+                                           FALSE);
+  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
+                                           tr_tool->tx3, tr_tool->ty3,
+                                           HANDLE, HANDLE,
+                                           FALSE);
+  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
+                                           tr_tool->tx4, tr_tool->ty4,
+                                           HANDLE, HANDLE,
+                                           FALSE);
 
   /*  draw the center  */
-  gdisplay_transform_coords (gdisp,
-			     tr_tool->tcx, tr_tool->tcy,
-			     &tr_tool->scx, &tr_tool->scy, FALSE);
-
-  gdk_draw_arc (dr_tool->win,
-		dr_tool->gc,
-		1,
-		tr_tool->scx - (srw >> 1),
-		tr_tool->scy - (srh >> 1),
-		srw, srh, 0, 23040);
+  gimp_draw_tool_draw_arc_by_center (draw_tool, TRUE,
+                                     tr_tool->tcx, tr_tool->tcy,
+                                     HANDLE >> 1,
+                                     0, 23040,
+                                     FALSE);
 
   if (gimp_transform_tool_showpath ())
     {
@@ -901,7 +896,8 @@ gimp_transform_tool_draw (GimpDrawTool *dr_tool)
 	  gimp_matrix3_duplicate (tr_tool->transform, tmp_matrix);
 	}
 
-      path_transform_draw_current (gdisp, dr_tool, tmp_matrix);
+      path_transform_draw_current (GIMP_TOOL (draw_tool)->gdisp,
+                                   draw_tool, tmp_matrix);
     }
 }
 

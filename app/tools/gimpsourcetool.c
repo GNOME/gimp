@@ -51,8 +51,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define TARGET_HEIGHT  15
-#define TARGET_WIDTH   15
+#define TARGET_WIDTH  15
+#define TARGET_HEIGHT 15
 
 /* default types */
 #define CLONE_DEFAULT_TYPE     IMAGE_CLONE
@@ -142,7 +142,7 @@ static gint          dest_y        = 0;        /*  position of clone src  */
 static gint          offset_x      = 0;        /*                         */
 static gint          offset_y      = 0;        /*  offset for cloning     */
 static gint          first         = TRUE;
-static gint          trans_tx      = 0;        /*                         */
+static gint          trans_tx      = 0;        /*  transformed target     */
 static gint          trans_ty      = 0;        /*  transformed target     */
 static GimpDisplay  *the_src_gdisp = NULL;     /*  ID of source gdisplay  */
 static GimpDrawable *src_drawable_ = NULL;     /*  source drawable        */

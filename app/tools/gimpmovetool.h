@@ -20,7 +20,7 @@
 #define __GIMP_MOVE_TOOL_H__
 
 
-#include "gimptool.h"
+#include "gimpdrawtool.h"
 
 
 #define GIMP_TYPE_MOVE_TOOL            (gimp_move_tool_get_type ())
@@ -36,16 +36,16 @@ typedef struct _GimpMoveToolClass GimpMoveToolClass;
 
 struct _GimpMoveTool
 {
-  GimpTool     parent_instance;
+  GimpDrawTool  parent_instance;
 
-  GimpLayer   *layer;
-  GimpGuide   *guide;
-  GimpDisplay *disp;
+  GimpLayer    *layer;
+  GimpGuide    *guide;
+  GimpDisplay  *disp;
 };
 
 struct _GimpMoveToolClass
 {
-  GimpToolClass parent_class;
+  GimpDrawToolClass parent_class;
 };
 
 

@@ -825,44 +825,50 @@ gimp_path_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-#if 0
-  gint     x, y, halfwidth, dummy, cursor_location;
-  
-#ifdef PATH_TOOL_DEBUG
-  g_printerr ("path_tool_cursor_update\n");
-#endif
+  GimpDisplayShell *shell;
+  gint              cursor_location;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-  /* get halfwidth in image coord */
-  gdisplay_untransform_coords (gdisp, mevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
-  halfwidth -= x;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  cursor_location = path_tool_cursor_position (tool, x, y, halfwidth, NULL, NULL, NULL, NULL, NULL);
+  cursor_location = path_tool_cursor_position (GIMP_PATH_TOOL (tool)->cur_path,
+                                               coords->x,
+                                               coords->y,
+                                               PATH_TOOL_HALFWIDTH,
+                                               PATH_TOOL_HALFWIDTH,
+                                               NULL, NULL, NULL, NULL, NULL);
 
-  switch (cursor_location) {
-  case ON_CANVAS:
-     gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1AP_CURSOR);
-     break;
-  case ON_ANCHOR:
-     gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
-     break;
-  case ON_HANDLE:
-     gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
-     break;
-  case ON_CURVE:
-     gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
-     break;
-  default:
-     gdisplay_install_tool_cursor (gdisp, GDK_QUESTION_ARROW);
-     break;
-  }
+  /* FIXME: add GIMP_PATH_TOOL_CURSOR */
 
-/* New Syntax */
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				GIMP_MEASURE_TOOL_CURSOR,
-				cmodifier);
-#endif
+  switch (cursor_location)
+    {
+    case ON_CANVAS:
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_TOOL_CURSOR_NONE,
+                                              GIMP_CURSOR_MODIFIER_PLUS);
+      break;
+    case ON_ANCHOR:
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_TOOL_CURSOR_NONE,
+                                              GIMP_CURSOR_MODIFIER_MOVE);
+      break;
+    case ON_HANDLE:
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_TOOL_CURSOR_NONE,
+                                              GIMP_CURSOR_MODIFIER_MOVE);
+      break;
+    case ON_CURVE:
+      gimp_display_shell_install_tool_cursor (shell,
+                                              GIMP_MOUSE_CURSOR,
+                                              GIMP_TOOL_CURSOR_NONE,
+                                              GIMP_CURSOR_MODIFIER_NONE);
+      break;
+    default:
+      g_warning ("gimp_path_tool_cursor_update(): bad cursor_location");
+      break;
+    }
 }
 
 
@@ -885,9 +891,23 @@ gimp_path_tool_draw_helper (NPath *path,
 	    (segment->next && segment->next->flags & SEGMENT_ACTIVE));
 
   if (segment->flags & SEGMENT_ACTIVE)
-    gimp_draw_tool_draw_handle (draw_tool, segment->x, segment->y, PATH_TOOL_WIDTH, 2);
+    {
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CIRCLE,
+                                  FALSE,
+                                  segment->x, segment->y,
+                                  PATH_TOOL_WIDTH,
+                                  FALSE);
+    }
   else
-    gimp_draw_tool_draw_handle (draw_tool, segment->x, segment->y, PATH_TOOL_WIDTH, 3);
+    {
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CIRCLE,
+                                  TRUE,
+                                  segment->x, segment->y,
+                                  PATH_TOOL_WIDTH,
+                                  FALSE);
+    }
 
   if (segment->next)
     path_curve_draw_segment (draw_tool, segment);

@@ -147,27 +147,18 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 static void
 gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool           *tool;
   GimpRectSelectTool *rect_sel;
-  gint                x1, y1;
-  gint                x2, y2;
 
-  tool     = GIMP_TOOL (draw_tool);
   rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
 
-  x1 = MIN (rect_sel->x, rect_sel->x + rect_sel->w);
-  y1 = MIN (rect_sel->y, rect_sel->y + rect_sel->h);
-  x2 = MAX (rect_sel->x, rect_sel->x + rect_sel->w);
-  y2 = MAX (rect_sel->y, rect_sel->y + rect_sel->h);
-
-  gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
-
-  gdk_draw_arc (draw_tool->win,
-		draw_tool->gc,
-                0,
-		x1, y1, (x2 - x1), (y2 - y1),
-                0, 23040);
+  gimp_draw_tool_draw_arc (draw_tool,
+                           FALSE,
+                           rect_sel->x,
+                           rect_sel->y,
+                           rect_sel->w,
+                           rect_sel->h,
+                           0, 23040,
+                           FALSE);
 }
 
 static void

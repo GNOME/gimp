@@ -482,20 +482,14 @@ static void
 gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMagnifyTool *magnify;
-  GimpTool        *tool;
-  gint             x1, y1, x2, y2;
 
   magnify = GIMP_MAGNIFY_TOOL (draw_tool);
-  tool    = GIMP_TOOL (draw_tool);
 
-  x1 = MIN (magnify->x, magnify->x + magnify->w);
-  y1 = MIN (magnify->y, magnify->y + magnify->h);
-  x2 = MAX (magnify->x, magnify->x + magnify->w);
-  y2 = MAX (magnify->y, magnify->y + magnify->h);
-
-  gdisplay_transform_coords (tool->gdisp, x1, y1, &x1, &y1, 0);
-  gdisplay_transform_coords (tool->gdisp, x2, y2, &x2, &y2, 0);
-
-  gdk_draw_rectangle (draw_tool->win, draw_tool->gc, 0,
-		      x1, y1, (x2 - x1), (y2 - y1));
+  gimp_draw_tool_draw_rectangle (draw_tool,
+                                 FALSE,
+                                 magnify->x,
+                                 magnify->y,
+                                 magnify->w,
+                                 magnify->h,
+                                 FALSE);
 }

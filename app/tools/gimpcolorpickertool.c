@@ -28,6 +28,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "gui/info-dialog.h"
 #include "gui/palette-editor.h"
@@ -643,38 +644,24 @@ pick_color (GimpImage    *gimage,
 static void
 gimp_color_picker_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpColorPickerTool *cp_tool;
-  GimpTool            *tool;
-  gint                 tx, ty;
-  gint                 radiusx, radiusy;
-  gint                 cx, cy;
-
-  if (! gimp_color_picker_tool_options->sample_average)
-    return;
+  GimpColorPickerTool        *cp_tool;
+  GimpColorPickerToolOptions *options;
+  GimpTool                   *tool;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (draw_tool);
   tool    = GIMP_TOOL (draw_tool);
 
-  gdisplay_transform_coords (tool->gdisp, cp_tool->centerx, cp_tool->centery,
-			     &tx, &ty, TRUE);
+  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
 
-  radiusx = SCALEX (tool->gdisp, gimp_color_picker_tool_options->average_radius);
-  radiusy = SCALEY (tool->gdisp, gimp_color_picker_tool_options->average_radius);
-  cx      = SCALEX (tool->gdisp, 1);
-  cy      = SCALEY (tool->gdisp, 1);
-
-  /*  Draw the circle around the collecting area */
-  gdk_draw_rectangle (draw_tool->win, draw_tool->gc, 0,
-		      tx - radiusx,
-		      ty - radiusy,
-		      2 * radiusx + cx, 2 * radiusy + cy);
-
-  if (radiusx > 1 && radiusy > 1)
+  if (options->sample_average)
     {
-      gdk_draw_rectangle (draw_tool->win, draw_tool->gc, 0,
-			  tx - radiusx + 2,
-			  ty - radiusy + 2,
-			  2 * radiusx + cx - 4, 2 * radiusy + cy - 4);
+      gimp_draw_tool_draw_rectangle (draw_tool,
+                                     FALSE,
+                                     cp_tool->centerx - options->average_radius,
+                                     cp_tool->centery - options->average_radius,
+                                     2 * options->average_radius + 1,
+                                     2 * options->average_radius + 1,
+                                     TRUE);
     }
 }
 

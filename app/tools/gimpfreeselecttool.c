@@ -293,12 +293,9 @@ gimp_free_select_tool_motion (GimpTool        *tool,
 {
   GimpFreeSelectTool *free_sel;
   GimpSelectionTool  *sel_tool;
-  GimpDrawTool       *draw_tool;
-  GdkPoint            points[2];
 
   free_sel  = GIMP_FREE_SELECT_TOOL (tool);
   sel_tool  = GIMP_SELECTION_TOOL (tool);
-  draw_tool = GIMP_DRAW_TOOL (tool);
 
   if (tool->state != ACTIVE)
     return;
@@ -312,65 +309,31 @@ gimp_free_select_tool_motion (GimpTool        *tool,
 
   gimp_free_select_tool_add_point (free_sel, coords->x, coords->y);
 
-  gdisplay_transform_coords (tool->gdisp,
-                             free_sel->points[free_sel->num_points - 2].x,
-                             free_sel->points[free_sel->num_points - 2].y,
-                             &points[0].x,
-                             &points[0].y,
-                             FALSE);
-  gdisplay_transform_coords (tool->gdisp,
-                             free_sel->points[free_sel->num_points - 1].x,
-                             free_sel->points[free_sel->num_points - 1].y,
-                             &points[1].x,
-                             &points[1].y,
-                             FALSE);
-
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-                 points[0].x,
-                 points[0].y,
-                 points[1].x,
-                 points[1].y);
+  gimp_draw_tool_draw_line (GIMP_DRAW_TOOL (tool),
+                            free_sel->points[free_sel->num_points - 2].x,
+                            free_sel->points[free_sel->num_points - 2].y,
+                            free_sel->points[free_sel->num_points - 1].x,
+                            free_sel->points[free_sel->num_points - 1].y,
+                            FALSE);
 }
 
 static void
 gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpFreeSelectTool *free_sel;
-  GimpTool           *tool;
-  GdkPoint           *points;
   gint                i;
 
   free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
-  tool     = GIMP_TOOL (draw_tool);
-
-  points = g_new (GdkPoint, free_sel->num_points);
-
-  gdisplay_transform_coords (tool->gdisp,
-                             free_sel->points[0].x,
-                             free_sel->points[0].y,
-                             &points[0].x,
-                             &points[0].y,
-                             FALSE);
 
   for (i = 1; i < free_sel->num_points; i++)
     {
-      gdisplay_transform_coords (tool->gdisp,
-                                 free_sel->points[i].x,
-                                 free_sel->points[i].y,
-                                 &points[i].x,
-                                 &points[i].y,
-                                 FALSE);
-
-      gdk_draw_line (draw_tool->win,
-                     draw_tool->gc,
-                     points[i - 1].x,
-                     points[i - 1].y,
-                     points[i].x,
-                     points[i].y);
+      gimp_draw_tool_draw_line (draw_tool,
+                                free_sel->points[i - 1].x,
+                                free_sel->points[i - 1].y,
+                                free_sel->points[i].x,
+                                free_sel->points[i].y,
+                                FALSE);
     }
-
-  g_free (points);
 }
 
 static void

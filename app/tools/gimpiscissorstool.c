@@ -181,19 +181,18 @@ static void          find_max_gradient         (GimpIscissorsTool *iscissors,
 						gint              *y);
 static void          calculate_curve           (GimpTool          *tool,
 						ICurve            *curve);
-static void          iscissors_draw_curve      (GimpDisplay       *gdisp,
-						GimpDrawTool      *draw_tool,
+static void          iscissors_draw_curve      (GimpDrawTool      *draw_tool,
 						ICurve            *curve);
 static void          iscissors_free_icurves    (GSList            *list);
 static void          iscissors_free_buffers    (GimpIscissorsTool *iscissors);
 
 static gint          mouse_over_vertex         (GimpIscissorsTool *iscissors,
-						gint               x,
-						gint               y);
+						gdouble            x,
+						gdouble            y);
 static gboolean      clicked_on_vertex         (GimpTool          *tool);
 static GSList      * mouse_over_curve          (GimpIscissorsTool *iscissors,
-						gint               x,
-						gint               y);
+						gdouble            x,
+						gdouble            y);
 static gboolean      clicked_on_curve          (GimpTool          *tool);
 
 static void          precalculate_arrays       (void);
@@ -234,9 +233,6 @@ static gint move[8][2] =
  * | 2 | 1 | 3 |
  * `---+---+---'
  */
-
-/*  points for drawing curves  */
-static GdkPoint  curve_points[MAX_POINTS];
 
 
 /*  temporary convolution buffers --  */
@@ -806,42 +802,28 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
   GimpDisplay       *gdisp;
   ICurve            *curve;
   GSList            *list;
-  gint               tx1, ty1, tx2, ty2;
-  gint               txn, tyn;
 
   tool      = GIMP_TOOL (draw_tool);
   iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
 
   gdisp = tool->gdisp;
 
-  gdisplay_transform_coords (gdisp,
-                             iscissors->ix, iscissors->iy,
-                             &tx1, &ty1,
-			     FALSE);
-
   /*  Draw the crosshairs target if we're placing a seed  */
   if (iscissors->draw & DRAW_CURRENT_SEED)
     {
-      gdisplay_transform_coords (gdisp,
-                                 iscissors->x, iscissors->y,
-                                 &tx2, &ty2,
-				 FALSE);
-
-      gdk_draw_line (draw_tool->win,
-                     draw_tool->gc, 
-		     tx2 - (TARGET_WIDTH >> 1), ty2,
-		     tx2 + (TARGET_WIDTH >> 1), ty2);
-      gdk_draw_line (draw_tool->win,
-                     draw_tool->gc, 
-		     tx2, ty2 - (TARGET_HEIGHT >> 1),
-		     tx2, ty2 + (TARGET_HEIGHT >> 1));
+      gimp_draw_tool_draw_cross (draw_tool,
+                                 iscissors->x,
+                                 iscissors->y,
+                                 TARGET_WIDTH,
+                                 FALSE);
 
       /* Draw a line boundary */
       if (! iscissors->first_point && ! (iscissors->draw & DRAW_LIVEWIRE))
 	{
-	  gdk_draw_line (draw_tool->win,
-                         draw_tool->gc, 
-			 tx1, ty1, tx2, ty2);
+          gimp_draw_tool_draw_line (draw_tool,
+                                    iscissors->ix, iscissors->iy,
+                                    iscissors->x, iscissors->y,
+                                    FALSE);
 	}
     }
 
@@ -878,20 +860,24 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
           calculate_curve (tool, curve);
           curve = NULL;
         }
+
       /*  plot the curve  */
-      iscissors_draw_curve (gdisp, GIMP_DRAW_TOOL (iscissors),
-                            iscissors->livewire);
+      iscissors_draw_curve (draw_tool, iscissors->livewire);
     }
 
   if ((iscissors->draw & DRAW_CURVE) && ! iscissors->first_point)
     {
       /*  Draw a point at the init point coordinates  */
       if (! iscissors->connected)
-	gdk_draw_arc (draw_tool->win,
-                      draw_tool->gc,
-                      TRUE,
-		      tx1 - POINT_HALFWIDTH, ty1 - POINT_HALFWIDTH, 
-		      POINT_WIDTH, POINT_WIDTH, 0, 23040);
+        {
+          gimp_draw_tool_draw_arc_by_center (draw_tool,
+                                             TRUE,
+                                             iscissors->ix,
+                                             iscissors->iy,
+                                             POINT_WIDTH >> 1,
+                                             0, 23040,
+                                             FALSE);
+        }
 
       /*  Go through the list of icurves, and render each one...  */
       for (list = iscissors->curves; list; list = g_slist_next (list))
@@ -899,92 +885,85 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 	  curve = (ICurve *) list->data;
 
 	  /*  plot the curve  */
-	  iscissors_draw_curve (gdisp, GIMP_DRAW_TOOL (iscissors), curve);
+	  iscissors_draw_curve (draw_tool, curve);
 
-	  gdisplay_transform_coords (gdisp,
-                                     curve->x1, curve->y1,
-                                     &tx1, &ty1,
-				     FALSE);
-
-	  gdk_draw_arc (draw_tool->win,
-                        draw_tool->gc,
-                        TRUE,
-			tx1 - POINT_HALFWIDTH, ty1 - POINT_HALFWIDTH, 
-			POINT_WIDTH, POINT_WIDTH, 0, 23040);
+          gimp_draw_tool_draw_arc_by_center (draw_tool,
+                                             TRUE,
+                                             curve->x1,
+                                             curve->y1,
+                                             POINT_WIDTH >> 1,
+                                             0, 23040,
+                                             FALSE);
 	}
     }
 
   if (iscissors->draw & DRAW_ACTIVE_CURVE)
     {
-      gdisplay_transform_coords (gdisp,
-                                 iscissors->nx, iscissors->ny,
-				 &txn, &tyn,
-                                 FALSE);
-
       /*  plot both curves, and the control point between them  */
       if (iscissors->curve1)
 	{
-	  gdisplay_transform_coords (gdisp,
-                                     iscissors->curve1->x2, 
-				     iscissors->curve1->y2,
-                                     &tx1, &ty1,
-                                     FALSE);
-
-	  gdk_draw_line (draw_tool->win,
-                         draw_tool->gc, 
-			 tx1, ty1, txn, tyn);
+          gimp_draw_tool_draw_line (draw_tool,
+                                    iscissors->curve1->x2, 
+                                    iscissors->curve1->y2,
+                                    iscissors->nx,
+                                    iscissors->ny,
+                                    FALSE);
 	}
       if (iscissors->curve2)
 	{
-	  gdisplay_transform_coords (gdisp,
-                                     iscissors->curve2->x1, 
-				     iscissors->curve2->y1,
-                                     &tx2, &ty2,
-                                     FALSE);
-
-	  gdk_draw_line (draw_tool->win,
-                         draw_tool->gc, 
-			 tx2, ty2, txn, tyn);
+          gimp_draw_tool_draw_line (draw_tool,
+                                    iscissors->curve2->x1, 
+                                    iscissors->curve2->y1,
+                                    iscissors->nx,
+                                    iscissors->ny,
+                                    FALSE);
 	}
 
-      gdk_draw_arc (draw_tool->win,
-                    draw_tool->gc,
-                    TRUE,
-		    txn - POINT_HALFWIDTH, tyn - POINT_HALFWIDTH, 
-		    POINT_WIDTH, POINT_WIDTH, 0, 23040);
+      gimp_draw_tool_draw_arc_by_center (draw_tool,
+                                         TRUE,
+                                         iscissors->nx,
+                                         iscissors->ny,
+                                         POINT_WIDTH >> 1,
+                                         0, 23040,
+                                         FALSE);
     }
 }
 
 
 static void
-iscissors_draw_curve (GimpDisplay  *gdisp,
-		      GimpDrawTool *draw_tool,
+iscissors_draw_curve (GimpDrawTool *draw_tool,
 		      ICurve       *curve)
 {
   gpointer *point;
   guint     len;
-  gint      tx, ty;
   gint      npts = 0;
   guint32   coords;
+  guint32   coords_2;
 
   /* Uh, this shouldn't happen, but it does.  So we ignore it.
-   * Quality code, baby. */
-  if (!curve->points)
-      return;
+   * Quality code, baby.
+   */
+  if (! curve->points)
+    return;
 
-  point = curve->points->pdata;
-  len = curve->points->len;
+  point = curve->points->pdata + 1;
+  len   = curve->points->len - 1;
+
   while (len--)
     {
-      coords = GPOINTER_TO_INT (*point);
+      coords   = GPOINTER_TO_INT (*point);
+      coords_2 = GPOINTER_TO_INT (*(point - 1));
       point++;
-      gdisplay_transform_coords (gdisp, (coords & 0x0000ffff), 
-				 (coords >> 16), &tx, &ty, FALSE);
+
       if (npts < MAX_POINTS)
 	{
-	  curve_points[npts].x = tx;
-	  curve_points[npts].y = ty;
-	  npts ++;
+          gimp_draw_tool_draw_line (draw_tool,
+                                    (coords & 0x0000ffff),
+                                    (coords >> 16),
+                                    (coords_2 & 0x0000ffff),
+                                    (coords_2 >> 16),
+                                    FALSE);
+	  npts++;
 	}
       else
 	{
@@ -992,11 +971,6 @@ iscissors_draw_curve (GimpDisplay  *gdisp,
 	  return;
 	}
     }
-
-  /*  draw the curve */
-  gdk_draw_lines (draw_tool->win,
-                  draw_tool->gc,
-		  curve_points, npts);
 }
 
 static void
@@ -1209,8 +1183,8 @@ iscissors_free_buffers (GimpIscissorsTool *iscissors)
 
 static gint
 mouse_over_vertex (GimpIscissorsTool *iscissors,
-		   gint               x,
-		   gint               y)
+		   gdouble            x,
+		   gdouble            y)
 {
   GSList *list;
   ICurve *curve;
@@ -1229,17 +1203,25 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
     {
       curve = (ICurve *) list->data;
 
-      if (abs (curve->x1 - x) < POINT_HALFWIDTH &&
-	  abs (curve->y1 - y) < POINT_HALFWIDTH)
+      if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
+                                    GIMP_TOOL (iscissors)->gdisp,
+                                    curve->x1, curve->y1,
+                                    x, y,
+                                    POINT_HALFWIDTH))
 	{
 	  iscissors->curve1 = curve;
+
 	  if (curves_found++)
 	    return curves_found;
 	}
-      else if (abs (curve->x2 - x) < POINT_HALFWIDTH &&
-	       abs (curve->y2 - y) < POINT_HALFWIDTH)
+      else if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
+                                         GIMP_TOOL (iscissors)->gdisp,
+                                         curve->x2, curve->y2,
+                                         x, y,
+                                         POINT_HALFWIDTH))
 	{
 	  iscissors->curve2 = curve;
+
 	  if (curves_found++)
 	    return curves_found;
 	}
@@ -1280,8 +1262,8 @@ clicked_on_vertex (GimpTool *tool)
 
 static GSList *
 mouse_over_curve (GimpIscissorsTool *iscissors,
-		  gint               x,
-		  gint               y)
+		  gdouble            x,
+		  gdouble            y)
 {
   GSList   *list;
   gpointer *pt;
@@ -1308,8 +1290,11 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
 	  ty = coords >> 16;
 
 	  /*  Is the specified point close enough to the curve?  */
-	  if (abs (tx - x) < POINT_HALFWIDTH &&
-	      abs (ty - y) < POINT_HALFWIDTH)
+	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
+                                        GIMP_TOOL (iscissors)->gdisp,
+                                        tx, ty,
+                                        x, y,
+                                        POINT_HALFWIDTH))
 	    {
 	      return list;
 	    }

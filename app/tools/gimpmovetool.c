@@ -72,17 +72,12 @@ static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
                                              GdkModifierType    state,
                                              GimpDisplay       *gdisp);
 
-static void   gimp_move_tool_draw_guide     (GimpDisplay       *gdisp, 
-                                             GimpGuide         *guide);
+static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
 
 
-/*  the move tool options  */
 static GimpToolOptions *move_options = NULL;
 
-/*  local variables  */
-static GdkGC *move_gc = NULL;
-
-static GimpToolClass *parent_class = NULL;
+static GimpDrawToolClass *parent_class = NULL;
 
 
 void
@@ -119,7 +114,7 @@ gimp_move_tool_get_type (void)
 	(GInstanceInitFunc) gimp_move_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
 					  "GimpMoveTool", 
                                           &tool_info, 0);
     }
@@ -130,9 +125,11 @@ gimp_move_tool_get_type (void)
 static void
 gimp_move_tool_class_init (GimpMoveToolClass *klass)
 {
-  GimpToolClass *tool_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
 
-  tool_class = GIMP_TOOL_CLASS (klass);
+  tool_class      = GIMP_TOOL_CLASS (klass);
+  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -142,6 +139,8 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   tool_class->motion         = gimp_move_tool_motion;
   tool_class->arrow_key      = gimp_edit_selection_tool_arrow_key;
   tool_class->cursor_update  = gimp_move_tool_cursor_update;
+
+  draw_tool_class->draw      = gimp_move_tool_draw;
 }
 
 static void
@@ -251,7 +250,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  tool->scroll_lock = TRUE;
 	  tool->state       = ACTIVE;
 
-	  gimp_move_tool_draw_guide (gdisp, move->guide);
+          gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                                shell->canvas->window);
 	}
       else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
                                                          coords->x,
@@ -346,7 +346,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
       gdisplays_expose_guide (gdisp->gimage, move->guide);
 
-      gimp_move_tool_draw_guide (gdisp, move->guide);
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
       if (delete_guide)
 	{
@@ -394,7 +394,7 @@ gimp_move_tool_motion (GimpTool        *tool,
 
       shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-      gimp_move_tool_draw_guide (gdisp, move->guide);
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       gdisplay_transform_coords (gdisp,
                                  coords->x, coords->y,
@@ -414,9 +414,9 @@ gimp_move_tool_motion (GimpTool        *tool,
             move->guide->position = ROUND (coords->y);
           else
             move->guide->position = ROUND (coords->x);
-
-          gimp_move_tool_draw_guide (gdisp, move->guide);
         }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
 
@@ -519,57 +519,38 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_move_tool_draw_guide (GimpDisplay *gdisp, 
-                           GimpGuide   *guide)
+gimp_move_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpDisplayShell *shell;
-  gint              x1, y1;
-  gint              x2, y2;
-  gint              w, h;
-  gint              x, y;
+  GimpMoveTool *move;
+  GimpTool     *tool;
+  GimpGuide    *guide;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  move = GIMP_MOVE_TOOL (draw_tool);
+  tool = GIMP_TOOL (draw_tool);
 
-  if (! move_gc)
+  guide = move->guide;
+
+  if (guide && guide->position != -1)
     {
-      GdkGCValues values;
+      switch (guide->orientation)
+        {
+        case ORIENTATION_HORIZONTAL:
+          gimp_draw_tool_draw_line (draw_tool,
+                                    0, guide->position,
+                                    tool->gdisp->gimage->width, guide->position,
+                                    FALSE);
+          break;
 
-      values.foreground.pixel = g_white_pixel;
-      values.function         = GDK_INVERT;
-      move_gc = gdk_gc_new_with_values (shell->canvas->window, &values,
-					GDK_GC_FUNCTION);
-    }
+        case ORIENTATION_VERTICAL:
+          gimp_draw_tool_draw_line (draw_tool,
+                                    guide->position, 0,
+                                    guide->position, tool->gdisp->gimage->height,
+                                    FALSE);
+          break;
 
-  if (guide->position == -1)
-    return;
-  
-  gdisplay_transform_coords (gdisp, gdisp->gimage->width, 
-			     gdisp->gimage->height, &x2, &y2, FALSE); 
-
-  w = shell->canvas->allocation.width;
-  h = shell->canvas->allocation.height;
-
-  switch (guide->orientation)
-    {
-    case ORIENTATION_HORIZONTAL:
-      gdisplay_transform_coords (gdisp, 0, guide->position, &x1, &y, FALSE);
-      if (x1 < 0) x1 = 0;
-      if (x2 > w) x2 = w;
-
-      gdk_draw_line (shell->canvas->window, move_gc, x1, y, x2, y); 
-      break;
-
-    case ORIENTATION_VERTICAL:
-      gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y1, FALSE);
-      if (y1 < 0) y1 = 0;
-      if (y2 > h) y2 = h;
-
-      gdk_draw_line (shell->canvas->window, move_gc, x, y1, x, y2);
-      break;
-
-    default:
-      g_warning ("mdg / BAD FALLTHROUGH");
-      break;
+        default:
+          break;
+        }          
     }
 }
 
@@ -597,6 +578,9 @@ gimp_move_tool_start_hguide (GimpTool    *tool,
   tool->state = ACTIVE;
 
   undo_push_guide (gdisp->gimage, move->guide);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        GIMP_DISPLAY_SHELL (gdisp->shell)->canvas->window);
 }
 
 void
@@ -623,4 +607,7 @@ gimp_move_tool_start_vguide (GimpTool    *tool,
   tool->state = ACTIVE;
 
   undo_push_guide (gdisp->gimage, move->guide);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
+                        GIMP_DISPLAY_SHELL (gdisp->shell)->canvas->window);
 }

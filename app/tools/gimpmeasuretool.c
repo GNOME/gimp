@@ -54,7 +54,6 @@
 /*  definitions  */
 #define  TARGET         8
 #define  ARC_RADIUS     30
-#define  ARC_RADIUS_2   1100
 #define  STATUSBAR_SIZE 128
 
 /*  maximum information buffer size  */
@@ -264,30 +263,25 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       gtk_statusbar_pop (GTK_STATUSBAR (GIMP_DISPLAY_SHELL (old_gdisp->shell)->statusbar),
 			 measure_tool->context_id);
 
-      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar), 
+      gtk_statusbar_push (GTK_STATUSBAR (shell->statusbar),
 			  measure_tool->context_id, (""));
-    } 
+    }
   
   measure_tool->function = CREATING;
 
   if (tool->state == ACTIVE && gdisp == tool->gdisp)
     {
-      gint target_w, target_h;
-
-      target_w = UNSCALEX (gdisp, TARGET);
-      target_h = UNSCALEY (gdisp, TARGET);
-
       /*  if the cursor is in one of the handles,
        *  the new function will be moving or adding a new point or guide
        */
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  if (coords->x == CLAMP (coords->x,
-                                  measure_tool->x[i] - target_w,
-                                  measure_tool->x[i] + target_w) &&
-	      coords->y == CLAMP (coords->y,
-                                  measure_tool->y[i] - target_h,
-                                  measure_tool->y[i] + target_h))
+	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (tool), gdisp,
+                                        measure_tool->x[i],
+                                        measure_tool->y[i],
+                                        coords->x,
+                                        coords->y,
+                                        TARGET))
 	    {
 	      if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
@@ -694,19 +688,14 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
-      gint target_w, target_h;
-
-      target_w = UNSCALEX (gdisp, TARGET);
-      target_h = UNSCALEY (gdisp, TARGET);
-
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  if (coords->x == CLAMP (coords->x,
-                                  measure_tool->x[i] - target_w,
-                                  measure_tool->x[i] + target_w) &&
-	      coords->y == CLAMP (coords->y,
-                                  measure_tool->y[i] - target_h,
-                                  measure_tool->y[i] + target_h))
+	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (tool), gdisp,
+                                        measure_tool->x[i],
+                                        measure_tool->y[i],
+                                        coords->x,
+                                        coords->y,
+                                        TARGET))
 	    {
 	      in_handle = TRUE;
 
@@ -752,8 +741,6 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMeasureTool *measure_tool;
   GimpTool        *tool;
-  gint             x[3];
-  gint             y[3];
   gint             i;
   gint             angle1, angle2;
   gint             draw_arc = 0;
@@ -763,34 +750,43 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
   for (i = 0; i < measure_tool->num_points; i++)
     {
-      gdisplay_transform_coords (tool->gdisp,
-				 measure_tool->x[i], measure_tool->y[i],
-				 &x[i], &y[i],
-                                 FALSE);
-
       if (i == 0 && measure_tool->num_points == 3)
 	{
-	  gdk_draw_arc (draw_tool->win, draw_tool->gc, FALSE,
-			x[i] - (TARGET >> 1), y[i] - (TARGET >> 1),
-			TARGET, TARGET, 0, 23040);
+          gimp_draw_tool_draw_arc_by_center (draw_tool,
+                                             FALSE,
+                                             measure_tool->x[i],
+                                             measure_tool->y[i],
+                                             TARGET >> 1,
+                                             0, 23040,
+                                             FALSE);
 	}
       else
 	{
-	  gdk_draw_line (draw_tool->win, draw_tool->gc,
-			 x[i] - TARGET, y[i],
-			 x[i] + TARGET, y[i]);
-	  gdk_draw_line (draw_tool->win, draw_tool->gc,
-			 x[i], y[i] - TARGET,
-			 x[i], y[i] + TARGET);
+          gimp_draw_tool_draw_cross (draw_tool,
+                                     measure_tool->x[i],
+                                     measure_tool->y[i],
+                                     TARGET * 2,
+                                     FALSE);
 	}
+
       if (i > 0)
 	{
-	  gdk_draw_line (draw_tool->win, draw_tool->gc,
-			 x[0], y[0],
-			 x[i], y[i]);
+          gimp_draw_tool_draw_line (draw_tool,
+                                    measure_tool->x[0],
+                                    measure_tool->y[0],
+                                    measure_tool->x[i],
+                                    measure_tool->y[i],
+                                    FALSE);
+
 	  /*  only draw the arc if the lines are long enough  */
-	  if ((SQR (x[i] - x[0]) + SQR (y[i] - y[0])) > ARC_RADIUS_2)
-	    draw_arc++;
+          if (gimp_draw_tool_calc_distance (draw_tool, tool->gdisp,
+                                            measure_tool->x[0],
+                                            measure_tool->y[0],
+                                            measure_tool->x[i],
+                                            measure_tool->y[i]) > ARC_RADIUS)
+            {
+              draw_arc++;
+            }
 	}
     }
 
@@ -806,17 +802,32 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (angle2 != 0)
 	{
-	  gdk_draw_arc (draw_tool->win, draw_tool->gc, FALSE,
-			x[0] - ARC_RADIUS, y[0] - ARC_RADIUS,
-			2 * ARC_RADIUS, 2 * ARC_RADIUS,
-			angle1, angle2);
+          gimp_draw_tool_draw_arc_by_center (draw_tool,
+                                             FALSE,
+                                             measure_tool->x[0],
+                                             measure_tool->y[0],
+                                             ARC_RADIUS,
+                                             angle1, angle2,
+                                             FALSE);
 
 	  if (measure_tool->num_points == 2)
-	    gdk_draw_line (draw_tool->win, draw_tool->gc,
-			   x[0], y[0],
-			   x[1] - x[0] <= 0 ? x[0] - ARC_RADIUS - (TARGET >> 1) :
-			                      x[0] + ARC_RADIUS + (TARGET >> 1),
-			   y[0]);
+            {
+              gdouble target;
+              gdouble arc_radius;
+
+              target     = FUNSCALEX (tool->gdisp, (TARGET >> 1));
+              arc_radius = FUNSCALEX (tool->gdisp, ARC_RADIUS);
+
+              gimp_draw_tool_draw_line
+                (draw_tool,
+                 measure_tool->x[0],
+                 measure_tool->y[0],
+                 (measure_tool->x[1] >= measure_tool->x[0] ?
+                  measure_tool->x[0] + arc_radius + target :
+                  measure_tool->x[0] - arc_radius - target),
+                 measure_tool->y[0],
+                 FALSE);
+            }
 	}
     }
 }

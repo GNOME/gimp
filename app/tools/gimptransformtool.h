@@ -74,12 +74,6 @@ struct _GimpTransformTool
   gdouble         tx4, ty4;     /*                              */
   gdouble	  tcx, tcy;	/*                              */
 
-  gint            sx1, sy1;     /*  transformed screen coords   */
-  gint            sx2, sy2;     /*  position of four handles    */
-  gint            sx3, sy3;     /*                              */
-  gint            sx4, sy4;     /*                              */
-  gint            scx, scy;     /*  and center for rotation     */
-
   GimpMatrix3     transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
 

@@ -725,16 +725,16 @@ path_delete_segment (PathSegment *segment)
  */
 
 gint
-path_tool_cursor_position (NPath *path,
-			   gdouble x,
-			   gdouble y,
-			   gint halfwidth,
-                           gint halfheight,
-			   NPath **pathP,
-			   PathCurve **curveP,
+path_tool_cursor_position (NPath        *path,
+			   gdouble       x,
+			   gdouble       y,
+			   gint          halfwidth,
+                           gint          halfheight,
+			   NPath       **pathP,
+			   PathCurve   **curveP,
 			   PathSegment **segmentP,
-			   gdouble *positionP,
-			   gint *handle_idP)
+			   gdouble      *positionP,
+			   gint         *handle_idP)
 {
    gdouble pos;
    gint handle_id;
