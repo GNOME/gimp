@@ -68,6 +68,10 @@ static void   gimp_tool_options_editor_tool_changed    (GimpContext           *c
                                                         GimpToolInfo          *tool_info,
                                                         GimpToolOptionsEditor *editor);
 
+static void   gimp_tool_options_editor_presets_changed (GimpContainer         *container,
+                                                        GimpToolOptions       *options,
+                                                        GimpToolOptionsEditor *editor);
+
 
 static GimpEditorClass *parent_class = NULL;
 
@@ -120,7 +124,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_SAVE,
-                            _("Save options"),
+                            _("Save options to..."),
                             GIMP_HELP_TOOL_OPTIONS_SAVE,
                             G_CALLBACK (gimp_tool_options_editor_save_clicked),
                             NULL,
@@ -128,7 +132,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   editor->restore_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_REVERT_TO_SAVED,
-                            _("Restore saved options"),
+                            _("Restore options from..."),
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),
                             NULL,
@@ -136,7 +140,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   editor->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_DELETE,
-                            _("Delete saved options"),
+                            _("Delete saved options..."),
                             GIMP_HELP_TOOL_OPTIONS_DELETE,
                             G_CALLBACK (gimp_tool_options_editor_delete_clicked),
                             NULL,
@@ -275,7 +279,23 @@ static void
 gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
                                        GimpToolOptionsEditor *editor)
 {
-  gimp_tool_options_editor_menu_popup (editor, widget, "/Save Options to");
+  if (GTK_WIDGET_SENSITIVE (editor->restore_button) /* evil but correct */)
+    {
+      gimp_tool_options_editor_menu_popup (editor, widget, "/Save Options to");
+    }
+  else
+    {
+      GtkItemFactory *item_factory;
+      GtkWidget      *item;
+
+      item_factory = GTK_ITEM_FACTORY (GIMP_EDITOR (editor)->item_factory);
+
+      item = gtk_item_factory_get_widget (item_factory,
+                                          "/Save Options to/New Entry...");
+
+      if (item)
+        gtk_widget_activate (item);
+    }
 }
 
 static void
@@ -371,12 +391,21 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
                                        GimpToolInfo          *tool_info,
                                        GimpToolOptionsEditor *editor)
 {
-  GtkWidget *options_gui;
-  gboolean   sensitive;
+  GimpContainer *presets;
+  GtkWidget     *options_gui;
 
-  if (editor->visible_tool_options &&
-      (! tool_info || tool_info->tool_options != editor->visible_tool_options))
+  if (tool_info && tool_info->tool_options == editor->visible_tool_options)
+    return;
+
+  if (editor->visible_tool_options)
     {
+      presets = editor->visible_tool_options->tool_info->options_presets;
+
+      if (presets)
+        g_signal_handlers_disconnect_by_func (presets,
+                                              gimp_tool_options_editor_presets_changed,
+                                              editor);
+
       options_gui = g_object_get_data (G_OBJECT (editor->visible_tool_options),
                                        "gimp-tool-options-gui");
 
@@ -388,6 +417,18 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 
   if (tool_info && tool_info->tool_options)
     {
+      presets = tool_info->options_presets;
+
+      if (presets)
+        {
+          g_signal_connect_object (presets, "add",
+                                   G_CALLBACK (gimp_tool_options_editor_presets_changed),
+                                   G_OBJECT (editor), 0);
+          g_signal_connect_object (presets, "remove",
+                                   G_CALLBACK (gimp_tool_options_editor_presets_changed),
+                                   G_OBJECT (editor), 0);
+        }
+
       options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
                                        "gimp-tool-options-gui");
 
@@ -399,12 +440,38 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 
       editor->visible_tool_options = tool_info->tool_options;
     }
+  else
+    {
+      presets = NULL;
+    }
 
-  sensitive = (editor->visible_tool_options &&
-               G_TYPE_FROM_INSTANCE (editor->visible_tool_options) !=
-               GIMP_TYPE_TOOL_OPTIONS);
+  gimp_tool_options_editor_presets_changed (presets, NULL, editor);
+}
 
-  gtk_widget_set_sensitive (editor->save_button,    sensitive);
-  gtk_widget_set_sensitive (editor->restore_button, sensitive);
-  gtk_widget_set_sensitive (editor->reset_button,   sensitive);
+static void
+gimp_tool_options_editor_presets_changed (GimpContainer         *container,
+                                          GimpToolOptions       *options,
+                                          GimpToolOptionsEditor *editor)
+{
+  gboolean save_sensitive    = FALSE;
+  gboolean restore_sensitive = FALSE;
+  gboolean delete_sensitive  = FALSE;
+  gboolean reset_sensitive   = FALSE;
+
+  if (container)
+    {
+      save_sensitive  = TRUE;
+      reset_sensitive = TRUE;
+
+      if (gimp_container_num_children (container))
+        {
+          restore_sensitive = TRUE;
+          delete_sensitive  = TRUE;
+        }
+    }
+
+  gtk_widget_set_sensitive (editor->save_button,    save_sensitive);
+  gtk_widget_set_sensitive (editor->restore_button, restore_sensitive);
+  gtk_widget_set_sensitive (editor->delete_button,  delete_sensitive);
+  gtk_widget_set_sensitive (editor->reset_button,   reset_sensitive);
 }

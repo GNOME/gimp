@@ -1,5 +1,13 @@
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptooloptionseditor.c: connect to the "add" and
+	"remove" signals of the current tool_option's presets container
+	and set the "Restore" and "Delete" buttons insensitive when there
+	are no saved tool options. Also show the "Enter Name" dialog
+	directly instead of popping up a menu with only one item.
+
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/tool-options-menu.[ch] (tool_options_menu_setup): new
 	function for stuff which needs to be done once, not on every
 	tool_options_menu_update(). Cleanup.
