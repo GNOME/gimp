@@ -1,5 +1,41 @@
 2003-05-12  Michael Natterer  <mitch@gimp.org>
 
+	Added support for transforming linked layers, channels
+	and vectors. Fixes bug #86277.
+
+	* app/core/gimpdrawable-transform.[ch]
+	(gimp_drawable_transform_tiles_flip): added "gdouble axis" and
+	calculate the resulting drawable offset.
+	(gimp_drawable_transform_flip): calculate the axis and pass it to
+	the function above.
+	(gimp_drawable_transform_[tiles_]affine): reordered parameters.
+
+	* app/core/gimpitem.[ch]: added virtual functions GimpItem::flip()
+	and GimpItem::transform().
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c
+	* app/vectors/gimpvectors.c: implement flip() and transform().
+	Note that all functions always transform the whole item,
+	regardless of a present selection.
+
+	* app/core/Makefile.am
+	* app/core/gimpitem-linked.[ch]: new files containing utility
+	functions which translate, flip and transform all linked items.
+
+	* app/tools/gimpfliptool.c
+	* app/tools/gimptransformtool.c
+	* tools/pdbgen/pdb/layer.pdb: use the new gimp_item_linked_*()
+	functions to translate, flip and transform all linked items.
+
+	* tools/pdbgen/pdb/transform_tools.pdb: follow
+	gimp_drawable_transform_affine() API change.
+
+	* app/pdb/layer_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+2003-05-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
 	(Spotted by Ville Pätsi).

@@ -42,6 +42,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
@@ -381,7 +382,9 @@ gimp_transform_tool_button_press (GimpTool        *tool,
           /*  Set the pointer to the active display  */
           tool->gdisp    = gdisp;
           tool->drawable = drawable;
-          gimp_tool_control_activate (tool->control);
+
+          if (! gimp_tool_control_is_active (tool->control))
+            gimp_tool_control_activate (tool->control);
 
           /*  Find the transform bounds for some tools (like scale,
            *  perspective) that actually need the bounds for
@@ -428,7 +431,8 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       tr_tool->lastx = tr_tool->startx = coords->x;
       tr_tool->lasty = tr_tool->starty = coords->y;
 
-      gimp_tool_control_activate (tool->control);
+      if (! gimp_tool_control_is_active (tool->control))
+        gimp_tool_control_activate (tool->control);
     }
 }
 
@@ -767,13 +771,17 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpDisplay       *gdisp)
 {
   GimpTool             *tool;
-  GimpDrawable         *drawable;
   GimpTransformOptions *options;
+  GimpDrawable         *active_drawable;
+  GimpItem             *active_item;
   GimpProgress         *progress;
   TileManager          *ret;
 
   tool    = GIMP_TOOL (tr_tool);
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+
+  active_drawable = gimp_image_active_drawable (gdisp->gimage);
+  active_item     = GIMP_ITEM (active_drawable);
 
   if (tr_tool->info_dialog)
     gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
@@ -781,14 +789,20 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   progress = gimp_progress_start (gdisp, tr_tool->progress_text, FALSE,
                                   NULL, NULL);
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  if (gimp_item_get_linked (active_item))
+    gimp_item_linked_transform (active_item, tr_tool->transform,
+                                options->direction,
+                                options->interpolation, options->clip,
+                                progress ?
+                                gimp_progress_update_and_flush : NULL,
+                                progress);
 
-  ret = gimp_drawable_transform_tiles_affine (drawable,
+  ret = gimp_drawable_transform_tiles_affine (active_drawable,
                                               tr_tool->original,
-                                              options->interpolation,
-                                              options->clip,
                                               tr_tool->transform,
                                               options->direction,
+                                              options->interpolation,
+                                              options->clip,
                                               progress ?
                                               gimp_progress_update_and_flush : 
                                               NULL,

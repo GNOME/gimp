@@ -35,21 +35,22 @@ typedef enum
 
 TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable *drawable,
                                                     TileManager  *float_tiles,
-                                                    GimpInterpolationType  interpolation_type,
-                                                    gboolean      clip_result,
                                                     GimpMatrix3   matrix,
                                                     GimpTransformDirection direction,
+                                                    GimpInterpolationType  interpolation_type,
+                                                    gboolean      clip_result,
                                                     GimpProgressFunc progress_callback,
                                                     gpointer      progress_data);
 TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable *drawable,
                                                     TileManager  *orig,
-                                                    GimpOrientationType flip_type);
+                                                    GimpOrientationType flip_type,
+                                                    gdouble       axis);
 
 gboolean      gimp_drawable_transform_affine       (GimpDrawable *drawable,
-                                                    GimpInterpolationType  interpolation_type,
-                                                    gboolean      clip_result,
                                                     GimpMatrix3   matrix,
-                                                    GimpTransformDirection direction);
+                                                    GimpTransformDirection direction,
+                                                    GimpInterpolationType  interpolation_type,
+                                                    gboolean      clip_result);
 gboolean      gimp_drawable_transform_flip         (GimpDrawable *drawable,
                                                     GimpOrientationType flip_type);
 

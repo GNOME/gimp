@@ -35,10 +35,10 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem-linked.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimplist.h"
 #include "gimp-intl.h"
 #include "pdb_glue.h"
 
@@ -646,50 +646,10 @@ layer_translate_invoker (Gimp     *gimp,
 			       TRUE);
 	
 	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
-	    {
-	      GList    *list;
-	      GimpItem *item;
-	
-	      /*  translate all linked items as well  */
-	      for (list = GIMP_LIST (gimage->layers)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (item != (GimpItem *) layer && gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	
-	      for (list = GIMP_LIST (gimage->channels)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	
-	      for (list = GIMP_LIST (gimage->vectors)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	    }
+	    gimp_item_linked_translate (GIMP_ITEM (layer),
+					offx,
+					offy,
+					TRUE);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
@@ -817,50 +777,10 @@ layer_set_offsets_invoker (Gimp     *gimp,
 			       TRUE);
 	
 	  if (gimp_item_get_linked (GIMP_ITEM (layer)))
-	    {
-	      GList    *list;
-	      GimpItem *item;
-	
-	      /*  translate all linked items as well  */
-	      for (list = GIMP_LIST (gimage->layers)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (item != (GimpItem *) layer && gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	
-	      for (list = GIMP_LIST (gimage->channels)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	
-	      for (list = GIMP_LIST (gimage->vectors)->list;
-		   list;
-		   list = g_list_next (list))
-		{
-		  item = (GimpItem *) list->data;
-	
-		  if (gimp_item_get_linked (item))
-		    gimp_item_translate (item,
-					 offx,
-					 offy,
-					 TRUE);
-		}
-	    }
+	    gimp_item_linked_translate (GIMP_ITEM (layer),
+					offx,
+					offy,
+					TRUE);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);

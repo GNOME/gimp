@@ -27,10 +27,13 @@
 
 #include "tools-types.h"
 
+#include "base/tile-manager.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpitem-linked.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpwidgets-utils.h"
@@ -40,8 +43,6 @@
 #include "gimpflipoptions.h"
 #include "gimpfliptool.h"
 #include "gimptoolcontrol.h"
-
-#include "path_transform.h"
 
 #include "gimp-intl.h"
 
@@ -233,13 +234,39 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 			  GimpDisplay       *gdisp)
 {
   GimpFlipOptions *options;
-  GimpDrawable    *drawable;
+  GimpDrawable    *active_drawable;
+  GimpItem        *active_item;
+  gint             off_x, off_y;
+  gint             width, height;
+  gdouble          axis = 0.0;
 
   options = GIMP_FLIP_OPTIONS (GIMP_TOOL (trans_tool)->tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  active_drawable = gimp_image_active_drawable (gdisp->gimage);
+  active_item     = GIMP_ITEM (active_drawable);
 
-  return gimp_drawable_transform_tiles_flip (drawable,
-                                             trans_tool->original, 
-                                             options->flip_type);
+  tile_manager_get_offsets (trans_tool->original, &off_x, &off_y);
+  width  = tile_manager_width  (trans_tool->original);
+  height = tile_manager_height (trans_tool->original);
+
+  switch (options->flip_type)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      axis = ((gdouble) off_x + (gdouble) width / 2.0);
+      break;
+
+    case GIMP_ORIENTATION_VERTICAL:
+      axis = ((gdouble) off_y + (gdouble) height / 2.0);
+      break;
+
+    default:
+      break;
+    }
+
+  if (gimp_item_get_linked (active_item))
+    gimp_item_linked_flip (active_item, options->flip_type, axis);
+
+  return gimp_drawable_transform_tiles_flip (active_drawable,
+                                             trans_tool->original,
+                                             options->flip_type, axis);
 }

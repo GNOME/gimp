@@ -40,8 +40,10 @@
 
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
+#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
+#include "gimpdrawable-transform.h"
 #include "gimplayer.h"
 #include "gimpparasitelist.h"
 
@@ -73,6 +75,16 @@ static void       gimp_channel_resize      (GimpItem         *item,
                                             gint              new_height,
                                             gint              offx,
                                             gint              offy);
+static void       gimp_channel_flip        (GimpItem         *item,
+                                            GimpOrientationType flip_type,
+                                            gdouble           axis);
+static void       gimp_channel_transform   (GimpItem         *item,
+                                            GimpMatrix3       matrix,
+                                            GimpTransformDirection direction,
+                                            GimpInterpolationType  interpolation_type,
+                                            gboolean          clip_result,
+                                            GimpProgressFunc  progress_callback,
+                                            gpointer          progress_data);
 
 static void       gimp_channel_push_undo   (GimpChannel      *mask,
                                             const gchar      *undo_desc);
@@ -136,6 +148,8 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->translate            = gimp_channel_translate;
   item_class->scale                = gimp_channel_scale;
   item_class->resize               = gimp_channel_resize;
+  item_class->flip                 = gimp_channel_flip;
+  item_class->transform            = gimp_channel_transform;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
 }
@@ -375,6 +389,79 @@ gimp_channel_resize (GimpItem *item,
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
                                           offset_x, offset_y);
+
+  /*  bounds are now unknown  */
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_flip (GimpItem            *item,
+                   GimpOrientationType  flip_type,
+                   gdouble              axis)
+{
+#ifdef __GNUC__
+#warning FIXME: implement clip_result for flipping
+#endif
+
+  g_print ("FIXME: implement channel flipping\n");
+
+#if 0
+  GimpChannel *channel;
+  GimpImage   *gimage;
+  TileManager *tiles;
+
+  channel = GIMP_CHANNEL (item);
+  gimage  = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Flip Channel"));
+
+  tiles = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (channel),
+                                              GIMP_DRAWABLE (channel)->tiles,
+                                              flip_type, axis,
+                                              TRUE /* always clip_result */);
+
+  if (tiles)
+    gimp_drawable_transform_paste (GIMP_DRAWABLE (channel), tiles, FALSE);
+
+  gimp_image_undo_group_end (gimage);
+
+  /*  bounds are now unknown  */
+  channel->bounds_known = FALSE;
+#endif
+}
+
+static void
+gimp_channel_transform (GimpItem               *item,
+                        GimpMatrix3             matrix,
+                        GimpTransformDirection  direction,
+                        GimpInterpolationType   interpolation_type,
+                        gboolean                clip_result,
+                        GimpProgressFunc        progress_callback,
+                        gpointer                progress_data)
+{
+  GimpChannel *channel;
+  GimpImage   *gimage;
+  TileManager *tiles;
+
+  channel = GIMP_CHANNEL (item);
+  gimage  = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Transform Channel"));
+
+  tiles = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (channel),
+                                                GIMP_DRAWABLE (channel)->tiles,
+                                                matrix, direction,
+                                                interpolation_type,
+                                                TRUE, /* always clip_result */
+                                                progress_callback,
+                                                progress_data);
+
+  if (tiles)
+    gimp_drawable_transform_paste (GIMP_DRAWABLE (channel), tiles, FALSE);
+
+  gimp_image_undo_group_end (gimage);
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;

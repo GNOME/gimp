@@ -35,6 +35,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpdrawable-invert.h"
+#include "gimpdrawable-transform.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
@@ -89,6 +90,16 @@ static void       gimp_layer_resize             (GimpItem           *item,
                                                  gint                new_height,
                                                  gint                offset_x,
                                                  gint                offset_y);
+static void       gimp_layer_flip               (GimpItem           *item,
+                                                 GimpOrientationType flip_type,
+                                                 gdouble             axis);
+static void       gimp_layer_transform          (GimpItem           *item,
+                                                 GimpMatrix3         matrix,
+                                                 GimpTransformDirection direction,
+                                                 GimpInterpolationType  interpolation_type,
+                                                 gboolean            clip_result,
+                                                 GimpProgressFunc    progress_callback,
+                                                 gpointer            progress_data);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -193,6 +204,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->translate              = gimp_layer_translate;
   item_class->scale                  = gimp_layer_scale;
   item_class->resize                 = gimp_layer_resize;
+  item_class->flip                   = gimp_layer_flip;
+  item_class->transform              = gimp_layer_transform;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
 
@@ -453,6 +466,140 @@ gimp_layer_resize (GimpItem *item,
 
       gimp_image_undo_group_end (gimage);
     }
+
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
+}
+
+static void
+gimp_layer_flip (GimpItem            *item,
+                 GimpOrientationType  flip_type,
+                 gdouble              axis)
+{
+  GimpLayer   *layer;
+  GimpImage   *gimage;
+  TileManager *tiles;
+  gint         off_x, off_y;
+  gint         old_off_x, old_off_y;
+
+  layer  = GIMP_LAYER (item);
+  gimage = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Flip Layer"));
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  tile_manager_get_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            &old_off_x, &old_off_y);
+  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            off_x, off_y);
+
+  tiles = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (layer),
+                                              GIMP_DRAWABLE (layer)->tiles,
+                                              flip_type, axis);
+
+  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            old_off_x, old_off_y);
+
+  if (tiles)
+    gimp_drawable_transform_paste (GIMP_DRAWABLE (layer), tiles, FALSE);
+
+  /*  If there is a layer mask, make sure it gets flipped also  */
+  if (layer->mask)
+    {
+      tile_manager_get_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                &old_off_x, &old_off_y);
+      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                off_x, off_y);
+
+      tiles =
+        gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (layer->mask),
+                                            GIMP_DRAWABLE (layer->mask)->tiles,
+                                            flip_type, axis);
+
+      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                old_off_x, old_off_y);
+
+      if (tiles)
+        gimp_drawable_transform_paste (GIMP_DRAWABLE (layer->mask), tiles,
+                                       FALSE);
+    }
+
+  gimp_image_undo_group_end (gimage);
+
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
+}
+
+static void
+gimp_layer_transform (GimpItem               *item,
+                      GimpMatrix3             matrix,
+                      GimpTransformDirection  direction,
+                      GimpInterpolationType   interpolation_type,
+                      gboolean                clip_result,
+                      GimpProgressFunc        progress_callback,
+                      gpointer                progress_data)
+{
+  GimpLayer   *layer;
+  GimpImage   *gimage;
+  TileManager *tiles;
+  gint         off_x, off_y;
+  gint         old_off_x, old_off_y;
+
+  layer  = GIMP_LAYER (item);
+  gimage = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Transform Layer"));
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  tile_manager_get_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            &old_off_x, &old_off_y);
+  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            off_x, off_y);
+
+  tiles = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (layer),
+                                                GIMP_DRAWABLE (layer)->tiles,
+                                                matrix, direction,
+                                                interpolation_type,
+                                                clip_result,
+                                                progress_callback,
+                                                progress_data);
+
+  tile_manager_set_offsets (GIMP_DRAWABLE (layer)->tiles,
+                            old_off_x, old_off_y);
+
+  if (tiles)
+    gimp_drawable_transform_paste (GIMP_DRAWABLE (layer), tiles, FALSE);
+
+  /*  If there is a layer mask, make sure it gets flipped also  */
+  if (layer->mask)
+    {
+      tile_manager_get_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                &old_off_x, &old_off_y);
+      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                off_x, off_y);
+
+      tiles =
+        gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (layer->mask),
+                                              GIMP_DRAWABLE (layer->mask)->tiles,
+                                              matrix, direction,
+                                              interpolation_type,
+                                              clip_result,
+                                              progress_callback,
+                                              progress_data);
+
+      tile_manager_set_offsets (GIMP_DRAWABLE (layer->mask)->tiles,
+                                old_off_x, old_off_y);
+
+      if (tiles)
+        gimp_drawable_transform_paste (GIMP_DRAWABLE (layer->mask), tiles,
+                                       FALSE);
+    }
+
+  gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
   gimp_layer_invalidate_boundary (layer);

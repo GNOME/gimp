@@ -182,10 +182,8 @@ perspective_invoker (Gimp     *gimp,
     
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation_type,
-						FALSE,
-						matrix,
-						GIMP_TRANSFORM_FORWARD);
+						matrix, GIMP_TRANSFORM_FORWARD,
+						interpolation_type, FALSE);
     }
 
   return_args = procedural_db_return_args (&perspective_proc, success);
@@ -313,10 +311,8 @@ rotate_invoker (Gimp     *gimp,
     
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation_type,
-						FALSE,
-						matrix,
-						GIMP_TRANSFORM_FORWARD);
+						matrix, GIMP_TRANSFORM_FORWARD,
+						interpolation_type, FALSE);
     }
 
   return_args = procedural_db_return_args (&rotate_proc, success);
@@ -420,10 +416,8 @@ scale_invoker (Gimp     *gimp,
     
 	  /* Scale the selection */
 	  success = gimp_drawable_transform_affine (drawable,
-						    interpolation_type,
-						    FALSE,
-						    matrix,
-						    GIMP_TRANSFORM_FORWARD);
+						    matrix, GIMP_TRANSFORM_FORWARD,
+						    interpolation_type, FALSE);
 	}
       else
 	{
@@ -541,10 +535,8 @@ shear_invoker (Gimp     *gimp,
     
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation_type,
-						FALSE,
-						matrix,
-						GIMP_TRANSFORM_FORWARD);
+						matrix, GIMP_TRANSFORM_FORWARD,
+						interpolation_type, FALSE);
     }
 
   return_args = procedural_db_return_args (&shear_proc, success);
@@ -658,10 +650,8 @@ transform_2d_invoker (Gimp     *gimp,
     
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation_type,
-						FALSE,
-						matrix,
-						GIMP_TRANSFORM_FORWARD);
+						matrix, GIMP_TRANSFORM_FORWARD,
+						interpolation_type, FALSE);
     }
 
   return_args = procedural_db_return_args (&transform_2d_proc, success);

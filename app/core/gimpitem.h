@@ -55,31 +55,41 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* removed)        (GimpItem         *item);
-  void       (* linked_changed) (GimpItem         *item);
+  void       (* removed)        (GimpItem          *item);
+  void       (* linked_changed) (GimpItem          *item);
 
   /*  virtual functions  */
-  GimpItem * (* duplicate) (GimpItem              *item,
-                            GType                  new_type,
-                            gboolean               add_alpha);
-  void       (* rename)    (GimpItem              *item,
-                            const gchar           *new_name,
-                            const gchar           *undo_desc);
-  void       (* translate) (GimpItem              *item,
-                            gint                   offset_x,
-                            gint                   offset_y,
-                            gboolean               push_undo);
-  void       (* scale)     (GimpItem              *item,
-                            gint                   new_width,
-                            gint                   new_height,
-                            gint                   new_offset_x,
-                            gint                   new_offset_y,
-                            GimpInterpolationType  interpolation_type);
-  void       (* resize)    (GimpItem              *item,
-                            gint                   new_width,
-                            gint                   new_height,
-                            gint                   offset_x,
-                            gint                   offset_y);
+  GimpItem * (* duplicate) (GimpItem               *item,
+                            GType                   new_type,
+                            gboolean                add_alpha);
+  void       (* rename)    (GimpItem               *item,
+                            const gchar            *new_name,
+                            const gchar            *undo_desc);
+  void       (* translate) (GimpItem               *item,
+                            gint                    offset_x,
+                            gint                    offset_y,
+                            gboolean                push_undo);
+  void       (* scale)     (GimpItem               *item,
+                            gint                    new_width,
+                            gint                    new_height,
+                            gint                    new_offset_x,
+                            gint                    new_offset_y,
+                            GimpInterpolationType   interpolation_type);
+  void       (* resize)    (GimpItem               *item,
+                            gint                    new_width,
+                            gint                    new_height,
+                            gint                    offset_x,
+                            gint                    offset_y);
+  void       (* flip)      (GimpItem               *item,
+                            GimpOrientationType     flip_type,
+                            gdouble                 axis);
+  void       (* transform) (GimpItem               *item,
+                            GimpMatrix3             matrix,
+                            GimpTransformDirection  direction,
+                            GimpInterpolationType   interpolation_type,
+                            gboolean                clip_result,
+                            GimpProgressFunc        progress_callback,
+                            gpointer                progress_data);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -139,6 +149,17 @@ void            gimp_item_resize           (GimpItem       *item,
                                             gint            offset_x,
                                             gint            offset_y);
 void            gimp_item_resize_to_image  (GimpItem       *item);
+
+void            gimp_item_flip             (GimpItem       *item,
+                                            GimpOrientationType flip_type,
+                                            gdouble         axis);
+void            gimp_item_transform        (GimpItem       *item,
+                                            GimpMatrix3     matrix,
+                                            GimpTransformDirection  direction,
+                                            GimpInterpolationType   interpolation_type,
+                                            gboolean        clip_result,
+                                            GimpProgressFunc  progress_callback,
+                                            gpointer        progress_data);
 
 gint            gimp_item_get_ID           (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp           *gimp,

@@ -680,6 +680,40 @@ gimp_item_resize (GimpItem *item,
   item_class->resize (item, new_width, new_height, offset_x, offset_y);
 }
 
+void
+gimp_item_flip (GimpItem            *item,
+                GimpOrientationType  flip_type,
+                gdouble              axis)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  item_class->flip (item, flip_type, axis);
+}
+
+void
+gimp_item_transform (GimpItem               *item,
+                     GimpMatrix3             matrix,
+                     GimpTransformDirection  direction,
+                     GimpInterpolationType   interpolation_type,
+                     gboolean                clip_result,
+                     GimpProgressFunc        progress_callback,
+                     gpointer                progress_data)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  item_class->transform (item, matrix, direction, interpolation_type,
+                         clip_result,
+                         progress_callback, progress_data);
+}
+
 gint
 gimp_item_get_ID (GimpItem *item)
 {

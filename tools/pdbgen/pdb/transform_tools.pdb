@@ -146,10 +146,8 @@ HELP
 
   /* Perspective the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation_type,
-                                            FALSE,
-				            matrix,
-                                            GIMP_TRANSFORM_FORWARD);
+				            matrix, GIMP_TRANSFORM_FORWARD,
+                                            interpolation_type, FALSE);
 }
 CODE
     );
@@ -202,10 +200,8 @@ HELP
 
   /* Rotate the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation_type,
-                                            FALSE,
-                                            matrix,
-                                            GIMP_TRANSFORM_FORWARD);
+                                            matrix, GIMP_TRANSFORM_FORWARD,
+                                            interpolation_type, FALSE);
 }
 CODE
     );
@@ -273,10 +269,8 @@ HELP
 
       /* Scale the selection */
       success = gimp_drawable_transform_affine (drawable,
-                                                interpolation_type,
-                                                FALSE,
-                                                matrix,
-                                                GIMP_TRANSFORM_FORWARD);
+                                                matrix, GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, FALSE);
     }
   else
     {
@@ -340,10 +334,8 @@ HELP
 
   /* Shear the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation_type,
-                                            FALSE,
-                                            matrix,
-                                            GIMP_TRANSFORM_FORWARD);
+                                            matrix, GIMP_TRANSFORM_FORWARD,
+                                            interpolation_type, FALSE);
 }
 CODE
     );
@@ -411,10 +403,8 @@ HELP
 
   /* Transform the selection */
   success = gimp_drawable_transform_affine (drawable,
-				            interpolation_type,
-                                            FALSE,
-                                            matrix,
-                                            GIMP_TRANSFORM_FORWARD);
+                                            matrix, GIMP_TRANSFORM_FORWARD,
+				            interpolation_type, FALSE);
 }
 CODE
     );

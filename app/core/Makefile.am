@@ -129,6 +129,8 @@ libappcore_a_sources = \
 	gimpimagemap.h			\
 	gimpitem.c			\
 	gimpitem.h			\
+	gimpitem-linked.c		\
+	gimpitem-linked.h		\
 	gimpitemundo.c			\
 	gimpitemundo.h			\
 	gimplayer.c			\
