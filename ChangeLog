@@ -1,3 +1,8 @@
+Fri Mar 26 01:30:45 EST 1998 Matthew Wilson <msw@gimp.org>
+	* app/iscissors.c
+	* app/bezier_select.c: Change to select the bezier tool properly
+	when converting from iscissors to bezier
+
 Thu Mar 26 17:41:55 MST 1998 Nathan Summers <rock@gimp.org>
 	* app/iscissors.c: fixed the sigsegv if the layer is offset!
 

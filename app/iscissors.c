@@ -281,7 +281,6 @@ selection_to_bezier(GtkWidget *w, gpointer none)
 	iscissors = (Iscissors *) last_tool->private;
 	last_tool->state = INACTIVE;
 	bezierify_boundary (last_tool);
-	tools_select(BEZIER_SELECT);
     }
    return;
 }
