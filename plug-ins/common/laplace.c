@@ -29,9 +29,11 @@
    #ifdef MAX and MIN */
 
 #include <stdlib.h>
-#include "libgimp/gimp.h"
 #include <stdio.h>
 #include <math.h>
+#include "config.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.
  */
@@ -74,13 +76,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_laplace",
-			  "Edge Detection with Laplace Operation",
-			  "This plugin creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle)The image has to be laplacered to get usefull results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best",
+			  _("Edge Detection with Laplace Operation"),
+			  _("This plugin creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle)The image has to be laplacered to get usefull results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best"),
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  "<Image>/Filters/Edge-Detect/Laplace",
+			  N_("<Image>/Filters/Edge-Detect/Laplace"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -100,6 +104,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N();
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -208,7 +214,7 @@ laplace (GDrawable *drawable)
    */
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
-  gimp_progress_init ("Laplace");
+  gimp_progress_init ( _("Laplace..."));
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -282,7 +288,7 @@ laplace (GDrawable *drawable)
   laplace_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
   laplace_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
 
-  gimp_progress_init ("Cleanup");
+  gimp_progress_init ( _("Cleanup..."));
   scale = (255.0 / (float) max_gradient);
   counter =0;
 

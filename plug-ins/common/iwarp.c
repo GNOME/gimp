@@ -45,6 +45,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define MAX_PREVIEW_WIDTH 256
 #define MAX_PREVIEW_HEIGHT 256
@@ -232,13 +233,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_iwarp",
-			  "Interactive warping of the specified drawable",
-			  "Interactive warping of the specified drawable ",
+			  _("Interactive warping of the specified drawable"),
+			  _("Interactive warping of the specified drawable"),
 			  "Norbert Schmitz",
 			  "Norbert Schmitz",
 			  "1997",
-			  "<Image>/Filters/Distorts/IWarp...",
+			  N_("<Image>/Filters/Distorts/IWarp..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -265,6 +268,7 @@ run (char    *name,
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id)) { 
       switch ( run_mode) {
         case RUN_INTERACTIVE :
+          INIT_I18N_UI();
           gimp_get_data("plug_in_iwarp",&iwarp_vals);
           gimp_tile_cache_ntiles(2*(drawable->width +gimp_tile_width()-1) / gimp_tile_width());
           if (iwarp_dialog()) iwarp();
@@ -529,7 +533,7 @@ iwarp_frame()
   max_progress = (yh-yl)*(xh-xl);
 
   gimp_pixel_rgn_init (&dest_rgn, destdrawable, xl, yl, xh-xl, yh-yl, TRUE, TRUE);
-  if (!do_animate) gimp_progress_init("Warping ...");
+  if (!do_animate) gimp_progress_init( _("Warping ..."));
   for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
          pr != NULL; pr = gimp_pixel_rgns_process(pr)) {
          dest_row = dest_rgn.data;
@@ -621,7 +625,7 @@ static void iwarp()
    animlayers[i] = iwarp_layer_copy(layerID);
    gimp_layer_set_name(animlayers[i],st);
    destdrawable = gimp_drawable_get(animlayers[i]);
-   sprintf(st,"Warping Frame Nr %d ...",frame_number);
+   sprintf(st, _("Warping Frame Nr %d ..."),frame_number);
    gimp_progress_init(st);
    if (animate_deform_value >0.0) iwarp_frame();
    gimp_image_add_layer(imageID,animlayers[i],0);
@@ -629,8 +633,8 @@ static void iwarp()
    frame_number++;
   }
   if (do_animate_ping_pong) {
-   sprintf(st,"Warping Frame Nr %d ...",frame_number);
-   gimp_progress_init("Ping Pong");
+   sprintf(st, _("Warping Frame Nr %d ..."),frame_number);
+   gimp_progress_init( _("Ping Pong"));
    for (i=0; i < animate_num_frames; i++) {
      gimp_progress_update((double)i / (animate_num_frames-1));
      layerID = iwarp_layer_copy(animlayers[animate_num_frames-i-1]); 
@@ -762,7 +766,7 @@ iwarp_animate_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_table_set_row_spacings(GTK_TABLE(table), 10);
  gtk_table_set_col_spacings(GTK_TABLE(table), 3);
 
- button = gtk_check_button_new_with_label ("Animate");
+ button = gtk_check_button_new_with_label ( _("Animate"));
  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 0, 1, GTK_FILL , GTK_FILL , 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_animate_toggle,
@@ -780,7 +784,7 @@ iwarp_animate_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_container_add (GTK_CONTAINER (animate_frame), animate_table);
  
 
- label = gtk_label_new ("Number of Frames");
+ label = gtk_label_new ( _("Number of Frames"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (animate_table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
  scale_data = gtk_adjustment_new (animate_num_frames, 2, MAX_NUM_FRAMES, 1.0, 1.0, 0.0);
@@ -797,14 +801,14 @@ iwarp_animate_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show (scale);
    
 
- button = gtk_check_button_new_with_label ("Reverse");
+ button = gtk_check_button_new_with_label ( _("Reverse"));
  gtk_table_attach (GTK_TABLE (animate_table), button, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_toggle_update,
                       &do_animate_reverse);
  gtk_widget_show(button);
  
- button = gtk_check_button_new_with_label ("Ping Pong");
+ button = gtk_check_button_new_with_label ( _("Ping Pong"));
  gtk_table_attach (GTK_TABLE (animate_table), button, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_toggle_update,
@@ -820,7 +824,7 @@ iwarp_animate_dialog(GtkWidget* dlg, GtkWidget* notebook)
   gtk_widget_set_sensitive(animate_frame,do_animate);
   gtk_table_attach (GTK_TABLE (table), animate_frame, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
  
-  label = gtk_label_new("Animate");
+  label = gtk_label_new( _("Animate"));
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook),table,label);
   gtk_widget_show(label);
@@ -848,7 +852,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_table_set_col_spacings(GTK_TABLE(table), 3);
   
 
- label = gtk_label_new ("Deform Radius");
+ label = gtk_label_new ( _("Deform Radius"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
  scale_data = gtk_adjustment_new (iwarp_vals.deform_area_radius, 5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 1.0, 0.0);
@@ -864,7 +868,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show (label);
  gtk_widget_show (scale);
  
- label = gtk_label_new ("Deform Amount");
+ label = gtk_label_new ( _("Deform Amount"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
  scale_data = gtk_adjustment_new (iwarp_vals.deform_amount, 0.0, 1.0, 0.01,0.01, 0.0);
@@ -884,7 +888,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_table_attach (GTK_TABLE(table), separator, 0, 2 ,2,3,GTK_FILL,0,0,0); 
  gtk_widget_show(separator);
     
- toggle = gtk_radio_button_new_with_label(group,"Move");
+ toggle = gtk_radio_button_new_with_label(group, _("Move"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -893,7 +897,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_move);
  gtk_widget_show(toggle);  
  
- toggle = gtk_radio_button_new_with_label(group,"Shrink");
+ toggle = gtk_radio_button_new_with_label(group, _("Shrink"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 4, 5, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -902,7 +906,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_shrink);
  gtk_widget_show(toggle);  
  
- toggle = gtk_radio_button_new_with_label(group,"Grow");
+ toggle = gtk_radio_button_new_with_label(group, _("Grow"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -911,7 +915,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_grow);
  gtk_widget_show(toggle);  
 
- toggle = gtk_radio_button_new_with_label(group,"Remove");
+ toggle = gtk_radio_button_new_with_label(group, _("Remove"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 3, 4, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -920,7 +924,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_remove);
  gtk_widget_show(toggle);  
 
- toggle = gtk_radio_button_new_with_label(group,"Swirl CW");
+ toggle = gtk_radio_button_new_with_label(group, _("Swirl CW"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 5, 6, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -929,7 +933,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_swirl_cw);
  gtk_widget_show(toggle);  
  
- toggle = gtk_radio_button_new_with_label(group,"Swirl CCW");
+ toggle = gtk_radio_button_new_with_label(group, _("Swirl CCW"));
  group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 5, 6, GTK_FILL, 0, 0, 0);
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -944,7 +948,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show(separator);
   
 
- button = gtk_check_button_new_with_label ("Bilinear");
+ button = gtk_check_button_new_with_label ( _("Bilinear"));
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_bilinear);
  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -953,7 +957,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show(button);
 
 
- button = gtk_button_new_with_label ("Reset");
+ button = gtk_button_new_with_label ( _("Reset"));
  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_reset_callback,
@@ -965,7 +969,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show(separator);
   
 
- button = gtk_check_button_new_with_label ("Adaptive Supersample");
+ button = gtk_check_button_new_with_label ( _("Adaptive Supersample"));
  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_supersample);
  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 9, 10, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -982,7 +986,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
   
  gtk_container_add (GTK_CONTAINER (supersample_frame), supersample_table);
  
- label = gtk_label_new ("Max Depth");
+ label = gtk_label_new ( _("Max Depth"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (supersample_table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
  scale_data = gtk_adjustment_new (iwarp_vals.max_supersample_depth, 1.0, 5.0, 1.0, 1.0, 0.0);
@@ -998,7 +1002,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_widget_show (label);
  gtk_widget_show (scale);
    
- label = gtk_label_new ("Threshold");
+ label = gtk_label_new ( _("Threshold"));
  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
  gtk_table_attach (GTK_TABLE (supersample_table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
  scale_data = gtk_adjustment_new (iwarp_vals.supersample_threshold, 1.0, 10.0, 0.01,0.01, 0.0);
@@ -1025,7 +1029,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
     
  gtk_widget_show (table);
 
- label = gtk_label_new("Settings");
+ label = gtk_label_new( _("Settings"));
  gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
  gtk_notebook_append_page(GTK_NOTEBOOK(notebook),table,label);
  gtk_widget_show(label);
@@ -1065,7 +1069,7 @@ iwarp_dialog()
  iwarp_init();
  
  dlg = gtk_dialog_new ();
- gtk_window_set_title (GTK_WINDOW (dlg), "IWarp");
+ gtk_window_set_title (GTK_WINDOW (dlg), _("IWarp"));
  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) iwarp_close_callback,
@@ -1079,7 +1083,7 @@ iwarp_dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) iwarp_ok_callback,
@@ -1088,7 +1092,7 @@ iwarp_dialog()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,

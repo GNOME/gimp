@@ -882,7 +882,7 @@ void compute_image(void)
 
   if (scalarfield==NULL)
     {
-      printf( _("LIC: Couldn't allocate temporary buffer - out of memory!\n"));
+      printf( "LIC: Couldn't allocate temporary buffer - out of memory!\n");
       return;
     }
 
@@ -1438,7 +1438,7 @@ void lic_interactive(GDrawable *drawable)
 
 void lic_noninteractive(GDrawable *drawable)
 {
-  printf( _("Noninteractive not yet implemented! Sorry.\n"));
+  printf("Noninteractive not yet implemented! Sorry.\n");
 }
 
 MAIN()

@@ -21,16 +21,16 @@
 
 *******************************************************************************/
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <math.h>
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.7 (Dec. 25 1997)"
-
-#define DIALOG_CAPTION  "Illusion"
 
 #ifndef PI
 #define PI 3.141592653589793238462643383279
@@ -96,14 +96,16 @@ static void query( void )
   static int nreturn_vals = 0;
   static GParamDef *return_vals = NULL;
 
+  INIT_I18N();
+
   gimp_install_procedure(
 			 PLUG_IN_NAME,
-			 "produce illusion",
-			 "produce illusion",
+			 _("produce illusion"),
+			 _("produce illusion"),
 			 "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			 "Hirotsuna Mizuno",
 			 PLUG_IN_VERSION,
-			 "<Image>/Filters/Map/Illusion...",
+			 N_("<Image>/Filters/Map/Illusion..."),
 			 "RGB*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs,
@@ -147,6 +149,7 @@ static void run( char    *name,
   switch( run_mode ){
 
   case RUN_INTERACTIVE:
+    INIT_I18N_UI();
     gimp_get_data( PLUG_IN_NAME, &parameters );
     if( ! dialog() ) return;
     gimp_set_data( PLUG_IN_NAME, &parameters, sizeof( parameter_t ) );
@@ -299,7 +302,7 @@ static int dialog( void )
   {
     gint    argc = 1;
     gchar **argv = g_new( gchar *, 1 );
-    argv[0] = g_strdup( DIALOG_CAPTION );
+    argv[0] = g_strdup( _("Illusion") );
     gtk_init( &argc, &argv );
     gtk_rc_parse( gimp_gtkrc () );
   }
@@ -316,7 +319,7 @@ static int dialog( void )
     GtkWidget *button;
 
     /* ok button */
-    button = gtk_button_new_with_label( "OK" );
+    button = gtk_button_new_with_label( _("OK") );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_ok_handler ),
 			GTK_OBJECT( window ) );
@@ -327,7 +330,7 @@ static int dialog( void )
     gtk_widget_show( button );
     
     /* cancel button */
-    button = gtk_button_new_with_label( "Cancel" );
+    button = gtk_button_new_with_label( _("Cancel") );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_cancel_handler ),
 			GTK_OBJECT( window )) ;
@@ -351,7 +354,7 @@ static int dialog( void )
     gtk_widget_show( table );
     
     /* tile width */
-    label = gtk_label_new( "division: " );
+    label = gtk_label_new( _("division: ") );
     entry_division = gtk_entry_new();
     sprintf( buffer, "%d", parameters.division );
     gtk_entry_set_text( GTK_ENTRY( entry_division ), buffer );

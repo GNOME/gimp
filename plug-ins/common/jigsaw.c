@@ -25,8 +25,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 typedef enum {BEZIER_1, BEZIER_2} style_t;
 typedef enum {LEFT, RIGHT, UP, DOWN} bump_t;
@@ -186,14 +188,6 @@ static void check_config(gint width, gint height);
 #define SCALE_WIDTH 200
 #define ENTRY_WIDTH 40
 
-#define XTILES_TEXT "Number of pieces going across"
-#define YTILES_TEXT "Number of pieces going down"
-#define BLEND_LINES_TEXT "Degree of slope of each piece's edge"
-#define BLEND_AMOUNT_TEXT "The amount of highlighting on the edges of each piece"
-#define SQUARE_TEXT "Each piece has straight sides"
-#define CURVE_TEXT "Each piece has curved sides"
-#define DISABLE_TEXT "Toggle Tooltips on/off"
-
 #define DRAW_POINT(buffer, index)		\
 do {						\
   buffer[index] = BLACK_R;			\
@@ -329,13 +323,15 @@ query(void)
   static gint nargs = sizeof(args) / sizeof(args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_jigsaw",
-			 "Renders a jigsaw puzzle look",
-			 "Jigsaw puzzle look",
+			 _("Renders a jigsaw puzzle look"),
+			 _("Jigsaw puzzle look"),
 			 "Nigel Wetten",
 			 "Nigel Wetten",
 			 "1998",
-			 "<Image>/Filters/Render/Jigsaw...",
+			 N_("<Image>/Filters/Render/Jigsaw..."),
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -362,6 +358,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
   switch (run_mode)
     {
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       if (nparams == 8)
 	{
 	  config.x = param[3].data.d_int32;
@@ -381,6 +378,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
       break;
       
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data("plug_in_jigsaw", &config);
       gimp_get_data(PLUG_IN_STORAGE, &globals.tooltips);
       dialog_box();
@@ -389,7 +387,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
 	  status = STATUS_EXECUTION_ERROR;
 	  break;
 	}
-      gimp_progress_init("Assembling Jigsaw");
+      gimp_progress_init( _("Assembling Jigsaw"));
       if (jigsaw() == -1)
 	{
 	  status = STATUS_CALLING_ERROR;
@@ -402,6 +400,7 @@ run(gchar *name, gint nparams, GParam *param, gint *nreturn_vals,
       break;
       
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data("plug_in_jigsaw", &config);
       if (jigsaw() == -1)
 	{
@@ -2294,7 +2293,7 @@ dialog_box(void)
   /* Create the dialog box */
   
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), PLUG_IN_NAME);
+  gtk_window_set_title(GTK_WINDOW(dlg), _("jigsaw"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) dialog_close_callback, NULL);
@@ -2307,7 +2306,7 @@ dialog_box(void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) run_callback,
@@ -2316,7 +2315,7 @@ dialog_box(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -2340,7 +2339,7 @@ dialog_box(void)
       gtk_tooltips_disable(tooltips);
     }
   /* paramters frame */
-  frame = gtk_frame_new("Number of Tiles");
+  frame = gtk_frame_new( _("Number of Tiles"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -2350,7 +2349,7 @@ dialog_box(void)
   gtk_container_add(GTK_CONTAINER(frame), table);
 
   /* xtiles */
-  label = gtk_label_new("Horizontal:");
+  label = gtk_label_new( _("Horizontal:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show(label);
@@ -2366,7 +2365,7 @@ dialog_box(void)
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
   gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, XTILES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, scale, _("Number of pieces going across"), NULL);
   
   entry = gtk_entry_new();
   gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
@@ -2379,10 +2378,10 @@ dialog_box(void)
 		     (gpointer) &config.x);
   gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, XTILES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, entry, _("Number of pieces going across"), NULL);
 
   /* ytiles */
-  label = gtk_label_new("Vertical:");
+  label = gtk_label_new( _("Vertical:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show(label);
@@ -2398,7 +2397,7 @@ dialog_box(void)
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
   gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, YTILES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, scale, _("Number of pieces going down"), NULL);
   
   entry = gtk_entry_new();
   gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
@@ -2411,14 +2410,14 @@ dialog_box(void)
 		     (gpointer) &config.y);
   gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, YTILES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, entry, _("Number of pieces going down"), NULL);
 
   gtk_widget_show(table);
   gtk_widget_show(frame);
 
   /* frame for bevel blending */
 
-  frame = gtk_frame_new("Bevel Edges");
+  frame = gtk_frame_new( _("Bevel Edges"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -2428,7 +2427,7 @@ dialog_box(void)
   gtk_container_add(GTK_CONTAINER(frame), table);
 
   /* number of blending lines */
-  label = gtk_label_new("Bevel width:");
+  label = gtk_label_new( _("Bevel width:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show(label);
@@ -2444,7 +2443,7 @@ dialog_box(void)
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
   gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, BLEND_LINES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, scale, _("Degree of slope of each piece's edge"), NULL);
 
   entry = gtk_entry_new();
   gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
@@ -2457,10 +2456,10 @@ dialog_box(void)
 		     (gpointer) &config.blend_lines);
   gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, BLEND_LINES_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, entry, _("Degree of slope of each piece's edge"), NULL);
 
   /* blending amount */
-  label = gtk_label_new("Highlight:");
+  label = gtk_label_new( _("Highlight:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show(label);
@@ -2476,7 +2475,7 @@ dialog_box(void)
   gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
   gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
   gtk_widget_show(scale);
-  gtk_tooltips_set_tip(tooltips, scale, BLEND_AMOUNT_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, scale, _("The amount of highlighting on the edges of each piece"), NULL);
 
   entry = gtk_entry_new();
   gtk_object_set_user_data(GTK_OBJECT(entry), adjustment);
@@ -2489,7 +2488,7 @@ dialog_box(void)
 		     (gpointer) &config.blend_amount);
   gtk_table_attach(GTK_TABLE(table), entry, 2, 3, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show(entry);
-  gtk_tooltips_set_tip(tooltips, entry, BLEND_AMOUNT_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, entry, _("The amount of highlighting on the edges of each piece"), NULL);
 
   gtk_widget_show(table);
   gtk_widget_show(frame);
@@ -2499,7 +2498,7 @@ dialog_box(void)
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, FALSE, FALSE, 0);
   
-  frame = gtk_frame_new("Jigsaw Style");
+  frame = gtk_frame_new( _("Jigsaw Style"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(hbox), frame, TRUE, TRUE, 0);
@@ -2508,7 +2507,7 @@ dialog_box(void)
   gtk_container_border_width(GTK_CONTAINER(table), 5);
   gtk_container_add(GTK_CONTAINER(frame), table);
 
-  rbutton = gtk_radio_button_new_with_label(NULL, "Square");
+  rbutton = gtk_radio_button_new_with_label(NULL, _("Square"));
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
   gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.style == BEZIER_1 ? TRUE : FALSE);
@@ -2517,9 +2516,9 @@ dialog_box(void)
 		     (gpointer) BEZIER_1);
   gtk_table_attach(GTK_TABLE(table), rbutton, 0, 1, 0, 1, GTK_FILL, 0, 10, 0);
   gtk_widget_show(rbutton);
-  gtk_tooltips_set_tip(tooltips, rbutton, SQUARE_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, rbutton, _("Each piece has straight sides"), NULL);
 
-  rbutton = gtk_radio_button_new_with_label(list, "Curved");
+  rbutton = gtk_radio_button_new_with_label(list, _("Curved"));
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
   gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.style == BEZIER_2 ? TRUE : FALSE);
@@ -2528,7 +2527,7 @@ dialog_box(void)
 		     (gpointer) BEZIER_2);
   gtk_table_attach(GTK_TABLE(table), rbutton, 1, 2, 0, 1, GTK_FILL, 0, 10, 0);
   gtk_widget_show(rbutton);
-  gtk_tooltips_set_tip(tooltips, rbutton, CURVE_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, rbutton, _("Each piece has curved sides"), NULL);
 
   gtk_widget_show(table);
   gtk_widget_show(frame);
@@ -2537,7 +2536,7 @@ dialog_box(void)
   gtk_container_border_width(GTK_CONTAINER(table), 3);
   gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, TRUE, 0);
   
-  cbutton = gtk_check_button_new_with_label("Disable Tooltips");
+  cbutton = gtk_check_button_new_with_label( _("Disable Tooltips"));
   gtk_toggle_button_set_active((GtkToggleButton *) cbutton,
 			      globals.tooltips ? FALSE : TRUE);
   gtk_signal_connect(GTK_OBJECT(cbutton), "toggled",
@@ -2545,7 +2544,7 @@ dialog_box(void)
 		     (gpointer) tooltips);
   gtk_table_attach(GTK_TABLE(table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);
   gtk_widget_show(cbutton);
-  gtk_tooltips_set_tip(tooltips, cbutton, DISABLE_TEXT, NULL);
+  gtk_tooltips_set_tip(tooltips, cbutton, _("Toggle Tooltips on/off"), NULL);
 
   gtk_widget_show(table);
   gtk_widget_show(hbox);

@@ -1,3 +1,24 @@
+1999-12-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/hrz.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/laplace.c
+	* po-plug-ins/POTFILES.in: added gettext support.
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/guillotine.c
+ 	* plug-ins/common/gz.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/lic.c: unmarked unnecessary translation tag.
+
 Tue Dec 28 20:26:34 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/fp/fp.c

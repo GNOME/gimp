@@ -158,7 +158,7 @@ guillotine(gint32 image_ID)
 	    case ORIENTATION_HORIZONTAL:
 	      num_hguides++; break;
 	    default:
-	      printf(_("Aie!  Aie!  Aie!\n"));
+	      printf("Aie!  Aie!  Aie!\n");
 	      gimp_quit();
 	    }
 	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
@@ -168,12 +168,12 @@ guillotine(gint32 image_ID)
 
   if (num_vguides+num_hguides)
     {
-      printf(_("Yay... found %d horizontal guides and %d vertical guides.\n"),
+      printf("Yay... found %d horizontal guides and %d vertical guides.\n",
 	     num_hguides, num_vguides);
     }
   else
     {
-      printf(_("Poopy, no guides.\n"));
+      printf("Poopy, no guides.\n");
       return;
     }
 

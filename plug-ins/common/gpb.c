@@ -747,7 +747,7 @@ try_fwrite (gpointer buffer,
 {
   if (fwrite (buffer, size, nitems, file) < nitems)
     {
-      g_message ( _("GPB: write error"));
+      g_message ("GPB: write error");
       fclose (file);
       return FALSE;
     }
@@ -904,7 +904,7 @@ gpb_save_image (char   *filename,
 
   if (!(gimp_drawable_has_alpha (drawable_ID)))
     {
-      g_warning ( _("drawable has no alpha channel -- aborting!\n"));
+      g_warning ("drawable has no alpha channel -- aborting!\n");
       return (FALSE);
     }
 
@@ -921,7 +921,7 @@ gpb_save_image (char   *filename,
 
   if (file == NULL)
     {
-      g_message ( _("GPB: can't open \"%s\""), filename);
+      g_message ("GPB: can't open \"%s\"", filename);
       return FALSE;
     }
 
@@ -961,7 +961,7 @@ gih_save_image (char   *filename,
 
   if (file == NULL)
     {
-      g_message ( _("GPB: can't open \"%s\""), filename);
+      g_message ("GPB: can't open \"%s\"", filename);
       return FALSE;
     }
 

@@ -272,7 +272,7 @@ load_image (char *filename)
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
     {
-      fprintf (stderr, _("gicon: can't open \"%s\"\n"), filename);
+      fprintf (stderr, "gicon: can't open \"%s\"\n", filename);
       return -1;
     }
 
@@ -280,7 +280,7 @@ load_image (char *filename)
   fscanf (fp, "/*  %s icon image format -- S. Kimball, P. Mattis  */\n", name_buf);
   if (strcmp ("GIMP", name_buf))
     {
-      fprintf (stderr, _("Not a GIcon file: %s!\n"), filename);
+      fprintf (stderr, "Not a GIcon file: %s!\n", filename);
       return -1;
     }
 

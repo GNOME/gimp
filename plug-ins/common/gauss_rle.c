@@ -225,7 +225,7 @@ run (gchar   *name,
         }
       else
         {
-          gimp_message ( _("gauss_rle: cannot operate on indexed color images"));
+          gimp_message ( "gauss_rle: cannot operate on indexed color images");
           status = STATUS_EXECUTION_ERROR;
         }
 

@@ -63,7 +63,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local data types
  */
@@ -150,9 +150,11 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_hrz_load",
-                          "loads files of the hrz file format",
-                          "FIXME: write help for hrz_load",
+                          _("loads files of the hrz file format"),
+                          _("FIXME: write help for hrz_load"),
                           "Albert Cahalan",
                           "Albert Cahalan",
                           "1997",
@@ -163,8 +165,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_hrz_save",
-                          "saves files in the hrz file format",
-                          "HRZ saving handles all image types except those with alpha channels.",
+                          _("saves files in the hrz file format"),
+                          _("HRZ saving handles all image types except those with alpha channels."),
                           "Albert Cahalan",
                           "Albert Cahalan",
                           "1997",
@@ -201,6 +203,7 @@ run (char    *name,
 
   if (strcmp (name, "file_hrz_load") == 0)
     {
+      INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
@@ -225,6 +228,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "HRZ", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
@@ -235,6 +239,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -317,7 +322,7 @@ load_image (char *filename)
   struct stat statbuf;  /* must check file size */
 
   temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, "Loading %s:", filename);
+  sprintf (temp, _("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -358,7 +363,7 @@ load_image (char *filename)
   image_ID = gimp_image_new (256, 240, RGB);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, "Background",
+  layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     256, 240,
 			     RGB_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
@@ -455,7 +460,7 @@ save_image (char   *filename,
     }
 
   temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, "Saving %s:", filename);
+  sprintf (temp, _("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -518,7 +523,7 @@ save_dialog ()
   GtkWidget *button;
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as HRZ");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as HRZ"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
@@ -532,7 +537,7 @@ save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -541,7 +546,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,

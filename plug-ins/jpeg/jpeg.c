@@ -852,7 +852,7 @@ load_image (char         *filename,
       layer_type = preview ? RGBA_IMAGE : RGB_IMAGE;
       break;
     default:
-      g_message (_("don't know how to load JPEGs\nwith %d color channels"),
+      g_message ("don't know how to load JPEGs\nwith %d color channels",
                    cinfo.output_components);
       gimp_quit ();
     }
@@ -914,7 +914,7 @@ load_image (char         *filename,
 	break;
 
       default:
-	g_message (_("unknown density unit %d\nassuming dots per inch"),
+	g_message ("unknown density unit %d\nassuming dots per inch",
 		   cinfo.density_unit);
 	break;
       }
@@ -1718,9 +1718,9 @@ save_dialog ()
   /* build option menu (code taken from app/buildmenu.c) */
   menu = gtk_menu_new ();
 
-  add_menu_item(menu, _("2x2,1x1,1x1"), 0, subsmp_callback);
-  add_menu_item(menu, _("2x1,1x1,1x1 (4:2:2)"), 1, subsmp_callback);
-  add_menu_item(menu, _("1x1,1x1,1x1"), 2, subsmp_callback);
+  add_menu_item(menu, "2x2,1x1,1x1", 0, subsmp_callback);
+  add_menu_item(menu, "2x1,1x1,1x1 (4:2:2)", 1, subsmp_callback);
+  add_menu_item(menu, "1x1,1x1,1x1", 2, subsmp_callback);
 
   subsmp_menu = gtk_option_menu_new ();
 

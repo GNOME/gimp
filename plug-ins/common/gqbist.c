@@ -566,7 +566,7 @@ int dialog_create()
 	gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
 	dialog=gtk_dialog_new ();
-	gtk_window_set_title (GTK_WINDOW(dialog), _("G-Qbist 1.10"));
+	gtk_window_set_title (GTK_WINDOW(dialog), "G-Qbist 1.10");
 	gtk_signal_connect (GTK_OBJECT (dialog), "destroy", 
 		(GtkSignalFunc) dialog_close, 
 		NULL);

@@ -963,7 +963,7 @@ save_image (char   *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("GIF: can't open %s\n"), filename);
+      g_message ("GIF: can't open %s\n", filename);
       return FALSE;
     }
 
@@ -1518,7 +1518,7 @@ colorstobpp (int colors)
     bpp = 8;
   else
     {
-      g_warning (_("GIF: colorstobpp - Eep! too many colours: %d\n"), colors);
+      g_warning ("GIF: colorstobpp - Eep! too many colours: %d\n", colors);
       return 8;
     }
 
@@ -1534,7 +1534,7 @@ bpptocolors (int bpp)
 
   if (bpp>8)
     {
-      g_warning (_("GIF: bpptocolors - Eep! bpp==%d !\n"), bpp);
+      g_warning ("GIF: bpptocolors - Eep! bpp==%d !\n", bpp);
       return 256;
     }
   
