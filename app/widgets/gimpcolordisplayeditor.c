@@ -41,44 +41,39 @@
 #define LIST_WIDTH  150
 #define LIST_HEIGHT 100
 
-#define UPDATE_DISPLAY(cdd) G_STMT_START         \
-{	                                         \
-  gimp_display_shell_expose_full ((cdd)->shell); \
-} G_STMT_END
-
 
 typedef struct _ColorDisplayDialog ColorDisplayDialog;
 
 struct _ColorDisplayDialog
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell      *shell;
 
-  GtkWidget        *dialog;
+  GtkWidget             *dialog;
 
-  GtkTreeStore     *src;
-  GtkTreeStore     *dest;
+  GtkTreeStore          *src;
+  GtkTreeStore          *dest;
 
-  GtkTreeSelection *src_sel;
-  GtkTreeSelection *dest_sel;
+  GtkTreeSelection      *src_sel;
+  GtkTreeSelection      *dest_sel;
 
-  GimpColorDisplay *selected;
+  GimpColorDisplay      *selected;
 
-  gboolean          modified;
+  GimpColorDisplayStack *old_stack;
 
-  GList            *old_nodes;
+  GtkWidget             *add_button;
+  GtkWidget             *remove_button;
+  GtkWidget             *up_button;
+  GtkWidget             *down_button;
 
-  GtkWidget        *add_button;
-  GtkWidget        *remove_button;
-  GtkWidget        *up_button;
-  GtkWidget        *down_button;
+  GtkWidget             *config_frame;
+  GtkWidget             *config_box;
+  GtkWidget             *config_widget;
 
-  GtkWidget        *config_frame;
-  GtkWidget        *config_box;
-  GtkWidget        *config_widget;
-
-  GtkWidget        *reset_button;
+  GtkWidget             *reset_button;
 };
 
+
+/*  local function prototypes  */
 
 static void   color_display_dialog_create      (ColorDisplayDialog *cdd);
 
@@ -94,21 +89,56 @@ static void   color_display_up_callback        (GtkWidget          *widget,
 static void   color_display_down_callback      (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
 
-static void   dest_list_populate               (GList              *node_list,
-                                                GtkTreeStore       *dest);
+static void   src_list_populate                (GtkTreeStore          *src);
+static void   dest_list_populate               (GimpColorDisplayStack *stack,
+                                                GtkTreeStore          *dest);
 
 static void   src_selection_changed            (GtkTreeSelection   *sel,
                                                 ColorDisplayDialog *cdd);
 static void   dest_selection_changed           (GtkTreeSelection   *sel,
                                                 ColorDisplayDialog *cdd);
 
-static void   selected_filter_changed          (GimpColorDisplay   *filter,
-                                                ColorDisplayDialog *cdd);
 static void   selected_filter_reset            (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
 
 static void   color_display_update_up_and_down (ColorDisplayDialog *cdd);
 
+
+/*  public functions  */
+
+GtkWidget *
+gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
+{
+  ColorDisplayDialog *cdd;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  cdd = g_new0 (ColorDisplayDialog, 1);
+
+  cdd->shell = shell;
+
+  color_display_dialog_create (cdd);
+
+  if (shell->filter_stack)
+    {
+      cdd->old_stack = gimp_color_display_stack_clone (shell->filter_stack);
+    }
+  else
+    {
+      GimpColorDisplayStack *stack = gimp_color_display_stack_new ();
+
+      gimp_display_shell_filter_set (shell, stack);
+      g_object_unref (stack);
+    }
+
+  src_list_populate (cdd->src);
+  dest_list_populate (shell->filter_stack, cdd->dest);
+
+  return cdd->dialog;
+}
+
+
+/*  private functions  */
 
 static void
 color_display_dialog_create (ColorDisplayDialog *cdd)
@@ -305,44 +335,16 @@ color_display_response (GtkWidget          *widget,
                         gint                response_id,
                         ColorDisplayDialog *cdd)
 {
-
   gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
   cdd->shell->filters_dialog = NULL;
 
-  if (cdd->modified)
-    {
-      GList *list;
+  if (response_id != GTK_RESPONSE_OK)
+    gimp_display_shell_filter_set (cdd->shell, cdd->old_stack);
 
-      if (response_id == GTK_RESPONSE_OK)
-        {
-          for (list = cdd->old_nodes; list; list = g_list_next (list))
-            {
-              if (! g_list_find (cdd->shell->filters, list->data))
-                gimp_display_shell_filter_detach_destroy (cdd->shell,
-                                                          list->data);
-            }
+  if (cdd->old_stack)
+    g_object_unref (cdd->old_stack);
 
-          g_list_free (cdd->old_nodes);
-        }
-      else
-        {
-          list = cdd->shell->filters;
-          cdd->shell->filters = cdd->old_nodes;
-
-          while (list)
-            {
-              GList *next = list->next;
-
-              if (! g_list_find (cdd->old_nodes, list->data))
-                gimp_display_shell_filter_detach_destroy (cdd->shell,
-                                                          list->data);
-
-              list = next;
-            }
-        }
-
-      UPDATE_DISPLAY (cdd);
-    }
+  g_free (cdd);
 }
 
 static void
@@ -362,7 +364,7 @@ color_display_update_up_and_down (ColorDisplayDialog *cdd)
       indices = gtk_tree_path_get_indices (path);
 
       up_sensitive   = indices[0] > 0;
-      down_sensitive = indices[0] < (g_list_length (cdd->shell->filters) - 1);
+      down_sensitive = indices[0] < (g_list_length (cdd->shell->filter_stack->filters) - 1);
 
       gtk_tree_path_free (path);
     }
@@ -385,23 +387,24 @@ color_display_add_callback (GtkWidget          *widget,
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
 
-      filter = gimp_display_shell_filter_attach (cdd->shell,
-                                                 (GType) g_value_get_pointer (&val));
+      filter = gimp_color_display_new ((GType) g_value_get_pointer (&val));
 
       g_value_unset (&val);
 
-      gtk_tree_store_append (cdd->dest, &iter, NULL);
+      if (filter)
+        {
+          gimp_color_display_stack_add (cdd->shell->filter_stack, filter);
+          g_object_unref (filter);
 
-      gtk_tree_store_set (cdd->dest, &iter,
-                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name,
-                          1, filter,
-                          -1);
+          gtk_tree_store_append (cdd->dest, &iter, NULL);
 
-      cdd->modified = TRUE;
+          gtk_tree_store_set (cdd->dest, &iter,
+                              0, GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name,
+                              1, filter,
+                              -1);
 
-      color_display_update_up_and_down (cdd);
-
-      UPDATE_DISPLAY (cdd);
+          color_display_update_up_and_down (cdd);
+        }
     }
 }
 
@@ -425,16 +428,9 @@ color_display_remove_callback (GtkWidget          *widget,
 
       gtk_tree_store_remove (cdd->dest, &iter);
 
-      cdd->modified = TRUE;
-
-      if (g_list_find (cdd->old_nodes, filter))
-        gimp_display_shell_filter_detach (cdd->shell, filter);
-      else
-        gimp_display_shell_filter_detach_destroy (cdd->shell, filter);
+      gimp_color_display_stack_remove (cdd->shell->filter_stack, filter);
 
       color_display_update_up_and_down (cdd);
-
-      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -469,13 +465,9 @@ color_display_up_callback (GtkWidget          *widget,
                           1, filter1,
                           -1);
 
-      gimp_display_shell_filter_reorder_up (cdd->shell, filter1);
-
-      cdd->modified = TRUE;
+      gimp_color_display_stack_reorder_up (cdd->shell->filter_stack, filter1);
 
       gtk_tree_selection_select_iter (cdd->dest_sel, &iter2);
-
-      UPDATE_DISPLAY (cdd);
     }
 }
 
@@ -510,29 +502,18 @@ color_display_down_callback (GtkWidget          *widget,
                           1, filter1,
                           -1);
 
-      gimp_display_shell_filter_reorder_down (cdd->shell, filter1);
-
-      cdd->modified = TRUE;
+      gimp_color_display_stack_reorder_down (cdd->shell->filter_stack, filter1);
 
       gtk_tree_selection_select_iter (cdd->dest_sel, &iter2);
-
-      UPDATE_DISPLAY (cdd);
     }
 }
 
-void
-gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
+static void
+src_list_populate (GtkTreeStore *src)
 {
-  ColorDisplayDialog *cdd;
-  GType              *filter_types;
-  guint               n_filter_types;
-  gint                i;
-
-  cdd = g_new0 (ColorDisplayDialog, 1);
-
-  cdd->shell = shell;
-
-  color_display_dialog_create (cdd);
+  GType *filter_types;
+  guint  n_filter_types;
+  gint   i;
 
   filter_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_filter_types);
 
@@ -543,9 +524,9 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
       filter_class = g_type_class_ref (filter_types[i]);
 
-      gtk_tree_store_append (cdd->src, &iter, NULL);
+      gtk_tree_store_append (src, &iter, NULL);
 
-      gtk_tree_store_set (cdd->src, &iter,
+      gtk_tree_store_set (src, &iter,
                           0, filter_class->name,
                           1, filter_types[i],
                           -1);
@@ -554,25 +535,18 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
     }
 
   g_free (filter_types);
-
-  cdd->old_nodes = shell->filters;
-  dest_list_populate (shell->filters, cdd->dest);
-  shell->filters = g_list_copy (cdd->old_nodes);
-
-  shell->filters_dialog = cdd->dialog;
 }
 
 static void
-dest_list_populate (GList        *node_list,
-    		    GtkTreeStore *dest)
+dest_list_populate (GimpColorDisplayStack *stack,
+    		    GtkTreeStore          *dest)
 {
-  GimpColorDisplay *filter;
-  GList            *list;
-  GtkTreeIter       iter;
+  GList *list;
 
-  for (list = node_list; list; list = g_list_next (list))
+  for (list = stack->filters; list; list = g_list_next (list))
     {
-      filter = (GimpColorDisplay *) list->data;
+      GimpColorDisplay *filter = list->data;
+      GtkTreeIter       iter;
 
       gtk_tree_store_append (dest, &iter, NULL);
 
@@ -615,9 +589,6 @@ dest_selection_changed (GtkTreeSelection   *sel,
 
   if (cdd->selected)
     {
-      g_signal_handlers_disconnect_by_func (cdd->selected,
-                                            selected_filter_changed,
-                                            cdd);
       g_object_remove_weak_pointer (G_OBJECT (cdd->selected),
                                     (gpointer) &cdd->selected);
       cdd->selected = NULL;
@@ -647,9 +618,6 @@ dest_selection_changed (GtkTreeSelection   *sel,
       cdd->selected = filter;
 
       g_object_add_weak_pointer (G_OBJECT (filter), (gpointer) &cdd->selected);
-      g_signal_connect (cdd->selected, "changed",
-                        G_CALLBACK (selected_filter_changed),
-                        cdd);
 
       cdd->config_widget = gimp_color_display_configure (filter);
 
@@ -678,13 +646,6 @@ dest_selection_changed (GtkTreeSelection   *sel,
     }
 
   color_display_update_up_and_down (cdd);
-}
-
-static void
-selected_filter_changed (GimpColorDisplay   *filter,
-                         ColorDisplayDialog *cdd)
-{
-  UPDATE_DISPLAY (cdd);
 }
 
 static void

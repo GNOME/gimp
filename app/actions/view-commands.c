@@ -34,6 +34,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -205,9 +206,16 @@ view_display_filters_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                  gtk_widget_get_screen (widget),
-                                  "gimp-display-filters-dialog", -1);
+  if (! shell->filters_dialog)
+    {
+      shell->filters_dialog = gimp_display_shell_filter_dialog_new (shell);
+
+      g_signal_connect (shell->filters_dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &shell->filters_dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (shell->filters_dialog));
 }
 
 void

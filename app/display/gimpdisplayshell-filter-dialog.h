@@ -20,7 +20,7 @@
 #define __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__
 
 
-void   gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell);
+GtkWidget * gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_FILTER_DIALOG_H__ */

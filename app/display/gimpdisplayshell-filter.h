@@ -20,21 +20,8 @@
 #define __GIMP_DISPLAY_SHELL_FILTER_H__
 
 
-GimpColorDisplay *
-       gimp_display_shell_filter_attach           (GimpDisplayShell *shell,
-                                                   GType             type);
-GimpColorDisplay * 
-       gimp_display_shell_filter_attach_clone     (GimpDisplayShell *shell,
-                                                   GimpColorDisplay *filter);
-void   gimp_display_shell_filter_detach           (GimpDisplayShell *shell,
-                                                   GimpColorDisplay *filter);
-void   gimp_display_shell_filter_detach_destroy   (GimpDisplayShell *shell,
-                                                   GimpColorDisplay *filter);
-void   gimp_display_shell_filter_detach_all       (GimpDisplayShell *shell);
-void   gimp_display_shell_filter_reorder_up       (GimpDisplayShell *shell,
-                                                   GimpColorDisplay *filter);
-void   gimp_display_shell_filter_reorder_down     (GimpDisplayShell *shell,
-                                                   GimpColorDisplay *filter);
+void   gimp_display_shell_filter_set (GimpDisplayShell      *shell,
+                                      GimpColorDisplayStack *stack);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */

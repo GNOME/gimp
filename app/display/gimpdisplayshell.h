@@ -137,8 +137,9 @@ struct _GimpDisplayShell
   GtkWidget        *nav_popup;         /*  navigation popup                   */
   GtkWidget        *grid_dialog;       /*  grid configuration dialog          */
 
-  GList            *filters;           /* color display conversion stuff      */
-  GtkWidget        *filters_dialog;    /* color display filter dialog         */
+  GimpColorDisplayStack *filter_stack;  /* color display conversion stuff      */
+  guint                  filter_idle_id;
+  GtkWidget             *filters_dialog;/* color display filter dialog         */
 
   GdkWindowState    window_state;      /* for fullscreen display              */
 

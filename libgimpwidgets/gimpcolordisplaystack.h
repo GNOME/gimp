@@ -54,6 +54,7 @@ struct _GimpColorDisplayStackClass
 
 GType                   gimp_color_display_stack_get_type (void) G_GNUC_CONST;
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
+GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
 
 void   gimp_color_display_stack_changed      (GimpColorDisplayStack *stack);
 

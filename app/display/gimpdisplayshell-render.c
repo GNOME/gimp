@@ -319,7 +319,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 {
   RenderInfo     info;
   GimpImageType  image_type;
-  GList         *list;
 
   render_image_init_info (&info, shell, x, y, w, h);
 
@@ -346,16 +345,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   (* render_funcs[image_type]) (&info);
 
   /*  apply filters to the rendered projection  */
-  for (list = shell->filters; list; list = g_list_next (list))
-    {
-      GimpColorDisplay *filter = (GimpColorDisplay *) list->data;
-
-      gimp_color_display_convert (filter,
-                                  shell->render_buf,
-                                  w, h,
-                                  3,
-                                  3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
-    }
+  if (shell->filter_stack)
+    gimp_color_display_stack_convert (shell->filter_stack,
+                                      shell->render_buf,
+                                      w, h,
+                                      3,
+                                      3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
 
   /*  put it to the screen  */
   gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,

@@ -1,5 +1,34 @@
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplaystack.h: forgot to declare
+	gimp_color_display_stack_clone().
+
+	* app/display/gimpdisplayshell.[ch]: replaced the GList of
+	GimpColorDisplays by a single GimpColorDisplayStack.
+
+	* app/display/gimpdisplayshell-render.c
+	(gimp_display_shell_render): changed accordingly.
+
+	* app/display/gimpdisplayshell-filter.[ch]: reduced API to a
+	single function, gimp_display_shell_filter_set(), which exchanges
+	the whole filter stack. Idle update the display on
+	GimpColorDisplayStack::update().
+
+	* app/display/gimpdisplayshell-filter-dialog.[ch]: changed
+	accordingly.  Return the created dialog instead of assigning
+	shell->filters_dialog.
+
+	* app/gui/view-commands.c (view_display_filters_cmd_callback): set
+	shell->filters_dialog here and raise it it if already
+	exists. Don't use the dialog factory to create it because it's a
+	transient dialog for the display which does not need to be session
+	managed.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: removed display filter dialog stuff.
+
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h

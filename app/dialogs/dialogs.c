@@ -94,8 +94,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   /*  ordinary toplevels  */
   { "gimp-file-new-dialog",        dialogs_file_new_new,
     0, FALSE, TRUE,  FALSE, FALSE },
-  { "gimp-display-filters-dialog", dialogs_display_filters_get,
-    0, FALSE, TRUE,  FALSE, FALSE },
 
   /*  singleton toplevels  */
   { "gimp-preferences-dialog",     dialogs_preferences_get,

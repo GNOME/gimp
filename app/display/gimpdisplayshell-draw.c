@@ -270,7 +270,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->nav_popup             = NULL;
   shell->grid_dialog           = NULL;
 
-  shell->filters               = NULL;
+  shell->filter_stack          = NULL;
+  shell->filter_idle_id        = 0;
   shell->filters_dialog        = NULL;
 
   shell->window_state          = 0;
@@ -385,7 +386,14 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->select = NULL;
     }
 
-  gimp_display_shell_filter_detach_all (shell);
+  if (shell->filter_stack)
+    gimp_display_shell_filter_set (shell, NULL);
+
+  if (shell->filter_idle_id)
+    {
+      g_source_remove (shell->filter_idle_id);
+      shell->filter_idle_id = NULL;
+    }
 
   if (shell->render_buf)
     {

@@ -18,133 +18,80 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <gmodule.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
-
-#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
 
 
-GimpColorDisplay *
-gimp_display_shell_filter_attach (GimpDisplayShell *shell,
-                                  GType             type)
+/*  local function prototypes  */
+
+static void   gimp_display_shell_filter_changed (GimpColorDisplayStack *stack,
+                                                 GimpDisplayShell      *shell);
+
+
+/*  public functions  */
+
+void
+gimp_display_shell_filter_set (GimpDisplayShell      *shell,
+                               GimpColorDisplayStack *stack)
 {
-  GimpColorDisplay *filter;
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (stack == NULL || GIMP_IS_COLOR_DISPLAY_STACK (stack));
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_COLOR_DISPLAY), NULL);
+  if (stack == shell->filter_stack)
+    return;
 
-  filter = gimp_color_display_new (type);
-
-  if (filter)
+  if (shell->filter_stack)
     {
-      shell->filters = g_list_append (shell->filters, filter);
+      g_signal_handlers_disconnect_by_func (shell->filter_stack,
+                                            gimp_display_shell_filter_changed,
+                                            shell);
 
-      return filter;
+      g_object_unref (shell->filter_stack);
     }
-  else
-    g_warning ("Tried to attach a nonexistant color display");
 
-  return NULL;
-}
+  shell->filter_stack = stack;
 
-GimpColorDisplay *
-gimp_display_shell_filter_attach_clone (GimpDisplayShell *shell,
-                                        GimpColorDisplay *filter)
-{
-  GimpColorDisplay *clone;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (filter), NULL);
-
-  clone = gimp_color_display_clone (filter);
-
-  if (clone)
+  if (shell->filter_stack)
     {
-      shell->filters = g_list_append (shell->filters, clone);
+      g_object_ref (shell->filter_stack);
 
-      return clone;
+      g_signal_connect (shell->filter_stack, "changed",
+                        G_CALLBACK (gimp_display_shell_filter_changed),
+                        shell);
     }
-  else
-    g_warning ("Tried to clone a nonexistant color display");
 
-  return NULL;
+  gimp_display_shell_filter_changed (NULL, shell);
 }
 
-void
-gimp_display_shell_filter_detach (GimpDisplayShell *shell,
-                                  GimpColorDisplay *filter)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
 
-  shell->filters = g_list_remove (shell->filters, filter);
+/*  private functions  */
+
+static gboolean
+gimp_display_shell_filter_changed_idle (gpointer data)
+{
+  GimpDisplayShell *shell = data;
+
+  gimp_display_shell_expose_full (shell);
+  shell->filter_idle_id = 0;
+
+  return FALSE;
 }
 
-void
-gimp_display_shell_filter_detach_destroy (GimpDisplayShell *shell,
-                                          GimpColorDisplay *filter)
+static void
+gimp_display_shell_filter_changed (GimpColorDisplayStack *stack,
+                                   GimpDisplayShell      *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
+  if (shell->filter_idle_id)
+    g_source_remove (shell->filter_idle_id);
 
-  g_object_unref (filter);
-
-  shell->filters = g_list_remove (shell->filters, filter);
-}
-
-void
-gimp_display_shell_filter_detach_all (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  g_list_foreach (shell->filters, (GFunc) g_object_unref, NULL);
-  g_list_free (shell->filters);
-  shell->filters = NULL;
-}
-
-void
-gimp_display_shell_filter_reorder_up (GimpDisplayShell *shell,
-                                      GimpColorDisplay *filter)
-{
-  GList *node_list;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
-
-  node_list = g_list_find (shell->filters, filter);
-
-  if (node_list->prev)
-    {
-      node_list->data       = node_list->prev->data;
-      node_list->prev->data = filter;
-    }
-}
-
-void
-gimp_display_shell_filter_reorder_down (GimpDisplayShell *shell,
-                                        GimpColorDisplay *filter)
-{
-  GList *node_list;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
-
-  node_list = g_list_find (shell->filters, filter);
-
-  if (node_list->next)
-    {
-      node_list->data       = node_list->next->data;
-      node_list->next->data = filter;
-    }
+  shell->filter_idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     gimp_display_shell_filter_changed_idle,
+                     shell, NULL);
 }

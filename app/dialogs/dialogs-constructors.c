@@ -66,7 +66,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-filter-dialog.h"
 #include "display/gimpnavigationview.h"
 
 #include "about-dialog.h"
@@ -126,30 +125,6 @@ dialogs_module_browser_get (GimpDialogFactory *factory,
                             gint               preview_size)
 {
   return module_browser_new (context->gimp);
-}
-
-GtkWidget *
-dialogs_display_filters_get (GimpDialogFactory *factory,
-			     GimpContext       *context,
-                             gint               preview_size)
-{
-  GimpDisplay *gdisp;
-
-  gdisp = gimp_context_get_display (context);
-
-  if (gdisp)
-    {
-      GimpDisplayShell *shell;
-
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-      if (! shell->filters_dialog)
-        gimp_display_shell_filter_dialog_new (shell);
-
-      return shell->filters_dialog;
-    }
-
-  return NULL;
 }
 
 GtkWidget *

@@ -31,9 +31,6 @@ GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
 GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_display_filters_get    (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_tips_get               (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
