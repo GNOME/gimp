@@ -1,3 +1,8 @@
+Sat Aug 21 01:06:53 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/nav_window.c: Navigation window shows checkmarked alpha,
+	also previews correctly for greyscale images now.
+
 Sat Aug 21 00:07:37 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/nav_window.c: Improved pointer tracking when

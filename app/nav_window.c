@@ -362,10 +362,11 @@ nav_window_update_preview(NavWinData *iwd)
 {
   GDisplay *gdisp;
   TempBuf * preview_buf;
-  gchar *src, *buf;
+  gchar *src, *buf, *dest;
   gint x,y,has_alpha;
   gint pwidth, pheight;
   GimpImage *gimage;
+  guchar r,g,b,a;
 
   gimp_add_busy_cursors();
 
@@ -385,26 +386,55 @@ nav_window_update_preview(NavWinData *iwd)
   buf = g_new (gchar,  iwd->nav_preview_width * 3);
   src = (gchar *) temp_buf_data (preview_buf);
   has_alpha = (preview_buf->bytes == 2 || preview_buf->bytes == 4);
+
   for (y = 0; y <preview_buf->height ; y++)
     {
-      if (preview_buf->bytes == (1+has_alpha))
-	for (x = 0; x < preview_buf->width; x++)
-	  {
-	    buf[x*3+0] = src[x];
-	    buf[x*3+1] = src[x];
-	    buf[x*3+2] = src[x];
-	  }
-      else
-	for (x = 0; x < preview_buf->width; x++)
-	  {
-	    gint stride = 3 + has_alpha;
-	    buf[x*3+0] = src[x*stride+0];
-	    buf[x*3+1] = src[x*stride+1];
-	    buf[x*3+2] = src[x*stride+2];
-	  }
+      dest = buf;
+      switch (preview_buf->bytes)
+	{
+	case 4:
+	  for (x = 0; x < preview_buf->width; x++)
+	    {
+              r = *(src++);
+              g = *(src++);
+              b = *(src++);
+              a = *(src++);
+
+	      if (a & 128)
+                {
+                  *(dest++) = r;
+                  *(dest++) = g;
+                  *(dest++) = b;
+                }
+              else
+                {
+                  r = (( (x^y) & 4 ) << 4) | 128;
+                  *(dest++) = r;
+                  *(dest++) = r;
+                  *(dest++) = r;
+                }
+	    }
+	  break;
+	case 2:
+	  for (x = 0; x < preview_buf->width; x++)
+	    {
+              r = *(src++);
+              a = *(src++);
+
+              if (!(a & 128))
+                r = (( (x^y) & 4 ) << 4) | 128;
+
+              *(dest++) = r;
+              *(dest++) = r;
+              *(dest++) = r;
+	    }
+	  break;
+	default:
+	  g_warning("UNKNOWN TempBuf bpp in nav_window_update_preview()");
+	}
+
       gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
 			    (guchar *)buf, 0, y, preview_buf->width);
-      src += preview_buf->width * preview_buf->bytes;
     }
 
   g_free (buf);
