@@ -1,3 +1,12 @@
+Mon Sep 13 16:45:30 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/helpbrowser/helpbrowser.c (load_page): BUG in helpbrowser.
+	Trying to open file like "file.html#1111" should be "file.html".
+	Added g_strdelimit() to remove '#' char before file opening.
+	
+	g_strdelimit (new_base,"#",'\0'); 
+        afile = fopen (new_base, "rt");
+
 Mon Sep 13 12:58:56 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.c: corrected scrolling in the Brushes Dialog. 

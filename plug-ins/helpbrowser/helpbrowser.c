@@ -38,6 +38,10 @@
 
 /*  defines  */
 
+#ifdef __EMX__
+#define chdir _chdir2
+#endif
+
 #define EEEK                    23
 #define GIMP_HELP_EXT_NAME      "extension_gimp_help_browser"
 #define GIMP_HELP_TEMP_EXT_NAME "extension_gimp_help_browser_temp"
@@ -409,6 +413,7 @@ load_page (HelpPage *source_page,
   new_dir  = g_dirname (ref);
   new_base = g_basename (ref);
 
+  
   /* return value is intentionally ignored */
   chdir (old_dir);
 
@@ -442,6 +447,11 @@ load_page (HelpPage *source_page,
       
       goto FINISH;
     }
+
+  /*
+   *  handle basename like: filename.html#11111 -> filename.html
+   */ 
+  g_strdelimit (new_base,"#",'\0');
 
   afile = fopen (new_base, "rt");
 
