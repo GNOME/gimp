@@ -1,3 +1,12 @@
+2004-03-09  Simon Budig  <simon@gimp.org>
+
+	* app/gui/preferences-dialog.c: Resurrect the "Save"-Button
+	in the input-devices dialog, to avoid to confuse the users
+	as described in bug #128588. This is not a proper fix though,
+	since the input device configuration should be independant
+	from the tool configuration. However, we can bump this bug
+	to 2.2 now.
+
 2004-03-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gimpressionist/general.c: fixed typo (bug #136610).

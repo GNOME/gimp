@@ -73,7 +73,8 @@ static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *sizeentry);
-static void   prefs_input_devices_dialog          (GtkWidget  *widget);
+static void   prefs_input_devices_dialog          (GtkWidget  *widget,
+                                                   gpointer    user_data);
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    GdkDevice  *device,
                                                    gpointer    data);
@@ -403,8 +404,11 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
 }
 
 static void
-prefs_input_devices_dialog (GtkWidget *widget)
+prefs_input_devices_dialog (GtkWidget *widget,
+                            gpointer   user_data)
 {
+  Gimp *gimp = GIMP (user_data);
+
   static GtkWidget *input_dialog = NULL;
 
   if (input_dialog)
@@ -422,7 +426,10 @@ prefs_input_devices_dialog (GtkWidget *widget)
                                 GTK_WINDOW (prefs_dialog));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (input_dialog), TRUE);
 
-  gtk_widget_hide (GTK_INPUT_DIALOG (input_dialog)->save_button);
+  g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->save_button,
+                            "clicked",
+                            G_CALLBACK (gimp_devices_save),
+                            gimp);
 
   g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->close_button,
                             "clicked",
@@ -1440,7 +1447,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     page_index++);
 
   /*  Input Device Settings  */
-  vbox2 = prefs_frame_new (_("Extended Input Devices"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Extended Input Devices"),
+                           GTK_CONTAINER (vbox), FALSE);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -1454,7 +1462,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_input_devices_dialog),
-                    NULL);
+                    gimp);
 
 
   /*******************************/
