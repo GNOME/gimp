@@ -12973,7 +12973,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:322
 #, c-format
 msgid "%s -- Print v%s"
-msgstr "%s -- Druck v%s"
+msgstr "%s -- Drucken v%s"
 
 #: plug-ins/print/gimp_main_window.c:333
 msgid ""
@@ -13093,7 +13093,7 @@ msgstr "Zentriert das Bild horizontal auf dem Papier"
 
 #: plug-ins/print/gimp_main_window.c:615
 msgid "Setup Printer"
-msgstr "Drucker Einstellungen:"
+msgstr "Drucker Einstellungen"
 
 # TODO ??
 #.
@@ -13101,7 +13101,7 @@ msgstr "Drucker Einstellungen:"
 #.
 #: plug-ins/print/gimp_main_window.c:643 plug-ins/print/gimp_main_window.c:901
 msgid "Printer Model:"
-msgstr "Drucker-Modell:"
+msgstr "Drucker:"
 
 #: plug-ins/print/gimp_main_window.c:655
 msgid "Select your printer model"
@@ -13330,7 +13330,7 @@ msgstr "Die Basis-Einheit für Grössenangaben auswählen"
 
 #: plug-ins/print/gimp_main_window.c:1235
 msgid "Set the base unit of measurement to inches"
-msgstr "Die Basis-Einheit auf Inch einstellen"
+msgstr "Die Längeninheit auf Inch einstellen"
 
 #: plug-ins/print/gimp_main_window.c:1241
 msgid "cm"
@@ -13338,7 +13338,7 @@ msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:1247
 msgid "Set the base unit of measurement to centimetres"
-msgstr "Die Basis-Einheit auf Zentimeter einstellen"
+msgstr "Die Längeneinheit auf Zentimeter einstellen"
 
 #.
 #. * The "image size" button
@@ -13407,7 +13407,7 @@ msgstr "Farbe"
 
 #: plug-ins/print/gimp_main_window.c:1398
 msgid "Print in shades of gray using black ink"
-msgstr "Mit schwarzer Tinte In Graustufen drucken"
+msgstr "Mit schwarzer Tinte in Graustufen drucken"
 
 #: plug-ins/print/gimp_main_window.c:1405
 msgid "Black and White"
@@ -13415,7 +13415,7 @@ msgstr "Schwarz-Weiss"
 
 #: plug-ins/print/gimp_main_window.c:1412
 msgid "Print in black and white (no color, and no shades of gray)"
-msgstr "Nur Schwarz und Weiss (keine Farben, keine Graustufen) drucken"
+msgstr "Nur Schwarz-Weiss (keine Farben, keine Graustufen) drucken"
 
 #.
 #. *  Color adjust button

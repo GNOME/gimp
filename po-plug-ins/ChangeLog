@@ -1,6 +1,10 @@
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
+	* de.po: updated german translation.
+
 2002-05-10  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-05-08  Sven Neumann  <sven@gimp.org>
 
@@ -29,11 +33,11 @@
 
 2002-03-04  Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>
 
-        * nl.po: Major update to Dutch translation by Branko Collin
+	* nl.po: Major update to Dutch translation by Branko Collin
 
 2002-03-01  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-02-28  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
@@ -41,7 +45,7 @@
 
 2002-02-17  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Added Portuguese translation by Filipe Maia <fmaia@gmx.net>
+	* pt.po: Added Portuguese translation by Filipe Maia <fmaia@gmx.net>
 
 2002-02-16  Stanislav Brabec  <utx@penguin.cz>
 
