@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
-"PO-Revision-Date: 2004-05-27 14:01+0200\n"
+"POT-Creation-Date: 2004-09-25 11:35+0200\n"
+"PO-Revision-Date: 2004-09-25 14:47+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4095,9 +4095,8 @@ msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/Zobrazení/Zvětšení/1:16  (6,25%)"
 
 #: app/gui/image-menu.c:427
-#, fuzzy
 msgid "/View/Zoom/O_ther..."
-msgstr "/Zobrazení/Zvětšení/Z_menšit"
+msgstr "/Zobrazení/Zvětšení/_Jiné..."
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
