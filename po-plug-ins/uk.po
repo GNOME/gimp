@@ -406,7 +406,7 @@ msgstr "Павук"
 
 #: plug-ins/FractalExplorer/Dialogs.c:571
 msgid "Man'o'war"
-msgstr ""
+msgstr "Медуза"
 
 #: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Lambda"
@@ -10198,7 +10198,6 @@ msgid "Fade out:"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
 msgstr "Град╕╓нт:"
 
@@ -10452,7 +10451,7 @@ msgstr "Е-пошта alt@picnic.demon.co.uk"
 
 #: plug-ins/gfig/gfig.c:4857
 msgid "Isometric grid By Rob Saunders"
-msgstr ""
+msgstr "╤зометрична с╕тка Роба Сандерса"
 
 #: plug-ins/gfig/gfig.c:4890
 msgid "New gfig obj"
