@@ -120,7 +120,7 @@ static void   gimp_item_tree_view_size_changed      (GimpImage         *gimage,
 
 static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
                                                      const gchar       *path,
-                                                     const gchar       *name,
+                                                     const gchar       *new_name,
                                                      GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_visible_changed   (GimpItem          *item,
@@ -848,7 +848,7 @@ gimp_item_tree_view_size_changed (GimpImage        *gimage,
 static void
 gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
                                  const gchar         *path_str,
-                                 const gchar         *new_text,
+                                 const gchar         *new_name,
                                  GimpItemTreeView    *view)
 {
   GimpContainerTreeView *tree_view;
@@ -863,6 +863,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
     {
       GimpViewRenderer *renderer;
       GimpItem         *item;
+      const gchar      *old_name;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -870,7 +871,13 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
 
       item = GIMP_ITEM (renderer->viewable);
 
-      if (gimp_item_rename (item, new_text))
+      old_name = gimp_object_get_name (GIMP_OBJECT (item));
+
+      if (! old_name) old_name = "";
+      if (! new_name) new_name = "";
+
+      if (strcmp (old_name, new_name) &&
+          gimp_item_rename (item, new_name))
         {
           gimp_image_flush (gimp_item_get_image (item));
         }

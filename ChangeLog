@@ -1,5 +1,20 @@
 2004-12-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_tree_name_edited)
+	* app/widgets/gimpitemtreeview.c
+	(gimp_item_tree_view_name_edited)
+	* app/widgets/gimptemplateview.c
+
+	(gimp_template_view_tree_name_edited): call gimp_object_set_name()
+	or gimp_item_rename() only if the item's name has actually changed
+	and restore the old text otherwise. Fixes one instance of "name is
+	not updated correctly after editing" for which I blamed GTK+ in
+	bug #145463 :-) The other instances should be fixed in GTK+ HEAD
+	and are imho unfixable with GTK+ 2.4.
+
+2004-12-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_clear_items): clear all viewable cell
 	renderers so they don't keep pointers to layers/masks which don't

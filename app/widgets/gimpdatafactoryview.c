@@ -281,6 +281,7 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
     {
       GimpViewRenderer *renderer;
       GimpData         *data;
+      const gchar      *old_name;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -288,7 +289,12 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
       data = GIMP_DATA (renderer->viewable);
 
-      if (data->writable)
+      old_name = gimp_object_get_name (GIMP_OBJECT (data));
+
+      if (! old_name) old_name = "";
+      if (! new_name) new_name = "";
+
+      if (data->writable && strcmp (old_name, new_name))
         {
           gimp_object_set_name (GIMP_OBJECT (data), new_name);
         }
