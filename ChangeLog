@@ -1,5 +1,18 @@
 2004-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_set_uri):
+	new function which configures the dialog to load an image.
+
+	* app/gui/file-open-dialog.c: use it. Don't use file-dialog-utils
+	any more and allow setting the uri of an already visible file open
+	dialog.
+
+	* app/gui/file-dialog-utils.c: took the file open menu entries out
+	of that insane logic that makes the menus insensitive while any
+	file dialog is open.
+
+2004-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_set_image): 
 	new function which configures the dialog to save an image.
 

@@ -254,6 +254,43 @@ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
 }
 
 void
+gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
+                          GimpImage       *gimage,
+                          const gchar     *uri)
+{
+  gchar *filename = NULL;
+
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+
+  if (gimage)
+    {
+      filename = gimp_image_get_filename (gimage);
+
+      if (filename)
+        {
+          gchar *dirname;
+
+          dirname = g_path_get_dirname (filename);
+          g_free (filename);
+
+          filename = g_build_filename (dirname, G_DIR_SEPARATOR_S, NULL);
+          g_free (dirname);
+        }
+    }
+  else if (uri)
+    {
+      filename = g_filename_from_uri (uri, NULL, NULL);
+    }
+
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog),
+				   filename ?
+				   filename : "." G_DIR_SEPARATOR_S);
+
+  g_free (filename);
+}
+
+void
 gimp_file_dialog_set_image (GimpFileDialog *dialog,
                             GimpImage      *gimage,
                             gboolean        set_uri_and_proc,

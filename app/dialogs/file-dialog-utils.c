@@ -32,9 +32,6 @@ void
 file_dialog_show (GtkWidget *dialog,
                   GtkWidget *parent)
 {
-  gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", FALSE);
-
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Open...", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
@@ -49,9 +46,6 @@ file_dialog_hide (GtkWidget *dialog)
 {
   gtk_widget_hide (dialog);
 
-  gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", TRUE);
-
-  gimp_item_factories_set_sensitive ("<Image>", "/File/Open...", TRUE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save", TRUE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", TRUE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", TRUE);
