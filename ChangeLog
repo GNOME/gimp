@@ -1,5 +1,11 @@
 2005-02-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/plug-ins/script-fu/scripts/guides-new.scm:  committted
+	slightly modified patch from  Joao S. O. Bueno Calligaris
+	to raise guide position limit to 262144.
+
+2005-02-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Merged from HEAD:
 
 	* app/tools/gimpclonetool.[ch]: make sure clone source is
