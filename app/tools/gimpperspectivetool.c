@@ -24,18 +24,21 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
-#include "gimpprogress.h"
 #include "gui/info-dialog.h"
-#include "undo.h"
+
+#include "display/gimpdisplay.h"
 
 #include "gimpperspectivetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "transform_options.h"
+
+#include "gimpprogress.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

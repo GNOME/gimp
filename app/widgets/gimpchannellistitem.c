@@ -33,8 +33,6 @@
 #include "gimpchannellistitem.h"
 #include "gimppreview.h"
 
-#include "gdisplay.h"
-
 
 static void   gimp_channel_list_item_class_init (GimpChannelListItemClass *klass);
 static void   gimp_channel_list_item_init       (GimpChannelListItem      *list_item);
@@ -46,10 +44,10 @@ static void   gimp_channel_list_item_drop_color (GtkWidget     *widget,
 */
 
 
-GtkType
+GType
 gimp_channel_list_item_get_type (void)
 {
-  static GtkType list_item_type = 0;
+  static GType list_item_type = 0;
 
   if (! list_item_type)
     {

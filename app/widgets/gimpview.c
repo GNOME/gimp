@@ -44,6 +44,8 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "display/gimpdisplay-render.h"
+
 #include "gimpbrushpreview.h"
 #include "gimpbufferpreview.h"
 #include "gimpdnd.h"
@@ -54,9 +56,6 @@
 #include "gimppatternpreview.h"
 #include "gimppreview.h"
 #include "gimptoolinfopreview.h"
-
-#include "display/display-types.h"
-#include "image_render.h"
 
 
 #define PREVIEW_POPUP_DELAY 150

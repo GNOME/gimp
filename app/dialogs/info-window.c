@@ -23,7 +23,6 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
@@ -32,6 +31,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"
+
+#include "display/gimpdisplay.h"
 
 #include "widgets/gimppreview.h"
 
@@ -45,7 +46,6 @@
 
 #include "app_procs.h"
 #include "colormaps.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

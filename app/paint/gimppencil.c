@@ -36,8 +36,6 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
-
 #include "gimppenciltool.h"
 #include "gimppainttool.h"
 #include "paint_options.h"

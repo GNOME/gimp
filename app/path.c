@@ -26,14 +26,14 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "display/display-types.h"
 
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimpbezierselecttool.h"
 
-#include "gdisplay.h"
 #include "gui/paths-dialog.h"
 
 #include "path.h"

@@ -82,7 +82,7 @@ internal_procs_init (Gimp *gimp)
   app_init_update_status (NULL, _("Convert"), 0.129);
   register_convert_procs (gimp);
 
-  app_init_update_status (NULL, _("GDisplay procedures"), 0.138);
+  app_init_update_status (NULL, _("GimpDisplay procedures"), 0.138);
   register_display_procs (gimp);
 
   app_init_update_status (NULL, _("Drawable procedures"), 0.147);

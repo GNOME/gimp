@@ -26,6 +26,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -34,6 +35,8 @@
 
 #include "gui/info-dialog.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpcroptool.h"
 #include "gimpdrawtool.h"
 #include "gimptool.h"
@@ -41,7 +44,6 @@
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

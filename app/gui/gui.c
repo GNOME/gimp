@@ -34,6 +34,11 @@
 #include "core/gimpdatafiles.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
+#include "display/gimpdisplay-render.h"
+#include "display/gximage.h"
+
 #include "widgets/gimpdialogfactory.h"
 
 #include "brush-select.h"
@@ -45,8 +50,6 @@
 #include "file-save-dialog.h"
 #include "gradient-select.h"
 #include "gui.h"
-#include "gximage.h"
-#include "image_render.h"
 #include "menus.h"
 #include "palette-select.h"
 #include "palette-import-dialog.h"
@@ -57,8 +60,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "gdisplay.h"     /* for gdisplay_*_override_cursor()  */
-#include "gdisplay_ops.h" /* for gdisplay_xserver_resolution() */
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

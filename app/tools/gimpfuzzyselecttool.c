@@ -39,6 +39,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpeditselectiontool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimptool.h"
@@ -46,7 +48,6 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
-#include "gdisplay.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

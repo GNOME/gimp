@@ -26,16 +26,17 @@
 
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
+#include "display/gimpdisplay-scale.h"
+#include "display/gimpdisplay-selection.h"
+
 #include "info-dialog.h"
 #include "info-window.h"
 #include "view-commands.h"
 
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "gimprc.h"
 #include "nav_window.h"
-#include "scale.h"
-#include "selection.h"
 
 
 #define return_if_no_display(gdisp) \

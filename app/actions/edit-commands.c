@@ -22,7 +22,6 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
 #include "tools/tools-types.h"
 
 #include "core/gimp.h"
@@ -34,6 +33,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -41,7 +42,6 @@
 #include "dialogs.h"
 #include "edit-commands.h"
 
-#include "gdisplay.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

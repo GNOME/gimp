@@ -46,6 +46,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpmarshal.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
@@ -54,7 +56,6 @@
 
 #include "app_procs.h"
 #include "devices.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "undo.h"
 

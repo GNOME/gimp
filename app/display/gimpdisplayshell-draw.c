@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "display/display-types.h"
+#include "display-types.h"
 
 #include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
@@ -33,13 +33,15 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "disp_callbacks.h"
-#include "gdisplay_ops.h"
-#include "interface.h"
 #include "gui/menus.h"
-#include "nav_window.h"
+
+#include "gimpdisplay.h"
+#include "gimpdisplay-callbacks.h"
+#include "gimpdisplay-ops.h"
+#include "gimpdisplayshell.h"
 
 #include "gimprc.h"
+#include "nav_window.h"
 #include "qmask.h"
 
 #include "pixmaps/qmasksel.xpm"

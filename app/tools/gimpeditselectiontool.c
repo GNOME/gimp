@@ -37,11 +37,12 @@
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-selection.h"
+
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "path_transform.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "gimpeditselectiontool.h"

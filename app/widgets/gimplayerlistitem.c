@@ -33,11 +33,11 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdnd.h"
 #include "gimplayerlistitem.h"
 #include "gimppreview.h"
-
-#include "gdisplay.h"
 
 
 static void   gimp_layer_list_item_class_init (GimpLayerListItemClass  *klass);

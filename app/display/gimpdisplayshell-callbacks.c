@@ -25,8 +25,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "display-types.h"
+#include "gui/gui-types.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
@@ -55,13 +55,14 @@
 #include "gui/info-window.h"
 #include "gui/layer-select.h"
 
+#include "gimpdisplay.h"
+#include "gimpdisplay-callbacks.h"
+#include "gimpdisplay-selection.h"
+#include "gimpdisplay-scale.h"
+#include "gimpdisplay-scroll.h"
+
 #include "devices.h"
-#include "disp_callbacks.h"
-#include "gdisplay.h"
 #include "gimprc.h"
-#include "scale.h"
-#include "scroll.h"
-#include "selection.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

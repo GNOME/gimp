@@ -81,11 +81,11 @@ HELP
     %invoke = ( code => 'gdisplays_flush ();' );
 }
 
-@headers = qw("display/display-types.h" "gdisplay.h");
+@headers = qw("display/display-types.h" "display/gimpdisplay.h");
 
 @procs = qw(display_new display_delete displays_flush);
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'GDisplay procedures';
+$desc = 'GimpDisplay procedures';
 
 1;

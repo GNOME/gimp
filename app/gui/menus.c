@@ -28,11 +28,13 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
+
+#include "display/gimpdisplay.h"
 
 #include "tools/gimpbrightnesscontrasttool.h"
 #include "tools/gimpcolorbalancetool.h"
@@ -61,7 +63,6 @@
 #include "view-commands.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 

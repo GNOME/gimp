@@ -23,18 +23,19 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "display-types.h"
 
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
 #include "core/gimpimage.h"
 
-#include "appenv.h"
-#include "gdisplay.h"
-#include "gimprc.h"
+#include "gimpdisplay.h"
+#include "gimpdisplay-render.h"
 #include "gximage.h"
-#include "image_render.h"
+
+#include "appenv.h"
+#include "gimprc.h"
 
 
 #define MAX_PREVIEW_SIZE 256  /* EEK */

@@ -26,7 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "base/base-config.h"
 #include "base/tile-cache.h"
@@ -36,6 +36,10 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
+#include "display/gimpdisplay-render.h"
+
 #include "tools/tool_manager.h"
 
 #include "layer-select.h"
@@ -44,11 +48,8 @@
 
 #include "app_procs.h"
 #include "colormaps.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "gimphelp.h"
 #include "gimprc.h"
-#include "image_render.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -30,9 +30,10 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
+
 #include "floating_sel.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "undo.h"
 
 #include "gimpeditselectiontool.h"

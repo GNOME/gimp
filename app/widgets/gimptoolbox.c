@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -50,7 +50,6 @@
 #include "devices.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
-#include "gdisplay.h"
 #include "indicator-area.h"
 #include "menus.h"
 

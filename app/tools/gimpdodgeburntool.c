@@ -37,8 +37,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
-
 #include "gimpdodgeburntool.h"
 #include "gimppainttool.h"
 #include "paint_options.h"

@@ -31,7 +31,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
+
 #include "image_map.h"
 
 

@@ -27,15 +27,14 @@
 
 #include "tools-types.h"
 
-#include "gui/info-window.h"
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-scale.h"
 
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
 #include "tool_manager.h"
 
 #include "gimprc.h"
-#include "scale.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -16,11 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GDISPLAY_OPS_H__
-#define __GDISPLAY_OPS_H__
-
-
-#include "gdisplay.h"
+#ifndef __GIMPDISPLAY_OPS_H__
+#define __GIMPDISPLAY_OPS_H__
 
 
 gulong  gdisplay_black_pixel        (GimpDisplay *gdisp);
@@ -37,4 +34,4 @@ void    gdisplay_close_window       (GimpDisplay *gdisp,
 void    gdisplay_shrink_wrap        (GimpDisplay *gdisp);
 
 
-#endif  /* __GDISPLAY_OPS_H__ */
+#endif  /* __GIMPDISPLAY_OPS_H__ */

@@ -24,14 +24,13 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage-new.h"
 
 #include "file-new-dialog.h"
-#include "gdisplay.h"
 
 #include "app_procs.h"
 #include "gimprc.h"

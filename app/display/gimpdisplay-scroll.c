@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#include "tools/tools-types.h"
+#include "display-types.h"
 
 #include "core/gimpimage.h"
 
@@ -31,9 +31,10 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "gdisplay.h"
-#include "scale.h"
-#include "scroll.h"
+#include "gimpdisplay.h"
+#include "gimpdisplay-scale.h"
+#include "gimpdisplay-scroll.h"
+
 #include "nav_window.h"
 
 

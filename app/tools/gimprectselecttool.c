@@ -34,6 +34,8 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "selection_options.h"
@@ -41,7 +43,6 @@
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"

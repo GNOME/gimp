@@ -23,12 +23,12 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -27,28 +27,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	undo_history.c		\
 	undo_history.h		\
 ##
-## display stuff
-##
-	disp_callbacks.c	\
-	disp_callbacks.h	\
-	gdisplay.c		\
-	gdisplay.h		\
-	gdisplay_ops.c		\
-	gdisplay_ops.h		\
-	gximage.c		\
-	gximage.h		\
-	image_render.c		\
-	image_render.h		\
-	interface.c		\
-	interface.h		\
-	scale.c			\
-	scale.h			\
-	scroll.c		\
-	scroll.h		\
-	selection.c		\
-	selection.h		\
-	marching_ants.h		\
-##
 ## stuff that needs to be split up in core / ui files
 ##
 	image_map.c		\

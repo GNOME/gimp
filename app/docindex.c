@@ -29,13 +29,14 @@
 
 #include "core/gimpobject.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "gui/file-commands.h"
 #include "gui/file-open-dialog.h"
 
 #include "docindex.h"
-#include "gdisplay.h"
 #include "ops_buttons.h"
 
 #include "libgimp/gimpintl.h"

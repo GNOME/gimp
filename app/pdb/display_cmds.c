@@ -30,7 +30,7 @@
 #include "procedural_db.h"
 
 #include "core/gimpimage.h"
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
 
 static ProcRecord display_new_proc;
 static ProcRecord display_delete_proc;
@@ -51,7 +51,7 @@ display_new_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GDisplay *gdisp = NULL;
+  GimpDisplay *gdisp = NULL;
   guint scale = 0x101;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -110,7 +110,7 @@ display_delete_invoker (Gimp     *gimp,
                         Argument *args)
 {
   gboolean success = TRUE;
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   gdisp = gdisplay_get_by_ID (gimp, args[0].value.pdb_int);
   if (gdisp == NULL)

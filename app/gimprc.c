@@ -37,9 +37,7 @@
 #include "libgimpbase/gimputils.h"
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
-#include "widgets/widgets-types.h"
+#include "gui/gui-types.h"
 
 #include "base/base-config.c"
 

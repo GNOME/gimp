@@ -30,23 +30,22 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimpbezierselecttool.h"
 
-#include "gdisplay.h"
 #include "menus.h"
 #include "ops_buttons.h"
 #include "paths-dialog.h"
 
 #include "gimprc.h"
-#include "image_render.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"

@@ -34,13 +34,13 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpmarshal.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpchannellistview.h"
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
 #include "gimpimagepreview.h"
 #include "gimplistitem.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -41,6 +41,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
 #include "gimptool.h"
@@ -49,7 +51,6 @@
 
 #include "gimprc.h"
 #include "undo.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -21,16 +21,16 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "core/core-types.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimppreview.h"
 
 #include "layer-select.h"
-#include "gdisplay.h"
 
 #include "gimprc.h"
 

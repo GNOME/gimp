@@ -20,17 +20,18 @@
 
 #include <gtk/gtk.h>
 
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 
 
 #define return_if_no_display(gdisp) \

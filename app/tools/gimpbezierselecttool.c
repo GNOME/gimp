@@ -40,6 +40,8 @@
 
 #include "pdb/procedural_db.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gui/paths-dialog.h"
 
 #include "gimpeditselectiontool.h"
@@ -50,7 +52,6 @@
 
 #include "app_procs.h"
 #include "errors.h"
-#include "gdisplay.h"
 #include "path.h"
 #include "pathP.h"
 #include "undo.h"

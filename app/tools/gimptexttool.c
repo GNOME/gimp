@@ -41,19 +41,19 @@
 
 #include "widgets/gimpfontselection.h"
 
+#include "display/gimpdisplay.h"
+
+#include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
 #include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "libgimp_glue.h"
 #include "floating_sel.h"
 #include "undo_types.h"
 #include "undo.h"
-
-#include "gimpeditselectiontool.h"
 
 #include "libgimp/gimpintl.h"
 

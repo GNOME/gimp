@@ -27,11 +27,12 @@
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimptool.h"
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -26,21 +26,22 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
 
 #include "gui/info-dialog.h"
 
-#include "floating_sel.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
-#include "gimpprogress.h"
-#include "undo.h"
+#include "display/gimpdisplay.h"
 
 #include "gimpsheartool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "transform_options.h"
+
+#include "floating_sel.h"
+#include "gimpprogress.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

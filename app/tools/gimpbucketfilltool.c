@@ -41,13 +41,14 @@
 
 #include "pdb/procedural_db.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpbucketfilltool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimptool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "undo.h"
 

@@ -35,11 +35,12 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimpcolorpanel.h"
 
 #include "app_procs.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "qmask.h"
 #include "undo.h"
 

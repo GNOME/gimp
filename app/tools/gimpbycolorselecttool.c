@@ -44,13 +44,14 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
 
 #include "gimprc.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -58,13 +58,13 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpscanconvert.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpeditselectiontool.h"
 #include "selection_options.h"
 #include "tool_manager.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

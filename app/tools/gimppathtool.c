@@ -28,16 +28,17 @@
 
 #include "tools-types.h"
 
-#include "gdisplay.h"
-#include "path_curves.h"
+#include "display/gimpdisplay.h"
+
 #include "gimpdrawtool.h"
 #include "gimppathtool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
+#include "path_tool.h"
 
 #include "libgimp/gimpintl.h"
 
-#include "path_tool.h"
+#include "path_curves.h"
 
 
 /*  local function prototypes  */

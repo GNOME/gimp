@@ -33,11 +33,11 @@
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

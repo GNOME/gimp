@@ -34,6 +34,8 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpscanconvert.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "selection_options.h"
@@ -42,7 +44,6 @@
 
 #include "errors.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

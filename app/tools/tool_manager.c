@@ -33,6 +33,8 @@
 
 #include "gui/brush-select.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimptool.h"
 #include "gimprectselecttool.h"
 #include "paint_options.h"
@@ -50,7 +52,6 @@
 #include "gimpsmudgetool.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

@@ -37,8 +37,9 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
+
 #include "undo.h"
 #include "path_transform.h"
 

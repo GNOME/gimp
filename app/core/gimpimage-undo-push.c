@@ -25,7 +25,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
 #include "tools/tools-types.h"
 
 #include "base/pixel-region.h"
@@ -45,6 +44,8 @@
 #include "core/gimpparasite.h"
 #include "core/gimpparasitelist.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimpbycolorselecttool.h"
 #include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
@@ -54,13 +55,10 @@
 
 #include "app_procs.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "path_transform.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
-
 
 
 /*#define DEBUG*/

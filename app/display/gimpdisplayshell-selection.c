@@ -20,19 +20,20 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "display-types.h"
 
 #include "base/boundary.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "gimpdisplay.h"
+#include "gimpdisplay-marching-ants.h"
+#include "gimpdisplay-ops.h"
+#include "gimpdisplay-selection.h"
+
 #include "colormaps.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "gimprc.h"
-#include "selection.h"
-#include "marching_ants.h"
 
 
 #define USE_XDRAWPOINTS

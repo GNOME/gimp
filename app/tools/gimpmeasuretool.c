@@ -30,11 +30,13 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimpimage.h"
 
 #include "gui/info-dialog.h"
-#include "gdisplay.h"
+
+#include "display/gimpdisplay.h"
 
 #include "gimpdrawtool.h"
 #include "gimpmeasuretool.h"

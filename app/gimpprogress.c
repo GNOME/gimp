@@ -24,7 +24,8 @@
 
 #include "core/core-types.h"
 
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
+
 #include "gimpprogress.h"
 
 #include "libgimp/gimpintl.h"

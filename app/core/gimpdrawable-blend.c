@@ -45,9 +45,10 @@
 
 #include "widgets/gimpdnd.h"
 
+#include "display/gimpdisplay.h"
+
 #include "app_procs.h"
 #include "errors.h"
-#include "gdisplay.h"
 #include "gimpprogress.h"
 #include "undo.h"
 

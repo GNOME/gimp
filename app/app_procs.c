@@ -46,6 +46,8 @@
 
 #include "xcf/xcf.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/tool_manager.h"
 
 #include "gui/file-open-dialog.h"
@@ -58,7 +60,6 @@
 #include "colormaps.h"
 #include "docindex.h"
 #include "errors.h"
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "module_db.h"
 #include "plug_in.h"

@@ -84,7 +84,7 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-#include "core/core-types.h"
+#include "display/display-types.h"
 
 #include "base/tile.h"
 #include "base/tile-manager.h"
@@ -95,11 +95,12 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
 #include "gui/menus.h"
 #include "gui/pattern-select.h"
-#include "gdisplay.h"
 
 #include "app_procs.h"
 #include "appenv.h"

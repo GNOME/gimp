@@ -23,9 +23,8 @@
 #include "core/gimpobject.h"
 
 
-/* FIXME: move the display stuff to display/ */
-
-#include "display/display-types.h"
+/* FIXME move all GTK stuff to gimpdisplayshell */
+#include "gui/gui-types.h"
 
 
 /*  some useful macros  */

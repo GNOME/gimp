@@ -36,16 +36,17 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-scroll.h"
+#include "display/gimpdisplay-scale.h"
+
 #include "widgets/gimpnavigationpreview.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "nav_window.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
-#include "scroll.h"
-#include "scale.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -42,8 +42,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "gdisplay.h"
-
 #include "libgimp/gimpintl.h"
 
 

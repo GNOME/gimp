@@ -33,13 +33,14 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpcolorbalancetool.h"
 #include "gimpcolorbalancetool-transfer.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "image_map.h"
 
 #include "libgimp/gimpintl.h"

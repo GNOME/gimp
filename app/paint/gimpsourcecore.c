@@ -40,12 +40,12 @@
 #include "core/gimpcontext.h"
 #include "core/gimpbrush.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpclonetool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 #include "tool_options.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -40,7 +40,6 @@
 #include "color-notebook.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"

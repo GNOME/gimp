@@ -24,6 +24,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -31,16 +32,16 @@
 
 #include "gui/info-dialog.h"
 
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
-#include "gimpprogress.h"
-#include "undo.h"
-#include "path_transform.h"
+#include "display/gimpdisplay.h"
 
 #include "gimprotatetool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "transform_options.h"
+
+#include "gimpprogress.h"
+#include "undo.h"
+#include "path_transform.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -22,13 +22,15 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "display-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "gimpdisplay.h"
+#include "gimpdisplay-ops.h"
+
 #include "colormaps.h"
-#include "gdisplay_ops.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

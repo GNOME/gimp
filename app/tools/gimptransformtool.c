@@ -26,6 +26,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gui/gui-types.h"
 
 #include "base/base-config.h"
 #include "base/pixel-region.h"
@@ -46,7 +47,8 @@
 #include "core/gimptoolinfo.h"
 
 #include "gui/info-dialog.h"
-#include "gdisplay.h"
+
+#include "display/gimpdisplay.h"
 
 #include "tool_manager.h"
 #include "tool_options.h"

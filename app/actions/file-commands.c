@@ -22,10 +22,13 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "display/display-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpobject.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplay-ops.h"
 
 #include "file-commands.h"
 #include "file-new-dialog.h"
@@ -36,8 +39,6 @@
 #include "app_procs.h"
 #include "file-open.h"
 #include "file-save.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "gimprc.h"
 #include "undo.h"
 

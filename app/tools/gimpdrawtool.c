@@ -24,9 +24,9 @@
 
 #include "tools-types.h"
  
-#include "gimpdrawtool.h"
+#include "display/gimpdisplay.h"
 
-#include "gdisplay.h"
+#include "gimpdrawtool.h"
 
 
 enum

@@ -25,11 +25,12 @@
 
 #include "core/core-types.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "menus.h"
 
-#include "gdisplay.h"
 #include "plug_in.h"
 
 

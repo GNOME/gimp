@@ -33,12 +33,12 @@
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimpwidgets-constructors.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

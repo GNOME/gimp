@@ -38,8 +38,6 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
-
 #include "gimppaintbrushtool.h"
 #include "paint_options.h"
 #include "tool_manager.h"

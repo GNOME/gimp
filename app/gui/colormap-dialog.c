@@ -34,6 +34,8 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 
+#include "display/gimpdisplay-render.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "color-notebook.h"
@@ -41,7 +43,6 @@
 #include "color-area.h"
 
 #include "colormaps.h"
-#include "image_render.h"
 
 #include "libgimp/gimpintl.h"
 

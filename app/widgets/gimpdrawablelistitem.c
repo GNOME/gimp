@@ -29,12 +29,12 @@
 
 #include "core/gimpdrawable.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
 #include "gimpdrawablelistview.h"
 #include "gimppreview.h"
-
-#include "gdisplay.h"
 
 
 static void   gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass);

@@ -26,7 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -37,6 +37,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "layers-commands.h"
@@ -44,7 +46,6 @@
 #include "resize-dialog.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "floating_sel.h"
 #include "undo.h"
 

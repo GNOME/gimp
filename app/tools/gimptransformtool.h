@@ -23,6 +23,10 @@
 #include "gimpdrawtool.h"
 
 
+/* FIXME */
+#include "gui/gui-types.h"
+
+
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
 #define TRAN_INFO_SIZE  8

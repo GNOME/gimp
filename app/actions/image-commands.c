@@ -33,11 +33,12 @@
 
 #include "pdb/procedural_db.h"
 
+#include "display/gimpdisplay.h"
+
 #include "convert-dialog.h"
 #include "offset-dialog.h"
 #include "resize-dialog.h"
 
-#include "gdisplay.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -31,11 +31,12 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplist.h"
 
+#include "display/gimpdisplay.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "channels-commands.h"
-#include "gdisplay.h"
 #include "menus.h"
 
 #include "app_procs.h"

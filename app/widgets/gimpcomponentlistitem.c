@@ -30,12 +30,12 @@
 #include "core/gimpimage.h"
 #include "core/gimpviewable.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
 #include "gimpimagepreview.h"
 #include "gimppreview.h"
-
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

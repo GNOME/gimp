@@ -26,10 +26,10 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimpdrawtool.h"
 #include "gimpselectiontool.h"
-
-#include "gdisplay.h"
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);

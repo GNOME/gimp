@@ -3,29 +3,27 @@
 noinst_LIBRARIES = libappdisplay.a
 
 libappdisplay_a_SOURCES = @STRIP_BEGIN@ \
-	display-types.h		\
-##	display.c		\
-##	display.h		\
-##	gimpdisplay.c		\
-##	gimpdisplay.h		\
-##	gimpdisplay-callbacks.c	\
-##	gimpdisplay-callbacks.h	\
-##	gimpdisplay-ops.c	\
-##	gimpdisplay-ops.h	\
-##	gimpdisplay-render.c	\
-##	gimpdisplay-render.h	\
-##	gimpdisplay-scale.c	\
-##	gimpdisplay-scale.h	\
-##	gimpdisplay-scroll.c	\
-##	gimpdisplay-scroll.h	\
-##	gimpdisplay-selection.c	\
-##	gimpdisplay-selection.h	\
-##	gimpdisplay-shell.c	\
-##	gimpdisplay-shell.h	\
-##	\
-##	gximage.c		\
-##	gximage.h		\
-##	marching_ants.h		\
+	display-types.h			\
+	gimpdisplay.c			\
+	gimpdisplay.h			\
+	gimpdisplay-callbacks.c		\
+	gimpdisplay-callbacks.h		\
+	gimpdisplay-marching-ants.h	\
+	gimpdisplay-ops.c		\
+	gimpdisplay-ops.h		\
+	gimpdisplay-render.c		\
+	gimpdisplay-render.h		\
+	gimpdisplay-scale.c		\
+	gimpdisplay-scale.h		\
+	gimpdisplay-scroll.c		\
+	gimpdisplay-scroll.h		\
+	gimpdisplay-selection.c		\
+	gimpdisplay-selection.h		\
+	gimpdisplayshell.c		\
+	gimpdisplayshell.h		\
+	\
+	gximage.c			\
+	gximage.h			\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \

@@ -34,12 +34,13 @@
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpdisplay.h"
+
 #include "gimphistogramtool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

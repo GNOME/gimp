@@ -23,13 +23,13 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpimage.h"
 
-#include "gdisplay.h"
+#include "display/gimpdisplay.h"
 
 #include "libgimp/gimpintl.h"
 

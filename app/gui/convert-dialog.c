@@ -32,11 +32,12 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "app_procs.h"
-#include "gdisplay.h"
 #include "palette-select.h"
 
 #include "libgimp/gimpintl.h"

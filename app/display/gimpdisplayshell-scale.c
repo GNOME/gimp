@@ -24,19 +24,19 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "display-types.h"
 
 #include "core/gimpimage.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
+#include "gimpdisplay.h"
+#include "gimpdisplay-ops.h"
+#include "gimpdisplay-scale.h"
+
 #include "gimprc.h"
 #include "nav_window.h"
-#include "scale.h"
 
 
 void

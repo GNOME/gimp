@@ -26,8 +26,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "display-types.h"
+#include "gui/gui-types.h" /* FIXME */
 
 #include "base/temp-buf.h"
 
@@ -44,24 +44,25 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "disp_callbacks.h"
-#include "gdisplay.h"
-#include "gdisplay_ops.h"
 #include "gui/info-window.h"
-#include "interface.h"
 #include "gui/menus.h"
-#include "nav_window.h"
+
+#include "gimpdisplay.h"
+#include "gimpdisplay-callbacks.h"
+#include "gimpdisplay-ops.h"
+#include "gimpdisplay-render.h"
+#include "gimpdisplay-scale.h"
+#include "gimpdisplay-selection.h"
+#include "gimpdisplayshell.h"
+#include "gximage.h"
 
 #include "app_procs.h"
 #include "appenv.h"
 #include "colormaps.h"
 #include "gimprc.h"
-#include "gximage.h"
-#include "image_render.h"
+#include "nav_window.h"
 #include "plug_in.h"
 #include "qmask.h"
-#include "scale.h"
-#include "selection.h"
 #include "undo.h"
 
 #ifdef DISPLAY_FILTERS
