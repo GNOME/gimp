@@ -458,6 +458,7 @@ tools_new_iscissors ()
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = iscissors_control;
   tool->auto_snap_to = 0;
+  tool->preserve = TRUE;
   
   last_tool = tool;
   
