@@ -1,3 +1,8 @@
+2004-07-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-actions.c: make sure that the "image-new" and
+	"image-new-from-image" actions always have the same shortcut.
+
 2004-07-20  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_main.c

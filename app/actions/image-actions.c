@@ -63,7 +63,7 @@ static GimpActionEntry image_actions[] =
     GIMP_HELP_FILE_NEW },
 
   { "image-new-from-image", GTK_STOCK_NEW,
-    N_("_New..."), "<control>N", NULL,
+    N_("_New..."), NULL, NULL,
     G_CALLBACK (image_new_from_image_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
@@ -157,9 +157,15 @@ static GimpEnumActionEntry image_rotate_actions[] =
 void
 image_actions_setup (GimpActionGroup *group)
 {
+  GtkAction *action;
+
   gimp_action_group_add_actions (group,
                                  image_actions,
                                  G_N_ELEMENTS (image_actions));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "image-new-from-image");
+  gtk_action_set_accel_path (action, "<Actions>/image/image-new");
 
   gimp_action_group_add_enum_actions (group,
                                       image_convert_actions,
