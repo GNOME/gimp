@@ -103,8 +103,8 @@ print_size_dialog_new (GimpImage              *image,
                                      parent,
                                      help_func, help_id,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                      GIMP_STOCK_RESET, RESPONSE_RESET,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                      NULL);

@@ -135,8 +135,8 @@ resize_dialog_new (GimpViewable       *viewable,
                                      parent,
                                      help_func, help_id,
 
-                                     GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
                                      GIMP_STOCK_RESET,  RESPONSE_RESET,
+                                     GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
                                      GIMP_STOCK_RESIZE, GTK_RESPONSE_OK,
 
                                      NULL);

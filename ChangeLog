@@ -1,3 +1,9 @@
+2005-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/scale-dialog.c: moved "Reset" buttons left of "Cancel".
+
 2005-02-03  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am
