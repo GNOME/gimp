@@ -67,21 +67,24 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
 
       coords = gimp_stroke_interpolate (cur_stroke, 0.5, &closed);
 
-      for (i = 0; i < coords->len; i++)
+      if (coords)
         {
-          GimpCoords point;
-          gint       x, y;
+          for (i = 0; i < coords->len; i++)
+            {
+              GimpCoords point;
+              gint       x, y;
 
-          point = g_array_index (coords, GimpCoords, i);
+              point = g_array_index (coords, GimpCoords, i);
 
-          x = ROUND (point.x * xscale);
-          y = ROUND (point.y * yscale);
+              x = ROUND (point.x * xscale);
+              y = ROUND (point.y * yscale);
 
-          if (x >= 0 && y >= 0 && x < width && y < height)
-            data[y * width + x] = 0;
+              if (x >= 0 && y >= 0 && x < width && y < height)
+                data[y * width + x] = 0;
+            }
+
+          g_array_free (coords, TRUE);
         }
-
-      g_array_free (coords, TRUE);
     }
 
   return temp_buf;

@@ -764,22 +764,25 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
               coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
-              for (i = 0; i < coords->len; i++)
+              if (coords)
                 {
-                  GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
+                  for (i = 0; i < coords->len; i++)
+                    {
+                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
 
-                  gimp_matrix3_transform_point (&matrix,
-                                                curr->x, curr->y,
-                                                &curr->x, &curr->y);
+                      gimp_matrix3_transform_point (&matrix,
+                                                    curr->x, curr->y,
+                                                    &curr->x, &curr->y);
+                    }
+
+                  if (coords->len)
+                    gimp_draw_tool_draw_strokes (draw_tool,
+                                                 &g_array_index (coords,
+                                                                 GimpCoords, 0),
+                                                 coords->len, FALSE, FALSE);
+
+                  g_array_free (coords, TRUE);
                 }
-
-              if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
-
-              g_array_free (coords, TRUE);
             }
         }
     }

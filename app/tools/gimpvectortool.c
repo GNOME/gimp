@@ -982,18 +982,21 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
       /* the lines to the control handles */
       coords = gimp_stroke_get_draw_lines (cur_stroke);
 
-      if (coords->len % 2 == 0)
+      if (coords)
         {
-          gint i;
+          if (coords->len % 2 == 0)
+            {
+              gint i;
 
-          for (i = 0; i < coords->len; i += 2)
-            gimp_draw_tool_draw_strokes (draw_tool,
-                                         &g_array_index (coords,
-                                                         GimpCoords, i),
-                                         2, FALSE, FALSE);
+              for (i = 0; i < coords->len; i += 2)
+                gimp_draw_tool_draw_strokes (draw_tool,
+                                             &g_array_index (coords,
+                                                             GimpCoords, i),
+                                             2, FALSE, FALSE);
+            }
+
+          g_array_free (coords, TRUE);
         }
-
-      g_array_free (coords, TRUE);
 
       /* the stroke itself */
       coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);

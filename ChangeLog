@@ -1,5 +1,14 @@
 2003-08-22  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors-preview.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: Added missing checking for NULL
+	return values. Hopefully this fixes the crashes others are
+	observing.
+
+2003-08-22  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c: fixed crash when deleting
 	the last segment of a closed curve.
 

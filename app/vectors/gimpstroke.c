@@ -1000,7 +1000,8 @@ static GArray *
 gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
 {
   GList  *list;
-  GArray *ret_lines = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+  GArray *ret_lines = NULL;
+  gint    count = 0;
 
   for (list = stroke->anchors; list; list = g_list_next (list))
     {
@@ -1012,16 +1013,24 @@ gimp_stroke_real_get_draw_lines (const GimpStroke  *stroke)
             {
               GimpAnchor *next = list->next->data;
 
+              if (count == 0)
+                ret_lines = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+
               ret_lines = g_array_append_val (ret_lines, anchor->position);
               ret_lines = g_array_append_val (ret_lines, next->position);
+              count += 1;
             }
 
           if (list->prev)
             {
               GimpAnchor *prev = list->prev->data;
 
+              if (count == 0)
+                ret_lines = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+
               ret_lines = g_array_append_val (ret_lines, anchor->position);
               ret_lines = g_array_append_val (ret_lines, prev->position);
+              count += 1;
             }
         }
     }
