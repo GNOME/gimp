@@ -532,18 +532,16 @@ gimp_image_scale (GimpImage *gimage,
   Layer   *layer;
   Layer   *floating_layer;
   GSList  *list;
-  GSList  *marklist = NULL;
+  GSList  *remove = NULL;
   GList   *glist;
   Guide   *guide;
   gint    old_width, old_height;
-  gint    old_offset_x, old_offset_y;
-  gint    layer_width, layer_height;
   gdouble img_scale_w = 1.0;
   gdouble img_scale_h = 1.0;
 
-  if((new_width == 0) || (new_height == 0))
+  if ((new_width == 0) || (new_height == 0))
     {
-      g_message(_("gimp_image_scale: Layer with zero width or height has been rejected."));
+      g_message (("gimp_image_scale: Scaling to zero width or height has been rejected."));
       return;
     }
 
@@ -567,16 +565,14 @@ gimp_image_scale (GimpImage *gimage,
   old_height     = gimage->height;
   gimage->width  = new_width;
   gimage->height = new_height;
-  img_scale_w    = (gdouble)new_width/(gdouble)old_width;
-  img_scale_h    = (gdouble)new_height/(gdouble)old_height;
+  img_scale_w    = (gdouble)new_width / (gdouble)old_width;
+  img_scale_h    = (gdouble)new_height / (gdouble)old_height;
  
   /*  Scale all channels  */
-  list = gimage->channels;
-  while (list)
+  for (list = gimage->channels; list; list = g_slist_next (list))
     {
       channel = (Channel *) list->data;
       channel_scale (channel, new_width, new_height);
-      list = g_slist_next (list);
     }
 
   /*  Don't forget the selection mask!  */
@@ -585,40 +581,34 @@ gimp_image_scale (GimpImage *gimage,
 
   /*  Scale all layers  */
   list = gimage->layers;
-  while (list)
+  for (list = gimage->layers; list; list = g_slist_next (list))
     {
-      layer  = (Layer *) list->data;
-      if(FALSE == layer_scale_by_factors(layer, img_scale_w, img_scale_h))
+      layer = (Layer *) list->data;
+      if (layer_scale_by_factors (layer, img_scale_w, img_scale_h) == FALSE)
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more     */
 	  /* vanishing scaled layer dimensions. Implicit delete implemented     */
 	  /* here. Upstream warning implemented in resize_check_layer_scaling() */
           /* [resize.c line 1295], which offers the user the chance to bail out.*/
 
-          marklist = g_list_append(marklist, layer);
+          remove = g_slist_append (remove, layer);
         }
-      list   = g_slist_next (list);
     }
   /* We defer removing layers lost to scaling until now            */
   /* so as not to mix the operations of iterating over and removal */
   /* from gimage->layers.                                          */  
 
-  if(marklist != NULL)
+  for (list = remove; list; list = g_slist_next (list))
     {
-      while(marklist)
-        {
-	  layer = marklist->data;
-	  gimage_remove_layer(gimage, layer);
-	  marklist = g_slist_remove(marklist, layer);
-        }
+      layer = remove->data;
+      gimage_remove_layer (gimage, layer);
     }
+  g_slist_free (remove);
 
   /*  Scale any Guides  */
-  glist = gimage->guides;
-  while (glist)
+  for (glist = gimage->guides; glist; glist = g_list_next (glist))
     {
       guide = (Guide*) glist->data;
-      glist = g_list_next (glist);
 
       switch (guide->orientation)
 	{

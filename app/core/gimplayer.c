@@ -346,7 +346,7 @@ layer_copy (Layer    *layer,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer)
     {
-      g_message (_("layer_copy: could not allocate new layer"));
+      g_message ("layer_copy: could not allocate new layer");
       goto cleanup;
     }
 
@@ -421,7 +421,7 @@ layer_new_from_tiles (GimpImage        *gimage,
 
   if (!new_layer)
     {
-      g_message (_("layer_new_from_tiles: could not allocate new layer"));
+      g_message ("layer_new_from_tiles: could not allocate new layer");
       return NULL;
     }
 
@@ -628,7 +628,8 @@ layer_translate_lowlevel (Layer    *layer,
     }
 
   /*  update the affected region  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0, 
+		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
   if (!temporary)
     {
@@ -739,7 +740,8 @@ layer_scale_lowlevel(Layer *layer,
 		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
   /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, 
+		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
 
   /*  Allocate the new layer, configure dest region  */
   new_tiles = tile_manager_new (new_width, new_height, GIMP_DRAWABLE(layer)->bytes);
@@ -786,18 +788,20 @@ layer_scale_lowlevel(Layer *layer,
  * @layer:      Layer to check
  * @new_width:  proposed width of layer, in pixels
  * @new_height: proposed height of layer, in pixels
+ *
  * Scales layer dimensions, then snaps them to pixel centers
+ *
  * Returns FALSE if any dimension reduces to zero as a result 
- * of this; otherwise, returns TRUE.
+ *         of this; otherwise, returns TRUE.
  */
-
-gboolean layer_check_scaling (Layer  *layer,
-			      gint    new_width,
-			      gint    new_height)
+gboolean 
+layer_check_scaling (Layer  *layer,
+		     gint    new_width,
+		     gint    new_height)
 {
    GImage  *gimage           =  GIMP_DRAWABLE(layer)->gimage;
-   gdouble  img_scale_w      = (gdouble)new_width/(gdouble)gimage->width;
-   gdouble  img_scale_h      = (gdouble)new_height/(gdouble)gimage->height;
+   gdouble  img_scale_w      = (gdouble)new_width / (gdouble)gimage->width;
+   gdouble  img_scale_h      = (gdouble)new_height / (gdouble)gimage->height;
    gint     new_layer_width  = (gint)(0.5 + img_scale_w * (gdouble)GIMP_DRAWABLE(layer)->width); 
    gint     new_layer_height = (gint)(0.5 + img_scale_h * (gdouble)GIMP_DRAWABLE(layer)->height);
 
@@ -826,24 +830,23 @@ gboolean layer_check_scaling (Layer  *layer,
  * Use layer_scale() in circumstances where new layer width
  * and height dimensions are predetermined instead.
  *
- * #Returns: TRUE, if the scaled layer has positive dimensions
- *           FALSE if the scaled layer has at least one zero dimension
+ * Side effects: Undo set created for layer. Old layer imagery 
+ *               scaled & painted to new layer tiles. 
  *
- * #Side effects: undo set created for layer.
- *                Old layer imagery scaled 
- *                & painted to new layer tiles 
+ * Returns: TRUE, if the scaled layer has positive dimensions
+ *          FALSE if the scaled layer has at least one zero dimension
  */
-
 gboolean
-layer_scale_by_factors(Layer   *layer,
-                       gdouble  w_factor,
-                       gdouble  h_factor)
+layer_scale_by_factors (Layer   *layer,
+			gdouble  w_factor,
+			gdouble  h_factor)
 {
-  gint new_width, new_height, new_offset_x, new_offset_y;
+  gint new_width, new_height;
+  gint new_offset_x, new_offset_y;
   
   if (w_factor == 0.0 || h_factor == 0.0)
     {
-      g_message(_("layer_scale_by_factors: Error. Requested width or height scale equals zero."));
+      g_message ("layer_scale_by_factors: Error. Requested width or height scale equals zero.");
       return FALSE;
     }
 
@@ -852,9 +855,9 @@ layer_scale_by_factors(Layer   *layer,
   new_width    = (gint)(0.5 + w_factor * (gdouble)GIMP_DRAWABLE(layer)->width);
   new_height   = (gint)(0.5 + h_factor * (gdouble)GIMP_DRAWABLE(layer)->height);
 
-  if(new_width != 0 && new_height != 0)
+  if (new_width != 0 && new_height != 0)
     {
-      layer_scale_lowlevel(layer, new_width, new_height, new_offset_x, new_offset_y);
+      layer_scale_lowlevel (layer, new_width, new_height, new_offset_x, new_offset_y);
       return TRUE;
     }
   else
@@ -888,7 +891,6 @@ layer_scale_by_factors(Layer   *layer,
  *               Old layer imagery scaled 
  *               & painted to new layer tiles 
  */
-    
 void
 layer_scale (Layer   *layer,
 	     gint     new_width,
@@ -899,20 +901,24 @@ layer_scale (Layer   *layer,
 
   if (new_width == 0 || new_height == 0)
     {
-      g_message(_("layer_scale: Error. Requested width or height equals zero."));
+      g_message ("layer_scale: Error. Requested width or height equals zero.");
       return;
     }
   if (local_origin)
     {
-      new_offset_x = GIMP_DRAWABLE(layer)->offset_x + ((GIMP_DRAWABLE(layer)->width  - new_width)/2.0);
-      new_offset_y = GIMP_DRAWABLE(layer)->offset_y + ((GIMP_DRAWABLE(layer)->height - new_height)/2.0);
+      new_offset_x = GIMP_DRAWABLE(layer)->offset_x + 
+	((GIMP_DRAWABLE(layer)->width  - new_width) / 2.0);
+      new_offset_y = GIMP_DRAWABLE(layer)->offset_y + 
+	((GIMP_DRAWABLE(layer)->height - new_height) / 2.0);
     }
   else
     {
-      new_offset_x = (gint)(((gdouble) new_width * GIMP_DRAWABLE(layer)->offset_x/(gdouble) GIMP_DRAWABLE(layer)->width));
-      new_offset_y = (gint)(((gdouble) new_height * GIMP_DRAWABLE(layer)->offset_y/(gdouble) GIMP_DRAWABLE(layer)->height));
+      new_offset_x = (gint)(((gdouble) new_width * 
+			     GIMP_DRAWABLE(layer)->offset_x / (gdouble) GIMP_DRAWABLE(layer)->width));
+      new_offset_y = (gint)(((gdouble) new_height * 
+			     GIMP_DRAWABLE(layer)->offset_y / (gdouble) GIMP_DRAWABLE(layer)->height));
     }
-  layer_scale_lowlevel(layer, new_width, new_height, new_offset_x, new_offset_y);
+  layer_scale_lowlevel (layer, new_width, new_height, new_offset_x, new_offset_y);
 }
 
 void

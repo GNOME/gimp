@@ -1,6 +1,12 @@
+Sun Feb 27 13:07:31 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpimage.c
+	* app/layer.c: removed warnings, cleaned up the source, 
+	unmarked internal error messages for translation
+
 Sat Feb 26 23:58:27 GMT 2000 Andy Thomas <alt@gimp.org>
 
-         * gimp/app/nav_window.c
+        * gimp/app/nav_window.c
 
 	Now takes note of the users set preview size when close to the
 	edge of the screen. 
