@@ -60,13 +60,13 @@ typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
 
 struct _GimpPaintOptions
 {
-  GimpToolOptions      parent_instance;
+  GimpToolOptions           parent_instance;
 
-  gboolean             incremental;
-  gboolean             incremental_save;
+  GimpPaintApplicationMode  application_mode;
+  GimpPaintApplicationMode  application_mode_save;
 
-  GimpPressureOptions *pressure_options;
-  GimpGradientOptions *gradient_options;
+  GimpPressureOptions      *pressure_options;
+  GimpGradientOptions      *gradient_options;
 };
 
 struct _GimpPaintOptionsClass

@@ -49,6 +49,12 @@ GtkWidget     * gimp_prop_paint_mode_menu_new     (GObject     *config,
                                                    const gchar *property_name,
                                                    gboolean     with_behind_mode);
 
+GtkWidget     * gimp_prop_enum_check_button_new   (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *label,
+                                                   gint         false_value,
+                                                   gint         true_value);
+
 GtkWidget     * gimp_prop_enum_radio_frame_new    (GObject     *config,
                                                    const gchar *property_name,
                                                    const gchar *title,

@@ -226,10 +226,9 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   context = GIMP_CONTEXT (paint_options);
 
-  paint_appl_mode = (paint_options->incremental ? 
-                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+  paint_appl_mode = paint_options->application_mode;
 
-  pressure = ((GimpAirbrushOptions *) paint_options)->pressure / 100.0;
+  pressure = GIMP_AIRBRUSH_OPTIONS (paint_options)->pressure / 100.0;
 
   if (paint_options->pressure_options->size)
     scale = paint_core->cur_coords.pressure;

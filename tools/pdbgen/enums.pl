@@ -397,19 +397,19 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
 	},
-    GimpBrushApplicationMode =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT) ],
-	  mapping => { GIMP_BRUSH_HARD => '0',
-		       GIMP_BRUSH_SOFT => '1' }
-	},
     GimpPaintApplicationMode =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
 	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
 	  mapping => { GIMP_PAINT_CONSTANT => '0',
 		       GIMP_PAINT_INCREMENTAL => '1' }
+	},
+    GimpBrushApplicationMode =>
+	{ contig => 1,
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT) ],
+	  mapping => { GIMP_BRUSH_HARD => '0',
+		       GIMP_BRUSH_SOFT => '1' }
 	},
     GimpRunMode =>
 	{ contig => 1,

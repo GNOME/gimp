@@ -156,6 +156,127 @@ gimp_prop_check_button_notify (GObject    *config,
 }
 
 
+static void   gimp_prop_enum_check_button_callback (GtkWidget  *widget,
+                                                    GObject    *config);
+static void   gimp_prop_enum_check_button_notify   (GObject    *config,
+                                                    GParamSpec *param_spec,
+                                                    GtkWidget  *button);
+
+GtkWidget *
+gimp_prop_enum_check_button_new (GObject     *config,
+                                 const gchar *property_name,
+                                 const gchar *label,
+                                 gint         false_value,
+                                 gint         true_value)
+{
+  GParamSpec  *param_spec;
+  GtkWidget   *button;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  button = gtk_check_button_new_with_mnemonic (label);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value == true_value);
+
+  if (value != false_value && value != true_value)
+    gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (button), TRUE);
+
+  set_param_spec (G_OBJECT (button), button, param_spec);
+
+  g_object_set_data (G_OBJECT (button), "false-value",
+                     GINT_TO_POINTER (false_value));
+  g_object_set_data (G_OBJECT (button), "true-value",
+                     GINT_TO_POINTER (true_value));
+
+  g_signal_connect (button, "toggled",
+		    G_CALLBACK (gimp_prop_enum_check_button_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_enum_check_button_notify),
+                  button);
+
+  return button;
+}
+
+static void
+gimp_prop_enum_check_button_callback (GtkWidget *widget,
+                                      GObject   *config)
+{
+  GParamSpec *param_spec;
+  gint        false_value;
+  gint        true_value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  false_value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                    "false-value"));
+  true_value  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                    "true-value"));
+
+  g_object_set (config,
+                param_spec->name,
+                GTK_TOGGLE_BUTTON (widget)->active ? true_value : false_value,
+                NULL);
+
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (widget), FALSE);
+
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+}
+
+static void
+gimp_prop_enum_check_button_notify (GObject    *config,
+                                    GParamSpec *param_spec,
+                                    GtkWidget  *button)
+{
+  gint     value;
+  gint     false_value;
+  gint     true_value;
+  gboolean active       = FALSE;
+  gboolean inconsistent = FALSE;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  false_value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
+                                                    "false-value"));
+  true_value  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
+                                                    "true-value"));
+
+  if (value == true_value)
+    active = TRUE;
+  else if (value != false_value)
+    inconsistent = TRUE;
+
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (button),
+                                      inconsistent);
+
+  if (GTK_TOGGLE_BUTTON (button)->active != active)
+    {
+      g_signal_handlers_block_by_func (button,
+                                       gimp_prop_enum_check_button_callback,
+                                       config);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
+      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
+
+      g_signal_handlers_unblock_by_func (button,
+                                         gimp_prop_enum_check_button_callback,
+                                         config);
+    }
+}
+
+
 /******************/
 /*  option menus  */
 /******************/

@@ -31,7 +31,7 @@
 #include "gimppaintoptions.h"
 
 
-#define DEFAULT_INCREMENTAL       FALSE
+#define DEFAULT_APPLICATION_MODE  GIMP_PAINT_CONSTANT
 
 #define DEFAULT_PRESSURE_OPACITY  TRUE
 #define DEFAULT_PRESSURE_PRESSURE TRUE
@@ -51,7 +51,7 @@
 enum
 {
   PROP_0,
-  PROP_INCREMENTAL,
+  PROP_APPLICATION_MODE,
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_PRESSURE,
   PROP_PRESSURE_RATE,
@@ -126,10 +126,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   object_class->get_property = gimp_paint_options_get_property;
   object_class->notify       = gimp_paint_options_notify;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INCREMENTAL,
-                                    "incremental", NULL,
-                                    DEFAULT_INCREMENTAL,
-                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
+                                 "application-mode", NULL,
+                                 GIMP_TYPE_PAINT_APPLICATION_MODE,
+                                 DEFAULT_APPLICATION_MODE,
+                                 0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
@@ -186,7 +187,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 static void
 gimp_paint_options_init (GimpPaintOptions *options)
 {
-  options->incremental_save = DEFAULT_INCREMENTAL;
+  options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
   options->pressure_options = g_new0 (GimpPressureOptions, 1);
   options->gradient_options = g_new0 (GimpGradientOptions, 1);
@@ -209,8 +210,8 @@ gimp_paint_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_INCREMENTAL:
-      options->incremental = g_value_get_boolean (value);
+    case PROP_APPLICATION_MODE:
+      options->application_mode = g_value_get_enum (value);
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -275,8 +276,8 @@ gimp_paint_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_INCREMENTAL:
-      g_value_set_boolean (value, options->incremental);
+    case PROP_APPLICATION_MODE:
+      g_value_set_enum (value, options->application_mode);
       break;
 
     case PROP_PRESSURE_OPACITY:
@@ -336,15 +337,15 @@ gimp_paint_options_notify (GObject    *object,
     {
       if (options->gradient_options->use_gradient)
         {
-          options->incremental_save = options->incremental;
-          options->incremental      = TRUE;
+          options->application_mode_save = options->application_mode;
+          options->application_mode      = GIMP_PAINT_INCREMENTAL;
         }
       else
         {
-          options->incremental = options->incremental_save;
+          options->application_mode = options->application_mode_save;
         }
 
-      g_object_notify (object, "incremental");
+      g_object_notify (object, "application-mode");
     }
 
   if (G_OBJECT_CLASS (parent_class)->notify)

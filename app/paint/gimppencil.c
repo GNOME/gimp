@@ -153,8 +153,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  paint_appl_mode = (paint_options->incremental ?
-                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+  paint_appl_mode = paint_options->application_mode;
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;

@@ -145,7 +145,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   guchar                    col[MAX_CHANNELS];
   gdouble                   scale;
   GimpBrushApplicationMode  brush_mode;
-  GimpPaintApplicationMode  paint_appl_mode;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
@@ -156,9 +155,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   pressure_options = paint_options->pressure_options;
 
   gimp_image_get_background (gimage, drawable, col);
-
-  paint_appl_mode = (paint_options->incremental ?
-                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -198,5 +194,5 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
 				brush_mode,
 				scale,
-				paint_appl_mode);
+				paint_options->application_mode);
 }

@@ -514,8 +514,10 @@ convolve_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
     
-      GIMP_CONVOLVE_OPTIONS (options)->type = convolve_type;
-      GIMP_CONVOLVE_OPTIONS (options)->rate = pressure;
+      g_object_set (options,
+		    "type", convolve_type,
+		    "rate", pressure,
+		    NULL);
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_CONVOLVE,
@@ -684,9 +686,11 @@ dodgeburn_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
     
-      GIMP_DODGE_BURN_OPTIONS (options)->exposure = exposure;
-      GIMP_DODGE_BURN_OPTIONS (options)->type     = dodgeburn_type;
-      GIMP_DODGE_BURN_OPTIONS (options)->mode     = dodgeburn_mode;
+      g_object_set (options,
+		    "type",     dodgeburn_type,
+		    "mode",     dodgeburn_mode,
+		    "exposure", exposure,
+		    NULL);
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_DODGE_BURN,
@@ -855,9 +859,10 @@ eraser_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
     
-      options->incremental = method;
-    
-      GIMP_ERASER_OPTIONS (options)->hard = hardness;
+      g_object_set (options,
+		    "application-mode", method,
+		    "hard",             hardness,
+		    NULL);
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_ERASER,
@@ -1026,10 +1031,11 @@ paintbrush_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
     
-      options->incremental = method;
-    
-      options->gradient_options->fade_length     = fade_out;
-      options->gradient_options->gradient_length = gradient_length;
+      g_object_set (options,
+		    "application-mode", method,
+		    "fade-length",      fade_out,
+		    "gradient-length",  gradient_length,
+		    NULL);
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_PAINTBRUSH,
@@ -1264,7 +1270,9 @@ smudge_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
     
-      GIMP_SMUDGE_OPTIONS (options)->rate = pressure;
+      g_object_set (options,
+		    "rate", pressure,
+		    NULL);
     
       success = paint_tools_stroke (gimp,
 				    GIMP_TYPE_SMUDGE,

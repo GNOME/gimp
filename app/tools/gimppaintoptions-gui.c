@@ -155,9 +155,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_options->tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_options->tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-      incremental_toggle = gimp_prop_check_button_new (config,
-                                                       "incremental",
-                                                       _("Incremental"));
+      incremental_toggle =
+        gimp_prop_enum_check_button_new (config,
+                                         "application-mode",
+                                         _("Incremental"),
+                                         GIMP_PAINT_CONSTANT,
+                                         GIMP_PAINT_INCREMENTAL);
       gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
       gtk_widget_show (incremental_toggle);
     }

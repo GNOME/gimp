@@ -159,8 +159,7 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
   pressure_options = paint_options->pressure_options;
   gradient_options = paint_options->gradient_options;
 
-  paint_appl_mode = (paint_options->incremental ? 
-                     GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
+  paint_appl_mode = paint_options->application_mode;
 
   if (gradient_options->use_fade)
     {

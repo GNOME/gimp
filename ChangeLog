@@ -1,3 +1,29 @@
+2003-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/paint-enums.[ch]: register GimpPaintApplicationMode
+	with the type system.
+
+	* app/paint/gimppaintoptions.[ch]: replaced "gboolean incremental"
+	with "GimpPaintApplicationMode application_mode"
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppencil.c: changed accordingly.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: ditto. Set all paint options
+	values using g_object_set().
+
+	* app/widgets/gimppropwidgets.[ch]: added
+	gimp_prop_enum_check_button_new() which can represent two
+	specified enum values and renders itself "inconsistent" for all
+	other values.
+
+	* app/tools/paint_options.c: use it for the "Incremental" toggle.
+
+	* app/pdb/paint_tools_cmds.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2003-03-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/compose.c: added some stock icons to the dialog.

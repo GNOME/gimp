@@ -107,6 +107,17 @@ typedef enum  /*< pdb-skip >*/
 } GimpInkBlobType;
 
 
+#define GIMP_TYPE_PAINT_APPLICATION_MODE (gimp_paint_application_mode_get_type ())
+
+GType gimp_paint_application_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PAINT_CONSTANT,    /*< desc="Constant"    >*/
+  GIMP_PAINT_INCREMENTAL  /*< desc="Incremental" >*/
+} GimpPaintApplicationMode;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -117,12 +128,6 @@ typedef enum  /*< skip >*/
   GIMP_BRUSH_SOFT,
   GIMP_BRUSH_PRESSURE  /*< skip >*/
 } GimpBrushApplicationMode;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_PAINT_CONSTANT,
-  GIMP_PAINT_INCREMENTAL
-} GimpPaintApplicationMode;
 
 
 #endif /* __PAINT_ENUMS_H__ */
