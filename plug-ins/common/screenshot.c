@@ -1,7 +1,7 @@
 /*  
- *  ScreenShot plug-in v0.8 
+ *  ScreenShot plug-in v0.9 
  *  Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1998/06/04
+ *  1998/06/06
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -39,6 +39,7 @@
  *  (98/04/18)  v0.6   cosmetic change to the dialog
  *  (98/05/28)  v0.7   use g_message for error output
  *  (98/06/04)  v0.8   added delay-time for root window shot
+ *  (98/06/06)  v0.9   fixed a stupid bug in the dialog
  */
 
 #include <stdio.h>
@@ -51,7 +52,7 @@
 /* Defines */
 #define PLUG_IN_NAME        "extension_screenshot"
 #define PLUG_IN_PRINT_NAME  "Screen Shot"
-#define PLUG_IN_VERSION     "v0.8 (98/06/04)"
+#define PLUG_IN_VERSION     "v0.9 (98/06/06)"
 #define PLUG_IN_MENU_PATH   "<Toolbox>/Xtns/Screen Shot"
 #define PLUG_IN_AUTHOR      "Sven Neumann (neumanns@uni-duesseldorf.de)"
 #define PLUG_IN_COPYRIGHT   "Sven Neumann"
@@ -524,7 +525,7 @@ shoot_toggle_update (GtkWidget *widget,
       gtk_widget_set_sensitive (shootint.decor_button, *toggle_val);
       gtk_widget_set_sensitive (shootint.delay_box, !*toggle_val);
     }
-  else 
+  if (widget == shootint.root_button)
     {
       gtk_widget_set_sensitive (shootint.decor_button, !*toggle_val);
       gtk_widget_set_sensitive (shootint.delay_box, *toggle_val);

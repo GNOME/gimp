@@ -234,8 +234,13 @@ static void run(gchar   *name,
         break;
     }
 
+  if (run_mode != RUN_NONINTERACTIVE)
+     gimp_displays_flush();
+
+
   values[0].data.d_status = status;
   gimp_drawable_detach(drawable);
+  	
 }
 
 GPlugInInfo PLUG_IN_INFO =

@@ -446,7 +446,7 @@ create_pixmap (GdkWindow *parent, GdkBitmap **mask,
 
   visual = gdk_window_get_visual (parent);
   cmap = gdk_window_get_colormap (parent);
-  image = gdk_image_new (GDK_IMAGE_SHARED, visual, width, height);
+  image = gdk_image_new (GDK_IMAGE_NORMAL, visual, width, height);
   pixmap = gdk_pixmap_new (parent, width, height, -1);
   gc = NULL;
 
