@@ -1,5 +1,14 @@
 2004-01-07  Sven Neumann  <sven@gimp.org>
 
+	* gimp-1.3.pc.in
+	* gimpui-1.3.pc.in: don't use $VERSION because pkg-config and the
+	like don't like the 2.0pre version numbers. Instead create a
+	parseable version number from major, minor and micro version.
+	
+	* m4macros/gimp-2.0.m4: check for 1.3.24 or newer.
+
+2004-01-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpthumb/gimpthumb.def: fixed wrong function name.
 
 2004-01-07  Henrik Brix Andersen  <brix@gimp.org>
