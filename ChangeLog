@@ -10,6 +10,8 @@
 	* app/base/Makefile.am
 	* app/core/Makefile.am
 	* app/display/Makefile.am
+	* app/paint/Makefile.am
+	* app/text/Makefile.am
 	* app/widgets/Makefile.am: changed rules that generate enums code
 	to include gimp-intl.h instead of libgimp-intl.h.
 
