@@ -1,3 +1,8 @@
+2003-10-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.c (gimp_display_reconnect): HALT the
+	active tool before reconnecting. Fixes bug #124388.
+
 2003-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-serialize.[ch]: removed function

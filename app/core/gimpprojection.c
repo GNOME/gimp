@@ -320,6 +320,9 @@ gimp_display_reconnect (GimpDisplay *gdisp,
       gdisp->idle_render.idle_id = 0;
     }
 
+  /*  stop any active tool  */
+  tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
+
   gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (gdisp->shell));
 
   gimp_display_disconnect (gdisp);
