@@ -716,6 +716,22 @@ remap_indexed_layer (GimpLayer     *layer,
     }
 }
 
+int
+color_quicksort (const void *c1,
+                 const void *c2)
+{
+  Color *color1 = (Color *)c1;
+  Color *color2 = (Color *)c2;
+  double v1 = INTENSITY(color1->red, color1->green, color1->blue);
+  double v2 = INTENSITY(color2->red, color2->green, color2->blue);
+  
+  if (v1 < v2)
+    return -1;
+  else if (v1 > v2)
+    return 1;
+  else
+    return 0;
+}
 
 void
 gimp_image_convert (GimpImage              *gimage,
@@ -874,6 +890,10 @@ gimp_image_convert (GimpImage              *gimage,
 	{
 	  (* quantobj->first_pass) (quantobj);
 	}
+      
+      if (palette_type == GIMP_MAKE_PALETTE)
+        qsort (quantobj->cmap, quantobj->actual_number_of_colors, sizeof(Color),
+               color_quicksort);
     }
 
   /* Initialise data which must persist across indexed layer iterations */

@@ -1,3 +1,9 @@
+2003-10-21  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimpimage-convert.c: Applied a slightly modified 
+	patch from Vesa Halttunen <vesuri@jormas.com> to sort generated
+	optimum palettes. Closes bug #119824.
+
 2003-10-21  Sven Neumann  <sven@gimp.org>
 
 	* base/base.c (base_init)
