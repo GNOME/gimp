@@ -502,7 +502,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
                              gimp_standard_help_func, NULL,
 
                              GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
-                             _("_Resassign shortcut"), GTK_RESPONSE_OK,
+                             _("_Reassign shortcut"),  GTK_RESPONSE_OK,
 
                              NULL);
 
