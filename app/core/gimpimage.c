@@ -2865,7 +2865,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
   g_return_if_fail (gimp_container_have (gimage->channels, 
 					 GIMP_OBJECT (channel)));
 
-  gimp_image_undo_push_channel_remove (gimage, _("Remove Layer"),
+  gimp_image_undo_push_channel_remove (gimage, _("Remove Channel"),
                                        channel,
                                        gimp_container_get_child_index (gimage->channels,
                                                                        GIMP_OBJECT (channel)),

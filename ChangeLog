@@ -1,5 +1,10 @@
 2003-04-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_remove_channel): say
+	"Remove Channel" when pushing the undo, not "Remove Layer".
+
+2003-04-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/paint_options.[ch]: added
 	paint_options_container_scrolled() utility function which
 	wheel-scrolls a container. Use it for the brush and pattern
