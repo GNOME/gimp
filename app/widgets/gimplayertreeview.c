@@ -259,7 +259,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_box_reorder_child (GTK_BOX (view), view->options_box, 0);
   gtk_widget_show (view->options_box);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   /*  Paint mode menu  */
 

@@ -261,7 +261,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   vbox = image_map_tool->main_vbox;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

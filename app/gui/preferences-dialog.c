@@ -818,7 +818,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   vbox = prefs_frame_new (label, parent, FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1247,7 +1247,7 @@ prefs_dialog_new (Gimp       *gimp,
                       gimp);
   }
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

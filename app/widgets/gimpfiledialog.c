@@ -187,7 +187,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
                                                    dialog,
                                                    FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
   gtk_widget_show (hbox);
 
@@ -236,8 +236,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
       if (file_proc->menu_paths && file_proc->extensions_list)
         {
-          gchar  *name;
-          GSList *ext;
+          const gchar *name;
+          GSList      *ext;
 
           if (file_proc->menu_label)
             name = file_proc->menu_label;
@@ -250,6 +250,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
           for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
             {
               gchar *pattern = g_strdup_printf ("*.%s", (gchar *) ext->data);
+
               gtk_file_filter_add_pattern (filter, pattern);
               g_free (pattern);
             }
@@ -283,7 +284,7 @@ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
 
       if (uri && strlen (uri))
         {
-          gchar *last_dot = last_dot = strrchr (uri, '.');
+          const gchar *last_dot = strrchr (uri, '.');
 
           if (last_dot != uri)
             {

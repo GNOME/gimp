@@ -404,7 +404,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   vbox = image_map_tool->main_vbox;
 
   /*  The option menu for selecting channels  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -501,7 +501,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (bar);
 
   /*  Horizontal box for input levels spinbuttons  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -604,7 +604,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (tool->output_bar);
 
   /*  Horizontal box for levels spin widgets  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -663,13 +663,12 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                            _("Save levels settings to file"), NULL);
   gtk_widget_show (image_map_tool->save_button);
 
-  hbbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
+  hbbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 
   button = gtk_button_new_with_mnemonic (_("_Auto"));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
   gtk_widget_show (button);
 

@@ -143,7 +143,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
                     bar);
 
   /*  The range selection */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

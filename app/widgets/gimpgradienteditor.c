@@ -378,7 +378,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   /* Instant update toggle */
   editor->instant_update = TRUE;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

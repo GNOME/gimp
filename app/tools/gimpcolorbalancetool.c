@@ -320,7 +320,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (color_balance_yb_adjustment_update),
                     cb_tool);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

@@ -529,16 +529,16 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                     data);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
                      table);
   gtk_widget_show (table);
 
   row = 0;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Zoom Ratio:"), 0.0, 0.5,
                              hbox, 1, FALSE);
@@ -565,7 +565,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Zoom:"), 0.0, 0.5,
                              hbox, 1, FALSE);

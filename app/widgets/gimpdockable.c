@@ -803,7 +803,7 @@ gimp_dockable_get_tab_widget (GimpDockable *dockable,
     case GIMP_TAB_STYLE_ICON_BLURB:
     case GIMP_TAB_STYLE_PREVIEW_NAME:
     case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      tab_widget = gtk_hbox_new (FALSE, 4);
+      tab_widget = gtk_hbox_new (FALSE, 2);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
       gtk_widget_show (icon);

@@ -1,3 +1,22 @@
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/gui/info-window.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpstrokeeditor.c: tweaked some spacings for
+	consistency and better HIG compliance.
+
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gradient_edit.pdb: set_blending_function() and

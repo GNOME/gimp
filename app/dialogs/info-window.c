@@ -186,7 +186,7 @@ info_window_create_extended (InfoDialog *info_win,
 
   /* color information */
 
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

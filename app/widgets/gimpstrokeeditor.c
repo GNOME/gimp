@@ -191,7 +191,7 @@ gimp_stroke_editor_constructor (GType                   type,
 
   gtk_box_set_spacing (GTK_BOX (editor), 6);
 
-  box = gtk_hbox_new (FALSE, 4);
+  box = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
