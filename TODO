@@ -418,4 +418,4 @@ script-fu
 tools
 	Make tools listen for gimage dirty signals to fix munging.
 	When a tool caches image data privately, you need to reset
-	when the image gets dirty.
+	when the image gets dirty
