@@ -835,7 +835,7 @@ xcf_save_prop (XcfInfo  *info,
 	int nguides;
 
 	guides = va_arg (args, GList*);
-	nguides = g_slist_length (guides);
+	nguides = g_list_length (guides);
 
 	size = nguides * (4 + 1);
 

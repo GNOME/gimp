@@ -443,10 +443,10 @@ iscissors_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
-  /* message_box ("Intelligent Scissors is currently not enabled\nfor use with the tile-based GIMP",
-	       NULL, NULL);
-  return;*/
-
+  message_box ("Intelligent Scissors is currently not enabled\nfor use with
+  the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);
+  return;
+  
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &iscissors->x, &iscissors->y, FALSE, TRUE);
 
@@ -989,7 +989,7 @@ get_kink (Kink *kinks,
       return kinks + index;
     }
 
-  /* I don't think this ever gets called -- Rockwalrus */
+  /* I don't think it ever gets to this point -- Rockwalrus */
   return NULL;
 }
 
@@ -1942,6 +1942,8 @@ construct_edge_map (Tool    *tool,
 	    srcPR.w = x2 - x;
 
 	    /*  Calculate the offsets into each buffer  */
+	    srcPR.x=x;
+	    srcPR.y=y;
 	    srcPR.rowstride = srcPR.bytes * block->width;
 	    srcPR.data = temp_buf_data (block) + offy * srcPR.rowstride + offx * srcPR.bytes;
 	    destPR.data = temp_buf_data (edge_buf) +
@@ -2372,7 +2374,7 @@ CR_convert (Iscissors *iscissors,
 	    int        antialias)
 {
   int indices[4];
-  GSList *list;
+  GSList * list;
   int draw_type;
   int * vals, val;
   int x, w;
