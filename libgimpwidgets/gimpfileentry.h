@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpfileentry.h
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -67,12 +67,12 @@ struct _GimpFileEntryClass
 };
 
 
-GType       gimp_file_entry_get_type    (void) G_GNUC_CONST;
+GType       gimp_file_entry_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_file_entry_new         (const gchar    *title,
-                                         const gchar    *filename,
-                                         gboolean        dir_only,
-                                         gboolean        check_valid);
+GtkWidget * gimp_file_entry_new          (const gchar    *title,
+                                          const gchar    *filename,
+                                          gboolean        dir_only,
+                                          gboolean        check_valid);
 
 gchar     * gimp_file_entry_get_filename (GimpFileEntry *entry);
 void        gimp_file_entry_set_filename (GimpFileEntry *entry,
