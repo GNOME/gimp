@@ -37,6 +37,11 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
+typedef enum {
+  PASTE,
+  PASTE_INTO,
+  PASTE_AS_NEW
+} PasteAction;  
 
 /*  The named paste dialog  */
 typedef struct _PasteNamedDlg PasteNamedDlg;
@@ -44,9 +49,8 @@ struct _PasteNamedDlg
 {
   GtkWidget   *shell;
   GtkWidget   *list;
-  int          paste_into;
-  int          paste_as_new;
   GDisplay    *gdisp;
+  PasteAction  action;
 };
 
 /*  The named buffer structure...  */
@@ -538,8 +542,8 @@ set_list_of_named_buffers (GtkWidget *list_widget)
 }
 
 static void
-named_buffer_paste_foreach (GtkWidget *w,
-			    gpointer   client_data)
+named_buffer_paste_foreach (GtkWidget  *w,
+			    gpointer    client_data)
 {
   PasteNamedDlg *pn_dlg;
   NamedBuffer *nb;
@@ -548,12 +552,24 @@ named_buffer_paste_foreach (GtkWidget *w,
     {
       pn_dlg = (PasteNamedDlg *) client_data;
       nb = (NamedBuffer *) gtk_object_get_user_data (GTK_OBJECT (w));
-      if (pn_dlg->paste_as_new)
-	edit_paste_as_new (pn_dlg->gdisp->gimage, nb->buf);
-      else
-	edit_paste (pn_dlg->gdisp->gimage,
+      switch (pn_dlg->action)
+	{
+	case PASTE:
+	  edit_paste (pn_dlg->gdisp->gimage,
 		    gimage_active_drawable (pn_dlg->gdisp->gimage),
-		    nb->buf, pn_dlg->paste_into);
+		    nb->buf, FALSE);
+	  break;
+	case PASTE_INTO:
+	  edit_paste (pn_dlg->gdisp->gimage,
+		    gimage_active_drawable (pn_dlg->gdisp->gimage),
+		    nb->buf, TRUE);
+	  break;
+	case PASTE_AS_NEW:
+	  edit_paste_as_new (pn_dlg->gdisp->gimage, nb->buf);
+	  break;
+	default:
+	  break;
+	}
     }
 }
 
@@ -565,6 +581,49 @@ named_buffer_paste_callback (GtkWidget *w,
 
   pn_dlg = (PasteNamedDlg *) client_data;
 
+  pn_dlg->action = PASTE_INTO;
+  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
+			 named_buffer_paste_foreach, client_data);
+
+  /*  Destroy the box  */
+  gtk_widget_destroy (pn_dlg->shell);
+
+  g_free (pn_dlg);
+      
+  /*  flush the display  */
+  gdisplays_flush ();
+}
+
+static void
+named_buffer_paste_into_callback (GtkWidget *w,
+				  gpointer   client_data)
+{
+  PasteNamedDlg *pn_dlg;
+
+  pn_dlg = (PasteNamedDlg *) client_data;
+
+  pn_dlg->action = PASTE_INTO;
+  gtk_container_foreach ((GtkContainer*) pn_dlg->list,
+			 named_buffer_paste_foreach, client_data);
+
+  /*  Destroy the box  */
+  gtk_widget_destroy (pn_dlg->shell);
+
+  g_free (pn_dlg);
+      
+  /*  flush the display  */
+  gdisplays_flush ();
+}
+
+static void
+named_buffer_paste_as_new_callback (GtkWidget *w,
+				    gpointer   client_data)
+{
+  PasteNamedDlg *pn_dlg;
+
+  pn_dlg = (PasteNamedDlg *) client_data;
+
+  pn_dlg->action = PASTE_AS_NEW;
   gtk_container_foreach ((GtkContainer*) pn_dlg->list,
 			 named_buffer_paste_foreach, client_data);
 
@@ -632,52 +691,29 @@ named_buffer_dialog_delete_callback (GtkWidget *w,
 }
 
 static void
-named_buffer_paste_into_update (GtkWidget *w,
-				gpointer   client_data)
-{
-  PasteNamedDlg *pn_dlg;
-
-  pn_dlg = (PasteNamedDlg *) client_data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    pn_dlg->paste_into = TRUE;
-  else
-    pn_dlg->paste_into = FALSE;
-}
-
-static void
-named_buffer_paste_as_new_update (GtkWidget *w,
-				  gpointer   client_data)
-{
-  PasteNamedDlg *pn_dlg;
-
-  pn_dlg = (PasteNamedDlg *) client_data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    pn_dlg->paste_as_new = TRUE;
-  else
-    pn_dlg->paste_as_new = FALSE;
-}
-
-static void
 paste_named_buffer (GDisplay *gdisp)
 {
-  static ActionAreaItem action_items[3] =
+  static ActionAreaItem paste_action_items[3] =
   {
     { N_("Paste"), named_buffer_paste_callback, NULL, NULL },
+    { N_("Paste Into"), named_buffer_paste_into_callback, NULL, NULL },
+    { N_("Paste As New"), named_buffer_paste_as_new_callback, NULL, NULL }
+  };
+  static ActionAreaItem other_action_items[2] =
+  {
     { N_("Delete"), named_buffer_delete_callback, NULL, NULL },
     { N_("Cancel"), named_buffer_cancel_callback, NULL, NULL }
   };
   PasteNamedDlg *pn_dlg;
   GtkWidget *vbox;
   GtkWidget *label;
-  GtkWidget *toggle;
   GtkWidget *listbox;
+  GtkWidget *bbox;
+  GtkWidget *button;
+  int i;
 
   pn_dlg = (PasteNamedDlg *) g_malloc (sizeof (PasteNamedDlg));
   pn_dlg->gdisp = gdisp;
-  pn_dlg->paste_into   = FALSE;
-  pn_dlg->paste_as_new = FALSE;
   
   pn_dlg->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (pn_dlg->shell), "paste_named_buffer", "Gimp");
@@ -712,26 +748,24 @@ paste_named_buffer (GDisplay *gdisp)
   set_list_of_named_buffers (pn_dlg->list);
   gtk_widget_show (pn_dlg->list);
 
-  toggle = gtk_check_button_new_with_label (_("Replace Current Selection"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (pn_dlg->paste_into));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) named_buffer_paste_into_update,
-		      pn_dlg);
-  gtk_widget_show (toggle);
+  bbox = gtk_hbutton_box_new ();
+  gtk_container_border_width (GTK_CONTAINER (bbox), 6);
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  for (i=0; i<3; i++)
+    {
+      button = gtk_button_new_with_label (gettext (paste_action_items[i].label));
+      gtk_container_add (GTK_CONTAINER (bbox), button);
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			  (GtkSignalFunc) paste_action_items[i].callback,
+			  pn_dlg);
+      gtk_widget_show (button);
+    }
+  gtk_widget_show (bbox);
 
-  toggle = gtk_check_button_new_with_label (_("Paste As New"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (pn_dlg->paste_as_new));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) named_buffer_paste_as_new_update,
-		      pn_dlg);
-  gtk_widget_show (toggle);
-
-  action_items[0].user_data = pn_dlg;
-  action_items[1].user_data = pn_dlg;
-  action_items[2].user_data = pn_dlg;
-  build_action_area (GTK_DIALOG (pn_dlg->shell), action_items, 3, 0);
+  other_action_items[0].user_data = pn_dlg;
+  other_action_items[1].user_data = pn_dlg;
+  build_action_area (GTK_DIALOG (pn_dlg->shell), other_action_items, 2, 1);
 
   gtk_widget_show (pn_dlg->shell);
 }
