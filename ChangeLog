@@ -1,3 +1,8 @@
+1999-07-07  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+        * app/gdisplay.c (gdisplay_set_menu_sensitivity): don't make menus
+        unreachable by forgetting to set them sensitive again.
+
 Wed Jul  7 12:53:54 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/global_edit.c: cosmetic changes

@@ -608,9 +608,8 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
 static void
 gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
 {
-  GSList      *list;
-  GArea       *ga;
-  GimpContext *context;
+  GSList *list;
+  GArea  *ga;
 
   /*  Flush the items in the displays and updates lists -
    *  but only if gdisplay has been mapped and exposed
@@ -654,9 +653,9 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
  
   /* update the gdisplay's qmask buttons */
   qmask_buttons_update (gdisp);
+
   /*  ensure the consistency of the tear-off menus  */
-  context = gimp_context_get_user ();
-  if (gimp_context_get_display (context) == gdisp)
+  if (gimp_context_get_display (gimp_context_get_user ()) == gdisp)
     gdisplay_set_menu_sensitivity (gdisp);
 }
 
@@ -1601,13 +1600,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   SET_SENSITIVE ("/Select", gdisp && lp);
   SET_SENSITIVE ("/Select/Save To Channel", !fs);
 
-  if (!gdisp)
+  SET_SENSITIVE ("/View", gdisp);
+  if (gdisp)
     {
-      SET_SENSITIVE ("/View", FALSE);
-    }
-  else
-    {
-      SET_SENSITIVE ("/View", TRUE);
       SET_STATE ("/View/Toggle Selection", !gdisp->select->hidden);
       SET_STATE ("/View/Toggle Rulers",
 		 GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
@@ -1618,16 +1613,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_STATE ("/View/Dot for dot", gdisp->dot_for_dot);
     }
 
-  if (!gdisp)
+  SET_SENSITIVE ("/Image", gdisp);
+  SET_SENSITIVE ("/Image/Colors", gdisp);
+  SET_SENSITIVE ("/Image/Channel Ops", gdisp);
+  SET_SENSITIVE ("/Image/Alpha", gdisp);
+  if (gdisp)
     {
-      SET_SENSITIVE ("/Image", FALSE);
-      SET_SENSITIVE ("/Image/Colors", FALSE);
-      SET_SENSITIVE ("/Image/Channel Ops", FALSE);
-      SET_SENSITIVE ("/Image/Alpha", FALSE);
-    }
-  else
-    {
-      SET_SENSITIVE ("/Image", TRUE);
       SET_SENSITIVE ("/Image/RGB", (base_type != RGB));
       SET_SENSITIVE ("/Image/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("/Image/Indexed", (base_type != INDEXED));
@@ -1646,20 +1637,15 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("/Image/Colors/Levels", (base_type != INDEXED));
       SET_SENSITIVE ("/Image/Colors/Desaturate", (base_type == RGB));
 
-      SET_SENSITIVE ("/Image/Alpha", TRUE);
       SET_SENSITIVE ("/Image/Alpha/Add Alpha Channel",
 		     !fs && !aux && lp && !lm && !alpha);
 
       SET_SENSITIVE ("/Image/Channel Ops/Offset", lp);
     }
 
-  if (!gdisp)
+  SET_SENSITIVE ("/Layers/Stack", gdisp);
+  if (gdisp)
     {
-      SET_SENSITIVE ("/Layers/Stack", FALSE);
-    }
-  else
-    {
-      SET_SENSITIVE ("/Layers/Stack", TRUE);
       SET_SENSITIVE ("/Layers/Stack/Previous Layer",
 		     !fs && !aux && lp && lind > 0);
       SET_SENSITIVE ("/Layers/Stack/Next Layer",
@@ -1683,6 +1669,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 		 gdisp && !fs && !aux && lp && !lm && !alpha);
 
   SET_SENSITIVE ("/Filters", gdisp && lp);
+
   SET_SENSITIVE ("/Script-Fu", gdisp && lp);
 
 #undef SET_STATE
