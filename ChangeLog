@@ -1,3 +1,11 @@
+2005-02-21  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD:
+
+	* libgimpthumb/gimpthumb-utils.c (gimp_thumb_init): workaround for
+	bug #167973: if no valid home directory exists, use the folder for
+	temporary files to store thumbnails.
+
 2005-02-19  Manish Singh  <yosh@gimp.org>
 
 	Merged from HEAD:

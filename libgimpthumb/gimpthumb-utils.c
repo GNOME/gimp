@@ -105,9 +105,31 @@ gimp_thumb_init (const gchar *creator,
   if (gimp_thumb_initialized)
     gimp_thumb_exit ();
 
-  thumb_dir = (thumb_basedir ?
-               g_strdup (thumb_basedir) :
-               g_build_filename (g_get_home_dir(), ".thumbnails", NULL));
+  if (thumb_basedir)
+    {
+      thumb_dir = g_strdup (thumb_basedir);
+    }
+  else
+    {
+      const gchar *home_dir = g_get_home_dir ();
+
+      if (home_dir && g_file_test (home_dir, G_FILE_TEST_IS_DIR))
+        {
+          thumb_dir = g_build_filename (home_dir, ".thumbnails", NULL);
+        }
+      else
+        {
+          gchar *name =
+            g_filename_to_utf8 (g_get_tmp_dir (), -1, NULL, NULL, NULL);
+
+          g_message (_("Cannot determine a valid home directory.\n"
+                       "Thumbnails will be stored in the folder for "
+                       "temporary files (%s) instead."), name);
+          g_free (name);
+
+          thumb_dir = g_build_filename (g_get_tmp_dir (), ".thumbnails", NULL);
+        }
+    }
 
   enum_class = g_type_class_ref (GIMP_TYPE_THUMB_SIZE);
 
