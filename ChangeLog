@@ -15,7 +15,7 @@
 	* app/core/gimppalette-import.[ch] (gimp_palette_import_from_gradient):
 	added "gboolean reverse".
 
-	* app/paint/paint-enums.[ch]: removed enum GimpGradientRepeatMode
+	* app/paint/paint-enums.[ch]: removed enum GimpGradientPaintMode
 	since it is identical to GimpRepeatMode, except for the now
 	obsolete ONCE_BACKWARD value.
 
