@@ -1,3 +1,7 @@
+2001-03-09  Zach Beane  <xach@mint.net>
+
+	* TODO.xml: Added "Open into layer" entry.
+
 2001-03-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
