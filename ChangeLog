@@ -1,3 +1,9 @@
+2002-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig.h:
+	s/gimp_config_equal/gimp_config_is_equal_to/ to match the
+	implementation.
+
 2002-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user_install.c: don't access the global base_config

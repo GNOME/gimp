@@ -87,7 +87,7 @@ gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
                                                  gint          nest_level);
 
 GObject     * gimp_config_duplicate             (GObject      *object);
-gboolean      gimp_config_equal                 (GObject      *a,
+gboolean      gimp_config_is_equal_to           (GObject      *a,
                                                  GObject      *b);
 
 void          gimp_config_add_unknown_token     (GObject      *object,
