@@ -370,6 +370,7 @@ gimp_color_picker_tool_info_response (GtkWidget           *widget,
                                       GimpColorPickerTool *picker_tool)
 {
   gtk_widget_destroy (picker_tool->dialog);
+
   picker_tool->dialog       = NULL;
   picker_tool->color_area   = NULL;
   picker_tool->color_frame1 = NULL;
@@ -389,5 +390,8 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
                               sample_type, color, color_index);
 
-  gtk_window_present (GTK_WINDOW (picker_tool->dialog));
+  if (GTK_WIDGET_VISIBLE (picker_tool->dialog))
+    gdk_window_show (picker_tool->dialog->window);
+  else
+    gtk_widget_show (picker_tool->dialog);
 }

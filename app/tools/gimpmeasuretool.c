@@ -820,7 +820,10 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
           gtk_label_set_text (GTK_LABEL (mtool->unit_label[1]),  " ");
         }
 
-      gtk_window_present (GTK_WINDOW (mtool->dialog));
+      if (GTK_WIDGET_VISIBLE (mtool->dialog))
+        gdk_window_show (mtool->dialog->window);
+      else
+        gtk_widget_show (mtool->dialog);
     }
 }
 
