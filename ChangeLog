@@ -1,3 +1,8 @@
+1999-10-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo_history.c: made it a bit bigger and sprinkled some
+	pixmaps.
+
 Mon Oct  4 17:46:50 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/unittest/parse_gimprc.c (show_gimprc_funcs_tab): Display

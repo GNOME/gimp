@@ -30,9 +30,6 @@
  *  - scroll to keep current selection visible.  Can some GTK guru
  *         help out?
  *
- *  - window looks butt-ugly.  As usual, my (lack) of graphic design
- *         skills are showing through.  Someone please prettify it!
- *
  *  - undo names are less than useful.  This isn't a problem with
  *         undo_history.c itself, more with the rather chaotic way
  *         people have of picking an undo type when pushing undos, and
@@ -47,25 +44,25 @@
  *
  */
 
-
 #include <gtk/gtk.h>
 #include "gimpui.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps/raise.xpm"
+#include "pixmaps/lower.xpm"
+#include "pixmaps/yes.xpm"
 
-
-
-typedef struct {
-    GImage    *gimage;		/* image we're tracking undo info for */
-    GtkWidget *shell;		/* dialog window */
-    GtkWidget *clist;		/* list of undo actions */
-    GtkWidget *undo_button;	/* button to undo an operation */
-    GtkWidget *redo_button;	/* button to redo an operation */
-    int        old_selection;   /* previous selection in the clist */
+typedef struct
+{
+  GImage    *gimage;	      /* image we're tracking undo info for */
+  GtkWidget *shell;	      /* dialog window */
+  GtkWidget *clist;	      /* list of undo actions */
+  GtkWidget *undo_button;     /* button to undo an operation */
+  GtkWidget *redo_button;     /* button to redo an operation */
+  int        old_selection;   /* previous selection in the clist */
 } undo_history_st;
-
 
 
 /*
@@ -118,18 +115,28 @@ typedef struct {
  * --austin, 19/9/1999
  */
 
+/**************************************************************/
+/* Static Data */
+
+static GdkPixmap *undo_pixmap = NULL;
+static GdkBitmap *undo_mask   = NULL;
+
+static GdkPixmap *redo_pixmap = NULL;
+static GdkBitmap *redo_mask   = NULL;
+
+static GdkPixmap *clean_pixmap = NULL;
+static GdkBitmap *clean_mask   = NULL;
 
 /**************************************************************/
 /* Local functions */
 
-
 /* close button clicked */
 static void
-undo_history_close_callback (GtkWidget *w,
+undo_history_close_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-    undo_history_st *st = data;
-    gtk_widget_hide (GTK_WIDGET (st->shell));
+  undo_history_st *st = data;
+  gtk_widget_hide (GTK_WIDGET (st->shell));
 }
 
 /* The gimage and shell destroy callbacks are split so we can:
@@ -141,46 +148,46 @@ undo_history_close_callback (GtkWidget *w,
 
 /* gimage destroyed */
 static void
-undo_history_gimage_destroy_callback (GtkWidget *w, gpointer data)
+undo_history_gimage_destroy_callback (GtkWidget *widget,
+				      gpointer   data)
 {
-    undo_history_st *st = data;
+  undo_history_st *st = data;
 
-    st->gimage = NULL;  /* not allowed to use this any more */
-    gtk_widget_destroy (GTK_WIDGET (st->shell));
-    /* which continues in the function below: */
+  st->gimage = NULL;  /* not allowed to use this any more */
+  gtk_widget_destroy (GTK_WIDGET (st->shell));
+  /* which continues in the function below: */
 }
 
 static void
-undo_history_shell_destroy_callback (GtkWidget *w, gpointer data)
+undo_history_shell_destroy_callback (GtkWidget *widget,
+				     gpointer   data)
 {
-    undo_history_st *st = data;
+  undo_history_st *st = data;
 
-    if (st->gimage)
-	gtk_signal_disconnect_by_data (GTK_OBJECT (st->gimage), st);
-    g_free (st);
+  if (st->gimage)
+    gtk_signal_disconnect_by_data (GTK_OBJECT (st->gimage), st);
+  g_free (st);
 }
-
-
 
 /* undo button clicked */
 static void
-undo_history_undo_callback (GtkWidget *widget, gpointer data)
+undo_history_undo_callback (GtkWidget *widget,
+			    gpointer   data)
 {
-    undo_history_st *st = data;
+  undo_history_st *st = data;
 
-    undo_pop (st->gimage);
+  undo_pop (st->gimage);
 }
 
 /* redo button clicked */
 static void
-undo_history_redo_callback (GtkWidget *widget, gpointer data)
+undo_history_redo_callback (GtkWidget *widget,
+			    gpointer   data)
 {
-    undo_history_st *st = data;
+  undo_history_st *st = data;
 
-    undo_redo (st->gimage);
+  undo_redo (st->gimage);
 }
-
-
 
 
 /* Always start clist with dummy entry for image state before
@@ -188,214 +195,221 @@ undo_history_redo_callback (GtkWidget *widget, gpointer data)
 static void
 undo_history_prepend_special (GtkCList *clist)
 {
-    char *name = _("[ base image ]");
-    char *namelist[2];
+  gchar *name = _("[ base image ]");
+  gchar *namelist[3];
+  gint   row;
 
-    namelist[0] = NULL;
-    namelist[1] = name;
+  namelist[0] = NULL;
+  namelist[1] = NULL;
+  namelist[2] = name;
 
-    gtk_clist_prepend (clist, namelist);
+  row = gtk_clist_prepend (clist, namelist);
 }
-
 
 
 /* Recalculate which of the undo and redo buttons are meant to be sensitive */
 static void
-undo_history_set_sensitive (undo_history_st *st, int rows)
+undo_history_set_sensitive (undo_history_st *st,
+			    int              rows)
 {
-    gtk_widget_set_sensitive (st->undo_button, (st->old_selection != 0));
-    gtk_widget_set_sensitive (st->redo_button, (st->old_selection != rows-1));
+  gtk_widget_set_sensitive (st->undo_button, (st->old_selection != 0));
+  gtk_widget_set_sensitive (st->redo_button, (st->old_selection != rows-1));
 }
 
 
 /* Track undo_event signals, telling us of changes to the undo and
  * redo stacks. */
 static void
-undo_history_undo_event (GtkWidget *widget, int ev, gpointer data)
+undo_history_undo_event (GtkWidget *widget,
+			 int        ev,
+			 gpointer   data)
 {
-    undo_history_st *st = data;
-    undo_event_t event = ev;
-    const char *name;
-    char *namelist[2];
-    GList *list;
-    int cur_selection;
-    GtkCList *clist;
+  undo_history_st *st = data;
+  undo_event_t event = ev;
+  const char *name;
+  char *namelist[3];
+  GList *list;
+  int cur_selection;
+  GtkCList *clist;
+  gint row;
 
-    list = GTK_CLIST(st->clist)->selection;
-    g_return_if_fail (list != NULL);
-    cur_selection = GPOINTER_TO_INT (list->data);
+  list = GTK_CLIST (st->clist)->selection;
+  g_return_if_fail (list != NULL);
+  cur_selection = GPOINTER_TO_INT (list->data);
 
-    clist = GTK_CLIST (st->clist); 
+  clist = GTK_CLIST (st->clist); 
 
-    /* block select events */
-    gtk_signal_handler_block_by_data (GTK_OBJECT (st->clist), st);
+  /* block select events */
+  gtk_signal_handler_block_by_data (GTK_OBJECT (st->clist), st);
 
-    switch (event) {
+  switch (event)
+    {
     case UNDO_PUSHED:
-	/* clip everything after the current selection (ie, the
-         * actions that are from the redo stack) */
-	gtk_clist_freeze (clist);
-	while (clist->rows > cur_selection + 1)
-	    gtk_clist_remove (clist, cur_selection + 1);
+      /* clip everything after the current selection (ie, the
+       * actions that are from the redo stack) */
+      gtk_clist_freeze (clist);
+      while (clist->rows > cur_selection + 1)
+	gtk_clist_remove (clist, cur_selection + 1);
 
-	/* find out what's new */
-	name = undo_get_undo_name (st->gimage);
-	namelist[0] = NULL;
-	namelist[1] = (char *) name;
-	gtk_clist_append (clist, namelist);
-
-	g_assert (clist->rows == cur_selection+2);
-
-	/* always force selection to bottom, and scroll to it */
-	gtk_clist_select_row (clist, clist->rows-1, -1);
-	gtk_clist_moveto (clist, clist->rows-1, 0, 1.0, 0.0);
-	gtk_clist_thaw (clist);
-	cur_selection = clist->rows-1;
-	break;
-
+      /* find out what's new */
+      name = undo_get_undo_name (st->gimage);
+      namelist[0] = NULL;
+      namelist[1] = NULL;
+      namelist[2] = (char *) name;
+      row = gtk_clist_append (clist, namelist);
+      g_assert (clist->rows == cur_selection+2);
+ 
+      /* always force selection to bottom, and scroll to it */
+      gtk_clist_select_row (clist, clist->rows-1, -1);
+      gtk_clist_moveto (clist, clist->rows-1, 0, 1.0, 0.0);
+      gtk_clist_thaw (clist);
+      cur_selection = clist->rows-1;
+      break;
 
     case UNDO_EXPIRED:
-	/* remove earliest row, but not our special first one */
-	gtk_clist_remove (clist, 1);
-	break;
-
+      /* remove earliest row, but not our special first one */
+      gtk_clist_remove (clist, 1);
+      break;
 
     case UNDO_POPPED:
-	/* move hilight up one */
-	g_return_if_fail (cur_selection >= 1);
-	gtk_clist_select_row (clist, cur_selection-1, -1);
-	cur_selection--;
-	break;
+      /* move hilight up one */
+      g_return_if_fail (cur_selection >= 1);
+      gtk_clist_select_row (clist, cur_selection-1, -1);
+      cur_selection--;
+      break;
 
- 
-    case UNDO_REDO:
-	/* move hilight down one */
-	g_return_if_fail (cur_selection+1 < clist->rows);
-	gtk_clist_select_row (clist, cur_selection+1, -1);
-	cur_selection++;
-	break;
-
+     case UNDO_REDO:
+       /* move hilight down one */
+       g_return_if_fail (cur_selection+1 < clist->rows);
+       gtk_clist_select_row (clist, cur_selection+1, -1);
+       cur_selection++;
+       break;
 
     case UNDO_FREE:
-	/* clear all info other that the special first line */
-	gtk_clist_freeze (clist);
-	gtk_clist_clear (clist);
-	undo_history_prepend_special (clist);
-	gtk_clist_thaw (clist);
-	cur_selection = 0;
-	break;
+      /* clear all info other that the special first line */
+      gtk_clist_freeze (clist);
+      gtk_clist_clear (clist);
+      undo_history_prepend_special (clist);
+      gtk_clist_thaw (clist);
+      cur_selection = 0;
+      break;
     }
 
-    gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->clist), st);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->clist), st);
 
-    st->old_selection = cur_selection;
-    undo_history_set_sensitive (st, clist->rows);
-}
-
-
-
-static void
-undo_history_select_row_callback (GtkWidget *w,
-				  gint row, gint column, gpointer event,
-				  gpointer data)
-{
-    undo_history_st *st = data;
-    int cur_selection;
-
-    cur_selection = row;
-
-    if (cur_selection == st->old_selection)
-	return;
-
-    /* Disable undo_event signals while we do these multiple undo or
-     * redo actions. */
-    gtk_signal_handler_block_by_func (GTK_OBJECT (st->gimage),
-				      undo_history_undo_event, st);
-
-    while (cur_selection < st->old_selection)
-    {
-	undo_pop (st->gimage);
-	st->old_selection--;
-    }
-    while (cur_selection > st->old_selection)
-    {
-	undo_redo (st->gimage);
-	st->old_selection++;
-    }
-
-    gtk_signal_handler_unblock_by_func (GTK_OBJECT (st->gimage),
-					undo_history_undo_event, st);    
-
-    undo_history_set_sensitive (st, GTK_CLIST(st->clist)->rows);
+  st->old_selection = cur_selection;
+  undo_history_set_sensitive (st, clist->rows);
 }
 
 
 static void
-undo_history_clean_callback (GtkWidget *w, gpointer data)
+undo_history_select_row_callback (GtkWidget *widget,
+				  gint       row,
+				  gint       column,
+				  gpointer   event,
+				  gpointer   data)
 {
-    undo_history_st *st = data;
-    int i;
-    int nrows;
-    GtkCList *clist;
+  undo_history_st *st = data;
+  int cur_selection;
 
-    if (st->gimage->dirty != 0)
-	return;
+  cur_selection = row;
 
-    /* The image is clean, so this is the version on disc.  Remove the
-     * clean star from all other entries, and add it to the current
-     * one. */
+  if (cur_selection == st->old_selection)
+    return;
 
-    /* XXX currently broken, since "clean" signal is emitted before
-     * UNDO_POPPED event.  I don't want to change the order of the
-     * signals.  So I'm a little stuck. --austin */
+  /* Disable undo_event signals while we do these multiple undo or
+   * redo actions. */
+  gtk_signal_handler_block_by_func (GTK_OBJECT (st->gimage),
+				    undo_history_undo_event, st);
 
-    clist = GTK_CLIST (st->clist);
-    nrows = clist->rows;
+  while (cur_selection < st->old_selection)
+    {
+      undo_pop (st->gimage);
+      st->old_selection--;
+    }
+  while (cur_selection > st->old_selection)
+    {
+      undo_redo (st->gimage);
+      st->old_selection++;
+    }
 
-    gtk_clist_freeze (clist);
-    for (i=0; i < nrows; i++)
-	gtk_clist_set_text (clist, i, 0, NULL);
-    gtk_clist_set_text (clist, st->old_selection, 0, "*");
-    gtk_clist_thaw (clist);
+  gtk_signal_handler_unblock_by_func (GTK_OBJECT (st->gimage),
+				      undo_history_undo_event, st);    
+
+  undo_history_set_sensitive (st, GTK_CLIST(st->clist)->rows);
 }
 
+
+static void
+undo_history_clean_callback (GtkWidget *widget,
+			     gpointer   data)
+{
+  undo_history_st *st = data;
+  int i;
+  int nrows;
+  GtkCList *clist;
+
+  if (st->gimage->dirty != 0)
+    return;
+
+  /* The image is clean, so this is the version on disc.  Remove the
+   * clean star from all other entries, and add it to the current
+   * one. */
+
+  /* XXX currently broken, since "clean" signal is emitted before
+   * UNDO_POPPED event.  I don't want to change the order of the
+   * signals.  So I'm a little stuck. --austin */
+
+  clist = GTK_CLIST (st->clist);
+  nrows = clist->rows;
+
+  gtk_clist_freeze (clist);
+  for (i=0; i < nrows; i++)
+    gtk_clist_set_text (clist, i, 1, NULL);
+  gtk_clist_set_pixmap (clist, st->old_selection, 1,
+			clean_pixmap, clean_mask);
+  gtk_clist_thaw (clist);
+}
 
 
 /* Used to build up initial contents of clist */
 static int
-undo_history_init_undo (const char *undoitemname, void *data)
+undo_history_init_undo (const char *undoitemname,
+			void       *data)
 {
-    undo_history_st *st = data;
-    char *namelist[2];
+  undo_history_st *st = data;
+  char *namelist[3];
+  gint row;
 
-    namelist[0] = NULL;
-    namelist[1] = (char *) undoitemname;
-    gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
+  namelist[0] = NULL;
+  namelist[1] = NULL;
+  namelist[2] = (char *) undoitemname;
+  row = gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
 
-    /* force selection to bottom */
-    gtk_clist_select_row (GTK_CLIST (st->clist),
-			  GTK_CLIST (st->clist)->rows - 1, -1);
-    st->old_selection = GTK_CLIST(st->clist)->rows - 1;
+  /* force selection to bottom */
+  gtk_clist_select_row (GTK_CLIST (st->clist),
+			GTK_CLIST (st->clist)->rows - 1, -1);
+  st->old_selection = GTK_CLIST (st->clist)->rows - 1;
 
-    return 0;
+  return 0;
 }
 
 /* Ditto, but doesn't change selection */
 static int
-undo_history_init_redo (const char *undoitemname, void *data)
+undo_history_init_redo (const char *undoitemname,
+			void       *data)
 {
-    undo_history_st *st = data;
-    char *namelist[2];
+  undo_history_st *st = data;
+  char *namelist[3];
+  gint row;
 
-    namelist[0] = NULL;
-    namelist[1] = (char *) undoitemname;
-    gtk_clist_append (GTK_CLIST (st->clist), namelist);
+  namelist[0] = NULL;
+  namelist[1] = NULL;
+  namelist[2] = (char *) undoitemname;
+  row = gtk_clist_append (GTK_CLIST (st->clist), namelist);
 
-    return 0;
+  return 0;
 }
-
-
-
 
 
 /*************************************************************/
@@ -404,100 +418,164 @@ undo_history_init_redo (const char *undoitemname, void *data)
 GtkWidget *
 undo_history_new (GImage *gimage)
 {
-    undo_history_st *st;
-    GtkWidget *vbox;
-    GtkWidget *hbox;
-    GtkWidget *button;
-    GtkWidget *scrolled_win;
+  undo_history_st *st;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *abox;
+  GtkWidget *hbox2;
+  GtkWidget *pixmapwid;
+  GtkWidget *label;
+  GtkWidget *scrolled_win;
 
-    st = g_new0 (undo_history_st, 1);
-    st->gimage = gimage;
+  st = g_new0 (undo_history_st, 1);
+  st->gimage = gimage;
 
-    /* gimage signals */
-    gtk_signal_connect (GTK_OBJECT (gimage), "undo_event",
-			undo_history_undo_event, st);
-    gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
-			undo_history_gimage_destroy_callback, st);
-    gtk_signal_connect (GTK_OBJECT (gimage), "clean",
-			undo_history_clean_callback, st);
+  /*  gimage signals  */
+  gtk_signal_connect (GTK_OBJECT (gimage), "undo_event",
+		      undo_history_undo_event, st);
+  gtk_signal_connect (GTK_OBJECT (gimage), "destroy",
+		      undo_history_gimage_destroy_callback, st);
+  gtk_signal_connect (GTK_OBJECT (gimage), "clean",
+		      undo_history_clean_callback, st);
 
-    /*  The shell and main vbox  */
+  /*  The shell and main vbox  */
+  {
+    char *title = g_strdup_printf (_("%s: undo history"),
+				   g_basename (gimage_filename (gimage)));
+    st->shell = gimp_dialog_new (title, "undo_history",
+				 gimp_standard_help_func,
+				 "dialogs/undo_history.html",
+				 GTK_WIN_POS_NONE,
+				 FALSE, TRUE, FALSE,
+
+				 _("Close"), undo_history_close_callback,
+				 st, NULL, TRUE, TRUE,
+
+				 NULL);
+    g_free (title);
+  }
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (st->shell)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  gtk_signal_connect (GTK_OBJECT (st->shell), "destroy",
+		      GTK_SIGNAL_FUNC (undo_history_shell_destroy_callback),
+		      st);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_usize (GTK_WIDGET (scrolled_win), 192, -1);
+
+  /* clist of undo actions */
+  st->clist = gtk_clist_new (3);
+  gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
+  gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
+  gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, 1);
+  gtk_clist_set_column_width (GTK_CLIST (st->clist), 1, 16);
+  gtk_clist_set_column_min_width (GTK_CLIST (st->clist), 2, 64);
+
+  /* allocate the pixmaps if not already done */
+  if (!clean_pixmap)
     {
-      char *title = g_strdup_printf (_("%s: undo history"),
-				     g_basename (gimage_filename (gimage)));
-      st->shell = gimp_dialog_new (title, "undo_history",
-				   gimp_standard_help_func,
-				   "dialogs/undo_history.html",
-				   GTK_WIN_POS_NONE,
-				   FALSE, TRUE, FALSE,
+      GtkStyle *style;
 
-				   _("Close"), undo_history_close_callback,
-				   st, NULL, TRUE, TRUE,
+      gtk_widget_realize (st->shell);
+      style = gtk_widget_get_style (st->shell);
 
-				   NULL);
-      g_free (title);
-    }
+      undo_pixmap =
+	gdk_pixmap_create_from_xpm_d (st->shell->window,
+				      &undo_mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      raise_xpm);
+      redo_pixmap =
+	gdk_pixmap_create_from_xpm_d (st->shell->window,
+				      &redo_mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      lower_xpm);
+      clean_pixmap =
+	gdk_pixmap_create_from_xpm_d (st->shell->window,
+				      &clean_mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      yes_xpm);
+   }
 
-    vbox = gtk_vbox_new (FALSE, 1);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (st->shell)->vbox),
-			vbox, TRUE, TRUE, 0);
-    gtk_widget_show (vbox);
+  /* work out the initial contents */
+  undo_map_over_undo_stack (st->gimage, undo_history_init_undo, st);
+  undo_map_over_redo_stack (st->gimage, undo_history_init_redo, st);
+  undo_history_prepend_special (GTK_CLIST (st->clist));
 
-    gtk_signal_connect (GTK_OBJECT (st->shell), "destroy",
-			GTK_SIGNAL_FUNC (undo_history_shell_destroy_callback),
-			st);
-    
-    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
 
-    /* clist of undo actions */
-    st->clist = gtk_clist_new (2);
-    gtk_clist_set_shadow_type (GTK_CLIST (st->clist), GTK_SHADOW_IN);
-    gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
-    gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
-    gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, 52);
+  gtk_signal_connect (GTK_OBJECT (st->clist), "select_row",
+		      undo_history_select_row_callback, st);
 
-    /* work out the initial contents */
-    undo_map_over_undo_stack (st->gimage, undo_history_init_undo, st);
-    undo_map_over_redo_stack (st->gimage, undo_history_init_redo, st);
-    undo_history_prepend_special (GTK_CLIST (st->clist));
+  gtk_widget_show (GTK_WIDGET (st->clist));
 
-    st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
+  gtk_widget_show (GTK_WIDGET (scrolled_win));
+  gtk_container_add (GTK_CONTAINER (scrolled_win), st->clist);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+				  GTK_POLICY_NEVER,
+				  GTK_POLICY_ALWAYS);
 
-    gtk_signal_connect (GTK_OBJECT (st->clist), "select_row",
-			undo_history_select_row_callback, st);
-    
-    gtk_widget_show (GTK_WIDGET (st->clist));
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-    gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
-    gtk_widget_show (GTK_WIDGET (scrolled_win));
-    gtk_container_add (GTK_CONTAINER (scrolled_win), st->clist);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				    GTK_POLICY_AUTOMATIC,
-				    GTK_POLICY_ALWAYS);
+  button = gtk_button_new ();
+  st->undo_button = button;
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      undo_history_undo_callback, st);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-    hbox = gtk_hbox_new (FALSE, 8);
-    gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (button), abox);
 
-    button = gtk_button_new_with_label (_("<< Undo"));
-    st->undo_button = button;
-    gtk_widget_show (GTK_WIDGET (button));
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			undo_history_undo_callback, st);
-    gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (abox), hbox2);
 
-    button = gtk_button_new_with_label (_("Redo >>"));
-    st->redo_button = button;
-    gtk_widget_show (GTK_WIDGET (button));
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			undo_history_redo_callback, st);
-    gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  pixmapwid = gtk_pixmap_new (undo_pixmap, undo_mask);
+  gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
+  gtk_widget_show (pixmapwid);
+  
+  label = gtk_label_new (_("Undo"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-    undo_history_set_sensitive (st, GTK_CLIST (st->clist)->rows);
+  gtk_widget_show (GTK_WIDGET (hbox2));
+  gtk_widget_show (GTK_WIDGET (abox));
+  gtk_widget_show (GTK_WIDGET (button));
 
-    gtk_widget_show (GTK_WIDGET (st->shell));
+  button = gtk_button_new ();
+  st->redo_button = button;
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      undo_history_redo_callback, st);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-    return st->shell;
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (button), abox);
+
+  hbox2 = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (abox), hbox2);
+
+  pixmapwid = gtk_pixmap_new (redo_pixmap, redo_mask);
+  gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
+  gtk_widget_show (pixmapwid);
+
+  label = gtk_label_new (_("Redo"));
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_widget_show (GTK_WIDGET (hbox2));
+  gtk_widget_show (GTK_WIDGET (abox));
+  gtk_widget_show (GTK_WIDGET (button));
+
+  undo_history_set_sensitive (st, GTK_CLIST (st->clist)->rows);
+
+  gtk_widget_show (GTK_WIDGET (st->shell));
+
+  return st->shell;
 }
