@@ -422,6 +422,9 @@ text_create_dialog (TextTool *text_tool)
   gtk_window_set_title (GTK_WINDOW (text_tool->shell), "Text Tool");
   gtk_window_set_policy (GTK_WINDOW (text_tool->shell), FALSE, TRUE, TRUE);
   gtk_window_position (GTK_WINDOW (text_tool->shell), GTK_WIN_POS_MOUSE);
+  gtk_widget_set (GTK_WIDGET (text_tool->shell),
+		  "GtkWindow::auto_shrink", FALSE,
+		  NULL);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (text_tool->shell), "delete_event",

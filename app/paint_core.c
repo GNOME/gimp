@@ -999,6 +999,14 @@ paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
      int brush_opacity;
 {
   PixelRegion srcPR, maskPR;
+  int x, y;
+  int xoff, yoff;
+
+  x = (int) paint_core->curx - (brush_mask->width >> 1);
+  y = (int) paint_core->cury - (brush_mask->height >> 1);
+  xoff = (x < 0) ? -x : 0;
+  yoff = (y < 0) ? -y : 0;
+
 
   /*  combine the canvas buf and the brush mask to the canvas buf  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1013,7 +1021,7 @@ paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
   maskPR.w = srcPR.w;
   maskPR.h = srcPR.h;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
-  maskPR.data = mask_buf_data (brush_mask);
+  maskPR.data = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, &maskPR, brush_opacity);
