@@ -3,6 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
+gimpdatadir=@gimpdatadir@
+gimplibdir=@gimpplugindir@
+
 Name: GIMP
 Description: GIMP Library
 Version: @VERSION@
