@@ -2,7 +2,7 @@
 
 	* app/gui/plug-in-menus.c (plug_in_menus_init): only call
 	bind_textdomain_codeset() when it is available. Spotted by
-	Reinhard Geissler (bug #131215).
+	Reinhard Geisler (bug #131215).
 
 2004-01-12  Michael Natterer  <mitch@gimp.org>
 
