@@ -416,7 +416,7 @@ find_contiguous_segment (GimpImage     *gimage,
   guchar *m;
   guchar  s_color[MAX_CHANNELS];
   guchar  diff;
-  gint    col_bytes = bytes;;
+  gint    col_bytes = bytes;
   Tile   *s_tile    = NULL;
   Tile   *m_tile    = NULL;
 
