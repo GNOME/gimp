@@ -1,5 +1,16 @@
 2002-06-09  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/imagerc
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: register the new "Swap" and
+	"Default" icons in "menu" size.
+
+	* app/gui/menus.c: use them here.
+
+	* app/widgets/gimptoolbox-color-area.c: changed accordingly.
+
+2002-06-09  Michael Natterer  <mitch@gimp.org>
+
 	Paint cleanup:
 
 	* app/paint/gimpairbrush.c

@@ -199,6 +199,19 @@ style "gimp-icons"
       { "images/stock-qmask-on-16.png", *, *, * }
     }
 
+  # Toolbox icons
+  #
+  stock["gimp-default-colors"] =
+    {
+      { "images/stock-default-colors-12.png", *, *, "gtk-menu" },
+      { "images/stock-default-colors-12.png", *, *, * }
+    }
+  stock["gimp-swap-colors"] =
+    {
+      { "images/stock-swap-colors-12.png", *, *, "gtk-menu" },
+      { "images/stock-swap-colors-12.png", *, *, * }
+    }
+
   # X & Y linked or not
   #
   stock["gimp-hchain"] =

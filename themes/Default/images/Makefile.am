@@ -60,9 +60,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-info-24.png			\
-	stock-warning-24.png			\
-	stock-default-colors-12.png		\
-	stock-swap-colors-12.png
+	stock-warning-24.png
 
 STOCK_MENU_IMAGES = \
 	stock-convert-grayscale-16.png		\
@@ -80,6 +78,8 @@ STOCK_MENU_IMAGES = \
 	stock-navigation-16.png			\
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
+	stock-default-colors-12.png		\
+	stock-swap-colors-12.png		\
 	stock-tool-options-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\

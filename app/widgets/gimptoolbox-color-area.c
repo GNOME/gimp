@@ -323,7 +323,7 @@ color_area_draw (GimpContext *context)
 
   /*  draw the default colors pixbuf  */
   pixbuf = gtk_widget_render_icon (color_area, GIMP_STOCK_DEFAULT_COLORS,
-                                   GTK_ICON_SIZE_BUTTON, NULL);
+                                   GTK_ICON_SIZE_MENU, NULL);
   w = gdk_pixbuf_get_width  (pixbuf);
   h = gdk_pixbuf_get_height (pixbuf);
   gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,
@@ -334,7 +334,7 @@ color_area_draw (GimpContext *context)
 
   /*  draw the swap colors pixbuf  */
   pixbuf = gtk_widget_render_icon (color_area, GIMP_STOCK_SWAP_COLORS,
-                                   GTK_ICON_SIZE_BUTTON, NULL);
+                                   GTK_ICON_SIZE_MENU, NULL);
   w = gdk_pixbuf_get_width  (pixbuf);
   h = gdk_pixbuf_get_height (pixbuf);
   gdk_pixbuf_render_to_drawable_alpha (pixbuf, color_area->window,

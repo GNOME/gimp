@@ -53,9 +53,6 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_PATH_STROKE          "gimp-path-stroke"
 
-#define GIMP_STOCK_DEFAULT_COLORS       "gimp-default-colors"
-#define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
-
 
 /*  only in menu size:  */
 
@@ -74,6 +71,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_NAVIGATION           "gimp-navigation"
 #define GIMP_STOCK_QMASK_OFF            "gimp-qmask-off"
 #define GIMP_STOCK_QMASK_ON             "gimp-qmask-on"
+
+#define GIMP_STOCK_DEFAULT_COLORS       "gimp-default-colors"
+#define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
 
 #define GIMP_STOCK_TOOL_OPTIONS         "gimp-tool-options"
 #define GIMP_STOCK_INFO                 "gimp-info"
