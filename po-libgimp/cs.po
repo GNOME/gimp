@@ -1,15 +1,16 @@
 # Translation of gimp-libgimp to Czech
 # Copyright (C) 2000,2003 Free Software Foundation, Inc.
+# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # Stanislav Brabec <utx@penguin.cz>, 2000
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
-# Miloslav Trmac <mitr@volny.cz>, 2003.
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2003-12-12 18:43+0100\n"
+"POT-Creation-Date: 2004-01-24 04:09+0100\n"
+"PO-Revision-Date: 2004-01-25 03:40+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -137,24 +138,24 @@ msgstr "Přidat alfa kanál"
 msgid "Confirm Save"
 msgstr "Potvrzení zápisu"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Potvrzení"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Exportovat soubor"
 
-#: libgimp/gimpexport.c:460
+#: libgimp/gimpexport.c:461
 msgid "_Ignore"
 msgstr "_Ignorovat"
 
-#: libgimp/gimpexport.c:462
+#: libgimp/gimpexport.c:463
 msgid "_Export"
 msgstr "_Exportovat"
 
 #. the headline
-#: libgimp/gimpexport.c:484
+#: libgimp/gimpexport.c:485
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -163,11 +164,11 @@ msgstr ""
 "Váš obrázek by měl být před zápisem exportován jako %s z následujících "
 "důvodů:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by neměla změnit původní obrázek."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -176,7 +177,7 @@ msgstr ""
 "Chcete zapsat masku vrstev jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -259,36 +260,36 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpmodule/gimpmodule.c:178
+#: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Načítá se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
-#: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
-#: libgimpmodule/gimpmodule.c:471
+#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
+#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
+#: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Chyba při načítání modulu '%s': %s"
 
-#: libgimpmodule/gimpmodule.c:293
+#: libgimpmodule/gimpmodule.c:283
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynechává se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:442
+#: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:443
+#: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
 msgstr "Načteno"
 
-#: libgimpmodule/gimpmodule.c:444
+#: libgimpmodule/gimpmodule.c:426
 msgid "Load failed"
 msgstr "Načtení selhalo"
 
-#: libgimpmodule/gimpmodule.c:445
+#: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
 msgstr "Nenačteno"
 
@@ -360,15 +361,15 @@ msgstr "Hodnota"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr "Červená (Red)"
+msgstr "Červená"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr "Zelená (Green)"
+msgstr "Zelená"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr "Modrá (Blue)"
+msgstr "Modrá"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
@@ -490,11 +491,11 @@ msgstr "Více..."
 msgid "Unit Selection"
 msgstr "Výběr jednotek"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Jednotka"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Faktor"
 
@@ -508,7 +509,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
-msgstr "Gene_rovat náhodná čísla"
+msgstr "_Generovat náhodná čísla"
 
 #: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
