@@ -372,6 +372,12 @@ gimp_item_real_resize (GimpItem    *item,
   item->height   = new_height;
 }
 
+/**
+ * gimp_item_is_floating:
+ * @item: the #GimpItem to check.
+ *
+ * Returns: #TRUE if the item is floating.
+ */
 gboolean
 gimp_item_is_floating (const GimpItem *item)
 {
@@ -380,6 +386,14 @@ gimp_item_is_floating (const GimpItem *item)
   return item->floating;
 }
 
+/**
+ * gimp_item_sink:
+ * @item: the #GimpItem to sink.
+ *
+ * If @item is floating, this function sets it so that
+ * it is not, and removes a reference to it.  If @item
+ * is not floating, the function does nothing.
+ */
 void
 gimp_item_sink (GimpItem *item)
 {
@@ -393,6 +407,13 @@ gimp_item_sink (GimpItem *item)
     }
 }
 
+/**
+ * gimp_item_remove:
+ * @item: the #GimpItem to remove.
+ *
+ * This function sets the 'removed' flag on @item to #TRUE, and emits
+ * a 'removed' signal on the item.
+ */
 void
 gimp_item_removed (GimpItem *item)
 {
@@ -403,6 +424,13 @@ gimp_item_removed (GimpItem *item)
   g_signal_emit (item, gimp_item_signals[REMOVED], 0);
 }
 
+/**
+ * gimp_item_is_removed:
+ * @item: the #GimpItem to check.
+ *
+ * Returns #TRUE if the 'removed' flag is set for @item, and
+ * #FALSE otherwise.
+ */
 gboolean
 gimp_item_is_removed (const GimpItem *item)
 {
@@ -411,6 +439,21 @@ gimp_item_is_removed (const GimpItem *item)
   return item->removed;
 }
 
+/**
+ * gimp_item_configure:
+ * @item: The #GimpItem to configure.
+ * @gimage: The #GimpImage to which the item belongs.
+ * @offset_x: The X offset to assign the item.
+ * @offset_y: The Y offset to assign the item.
+ * @width: The width to assign the item.
+ * @height: The height to assign the item.
+ * @name: The name to assign the item.
+ *
+ * This function is used to configure a new item.  First, if the item 
+ * does not already have an ID, it is assigned the next available
+ * one, and then inserted into the Item Hash Table.  Next, it is
+ * given basic item properties as specified by the arguments.
+ */
 void
 gimp_item_configure (GimpItem    *item,
                      GimpImage   *gimage,
@@ -442,6 +485,13 @@ gimp_item_configure (GimpItem    *item,
   gimp_object_set_name (GIMP_OBJECT (item), name ? name : _("Unnamed"));
 }
 
+/**
+ * gimp_item_is_attached:
+ * @item: The #GimpItem to check.
+ *
+ * Calls the type-specific 'is_attached' function for the item,
+ * the returns the value that this yields.
+ */
 gboolean
 gimp_item_is_attached (GimpItem *item)
 {
@@ -450,6 +500,17 @@ gimp_item_is_attached (GimpItem *item)
   return GIMP_ITEM_GET_CLASS (item)->is_attached (item);
 }
 
+/**
+ * gimp_item_duplicate:
+ * @item: The #GimpItem to duplicate.
+ * @new_type: The type to make the new item.
+ * @add_alpha: #TRUE if an alpha channel should be added to the new item.
+ *
+ * Calls the type-specific 'duplicate' function for the item, with the specified
+ * arguments passed on unchanged.
+ *
+ * Returns: the newly created item.
+ */
 GimpItem *
 gimp_item_duplicate (GimpItem *item,
                      GType     new_type,
@@ -462,6 +523,18 @@ gimp_item_duplicate (GimpItem *item,
   return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type, add_alpha);
 }
 
+/**
+ * gimp_item_convert:
+ * @item: The @GimpItem to convert.
+ * @dest_image: The #GimpImage in which to place the converted item.
+ * @new_type: The type to convert the item to.
+ * @add_alpha: #TRUE if an alpha channel should be added to the converted item.
+ *
+ * Calls the type-specific 'convert' function for the item, with the specified
+ * arguments passed on unchanged.
+ *
+ * Returns: the new item that results from the conversion.
+ */
 GimpItem *
 gimp_item_convert (GimpItem  *item,
                    GimpImage *dest_image,
@@ -484,6 +557,22 @@ gimp_item_convert (GimpItem  *item,
   return new_item;
 }
 
+/**
+ * gimp_item_rename:
+ * @item: The #GimpItem to rename.
+ * @new_name: The new name to give the item.
+ *
+ * This function assigns a new name to the item, if the desired name is
+ * different from the name it already has, and pushes an entry onto the
+ * undo stack for the item's image.  If @new_name is NULL or empty, the
+ * default name for the item's class is used.  If the name is changed,
+ * the "name_changed" signal is emitted for the item.
+ *
+ * The contents of @new_name are copied, so it is okay to free them
+ * afterward.
+ *
+ * Returns: #TRUE if @item is a valid #GimpItem.
+ */
 gboolean
 gimp_item_rename (GimpItem    *item,
                   const gchar *new_name)
@@ -503,6 +592,12 @@ gimp_item_rename (GimpItem    *item,
   return TRUE;
 }
 
+/**
+ * gimp_item_width:
+ * @item: The #GimpItem to check.
+ *
+ * Returns: The width of the item, as recorded in its #GimpItem struct. 
+ */
 gint
 gimp_item_width (const GimpItem *item)
 {
@@ -511,6 +606,12 @@ gimp_item_width (const GimpItem *item)
   return item->width;
 }
 
+/**
+ * gimp_item_height:
+ * @item: The #GimpItem to check.
+ *
+ * Returns: The height of the item, as recorded in its #GimpItem struct. 
+ */
 gint
 gimp_item_height (const GimpItem *item)
 {
@@ -519,6 +620,14 @@ gimp_item_height (const GimpItem *item)
   return item->height;
 }
 
+/**
+ * gimp_item_offsets:
+ * @item: The #GimpItem to check.
+ * @off_x: Pointer to a location in which to return the X offset of the item.
+ * @off_y: Pointer to a location in which to return the Y offset of the item.
+ *
+ * Reveals the X and Y offsets of the item, as recorded in its #GimpItem struct. 
+ */
 void
 gimp_item_offsets (const GimpItem *item,
                    gint           *off_x,
@@ -530,6 +639,17 @@ gimp_item_offsets (const GimpItem *item,
   if (off_y) *off_y = item->offset_y;
 }
 
+
+/**
+ * gimp_item_translate:
+ * @item: The #GimpItem to move.
+ * @off_x: Increment to the X offset of the item.
+ * @off_y: Increment to the Y offset of the item.
+ * @push_undo: If #TRUE, create an entry in the image's undo stack for this action.
+ *
+ * Adds the specified increments to the X and Y offsets for the item, as stored
+ * in its #GimpItem struct.
+ */
 void
 gimp_item_translate (GimpItem *item,
                      gint      off_x,
@@ -636,7 +756,7 @@ gimp_item_scale (GimpItem              *item,
  * dimensions and offsets from the sides of the containing
  * image all change by these predetermined factors. By fiat,
  * the fixed point of the transform is the upper left hand
- * corner of the image. Returns gboolean FALSE if a requested
+ * corner of the image. Returns gboolean #FALSE if a requested
  * scale factor is zero or if a scaling zero's out a item
  * dimension; returns #TRUE otherwise.
  *
@@ -698,7 +818,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * Sets item dimensions to new_width and
  * new_height. Derives vertical and horizontal scaling
  * transforms from new width and height. If local_origin is
- * TRUE, the fixed point of the scaling transform coincides
+ * #TRUE, the fixed point of the scaling transform coincides
  * with the item's center point.  Otherwise, the fixed
  * point is taken to be [-item->offset_x, -item->offset_y].
  *

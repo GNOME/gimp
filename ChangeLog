@@ -1,3 +1,8 @@
+2004-07-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpitem.c: added documentation comments to some
+	of the functions.
+	
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/Makefile.am
