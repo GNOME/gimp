@@ -112,18 +112,14 @@ gimp_statusbar_get_type (void)
 static void
 gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
-
-
-  GObjectClass      *g_object_class      = G_OBJECT_CLASS (klass);
-  GtkObjectClass    *gtk_object_class    = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass    *gtk_widget_class    = GTK_WIDGET_CLASS (klass);
-  GtkContainerClass *gtk_container_class = GTK_CONTAINER_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gtk_object_class->destroy = gimp_statusbar_destroy;
+  object_class->destroy = gimp_statusbar_destroy;
 
-  klass->messages_mem_chunk = g_mem_chunk_new ("GimpStatusbar messages mem chunk",
+  klass->messages_mem_chunk = g_mem_chunk_new ("GimpStatusbar messages",
                                                sizeof (GimpStatusbarMsg),
                                                sizeof (GimpStatusbarMsg) * 64,
                                                G_ALLOC_AND_FREE);
@@ -149,7 +145,7 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
                   G_TYPE_UINT,
                   G_TYPE_STRING);
 
-  gtk_widget_class_install_style_property (gtk_widget_class,
+  gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("shadow_type",
                                            _("Shadow type"),
                                            _("Style of bevel around the statusbar text"),
