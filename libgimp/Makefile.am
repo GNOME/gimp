@@ -1,11 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-1.3.la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-1.3.la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-1.3.la
+libgimp = ./libgimp-1.3.la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
-conditional_libgimpbase_la = ../libgimpbase/libgimpbase-1.3.la
-conditional_libgimpcolor_la = ../libgimpcolor/libgimpcolor-1.3.la
-conditional_libgimpwidgets_la = ../libgimpwidgets/libgimpwidgets-1.3.la
-conditional_libgimp_la = libgimp-1.3.la
 endif
 
 if OS_WIN32
@@ -216,7 +217,7 @@ libgimp_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimp_export_symbols)
 
-libgimp_1_3_la_LIBADD = $(conditional_libgimpbase_la) $(conditional_libgimpcolor_la) $(GLIB_LIBS) 
+libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) 
 
 libgimp_1_3_la_DEPENDENCIES = $(gimp_def)
 
@@ -225,7 +226,7 @@ libgimpui_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimpui_export_symbols)
 
-libgimpui_1_3_la_LIBADD = $(conditional_libgimp_la) $(conditional_libgimpbase_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
+libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpbase) $(GTK_LIBS)
 
 libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def)
 

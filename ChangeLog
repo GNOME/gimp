@@ -1,3 +1,9 @@
+2003-05-21  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimpwidgets/Makefile.am: Always provide interlibrary
+	dependencies, not just on Win32. Fixes bug #113410.
+
 2003-05-21  Michael Natterer  <mitch@gimp.org>
 
 	Removed the old paths and the remaining legacy stuff it needed.

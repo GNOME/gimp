@@ -1,8 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-1.3.la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
-conditional_libgimpcolor_la = ../libgimpcolor/libgimpcolor-1.3.la
 endif
 
 if PLATFORM_WIN32
@@ -152,7 +153,7 @@ libgimpwidgets_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_1_3_la_LIBADD = $(conditional_libgimpcolor_la) $(GTK_LIBS) $(libm)
+libgimpwidgets_1_3_la_LIBADD = $(libgimpcolor) $(GTK_LIBS) $(libm)
 
 libgimpwidgets_1_3_la_DEPENDENCIES = $(gimpwidgets_def)
 
