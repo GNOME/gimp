@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-05 00:12+0100\n"
-"PO-Revision-Date: 2004-02-10 21:48+0100\n"
+"POT-Creation-Date: 2004-03-08 18:56+0100\n"
+"PO-Revision-Date: 2004-03-08 18:56+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,6 @@ msgstr ""
 "få det til at bruge baggrundsfarven i stedet for forgrundsfarven."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -70,12 +69,11 @@ msgid ""
 msgstr ""
 "En flydende markering skal forankres til et nyt lag eller det sidste aktive "
 "lag før der kan foretages andre operationer på billedet. Klik på \"Nyt lag"
-"\"- eller \"Forankr lag\"-knapperne i \"Lag\"-vinduet eller brug menuerne "
-"til at gøre det samme."
+"\"- eller \"Forankr lag\"-knapperne i lagvinduet eller brug menuerne til at "
+"gøre det samme."
 
 # mon ikke 'dynamic' dækker over noget i retning af det skrevne
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -110,7 +108,6 @@ msgstr ""
 "med kurveværktøjet (Lag-&gt;Farver-&gt;Kurver)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -130,7 +127,6 @@ msgstr ""
 "andre vinduer."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -150,7 +146,6 @@ msgstr ""
 "ikke nervøs, du kan fortryde de fleste fejltagelser..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -181,7 +176,7 @@ msgid ""
 msgstr ""
 "Gimp'en understøtter automatisk gzip-komprimering. Tilføj blot <tt>.gz</tt> "
 "(eller <tt>.bz2</tt> hvis du har bzip2 installeret) til filnavnet, og "
-"billedet vil blive gemt komprimeret. Åbning af komprimerede billedervirker "
+"billedet vil blive gemt komprimeret. Åbning af komprimerede billeder virker "
 "selvfølgelig også."
 
 #: tips/gimp-tips.xml.in.h:18
@@ -213,8 +208,8 @@ msgid ""
 msgstr ""
 "Laget ved navn \"Baggrund\" er specielt fordi det mangler gennemsigtighed. "
 "Dette forhindrer dig i at tilføje en lagmaske eller hæve lageti stakken. Du "
-"kan tilføje gennemsigtighed til det ved at højreklikke i \"Lag\"-vinduet og "
-"vælge \"Tilføj alfakanal\"."
+"kan tilføje gennemsigtighed til det ved at højreklikke i lagvinduet og vælge "
+"\"Tilføj alfakanal\"."
 
 #: tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -273,14 +268,13 @@ msgstr ""
 "og trække til højre eller venstre."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"Du kan oprette og redigere komplekse markeringer med Bane-værktøjet. \"Baner"
-"\"-vinduet lader dig arbejde på flere baner og så konvertere dem til "
+"Du kan oprette og redigere komplekse markeringer med baneværktøjet. "
+"Banevinduet lader dig arbejde på flere baner og så konvertere dem til "
 "markeringer."
 
 #: tips/gimp-tips.xml.in.h:27
@@ -288,8 +282,8 @@ msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"Du kan trække et lag fra \"Lag\"-vinduet og slippe det i værktøjskassen. "
-"Dette opretter et nyt billede som kun indeholder det lag."
+"Du kan trække et lag fra lagvinduet og slippe det i værktøjskassen. Dette "
+"opretter et nyt billede som kun indeholder det lag."
 
 #: tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -302,7 +296,6 @@ msgstr ""
 "billede, vil billedet eller det markerede bliver fyldt ud med den farve."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -328,7 +321,7 @@ msgid ""
 "a layer in the Layers dialog."
 msgstr ""
 "Du kan udføre mange lagoperationer ved at højreklikke på tekstetiketten til "
-"et lag i \"Lag\"-vinduet."
+"et lag i lagvinduet."
 
 #: tips/gimp-tips.xml.in.h:32
 msgid ""
