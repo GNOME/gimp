@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
-"PO-Revision-Date: 2004-11-07 16:56+0100\n"
+"POT-Creation-Date: 2004-12-04 17:14+0100\n"
+"PO-Revision-Date: 2004-12-04 17:15+0100\n"
 "Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
 "Language-Team: Norwegian Bokmål<i18n-no@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -136,39 +136,40 @@ msgstr "%s må ha en alfakanal"
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Bekreft lagring"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Bekreft"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Eksporter fil"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Ignorer"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Eksporter"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr "Bildet bør eksporteres før det kan lagres som %s av følgende årsaker:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen under eksport vil ikke endre ditt originale bilde."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +178,7 @@ msgstr ""
 "Du er i ferd med å lagre en lagmaske som %s.\n"
 "Dette vil ikke lagre synlige lag."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -328,7 +329,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(ugyldig «UTF-8»-streng)"
 
@@ -370,7 +371,7 @@ msgstr "Ikke lastet"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunne ikke opprette miniatyrbildemappe «%s.»"
 
-#: libgimpthumb/gimpthumbnail.c:917
+#: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunne ikke opprette miniatyrbilde for %s: %s"
@@ -523,7 +524,7 @@ msgstr "Anker"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "S_enter"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
