@@ -34,6 +34,7 @@
 
 #include "config/gimpconfig.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
@@ -291,6 +292,11 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   item->ID        = gimp_item_get_ID (GIMP_ITEM (layer));
   item->tattoo    = gimp_item_get_tattoo (GIMP_ITEM (layer));
   item->gimage    = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_item_set_image (GIMP_ITEM (layer), NULL);
+  g_hash_table_replace (item->gimage->gimp->item_table,
+                        GINT_TO_POINTER (item->ID),
+                        item);
 
   item->parasites = GIMP_ITEM (layer)->parasites;
   GIMP_ITEM (layer)->parasites = NULL;

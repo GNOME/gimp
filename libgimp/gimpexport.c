@@ -606,17 +606,22 @@ gimp_export_image (gint32                 *image_ID,
       && !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
       if (gimp_drawable_is_layer_mask (*drawable_ID))
-	dialog_return =
-          confirm_save_dialog (_("You are about to save a layer mask as %s.\n"
-                                 "This will not save the visible layers."),
-                               format_name);
+        {
+          dialog_return = confirm_save_dialog
+            (_("You are about to save a layer mask as %s.\n"
+               "This will not save the visible layers."), format_name);
+        }
       else if (gimp_drawable_is_channel (*drawable_ID))
-	dialog_return =
-          confirm_save_dialog (_("You are about to save a channel (saved selection) as %s.\n"
-                                 "This will not save the visible layers."),
-                               format_name);
+        {
+          dialog_return = confirm_save_dialog
+            (_("You are about to save a channel (saved selection) as %s.\n"
+               "This will not save the visible layers."), format_name);
+        }
       else
-	; /* this should not happen */
+        {
+          /* this should not happen */
+          g_warning ("gimp_export_image: unknown drawable type!");
+        }
 
       /* cancel - the user can then select an appropriate layer to save */
       if (dialog_return == GIMP_EXPORT_CANCEL)

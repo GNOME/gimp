@@ -1,5 +1,13 @@
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c (gimp_text_layer_from_layer): replace
+	the layer in the global item hash table, fixes bug #116936.
+
+	* libgimp/gimpexport.c (gimp_export_image): added a warning that
+	would have helped to resolve above bug.
+
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/splash.c (splash_create): don't ignore the delete event
 	on the splash screen, but quit gimp immidiately by calling exit().
 
