@@ -20,11 +20,6 @@
 #define __FILE_UTILS_H__
 
 
-#include <stdio.h>
-
-#include "plug-in/plug-in-types.h"
-
-
 gchar         * file_utils_filename_to_uri      (GSList        *procs,
                                                  const gchar   *filename,
                                                  GError       **error);
