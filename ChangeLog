@@ -1,3 +1,7 @@
+Sun Jan 25 02:24:03 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/*: Placed libgimp under the LGPL
+
 Sun Jan 25 01:25:55 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plugin updates from the registry (align_layers,
