@@ -1835,6 +1835,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
   PixelRegion * mask;
   Layer *merge_layer;
   Layer *layer;
+  Layer *bottom;
   unsigned char bg[4] = {0, 0, 0, 0};
   int type;
   int count;
@@ -1955,12 +1956,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
        */
       merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (layer->ID), layer->name,
-			       OPAQUE, NORMAL_MODE);
-
-      if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
-	return NULL;
-      }
+			       layer->opacity, layer->mode);
 
       if (!merge_layer) {
 	warning("gimage_merge_layers: could not allocate merge layer");
@@ -1981,6 +1977,14 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
        */
       layer = (Layer *) reverse_list->data;
       position = list_length (gimage->layers) - gimage_get_layer_index (gimage, layer->ID);
+      
+      /* set the mode of the bottom layer to normal so that the contents
+       *  aren't lost when merging with the all-alpha merge_layer
+       *  Keep a pointer to it so that we can set the mode right after it's been
+       *  merged so that undo works correctly.
+       */
+      layer -> mode =NORMAL;
+      bottom = layer;
     }
 
   while (reverse_list)
@@ -2022,6 +2026,9 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
       gimage_remove_layer (gimage, layer->ID);
       reverse_list = next_item (reverse_list);
     }
+
+  /* Save old mode in undo */
+  bottom -> mode = merge_layer -> mode;
 
   free_list (reverse_list);
 

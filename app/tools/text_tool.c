@@ -634,12 +634,6 @@ text_font_item_update (GtkWidget *w,
   old_index = the_text_tool->font_index;
   the_text_tool->font_index = index;
 
-  if (!text_load_font (the_text_tool))
-    {
-      the_text_tool->font_index = old_index;
-      return;
-    }
-
   font = font_info[the_text_tool->font_index];
 
   if (the_text_tool->foundry && !font->foundries[the_text_tool->foundry])
@@ -678,6 +672,12 @@ text_font_item_update (GtkWidget *w,
     gtk_widget_set_sensitive (the_text_tool->set_width_items[i], font->set_widths[i]);
   for (i = 0; i < nspacings; i++)
     gtk_widget_set_sensitive (the_text_tool->spacing_items[i], font->spacings[i]);
+
+  if (!text_load_font (the_text_tool))
+    {
+      the_text_tool->font_index = old_index;
+      return;
+    }
 }
 
 static void
