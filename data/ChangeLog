@@ -1,3 +1,8 @@
+Thu Nov  9 16:52:49 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * brushes/hsparks.gih: This small gem(?), (before you cry, it's
+        <20k gzipped) is from http://bart.northnet.com.au/~robrow/tubes/.
+
 Thu Aug 12 20:57:02 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* palettes/Makefile.am
