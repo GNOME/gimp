@@ -155,12 +155,12 @@ HELP
     push @{$invoke{headers}}, qw("gimage_mask.h");
 }
 
+# For edit_paste
+$extra{app}->{decls} = "extern TileManager *global_buf;\n";
+
 @procs = qw(edit_cut edit_copy edit_paste edit_clear edit_fill edit_stroke);
 %exports = (app => [@procs]);
 
 $desc = 'Edit procedures';
-
-# For edit_paste
-$code = "extern TileManager *global_buf;\n";
 
 1;

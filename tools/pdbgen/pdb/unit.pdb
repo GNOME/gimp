@@ -1,0 +1,208 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Michael Natterer';
+    $date = '1999';
+}
+
+sub unit_arg () {{
+    name => 'unit_id',
+    type => 'unit',
+    desc => "The unit's integer ID",
+    alias => 'unit'
+}}
+
+sub unit_prop_proc {
+    my ($prop, $type, $desc) = @_;
+    $desc = $prop unless $desc;
+
+    $blurb = "Returns the $desc of the unit.";
+
+    &pdb_misc;
+
+    @inargs = ( &unit_arg );
+
+    @outargs = (
+	{ name => $prop, type => $type,
+	  desc => "The unit's $desc",
+	  alias => "gimp_unit_get_$prop (unit)",
+	  no_declare => 1 }
+    );
+
+    if ($type eq 'string') {
+	$outargs[0]->{alias} = "g_strdup ($outargs[0]->{alias})";
+    }
+}
+
+sub unit_get_number_of_units {
+    $blurb = 'Returns the number of units.';
+
+    $help = 'This procedure returns the number of defined units.';
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name => 'num_units', type => 'int32',
+	  desc => 'The number of units',
+	  alias => 'gimp_unit_get_number_of_units ()', no_declare => 1 }
+    );
+}
+
+sub unit_new {
+    $blurb = "Creates a new unit and returns it's integer ID.";
+
+    $help = <<'HELP';
+This procedure creates a new unit and returns it's integer ID. Note that the
+new unit will have it's deletion flag set to TRUE, so you will have to set it
+to FALSE with gimp_unit_set_deletion_flag to make it persistent.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'identifier', type => 'string',
+	  desc => "The new unit's identifier" },
+	{ name => 'factor', type => 'float',
+	  desc => "The new unit's factor" },
+	{ name => 'digits', type => 'int32',
+	  desc => "The new unit's digits" },
+	{ name => 'symbol', type => 'string',
+	  desc => "The new unit's symbol" },
+	{ name => 'abbreviation', type => 'string',
+	  desc => "The new unit's abbreviation" },
+	{ name => 'singular', type => 'string',
+	  desc => "The new unit's singular form" },
+	{ name => 'plural', type => 'string',
+	  desc => "The new unit's plural form" }
+    );
+
+    @outargs = ( &unit_arg );
+    $outargs[0]->{desc} = "The new unit's ID";
+    $outargs[0]->{init} = 1;
+
+    %invoke = (
+	code => <<'CODE'
+unit = gimp_unit_new (identifier, factor, digits, symbol, abbreviation,
+		      singular, plural);
+CODE
+    );
+}
+
+sub unit_get_deletion_flag {
+    $help = <<'HELP';
+This procedure returns the deletion flag of the unit. If this value is TRUE the
+unit's definition will not be saved in the user's unitrc file on gimp exit.
+HELP
+
+    &unit_prop_proc('deletion_flag', 'boolean', 'deletion flag');
+}
+
+sub unit_set_deletion_flag {
+    $blurb = 'Sets the deletion flag of a unit.';
+
+    $help = <<'HELP';
+This procedure sets the unit's deletion flag. If the deletion flag of a unit is
+TRUE on gimp exit, this unit's definition will not be saved in the user's
+unitrc.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&unit_arg,
+	{ name => 'deletion_flag', type => 'boolean',
+	  desc => 'The new deletion flag of the unit' }
+    );
+
+    %invoke = ( code => 'gimp_unit_set_deletion_flag (unit, deletion_flag);' );
+}
+
+sub unit_get_identifier {
+    $help = <<'HELP';
+This procedure returns the textual identifier of the unit. For built-in units
+it will be the english singular form of the unit's name. For user-defined units
+this should equal to the singular form.
+HELP
+
+    &unit_prop_proc('identifier', 'string', 'textual identifier');
+}
+
+sub unit_get_factor {
+    $help = <<'HELP';
+This procedure returns the unit's factor which indicates how many units make up
+an inch. Note that asking for the factor of "pixels" will produce an error.
+HELP
+
+    &unit_prop_proc('factor', 'float');
+}
+
+sub unit_get_digits {
+    $help = <<'HELP';
+This procedure returns the number of digits you should provide in input or
+output functions to get approximately the same accuracy as with two digits and
+inches. Note that asking for the digits of "pixels" will produce an error.
+HELP
+
+    &unit_prop_proc('digits', 'int32', 'number of digits');
+}
+
+sub unit_get_symbol {
+    $help = <<'HELP';
+This procedure returns the symbol of the unit ("''" for inches).
+HELP
+
+    &unit_prop_proc('symbol', 'string');
+}
+
+sub unit_get_abbreviation {
+    $help = <<'HELP';
+This procedure returns the abbreviation of the unit ("in" for inches).
+HELP
+
+    &unit_prop_proc('abbreviation', 'string');
+}
+
+sub unit_get_singular {
+    $help  = <<'HELP';
+This procedure returns the singular form of the unit.
+HELP
+
+    &unit_prop_proc('singular', 'string', 'singular form');
+}
+
+sub unit_get_plural {
+    $help = <<'HELP';
+This procedure returns the singular form of the unit.
+HELP
+
+    &unit_prop_proc('plural', 'string', 'plural form');
+}
+
+@headers = qw("libgimp/gimpunit.h");
+
+@procs = qw(unit_get_number_of_units unit_new unit_get_deletion_flag
+	    unit_set_deletion_flag unit_get_identifier unit_get_factor
+	    unit_get_digits unit_get_symbol unit_get_abbreviation
+	    unit_get_singular unit_get_plural);
+%exports = (app => [@procs]);
+
+$desc = 'Units';
+
+1;

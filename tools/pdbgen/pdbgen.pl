@@ -17,7 +17,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-require 5.002;
+require 5.004;
 
 BEGIN {
     $srcdir = '.';
@@ -36,13 +36,28 @@ $evalcode = <<'CODE';
 {
     my $file = $main::file;
     my $srcdir = $main::srcdir;
-    my $proc;
-    my($var, $type);
-    my($dest, $procs);
+
+    my $copyvars = sub {
+	my $dest = shift;
+
+	foreach (@_) {
+	    if (eval "defined $_") {
+		(my $var = $_) =~ s/^(\W)//;
+		for ($1) {
+		    /\$/ && do { $$dest->{$var} =   $$var  ; last; };
+		    /\@/ && do { $$dest->{$var} = [ @$var ]; last; };
+		    /\%/ && do { $$dest->{$var} = { %$var }; last; };
+		}
+	    }
+	}
+    };
 
     # Variables to evaluate and insert into the PDB structure
     my @procvars = qw($name $group $blurb $help $author $copyright $date
 		      @inargs @outargs %invoke);
+
+    # These are attached to the group structure
+    my @groupvars = qw($desc @headers %extra);
 
     # Hook some variables into the top-level namespace
     *pdb = \%main::pdb;
@@ -56,14 +71,13 @@ $evalcode = <<'CODE';
     &$safeeval("do '$main::srcdir/stddefs.pdb'");
 
     # Group properties
-    undef $desc; undef $code; undef @headers;
+    foreach (@groupvars) { eval "undef $_" }
 
     # Load the file in and get the group info
     &$safeeval("require '$main::srcdir/pdb/$file.pdb'");
 
     # Save these for later
-    $grp{$file}->{desc} = $desc if defined $desc;
-    $grp{$file}->{code} = $code if defined $code;
+    &$copyvars(\$grp{$file}, @groupvars);
 
     foreach $proc (@procs) {
 	# Reset all our PDB vars so previous defs don't interfere
@@ -78,23 +92,12 @@ $evalcode = <<'CODE';
 
 	# Load the info into %pdb, making copies of the data instead of refs
 	my $entry = {};
-	foreach (@procvars) {
-	    if (eval "defined $_") {
-		($var = $_) =~ s/^(\W)//, $type = $1;
-		for ($type) {
-		    /\$/ && do { $entry->{$var} =   $$var  ; last; };
-		    /\@/ && do { $entry->{$var} = [ @$var ]; last; };
-		    /\%/ && do { $entry->{$var} = { %$var }; last; };
-		}
-	    }
-	}
+	&$copyvars(\$entry, @procvars);
 	$pdb{$proc} = $entry;
-
-	push @{$entry->{invoke}->{headers}}, @headers if scalar @headers;
     }
 
     # Find out what to do with these entries 
-    while (($dest, $procs) = each %exports) { push @{$gen{$dest}}, @$procs }
+    while (my ($dest, $procs) = each %exports) { push @{$gen{$dest}}, @$procs }
 }
 CODE
 

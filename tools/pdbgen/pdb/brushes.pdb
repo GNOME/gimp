@@ -1,0 +1,241 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub opacity_arg () {{
+    name => 'opacity',
+    type => '0 <= float <= 100',
+    desc => 'The brush opacity: %%desc%%'
+}}
+
+sub spacing_arg () {{
+    name => 'spacing',
+    type => '0 <= int32 <= 1000',
+    desc => 'The brush spacing: %%desc%%'
+}}
+
+sub paint_mode_arg () {{
+    name => 'paint_mode',
+    type => 'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)',
+    desc => 'The paint mode: { %%desc%% }'
+}}
+
+# The defs
+
+sub brushes_refresh {
+    $blurb = 'Refresh current brushes.';
+
+    $help = <<'HELP';
+This procedure retrieves all brushes currently in the user's brush path
+and updates the brush dialog accordingly.
+HELP
+
+    $author = $copyright = 'Seth Burgess';
+    $date = '1997';
+
+    %invoke = (
+	code => <<'CODE'
+{
+  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
+   *        void function right now.  It'd be nice if it returned a value at 
+   *        some future date, so we could tell if things blew up when reparsing
+   *        the list (for whatever reason). 
+   *                       - Seth "Yes, this is a kludge" Burgess
+   *                         <sjburges@ou.edu>
+   */
+
+  brushes_init (FALSE);
+}
+CODE
+    );
+}
+
+sub brushes_get_brush {
+    $blurb = 'Retrieve information about the currently active brush mask.';
+
+    $help = <<'HELP';
+This procedure retrieves information about the currently active brush mask.
+This includes the brush name, the width and height, and the brush spacing
+paramter. All paint operations and stroke operations use this mask to control
+the application of paint to the image.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name',
+	  alias => 'g_strdup (brushp->name)', no_declare => 1 },
+	{ name => 'width', type => 'int32',
+	  desc => 'The brush width',
+	  alias => 'brushp->mask->width', no_declare => 1 },
+	{ name => 'height', type => 'int32',
+	  desc => 'The brush height',
+	  alias => 'brushp->mask->height', no_declare => 1 },
+	{ name => 'spacing', type => 'int32',
+	  desc => 'The brush spacing: (% of MAX [width, height])',
+	  alias => 'brushp->spacing', no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => ['GimpBrush *brushp'],
+	code => 'success = (brushp = get_active_brush ()) != NULL;'
+    );
+}
+
+sub brushes_set_brush {
+    $blurb = 'Set the specified brush as the active brush.';
+
+    $help = <<'HELP';
+This procedure allows the active brush mask to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed brushes. If there is no matching brush found, this procedure will
+return an error.  Otherwise, the specified brush becomes active and will be
+used in all subsequent paint operations.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name' }
+    );
+
+    %invoke = (
+	vars => ['GimpBrush *brushp'],
+	code => <<'CODE'
+{
+  brushp = gimp_brush_list_get_brush (brush_list, name);
+  if (brushp)
+    select_brush (brushp);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brushes_get_opacity {
+    $blurb = 'Get the brush opacity.';
+
+    $help = <<'HELP';
+This procedure returns the opacity setting for brushes. This value is set
+globally and will remain the same even if the brush mask is changed. The return
+value is a floating point number between 0 and 100.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = ( &opacity_arg );
+    $outargs[0]->{alias} = 'gimp_brush_get_opacity () * 100.0';
+    $outargs[0]->{no_declare} = 1;
+}
+
+sub brushes_set_opacity {
+    $blurb = 'Set the brush opacity.';
+
+    $help = <<'HELP';
+This procedure modifies the opacity setting for brushes. This value is set
+globally and will remain the same even if the brush mask is changed. The value
+should be a floating point number between 0 and 100.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &opacity_arg );
+
+    %invoke = ( code => 'gimp_brush_set_opacity (opacity / 100.0);' );
+}
+
+sub brushes_get_spacing {
+    $blurb = 'Get the brush spacing.';
+
+    $help = <<'HELP';
+This procedure returns the spacing setting for brushes. This value is set per
+brush and will change if a different brush is selected. The return value is an
+integer between 0 and 1000 which represents percentage of the maximum of the
+width and height of the mask.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = ( &spacing_arg );
+    $outargs[0]->{alias} = 'gimp_brush_get_spacing ()';
+    $outargs[0]->{no_declare} = 1;
+}
+
+sub brushes_set_spacing {
+    $blurb = 'Set the brush spacing.';
+
+    $help = <<'HELP';
+This procedure modifies the spacing setting for the current brush. This value
+is set on a per-brush basis and will change if a different brush mask is
+selected. The value should be a integer between 0 and 1000.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &spacing_arg );
+
+    %invoke = ( code => 'gimp_brush_set_spacing (spacing);' );
+}
+
+sub brushes_get_paint_mode {
+    $blurb = 'Get the brush paint mode.';
+
+    $help = <<'HELP';
+This procedure returns the paint-mode setting for brushes. This value is set
+globally and will not change if a different brush is selected. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = ( &paint_mode_arg );
+    $outargs[0]->{alias} = 'gimp_brush_get_paint_mode ()';
+    $outargs[0]->{no_declare} = 1;
+}
+
+sub brushes_set_paint_mode {
+    $blurb = 'Set the brush paint_mode.';
+
+    $help = <<'HELP';
+This procedure modifies the paint_mode setting for the current brush. This
+value is set globally and will not change if a different brush mask is
+selected.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &paint_mode_arg );
+
+    %invoke = ( code => 'gimp_brush_set_paint_mode (paint_mode);' );
+}
+
+@headers = qw("gimpbrushlist.h");
+
+@procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
+	    brushes_get_opacity brushes_set_opacity brushes_get_spacing
+	    brushes_set_spacing brushes_get_paint_mode brushes_set_paint_mode);
+%exports = (app => [@procs]);
+
+$desc = 'Brushes';
+
+&brushes_get_paint_mode;
+1;

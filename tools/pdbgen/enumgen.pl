@@ -25,16 +25,12 @@ BEGIN {
 use lib $srcdir;
 
 use Text::Wrap qw(wrap $columns);
-$columns = 79;
+$columns = 77;
 
-require 'util.pl';
+BEGIN { require 'util.pl' }
 
-eval <<'CODE';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
-CODE
-
-$FILE_EXT = $FILE_EXT;
 
 my $header = <<'HEADER';
 :# The GIMP -- an image manipulation program
@@ -66,7 +62,10 @@ my $footer = <<'FOOTER';
 :
 :foreach $e (values %enums) {
 :    $e->{info} = "";
-:    foreach (@{$e->{symbols}}) { $e->{info} .= "$_ ($e->{mapping}->{$_}), " }
+:    foreach (@{$e->{symbols}}) {
+:	my $nick = exists $e->{nicks}->{$_} ? $e->{nicks}->{$_} : $_;
+:	$e->{info} .= "$nick ($e->{mapping}->{$_}), "
+:    }
 :    $e->{info} =~ s/, $//;
 :}
 :
@@ -76,9 +75,21 @@ FOOTER
 $header =~ s/^://mg;
 $footer =~ s/^://mg;
 
-my ($enumname, $contig, $symbols, @mapping, $before);
+my ($enumname, $contig, $symbols, @nicks, @mapping, $before, $chop);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
+sub parse_options {
+    my $opts = shift;
+    my @opts;
+
+    for $opt (split /\s*,\s*/, $opts) {
+	my ($key,$val) = $opt =~ /\s*(\w+)(?:=(\S+))?/;
+	defined $val or $val = 1;
+	push @opts, $key, $val;
+    }
+    @opts;
+}
+
 sub parse_entries {
     my $file = shift;
 
@@ -127,7 +138,20 @@ sub parse_entries {
 	       >\*/)?
 	      \s*$
              @x) {
-            my ($name, $value) = ($1, $2);
+            my ($name, $value, $options) = ($1, $2, $3);
+
+	    if (defined $options) {
+		my %options = parse_options($options);
+		next if defined $options{skip};
+		if (defined $options{nick}) {
+		    push @nicks, $name, $options{nick};
+		}
+	    }
+	    elsif (defined $chop) {
+		my $nick = $name;
+		$nick =~ s/$chop//;
+		push @nicks, $name, $nick;
+	    }
 
 	    $symbols .= $name . ' ';
 
@@ -163,7 +187,18 @@ while (<>) {
         close (ARGV);           # reset line numbering
     }
 
-    if (/^\s*typedef\s+enum\s*({)?/) {
+    if (m@^\s*typedef\s+enum\s*
+	   ({)?\s*
+	   (?:/\*<
+	     (([^*]|\*(?!/))*)
+	    >\*/)?
+         @x) {
+        if (defined $2) {
+            my %options = parse_options($2);
+	    $chop = $options{"chop"};
+	} else {
+	    $chop = undef;
+	}	    
 	# Didn't have trailing '{' look on next lines
 	if (!defined $1) {
 	    while (<>) {
@@ -173,7 +208,7 @@ while (<>) {
 	    }
 	}
 
-	$symbols = ""; $contig = 1; $before = -1; @mapping = ();
+	$symbols = ""; $contig = 1; $before = -1; @mapping = (); @nicks = ();
 
 	# Now parse the entries
 	&parse_entries (\*ARGV);
@@ -188,11 +223,20 @@ while (<>) {
 	}
 	$mapping =~ s/,\n\s*$//s;
 
+	my $nicks = ""; $pos = 1;
+	foreach (@nicks) {
+	    $nicks .= $pos++ % 2 ? "$_ => " : "'$_',\n\t\t       ";
+	}
+	if ($nicks) {
+	    $nicks =~ s/,\n\s*$//s;
+	    $nicks = ",\n\t  nicks   => { " . $nicks . " }";
+	}
+
 	$code .= <<ENTRY;
     $enumname =>
 	{ contig => $contig,
 	  symbols => [ qw($symbols) ],
-	  mapping => { $mapping }
+	  mapping => { $mapping }$nicks
 	},
 ENTRY
     }

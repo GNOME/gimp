@@ -308,9 +308,16 @@ LGPL
 	my $hfile = "$destdir/gimp${group}.h$FILE_EXT";
 	my $cfile = "$destdir/gimp${group}.c$FILE_EXT";
 
-	my $protos;
-	foreach (@{$out->{proto}}) { $protos .= $_ }
-	chop $protos;
+	my $extra = {};
+	if (exists $main::grp{$group}->{extra}->{lib}) {
+	    $extra = $main::grp{$group}->{extra}->{lib}
+	}
+
+	my $body;
+	$body = $extra->{decls} if exists $extra->{decls};
+	foreach (@{$out->{proto}}) { $body .= $_ }
+	$body .= $extra->{protos} if exists $extra->{protos};
+	chomp $body;
 
 	open HFILE, "> $hfile" or die "Can't open $cfile: $!\n";
 	print HFILE $lgpl;
@@ -329,7 +336,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-$protos
+$body
 
 
 #ifdef __cplusplus
@@ -345,6 +352,7 @@ HEADER
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $lgpl;
 	print CFILE qq/#include "gimp${group}.h"\n/;
+	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;
 	&write_file($cfile);

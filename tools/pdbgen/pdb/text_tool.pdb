@@ -175,17 +175,9 @@ HELP
     &extents_outargs;
 
     %invoke = (
-	code => <<'CODE'
-{
-  success = text_get_xlfd (size, size_type, foundry, family, weight,
-			   slant, set_width, spacing, registry, encoding,
-			   fontname);
-
-  if (success)
-    success = text_get_extents (fontname, text, &width, &height, &ascent,
-				&descent);
-}
-CODE
+	pass_through => 'text_get_extents_fontname',
+	pass_args => [ 0..2 ],
+	make_args => [ &fontname_makeargs ]
     );
 }
 
@@ -248,13 +240,62 @@ HELP
     &extents_outargs;
 
     %invoke = (
-	pass_through => 'text_get_extents',
-	pass_args => [ 0..2 ],
-	make_args => [ &fontname_makeargs ]
+	code => <<'CODE'
+success = text_get_extents (fontname, text,
+			    &width, &height,
+			    &ascent, &descent);
+CODE
     );
 }
 
-@headers = qw("text_tool.h");
+@headers = qw("text_tool.h" <string.h>);
+
+$extra{app}->{code} = <<'CODE';
+static int
+text_get_xlfd (double  size,
+	       int     size_type,
+	       char   *foundry,
+	       char   *family,
+	       char   *weight,
+	       char   *slant,
+	       char   *set_width,
+	       char   *spacing,
+	       char   *registry,
+	       char   *encoding,
+	       char   *fontname)
+{
+  char pixel_size[12], point_size[12];
+
+  if (size > 0)
+    {
+      switch (size_type)
+	{
+	case PIXELS:
+	  sprintf (pixel_size, "%d", (int) size);
+	  sprintf (point_size, "*");
+	  break;
+	case POINTS:
+	  sprintf (pixel_size, "*");
+	  sprintf (point_size, "%d", (int) (size * 10));
+	  break;
+	}
+
+      /* create the fontname */
+      g_snprintf (fontname, "-%s-%s-%s-%s-%s-*-%s-%s-75-75-%s-*-%s-%s",
+	       foundry,
+	       family,
+	       weight,
+	       slant,
+	       set_width,
+	       pixel_size, point_size,
+	       spacing,
+	       registry, encoding);
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+CODE
 
 @procs = qw(text text_get_extents text_fontname text_get_extents_fontname);
 %exports = (app => [@procs]);

@@ -17,4 +17,5 @@
 
 # Modify this list for the groups to parse in the pdb directory
 @groups = qw(gdisplay edit floating_sel undo palette gradient convert
-	     channel_ops text gimprc drawable parasite paths);
+	     channel_ops gimprc drawable parasite paths gradient_select
+	     unit procedural_db brushes);

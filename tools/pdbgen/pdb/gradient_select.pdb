@@ -22,7 +22,151 @@ sub pdb_misc {
     $date = '1998';
 }
 
-sub get_gradient_data {
+sub sample_size_arg {{
+    name => 'sample_size',
+    type => '0 < int32 <= 10000',
+    desc => 'Size of the sample to return when the gradient is changed
+	    (%%desc%%)',
+    on_fail => 'sample_size = G_SAMPLE;',
+    no_success => 1
+}}
+
+sub gradients_popup {
+    $blurb = 'Invokes the Gimp gradients selection.';
+
+    $help = 'This procedure popups the gradients selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'gradients_callback', type => 'string', alias => 'name',
+	  desc => 'The callback PDB proc to call when gradient selection is
+		   made' },
+	{ name => 'popup_title', type => 'string', alias => 'title',
+	  desc => 'Title to give the gradient popup window' },
+	{ name => 'initial_gradient', type => 'string',
+	  desc => 'The name of the pattern to set as the first selected',
+	  no_success => 1 },
+	&sample_size_arg
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'GradSelectP newdialog' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)))
+    {
+      if (initial_gradient && strlen (initial_gradient))
+	newdialog = gsel_new_selection (title, initial_gradient);
+      else
+	newdialog = gsel_new_selection (title, NULL);
+
+      newdialog->callback_name = g_strdup (name);
+      newdialog->sample_size = sample_size;
+
+      /* Add to active gradient dialogs list */
+      active_dialogs = g_slist_append (active_dialogs, newdialog);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradients_close_popup {
+    $blurb = 'Popdown the Gimp gradient selection.';
+
+    $help = 'This procedure closes an opened gradient selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'gradients_callback', type => 'string', alias => 'name',
+	  desc => 'The name of the callback registered for this popup' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'GradSelectP gsp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (gsp = gradients_get_gradientselect (name))
+    {
+      active_dialogs = g_slist_remove (active_dialogs, gsp);
+
+      if (GTK_WIDGET_VISIBLE (gsp->shell))
+	gtk_widget_hide (gsp->shell);
+
+      /* Free memory if poping down dialog which is not the main one */
+      if (gsp != gradient_select_dialog)
+	{
+	  /* Send data back */
+	  gtk_widget_destroy (gsp->shell);
+	  grad_select_free (gsp);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradients_set_popup {
+    $blurb = 'Sets the current gradient selection in a popup.';
+
+    $help = $blurb;
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'gradients_callback', type => 'string', alias => 'pdbname',
+	  desc => 'The name of the callback registered for this popup' },
+	{ name => 'gradient_name', type => 'string',
+	  desc => 'The name of the gradient to set as selected' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'GradSelectP gsp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (gsp = gradients_get_gradientselect (name))
+    {
+      GSList *tmp;
+      gradient_t *active = NULL;
+      int pos = 0;
+
+      tmp = gradients_list;
+
+      while (tmp)
+ 	{
+	  active = tmp->data;
+
+	  if (!strcmp (gradient_name, active->name)
+	    break; /* We found the one we want */
+
+	  pos++;
+	  tmp = tmp->next;
+	}
+
+      if (active)
+        {
+	  gtk_clist_select_row (GTK_CLIST (gsp->clist), pos, -1);
+	  gtk_clist_moveto (GTK_CLIST (gsp->clist), pos, 0, 0.0, 0.0);
+	}
+      else
+	success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradients_get_gradient_data {
     $blurb = <<'BLURB';
 Retrieve information about the specified gradient (including data).
 BLURB
@@ -37,17 +181,14 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name ("" means current active gradient)' },
-	{ name => 'sample_size', type => '0 < int32 < 10000',
-	  desc => 'The size of the sample to return when the gradient is
-		   changed $desc',
-	  on_fail => 'sample_size = G_SAMPLE;' }
+	&sample_size_arg
     );
 
     @outargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name',
 	  alias => 'g_strdup (grad->name)', no_declare => 1 },
-	{ name => 'grad_data', type => 'floatarray',
+	{ name => 'grad_data', type => 'floatarray', alias => 'values',
 	  desc => 'The gradient sample data',
 	  array => { name => 'width',
 		     desc => 'The gradient sample width (r,g,b,a)',
@@ -59,15 +200,11 @@ HELP
 	vars => ['gradient_t *grad'],
 	code => <<'CODE'
 {
-  if (name[0] == '\0')
-    success = (grad = curr_gradient) != NULL;
-  else
+  if (strlen (name))
     {
-      GSList *list;
+      GSList *list = gradients_list;
 
       success = FALSE;
-
-      list = gradients_list;
 
       while (list)
 	{
@@ -82,17 +219,67 @@ HELP
 	  list = list->next;
 	}
     }
+  else
+    success = (grad = curr_gradient) != NULL;
 
   if (success)
     {
-      gdouble *, 
+      gdouble *values, *pv;
+      gdouble pos, delta;
+      gdouble r, g, b, a;
+      int i = sample_size;
+
+      pos = 0.0;
+      delta = 1.0 / (i - 1);
+
+      pv = values = g_new (gdouble, i * 4);
+
+      curr_gradient = grad;
+
+      while (i--)
+	{
+	  grad_get_color_at (pos, &r, &g, &b, &a);
+
+	  *pv++ = r;
+	  *pv++ = g;
+	  *pv++ = b;
+	  *pv++ = a;
+
+	  pos += delta;
+	}
+
+      curr_gradient = oldgrad;
     }
 }
 CODE
     );
 }
 
-@procs = qw(gradients_get_gradient_data);
+@headers = qw("gradient_select.h");
+
+$extra{app}->{code} = <<'CODE';
+static GradSelectP
+gradients_get_gradientselect(gchar *name)
+{
+  GSList *list = active_dialogs;
+  GradSelectP gsp;
+
+  while (list)
+    {
+      gsp = (GradSelectP) list->data;
+      
+      if (!strcmp (name, gsp->callback_name))
+	return gsp;
+
+      list = list->next;
+    }
+
+  return NULL;
+}
+CODE
+
+@procs = qw(gradients_popup gradients_close_popup gradients_set_popup
+	    gradients_get_gradient_data);
 %exports = (app => [@procs]);
 
 $desc = 'Gradient UI';

@@ -17,31 +17,37 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub proc_name_arg {
-    { name => 'procedure', type => 'string',
-      desc => 'The procedure name', alias => 'proc_name' },
-}
+sub proc_name_arg {{
+    name => 'procedure',
+    type => 'string',
+    desc => 'The procedure name',
+    alias => 'proc_name'
+}}
 
 sub regex_arg {
     my $type = shift;
-    { name => $type, type => 'string',
-      desc => "The regex for procedure $type" }
 }
 
-sub data_ident_arg {
-    { name => 'identifier', type => 'string',
-      desc => 'The identifier associated with data' }
-}
+sub data_ident_arg {{
+    name => 'identifier',
+    type => 'string',
+    desc => 'The identifier associated with data'
+}}
 
-sub data_bytes_arg {
-    { name => 'bytes', type => 'int32',
-      desc => 'The number of bytes in the data' }
-}
+sub data_bytes_arg {{
+    name => 'bytes',
+    type => '0 < int32',
+    desc => 'The number of bytes in the data',
+    alias => 'data->bytes',
+    no_declare => 1
+}}
 
-sub data_arg {
-    { name => 'data', type => 'int8array',
-      desc => 'A byte array containing data' }
-}
+sub data_arg {{
+    name => 'data',
+    type => 'int8array',
+    desc => 'A byte array containing data',
+    array => &data_bytes_arg
+}}
 
 sub arg_info_proc {
     my $type = shift; my $long_type = shift; my $real_type = shift;
@@ -61,30 +67,29 @@ HELP
 
     @inargs = (
 	&proc_name_arg,
-	{ name => "$type_num", type => 'int32',
+	{ name => "${type}_num", type => 'int32',
 	  desc => "The $long_type number" }
     );
 
     @outargs = (
 	{ name => "${type}_type", type => 'enum PDBArgType',
 	  desc => "The type of $long_type %%desc%%",
-	  alias => "${type}->arg_type" },
+	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type",
-	  alias => "${type}->name" },
+	  alias => "g_strdup (${type}->name)", no_declare => 1 },
 	{ name => "${type}_desc", type => 'string',
 	  desc => "A description of the $long_type",
-	  alias => "${type}->description" }
+	  alias => "g_strdup (${type}->description)", no_declare => 1 }
     );
 
    %invoke = (
-	headers => [ qw("procedural_db.h") ],
 	vars => [ 'ProcRecord *proc;' ],
 	code => <<CODE
 {
   proc = procedural_db_lookup (proc_name);
   if (proc && (${type}_num >= 0 && ${type}_num < proc->num_$real_type))
-    $type = \&proc->${real_type}[${type}_num];
+    $type = \&proc->${real_type}\[${type}_num];
   else
     success = FALSE;
 }
@@ -94,9 +99,39 @@ CODE
 
 # The defs
 
-sub procedural_db_query {
-    $alias{lib} = 'query_database';
+sub procedural_db_dump {
+    $blurb = 'Dumps the current contents of the procedural database';
 
+    $help = <<'HELP';
+This procedure dumps the contents of the procedural database to the specified
+file. The file will contain all of the information provided for each registered
+procedure. This file is in a format appropriate for use with the supplied
+"pdb_self_doc.el" Elisp script, which generates a texinfo document.
+HELP
+
+    &std_pdb_misc;
+    $author = 'Spencer Kimball & Josh MacDonald';
+    $copyright = $author . ' & Peter Mattis';
+
+    @inargs = (
+	{ name => 'filename', type => 'string',
+	  desc => 'The dump filename' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if ((procedural_db_out = fopen (filename, "w")))
+    {
+      g_hash_table_foreach (procedural_ht, procedural_db_print_entry, NULL);
+      fclose (procedural_db_out);
+    }
+}
+CODE
+    );
+}
+
+sub procedural_db_query {
     $blurb = <<'BLURB';
 Queries the procedural database for its contents using regular expression
 matching.
@@ -117,46 +152,36 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = (
-	&regex_arg('name'),
-	&regex_arg('blurb'),
-	&regex_arg('help'),
-	&regex_arg('author'),
-	&regex_arg('copyright'),
-	&regex_arg('date'),
-	&regex_arg('proc_type')
-    );
-    $inargs[$#inargs]->{desc} =~
-	s <proc_type$>
-	  <type: { 'Internal GIMP procedure', 'GIMP Plug-in',
-		   'GIMP Extension' }>;
+    my $regcomp = ""; my $free = ""; $once = 0;
+    foreach (qw(name blurb help author copyright date proc_type)) {
+	push @inargs, { name => $_, type => 'string',
+			desc => "The regex for procedure $_" };
 
-    @outargs = (
-	{
-	    name  => 'num_matches',
-	    type  => 'int32',
-	    desc  => 'The number of matching procedures',
-	    alias => 'pdb_query.num_procs'
-	},
-	{
-	    name  => 'procedure_names',
-	    type  => 'stringarray',
-	    desc  => 'The list of procedure names',
-	    alias => 'pdb_query.list_or_procs'
-	}
-    );
-
-    my($regcomp, $free, $once);
-    foreach (@inargs) {
 	$regcomp .= ' ' x 2 if $once;
 	$regcomp .= "regcomp (&pdb_query.${_}_regex, $_, 0);\n";
 
 	$free .= ' ' x 2 if $once++;
 	$free .= "free (pdb_query.${_}_regex.buffer);\n";
     }
+    chop $free;
+
+    $inargs[$#inargs]->{desc} =~
+	s <proc_type$>
+	  <type: { 'Internal GIMP procedure', 'GIMP Plug-in',
+		   'GIMP Extension' }>;
+
+    @outargs = (
+	{ name  => 'procedure_names', type  => 'stringarray',
+	  desc  => 'The list of procedure names',
+	  alias => 'pdb_query.list_of_procs', no_declare => 1,
+	  array => { name  => 'num_matches',
+		     desc  => 'The number of matching procedures',
+		     alias => 'pdb_query.num_procs', no_declare => 1 }
+	}
+    );
 
     %invoke = (
-	headers => [ qw("procedural_db.h" "regex.h") ],
+	headers => [ qw("regex.h") ],
 	vars => [ 'PDBQuery pdb_query' ],
 	code => <<CODE
 {
@@ -173,8 +198,6 @@ CODE
 }
 
 sub procedural_db_proc_info {
-    $alias{lib} = 'query_procedure';
-
     $blurb = <<'BLURB';
 Queries the procedural database for information on the specified procedure.
 BLURB
@@ -212,12 +235,15 @@ HELP
 	  desc => 'The number of return values' }
     );
 
-    foreach (@outargs) { $_->{alias} = "proc->$_->{name}" }
+    foreach (@outargs) {
+	$_->{alias} = "proc->$_->{name}";
+	$_->{alias} = "g_strdup ($_->{alias})" if $_->{type} eq 'string';
+	$_->{no_declare} = 1;
+    }
 
     %invoke = (
-	headers => [ qw("procedural_db.h") ],
 	code => <<'CODE'
-success = ((proc = procedural_db_lookup (proc_name)) != NULL);
+success = (proc = procedural_db_lookup (proc_name)) != NULL;
 CODE
     );
 }
@@ -246,14 +272,10 @@ HELP
 
     @inargs = ( &data_ident_arg );
 
-    @outargs = ( &data_bytes_arg, &data_arg );
-    $outargs[0]->{alias} = 'data->bytes';
-    $outargs[1]->{alias} = 'data_copy';
-
-    @globals = ('static GList *data_list = NULL');
+    @outargs = ( &data_arg );
+    $outargs[0]->{alias} = 'data_copy';
 
     %invoke = (
-	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data', 'char *data_copy', 'GList *list'],
 	code => <<'CODE'
 {
@@ -265,7 +287,7 @@ HELP
       data = (PDBData *) list->data;
       list = list->next;
 
-      if (strcmp (data->identifier, identifier) == 0)
+      if (!strcmp (data->identifier, identifier))
 	{
 	  data_copy = g_new (char, data->bytes);
 	  memcpy (data_copy, data->data, data->bytes);
@@ -280,8 +302,6 @@ CODE
 }
 
 sub procedural_db_get_data_size {
-    $alias{lib} = 'get_data_size';
-
     $blurb = 'Returns size of data associated with the specified identifier.';
 
     $help = <<'HELP';
@@ -290,17 +310,14 @@ the specified identifier. If no data has been associated with the identifier,
 an error is returned.
 HELP
 
-    $author = 'Nick Lamb';
-    $copyright = $author;
+    $author = $copyright = 'Nick Lamb';
     $date = '1998';
 
     @inargs = ( &data_ident_arg );
 
     @outargs = ( &data_bytes_arg );
-    $outargs[0]->{alias} = 'data->bytes';
 
     %invoke = (
-	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data', 'GList *list'],
 	code => <<'CODE'
 {
@@ -312,7 +329,7 @@ HELP
       data = (PDBData *) list->data;
       list = list->next;
 
-      if (strcmp (data->identifier, identifier) == 0)
+      if (!strcmp (data->identifier, identifier))
 	{
 	  success = TRUE;
 	  break;
@@ -336,18 +353,17 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
-    @inargs = ( &data_ident_arg, &data_bytes_arg, &data_arg );
-    $inargs[2]->{alias} = 'data_src';
+    @inargs = ( &data_ident_arg, &data_arg );
+    $inargs[1]->{alias} = 'data_src';
 
     %invoke = (
-	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data = NULL', 'GList *list'],
 	code => <<'CODE'
 {
   list = data_list;
   while (list)
     {
-      if (strcmp (((PDBData *) list->data)->identifier, identifier) == 0)
+      if (!strcmp (((PDBData *) list->data)->identifier, identifier))
 	data = (PDBData *) list->data;
 
       list = list->next;
@@ -371,7 +387,7 @@ CODE
     );
 }
 
-$support{types} = <<'SUPPORT';
+$extra{app}->{decls} = <<'CODE';
 /*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
 
@@ -385,7 +401,7 @@ struct _PDBQuery
   regex_t date_regex;
   regex_t proc_type_regex;
 
-  char ** list_of_procs;
+  gchar **list_of_procs;
   int     num_procs;
 };
 
@@ -393,16 +409,18 @@ typedef struct _PDBData PDBData;
 
 struct _PDBData
 {
-  char *identifier;
-  int   bytes;
-  char *data;
+  gchar *identifier;
+  gint   bytes;
+  gchar *data;
 };
-SUPPORT
 
-$support{code} = <<'SUPPORT';
-static inline int
+static GList *data_list = NULL;
+CODE
+
+$extra{app}->{code} = <<'CODE';
+static int
 match_strings (regex_t *preg,
-	       char    *a)
+	       gchar   *a)
 {
   return regexec (preg, a, 0, NULL, 0);
 }
@@ -427,28 +445,112 @@ procedural_db_query_entry (gpointer key,
       !match_strings (&pdb_query->author_regex, proc->author) &&
       !match_strings (&pdb_query->copyright_regex, proc->copyright) &&
       !match_strings (&pdb_query->date_regex, proc->date) &&
-      !match_strings (&pdb_query->proc_type_regex, proc_type_str[(int) proc->pro
-c_type]))
+      !match_strings (&pdb_query->proc_type_regex,
+		      proc_type_str[(int) proc->proc_type]))
     {
-      new_length = (proc->name) ? (strlen (proc->name) + 1) : 0;
+      new_length = proc->name ? (strlen (proc->name) + 1) : 0;
 
       if (new_length)
         {
           pdb_query->num_procs++;
           pdb_query->list_of_procs = g_realloc (pdb_query->list_of_procs,
-                                               (sizeof (char **) * pdb_query->nu
-m_procs));
+                                               (sizeof (gchar **) * pdb_query->num_procs));
           pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc->n
 ame);
         }
     }
 }
-SUPPORT
+
+static void
+output_string (gchar *string)
+{
+  fprintf (procedural_db_out, "\"");
+  while (*string)
+    {
+      switch (*string)
+	{
+	case '\\' : fprintf (procedural_db_out, "\\\\"); break;
+	case '\"' : fprintf (procedural_db_out, "\\\""); break;
+	case '{'  : fprintf (procedural_db_out, "@{"); break;
+	case '@'  : fprintf (procedural_db_out, "@@"); break;
+	case '}'  : fprintf (procedural_db_out, "@}"); break;
+	default:
+	  fprintf (procedural_db_out, "%c", *string);
+	}
+      string++;
+    }
+  fprintf (procedural_db_out, "\"\n");
+}
+
+static void
+procedural_db_print_entry (gpointer key,
+                           gpointer value,
+                           gpointer user_data)
+{
+  int i;
+  ProcRecord *procedure;
+  GList *list = (GList *) value;
+  int num = 0;
+  GString *buf = g_string_new ("");
+
+  while (list)
+    {
+      num++;
+      procedure = (ProcRecord*) list->data;
+      list = list->next;
+
+      fprintf (procedural_db_out, "\n(register-procedure ");
+
+      if (list || num != 1)
+        {
+          g_string_sprintf (buf, "%s <%d>", procedure->name, num);
+          output_string (buf->str);
+        }
+      else
+        output_string (procedure->name);
+
+      output_string (procedure->blurb);
+      output_string (procedure->help);
+      output_string (procedure->author);
+      output_string (procedure->copyright);
+      output_string (procedure->date);
+      output_string (proc_type_str[(int) procedure->proc_type]);
+
+      fprintf (procedural_db_out, "( ");
+      for (i = 0; i < procedure->num_args; i++)
+        {
+          fprintf (procedural_db_out, "( ");
+
+          output_string (procedure->args[i].name );
+          output_string (type_str[procedure->args[i].arg_type]);
+          output_string (procedure->args[i].description);
+
+          fprintf (procedural_db_out, " ) ");
+        }
+      fprintf (procedural_db_out, " ) ");
+
+      fprintf (procedural_db_out, "( ");
+      for (i = 0; i < procedure->num_values; i++)
+        {
+          fprintf (procedural_db_out, "( ");
+          output_string (procedure->values[i].name );
+          output_string (type_str[procedure->values[i].arg_type]);
+          output_string (procedure->values[i].description);
+
+          fprintf (procedural_db_out, " ) ");
+        }
+      fprintf (procedural_db_out, " ) ");
+      fprintf (procedural_db_out, " ) ");
+    }
+
+  g_string_free (buf, TRUE);
+}
+CODE
 
 @procs = qw(procedural_db_dump procedural_db_query procedural_db_proc_info
 	    procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
-	    procedural_db_set_data)
+	    procedural_db_set_data);
 %exports = (app => [@procs], lib => [@procs[5..7], @procs[1..2]]);
 
 $desc = 'Procedural database';

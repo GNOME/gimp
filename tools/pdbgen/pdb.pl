@@ -74,17 +74,25 @@ package Gimp::CodeGen::pdb;
     # Special cases
     enum    => { name => 'INT32', type => 'gint32 '   },
     boolean => { name => 'INT32', type => 'gboolean ' },
+    unit    => { name => 'INT32', type => 'GUnit '    },
 
     region => { name => 'REGION', type => 'gpointer ' } # not supported
 );
 
 # Split out the parts of an arg constraint
 sub arg_parse {
-    my %testmap = (
-	'<'  => '>',
-	'>'  => '<',
-	'<=' => '>=',
-	'>=' => '<='
+    my %premap = (
+	'<'  => '<=',
+	'>'  => '>=',
+	'<=' => '<',
+	'>=' => '>'
+    );
+
+    my %postmap = (
+	'<'  => '>=',
+	'>'  => '<=',
+	'<=' => '>',
+	'>=' => '<'
     );
 
     my $arg = shift;
@@ -100,11 +108,11 @@ sub arg_parse {
 
 	return @retvals;
     }
-    elsif ($arg =~ /^(?:([+-.\d].*?) \s* (<=|<))?
+    elsif ($arg =~ /^(?:([+-.\d][^\s]*) \s* (<=|<))?
 		     \s* (\w+) \s*
-		     (?:(<=|<) \s* ([+-.\d].*?))?
+		     (?:(<=|<) \s* ([+-.\d][^\s]*))?
 		   /x) {
-	return ($3, $1, $2 ? $testmap{$2} : $2, $5, $4 ? $testmap{$4} : $4);
+	return ($3, $1, $2 ? $premap{$2} : $2, $5, $4 ? $postmap{$4} : $4);
     }
 }
 
@@ -115,6 +123,7 @@ sub arg_ptype {
 	if (exists $arg->{id_func})       { 'int'     }
 	elsif ($arg->{type} =~ /\*/)      { 'pointer' }
 	elsif ($arg->{type} =~ /boolean/) { 'int'     }
+	elsif ($arg->{type} =~ /GUnit/)   { 'int'     }
 	elsif ($arg->{type} =~ /int/)     { 'int'     }
 	elsif ($arg->{type} =~ /double/)  { 'float'   }
 	else                              { 'pointer' }
@@ -125,3 +134,5 @@ sub arg_ptype {
 sub arg_vname { exists $_[0]->{alias} ? $_[0]->{alias} : $_[0]->{name} }
 
 sub arg_numtype () { 'gint32 ' }
+
+1;

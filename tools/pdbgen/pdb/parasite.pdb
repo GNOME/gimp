@@ -47,7 +47,7 @@ sub parasite_new {
     @inargs = (
 	&name_arg('create'),
 	{ name => 'flags', type => 'int32',
-	  desc => 'The flags (persistance == 1)' },
+	  desc => 'The flags (1 == persistance)' },
 	{ name => 'size', type => '0 <= int32',
 	  desc => 'The size of the data in bytes' },
 	{ name => 'data', type => 'string',
@@ -82,9 +82,8 @@ HELP
     @outargs = ( &parasite_outarg('found') );
 
     %invoke = (
-	headers => [ qw("gimpparasite.h") ],
 	code => <<'CODE'
-success = (parasite = parasite_copy (gimp_find_parasite (name))) != NULL;
+success = (parasite = parasite_copy (gimp_parasite_find (name))) != NULL;
 CODE
     );
 }
@@ -102,12 +101,65 @@ HELP
 	{ name => 'parasite', type => 'parasite',
 	  desc => 'The parasite to attach to the gimp' }
     );
+
+    %invoke = ( code => 'gimp_parasite_attach (parasite);' );
 }
 
-@headers = qw("libgimp/parasite.h");
+sub parasite_detach {
+    $blurb = 'Removes a parasite from the gimp.';
 
-@procs = qw(parasite_new parasite_find parasite_attach);
-%exports = (app => [@procs]);
+    $help = <<'HELP';
+This procedure detaches a parasite from the gimp. It has no return values.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from the gimp.' }
+    );
+
+    %invoke = ( code => 'gimp_parasite_detach (name);' );
+}
+
+sub parasite_list {
+    $blurb = 'List all parasites.';
+
+    $help = 'Returns a list of all currently attached parasites.';
+
+    $author = $copyright = 'Marc Lehmann';
+    $date = '1999';
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray',
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = ( code => 'parasites = gimp_parasite_list (&num_parasites);' );
+}
+
+@headers = qw("libgimp/parasite.h" "gimpparasite.h");
+
+$extra{lib}->{protos} = <<'CODE';
+void gimp_parasite_attach_new (const char *name, int flags, int size
+			       const void *data);
+CODE
+
+$extra{lib}->{code} = <<'CODE';
+void
+gimp_parasite_attach_new (const char *name, int flags, int size,
+			  const void *data)
+{
+  Parasite *p = parasite_new (name, flags, size, data);
+  gimp_parasite_attach (p);
+  parasite_free (p);
+}
+CODE
+
+@procs = qw(parasite_new parasite_find parasite_attach parasite_detach
+	    parasite_list);
+%exports = (app => [@procs], lib => [@procs[1..3]]);
 
 $desc = 'Parasite procedures';
 

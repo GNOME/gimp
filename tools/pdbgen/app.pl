@@ -60,6 +60,37 @@ sub format_code_frag {
     $code;
 }
 
+sub make_arg_test {
+    my ($arg, $reverse, $test) = @_;
+    my $result = "";
+
+    my $yes = exists $arg->{on_success};
+    my $no  = !exists $arg->{no_success} || exists $arg->{on_fail};
+
+    if ($yes || $no) {
+	&$reverse(\$test) if $yes;
+
+	$result = ' ' x 2 . "if ($test)\n";
+
+	$result .= &format_code_frag($arg->{on_success}, 1) if $yes;
+
+	if ($no) {
+	    $result .= ' ' x 2 . "else\n" if $yes;
+
+	    if (!exists $arg->{no_success}) {
+		$success = 1;
+		$result .= ' ' x 4 . "success = FALSE;\n";
+	    }
+
+	    if (exists $arg->{on_fail}) {
+		$result .= &format_code_frag($_->{on_fail}, 1);
+	    }
+	}
+    }
+
+    $result;
+}
+
 sub declare_args {
     my $proc = shift;
     my $out = shift;
@@ -116,10 +147,18 @@ sub make_arg_recs {
 		    /array/     && do { 				 last };
 		    /boolean/   && do { $info = 'TRUE or FALSE';	 last };
 		    /int|float/ && do { $info =~ s/$type/$arg->{name}/e; last };
-		    /enum/      && do { $info = $enums{$name}->{info};
+		    /enum/      && do { my $enum = $enums{$name};
+					$info = $enum->{info};
 					foreach (@remove) {
-					    $info =~ s/$_ \(.*?\)(, )?//
-					}				 last };
+					    if (exists $enum->{nicks}->{$_}) {
+						$nick = $enum->{nicks}->{$_};
+					    }
+					    else {
+						$nick = $_;
+					    }
+					    $info =~ s/$nick \(.*?\)(, )?//
+					}				 
+					$info =~ s/, $//;		 last };
 		}
 
 		$desc =~ s/%%desc%%/$info/eg;
@@ -159,123 +198,113 @@ sub marshal_inargs {
 	    $result .= <<CODE;
   $var = $arg->{id_func} (args[$argc].value.pdb_$type);
 CODE
-
-	    if (!exists $_->{no_success}) {
-		$result .= ' ' x 2 . "if ($var ";
-		$result .= exists $_->{on_success} ? '!=' : '==';
-		$result .= " NULL)\n";
-
-		if (exists $_->{on_success}) {
-		    $result .= &format_code_frag($_->{on_success}, 1);
-		    $result .= ' ' x 2 . "else\n";
-		}
-
-		$result .= ' ' x 4 . "success = FALSE;\n";
-
-		if (exists $_->{on_fail}) {
-		    $result .= &format_code_frag($_->{on_fail}, 1);
-		}
-
-		$success = 1;
-	    }
+	    $result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
+				      "$var == NULL");
 	}
 	else {
-	    my $code = ' ' x 2 . "$var =";
+	    $result .= ' ' x 2 . "$var =";
 
 	    my $cast = "";
 	    if ($type eq 'pointer' || $arg->{type} =~ /int(16|8)$/) {
 		$cast = " ($arg->{type})";
 	    }
-	    $code .= "$cast args[$argc].value.pdb_$type";
-	    $code .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
-	    $code .= ";\n";
+	    $result .= "$cast args[$argc].value.pdb_$type";
+	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
+	    $result .= ";\n";
 
-	    if (!exists $_->{no_success}) {
-		if ($pdbtype eq 'string') {
-		    $code .= ' ' x 2 . "success = $var != NULL;\n";
-		}
-		elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
+	    if ($pdbtype eq 'string') {
+		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
+					  "$var == NULL");
+	    }
+	    elsif ($pdbtype eq 'unit') {
+		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
+					  'unit < UNIT_PIXEL || unit >= ' .
+					  'gimp_unit_get_number_of_units ()');
+	    }
+	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
+		if (!exists $_->{no_success} || exists $_->{on_success} ||
+		     exists $_->{on_fail}) {
 		    my %vals; my $symbols = $enums{pop @typeinfo}->{symbols};
 		    @vals{@$symbols}++; delete @vals{@typeinfo};
-		
-		    $code .= <<CODE;
-  switch ($var)
-    {
-CODE
 
+		    my $okvals = ""; my $failvals = "";
+
+		    my $once = 0;
 		    foreach (@$symbols) {
-			$code .= ' ' x 4 . "case $_:\n" if exists $vals{$_};
+			if (exists $vals{$_}) {
+			    $okvals .= ' ' x 4 if $once++;
+			    $okvals .= "case $_:\n";
+			}
 		    }
 
-		    $code .= <<CODE;
+		    sub format_switch_frag {
+			my ($arg, $key) = @_;
+			my $frag = "";
+			if (exists $arg->{$key}) {
+			    $frag = &format_code_frag($arg->{$key}, 1);
+			    $frag =~ s/\t/' ' x 8/eg;
+			    $frag =~ s/^/' ' x 2/meg;
+			    $frag =~ s/^ {8}/\t/mg;
+			}
+			$frag;
+		    }
+
+		    $okvals .= &format_switch_frag($_, 'on_success');
+
+		    $failvals .= "default:\n";
+		    if (!exists $_->{no_success}) {
+			$success = 1;
+			$failvals .= ' ' x 6 . "success = FALSE\n"
+		    }
+		    $failvals .=  &format_switch_frag($_, 'on_fail');
+
+		    $result .= <<CODE;
+  switch ($var)
+    {
+    $okvals
       break;
 
-    default:
-      success = FALSE;
+    $failvals
       break;
     }
 CODE
 		}
-		elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
-		    my $tests = 0; my $extra = "";
-
-		    if ($pdbtype eq 'enum') {
-			my $symbols = $enums{pop @typeinfo}->{symbols};
-
-			foreach (@typeinfo) { $extra .= " && $var != $_" }
-
-			$typeinfo[0] = $symbols->[0];
-			$typeinfo[1] = '>=';
-			$typeinfo[2] = $symbols->[$#$symbols];
-			$typeinfo[3] = '<=';
-		    }
-
-		    $code .= ' ' x 2 . "success = ";
-
-		    if (defined $typeinfo[0]) {
-			$code .= "$var $typeinfo[1] $typeinfo[0]";
-			$tests++;
-		    }
-
-		    if (defined $typeinfo[2]) {
-			$code .= ' && ' if $tests;
-			$code .= "$var $typeinfo[3] $typeinfo[2]";
-		    }
-
-		    $code .= "$extra;\n";
-		}
-
-		if ($code =~ /success/) {
-		    my $tests = 0;
-
-		    if (exists $_->{on_success}) {
-			$code .= ' ' x 2 . "if (success)\n";
-			$code .= &format_code_frag($_->{on_success}, 1);
-			$tests++;
-		    }
-
-		    if (exists $_->{on_fail}) {
-			$code .= ' ' x 2;
-			$code .= $tests ? "else\n" : "if (success)\n"; 
-			$code .= &format_code_frag($_->{on_fail}, 1);
-		    }
-
-		    if ($success) {
-			$code =~ s/^/' ' x 4/meg;
-			$code =~ s/^ {8}/\t/mg;
-
-			$code .= ' '  x 4 . "}\n";
-			$result .= ' ' x 2 . "if (success)\n" . ' ' x 4 . "{\n";
-		    }
-		    else {
-			$success_init = 0;
-		    }
-
-		    $success = 1;
-		}
 	    }
+	    elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
+		my $code = ""; my $tests = 0; my $extra = "";
 
-	    $result .= $code;
+		if ($pdbtype eq 'enum') {
+		    my $symbols = $enums{shift @typeinfo}->{symbols};
+
+		    foreach (@typeinfo) { $extra .= " || $var == $_" }
+
+		    $typeinfo[0] = $symbols->[0];
+		    $typeinfo[1] = '<';
+		    $typeinfo[2] = $symbols->[$#$symbols];
+		    $typeinfo[3] = '>';
+		}
+		elsif ($pdbtype eq 'float') {
+		    foreach (@typeinfo[0, 2]) {
+			$_ .= '.0' if defined $_ && !/\./
+		    }
+		}
+
+		if (defined $typeinfo[0]) {
+		    $code .= "$var $typeinfo[1] $typeinfo[0]";
+		    $code .= '.0' if $pdbtype eq 'float' && $typeinfo[0] !~ /\./;
+		    $tests++;
+		}
+
+		if (defined $typeinfo[2]) {
+		    $code .= ' || ' if $tests;
+		    $code .= "$var $typeinfo[3] $typeinfo[2]";
+		}
+
+		$code .= $extra;
+
+		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
+					  $code);
+	    }
 	}
 
 	$argc++; $result .= "\n";
@@ -344,7 +373,6 @@ sub generate {
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 	
 	local $success = 0;
-	local $success_init = 1;
 
 	$out->{pcount}++; $total++;
 
@@ -476,13 +504,11 @@ CODE
 	}
 
 	if ($success) {
-	    $success_init = 0 if $proc->{invoke}->{success} eq 'NONE';
-
-	    my $header = ' ' x 2 . "gboolean success";
-	    $header .= " = $proc->{invoke}->{success}" if $success_init;
-	    $header .= ";\n";
-
-	    $out->{code} .= $header;
+	    $out->{code} .= ' ' x 2 . "gboolean success";
+	    unless ($proc->{invoke}->{success} eq 'NONE') {
+		$out->{code} .= " = $proc->{invoke}->{success}";
+	    }
+	    $out->{code} .= ";\n";
 	}
 
         $out->{code} .= $code;
@@ -500,15 +526,13 @@ static ProcRecord ${name}_proc =
   "$proc->{copyright}",
   "$proc->{date}",
   PDB_INTERNAL,
-  @{[scalar @inargs or '0']},
+  @{[scalar @inargs]},
   @{[scalar @inargs ? "${name}_inargs" : 'NULL']},
-  @{[scalar @outargs or '0']},
+  @{[scalar @outargs]},
   @{[scalar @outargs ? "${name}_outargs" : 'NULL']},
   { { ${name}_invoker } }
 };
 CODE
-
-	delete $out->{headers}->{q/"procedural_db.h"/};
     }
 
     my $gpl = <<'GPL';
@@ -554,20 +578,27 @@ HEADER
     foreach $group (@main::groups) {
 	my $out = $out{$group};
 
+	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
+	delete $out->{headers}->{q/"procedural_db.h"/};
+
+	my $headers = "";
+	foreach (sort keys %{$out->{headers}}) { $headers .= "#include $_\n" }
+
+	my $extra = {};
+	if (exists $main::grp{$group}->{extra}->{app}) {
+	    $extra = $main::grp{$group}->{extra}->{app}
+	}
+
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cmdfile: $!\n";
 	print CFILE $gpl;
 	print CFILE qq/#include "procedural_db.h"\n\n/;
-	foreach $header (sort keys %{$out->{headers}}) {
-	    print CFILE "#include $header\n";
-	}
-	print CFILE "\n";
-	if (exists $main::grp{$group}->{code}) {
-	    print CFILE "$main::grp{$group}->{code}\n";
-	}
+	print CFILE $headers, "\n";
+	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE $out->{procs};
 	print CFILE "\nvoid\nregister_${group}_procs (void)\n";
 	print CFILE "{\n$out->{register}}\n";
+	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;
 	&write_file($cfile);
@@ -577,9 +608,9 @@ HEADER
 	$longest = length $decl if $longest < length $decl;
 
 	$group_procs .= ' ' x 2 . "app_init_update_status (";
-	$group_procs .= q/"Internal Procedures"/ unless $once;
+	$group_procs .= q/_("Internal Procedures")/ unless $once;
 	$group_procs .= 'NULL' if $once++;
-	$group_procs .= qq/, "$main::grp{$group}->{desc}", /;
+	$group_procs .= qq/, _("$main::grp{$group}->{desc}"), /;
        ($group_procs .= sprintf "%.3f", $pcount / $total) =~ s/\.?0*$//s;
 	$group_procs .= ($group_procs !~ /\.\d+$/s ? ".0" : "") . ");\n";
 	$group_procs .=  ' ' x 2 . "register_${group}_procs ();\n\n";
@@ -589,7 +620,8 @@ HEADER
     $internal = "$destdir/internal_procs.c$FILE_EXT";
     open INTERNAL, "> $internal" or die "Can't open $cmdfile: $!\n";
     print INTERNAL $gpl;
-    print INTERNAL qq/#include "app_procs.h"\n\n/;
+    print INTERNAL qq@#include "app_procs.h"\n\n@;
+    print INTERNAL qq@#include "libgimp/gimpintl.h"\n\n@;
     print INTERNAL "/* Forward declarations for registering PDB procs */\n\n";
     foreach (@group_decls) {
 	print INTERNAL "void $_" . ' ' x ($longest - length $_) . " (void);\n";

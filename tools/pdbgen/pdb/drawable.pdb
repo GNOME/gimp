@@ -24,6 +24,25 @@ sub drawable_arg {{
     no_success => 1
 }}
 
+sub drawable_coord_args {
+    @inargs = ( &drawable_arg );
+    delete $inargs[0]->{no_success};
+
+    foreach (qw(x y)) {
+	push @inargs, { name => "${_}_coord", type => '0 <= int32',
+			desc => "The $_ coordinate", alias => $_ }
+    }
+}
+
+sub pixel_arg {{
+    name => 'pixel',
+    type => 'int8array',
+    desc => 'The pixel value',
+    array => { name => 'num_channels', type => 'int32',
+	       desc => 'The number of channels for the pixel',
+	       no_success => 1 }
+}}
+
 sub drawable_prop_proc {
     my ($return, $name, $type, $func, $desc) = @_;
 
@@ -48,7 +67,24 @@ This procedure returns non-zero if the specified drawable is of type
 HELP
 
     &drawable_prop_proc("whether the drawable is $desc type", $func, 'boolean',
-			$func, "non-zero if the drawable is $desc type")
+			$func, "non-zero if the drawable is $desc type");
+}
+
+sub drawable_is_proc {
+    my $desc = shift;
+
+    my $type = $desc;
+    $type =~ s/ /_/g;
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable is a $desc.
+HELP
+
+    &drawable_prop_proc("whether the drawable is a $desc",
+			$type, 'boolean', $type,
+			"Non-zero if the drawable is a $desc");
+
+    $outargs[0]->{alias} .= ' ? TRUE : FALSE';
 }
 
 sub drawable_merge_shadow {
@@ -273,13 +309,112 @@ HELP
     %invoke = ( code => 'drawable_offsets (drawable, &offset_x, &offset_y);' );
 }
 
+sub drawable_layer {
+    &drawable_is_proc('layer');
+}
+
+sub drawable_layer_mask {
+    &drawable_is_proc('layer mask');
+}
+
+sub drawable_channel {
+    &drawable_is_proc('channel');
+}
+
+sub drawable_set_pixel {
+    $blurb = 'Sets the value of the pixel at the specified coordinates.';
+
+    $help = <<'HELP';
+This procedure sets the pixel value at the specified coordinates. The
+'num_channels' argument must always be equal to the bytes-per-pixel value for
+the spec ified drawable.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    &drawable_coord_args();
+    push @inargs, &pixel_arg();
+
+    %invoke = (
+	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	code => <<'CODE'
+{
+  if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
+      num_channels == drawable_bytes (drawable))
+    {
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+				    TRUE, TRUE);
+
+      x %= TILE_WIDTH;
+      y %= TILE_WIDTH;
+
+      p = tile_data_pointer (tile, y, x);
+      for (b = 0; b < num_channels; b++)
+	*p++ = *pixel++;
+
+      tile_release (tile, TRUE);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_get_pixel {
+    $blurb = 'Gets the value of the pixel at the specified coordinates.';
+
+    $help = <<'HELP';
+This procedure gets the pixel value at the specified coordinates. The
+'num_channels' argument must always be equal to the bytes-per-pixel value for
+the specified drawable.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    &drawable_coord_args();
+
+    @outargs = ( &pixel_arg );
+
+    %invoke = (
+	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	code => <<'CODE'
+{
+  if (x < drawable_width (drawable) && y < drawable_height (drawable)
+    {  
+      num_channels = drawable_bytes (drawable);
+      pixel = g_new (gint8, num_channels);
+
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+				    TRUE, TRUE);
+
+      x %= TILE_WIDTH;
+      y %= TILE_WIDTH;
+
+      p = tile_data_pointer (tile, y, x);
+      for (b = 0; b < num_channels; b++)
+	pixel[b] = p[b];
+
+      tile_release (tile, FALSE);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 @headers = qw("drawable.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_gimage drawable_type
 	    drawable_has_alpha drawable_type_with_alpha drawable_color
 	    drawable_gray drawable_indexed drawable_bytes drawable_width
-	    drawable_height drawable_offsets);
+	    drawable_height drawable_offsets drawable_layer
+	    drawable_layer_mask drawable_channel drawable_set_pixel
+	    drawable_get_pixel);
 %exports = (app => [@procs]);
 
 $desc = 'Drawable procedures';
