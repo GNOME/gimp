@@ -23,6 +23,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimplimits.h"
+#include "libgimpbase/gimpbasetypes.h"
+
+#include "base/base-enums.h"
+#include "core/core-enums.h"
+
 #include "gimpconfig.h"
 #include "gimpcoreconfig.h"
 
@@ -131,4 +137,33 @@ output_unknown_token (const gchar *key,
 
   g_print ("   %s \"%s\"\n", key, value);
   g_free (escaped);
+}
+
+
+/* some dummy funcs so we can properly link this beast */
+
+const gchar *
+gimp_unit_get_identifier (GimpUnit unit)
+{
+  switch (unit)
+    {
+    case GIMP_UNIT_PIXEL:
+      return "pixels";
+    case GIMP_UNIT_INCH:
+      return "inches";
+    case GIMP_UNIT_MM:
+      return "millimeters";
+    case GIMP_UNIT_POINT:
+      return "points";
+    case GIMP_UNIT_PICA:
+      return "picas";
+    default:
+      return NULL;
+    }
+}
+
+gint
+gimp_unit_get_number_of_units (void)
+{
+  return GIMP_UNIT_END;
 }

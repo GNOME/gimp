@@ -20,47 +20,47 @@
 #define __APP_GIMP_UNIT_H__
 
 
-void       gimp_units_init                         (Gimp     *gimp);
-void       gimp_units_exit                         (Gimp     *gimp);
+void          gimp_units_init                         (Gimp     *gimp);
+void          gimp_units_exit                         (Gimp     *gimp);
 
-void       gimp_unitrc_load                        (Gimp     *gimp);
-void       gimp_unitrc_save                        (Gimp     *gimp);
+void          gimp_unitrc_load                        (Gimp     *gimp);
+void          gimp_unitrc_save                        (Gimp     *gimp);
 
-gint       _gimp_unit_get_number_of_units          (Gimp     *gimp);
-gint       _gimp_unit_get_number_of_built_in_units (Gimp     *gimp);
+gint          _gimp_unit_get_number_of_units          (Gimp     *gimp);
+gint          _gimp_unit_get_number_of_built_in_units (Gimp     *gimp) G_GNUC_CONST;
 
-GimpUnit   _gimp_unit_new                          (Gimp     *gimp,
-						    gchar    *identifier,
-						    gdouble   factor,
-						    gint      digits,
-						    gchar    *symbol,
-						    gchar    *abbreviation,
-						    gchar    *singular,
-						    gchar    *plural);
+GimpUnit      _gimp_unit_new                          (Gimp     *gimp,
+                                                       gchar    *identifier,
+                                                       gdouble   factor,
+                                                       gint      digits,
+                                                       gchar    *symbol,
+                                                       gchar    *abbreviation,
+                                                       gchar    *singular,
+                                                       gchar    *plural);
 
-gboolean   _gimp_unit_get_deletion_flag            (Gimp     *gimp,
-						    GimpUnit  unit);
-void       _gimp_unit_set_deletion_flag            (Gimp     *gimp,
-						    GimpUnit  unit,
-						    gboolean  deletion_flag);
+gboolean      _gimp_unit_get_deletion_flag            (Gimp     *gimp,
+                                                       GimpUnit  unit);
+void          _gimp_unit_set_deletion_flag            (Gimp     *gimp,
+                                                       GimpUnit  unit,
+                                                       gboolean  deletion_flag);
 
-gdouble    _gimp_unit_get_factor                   (Gimp     *gimp,
-						    GimpUnit  unit);
+gdouble       _gimp_unit_get_factor                   (Gimp     *gimp,
+                                                       GimpUnit  unit);
 
-gint       _gimp_unit_get_digits                   (Gimp     *gimp,
-						    GimpUnit  unit);
+gint          _gimp_unit_get_digits                   (Gimp     *gimp,
+                                                       GimpUnit  unit);
 
-gchar    * _gimp_unit_get_identifier               (Gimp     *gimp,
-						    GimpUnit  unit);
+const gchar * _gimp_unit_get_identifier               (Gimp     *gimp,
+                                                       GimpUnit  unit);
 
-gchar    * _gimp_unit_get_symbol                   (Gimp     *gimp,
-						    GimpUnit  unit);
-gchar    * _gimp_unit_get_abbreviation             (Gimp     *gimp,
-						    GimpUnit  unit);
-gchar    * _gimp_unit_get_singular                 (Gimp     *gimp,
-						    GimpUnit  unit);
-gchar    * _gimp_unit_get_plural                   (Gimp     *gimp,
-						    GimpUnit  unit);
+const gchar * _gimp_unit_get_symbol                   (Gimp     *gimp,
+                                                       GimpUnit  unit);
+const gchar * _gimp_unit_get_abbreviation             (Gimp     *gimp,
+                                                       GimpUnit  unit);
+const gchar * _gimp_unit_get_singular                 (Gimp     *gimp,
+                                                       GimpUnit  unit);
+const gchar * _gimp_unit_get_plural                   (Gimp     *gimp,
+                                                       GimpUnit  unit);
 
 
 #endif  /*  __APP_GIMP_UNIT_H__  */

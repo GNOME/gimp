@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "base/base-enums.h"
 
 #include "gimpconfig.h"

@@ -182,7 +182,7 @@ _gimp_unit_get_digits (Gimp     *gimp,
   return _gimp_unit_get_user_unit (gimp, unit)->digits;
 }
 
-gchar * 
+const gchar * 
 _gimp_unit_get_identifier (Gimp     *gimp,
 			   GimpUnit  unit)
 {
@@ -200,7 +200,7 @@ _gimp_unit_get_identifier (Gimp     *gimp,
   return _gimp_unit_get_user_unit (gimp, unit)->identifier;
 }
 
-gchar *
+const gchar *
 _gimp_unit_get_symbol (Gimp     *gimp,
 		       GimpUnit  unit)
 {
@@ -218,7 +218,7 @@ _gimp_unit_get_symbol (Gimp     *gimp,
   return _gimp_unit_get_user_unit (gimp, unit)->symbol;
 }
 
-gchar *
+const gchar *
 _gimp_unit_get_abbreviation (Gimp     *gimp,
 			     GimpUnit  unit)
 {
@@ -236,7 +236,7 @@ _gimp_unit_get_abbreviation (Gimp     *gimp,
   return _gimp_unit_get_user_unit (gimp, unit)->abbreviation;
 }
 
-gchar *
+const gchar *
 _gimp_unit_get_singular (Gimp     *gimp,
 			 GimpUnit  unit)
 {
@@ -254,7 +254,7 @@ _gimp_unit_get_singular (Gimp     *gimp,
   return gettext (_gimp_unit_get_user_unit (gimp, unit)->singular);
 }
 
-gchar *
+const gchar *
 _gimp_unit_get_plural (Gimp     *gimp,
 		       GimpUnit  unit)
 {

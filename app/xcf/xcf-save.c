@@ -770,10 +770,10 @@ xcf_save_prop (XcfInfo   *info,
       break;
     case PROP_USER_UNIT:
       {
-	GimpUnit  unit;
-	gchar    *unit_strings[5];
-	gfloat    factor;
-	guint32   digits;
+	GimpUnit     unit;
+	const gchar *unit_strings[5];
+	gfloat       factor;
+	guint32      digits;
 
 	unit = va_arg (args, guint32);
 
@@ -798,7 +798,7 @@ xcf_save_prop (XcfInfo   *info,
 	info->cp += xcf_write_int32 (info->fp, &size, 1);
 	info->cp += xcf_write_float (info->fp, &factor, 1);
 	info->cp += xcf_write_int32 (info->fp, &digits, 1);
-	info->cp += xcf_write_string (info->fp, unit_strings, 5);
+	info->cp += xcf_write_string (info->fp, (gchar **) unit_strings, 5);
       }
       break;
     }

@@ -23,6 +23,9 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
+#include "base/base-enums.h"
 #include "core/core-enums.h"
 
 #include "gimpconfig.h"
@@ -66,7 +69,13 @@ enum
   PROP_DEFAULT_COMMENT,
   PROP_DEFAULT_IMAGE_TYPE,
   PROP_DEFAULT_IMAGE_WIDTH,
-  PROP_DEFAULT_IMAGE_HEIGHT,  
+  PROP_DEFAULT_IMAGE_HEIGHT,
+  PROP_DEFAULT_UNIT,
+  PROP_DEFAULT_XRESOLUTION,
+  PROP_DEFAULT_YRESOLUTION,
+  PROP_DEFAULT_RESOLUTION_UNIT,
+  PROP_UNDO_LEVELS,
+  PROP_PLUGINRC_PATH,
 };
 
 
@@ -150,6 +159,24 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_HEIGHT,
                                 "default-image-height",
                                 1, 0x8000, 256);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_UNIT,
+                                "default-unit",
+                                 GIMP_UNIT_INCH);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_XRESOLUTION,
+                                   "default-xresolution",
+                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_YRESOLUTION,
+                                   "default-yresolution",
+                                   GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_RESOLUTION_UNIT,
+                                 "default-resolution-unit",
+                                 GIMP_UNIT_INCH);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
+                                "undo-levels",
+                                0, G_MAXINT, 5);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUGINRC_PATH,
+                                 "pluginrc-path",
+                                 "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc");
 }
 
 static void
@@ -217,6 +244,25 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEFAULT_IMAGE_HEIGHT:
       core_config->default_image_height = g_value_get_int (value);
       break;
+    case PROP_DEFAULT_UNIT:
+      core_config->default_unit = g_value_get_int (value);
+      break;
+    case PROP_DEFAULT_XRESOLUTION:
+      core_config->default_xresolution = g_value_get_double (value);
+      break;
+    case PROP_DEFAULT_YRESOLUTION:
+      core_config->default_yresolution = g_value_get_double (value);
+      break;
+    case PROP_DEFAULT_RESOLUTION_UNIT:
+      core_config->default_resolution_unit = g_value_get_int (value);
+      break;
+    case PROP_UNDO_LEVELS:
+      core_config->levels_of_undo = g_value_get_int (value);
+      break;
+    case PROP_PLUGINRC_PATH:
+      g_free (core_config->plug_in_rc_path);
+      core_config->plug_in_rc_path = g_value_dup_string (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -276,6 +322,24 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_IMAGE_HEIGHT:
       g_value_set_int (value, core_config->default_image_height);
+      break;
+    case PROP_DEFAULT_UNIT:
+      g_value_set_int (value, core_config->default_unit);
+      break;
+    case PROP_DEFAULT_XRESOLUTION:
+      g_value_set_double (value, core_config->default_xresolution);
+      break;
+    case PROP_DEFAULT_YRESOLUTION:
+      g_value_set_double (value, core_config->default_yresolution);
+      break;
+    case PROP_DEFAULT_RESOLUTION_UNIT:
+      g_value_set_int (value, core_config->default_resolution_unit);
+      break;
+    case PROP_UNDO_LEVELS:
+      g_value_set_int (value, core_config->levels_of_undo);
+      break;
+    case PROP_PLUGINRC_PATH:
+      g_value_set_string (value, core_config->plug_in_rc_path);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

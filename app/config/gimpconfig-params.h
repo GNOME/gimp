@@ -49,12 +49,29 @@ GParamSpec * gimp_param_spec_path         (const gchar    *name,
                                            GParamFlags     flags);
 
 
+#define GIMP_TYPE_PARAM_UNIT              (gimp_param_unit_get_type ())
+#define GIMP_IS_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_UNIT))
+
+GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_unit         (const gchar    *name,
+                                           const gchar    *nick,
+                                           const gchar    *blurb,
+                                           GimpUnit        default_value,
+                                           GParamFlags     flags);
+
+
 /* some convenience macros to install object properties */
 
 #define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_boolean (name, NULL, NULL,\
                                    default,\
+                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+#define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, min, max, default)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_double (name, NULL, NULL,\
+                                   min, max, default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
 #define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, enum_type, default)\
   g_object_class_install_property (class, id,\
@@ -85,6 +102,11 @@ GParamSpec * gimp_param_spec_path         (const gchar    *name,
   g_object_class_install_property (class, id,\
                                    g_param_spec_uint (name, NULL, NULL,\
                                    min, max, default,\
+                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+#define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, default)\
+  g_object_class_install_property (class, id,\
+                                   gimp_param_spec_unit (name, NULL, NULL,\
+                                   default,\
                                    G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
 
 

@@ -23,6 +23,9 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbasetypes.h"
+#include "libgimpbase/gimpunit.h"
+
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 
@@ -129,5 +132,75 @@ gimp_param_spec_path (const gchar *name,
   
   pspec->default_value = default_value;
   
+  return G_PARAM_SPEC (pspec);
+}
+
+
+static void      gimp_param_unit_class_init     (GParamSpecClass *class);
+static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
+                                                 GValue          *value);
+
+GType
+gimp_param_unit_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info = 
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL, 
+        (GClassInitFunc) gimp_param_unit_class_init, 
+        NULL, NULL,
+        sizeof (GParamSpecInt),
+        0, NULL, NULL
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_INT,
+                                          "GimpParamUnit", 
+                                          &type_info, 0);
+    }
+  
+  return spec_type;
+}
+
+static void
+gimp_param_unit_class_init (GParamSpecClass *class)
+{
+  class->value_type     = GIMP_TYPE_UNIT;
+  class->value_validate = gimp_param_unit_value_validate;
+}
+
+static gboolean
+gimp_param_unit_value_validate (GParamSpec *pspec,
+                                GValue     *value)
+{
+  GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
+  gint oval = value->data[0].v_int;
+  
+  value->data[0].v_int = CLAMP (value->data[0].v_int, 
+                                ispec->minimum, 
+                                gimp_unit_get_number_of_units () - 1);
+  
+  return value->data[0].v_int != oval;
+}
+
+GParamSpec *
+gimp_param_spec_unit (const gchar *name,
+                      const gchar *nick,
+                      const gchar *blurb,
+                      GimpUnit     default_value,
+                      GParamFlags  flags)
+{
+  GParamSpecInt *pspec;
+
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_UNIT,
+                                 name, nick, blurb, flags);
+
+  pspec->default_value = default_value;
+  pspec->minimum       = GIMP_UNIT_INCH;
+  pspec->maximum       = G_MAXINT;
+
   return G_PARAM_SPEC (pspec);
 }

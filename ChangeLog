@@ -1,5 +1,24 @@
 2001-12-16  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-params.[ch]
+	* app/config/gimpconfig-types.[ch]: added support for GimpUnit type.
+	
+	* app/config/gimpbaseconfig.[ch]
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/test-config.c: cleaned up includes. Added more properties
+	to GimpCoreConfig.
+
+	* app/libgimp_glue.h
+	* libgimpbase/gimpunit.h: 
+	declared gimp_unit_get_number_of_built_in_units() G_GNUC_CONST.
+
+	* app/core/gimpunit.[ch]: internal GimpUnit functions return const 
+	strings.
+
+	* app/xcf/xcf-save.c: changed accordingly.
+
+2001-12-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpscanconvert.c: merged fix for bug #66003 from stable
 	branch.
 

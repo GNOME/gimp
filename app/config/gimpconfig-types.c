@@ -26,12 +26,19 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpconfig-types.h"
 
 
 static void  memsize_to_string (const GValue *src_value,
                                 GValue       *dest_value);
 static void  string_to_memsize (const GValue *src_value,
+                                GValue       *dest_value);
+
+static void  unit_to_string    (const GValue *src_value,
+                                GValue       *dest_value);
+static void  string_to_unit    (const GValue *src_value,
                                 GValue       *dest_value);
 
 
@@ -72,22 +79,46 @@ gimp_path_get_type (void)
   return path_type;
 }
 
+GType
+gimp_unit_get_type (void)
+{
+  static GType unit_type = 0;
+
+  if (!unit_type)
+    {
+      static const GTypeInfo type_info = { 0, };
+
+      unit_type = g_type_register_static (G_TYPE_INT, "GimpUnit", 
+                                          &type_info, 0);
+
+      g_value_register_transform_func (unit_type, G_TYPE_STRING,
+                                       unit_to_string);
+      g_value_register_transform_func (G_TYPE_STRING, unit_type,
+                                       string_to_unit);
+    }
+  
+  return unit_type;
+}
+
 static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)
 {
-  guint size;
+  guint  size;
+  gchar *str;
 
-  size = src_value->data[0].v_uint;
-  
+  size = g_value_get_uint (src_value);
+
   if (size > (1 << 30) && size % (1 << 30) == 0)
-    dest_value->data[0].v_pointer = g_strdup_printf ("%uG", size >> 30);
+    str = g_strdup_printf ("%uG", size >> 30);
   else if (size > (1 << 20) && size % (1 << 20) == 0)
-    dest_value->data[0].v_pointer = g_strdup_printf ("%uM", size >> 20);
+    str = g_strdup_printf ("%uM", size >> 20);
   else if (size > (1 << 10) && size % (1 << 10) == 0)
-    dest_value->data[0].v_pointer = g_strdup_printf ("%uk", size >> 10);
+    str = g_strdup_printf ("%uk", size >> 10);
   else
-    dest_value->data[0].v_pointer = g_strdup_printf ("%u", size);
+    str = g_strdup_printf ("%u", size);
+
+  g_value_set_string_take_ownership (dest_value, str);
 };
 
 
@@ -95,13 +126,16 @@ static void
 string_to_memsize (const GValue *src_value,
                    GValue       *dest_value)
 {
-  gchar *end;
-  guint  size;
+  const gchar *str;
+  gchar       *end;
+  guint        size;
 
-  if (!src_value->data[0].v_pointer)
+  str = g_value_get_string (src_value);
+
+  if (!str || !*str)
     goto error;
 
-  size = strtoul (src_value->data[0].v_pointer, &end, 0);
+  size = strtoul (str, &end, 0);
   if (size == ULONG_MAX)
     goto error;
 
@@ -135,5 +169,45 @@ string_to_memsize (const GValue *src_value,
   return;
   
  error:
-  g_warning ("Can't convert string to memory size.");
+  g_warning ("Can't convert string to GimpMemsize.");
+};
+
+static void
+unit_to_string (const GValue *src_value,
+                GValue       *dest_value)
+{
+  GimpUnit unit;
+
+  unit = (GimpUnit) g_value_get_int (src_value);
+
+  g_value_set_string (dest_value, gimp_unit_get_identifier (unit));
+};
+
+static void
+string_to_unit (const GValue *src_value,
+                GValue       *dest_value)
+{
+  const gchar *str;
+  gint         num_units;
+  gint         i;
+
+  str = g_value_get_string (src_value);
+
+  if (!str || !*str)
+    goto error;
+
+  num_units = gimp_unit_get_number_of_units ();
+
+  for (i = GIMP_UNIT_PIXEL; i < num_units; i++)
+    if (strcmp (str, gimp_unit_get_identifier (i)) == 0)
+      break;
+
+  if (i == num_units)
+    goto error;
+    
+  g_value_set_int (dest_value, i);
+  return;
+
+ error:
+  g_warning ("Can't convert string to GimpUnit.");
 };

@@ -35,4 +35,9 @@ GType   gimp_memsize_get_type           (void) G_GNUC_CONST;
 GType   gimp_path_get_type              (void) G_GNUC_CONST;
 
 
+#define GIMP_TYPE_UNIT                  (gimp_unit_get_type ())
+
+GType   gimp_unit_get_type              (void) G_GNUC_CONST;
+
+
 #endif /* __GIMP_CONFIG_TYPES_H__ */

@@ -22,8 +22,6 @@
 #ifndef __GIMP_CORE_CONFIG_H__
 #define __GIMP_CORE_CONFIG_H__
 
-#include "core/core-enums.h"
-
 #include "gimpbaseconfig.h"
 
 
@@ -56,21 +54,20 @@ struct _GimpCoreConfig
 
   gchar               *default_comment;
 
-
   GimpImageBaseType    default_image_type;
-
   gint                 default_image_width;
   gint                 default_image_height;
 
-  /* the remaining fields are not yet implemented as properties
-
-  GimpUnit             default_units;
+  GimpUnit             default_unit;
   gdouble              default_xresolution;
   gdouble              default_yresolution;
-  GimpUnit             default_resolution_units;
+  GimpUnit             default_resolution_unit;
 
   gint                 levels_of_undo;
-  gchar               *pluginrc_path;
+  gchar               *plug_in_rc_path;
+
+  /* the remaining fields are not yet implemented as properties
+
   gchar               *module_db_load_inhibit;
   gint                 thumbnail_mode;
 

@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 
 
 gint       gimp_unit_get_number_of_units          (void);
-gint       gimp_unit_get_number_of_built_in_units (void);
+gint       gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
 
 GimpUnit   gimp_unit_new                 (gchar    *identifier,
 					  gdouble   factor,
