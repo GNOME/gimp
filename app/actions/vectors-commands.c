@@ -435,7 +435,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("New Vectors Options"), "new_vectors_options",
+    gimp_dialog_new (_("New Path Options"), "new_path_options",
 		     gimp_standard_help_func,
 		     "dialogs/vectors/new_vectors.html",
 		     GTK_WIN_POS_MOUSE,
@@ -550,9 +550,9 @@ vectors_edit_vectors_query (GimpVectors *vectors)
 
   /*  The dialog  */
   options->query_box =
-    gimp_dialog_new (_("Edit Vectors Attributes"), "edit_vectors_attributes",
+    gimp_dialog_new (_("Edit Path Attributes"), "edit_path_attributes",
 		     gimp_standard_help_func,
-		     "dialogs/vectors/edit_vectors_attributes.html",
+		     "dialogs/paths/edit_path_attributes.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

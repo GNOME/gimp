@@ -36,9 +36,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PASTE_AS_NEW  "gimp-paste-as-new"
 #define GIMP_STOCK_PASTE_INTO    "gimp-paste-into"
 #define GIMP_STOCK_RESET         "gimp-reset"
-#define GIMP_STOCK_STROKE        "gimp-stroke"
-#define GIMP_STOCK_TO_PATH       "gimp-to-path"
-#define GIMP_STOCK_TO_SELECTION  "gimp-to-selection"
 #define GIMP_STOCK_VISIBLE       "gimp-visible"
 
 #define GIMP_STOCK_NAVIGATION    "gimp-navigation"
@@ -54,6 +51,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_ADD       "gimp-selection-add"
 #define GIMP_STOCK_SELECTION_SUBTRACT  "gimp-selection-subtract"
 #define GIMP_STOCK_SELECTION_INTERSECT "gimp-selection-intersect"
+#define GIMP_STOCK_SELECTION_STROKE    "gimp-selection-stroke"
+#define GIMP_STOCK_SELECTION_TO_PATH   "gimp-selection-to-path"
+
+#define GIMP_STOCK_PATH_STROKE         "gimp-path-stroke"
 
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"

@@ -140,7 +140,7 @@ gimp_vectors_list_view_init (GimpVectorsListView *view)
 
   view->stroke_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_STROKE,
+				    GIMP_STOCK_PATH_STROKE,
 				    _("Stroke Path"), NULL,
 				    G_CALLBACK (gimp_vectors_list_view_stroke_clicked),
 				    NULL,

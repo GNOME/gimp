@@ -200,6 +200,26 @@ app_init (gint    gimp_argc,
                   absolute_filename = g_strdup (gimp_argv[i]);
                 }
 
+              /* test */
+              {
+                GError *error = NULL;
+                gchar  *uri;
+
+                uri = g_filename_to_uri (absolute_filename, NULL, &error);
+
+                if (uri)
+                  {
+                    g_print ("filename as uri: %s\n", uri);
+                    g_free (uri);
+                  }
+                else
+                  {
+                    g_printerr ("conversion filename -> uri failed: %s\n",
+                                error->message);
+                    g_error_free (error);
+                  }
+              }
+
               file_open_with_display (the_gimp, absolute_filename);
 
               g_free (absolute_filename);

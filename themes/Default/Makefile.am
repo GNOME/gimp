@@ -27,12 +27,6 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-paste-into.png		\
 	stock_button_refresh					\
 	$(srcdir)/images/stock-button-refresh.png		\
-	stock_button_stroke					\
-	$(srcdir)/images/stock-button-stroke.png		\
-	stock_button_to_path					\
-	$(srcdir)/images/stock-button-to-path.png		\
-	stock_button_to_selection				\
-	$(srcdir)/images/stock-button-to-selection.png		\
 	stock_button_selection_replace				\
 	$(srcdir)/images/stock-button-selection-replace.png	\
 	stock_button_selection_add    				\
@@ -41,6 +35,12 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-button-selection-subtract.png	\
 	stock_button_selection_intersect			\
 	$(srcdir)/images/stock-button-selection-intersect.png	\
+	stock_button_selection_stroke				\
+	$(srcdir)/images/stock-button-selection-stroke.png	\
+	stock_button_selection_to_path				\
+	$(srcdir)/images/stock-button-selection-to-path.png	\
+	stock_button_path_stroke				\
+	$(srcdir)/images/stock-button-path-stroke.png		\
 	\
 	stock_button_hchain					\
 	$(srcdir)/images/stock-button-hchain.png		\

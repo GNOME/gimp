@@ -93,9 +93,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PASTE_AS_NEW, N_("Paste as New"),      0, 0, "gimp-libgimp" },
   { GIMP_STOCK_PASTE_INTO,   N_("Paste Into"),        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_RESET,        N_("_Reset"),            0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_STROKE,       N_("_Stroke"),           0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_TO_PATH,      N_("Selection To Path"), 0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_TO_SELECTION, N_("To Sleection"),      0, 0, "gimp-libgimp" },
   { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" },
 
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, "gimp-libgimp" },
@@ -111,6 +108,10 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_ADD,            NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_SELECTION_SUBTRACT,       NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_SELECTION_INTERSECT,      NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_STROKE,         NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SELECTION_TO_PATH,        NULL,        0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_PATH_STROKE,              NULL,        0, 0, "gimp-libgimp" },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       NULL,        0, 0, "gimp-libgimp" },
@@ -167,9 +168,6 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_PASTE_AS_NEW,             stock_button_paste_as_new             },
   { GIMP_STOCK_PASTE_INTO,               stock_button_paste_into               },
   { GIMP_STOCK_RESET,                    stock_button_refresh                  },
-  { GIMP_STOCK_STROKE,                   stock_button_stroke                   },
-  { GIMP_STOCK_TO_PATH,                  stock_button_to_path                  },
-  { GIMP_STOCK_TO_SELECTION,             stock_button_to_selection             },
   { GIMP_STOCK_VISIBLE,                  stock_button_eye                      },
 
   { GIMP_STOCK_HCHAIN,                   stock_button_hchain                   },
@@ -181,6 +179,10 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_SELECTION_ADD,            stock_button_selection_add            },
   { GIMP_STOCK_SELECTION_SUBTRACT,       stock_button_selection_subtract       },
   { GIMP_STOCK_SELECTION_INTERSECT,      stock_button_selection_intersect      },
+  { GIMP_STOCK_SELECTION_STROKE,         stock_button_selection_stroke         },
+  { GIMP_STOCK_SELECTION_TO_PATH,        stock_button_selection_to_path        },
+
+  { GIMP_STOCK_PATH_STROKE,              stock_button_path_stroke              },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_button_airbrush            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_button_bezier_select       },

@@ -28,13 +28,13 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-paste.png			\
 	stock-button-paste-as-new.png		\
 	stock-button-paste-into.png		\
-	stock-button-stroke.png			\
-	stock-button-to-path.png		\
-	stock-button-to-selection.png		\
 	stock-button-selection-replace.png	\
 	stock-button-selection-add.png		\
 	stock-button-selection-subtract.png	\
 	stock-button-selection-intersect.png	\
+	stock-button-selection-stroke.png	\
+	stock-button-selection-to-path.png	\
+	stock-button-path-stroke.png		\
 	stock-button-hchain.png			\
 	stock-button-hchain-broken.png		\
 	stock-button-vchain.png			\

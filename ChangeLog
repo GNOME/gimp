@@ -1,5 +1,38 @@
 2002-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/stock-button-stroke.png
+	* themes/Default/images/stock-button-to-path.png
+	* themes/Default/images/stock-button-to-selection.png: removed.
+
+	* themes/Default/images/stock-button-path-stroke.png
+	* themes/Default/images/stock-button-selection-stroke.png
+	* themes/Default/images/stock-button-selection-to-path.png: new ones.
+
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* libgimpwidgets/gimpstock.[ch]: changed accordingly.
+
+	* themes/Default/images/stock-button-selection-add.png
+	* themes/Default/images/stock-button-selection-intersect.png
+	* themes/Default/images/stock-button-selection-replace.png
+	* themes/Default/images/stock-button-selection-subtract.png: cropped.
+
+	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
+	a nicer one from Ville Pätsi.
+
+	* app/gui/menus.c
+	* app/widgets/gimpvectorslistview.c: use the new stock items.
+
+	* app/gui/dialogs-commands.c: create the new paths dialog, not the
+	old one in dialogs_lc_cmd_callback().
+
+	* app/gui/vectors-commands.c: some more s/Vectors/Path/ in
+	user-visible strings.
+
+	* app/app_procs.c: some test code for the filename -> uri migration.
+
+2002-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimppaintinfo.[ch]: new object for registering
 	GimpPaintCore subclasses, just like GimpToolInfo for tools.

@@ -298,7 +298,7 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
   {
     "gimp:layer-list",
     "gimp:channel-list",
-    "gimp:path-list",
+    "gimp:vectors-list",
     "gimp:indexed-palette"
   };
   gint i;
