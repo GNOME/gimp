@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-04-22 11:49-0700\n"
-"PO-Revision-Date: 2000-03-23 21:16+0100\n"
+"Project-Id-Version: GIMP 1.1.20\n"
+"POT-Creation-Date: 2000-04-22 22:41+0200\n"
+"PO-Revision-Date: 2000-04-23 00:45+0100\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -462,18 +462,16 @@ msgid "Fuzziness Threshold"
 msgstr "Luddighetströskel"
 
 #: app/by_color_select.c:792
-#, fuzzy
 msgid "Selection"
-msgstr "Markering: "
+msgstr "Markering"
 
 #: app/by_color_select.c:803
-#, fuzzy
 msgid "Invert"
-msgstr "Konvertera"
+msgstr "Invertera"
 
 #: app/by_color_select.c:810
 msgid "All"
-msgstr ""
+msgstr "Hela"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -1404,6 +1402,8 @@ msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"Bildupplösningen är utanför området,\n"
+"använder standardupplösningen istället."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -2376,9 +2376,8 @@ msgstr "färger"
 
 #. adjust sliders
 #: app/ink.c:291
-#, fuzzy
 msgid "Adjustment"
-msgstr "justering:"
+msgstr "Justering:"
 
 #: app/ink.c:308 app/ink.c:346
 msgid "Size:"
@@ -2386,19 +2385,16 @@ msgstr "Storlek:"
 
 #. sens sliders
 #: app/ink.c:329
-#, fuzzy
 msgid "Sensitivity"
-msgstr "Känslighet:"
+msgstr "Känslighet"
 
 #: app/ink.c:359
-#, fuzzy
 msgid "Tilt:"
-msgstr "Lutning"
+msgstr "Lutning:"
 
 #: app/ink.c:372
-#, fuzzy
 msgid "Speed:"
-msgstr "Hastighet"
+msgstr "Hastighet:"
 
 #. Brush shape widget
 #: app/ink.c:454
@@ -2870,11 +2866,8 @@ msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Aktivera signalhanterare för felsökning.\n"
 
 #: app/main.c:294
-#, fuzzy
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr ""
-"  --display <display>      Använd en speciell X 'display'.\n"
-"\n"
+msgstr "  --display <display>      Använd en speciell X 'display'.\n"
 
 #: app/main.c:295
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
@@ -3074,14 +3067,12 @@ msgid "/Edit/Clear"
 msgstr "/Redigera/Rensa"
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Fill with FG Color"
-msgstr "Fyll med färgtoning"
+msgstr "/Redigera/Fyll med förgrundsfärg"
 
 #: app/menus.c:249
-#, fuzzy
 msgid "/Edit/Fill with BG Color"
-msgstr "Fyll med färgtoning"
+msgstr "/Redigera/Fyll med bakgrundsfärg"
 
 #: app/menus.c:251
 msgid "/Edit/Stroke"
@@ -3711,39 +3702,32 @@ msgid "Unload"
 msgstr "Ladda ur"
 
 #: app/module_db.c:853
-#, fuzzy
 msgid "Purpose:"
-msgstr "Syfte: "
+msgstr "Syfte:"
 
 #: app/module_db.c:854
-#, fuzzy
 msgid "Author:"
-msgstr "Författare: "
+msgstr "Författare:"
 
 #: app/module_db.c:855
-#, fuzzy
 msgid "Version:"
-msgstr "Version: "
+msgstr "Version:"
 
 #: app/module_db.c:856
-#, fuzzy
 msgid "Copyright:"
-msgstr "Copyright: "
+msgstr "Copyright:"
 
 #: app/module_db.c:857
-#, fuzzy
 msgid "Date:"
-msgstr "Datum: "
+msgstr "Datum:"
 
 #: app/module_db.c:858
-#, fuzzy
 msgid "Location:"
-msgstr "Placering: "
+msgstr "Placering:"
 
 #: app/module_db.c:859
-#, fuzzy
 msgid "State:"
-msgstr "Tillstånd: "
+msgstr "Tillstånd:"
 
 #: app/module_db.c:878
 msgid "Autoload during startup"
@@ -4192,7 +4176,7 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
-"Åt minstone en av de förändringar du gjort kommer endast\n"
+"Åtminstone en av de förändringar du gjort kommer endast\n"
 "att träda i kraft efter du startat om GIMP.\n"
 "\n"
 "Du kan välja att spara nu för att göra dina förändringar\n"
@@ -4474,14 +4458,12 @@ msgid "Use Global Paint Options"
 msgstr "Använd globala målarinställningar"
 
 #: app/preferences_dialog.c:2051
-#, fuzzy
 msgid "Finding Contiguous Regions"
-msgstr "Markerar kontinuerliga ytor"
+msgstr "Hitta kontinuerliga ytor"
 
 #: app/preferences_dialog.c:2070
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Tröskelvärde:"
+msgstr "Standard tröskelvärde:"
 
 #: app/preferences_dialog.c:2079 app/preferences_dialog.c:2081
 msgid "Environment"
@@ -5047,9 +5029,8 @@ msgid "Opacity"
 msgstr "Opacitet"
 
 #: app/tool_options.c:752
-#, fuzzy
 msgid "Hardness"
-msgstr "Hårdhet:"
+msgstr "Hårdhet"
 
 #: app/tool_options.c:772
 msgid "Rate"
@@ -5964,6 +5945,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Var god vänta medans din personliga\n"
+"GIMP-katalog skapas..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
@@ -6187,7 +6170,7 @@ msgstr ""
 #: app/user_install.c:1358
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "Hämda upplösning från X-server (Nuvarande %d x %d dpi)"
+msgstr "Hämta upplösning från X-server (Nuvarande %d x %d dpi)"
 
 #: app/user_install.c:1372
 msgid "Alternatively, you can set the monitor resolution manually."
