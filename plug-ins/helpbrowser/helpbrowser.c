@@ -42,9 +42,7 @@
 
 #define GIMP_HELP_EXT_NAME       "extension_gimp_help_browser"
 #define GIMP_HELP_TEMP_EXT_NAME  "extension_gimp_help_browser_temp"
-
 #define GIMP_HELP_PREFIX         "help"
-#define GIMP_HELP_DEFAULT_DOMAIN "http://www.gimp.org/help"
 
 
 typedef struct

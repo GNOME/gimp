@@ -32,6 +32,8 @@
 
 #include "domain.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 
 struct _HelpDomain
 {
@@ -106,10 +108,10 @@ domain_map (HelpDomain  *domain,
       if (! domain_parse (domain, &error) || error)
         {
           if (! domain->help_id_mapping)
-            g_message ("Failed to open help files:\n%s", error->message);
+            g_message (_("Failed to open help files:\n%s"), error->message);
           else
-            g_message ("Parse error in help domain:\n%s\n\n"
-                       "(Added entires before error anyway)", error->message);
+            g_message (_("Parse error in help domain:\n%s\n\n"
+                         "(Added entires before error anyway)"), error->message);
 
           if (error)
             g_clear_error (&error);
@@ -123,7 +125,7 @@ domain_map (HelpDomain  *domain,
 
   if (! ref)
     {
-      g_message ("Help ID \"%s\" unknown", help_id);
+      g_message (_("Help ID '%s' unknown"), help_id);
       return NULL;
     }
 
@@ -241,18 +243,22 @@ domain_parse (HelpDomain  *domain,
   fp = fopen (filename, "r");
   if (! fp)
     {
-      if (strcmp (domain->help_uri, 
-		  "file:///usr/local/share/gimp/1.3/help") == 0)
-        {
-          g_set_error (error, 0, 0,
-                       "The GIMP help files are not installed.");
-	}
+      gchar *msg;
+      gchar *msg2;
+
+      if (! strcmp (domain->help_domain, GIMP_HELP_DEFAULT_DOMAIN))
+        msg = _("The GIMP help files are not installed.");
       else
-        {
-          g_set_error (error, 0, 0,
-                       "The requested help file %s could not be opened.\n"
-		       "Please check your installation.", filename);
-        }
+        msg = _("The requested help files are not installed.");
+
+      msg2 = g_strdup_printf (_("Could not open '%s' for reading: %s"),
+                              filename, g_strerror (errno));
+
+      g_set_error (error, 0, 0, "%s\n\n%s\n\n%s",
+                   msg, msg2, _("Please check your installation."));
+
+      g_free (msg2);
+
       g_free (filename);
       return FALSE;
     }
@@ -336,7 +342,7 @@ domain_parser_end_element (GMarkupParseContext *context,
   switch (parser->state)
     {
     case DOMAIN_START:
-      g_warning ("tips_parser: This shouldn't happen.");
+      g_warning ("domain_parser: This shouldn't happen.");
       break;
 
     case DOMAIN_IN_HELP:

@@ -1,3 +1,16 @@
+2004-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c: removed
+	GIMP_HELP_DEFAULT_DOMAIN #define...
+
+	* plug-ins/helpbrowser/domain.h: ...and added it here.
+
+	* plug-ins/helpbrowser/domain.c: fixed the fix for bug #128112:
+	don't compare the help domain's base uri (which is variable) but
+	the help domain's name (which is constant). Re-added removed
+	information to the error message while keeping its user
+	readability. Marked g_message() strings for translation.
+
 2004-01-15  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/nova.c: Somewhat resurrected the SuperNova plugin.
