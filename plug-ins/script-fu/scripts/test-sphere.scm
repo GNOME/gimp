@@ -82,7 +82,7 @@
 ;
 ; Usage:
 ; SF-FILENAME "Environment Map"
-;             (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+;             (string-append "" gimp-data-directory "/scripts/beavis.jpg")
 ;
 ; The value returned when the script is invoked is a string containing the
 ; filename.
@@ -117,6 +117,7 @@
 			       sphere-color
 			       brush
 			       text
+			       multi-text
 			       pattern
 			       gradient
 			       gradient-reverse
@@ -142,7 +143,9 @@
 	 (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
 	 (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
 	 (offset (* radius 0.1))
-	 (text-extents (gimp-text-get-extents-fontname text size PIXELS font))
+	 (text-extents (gimp-text-get-extents-fontname multi-text
+						       size PIXELS
+						       font))
 	 (x-position (- cx (/ (car text-extents) 2)))
 	 (y-position (- cy (/ (cadr text-extents) 2))))
 
@@ -196,7 +199,7 @@
     (gimp-context-set-foreground '(0 0 0))
     (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
 						       x-position y-position
-						       text
+						       multi-text
 						       0 TRUE
 						       size PIXELS
 						       font)))
@@ -220,6 +223,7 @@
 		    SF-COLOR      "Sphere color"       '(255 0 0)
 		    SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
 		    SF-STRING     "Text"               "Script-Fu rocks!"
+		    SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
 		    SF-PATTERN    "Pattern"            "Maple Leaves"
 		    SF-GRADIENT   "Gradient"           "Deep Sea"
 		    SF-TOGGLE     "Gradient reverse"   FALSE
@@ -228,7 +232,7 @@
 		    SF-PALETTE    "Palette"            "Default"
 		    SF-FILENAME   "Environment map"
 		                  (string-append ""
-						 gimp-data-dir
+						 gimp-data-directory
 						 "/scripts/images/beavis.jpg")
 		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
 		    SF-DIRNAME    "Output directory"   "/var/tmp/"

@@ -39,7 +39,8 @@ typedef enum
   SF_FILENAME,
   SF_DIRNAME,
   SF_OPTION,
-  SF_PALETTE
+  SF_PALETTE,
+  SF_TEXT
 } SFArgType;
 
 typedef enum

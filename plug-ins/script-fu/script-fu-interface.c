@@ -78,6 +78,8 @@ static void   script_fu_about               (SFScript             *script);
 
 static void   script_fu_string_callback     (GtkWidget            *widget,
                                              gchar               **value);
+static void   script_fu_text_callback       (GtkWidget            *widget,
+                                             gchar               **value);
 static void   script_fu_file_entry_callback (GtkWidget            *widget,
                                              SFFilename           *file);
 static void   script_fu_combo_callback      (GtkWidget            *widget,
@@ -348,6 +350,26 @@ script_fu_interface (SFScript *script)
                             &script->arg_values[i].sfa_value);
 	  break;
 
+        case SF_TEXT:
+          {
+            GtkTextBuffer *text_buf;
+
+            leftalign = FALSE;
+            widget = gtk_text_view_new ();
+
+            text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+            gtk_text_view_set_editable (GTK_TEXT_VIEW (widget), TRUE);
+            gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
+
+            gtk_text_buffer_set_text (text_buf,
+                                      script->arg_values[i].sfa_value, -1);
+
+            g_signal_connect (text_buf, "modified-changed",
+                              G_CALLBACK (script_fu_text_callback),
+                              &script->arg_values[i].sfa_value);
+          }
+          break;
+
 	case SF_ADJUSTMENT:
 	  switch (script->arg_defaults[i].sfa_adjustment.type)
 	    {
@@ -582,6 +604,24 @@ script_fu_string_callback (GtkWidget  *widget,
 }
 
 static void
+script_fu_text_callback (GtkWidget  *widget,
+                         gchar     **value)
+{
+  GtkTextBuffer *text_buf;
+  GtkTextIter    start, end;
+  gchar         *text;
+
+  if (*value)
+    g_free (*value);
+
+  text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+  gtk_text_buffer_get_start_iter (text_buf, &start);
+  gtk_text_buffer_get_end_iter (text_buf, &end);
+  text = (gchar *) gtk_text_buffer_get_text (text_buf, &start, &end, FALSE);
+  *value = g_strdup (text);
+}
+
+static void
 script_fu_file_entry_callback (GtkWidget  *widget,
                                SFFilename *file)
 {
@@ -750,6 +790,26 @@ script_fu_ok (SFScript *script)
           g_free (escaped);
           break;
 
+        case SF_TEXT:
+          {
+            GtkTextBuffer *text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (sf_interface->args_widgets[i]));
+            GtkTextIter    start, end;
+            gchar         *text;
+
+            gtk_text_buffer_get_start_iter (text_buf, &start);
+            gtk_text_buffer_get_end_iter (text_buf, &end);
+            text = (gchar *) gtk_text_buffer_get_text (text_buf,
+                                                       &start, &end, FALSE);
+
+            g_free (arg_value->sfa_value);
+            arg_value->sfa_value = g_strdup (text);
+            escaped = g_strescape (text, NULL);
+            g_string_append_printf (s, "\"%s\"", escaped);
+            g_free (escaped);
+            g_free (text);
+          }
+          break;
+
         case SF_ADJUSTMENT:
           g_ascii_dtostr (buffer, sizeof (buffer),
                           arg_value->sfa_adjustment.value);
@@ -841,6 +901,20 @@ script_fu_reset (SFScript *script)
         case SF_STRING:
           gtk_entry_set_text (GTK_ENTRY (widget),
                               script->arg_defaults[i].sfa_value);
+          break;
+
+        case SF_TEXT:
+          {
+            GtkTextBuffer *buffer;
+
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+
+            g_free (script->arg_values[i].sfa_value);
+            script->arg_values[i].sfa_value =
+              g_strdup (script->arg_defaults[i].sfa_value);
+            gtk_text_buffer_set_text (buffer,
+                                      script->arg_values[i].sfa_value, -1);
+          }
           break;
 
         case SF_ADJUSTMENT:

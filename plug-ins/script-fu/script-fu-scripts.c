@@ -331,6 +331,7 @@ script_fu_add_script (LISP a)
 		  break;
 
 		case SF_STRING:
+                case SF_TEXT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: string defaults must be string values", NIL);
 
@@ -729,6 +730,7 @@ script_fu_script_proc (const gchar      *name,
                           break;
 
                         case SF_STRING:
+                        case SF_TEXT:
                         case SF_FILENAME:
                         case SF_DIRNAME:
                           escaped = g_strescape (param->data.d_string, NULL);
@@ -849,6 +851,7 @@ script_fu_free_script (SFScript *script)
 
 	    case SF_VALUE:
 	    case SF_STRING:
+            case SF_TEXT:
 	      g_free (script->arg_defaults[i].sfa_value);
 	      g_free (script->arg_values[i].sfa_value);
 	      break;
