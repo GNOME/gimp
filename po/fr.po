@@ -3230,7 +3230,7 @@ msgstr "  --system-gimprc <gimprc> Utilise un autre fichier système gimprc.\n"
 
 #: app/main.c:339
 msgid "(This console window will close in ten seconds)\n"
-msgstr ""
+msgstr "(Cette fenêtre de console se fermera dans dix secondes.)\n"
 
 #: app/measure.c:118
 msgid "Measure Options"
@@ -4869,14 +4869,12 @@ msgstr "Taille de la liste des documents récents :"
 
 #. Indicators
 #: app/preferences_dialog.c:1726
-#, fuzzy
 msgid "Toolbox"
-msgstr "/Outils/Boîte à outils"
+msgstr "Boîte à outils"
 
 #: app/preferences_dialog.c:1729
-#, fuzzy
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Afficher les indicateurs de brosse et motif sur la barre d'outils"
+msgstr "Afficher les indicateurs de brosse, motif et dégradé sur la barre d'outils"
 
 #: app/preferences_dialog.c:1738
 msgid "Dialog Behaviour"
@@ -4986,7 +4984,6 @@ msgid "Pointer Movement Feedback"
 msgstr "Suivi du mouvement du pointeur"
 
 #: app/preferences_dialog.c:1922
-#, fuzzy
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Suivi du pointeur parfait mais lent"
 
@@ -6146,11 +6143,11 @@ msgstr "gimage"
 
 #: app/undo.c:2876
 msgid "FS rigor"
-msgstr ""
+msgstr "Sélection flottante rigoureuse"
 
 #: app/undo.c:2877
 msgid "FS relax"
-msgstr ""
+msgstr "Sélection flottante relâchée"
 
 #: app/undo.c:2878
 msgid "guide"
@@ -6174,11 +6171,11 @@ msgstr "couper"
 
 #: app/undo.c:2883
 msgid "transform core"
-msgstr ""
+msgstr "transformations - coeur"
 
 #: app/undo.c:2884
 msgid "paint core"
-msgstr ""
+msgstr "dessin - coeur"
 
 #: app/undo.c:2885
 msgid "floating layer"
@@ -6187,7 +6184,7 @@ msgstr "calque flottant"
 #. unused!
 #: app/undo.c:2886
 msgid "linked layer"
-msgstr ""
+msgstr "calque chaîné"
 
 #: app/undo.c:2887
 msgid "apply layer mask"
@@ -6200,7 +6197,7 @@ msgstr "fusionner calques"
 
 #: app/undo.c:2889
 msgid "FS anchor"
-msgstr ""
+msgstr "sélection flottante ancrée"
 
 #: app/undo.c:2890
 msgid "gimage mod"
@@ -6212,15 +6209,15 @@ msgstr "découper"
 
 #: app/undo.c:2892
 msgid "layer scale"
-msgstr ""
+msgstr "mise à l'échelle du calque"
 
 #: app/undo.c:2893
 msgid "layer resize"
-msgstr "redimensionner du calque"
+msgstr "redimensionnement du calque"
 
 #: app/undo.c:2894
 msgid "quickmask"
-msgstr ""
+msgstr "masque rapide"
 
 #: app/undo.c:2895
 msgid "attach parasite"
@@ -6297,9 +6294,8 @@ msgid "Max Height:"
 msgstr "Hauteur max :"
 
 #: modules/cdisplay_gamma.c:91
-#, fuzzy
 msgid "Gamma color display filter"
-msgstr "Filtres d'affichage couleur"
+msgstr "Filtres de correction du gamma"
 
 #: modules/cdisplay_gamma.c:326
 msgid "Gamma"
@@ -6311,30 +6307,27 @@ msgstr "Gamma :"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK colour selector as a pluggable colour selector"
-msgstr ""
+msgstr "Sélecteur de couleur GTK (module)"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style colour selector as a pluggable colour selector"
-msgstr ""
+msgstr "Sélecteur de couleur style « peintre » (module)\n"
 
 #: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
-#, fuzzy
 msgid "Triangle"
-msgstr "Boucle Triangle"
+msgstr "Triangle"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
+msgstr "Sélecteur de couleur style « aquarelle » (module)"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
-#, fuzzy
 msgid "Watercolor"
-msgstr "Couleur Statique"
+msgstr "Aquarelle"
 
 #: modules/colorsel_water.c:640
-#, fuzzy
 msgid "Color History"
-msgstr "Pipette à Couleurs"
+msgstr "Historique des couleurs"
 
 #~ msgid "generated_brushes\n"
 #~ msgstr "generated_brushes\n"
