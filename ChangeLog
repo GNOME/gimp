@@ -1,3 +1,24 @@
+2003-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-enums.[ch]: added GimpWindowTypeHint enum.
+
+	* app/widgets/gimpwidgets-utils.{ch]: added a utility function
+	that translates GimpWindowTypeHint to GdkWindowTypeHint.
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added two new gimprc options that
+	allow to configure which window type hint to set on the toolbox
+	and on dock windows.
+
+	* app/widgets/gimpdock.[ch}: use the window type hint from gimprc.
+	Introduced construct properties and got rid of gimp_dock_construct().
+
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimptoolbox.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): let the Themes
+	frame expand.
+
 2003-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.c (gimp_display_paint_area): when

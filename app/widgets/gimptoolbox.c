@@ -27,6 +27,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
@@ -165,13 +167,6 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   GtkWidget       *vbox;
 
   gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
-  gtk_window_set_title (GTK_WINDOW (toolbox), _("The GIMP"));
-
-  /*  Docks are utility windows by default, but the toolbox doesn't fit
-   *  into this category.  'Normal' is not correct as well but there
-   *  doesn't seem to be a better match :-(
-   */
-  gtk_window_set_type_hint (GTK_WINDOW (toolbox), GDK_WINDOW_TYPE_HINT_NORMAL);
 
   main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
@@ -415,7 +410,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
       gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
                                      NULL,
-                                     &geometry, 
+                                     &geometry,
                                      GDK_HINT_MIN_SIZE   |
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
@@ -426,22 +421,30 @@ GtkWidget *
 gimp_toolbox_new (GimpDialogFactory *dialog_factory,
                   Gimp              *gimp)
 {
-  GimpContext *context;
-  GimpToolbox *toolbox;
-  GdkDisplay  *display;
-  GList       *list;
+  GimpContext   *context;
+  GimpToolbox   *toolbox;
+  GimpGuiConfig *config;
+  GdkDisplay    *display;
+  GList         *list;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   context = gimp_get_user_context (gimp);
 
-  toolbox = g_object_new (GIMP_TYPE_TOOLBOX, NULL);
-
-  gimp_dock_construct (GIMP_DOCK (toolbox), dialog_factory, context);
+  toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
+                          "title",          _("The GIMP"),
+                          "context",        context,
+                          "dialog-factory", dialog_factory,
+                          NULL);
 
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL);
+
+  config = GIMP_GUI_CONFIG (gimp->config);
+
+  gtk_window_set_type_hint (GTK_WINDOW (toolbox),
+                            gimp_window_type_hint_to_gdk_hint (config->toolbox_window_type));
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.

@@ -688,3 +688,18 @@ gimp_rgb_set_gdk_color (GimpRGB        *rgb,
 
   gimp_rgb_set_uchar (rgb, r, g, b);
 }
+
+GdkWindowTypeHint
+gimp_window_type_hint_to_gdk_hint (GimpWindowTypeHint  hint)
+{
+  switch (hint)
+    {
+    case GIMP_WINDOW_TYPE_HINT_NORMAL:
+      return GDK_WINDOW_TYPE_HINT_NORMAL;
+
+    case GIMP_WINDOW_TYPE_HINT_UTILITY:
+      return GDK_WINDOW_TYPE_HINT_UTILITY;
+    }
+
+  return GDK_WINDOW_TYPE_HINT_NORMAL;
+}

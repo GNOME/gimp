@@ -70,10 +70,6 @@ struct _GimpDockClass
 
 GType       gimp_dock_get_type     (void) G_GNUC_CONST;
 
-gboolean    gimp_dock_construct    (GimpDock          *dock,
-                                    GimpDialogFactory *dialog_factory,
-                                    GimpContext       *context);
-
 void        gimp_dock_setup        (GimpDock          *dock,
                                     const GimpDock    *template);
 void        gimp_dock_set_aux_info (GimpDock          *dock,

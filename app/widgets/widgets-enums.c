@@ -131,6 +131,25 @@ gimp_view_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_window_type_hint_enum_values[] =
+{
+  { GIMP_WINDOW_TYPE_HINT_NORMAL, N_("Normal"), "normal" },
+  { GIMP_WINDOW_TYPE_HINT_UTILITY, N_("Utility"), "utility" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_window_type_hint_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpWindowTypeHint", gimp_window_type_hint_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_zoom_type_enum_values[] =
 {
   { GIMP_ZOOM_IN, N_("Zoom in"), "in" },

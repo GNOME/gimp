@@ -77,6 +77,10 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
 #define DEFAULT_FULLSCREEN_VIEW_BLURB \
 "Sets the default settings used when an image is viewed in fullscreen mode."
 
+#define DOCK_WINDOW_TYPE_BLURB \
+N_("The window type hint that is set on dock windows. This may affect " \
+   "the way your window manager decorates and handles dock windows.")
+
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
 
@@ -312,6 +316,10 @@ N_("The tile cache is used to make sure the GIMP doesn't thrash " \
    "cause the GIMP to use less swap space, but will also cause " \
    "the GIMP to use more memory. Conversely, a smaller cache size " \
    "causes the GIMP to use more swap space and less memory.")
+
+#define TOOLBOX_WINDOW_TYPE_BLURB \
+N_("The window type hint that is set on the toolbox. This may affect " \
+   "how your window manager decorates and handles the toolbox window.")
 
 #define TRANSPARENCY_TYPE_BLURB \
 N_("Sets the manner in which transparency is displayed in images.")

@@ -396,15 +396,16 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (display_container), NULL);
 
-  image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK, NULL);
-
-  image_dock->image_container   = image_container;
-  image_dock->display_container = display_container;
-
   context = gimp_context_new (dialog_factory->context->gimp,
                               "Dock Context", NULL);
 
-  gimp_dock_construct (GIMP_DOCK (image_dock), dialog_factory, context);
+  image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK,
+                             "context",        context,
+                             "dialog-factory", dialog_factory,
+                             NULL);
+
+  image_dock->image_container   = image_container;
+  image_dock->display_container = display_container;
 
   gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);

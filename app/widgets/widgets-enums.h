@@ -99,6 +99,17 @@ typedef enum
 } GimpViewType;
 
 
+#define GIMP_TYPE_WINDOW_TYPE_HINT (gimp_window_type_hint_get_type ())
+
+GType gimp_window_type_hint_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_WINDOW_TYPE_HINT_NORMAL,  /*< desc="Normal"  >*/
+  GIMP_WINDOW_TYPE_HINT_UTILITY  /*< desc="Utility" >*/
+} GimpWindowTypeHint;
+
+
 #define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
 
 GType gimp_zoom_type_get_type (void) G_GNUC_CONST;

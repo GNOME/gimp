@@ -49,14 +49,14 @@ static void  gimp_gui_config_get_property (GObject            *object,
                                            GParamSpec         *pspec);
 
 
-#define DEFAULT_THEME       "Default"
+#define   DEFAULT_THEME        "Default"
 
 #ifdef G_OS_WIN32
-#define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_WEB_BROWSER
-#define DEFAULT_WEB_BROWSER "not used on Windows"
+#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_WEB_BROWSER
+#  define DEFAULT_WEB_BROWSER  "not used on Windows"
 #else
-#define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
-#define DEFAULT_WEB_BROWSER "mozilla %s"
+#  define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
+#  define DEFAULT_WEB_BROWSER  "mozilla %s"
 #endif
 
 enum
@@ -82,7 +82,9 @@ enum
   PROP_THEME,
   PROP_USE_HELP,
   PROP_HELP_BROWSER,
-  PROP_WEB_BROWSER
+  PROP_WEB_BROWSER,
+  PROP_TOOLBOX_WINDOW_TYPE,
+  PROP_DOCK_WINDOW_TYPE
 };
 
 static GObjectClass *parent_class = NULL;
@@ -221,6 +223,18 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_PARAM_PATH_FILE,
                                  DEFAULT_WEB_BROWSER,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_TYPE,
+                                 "toolbox-window-type",
+                                 TOOLBOX_WINDOW_TYPE_BLURB,
+                                 GIMP_TYPE_WINDOW_TYPE_HINT,
+                                 GIMP_WINDOW_TYPE_HINT_NORMAL,
+                                 GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_TYPE,
+                                 "dock-window-type",
+                                 DOCK_WINDOW_TYPE_BLURB,
+                                 GIMP_TYPE_WINDOW_TYPE_HINT,
+                                 GIMP_WINDOW_TYPE_HINT_UTILITY,
+                                 GIMP_PARAM_RESTART);
 }
 
 static void
@@ -311,6 +325,12 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->web_browser);
       gui_config->web_browser = g_value_dup_string (value);
       break;
+    case PROP_TOOLBOX_WINDOW_TYPE:
+      gui_config->toolbox_window_type = g_value_get_enum (value);
+      break;
+    case PROP_DOCK_WINDOW_TYPE:
+      gui_config->dock_window_type = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -390,6 +410,12 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_WEB_BROWSER:
       g_value_set_string (value, gui_config->web_browser);
+      break;
+    case PROP_TOOLBOX_WINDOW_TYPE:
+      g_value_set_enum (value, gui_config->toolbox_window_type);
+      break;
+    case PROP_DOCK_WINDOW_TYPE:
+      g_value_set_enum (value, gui_config->dock_window_type);
       break;
 
     default:

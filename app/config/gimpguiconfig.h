@@ -61,6 +61,8 @@ struct _GimpGuiConfig
   gboolean             use_help;
   GimpHelpBrowserType  help_browser;
   gchar               *web_browser;
+  GimpWindowTypeHint   toolbox_window_type;
+  GimpWindowTypeHint   dock_window_type;
 
   gint                 last_tip;  /* saved in sessionrc */
 };

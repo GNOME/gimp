@@ -1206,7 +1206,7 @@ prefs_dialog_new (Gimp       *gimp,
                           GTK_BOX (vbox2));
 
   /* Themes */
-  vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), TRUE);
 
   {
     GtkWidget         *scrolled_win;
