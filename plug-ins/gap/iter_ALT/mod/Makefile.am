@@ -4,10 +4,12 @@ EXTRA_DIST = \
 	   plug_in_Twist_iter_ALT.inc		\
 	   plug_in_alienmap_iter_ALT.inc	\
 	   plug_in_applylens_iter_ALT.inc	\
+	   plug_in_convmatrix_iter_ALT.inc	\
 	   plug_in_depth_merge_iter_ALT.inc	\
 	   plug_in_despeckle_iter_ALT.inc	\
 	   plug_in_emboss_iter_ALT.inc		\
 	   plug_in_exchange_iter_ALT.inc	\
+	   plug_in_flame_iter_ALT.inc		\
 	   plug_in_map_object_iter_ALT.inc	\
 	   plug_in_maze_iter_ALT.inc		\
 	   plug_in_nlfilt_iter_ALT.inc		\

@@ -69,7 +69,7 @@ State Procedure_name                  Testnotes
 +     plug_in_color_map                           
 -REM  plug_in_colorify                ERROR: no stored data found for Key plug_in_colorify                        
 .Del  plug_in_compose                               
--     plug_in_convmatrix              ERROR: p_plug_in_convmatrix_iter_ALT  stored Data missmatch in size 140 != 0                    
++     plug_in_convmatrix                 
 +     plug_in_cubism                                 
 .Del  plug_in_decompose                                      
 .Del  plug_in_deinterlace                                  
@@ -88,7 +88,7 @@ State Procedure_name                  Testnotes
 .  *  plug_in_figures                (not part of 1.1.3)      
 .Del  plug_in_film                                     
 -REM  plug_in_filter_pack            ERROR: no stored data found for Key plug_in_filter_pack                  
--     plug_in_flame  
++     plug_in_flame  
 +     plug_in_flarefx                               
 -  *  plug_in_fractal_trace          OK Button disappeared at 1.st press ?????                
 +     plug_in_gauss_iir                           

@@ -2163,9 +2163,9 @@ int p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
   guint        l_image_width;
   guint        l_image_height;
  
-  if(gap_debug) printf("p_mov_render: frame/layer: %ld/%ld  X=%f, Y=%f
-                Width=%f Height=%f
-                Opacity=%f  Rotate=%f  clip_to_img = %d\n",
+  if(gap_debug) printf("p_mov_render: frame/layer: %ld/%ld  X=%f, Y=%f\n"
+                "       Width=%f Height=%f\n"
+                "       Opacity=%f  Rotate=%f  clip_to_img = %d\n",
                      cur_ptr->dst_frame_nr, cur_ptr->src_layer_idx,
                      cur_ptr->currX, cur_ptr->currY,
                      cur_ptr->currWidth,

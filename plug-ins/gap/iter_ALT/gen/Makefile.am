@@ -9,14 +9,12 @@ EXTRA_DIST = \
 	   plug_in_checkerboard_iter_ALT.inc	\
 	   plug_in_color_map_iter_ALT.inc	\
 	   plug_in_colorify_iter_ALT.inc	\
-	   plug_in_convmatrix_iter_ALT.inc	\
 	   plug_in_cubism_iter_ALT.inc		\
 	   plug_in_destripe_iter_ALT.inc	\
 	   plug_in_diffraction_iter_ALT.inc	\
 	   plug_in_displace_iter_ALT.inc	\
 	   plug_in_edge_iter_ALT.inc		\
 	   plug_in_engrave_iter_ALT.inc		\
-	   plug_in_flame_iter_ALT.inc		\
 	   plug_in_flarefx_iter_ALT.inc		\
 	   plug_in_fractal_trace_iter_ALT.inc	\
 	   plug_in_gauss_iir_iter_ALT.inc	\
@@ -25,7 +23,6 @@ EXTRA_DIST = \
 	   plug_in_glasstile_iter_ALT.inc	\
 	   plug_in_grid_iter_ALT.inc		\
 	   plug_in_jigsaw_iter_ALT.inc		\
-	   plug_in_make_seamless_iter_ALT.inc	\
 	   plug_in_mblur_iter_ALT.inc		\
 	   plug_in_mosaic_iter_ALT.inc		\
 	   plug_in_newsprint_iter_ALT.inc	\
@@ -45,8 +42,7 @@ EXTRA_DIST = \
 	   plug_in_vpropagate_iter_ALT.inc	\
 	   plug_in_waves_iter_ALT.inc		\
 	   plug_in_whirl_pinch_iter_ALT.inc	\
-	   plug_in_wind_iter_ALT.inc		\
-	   plug_in_zealouscrop_iter_ALT.inc
+	   plug_in_wind_iter_ALT.inc
 
 
 files:

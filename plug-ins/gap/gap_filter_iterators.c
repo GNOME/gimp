@@ -130,6 +130,15 @@ static void p_delta_short(short *val, short val_from, short val_to, gint32 total
     delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
     *val  = val_from + delta; 
 }
+static void p_delta_int(int *val, int val_from, int val_to, gint32 total_steps, gdouble current_step)
+{
+     double     delta;
+ 
+     if(total_steps < 1) return;
+ 
+     delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+     *val  = val_from + delta; 
+}
 static void p_delta_gint(gint *val, gint val_from, gint val_to, gint32 total_steps, gdouble current_step)
 {
     double     delta;
@@ -159,16 +168,29 @@ static void p_delta_guchar(guchar *val, char val_from, char val_to, gint32 total
 }
 static void p_delta_gdouble(double *val, double val_from, double val_to, gint32 total_steps, gdouble current_step)
 {
-    double     delta;
+   double     delta;
 
-    if(total_steps < 1) return;
+   if(total_steps < 1) return;
 
-    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-    *val  = val_from + delta;
+   delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+   *val  = val_from + delta;
     
-    if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
+   if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gdouble total: %d  from: %f to: %f curr: %f    delta: %f\n",
                                   (int)total_steps, val_from, val_to, *val, delta);
 }
+static void p_delta_gfloat(gfloat *val, gfloat val_from, gfloat val_to, gint32 total_steps, gdouble current_step)
+{
+    double     delta;
+ 
+    if(total_steps < 1) return;
+ 
+    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+    *val  = val_from + delta;
+     
+    if(gap_debug) fprintf(stderr, "DEBUG: p_delta_gfloat total: %d  from: %f to: %f curr: %f    delta: %f\n",
+                                   (int)total_steps, val_from, val_to, *val, delta);
+}
+
 static void p_delta_float(float *val, float val_from, float val_to, gint32 total_steps, gdouble current_step)
 {
     double     delta;
@@ -354,10 +376,12 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/mod/plug_in_alienmap_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_applylens_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_blur_iter_ALT.inc"
+#include "iter_ALT/mod/plug_in_convmatrix_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_depth_merge_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_despeckle_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_emboss_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_exchange_iter_ALT.inc"
+#include "iter_ALT/mod/plug_in_flame_iter_ALT.inc
 #include "iter_ALT/mod/plug_in_lighting_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_map_object_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_maze_iter_ALT.inc"
@@ -399,14 +423,12 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/gen/plug_in_checkerboard_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_color_map_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_colorify_iter_ALT.inc"
-#include "iter_ALT/gen/plug_in_convmatrix_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_cubism_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_destripe_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_diffraction_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_displace_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_edge_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_engrave_iter_ALT.inc"
-#include "iter_ALT/gen/plug_in_flame_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_flarefx_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_fractal_trace_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_gauss_iir_iter_ALT.inc"
@@ -415,7 +437,6 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/gen/plug_in_glasstile_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_grid_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_jigsaw_iter_ALT.inc"
-#include "iter_ALT/gen/plug_in_make_seamless_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_mblur_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_mosaic_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_newsprint_iter_ALT.inc"
@@ -436,7 +457,6 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/gen/plug_in_waves_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_whirl_pinch_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_wind_iter_ALT.inc"
-#include "iter_ALT/gen/plug_in_zealouscrop_iter_ALT.inc"
 
 /* table of proc_names and funtion pointers to iter_ALT procedures */
 /* del ... Deleted (does not make sense to animate)
@@ -529,7 +549,7 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
   , { "plug_in_lighting",  p_plug_in_lighting_iter_ALT }
   , { "plug_in_magic_eye",  p_plug_in_magic_eye_iter_ALT }
 /*, { "plug_in_mail_image",  p_plug_in_mail_image_iter_ALT }                      */
-  , { "plug_in_make_seamless",  p_plug_in_make_seamless_iter_ALT }
+/*, { "plug_in_make_seamless",  p_plug_in_make_seamless_iter_ALT }                */
   , { "plug_in_mandelbrot",  p_plug_in_mandelbrot_iter_ALT }
   , { "plug_in_map_object",  p_plug_in_map_object_iter_ALT }
 /*, { "plug_in_max_rgb",  p_plug_in_max_rgb_iter_ALT }                            */

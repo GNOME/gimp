@@ -1,3 +1,8 @@
+Mon Apr 19 23:31:17 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap: Changes to the GAP plug-in as they were sent to
+	me by Wolfgang Hofer.
+
 1999-04-19  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* pixmaps/penstroke.xpm: Punched a hole inside the icon - it 
