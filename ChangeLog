@@ -1,5 +1,10 @@
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimpfont.c: made the PangoContext an object property of
+	GimpFont.
+
+2003-03-25  Sven Neumann  <sven@gimp.org>
+
 	* gimpui-1.3.pc.in: require gtk+ >= 2.2.
 
 	* app/text/gimpfont.[ch]: implemented basic preview functionality.

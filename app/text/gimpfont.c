@@ -31,22 +31,33 @@
 
 #include "gimpfont.h"
 
+enum
+{
+  PROP_0,
+  PROP_PANGO_CONTEXT
+};
+
 
 struct _GimpFont
 {
   GimpViewable  parent_instance;
+
+  PangoContext *pango_context;
 };
 
 struct _GimpFontClass
 {
   GimpViewableClass   parent_class;
-
-  PangoContext       *pango_context;
 };
 
 
 static void      gimp_font_class_init       (GimpFontClass *klass);
 static void      gimp_font_init             (GimpFont      *font);
+static void      gimp_font_finalize         (GObject       *object);
+static void      gimp_font_set_property     (GObject       *object,
+                                             guint          property_id,
+                                             const GValue  *value,
+                                             GParamSpec    *pspec);
 
 static void      gimp_font_get_preview_size (GimpViewable  *viewable,
                                              gint           size,
@@ -99,23 +110,74 @@ gimp_font_get_type (void)
 static void
 gimp_font_class_init (GimpFontClass *klass)
 {
+  GObjectClass      *object_class;
   GimpViewableClass *viewable_class;
+  GParamSpec        *param_spec;
+
+  object_class   = G_OBJECT_CLASS (klass);
+  viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class->finalize     = gimp_font_finalize;
+  object_class->set_property = gimp_font_set_property;
 
   viewable_class->get_preview_size = gimp_font_get_preview_size;
   viewable_class->get_popup_size   = gimp_font_get_popup_size;
   viewable_class->get_new_preview  = gimp_font_get_new_preview;
 
-  klass->pango_context = pango_ft2_get_context (72, 72);
+  viewable_class->default_stock_id = "gtk-font";
+
+  param_spec = g_param_spec_object ("pango-context", NULL, NULL,
+                                    PANGO_TYPE_CONTEXT,
+                                    G_PARAM_WRITABLE);
+
+  g_object_class_install_property (object_class,
+                                   PROP_PANGO_CONTEXT, param_spec);
 }
 
 static void
 gimp_font_init (GimpFont *font)
 {
+  font->pango_context = NULL;
 }
+
+static void
+gimp_font_finalize (GObject *object)
+{
+  GimpFont *font = GIMP_FONT (object);
+
+  if (font->pango_context)
+    {
+      g_object_unref (font->pango_context);
+      font->pango_context = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_font_set_property (GObject       *object,
+                        guint          property_id,
+                        const GValue  *value,
+                        GParamSpec    *pspec)
+{
+  GimpFont *font = GIMP_FONT (object);
+
+  switch (property_id)
+    {
+    case PROP_PANGO_CONTEXT:
+      if (font->pango_context)
+        g_object_unref (font->pango_context);
+
+      font->pango_context = (PangoContext *) g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}  
 
 static void
 gimp_font_get_preview_size (GimpViewable *viewable,
@@ -146,7 +208,6 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            gint          height)
 {
   GimpFont             *font;
-  GimpFontClass        *font_class;
   PangoFontDescription *font_desc;
   PangoLayout          *layout;
   const gchar          *name;
@@ -155,8 +216,10 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   guchar               *p;
   guchar                black = 0;
 
-  font       = GIMP_FONT (viewable);
-  font_class = GIMP_FONT_GET_CLASS (font);
+  font = GIMP_FONT (viewable);
+
+  if (!font->pango_context)
+    return NULL;
 
   name = gimp_object_get_name (GIMP_OBJECT (font));
 
@@ -167,7 +230,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 
   pango_font_description_set_size (font_desc, PANGO_SCALE * height);
 
-  layout = pango_layout_new (font_class->pango_context);
+  layout = pango_layout_new (font->pango_context);
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (layout, "Aa", -1);
