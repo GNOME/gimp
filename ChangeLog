@@ -1,3 +1,7 @@
+2000-04-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.c: fixed the "Resize Canvas" segfault.
+
 2000-04-24  Sven Neumann <sven@gimp.org>
 
 	* app/internal_procs.c

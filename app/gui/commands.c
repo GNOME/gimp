@@ -1319,7 +1319,6 @@ image_resize_callback (GtkWidget *widget,
     }
 
   gtk_widget_destroy (image_resize->resize->resize_shell);
-  g_free (image_resize);
 }
 
 static void
