@@ -1,3 +1,2 @@
 PACKAGE = gimp-script-fu
-LOCALEDIR = /gimp/locale
 include ../../gtk+/po/makefile.cygwin
