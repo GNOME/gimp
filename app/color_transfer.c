@@ -23,32 +23,40 @@
 
 #include <glib.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
-#include "libgimp/gimpmath.h"
 #include "color_transfer.h"
 
+
 /*  for lightening  */
-double  highlights_add[256];
-double  midtones_add[256];
-double  shadows_add[256];
+gdouble  highlights_add[256];
+gdouble  midtones_add[256];
+gdouble  shadows_add[256];
 
 /*  for darkening  */
-double  highlights_sub[256];
-double  midtones_sub[256];
-double  shadows_sub[256];
+gdouble  highlights_sub[256];
+gdouble  midtones_sub[256];
+gdouble  shadows_sub[256];
+
 
 /*  color transfer functions  */
 void
-color_transfer_init ()
+color_transfer_init (void)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 256; i++)
     {
-      highlights_add[i] = shadows_sub[255 - i] = (1.075 - 1 / ((double) i / 16.0 + 1));
-      midtones_add[i] = midtones_sub[i] = 0.667 * (1 - SQR (((double) i - 127.0) / 127.0));
-      shadows_add[i] = highlights_sub[i] = 0.667 * (1 - SQR (((double) i - 127.0) / 127.0));
+      highlights_add[i] =
+	shadows_sub[255 - i] = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
+
+      midtones_add[i] =
+	midtones_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
+
+      shadows_add[i] =
+	highlights_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
     }
 }

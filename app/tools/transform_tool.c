@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -35,8 +37,8 @@
 #include "transform_core.h"
 #include "transform_tool.h"
 
-#include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
+
 
 /*  the transform structures  */
 

@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -40,8 +42,6 @@
 #include "scan_convert.h"
 #include "tools.h"
 #include "tool_options.h"
-
-#include "libgimp/gimpmath.h"
 
 
 #define DEFAULT_MAX_INC  1024

@@ -23,7 +23,6 @@
 #include <glib.h>
 
 #include "gimpmath.h"
-#include "gimpmatrix.h"
 
 
 #define EPSILON 1e-6

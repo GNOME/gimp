@@ -34,6 +34,8 @@
 #include <process.h>		/* For _getpid() */
 #endif
  
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -42,8 +44,6 @@
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
-
-#include "libgimp/gimpcolorspace.h"
 
 
 static guchar * temp_buf_allocate (guint);

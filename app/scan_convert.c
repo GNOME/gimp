@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "channel.h"
@@ -29,8 +31,6 @@
 #include "gimpimage.h"
 #include "pixel_region.h"
 #include "scan_convert.h"
-
-#include "libgimp/gimpmath.h"
 
 
 #ifdef DEBUG

@@ -61,6 +61,8 @@
 #define getegid() 0
 #endif
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -84,7 +86,6 @@
 #include "undo.h"
 
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

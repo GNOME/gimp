@@ -22,11 +22,11 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
-
 #include "channel.h"
 #include "channels_dialog.h"
 #include "color_panel.h"
@@ -46,7 +46,6 @@
 #include "undo.h"
 
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

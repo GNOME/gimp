@@ -203,9 +203,9 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui -lgimp -lgimpcolor $my_gtk_libs ;;
+          echo $libdirs -lgimpui -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
         --libs-nogimpui)
-          echo $libdirs -lgimp -lgimpcolor $my_gtk_libs ;;
+          echo $libdirs -lgimp -lgimpcolor -lgimpmath $my_gtk_libs ;;
       esac
       ;;
     --libs-noui)

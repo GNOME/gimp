@@ -25,13 +25,13 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpmodregister.h"
 
-#include "libgimp/gimpcolor.h"
-#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

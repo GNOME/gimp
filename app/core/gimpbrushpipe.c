@@ -41,7 +41,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
+
 #include "appenv.h"
 #include "brush_header.h"
 #include "pattern_header.h"
@@ -53,7 +56,6 @@
 /*  this needs to go away  */
 #include "tools/paint_core.h"
 
-#include "libgimp/gimpmath.h"
 #include "libgimp/gimpparasiteio.h"
 
 #include "libgimp/gimpintl.h"

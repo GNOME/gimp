@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
@@ -50,11 +51,10 @@
 #include "tools.h"
 #include "undo.h"
 
-#include "libgimp/gimpmath.h"
-
 #include "libgimp/gimpintl.h"
 
 #include "paint_core_kernels.h"
+
 
 /*  target size  */
 #define  TARGET_HEIGHT  15

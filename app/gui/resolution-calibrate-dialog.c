@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -31,9 +33,9 @@
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
+
 
 #define SET_STYLE(widget, style)  if (style) gtk_widget_set_style (widget, style)
 

@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "edit_selection.h"
@@ -43,8 +45,6 @@
 #include "path_transform.h"
 #include "selection.h"
 #include "undo.h"
-
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -21,12 +21,11 @@
 
 
 #include "libgimpcolor/gimpcolortypes.h"
+#include "libgimpmath/gimpmathtypes.h"
 #include "libgimp/gimpuitypes.h"
 
 
 /* stuff that will go to general-purpose libraries */
-#include "libgimp/gimpmatrix.h"
-#include "libgimp/gimpvector.h"
 #include "libgimp/gimpunit.h"
 
 

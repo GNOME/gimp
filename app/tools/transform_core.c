@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -48,7 +50,6 @@
 #include "tools.h"
 
 #include "libgimp/gimpintl.h"
-#include "libgimp/gimpmath.h"
 
 
 /* This should be migrated to pixel_region or similar... */

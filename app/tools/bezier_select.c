@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "channel.h"
@@ -45,8 +47,6 @@
 #include "undo.h"
 
 #include "pdb/procedural_db.h"
-
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

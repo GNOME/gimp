@@ -22,9 +22,9 @@
 #include <glib.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "gimpadaptivesupersample.h"
-#include "gimpmath.h"
 
 
 /*********************************************************************/

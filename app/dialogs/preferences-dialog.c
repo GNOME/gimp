@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -43,7 +45,6 @@
 #include "tile_cache.h"
 
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -28,6 +28,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "color_area.h"
@@ -38,7 +40,6 @@
 #include "libgimp/gimphelpui.h"
 #include "libgimp/gimpcolorarea.h"
 #include "libgimp/gimpcolorselector.h"
-#include "libgimp/gimpcolorspace.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -28,7 +28,6 @@
 #include <glib.h>
 
 #include "gimpmath.h"
-#include "gimpvector.h"
 
 
 /*************************/

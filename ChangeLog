@@ -1,3 +1,48 @@
+2001-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* gimptool.in: added stuff for the new library below.
+
+	* libgimpmath/.cvsignore
+	* libgimpmath/Makefile.am
+	* libgimpmath/gimpmath.def
+	* libgimpmath/gimpmath.h
+	* libgimpmath/gimpmathtypes.h
+	* libgimpmath/gimpmatrix.c
+	* libgimpmath/gimpmatrix.h
+	* libgimpmath/gimpvector.c
+	* libgimpmath/gimpvector.h
+	* libgimpmath/makefile.mingw.in
+	* libgimpmath/makefile.msc: new shared library. Depends on glib only.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.def
+	* libgimp/gimp.h: removed the math stuff.
+
+	* libgimp/gimpmath.h
+	* libgimp/gimpmatrix.[ch]
+	* libgimp/gimpvector.[ch]: removed.
+
+	* app/Makefile.am
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/pagecurl/Makefile.am: link against libgimpmath.la
+
+	* app/[many files]
+	* libgimpcolor/gimpcolorspace.c
+	* libgimpcolor/gimprgb.c
+	* libgimp/gimpadaptivesupersample.c
+	* libgimp/gimpbilinear.c
+	* libgimp/gimpwidgets.c
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c
+	* plug-ins/libgck/gck/gckcolor.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/image.pdb: include "libgimpmath/gimpmath.h",
+	removed the remaining includes of the old color stuff.
+
 2001-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am

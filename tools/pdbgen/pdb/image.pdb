@@ -1433,8 +1433,8 @@ CODE
 }
 
 
-@headers = qw("config.h" <string.h> "gimage.h" "temp_buf.h"
-	      "libgimp/gimpmath.h" "libgimp/gimpintl.h" "libgimp/gimplimits.h");
+@headers = qw(<string.h> "gimage.h" "libgimpmath/gimpmath.h"
+	      "temp_buf.h" "libgimp/gimplimits.h" "libgimp/gimpintl.h");
 
 $extra{app}->{code} = <<'CODE';
 /* Yuup, this is somewhat unsmooth, to say the least */

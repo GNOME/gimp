@@ -29,6 +29,8 @@
 #include <unistd.h>
 #endif
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -38,9 +40,9 @@
 #include "resolution_calibrate.h"
 #include "unitrc.h"
 #include "user_install.h"
+
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

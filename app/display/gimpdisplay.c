@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -58,8 +60,6 @@
 #endif /* DISPLAY_FILTERS */
 
 #include "tools/tools.h"
-
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

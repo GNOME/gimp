@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "boundary.h"
@@ -43,7 +45,6 @@
 #include "tile_manager.h"
 #include "tile.h"
 
-#include "libgimp/gimpmath.h"
 #include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"

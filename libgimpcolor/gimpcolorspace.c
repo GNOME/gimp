@@ -21,13 +21,14 @@
 
 #include <glib.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpcolortypes.h"
 
 #include "gimpcolorspace.h"
 #include "gimprgb.h"
 #include "gimphsv.h"
 
-#include "libgimp/gimpmath.h"
 
 
 #define GIMP_HSV_UNDEFINED -1.0

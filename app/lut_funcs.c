@@ -22,13 +22,13 @@
 
 #include <glib.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "gimplut.h"
 #include "gimphistogram.h"
-
-#include "libgimp/gimpmath.h"
 
 
 /* ---------- Brightness/Contrast -----------*/

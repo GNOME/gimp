@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
@@ -80,7 +81,6 @@
 #include "tools/tools.h"
 
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

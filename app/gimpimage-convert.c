@@ -92,6 +92,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
@@ -120,9 +121,7 @@
 #include "tools/posterize.h"
 #include "tools/threshold.h"
 
-#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

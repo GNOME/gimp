@@ -32,11 +32,11 @@
 
 #include <glib.h>
 
-#include "libgimp/gimpcolor.h"
-#include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "gck.h"
+
 
 #define RESERVED_COLORS 2
 

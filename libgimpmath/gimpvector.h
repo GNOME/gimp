@@ -31,25 +31,6 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-typedef struct _GimpVector2 GimpVector2;
-typedef struct _GimpVector3 GimpVector3;
-typedef struct _GimpVector4 GimpVector4;
-
-struct _GimpVector2
-{
-  gdouble x, y;
-};
-
-struct _GimpVector3
-{
-  gdouble x, y, z;
-};
-
-struct _GimpVector4
-{
-  gdouble x, y, z, w;
-};
-
 /* Two dimensional vector functions */
 /* ================================ */
 

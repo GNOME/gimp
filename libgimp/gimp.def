@@ -229,21 +229,6 @@ EXPORTS
 	gimp_layer_translate
 	gimp_main
 	gimp_major_version
-	gimp_matrix3_determinant
-	gimp_matrix3_duplicate
-	gimp_matrix3_identity
-	gimp_matrix3_invert
-	gimp_matrix3_is_diagonal
-	gimp_matrix3_is_identity
-	gimp_matrix3_is_simple
-	gimp_matrix3_mult
-	gimp_matrix3_rotate
-	gimp_matrix3_scale
-	gimp_matrix3_transform_point
-	gimp_matrix3_translate
-	gimp_matrix3_xshear
-	gimp_matrix3_yshear
-	gimp_matrix4_to_deg
 	gimp_message
 	gimp_micro_version
 	gimp_min_colors
@@ -367,28 +352,6 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_use_xshm
-	gimp_vector2_add
-	gimp_vector2_cross_product
-	gimp_vector2_inner_product
-	gimp_vector2_length
-	gimp_vector2_mul
-	gimp_vector2_neg
-	gimp_vector2_normalize
-	gimp_vector2_rotate
-	gimp_vector2_set
-	gimp_vector2_sub
-	gimp_vector3_add
-	gimp_vector3_cross_product
-	gimp_vector3_inner_product
-	gimp_vector3_length
-	gimp_vector3_mul
-	gimp_vector3_neg
-	gimp_vector3_normalize
-	gimp_vector3_rotate
-	gimp_vector3_set
-	gimp_vector3_sub
-	gimp_vector_2d_to_3d
-	gimp_vector_3d_to_2d
 	gimp_version
 	gp_config_write
 	gp_extension_ack_write

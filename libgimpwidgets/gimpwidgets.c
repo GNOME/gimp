@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimptypes.h"
 #include "gimpuitypes.h"
 
@@ -33,7 +35,6 @@
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
-#include "gimpmath.h"
 
 #include "libgimp-intl.h"
 

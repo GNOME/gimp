@@ -111,8 +111,6 @@ libgimpi_a_SOURCES = \
 	gimpfileselection.h	\
 	gimphelpui.c		\
 	gimphelpui.h		\
-	gimpmatrix.c		\
-	gimpmatrix.h		\
 	gimppatheditor.c	\
 	gimppatheditor.h	\
 	gimppixmap.c		\
@@ -129,8 +127,6 @@ libgimpi_a_SOURCES = \
 	gimpunitmenu.h		\
 	gimputils.c		\
 	gimputils.h		\
-	gimpvector.c		\
-	gimpvector.h		\
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwire.c		\
@@ -173,8 +169,6 @@ libgimp_la_SOURCES = \
 	gimplayer.c			\
 	gimplayer.h			\
 	gimplimits.h			\
-	gimpmatrix.c			\
-	gimpmatrix.h			\
 	gimppalette.c			\
 	gimppalette.h			\
 	gimpparasite.c			\
@@ -197,8 +191,6 @@ libgimp_la_SOURCES = \
 	gimpunit.h			\
 	gimputils.c			\
 	gimputils.h			\
-	gimpvector.c			\
-	gimpvector.h			\
 	gimpwire.c			\
 	gimpwire.h			\
 	stdplugins-intl.h		\
@@ -249,8 +241,6 @@ gimpinclude_HEADERS = \
 	gimpimage.h			\
 	gimplayer.h			\
 	gimplimits.h			\
-	gimpmath.h			\
-	gimpmatrix.h			\
 	gimpmenu.h			\
 	gimpmodule.h			\
 	gimppalette.h			\
@@ -271,7 +261,6 @@ gimpinclude_HEADERS = \
 	gimpunit.h			\
 	gimpunitmenu.h			\
 	gimputils.h			\
-	gimpvector.h			\
 	gimpwidgets.h			\
 	gimpintl.h
 
@@ -279,7 +268,7 @@ gimpinclude_HEADERS = \
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-release $(LT_RELEASE)
-libgimp_la_LIBADD = $(GLIB_LIBS) -lm
+libgimp_la_LIBADD = $(GLIB_LIBS)
 
 libgimpui_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

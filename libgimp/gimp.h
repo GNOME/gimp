@@ -25,6 +25,7 @@
 #include <glib.h>
 
 #include <libgimpcolor/gimpcolor.h>
+#include <libgimpmath/gimpmath.h>
 
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
@@ -39,7 +40,6 @@
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplimits.h>
-#include <libgimp/gimpmath.h>
 #include <libgimp/gimppalette.h>
 #include <libgimp/gimpparasite.h>
 #include <libgimp/gimppixelrgn.h>
@@ -48,7 +48,6 @@
 #include <libgimp/gimptile.h>
 #include <libgimp/gimpunit.h>
 #include <libgimp/gimputils.h>
-#include <libgimp/gimpvector.h>
 
 #include <libgimp/gimp_pdb.h>
 

@@ -23,6 +23,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -45,7 +47,7 @@
 #include "undo.h"
 
 #include "libgimp/gimpsizeentry.h"
-#include "libgimp/gimpmath.h"
+
 #include "libgimp/gimpintl.h"
 
 

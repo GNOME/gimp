@@ -29,12 +29,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "blob.h"
-
-#include "libgimp/gimpmath.h"
 
 
 static Blob *

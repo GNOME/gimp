@@ -27,9 +27,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/* For information look into the C source or the html documentation */
 
-typedef gdouble GimpMatrix3[3][3];
-typedef gdouble GimpMatrix4[4][4];
 
 void          gimp_matrix3_transform_point (GimpMatrix3  matrix, 
 					    gdouble      x, 

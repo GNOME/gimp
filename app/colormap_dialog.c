@@ -26,6 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
@@ -44,7 +45,6 @@
 #include "pdb/procedural_db.h"
 
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -30,6 +30,8 @@
 #include "drawable.h"
 #include "gimpimage.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 static ProcRecord channel_new_proc;
 static ProcRecord channel_copy_proc;
 static ProcRecord channel_delete_proc;

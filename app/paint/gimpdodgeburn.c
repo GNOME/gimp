@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -38,8 +40,6 @@
 #include "temp_buf.h"
 #include "tools.h"
 #include "gimage.h"
-
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 

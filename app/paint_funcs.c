@@ -24,6 +24,9 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -34,9 +37,6 @@
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "tile.h"
-
-#include "libgimp/gimpmath.h"
-#include "libgimp/gimpcolorspace.h"
 
 #include "libgimp/gimpintl.h"
 

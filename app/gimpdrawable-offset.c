@@ -22,6 +22,9 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -42,12 +45,12 @@
 #include "tile_manager.h"
 
 #include "libgimp/gimphelpui.h"
-#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 
 
 #define ENTRY_WIDTH  60
+
 
 typedef struct _OffsetDialog OffsetDialog;
 
@@ -62,11 +65,15 @@ struct _OffsetDialog
   GimpImage         *gimage;
 };
 
-/*  Forward declarations  */
-static void  offset_ok_callback         (GtkWidget *, gpointer);
-static void  offset_cancel_callback     (GtkWidget *, gpointer);
 
-static void  offset_halfheight_callback (GtkWidget *, gpointer);
+/*  Forward declarations  */
+static void  offset_ok_callback         (GtkWidget *widget,
+					 gpointer   data);
+static void  offset_cancel_callback     (GtkWidget *widget,
+					 gpointer   data);
+
+static void  offset_halfheight_callback (GtkWidget *widget,
+					 gpointer   data);
 
 
 void

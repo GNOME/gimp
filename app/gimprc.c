@@ -58,7 +58,6 @@
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"
 #include "libgimp/gimpparasite.h"
-#include "libgimp/gimpcolorspace.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -24,10 +24,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpmodregister.h"
 
-#include "libgimp/gimpcolor.h"
-#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
 

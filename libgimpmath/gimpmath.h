@@ -3,8 +3,6 @@
  *
  * gimpmath.h
  *
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -21,14 +19,20 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPMATH_H__
-#define __GIMPMATH_H__
+#ifndef __GIMP_MATH_H__
+#define __GIMP_MATH_H__
 
 #include <math.h>
 
 #ifdef G_OS_WIN32
 #include <float.h>
 #endif
+
+#include <libgimpmath/gimpmathtypes.h>
+
+#include <libgimpmath/gimpmatrix.h>
+#include <libgimpmath/gimpvector.h>
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -97,4 +101,4 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif /* __GIMPMATH_H__ */
+#endif /* __GIMP_MATH_H__ */

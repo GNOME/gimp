@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -29,8 +31,6 @@
 #include "gimage_mask.h"
 #include "histogramwidget.h"
 #include "tile_manager.h"
-
-#include "libgimp/gimpmath.h"
 
 
 #define WAITING 0

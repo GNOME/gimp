@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -33,7 +35,6 @@
 
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimplimits.h"
-#include "libgimp/gimpmath.h"
 #include "libgimp/gimpsizeentry.h"
 
 #include "libgimp/gimpintl.h"

@@ -24,7 +24,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
+
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "path.h"
@@ -32,8 +35,6 @@
 #include "paths_dialog.h"
 
 #include "tools/bezier_selectP.h"
-
-#include "libgimp/gimpmath.h"
 
 
 static gchar * unique_name (GimpImage *gimage,

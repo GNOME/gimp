@@ -21,11 +21,11 @@
 
 #include <glib.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpcolortypes.h"
 
 #include "gimprgb.h"
-
-#include "libgimp/gimpmath.h"
 
 
 /*  RGB functions  */

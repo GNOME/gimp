@@ -20,8 +20,8 @@
 #define __COLOR_TRANSFER_H__
 
 
-/*************************/
 /*  color transfer data  */
+
 
 /*  for lightening  */
 extern gdouble  highlights_add[];

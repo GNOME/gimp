@@ -29,6 +29,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -39,8 +41,6 @@
 
 /*  this needs to go away  */
 #include "tools/paint_core.h"
-
-#include "libgimp/gimpmath.h"
 
 
 #define OVERSAMPLING 5

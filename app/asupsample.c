@@ -34,14 +34,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "apptypes.h"
 
 #include "appenv.h"
 #include "asupsample.h"
 #include "gimpprogress.h"
-
-#include "libgimp/gimpmath.h"
 
 
 typedef struct
