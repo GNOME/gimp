@@ -27,10 +27,11 @@
 
 #include "apptypes.h"
 
-#include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+
+#include "gimpdnd.h"
 
 
 static void      gimp_dockbook_class_init       (GimpDockbookClass  *klass);
@@ -114,7 +115,9 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
-  dockbook->dock = NULL;
+  dockbook->dock        = NULL;
+  dockbook->remove_item = NULL;
+  dockbook->add_item    = NULL;
 
   gtk_notebook_set_tab_border (GTK_NOTEBOOK (dockbook), 0);
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
@@ -126,17 +129,17 @@ gimp_dockbook_init (GimpDockbook *dockbook)
                      GDK_ACTION_MOVE);
 }
 
+GtkWidget *
+gimp_dockbook_new (void)
+{
+  return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCKBOOK));
+}
+
 static void
 gimp_dockbook_destroy (GtkObject *object)
 {
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-GtkWidget *
-gimp_dockbook_new (void)
-{
-  return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCKBOOK));
 }
 
 static gboolean
@@ -290,9 +293,15 @@ gimp_dockbook_add (GimpDockbook *dockbook,
       gtk_widget_set_sensitive (item, FALSE);
       gtk_widget_show (item);
 
-      item = gtk_menu_item_new_with_label ("Test");
-      gtk_menu_append (GTK_MENU (GTK_NOTEBOOK (dockbook)->menu), item);
-      gtk_widget_show (item);
+      dockbook->remove_item = gtk_menu_item_new_with_label ("Remove Tab");
+      gtk_menu_append (GTK_MENU (GTK_NOTEBOOK (dockbook)->menu),
+		       dockbook->remove_item);
+      gtk_widget_show (dockbook->remove_item);
+
+      dockbook->add_item = gtk_menu_item_new_with_label ("Add Tab");
+      gtk_menu_append (GTK_MENU (GTK_NOTEBOOK (dockbook)->menu),
+		       dockbook->add_item);
+      gtk_widget_show (dockbook->add_item);
     }
 }
 
@@ -313,6 +322,9 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
     {
       while (GTK_MENU_SHELL (GTK_NOTEBOOK (dockbook)->menu)->children->next)
 	gtk_widget_destroy (GTK_WIDGET (GTK_MENU_SHELL (GTK_NOTEBOOK (dockbook)->menu)->children->next->data));
+
+      dockbook->remove_item = NULL;
+      dockbook->add_item    = NULL;
     }
 
   dockable->dockbook = NULL;
@@ -340,7 +352,8 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
     case 3:
       gtk_menu_popup (GTK_MENU (GTK_NOTEBOOK (dockable->dockbook)->menu),
 		      NULL, NULL,
-		      NULL, NULL, 3, bevent->time);
+		      NULL, NULL,
+		      3, bevent->time);
       break;
 
     default:

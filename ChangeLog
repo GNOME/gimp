@@ -1,3 +1,11 @@
+2001-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdnd.c: added a DND type for GimpImage.
+
+	* app/tools/tools.c: don't register bezier select twice.
+
+	* app/widgets/gimpdockbook.[ch]: hacked the popup menu a bit.
+
 2001-04-11  Stanislav Brabec  <utx@penguin.cz> 
 
         On request of Martin Weber <martweb@gmx.net>: 

@@ -99,7 +99,6 @@ register_tools (void)
 
   gimp_bezier_select_tool_register ();
   gimp_iscissors_tool_register ();
-  gimp_bezier_select_tool_register ();
   gimp_fuzzy_select_tool_register ();
   gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();

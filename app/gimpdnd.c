@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "pdb/procedural_db.h"
+
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
@@ -62,6 +64,7 @@ typedef enum
 {
   GIMP_DND_DATA_NONE,
   GIMP_DND_DATA_COLOR,
+  GIMP_DND_DATA_IMAGE,
   GIMP_DND_DATA_LAYER,
   GIMP_DND_DATA_CHANNEL,
   GIMP_DND_DATA_LAYER_MASK,
@@ -117,6 +120,11 @@ static guchar    * gimp_dnd_get_color_data    (GtkWidget     *widget,
 					       gpointer       get_color_data,
 					       gint          *format,
 					       gint          *length);
+static guchar    * gimp_dnd_get_image_data    (GtkWidget     *widget,
+					       GtkSignalFunc  get_image_func,
+					       gpointer       get_image_data,
+					       gint          *format,
+					       gint          *length);
 static guchar    * gimp_dnd_get_drawable_data (GtkWidget     *widget,
 					       GtkSignalFunc  get_drawable_func,
 					       gpointer       get_drawable_data,
@@ -136,6 +144,12 @@ static guchar    * gimp_dnd_get_tool_data     (GtkWidget     *widget,
 static void        gimp_dnd_set_color_data    (GtkWidget     *widget,
 					       GtkSignalFunc  set_color_func,
 					       gpointer       set_color_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_image_data    (GtkWidget     *widget,
+					       GtkSignalFunc  set_image_func,
+					       gpointer       set_image_data,
 					       guchar        *vals,
 					       gint           format,
 					       gint           length);
@@ -199,6 +213,17 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_color_icon,
     gimp_dnd_get_color_data,
     gimp_dnd_set_color_data
+  },
+
+  {
+    GIMP_TARGET_IMAGE,
+
+    "gimp_dnd_set_image_func",
+    "gimp_dnd_set_image_data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_image_data,
+    gimp_dnd_set_image_data,
   },
 
   {
@@ -693,7 +718,11 @@ gimp_dnd_data_type_get_by_gtk_type (GtkType  type)
 {
   GimpDndDataType dnd_type = GIMP_DND_DATA_NONE;
 
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
+  if (gtk_type_is_a (type, GIMP_TYPE_IMAGE))
+    {
+      dnd_type = GIMP_DND_DATA_IMAGE;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       dnd_type = GIMP_DND_DATA_LAYER;
     }
@@ -886,6 +915,69 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
   return (GimpViewable *) (* get_data_func) (widget, get_data_data);
  
 }
+
+
+/*************************/
+/*  image dnd functions  */
+/*************************/
+
+static guchar *
+gimp_dnd_get_image_data (GtkWidget     *widget,
+			 GtkSignalFunc  get_image_func,
+			 gpointer       get_image_data,
+			 gint          *format,
+			 gint          *length)
+{
+  GimpImage *gimage;
+  gchar     *id;
+
+  gimage = (GimpImage *)
+    (* (GimpDndDragViewableFunc) get_image_func) (widget, get_image_data);
+
+  if (! gimage)
+    return NULL;
+
+  id = g_strdup_printf ("%d", pdb_image_to_id (gimage));
+
+  *format = 8;
+  *length = strlen (id) + 1;
+
+  return (guchar *) id;
+}
+
+static void
+gimp_dnd_set_image_data (GtkWidget     *widget,
+			 GtkSignalFunc  set_image_func,
+			 gpointer       set_image_data,
+			 guchar        *vals,
+			 gint           format,
+			 gint           length)
+{
+  GimpImage *gimage;
+  gchar     *id;
+  gint       ID;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("%s(): received invalid image ID data", G_GNUC_FUNCTION);
+      return;
+    }
+
+  id = (gchar *) vals;
+
+  ID = atoi (id);
+
+  if (! ID)
+    return;
+
+  gimage = pdb_id_to_image (ID);
+
+  if (gimage)
+    (* (GimpDndDropViewableFunc) set_image_func) (widget,
+						  GIMP_VIEWABLE (gimage),
+						  set_image_data);
+}
+
 
 /****************************/
 /*  drawable dnd functions  */
