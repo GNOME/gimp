@@ -1,3 +1,14 @@
+Fri Sep 24 02:19:05 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c: i18n for script-fu
+	* plug-ins/script-fu/script-fu/po/*: new directory with new files
+
+	A patch from Daniel Egger giving a start on i18n for script-fu.
+
 Thu Sep 23 16:29:09 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/channel.h

@@ -35,6 +35,7 @@
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/gimpintl.h"
 
 #include "siod.h"
 #include "script-fu-console.h"
@@ -152,7 +153,7 @@ script_fu_console_run (char     *name,
     case RUN_WITH_LAST_VALS:
     case RUN_NONINTERACTIVE:
       status = STATUS_CALLING_ERROR;
-      gimp_message ("Script-Fu console mode allows only interactive invocation");
+      gimp_message (_("Script-Fu console mode allows only interactive invocation"));
       break;
 
     default:
@@ -178,6 +179,8 @@ script_fu_console_interface ()
   gchar **argv;
   gint argc;
 
+  INIT_LOCALE("script-fu")
+
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("script-fu");
@@ -186,7 +189,7 @@ script_fu_console_interface ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Script-Fu Console");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Console"));
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
 		      NULL);
@@ -198,7 +201,7 @@ script_fu_console_interface ()
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label (_("Close"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) script_fu_close_callback,
                       NULL);
@@ -206,7 +209,7 @@ script_fu_console_interface ()
   gtk_widget_show (button);
 
   /*  The info vbox  */
-  label = gtk_label_new ("SIOD Output");
+  label = gtk_label_new (_("SIOD Output"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
   gtk_widget_show (label);
@@ -283,7 +286,7 @@ script_fu_console_interface ()
   gtk_widget_show (table);
 
   /*  The current command  */
-  label = gtk_label_new ("Current Command");
+  label = gtk_label_new (_("Current Command"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), label, FALSE, TRUE, 0);
   gtk_widget_show (label);
@@ -304,7 +307,7 @@ script_fu_console_interface ()
 		      (GtkSignalFunc) script_fu_cc_key_function,
 		      NULL);
 
-  button = gtk_button_new_with_label ("Browse...");
+  button = gtk_button_new_with_label (_("Browse..."));
   gtk_widget_set_usize (button, (ENTRY_WIDTH)/6, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, 
 		      FALSE, TRUE, 0);
@@ -562,11 +565,11 @@ script_fu_open_siod_console ()
     {
       if (pipe (siod_output_pipe))
 	{
-	  gimp_message ("Unable to open SIOD output pipe");
+	  gimp_message (_("Unable to open SIOD output pipe"));
 	}
       else if ((siod_output = fdopen (siod_output_pipe [1], "w")) == NULL)
 	{
-	  gimp_message ("Unable to open a stream on the SIOD output pipe");
+	  gimp_message (_("Unable to open a stream on the SIOD output pipe"));
 	  siod_output = stdout;
 	}
       else
@@ -613,7 +616,7 @@ script_fu_eval_run (char     *name,
     case RUN_INTERACTIVE:
     case RUN_WITH_LAST_VALS:
       status = STATUS_CALLING_ERROR;
-      gimp_message ("Script-Fu evaluate mode allows only noninteractive invocation");
+      gimp_message (_("Script-Fu evaluate mode allows only noninteractive invocation"));
       break;
 
     default:

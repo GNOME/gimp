@@ -37,6 +37,7 @@
 #endif /* HAVE_SYS_SELECT_H */
 
 #include "libgimp/gimp.h"
+#include "libgimp/gimpintl.h"
 #include "gtk/gtk.h"
 #include "siod.h"
 #include "script-fu-server.h"
@@ -536,13 +537,16 @@ server_interface ()
 
   argc = 1;
   argv = g_new (gchar *, 1);
+
+  INIT_LOCALE("script-fu")
+
   argv[0] = g_strdup ("script-fu");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Script-Fu Server Options");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Script-Fu Server Options"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) cancel_callback,
@@ -550,7 +554,7 @@ server_interface ()
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_callback,
@@ -559,7 +563,7 @@ server_interface ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -573,7 +577,7 @@ server_interface ()
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  The server port  */
-  label = gtk_label_new ("Server Port: ");
+  label = gtk_label_new (_("Server Port: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -586,7 +590,7 @@ server_interface ()
   gtk_widget_show (sint.port_entry);
 
   /*  The server logfile  */
-  label = gtk_label_new ("Server Logfile: ");
+  label = gtk_label_new (_("Server Logfile: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
