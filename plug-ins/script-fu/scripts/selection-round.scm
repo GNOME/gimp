@@ -108,7 +108,7 @@
 			       select-y1
 			       ellipse-radius
 			       ellipse-radius
-			       ADD
+			       CHANNEL-OP-ADD
 			       TRUE
 			       FALSE 0)
 	  (gimp-ellipse-select image
@@ -116,7 +116,7 @@
 			       (- select-y2 ellipse-radius)
 			       ellipse-radius
 			       ellipse-radius
-			       ADD
+			       CHANNEL-OP-ADD
 			       TRUE
 			       FALSE 0)
 	  (gimp-ellipse-select image
@@ -124,7 +124,7 @@
 			       select-y1
 			       ellipse-radius
 			       ellipse-radius
-			       ADD
+			       CHANNEL-OP-ADD
 			       TRUE
 			       FALSE 0)
 	  (gimp-ellipse-select image
@@ -132,7 +132,7 @@
 			       (- select-y2 ellipse-radius)
 			       ellipse-radius
 			       ellipse-radius
-			       ADD
+			       CHANNEL-OP-ADD
 			       TRUE
 			       FALSE 0)))
 

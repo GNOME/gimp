@@ -1,3 +1,8 @@
+2004-10-07  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/selection-round.scm: Changed deprecated
+	constant ADD to CHANNEL-OP-ADD.
+
 2004-10-07  Michael Natterer  <mitch@gimp.org>
 
 	Merged the gz and bz2 plug-ins into one generic compression
