@@ -52,7 +52,7 @@
 /*  public functions  */
 
 GimpLayer *
-gimp_image_merge_visible_layers (GimpImage     *gimage, 
+gimp_image_merge_visible_layers (GimpImage     *gimage,
 				 GimpMergeType  merge_type)
 {
   GList     *list;
@@ -152,7 +152,7 @@ gimp_image_merge_down (GimpImage     *gimage,
   GList     *list;
   GList     *layer_list;
   GSList    *merge_list;
-  
+
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   for (list = GIMP_LIST (gimage->layers)->list, layer_list = NULL;
@@ -160,17 +160,17 @@ gimp_image_merge_down (GimpImage     *gimage,
        list = g_list_next (list))
     {
       layer = (GimpLayer *) list->data;
-      
+
       if (layer == current_layer)
 	break;
     }
-    
-  for (layer_list = g_list_next (list), merge_list = NULL; 
-       layer_list && !merge_list; 
+
+  for (layer_list = g_list_next (list), merge_list = NULL;
+       layer_list && !merge_list;
        layer_list = g_list_next (layer_list))
     {
       layer = (GimpLayer *) layer_list->data;
-      
+
       if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (NULL, layer);
     }
@@ -189,7 +189,7 @@ gimp_image_merge_down (GimpImage     *gimage,
 
       return layer;
     }
-  else 
+  else
     {
       g_message (_("There are not enough visible layers for a merge down."));
       return NULL;
@@ -197,8 +197,8 @@ gimp_image_merge_down (GimpImage     *gimage,
 }
 
 GimpLayer *
-gimp_image_merge_layers (GimpImage     *gimage, 
-			 GSList        *merge_list, 
+gimp_image_merge_layers (GimpImage     *gimage,
+			 GSList        *merge_list,
 			 GimpMergeType  merge_type,
                          const gchar   *undo_desc)
 {
@@ -326,10 +326,10 @@ gimp_image_merge_layers (GimpImage     *gimage,
       gimp_image_get_background (gimage, GIMP_DRAWABLE (merge_layer), bg);
 
       /*  init the pixel region  */
-      pixel_region_init (&src1PR, 
-			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
-			 0, 0, 
-			 gimage->width, gimage->height, 
+      pixel_region_init (&src1PR,
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+			 0, 0,
+			 gimage->width, gimage->height,
 			 TRUE);
 
       /*  set the region to the background color  */
@@ -362,10 +362,10 @@ gimp_image_merge_layers (GimpImage     *gimage,
       GIMP_ITEM (merge_layer)->offset_y = y1;
 
       /*  Set the layer to transparent  */
-      pixel_region_init (&src1PR, 
-			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
-			 0, 0, 
-			 (x2 - x1), (y2 - y1), 
+      pixel_region_init (&src1PR,
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+			 0, 0,
+			 (x2 - x1), (y2 - y1),
 			 TRUE);
 
       /*  set the region to 0's  */
@@ -375,8 +375,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
        *  in order to add the final, merged layer to the layer list correctly
        */
       layer = (GimpLayer *) reverse_list->data;
-      position = 
-	gimp_container_num_children (gimage->layers) - 
+      position =
+	gimp_container_num_children (gimage->layers) -
 	gimp_container_get_child_index (gimage->layers, GIMP_OBJECT (layer));
     }
 
@@ -385,6 +385,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
                         gimp_item_get_tattoo (GIMP_ITEM (bottom_layer)));
+
+  g_object_unref (GIMP_ITEM (merge_layer)->parasites);
   GIMP_ITEM (merge_layer)->parasites =
     gimp_parasite_list_copy (GIMP_ITEM (bottom_layer)->parasites);
 
@@ -416,22 +418,22 @@ gimp_image_merge_layers (GimpImage     *gimage,
       y4 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y1, y2);
 
       /* configure the pixel regions  */
-      pixel_region_init (&src1PR, 
-			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
-			 (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3), 
+      pixel_region_init (&src1PR,
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)),
+			 (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3),
 			 TRUE);
-      pixel_region_init (&src2PR, 
-			 gimp_drawable_data (GIMP_DRAWABLE (layer)), 
+      pixel_region_init (&src2PR,
+			 gimp_drawable_data (GIMP_DRAWABLE (layer)),
 			 (x3 - off_x), (y3 - off_y),
-			 (x4 - x3), (y4 - y3), 
+			 (x4 - x3), (y4 - y3),
 			 FALSE);
 
       if (layer->mask && layer->mask->apply_mask)
 	{
-	  pixel_region_init (&maskPR, 
-			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)), 
+	  pixel_region_init (&maskPR,
+			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
 			     (x3 - off_x), (y3 - off_y),
-			     (x4 - x3), (y4 - y3), 
+			     (x4 - x3), (y4 - y3),
 			     FALSE);
 	  mask = &maskPR;
 	}
@@ -442,7 +444,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
 
       /* DISSOLVE_MODE is special since it is the only mode that does not
        *  work on the projection with the lower layer, but only locally on
-       *  the layers alpha channel. 
+       *  the layers alpha channel.
        */
       mode = layer->mode;
       if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
@@ -492,9 +494,9 @@ gimp_image_merge_layers (GimpImage     *gimage,
   /*  End the merge undo group  */
   gimp_image_undo_group_end (gimage);
 
-  gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 
-			0, 0, 
-			gimp_item_width  (GIMP_ITEM (merge_layer)), 
+  gimp_drawable_update (GIMP_DRAWABLE (merge_layer),
+			0, 0,
+			gimp_item_width  (GIMP_ITEM (merge_layer)),
 			gimp_item_height (GIMP_ITEM (merge_layer)));
 
   return merge_layer;

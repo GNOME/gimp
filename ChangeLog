@@ -1,5 +1,10 @@
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-merge.c (gimp_image_merge_layers): unref
+	the parasite list before assigning a copy.
+
+2003-09-05  Sven Neumann  <sven@gimp.org>
+
 	* app/base/temp-buf.c (temp_buf_new_check): fixed loop boundaries,
 	spotted by Wolfgang Hofer (bug #121521).
 
