@@ -623,6 +623,7 @@ plug-ins/xwd/Makefile
 plug-ins/zealouscrop/Makefile
 app/Makefile
 docs/Makefile
+docs/white-paper/Makefile
 data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile

@@ -5,6 +5,9 @@ Mon Mar 29 11:33:38 PST 1999 Manish Singh <yosh@gimp.org>
 	* Added various #include files to some plug-ins to make them
 	compile cleanly
 
+	* configure.in: Makefile in docs/white-paper too
+
+	* README
 	* NEWS: updated
 
 Sun Mar 28 14:38:53 PST 1999 Manish Singh <yosh@gimp.org>
