@@ -38,6 +38,8 @@ typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpStringAction             GimpStringAction;
 
+typedef struct _GimpEnumStore                GimpEnumStore;
+
 typedef struct _GimpCellRendererToggle       GimpCellRendererToggle;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 

@@ -1,5 +1,12 @@
 2004-04-18  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpenumstore.[ch]: added (yet unused) GimpEnumStore,
+	a GtkListStore for enum values.
+
+2004-04-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/gimp_main_window.c: replaced wrong use of
 	gimp_option_menu with gimp_int_option_menu.
 

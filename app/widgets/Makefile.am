@@ -101,6 +101,8 @@ libappwidgets_a_sources = \
 	gimpenumaction.h		\
 	gimpenummenu.c			\
 	gimpenummenu.h			\
+	gimpenumstore.c			\
+	gimpenumstore.h			\
 	gimperrorconsole.c		\
 	gimperrorconsole.h		\
 	gimpfiledialog.c		\
