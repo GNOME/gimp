@@ -1,3 +1,7 @@
+2004-12-23  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt: updated.
+
 2004-12-15  Simon Budig  <simon@gimp.org>
 
 	* libgimp/tmpl/gimppaths.sgml: regenerated.

@@ -1,3 +1,8 @@
+2004-12-23  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-proc-frame.[ch]: made plug_in_proc_frame_free()
+	a static function.
+
 2004-12-23  Michael Natterer  <mitch@gimp.org>
 
 	Item conversion depends on the old *and* the new item type, so

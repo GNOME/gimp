@@ -6456,6 +6456,7 @@ gimp_drawable_offset
 <TITLE>GimpDrawable-preview</TITLE>
 gimp_drawable_get_preview
 gimp_drawable_get_sub_preview
+gimp_drawable_preview_bytes
 </SECTION>
 
 <SECTION>
@@ -7410,8 +7411,9 @@ plug_in_proc_def_get_sensitive
 PlugInProcFrame
 plug_in_proc_frame_new
 plug_in_proc_frame_init
+plug_in_proc_frame_ref
+plug_in_proc_frame_unref
 plug_in_proc_frame_dispose
-plug_in_proc_frame_free
 </SECTION>
 
 <SECTION>

@@ -31,6 +31,10 @@
 #include "plug-in-progress.h"
 
 
+static void  plug_in_proc_frame_free (PlugInProcFrame *proc_frame,
+                                      PlugIn          *plug_in);
+
+
 /*  publuc functions  */
 
 PlugInProcFrame *
@@ -106,7 +110,7 @@ plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
     }
 }
 
-void
+static void
 plug_in_proc_frame_free (PlugInProcFrame *proc_frame,
                          PlugIn          *plug_in)
 {

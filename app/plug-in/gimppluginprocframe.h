@@ -51,8 +51,6 @@ void              plug_in_proc_frame_init    (PlugInProcFrame *proc_frame,
 
 void              plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
                                               PlugIn          *plug_in);
-void              plug_in_proc_frame_free    (PlugInProcFrame *proc_frame,
-                                              PlugIn          *plug_in);
 
 PlugInProcFrame * plug_in_proc_frame_ref     (PlugInProcFrame *proc_frame);
 void              plug_in_proc_frame_unref   (PlugInProcFrame *proc_frame,

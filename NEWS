@@ -15,3 +15,5 @@ Bugs fixed in GIMP 2.2.1
 - fixed crash in unsharp mask plug-in preview code (bug #157910)
 - fixed bug in unsharp mask plug-in that caused artefacts when a large blur
   radius was being used on a small drawable; minor optimizations
+- removed broken asc2img Script-Fu
+- fixed channel drag-n-drop (bug #161877)
