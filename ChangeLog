@@ -1,3 +1,10 @@
+2000-03-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/transform_core.c: the button_press and cursor_update
+	functions were still doing checks on the active layer instead of
+	the active drawable.
+	Fixing this automatically made the layers mask transformable.
+
 2000-03-26 Garry R. Osgood <gosgood@idt.net>
 
 	* gimp/app/bezier_select.c
@@ -32,7 +39,7 @@
 	  non-layer as alpha channel and never enter the loop which
 	  transforms the (not present) color channels.
 	  Also clip the result to ensure that the channel never grows
-	  larger then the image.
+	  larger than the image.
 
 	* app/tools_cmds.c
 	* tools/pdbgen/pdb/tools.pdb: transform_core_paste() returns a

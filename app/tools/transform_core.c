@@ -22,21 +22,17 @@
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "info_dialog.h"
-#include "interface.h"
 #include "path_transform.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-#include "temp_buf.h"
 #include "tools.h"
 #include "undo.h"
-#include "layer_pvt.h"
 #include "drawable_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
@@ -266,7 +262,6 @@ transform_core_button_press (Tool           *tool,
 {
   GDisplay      *gdisp;
   TransformCore *transform_core;
-  Layer         *layer;
   GimpDrawable  *drawable;
   gint           dist;
   gint           closest_dist;
@@ -352,79 +347,80 @@ transform_core_button_press (Tool           *tool,
   /*  Initialisation stuff: if the cursor is clicked inside the current
    *  selection, show the bounding box and handles...
    */
-  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage))) 
-    {
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
-	if (gimage_mask_is_empty (gdisp->gimage) ||
-	    gimage_mask_value (gdisp->gimage, x, y))
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
+			       FALSE, FALSE);
+
+  drawable_offsets (drawable, &off_x, &off_y);
+  if (x >= off_x && y >= off_y &&
+      x < (off_x + drawable_width (drawable)) &&
+      y < (off_y + drawable_height (drawable)))
+    if (gimage_mask_is_empty (gdisp->gimage) ||
+	gimage_mask_value (gdisp->gimage, x, y))
+      {
+	if (GIMP_IS_LAYER (drawable) &&
+	    layer_get_mask (GIMP_LAYER (drawable)))
 	  {
-	    if (layer->mask != NULL && GIMP_DRAWABLE (layer->mask))
-	      {
-		g_message (_("Transformations do not work on\nlayers that contain layer masks."));
-		tool->state = INACTIVE;
-		return;
-	      }
-
-	    /*  If the tool is already active, clear the current state
-             *  and reset
-	     */
-	    if (tool->state == ACTIVE)
-	      transform_core_reset (tool, gdisp_ptr);
-
-	    /*  Set the pointer to the active display  */
-	    tool->gdisp_ptr = gdisp;
-	    tool->drawable = drawable;
-	    tool->state = ACTIVE;
-
-	    /*  Grab the pointer if we're in non-interactive mode  */
-	    if (!transform_core->interactive)
-	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
-				(GDK_POINTER_MOTION_HINT_MASK |
-				 GDK_BUTTON1_MOTION_MASK |
-				 GDK_BUTTON_RELEASE_MASK),
-				NULL, NULL, bevent->time);
-
-	    /*  Find the transform bounds for some tools (like scale,
-	     *  perspective) that actually need the bounds for
-	     *  initializing
-	     */
-	    transform_core_bounds (tool, gdisp_ptr);
-
-	    /*  Calculate the grid line endpoints  */
-	    if (transform_tool_show_grid ())
-	      transform_core_setup_grid (tool);
-
-	    /*  Initialize the transform tool  */
-	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
-
-	    if (transform_info && !transform_info_inited)
-	      {
-		gimp_dialog_create_action_area
-		  (GTK_DIALOG (transform_info->shell),
-
-		   gettext (action_labels[tool->type - ROTATE]),
-		   transform_ok_callback,
-		   tool, NULL, NULL, TRUE, FALSE,
-		   _("Reset"), transform_reset_callback,
-		   tool, NULL, NULL, FALSE, FALSE,
-
-		   NULL);
-
-		transform_info_inited = TRUE;
-	      }
-
-	    /*  Recalculate the transform tool  */
-	    transform_core_recalc (tool, gdisp_ptr);
-
-	    /*  recall this function to find which handle we're dragging  */
-	    if (transform_core->interactive)
-	      transform_core_button_press (tool, bevent, gdisp_ptr);
+	    g_message (_("Transformations do not work on\n"
+			 "layers that contain layer masks."));
+	    tool->state = INACTIVE;
+	    return;
 	  }
-    }
+
+	/*  If the tool is already active, clear the current state
+	 *  and reset
+	 */
+	if (tool->state == ACTIVE)
+	  transform_core_reset (tool, gdisp_ptr);
+
+	/*  Set the pointer to the active display  */
+	tool->gdisp_ptr = gdisp;
+	tool->drawable = drawable;
+	tool->state = ACTIVE;
+
+	/*  Grab the pointer if we're in non-interactive mode  */
+	if (!transform_core->interactive)
+	  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+			    (GDK_POINTER_MOTION_HINT_MASK |
+			     GDK_BUTTON1_MOTION_MASK |
+			     GDK_BUTTON_RELEASE_MASK),
+			    NULL, NULL, bevent->time);
+
+	/*  Find the transform bounds for some tools (like scale,
+	 *  perspective) that actually need the bounds for
+	 *  initializing
+	 */
+	transform_core_bounds (tool, gdisp_ptr);
+
+	/*  Calculate the grid line endpoints  */
+	if (transform_tool_show_grid ())
+	  transform_core_setup_grid (tool);
+
+	/*  Initialize the transform tool  */
+	(* transform_core->trans_func) (tool, gdisp_ptr, INIT);
+
+	if (transform_info && !transform_info_inited)
+	  {
+	    gimp_dialog_create_action_area
+	      (GTK_DIALOG (transform_info->shell),
+
+	       gettext (action_labels[tool->type - ROTATE]),
+	       transform_ok_callback,
+	       tool, NULL, NULL, TRUE, FALSE,
+	       _("Reset"), transform_reset_callback,
+	       tool, NULL, NULL, FALSE, FALSE,
+
+	       NULL);
+
+	    transform_info_inited = TRUE;
+	  }
+
+	/*  Recalculate the transform tool  */
+	transform_core_recalc (tool, gdisp_ptr);
+
+	/*  recall this function to find which handle we're dragging  */
+	if (transform_core->interactive)
+	  transform_core_button_press (tool, bevent, gdisp_ptr);
+      }
 }
 
 void
@@ -656,25 +652,37 @@ transform_core_cursor_update (Tool           *tool,
 {
   GDisplay      *gdisp;
   TransformCore *transform_core;
-  Layer         *layer;
+  GimpDrawable  *drawable;
   gboolean       use_transform_cursor = FALSE;
+  gboolean       use_bad_cursor       = FALSE;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
   gint           x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
-  if ((layer = gimage_get_active_layer (gdisp->gimage)))
-    if (x >= GIMP_DRAWABLE (layer)->offset_x &&
-	y >= GIMP_DRAWABLE (layer)->offset_y &&
-	x < (GIMP_DRAWABLE (layer)->offset_x + GIMP_DRAWABLE (layer)->width) &&
-	y < (GIMP_DRAWABLE (layer)->offset_y + GIMP_DRAWABLE (layer)->height))
-      {
-	if (gimage_mask_is_empty (gdisp->gimage) ||
-	    gimage_mask_value (gdisp->gimage, x, y))
-	  use_transform_cursor = TRUE;
-      }
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
+			       FALSE, FALSE);
+
+  if ((drawable = gimage_active_drawable (gdisp->gimage)))
+    {
+      if (GIMP_IS_LAYER (drawable) &&
+	  layer_get_mask (GIMP_LAYER (drawable)))
+	{
+	  use_bad_cursor = TRUE;
+	}
+      else if (x >= drawable->offset_x &&
+	       y >= drawable->offset_y &&
+	       x < (drawable->offset_x + drawable->width) &&
+	       y < (drawable->offset_y + drawable->height))
+	{
+	  if (gimage_mask_is_empty (gdisp->gimage) ||
+	      gimage_mask_value (gdisp->gimage, x, y))
+	    {
+	      use_transform_cursor = TRUE;
+	    }
+	}
+    }
 
   if (use_transform_cursor)
     /*  ctype based on transform tool type  */
@@ -686,6 +694,8 @@ transform_core_cursor_update (Tool           *tool,
       case PERSPECTIVE: ctype = GDK_TCROSS;   break;
       default: break;
       }
+  else if (use_bad_cursor)
+    ctype = GIMP_BAD_CURSOR;
 
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
