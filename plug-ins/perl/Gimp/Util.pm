@@ -46,7 +46,7 @@ require      Exporter;
                );
 #@EXPORT_OK = qw();
 
-$VERSION=1.1;
+$VERSION=1.101;
 
 use Gimp;
 
@@ -256,6 +256,10 @@ mark the given layers visible (invisible) and all others invisible (visible).
 
 return the position the layer has in the image layer stack.
 
+=item C<gimp_layer_set_position $layer,$new_index>
+
+moves the layer to a new position in the layer stack.
+
 =cut
 sub gimp_image_layertype {
    my $type = $_[0]->base_type;
@@ -298,6 +302,20 @@ sub gimp_layer_get_position {
       return $_ if ${$layers[$_]} == $$layer;
    }
    ();
+}
+
+sub gimp_layer_set_position {
+   my($layer,$new_pos)=@_;
+   $pos=$layer->get_position;
+   $layer->add_alpha;
+   while($pos>$new_pos) {
+      $layer->lower_layer;
+      $pos--;
+   }
+   while($pos<$new_pos) {
+      $layer->raise_layer;
+      $pos++;
+   }
 }
 
 =pod

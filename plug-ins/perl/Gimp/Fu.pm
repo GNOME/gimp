@@ -164,8 +164,12 @@ sub interact($$$@) {
 
    # only pull these in if _really_ required
    # gets us some speed we really need
-   require Gtk; import Gtk;
-   init Gtk; # gross hack...
+   eval {
+      require Gtkx; import Gtk;
+      init Gtk; # gross hack...
+   };
+   die "The Gtk perl module is required to run perl-scripts in interactive mode!\n" if $@;
+
    parse Gtk::Rc Gimp->gtkrc;
 
    require Gimp::UI; import Gimp::UI;
