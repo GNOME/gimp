@@ -1,3 +1,7 @@
+Wed May  3 14:49:09 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* gimp.m4: help spacing correction
+
 2000-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/layers_dialog.c: removed layers_dialog_idle_set_layer_focus()

@@ -9,11 +9,11 @@ AC_DEFUN(AM_PATH_GIMP,
 [dnl 
 dnl Get the cflags and libraries from the gimptool script
 dnl
-AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX   Prefix where GIMP is installed (optional)],
+AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX  Prefix where GIMP is installed (optional)],
             gimptool_prefix="$withval", gimptool_prefix="")
 AC_ARG_WITH(gimp-exec-prefix,[  --with-gimp-exec-prefix=PFX Exec prefix where GIMP is installed (optional)],
             gimptool_exec_prefix="$withval", gimptool_exec_prefix="")
-AC_ARG_ENABLE(gimptest, [  --disable-gimptest       Do not try to compile and run a test GIMP program],
+AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run a test GIMP program],
 		    , enable_gimptest=yes)
 
   if test x$gimptool_exec_prefix != x ; then
