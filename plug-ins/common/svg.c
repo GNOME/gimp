@@ -215,6 +215,8 @@ load_rsvg_pixbuf (const gchar  *filename,
   if (!io)
     return NULL;
 
+  g_io_channel_set_encoding (io, NULL, NULL);
+
   handle = rsvg_handle_new ();
 
   while (success && status != G_IO_STATUS_EOF)
@@ -273,8 +275,10 @@ load_image (const gchar *filename)
   pixbuf = load_rsvg_pixbuf (filename, &error);
   if (!pixbuf)
     {
+      /*  Do not rely on librsvg setting GError on failure!  */
       g_message (_("Can't open '%s':\n"
-                   "%s"), filename, error->message);
+                   "%s"),
+                 filename, error ? error->message : "unknown reason");
       gimp_quit ();
     }
 
