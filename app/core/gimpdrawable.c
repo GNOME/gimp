@@ -31,11 +31,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-preview.h"
 #include "gimpimage.h"
+#include "gimpimage-mask.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimppreviewcache.h"

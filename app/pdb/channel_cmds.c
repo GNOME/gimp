@@ -26,9 +26,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
 #include "drawable.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
 #include "pdb_glue.h"
 
 #include "libgimpcolor/gimpcolor.h"

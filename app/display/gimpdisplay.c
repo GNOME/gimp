@@ -27,6 +27,13 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -42,13 +49,6 @@
 
 #include "appenv.h"
 #include "colormaps.h"
-#include "gimage.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
-#include "gimplayer.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"

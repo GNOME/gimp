@@ -26,12 +26,12 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "gui/info-dialog.h"
 #include "gdisplay.h"
 
 #include "drawable.h"
-#include "gimage_mask.h"
-#include "gimpimage.h"
 #include "gimpprogress.h"
 #include "selection.h"
 #include "tile_manager.h"

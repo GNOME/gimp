@@ -27,11 +27,11 @@
 
 #include "widgets-types.h"
 
-#include "gimpcontainer.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+
 #include "gimpcontainerlistview.h"
-#include "gimpcontext.h"
 #include "gimpdnd.h"
-#include "gimplist.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
 

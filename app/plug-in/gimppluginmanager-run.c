@@ -77,12 +77,16 @@
 #include <sys/shm.h>
 #endif
 
+#include "libgimp/gimpenv.h"
+
 #include "apptypes.h"
 
-#include "libgimp/gimpenv.h"
+#include "libgimp/gimpparasite.h"
 #include "libgimp/gimpprotocol.h"
 #include "libgimp/gimpwire.h"
-#include "libgimp/gimpparasite.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
@@ -95,8 +99,6 @@
 #include "datafiles.h"
 #include "errors.h"
 #include "general.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
 #include "gimpprogress.h"
 #include "gimprc.h"
 #include "plug_in.h"

@@ -29,15 +29,16 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "widgets/gimpcolorpanel.h"
 
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
 #include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"

@@ -29,12 +29,14 @@
 
 #include "widgets-types.h"
 
-#include "colormaps.h"
-#include "gimpcontainer.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+
 #include "gimpcontainergridview.h"
-#include "gimpcontext.h"
 #include "gimppreview.h"
 #include "gimpconstrainedhwrapbox.h"
+
+#include "colormaps.h"
 
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);

@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "drawable.h"
+#include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
 #include "gimplut.h"
 #include "lut_funcs.h"

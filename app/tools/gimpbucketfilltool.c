@@ -27,15 +27,17 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimppattern.h"
+
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
-#include "gimppattern.h"
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "selection.h"

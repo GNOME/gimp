@@ -28,10 +28,9 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimplist.h"
-#include "gimppattern.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 #include "gui/pattern-select.h"
 
 static ProcRecord patterns_popup_proc;

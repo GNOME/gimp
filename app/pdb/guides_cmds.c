@@ -26,8 +26,8 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpimage.h"
 #include "gimage.h"
-#include "gimpimage.h"
 #include "undo.h"
 
 static ProcRecord image_add_hguide_proc;

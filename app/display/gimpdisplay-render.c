@@ -25,9 +25,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "appenv.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"

@@ -31,18 +31,17 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdata.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpmarshal.h"
+
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
 #include "gimpdnd.h"
-
-#include "gimpcontainer.h"
-#include "gimpdata.h"
-#include "gimpdatafactory.h"
-#include "gimpcontext.h"
-#include "gimpmarshal.h"
-#include "gimpviewable.h"
 
 #include "libgimp/gimpintl.h"
 

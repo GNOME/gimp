@@ -37,11 +37,12 @@
 
 #include "apptypes.h"
 
+#include "core/gimplist.h"
+
 #include "appenv.h"
 #include "module_db.h"
 #include "gimprc.h"
 #include "datafiles.h"
-#include "gimplist.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpmodule.h"

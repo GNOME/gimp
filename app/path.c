@@ -28,12 +28,13 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "tools/gimpbezierselecttool.h"
 
 #include "gdisplay.h"
 #include "gui/paths-dialog.h"
 
-#include "gimpimage.h"
 #include "path.h"
 #include "pathP.h"
 

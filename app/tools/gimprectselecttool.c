@@ -27,12 +27,13 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimpmarshal.h"
+
 #include "cursorutil.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimpmarshal.h"
 #include "floating_sel.h"
 
 #include "gimpeditselectiontool.h"

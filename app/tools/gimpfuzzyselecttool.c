@@ -26,13 +26,14 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "boundary.h"
 #include "cursorutil.h"
-#include "drawable.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

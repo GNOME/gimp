@@ -27,13 +27,12 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+
 #include "gimpcontainermenuimpl.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
-
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimplist.h"
 
 
 static void     gimp_container_menu_impl_class_init   (GimpContainerMenuImplClass *klass);

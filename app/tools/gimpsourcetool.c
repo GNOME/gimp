@@ -1,4 +1,3 @@
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -30,6 +29,13 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimppattern.h"
+#include "core/gimpcontext.h"
+#include "core/gimpbrush.h"
+
 #include "gimpclonetool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
@@ -37,11 +43,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimage_mask.h"
-#include "gimppattern.h"
-#include "gimpcontext.h"
-#include "gimpbrush.h"
 #include "gimplut.h"
 #include "gimpui.h"
 #include "pixel_region.h"

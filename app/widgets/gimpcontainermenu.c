@@ -25,12 +25,12 @@
 
 #include "widgets-types.h"
 
-#include "gimpcontainermenu.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
+#include "core/gimpviewable.h"
 
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpmarshal.h"
-#include "gimpviewable.h"
+#include "gimpcontainermenu.h"
 
 
 enum

@@ -48,6 +48,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpdatafactory.h"
+
 #include "pdb/internal_procs.h"
 
 #include "tools/curves.h"
@@ -67,9 +69,6 @@
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "global_edit.h"

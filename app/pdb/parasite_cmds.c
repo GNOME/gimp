@@ -26,9 +26,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "drawable.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
 #include "gimpparasite.h"
 
 #include "libgimp/gimpparasite.h"

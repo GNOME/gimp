@@ -29,29 +29,30 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpimage.h"
+#include "core/gimpbrush.h"
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
+
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
-#include "widgets/gimppreview.h"
-
 #include "gui/file-open-dialog.h"
 
 #include "context_manager.h"
-#include "gimpimage.h"
-#include "gimpbrush.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpdatafactory.h"
-#include "gimpdnd.h"
-#include "gimpdrawable.h"
-#include "gimpgradient.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimppalette.h"
-#include "gimppattern.h"
 #include "gimprc.h"
 #include "temp_buf.h"
+
+#include "gimpdnd.h"
+#include "gimppreview.h"
 
 #include "libgimp/gimplimits.h"
 

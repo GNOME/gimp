@@ -28,15 +28,15 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpdrawable.h"
+#include "core/gimplayer.h"
+#include "core/gimpmarshal.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpcontainer.h"
-#include "gimplayer.h"
-#include "gimpimage.h"
 #include "gimplistitem.h"
-#include "gimpmarshal.h"
 #include "gimprc.h"
-#include "gimpviewable.h"
 
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"

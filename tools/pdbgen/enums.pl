@@ -279,16 +279,26 @@ package Gimp::CodeGen::enums;
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
 	},
+    ChannelLutType =>
+	{ contig => 1,
+	  header => 'lut_funcs.h',
+	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
+	  mapping => { VALUE_LUT => '0',
+		       RED_LUT => '1',
+		       GREEN_LUT => '2',
+		       BLUE_LUT => '3',
+		       ALPHA_LUT => '4' }
+	},
     GimpOffsetType =>
 	{ contig => 1,
-	  header => 'gimpdrawable-offset.h',
+	  header => 'core/gimpdrawable-offset.h',
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
 	},
     MergeType =>
 	{ contig => 1,
-	  header => 'gimpimage.h',
+	  header => 'core/gimpimage.h',
 	  symbols => [ qw(EXPAND_AS_NECESSARY CLIP_TO_IMAGE
 			  CLIP_TO_BOTTOM_LAYER FLATTEN_IMAGE) ],
 	  mapping => { EXPAND_AS_NECESSARY => '0',
@@ -298,7 +308,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvertPaletteType =>
 	{ contig => 1,
-	  header => 'gimpimage-convert.h',
+	  header => 'core/gimpimage-convert.h',
 	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
 			  MONO_PALETTE CUSTOM_PALETTE) ],
 	  mapping => { MAKE_PALETTE => '0',
@@ -309,7 +319,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvertDitherType =>
 	{ contig => 1,
-	  header => 'gimpimage-convert.h',
+	  header => 'core/gimpimage-convert.h',
 	  symbols => [ qw(NO_DITHER FS_DITHER FSLOWBLEED_DITHER FIXED_DITHER
 			  NODESTRUCT_DITHER) ],
 	  mapping => { NO_DITHER => '0',
@@ -317,16 +327,6 @@ package Gimp::CodeGen::enums;
 		       FSLOWBLEED_DITHER => '2',
 		       FIXED_DITHER => '3',
 		       NODESTRUCT_DITHER => '4' }
-	},
-    ChannelLutType =>
-	{ contig => 1,
-	  header => 'lut_funcs.h',
-	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
-	  mapping => { VALUE_LUT => '0',
-		       RED_LUT => '1',
-		       GREEN_LUT => '2',
-		       BLUE_LUT => '3',
-		       ALPHA_LUT => '4' }
 	},
     GradientType =>
 	{ contig => 1,

@@ -26,8 +26,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "drawable.h"
-#include "gimpimage.h"
 #include "tile_manager.h"
 #include "tools/gimpairbrushtool.h"
 #include "tools/gimpblendtool.h"

@@ -161,7 +161,7 @@ HELP
     &std_pdb_misc;
     &inargs('stroke to');
     &invoke('gimage_mask_stroke (gimage, drawable)');
-    push @{$invoke{headers}}, qw("gimage_mask.h");
+    push @{$invoke{headers}}, qw("core/gimpimage-mask.h");
 }
 
 # For edit_paste

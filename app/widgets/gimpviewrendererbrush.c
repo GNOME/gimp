@@ -25,10 +25,12 @@
 
 #include "widgets-types.h"
 
-#include "gimpbrush.h"
-#include "gimpbrushpipe.h"
+#include "core/gimpbrush.h"
+#include "core/gimpbrushpipe.h"
+
 #include "gimpbrushpreview.h"
 #include "gimpdnd.h"
+
 #include "temp_buf.h"
 
 

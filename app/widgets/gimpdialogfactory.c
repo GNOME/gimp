@@ -27,12 +27,12 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
-
-#include "gimpcontext.h"
 
 
 static void   gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass);

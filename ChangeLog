@@ -1,3 +1,60 @@
+2001-05-09  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/Makefile.am: added new directory app/core/ for the core
+	object system.
+
+	* app/gimage_mask.[ch]
+	* app/gimpbrush-header.h
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpchannel.[ch]
+	* app/gimpcontainer.[ch]
+	* app/gimpcontext.[ch]
+	* app/gimpdata.[ch]
+	* app/gimpdatafactory.[ch]
+	* app/gimpdatalist.h
+	* app/gimpdrawable-desaturate.[ch]
+	* app/gimpdrawable-equalize.[ch]
+	* app/gimpdrawable-invert.[ch]
+	* app/gimpdrawable-offset.[ch]
+	* app/gimpdrawable-preview.[ch]
+	* app/gimpdrawable.[ch]
+	* app/gimpgradient.[ch]
+	* app/gimpimage-convert.[ch]
+	* app/gimpimage-duplicate.[ch]
+	* app/gimpimage-undo.[ch]
+	* app/gimpimage.[ch]
+	* app/gimplayer.[ch]
+	* app/gimplayermask.[ch]
+	* app/gimplist.[ch]
+	* app/gimpmarshal.[ch]
+	* app/gimpobject.[ch]
+	* app/gimppalette-import.[ch]
+	* app/gimppalette.[ch]
+	* app/gimppattern-header.h
+	* app/gimppattern.[ch]
+	* app/gimpundo.[ch]
+	* app/gimpundostack.[ch]
+	* app/gimpviewable.[ch]: removed these files...
+
+	* app/core/*: ...and added them here.
+
+	* app/*.c
+	* app/gui/*.c
+	* app/pdb/*.c
+	* app/tools/*.c
+	* app/widgets/*.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/pat.c
+	* po/POTFILES.in
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/*.pdb: changed accordingly.
+
 2001-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenums.h: removed GimpDropType.

@@ -28,11 +28,12 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpcontext.h"
+
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimplut.h"
-#include "gimpcontext.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"

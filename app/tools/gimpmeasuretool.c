@@ -30,6 +30,8 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "gui/info-dialog.h"
 #include "cursorutil.h"
 #include "gdisplay.h"
@@ -39,7 +41,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "gimpimage.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

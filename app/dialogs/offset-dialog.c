@@ -25,12 +25,11 @@
 
 #include "apptypes.h"
 
-#include "apptypes.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-offset.h"
+#include "core/gimpimage.h"
+
 #include "gdisplay.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
-#include "gimpdrawable-offset.h"
-#include "gimpimage.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -28,6 +28,12 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimpmarshal.h"
+
 #include "gimpchannellistview.h"
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
@@ -36,13 +42,7 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpcontainer.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimpmarshal.h"
 #include "gimprc.h"
-#include "gimpviewable.h"
 
 #include "tools/paint_options.h"
 

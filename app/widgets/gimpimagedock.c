@@ -27,6 +27,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
 #include "gimpcontainermenuimpl.h"
@@ -34,10 +38,6 @@
 #include "gimpdockbook.h"
 #include "gimpmenuitem.h"
 #include "gimppreview.h"
-
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
 
 #include "libgimp/gimpintl.h"
 

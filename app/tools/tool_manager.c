@@ -24,14 +24,15 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimplist.h"
+
 #include "appenv.h"
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
-#include "gimplist.h"
 #include "gimpui.h"
 
 #include "gimptool.h"

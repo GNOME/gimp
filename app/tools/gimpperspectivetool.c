@@ -25,10 +25,9 @@
 
 #include "apptypes.h"
 
-#include "drawable.h"
+#include "core/gimpimage.h"
+
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpimage.h"
 #include "gimpprogress.h"
 #include "gui/info-dialog.h"
 #include "selection.h"

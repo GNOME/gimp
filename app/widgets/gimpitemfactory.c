@@ -29,6 +29,8 @@
 
 #include "apptypes.h"
 
+#include "core/gimplist.h"
+
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
@@ -45,7 +47,6 @@
 #include "test-commands.h"
 
 #include "gimphelp.h"
-#include "gimplist.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

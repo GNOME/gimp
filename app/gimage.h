@@ -20,9 +20,6 @@
 #define __GIMAGE_H__
 
 
-#include "gimpimage.h"
-
-
 GimpImage * gimage_new (gint               width,
                         gint               height,
                         GimpImageBaseType  base_type);

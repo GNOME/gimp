@@ -28,14 +28,16 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+
 #include "gui/file-new-dialog.h"
 #include "gdisplay.h"
 
 #include "appenv.h"
 #include "drawable.h"
 #include "gimage.h"
-#include "gimpcontext.h"
-#include "gimplayer.h"
 #include "gimprc.h"
 #include "image_new.h"
 #include "tile_manager.h"

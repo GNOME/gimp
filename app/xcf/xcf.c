@@ -37,16 +37,16 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimplist.h"
+
 #include "cursorutil.h"
 #include "floating_sel.h"
 #include "gimage.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "plug_in.h"
 #include "parasitelist.h"

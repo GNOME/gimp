@@ -38,6 +38,7 @@
 #include "gimage.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpimage.h"
 #include "gimpimage-duplicate.h"
 #include "gimplayer.h"
 #include "gimplist.h"

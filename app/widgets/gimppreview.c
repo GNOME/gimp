@@ -31,6 +31,14 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpbrush.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
+
 #include "tools/gimptoolinfo.h"
 
 #include "gimpbrushpreview.h"
@@ -40,17 +48,9 @@
 #include "gimpimagepreview.h"
 #include "gimppalettepreview.h"
 #include "gimppatternpreview.h"
+#include "gimppreview.h"
 #include "gimptoolinfopreview.h"
 
-#include "gimpbrush.h"
-#include "gimpdrawable.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimpmarshal.h"
-#include "gimppalette.h"
-#include "gimppattern.h"
-#include "gimppreview.h"
-#include "gimpviewable.h"
 #include "image_render.h"
 #include "temp_buf.h"
 

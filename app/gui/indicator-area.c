@@ -28,17 +28,17 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
+#include "core/gimpgradient.h"
+#include "core/gimppattern.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
 #include "dialogs.h"
 #include "indicator-area.h"
-
-#include "gimpbrush.h"
-#include "gimpcontext.h"
-#include "gimpgradient.h"
-#include "gimppattern.h"
 
 #include "libgimp/gimpintl.h"
 

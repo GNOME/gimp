@@ -24,6 +24,9 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpimage.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -34,11 +37,6 @@
 
 #include "context_manager.h"
 #include "gimage.h"
-#include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
 #include "undo.h"
 
 

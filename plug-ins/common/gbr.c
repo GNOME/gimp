@@ -44,8 +44,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "app/gimpbrush-header.h"
-#include "app/gimppattern-header.h"
+#include "app/core/gimpbrush-header.h"
+#include "app/core/gimppattern-header.h"
 
 #include "libgimp/stdplugins-intl.h"
 

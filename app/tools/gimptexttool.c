@@ -37,14 +37,15 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
+#include "core/gimpchannel.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
 #include "gimpui.h"
 #include "global_edit.h"
 #include "pixel_region.h"

@@ -22,12 +22,13 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "boundary.h"
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "gimage_mask.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "selection.h"
 #include "marching_ants.h"

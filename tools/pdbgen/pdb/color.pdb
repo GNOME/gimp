@@ -238,7 +238,7 @@ HELP
     @inargs = ( &drawable_arg );
 
     %invoke = (
-	headers => [ qw("gimpdrawable-desaturate.h") ],
+	headers => [ qw("core/gimpdrawable-desaturate.h") ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_rgb (drawable))
@@ -272,7 +272,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimpdrawable-equalize.h") ],
+	headers => [ qw("core/gimpdrawable-equalize.h") ],
 	code => <<'CODE'
 {
   if (! gimp_drawable_is_indexed (drawable))
@@ -298,7 +298,7 @@ HELP
     @inargs = ( &drawable_arg );
 
     %invoke = (
-	headers => [ qw("gimpdrawable-invert.h") ],
+	headers => [ qw("core/gimpdrawable-invert.h") ],
 	code => <<'CODE'
 {
   if (! gimp_drawable_is_indexed (drawable))
@@ -588,7 +588,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("tools/histogram_tool.h" "gimpimage.h") ],
+	headers => [ qw("tools/histogram_tool.h") ],
 	vars => [ 'PixelRegion srcPR, maskPR', 'int x1, y1, x2, y2',
 		  'HistogramToolDialog htd', 'int off_x, off_y',
 		  'gboolean no_mask', 'GimpChannel *mask' ],
@@ -761,7 +761,8 @@ CODE
     );
 }
 
-@headers = qw("widgets/gimphistogramview.h" "gimpimage.h" "gimpdrawable.h" "gimphistogram.h" "gimplut.h"
+@headers = qw("widgets/gimphistogramview.h" "core/gimpimage.h"
+              "core/gimpdrawable.h" "gimphistogram.h" "gimplut.h"
 	      "lut_funcs.h" "pixel_region.h" "pixel_processor.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert

@@ -23,13 +23,13 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "widgets/gimpdialogfactory.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 #include "menus.h"
-
-#include "gimpcontext.h"
 
 
 GimpDialogFactory *global_dialog_factory = NULL;

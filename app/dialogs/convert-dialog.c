@@ -24,6 +24,12 @@
 
 #include "apptypes.h"
 
+#include "core/gimpdatafactory.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-convert.h"
+#include "core/gimplist.h"
+#include "core/gimppalette.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -32,13 +38,6 @@
 
 #include "context_manager.h"
 #include "floating_sel.h"
-#include "gimpdatafactory.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-convert.h"
-#include "gimplist.h"
-#include "gimplayer.h"
-#include "gimppalette.h"
 
 #include "libgimp/gimpintl.h"
 

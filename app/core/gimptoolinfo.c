@@ -22,8 +22,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontext.h"
+
 #include "context_manager.h"
-#include "gimpcontext.h"
 #include "gimptoolinfo.h"
 #include "temp_buf.h"
 

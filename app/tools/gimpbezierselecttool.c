@@ -28,22 +28,23 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpmarshal.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimage_mask.h"
 #include "undo.h"
 
 #include "pdb/procedural_db.h"
 
 #include "gui/paths-dialog.h"
 
-#include "gimpchannel.h"
-#include "gimpmarshal.h"
 #include "floating_sel.h"
-#include "gimpcontext.h"
 #include "pixel_region.h"
 
 #include "gimpeditselectiontool.h"

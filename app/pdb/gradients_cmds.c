@@ -27,11 +27,11 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
-#include "gimplist.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+#include "core/gimplist.h"
 
 static ProcRecord gradients_get_list_proc;
 static ProcRecord gradients_get_active_proc;

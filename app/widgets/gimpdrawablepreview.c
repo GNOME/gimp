@@ -27,10 +27,11 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "gimpdrawablepreview.h"
 
-#include "gimpdrawable.h"
-#include "gimpimage.h"
 #include "temp_buf.h"
 
 

@@ -34,6 +34,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "docindex.h"
@@ -43,10 +46,6 @@
 #include "gimpui.h"
 #include "menus.h"
 
-#include "gimpdrawable.h"
-#include "gimage.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimprc.h"
 #include "file-save.h"
 #include "file-utils.h"

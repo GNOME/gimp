@@ -28,12 +28,13 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+
 #include "gdisplay.h"
-#include "gimpbrush.h"
-#include "gimpcontext.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
 #include "selection.h"
 #include "temp_buf.h"
 

@@ -31,9 +31,10 @@
 
 #include "apptypes.h"
 
-#include "gimpdrawable.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "gimphistogram.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"

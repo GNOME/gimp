@@ -22,6 +22,17 @@
 
 #include "apptypes.h"
 
+#include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
+#include "core/gimpbrushpipe.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+#include "core/gimplist.h"
+#include "core/gimpimage.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
+
 #include "tools/gimptool.h"
 #include "tools/gimptoolinfo.h"
 #include "tools/paint_options.h"
@@ -33,18 +44,6 @@
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
-#include "gimpbrush.h"
-#include "gimpbrushgenerated.h"
-#include "gimpbrushpipe.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpdatalist.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimplist.h"
-#include "gimppalette.h"
-#include "gimppattern.h"
 #include "gimprc.h"
 
 

@@ -24,6 +24,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+#include "core/gimppattern.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "disp_callbacks.h"
@@ -34,8 +37,6 @@
 #include "nav_window.h"
 
 #include "gimphelp.h"
-#include "gimpimage.h"
-#include "gimppattern.h"
 #include "gimprc.h"
 #include "qmask.h"
 

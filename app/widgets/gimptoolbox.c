@@ -29,13 +29,19 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "tools/gimptoolinfo.h"
-#include "tools/tool_manager.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimplist.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
+
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
 
 #include "color-area.h"
 #include "devices.h"
@@ -48,10 +54,6 @@
 
 #include "app_procs.h"
 #include "gimage.h"
-#include "gimpcontext.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

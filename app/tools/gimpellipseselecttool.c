@@ -24,10 +24,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
 
 #include "gimpellipseselecttool.h"
 #include "gimptoolinfo.h"

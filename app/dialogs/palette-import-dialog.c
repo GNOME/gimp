@@ -27,19 +27,20 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+#include "core/gimppalette.h"
+#include "core/gimppalette-import.h"
+
 #include "gradient-select.h"
 #include "palette-editor.h"
 #include "palette-import-dialog.h"
 
 #include "context_manager.h"
 #include "gimage.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimppalette.h"
-#include "gimppalette-import.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

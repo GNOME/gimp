@@ -25,9 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimppalette.h"
+
 #include "gimppalettepreview.h"
 
-#include "gimppalette.h"
 #include "temp_buf.h"
 
 

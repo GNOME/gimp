@@ -25,9 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpgradient.h"
+
 #include "gimpgradientpreview.h"
 
-#include "gimpgradient.h"
 #include "temp_buf.h"
 
 

@@ -125,7 +125,7 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("gimpbrush.h" "gimplist.h") ],
+	headers => [ qw("core/gimpbrush.h" "core/gimplist.h") ],
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
@@ -158,8 +158,8 @@ CODE
     );
 }
 
-@headers = qw(<string.h> "context_manager.h" "gimpcontext.h"
-	      "gimpdatafactory.h" "gui/brush-select.h");
+@headers = qw(<string.h> "context_manager.h" "core/gimpcontext.h"
+	      "core/gimpdatafactory.h" "gui/brush-select.h");
 
 $extra{app}->{code} = <<'CODE';
 static BrushSelect *

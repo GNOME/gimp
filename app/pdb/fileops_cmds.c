@@ -39,10 +39,10 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpimage.h"
 #include "file-open.h"
 #include "file-save.h"
 #include "file-utils.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "plug_in.h"
 

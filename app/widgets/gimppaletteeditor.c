@@ -27,6 +27,11 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimppalette.h"
+
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdnd.h"
@@ -41,10 +46,6 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimage.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpdatalist.h"
-#include "gimppalette.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

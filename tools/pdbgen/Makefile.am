@@ -51,11 +51,11 @@ enum_headers = \
 	../../app/appenums.h			\
 	../../app/appenv.h			\
 	../../app/errors.h			\
-	../../app/gimpdrawable-offset.h		\
-	../../app/gimpimage.h			\
-	../../app/gimpimage-convert.h		\
 	../../app/lut_funcs.h			\
 	../../app/paint-funcs/paint-funcs.h	\
+	../../app/core/gimpdrawable-offset.h	\
+	../../app/core/gimpimage.h		\
+	../../app/core/gimpimage-convert.h	\
 	../../app/tools/gimpblendtool.h		\
 	../../app/tools/gimpbucketfilltool.h	\
 	../../app/tools/gimpclonetool.h		\

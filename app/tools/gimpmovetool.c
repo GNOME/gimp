@@ -24,13 +24,14 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+
 #include "cursorutil.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "gimage_mask.h"
-#include "gimplayer.h"
-#include "gimpimage.h"
 #include "selection.h"
 #include "undo.h"
 

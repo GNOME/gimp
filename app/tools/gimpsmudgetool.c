@@ -28,16 +28,16 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimpcontext.h"
-#include "gimpbrush.h"
 #include "gimplut.h"
 #include "gimpui.h"
 #include "pixel_region.h"

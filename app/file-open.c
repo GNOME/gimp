@@ -59,10 +59,9 @@
 
 #include "apptypes.h"
 
-#include "gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "gimage.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"

@@ -23,10 +23,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "cursorutil.h"
 #include "gimpdrawtool.h"
-#include "gimpimage.h"
-#include "gimage_mask.h"
 #include "gdisplay.h"
 
 #include "gimpselectiontool.h"

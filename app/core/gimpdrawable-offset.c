@@ -33,6 +33,7 @@
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gimpcontext.h"
+#include "gimpdrawable.h"
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
 #include "pixel_region.h"

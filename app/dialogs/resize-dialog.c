@@ -25,10 +25,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplist.h"
+
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "resize.h"
 #include "undo.h"

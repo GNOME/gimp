@@ -24,11 +24,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
 #include "image_map.h"
 #include "pixel_region.h"
 #include "tile.h"

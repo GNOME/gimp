@@ -29,6 +29,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimppattern.h"
+
 #include "tools/gimpbucketfilltool.h"
 #include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
@@ -45,10 +50,6 @@
 
 #include "appenv.h"
 #include "drawable.h"
-#include "gimpimage.h"
-#include "gimpcontext.h"
-#include "gimplayer.h"
-#include "gimppattern.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "pixel_region.h"

@@ -25,6 +25,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplist.h"
+
 #include "widgets/gimpcolorpanel.h"
 
 #include "channels-commands.h"
@@ -33,10 +38,6 @@
 #include "menus.h"
 
 #include "drawable.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimplist.h"
 
 #include "libgimp/gimpintl.h"
 

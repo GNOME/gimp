@@ -1452,7 +1452,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimpimage-duplicate.h") ],
+	headers => [ qw("core/gimpimage-duplicate.h") ],
         code => <<'CODE'
 success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
 CODE
@@ -1460,8 +1460,8 @@ CODE
 }
 
 
-@headers = qw(<string.h> "gimage.h" "context_manager.h" "gimpcontainer.h"
-	      "gimplist.h" "temp_buf.h" 
+@headers = qw(<string.h> "gimage.h" "context_manager.h" "core/gimpcontainer.h"
+	      "core/gimplist.h" "temp_buf.h" 
 	      "libgimpmath/gimpmath.h" "libgimp/gimplimits.h"
               "libgimp/gimpintl.h");
 

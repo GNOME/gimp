@@ -40,6 +40,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+
 #include "cursorutil.h"
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
@@ -49,10 +52,7 @@
 #include "gimpui.h"
 #include "gui/menus.h"
 
-#include "gimpdrawable.h"
 #include "gimage.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"

@@ -24,10 +24,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "gdisplay_ops.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

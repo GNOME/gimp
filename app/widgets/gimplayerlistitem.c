@@ -28,18 +28,17 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+
 #include "gimpdnd.h"
 #include "gimplayerlistitem.h"
 #include "gimppreview.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimpviewable.h"
 
 #include "pixmaps/linked.xpm"
 

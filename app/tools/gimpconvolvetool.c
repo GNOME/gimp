@@ -25,6 +25,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpconvolvetool.h"
@@ -34,9 +38,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimpbrush.h"
-#include "gimpcontext.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"

@@ -30,16 +30,18 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpbrushpipe.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "brush_scale.h"
 #include "cursorutil.h"
 #include "devices.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpbrushpipe.h"
-#include "gimpcontext.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "selection.h"

@@ -24,9 +24,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpcontext.h"
+
 #include "drawable.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
 #include "gdisplay.h"
 #include "undo.h"
 

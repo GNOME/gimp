@@ -65,6 +65,11 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "color-notebook.h"
@@ -73,11 +78,6 @@
 #include "context_manager.h"
 #include "cursorutil.h"
 #include "errors.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
-#include "gimplist.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

@@ -25,11 +25,15 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+
+#include "widgets/gimppreview.h"
+
 #include "tools/gimptool.h"
 #include "tools/gimpcolorpickertool.h"
 #include "tools/tool_manager.h"
-
-#include "widgets/gimppreview.h"
 
 #include "gdisplay.h"
 #include "info-dialog.h"
@@ -37,9 +41,6 @@
 
 #include "context_manager.h"
 #include "colormaps.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
 
 #include "libgimp/gimpintl.h"
 

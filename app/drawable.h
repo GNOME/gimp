@@ -20,9 +20,6 @@
 #define __DRAWABLE_H__
 
 
-#include "gimpdrawable.h"
-
-
 void drawable_fill        (GimpDrawable *drawable,
 			   GimpFillType fill_type);
 void drawable_update      (GimpDrawable *drawable,

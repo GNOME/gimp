@@ -24,9 +24,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "gdisplay.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
 
 #include "gimptool.h"
 #include "tool_manager.h"

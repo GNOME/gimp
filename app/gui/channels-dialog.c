@@ -30,6 +30,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplist.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
 
@@ -44,10 +49,6 @@
 
 #include "appenv.h"
 #include "drawable.h"
-#include "gimage.h"
-#include "gimage_mask.h"
-#include "gimpchannel.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "temp_buf.h"
 #include "undo.h"

@@ -44,8 +44,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpimage.h"
+
 #include "file-utils.h"
-#include "gimpimage.h"
 #include "plug_in.h"
 #include "temp_buf.h"
 

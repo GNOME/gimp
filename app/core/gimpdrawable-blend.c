@@ -30,6 +30,12 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "appenv.h"
@@ -38,10 +44,6 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
-#include "gimage_mask.h"
-#include "gimpcontext.h"
-#include "gimpgradient.h"
 #include "gimpprogress.h"
 #include "pixel_region.h"
 #include "selection.h"

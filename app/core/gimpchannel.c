@@ -33,7 +33,7 @@
 #include "boundary.h"
 #include "drawable.h"
 #include "gimpimage.h"
-#include "gimage_mask.h"
+#include "gimpimage-mask.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
 #include "gimplut.h"

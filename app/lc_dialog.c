@@ -26,6 +26,10 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
@@ -36,9 +40,6 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
-#include "gimage.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"

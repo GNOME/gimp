@@ -27,6 +27,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gui/info-dialog.h"
@@ -35,9 +39,6 @@
 #include "nav_window.h"
 
 #include "context_manager.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimage.h"
 #include "gimprc.h"
 #include "scroll.h"
 #include "scale.h"

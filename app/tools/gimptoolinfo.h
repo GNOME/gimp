@@ -20,7 +20,7 @@
 #define __GIMP_TOOL_INFO_H__
 
 
-#include "gimpdata.h"
+#include "core/gimpdata.h"
 
 
 #define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())

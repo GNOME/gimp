@@ -23,6 +23,7 @@
 #include "apptypes.h"
 
 #include "drawable.h"
+#include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
 #include "gimpimage.h"
 #include "gimplut.h"

@@ -28,10 +28,10 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpbrush.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimplist.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimplist.h"
 #include "temp_buf.h"
 
 static ProcRecord brushes_refresh_proc;

@@ -22,7 +22,8 @@
 
 #include "apptypes.h"
 
-#include "gimpimage.h"
+#include "core/gimpimage.h"
+
 #include "pixel_region.h"
 #include "pixel_surround.h"
 #include "tile_manager.h"

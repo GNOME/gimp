@@ -465,7 +465,7 @@ HELP
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
-	headers => [ qw(<string.h> "gimplayer.h") ],
+	headers => [ qw(<string.h> "core/gimplayer.h") ],
 	code => <<'CODE'
 {
   TempBuf * buf;
@@ -528,7 +528,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimpdrawable-offset.h") ],
 	code => <<'CODE'
 {
   gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
@@ -537,7 +536,8 @@ CODE
     );
 }
 
-@headers = qw("gimplayermask.h" "drawable.h"
+@headers = qw("core/gimplayermask.h" "core/gimpchannel.h"
+              "core/gimpdrawable.h" "drawable.h"
 	      "pdb_glue.h" "tile.h" "tile_manager.h" "temp_buf.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update

@@ -32,6 +32,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "tools/gimpbezierselecttool.h"
 
 #include "gdisplay.h"
@@ -40,10 +44,6 @@
 #include "paths-dialog.h"
 
 #include "floating_sel.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
-#include "gimpdrawable.h"
-#include "gimage_mask.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"

@@ -26,8 +26,8 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpimage.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 
 static ProcRecord display_new_proc;
 static ProcRecord display_delete_proc;

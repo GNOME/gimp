@@ -25,19 +25,18 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
+#include "core/gimplayer.h"
+#include "core/gimpmarshal.h"
+#include "core/gimpviewable.h"
+
 #include "gimpchannellistitem.h"
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
 #include "gimplayerlistitem.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
-
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpdrawable.h"
-#include "gimplayer.h"
-#include "gimpmarshal.h"
-#include "gimpviewable.h"
 
 
 enum

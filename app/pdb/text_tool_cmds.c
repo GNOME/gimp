@@ -29,9 +29,9 @@
 #include "procedural_db.h"
 
 #include "appenv.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "drawable.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
 #include "tools/gimptexttool.h"
 
 #include "libgimp/gimplimits.h"

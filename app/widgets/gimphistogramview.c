@@ -27,7 +27,6 @@
 #include "gimphistogramview.h"
 
 #include "gimage.h"
-#include "gimage_mask.h"
 #include "gimphistogram.h"
 #include "tile_manager.h"
 

@@ -20,9 +20,6 @@
 #define __TOOL_OPTIONS_H__
 
 
-#include "gimpobject.h"
-
-
 /*  the tool options structures  */
 
 struct _ToolOptions
@@ -31,13 +28,6 @@ struct _ToolOptions
 
   ToolOptionsResetFunc  reset_func;
 };
-
-struct _ToolOptionsClass
-{
-  GimpObjectClass   parent_class;
-};
-
-typedef struct _ToolOptionsClass ToolOptionsClass;
 
 /*  create a dummy tool options structure
  *  (to be used by tools without options)

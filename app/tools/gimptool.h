@@ -20,7 +20,7 @@
 #define __GIMP_TOOL_H__
 
 
-#include "gimpobject.h"
+#include "core/gimpobject.h"
 
 
 #define GIMP_TYPE_BY_COLOR_SELECT_TOOL GTK_TYPE_NONE

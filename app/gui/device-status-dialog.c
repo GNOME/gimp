@@ -29,22 +29,23 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
-#include "tools/gimptoolinfo.h"
-#include "tools/tool_manager.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
+#include "core/gimppattern.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
+
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
 
 #include "appenv.h"
 #include "context_manager.h"
 #include "devices.h"
 #include "dialog_handler.h"
-#include "gimpbrush.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
-#include "gimppattern.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "libgimp/gimpenv.h"
 

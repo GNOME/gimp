@@ -25,6 +25,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "gui/info-dialog.h"
 #include "gui/palette-editor.h"
 #include "gdisplay.h"
@@ -37,8 +40,6 @@
 #include "tool_options.h"
 
 #include "appenv.h"
-#include "drawable.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"

@@ -26,7 +26,6 @@
 
 #include "apptypes.h"
 
-#include "gimpcontext.h"
 #include "gimprc.h"
 
 #include "gimptool.h"
@@ -36,6 +35,7 @@
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
+
 
 static TransformOptions  *transform_options     = NULL;
 

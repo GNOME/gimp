@@ -32,6 +32,12 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimplist.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "tools/paint_options.h"
@@ -46,11 +52,6 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gimage.h"
-#include "gimage_mask.h"
-#include "gimpcontainer.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"

@@ -27,9 +27,8 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpimage.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 
 #include "libgimpcolor/gimpcolor.h"
 

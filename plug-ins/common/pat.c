@@ -34,7 +34,7 @@
 #define _O_BINARY 0
 #endif
 
-#include "app/gimppattern-header.h"
+#include "app/core/gimppattern-header.h"
 
 
 /*  local function prototypes  */

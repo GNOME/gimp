@@ -26,7 +26,7 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "gimpimage.h"
+#include "core/gimpimage.h"
 #include "undo.h"
 
 static ProcRecord undo_push_group_start_proc;

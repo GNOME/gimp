@@ -27,16 +27,14 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpchannel.h"
+
 #include "gimpdnd.h"
 #include "gimpchannellistitem.h"
 #include "gimppreview.h"
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimpchannel.h"
-#include "gimpviewable.h"
 
 
 static void   gimp_channel_list_item_class_init (GimpChannelListItemClass *klass);

@@ -42,8 +42,8 @@ libappcore_la_SOURCES = \
 	gimpimage-convert.h		\
 	gimpimage-duplicate.c		\
 	gimpimage-duplicate.h		\
-	gimpimage-mask.c		\ (gimage_mask.c)
-	gimpimage-mask.h		\ (gimage_mask.h)
+	gimpimage-mask.c		\
+	gimpimage-mask.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimplayer.c			\
@@ -68,8 +68,7 @@ libappcore_la_SOURCES = \
 	gimpundostack.c			\
 	gimpundostack.h			\
 	gimpviewable.c			\
-	gimpviewable.h			\
-
+	gimpviewable.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"

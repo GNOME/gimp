@@ -404,7 +404,7 @@ HELP
     );
 }
 
-@headers = qw("gimage_mask.h" "gimpimage.h");
+@headers = qw("core/gimpimage-mask.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty
 	    selection_translate selection_float selection_clear

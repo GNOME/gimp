@@ -28,10 +28,10 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpgradient.h"
 #include "gui/gradient-select.h"
 
 static ProcRecord gradients_popup_proc;

@@ -26,9 +26,12 @@
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
 
-#include "tools/gimptoolinfo.h"
-#include "tools/tool_manager.h"
-#include "tools/tool_options_dialog.h"
+#include "core/gimpbrushgenerated.h"
+#include "core/gimpchannel.h"
+#include "core/gimpcontext.h"
+#include "core/gimpgradient.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -40,6 +43,10 @@
 #include "widgets/gimpdrawablelistview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
+
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
+#include "tools/tool_options_dialog.h"
 
 #include "about-dialog.h"
 #include "brush-editor.h"
@@ -64,15 +71,6 @@
 
 #include "context_manager.h"
 #include "gdisplay.h"
-#include "gimpbrush.h"
-#include "gimpbrushgenerated.h"
-#include "gimpchannel.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimpdatafactory.h"
-#include "gimpgradient.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
 #include "gimprc.h"
 #include "module_db.h"
 #include "undo_history.h"

@@ -25,10 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
-
-#include "gimpcontext.h"
 
 
 static void   gimp_dockable_class_init (GimpDockableClass *klass);

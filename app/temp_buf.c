@@ -40,7 +40,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimpimage.h"
+#include "core/gimpimage.h"
+
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "temp_buf.h"

@@ -51,10 +51,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+
 #include "dialog_handler.h"
-#include "gimage_mask.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "temp_buf.h"

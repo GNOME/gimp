@@ -30,9 +30,10 @@
 
 #include "apptypes.h"
 
+#include "core/gimpbrushgenerated.h"
+
 #include "brush-editor.h"
 
-#include "gimpbrushgenerated.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"

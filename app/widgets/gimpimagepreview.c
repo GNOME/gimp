@@ -25,10 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpimage.h"
+
 #include "gimpimagepreview.h"
 
-#include "gimpimage.h"
-#include "gimpviewable.h"
 #include "temp_buf.h"
 
 

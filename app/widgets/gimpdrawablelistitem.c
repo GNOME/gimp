@@ -27,16 +27,16 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpdrawable.h"
+
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
 #include "gimpdrawablelistview.h"
 #include "gimppreview.h"
 
-#include "drawable.h"
 #include "gdisplay.h"
-#include "gimpcontainer.h"
-#include "gimpimage.h"
-#include "gimpviewable.h"
+
+#include "drawable.h"
 
 #include "pixmaps/eye.xpm"
 

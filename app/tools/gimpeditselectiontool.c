@@ -28,15 +28,16 @@
 
 #include "apptypes.h"
 
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+#include "core/gimplist.h"
+
 #include "boundary.h"
 #include "cursorutil.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimplayer.h"
-#include "gimplist.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "path_transform.h"
 #include "selection.h"

@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 
-#include "gimpobject.h"
+#include "core/gimpobject.h"
 
 
 typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,

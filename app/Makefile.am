@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs pdb tools widgets gui
+SUBDIRS = paint-funcs core pdb tools widgets gui
 
 scriptdata =
 
@@ -93,76 +93,6 @@ gimp_SOURCES = \
 	user_install.c		\
 	user_install.h		\
 ##
-## base stuff that does not depend on anything else in app/
-##
-	gimpcontainer.c		\
-	gimpcontainer.h		\
-	gimpdata.c		\
-	gimpdata.h		\
-	gimpdatafactory.c	\
-	gimpdatafactory.h	\
-	gimpdatalist.c		\
-	gimpdatalist.h		\
-	gimplist.c		\
-	gimplist.h		\
-	gimpobject.c		\
-	gimpobject.h		\
-##
-## the core object system
-##
-	gimpbrush.c			\
-	gimpbrush.h			\
-	gimpbrush-header.h		\
-	gimpbrushgenerated.c		\
-	gimpbrushgenerated.h		\
-	gimpbrushpipe.c			\
-	gimpbrushpipe.h			\
-	gimpchannel.c			\
-	gimpchannel.h			\
-	gimpcontext.c			\
-	gimpcontext.h			\
-	gimpdrawable.c			\
-	gimpdrawable.h			\
-	gimpdrawable-desaturate.c	\
-	gimpdrawable-desaturate.h	\
-	gimpdrawable-equalize.c		\
-	gimpdrawable-equalize.h		\
-	gimpdrawable-invert.c		\
-	gimpdrawable-invert.h		\
-	gimpdrawable-offset.c		\
-	gimpdrawable-offset.h		\
-	gimpdrawable-preview.c		\
-	gimpdrawable-preview.h		\
-	gimpgradient.c			\
-	gimpgradient.h			\
-	gimpimage.c			\
-	gimpimage.h			\
-	gimpimage-convert.c		\
-	gimpimage-convert.h		\
-	gimpimage-duplicate.c		\
-	gimpimage-duplicate.h		\
-	gimpimage-undo.c		\
-	gimpimage-undo.h		\
-	gimplayer.c			\
-	gimplayer.h			\
-	gimplayermask.c			\
-	gimplayermask.h			\
-	gimpmarshal.c			\
-	gimpmarshal.h			\
-	gimppattern.c			\
-	gimppattern.h			\
-	gimppattern-header.h		\
-	gimppalette.c			\
-	gimppalette.h			\
-	gimppalette-import.c		\
-	gimppalette-import.h		\
-	gimpundo.c			\
-	gimpundo.h			\
-	gimpundostack.c			\
-	gimpundostack.h			\
-	gimpviewable.c			\
-	gimpviewable.h			\
-##
 ## stuff that needs to be sorted into yet undecided subsystems, split up,
 ## removed or otherwise tortured
 ##
@@ -203,8 +133,6 @@ gimp_SOURCES = \
 	general.h		\
 	gimage.c		\
 	gimage.h		\
-	gimage_mask.c		\
-	gimage_mask.h		\
 	gimphelp.c		\
 	gimphelp.h		\
 	gimphistogram.c		\
@@ -296,11 +224,12 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
-	gui/libappgui.la						\
 	paint-funcs/libapppaint-funcs.la				\
 	pdb/libapppdb.la						\
 	tools/libapptools.la						\
+	gui/libappgui.la						\
 	widgets/libappwidgets.la					\
+	core/libappcore.la						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\

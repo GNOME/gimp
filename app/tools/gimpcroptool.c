@@ -28,6 +28,13 @@
 
 #include "apptypes.h"
 
+#include "core/gimpchannel.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-mask.h"
+#include "core/gimplayer.h"
+#include "core/gimplist.h"
+
 #include "gui/info-dialog.h"
 #include "cursorutil.h"
 #include "gdisplay.h"
@@ -38,13 +45,7 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
-#include "drawable.h"
 #include "floating_sel.h"
-#include "gimpchannel.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplist.h"
-#include "gimage_mask.h"
 #include "pixel_region.h"
 #include "undo.h"
 

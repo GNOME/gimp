@@ -26,6 +26,8 @@
 
 #include "apptypes.h"
 
+#include "core/gimpobject.h"
+
 #include "widgets/gimpdnd.h"
 
 #include "gui/file-open-dialog.h"
@@ -33,7 +35,6 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
-#include "gimpimage.h"
 #include "ops_buttons.h"
 
 #include "libgimp/gimpenv.h"

@@ -53,7 +53,7 @@ sub channel_get_prop_proc {
 	$outargs[0]->{init} = 1;
 	delete @{$outargs[0]}{qw(alias no_declare)};
 
-	$invoke{headers} = [ qw("gimpimage.h") ];
+	$invoke{headers} = [ qw("core/gimpimage.h") ];
 
 	$invoke{code} = <<'CODE'
 {

@@ -19,7 +19,7 @@
 #define __PARASITE_LIST_H__
 
 
-#include "gimpobject.h"
+#include "core/gimpobject.h"
 
 
 #define GIMP_TYPE_PARASITE_LIST    (parasite_list_get_type ())

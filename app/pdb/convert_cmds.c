@@ -27,11 +27,11 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "gimpcontainer.h"
-#include "gimpdatafactory.h"
-#include "gimpimage-convert.h"
-#include "gimpimage.h"
-#include "gimppalette.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimpimage-convert.h"
+#include "core/gimpimage.h"
+#include "core/gimppalette.h"
 
 static ProcRecord convert_rgb_proc;
 static ProcRecord convert_grayscale_proc;

@@ -26,9 +26,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimplayer.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gimplayer.h"
 
 static ProcRecord floating_sel_remove_proc;
 static ProcRecord floating_sel_anchor_proc;

@@ -35,7 +35,6 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimage_mask.h"
 #include "gimpdrawable-invert.h"
 #include "gimpimage.h"
 #include "gimplayer.h"

@@ -28,6 +28,9 @@
 
 #include "apptypes.h"
 
+#include "core/gimpcontainer.h"
+#include "core/gimpimage.h"
+
 #include "cursorutil.h"
 #include "gdisplay.h"
 #include "layer-select.h"
@@ -36,9 +39,7 @@
 #include "colormaps.h"
 #include "context_manager.h"
 #include "gdisplay_ops.h"
-#include "gimpcontainer.h"
 #include "gimphelp.h"
-#include "gimpimage.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"

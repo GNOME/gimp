@@ -62,10 +62,9 @@
 #include "docindex.h"
 #include "gui/menus.h"
 
-#include "gimpdrawable.h"
-#include "gimage.h"
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+
 #include "gimprc.h"
 #include "file-save.h"
 #include "file-utils.h"

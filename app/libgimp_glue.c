@@ -24,7 +24,8 @@
 
 #include "apptypes.h"
 
-#include "gimpcontext.h"
+#include "core/gimpcontext.h"
+
 #include "libgimp_glue.h"
 
 

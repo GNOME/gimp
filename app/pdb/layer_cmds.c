@@ -26,12 +26,12 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
 #include "pdb_glue.h"
 #include "undo.h"
 
