@@ -674,9 +674,9 @@ shrink_line (gdouble           *dest,
   register const gdouble inv_step = 1.0 / step;
   gdouble position;
 
-  fprintf(stderr, "shrink_line bytes=%d old_width=%d width=%d interp=%d "
-	  "step=%f inv_step=%f\n",
-          bytes, old_width, width, interp, step, inv_step);
+  g_printerr ("shrink_line bytes=%d old_width=%d width=%d interp=%d "
+              "step=%f inv_step=%f\n",
+              bytes, old_width, width, interp, step, inv_step);
 
   for (b = 0; b < bytes; b++)
   {

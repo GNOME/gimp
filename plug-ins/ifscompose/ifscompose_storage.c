@@ -450,53 +450,77 @@ char *
 ifsvals_stringify (IfsComposeVals *vals, AffElement **elements)
 {
   gint i;
+  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar cbuf[3][G_ASCII_DTOSTR_BUF_SIZE];
   GString *result = g_string_new (NULL);
 
   g_string_append_printf (result, "iterations %d\n", vals->iterations);
   g_string_append_printf (result, "max_memory %d\n", vals->max_memory);
   g_string_append_printf (result, "subdivide %d\n", vals->subdivide);
-  g_string_append_printf (result, "radius %f\n", vals->radius);
-  g_string_append_printf (result, "aspect_ratio %f\n", vals->aspect_ratio);
-  g_string_append_printf (result, "center_x %f\n", vals->center_x);
-  g_string_append_printf (result, "center_y %f\n", vals->center_y);
+  g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", vals->radius);
+  g_string_append_printf (result, "radius %s\n", buf);
+  g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", vals->aspect_ratio);
+  g_string_append_printf (result, "aspect_ratio %s\n", buf);
+  g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", vals->center_x);
+  g_string_append_printf (result, "center_x %s\n", buf);
+  g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", vals->center_y);
+  g_string_append_printf (result, "center_y %s\n", buf);
 
   for (i=0; i<vals->num_elements; i++)
     {
       g_string_append (result, "element {\n");
-      g_string_append_printf (result, "    x %f\n", elements[i]->v.x);
-      g_string_append_printf (result, "    y %f\n", elements[i]->v.y);
-      g_string_append_printf (result, "    theta %f\n", elements[i]->v.theta);
-      g_string_append_printf (result, "    scale %f\n", elements[i]->v.scale);
-      g_string_append_printf (result, "    asym %f\n", elements[i]->v.asym);
-      g_string_append_printf (result, "    shear %f\n", elements[i]->v.shear);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.x);
+      g_string_append_printf (result, "    x %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.y);
+      g_string_append_printf (result, "    y %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.theta);
+      g_string_append_printf (result, "    theta %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.scale);
+      g_string_append_printf (result, "    scale %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.asym);
+      g_string_append_printf (result, "    asym %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.shear);
+      g_string_append_printf (result, "    shear %s\n", buf);
       g_string_append_printf (result, "    flip %d\n", elements[i]->v.flip);
-      g_string_append_printf (result, "    red_color { %f,%f,%f }\n",
-                              elements[i]->v.red_color.r,
-                              elements[i]->v.red_color.g,
-                              elements[i]->v.red_color.b);
-      g_string_append_printf (result, "    green_color { %f,%f,%f }\n",
-                              elements[i]->v.green_color.r,
-                              elements[i]->v.green_color.g,
-                              elements[i]->v.green_color.b);
-      g_string_append_printf (result, "    blue_color { %f,%f,%f }\n",
-                              elements[i]->v.blue_color.r,
-                              elements[i]->v.blue_color.g,
-                              elements[i]->v.blue_color.b);
-      g_string_append_printf (result, "    black_color { %f,%f,%f }\n",
-                              elements[i]->v.black_color.r,
-                              elements[i]->v.black_color.g,
-                              elements[i]->v.black_color.b);
-      g_string_append_printf (result, "    target_color { %f,%f,%f }\n",
-                              elements[i]->v.target_color.r,
-                              elements[i]->v.target_color.g,
-                              elements[i]->v.target_color.b);
-      g_string_append_printf (result, "    hue_scale %f\n", 
-                              elements[i]->v.hue_scale);
-      g_string_append_printf (result, "    value_scale %f\n", 
-                              elements[i]->v.value_scale);
+      
+      g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.r);
+      g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.g);
+      g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.b);
+      g_string_append_printf (result, "    red_color { %s,%s,%s }\n",
+                              cbuf[0], cbuf[1], cbuf[2]);
+
+      g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.green_color.r);
+      g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.green_color.g);
+      g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.green_color.b);
+      g_string_append_printf (result, "    green_color { %s,%s,%s }\n",
+                              cbuf[0], cbuf[1], cbuf[2]);
+
+      g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.blue_color.r);
+      g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.blue_color.g);
+      g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.blue_color.b);
+      g_string_append_printf (result, "    blue_color { %s,%s,%s }\n",
+                              cbuf[0], cbuf[1], cbuf[2]);
+
+      g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.black_color.r);
+      g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.black_color.g);
+      g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.black_color.b);
+      g_string_append_printf (result, "    black_color { %s,%s,%s }\n",
+                              cbuf[0], cbuf[1], cbuf[2]);
+
+      g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.target_color.r);
+      g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.target_color.g);
+      g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.target_color.b);
+      g_string_append_printf (result, "    target_color { %s,%s,%s }\n",
+                              cbuf[0], cbuf[1], cbuf[2]);
+
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.hue_scale);
+      g_string_append_printf (result, "    hue_scale %s\n", buf);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.value_scale);
+      g_string_append_printf (result, "    value_scale %s\n", buf); 
       g_string_append_printf (result, "    simple_color %d\n", 
                               elements[i]->v.simple_color);
-      g_string_append_printf (result, "    prob %f\n", elements[i]->v.prob);
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.prob);
+      g_string_append_printf (result, "    prob %s\n", buf);
       g_string_append (result, "}\n");
     }
 

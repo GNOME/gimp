@@ -165,8 +165,6 @@ script_fu_console_interface (void)
   GtkWidget  *hbox;
   GIOChannel *input_channel;
 
-  INIT_I18N_UI();
-
   gimp_ui_init ("script-fu", FALSE);
 
   dialog = gimp_dialog_new (_("Script-Fu Console"), "script-fu-console",

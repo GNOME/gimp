@@ -1290,11 +1290,19 @@ color_history_write (FILE *fp)
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
     {
-      fprintf (fp, "\n    (color-rgba %f %f %f %f)",
-	       color_history[i].r,
-	       color_history[i].g,
-	       color_history[i].b,
-	       color_history[i].a);
+      gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+
+      g_ascii_formatd (buf[0],  
+                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].r);
+      g_ascii_formatd (buf[1],  
+                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].g);
+      g_ascii_formatd (buf[2],  
+                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].b);
+      g_ascii_formatd (buf[3],  
+                       G_ASCII_DTOSTR_BUF_SIZE, "%f", color_history[i].a);
+
+      fprintf (fp, "\n    (color-rgba %s %s %s %s)", 
+               buf[0], buf[1], buf[2], buf[3]);
     }
 
   fprintf (fp, ")\n\n");

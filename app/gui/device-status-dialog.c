@@ -665,16 +665,25 @@ devices_write_rc_device (DeviceInfo *device_info,
 
   {
     GimpRGB color;
+    gchar buf[3][G_ASCII_DTOSTR_BUF_SIZE];
 
     gimp_context_get_foreground (device_info->context, &color);
 
-    fprintf (fp, "\n    (foreground (color-rgb %f %f %f))",
-	     color.r, color.g, color.b);
+    g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.r);
+    g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.g);
+    g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.b);
+
+    fprintf (fp, "\n    (foreground (color-rgb %s %s %s))",
+	     buf[0], buf[1], buf[2]);
 
     gimp_context_get_background (device_info->context, &color);
 
-    fprintf (fp, "\n    (background (color-rgb %f %f %f))",
-	     color.r, color.g, color.b);
+    g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.r);
+    g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.g);
+    g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", color.b);
+
+    fprintf (fp, "\n    (background (color-rgb %s %s %s))",
+	     buf[0], buf[1], buf[2]);
   }
 
   if (gimp_context_get_brush (device_info->context))

@@ -159,6 +159,7 @@ gradients_save_as_pov_ok_callback (GtkWidget    *widget,
   const gchar         *filename;
   FILE                *file;
   GimpGradientSegment *seg;
+  gchar                buf[3][G_ASCII_DTOSTR_BUF_SIZE];
 
   filesel  = GTK_FILE_SELECTION (gtk_widget_get_toplevel (widget));
   filename = gtk_file_selection_get_filename (filesel);
@@ -179,28 +180,46 @@ gradients_save_as_pov_ok_callback (GtkWidget    *widget,
       for (seg = gradient->segments; seg; seg = seg->next)
 	{
 	  /* Left */
-	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
+          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.r);
+          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.g);
+          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.b);
+          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - seg->left_color.a);
+
+	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
 		   seg->left,
-		   seg->left_color.r,
-		   seg->left_color.g,
-		   seg->left_color.b,
-		   1.0 - seg->left_color.a);
+                   buf[0], buf[1], buf[2], buf[3]);
 
 	  /* Middle */
+          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.r + seg->right_color.r) / 2.0);
+          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.g + seg->right_color.g) / 2.0);
+          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.b + seg->right_color.b) / 2.0);
+          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
+
 	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
 		   seg->middle,
-		   (seg->left_color.r + seg->right_color.r) / 2.0,
-		   (seg->left_color.g + seg->right_color.g) / 2.0,
-		   (seg->left_color.b + seg->right_color.b) / 2.0,
-		   1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
+		   buf[0], buf[1], buf[2], buf[3]);
 
 	  /* Right */
+          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.r);
+          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.g);
+          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.b);
+          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - seg->right_color.a);
+
 	  fprintf (file, "\t[%f color rgbt <%f, %f, %f, %f>]\n",
 		   seg->right,
-		   seg->right_color.r,
-		   seg->right_color.g,
-		   seg->right_color.b,
-		   1.0 - seg->right_color.a);
+		   buf[0], buf[1], buf[2], buf[3]);
 	}
 
       fprintf (file, "} /* color_map */\n");

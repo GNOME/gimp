@@ -21,7 +21,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -77,7 +76,7 @@ gimp_message_box (gchar       *message,
 
   if (g_list_length (message_boxes) > MESSAGE_BOX_MAXIMUM)
     {
-      fprintf (stderr, "%s: %s\n", prog_name, message);
+      g_printerr ("%s: %s\n", prog_name, message);
       return;
     }
 
@@ -115,7 +114,7 @@ gimp_message_box (gchar       *message,
 
   if (g_list_length (message_boxes) == MESSAGE_BOX_MAXIMUM)
     {
-      fprintf (stderr, "%s: %s\n", prog_name, message);
+      g_printerr ("%s: %s\n", prog_name, message);
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
 		  "Messages are redirected to stderr.");

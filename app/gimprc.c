@@ -166,7 +166,6 @@ static gint           parse_unknown             (gchar          *token_sym);
 static inline gchar * string_to_str             (gpointer val1p, gpointer val2p);
 static inline gchar * path_to_str               (gpointer val1p, gpointer val2p);
 static inline gchar * double_to_str             (gpointer val1p, gpointer val2p);
-static inline gchar * float_to_str              (gpointer val1p, gpointer val2p);
 static inline gchar * int_to_str                (gpointer val1p, gpointer val2p);
 static inline gchar * boolean_to_str            (gpointer val1p, gpointer val2p);
 static inline gchar * position_to_str           (gpointer val1p, gpointer val2p);
@@ -2857,9 +2856,8 @@ gimprc_value_to_str (const gchar *name)
 	case TT_PATH:
 	  return path_to_str (func->val1p, func->val2p);
 	case TT_DOUBLE:
-	  return double_to_str (func->val1p, func->val2p);
 	case TT_FLOAT:
-	  return float_to_str (func->val1p, func->val2p);
+	  return double_to_str (func->val1p, func->val2p);
 	case TT_INT:
 	  return int_to_str (func->val1p, func->val2p);
 	case TT_BOOLEAN:
@@ -2924,14 +2922,10 @@ static inline gchar *
 double_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  return g_strdup_printf ("%f", *((gdouble *)val1p));
-}
+  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-static inline gchar *
-float_to_str (gpointer val1p,
-	      gpointer val2p)
-{
-  return g_strdup_printf ("%f", (gdouble)(*((float *)val1p)));
+  g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", *((gdouble *)val1p));
+  return g_strdup (buf);
 }
 
 static inline gchar *

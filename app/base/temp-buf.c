@@ -107,11 +107,12 @@ temp_buf_to_gray (TempBuf *src_buf,
 
   while (num_bytes--)
     {
-      *dest++ = *src++;  /* alpha channel */
+      *dest++ = src[0];  /* alpha channel */
 
-      pix = INTENSITY (*src++, *src++, *src++);
-
+      pix = INTENSITY (src[1], src[2], src[3]);
       *dest++ = (guchar) pix;
+
+      src += 4;
     }
 }
 

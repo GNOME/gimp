@@ -61,8 +61,7 @@
 #endif
 
 #define INIT_LOCALE( domain )	G_STMT_START{	\
-     gtk_set_locale ();			        \
-     setlocale (LC_NUMERIC, "C");               \
+     setlocale (LC_ALL, "");                    \
      bindtextdomain (domain, LOCALEDIR);	\
      bind_textdomain_codeset (domain, "UTF-8"); \
      textdomain (domain);			\

@@ -26,18 +26,15 @@
 
 
 #define INIT_I18N()	G_STMT_START{                               \
+  setlocale (LC_ALL, "");                                           \
   bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);             \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");     \
   bindtextdomain(GETTEXT_PACKAGE"-std-plugins", LOCALEDIR);         \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-std-plugins", "UTF-8"); \
   textdomain(GETTEXT_PACKAGE"-std-plugins");		            \
-  setlocale (LC_NUMERIC, "C");                                      \
 }G_STMT_END
 
-#define INIT_I18N_UI()	G_STMT_START{	\
-  gtk_set_locale();			\
-  INIT_I18N();				\
-}G_STMT_END
+#define INIT_I18N_UI()	INIT_I18N()
 
 
 #endif /* __STDPLUGINS_INTL_H__ */

@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include <glib-object.h>
 
@@ -360,6 +361,8 @@ gimp_gradient_load (const gchar *filename)
 
   for (i = 0; i < num_segments; i++)
     {
+      gchar *end;
+
       seg = gimp_gradient_segment_new ();
 
       seg->prev = prev;
@@ -371,26 +374,41 @@ gimp_gradient_load (const gchar *filename)
 
       fgets (line, 1024, file);
 
-      if (sscanf (line, "%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%d%d",
-		  &(seg->left), &(seg->middle), &(seg->right),
-		  &(seg->left_color.r),
-		  &(seg->left_color.g),
-		  &(seg->left_color.b),
-		  &(seg->left_color.a),
-		  &(seg->right_color.r),
-		  &(seg->right_color.g),
-		  &(seg->right_color.b),
-		  &(seg->right_color.a),
-		  &type, &color) != 13)
-	{
+      seg->left = g_ascii_strtod (line, &end);
+      if (end && errno != ERANGE)
+        seg->middle = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->right = g_ascii_strtod (end, &end);
+
+      if (end && errno != ERANGE)
+        seg->left_color.r = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->left_color.g = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->left_color.b = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->left_color.a = g_ascii_strtod (end, &end);
+        
+      if (end && errno != ERANGE)
+        seg->right_color.r = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->right_color.g = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->right_color.b = g_ascii_strtod (end, &end);
+      if (end && errno != ERANGE)
+        seg->right_color.a = g_ascii_strtod (end, &end);
+
+      if (errno != ERANGE &&
+          sscanf (end, "%d %d", &type, &color) == 2)
+        {
+	  seg->type  = (GimpGradientSegmentType) type;
+	  seg->color = (GimpGradientSegmentColor) color;
+        }
+      else
+        {
 	  g_message ("%s(): badly formatted gradient segment %d in \"%s\" --- "
 		     "bad things may happen soon",
 		     G_GNUC_FUNCTION, i, filename);
-	}
-      else
-	{
-	  seg->type  = (GimpGradientSegmentType) type;
-	  seg->color = (GimpGradientSegmentColor) color;
 	}
 
       prev = seg;
@@ -463,16 +481,23 @@ gimp_gradient_save (GimpData *data)
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
-      fprintf (file, "%f %f %f %f %f %f %f %f %f %f %f %d %d\n",
-	       seg->left, seg->middle, seg->right,
-	       seg->left_color.r,
-	       seg->left_color.g,
-	       seg->left_color.b,
-	       seg->left_color.a,
-	       seg->right_color.r,
-	       seg->right_color.g,
-	       seg->right_color.b,
-	       seg->right_color.a,
+      gchar buf[11][G_ASCII_DTOSTR_BUF_SIZE];
+
+      g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->left);
+      g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->middle);
+      g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->right);
+      g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->left_color.r);
+      g_ascii_formatd (buf[4],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->left_color.g);
+      g_ascii_formatd (buf[5],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->left_color.b);
+      g_ascii_formatd (buf[6],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->left_color.a);
+      g_ascii_formatd (buf[7],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->right_color.r);
+      g_ascii_formatd (buf[8],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->right_color.g);
+      g_ascii_formatd (buf[9],  G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->right_color.b);
+      g_ascii_formatd (buf[10], G_ASCII_DTOSTR_BUF_SIZE, "%f", seg->right_color.a);
+
+      fprintf (file, "%s %s %s %s %s %s %s %s %s %s %s %d %d\n",
+               buf[0], buf[1], buf[2], buf[3], buf[4],
+               buf[5], buf[6], buf[7], buf[8], buf[9], buf[10],
 	       (gint) seg->type,
 	       (gint) seg->color);
     }

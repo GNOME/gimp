@@ -250,8 +250,8 @@ path_traverse_segment (NPath *path,
 		       gpointer data)
 {
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_traverse_segment\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_traverse_segment\n");
+#endif
 
    /* XXX: here we need path_curve_get_point(s) */
 
@@ -276,8 +276,8 @@ path_add_curve (NPath * cur_path,
    PathCurve * new_curve = NULL;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_add_curve\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_add_curve\n");
+#endif
    
    if (cur_path) {
       new_curve = g_new (PathCurve, 1);
@@ -296,8 +296,8 @@ path_add_curve (NPath * cur_path,
    }
 #ifdef PATH_TOOL_DEBUG
    else
-      fprintf (stderr, "Fatal Error: path_add_curve called without valid path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal Error: path_add_curve called without valid path\n");
+#endif
 
    return new_curve;
 }
@@ -314,8 +314,8 @@ path_append_segment  (NPath * cur_path,
    PathSegment * new_segment = NULL;
    
 #ifdef PATH_TOOL_DEBUG
-      fprintf(stderr, "path_append_segment\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("path_append_segment\n");
+#endif
 
    if (cur_curve) {
       tmp = cur_curve->segments;
@@ -345,13 +345,13 @@ path_append_segment  (NPath * cur_path,
       }
 #ifdef PATH_TOOL_DEBUG
       else
-         fprintf(stderr, "Fatal Error: path_append_segment called with a closed curve\n");
-#endif PATH_TOOL_DEBUG
+         g_printerr ("Fatal Error: path_append_segment called with a closed curve\n");
+#endif
    }
 #ifdef PATH_TOOL_DEBUG
    else
-      fprintf(stderr, "Fatal Error: path_append_segment called without valid curve\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal Error: path_append_segment called without valid curve\n");
+#endif
    
    return new_segment;
 }
@@ -368,8 +368,8 @@ path_prepend_segment  (NPath * cur_path,
    PathSegment * new_segment = NULL;
    
 #ifdef PATH_TOOL_DEBUG
-      fprintf(stderr, "path_prepend_segment\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("path_prepend_segment\n");
+#endif
 
    if (cur_curve) {
       tmp = cur_curve->segments;
@@ -396,13 +396,13 @@ path_prepend_segment  (NPath * cur_path,
       }
 #ifdef PATH_TOOL_DEBUG
       else
-         fprintf(stderr, "Fatal Error: path_prepend_segment called with a closed curve\n");
-#endif PATH_TOOL_DEBUG
+         g_printerr ("Fatal Error: path_prepend_segment called with a closed curve\n");
+#endif
    }
 #ifdef PATH_TOOL_DEBUG
    else
-      fprintf(stderr, "Fatal Error: path_prepend_segment called without valid curve\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal Error: path_prepend_segment called without valid curve\n");
+#endif
    
    return new_segment;
 }
@@ -414,8 +414,8 @@ path_split_segment   (PathSegment *segment,
    PathSegment * new_segment = NULL;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_split_segment\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_split_segment\n");
+#endif
    if (segment && segment->next) {
       new_segment = g_new (PathSegment, 1);
 
@@ -437,8 +437,8 @@ path_split_segment   (PathSegment *segment,
    }
 #ifdef PATH_TOOL_DEBUG
    else 
-      fprintf(stderr, "path_split_segment without valid segment\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("path_split_segment without valid segment\n");
+#endif
    return NULL;
 
 }
@@ -457,14 +457,14 @@ path_join_curves (PathSegment *segment1,
 
    if ((segment1->next && segment1->prev) || (segment2->next && segment2->prev)) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf(stderr, "Fatal Error: path_join_curves called with a closed segment\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal Error: path_join_curves called with a closed segment\n");
+#endif
       return;
    }
    if (segment1->parent == segment2->parent) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Joining beginning and end of the same curve...\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Joining beginning and end of the same curve...\n");
+#endif
       if (segment2->next == NULL) {
 	 segment2->next = segment1;
 	 segment1->prev = segment2;
@@ -478,8 +478,8 @@ path_join_curves (PathSegment *segment1,
 
    if (segment1->next == NULL && segment2->next == NULL) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Flipping second curve (next, next)...\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Flipping second curve (next, next)...\n");
+#endif
       path_flip_curve (segment2->parent);
       /* segment2 = segment2->parent->segments;
        */
@@ -487,8 +487,8 @@ path_join_curves (PathSegment *segment1,
       
    if (segment1->prev == NULL && segment2->prev == NULL) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Flipping second curve (prev, prev)...\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Flipping second curve (prev, prev)...\n");
+#endif
       path_flip_curve (segment2->parent);
       /* segment2 = segment2->parent->segments;
        * while (segment2->next)
@@ -498,8 +498,8 @@ path_join_curves (PathSegment *segment1,
       
    if (segment1->next == NULL && segment2->prev == NULL) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Appending second to first curve...\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Appending second to first curve...\n");
+#endif
       curve1 = segment1->parent;
       curve2 = segment2->parent;
       
@@ -530,8 +530,8 @@ path_join_curves (PathSegment *segment1,
 
    if (segment1->prev == NULL && segment2->next == NULL) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Prepending second to first curve...\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Prepending second to first curve...\n");
+#endif
       curve1 = segment1->parent;
       curve2 = segment2->parent;
       
@@ -559,9 +559,9 @@ path_join_curves (PathSegment *segment1,
    }
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "Cant join these curves yet...\nThis should not happen.");
+   g_printerr ("Cant join these curves yet...\nThis should not happen.");
    return;
-#endif PATH_TOOL_DEBUG
+#endif
 
 }
 
@@ -579,8 +579,8 @@ path_flip_curve (PathCurve *curve)
    
    if (!curve && !curve->segments) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "path_flip_curve: No curve o no segments to flip!\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("path_flip_curve: No curve o no segments to flip!\n");
+#endif
       return;
    }
    
@@ -773,8 +773,8 @@ path_tool_button_press (Tool           *tool,
    gint x, y, halfwidth, dummy;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_button_press\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press\n");
+#endif
 
    path_tool = (PathTool *) tool->private;
    tool->gdisp = gdisp;
@@ -782,8 +782,8 @@ path_tool_button_press (Tool           *tool,
    /* Transform window-coordinates to canvas-coordinates */
    gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "Clickcoordinates %d, %d\n",x,y);
-#endif PATH_TOOL_DEBUG
+   g_printerr ("Clickcoordinates %d, %d\n",x,y);
+#endif
    path_tool->click_x = x;
    path_tool->click_y = y;
    path_tool->click_modifier = bevent->state;
@@ -853,15 +853,15 @@ path_tool_button_press_anchor (Tool *tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_anchor:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_anchor:\n");
+#endif
    
    grab_pointer = 1;
 
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -873,8 +873,8 @@ path_tool_button_press_anchor (Tool *tool,
    if (bevent->time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Doppelclick!\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Doppelclick!\n");
+#endif
    } else
       doubleclick=FALSE;
    last_click_time = bevent->time;
@@ -894,8 +894,8 @@ path_tool_button_press_anchor (Tool *tool,
    p_sas = path_tool->single_active_segment;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "p_sas: %p\n", p_sas);
-#endif PATH_TOOL_DEBUG
+   g_printerr ("p_sas: %p\n", p_sas);
+#endif
 
    if (path_tool->click_modifier & GDK_SHIFT_MASK) {
       if (path_tool->active_count == 1 && p_sas && p_sas != path_tool->click_segment &&
@@ -977,15 +977,15 @@ path_tool_button_press_handle (Tool *tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_handle:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_handle:\n");
+#endif
    
    grab_pointer = 1;
 
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -997,8 +997,8 @@ path_tool_button_press_handle (Tool *tool,
    if (bevent->time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Doppelclick!\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Doppelclick!\n");
+#endif
    } else
       doubleclick=FALSE;
    last_click_time = bevent->time;
@@ -1019,15 +1019,15 @@ path_tool_button_press_canvas (Tool *tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_canvas:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_canvas:\n");
+#endif
    
    grab_pointer = 1;
    
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -1074,15 +1074,15 @@ path_tool_button_press_curve (Tool *tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_curve:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_curve:\n");
+#endif
    
    grab_pointer = 1;
    
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current NPath\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current NPath\n");
+#endif
       return 0;
    }
    
@@ -1113,8 +1113,8 @@ path_tool_button_release (Tool           *tool,
    PathTool * path_tool;
  
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_button_release\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_release\n");
+#endif
  
    path_tool = (PathTool *) tool->private;
    
@@ -1325,9 +1325,9 @@ path_tool_cursor_update (Tool           *tool,
    gint     x, y, halfwidth, dummy, cursor_location;
   
 #ifdef PATH_TOOL_DEBUG
-   /* fprintf (stderr, "path_tool_cursor_update\n");
+   /* g_printerr ("path_tool_cursor_update\n");
     */
-#endif PATH_TOOL_DEBUG
+#endif
 
    path_tool = (PathTool *) tool->private;
 
@@ -1369,8 +1369,8 @@ path_tool_control (Tool        *tool,
    PathTool * path_tool;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_control\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_control\n");
+#endif
 
    path_tool = (PathTool *) tool->private;
 
@@ -1386,8 +1386,8 @@ path_tool_control (Tool        *tool,
 
      case HALT:
 #ifdef PATH_TOOL_DEBUG
-        fprintf (stderr, "path_tool_control: HALT\n");
-#endif PATH_TOOL_DEBUG
+        g_printerr ("path_tool_control: HALT\n");
+#endif
         draw_core_stop (path_tool->core, tool);
         tool->state = INACTIVE;
         break;
@@ -1396,8 +1396,8 @@ path_tool_control (Tool        *tool,
         break;
      }
 #ifdef PATH_TOOL_DEBUG
-     fprintf (stderr, "path_tool_control: end\n");
-#endif PATH_TOOL_DEBUG
+     g_printerr ("path_tool_control: end\n");
+#endif
 }
 
 Tool *
@@ -1460,8 +1460,8 @@ tools_free_path_tool (Tool *tool)
    PathTool * path_tool;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "tools_free_path_tool start\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("tools_free_path_tool start\n");
+#endif
    path_tool = (PathTool *) tool->private;
    gdisp = tool->gdisp;
 
@@ -1476,8 +1476,8 @@ tools_free_path_tool (Tool *tool)
    
    g_free (path_tool);
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "tools_free_path_tool end\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("tools_free_path_tool end\n");
+#endif
 
 }
 
@@ -1848,8 +1848,8 @@ path_tool_draw_helper (NPath *path,
    
    if (!tool) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal Error: path_tool_draw_segment called without valid tool *\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal Error: path_tool_draw_segment called without valid tool *\n");
+#endif
       return;
    }
    
@@ -1882,8 +1882,8 @@ path_tool_draw_helper (NPath *path,
    }
 #ifdef PATH_TOOL_DEBUG
    else if (!segment)
-      fprintf(stderr, "path_tool_draw_segment: no segment to draw\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("path_tool_draw_segment: no segment to draw\n");
+#endif
 #endif
 }
 
@@ -1896,8 +1896,8 @@ path_tool_draw (Tool *tool)
    PathTool * path_tool;
   
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_draw\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_draw\n");
+#endif
    
    gdisp = tool->gdisp;
    path_tool = tool->private;
@@ -1906,9 +1906,9 @@ path_tool_draw (Tool *tool)
    path_traverse_path (cur_path, NULL, path_tool_draw_helper, NULL, tool);
    
 #ifdef PATH_TOOL_DEBUG
-   /* fprintf (stderr, "path_tool_draw end.\n");
+   /* g_printerr ("path_tool_draw end.\n");
     */
-#endif PATH_TOOL_DEBUG
+#endif
    
 }
 #endif

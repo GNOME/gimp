@@ -114,6 +114,7 @@ gimp_brush_generated_save (GimpData *data)
 {
   GimpBrushGenerated *brush;
   FILE               *fp;
+  gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
 
   g_return_val_if_fail (data != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (data), FALSE);
@@ -137,19 +138,29 @@ gimp_brush_generated_save (GimpData *data)
   fprintf (fp, "%.255s\n", GIMP_OBJECT (brush)->name);
 
   /* write brush spacing */
-  fprintf (fp, "%f\n", (gfloat) GIMP_BRUSH (brush)->spacing);
+  fprintf (fp, "%s\n", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                            GIMP_BRUSH (brush)->spacing));
 
   /* write brush radius */
-  fprintf (fp, "%f\n", brush->radius);
+  fprintf (fp, "%s\n", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                            brush->radius));
 
   /* write brush hardness */
-  fprintf (fp, "%f\n", brush->hardness);
+  fprintf (fp, "%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                            brush->hardness));
 
   /* write brush aspect_ratio */
-  fprintf (fp, "%f\n", brush->aspect_ratio);
+  fprintf (fp, "%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                            brush->aspect_ratio));
 
   /* write brush angle */
-  fprintf (fp, "%f\n", brush->angle);
+  fprintf (fp, "%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                            brush->angle));
 
   fclose (fp);
 
@@ -351,8 +362,6 @@ gimp_brush_generated_load (const gchar *filename)
   GimpBrushGenerated *brush;
   FILE               *fp;
   gchar               string[256];
-  gfloat              fl;
-  gfloat              version;
 
   if ((fp = fopen (filename, "rb")) == NULL)
     return NULL;
@@ -365,8 +374,8 @@ gimp_brush_generated_load (const gchar *filename)
 
   /* make sure we are reading a compatible version */
   fgets (string, 255, fp);
-  sscanf (string, "%f", &version);
-  g_return_val_if_fail (version < 2.0, NULL);
+  if (strncmp (string, "1.0", 3))
+    return NULL;
 
   /* create new brush */
   brush = GIMP_BRUSH_GENERATED (g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL));
@@ -382,24 +391,24 @@ gimp_brush_generated_load (const gchar *filename)
   gimp_object_set_name (GIMP_OBJECT (brush), string);
 
   /* read brush spacing */
-  fscanf (fp, "%f", &fl);
-  GIMP_BRUSH (brush)->spacing = fl;
+  fgets (string, 255, fp);
+  GIMP_BRUSH (brush)->spacing = g_ascii_strtod (string, NULL);
 
   /* read brush radius */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_radius (brush, fl);
+  fgets (string, 255, fp);
+  gimp_brush_generated_set_radius (brush, g_ascii_strtod (string, NULL));
 
   /* read brush hardness */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_hardness (brush, fl);
+  fgets (string, 255, fp);
+  gimp_brush_generated_set_hardness (brush, g_ascii_strtod (string, NULL));
 
   /* read brush aspect_ratio */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_aspect_ratio (brush, fl);
+  fgets (string, 255, fp);
+  gimp_brush_generated_set_aspect_ratio (brush, g_ascii_strtod (string, NULL));
 
   /* read brush angle */
-  fscanf (fp, "%f", &fl);
-  gimp_brush_generated_set_angle (brush, fl);
+  fgets (string, 255, fp);
+  gimp_brush_generated_set_angle (brush, g_ascii_strtod (string, NULL));
 
   fclose (fp);
 

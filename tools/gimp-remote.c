@@ -319,7 +319,7 @@ main (gint    argc,
 	exit (-1);
       }	
 
-    gimp_window = gdk_window_foreign_new (gimp_x_window);
+    gimp_window = gdk_window_foreign_new ((GdkNativeWindow) gimp_x_window);
     if (!gimp_window)
       {
 	g_printerr ("Couldn't create gdk_window for gimp_x_window\n");

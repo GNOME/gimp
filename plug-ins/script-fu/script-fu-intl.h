@@ -23,25 +23,11 @@
 
 #include "libgimp/gimpintl.h"
 
-#ifdef HAVE_LC_MESSAGES
 #define INIT_I18N()	G_STMT_START{			  \
-  setlocale(LC_MESSAGES, ""); 				  \
-  bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);   \
-  bindtextdomain(GETTEXT_PACKAGE"-script-fu", LOCALEDIR); \
-  textdomain(GETTEXT_PACKAGE"-script-fu");		  \
-                        }G_STMT_END
-#else
-#define INIT_I18N()	G_STMT_START{			  \
+  setlocale (LC_ALL, ""); 				  \
   bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);   \
   bindtextdomain(GETTEXT_PACKAGE"-script-fu", LOCALEDIR); \
   textdomain(GETTEXT_PACKAGE"-script-fu");                \
-  			}G_STMT_END
-#endif
-
-#define INIT_I18N_UI()	G_STMT_START{	\
-  gtk_set_locale();			\
-  setlocale (LC_NUMERIC, "C");		\
-  INIT_I18N();				\
-			}G_STMT_END
+}G_STMT_END
 
 #endif /* __SCRIPT_FU_INTL_H__ */

@@ -1,3 +1,46 @@
+2001-10-29  Sven Neumann  <sven@gimp.org>
+
+	* app/base/temp-buf.c (temp_buf_to_gray): rewrote so gcc-3.0 doesn't 
+	complain.
+
+	* app/widgets/gimpfontselection-dialog.c: use g_ascii_strcasecmp().
+	
+	* libgimp/gimpintl.h
+	* libgimp/stdplugins-intl.h
+	* plug-ins/script-fu/script-fu-intl.h: don't call gtk_set_locale()
+	since gtk_init() does it for us now. Don't set LC_NUMERIC to "C".
+	INIT_I18N_UI() is the same as INIT_I18N_UI() now.
+
+	* app/devices.c
+	* app/gimprc.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpgradient.c
+	* app/gui/color-notebook.c
+	* app/gui/gradients-commands.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/ifscompose/ifscompose_storage.c: use g_ascii_formatd() and
+	g_ascii_strtod() to serialize and deserialize floats. These functions 
+	are locale-independent. There are probably more places that need to be
+	fixed in this fashion.
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/script-fu/script-fu.c: s/INIT_I18N_UI/INIT_I18N/
+
+	* tools/gimp-remote.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/paint-funcs/paint-funcs-indexeda.c
+	* app/paint-funcs/paint-funcs.c
+	* app/tools/gimppathtool.c
+	* app/tools/path_tool.c
+	* modules/colorsel_triangle.c
+	* plug-ins/common/mpeg.c
+	* plug-ins/imagemap/imap_csim_parse.c: cleanups
+	
 2001-10-29  Michael Natterer  <mitch@gimp.org>
 
 	Cleanup weekend...
@@ -141,7 +184,8 @@
 	* app/*/makefile.msc : updated
 	* app/file/makefile.msc app/display/makefile.msc : new files
 
-	* app/user_install.c : make the G_OS_WIN32 part compile again (fn -> filename)
+	* app/user_install.c : make the G_OS_WIN32 part compile again 
+	(fn -> filename)
 
 	* app/core/gimptoolinfo.c (gimp_tool_info_init) : cosmetic change,
 	make implementation signature static like the local prototype

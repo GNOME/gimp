@@ -279,8 +279,8 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
 
       for (i = 0; i < dialog->n_families; i++)
         {
-          if (!g_strcasecmp (name, 
-                             pango_font_family_get_name (dialog->families[i])))
+          if (!g_ascii_strcasecmp (name, 
+                                   pango_font_family_get_name (dialog->families[i])))
             {
               row = i;
               break;

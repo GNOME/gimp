@@ -544,7 +544,7 @@ server_interface (void)
   GtkWidget *dlg;
   GtkWidget *table;
 
-  INIT_I18N_UI();
+  INIT_I18N();
 
   gimp_ui_init ("script-fu", FALSE);
 

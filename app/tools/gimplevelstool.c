@@ -1645,7 +1645,7 @@ levels_read_from_file (FILE *f)
       if (!fgets (buf, 50, f))
 	return FALSE;
 
-      gamma[i] = strtod(buf, &nptr);
+      gamma[i] = g_ascii_strtod (buf, &nptr);
 
       if (buf == nptr || errno == ERANGE)
 	return FALSE;
@@ -1671,17 +1671,19 @@ levels_read_from_file (FILE *f)
 static void
 levels_write_to_file (FILE *f)
 {
-  int i;
+  gint i;
+  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
   fprintf (f, "# GIMP Levels File\n");
 
   for (i = 0; i < 5; i++)
     {
-      fprintf (f, "%d %d %d %d %f\n",
+      fprintf (f, "%d %d %d %d %s\n",
 	       levels_dialog->low_input[i],
 	       levels_dialog->high_input[i],
 	       levels_dialog->low_output[i],
 	       levels_dialog->high_output[i],
-	       levels_dialog->gamma[i]);
+               g_ascii_formatd (buf,  G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                levels_dialog->gamma[i]));
     }
 }

@@ -19,8 +19,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -219,8 +217,8 @@ gimp_path_tool_finalize (GObject *object)
   path_tool = GIMP_PATH_TOOL (object);
 
 #ifdef PATH_TOOL_DEBUG
-  fprintf (stderr, "gimp_path_tool_free start\n");
-#endif PATH_TOOL_DEBUG
+  g_printerr ("gimp_path_tool_free start\n");
+#endif
 
   if (path_tool->cur_path)
     {
@@ -239,8 +237,8 @@ gimp_path_tool_control (GimpTool    *tool,
   GimpPathTool *path_tool;
 
 #ifdef PATH_TOOL_DEBUG
-  fprintf (stderr, "path_tool_control\n");
-#endif PATH_TOOL_DEBUG
+  g_printerr ("path_tool_control\n");
+#endif
 
   path_tool = GIMP_PATH_TOOL (tool);
 
@@ -275,14 +273,14 @@ gimp_path_tool_button_press (GimpTool       *tool,
   gint halfwidth, dummy;
 
 #ifdef PATH_TOOL_DEBUG
-  fprintf (stderr, "path_tool_button_press\n");
-#endif PATH_TOOL_DEBUG
+  g_printerr ("path_tool_button_press\n");
+#endif
 
   /* Transform window-coordinates to canvas-coordinates */
   gdisplay_untransform_coords_f (gdisp, bevent->x, bevent->y, &x, &y, TRUE);
 #ifdef PATH_TOOL_DEBUG
-  fprintf(stderr, "Clickcoordinates %.2f, %.2f\n",x,y);
-#endif PATH_TOOL_DEBUG
+  g_printerr ("Clickcoordinates %.2f, %.2f\n",x,y);
+#endif
   path_tool->click_x = x;
   path_tool->click_y = y;
   path_tool->click_modifier = bevent->state;
@@ -354,15 +352,15 @@ gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_anchor:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_anchor:\n");
+#endif
    
    grab_pointer = 1;
 
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -374,8 +372,8 @@ gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
    if (bevent->time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Doppelclick!\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Doppelclick!\n");
+#endif
    } else
       doubleclick=FALSE;
    last_click_time = bevent->time;
@@ -395,8 +393,8 @@ gimp_path_tool_button_press_anchor (GimpPathTool   *path_tool,
    p_sas = path_tool->single_active_segment;
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "p_sas: %p\n", p_sas);
-#endif PATH_TOOL_DEBUG
+   g_printerr ("p_sas: %p\n", p_sas);
+#endif
 
    if (path_tool->click_modifier & GDK_SHIFT_MASK) {
       if (path_tool->active_count == 1 && p_sas && p_sas != path_tool->click_segment &&
@@ -477,15 +475,15 @@ gimp_path_tool_button_press_handle (GimpPathTool   *path_tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_handle:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_handle:\n");
+#endif
    
    grab_pointer = 1;
 
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -497,8 +495,8 @@ gimp_path_tool_button_press_handle (GimpPathTool   *path_tool,
    if (bevent->time - last_click_time < 250) {
       doubleclick=TRUE;
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Doppelclick!\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Doppelclick!\n");
+#endif
    } else
       doubleclick=FALSE;
    last_click_time = bevent->time;
@@ -518,15 +516,15 @@ gimp_path_tool_button_press_canvas (GimpPathTool   *path_tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_canvas:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_canvas:\n");
+#endif
    
    grab_pointer = 1;
    
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current Path\n");
+#endif
       return 0;
    }
    
@@ -571,15 +569,15 @@ gimp_path_tool_button_press_curve (GimpPathTool   *path_tool,
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf(stderr, "path_tool_button_press_curve:\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_press_curve:\n");
+#endif
    
    grab_pointer = 1;
    
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current NPath\n");
-#endif PATH_TOOL_DEBUG
+      g_printerr ("Fatal error: No current NPath\n");
+#endif
       return 0;
    }
    
@@ -611,8 +609,8 @@ gimp_path_tool_button_release (GimpTool       *tool,
   GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
 
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_button_release\n");
-#endif PATH_TOOL_DEBUG
+   g_printerr ("path_tool_button_release\n");
+#endif
  
   path_tool->state &= ~PATH_TOOL_DRAG;
 
@@ -809,10 +807,9 @@ gimp_path_tool_cursor_update (GimpTool       *tool,
 #if 0
   gint     x, y, halfwidth, dummy, cursor_location;
   
-#idef PATH_TOOL_DEBUG
-  /* fprintf (stderr, "path_tool_cursor_update\n");
-   */
-#edif PATH_TOOL_DEBUG
+#ifdef PATH_TOOL_DEBUG
+  g_printerr ("path_tool_cursor_update\n");
+#endif
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
   /* get halfwidth in image coord */

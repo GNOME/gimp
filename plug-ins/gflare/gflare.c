@@ -1500,10 +1500,14 @@ gflare_read_int (gint *intvar, GFlareFile *gf)
 static void
 gflare_read_double (gdouble *dblvar, GFlareFile *gf)
 {
+  gchar buf[30];
+
   if (gf->error)
     return;
 
-  if (fscanf (gf->fp, "%le", dblvar) != 1)
+  if (fscanf (gf->fp, "%30s", buf) == 1)
+    *dblvar = g_ascii_strtod (buf, NULL);
+  else
     gf->error = TRUE;
 }
 
@@ -1578,6 +1582,7 @@ gflare_save (GFlare *gflare)
 {
   FILE	*fp;
   gchar *path;
+  gchar  buf[3][G_ASCII_DTOSTR_BUF_SIZE];
   static gboolean message_ok = FALSE;
 
   if (gflare->filename == NULL)
@@ -1624,25 +1629,38 @@ gflare_save (GFlare *gflare)
     }
 
   fprintf (fp, "%s", GFLARE_FILE_HEADER);
-  fprintf (fp, "%f %s\n", gflare->glow_opacity, gflare_modes[gflare->glow_mode]);
-  fprintf (fp, "%f %s\n", gflare->rays_opacity, gflare_modes[gflare->rays_mode]);
-  fprintf (fp, "%f %s\n", gflare->sflare_opacity, gflare_modes[gflare->sflare_mode]);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->glow_opacity);
+  fprintf (fp, "%s %s\n", buf[0], gflare_modes[gflare->glow_mode]);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->rays_opacity);
+  fprintf (fp, "%s %s\n", buf[0], gflare_modes[gflare->rays_mode]);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_opacity);
+  fprintf (fp, "%s %s\n", buf[0], gflare_modes[gflare->sflare_mode]);
 
   gflare_write_gradient_name (gflare->glow_radial, fp);
   gflare_write_gradient_name (gflare->glow_angular, fp);
   gflare_write_gradient_name (gflare->glow_angular_size, fp);
-  fprintf (fp, "%f %f %f\n", gflare->glow_size, gflare->glow_rotation, gflare->glow_hue);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->glow_size);
+  g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->glow_rotation);
+  g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->glow_hue);
+  fprintf (fp, "%s %s %s\n", buf[0], buf[1], buf[2]);
 
   gflare_write_gradient_name (gflare->rays_radial, fp);
   gflare_write_gradient_name (gflare->rays_angular, fp);
   gflare_write_gradient_name (gflare->rays_angular_size, fp);
-  fprintf (fp, "%f %f %f\n", gflare->rays_size, gflare->rays_rotation, gflare->rays_hue);
-  fprintf (fp, "%d %f\n", gflare->rays_nspikes, gflare->rays_thickness);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->rays_size);
+  g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->rays_rotation);
+  g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->rays_hue);
+  fprintf (fp, "%s %s %s\n", buf[0], buf[1], buf[2]);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->rays_thickness);
+  fprintf (fp, "%d %s\n", gflare->rays_nspikes, buf[0]);
 
   gflare_write_gradient_name (gflare->sflare_radial, fp);
   gflare_write_gradient_name (gflare->sflare_sizefac, fp);
   gflare_write_gradient_name (gflare->sflare_probability, fp);
-  fprintf (fp, "%f %f %f\n", gflare->sflare_size, gflare->sflare_rotation, gflare->sflare_hue);
+  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_size);
+  g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_rotation);
+  g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_hue);
+  fprintf (fp, "%s %s %s\n", buf[0], buf[1], buf[2]);
   fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed_time ? -1 : gflare->sflare_seed);
 
   fclose (fp);

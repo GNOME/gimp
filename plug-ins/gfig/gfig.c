@@ -1182,7 +1182,8 @@ gfig_load (const gchar *filename,
   gfig->draw_name = g_strdup (load_buf);
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
-  sscanf (load_buf, "Version: %f", &gfig->version);
+  if (strncmp (load_buf, "Version: ", 9) == 0)
+    gfig->version = g_ascii_strtod (load_buf + 9, NULL);
 
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   sscanf (load_buf, "ObjCount: %d", &load_count);
@@ -1448,7 +1449,8 @@ gfig_save_callbk (void)
   gint count = 0;
   gchar *savename;
   gchar *message;
-  gchar conv_buf[MAX_LOAD_LINE*3 +1];
+  gchar  buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar  conv_buf[MAX_LOAD_LINE*3 +1];
 
   savename = current_obj->filename;
 
@@ -1477,7 +1479,8 @@ gfig_save_callbk (void)
 
   gfig_name_encode (conv_buf, current_obj->draw_name);
   fprintf (fp, "Name: %s\n", conv_buf);
-  fprintf (fp, "Version: %f\n", current_obj->version);
+  fprintf (fp, "Version: %s\n", 
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", current_obj->version));
   objs = current_obj->obj_list;
 
   count = gfig_obj_counts (objs);

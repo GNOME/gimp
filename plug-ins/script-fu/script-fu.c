@@ -180,6 +180,8 @@ script_fu_run (gchar      *name,
 	       gint       *nreturn_vals,
 	       GimpParam **return_vals)
 {
+  INIT_I18N();
+
   siod_set_output_file (stdout);
 
   /*  Determine before we allow scripts to register themselves
@@ -274,8 +276,6 @@ script_fu_auxillary_init (void)
     { GIMP_PDB_INT32, "run_mode", "[Interactive], non-interactive" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
-
-  INIT_I18N_UI();
 
   gimp_install_temp_proc ("script_fu_refresh",
 			  _("Re-read all available scripts"),
