@@ -215,6 +215,8 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->sel_count      = 0;
   vector_tool->sel_anchor     = NULL;
   vector_tool->sel_stroke     = NULL;
+
+  vector_tool->saved_mode     = GIMP_VECTOR_MODE_CREATE;
 }
 
 
@@ -672,30 +674,53 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
+  GimpVectorTool    *vector_tool;
   GimpVectorOptions *options;
 
-  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+  vector_tool = GIMP_VECTOR_TOOL (tool);
+  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   if (key == TOGGLE_MASK)
     return;
 
-  if (state & MOVE_MASK)
+  if (key == INSDEL_MASK || key == MOVE_MASK)
     {
-      g_object_set (options,
-                    "vectors-edit-mode", GIMP_VECTOR_MODE_MOVE,
-                    NULL);
-    }
-  else if (state & INSDEL_MASK)
-    {
-      g_object_set (options,
-                    "vectors-edit-mode", GIMP_VECTOR_MODE_ADJUST,
-                    NULL);
-    }
-  else
-    {
-      g_object_set (options,
-                    "vectors-edit-mode", GIMP_VECTOR_MODE_CREATE,
-                    NULL);
+      GimpVectorMode button_mode;
+
+      button_mode = options->edit_mode;
+
+      if (press)
+        {
+          if (key == (state & (INSDEL_MASK | MOVE_MASK)))
+            {
+              /*  first modifier pressed  */
+
+              vector_tool->saved_mode = options->edit_mode;
+            }
+        }
+      else
+        {
+          if (! (state & (INSDEL_MASK | MOVE_MASK)))
+            {
+              /*  last modifier released  */
+
+              button_mode = vector_tool->saved_mode;
+            }
+        }
+
+      if (state & INSDEL_MASK)
+        {
+          button_mode = GIMP_VECTOR_MODE_ADJUST;
+        }
+      else if (state & MOVE_MASK)
+        {
+          button_mode = GIMP_VECTOR_MODE_MOVE;
+        }
+
+      if (button_mode != options->edit_mode)
+        {
+          g_object_set (options, "vectors-edit-mode", button_mode, NULL);
+        }
     }
 }
 

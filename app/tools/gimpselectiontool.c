@@ -121,15 +121,16 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 {
   GimpSelectionTool    *selection_tool;
   GimpSelectionOptions *options;
-  SelectOps             button_op;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
   options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  button_op = options->operation;
-
   if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
     {
+      SelectOps button_op;
+
+      button_op = options->operation;
+
       if (press)
         {
           if (key == (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
