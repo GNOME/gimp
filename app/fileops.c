@@ -762,6 +762,8 @@ file_save (int   image_ID,
 
   if ((gimage = gimage_get_ID (image_ID)) == NULL)
     return FALSE;
+  if (gimage_active_drawable (gimage) == NULL)
+    return FALSE;
 
   file_proc = save_file_proc;
   if (!file_proc)

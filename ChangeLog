@@ -5,6 +5,9 @@ Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
  	Matt Wilson (msw) to fix the crash with script-fu
 	 pdbs in dbbrowser.
 
+	* app/fileops.c: another patch from matt, this one to
+	fix the bug with saving images with no layers. 
+
 Sun Mar 22 14:23:03 EST 1998 Adrian Likins <adrian@gimp.org>
 
         * app/iscissors.c, app/tips_dialog.c, app/gradient.c,
