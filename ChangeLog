@@ -1,3 +1,40 @@
+Thu Mar 12 22:52:47 1998  Tim Janik  <timj@gimp.org>
+
+	* about_dialog.c:
+	* app_procs.c:
+	* brightness_contrast.c:
+	* brush_select.c:
+	* by_color_select.c:
+	* channel_ops.c:
+	* channels_dialog.c:
+	* color_balance.c:
+	* color_select.c:
+	* commands.c:
+	* convert.c:
+	* curves.c:
+	* fileops.c:
+	* gdisplay_ops.c:
+	* global_edit.c:
+	* gradient.c:
+	* histogram_tool.c:
+	* hue_saturation.c:
+	* indexed_palette.c:
+	* info_dialog.c:
+	* install.c:
+	* interface.c:
+	* layers_dialog.c:
+	* levels.c:
+	* main.c:
+	* palette.c:
+	* pattern_select.c:
+	* posterize.c:
+	* text_tool.c:
+	* threshold.c:
+	* tips_dialog.c:
+	* tools.c:
+	fixed a lot of the destroy handlers and delete_event handlers, still
+ 	not everything perfect, though.
+
 Wed Mar 11 22:02:03 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.20 release
