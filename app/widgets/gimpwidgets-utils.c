@@ -21,7 +21,20 @@
 
 #include "config.h"
 
+#include <errno.h>
+#include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib.h>
+
+#ifdef G_OS_WIN32
+#include "libbgimpbase/gimpwin32-io.h"
+#endif
 
 #include <gtk/gtk.h>
 
@@ -729,4 +742,64 @@ gimp_dialog_set_sensitive (GtkDialog *dialog,
     gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_CANCEL, sensitive);
 
   gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
+}
+
+gboolean
+gimp_text_buffer_save (GtkTextBuffer  *buffer,
+                       const gchar    *filename,
+                       gboolean        selection_only,
+                       GError        **error)
+{
+         GtkTextIter  start_iter;
+  GtkTextIter  end_iter;
+  gint         fd;
+  gchar	      *text_contents;
+
+  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  fd = open (filename, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+
+  if (fd == -1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   g_strerror (errno));
+      return FALSE;
+    }
+
+  if (selection_only)
+    gtk_text_buffer_get_selection_bounds (buffer, &start_iter, &end_iter);
+  else
+    gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+
+  text_contents = gtk_text_buffer_get_text (buffer,
+					    &start_iter, &end_iter, TRUE);
+
+  if (text_contents)
+    {
+      gint text_length = strlen (text_contents);
+
+      if (text_length > 0)
+        {
+          gint bytes_written;
+
+          bytes_written = write (fd, text_contents, text_length);
+
+          if (bytes_written != text_length)
+            {
+              g_free (text_contents);
+              close (fd);
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           g_strerror (errno));
+              return FALSE;
+            }
+        }
+
+      g_free (text_contents);
+    }
+
+  close (fd);
+
+  return TRUE;
 }

@@ -20,12 +20,11 @@
 #define __ERROR_CONSOLE_COMMANDS_H__
 
 
-void   error_console_clear_cmd_callback          (GtkAction *action,
-                                                  gpointer   data);
-void   error_console_save_all_cmd_callback       (GtkAction *action,
-                                                  gpointer   data);
-void   error_console_save_selection_cmd_callback (GtkAction *action,
-                                                  gpointer   data);
+void   error_console_clear_cmd_callback (GtkAction *action,
+                                         gpointer   data);
+void   error_console_save_cmd_callback  (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data);
 
 
 #endif /* __ERROR_CONSOLE_COMMANDS_H__ */

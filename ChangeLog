@@ -1,3 +1,16 @@
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch]: added gimp_text_buffer_save()
+	which saves a GtkTextBuffer's contents to a file.
+
+	* app/widgets/gimperrorconsole.c: use
+	gimp_editor_add_action_button() and removed all "clicked"
+	callbacks, including all file saving code.
+
+	* app/actions/error-console-actions.c
+	* app/actions/error-console-commands.[ch]: added the code removed
+	above to the action callbacks. Use gimp_text_buffer_save().
+
 2004-10-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.[ch]

@@ -41,18 +41,24 @@ static GimpActionEntry error_console_actions[] =
     GIMP_HELP_ERRORS_DIALOG },
 
   { "error-console-clear", GTK_STOCK_CLEAR,
-    N_("_Clear Errors"), "", NULL,
+    N_("_Clear Errors"), "",
+    N_("Clear errors"),
     G_CALLBACK (error_console_clear_cmd_callback),
-    GIMP_HELP_ERRORS_CLEAR },
+    GIMP_HELP_ERRORS_CLEAR }
+};
 
+static GimpEnumActionEntry error_console_save_actions[] =
+{
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
-    N_("Save _All Errors to File..."), "", NULL,
-    G_CALLBACK (error_console_save_all_cmd_callback),
+    N_("Save _All Errors to File..."), "",
+    N_("Save all errors"),
+    FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
   { "error-console-save-selection", GTK_STOCK_SAVE_AS,
-    N_("Save _Selection to File..."), "", NULL,
-    G_CALLBACK (error_console_save_selection_cmd_callback),
+    N_("Save _Selection to File..."), "",
+    N_("Save selection"),
+    TRUE,
     GIMP_HELP_ERRORS_SAVE }
 };
 
@@ -63,6 +69,11 @@ error_console_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  error_console_actions,
                                  G_N_ELEMENTS (error_console_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      error_console_save_actions,
+                                      G_N_ELEMENTS (error_console_save_actions),
+                                      G_CALLBACK (error_console_save_cmd_callback));
 }
 
 void
