@@ -121,6 +121,7 @@ GIMP_IS_PLUGIN_CONFIG_CLASS
 GimpRc
 gimp_rc_new
 gimp_rc_set_autosave
+gimp_rc_set_unknown_token
 gimp_rc_save
 gimp_rc_query
 <SUBSECTION Standard>
@@ -587,6 +588,7 @@ GimpDataFactory
 gimp_data_factory_new
 gimp_data_factory_data_init
 gimp_data_factory_data_save
+gimp_data_factory_data_save_single
 gimp_data_factory_data_free
 gimp_data_factory_data_new
 gimp_data_factory_data_duplicate
@@ -926,6 +928,7 @@ GIMP_IMAGE_MAP_GET_CLASS
 <TITLE>GimpItem</TITLE>
 GimpItem
 gimp_item_sink
+gimp_item_is_attached
 gimp_item_is_floating
 gimp_item_removed
 gimp_item_configure
@@ -1025,7 +1028,6 @@ GIMP_LAYER_GET_CLASS
 floating_sel_attach
 floating_sel_remove
 floating_sel_anchor
-floating_sel_reset
 floating_sel_to_layer
 floating_sel_store
 floating_sel_restore
@@ -1034,6 +1036,7 @@ floating_sel_relax
 floating_sel_composite
 floating_sel_boundary
 floating_sel_invalidate
+floating_sel_activate_drawable
 </SECTION>
 
 <SECTION>
@@ -1467,8 +1470,6 @@ GIMP_DISPLAY_OPTIONS_GET_CLASS
 <FILE>gimpdisplayshell</FILE>
 SCREEN_XRES
 SCREEN_YRES
-SCALESRC
-SCALEDEST
 SCALEFACTOR_X
 SCALEFACTOR_Y
 SCALEX
@@ -1626,11 +1627,11 @@ render_blend_white
 <SECTION>
 <FILE>gimpdisplayshell-scale</FILE>
 <TITLE>GimpDisplayShell-scale</TITLE>
-gimp_display_shell_scale_zoom_fraction
-gimp_display_shell_scale_calc_fraction
 gimp_display_shell_scale_setup
 gimp_display_shell_scale_set_dot_for_dot
 gimp_display_shell_scale
+gimp_display_shell_scale_get_fraction
+gimp_display_shell_scale_zoom_step
 gimp_display_shell_scale_fit
 gimp_display_shell_scale_by_values
 gimp_display_shell_scale_shrink_wrap
@@ -4786,7 +4787,6 @@ GimpLayerModeEffects
 GIMP_TYPE_TRANSFER_MODE
 GimpTransferMode
 GimpConvolutionType
-GimpChannelLutType
 GimpHueRange
 <SUBSECTION Standard>
 gimp_check_size_get_type
@@ -5235,6 +5235,7 @@ gimp_config_reset_properties
 gimp_config_string_append_escaped
 gimp_config_build_data_path
 gimp_config_build_plug_in_path
+gimp_config_build_writable_path
 gimp_config_file_copy
 gimp_config_file_backup_on_error
 </SECTION>
@@ -5962,7 +5963,7 @@ data_refresh_data_cmd_callback
 
 <SECTION>
 <FILE>debug-commands</FILE>
-ENABLE_DEBUG_ENTRIES
+ENABLE_DEBUG_MENU
 debug_dump_menus_cmd_callback
 debug_mem_profile_cmd_callback
 </SECTION>
@@ -6317,10 +6318,11 @@ InfoFieldType
 InfoField
 InfoDialog
 info_dialog_new
+info_dialog_show
+info_dialog_hide
+info_dialog_present
 info_dialog_notebook_new
 info_dialog_free
-info_dialog_popup
-info_dialog_popdown
 info_dialog_update
 info_dialog_add_label
 info_dialog_add_entry
@@ -6854,6 +6856,7 @@ plug_in_proc_def_free
 plug_in_proc_def_get_proc
 plug_in_proc_def_get_progname
 plug_in_proc_def_get_help_id
+plug_in_proc_def_compare_menu_path
 </SECTION>
 
 <SECTION>
