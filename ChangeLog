@@ -1,3 +1,16 @@
+2001-07-29  Sven Neumann  <sven@gimp.org>
+
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/docindex.[ch]
+	* app/file-save.c
+	* app/gdisplay.c
+	* app/gimpprogress.[ch]
+	* app/gimprc.c
+	* app/plug_in.c
+	* app/gui/gradient-editor.c
+	* app/gui/menus.[ch]: more GObject and const changes.
+
 2001-07-29  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/animationplay.c : REVERTED for all platforms

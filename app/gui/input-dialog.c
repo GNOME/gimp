@@ -222,25 +222,25 @@ input_dialog_create (void)
   gtk_widget_grab_default (GTK_INPUT_DIALOG (inputd)->close_button);
   gtk_widget_show(hbbox);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (devices_write_rc),
+  g_signal_connect (G_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
+                    "clicked",
+                    G_CALLBACK (devices_write_rc),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
-		      "clicked",
-		      GTK_SIGNAL_FUNC (devices_close_callback),
-		      inputd);
+  g_signal_connect (G_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
+                    "clicked",
+                    G_CALLBACK (devices_close_callback),
+                    inputd);
 
-  gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &inputd);
+  g_signal_connect (G_OBJECT (inputd), "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &inputd);
 
-  gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
-		      GTK_SIGNAL_FUNC (input_dialog_able_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (inputd), "disable_device",
-		      GTK_SIGNAL_FUNC (input_dialog_able_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (inputd), "enable_device",
+                    G_CALLBACK (input_dialog_able_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (inputd), "disable_device",
+                    G_CALLBACK (input_dialog_able_callback),
+                    NULL);
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (inputd,
@@ -819,10 +819,11 @@ device_status_create (void)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (device_info->context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      gtk_signal_connect_object_while_alive (GTK_OBJECT (device_info->context),
-					     "tool_changed",
-					     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-					     GTK_OBJECT (deviceD->tools[i]));
+      g_signal_connect_object (G_OBJECT (device_info->context),
+                               "tool_changed",
+                               G_CALLBACK (gimp_preview_set_viewable),
+                               G_OBJECT (deviceD->tools[i]),
+                               G_CONNECT_SWAPPED);
       gimp_gtk_drag_dest_set_by_type (deviceD->tools[i],
 				      GTK_DEST_DEFAULT_ALL,
 				      GIMP_TYPE_TOOL_INFO,
@@ -842,10 +843,9 @@ device_status_create (void)
 			     GIMP_COLOR_AREA_FLAT,
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
       gtk_widget_set_usize (deviceD->foregrounds[i], CELL_SIZE, CELL_SIZE);
-      gtk_signal_connect (GTK_OBJECT (deviceD->foregrounds[i]), 
-			  "color_changed",
-			  GTK_SIGNAL_FUNC (device_status_foreground_changed),
-			  device_info);
+      g_signal_connect (G_OBJECT (deviceD->foregrounds[i]), "color_changed",
+                        G_CALLBACK (device_status_foreground_changed),
+                        device_info);
       gtk_table_attach (GTK_TABLE (deviceD->table), 
 			deviceD->foregrounds[i],
 			2, 3, i, i+1,
@@ -858,10 +858,9 @@ device_status_create (void)
 			     GIMP_COLOR_AREA_FLAT,
 			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
       gtk_widget_set_usize (deviceD->backgrounds[i], CELL_SIZE, CELL_SIZE);
-      gtk_signal_connect (GTK_OBJECT (deviceD->backgrounds[i]), 
-			  "color_changed",
-			  GTK_SIGNAL_FUNC (device_status_background_changed),
-			  device_info);
+      g_signal_connect (G_OBJECT (deviceD->backgrounds[i]), "color_changed",
+                        G_CALLBACK (device_status_background_changed),
+                        device_info);
       gtk_table_attach (GTK_TABLE (deviceD->table), 
 			deviceD->backgrounds[i],
 			3, 4, i, i+1,
@@ -873,11 +872,10 @@ device_status_create (void)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (device_info->context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (device_info->context),
-	 "brush_changed",
-	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	 GTK_OBJECT (deviceD->brushes[i]));
+      g_signal_connect_object (G_OBJECT (device_info->context),"brush_changed",
+                               G_CALLBACK (gimp_preview_set_viewable),
+                               G_OBJECT (deviceD->brushes[i]),
+                               G_CONNECT_SWAPPED);
       gimp_gtk_drag_dest_set_by_type (deviceD->brushes[i],
 				      GTK_DEST_DEFAULT_ALL,
 				      GIMP_TYPE_BRUSH,
@@ -896,11 +894,11 @@ device_status_create (void)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (device_info->context)),
 			       CELL_SIZE, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (device_info->context),
-	 "pattern_changed",
-	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	 GTK_OBJECT (deviceD->patterns[i]));
+      g_signal_connect_object (G_OBJECT (device_info->context),
+                               "pattern_changed",
+                               G_CALLBACK (gimp_preview_set_viewable),
+                               G_OBJECT (deviceD->patterns[i]),
+                               G_CONNECT_SWAPPED);
       gimp_gtk_drag_dest_set_by_type (deviceD->patterns[i],
 				      GTK_DEST_DEFAULT_ALL,
 				      GIMP_TYPE_PATTERN,
@@ -919,11 +917,11 @@ device_status_create (void)
 	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (device_info->context)),
 			       CELL_SIZE * 2, CELL_SIZE, 0,
 			       FALSE, FALSE, TRUE);
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (device_info->context),
-	 "gradient_changed",
-	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	 GTK_OBJECT (deviceD->gradients[i]));
+      g_signal_connect_object (G_OBJECT (device_info->context),
+                               "gradient_changed",
+                               G_CALLBACK (gimp_preview_set_viewable),
+                               G_OBJECT (deviceD->gradients[i]),
+                               G_CONNECT_SWAPPED);
       gimp_gtk_drag_dest_set_by_type (deviceD->gradients[i],
 				      GTK_DEST_DEFAULT_ALL,
 				      GIMP_TYPE_GRADIENT,
@@ -943,9 +941,9 @@ device_status_create (void)
 
   device_status_update_current ();
 
-  gtk_signal_connect (GTK_OBJECT (deviceD->shell), "destroy",
-		      GTK_SIGNAL_FUNC (device_status_destroy_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (deviceD->shell), "destroy",
+                    G_CALLBACK (device_status_destroy_callback),
+                    NULL);
 
   return deviceD->shell;
 }
@@ -1182,7 +1180,8 @@ device_status_drop_gradient (GtkWidget    *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_gradient (device_info->context, GIMP_GRADIENT (viewable));
+      gimp_context_set_gradient (device_info->context, 
+                                 GIMP_GRADIENT (viewable));
     }
 }
 
@@ -1200,22 +1199,22 @@ static void
 device_status_context_connect  (GimpContext *context,
 				GdkDevice   *device)
 {
-  gtk_signal_connect (GTK_OBJECT (context), "foreground_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
-  gtk_signal_connect (GTK_OBJECT (context), "background_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
-  gtk_signal_connect (GTK_OBJECT (context), "tool_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
-  gtk_signal_connect (GTK_OBJECT (context), "brush_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
-  gtk_signal_connect (GTK_OBJECT (context), "pattern_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
-  gtk_signal_connect (GTK_OBJECT (context), "gradient_changed",
-		      GTK_SIGNAL_FUNC (device_status_data_changed),
-		      device);
+  g_signal_connect (G_OBJECT (context), "foreground_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
+  g_signal_connect (G_OBJECT (context), "background_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
+  g_signal_connect (G_OBJECT (context), "tool_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
+  g_signal_connect (G_OBJECT (context), "brush_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
+  g_signal_connect (G_OBJECT (context), "pattern_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
+  g_signal_connect (G_OBJECT (context), "gradient_changed",
+                    G_CALLBACK (device_status_data_changed),
+                    device);
 }

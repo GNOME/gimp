@@ -160,8 +160,8 @@ file_save (GimpImage   *gimage,
   args[0].value.pdb_int     = run_mode;
   args[1].value.pdb_int     = gimp_image_get_ID (gimage);
   args[2].value.pdb_int     = gimp_drawable_get_ID (gimp_image_active_drawable (gimage));
-  args[3].value.pdb_pointer = filename;
-  args[4].value.pdb_pointer = raw_filename;
+  args[3].value.pdb_pointer = (gpointer) filename;
+  args[4].value.pdb_pointer = (gpointer) raw_filename;
 
   return_vals = procedural_db_execute (gimage->gimp, proc->name, args);
 

@@ -1990,7 +1990,7 @@ menus_last_opened_update_labels (void)
 }
 
 void
-menus_last_opened_add (gchar *filename)
+menus_last_opened_add (const gchar *filename)
 {
   GString   *raw_filename;
   GSList    *list;

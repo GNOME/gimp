@@ -54,19 +54,19 @@ typedef struct
 
 typedef struct
 {
-  gboolean  boole;
-  gchar    *string;
-  gpointer  data;
+  gboolean     boole;
+  const gchar *string;
+  gpointer     data;
 } BoolCharPair;
 
 
 /*  forward declarations  */
 
 static void      create_idea_list                  (void);
-static void      idea_add_in_position              (gchar       *label,
+static void      idea_add_in_position              (const gchar *label,
 						    gint         position);
 static void      open_idea_window                  (void);
-static void      open_or_raise                     (gchar       *file_name,
+static void      open_or_raise                     (const gchar *file_name,
 						    gboolean     try_raise);
 
 static void      idea_open_callback                (GtkWidget   *widget,
@@ -176,7 +176,7 @@ document_index_free (void)
 }
 
 void
-document_index_add (gchar *title)
+document_index_add (const gchar *title)
 {
   idea_add_in_position (title, 0);
 }
@@ -233,7 +233,7 @@ static void
 load_from_list (gpointer data,
 		gpointer data_null)
 {
-  idea_add_in_position ((gchar *) data, -1);
+  idea_add_in_position ((const gchar *) data, -1);
 }
 
 static void
@@ -392,9 +392,9 @@ check_needed_list (gpointer data,
 }
 
 static void
-idea_add_in_position_with_select (gchar    *title,
-				  gint      position,
-				  gboolean  select)
+idea_add_in_position_with_select (const gchar *title,
+				  gint         position,
+				  gboolean     select)
 {
   BoolCharPair  pair;
 
@@ -480,8 +480,8 @@ idea_add_in_position_with_select (gchar    *title,
 }
 
 static void
-idea_add_in_position (gchar *title,
-		      gint   position)
+idea_add_in_position (const gchar *title,
+		      gint         position)
 {
   idea_add_in_position_with_select (title, position, TRUE);
 }
@@ -508,8 +508,8 @@ raise_if_match (gpointer data,
 }
 
 static void
-open_or_raise (gchar    *file_name,
-	       gboolean  try_raise)
+open_or_raise (const gchar *file_name,
+	       gboolean     try_raise)
 {
   BoolCharPair pair;
 

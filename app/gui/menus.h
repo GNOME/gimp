@@ -64,7 +64,7 @@ void   menus_set_state                  (gchar                 *path,
 					 gboolean               state);
 void   menus_destroy                    (gchar                 *path);
 
-void   menus_last_opened_add            (gchar                 *filename);
+void   menus_last_opened_add            (const gchar           *filename);
 
 
 #endif /* __MENUS_H__ */

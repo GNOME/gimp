@@ -585,8 +585,8 @@ gimprc_parse_file (gchar *filename)
 
   if (! g_path_is_absolute (filename))
     {
-      gchar *home_dir = g_get_home_dir ();
-      gchar *home_dir_sep;
+      const gchar *home_dir = g_get_home_dir ();
+      gchar       *home_dir_sep;
 
       if (home_dir != NULL)
 	{
@@ -1990,7 +1990,7 @@ transform_path (gchar    *path,
 {
   gint          length      = 0;
   gchar        *new_path;
-  gchar        *home;
+  const gchar  *home;
   gchar        *token;
   gchar        *tmp;
   gchar        *tmp2;

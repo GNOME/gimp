@@ -32,22 +32,22 @@
 
 struct _GimpProgress
 {
-  GDisplay      *gdisp;             /* gdisp in use, or NULL*/
+  GDisplay  *gdisp;            /* gdisp in use, or NULL*/
 
   /* next four fields are only valid if gdisp is NULL */
-  GtkWidget     *dialog;	    /* progress dialog, NULL if using gdisp */
-  GtkWidget     *dialog_label;
-  GtkWidget     *progressbar;
-  GtkWidget     *cancelbutton;
+  GtkWidget *dialog;           /* progress dialog, NULL if using gdisp */
+  GtkWidget *dialog_label;
+  GtkWidget *progressbar;
+  GtkWidget *cancelbutton;
 
-  GtkSignalFunc  cancel_callback;   /* callback to remove, or NULL */
-  gpointer       cancel_data;
+  GCallback  cancel_callback;  /* callback to remove, or NULL */
+  gpointer   cancel_data;
 };
 
 /* prototypes */
-static void   progress_signal_setup (GimpProgress  *progress,
-				     GtkSignalFunc  cancel_callback,
-				     gpointer       cancel_data);
+static void   progress_signal_setup (GimpProgress *progress,
+				     GCallback     cancel_callback,
+				     gpointer      cancel_data);
 
 
 /* These progress bar routines are re-entrant, and so should be
@@ -71,11 +71,11 @@ static void   progress_signal_setup (GimpProgress  *progress,
  * shown to the user if it would mean creating a new window.
  */
 GimpProgress *
-progress_start (GDisplay      *gdisp,
-		const char    *message,
-		gboolean       important,
-		GtkSignalFunc  cancel_callback,
-		gpointer       cancel_data)
+progress_start (GDisplay   *gdisp,
+		const char *message,
+		gboolean    important,
+		GCallback   cancel_callback,
+		gpointer    cancel_data)
 {
   GimpProgress *p;
   guint         cid;
@@ -154,10 +154,10 @@ progress_start (GDisplay      *gdisp,
 /* Update the message and/or the callbacks for a progress and reset
  * the bar to zero, with the minimum of disturbance to the user. */
 GimpProgress *
-progress_restart (GimpProgress  *p,
-		  const char    *message,
-		  GtkSignalFunc  cancel_callback,
-		  gpointer       cancel_data)
+progress_restart (GimpProgress *p,
+		  const char   *message,
+		  GCallback     cancel_callback,
+		  gpointer      cancel_data)
 {
   int cid;
   GtkWidget *bar;
@@ -286,9 +286,9 @@ progress_end (GimpProgress *p)
 
 /* Helper function to add or remove signals */
 static void
-progress_signal_setup (GimpProgress  *p,
-		       GtkSignalFunc  cancel_callback,
-		       gpointer       cancel_data)
+progress_signal_setup (GimpProgress *p,
+                       GCallback     cancel_callback,
+		       gpointer      cancel_data)
 {
   GtkWidget *button;
   GtkWidget *dialog;

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMPP_ROGRESS_H__
-#define __GIMPP_ROGRESS_H__
+#ifndef __GIMP_PROGRESS_H__
+#define __GIMP_PROGRESS_H__
 
 /* Progress bars for use internally by the main GIMP application. */
 
@@ -26,11 +26,11 @@
 GimpProgress * progress_start            (GDisplay      *gdisp,
 					  const gchar   *message,
 					  gboolean       important,
-					  GtkSignalFunc  cancel_callback,
+					  GCallback      cancel_callback,
 					  gpointer       cancel_data);
 GimpProgress * progress_restart          (GimpProgress  *progress,
 					  const gchar   *message,
-					  GtkSignalFunc  cancel_callback,
+					  GCallback      cancel_callback,
 					  gpointer       cancel_data);
 void           progress_update           (GimpProgress  *progress,
 					  gdouble        percentage);

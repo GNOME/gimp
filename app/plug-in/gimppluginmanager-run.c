@@ -2358,10 +2358,10 @@ static void
 plug_in_init_file (const gchar *filename,
 		   gpointer     loader_data)
 {
-  GSList    *tmp;
-  PlugInDef *plug_in_def;
-  gchar     *plug_in_name;
-  gchar     *name;
+  GSList      *tmp;
+  PlugInDef   *plug_in_def;
+  const gchar *plug_in_name;
+  const gchar *name;
 
   name = g_basename (filename);
 
@@ -3529,10 +3529,12 @@ plug_in_progress_init (PlugIn *plug_in,
 
   if (plug_in->progress)
     plug_in->progress = progress_restart (plug_in->progress, message,
-					  plug_in_progress_cancel, plug_in);
+					  G_CALLBACK (plug_in_progress_cancel),
+                                          plug_in);
   else
     plug_in->progress = progress_start (gdisp, message, TRUE,
-					plug_in_progress_cancel, plug_in);
+					G_CALLBACK (plug_in_progress_cancel), 
+                                        plug_in);
 }
 
 void

@@ -23,7 +23,7 @@
 GtkWidget * document_index_create     (void);
 void        document_index_free       (void);
 
-void        document_index_add        (gchar *label);
+void        document_index_add        (const gchar *label);
 
 FILE      * document_index_parse_init (void);
 gchar     * document_index_parse_line (FILE  *fp);

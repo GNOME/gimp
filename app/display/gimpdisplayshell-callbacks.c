@@ -211,12 +211,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
       gdk_gc_set_exposures (gdisp->scroll_gc, TRUE);
 
       /*  set up the scrollbar observers  */
-      gtk_signal_connect (GTK_OBJECT (gdisp->hsbdata), "value_changed",
-			  GTK_SIGNAL_FUNC (gdisplay_hscrollbar_update),
-			  gdisp);
-      gtk_signal_connect (GTK_OBJECT (gdisp->vsbdata), "value_changed",
-			  GTK_SIGNAL_FUNC (gdisplay_vscrollbar_update),
-			  gdisp);
+      g_signal_connect (G_OBJECT (gdisp->hsbdata), "value_changed",
+                        G_CALLBACK (gdisplay_hscrollbar_update),
+                        gdisp);
+      g_signal_connect (G_OBJECT (gdisp->vsbdata), "value_changed",
+                        G_CALLBACK (gdisplay_vscrollbar_update),
+                        gdisp);
 
       /*  setup scale properly  */
       setup_scale (gdisp);
@@ -287,10 +287,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	   * -Yosh
 	   */
 	  if (key_signal_id == 0)
-	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
-						"key_press_event",
-						GTK_SIGNAL_FUNC (gtk_true),
-						NULL);
+	    key_signal_id = g_signal_connect (G_OBJECT (canvas),
+                                              "key_press_event",
+                                              G_CALLBACK (gtk_true),
+                                              NULL);
 
 	  /* FIXME!!! This code is ugly */
 
@@ -421,7 +421,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* Lame hack. See above */
 	  if (key_signal_id)
 	    {
-	      gtk_signal_disconnect (GTK_OBJECT (canvas), key_signal_id);
+	      g_signal_handler_disconnect (G_OBJECT (canvas), key_signal_id);
 	      key_signal_id = 0;
 	    }
 
@@ -808,12 +808,10 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 					1, event->time);
     }
 
-  /*  Stop the signal emission so the button doesn't grab the
-   *  pointer away from us
-   */
-  gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
+  /* Return TRUE to stop signal emission so the button doesn't grab the
+   * pointer away from us. */
 
-  return FALSE;
+  return TRUE;
 }
 
 void

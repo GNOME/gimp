@@ -264,10 +264,10 @@ gdisplay_new (GimpImage *gimage,
   /* We're interested in clean and dirty signals so we can update the
    * title if need be.
    */
-  gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
-		      GTK_SIGNAL_FUNC (gdisplay_cleandirty_handler), gdisp);
-  gtk_signal_connect (GTK_OBJECT (gimage), "clean",
-		      GTK_SIGNAL_FUNC (gdisplay_cleandirty_handler), gdisp);
+  g_signal_connect (G_OBJECT (gimage), "dirty",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
+  g_signal_connect (G_OBJECT (gimage), "clean",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
 
   return gdisp;
 }
@@ -445,7 +445,7 @@ gdisplay_delete (GDisplay *gdisp)
 #endif /* DISPLAY_FILTERS */
 
   /* get rid of signals handled by this display */
-  gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
+  g_signal_handlers_disconnect_by_data (G_OBJECT (gdisp->gimage), gdisp);
 
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
@@ -2597,7 +2597,7 @@ gdisplay_reconnect (GDisplay  *gdisp,
       gdisp->idle_render.active = FALSE;
     }
 
-  gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
+  g_signal_handlers_disconnect_by_data (G_OBJECT (gdisp->gimage), gdisp);
   gdisp->gimage->disp_count--;
   g_object_unref (G_OBJECT (gdisp->gimage));
 
@@ -2611,11 +2611,11 @@ gdisplay_reconnect (GDisplay  *gdisp,
   gtk_object_ref (GTK_OBJECT (gimage));
   gtk_object_sink (GTK_OBJECT (gimage));
 
-  /* reconnect our clean / dirty signals */
-  gtk_signal_connect (GTK_OBJECT (gimage), "dirty",
-		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
-  gtk_signal_connect (GTK_OBJECT (gimage), "clean",
-		      GTK_SIGNAL_FUNC(gdisplay_cleandirty_handler), gdisp);
+  /*  reconnect our clean / dirty signal_handlers  */
+  g_signal_connect (G_OBJECT (gimage), "dirty",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
+  g_signal_connect (G_OBJECT (gimage), "clean",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
 
   gdisplays_update_title (gimage);
 
