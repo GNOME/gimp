@@ -1,3 +1,13 @@
+2003-10-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpcoreconfig.c: increased default undo-size to 4 MB.
+
+	* app/config/gimprc-blurbs.h (UNDO_SIZE_BLURB): attempt to improve
+	the description of the undo-size setting.
+
+	* app/gui/image-menu.c (image_menu_entries): changed the default
+	shortcut for Redo from the unergonmic Shift-Ctrl-Z to Ctrl-Y.
+
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmoveoptions.c (gimp_move_options_gui): changed

@@ -330,7 +330,8 @@ N_("Sets the minimal number of operations that can be undone. More undo " \
 
 #define UNDO_SIZE_BLURB \
 N_("Sets an upper limit to the memory that is used per image to keep " \
-   "operations on the undo stack.")
+   "operations on the undo stack. Regardless of this setting, at least " \
+   "as many undo-levels as configured can be undone.")
 
 #define USE_HELP_BLURB  \
 N_("When enabled, pressing F1 will open the help browser.")

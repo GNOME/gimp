@@ -222,7 +222,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 GIMP_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,
                                     "undo-size", UNDO_SIZE_BLURB,
-                                    0, G_MAXULONG, 1 << 20,
+                                    0, G_MAXULONG, 1 << 22,
                                     GIMP_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
