@@ -1,5 +1,6 @@
 Mon Aug 16 20:48:33 1999 Adrian Likins <alikins@redhat.com>
 
+	* app/Makefile.am
 	* app/gimpbrushhose.c
 	* app/gimpbrushhose.h: new files to implement a GimpBrushHose
 	type. The idea being its derived from gimpbrushes, so we can
