@@ -1,5 +1,15 @@
 2004-09-29  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/gimpfu.py: applied slightly tweaked patch
+	from Joao S. O. Bueno, which adds a mutliline text field (PF_TEXT) and
+	untabbifies things. Closes bug #153921.
+
+	* plug-ins/pygimp/plug-ins/gimpplugin.py
+	* plug-ins/pygimp/plug-ins/gimpshelf.py
+	* plug-ins/pygimp/plug-ins/gimpui.py: Untabbify.
+
+2004-09-29  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/gtkcons.py: minor tweak to history
 	behavior.
 
@@ -10,7 +20,7 @@
 	* plug-ins/pygimp/plug-ins/pdbbrowse.py
 	* plug-ins/pygimp/plug-ins/shadow_bevel.py
 	* plug-ins/pygimp/plug-ins/sphere.py
-	* plug-ins/pygimp/plug-ins/whirlpinch.py: Untabbify
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: Untabbify.
 
 2004-09-29  Sven Neumann  <sven@gimp.org>
 

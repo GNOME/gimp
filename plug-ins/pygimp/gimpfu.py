@@ -20,19 +20,19 @@ A typical gimpfu plugin would look like this:
   from gimpfu import *
 
   def plugin_func(image, drawable, args):
-	  #do what plugins do best
+              #do what plugins do best
   register(
-	  "plugin_func",
-	  "blurb",
-	  "help message",
-	  "author",
-	  "copyright",
-	  "year",
-	  "<Image>/Somewhere/My plugin",
-	  "*",
-	  [(PF_STRING, "arg", "The argument", "default-value")],
-	  [],
-	  plugin_func)
+              "plugin_func",
+              "blurb",
+              "help message",
+              "author",
+              "copyright",
+              "year",
+              "<Image>/Somewhere/My plugin",
+              "*",
+              [(PF_STRING, "arg", "The argument", "default-value")],
+              [],
+              plugin_func)
   main()
 
 The call to "from gimpfu import *" will import all the gimp constants into
@@ -90,6 +90,7 @@ PF_BRUSH       = 1005
 PF_PATTERN     = 1006
 PF_GRADIENT    = 1007
 PF_RADIO       = 1008
+PF_TEXT        = 1009
 
 _type_mapping = {
     PF_INT8        : PDB_INT8,
@@ -119,92 +120,92 @@ _type_mapping = {
     PF_PATTERN     : PDB_STRING,
     PF_GRADIENT    : PDB_STRING,
     PF_RADIO       : PDB_STRING,
+    PF_TEXT        : PDB_STRING,
 }
 
 _registered_plugins_ = {}
 
 def register(func_name, blurb, help, author, copyright, date, menupath,
-	     imagetypes, params, results, function,
-	     on_query=None, on_run=None):
+                 imagetypes, params, results, function,
+                 on_query=None, on_run=None):
     '''This is called to register a new plugin.'''
     # First perform some sanity checks on the data
     def letterCheck(str):
-	allowed = _string.letters + _string.digits + '_'
-	for ch in str:
-	    if not ch in allowed:
-		return 0
-	else:
-	    return 1
+        allowed = _string.letters + _string.digits + '_'
+        for ch in str:
+            if not ch in allowed:
+                    return 0
+        else:
+            return 1
     if not letterCheck(func_name):
-	raise error, "function name contains illegal characters"
+        raise error, "function name contains illegal characters"
     for ent in params:
-	if len(ent) < 4:
-	    raise error, ("parameter definition must contain at least 4 "
-                          "elements (%s given: %s)" % (len(ent), ent))
-	if type(ent[0]) != type(42):
-	    raise error, "parameter types must be integers"
-	if not letterCheck(ent[1]):
-	    raise error, "parameter name contains illegal characters"
+        if len(ent) < 4:
+            raise error, ("parameter definition must contain at least 4 "
+                        "elements (%s given: %s)" % (len(ent), ent))
+        if type(ent[0]) != type(42):
+            raise error, "parameter types must be integers"
+        if not letterCheck(ent[1]):
+            raise error, "parameter name contains illegal characters"
     for ent in results:
-	if len(ent) < 3:
-	    raise error, ("result definition must contain at least 3 elements "
-                          "(%s given: %s)" % (len(ent), ent))
-	if type(ent[0]) != type(42):
-	    raise error, "result types must be integers"
-	if not letterCheck(ent[1]):
-	    raise error, "result name contains illegal characters"
+        if len(ent) < 3:
+            raise error, ("result definition must contain at least 3 elements "
+                        "(%s given: %s)" % (len(ent), ent))
+        if type(ent[0]) != type(42):
+            raise error, "result types must be integers"
+        if not letterCheck(ent[1]):
+            raise error, "result name contains illegal characters"
     if menupath[:8] == '<Image>/' or \
        menupath[:7] == '<Load>/' or \
        menupath[:7] == '<Save>/' or \
        menupath[:10] == '<Toolbox>/':
-	plugin_type = PLUGIN
+        plugin_type = PLUGIN
     else:
-	raise error, "Invalid menu path"
+        raise error, "Invalid menu path"
 
     if not func_name[:7] == 'python_' and \
        not func_name[:10] == 'extension_' and \
        not func_name[:8] == 'plug_in_' and \
        not func_name[:5] == 'file_':
-	func_name = 'python_fu_' + func_name
+           func_name = 'python_fu_' + func_name
 
     _registered_plugins_[func_name] = (blurb, help, author, copyright,
-				       date, menupath, imagetypes,
-				       plugin_type, params, results,
-				       function, on_query, on_run)
+                                       date, menupath, imagetypes,
+                                       plugin_type, params, results,
+                                       function, on_query, on_run)
 
 file_params = [(PDB_STRING, "filename", "The name of the file"),
-	       (PDB_STRING, "raw_filename", "The name of the file")]
+               (PDB_STRING, "raw_filename", "The name of the file")]
 
 def _query():
     for plugin in _registered_plugins_.keys():
-	(blurb, help, author, copyright, date,
-	 menupath, imagetypes, plugin_type,
-	 params, results, function,
+        (blurb, help, author, copyright, date,
+         menupath, imagetypes, plugin_type,
+         params, results, function,
          on_query, on_run) = _registered_plugins_[plugin]
 
-	fn = lambda x: (_type_mapping[x[0]], x[1], x[2])
-	params = map(fn, params)
-	# add the run mode argument ...
-	params.insert(0, (PDB_INT32, "run_mode",
-			  "Interactive, Non-Interactive"))
-	if plugin_type == PLUGIN:
-	    if menupath[:7] == '<Load>/':
-		params[1:1] = file_params
-	    elif menupath[:10] != '<Toolbox>/':
-		params.insert(1, (PDB_IMAGE, "image",
-				  "The image to work on"))
-		params.insert(2, (PDB_DRAWABLE, "drawable",
-				  "The drawable to work on"))
+        fn = lambda x: (_type_mapping[x[0]], x[1], x[2])
+        params = map(fn, params)
+        # add the run mode argument ...
+        params.insert(0, (PDB_INT32, "run_mode",
+                                    "Interactive, Non-Interactive"))
+        if plugin_type == PLUGIN:
+            if menupath[:7] == '<Load>/':
+                params[1:1] = file_params
+            elif menupath[:10] != '<Toolbox>/':
+                params.insert(1, (PDB_IMAGE, "image",
+                                  "The image to work on"))
+                params.insert(2, (PDB_DRAWABLE, "drawable",
+                                  "The drawable to work on"))
+                if menupath[:7] == '<Save>/':
+                    params[3:3] = file_params
 
-		if menupath[:7] == '<Save>/':
-		    params[3:3] = file_params
-
-	results = map(fn, results)
-	gimp.install_procedure(plugin, blurb, help, author, copyright,
-			       date, menupath, imagetypes, plugin_type,
-			       params, results)
-	if on_query:
-	    on_query()
+        results = map(fn, results)
+        gimp.install_procedure(plugin, blurb, help, author, copyright,
+                               date, menupath, imagetypes, plugin_type,
+                               params, results)
+        if on_query:
+            on_query()
 
 def _get_defaults(func_name):
     import gimpshelf
@@ -215,10 +216,10 @@ def _get_defaults(func_name):
 
     key = "python-fu-save--" + func_name
     if gimpshelf.shelf.has_key(key):
-	return gimpshelf.shelf[key]
+        return gimpshelf.shelf[key]
     else:
-	# return the default values
-	return map(lambda x: x[3], params)
+        # return the default values
+        return map(lambda x: x[3], params)
 
 def _set_defaults(func_name, defaults):
     import gimpshelf
@@ -233,8 +234,8 @@ def _interact(func_name, start_params):
      on_query, on_run) = _registered_plugins_[func_name]
 
     def run_script(run_params):
-	params = start_params + tuple(run_params)
-	return apply(function, params)
+        params = start_params + tuple(run_params)
+        return apply(function, params)
 
     # short circuit for no parameters ...
     if len(params) == 0:
@@ -251,73 +252,96 @@ def _interact(func_name, start_params):
     defaults = _get_defaults(func_name)
 
     class EntryValueError(Exception):
-	pass
+        pass
 
     def error_dialog(parent, msg):
-	dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
-				gtk.MESSAGE_WARNING, gtk.BUTTONS_CLOSE,
-				msg)
-	dlg.run()
-	dlg.destroy()
+        dlg = gtk.MessageDialog(parent, gtk.DIALOG_DESTROY_WITH_PARENT,
+                                        gtk.MESSAGE_WARNING, gtk.BUTTONS_CLOSE,
+                                        msg)
+        dlg.run()
+        dlg.destroy()
 
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
-	def __init__(self, default=''):
-	    gtk.Entry.__init__(self)
-	    self.set_text(str(default))
-	def get_value(self):
-	    return self.get_text()
+        def __init__(self, default=''):
+            gtk.Entry.__init__(self)
+            self.set_text(str(default))
+        def get_value(self):
+            return self.get_text()
+
+    class TextEntry(gtk.ScrolledWindow):
+        def __init__ (self, default=''):
+            gtk.ScrolledWindow.__init__(self)
+            self.set_shadow_type(gtk.SHADOW_IN)
+            
+            self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+            self.set_size_request(100, -1)
+
+            self.view = gtk.TextView()
+            self.add(self.view)
+            self.view.show()
+
+            self.buffer = self.view.get_buffer()
+
+            self.set_value(str(default))
+            
+        def set_value (self, text):
+            self.buffer.set_text(text)
+        def get_value(self):
+            return self.buffer.get_text(self.buffer.get_start_iter(),
+                                        self.buffer.get_end_iter())
+
     class IntEntry(StringEntry):
-	def get_value(self):
-	    try:
-		return int(self.get_text())
-	    except ValueError, e:
-		raise EntryValueError, e.args
+        def get_value(self):
+            try:
+                return int(self.get_text())
+            except ValueError, e:
+                raise EntryValueError, e.args
     class FloatEntry(StringEntry):
-	def get_value(self):
-	    try:
-		return float(self.get_text())
-	    except ValueError, e:
-		raise EntryValueError, e.args
+            def get_value(self):
+                try:
+                    return float(self.get_text())
+                except ValueError, e:
+                    raise EntryValueError, e.args
 #    class ArrayEntry(StringEntry):
-#	def get_value(self):
-#	    return eval(self.get_text(), {}, {})
+#            def get_value(self):
+#                return eval(self.get_text(), {}, {})
     class SliderEntry(gtk.HScale):
-	# bounds is (upper, lower, step)
-	def __init__(self, default=0, bounds=(0, 100, 5)):
-	    self.adj = gtk.Adjustment(default, bounds[0],
-				      bounds[1], bounds[2],
-				      bounds[2], bounds[2])
-	    gtk.HScale.__init__(self, self.adj)
-	def get_value(self):
-	    return self.adj.value
+        # bounds is (upper, lower, step)
+        def __init__(self, default=0, bounds=(0, 100, 5)):
+            self.adj = gtk.Adjustment(default, bounds[0],
+                                      bounds[1], bounds[2],
+                                      bounds[2], bounds[2])
+            gtk.HScale.__init__(self, self.adj)
+        def get_value(self):
+            return self.adj.value
     class SpinnerEntry(gtk.SpinButton):
-	# bounds is (upper, lower, step)
-	def __init__(self, default=0, bounds=(0, 100, 5)):
-	    self.adj = gtk.Adjustment(default, bounds[0],
-				      bounds[1], bounds[2],
-				      bounds[2], bounds[2])
-	    gtk.SpinButton.__init__(self, self.adj, 1, 0)
-	def get_value(self):
-	    try:
-		return int(self.get_text())
-	    except ValueError, e:
-		raise EntryValueError, e.args
+        # bounds is (upper, lower, step)
+        def __init__(self, default=0, bounds=(0, 100, 5)):
+            self.adj = gtk.Adjustment(default, bounds[0],
+                                        bounds[1], bounds[2],
+                                        bounds[2], bounds[2])
+            gtk.SpinButton.__init__(self, self.adj, 1, 0)
+        def get_value(self):
+            try:
+                return int(self.get_text())
+            except ValueError, e:
+                raise EntryValueError, e.args
     class ToggleEntry(gtk.ToggleButton):
-	def __init__(self, default=0):
-	    gtk.ToggleButton.__init__(self)
-	    self.label = gtk.Label("No")
-	    self.add(self.label)
-	    self.label.show()
-	    self.connect("toggled", self.changed)
-	    self.set_active(default)
-	def changed(self, tog):
-	    if tog.get_active():
-		self.label.set_text("Yes")
-	    else:
-		self.label.set_text("No")
-	def get_value(self):
-	    return self.get_active()
+        def __init__(self, default=0):
+            gtk.ToggleButton.__init__(self)
+            self.label = gtk.Label("No")
+            self.add(self.label)
+            self.label.show()
+            self.connect("toggled", self.changed)
+            self.set_active(default)
+        def changed(self, tog):
+            if tog.get_active():
+                self.label.set_text("Yes")
+            else:
+                self.label.set_text("No")
+        def get_value(self):
+            return self.get_active()
     class RadioEntry(gtk.Frame):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
             gtk.Frame.__init__(self)
@@ -340,45 +364,46 @@ def _interact(func_name, start_params):
             return self.active_value
 
     _edit_mapping = {
-	PF_INT8        : IntEntry,
-	PF_INT16       : IntEntry,
-	PF_INT32       : IntEntry,
-	PF_FLOAT       : FloatEntry,
-	PF_STRING      : StringEntry,
-	#PF_INT8ARRAY   : ArrayEntry,
-	#PF_INT16ARRAY  : ArrayEntry,
-	#PF_INT32ARRAY  : ArrayEntry,
-	#PF_FLOATARRAY  : ArrayEntry,
-	#PF_STRINGARRAY : ArrayEntry,
-	PF_COLOUR      : gimpui.ColourSelector,
-	PF_REGION      : IntEntry,  # should handle differently ...
-	PF_IMAGE       : gimpui.ImageSelector,
-	PF_LAYER       : gimpui.LayerSelector,
-	PF_CHANNEL     : gimpui.ChannelSelector,
-	PF_DRAWABLE    : gimpui.DrawableSelector,
+            PF_INT8        : IntEntry,
+            PF_INT16       : IntEntry,
+            PF_INT32       : IntEntry,
+            PF_FLOAT       : FloatEntry,
+            PF_STRING      : StringEntry,
+            #PF_INT8ARRAY   : ArrayEntry,
+            #PF_INT16ARRAY  : ArrayEntry,
+            #PF_INT32ARRAY  : ArrayEntry,
+            #PF_FLOATARRAY  : ArrayEntry,
+            #PF_STRINGARRAY : ArrayEntry,
+            PF_COLOUR      : gimpui.ColourSelector,
+            PF_REGION      : IntEntry,  # should handle differently ...
+            PF_IMAGE       : gimpui.ImageSelector,
+            PF_LAYER       : gimpui.LayerSelector,
+            PF_CHANNEL     : gimpui.ChannelSelector,
+            PF_DRAWABLE    : gimpui.DrawableSelector,
 
-	PF_TOGGLE      : ToggleEntry,
-	PF_SLIDER      : SliderEntry,
-	PF_SPINNER     : SpinnerEntry,
-	PF_RADIO       : RadioEntry,
+            PF_TOGGLE      : ToggleEntry,
+            PF_SLIDER      : SliderEntry,
+            PF_SPINNER     : SpinnerEntry,
+            PF_RADIO       : RadioEntry,
 
-	PF_FONT        : gimpui.FontSelector,
-	PF_FILE        : gimpui.FileSelector,
-	PF_BRUSH       : gimpui.BrushSelector,
-	PF_PATTERN     : gimpui.PatternSelector,
-	PF_GRADIENT    : gimpui.GradientSelector,
+            PF_FONT        : gimpui.FontSelector,
+            PF_FILE        : gimpui.FileSelector,
+            PF_BRUSH       : gimpui.BrushSelector,
+            PF_PATTERN     : gimpui.PatternSelector,
+            PF_GRADIENT    : gimpui.GradientSelector,
+            PF_TEXT        : TextEntry
     }
 
     if on_run:
-	on_run()
+        on_run()
 
     need_progress = menupath[:8] != '<Image>/'
 
     tooltips = gtk.Tooltips()
 
     dialog = gtk.Dialog(func_name, None, 0,
-			(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-			 gtk.STOCK_OK, gtk.RESPONSE_OK))
+                        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                        gtk.STOCK_OK, gtk.RESPONSE_OK))
     table = gtk.Table(len(params), 3, gtk.FALSE)
     table.set_border_width(5)
     table.set_row_spacings(2)
@@ -403,98 +428,102 @@ def _interact(func_name, start_params):
     progress_callback = None
 
     def response(dlg, id):
-	if id == gtk.RESPONSE_OK:
-	    params = []
+        if id == gtk.RESPONSE_OK:
+            params = []
 
-	    try:
-		for wid in edit_wids:
-		    params.append(wid.get_value())
-	    except EntryValueError:
-		error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
-	    else:
-		_set_defaults(func_name, params)
-		dialog.res = run_script(params)
+            try:
+                for wid in edit_wids:
+                    params.append(wid.get_value())
+            except EntryValueError:
+                error_dialog(dialog, 'Invalid input for "%s"' % wid.desc)
+            else:
+                _set_defaults(func_name, params)
+                dialog.res = run_script(params)
 
-	if progress_callback:
-	    gimp.progress_uninstall(progress_callback)
+        if progress_callback:
+            gimp.progress_uninstall(progress_callback)
 
-	gtk.main_quit()
+        gtk.main_quit()
 
     dialog.connect("response", response)
 
     edit_wids = []
     for i in range(len(params)):
-	type = params[i][0]
-	name = params[i][1]
-	desc = params[i][2]
-	def_val = defaults[i]
+        pf_type = params[i][0]
+        name = params[i][1]
+        desc = params[i][2]
+        def_val = defaults[i]
 
-	label = gtk.Label(desc)
-	label.set_alignment(1.0, 0.5)
-	table.attach(label, 1,2, i,i+1, xoptions=gtk.FILL)
-	label.show()
+        label = gtk.Label(desc)
+        label.set_alignment(1.0, 0.5)
+        table.attach(label, 1,2, i,i+1, xoptions=gtk.FILL)
+        label.show()
 
-	if type in (PF_SPINNER, PF_SLIDER, PF_RADIO):
-	    wid = _edit_mapping[type](def_val, params[i][4])
-	else:
-	    wid = _edit_mapping[type](def_val)
+        if pf_type in (PF_SPINNER, PF_SLIDER, PF_RADIO):
+            wid = _edit_mapping[pf_type](def_val, params[i][4])
+        else:
+            wid = _edit_mapping[pf_type](def_val)
+        
+        table.attach(wid, 2,3, i,i+1)
+        if pf_type != PF_TEXT:
+            tooltips.set_tip(wid, desc, None)         
+        else:
+            #Attach tip to TextView, not to ScrolledWindow
+            tooltips.set_tip(wid.view, desc, None)         
+        wid.show()
 
-	table.attach(wid, 2,3, i,i+1)
-	tooltips.set_tip(wid, desc, None)
-	wid.show()
-
-	wid.desc = desc
-	edit_wids.append(wid)
+        wid.desc = desc
+        edit_wids.append(wid)
 
     if need_progress:
-	frame = gtk.Frame("Script Progress")
-	frame.set_border_width(5)
-	dialog.vbox.pack_start(frame)
-	frame.show()
+        frame = gtk.Frame("Script Progress")
+        frame.set_border_width(5)
+        dialog.vbox.pack_start(frame)
+        frame.show()
 
-	vbox = gtk.VBox(gtk.FALSE, 5)
-	vbox.set_border_width(5)
-	frame.add(vbox)
-	vbox.show()
+        vbox = gtk.VBox(gtk.FALSE, 5)
+        vbox.set_border_width(5)
+        frame.add(vbox)
+        vbox.show()
 
-	progress_label = gtk.Label("(none)")
-	progress_label.set_alignment(0.0, 0.5)
-	vbox.pack_start(progress_label)
-	progress_label.show()
+        progress_label = gtk.Label("(none)")
+        progress_label.set_alignment(0.0, 0.5)
+        vbox.pack_start(progress_label)
+        progress_label.show()
 
-	progress = gtk.ProgressBar()
-	progress.set_text(" ")
-	vbox.pack_start(progress)
-	progress.show()
+        progress = gtk.ProgressBar()
+        progress.set_text(" ")
+        vbox.pack_start(progress)
+        progress.show()
 
-	def progress_update(message=-1, fraction=None):
-	    if message == -1:
-		pass
-	    elif message:
-		progress.set_text(message)
-	    else:
-		progress.set_text(" ")
+        def progress_update(message=-1, fraction=None):
+            if message == -1:
+                pass
+            elif message:
+                progress.set_text(message)
+            else:
+                progress.set_text(" ")
 
-	    if fraction is not None:
-		progress.set_fraction(fraction)
+            if fraction is not None:
+                progress.set_fraction(fraction)
 
-	    while gtk.events_pending():
-		gtk.main_iteration()
+            while gtk.events_pending():
+                gtk.main_iteration()
 
-	def progress_start(message, cancelable):
-	    progress_update(message, 0.0)
+        def progress_start(message, cancelable):
+            progress_update(message, 0.0)
 
-	def progress_end():
-	    progress_update(None, 0.0)
+        def progress_end():
+            progress_update(None, 0.0)
 
-	def progress_text(message):
-	    progress_update(message)
+        def progress_text(message):
+            progress_update(message)
 
-	def progress_value(percentage):
-	    progress_update(fraction=percentage)
+        def progress_value(percentage):
+            progress_update(fraction=percentage)
 
-	progress_callback = gimp.progress_install(progress_start, progress_end,
-						  progress_text, progress_value)
+        progress_callback = gimp.progress_install(progress_start, progress_end,
+                                                  progress_text, progress_value)
 
     tooltips.enable()
     dialog.show()
@@ -503,10 +532,10 @@ def _interact(func_name, start_params):
 
     if hasattr(dialog, 'res'):
         res = dialog.res
-	dialog.destroy()
-	return res
+        dialog.destroy()
+        return res
     else:
-	dialog.destroy()
+        dialog.destroy()
         raise CancelError
 
 def _run(func_name, params):
@@ -516,28 +545,28 @@ def _run(func_name, params):
     func = _registered_plugins_[func_name][10]
 
     if plugin_type == PLUGIN and menupath[:10] != '<Toolbox>/':
-	if menupath[:7] == '<Save>/':
-	    end = 5
+        if menupath[:7] == '<Save>/':
+            end = 5
         else:
-	    end = 3
+            end = 3
 
-	start_params = params[1:end]
-	extra_params = params[end:]
+        start_params = params[1:end]
+        extra_params = params[end:]
     else:
-	start_params = ()
-	extra_params = params[1:]
+        start_params = ()
+        extra_params = params[1:]
 
     if run_mode == RUN_INTERACTIVE:
         try:
-	    res = _interact(func_name, start_params)
+            res = _interact(func_name, start_params)
         except CancelError:
-	    return
+            return
     else:
-	if run_mode == RUN_WITH_LAST_VALS:
-	    extra_params = _get_defaults(func_name)
+        if run_mode == RUN_WITH_LAST_VALS:
+            extra_params = _get_defaults(func_name)
 
-	params = start_params + tuple(extra_params)
-	res = apply(func, params)
+        params = start_params + tuple(extra_params)
+        res = apply(func, params)
 
     if run_mode != RUN_NONINTERACTIVE:
         gimp.displays_flush()
@@ -633,7 +662,7 @@ def _get_logo(colormap):
     pygtk.require('2.0')
     import gtk
     pix, mask = gtk.gdk.pixmap_colormap_create_from_xpm_d(None, colormap,
-							  None, _python_image)
+                                                          None, _python_image)
     image = gtk.Image()
     image.set_from_pixmap(pix, mask)
     return image

@@ -39,17 +39,17 @@ import gimp
 
 class plugin:
     def start(self):
-	gimp.main(self.init, self.quit, self.query, self._run)
+        gimp.main(self.init, self.quit, self.query, self._run)
     def init(self):
-	pass
+        pass
     def quit(self):
-	pass
+        pass
     def query(self):
-	pass
+        pass
     def _run(self, name, params):
-	if hasattr(self, name):
-	    apply(getattr(self, name), params)
-	else:
-	    raise AttributeError, name
+        if hasattr(self, name):
+            apply(getattr(self, name), params)
+        else:
+            raise AttributeError, name
 
 if __name__ == '__main__': plugin().start()

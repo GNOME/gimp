@@ -15,8 +15,8 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-# gimshelf.py -- a simple module to help gimp modules written in Python
-#                store persistent data.
+# gimpshelf.py -- a simple module to help gimp modules written in Python
+#                 store persistent data.
 #
 # Copyright (C) 1997, James Henstridge
 #
@@ -55,26 +55,26 @@ del copy_reg, _image_id, _drawable_id, _display_id
 
 class Gimpshelf:
     def has_key(self, key):
-	try:
-	    s = gimp.get_data(key)
-	    return 1
-	except gimp.error:
-	    return 0
-		
+        try:
+            s = gimp.get_data(key)
+            return 1
+        except gimp.error:
+            return 0
+                
     def __getitem__(self, key):
-	try:
-	    s = gimp.get_data(key)
-	except gimp.error:
-	    raise KeyError, key
-	f = StringIO.StringIO(s)
-	return pickle.Unpickler(f).load()
+        try:
+            s = gimp.get_data(key)
+        except gimp.error:
+            raise KeyError, key
+        f = StringIO.StringIO(s)
+        return pickle.Unpickler(f).load()
     def __setitem__(self, key, value):
-	f = StringIO.StringIO()
-	p = pickle.Pickler(f)
-	p.dump(value)
-	gimp.set_data(key, f.getvalue())
+        f = StringIO.StringIO()
+        p = pickle.Pickler(f)
+        p.dump(value)
+        gimp.set_data(key, f.getvalue())
     def __delitem__(self, key):
-	gimp.set_data(key, '')
+        gimp.set_data(key, '')
 
 shelf = Gimpshelf()
 del Gimpshelf
