@@ -360,7 +360,7 @@ sub gradients_new
     );
 
     %invoke = (
-        vars => [ 'GimpGradient * gradient = NULL;'],
+        vars => [ 'GimpGradient * gradient = NULL'],
         code => <<'CODE'
 {
   gradient = (GimpGradient *)

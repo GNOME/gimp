@@ -1232,7 +1232,7 @@ static void
 gimp_item_tree_view_size_changed (GimpImage        *gimage,
                                   GimpItemTreeView *tree_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
   gint               preview_size;
   gint               border_width;
 

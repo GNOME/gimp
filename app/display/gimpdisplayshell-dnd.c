@@ -285,7 +285,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *gimage = shell->gdisp->gimage;;
+  GimpImage        *gimage = shell->gdisp->gimage;
   GimpContext      *context;
   GList            *list;
 

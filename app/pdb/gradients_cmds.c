@@ -599,7 +599,7 @@ gradients_new_invoker (Gimp        *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  GimpGradient * gradient = NULL;;
+  GimpGradient * gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL || !g_utf8_validate (name, -1, NULL))

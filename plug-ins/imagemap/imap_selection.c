@@ -112,9 +112,9 @@ button_press_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
 {
   if (event->button == 1) {
     if (data->doubleclick) {
-      data->doubleclick = FALSE;
-
       GtkTreePath *path;
+
+      data->doubleclick = FALSE;
 
       if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
 					 (gint) event->x, (gint) event->y,

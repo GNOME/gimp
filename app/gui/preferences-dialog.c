@@ -1835,17 +1835,17 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
-  enum
-  {
-    COLUMN_EVENT,
-    COLUMN_ACTION,
-    NUM_COLUMNS
-  };
-
   {
     GimpContainer *controllers;
     GtkWidget     *notebook;
     GList         *list;
+    enum
+    {
+      COLUMN_EVENT,
+      COLUMN_ACTION,
+      NUM_COLUMNS
+    };
+
 
     controllers = gimp_controllers_get_list (gimp);
 

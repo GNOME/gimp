@@ -156,7 +156,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass  *draw_tool_class  = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);;
+  GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

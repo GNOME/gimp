@@ -1,3 +1,24 @@
+2004-07-04  Simon Budig  <simon@gimp.org>
+
+	* app/actions/dialogs-commands.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/preferences-dialog.c
+	* app/tools/gimppainttool.c
+	* app/widgets/gimpdeviceinfo.c
+	* app/widgets/gimpitemtreeview.c
+	* plug-ins/imagemap/imap_selection.c
+	* tools/pdbgen/pdb/gradients.pdb: Small changes to make GIMP
+	CVS compile with gcc 2.95 again. Mostly double semicolons and
+	variable declarations after other stuff. Spotted by Martin
+	Renold.
+
+	* app/pdb/gradients_cmds.c: regenerated.
+
+	(there is one issue left, see his patch at
+	http://old.homeip.net/martin/gcc-2.95.diff, I did not
+	copy the #define va_copy __va_copy, since I don't know
+	what happens here.)
+
 2004-07-04  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/gfig-dialog.[ch]:

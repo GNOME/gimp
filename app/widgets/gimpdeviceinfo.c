@@ -107,7 +107,7 @@ gimp_device_info_get_type (void)
 static void
 gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GParamSpec   *array_spec;
 
   parent_class = g_type_class_peek_parent (klass);
