@@ -65,7 +65,7 @@ gimp_remote_find_window (GdkDisplay *display,
   Display    *xdisplay;
   Window      root, parent;
   Window     *children;
-  Atom        class_atom;
+  Atom        role_atom;
   Atom        string_atom;
   guint       nchildren;
   gint        i;
@@ -81,8 +81,8 @@ gimp_remote_find_window (GdkDisplay *display,
   if (! (children && nchildren))
     return NULL;
 
-  class_atom  = XInternAtom (xdisplay, "WM_CLASS", TRUE);
-  string_atom = XInternAtom (xdisplay, "STRING",   TRUE);
+  role_atom   = XInternAtom (xdisplay, "WM_WINDOW_ROLE", TRUE);
+  string_atom = XInternAtom (xdisplay, "STRING",         TRUE);
 
   for (i = nchildren - 1; i >= 0; i--)
     {
@@ -101,14 +101,14 @@ gimp_remote_find_window (GdkDisplay *display,
 
       window = XmuClientWindow (xdisplay, children[i]);
 
-      /*  We are searching the Gimp toolbox: Its WM_CLASS Property
-       *  has the values "toolbox\0Gimp\0". This is pretty relieable,
-       *  it is more reliable when we ask a special property, explicitely
-       *  set from the gimp. See below... :-)
+      /*  We are searching for the Gimp toolbox: Its WM_WINDOW_ROLE Property
+       *  (as set by gtk_window_set_role ()) has the value "gimp-toolbox".
+       *  This is pretty reliable, since ask for a special property,
+       *  explicitly set by the gimp. See below... :-)
        */
 
       if (XGetWindowProperty (xdisplay, window,
-                              class_atom,
+                              role_atom,
                               0, 32,
                               FALSE,
                               string_atom,
@@ -116,9 +116,7 @@ gimp_remote_find_window (GdkDisplay *display,
                               &data) == Success &&
           ret_type)
         {
-          if (nitems > 12                        &&
-              strcmp (data,     "toolbox") == 0  &&
-              strcmp (data + 8, "Gimp")    == 0)
+          if (nitems > 11 && strcmp (data, "gimp-toolbox") == 0)
             {
               XFree (data);
               result = gdk_window_foreign_new_for_display (display, window);

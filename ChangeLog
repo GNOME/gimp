@@ -1,3 +1,9 @@
+2003-11-17  Manish Singh  <yosh@gimp.org>
+
+	* tools/gimp-remote.c (gimp_remote_find_window): search for the
+	window role "gimp-toolbox", since the app sets that instead of
+	the class now.
+
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.c (gimp_rc_new): simplified.
