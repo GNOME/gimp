@@ -933,9 +933,16 @@ menus_reorder_plugins (void)
   static gint n_xtns_plugins = (sizeof (xtns_plugins) /
 				sizeof (xtns_plugins[0]));
 
+  static gchar *rotate_plugins[] = { "90 degrees",
+				     "180 degrees",
+                                     "270 degrees" };
+  static gint n_rotate_plugins = (sizeof (rotate_plugins) /
+				  sizeof (rotate_plugins[0]));
+
   GtkWidget *menu;
   GtkWidget *menu_item;
   GList *list;
+  gchar *path;
   gint i, pos;
 
   /*  Beautify <Toolbox>/Xtns  */
@@ -971,6 +978,32 @@ menus_reorder_plugins (void)
 
       if (menu_item->submenu)
 	menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+    }
+
+  /*  Reorder Rotate plugin menu entries */
+  pos = 2;
+  for (i = 0; i < n_rotate_plugins; i++)
+    {
+      path = g_strconcat ("/Image/Transforms/Rotate/", rotate_plugins[i], NULL);
+      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      if (menu_item && menu_item->parent)
+        {
+          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
+          pos++;
+        }
+      g_free (path);
+    }
+  pos = 2;
+  for (i = 0; i < n_rotate_plugins; i++)
+    {
+      path = g_strconcat ("/Layers/Rotate/", rotate_plugins[i], NULL);
+      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      if (menu_item && menu_item->parent)
+        {
+          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
+          pos++;
+        }
+      g_free (path);
     }
 }
 
@@ -1545,7 +1578,7 @@ tearoff_cmd_callback (GtkWidget *widget,
 	  /* This should be a window */
 	  if (!GTK_IS_WINDOW (top))
 	    {
-	      g_message(_("tearoff menu not in top level window"));
+	      g_message("tearoff menu not in top level window");
 	    }
 	  else
 	    {
@@ -1568,7 +1601,7 @@ tearoff_cmd_callback (GtkWidget *widget,
 
 	  if (!top)
 	    {
-	      g_message (_("can't unregister tearoff menu top level window"));
+	      g_message ("can't unregister tearoff menu top level window");
 	    }
 	  else
 	    {
