@@ -51,7 +51,7 @@ static void updatepaperprev(void)
   }
   killppm(&p);
 
-  gtk_widget_draw (paperprev, NULL);
+  gtk_widget_queue_draw (paperprev);
 }
 
 static void selectpaper(GtkTreeSelection *selection, gpointer data)

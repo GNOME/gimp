@@ -79,8 +79,11 @@ static void updatesmpreviewprev(void)
     }
 
   for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(smpreviewprev), &nsbuffer.col[y*nsbuffer.width*3], 0, y, OMWIDTH);
-  gtk_widget_draw(smpreviewprev,NULL);
+    gtk_preview_draw_row (GTK_PREVIEW(smpreviewprev),
+                          nsbuffer.col + y * nsbuffer.width * 3,
+                          0, y, OMWIDTH);
+
+  gtk_widget_queue_draw (smpreviewprev);
 }
 
 static gint selectedsmvector = 0;
@@ -136,8 +139,11 @@ static void updatesmvectorprev(void)
   }
 
   for (y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(smvectorprev), &sbuffer.col[y*sbuffer.width*3], 0, y, OMWIDTH);
-  gtk_widget_draw(smvectorprev,NULL);
+    gtk_preview_draw_row (GTK_PREVIEW(smvectorprev),
+                          sbuffer.col + y * sbuffer.width * 3,
+                          0, y, OMWIDTH);
+
+  gtk_widget_queue_draw (smvectorprev);
 
   gtk_widget_set_sensitive (prev_button, (numsmvect > 1));
   gtk_widget_set_sensitive (next_button, (numsmvect > 1));

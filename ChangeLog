@@ -1,3 +1,14 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gflare/gflare.c (preview_handle_idle): use
+	gtk_widget_queue_draw_area() instead of the deprecated
+	gtk_widget_draw() routine.
+
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/sizemap.c: use gtk_widget_queue_draw()
+	instead of the deprecated gtk_widget_draw() routine.
+
 2004-07-13  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/preview.c

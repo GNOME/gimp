@@ -4175,17 +4175,17 @@ preview_render_end (Preview *preview)
   Handle an idle event.
   Return FALSE if done, TRUE otherwise.
  */
-static gint
+static gboolean
 preview_handle_idle (Preview *preview)
 {
-  gint			done = FALSE;
-  GdkRectangle		draw_rect;
+  gboolean done = FALSE;
 
   if (preview->init_done == FALSE)
     {
       if (preview->init_func &&
 	  (*preview->init_func) (preview, preview->init_data))
 	return TRUE;
+
       preview->init_done = TRUE;
     }
 
@@ -4203,12 +4203,13 @@ preview_handle_idle (Preview *preview)
 
   if (done || preview->current_y % 20 == 0)
     {
-      draw_rect.x      = 0;
-      draw_rect.y      = preview->drawn_y;
-      draw_rect.width  = preview->width;
-      draw_rect.height = preview->current_y - preview->drawn_y;
+      gtk_widget_queue_draw_area (preview->widget,
+                                  0,
+                                  preview->drawn_y,
+                                  preview->width,
+                                  preview->current_y - preview->drawn_y);
+
       preview->drawn_y = preview->current_y;
-      gtk_widget_draw (preview->widget, &draw_rect);
     }
 
   if (done)

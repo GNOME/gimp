@@ -89,7 +89,7 @@ double getdir(double x, double y, int from)
   for(i = first; i < last; i++) {
     double s = vec[i].str;
     double tx = 0.0, ty = 0.0;
-    
+
     if(vec[i].type == 0) {
       tx = vec[i].dx;
       ty = vec[i].dy;
@@ -146,14 +146,17 @@ static void updateompreviewprev(void)
       putrgb(&nbuffer, x-xo, y-yo, white);
     }
 
-  for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(ompreviewprev), (guchar *)nbuffer.col + y * OMWIDTH * 3, 0, y, OMWIDTH);
-  gtk_widget_draw(ompreviewprev,NULL);
+  for (y = 0; y < OMHEIGHT; y++)
+    gtk_preview_draw_row (GTK_PREVIEW (ompreviewprev),
+                          (guchar *) nbuffer.col + y * OMWIDTH * 3, 0, y,
+                          OMWIDTH);
 
-  gtk_widget_set_sensitive (prev_button, (numvect > 1));  
-  gtk_widget_set_sensitive (next_button, (numvect > 1));  
+  gtk_widget_queue_draw (ompreviewprev);
+
+  gtk_widget_set_sensitive (prev_button, (numvect > 1));
+  gtk_widget_set_sensitive (next_button, (numvect > 1));
   gtk_widget_set_sensitive (add_button, (numvect < MAXORIENTVECT));
-  gtk_widget_set_sensitive (kill_button, (numvect > 1));  
+  gtk_widget_set_sensitive (kill_button, (numvect > 1));
 }
 
 static int selectedvector = 0;
@@ -198,10 +201,12 @@ static void updatevectorprev(void)
     putrgb(&buffer, x-xo, y-yo, white);
   }
 
-  for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(vectorprev), (guchar *)buffer.col + y * OMWIDTH * 3, 0, y, OMWIDTH);
-  gtk_widget_draw(vectorprev,NULL);
+  for (y = 0; y < OMHEIGHT; y++)
+    gtk_preview_draw_row (GTK_PREVIEW (vectorprev),
+                          (guchar *) buffer.col + y * OMWIDTH * 3,
+                          0, y, OMWIDTH);
 
+  gtk_widget_queue_draw (vectorprev);
 }
 
 static gboolean adjignore = FALSE;
@@ -542,46 +547,46 @@ void create_orientmap_dialog(void)
   gtk_container_add(GTK_CONTAINER(hbox), table2);
   gtk_widget_show(table2);
 
-  angadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 0, 
+  angadjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 0,
 			  _("A_ngle:"),
-			  150, 6, 0.0, 
-			  0.0, 360.0, 1.0, 10.0, 1, 
+			  150, 6, 0.0,
+			  0.0, 360.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Change the angle of the selected vector"),
 			  NULL);
   g_signal_connect (angadjust, "value_changed", G_CALLBACK (angadjmove), NULL);
 
-  angoffadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 1, 
+  angoffadjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 1,
 			  _("Ang_le offset:"),
-			  150, 6, 0.0, 
-			  0.0, 360.0, 1.0, 10.0, 1, 
+			  150, 6, 0.0,
+			  0.0, 360.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Offset all vectors with a given angle"),
 			  NULL);
-  g_signal_connect (angoffadjust, "value_changed", 
+  g_signal_connect (angoffadjust, "value_changed",
 		    G_CALLBACK (angoffadjmove), NULL);
 
-  stradjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 2, 
+  stradjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 2,
 			  _("_Strength:"),
-			  150, 6, 1.0, 
+			  150, 6, 1.0,
 			  0.1, 5.0, 0.1, 1.0, 1,
 			  TRUE, 0, 0,
 			  _("Change the strength of the selected vector"),
 			  NULL);
   g_signal_connect (stradjust, "value_changed", G_CALLBACK (stradjmove), NULL);
 
-  orient_map_str_exp_adjust = 
-    gimp_scale_entry_new (GTK_TABLE(table2), 0, 3, 
+  orient_map_str_exp_adjust =
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 3,
 			  _("S_trength exp.:"),
-			  150, 6, 1.0, 
+			  150, 6, 1.0,
 			  0.1, 10.9, 0.1, 1.0, 1,
 			  TRUE, 0, 0,
 			  _("Change the exponent of the strength"),
 			  NULL);
-  g_signal_connect (orient_map_str_exp_adjust, "value_changed", 
+  g_signal_connect (orient_map_str_exp_adjust, "value_changed",
 		    G_CALLBACK (strexpadjmove), NULL);
 
   gtk_widget_show(omwindow);
