@@ -195,6 +195,9 @@ color_area_edit (void)
     {
       if (! color_select_active)
 	color_select_show (color_select);
+      else 
+	gdk_window_raise (color_select->shell->window);
+
       color_select_set_color (color_select, r, g, b, 1);
     }
 }
@@ -287,3 +290,8 @@ color_area_update ()
 {
   color_area_draw ();
 }
+
+
+
+
+
