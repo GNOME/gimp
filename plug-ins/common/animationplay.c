@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.98.7
+ * Animation Playback plug-in version 0.98.8
  *
  * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-08-30 : version 0.98.8
+ *              Default frame timing is now 100ms instead of 125ms.
  *
  * 2000-06-05 : version 0.98.7
  *              Fix old bug which could cause errors in evaluating the
@@ -1853,8 +1856,9 @@ get_frame_duration (const guint whichframe)
       g_free(layer_name);
     }
   
-  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
-  if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
+  if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
+  else
+    if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
 
   return ((guint32) duration);
 }
