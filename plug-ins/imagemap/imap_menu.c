@@ -421,10 +421,11 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
 void
 menu_build_mru_items(MRU_t *mru)
 {
-  return;
    GList *p;
    gint position = 0;
    int i;
+
+  return;
 
    if (_menu.nr_off_mru_items) {
       GList *children;
