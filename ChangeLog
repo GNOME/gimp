@@ -1,5 +1,12 @@
 2003-08-21  Henrik Brix Andersen  <brix@gimp.org>
 
+	* app/tools/gimpmovetool.c (gimp_move_tool_control): test
+	gimp_display_shell_get_show_guides() before drawing guide. Fixes
+	guide artefact seen when disabling drawing of guides while a guide
+	is selected by the move tool.
+
+2003-08-21  Henrik Brix Andersen  <brix@gimp.org>
+
 	* app/widgets/gimptoolbox.c: #include "libgimpbase/gimpbase.h"
 
 2003-08-21  Michael Natterer  <mitch@gimp.org>

@@ -185,8 +185,10 @@ gimp_move_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *gdisp)
 {
-  GimpMoveTool *move_tool;
+  GimpDisplayShell *shell;
+  GimpMoveTool     *move_tool;
 
+  shell     = GIMP_DISPLAY_SHELL (gdisp->shell);
   move_tool = GIMP_MOVE_TOOL (tool);
 
   switch (action)
@@ -195,14 +197,14 @@ gimp_move_tool_control (GimpTool       *tool,
       break;
 
     case RESUME:
-      if (move_tool->guide)
-	gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
+      if (move_tool->guide && gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
+	gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move_tool->guide, TRUE);
       break;
 
     case HALT:
-      if (move_tool->guide)
-        gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
+      if (move_tool->guide && gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
+        gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move_tool->guide, FALSE);
       break;
 
