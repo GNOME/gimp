@@ -80,7 +80,7 @@ static void		gfig_pos_update		(gint x,
 GtkWidget *
 make_preview (void)
 {
-  GtkWidget *xframe;
+  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *table;
@@ -104,14 +104,14 @@ make_preview (void)
   gtk_preview_size (GTK_PREVIEW (gfig_preview), preview_width,
 		    preview_height);
 
-  xframe = gtk_frame_new (NULL);
+  frame = gtk_frame_new (NULL);
 
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_attach (GTK_TABLE (table), gfig_preview, 1, 2, 1, 2,
 		    GTK_FILL , GTK_FILL , 0, 0);
-  gtk_container_add (GTK_CONTAINER (xframe), table);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
@@ -131,21 +131,19 @@ make_preview (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ruler);
 
-  gtk_widget_show (xframe);
+  gtk_widget_show (frame);
   gtk_widget_show (table);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), xframe, FALSE, FALSE, 0);
-
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  xframe = make_pos_info ();
-  gtk_box_pack_start (GTK_BOX (vbox), xframe, TRUE, TRUE, 0);
+  frame = make_pos_info ();
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
-  xframe = make_status ();
-  gtk_box_pack_start (GTK_BOX (vbox), xframe, TRUE, TRUE, 0);
+  frame = make_status ();
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
@@ -499,15 +497,14 @@ gfig_preview_events (GtkWidget *widget,
 static GtkWidget*
 make_pos_info (void)
 {
-  GtkWidget *xframe;
+  GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *label;
 
-  xframe = gtk_frame_new (_("Object Details"));
+  frame = gimp_frame_new (_("Object Details"));
 
   hbox = gtk_hbox_new (TRUE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_container_add (GTK_CONTAINER (xframe), hbox);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   /* Add labels */
   label = gfig_pos_labels ();
@@ -520,32 +517,34 @@ make_pos_info (void)
 #endif /* 0 */
 
   gtk_widget_show (hbox);
-  gtk_widget_show (xframe);
+  gtk_widget_show (frame);
 
-  return xframe;
+  return frame;
 }
 
 static GtkWidget*
 make_status (void)
 {
-  GtkWidget *xframe;
+  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
 
-  xframe = gtk_frame_new (_("Collection Details"));
+  frame = gimp_frame_new (_("Collection Details"));
 
   table = gtk_table_new (6, 6, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   label = gtk_label_new (_("Draw Name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Filename:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -562,12 +561,9 @@ make_status (void)
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_fname);
 
-  gtk_container_add (GTK_CONTAINER (xframe), table);
+  gtk_widget_show (frame);
 
-  gtk_widget_show (table);
-  gtk_widget_show (xframe);
-
-  return xframe;
+  return frame;
 }
 
 void

@@ -1378,9 +1378,9 @@ num_sides_dialog (gchar *d_title,
                     NULL);
 
   table = gtk_table_new (which_way ? 2 : 1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
                       FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -1407,8 +1407,8 @@ num_sides_dialog (gchar *d_title,
                         which_way);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Orientation:"), 1.0, 0.5,
-                                 combo, 1, TRUE);
+                                 _("Orientation:"), 0.0, 0.5,
+                                 combo, 1, FALSE);
     }
 
   gtk_widget_show (window);
@@ -1437,7 +1437,7 @@ draw_buttons (GtkWidget *ww)
 
   /* Put buttons in */
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
-  gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Create line"), NULL);
 
@@ -1661,7 +1661,6 @@ gfig_brush_preview (GtkWidget **pv)
 
   /* Now the buttons */
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_widget_show (vbox);
 
   combo = gimp_int_combo_box_new (_("Brush"),    BRUSH_BRUSH_TYPE,
@@ -2017,8 +2016,8 @@ paint_page (void)
   GtkWidget *scale_scale;
   GtkObject *scale_scale_data;
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2045,8 +2044,8 @@ paint_page (void)
       gtk_widget_set_sensitive (page_menu_layers, FALSE);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Draw on:"), 1.0, 0.5,
-                             page_menu_layers, 1, TRUE);
+                             _("Draw on:"), 0.0, 0.5,
+                             page_menu_layers, 1, FALSE);
 
   page_menu_type =
     gimp_int_combo_box_new (_("Brush"),          PAINT_BRUSH_TYPE,
@@ -2065,8 +2064,8 @@ paint_page (void)
                         NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Using:"), 1.0, 0.5,
-                             page_menu_type, 1, TRUE);
+                             _("Using:"), 0.0, 0.5,
+                             page_menu_type, 1, FALSE);
 
   page_menu_bg = gimp_int_combo_box_new (_("Transparent"), LAYER_TRANS_BG,
                                          _("Background"),  LAYER_BG_BG,
@@ -2087,8 +2086,8 @@ paint_page (void)
 
   gtk_widget_set_sensitive (page_menu_bg, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("With BG of:"), 1.0, 0.5,
-                             page_menu_bg, 1, TRUE);
+                             _("Background:"), 0.0, 0.5,
+                             page_menu_bg, 1, FALSE);
 
   toggle = gtk_check_button_new_with_label (_("Reverse Line"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5,
@@ -2217,8 +2216,8 @@ brush_page (void)
   GtkWidget *button;
   BrushDesc *bdesc = g_new0 (BrushDesc, 1); /* Initial brush settings */
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2361,12 +2360,12 @@ select_page (void)
   GtkWidget *table;
   GtkWidget *vbox;
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (4, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -2394,7 +2393,7 @@ select_page (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Selection Type:"), 1.0, 0.5,
+                             _("Selection:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   /* 2 */
@@ -2425,7 +2424,7 @@ select_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &selopt.feather_radius);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
-                             _("Radius:"), 1.0, 1.0,
+                             _("Radius:"), 0.0, 1.0,
                              scale, 1, FALSE);
 
   /* 5 */
@@ -2440,7 +2439,7 @@ select_page (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Fill Type:"), 1.0, 0.5,
+                             _("Fill Type:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   /* 6 */
@@ -2453,7 +2452,7 @@ select_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &selopt.fill_opacity);
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
-                             _("Fill Opacity:"), 1.0, 1.0,
+                             _("Fill Opacity:"), 0.0, 1.0,
                              scale, 1, FALSE);
 
   /* 7 */
@@ -2467,7 +2466,7 @@ select_page (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU_WHEN));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Fill after:"), 1.0, 0.5,
+                             _("Fill after:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   /* 8 */
@@ -2481,7 +2480,7 @@ select_page (void)
                     GINT_TO_POINTER (SELECT_ARCTYPE_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Arc as:"), 1.0, 0.5,
+                             _("Arc as:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   return vbox;
@@ -2522,12 +2521,12 @@ options_page (void)
   GtkWidget *vbox;
   GtkObject *size_data;
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -2563,8 +2562,8 @@ options_page (void)
                     GINT_TO_POINTER (GRID_TYPE_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Grid Type:"), 1.0, 0.5,
-                             combo, 1, TRUE);
+                             _("Grid Type:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   gfig_opt_widget.gridtypemenu = combo;
 
@@ -2583,8 +2582,8 @@ options_page (void)
                     GINT_TO_POINTER (GRID_RENDER_MENU));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Grid Color:"), 1.0, 0.5,
-                             combo, 1, TRUE);
+                             _("Grid Color:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                                     _("Max Undo:"), 0, 50,
@@ -2640,14 +2639,13 @@ grid_frame (void)
   GtkWidget *toggle;
   GtkObject *size_data;
 
-  frame = gtk_frame_new (_("Grid"));
+  frame = gimp_frame_new (_("Grid"));
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -2682,9 +2680,9 @@ grid_frame (void)
   gtk_widget_show (toggle);
   gfig_opt_widget.lockongrid = toggle;
 #endif
+
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -2749,14 +2747,15 @@ add_objects_list (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *bbox;
   GtkWidget *scrolled_win;
   GtkWidget *list;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Object"));
+  frame = gimp_frame_new (_("Object"));
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -2782,9 +2781,14 @@ add_objects_list (void)
   build_list_items (list);
 
   /* Put buttons in */
-  vbox = gtk_vbutton_box_new ();
+  vbox = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
+
+  bbox = gtk_vbutton_box_new ();
+  gtk_box_set_spacing (GTK_BOX (bbox), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_NEW);
   g_signal_connect (button, "clicked",
@@ -2792,7 +2796,7 @@ add_objects_list (void)
                     NULL);
   gimp_help_set_help_data (button, _("Create a new Gfig object collection "
                                      "for editing"), NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -2801,7 +2805,7 @@ add_objects_list (void)
                     list);
   gimp_help_set_help_data (button,
                            _("Load a single Gfig object collection"), NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
@@ -2809,7 +2813,7 @@ add_objects_list (void)
                     G_CALLBACK (edit_button_callback),
                     list);
   gimp_help_set_help_data (button, _("Edit Gfig object collection"), NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_mnemonic (_("_Merge"));
@@ -2818,7 +2822,7 @@ add_objects_list (void)
                     list);
   gimp_help_set_help_data (button, _("Merge Gfig Object collection into the "
                                      "current edit session"), NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
@@ -2827,7 +2831,7 @@ add_objects_list (void)
                     list);
   gimp_help_set_help_data (button, _("Delete currently selected Gfig Object "
                                      "collection"), NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
@@ -2837,7 +2841,7 @@ add_objects_list (void)
   gimp_help_set_help_data (button,
                         _("Select folder and rescan Gfig object collections"),
                            NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
   return frame;
@@ -2943,8 +2947,8 @@ gfig_dialog (void)
   gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
                                      RESPONSE_UNDO, undo_water_mark >= 0);
 
-  main_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 4);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
                       TRUE, TRUE, 0);
 
@@ -2957,7 +2961,7 @@ gfig_dialog (void)
 
   gtk_widget_show (gfig_preview);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -3281,14 +3285,14 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
                     options);
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /*  the name entry hbox, label and entry  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -3365,7 +3369,7 @@ gfig_rescan_list (void)
                     &dlg);
 
   patheditor = gimp_path_editor_new (_("Add Gfig Path"), gfig_path);
-  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
                       TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
@@ -3664,20 +3668,19 @@ about_button_callback (GtkWidget *widget,
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 
-  image = gtk_image_new_from_stock (GFIG_STOCK_LOGO, GTK_ICON_SIZE_DIALOG);
-  gtk_widget_show (image);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-  gtk_widget_show (vbox);
-
-  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox),
                       hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  image = gtk_image_new_from_stock (GFIG_STOCK_LOGO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
+  gtk_widget_show (image);
 
   label = gtk_label_new (_("Gfig - GIMP plug-in"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);

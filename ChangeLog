@@ -5,7 +5,9 @@
 	* plug-ins/bmp/bmpwrite.c
 	* plug-ins/fits/fits.c
 	* plug-ins/flame/flame.c
-	* plug-ins/fp/fp.c: HIG-ified.
+	* plug-ins/fp/fp.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/gfig/gfig.c: HIG-ified.
 
 2004-05-20  Sven Neumann  <sven@gimp.org>
 
