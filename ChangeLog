@@ -1,5 +1,11 @@
 2003-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/old-photo.scm: applied a modified
+	version of a patch from Branko Collins that makes the border size
+	configurable (bug #62087).
+
+2003-04-17  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-contiguous-region.c
 	(find_contiguous_region_helper): applied patch from Pedro Gimeno
 	that fixes bug #51883.

@@ -18,10 +18,13 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;
+; Branko Collin <collin@xs4all.nl> added the possibility to change
+; the border size in October 2001.
 
 ; Define the function:
 
-(define (script-fu-old-photo inImage inLayer inDefocus inBorder inSepia inMottle inCopy)
+(define (script-fu-old-photo inImage inLayer inDefocus inBorderSize inSepia inMottle inCopy)
         (gimp-selection-all inImage)
         (set! theImage (if (= inCopy TRUE)
                        (car (gimp-image-duplicate inImage))
@@ -33,9 +36,9 @@
             (plug-in-gauss-rle TRUE theImage theLayer 1.5 TRUE TRUE)
             ()
         )
-        (if (= inBorder TRUE)
+        (if (> inBorderSize 0)
             (script-fu-fuzzy-border theImage inLayer '(255 255 255)
-				20 TRUE 8 FALSE 100 FALSE TRUE )
+				inBorderSize TRUE 8 FALSE 100 FALSE TRUE )
             ()
         )
 	(set! theLayer (car(gimp-image-flatten theImage)))
@@ -80,16 +83,19 @@
 (script-fu-register
     "script-fu-old-photo"
     _"<Image>/Script-Fu/Decor/Old Photo..."
-    "Makes the image look like an old photo"
+    "Makes the image look like an old photo. A border size of 0 means no border."
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "16th April 1998"
     "RGB* GRAY*"
-    SF-IMAGE "The Image" 0
-    SF-DRAWABLE "The Layer" 0
-    SF-TOGGLE _"Defocus" TRUE
-    SF-TOGGLE _"Border" TRUE
-    SF-TOGGLE _"Sepia" TRUE
-    SF-TOGGLE _"Mottle" FALSE
-    SF-TOGGLE _"Work on Copy" TRUE
-)
+    SF-IMAGE      "The Image"     0
+    SF-DRAWABLE   "The Layer"     0
+    SF-TOGGLE     _"Defocus"      TRUE
+    SF-ADJUSTMENT _"Border Size"  '(20 0 300 1 10 0 1)
+       ; since this plug-in uses the fuzzy-border plug-in, I used the
+       ; values of the latter, with the exception of the initial value
+       ; and the 'minimum' value.
+    SF-TOGGLE     _"Sepia"        TRUE
+    SF-TOGGLE     _"Mottle"       FALSE
+    SF-TOGGLE     _"Work on Copy" TRUE
+    )
