@@ -35,6 +35,8 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -127,6 +129,10 @@ quit_dialog_new (Gimp *gimp)
   g_signal_connect (view, "activate-item",
                     G_CALLBACK (quit_dialog_image_activated),
                     gimp);
+
+  gimp_dnd_xds_source_add (gimp_container_view_get_dnd_widget (view),
+                           (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
+                           NULL);
 
   label = gtk_label_new (_("If you quit GIMP now, "
                            "these changes will be lost."));

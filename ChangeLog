@@ -1,5 +1,10 @@
 2005-03-31  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/quit-dialog.c: enable save via DND from the image
+	list in the quit dialog.
+
+2005-03-31  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c: use GTK_STOCK_DELETE for the "Discard
 	Changes" button.
 
