@@ -87,11 +87,11 @@ static void updatesmpreviewprev(void)
 }
 
 static gint selectedsmvector = 0;
+static ppm_t update_vector_preview_backup = {0,0,NULL};
+static ppm_t update_vector_preview_sbuffer = {0,0,NULL};
 
 static void updatesmvectorprev(void)
 {
-  static ppm_t backup = {0,0,NULL};
-  static ppm_t sbuffer = {0,0,NULL};
   static int ok = 0;
   gint i, x, y;
   gdouble val;
@@ -110,16 +110,17 @@ static void updatesmvectorprev(void)
 #if 0
       if (!PPM_IS_INITED (&infile))
          updatepreview (NULL, (void *)2); /* Force grabarea() */
-      ppm_copy(&infile, &backup);
+      ppm_copy(&infile, &update_vector_preview_backup);
 #else
-      infile_copy_to_ppm (&backup);
+      infile_copy_to_ppm (&update_vector_preview_backup);
 #endif
-      ppm_apply_brightness(&backup, val, 1,1,1);
-      if (backup.width != OMWIDTH || backup.height != OMHEIGHT)
-         resize_fast(&backup, OMWIDTH, OMHEIGHT);
+      ppm_apply_brightness(&update_vector_preview_backup, val, 1,1,1);
+      if (update_vector_preview_backup.width != OMWIDTH || 
+          update_vector_preview_backup.height != OMHEIGHT)
+         resize_fast(&update_vector_preview_backup, OMWIDTH, OMHEIGHT);
       ok = 1;
   }
-  ppm_copy(&backup, &sbuffer);
+  ppm_copy(&update_vector_preview_backup, &update_vector_preview_sbuffer);
 
   for (i = 0; i < numsmvect; i++)
     {
@@ -127,20 +128,21 @@ static void updatesmvectorprev(void)
       y = smvector[i].y * OMHEIGHT;
       if (i == selectedsmvector)
       {
-         ppm_drawline (&sbuffer, x-5, y, x+5, y, red);
-         ppm_drawline (&sbuffer, x, y-5, x, y+5, red);
+         ppm_drawline (&update_vector_preview_sbuffer, x-5, y, x+5, y, red);
+         ppm_drawline (&update_vector_preview_sbuffer, x, y-5, x, y+5, red);
       }
       else
       {
-         ppm_drawline (&sbuffer, x-5, y, x+5, y, gray);
-         ppm_drawline (&sbuffer, x, y-5, x, y+5, gray);
+         ppm_drawline (&update_vector_preview_sbuffer, x-5, y, x+5, y, gray);
+         ppm_drawline (&update_vector_preview_sbuffer, x, y-5, x, y+5, gray);
       }
-      ppm_put_rgb (&sbuffer, x, y, white);
+      ppm_put_rgb (&update_vector_preview_sbuffer, x, y, white);
   }
 
   for (y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row (GTK_PREVIEW(smvectorprev),
-                          sbuffer.col + y * sbuffer.width * 3,
+                          update_vector_preview_sbuffer.col +
+                          y * update_vector_preview_sbuffer.width * 3,
                           0, y, OMWIDTH);
 
   gtk_widget_queue_draw (smvectorprev);
@@ -149,6 +151,12 @@ static void updatesmvectorprev(void)
   gtk_widget_set_sensitive (next_button, (numsmvect > 1));
   gtk_widget_set_sensitive (add_button, (numsmvect < MAXORIENTVECT));
   gtk_widget_set_sensitive (kill_button, (numsmvect > 1));
+}
+
+void size_map_free_resources ()
+{
+  ppm_kill (&update_vector_preview_backup);
+  ppm_kill (&update_vector_preview_sbuffer);
 }
 
 static gboolean smadjignore = FALSE;
