@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = gfig-examples
+SUBDIRS = gfig-examples images
 
 libexecdir = $(gimpplugindir)/plug-ins
 
@@ -8,6 +8,8 @@ libexec_PROGRAMS = gfig
 
 gfig_SOURCES = \
 	gfig.c		\
+	gfig-stock.c	\
+	gfig-stock.h	\
 	pix_data.h
 
 EXTRA_DIST = README

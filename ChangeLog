@@ -1,3 +1,22 @@
+2003-01-07  Sven Neumann  <neo@wintermute>
+
+	* configure.in
+	* plug-ins/gfig/Makefile.am
+	* plug-ins/gfig/images/Makefile.am: added a new directory with PNG
+	images for the GFig plug-in.
+
+	* plug-ins/gfig/images/*.png: placeholder images that need to be
+	replaced (see bug #92473).
+
+	* plug-ins/gfig/gfig-stock.[ch]: new files that register the
+	images as stock icons.
+
+	* plug-ins/gfig/gfig.c: use stock icons for the buttons on the
+	left side of the dialog.
+
+	* plug-ins/gfig/pix_data.h: removed obsoleted images. The
+	remaining ones should get converted as well.
+
 2003-01-06  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_preview.c

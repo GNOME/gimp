@@ -76,6 +76,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gfig-stock.h"
+
 #include "pix_data.h"
 
 
@@ -1592,9 +1594,10 @@ gfig_save (void)
   gfig_save_callbk ();
 }
 
+
 /* HACK WARNING */
-void * xxx;
-void * yyy;
+static void * xxx;
+static void * yyy;
 
 /* Cache the preview image - updates are a lot faster. */
 /* The preview_cache will contain the small image */
@@ -1824,15 +1827,14 @@ obj_select_buttons (void)
 }
 
 static GtkWidget *
-but_with_pix (gchar  **pixdata,
-	      GSList **group,
-	      gint     baction)
+but_with_pix (const gchar  *stock_id,
+	      GSList      **group,
+	      gint          baction)
 {
   GtkWidget *button;
-  GtkWidget *alignment;
-  GtkWidget *pixmap_widget;
 
-  button = gtk_radio_button_new (*group);
+  button = gtk_radio_button_new_with_label (*group, stock_id);
+  gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE); 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (toggle_obj_type),
@@ -1840,14 +1842,6 @@ but_with_pix (gchar  **pixdata,
   gtk_widget_show (button);
 
   *group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (button), alignment);
-  gtk_widget_show (alignment);
-
-  pixmap_widget = gimp_pixmap_new (pixdata);
-  gtk_container_add (GTK_CONTAINER (alignment), pixmap_widget);
-  gtk_widget_show (pixmap_widget);
 
   return button;
 }
@@ -2095,27 +2089,27 @@ draw_buttons (GtkWidget *ww)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
   /* Put buttons in */
-  button = but_with_pix (line_xpm, &group, LINE);
+  button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Create line"), NULL); 
 
-  button = but_with_pix (circle_xpm, &group, CIRCLE);
+  button = but_with_pix (GFIG_STOCK_CIRCLE, &group, CIRCLE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Create circle"), NULL); 
 
-  button = but_with_pix (ellipse_xpm, &group, ELLIPSE);
+  button = but_with_pix (GFIG_STOCK_ELLIPSE, &group, ELLIPSE);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Create ellipse"), NULL); 
 
-  button = but_with_pix (curve_xpm, &group, ARC);
+  button = but_with_pix (GFIG_STOCK_CURVE, &group, ARC);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Create arch"), NULL); 
 
-  button = but_with_pix (poly_xpm, &group, POLY);
+  button = but_with_pix (GFIG_STOCK_POLYGON, &group, POLY);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
 
@@ -2124,7 +2118,7 @@ draw_buttons (GtkWidget *ww)
                     NULL);
   gimp_help_set_help_data (button, _("Create reg polygon"), NULL); 
 
-  button = but_with_pix (star_xpm, &group, STAR);
+  button = but_with_pix (GFIG_STOCK_STAR, &group, STAR);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   g_signal_connect (button, "button_press_event",
@@ -2132,7 +2126,7 @@ draw_buttons (GtkWidget *ww)
                     NULL);
   gimp_help_set_help_data (button, _("Create star"), NULL); 
 
-  button = but_with_pix (spiral_xpm, &group, SPIRAL);
+  button = but_with_pix (GFIG_STOCK_SPIRAL, &group, SPIRAL);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -2141,7 +2135,7 @@ draw_buttons (GtkWidget *ww)
                     NULL);
   gimp_help_set_help_data (button, _("Create spiral"), NULL); 
 
-  button = but_with_pix (bezier_xpm, &group, BEZIER);
+  button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
   gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
   g_signal_connect (button, "button_press_event",
@@ -2152,22 +2146,22 @@ draw_buttons (GtkWidget *ww)
 			_("Create bezier curve. "
 			  "Shift + Button ends object creation."), NULL); 
 
-  button = but_with_pix (move_obj_xpm, &group, MOVE_OBJ);
+  button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Move an object"), NULL); 
 
-  button = but_with_pix (move_point_xpm, &group, MOVE_POINT);
+  button = but_with_pix (GFIG_STOCK_MOVE_POINT, &group, MOVE_POINT);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Move a single point"), NULL); 
 
-  button = but_with_pix (copy_obj_xpm, &group, COPY_OBJ);
+  button = but_with_pix (GFIG_STOCK_COPY_OBJECT, &group, COPY_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Copy an object"), NULL); 
 
-  button = but_with_pix (delete_xpm, &group, DEL_OBJ);
+  button = but_with_pix (GFIG_STOCK_DELETE_OBJECT, &group, DEL_OBJ);
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Delete an object"), NULL); 
@@ -2175,13 +2169,6 @@ draw_buttons (GtkWidget *ww)
   button = obj_select_buttons ();
   gtk_container_add (GTK_CONTAINER (vbox), button);
   gtk_widget_show (button);
-
-#if 0
-  button = but_with_pix (blank_xpm, &group, NULL_OPER);
-  gtk_container_add (GTK_CONTAINER (vbox), button);
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
-#endif /* 0 */
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
@@ -3916,6 +3903,7 @@ gfig_dialog (void)
   GtkWidget *top_level_dlg;
 
   gimp_ui_init ("gfig", TRUE);
+  gfig_stock_init ();
 
   yyy = gdk_rgb_get_visual ();
   xxx = gdk_rgb_get_colormap ();
@@ -3933,9 +3921,6 @@ gfig_dialog (void)
 				   GTK_WIN_POS_MOUSE,
 				   FALSE, FALSE, FALSE,
 
-				   GTK_STOCK_CANCEL, gtk_widget_destroy,
-				   NULL, 1, NULL, FALSE, TRUE,
-
 				   GTK_STOCK_UNDO, gfig_undo_callback,
 				   NULL, NULL, &undo_widget, FALSE, FALSE,
 
@@ -3945,11 +3930,14 @@ gfig_dialog (void)
 				   GTK_STOCK_SAVE, save_button_callback,
 				   NULL, NULL, &save_button, FALSE, FALSE,
 
+				   GTK_STOCK_CANCEL, gtk_widget_destroy,
+				   NULL, 1, NULL, FALSE, TRUE,
+
+				   GTK_STOCK_CLOSE, gfig_ok_callback,
+				   NULL, NULL, NULL, TRUE, FALSE,
+
 				   _("Paint"), gfig_paint_callback,
 				   NULL, NULL, NULL, FALSE, FALSE,
-
-				   _("Done"), gfig_ok_callback,
-				   NULL, NULL, NULL, TRUE, FALSE,
 
 				   NULL);
 
