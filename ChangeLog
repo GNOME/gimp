@@ -1,3 +1,7 @@
+Thu Sep  9 00:56:42 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* configure.in: Fixed typoe (fasle => false).
+
 Tue Sep  7 22:57:32 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* app/palette.c: Applied gimp-ruth-990907-0.patch.gz (import palette).

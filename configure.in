@@ -574,7 +574,7 @@ if test "x$enable_python" != xno; then
       PYGIMP_LIBS_NOUI="-L\$(top_builddir)/libgimp/.libs -lgimp $GLIB_LIBS"
 
       build_python=true
-      AM_CHECK_PYMOD(gtk,,,build_python=fasle)
+      AM_CHECK_PYMOD(gtk,,,build_python=false)
     fi
   fi
 fi
