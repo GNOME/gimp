@@ -479,7 +479,7 @@ image_resize_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_image_resize (gimage, new_width, new_height, offx, offy);
+      gimp_image_resize (gimage, new_width, new_height, offx, offy, NULL, NULL);
     }
 
   return procedural_db_return_args (&image_resize_proc, success);

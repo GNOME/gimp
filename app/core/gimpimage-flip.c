@@ -45,9 +45,7 @@ gimp_image_flip (GimpImage           *gimage,
   GimpItem  *item;
   GList     *list;
   gdouble    axis;
-  gint       num_channels;
-  gint       num_layers;
-  gint       num_vectors;
+  gint       progress_max;
   gint       progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -69,9 +67,10 @@ gimp_image_flip (GimpImage           *gimage,
       return;
     }
 
-  num_channels = gimage->channels->num_children;
-  num_layers   = gimage->layers->num_children;
-  num_vectors  = gimage->vectors->num_children;
+  progress_max = (gimage->channels->num_children +
+                  gimage->layers->num_children   +
+                  gimage->vectors->num_children  +
+                  1 /* selection */);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -92,9 +91,7 @@ gimp_image_flip (GimpImage           *gimage,
       gimp_item_flip (item, flip_type, axis, TRUE);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Flip all vectors  */
@@ -107,14 +104,15 @@ gimp_image_flip (GimpImage           *gimage,
       gimp_item_flip (item, flip_type, axis, FALSE);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_flip (GIMP_ITEM (gimage->selection_mask), flip_type, axis, TRUE);
   gimp_image_mask_invalidate (gimage);
+
+  if (progress_func)
+    (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Flip all layers  */
   for (list = GIMP_LIST (gimage->layers)->list; 
@@ -126,9 +124,7 @@ gimp_image_flip (GimpImage           *gimage,
       gimp_item_flip (item, flip_type, axis, FALSE);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Flip all Guides  */

@@ -55,9 +55,7 @@ gimp_image_rotate (GimpImage        *gimage,
   GList     *list;
   gdouble    center_x;
   gdouble    center_y;
-  gint       num_channels;
-  gint       num_layers;
-  gint       num_vectors;
+  gint       progress_max;
   gint       progress_current = 1;
   gint       new_image_width;
   gint       new_image_height;
@@ -70,9 +68,10 @@ gimp_image_rotate (GimpImage        *gimage,
   center_x = (gdouble) gimage->width  / 2.0;
   center_y = (gdouble) gimage->height / 2.0;
 
-  num_channels = gimage->channels->num_children;
-  num_layers   = gimage->layers->num_children;
-  num_vectors  = gimage->vectors->num_children;
+  progress_max = (gimage->channels->num_children +
+                  gimage->layers->num_children   +
+                  gimage->vectors->num_children  +
+                  1 /* selection */);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -117,9 +116,7 @@ gimp_image_rotate (GimpImage        *gimage,
       item->offset_y = 0;
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Rotate all vectors  */
@@ -142,9 +139,7 @@ gimp_image_rotate (GimpImage        *gimage,
 			   FALSE);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
@@ -155,6 +150,9 @@ gimp_image_rotate (GimpImage        *gimage,
   GIMP_ITEM (gimage->selection_mask)->offset_y = 0;
 
   gimp_image_mask_invalidate (gimage);
+
+  if (progress_func)
+    (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Rotate all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -172,9 +170,7 @@ gimp_image_rotate (GimpImage        *gimage,
       gimp_image_rotate_item_offset (gimage, rotate_type, item, off_x, off_y); 
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Rotate all Guides  */
@@ -225,14 +221,19 @@ gimp_image_rotate_item_offset (GimpImage        *gimage,
 			       gint              off_x,
 			       gint              off_y)
 {
-  gint x, y;
+  gint x = 0;
+  gint y = 0;
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_270:
     case GIMP_ROTATE_90:
-      x = gimage->height - off_y - gimp_item_width (item)  - off_x;
-      y = gimage->width  - off_x - gimp_item_height (item) - off_y;
+      x = gimage->height - off_y - gimp_item_width (item);
+      y = off_x;
+      break;
+
+    case GIMP_ROTATE_270:
+      x = off_y;
+      y = gimage->width - off_x - gimp_item_height (item);
       break;
 
     case GIMP_ROTATE_180:

@@ -52,9 +52,7 @@ gimp_image_scale (GimpImage             *gimage,
   gint       old_height;
   gdouble    img_scale_w = 1.0;
   gdouble    img_scale_h = 1.0;
-  gint       num_channels;
-  gint       num_layers;
-  gint       num_vectors;
+  gint       progress_max;
   gint       progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -62,9 +60,10 @@ gimp_image_scale (GimpImage             *gimage,
 
   gimp_set_busy (gimage->gimp);
 
-  num_channels = gimage->channels->num_children;
-  num_layers   = gimage->layers->num_children;
-  num_vectors  = gimage->vectors->num_children;
+  progress_max = (gimage->channels->num_children +
+                  gimage->layers->num_children   +
+                  gimage->vectors->num_children  +
+                  1 /* selection */);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -98,9 +97,7 @@ gimp_image_scale (GimpImage             *gimage,
       gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Scale all vectors  */
@@ -113,15 +110,16 @@ gimp_image_scale (GimpImage             *gimage,
       gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_scale (GIMP_ITEM (gimage->selection_mask), new_width, new_height,
                    0, 0, interpolation_type);
   gimp_image_mask_invalidate (gimage);
+
+  if (progress_func)
+    (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Scale all layers  */
   for (list = GIMP_LIST (gimage->layers)->list; 
@@ -142,9 +140,7 @@ gimp_image_scale (GimpImage             *gimage,
         }
 
       if (progress_func)
-        (* progress_func) (0, num_vectors + num_channels + num_layers,
-                           progress_current++,
-                           progress_data);
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /* We defer removing layers lost to scaling until now so as not to mix

@@ -414,14 +414,24 @@ image_resize_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (image_resize->resize->resize_shell, FALSE);
 
-  if (image_resize->resize->width > 0 &&
+  if (image_resize->resize->width  > 0 &&
       image_resize->resize->height > 0) 
     {
+      GimpProgress *progress;
+
+      progress = gimp_progress_start (image_resize->gdisp,
+                                      _("Resizing..."),
+                                      TRUE, NULL, NULL);
+
       gimp_image_resize (image_resize->gimage,
 			 image_resize->resize->width,
 			 image_resize->resize->height,
 			 image_resize->resize->offset_x,
-			 image_resize->resize->offset_y);
+			 image_resize->resize->offset_y,
+                         gimp_progress_update_and_flush, progress);
+
+      gimp_progress_end (progress);
+
       gimp_image_flush (image_resize->gimage);
     }
   else 
@@ -481,10 +491,8 @@ image_scale_warn_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ImageResize *image_scale;
-  GimpImage   *gimage;
 
   image_scale = (ImageResize *) data;
-  gimage      = image_scale->gimage;
 
   if (do_scale) /* User doesn't mind losing layers... */
     {
@@ -501,52 +509,35 @@ image_scale_warn_callback (GtkWidget *widget,
 static void
 image_scale_implement (ImageResize *image_scale)
 {
-  GimpImage *gimage        = NULL;
-  gboolean   display_flush = FALSE;  /* this is a bit ugly: 
-					we hijack the flush variable 
-					to check if an undo_group was 
-					already started */
+  GimpImage *gimage;
 
   g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
 
   gimage = image_scale->gimage;
 
-  if (image_scale->resize->resolution_x != gimage->xresolution ||
-      image_scale->resize->resolution_y != gimage->yresolution)
-    {
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
-                                   _("Scale Image"));
-	  
-      gimp_image_set_resolution (gimage,
-				 image_scale->resize->resolution_x,
-				 image_scale->resize->resolution_y);
+  if (image_scale->resize->resolution_x == gimage->xresolution &&
+      image_scale->resize->resolution_y == gimage->yresolution &&
+      image_scale->resize->unit         == gimage->unit        &&
+      image_scale->resize->width        == gimage->width       &&
+      image_scale->resize->height       == gimage->height)
+    return;
 
-      display_flush = TRUE;
-    }
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
+                               _("Scale Image"));
 
-  if (image_scale->resize->unit != gimage->unit)
-    {
-      if (! display_flush)
-	gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
-                                     _("Scale Image"));
+  gimp_image_set_resolution (gimage,
+                             image_scale->resize->resolution_x,
+                             image_scale->resize->resolution_y);
+  gimp_image_set_unit (gimage, image_scale->resize->unit);
 
-      gimp_image_set_unit (gimage, image_scale->resize->unit);
-
-      display_flush = TRUE;
-    }
-
-  if (image_scale->resize->width != gimage->width ||
+  if (image_scale->resize->width  != gimage->width ||
       image_scale->resize->height != gimage->height)
     {
-      if (image_scale->resize->width > 0 &&
+      if (image_scale->resize->width  > 0 &&
 	  image_scale->resize->height > 0) 
 	{
           GimpProgress *progress;
-
-	  if (! display_flush)
-	    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_SCALE,
-                                         _("Scale Image"));
 
           progress = gimp_progress_start (image_scale->gdisp,
                                           _("Scaling..."),
@@ -559,8 +550,6 @@ image_scale_implement (ImageResize *image_scale)
                             gimp_progress_update_and_flush, progress);
 
           gimp_progress_end (progress);
-
-	  display_flush = TRUE;
 	}
       else
 	{
@@ -570,9 +559,7 @@ image_scale_implement (ImageResize *image_scale)
 	}
     }
 
-  if (display_flush)
-    {
-      gimp_image_undo_group_end (gimage);
-      gimp_image_flush (gimage);
-    }
+  gimp_image_undo_group_end (gimage);
+
+  gimp_image_flush (gimage);
 }

@@ -1,3 +1,27 @@
+2003-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-rotate.c (gimp_image_rotate_item_offset):
+	fixed offset calculation for 90 and 270 degree rotations.
+
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c: increase the progress also when
+	transforming the selection. Makes the progress appear more
+	continuous. Also clened up and simplified the progress code
+	in all files.
+
+	* app/core/gimpimage-resize.[ch]: added a progress like in the
+	files above.
+
+	* app/gui/image-commands.c (image_resize_callback): changed
+	accordingly.
+
+	(image_scale_implement): clened up and simplified a lot.
+
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-06-03  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: When initializing the LZW state,
@@ -38,7 +62,7 @@
 
 	(layer_dissolve_mode): pass the mask to dissolve_pixels(). No need
 	to call add_alpha_pixels() since we overwrite the dest buffer
-	entirely in disolve_pixels().
+	entirely in dissolve_pixels().
 
 	* app/paint-funcs.c (initial_sub_region, combine_sub_region):
 	allocate the buffer large enough for DISSOLVE (which always needs

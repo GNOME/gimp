@@ -38,19 +38,28 @@
 
 
 void
-gimp_image_resize (GimpImage *gimage, 
-		   gint       new_width, 
-		   gint       new_height,
-		   gint       offset_x, 
-		   gint       offset_y)
+gimp_image_resize (GimpImage        *gimage, 
+		   gint              new_width, 
+		   gint              new_height,
+		   gint              offset_x, 
+		   gint              offset_y,
+                   GimpProgressFunc  progress_func,
+                   gpointer          progress_data)
 {
   GimpLayer *floating_layer;
   GList     *list;
+  gint       progress_max;
+  gint       progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
 
   gimp_set_busy (gimage->gimp);
+
+  progress_max = (gimage->channels->num_children +
+                  gimage->layers->num_children   +
+                  gimage->vectors->num_children  +
+                  1 /* selection */);
 
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
@@ -77,6 +86,9 @@ gimp_image_resize (GimpImage *gimage,
       GimpItem *item = list->data;
 
       gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
+
+      if (progress_func)
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Resize all vectors  */
@@ -87,12 +99,18 @@ gimp_image_resize (GimpImage *gimage,
       GimpItem *item = list->data;
 
       gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
+
+      if (progress_func)
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
                     new_width, new_height, offset_x, offset_y);
   gimp_image_mask_invalidate (gimage);
+
+  if (progress_func)
+    (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Reposition all layers  */
   for (list = GIMP_LIST (gimage->layers)->list;
@@ -102,6 +120,9 @@ gimp_image_resize (GimpImage *gimage,
       GimpItem *item = list->data;
 
       gimp_item_translate (item, offset_x, offset_y, TRUE);
+
+      if (progress_func)
+        (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Reposition or remove all guides  */

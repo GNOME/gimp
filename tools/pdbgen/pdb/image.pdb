@@ -295,7 +295,7 @@ HELP
 	headers => [ qw("core/gimpimage-resize.h") ],
 	code => <<'CODE'
 {
-  gimp_image_resize (gimage, new_width, new_height, offx, offy);
+  gimp_image_resize (gimage, new_width, new_height, offx, offy, NULL, NULL);
 }
 CODE
     );
