@@ -54,6 +54,10 @@
 	* app/tools/gimptoolmodule.c
 	* app/tools/gimptoolcontrol.[ch]: parts that are core-specific
 	
+	* app/tools/gimptoolcontrol-displayshell.[ch]: a special interface
+	just for displayshell
+	
+	
 	* plug-ins/tools/gimptool.c
 	* plug-ins/tools/gimptoolcontrol.[ch]: parts that are 
 	pluginspace-specific
