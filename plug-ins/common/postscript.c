@@ -1808,6 +1808,7 @@ save_ps_setup (FILE   *ofp,
   double f1, f2, dx, dy;
   int xtrans, ytrans;
   int i_urx, i_ury;
+  char tmpbuf[G_ASCII_DTOSTR_BUF_SIZE];
 
   /* initialize */
 
@@ -1865,7 +1866,8 @@ save_ps_setup (FILE   *ofp,
   fprintf (ofp, "%%%%EndProlog\n");
   fprintf (ofp, "%%%%Page: 1 1\n");
   fprintf (ofp, "%% Translate for offset\n");
-  fprintf (ofp, "%f %f translate\n", x_offset*72.0, y_offset*72.0);
+  fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), x_offset*72.0));
+  fprintf (ofp, " %s translate\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), y_offset*72.0));
 
   /* Calculate translation to startpoint of first scanline */
   switch (psvals.rotate)
@@ -1882,11 +1884,15 @@ save_ps_setup (FILE   *ofp,
       break;
     }
   if ((dx != 0.0) || (dy != 0.0))
-    fprintf (ofp, "%% Translate to begin of first scanline\n%f %f translate\n",
-             dx, dy);
+    {
+      fprintf (ofp, "%% Translate to begin of first scanline\n");
+      fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), dx));
+      fprintf (ofp, " %s translate\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), dy));
+    }
   if (psvals.rotate)
     fprintf (ofp, "%d rotate\n", (int)psvals.rotate);
-  fprintf (ofp, "%f %f scale\n", 72.0*width_inch, -72.0*height_inch);
+  fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), 72.0*width_inch));
+  fprintf (ofp, " %s scale\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), -72.0*height_inch));
 
   /* Write the PostScript procedures to read the image */
   if (psvals.level <= 1)
