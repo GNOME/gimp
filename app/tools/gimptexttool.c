@@ -394,13 +394,10 @@ text_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  font_selection = gimp_font_selection_new (NULL);
-  gimp_font_selection_set_fontname (GIMP_FONT_SELECTION (font_selection),
-				    options->text->font);
+  font_selection = gimp_prop_font_selection_new (text, "font");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Font:"), 1.0, 0.5,
                              font_selection, 2, FALSE);
-  gtk_widget_set_sensitive (font_selection, FALSE);
 
   gimp_prop_scale_entry_new (text, "font-size",
 			     GTK_TABLE (table), 0, 1,

@@ -74,6 +74,8 @@ GtkWidget     * gimp_prop_entry_new               (GObject     *config,
 GtkTextBuffer * gimp_prop_text_buffer_new         (GObject     *config,
                                                    const gchar *property_name,
                                                    gint         max_len);
+GtkWidget     * gimp_prop_font_selection_new      (GObject     *config,
+                                                   const gchar *property_name);
 
 
 /*  GimpParamPath  */

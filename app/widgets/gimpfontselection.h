@@ -42,9 +42,7 @@ struct _GimpFontSelection
   PangoContext            *context;
   PangoFontDescription    *font_desc;
 
-  GtkWidget               *valid;
   GtkWidget               *entry;
-
   GimpFontSelectionDialog *dialog;
 };
 
@@ -59,7 +57,7 @@ struct _GimpFontSelectionClass
 
 GType         gimp_font_selection_get_type      (void) G_GNUC_CONST;
 GtkWidget   * gimp_font_selection_new           (PangoContext      *context);
-gboolean      gimp_font_selection_set_fontname  (GimpFontSelection *fontsel,
+void          gimp_font_selection_set_fontname  (GimpFontSelection *fontsel,
                                                  const gchar       *fontname);
 const gchar * gimp_font_selection_get_fontname  (GimpFontSelection *fontsel);
 void          gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,

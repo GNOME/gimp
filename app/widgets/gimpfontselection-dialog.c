@@ -41,16 +41,20 @@
 #include "libgimp/gimpintl.h"
 
 
+#define  FONT_SIZE              18
+
 #define  FONT_LIST_HEIGHT       136
 #define  FONT_LIST_WIDTH        190
 #define  FONT_STYLE_LIST_WIDTH  170
 
-enum {
+enum
+{
   FAMILY_COLUMN,
   FAMILY_NAME_COLUMN
 };
 
-enum {
+enum
+{
   FACE_COLUMN,
   FACE_NAME_COLUMN
 };
@@ -261,8 +265,10 @@ gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
                     dialog);
 
   dialog->layout = pango_layout_new (fontsel->context);
-  pango_layout_set_text (dialog->layout, 
-                         "my mind is going ...", -1);
+  pango_layout_set_text (dialog->layout,
+                         /* This is a so-called pangram; it's supposed to
+                            contain all characters found in the alphabet. */
+                         _("Pack my box with five dozen liquor jugs."), -1);
 
   gimp_font_selection_dialog_set_font_desc (dialog, fontsel->font_desc);
 
@@ -494,7 +500,7 @@ gimp_font_selection_dialog_show_available_fonts (GimpFontSelectionDialog *dialog
   if (dialog->family)
     current_name = pango_font_family_get_name (dialog->family);
   else
-    current_name = "sans";
+    current_name = "Sans";
 
   for (i = 0; i < n_families; i++)
     {
@@ -632,7 +638,7 @@ gimp_font_selection_dialog_preview (GimpFontSelectionDialog *dialog)
       PangoFontDescription *font_desc;
 
       font_desc = pango_font_face_describe (dialog->face);
-      pango_font_description_set_size (font_desc, PANGO_SCALE * 24);
+      pango_font_description_set_size (font_desc, PANGO_SCALE * FONT_SIZE);
       pango_layout_set_font_description (dialog->layout, font_desc);
       pango_font_description_free (font_desc);
       

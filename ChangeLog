@@ -1,3 +1,16 @@
+2003-02-03  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfontselection-dialog.c: changed the text used in
+	the preview.
+	
+	* app/widgets/gimpfontselection.[ch]: removed the yes/no image
+	that used to signal a valid font but stopped working a long time
+	ago.
+
+	* app/widgets/gimppropwidgets.c: added a property widget for fonts.
+
+	* app/tools/gimptexttool.c: use the new prop_widget.
+
 2003-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: fixed the "TAB toggles

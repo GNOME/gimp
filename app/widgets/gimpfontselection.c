@@ -147,10 +147,6 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
 
   fontsel->context = NULL;
 
-  fontsel->valid = gtk_image_new_from_stock (GTK_STOCK_NO, GTK_ICON_SIZE_MENU);
-  gtk_box_pack_start (GTK_BOX (fontsel), fontsel->valid, FALSE, FALSE, 0);
-  gtk_widget_show (fontsel->valid);
-
   fontsel->entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (fontsel->entry), 8);
   gtk_box_pack_start (GTK_BOX (fontsel), fontsel->entry, TRUE, TRUE, 0);
@@ -235,20 +231,13 @@ gimp_font_selection_real_activate (GimpFontSelection *fontsel)
 static void
 gimp_font_selection_real_font_changed (GimpFontSelection *fontsel)
 {
-  gchar *name;
-
   if (fontsel->font_desc)
     {
-      gtk_image_set_from_stock (GTK_IMAGE (fontsel->valid),
-				GTK_STOCK_YES, GTK_ICON_SIZE_BUTTON);
-      name = pango_font_description_to_string (fontsel->font_desc);
+      gchar *name = pango_font_description_to_string (fontsel->font_desc);
+
       gtk_entry_set_text (GTK_ENTRY (fontsel->entry), name);
+
       g_free (name);
-    }
-  else
-    {
-      gtk_image_set_from_stock (GTK_IMAGE (fontsel->valid),
-				GTK_STOCK_NO, GTK_ICON_SIZE_BUTTON);
     }
   
   if (fontsel->dialog)
@@ -261,51 +250,35 @@ gimp_font_selection_real_font_changed (GimpFontSelection *fontsel)
  * @fontsel: 
  * @fontname: 
  * 
- * This function checks if there's a font matching the given @fontname.
- * It return %FALSE if no such font could be found. The @fontname has
- * the format "[FAMILY-LIST] [STYLE-OPTIONS]" as Pango expects it.
- * 
- * This function causes the font selector to emit the "font_changed"
- * signal.
- * 
- * Return value: %TRUE if there is a matching font.
+ * This function expects a @fontname in the format "[FAMILY-LIST]
+ * [STYLE-OPTIONS]". It causes the font selector to emit the
+ * "font_changed" signal.
  **/
-gboolean
+void
 gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
                                   const gchar       *fontname)
 {
   PangoFontDescription *new_desc;
-  PangoFont            *font = NULL; 
 
-  g_return_val_if_fail (GIMP_IS_FONT_SELECTION (fontsel), FALSE);
-  g_return_val_if_fail (fontname != NULL, FALSE);
+  g_return_if_fail (GIMP_IS_FONT_SELECTION (fontsel));
+  g_return_if_fail (fontname != NULL);
 
   new_desc = pango_font_description_from_string (fontname);
-  if (new_desc)
-    {
-      pango_font_description_set_size (new_desc, 12 * PANGO_SCALE);  /* eeek */
-      font = pango_context_load_font (fontsel->context, new_desc);
-      pango_font_description_unset_fields (new_desc, PANGO_FONT_MASK_SIZE);
-    }
+
+  if (!new_desc)
+    return;
 
   if (fontsel->font_desc)
-    pango_font_description_free (fontsel->font_desc);
+    {
+      if (pango_font_description_equal (fontsel->font_desc, new_desc))
+        return;
 
-  if (font)
-    {
-      fontsel->font_desc = new_desc;
-      g_object_unref (font);
+      pango_font_description_free (fontsel->font_desc);
     }
-  else
-    {
-      if (new_desc)
-        pango_font_description_free (new_desc);
-      fontsel->font_desc = NULL;
-    }
+
+  fontsel->font_desc = new_desc;
 
   gimp_font_selection_font_changed (fontsel);
-
-  return (font != NULL);
 }
 
 const gchar *
