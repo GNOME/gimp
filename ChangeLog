@@ -1,3 +1,8 @@
+2003-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-duplicate.c (gimp_image_duplicate): also
+	duplicate vectors and grid.
+
 2003-09-28  Ville Pätsi <drc@gimp.org>
 
 	* gimp.spec.in: Removed post install processing to finally completely

@@ -29,11 +29,16 @@
 
 #include "base/pixel-region.h"
 
+#include "config/gimpconfig.h"
+
 #include "paint-funcs/paint-funcs.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
 #include "gimpimage-guides.h"
@@ -50,12 +55,14 @@ gimp_image_duplicate (GimpImage *gimage)
 {
   PixelRegion       srcPR, destPR;
   GimpImage        *new_gimage;
-  GimpLayer        *layer, *new_layer;
+  GimpLayer        *new_layer;
   GimpLayer        *floating_layer;
-  GimpChannel      *channel, *new_channel;
+  GimpChannel      *new_channel;
+  GimpVectors      *new_vectors;
   GList            *list;
   GimpLayer        *active_layer              = NULL;
   GimpChannel      *active_channel            = NULL;
+  GimpVectors      *active_vectors            = NULL;
   GimpDrawable     *new_floating_sel_drawable = NULL;
   GimpDrawable     *floating_sel_drawable     = NULL;
   GimpParasiteList *parasites;
@@ -93,7 +100,7 @@ gimp_image_duplicate (GimpImage *gimage)
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
                                                    G_TYPE_FROM_INSTANCE (layer),
@@ -120,7 +127,6 @@ gimp_image_duplicate (GimpImage *gimage)
       if (floating_sel_drawable == GIMP_DRAWABLE (layer))
 	new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
-      /*  Add the layer  */
       if (floating_layer != new_layer)
 	gimp_image_add_layer (new_gimage, new_layer, count++);
     }
@@ -130,8 +136,8 @@ gimp_image_duplicate (GimpImage *gimage)
        list;
        list = g_list_next (list))
     {
-      channel = (GimpChannel *) list->data;
- 
+      GimpChannel *channel = list->data;
+
       new_channel =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
                                            G_TYPE_FROM_INSTANCE (channel),
@@ -149,27 +155,53 @@ gimp_image_duplicate (GimpImage *gimage)
       if (floating_sel_drawable == GIMP_DRAWABLE (channel))
 	new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
-      /*  Add the channel  */
       gimp_image_add_channel (new_gimage, new_channel, count++);
     }
 
+  /*  Copy any vectors  */
+  for (list = GIMP_LIST (gimage->vectors)->list, count = 0;
+       list;
+       list = g_list_next (list))
+    {
+      GimpVectors *vectors = list->data;
+
+      new_vectors =
+        GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                           G_TYPE_FROM_INSTANCE (vectors),
+                                           FALSE));
+
+      gimp_item_set_image (GIMP_ITEM (new_vectors), new_gimage);
+
+      /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
+      gimp_object_set_name (GIMP_OBJECT (new_vectors),
+			    gimp_object_get_name (GIMP_OBJECT (vectors)));
+
+      if (gimp_image_get_active_vectors (gimage) == vectors)
+	active_vectors = new_vectors;
+
+      gimp_image_add_vectors (new_gimage, new_vectors, count++);
+    }
+
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, 
-		     gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)), 
+  pixel_region_init (&srcPR,
+		     gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)),
 		     0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, 
+  pixel_region_init (&destPR,
 		     gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask)),
 		     0, 0, gimage->width, gimage->height, TRUE);
   copy_region (&srcPR, &destPR);
   new_gimage->selection_mask->bounds_known = FALSE;
   new_gimage->selection_mask->boundary_known = FALSE;
 
-  /*  Set active layer, active channel  */
+  /*  Set active layer, active channel, active vectors  */
   if (active_layer)
     gimp_image_set_active_layer (new_gimage, active_layer);
 
   if (active_channel)
     gimp_image_set_active_channel (new_gimage, active_channel);
+
+  if (active_vectors)
+    gimp_image_set_active_vectors (new_gimage, active_vectors);
 
   if (floating_layer)
     floating_sel_attach (floating_layer, new_floating_sel_drawable);
@@ -180,14 +212,14 @@ gimp_image_duplicate (GimpImage *gimage)
 
   new_gimage->num_cols = gimage->num_cols;
 
-  /*  copy state of all color channels  */
+  /*  Copy state of all color channels  */
   for (count = 0; count < MAX_CHANNELS; count++)
     {
       new_gimage->visible[count] = gimage->visible[count];
       new_gimage->active[count] = gimage->active[count];
     }
 
-  /*  Copy any Guides  */
+  /*  Copy any guides  */
   for (list = gimage->guides; list; list = g_list_next (list))
     {
       GimpGuide *guide = list->data;
@@ -205,6 +237,13 @@ gimp_image_duplicate (GimpImage *gimage)
 	default:
 	  g_error ("Unknown guide orientation.\n");
 	}
+    }
+
+  /* Copy the grid */
+  if (gimage->grid)
+    {
+      new_gimage->grid =
+        GIMP_GRID (gimp_config_duplicate (G_OBJECT (gimage->grid)));
     }
 
   /* Copy the qmask info */
