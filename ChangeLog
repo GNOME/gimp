@@ -1,3 +1,9 @@
+2000-05-14  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/gpb.c (gih_save_dialog): Fix typo introduced
+	when gimp_spin_button_new() was taken into use. Now you can adjust
+	the cell height again.
+
 2000-05-14  Michael Natterer  <mitch@gimp.org>
 
 	After a weekend of extensive mail exchange with the signal crew,
@@ -76,7 +82,7 @@
 
 	* PLUGIN_MAINTAINERS
 	* plug-ins/twain/*
-	* plug-ins/winsnap/*: Changed Craig Setera'a email address on his
+	* plug-ins/winsnap/*: Changed Craig Setera's email address on his
 	request.
 
 2000-05-11  Sven Neumann  <sven@gimp.org>

@@ -223,7 +223,6 @@ size_adjustment_callback (GtkWidget *widget,
   if (adj->rank0 != NULL)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (adj->rank0),
 			      *(adj->other_count) * *(adj->count));
-			    
 }
 
 static void
@@ -412,7 +411,7 @@ gih_save_dialog (gint32 image_ID)
 
   spinbutton = gimp_spin_button_new (&adjustment,
 				     gihparms.cellheight,
-				     gimp_image_height (image_ID), 1, 1, 1, 1,
+				     2, gimp_image_height (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   cellh_adjust.orientation = ORIENTATION_HORIZONTAL;
