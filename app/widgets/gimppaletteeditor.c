@@ -500,20 +500,12 @@ GtkWidget *
 gimp_palette_editor_new (Gimp            *gimp,
                          GimpMenuFactory *menu_factory)
 {
-  GimpPaletteEditor *editor;
-
-  editor = g_object_new (GIMP_TYPE_PALETTE_EDITOR, NULL);
-
-  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
-                                    gimp->palette_factory,
-                                    menu_factory, "<PaletteEditor>",
-                                    "/palette-editor-popup"))
-    {
-      g_object_unref (editor);
-      return NULL;
-    }
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_PALETTE_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<PaletteEditor>",
+                       "ui-path",         "/palette-editor-popup",
+                       "data-factory",    gimp->palette_factory,
+                       NULL);
 }
 
 void

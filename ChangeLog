@@ -1,3 +1,13 @@
+2004-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdataeditor.[ch]: added CONSTRUCT_ONLY
+	"data-factory" property. Removed gimp_data_editor_construct().
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.c: pass the construct parameters
+	to g_object_new().
+
 2004-09-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorframe.c: changed label alignment to be more

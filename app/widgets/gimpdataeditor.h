@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdataeditor.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 #define GIMP_DATA_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_EDITOR, GimpDataEditorClass))
 
 
-typedef struct _GimpDataEditorClass  GimpDataEditorClass;
+typedef struct _GimpDataEditorClass GimpDataEditorClass;
 
 struct _GimpDataEditor
 {
@@ -55,23 +55,16 @@ struct _GimpDataEditorClass
   GimpEditorClass  parent_class;
 
   /*  virtual functions  */
-
   void (* set_data) (GimpDataEditor *editor,
                      GimpData       *data);
 };
 
 
-GType       gimp_data_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_data_editor_get_type (void) G_GNUC_CONST;
 
-gboolean    gimp_data_editor_construct  (GimpDataEditor  *editor,
-                                         GimpDataFactory *data_factory,
-                                         GimpMenuFactory *menu_factory,
-                                         const gchar     *menu_identifier,
-                                         const gchar     *ui_identifier);
-
-void        gimp_data_editor_set_data   (GimpDataEditor  *editor,
-                                         GimpData        *data);
-GimpData  * gimp_data_editor_get_data   (GimpDataEditor  *editor);
+void        gimp_data_editor_set_data (GimpDataEditor *editor,
+                                       GimpData       *data);
+GimpData  * gimp_data_editor_get_data (GimpDataEditor *editor);
 
 
 #endif  /*  __GIMP_DATA_EDITOR_H__  */

@@ -507,20 +507,12 @@ GtkWidget *
 gimp_gradient_editor_new (Gimp            *gimp,
                           GimpMenuFactory *menu_factory)
 {
-  GimpGradientEditor *editor;
-
-  editor = g_object_new (GIMP_TYPE_GRADIENT_EDITOR, NULL);
-
-  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
-                                    gimp->gradient_factory,
-                                    menu_factory, "<GradientEditor>",
-                                    "/gradient-editor-popup"))
-    {
-      g_object_unref (editor);
-      return NULL;
-    }
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_GRADIENT_EDITOR,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<GradientEditor>",
+                       "ui-path",         "/gradient-editor-popup",
+                       "data-factory",    gimp->gradient_factory,
+                       NULL);
 }
 
 void

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdataeditor.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,11 +43,22 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_DATA_FACTORY
+};
+
+
 static void       gimp_data_editor_class_init (GimpDataEditorClass *klass);
 static void       gimp_data_editor_init       (GimpDataEditor      *view);
 
 static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface);
 
+static void       gimp_data_editor_set_property      (GObject        *object,
+                                                      guint           property_id,
+                                                      const GValue   *value,
+                                                      GParamSpec     *pspec);
 static void       gimp_data_editor_dispose           (GObject        *object);
 
 static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
@@ -120,9 +131,17 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose = gimp_data_editor_dispose;
+  object_class->set_property = gimp_data_editor_set_property;
+  object_class->dispose      = gimp_data_editor_dispose;
 
-  klass->set_data       = gimp_data_editor_real_set_data;
+  klass->set_data            = gimp_data_editor_real_set_data;
+
+  g_object_class_install_property (object_class, PROP_DATA_FACTORY,
+                                   g_param_spec_object ("data-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DATA_FACTORY,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -133,8 +152,7 @@ gimp_data_editor_init (GimpDataEditor *editor)
   editor->data_editable = FALSE;
 
   editor->name_entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (editor), editor->name_entry,
-		      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->name_entry, FALSE, FALSE, 0);
   gtk_widget_show (editor->name_entry);
 
   g_signal_connect (editor->name_entry, "activate",
@@ -166,6 +184,25 @@ gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+}
+
+static void
+gimp_data_editor_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_DATA_FACTORY:
+      editor->data_factory = g_value_get_object (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -266,38 +303,6 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
   gtk_widget_set_sensitive (editor->name_entry, editor->data_editable);
 }
 
-gboolean
-gimp_data_editor_construct (GimpDataEditor  *editor,
-                            GimpDataFactory *data_factory,
-                            GimpMenuFactory *menu_factory,
-                            const gchar     *menu_identifier,
-                            const gchar     *ui_identifier)
-{
-  GimpData *data;
-
-  g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), FALSE);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (data_factory), FALSE);
-  g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
-  g_return_val_if_fail (menu_factory == NULL ||
-                        menu_identifier != NULL, FALSE);
-
-  editor->data_factory = data_factory;
-
-  if (menu_factory && menu_identifier && ui_identifier)
-    gimp_editor_create_menu (GIMP_EDITOR (editor),
-                             menu_factory, menu_identifier, ui_identifier,
-                             editor);
-
-  data = (GimpData *)
-    gimp_context_get_by_type (gimp_get_user_context (data_factory->gimp),
-                              data_factory->container->children_type);
-
-  gimp_data_editor_set_data (editor, data);
-
-  return TRUE;
-}
-
 void
 gimp_data_editor_set_data (GimpDataEditor *editor,
                            GimpData       *data)
@@ -377,4 +382,3 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
   if (data && data->dirty && data->writable)
     gimp_data_factory_data_save_single (editor->data_factory, data);
 }
-
