@@ -386,6 +386,9 @@ plug-ins/fractaltrace/Makefile
 plug-ins/flarefx/Makefile
 plug-ins/webbrowser/Makefile
 plug-ins/animoptimize/Makefile
+plug-ins/libgck/Makefile
+plug-ins/MapObject/Makefile
+plug-ins/gfig/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile
