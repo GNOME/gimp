@@ -113,7 +113,8 @@ static void   read_16bit    (guchar       *source,
 			     gint          rows,
 			     gint          cols,
 			     gint          alpha,
-			     gint          extra);
+			     gint          extra,
+			     gint          align);
 static void   read_8bit     (guchar       *source,
 			     channel_data *channel,
 			     gushort       photomet,
@@ -122,7 +123,8 @@ static void   read_8bit     (guchar       *source,
 			     gint          rows,
 			     gint          cols,
 			     gint          alpha,
-			     gint          extra);
+			     gint          extra,
+			     gint          align);
 static void   read_default  (guchar       *source,
 			     channel_data *channel,
 			     gushort       bps,
@@ -132,7 +134,8 @@ static void   read_default  (guchar       *source,
 			     gint          rows,
 			     gint          cols,
 			     gint          alpha,
-			     gint          extra);
+			     gint          extra,
+			     gint          align);
 
 static gint   save_image             (gchar     *filename,
 				      gint32     image,
@@ -764,12 +767,14 @@ load_tiles (TIFF *tif, channel_data *channel,
       cols= MIN(imageWidth - x, tileWidth);
       rows= MIN(imageLength - y, tileLength);
       if (bps == 16) {
-        read_16bit(buffer, channel, photomet, y, x, rows, cols, alpha, extra);
+        read_16bit(buffer, channel, photomet, y, x, rows, cols, alpha,
+                   extra, tileWidth - cols);
       } else if (bps == 8) {
-        read_8bit(buffer, channel, photomet, y, x, rows, cols, alpha, extra);
+        read_8bit(buffer, channel, photomet, y, x, rows, cols, alpha,
+                  extra, tileWidth - cols);
       } else {
-        read_default(buffer, channel, bps, photomet,
-                          y, x, rows, cols, alpha, extra);
+        read_default(buffer, channel, bps, photomet, y, x, rows, cols,
+                     alpha, extra, tileWidth - cols);
       }
     }
     progress+= one_row;
@@ -808,12 +813,14 @@ load_lines (TIFF *tif, channel_data *channel,
       for (i = 0; i < rows; ++i)
 	TIFFReadScanline(tif, buffer + i * lineSize, y + i, 0);
       if (bps == 16) {
-	read_16bit(buffer, channel, photomet, y, 0, rows, cols, alpha, extra);
+	read_16bit(buffer, channel, photomet, y, 0, rows, cols,
+                   alpha, extra, 0);
       } else if (bps == 8) {
-	read_8bit(buffer, channel, photomet, y, 0, rows, cols, alpha, extra);
+	read_8bit(buffer, channel, photomet, y, 0, rows, cols,
+                  alpha, extra, 0);
       } else {
-	read_default(buffer, channel, bps, photomet,
-                             y, 0, rows, cols, alpha, extra);
+	read_default(buffer, channel, bps, photomet, y, 0, rows, cols,
+                     alpha, extra, 0);
       }
     }
   } else { /* PLANARCONFIG_SEPARATE  -- Just say "No" */
@@ -845,7 +852,8 @@ read_16bit (guchar       *source,
 	    gint          rows,
 	    gint          cols,
 	    gint          alpha,
-	    gint          extra)
+            gint          extra,
+            gint          align)
 {
   guchar *dest;
   gint    gray_val, red_val, green_val, blue_val, alpha_val;
@@ -929,6 +937,18 @@ read_16bit (guchar       *source,
         *channel[i].pixel++ = *source; source+= 2;
       }
     }
+    if (align) {
+      switch (photomet) {
+        case PHOTOMETRIC_MINISBLACK:
+        case PHOTOMETRIC_MINISWHITE:
+        case PHOTOMETRIC_PALETTE:
+          source+= align * (1 + alpha + extra) * 2;
+          break;
+        case PHOTOMETRIC_RGB:
+          source+= align * (3 + alpha + extra) * 2;
+          break;
+      }
+    }
   }
   for (i= 0; i <= extra; ++i) {
     gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
@@ -945,7 +965,8 @@ read_8bit (guchar       *source,
 	   gint          rows,
 	   gint          cols,
 	   gint          alpha,
-	   gint          extra)
+	   gint          extra,
+	   gint          align)
 {
   guchar *dest;
   gint    gray_val, red_val, green_val, blue_val, alpha_val;
@@ -1029,6 +1050,18 @@ read_8bit (guchar       *source,
         *channel[i].pixel++ = *source++;
       }
     }
+    if (align) {
+      switch (photomet) {
+        case PHOTOMETRIC_MINISBLACK:
+        case PHOTOMETRIC_MINISWHITE:
+        case PHOTOMETRIC_PALETTE:
+          source+= align * (1 + alpha + extra);
+          break;
+        case PHOTOMETRIC_RGB:
+          source+= align * (3 + alpha + extra);
+          break;
+      }
+    }
   }
   for (i= 0; i <= extra; ++i) {
     gimp_pixel_rgn_set_rect(&(channel[i].pixel_rgn), channel[i].pixels,
@@ -1059,7 +1092,8 @@ read_default (guchar       *source,
 	      gint          rows,
 	      gint          cols,
 	      gint          alpha,
-	      gint          extra)
+	      gint          extra,
+              gint          align)
 {
   guchar *dest;
   gint    gray_val, red_val, green_val, blue_val, alpha_val;
@@ -1145,6 +1179,22 @@ read_default (guchar       *source,
       for (i= 1; i <= extra; ++i) {
         NEXTSAMPLE(alpha_val);
         *channel[i].pixel++ = alpha_val;
+      }
+    }
+    if (align) {
+      switch (photomet) {
+        case PHOTOMETRIC_MINISBLACK:
+        case PHOTOMETRIC_MINISWHITE:
+        case PHOTOMETRIC_PALETTE:
+          for (i= 0; i < align * (1 + alpha + extra); ++i) {
+            NEXTSAMPLE(alpha_val);
+          }
+          break;
+        case PHOTOMETRIC_RGB:
+          for (i= 0; i < align * (3 + alpha + extra); ++i) {
+            NEXTSAMPLE(alpha_val);
+          }
+          break;
       }
     }
     bitsleft= 0;

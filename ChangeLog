@@ -1,3 +1,7 @@
+2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Fix #27994 (corruption of tiled tiffs)
+
 2000-10-24  Daniel Egger <egger@suse.de>
 
 	* app/image_render.c:
