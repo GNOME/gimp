@@ -68,18 +68,7 @@ typedef struct
 } ImageResize;
 
 
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-
-/*  local functions  */
+/*  local function prototypes  */
 
 static void     image_resize_callback     (GtkWidget   *widget,
 				           gpointer     data);
@@ -122,11 +111,13 @@ void
 image_convert_indexed_cmd_callback (GtkAction *action,
 				    gpointer   data)
 {
-  GimpDisplay *gdisp;
-  GtkWidget   *dialog;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  GtkWidget *widget;
+  GtkWidget *dialog;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  dialog = convert_dialog_new (gdisp->gimage, gdisp->shell);
+  dialog = convert_dialog_new (gimage, widget);
   gtk_widget_show (dialog);
 }
 
@@ -254,20 +245,20 @@ void
 image_crop_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
-  GimpDisplay *gdisp;
-  gint         x1, y1, x2, y2;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  gint       x1, y1, x2, y2;
+  return_if_no_image (gimage, data);
 
-  if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+  if (! gimp_channel_bounds (gimp_image_get_mask (gimage),
                              &x1, &y1, &x2, &y2))
     {
       g_message (_("Cannot crop because the current selection is empty."));
       return;
     }
 
-  gimp_image_crop (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
+  gimp_image_crop (gimage, gimp_get_user_context (gimage->gimp),
                    x1, y1, x2, y2, FALSE, TRUE);
-  gimp_image_flush (gdisp->gimage);
+  gimp_image_flush (gimage);
 }
 
 void
@@ -289,10 +280,12 @@ void
 image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  GtkWidget *widget;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  image_layers_merge_query (gdisp->gimage, TRUE, gdisp->shell);
+  image_layers_merge_query (gimage, TRUE, widget);
 }
 
 void

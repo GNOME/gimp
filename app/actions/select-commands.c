@@ -45,18 +45,7 @@
 #include "gimp-intl.h"
 
 
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-
-/*  local functions  */
+/*  local function prototypes  */
 
 static void   gimp_image_mask_feather_callback (GtkWidget   *widget,
                                                 gdouble      size,
@@ -272,14 +261,16 @@ void
 select_save_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  GtkWidget *widget;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  gimp_selection_save (gimp_image_get_mask (gdisp->gimage));
-  gimp_image_flush (gdisp->gimage);
+  gimp_selection_save (gimp_image_get_mask (gimage));
+  gimp_image_flush (gimage);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (gdisp->shell),
+                                    gtk_widget_get_screen (widget),
                                     "gimp-channel-list", -1);
 }
 

@@ -41,23 +41,6 @@
 #include "gimp-intl.h"
 
 
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-#define return_if_no_drawable(gimage,drawable,data) \
-  return_if_no_image (gimage,data); \
-  drawable = gimp_image_active_drawable (gimage); \
-  if (! drawable) \
-    return
-
-#define return_if_no_widget(widget,data) \
-  widget = action_data_get_widget (data); \
-  if (! widget) \
-    return
-
-
 /*  public functions  */
 
 void

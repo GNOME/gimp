@@ -61,22 +61,7 @@
 #include "gimp-intl.h"
 
 
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-#define return_if_no_vectors(gimage,vectors,data) \
-  return_if_no_image (gimage,data); \
-  vectors = gimp_image_get_active_vectors (gimage); \
-  if (! vectors) \
-    return
-
-#define return_if_no_widget(widget,data) \
-  widget = action_data_get_widget (data); \
-  if (! widget) \
-    return
-
+/*  local function prototypes  */
 
 static void  vectors_import_query (GimpImage   *gimage,
                                    GtkWidget   *parent);

@@ -61,22 +61,6 @@
 #define REVERT_DATA_KEY "revert-confirm-dialog"
 
 
-#define return_if_no_gimp(gimp,data) \
-  gimp = action_data_get_gimp (data); \
-  if (! gimp) \
-    return
-
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
-#define return_if_no_widget(widget,data) \
-  widget = action_data_get_widget (data); \
-  if (! widget) \
-    return
-
-
 /*  local function prototypes  */
 
 static void   file_new_template_callback   (GtkWidget   *widget,

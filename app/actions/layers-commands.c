@@ -80,23 +80,6 @@ static void   layers_resize_layer_query   (GimpImage   *gimage,
                                            GtkWidget   *parent);
 
 
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-#define return_if_no_layer(gimage,layer,data) \
-  return_if_no_image (gimage,data); \
-  layer = gimp_image_get_active_layer (gimage); \
-  if (! layer) \
-    return
-
-#define return_if_no_widget(widget,data) \
-  widget = action_data_get_widget (data); \
-  if (! widget) \
-    return
-
-
 /*  public functions  */
 
 void

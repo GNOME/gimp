@@ -50,11 +50,6 @@
 #include "view-commands.h"
 
 
-#define return_if_no_display(gdisp, data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
 #define SET_ACTIVE(manager,group_name,action_name,active) \
   { GimpActionGroup *group = \
       gimp_ui_manager_get_action_group (manager, group_name); \
@@ -64,6 +59,8 @@
   ((gdisp) == \
    gimp_context_get_display (gimp_get_user_context ((gdisp)->gimage->gimp)))
 
+
+/*  public functions  */
 
 void
 view_zoom_out_cmd_callback (GtkAction *action,

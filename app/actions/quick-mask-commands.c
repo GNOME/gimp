@@ -55,17 +55,6 @@ struct _EditQmaskOptions
 };
 
 
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-
 /*  local function prototypes  */
 
 static void   qmask_channel_query       (GimpDisplayShell *shell);

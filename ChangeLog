@@ -1,5 +1,22 @@
 2004-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/actions.h. added the various return_if_no_foo()
+	macros here.
+
+	* app/actions/channels-commands.c
+	* app/actions/dialogs-commands.c
+	* app/actions/drawable-commands.c
+	* app/actions/edit-commands.c
+	* app/actions/file-commands.c
+	* app/actions/image-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/qmask-commands.c
+	* app/actions/select-commands.c
+	* app/actions/vectors-commands.c
+	* app/actions/view-commands.c: removed them here. Some cleanup.
+
+2004-05-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/actions.[ch]: added some utility functions to get a
 	Gimp, GimpImage, GimpDisplay and GtkWidget from the "data" pointer
 	passed to action callbacks.

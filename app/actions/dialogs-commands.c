@@ -27,31 +27,16 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
 
-#include "display/gimpdisplay.h"
-
 #include "gui/dialogs.h"
+
+#include "actions.h"
 #include "dialogs-commands.h"
-
-
-#define return_if_no_widget(widget,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    widget = ((GimpDisplay *) data)->shell; \
-  else if (GIMP_IS_GIMP (data)) \
-    widget = dialogs_get_toolbox (); \
-  else if (GIMP_IS_DOCK (data)) \
-    widget = data; \
-  else \
-    widget = NULL; \
-  \
-  if (! widget) \
-    return
 
 
 /*  local function prototypes  */

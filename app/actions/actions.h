@@ -32,4 +32,50 @@ GimpDisplay * action_data_get_display (gpointer  data);
 GtkWidget   * action_data_get_widget  (gpointer  data);
 
 
+#define return_if_no_gimp(gimp,data) \
+  gimp = action_data_get_gimp (data); \
+  if (! gimp) \
+    return
+
+#define return_if_no_image(gimage,data) \
+  gimage = action_data_get_image (data); \
+  if (! gimage) \
+    return
+
+#define return_if_no_display(gdisp,data) \
+  gdisp = action_data_get_display (data); \
+  if (! gdisp) \
+    return
+
+#define return_if_no_widget(widget,data) \
+  widget = action_data_get_widget (data); \
+  if (! widget) \
+    return
+
+
+#define return_if_no_drawable(gimage,drawable,data) \
+  return_if_no_image (gimage,data); \
+  drawable = gimp_image_active_drawable (gimage); \
+  if (! drawable) \
+    return
+
+#define return_if_no_layer(gimage,layer,data) \
+  return_if_no_image (gimage,data); \
+  layer = gimp_image_get_active_layer (gimage); \
+  if (! layer) \
+    return
+
+#define return_if_no_channel(gimage,channel,data) \
+  return_if_no_image (gimage,data); \
+  channel = gimp_image_get_active_channel (gimage); \
+  if (! channel) \
+    return
+
+#define return_if_no_vectors(gimage,vectors,data) \
+  return_if_no_image (gimage,data); \
+  vectors = gimp_image_get_active_vectors (gimage); \
+  if (! vectors) \
+    return
+
+
 #endif /* __ACTIONS_H__ */

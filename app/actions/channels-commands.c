@@ -53,24 +53,6 @@ static void   channels_color_changed  (GimpColorButton *button,
                                        gpointer         data);
 
 
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-#define return_if_no_channel(gimage,channel,data) \
-  return_if_no_image (gimage,data); \
-  channel = gimp_image_get_active_channel (gimage); \
-  if (! channel) \
-    return
-
-#define return_if_no_widget(widget,data) \
-  widget = action_data_get_widget (data); \
-  if (! widget) \
-    return
-
-
-
 /*  public functions  */
 
 void

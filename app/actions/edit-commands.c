@@ -51,23 +51,6 @@
 #include "gimp-intl.h"
 
 
-#define return_if_no_display(gdisp,data) \
-  gdisp = action_data_get_display (data); \
-  if (! gdisp) \
-    return
-
-#define return_if_no_image(gimage,data) \
-  gimage = action_data_get_image (data); \
-  if (! gimage) \
-    return
-
-#define return_if_no_drawable(gimage,drawable,data) \
-  return_if_no_image (gimage, data); \
-  drawable = gimp_image_active_drawable (gimage); \
-  if (! drawable) \
-    return;
-
-
 /*  local function prototypes  */
 
 static void   cut_named_buffer_callback  (GtkWidget   *widget,
@@ -173,33 +156,31 @@ void
 edit_paste_as_new_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  Gimp *gimp;
+  return_if_no_gimp (gimp, data);
 
-  if (gdisp->gimage->gimp->global_buffer)
-    {
-      gimp_edit_paste_as_new (gdisp->gimage->gimp,
-                              gdisp->gimage,
-                              gdisp->gimage->gimp->global_buffer);
-    }
+  if (gimp->global_buffer)
+    gimp_edit_paste_as_new (gimp, action_data_get_image (data),
+                            gimp->global_buffer);
 }
 
 void
 edit_named_cut_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpDisplay *gdisp;
-  GtkWidget   *qbox;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  GtkWidget *widget;
+  GtkWidget *qbox;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  qbox = gimp_query_string_box (_("Cut Named"),
-                                gdisp->shell,
+  qbox = gimp_query_string_box (_("Cut Named"), widget,
                                 gimp_standard_help_func,
                                 GIMP_HELP_BUFFER_CUT,
                                 _("Enter a name for this buffer"),
                                 NULL,
-                                G_OBJECT (gdisp->gimage), "disconnect",
-                                cut_named_buffer_callback, gdisp->gimage);
+                                G_OBJECT (gimage), "disconnect",
+                                cut_named_buffer_callback, gimage);
   gtk_widget_show (qbox);
 }
 
@@ -207,18 +188,19 @@ void
 edit_named_copy_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpDisplay *gdisp;
-  GtkWidget   *qbox;
-  return_if_no_display (gdisp, data);
+  GimpImage *gimage;
+  GtkWidget *widget;
+  GtkWidget *qbox;
+  return_if_no_image (gimage, data);
+  return_if_no_widget (widget, data);
 
-  qbox = gimp_query_string_box (_("Copy Named"),
-                                gdisp->shell,
+  qbox = gimp_query_string_box (_("Copy Named"), widget,
                                 gimp_standard_help_func,
                                 GIMP_HELP_BUFFER_COPY,
                                 _("Enter a name for this buffer"),
                                 NULL,
-                                G_OBJECT (gdisp->gimage), "disconnect",
-                                copy_named_buffer_callback, gdisp->gimage);
+                                G_OBJECT (gimage), "disconnect",
+                                copy_named_buffer_callback, gimage);
   gtk_widget_show (qbox);
 }
 
@@ -226,11 +208,11 @@ void
 edit_named_paste_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GtkWidget *widget;
+  return_if_no_widget (widget, data);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    gtk_widget_get_screen (gdisp->shell),
+                                    gtk_widget_get_screen (widget),
                                     "gimp-buffer-list|gimp-buffer-grid", -1);
 }
 
@@ -267,13 +249,13 @@ void
 edit_stroke_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpDisplay  *gdisp;
   GimpImage    *gimage;
   GimpDrawable *drawable;
-  return_if_no_display (gdisp, data);
+  GtkWidget    *widget;
   return_if_no_drawable (gimage, drawable, data);
+  return_if_no_widget (widget, data);
 
-  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), gdisp->shell);
+  edit_stroke_selection (GIMP_ITEM (gimp_image_get_mask (gimage)), widget);
 }
 
 void
@@ -285,6 +267,7 @@ edit_stroke_selection (GimpItem  *item,
   GtkWidget    *dialog;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GTK_IS_WIDGET (parent));
 
   gimage = gimp_item_get_image (item);
 
