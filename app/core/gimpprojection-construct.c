@@ -3596,7 +3596,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
 					  GIMP_OBJECT (channel));
   if (index == 0)
     {
-      g_message (_("Channel cannot be raiseed any further"));
+      g_message (_("Channel cannot be raised any further"));
       return FALSE;
     }
 
