@@ -212,7 +212,7 @@ channel_get_ID (int ID)
 void
 channel_delete (Channel *channel)
 {
-  gtk_object_destroy (GTK_OBJECT (channel));
+  gtk_object_unref (GTK_OBJECT (channel));
 }
 
 static void

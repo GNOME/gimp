@@ -504,7 +504,7 @@ layer_get_ID (ID)
 void
 layer_delete (Layer * layer)
 {
-  gtk_object_destroy (GTK_OBJECT (layer));
+  gtk_object_unref (GTK_OBJECT (layer));
 }
 
 static void
