@@ -1,10 +1,10 @@
 .TH GIMP-REMOTE 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
-gimp-remote - tells a running GIMP to open a (local or remote) image file.
+gimp\-remote - tells a running GIMP to open a (local or remote) image file.
 .SH SYNOPSIS
 .B gimp-remote
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-display \fIdisplay\fP]
-[\-e] [\-\-existing] [-q] [\-\-query]  [\-s] [\-\-no\-splash]
+[\-e] [\-\-existing] [\-q] [\-\-query]  [\-s] [\-\-no\-splash]
 \fIfilename\fP ...
 
 .SH DESCRIPTION
@@ -25,7 +25,7 @@ can be altered using the command-line options described below.
 
 .SH OPTIONS
 .l 
-\fIgimp-remote\fP accepts the following options:
+\fIgimp\-remote\fP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
 Display a list of all commandline options.
@@ -48,11 +48,11 @@ When starting GIMP, do not show the splash screen.
 
 .SH EXAMPLES
 .TP
-.BI gimp-remote\ http://www.gimp.org/images/wilber_the_gimp.png
+.BI gimp\-remote\ http://www.gimp.org/images/wilber_the_gimp.png
 Loads the image from the GIMP website into a running GIMP or starts
 a new one.
 .TP
-.BI gimp-remote\ wilber.xcf\ wilma.xcf
+.BI gimp\-remote\ wilber.xcf\ wilma.xcf
 Loads the local files wilber.xcf and wilma.xcf into a running GIMP
 or starts a new one. 
 

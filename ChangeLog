@@ -1,3 +1,10 @@
+2004-12-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c
+	* docs/gimp-remote.1.in
+	* docs/gimp.1.in
+	* docs/gimprc.5.in: hyphens revisited.
+
 2004-12-16  Sven Neumann  <neumann@jpk.com>
 
 	* app/config/gimpconfig-dump.c (dump_gimprc_manpage): escape hyphens.

@@ -62,7 +62,7 @@ in non-interactive situations where startup time is to be minimized.
 Do not load any fonts. No text functionality will be available if this
 option is used.
 .TP 8
-.B \-i, \-\-no-interface
+.B \-i, \-\-no\-interface
 Run without a user interface.
 .TP 8
 .B \-\-display \fIdisplay\fP
@@ -138,11 +138,11 @@ associated to that device.
 \fB$HOME\fP/@gimpdir@/documents - lists all images that have been 
 opened or saved using GIMP.
 
-\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP\-specific GTK config
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK config
 settings. Options such as widget color and fonts sizes can be set
 here.
 
-@gimpsysconfdir@/gtkrc - sytem wide default set of GIMP\-specific GTK+
+@gimpsysconfdir@/gtkrc - sytem wide default set of GIMP-specific GTK+
 config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
@@ -289,4 +289,4 @@ and lots of people all over the world.
 .SH "SEE ALSO"
 .BR gimprc (5), 
 .BR gimptool (1), 
-.BR gimp-remote (1)
+.BR gimp\-remote (1)
