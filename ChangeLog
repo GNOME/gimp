@@ -1,5 +1,14 @@
 2004-02-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-dialog-utils.[ch] (file_dialog_hide): changed
+	return value from gboolean to void because the function is no
+	longer used as "delete_event" callback.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: removed unused #includes.
+
+2004-02-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.c (file_open_image): added missing cast.
 
 	* app/widgets/gimperrorconsole.[ch]

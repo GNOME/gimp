@@ -31,7 +31,7 @@ GtkWidget * file_dialog_new         (Gimp              *gimp,
 
 void        file_dialog_show        (GtkWidget         *filesel,
                                      GtkWidget         *parent);
-gboolean    file_dialog_hide        (GtkWidget         *filesel);
+void        file_dialog_hide        (GtkWidget         *filesel);
 
 void        file_dialog_update_name (PlugInProcDef     *proc,
                                      GtkFileSelection  *filesel);

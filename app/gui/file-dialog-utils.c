@@ -139,7 +139,7 @@ file_dialog_show (GtkWidget *filesel,
   gtk_window_present (GTK_WINDOW (filesel));
 }
 
-gboolean
+void
 file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
@@ -150,9 +150,6 @@ file_dialog_hide (GtkWidget *filesel)
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save", TRUE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", TRUE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", TRUE);
-
-  /*  return TRUE because we are used as "delete_event" handler  */
-  return TRUE;
 }
 
 void

@@ -19,35 +19,18 @@
 
 #include "config.h"
 
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
 #include "config/gimpcoreconfig.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-new.h"
 #include "core/gimpimagefile.h"
 
 #include "plug-in/plug-in-proc.h"
@@ -57,9 +40,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
-#include "widgets/gimppreview.h"
 #include "widgets/gimpthumbbox.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs.h"
 #include "file-dialog-utils.h"
