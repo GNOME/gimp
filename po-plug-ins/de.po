@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-04-10 20:05+0200\n"
-"PO-Revision-Date: 2001-04-10 20:09+02:00\n"
+"Project-Id-Version: GIMP 1.2.2\n"
+"POT-Creation-Date: 2001-06-18 14:08+0200\n"
+"PO-Revision-Date: 2001-06-18 14:09+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Über"
 #: plug-ins/common/aa.c:344 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
-#: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
+#: plug-ins/common/bumpmap.c:856 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:407
 #: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:856
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
@@ -118,7 +118,7 @@ msgstr "OK"
 #: plug-ins/common/CML_explorer.c:2256 plug-ins/common/aa.c:346
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
-#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
+#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:858
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:409 plug-ins/common/compose.c:778
 #: plug-ins/common/convmatrix.c:860 plug-ins/common/csource.c:655
@@ -595,11 +595,11 @@ msgstr "Wie oben angegeben"
 
 #: plug-ins/FractalExplorer/Dialogs.c:858
 msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
 msgstr ""
-"Erzeuge eine Farb-Tabelle mit den oben gemachten Einstellungen "
-"(Dichte/Funktion). Das Ergebnis ist im Vorschaufenster sichtbar."
+"Erzeuge eine Farb-Tabelle mit den oben gemachten Einstellungen (Dichte/"
+"Funktion). Das Ergebnis ist im Vorschaufenster sichtbar."
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "Apply Active Gradient to Final Image"
@@ -849,7 +849,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
+#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:589
 #: plug-ins/common/fractaltrace.c:831 plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "Tiefe:"
@@ -979,7 +979,7 @@ msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
 
 #: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:1082
+#: plug-ins/common/bumpmap.c:1089
 msgid "Ambient:"
 msgstr "Ambient:"
 
@@ -1121,7 +1121,7 @@ msgstr "Licht"
 msgid "Material"
 msgstr "Material"
 
-#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:844
+#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:851
 msgid "Bump Map"
 msgstr "Bumpmap"
 
@@ -1353,7 +1353,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:51 plug-ins/common/CEL.c:266
+#: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:296 plug-ins/common/gifload.c:306
 #: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:333
 #: plug-ins/common/jpeg.c:739 plug-ins/common/pat.c:266
@@ -1369,32 +1369,34 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 msgid "Loading %s:"
 msgstr "Öffne %s:"
 
-#: plug-ins/bmp/bmpread.c:63
+#: plug-ins/bmp/bmpread.c:64
 #, c-format
 msgid "%s: can't open \"%s\""
 msgstr "%s: kann \"%s\" nicht öffnen"
 
-#: plug-ins/bmp/bmpread.c:71
+#: plug-ins/bmp/bmpread.c:75 plug-ins/bmp/bmpread.c:83
+#: plug-ins/bmp/bmpread.c:88 plug-ins/bmp/bmpread.c:95
+#: plug-ins/bmp/bmpread.c:108
 #, c-format
 msgid "%s: %s is not a valid BMP file"
 msgstr "%s: %s ist keine gültige BMP-Datei"
 
-#: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
-#: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
-#: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
-#: plug-ins/bmp/bmpread.c:173
+#: plug-ins/bmp/bmpread.c:120 plug-ins/bmp/bmpread.c:138
+#: plug-ins/bmp/bmpread.c:158 plug-ins/bmp/bmpread.c:176
+#: plug-ins/bmp/bmpread.c:194 plug-ins/bmp/bmpread.c:199
+#: plug-ins/bmp/bmpread.c:204
 #, c-format
 msgid "%s: error reading BMP file header"
 msgstr "%s: Fehler beim Lesen des BMP-headers"
 
-#: plug-ins/bmp/bmpread.c:246
+#: plug-ins/bmp/bmpread.c:279
 #, c-format
 msgid "%s: bad colormap"
 msgstr "%s: fehlerhafte Palette"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
-#: plug-ins/bmp/bmpread.c:302 plug-ins/common/CEL.c:304
+#: plug-ins/bmp/bmpread.c:321 plug-ins/bmp/bmpread.c:328
+#: plug-ins/bmp/bmpread.c:335 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gifload.c:849 plug-ins/common/hrz.c:374
@@ -2163,7 +2165,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #.
 #: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:405 plug-ins/common/blur.c:631
-#: plug-ins/common/bumpmap.c:983 plug-ins/common/checkerboard.c:361
+#: plug-ins/common/bumpmap.c:990 plug-ins/common/checkerboard.c:361
 #: plug-ins/common/cubism.c:315 plug-ins/common/despeckle.c:729
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
@@ -2477,62 +2479,62 @@ msgstr "256 (Unsinn?)"
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Filter/Abbilden/Bumpmap..."
 
-#: plug-ins/common/bumpmap.c:522
+#: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
 msgstr "Wende Bumpmap-Effekt an..."
 
-#: plug-ins/common/bumpmap.c:935
+#: plug-ins/common/bumpmap.c:942
 msgid "Map Type"
 msgstr "Map Typ"
 
-#: plug-ins/common/bumpmap.c:939
+#: plug-ins/common/bumpmap.c:946
 msgid "Linear Map"
 msgstr "Lineare Abb."
 
-#: plug-ins/common/bumpmap.c:940
+#: plug-ins/common/bumpmap.c:947
 msgid "Spherical Map"
 msgstr "Spherische Abb."
 
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:948
 msgid "Sinuosidal Map"
 msgstr "Sinusförmige Abb."
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:954
+#: plug-ins/common/bumpmap.c:961
 msgid "Compensate for Darkening"
 msgstr "Verdunkelung kompensieren"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:964
+#: plug-ins/common/bumpmap.c:971
 msgid "Invert Bumpmap"
 msgstr "Bumpmap invertieren"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:974
+#: plug-ins/common/bumpmap.c:981
 msgid "Tile Bumpmap"
 msgstr "Bumpmap kacheln"
 
-#: plug-ins/common/bumpmap.c:1005
+#: plug-ins/common/bumpmap.c:1012
 msgid "Bump Map:"
 msgstr "Bumpmap:"
 
-#: plug-ins/common/bumpmap.c:1024 plug-ins/common/emboss.c:571
+#: plug-ins/common/bumpmap.c:1031 plug-ins/common/emboss.c:571
 msgid "Azimuth:"
 msgstr "Längengrad (Azimuth):"
 
-#: plug-ins/common/bumpmap.c:1033 plug-ins/common/emboss.c:580
+#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:580
 msgid "Elevation:"
 msgstr "Breitengrad (Elevation):"
 
-#: plug-ins/common/bumpmap.c:1053 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1060 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "X-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1063 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1070 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Y-Versatz:"
 
-#: plug-ins/common/bumpmap.c:1073
+#: plug-ins/common/bumpmap.c:1080
 msgid "Waterlevel:"
 msgstr "Wasserhöhe:"
 
@@ -10275,6 +10277,10 @@ msgstr ""
 msgid "First Gfig"
 msgstr "Erste GFig"
 
+#: plug-ins/gfig/gfig.c:1559
+msgid "Save Gfig drawing"
+msgstr "Gfig-Zeichnung speichern"
+
 #: plug-ins/gfig/gfig.c:1885
 msgid "Prev"
 msgstr "Vorig."
@@ -10421,8 +10427,8 @@ msgstr "Muster"
 #: plug-ins/gfig/gfig.c:2364
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to "
-"circles/ellipses if Approx. Circles/Ellipses toggle is set."
+"paints with currently selected brush with a pattern. Only applies to circles/"
+"ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 "Benutze Pinsel/Bleistift oder Airbrush zum zeichnen auf dem Bild.\n"
 "\"Muster\" zeichnet mit dem ausgewählten Pinseln mit einem Muster.\n"
@@ -11566,8 +11572,8 @@ msgstr "Invertiert die Papiertextur"
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
-"Wendet das Papier an, so wie es ist (ohne es vorher \"auszustanzen\" "
-"(emboss))"
+"Wendet das Papier an, so wie es ist (ohne es vorher \"auszustanzen"
+"\" (emboss))"
 
 #. Scale
 #: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
@@ -11755,8 +11761,8 @@ msgid ""
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 "Das smvektor-Feld. Links-klicken, um den ausgewählten smvektor zu bewegen,\n"
-"Rechts-klicken um den Vektor zum Mauszeiger zeigen zu lassen, "
-"Mittel-klicken\n"
+"Rechts-klicken um den Vektor zum Mauszeiger zeigen zu lassen, Mittel-"
+"klicken\n"
 "um einen neuen Vektor hinzuzufügen."
 
 #: plug-ins/gimpressionist/sizemap.c:422
@@ -11794,38 +11800,35 @@ msgstr ""
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
 msgid ""
-"<html><head><title>Document not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't find "
-"document</h3><tt>%s</tt></center><p><small>This either means that the help "
-"for this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
+"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
+"center><p><small>This either means that the help for this topic has not been "
+"written yet or that something is wrong with your installation. Please check "
+"carefully before you report this as a bug.</small></body></html>"
 msgstr ""
-"<html><head><title>Dokument nicht gefunden</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Konnte Dokument nicht "
-"finden</h3><tt>%s</tt></center><p><small>Entweder heisst das, dass die Hilfe "
-"noch nicht geschrieben wurde, oder ihre Installation funktioniert nichtBitte "
-"überprüfen Sie das sorgfältig, bevor Sie einen Bug-Report "
-"schicken.</small></body></html>"
+"<html><head><title>Dokument nicht gefunden</title></head><body bgcolor="
+"\"#ffffff\"><center><p>%s<h3>Konnte Dokument nicht finden</h3><tt>%s</tt></"
+"center><p><small>Entweder heisst das, dass die Hilfe noch nicht geschrieben "
+"wurde, oder ihre Installation funktioniert nichtBitte überprüfen Sie das "
+"sorgfältig, bevor Sie einen Bug-Report schicken.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
 msgid ""
-"<html><head><title>Directory not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't change to "
-"directory</h3><tt>%s</tt><h3>while trying to "
-"access</h3><tt>%s</tt></center><p><small>This either means that the help for "
-"this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
+"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
+"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
+"the help for this topic has not been written yet or that something is wrong "
+"with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
-"<html><head><title>Verzeichnis nicht gefunden</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Konnte nicht in das Verzeichnis "
-"wechseln</h3><tt>%s</tt><h3>während ich versuchte, die folgende URL zu "
-"erreichen</h3><tt>%s</tt></center><p><small>Entweder heisst das, dass die "
-"Hilfe noch nicht geschrieben wurde, oder es ihre Installation ist nicht "
-"funktionierend. Bitte überprüfen Sie das sorgfältig, bevor Sie einen "
-"Bug-Report schicken.</small></body></html>"
+"<html><head><title>Verzeichnis nicht gefunden</title></head><body bgcolor="
+"\"#ffffff\"><center><p>%s<h3>Konnte nicht in das Verzeichnis wechseln</"
+"h3><tt>%s</tt><h3>während ich versuchte, die folgende URL zu erreichen</"
+"h3><tt>%s</tt></center><p><small>Entweder heisst das, dass die Hilfe noch "
+"nicht geschrieben wurde, oder es ihre Installation ist nicht funktionierend. "
+"Bitte überprüfen Sie das sorgfältig, bevor Sie einen Bug-Report schicken.</"
+"small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"

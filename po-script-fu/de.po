@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.30\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
-"PO-Revision-Date: 2000-12-19 13:54+01:00\n"
+"Project-Id-Version: GIMP 1.2.2\n"
+"POT-Creation-Date: 2001-06-18 14:09+0200\n"
+"PO-Revision-Date: 2001-06-18 14:10+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1856,6 +1856,10 @@ msgstr "Skalierung X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Skalierung Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Sea Depth"
+msgstr "Wassertiefe"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
