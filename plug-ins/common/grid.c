@@ -147,6 +147,8 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N_UI(); 
+
   run_mode = param[0].data.d_int32;
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);

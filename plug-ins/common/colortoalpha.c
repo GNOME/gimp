@@ -135,6 +135,8 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N_UI();
+
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
 

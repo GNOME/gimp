@@ -961,6 +961,8 @@ plugin_run ( gchar *          name,
 {
   GStatusType status;
 
+  INIT_I18N_UI();
+
   status = STATUS_SUCCESS;
   p.run  = FALSE;
   p.run_mode = params[0].data.d_int32;

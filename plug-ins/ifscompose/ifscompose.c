@@ -40,6 +40,8 @@
 #include <ctype.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 #include "ifscompose.h"
 
 #define SCALE_WIDTH     150
@@ -378,6 +380,8 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N_UI(); 
+
   /* kill (getpid(), 19); */
   
   /*  Get the active drawable  */
@@ -496,7 +500,7 @@ ifs_compose_trans_page ()
 
   /* X */
 
-  label = gtk_label_new("X");
+  label = gtk_label_new (_("X"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
 		   4, 0);
@@ -510,7 +514,7 @@ ifs_compose_trans_page ()
 
   /* Y */
 
-  label = gtk_label_new("Y");
+  label = gtk_label_new (_("Y"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -524,7 +528,7 @@ ifs_compose_trans_page ()
 
   /* Scale */
 
-  label = gtk_label_new("Scale");
+  label = gtk_label_new(_("Scale"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -538,7 +542,7 @@ ifs_compose_trans_page ()
 
   /* Angle */
 
-  label = gtk_label_new("Angle");
+  label = gtk_label_new(_("Angle"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -552,7 +556,7 @@ ifs_compose_trans_page ()
 
   /* Asym */
 
-  label = gtk_label_new("Asymmetry");
+  label = gtk_label_new(_("Asymmetry"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 4, 5, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -566,7 +570,7 @@ ifs_compose_trans_page ()
 
   /* Shear */
 
-  label = gtk_label_new("Shear");
+  label = gtk_label_new(_("Shear"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
   gtk_table_attach(GTK_TABLE(table), label, 4, 5, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -580,7 +584,7 @@ ifs_compose_trans_page ()
 
   /* Flip */
 
-  ifsD->flip_check_button = gtk_check_button_new_with_label("Flip");
+  ifsD->flip_check_button = gtk_check_button_new_with_label (_("Flip"));
   gtk_table_attach(GTK_TABLE(table), ifsD->flip_check_button,0,1,2,3,
 		   GTK_FILL,GTK_FILL,4,0);
   gtk_signal_connect(GTK_OBJECT(ifsD->flip_check_button), "toggled",
@@ -610,7 +614,7 @@ ifs_compose_color_page ()
 
   /* Simple color control section */
 
-  ifsD->simple_button = gtk_radio_button_new_with_label (group, "Simple");
+  ifsD->simple_button = gtk_radio_button_new_with_label (group, _("Simple"));
   gtk_table_attach(GTK_TABLE(table), ifsD->simple_button, 0, 1, 0, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->simple_button));
@@ -621,13 +625,13 @@ ifs_compose_color_page ()
   color.vals[0] = 1.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->target_cmap = color_map_create("IfsCompose: Target",NULL,
+  ifsD->target_cmap = color_map_create(_("IfsCompose: Target"),NULL,
 				       &ifsD->current_vals.target_color,TRUE);
   gtk_table_attach(GTK_TABLE(table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
 		   GTK_FILL, 0, 4, 0);
   gtk_widget_show(ifsD->target_cmap->hbox);
 
-  label = gtk_label_new("Scale hue by:");
+  label = gtk_label_new(_("Scale hue by:"));
   gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -642,7 +646,7 @@ ifs_compose_color_page ()
 		   GTK_FILL, GTK_FILL, 4, 0);
   gtk_widget_show (ifsD->hue_scale_pair->entry);
 
-  label = gtk_label_new("Scale value by:");
+  label = gtk_label_new(_("Scale value by:"));
   gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -659,7 +663,7 @@ ifs_compose_color_page ()
 
   /* Full color control section */
 
-  ifsD->full_button = gtk_radio_button_new_with_label (group, "Full");
+  ifsD->full_button = gtk_radio_button_new_with_label (group, _("Full"));
   gtk_table_attach(GTK_TABLE(table), ifsD->full_button, 0, 1, 2, 3,
 		   GTK_FILL, GTK_FILL, 4, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->full_button));
@@ -668,7 +672,7 @@ ifs_compose_color_page ()
   color.vals[0] = 1.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->red_cmap = color_map_create("IfsCompose: Red",&color,
+  ifsD->red_cmap = color_map_create(_("IfsCompose: Red"),&color,
 				    &ifsD->current_vals.red_color,FALSE);
   gtk_table_attach(GTK_TABLE(table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -677,7 +681,7 @@ ifs_compose_color_page ()
   color.vals[0] = 0.0;
   color.vals[1] = 1.0;
   color.vals[2] = 0.0;
-  ifsD->green_cmap = color_map_create("IfsCompose: Green",&color,
+  ifsD->green_cmap = color_map_create(_("IfsCompose: Green"),&color,
 				    &ifsD->current_vals.green_color,FALSE);
   gtk_table_attach(GTK_TABLE(table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -686,7 +690,7 @@ ifs_compose_color_page ()
   color.vals[0] = 0.0;
   color.vals[1] = 0.0;
   color.vals[2] = 2.0;
-  ifsD->blue_cmap = color_map_create("IfsCompose: Blue",&color,
+  ifsD->blue_cmap = color_map_create(_("IfsCompose: Blue"),&color,
 				    &ifsD->current_vals.blue_color,FALSE);
   gtk_table_attach(GTK_TABLE(table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -695,7 +699,7 @@ ifs_compose_color_page ()
   color.vals[0] = 0.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->black_cmap = color_map_create("IfsCompose: Black",&color,
+  ifsD->black_cmap = color_map_create(_("IfsCompose: Black"),&color,
 				    &ifsD->current_vals.black_color,FALSE);
   gtk_table_attach(GTK_TABLE(table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -774,7 +778,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "IfsCompose");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("IfsCompose"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) ifs_compose_close_callback,
@@ -782,7 +786,7 @@ ifs_compose_dialog (GDrawable *drawable)
 
   /*  Action area  */
 
-  button = gtk_button_new_with_label ("New");
+  button = gtk_button_new_with_label (_("New"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ifs_compose_new_callback,
@@ -790,7 +794,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Delete");
+  button = gtk_button_new_with_label (_("Delete"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ifs_compose_delete_callback,
@@ -798,7 +802,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Defaults");
+  button = gtk_button_new_with_label (_("Defaults"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       GTK_SIGNAL_FUNC (ifs_compose_defaults_callback),
@@ -806,7 +810,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       GTK_SIGNAL_FUNC (ifs_compose_ok_callback),
@@ -815,7 +819,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -869,14 +873,14 @@ ifs_compose_dialog (GDrawable *drawable)
   util_hbox = gtk_hbox_new(FALSE,5);
   gtk_container_add(GTK_CONTAINER(hbox), util_hbox);
 
-  ifsD->move_button = gtk_toggle_button_new_with_label("Move");
+  ifsD->move_button = gtk_toggle_button_new_with_label(_("Move"));
   gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->move_button, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->move_button);
   ifsD->move_handler = gtk_signal_connect(GTK_OBJECT(ifsD->move_button),"toggled",
 		     (GtkSignalFunc)design_op_callback,
 		     (gpointer)((long)OP_TRANSLATE));
 
-  ifsD->rotate_button = gtk_toggle_button_new_with_label("Rotate/Scale");
+  ifsD->rotate_button = gtk_toggle_button_new_with_label(_("Rotate/Scale"));
   gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->rotate_button, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->rotate_button);
   ifsD->rotate_handler = gtk_signal_connect(GTK_OBJECT(ifsD->rotate_button),
@@ -884,7 +888,7 @@ ifs_compose_dialog (GDrawable *drawable)
 					    (GtkSignalFunc)design_op_callback,
 					    (gpointer)((long)OP_ROTATE));
 
-  ifsD->stretch_button = gtk_toggle_button_new_with_label("Stretch");
+  ifsD->stretch_button = gtk_toggle_button_new_with_label(_("Stretch"));
   gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->stretch_button, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->stretch_button);
   ifsD->stretch_handler = gtk_signal_connect(GTK_OBJECT(ifsD->stretch_button),
@@ -902,7 +906,7 @@ ifs_compose_dialog (GDrawable *drawable)
   util_hbox = gtk_hbox_new(FALSE,5);
   gtk_container_add(GTK_CONTAINER(alignment), util_hbox);
 
-  button = gtk_button_new_with_label ("Render Options");
+  button = gtk_button_new_with_label (_("Render Options"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) ifs_options_dialog,
 			     NULL);
@@ -910,7 +914,7 @@ ifs_compose_dialog (GDrawable *drawable)
 		      TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Preview");
+  button = gtk_button_new_with_label (_("Preview"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) ifs_compose_preview_callback,
 			     GTK_OBJECT (ifsD->preview));
@@ -918,7 +922,7 @@ ifs_compose_dialog (GDrawable *drawable)
 		      TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  check_button = gtk_check_button_new_with_label ("Auto");
+  check_button = gtk_check_button_new_with_label (_("Auto"));
   gtk_box_pack_start (GTK_BOX (util_hbox), check_button,
 		      FALSE, FALSE, 0);
   gtk_toggle_button_set_active ( GTK_TOGGLE_BUTTON(check_button) ,
@@ -957,7 +961,7 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_widget_show(page);
 
   page = ifs_compose_color_page();
-  label = gtk_label_new("Color Transformation");
+  label = gtk_label_new(_("Color Transformation"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, label);
   gtk_widget_show(page);
@@ -966,7 +970,7 @@ ifs_compose_dialog (GDrawable *drawable)
 
   hbox = gtk_hbox_new(FALSE,5);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 5);
-  label = gtk_label_new ("Relative Probability:");
+  label = gtk_label_new (_("Relative Probability:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1123,7 +1127,7 @@ design_op_menu_create(GtkWidget *window)
   gtk_menu_set_accel_group(GTK_MENU(ifsDesign->op_menu), accel_group);
   gtk_window_add_accel_group(GTK_WINDOW(window),accel_group);
 
-  menu_item = gtk_menu_item_new_with_label("Move");
+  menu_item = gtk_menu_item_new_with_label(_("Move"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1135,7 +1139,7 @@ design_op_menu_create(GtkWidget *window)
 			     'M', 0,
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
-  menu_item = gtk_menu_item_new_with_label("Rotate/Scale");
+  menu_item = gtk_menu_item_new_with_label(_("Rotate/Scale"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1147,7 +1151,7 @@ design_op_menu_create(GtkWidget *window)
 			     'R', 0,
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
-  menu_item = gtk_menu_item_new_with_label("Stretch");
+  menu_item = gtk_menu_item_new_with_label(_("Stretch"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1164,7 +1168,7 @@ design_op_menu_create(GtkWidget *window)
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
 
-  menu_item = gtk_menu_item_new_with_label("Select All");
+  menu_item = gtk_menu_item_new_with_label(_("Select All"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1176,7 +1180,7 @@ design_op_menu_create(GtkWidget *window)
 			     'A', GDK_CONTROL_MASK,
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
-  menu_item = gtk_menu_item_new_with_label("Recompute Center");
+  menu_item = gtk_menu_item_new_with_label(_("Recompute Center"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1188,7 +1192,7 @@ design_op_menu_create(GtkWidget *window)
 			     'R', GDK_MOD1_MASK,
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
-  menu_item = gtk_menu_item_new_with_label("Undo");
+  menu_item = gtk_menu_item_new_with_label(_("Undo"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1200,7 +1204,7 @@ design_op_menu_create(GtkWidget *window)
 			     'Z', GDK_CONTROL_MASK,
 			     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
-  menu_item = gtk_menu_item_new_with_label("Redo");
+  menu_item = gtk_menu_item_new_with_label(_("Redo"));
   gtk_menu_append(GTK_MENU(ifsDesign->op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -1231,7 +1235,7 @@ ifs_options_dialog()
       ifsOptD = g_new(IfsOptionsDialog,1);
 
       ifsOptD->dialog = gtk_dialog_new();
-      gtk_window_set_title(GTK_WINDOW(ifsOptD->dialog),"IfsCompose Options");
+      gtk_window_set_title(GTK_WINDOW(ifsOptD->dialog), _("IfsCompose Options"));
       gtk_window_position(GTK_WINDOW(ifsOptD->dialog), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT(ifsOptD->dialog),
 			   "delete_event",
@@ -1242,7 +1246,7 @@ ifs_options_dialog()
 			 NULL);
       /* Action area */
 
-      button = gtk_button_new_with_label ("Close");
+      button = gtk_button_new_with_label (_("Close"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) ifs_options_close_callback,
@@ -1261,7 +1265,7 @@ ifs_options_dialog()
 			 FALSE,FALSE,0);
       gtk_widget_show(table);
 
-      label = gtk_label_new("Max. Memory:");
+      label = gtk_label_new(_("Max. Memory:"));
       gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 		       GTK_FILL, GTK_FILL, 4, 0);
@@ -1274,7 +1278,7 @@ ifs_options_dialog()
 		       1, 2, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
       gtk_widget_show (ifsOptD->memory_pair->entry);
 
-      label = gtk_label_new("Iterations:");
+      label = gtk_label_new(_("Iterations:"));
       gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
 		       GTK_FILL, GTK_FILL, 4, 0);
@@ -1287,7 +1291,7 @@ ifs_options_dialog()
       gtk_widget_show (ifsOptD->iterations_pair->entry);
       gtk_widget_show (label);
 
-      label = gtk_label_new("Subdivide:");
+      label = gtk_label_new(_("Subdivide:"));
       gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
 		       GTK_FILL, GTK_FILL, 4, 0);
@@ -1300,7 +1304,7 @@ ifs_options_dialog()
 		       1, 2, 2, 3, GTK_FILL, GTK_FILL, 4, 0);
       gtk_widget_show (ifsOptD->subdivide_pair->entry);
 
-      label = gtk_label_new("Spot Radius:");
+      label = gtk_label_new(_("Spot Radius:"));
       gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
 		       GTK_FILL, GTK_FILL, 4, 0);
@@ -1370,7 +1374,7 @@ ifs_compose(GDrawable *drawable)
 
       gpointer pr;
 
-      sprintf(buffer,"Rendering IFS (%d/%d)...",band_no+1,num_bands);
+      sprintf(buffer, _("Rendering IFS (%d/%d)..."), band_no+1, num_bands);
       gimp_progress_init(buffer);
 
       /* render the band to a buffer */
@@ -1386,7 +1390,7 @@ ifs_compose(GDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-      sprintf(buffer,"Copying IFS to image (%d/%d)...",band_no+1,num_bands);
+      sprintf(buffer, _("Copying IFS to image (%d/%d)..."), band_no+1,num_bands);
       gimp_progress_init(buffer);
 
       progress = 0;

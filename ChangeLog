@@ -1,3 +1,15 @@
+Wed Nov 17 15:37:06 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/color_balance.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/sinus/sinus.c
+	* po-plug-ins/POTFILES.in: more internationalization 
+
 Wed Nov 17 00:14:11 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpcolorbutton.c: hide the colorselection dialog when

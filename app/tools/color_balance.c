@@ -457,7 +457,7 @@ color_balance_new_dialog ()
   /*  the radio buttons for application mode  */
   for (i = 0; i < 3; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, appl_mode_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group, gettext (appl_mode_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (hbox), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",

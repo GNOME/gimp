@@ -35,6 +35,7 @@ plug-ins/common/gifload.c
 plug-ins/common/grid.c
 plug-ins/common/film.c
 plug-ins/common/mail.c
+plug-ins/common/mapcolor.c
 plug-ins/common/normalize.c
 plug-ins/common/nova.c
 plug-ins/common/oilify.c
@@ -77,6 +78,7 @@ plug-ins/gimpressionist/preview.c
 plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
+plug-ins/ifscompose/ifscompose.c
 plug-ins/imagemap/imap_about.c
 plug-ins/imagemap/imap_circle.c
 plug-ins/imagemap/imap_cmd_clear.c
