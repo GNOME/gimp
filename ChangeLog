@@ -1,3 +1,10 @@
+2005-01-11  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/script-fu/siod/slib.c (help): removed wrong URL from
+	help output.
+
 2005-01-10  Manish Singh  <yosh@gimp.org>
 
 	* modules/controller_midi.c: #include <time.h> to make sure all
