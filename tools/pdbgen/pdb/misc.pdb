@@ -62,8 +62,9 @@ HELP
 }
 
 @procs = qw(version quit);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [$procs[0]]);
 
 $desc = 'Miscellaneous';
 
 1;
+

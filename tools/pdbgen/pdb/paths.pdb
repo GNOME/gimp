@@ -769,7 +769,7 @@ CODE
 	    path_set_points path_stroke_current path_get_point_at_dist
 	    path_get_tattoo get_path_by_tattoo path_delete path_get_locked
 	    path_set_locked path_set_tattoo);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';
 

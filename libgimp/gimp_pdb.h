@@ -41,8 +41,10 @@
 #include <libgimp/gimpimage_pdb.h>
 #include <libgimp/gimplayer_pdb.h>
 #include <libgimp/gimpmessage_pdb.h>
+#include <libgimp/gimpmisc_pdb.h>
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimpparasite_pdb.h>
+#include <libgimp/gimppaths_pdb.h>
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
 #include <libgimp/gimpproceduraldb_pdb.h>

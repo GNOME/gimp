@@ -44,8 +44,10 @@ PDB_WRAPPERS_C = \
 	gimpimage_pdb.c			\
 	gimplayer_pdb.c			\
 	gimpmessage_pdb.c		\
+	gimpmisc_pdb.c			\
 	gimppalette_pdb.c		\
 	gimpparasite_pdb.c		\
+	gimppaths_pdb.c			\
 	gimppatterns_pdb.c		\
 	gimppatternselect_pdb.c		\
 	gimpplugin_pdb.c		\
@@ -77,8 +79,10 @@ PDB_WRAPPERS_H = \
 	gimpimage_pdb.h			\
 	gimplayer_pdb.h			\
 	gimpmessage_pdb.h		\
+	gimpmisc_pdb.h			\
 	gimppalette_pdb.h		\
 	gimpparasite_pdb.h		\
+	gimppaths_pdb.h			\
 	gimppatterns_pdb.h		\
 	gimppatternselect_pdb.h		\
 	gimpplugin_pdb.h		\
