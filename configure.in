@@ -32,7 +32,7 @@ GIMPPRINT_REQUIRED_VERSION=4.2.0
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=13
+GIMP_MICRO_VERSION=14
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -1065,7 +1065,6 @@ AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
 dnl These are not built nor included in the tarball for the time being.
-dnl plug-ins/gap/Makefile
 dnl plug-ins/plugin-helper/Makefile
 dnl plug-ins/tools/common/Makefile
 

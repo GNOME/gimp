@@ -55,7 +55,3 @@ SUBDIRS = 			\
 	$(XJT)			\
 	common			\
 	tools
-
-##	plugin-helper		\
-##	gap			\
-##	gdyntext		\

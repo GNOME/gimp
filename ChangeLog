@@ -1,3 +1,12 @@
+2003-03-25  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am: removed traces of gap which was moved to a
+	separate CVS module and bumped the version to 1.3.14.
+	
+	* pixmaps/Makefile.am: removed a couple of pixmaps that are not
+	used any longer.
+
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
