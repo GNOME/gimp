@@ -585,7 +585,7 @@ CB_PasteImage (gboolean interactive,
 	  /* ??? gimp_image_convert_rgb (image_ID);
 	   */
 	  drawable_ID = gimp_layer_new (image_ID, _("Pasted"), nWidth, nHeight,
-					nBitsPS <= 8 ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE,
+					nBitsPS <= 8 ? GIMP_INDEXEDA_IMAGE : GIMP_RGBA_IMAGE,
 					100, GIMP_NORMAL_MODE);
 	  bIsNewImage = FALSE;
 	}
@@ -647,6 +647,8 @@ CB_PasteImage (gboolean interactive,
 		    pLine[x*drawable->bpp]   = pData[y*nSizeLine+x*bps+2];
 		    pLine[x*drawable->bpp+1] = pData[y*nSizeLine+x*bps+1];
 		    pLine[x*drawable->bpp+2] = pData[y*nSizeLine+x*bps];
+		    if (drawable->bpp == 4)
+		      pLine[x*drawable->bpp+3] = 255;
 		  }
 	      else
 		for (x = 0; x < drawable->width; x++)
@@ -660,6 +662,8 @@ CB_PasteImage (gboolean interactive,
 		    pLine[x*drawable->bpp]   = (255 * ((dw & maskR) >> shiftR)) / maxR;
 		    pLine[x*drawable->bpp+1] = (255 * ((dw & maskG) >> shiftG)) / maxG;
 		    pLine[x*drawable->bpp+2] = (255 * ((dw & maskB) >> shiftB)) / maxB;
+		    if (drawable->bpp == 4)
+		      pLine[x*drawable->bpp+3] = 255;
 		  }
 
 	      /* copy data to GIMP */
@@ -671,6 +675,7 @@ CB_PasteImage (gboolean interactive,
 	{
 	  int y;
 	  /* copy line by line */
+	  /* This will only be reached for new images, so no need for alpha */
 	  for (y = 0; y < drawable->height; y++)
 	    {
 	      if ((interactive) && (StepProgress (y, drawable->height)))
