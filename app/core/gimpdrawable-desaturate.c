@@ -39,12 +39,12 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
   guchar      *dest, *d;
   gint         h, j;
   gint         lightness, min, max;
-  gint         has_alpha;
+  gboolean     has_alpha;
   gpointer     pr;
   gint         x1, y1, x2, y2;
 
-  g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_drawable_is_rgb (drawable));
 
   has_alpha = gimp_drawable_has_alpha (drawable);
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -58,9 +58,9 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      src = srcPR.data;
+      src  = srcPR.data;
       dest = destPR.data;
-      h = srcPR.h;
+      h    = srcPR.h;
 
       while (h--)
 	{
@@ -76,9 +76,9 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
 
 	      lightness = (max + min) / 2;
 
-	      d[RED_PIX] = lightness;
+	      d[RED_PIX]   = lightness;
 	      d[GREEN_PIX] = lightness;
-	      d[BLUE_PIX] = lightness;
+	      d[BLUE_PIX]  = lightness;
 
 	      if (has_alpha)
 		d[ALPHA_PIX] = s[ALPHA_PIX];

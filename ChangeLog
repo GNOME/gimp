@@ -1,5 +1,10 @@
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-desaturate.c (gimp_drawable_desaturate):
+	Added g_return_if_fail (gimp_drawable_is_rgb (drawable)), cleanup.
+
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptemplate.c (gimp_template_notify): invalidate
 	the preview when the stock_id changes.
 
