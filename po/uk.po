@@ -515,7 +515,7 @@ msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
-"Канал -> Вид╕лення \n"
+"Канал у вид╕лення \n"
 "<Shift> Додати       <Ctrl> В╕дняти       <Shift><Ctrl> Перетнути"
 
 #: app/channels_dialog.c:211
@@ -750,7 +750,7 @@ msgstr "Зменшити вид╕лення за:"
 
 #: app/commands.c:377
 msgid "Shrink from image border"
-msgstr ""
+msgstr "Зменшити за межою зображення"
 
 #: app/commands.c:399
 msgid "Grow Selection"
@@ -1904,7 +1904,7 @@ msgstr "В╕дзеркалити сегмент"
 
 #: app/gradient.c:3784 app/gradient.c:5427
 msgid "Replicate segment"
-msgstr ""
+msgstr "Розмножити сергмент"
 
 #: app/gradient.c:3789
 msgid "Blending function for selection"
@@ -1940,11 +1940,11 @@ msgstr "В╕дзеркалити вид╕лення"
 
 #: app/gradient.c:3805 app/gradient.c:5428
 msgid "Replicate selection"
-msgstr ""
+msgstr "Розмножити вид╕лення"
 
 #: app/gradient.c:4089
 msgid "FG color"
-msgstr ""
+msgstr "Кол╕р переднього плану"
 
 #: app/gradient.c:4137
 #, c-format
@@ -2169,7 +2169,7 @@ msgstr ""
 #: app/info_dialog.c:180 app/preferences_dialog.c:1628
 #: app/preferences_dialog.c:1728
 msgid "General"
-msgstr ""
+msgstr "Загальне"
 
 #: app/info_window.c:64
 msgid "Static Gray"
@@ -2189,7 +2189,7 @@ msgstr ""
 
 #: app/info_window.c:69
 msgid "Direct Color"
-msgstr ""
+msgstr "Чистий кол╕р"
 
 #: app/info_window.c:225
 msgid "A:"
@@ -2214,7 +2214,7 @@ msgstr ""
 #. add the information fields
 #: app/info_window.c:327
 msgid "Dimensions (w x h):"
-msgstr ""
+msgstr "Розм╕ри (ш x в):"
 
 #: app/info_window.c:329
 msgid "Resolution:"
@@ -2377,7 +2377,7 @@ msgstr ""
 
 #: app/install.c:135
 msgid "For a proper GIMP installation, a subdirectory called\n"
-msgstr ""
+msgstr "Для правильно╖ ╕нсталяц╕╖ GIMP потр╕бно створити\n"
 
 #. will be replaced with gimp_directory()
 #: app/install.c:137
@@ -2386,6 +2386,8 @@ msgid ""
 "subdirectory will contain a number of important files:\n"
 "\n"
 msgstr ""
+"дек╕лька п╕дкаталог╕в. Ц╕ каталоги будуть м╕стити\n"
+"к╕лька важливих файл╕в:"
 
 #: app/install.c:141
 msgid ""
@@ -2394,6 +2396,10 @@ msgid ""
 "\t\tPaths to search for brushes, palettes, gradients,\n"
 "\t\tpatterns, plug-ins and modules can also configured here.\n"
 msgstr ""
+"\t\tgimprc використову╓ться для збер╕гання персональних установок\n"
+"\t\tтаких як типова повед╕ка GIMP.\n"
+"\t\tШляхи пошуку пензл╕в, пал╕тр, град╕╓нт╕в,\n"
+"\t\tшаблон╕в, допвнень та модул╕в також вказуються тут.\n"
 
 #: app/install.c:147
 msgid ""
@@ -2404,6 +2410,12 @@ msgid ""
 "\t\tis cached in this file.  This file is intended to\n"
 "\t\tbe GIMP-readable only, and should not be edited.\n"
 msgstr ""
+"\t\tДоповнення та розширення - це зовн╕шн╕ програми, що запуска╓\n"
+"\t\tGIMP, як╕ надаять додатков╕ можливост╕.\n"
+"\t\tЦ╕ програми розшукують при запуску й ╕нформац╕я про ╖хню\n"
+"\t\tфункц╕ональн╕сть та mod-times к кешу╓ться у цьому файл╕.\n"
+"\t\Цей файл призначений лише для зчитування GIMP'ом,\n"
+"\t\t╕ не повинен редагуватися.\n"
 
 #: app/install.c:155
 msgid ""
@@ -2566,16 +2578,20 @@ msgid ""
 "User Installation Log\n"
 "\n"
 msgstr ""
+"Журнал користувацько╖ ╕нсталяц╕╖\n"
+"\n"
 
 #: app/install.c:457
 msgid " does not exist.  Cannot install.\n"
-msgstr ""
+msgstr " не ╕сну╓.  ╤нсталяц╕я неможлива.\n"
 
 #: app/install.c:465
 msgid ""
 " has invalid permissions.\n"
 "Cannot install."
 msgstr ""
+" ма╓ нев╕рн╕ права доступу.\n"
+"╤нсталяц╕я неможлива."
 
 #: app/install.c:499
 msgid ""
@@ -2623,7 +2639,7 @@ msgstr "Канал"
 
 #: app/internal_procs.c:77
 msgid "Channel Ops"
-msgstr ""
+msgstr "Параметри каналу"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:240 app/paint_funcs.c:96
 #: app/tool_options.c:900 app/tool_options.c:1014
@@ -2632,27 +2648,27 @@ msgstr "Кол╕р"
 
 #: app/internal_procs.c:83
 msgid "Convert"
-msgstr ""
+msgstr "Перетворення"
 
 #: app/internal_procs.c:86
 msgid "Drawable procedures"
-msgstr ""
+msgstr "Процедури малюнку"
 
 #: app/internal_procs.c:89
 msgid "Edit procedures"
-msgstr ""
+msgstr "Процедури редагування"
 
 #: app/internal_procs.c:92
 msgid "File Operations"
-msgstr ""
+msgstr "Файлов╕ операц╕╖"
 
 #: app/internal_procs.c:95
 msgid "Floating selections"
-msgstr ""
+msgstr "Плаваюч╕ вид╕лення"
 
 #: app/internal_procs.c:98
 msgid "GDisplay procedures"
-msgstr ""
+msgstr "Процедури GDisplay"
 
 #: app/internal_procs.c:101 app/palette.c:3243
 msgid "Image"
@@ -2660,23 +2676,23 @@ msgstr "Зображення"
 
 #: app/internal_procs.c:104
 msgid "Image mask"
-msgstr ""
+msgstr "Маска зображення"
 
 #: app/internal_procs.c:107
 msgid "Gimprc procedures"
-msgstr ""
+msgstr "Процедури Gimprc"
 
 #: app/internal_procs.c:110
 msgid "Help procedures"
-msgstr ""
+msgstr "Дов╕дков╕ процедури"
 
 #: app/internal_procs.c:116
 msgid "Gradient UI"
-msgstr ""
+msgstr "UI град╕╓нта"
 
 #: app/internal_procs.c:119
 msgid "Guide procedures"
-msgstr ""
+msgstr "Процедури направляючо╖"
 
 #: app/internal_procs.c:122 app/preferences_dialog.c:1620
 msgid "Interface"
@@ -2689,7 +2705,7 @@ msgstr "Шар"
 
 #: app/internal_procs.c:128
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Р╕зне"
 
 #: app/internal_procs.c:131 app/palette.c:2260 app/palette.c:2272
 #: app/palette_select.c:80
@@ -2698,7 +2714,7 @@ msgstr "Пал╕тра"
 
 #: app/internal_procs.c:134
 msgid "Parasite procedures"
-msgstr ""
+msgstr "Паразитн╕ процедури"
 
 #: app/internal_procs.c:137 app/lc_dialog.c:180
 msgid "Paths"
@@ -2706,7 +2722,7 @@ msgstr "Контури"
 
 #: app/internal_procs.c:140
 msgid "Pattern UI"
-msgstr ""
+msgstr "UI Шаблону"
 
 #: app/internal_procs.c:146
 msgid "Plug-in"
@@ -2714,23 +2730,23 @@ msgstr "Доповнення"
 
 #: app/internal_procs.c:149
 msgid "Procedural database"
-msgstr ""
+msgstr "Процедурна база даних"
 
 #: app/internal_procs.c:152
 msgid "Text procedures"
-msgstr ""
+msgstr "Текстов╕ процедури"
 
 #: app/internal_procs.c:155
 msgid "Tool procedures"
-msgstr ""
+msgstr "Процедури ╕нструмент╕в"
 
 #: app/internal_procs.c:158 app/undo_history.c:872
 msgid "Undo"
-msgstr ""
+msgstr "В╕дм╕на"
 
 #: app/internal_procs.c:161
 msgid "Units"
-msgstr ""
+msgstr "Одиниц╕"
 
 #: app/invert.c:43
 msgid "Invert does not operate on indexed drawables."
@@ -2742,24 +2758,24 @@ msgstr "Операц╕я ╕нвертування не вдалась."
 
 #: app/layer.c:248
 msgid "Zero width or height layers not allowed."
-msgstr ""
+msgstr "Нульова ширина чи висота шару не допустима."
 
 #: app/layer.c:477
 #, c-format
 msgid "%s mask"
-msgstr ""
+msgstr "%s маска"
 
 #: app/layer_select.c:101
 msgid "Layer Select"
-msgstr "Вибрати шар"
+msgstr "Вид╕лити шар"
 
 #: app/layers_dialog.c:214 app/paint_funcs.c:83 app/tool_options.c:1000
 msgid "Normal"
-msgstr "Нормальня"
+msgstr "Нормальна"
 
 #: app/layers_dialog.c:216 app/paint_funcs.c:84 app/tool_options.c:1001
 msgid "Dissolve"
-msgstr ""
+msgstr "Розчинення"
 
 #: app/layers_dialog.c:218 app/paint_funcs.c:86 app/tool_options.c:1003
 msgid "Multiply (Burn)"
@@ -2771,11 +2787,11 @@ msgstr "Д╕лення (Осв╕тлювач)"
 
 #: app/layers_dialog.c:222 app/paint_funcs.c:87 app/tool_options.c:1005
 msgid "Screen"
-msgstr ""
+msgstr "Осв╕тлення"
 
 #: app/layers_dialog.c:224 app/paint_funcs.c:88 app/tool_options.c:1006
 msgid "Overlay"
-msgstr ""
+msgstr "Перекриття"
 
 #: app/layers_dialog.c:226 app/paint_funcs.c:89 app/tool_options.c:1007
 msgid "Difference"
@@ -2827,7 +2843,7 @@ msgstr "Видалити шар"
 
 #: app/layers_dialog.c:377
 msgid "Keep Trans."
-msgstr ""
+msgstr "Збер╕гати прозор╕сть"
 
 #: app/layers_dialog.c:1808
 msgid "Empty Layer Copy"
@@ -2883,7 +2899,7 @@ msgstr "Параметри додавання маски"
 #. The radio frame and box
 #: app/layers_dialog.c:3694
 msgid "Initialize Layer Mask to:"
-msgstr ""
+msgstr "╤н╕ц╕ал╕зувати маску шару з:"
 
 #: app/layers_dialog.c:3786
 msgid "Layer Mask Options"
@@ -3012,7 +3028,7 @@ msgstr "Верс╕я GIMP"
 #: app/main.c:305
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Використання: %s [option ...] [files ...]\n"
+msgstr "Використання: %s [параметр ...] [файли ...]\n"
 
 #: app/main.c:306
 msgid "Valid options are:\n"
@@ -4226,7 +4242,7 @@ msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
-"Завантаження пал╕тры %s:\n"
+"Завантаження пал╕три %s:\n"
 "З╕псована пал╕тра: в╕дсутн╕й маг╕чний заголовок"
 
 #: app/palette.c:447
@@ -4580,8 +4596,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:282
 msgid "Error: Monitor resolution must not be zero."
-msgstr ""
-"Помилка: Типова розд╕льна здатн╕сть мон╕тора мусить бути р╕вною не нулю."
+msgstr "Помилка: Нульова розд╕льна здатн╕сть мон╕тора не допуска╓ться."
 
 #: app/preferences_dialog.c:289
 msgid "Error: Image title format must not be NULL."
@@ -5947,7 +5962,7 @@ msgstr "Неможливо в╕дм╕нити %s"
 
 #: app/undo.c:2857
 msgid "<<invalid>>"
-msgstr ""
+msgstr "<<нед╕йсно>>"
 
 #: app/undo.c:2858
 msgid "image"
