@@ -262,7 +262,14 @@ gimp_image_set_filename (GimpImage *gimage, char *filename)
 {
   char *new_filename;
 
+  /* 
+   * WARNING: this function will free the current filename even if you are 
+   * setting it to itself so any pointer you hold to the filename will be
+   * invalid after this call.  So please use with care.
+   */
+
   new_filename = g_strdup (filename);
+
   if (gimage->has_filename)
     g_free (gimage->filename);
 

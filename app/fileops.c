@@ -300,7 +300,7 @@ static GSList *save_procs = NULL;
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
 
-static GimpImage* the_gimage;
+static GimpImage* the_gimage = NULL;
 
 #define FILE_ERR_MESSAGE(str)				G_STMT_START{	\
   if (message_handler == MESSAGE_BOX)					\
@@ -813,11 +813,12 @@ file_save (GimpImage* gimage,
       /*  set this image to clean  */
       gimage_clean_all (gimage);
 
-      /*  set the image title  */
-      gimage_set_filename (gimage, filename);
-
-      idea_add( filename );
+      /* these calls must come before the call to gimage_set_filename */
+      idea_add (filename);
       menus_last_opened_add (filename);
+      
+      /*  set the image title  */
+      gimp_image_set_filename (gimage, filename);
     }
 
   g_free (return_vals);

@@ -1,3 +1,12 @@
+Mon Aug 24 13:41:49 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/fileops.c (file_save): move the mru and docindex calls to
+	before the call to gimp_image_set_filename so that they are still
+	accessing valid memory.  Fixes the filename corruption seen in
+	these interfaces.
+	* app/gimpimage.c: added a warning about the side effect that
+	caused the above bug.
+	
 Mon Aug 24 09:34:37 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/depthmerge.c
