@@ -190,12 +190,6 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   t_tool = GIMP_THRESHOLD_TOOL (tool);
 
-  if (! gdisp)
-    {
-      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
-      return;
-    }
-
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Threshold does not operate on indexed drawables."));

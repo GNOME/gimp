@@ -111,11 +111,8 @@ static void  resolution_update           (Resize    *resize,
 
 
 Resize *
-resize_widget_new (GimpImage    *gimage,
+resize_widget_new (GimpViewable *viewable,
                    ResizeType    type,
-		   ResizeTarget  target,
-		   GObject      *object,
-		   const gchar  *signal,
 		   gint          width,
 		   gint          height,
 		   gdouble       resolution_x,
@@ -137,8 +134,8 @@ resize_widget_new (GimpImage    *gimage,
   GtkWidget     *abox;
   GtkObject     *adjustment;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (GIMP_IS_OBJECT (object), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (viewable) ||
+                        GIMP_IS_IMAGE (viewable), NULL);
 
   abox  = NULL;
   frame = NULL;
@@ -152,9 +149,18 @@ resize_widget_new (GimpImage    *gimage,
 
   resize = (Resize *) private;
 
-  resize->gimage        = gimage;
+  if (GIMP_IS_IMAGE (viewable))
+    {
+      resize->gimage = GIMP_IMAGE (viewable);
+      resize->target = ResizeImage;
+    }
+  else
+    {
+      resize->gimage = gimp_item_get_image (GIMP_ITEM (viewable));
+      resize->target = ResizeLayer;
+    }
+
   resize->type          = type;
-  resize->target        = target;
   resize->width         = width;
   resize->height        = height;
   resize->resolution_x  = resolution_x;
@@ -164,7 +170,7 @@ resize_widget_new (GimpImage    *gimage,
   resize->ratio_y       = 1.0;
   resize->offset_x      = 0;
   resize->offset_y      = 0;
-  resize->interpolation = gimage->gimp->config->interpolation_type;
+  resize->interpolation = resize->gimage->gimp->config->interpolation_type;
 
   /*  dialog box  */
   {
@@ -179,7 +185,7 @@ resize_widget_new (GimpImage    *gimage,
       case ScaleWidget:
         stock_id = GIMP_STOCK_SCALE;
 
-	switch (target)
+	switch (resize->target)
 	  {
 	  case ResizeLayer:
 	    wmclass      = "scale_layer";
@@ -202,7 +208,7 @@ resize_widget_new (GimpImage    *gimage,
       case ResizeWidget:
         stock_id = GIMP_STOCK_RESIZE;
 
-	switch (target)
+	switch (resize->target)
 	  {
 	  case ResizeLayer:
 	    wmclass      = "resize_layer";
@@ -223,15 +229,13 @@ resize_widget_new (GimpImage    *gimage,
       }
 
     resize->resize_shell =
-      gimp_viewable_dialog_new (GIMP_IS_VIEWABLE (object) ?
-                                GIMP_VIEWABLE (object) : GIMP_VIEWABLE (gimage),
+      gimp_viewable_dialog_new (viewable,
                                 window_title, wmclass,
                                 stock_id, window_desc,
                                 gimp_standard_help_func, help_page,
 
-                                GTK_STOCK_CANCEL, 
-                                G_CALLBACK (gtk_widget_destroy),
-                                NULL, (gpointer) 1, NULL, FALSE, TRUE,
+                                GTK_STOCK_CANCEL, gtk_widget_destroy,
+                                NULL, 1, NULL, FALSE, TRUE,
 
                                 GIMP_STOCK_RESET, reset_callback,
                                 resize, NULL, NULL, FALSE, FALSE,
@@ -245,13 +249,6 @@ resize_widget_new (GimpImage    *gimage,
 		       (GWeakNotify) g_free,
 		       private);
   }
-
-  /*  handle the image disappearing under our feet  */
-  if (object && signal)
-    g_signal_connect_object (G_OBJECT (object), signal,
-                             G_CALLBACK (gtk_widget_destroy),
-                             G_OBJECT (resize->resize_shell),
-                             G_CONNECT_SWAPPED);
 
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
@@ -535,7 +532,7 @@ resize_widget_new (GimpImage    *gimage,
     }
 
   /*  the resolution stuff  */
-  if ((type == ScaleWidget) && (target == ResizeImage))
+  if ((type == ScaleWidget) && (resize->target == ResizeImage))
     {
       frame = gtk_frame_new (_("Print Size & Display Unit"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -637,7 +634,7 @@ resize_widget_new (GimpImage    *gimage,
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
       private->resolution_se =
-	gimp_size_entry_new (1, gimage->gimp->config->default_resolution_units, 
+	gimp_size_entry_new (1, resize->gimage->gimp->config->default_resolution_units, 
 			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, SB_WIDTH,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);

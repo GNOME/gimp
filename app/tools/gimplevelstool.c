@@ -263,12 +263,6 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   l_tool = GIMP_LEVELS_TOOL (tool);
 
-  if (! gdisp)
-    {
-      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
-      return;
-    }
-
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Levels for indexed drawables cannot be adjusted."));

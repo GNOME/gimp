@@ -129,11 +129,8 @@ image_resize_cmd_callback (GtkWidget *widget,
   image_resize->gimage = gimage;
 
   image_resize->resize =
-    resize_widget_new (gimage,
+    resize_widget_new (GIMP_VIEWABLE (gimage),
                        ResizeWidget,
-                       ResizeImage,
-                       G_OBJECT (gdisp),
-                       "disconnect",
                        gimage->width,
                        gimage->height,
                        gimage->xresolution,
@@ -142,6 +139,11 @@ image_resize_cmd_callback (GtkWidget *widget,
                        GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
                        G_CALLBACK (image_resize_callback),
                        image_resize);
+
+  g_signal_connect_object (G_OBJECT (gdisp), "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (image_resize->resize->resize_shell),
+                           G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (image_resize->resize->resize_shell),
 		     (GWeakNotify) g_free,
@@ -167,11 +169,8 @@ image_scale_cmd_callback (GtkWidget *widget,
   image_scale->gimage = gimage;
 
   image_scale->resize =
-    resize_widget_new (gimage,
+    resize_widget_new (GIMP_VIEWABLE (gimage),
                        ScaleWidget,
-                       ResizeImage,
-                       G_OBJECT (gdisp),
-                       "disconnect",
                        gimage->width,
                        gimage->height,
                        gimage->xresolution,
@@ -180,6 +179,11 @@ image_scale_cmd_callback (GtkWidget *widget,
                        GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot,
                        G_CALLBACK (image_scale_callback),
                        image_scale);
+
+  g_signal_connect_object (G_OBJECT (gdisp), "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (image_scale->resize->resize_shell),
+                           G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (image_scale->resize->resize_shell),
 		     (GWeakNotify) g_free,

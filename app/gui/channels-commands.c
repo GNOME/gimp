@@ -347,17 +347,15 @@ channels_new_channel_query (GimpImage   *gimage,
 
   /*  The name entry  */
   options->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (options->name_entry, 150, -1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (channel_name ? channel_name : _("New Channel")));
-
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Channel Name:"), 1.0, 0.5,
 			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */
   opacity_scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					     _("Fill Opacity:"), -1, 50,
+					     _("Fill Opacity:"), 100, -1,
 					     channel_color.a * 100.0,
 					     0.0, 100.0, 1.0, 10.0, 1,
 					     TRUE, 0.0, 0.0,
@@ -478,11 +476,6 @@ channels_edit_channel_query (GimpChannel *channel)
 		     (GWeakNotify) g_free,
 		     options);
 
-  g_signal_connect_object (G_OBJECT (channel), "removed",
-			   G_CALLBACK (gtk_widget_destroy),
-			   G_OBJECT (options->query_box),
-			   G_CONNECT_SWAPPED);
-
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -501,17 +494,15 @@ channels_edit_channel_query (GimpChannel *channel)
 
   /*  The name entry  */
   options->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (options->name_entry, 150, -1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      gimp_object_get_name (GIMP_OBJECT (channel)));
-
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Channel Name:"), 1.0, 0.5,
 			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */
   opacity_scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					     _("Fill Opacity:"), -1, 50,
+					     _("Fill Opacity:"), 100, -1,
 					     channel_color.a * 100.0,
 					     0.0, 100.0, 1.0, 10.0, 1,
 					     TRUE, 0.0, 0.0,

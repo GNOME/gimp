@@ -176,7 +176,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 
   view->opacity_adjustment =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (view->options_box), 0, 1,
-					  _("Opacity:"), -1, 50,
+					  _("Opacity:"), -1, -1,
 					  100.0, 0.0, 100.0, 1.0, 10.0, 1,
 					  TRUE, 0.0, 0.0,
 					  NULL, "#opacity_sacle"));

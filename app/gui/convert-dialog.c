@@ -59,7 +59,7 @@ typedef struct
 
 static void indexed_ok_callback                     (GtkWidget *widget,
 						     gpointer   data);
-static void indexed_cancel_callback                 (GtkWidget *widget,
+static void indexed_destroy_callback                (GtkWidget *widget,
 						     gpointer   data);
 
 static void indexed_custom_palette_button_callback  (GtkWidget *widget,
@@ -135,13 +135,17 @@ convert_to_indexed (GimpImage *gimage)
                               gimp_standard_help_func,
                               "dialogs/convert_to_indexed.html",
 
-                              GTK_STOCK_CANCEL, indexed_cancel_callback,
-                              dialog, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
                               GTK_STOCK_OK, indexed_ok_callback,
                               dialog, NULL, NULL, TRUE, FALSE,
 
                               NULL);
+
+  g_signal_connect (G_OBJECT (dialog->shell), "destroy",
+                    G_CALLBACK (indexed_destroy_callback),
+                    dialog);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
@@ -467,17 +471,12 @@ indexed_ok_callback (GtkWidget *widget,
   saved_num_colors   = dialog->num_colors;
   saved_palette_type = dialog->palette_type;
 
-  if (dialog->palette_select)
-    gtk_widget_destroy (dialog->palette_select->shell);  
-
   gtk_widget_destroy (dialog->shell);
-
-  g_free (dialog);
 }
 
 static void
-indexed_cancel_callback (GtkWidget *widget,
-			 gpointer   data)
+indexed_destroy_callback (GtkWidget *widget,
+                          gpointer   data)
 {
   IndexedDialog *dialog;
 
@@ -485,8 +484,6 @@ indexed_cancel_callback (GtkWidget *widget,
 
   if (dialog->palette_select)
     gtk_widget_destroy (dialog->palette_select->shell);
-
-  gtk_widget_destroy (dialog->shell);
 
   g_free (dialog);
 }

@@ -40,8 +40,11 @@
 static void   gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass);
 static void   gimp_viewable_dialog_init       (GimpViewableDialog      *dialog);
 
+static void   gimp_viewable_dialog_destroy      (GtkObject          *object);
+
 static void   gimp_viewable_dialog_name_changed (GimpObject         *object,
                                                  GimpViewableDialog *dialog);
+static void   gimp_viewable_dialog_close        (GimpViewableDialog *dialog);
 
 
 static GimpDialogClass *parent_class = NULL;
@@ -78,7 +81,13 @@ gimp_viewable_dialog_get_type (void)
 static void
 gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 {
+  GtkObjectClass *object_class;
+
+  object_class = GTK_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->destroy = gimp_viewable_dialog_destroy;
 }
 
 static void
@@ -128,6 +137,19 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_misc_set_alignment (GTK_MISC (dialog->viewable_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->viewable_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->viewable_label);
+}
+
+static void
+gimp_viewable_dialog_destroy (GtkObject *object)
+{
+  GimpViewableDialog *dialog;
+
+  dialog = GIMP_VIEWABLE_DIALOG (object);
+
+  if (dialog->preview)
+    gimp_viewable_dialog_set_viewable (dialog, NULL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
@@ -206,12 +228,18 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
       if (viewable == old_viewable)
         return;
 
-      g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
-                                            gimp_viewable_dialog_name_changed,
-                                            dialog);
-
       gtk_widget_destroy (dialog->preview);
-      dialog->preview = NULL;
+
+      if (old_viewable)
+        {
+          g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
+                                                gimp_viewable_dialog_name_changed,
+                                                dialog);
+
+          g_signal_handlers_disconnect_by_func (G_OBJECT (old_viewable),
+                                                gimp_viewable_dialog_close,
+                                                dialog);
+        }
     }
 
   if (viewable)
@@ -227,7 +255,25 @@ gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,
                         FALSE, FALSE, 2);
       gtk_widget_show (dialog->preview);
 
+      g_object_add_weak_pointer (G_OBJECT (dialog->preview),
+                                 (gpointer *) &dialog->preview);
+
       gimp_viewable_dialog_name_changed (GIMP_OBJECT (viewable), dialog);
+
+      if (GIMP_IS_ITEM (viewable))
+        {
+          g_signal_connect_object (G_OBJECT (viewable), "removed",
+                                   G_CALLBACK (gimp_viewable_dialog_close),
+                                   G_OBJECT (dialog),
+                                   G_CONNECT_SWAPPED);
+        }
+      else
+        {
+          g_signal_connect_object (G_OBJECT (viewable), "disconnect",
+                                   G_CALLBACK (gimp_viewable_dialog_close),
+                                   G_OBJECT (dialog),
+                                   G_CONNECT_SWAPPED);
+        }
     }
 }
 
@@ -273,4 +319,25 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
 
   gtk_label_set_text (GTK_LABEL (dialog->viewable_label), name);
   g_free (name);
+}
+
+static void
+gimp_viewable_dialog_close (GimpViewableDialog *dialog)
+{
+  GtkWidget   *widget;
+  GdkEventAny  event;
+
+  widget = GTK_WIDGET (dialog);
+  
+  /* Synthesize delete_event to close dialog. */
+  
+  event.type       = GDK_DELETE;
+  event.window     = widget->window;
+  event.send_event = TRUE;
+  
+  g_object_ref (G_OBJECT (event.window));
+  
+  gtk_main_do_event ((GdkEvent *) &event);
+  
+  g_object_unref (G_OBJECT (event.window));
 }

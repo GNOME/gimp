@@ -1,5 +1,55 @@
 2002-09-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplayerlistview.c
+	* app/gui/channels-commands.c: some more auto-sizing spinbuttons.
+
+	* app/gui/offset-dialog.c: added mnemonics for "X" and "Y".
+
+	Dialog auto-hide cleanup:
+
+	* app/widgets/gimpviewabledialog.c: close the dialog when the
+	GimpViewable goes away (special cased GimpItems which become
+	invisible on "removed"). Close the dialog by syntesizing a
+	"delete_event" instead of simply hiding or destroying it so the
+	closing method of the dialog's user gets invoked.
+
+	* app/gui/resize-dialog.[ch]: don't do the same here. Simplifies
+	the API even more as we don't have to pass the object to watch any
+	more.
+
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c: changed accordingly.
+
+	* app/undo_history.c
+	* app/gui/convert-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/vectors-commands.c: removed all dialog auto-hiding which
+	is now done by GimpViewableDialog. Also connect more close
+	callbacks to gtk_widget_destroy() and handle shell destruction
+	accordingly, so these pseudo widgets behave more like real ones.
+
+	Tool-dialog auto-hide fix:
+
+	* app/tools/tool_manager.c: never call a tool's initialize()
+	method with a NULL gdisp (I can't follow why we did this before
+	because it's conceptually broken and makes the semantics of
+	initialize() more than unclear).
+	To be sure, added g_return_if_fail(GIMP_IS_DISPLAY(gdisp)) to
+	tool_manager_initialize_active().
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: removed the recently added code
+	for handling NULL displays in initialize().
+
+2002-09-08  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/curve_bend.c: forgot a mnemonic.
 
 2002-09-08  Michael Natterer  <mitch@gimp.org>

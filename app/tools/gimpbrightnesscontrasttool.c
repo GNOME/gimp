@@ -176,12 +176,6 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
 
   bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  if (! gdisp)
-    {
-      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
-      return;
-    }
-
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Brightness-Contrast does not operate on indexed drawables."));

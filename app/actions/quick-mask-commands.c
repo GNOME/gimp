@@ -59,8 +59,6 @@ struct _EditQmaskOptions
 static void   qmask_channel_query         (GimpDisplayShell *shell);
 static void   qmask_query_ok_callback     (GtkWidget        *widget, 
                                            gpointer          client_data);
-static void   qmask_query_cancel_callback (GtkWidget        *widget, 
-                                           gpointer          client_data);
 static void   qmask_query_scale_update    (GtkAdjustment    *adjustment,
                                            gpointer          data);
 static void   qmask_query_color_changed   (GimpColorButton  *button,
@@ -181,13 +179,16 @@ qmask_channel_query (GimpDisplayShell *shell)
                               gimp_standard_help_func,
                               "dialogs/edit_qmask_attributes.html",
 
-                              GTK_STOCK_CANCEL, qmask_query_cancel_callback,
-                              options, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL, gtk_widget_destroy,
+                              NULL, 1, NULL, FALSE, TRUE,
 
                               GTK_STOCK_OK, qmask_query_ok_callback,
                               options, NULL, NULL, TRUE, FALSE,
 
                               NULL);
+
+  g_object_weak_ref (G_OBJECT (options->query_box),
+                     (GWeakNotify) g_free, options);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -262,18 +263,6 @@ qmask_query_ok_callback (GtkWidget *widget,
 
   /* update the qmask color no matter what */
   options->gimage->qmask_color = color;
-
-  gtk_widget_destroy (options->query_box);
-  g_free (options);
-}
-
-static void
-qmask_query_cancel_callback (GtkWidget *widget,
-				  gpointer   data)
-{
-  EditQmaskOptions *options;
-
-  options = (EditQmaskOptions *) data;
 
   gtk_widget_destroy (options->query_box);
   g_free (options);

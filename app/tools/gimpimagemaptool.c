@@ -186,14 +186,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
-  if (! gdisp)
-    {
-      if (image_map_tool->shell)
-        gimp_image_map_tool_cancel_clicked (NULL, image_map_tool);
-
-      return;
-    }
-
   if (! image_map_tool->shell)
     {
       GimpToolInfo *tool_info;

@@ -474,19 +474,6 @@ undo_history_gimage_rename_callback (GimpImage *gimage,
   g_free (title);
 }
 
-/* gimage destroyed */
-static void
-undo_history_gimage_destroy_callback (GimpImage *gimage,
-				      gpointer   data)
-{
-  undo_history_st *st = data;
-
-  st->gimage = NULL;  /* not allowed to use this any more */
-
-  gtk_widget_destroy (GTK_WIDGET (st->shell));
-  /* which continues in the function below: */
-}
-
 static void
 undo_history_shell_destroy_callback (GtkWidget *widget,
 				     gpointer   data)
@@ -501,10 +488,6 @@ undo_history_shell_destroy_callback (GtkWidget *widget,
       g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
                                             undo_history_gimage_rename_callback,
                                             st);
-      g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
-                                            undo_history_gimage_destroy_callback,
-                                            st);
-      
       g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
                                             undo_history_clean_callback,
                                             st);
@@ -807,9 +790,6 @@ undo_history_new (GimpImage *gimage)
                     st);
   g_signal_connect (G_OBJECT (gimage), "name_changed",
                     G_CALLBACK (undo_history_gimage_rename_callback),
-                    st);
-  g_signal_connect (G_OBJECT (gimage), "disconnect",
-                    G_CALLBACK (undo_history_gimage_destroy_callback),
                     st);
   g_signal_connect (G_OBJECT (gimage), "clean",
                     G_CALLBACK (undo_history_clean_callback),

@@ -803,11 +803,6 @@ layers_edit_layer_query (GimpLayer *layer)
 		     (GWeakNotify) g_free,
 		     options);
 
-  g_signal_connect_object (G_OBJECT (layer), "removed",
-			   G_CALLBACK (gtk_widget_destroy),
-			   G_OBJECT (options->query_box),
-			   G_CONNECT_SWAPPED);
-
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -907,11 +902,6 @@ layers_add_mask_query (GimpLayer *layer)
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
 		     options);
-
-  g_signal_connect_object (G_OBJECT (layer), "removed",
-			   G_CALLBACK (gtk_widget_destroy),
-			   G_OBJECT (options->query_box),
-			   G_CONNECT_SWAPPED);
 
   /*  The radio frame and box  */
   if (! gimp_image_mask_is_empty (gimage))
@@ -1046,11 +1036,8 @@ layers_scale_layer_query (GimpImage *gimage,
   options->layer = layer;
 
   options->resize =
-    resize_widget_new (gimage,
+    resize_widget_new (GIMP_VIEWABLE (layer),
                        ScaleWidget,
-		       ResizeLayer,
-		       G_OBJECT (layer),
-		       "removed",
 		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
 		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
 		       gimage->xresolution,
@@ -1138,11 +1125,8 @@ layers_resize_layer_query (GimpImage *gimage,
   options->layer = layer;
 
   options->resize =
-    resize_widget_new (gimage,
+    resize_widget_new (GIMP_VIEWABLE (layer),
                        ResizeWidget,
-		       ResizeLayer,
-		       G_OBJECT (layer),
-		       "removed",
 		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
 		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
 		       gimage->xresolution,

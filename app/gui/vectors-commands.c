@@ -571,11 +571,6 @@ vectors_edit_vectors_query (GimpVectors *vectors)
 		     (GWeakNotify) g_free,
 		     options);
 
-  g_signal_connect_object (G_OBJECT (vectors), "removed",
-			   G_CALLBACK (gtk_widget_destroy),
-			   G_OBJECT (options->query_box),
-			   G_CONNECT_SWAPPED);
-
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);

@@ -69,11 +69,8 @@ struct _Resize
  *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
  */
 
-Resize * resize_widget_new (GimpImage    *gimage,
+Resize * resize_widget_new (GimpViewable *viewable,
                             ResizeType    type,
-			    ResizeTarget  target,
-			    GObject      *object,
-			    const gchar  *signal,
 			    gint          width,
 			    gint          height,
 			    gdouble       resolution_x,

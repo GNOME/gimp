@@ -189,12 +189,6 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
 
-  if (! gdisp)
-    {
-      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
-      return;
-    }
-
   if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Color balance operates only on RGB color drawables."));

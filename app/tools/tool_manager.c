@@ -290,6 +290,7 @@ tool_manager_initialize_active (Gimp        *gimp,
   GimpTool        *tool;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   tool_manager = tool_manager_get (gimp);
 
@@ -299,10 +300,7 @@ tool_manager_initialize_active (Gimp        *gimp,
 
       gimp_tool_initialize (tool, gdisp);
 
-      if (gdisp)
-        tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-      else
-        tool->drawable = NULL;
+      tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
 }
 
@@ -723,7 +721,8 @@ tool_manager_image_dirty (GimpImage *gimage,
 
   tool_manager = (GimpToolManager *) data;
 
-  if (tool_manager->active_tool && ! gimp_tool_control_preserve(tool_manager->active_tool->control))
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_preserve (tool_manager->active_tool->control))
     {
       GimpDisplay *gdisp;
 
@@ -737,13 +736,17 @@ tool_manager_image_dirty (GimpImage *gimage,
 
 	  if (gdisp->gimage == gimage)
             {
-              tool_manager_initialize_active (gimage->gimp, gdisp);
+              GimpTool *tool;
 
-              tool_manager->active_tool->gdisp = gdisp;
-            }
-	  else
-            {
-              tool_manager_initialize_active (gimage->gimp, NULL);
+              tool = tool_manager->active_tool;
+
+              if (gimp_image_active_drawable (gdisp->gimage) ||
+                  gimp_tool_control_handles_empty_image (tool->control))
+                {
+                  tool_manager_initialize_active (gimage->gimp, gdisp);
+
+                  tool->gdisp = gdisp;
+                }
             }
 	}
     }

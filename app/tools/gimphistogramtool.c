@@ -190,13 +190,6 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
   GimpDrawable *drawable;
   PixelRegion   PR;
 
-  if (! gdisp)
-    {
-      if (histogram_dialog)
-        histogram_tool_close_callback (NULL, histogram_dialog);
-      return;
-    }
-
   if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Histogram does not operate on indexed drawables."));
