@@ -109,6 +109,11 @@ typedef enum
         { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
 
 
+/*  dnd initialization  */
+
+void  gimp_dnd_init (Gimp *gimp);
+
+
 /*  file / url dnd functions  */
 
 typedef void (* GimpDndDropFileFunc) (GtkWidget *widget,

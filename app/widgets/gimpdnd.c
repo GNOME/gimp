@@ -53,8 +53,6 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "app_procs.h"
-
 #include "gimpdnd.h"
 #include "gimppreview.h"
 
@@ -441,6 +439,19 @@ static GimpDndDataDef dnd_data_defs[] =
     NULL
   }
 };
+
+
+static Gimp *the_dnd_gimp = NULL;
+
+
+void
+gimp_dnd_init (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (the_dnd_gimp == NULL);
+
+  the_dnd_gimp = gimp;
+}
 
 
 /********************************/
@@ -1000,7 +1011,7 @@ gimp_dnd_open_files (GtkWidget *widget,
         GimpPDBStatusType  status;
         GError            *error = NULL;
 
-        gimage = file_open_with_display (the_gimp, uri, &status, &error);
+        gimage = file_open_with_display (the_dnd_gimp, uri, &status, &error);
 
         if (! gimage && status != GIMP_PDB_CANCEL)
           {
@@ -1424,7 +1435,7 @@ gimp_dnd_set_image_data (GtkWidget *widget,
   if (! ID)
     return;
 
-  gimage = gimp_image_get_by_ID (the_gimp, ID);
+  gimage = gimp_image_get_by_ID (the_dnd_gimp, ID);
 
   if (gimage)
     (* (GimpDndDropViewableFunc) set_image_func) (widget,
@@ -1486,7 +1497,7 @@ gimp_dnd_set_item_data (GtkWidget *widget,
   if (! ID)
     return;
 
-  item = gimp_item_get_by_ID (the_gimp, ID);
+  item = gimp_item_get_by_ID (the_dnd_gimp, ID);
 
   if (item)
     (* (GimpDndDropViewableFunc) set_item_func) (widget,
@@ -1556,7 +1567,7 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
     brush = GIMP_BRUSH (gimp_brush_get_standard ());
   else
     brush = (GimpBrush *)
-      gimp_container_get_child_by_name (the_gimp->brush_factory->container,
+      gimp_container_get_child_by_name (the_dnd_gimp->brush_factory->container,
 					name);
 
   if (brush)
@@ -1593,7 +1604,7 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
     pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
   else
     pattern = (GimpPattern *)
-      gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
+      gimp_container_get_child_by_name (the_dnd_gimp->pattern_factory->container,
 					name);
 
   if (pattern)
@@ -1630,7 +1641,7 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
     gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
   else
     gradient = (GimpGradient *)
-      gimp_container_get_child_by_name (the_gimp->gradient_factory->container,
+      gimp_container_get_child_by_name (the_dnd_gimp->gradient_factory->container,
 					name);
 
   if (gradient)
@@ -1667,7 +1678,7 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
     palette = GIMP_PALETTE (gimp_palette_get_standard ());
   else
     palette = (GimpPalette *)
-      gimp_container_get_child_by_name (the_gimp->palette_factory->container,
+      gimp_container_get_child_by_name (the_dnd_gimp->palette_factory->container,
 					name);
 
   if (palette)
@@ -1704,7 +1715,7 @@ gimp_dnd_set_font_data (GtkWidget *widget,
     font = gimp_font_get_standard ();
   else
     font = (GimpFont *)
-      gimp_container_get_child_by_name (the_gimp->fonts, name);
+      gimp_container_get_child_by_name (the_dnd_gimp->fonts, name);
 
   if (font)
     (* (GimpDndDropViewableFunc) set_font_func) (widget,
@@ -1737,7 +1748,7 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
   name = (gchar *) vals;
 
   buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (the_gimp->named_buffers, name);
+    gimp_container_get_child_by_name (the_dnd_gimp->named_buffers, name);
 
   if (buffer)
     (* (GimpDndDropViewableFunc) set_buffer_func) (widget,
@@ -1770,7 +1781,7 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
   name = (gchar *) vals;
 
   imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_name (the_gimp->documents, name);
+    gimp_container_get_child_by_name (the_dnd_gimp->documents, name);
 
   if (imagefile)
     (* (GimpDndDropViewableFunc) set_imagefile_func) (widget,
@@ -1803,7 +1814,7 @@ gimp_dnd_set_template_data (GtkWidget *widget,
   name = (gchar *) vals;
 
   template = (GimpTemplate *)
-    gimp_container_get_child_by_name (the_gimp->templates, name);
+    gimp_container_get_child_by_name (the_dnd_gimp->templates, name);
 
   if (template)
     (* (GimpDndDropViewableFunc) set_template_func) (widget,
@@ -1835,13 +1846,11 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
 
   name = (gchar *) vals;
 
-  g_print ("gimp_dnd_set_tool_data() got >>%s<<\n", name);
-
   if (strcmp (name, "gimp-standard-tool") == 0)
-    tool_info = gimp_tool_info_get_standard (the_gimp);
+    tool_info = gimp_tool_info_get_standard (the_dnd_gimp);
   else
     tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (the_gimp->tool_info_list, name);
+      gimp_container_get_child_by_name (the_dnd_gimp->tool_info_list, name);
 
   if (tool_info)
     (* (GimpDndDropViewableFunc) set_tool_func) (widget,

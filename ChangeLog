@@ -1,3 +1,15 @@
+2003-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.[ch]: added static "the_dnd_gimp" variable
+	and don't use the global "the_gimp" any more.
+	Added gimp_dnd_init() to let the DND system know about the GUI's
+	Gimp instance.
+
+	* app/gui/gui.c (gui_init): call gimp_dnd_init().
+
+	* app/app_procs.h: changed the #warning about including
+	"app_procs.h" to an #error, like the other headers in app/ do.
+
 2003-11-03  Manish Singh  <yosh@gimp.org>
 
 	* app/text/gimptext-vectors.c: use recommended freetype include

@@ -21,11 +21,7 @@
 
 
 #ifndef GIMP_APP_GLUE_COMPILATION
-#ifdef __GNUC__
-#warning FIXME: Dont #include "app_procs.h"
-#elif defined _MSC_VER
-#pragma message ("FIXME: Dont #include 'app_procs.h'")
-#endif
+#error You must not #include "app_procs.h" from an app/ subdir
 #endif
 
 /*

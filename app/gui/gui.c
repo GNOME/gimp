@@ -47,6 +47,7 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdnd.h"
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
@@ -192,6 +193,8 @@ gui_init (Gimp     *gimp,
   g_return_val_if_fail (the_gui_gimp == NULL, NULL);
 
   the_gui_gimp = gimp;
+
+  gimp_dnd_init (gimp);
 
   themes_init (gimp);
 
