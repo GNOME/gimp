@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
-"PO-Revision-Date: 2002-08-17 19:20+0100\n"
+"POT-Creation-Date: 2002-08-25 23:11+0100\n"
+"PO-Revision-Date: 2002-08-25 23:34+0100\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1386 plug-ins/common/AlienMap.c:1388
 #: plug-ins/common/AlienMap2.c:1367 plug-ins/gfig/gfig.c:3374
-#: plug-ins/imagemap/imap_about.c:43 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:361
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Sobre"
@@ -1188,8 +1188,8 @@ msgstr "Exibe/oculta quadro de pré-visualização"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
-#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
+#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -2044,7 +2044,7 @@ msgstr "Alinhar Camadas Visíveis"
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:365
 #: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
-#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:390
 #: plug-ins/common/smooth_palette.c:424 plug-ins/common/snoise.c:528
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
@@ -3141,7 +3141,7 @@ msgid "Create _Histogram"
 msgstr "Criar _Histograma"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
 msgstr "_Largura:"
@@ -4532,7 +4532,7 @@ msgid "Subject:"
 msgstr "Assunto:"
 
 #: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:98
 msgid "Filename:"
 msgstr "Nome do ficheiro:"
 
@@ -5751,19 +5751,19 @@ msgstr "Segundos de Atraso"
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
 msgstr "<Image>/Filtros/Desfocar/Desfoc. gaussiano selectivo..."
 
-#: plug-ins/common/sel_gauss.c:200 plug-ins/common/sel_gauss.c:236
+#: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
 msgstr "Desfoc. Gaussiano Selectivo"
 
-#: plug-ins/common/sel_gauss.c:217
+#: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
 msgstr "sel_gauss: Não se pode operar em imagens de cores indexadas"
 
-#: plug-ins/common/sel_gauss.c:270
+#: plug-ins/common/sel_gauss.c:271
 msgid "_Blur Radius:"
 msgstr "Raio de Des_foc.:"
 
-#: plug-ins/common/sel_gauss.c:277
+#: plug-ins/common/sel_gauss.c:278
 msgid "_Max. Delta:"
 msgstr "Delta _Máx.:"
 
@@ -5947,7 +5947,7 @@ msgid "Smooth Palette"
 msgstr "Paleta Uniforme"
 
 #: plug-ins/common/smooth_palette.c:449 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Altura:"
@@ -9283,7 +9283,7 @@ msgstr ""
 "escrito, ou a sua instalação está incompleta. Verifique que a sua instalação "
 "está completa antes de reportar isto como um bug. </small></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:609
 msgid "<Untitled>"
 msgstr "<Sem título>"
 
@@ -9443,19 +9443,19 @@ msgstr "Renderizando IFS (%d/%d)..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copiando IFS para a imagem (%d/%d)..."
 
-#: plug-ins/imagemap/imap_about.c:47
+#: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
 msgstr "Plug-in Mapa Imagens 2.0"
 
-#: plug-ins/imagemap/imap_about.c:49
-msgid "Copyright(c) 1999 by Maurits Rijk"
-msgstr "Copyright(c) 1999 por Maurits Rijk"
+#: plug-ins/imagemap/imap_about.c:44
+msgid "Copyright(c) 1999-2002 by Maurits Rijk"
+msgstr "Copyright(c) 1999-2002 por Maurits Rijk"
 
-#: plug-ins/imagemap/imap_about.c:50
+#: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
 msgstr "lpeek.mrijk@consunet.nl"
 
-#: plug-ins/imagemap/imap_about.c:52
+#: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
 msgstr "  Lançado sob a Licença Pública Genérica GNU  "
 
@@ -9468,8 +9468,8 @@ msgid "Center _x:"
 msgstr "Centro _x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:260
-#: plug-ins/imagemap/imap_grid.c:266 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
@@ -9527,44 +9527,44 @@ msgstr ""
 "mais comum \"thumbnails\", adequadas para barras de\n"
 "navegação."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "_Left Start at:"
 msgstr "_Esquerda Inicia em "
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "_Top Start at:"
 msgstr "_Topo Inicia em "
 
-#: plug-ins/imagemap/imap_cmd_guides.c:188
+#: plug-ins/imagemap/imap_cmd_guides.c:183
 msgid "_Horz. Spacing"
 msgstr "Espaçamento _Horiz."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "_No. Across:"
 msgstr "_Núm. Através:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:200
+#: plug-ins/imagemap/imap_cmd_guides.c:195
 msgid "_Vert. Spacing:"
 msgstr "Espaçamento _Vert.:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:206
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. _Down"
 msgstr "Núm. A_baixo"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:214
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 msgid "Base _URL:"
 msgstr "_URL Base:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Dimensões de imagem: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:236
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Limites de guias resultante: 0,0 para 0,0 (áreas 0)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:271
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Guias"
 
@@ -9740,67 +9740,67 @@ msgstr "Gravar Mapa de Imagens"
 msgid "Error"
 msgstr "Erro"
 
-#: plug-ins/imagemap/imap_grid.c:199
+#: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
 msgstr "Configurações de Grade"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:205
 msgid "_Snap-To Grid Enabled"
 msgstr "Captura para Grade _Habilitada"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
 msgstr "Visibilidade e Tipo de Grade"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:218
 msgid "_Hidden"
 msgstr "_Oculta"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:226
 msgid "_Lines"
 msgstr "_Linhas"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:235
 msgid "C_rosses"
 msgstr "C_ruzes"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
 msgstr "Granulação de Grade"
 
-#: plug-ins/imagemap/imap_grid.c:256
+#: plug-ins/imagemap/imap_grid.c:251
 msgid "_Width"
 msgstr "Lar_gura:"
 
-#: plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:257
 msgid "_Height"
 msgstr "_Altura:"
 
-#: plug-ins/imagemap/imap_grid.c:276
+#: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
 msgstr "Deslocamento de Grade"
 
-#: plug-ins/imagemap/imap_grid.c:284
+#: plug-ins/imagemap/imap_grid.c:279
 msgid "pixels from l_eft"
 msgstr "pixeis a partir da _esquerda"
 
-#: plug-ins/imagemap/imap_grid.c:289
+#: plug-ins/imagemap/imap_grid.c:284
 msgid "pixels from _top"
 msgstr "pixeis a partir do _topo"
 
-#: plug-ins/imagemap/imap_grid.c:300
+#: plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "_Pré-Visualizar"
 
-#: plug-ins/imagemap/imap_main.c:152
+#: plug-ins/imagemap/imap_main.c:153
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtros/Web/Mapa de imagens..."
 
-#: plug-ins/imagemap/imap_main.c:759
+#: plug-ins/imagemap/imap_main.c:760
 msgid "Data changed"
 msgstr "Dados alterados"
 
-#: plug-ins/imagemap/imap_main.c:763
+#: plug-ins/imagemap/imap_main.c:764
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
@@ -9808,20 +9808,20 @@ msgstr ""
 "Alguns dados foram alterados.\n"
 "Deseja ignorar as mudanças e continuar?"
 
-#: plug-ins/imagemap/imap_main.c:972
+#: plug-ins/imagemap/imap_main.c:973
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Ficheiro \"%s\" salvo."
 
-#: plug-ins/imagemap/imap_main.c:976
+#: plug-ins/imagemap/imap_main.c:977
 msgid "Couldn't save file:"
 msgstr "Não foi possível gravar ficheiro:"
 
-#: plug-ins/imagemap/imap_main.c:1001
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Image size changed"
 msgstr "Tamanho da imagem alterado"
 
-#: plug-ins/imagemap/imap_main.c:1005
+#: plug-ins/imagemap/imap_main.c:1006
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -9829,11 +9829,11 @@ msgstr ""
 "O tamanho da imagem foi alterado.\n"
 "Redimensionar a área?"
 
-#: plug-ins/imagemap/imap_main.c:1036
+#: plug-ins/imagemap/imap_main.c:1037
 msgid "Couldn't read file:"
 msgstr "Não foi possível ler o ficheiro:"
 
-#: plug-ins/imagemap/imap_main.c:1082
+#: plug-ins/imagemap/imap_main.c:1083
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -9900,15 +9900,19 @@ msgstr "_Extras"
 msgid "Grid Settings..."
 msgstr "Configurações de Grade..."
 
-#: plug-ins/imagemap/imap_menu.c:383
+#: plug-ins/imagemap/imap_menu.c:384
+msgid "Use GIMP Guides..."
+msgstr "Utilizar Guias GIMP..."
+
+#: plug-ins/imagemap/imap_menu.c:386
 msgid "Create Guides..."
 msgstr "Criar Guias..."
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:393
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: plug-ins/imagemap/imap_menu.c:393
+#: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "Sobre do Mapa de Imagens..."
 
@@ -10052,31 +10056,31 @@ msgstr "Comentar"
 msgid "Settings for this Mapfile"
 msgstr "Configurações para este mapa de ficheiros"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:101
 msgid "Image name:"
 msgstr "Nome de imagem:"
 
-#: plug-ins/imagemap/imap_settings.c:109
+#: plug-ins/imagemap/imap_settings.c:102
 msgid "Select Image File"
 msgstr "Seleccionar ficheiro de imagem"
 
-#: plug-ins/imagemap/imap_settings.c:113
+#: plug-ins/imagemap/imap_settings.c:106
 msgid "_Title:"
 msgstr "_Título:"
 
-#: plug-ins/imagemap/imap_settings.c:115
+#: plug-ins/imagemap/imap_settings.c:108
 msgid "Aut_hor:"
 msgstr "A_utor:"
 
-#: plug-ins/imagemap/imap_settings.c:117
+#: plug-ins/imagemap/imap_settings.c:110
 msgid "Default _URL:"
 msgstr "_URL por Omissão:"
 
-#: plug-ins/imagemap/imap_settings.c:119
+#: plug-ins/imagemap/imap_settings.c:112
 msgid "_Description:"
 msgstr "_Descrição:"
 
-#: plug-ins/imagemap/imap_settings.c:134
+#: plug-ins/imagemap/imap_settings.c:127
 msgid "Map file format"
 msgstr "Formato do ficheiro de mapa"
 
