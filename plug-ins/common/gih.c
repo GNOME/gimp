@@ -542,7 +542,7 @@ gih_load_one_brush (gint   fd,
 		}
 	      g_free (plain_brush);
 	    }
-	  else if (lseek (fd, - sizeof (PatternHeader), SEEK_CUR) < 0)
+	  else if (lseek (fd, - ((off_t) sizeof (PatternHeader)), SEEK_CUR) < 0)
 	    {
 	      g_message (_("GIMP brush file appears to be corrupted."));
 	      g_free (name);
