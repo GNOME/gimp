@@ -1,3 +1,11 @@
+1999-01-31  Jay Cox  <jaycox@earthlink.net>
+
+	* app/color_balance.c: optimized by using a lookup table
+	
+	* app/paint_funcs.c: parallelized apply_mask_to_region, 
+	combine_mask_and_region, and initial_region.  Use rand_r
+	if we are multithreaded.
+
 Sun Jan 31 18:02:46 1999  Owen Taylor  <otaylor@gtk.org>
 
 	* app/blob.c: Merged in changes from gsumi. This
@@ -7,7 +15,7 @@ Sun Jan 31 18:02:46 1999  Owen Taylor  <otaylor@gtk.org>
 
 Sun Jan 31 19:42:26 GMT 1999 Adam D. Moss <adam@gimp.org>
 
-	* app/tile.c app/tile_manager.c:
+	* app/tile.c, app/tile_manager.c:
 
 	Fixed the tile-corruption bug which has been around
 	since early GIMP-1.1.  When dirtying a copy-on-write

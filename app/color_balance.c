@@ -71,6 +71,10 @@ struct _ColorBalanceDialog
   double       magenta_green[3];
   double       yellow_blue[3];
 
+  char         r_lookup[255];
+  char         g_lookup[255];
+  char         b_lookup[255];
+
   gint         preserve_luminosity;
   gint         preview;
   gint         application_mode;
@@ -122,22 +126,8 @@ color_balance (PixelRegion *srcPR,
   int r, g, b;
   int r_n, g_n, b_n;
   int w, h;
-  double *cyan_red_transfer[3];
-  double *magenta_green_transfer[3];
-  double *yellow_blue_transfer[3];
 
   cbd = (ColorBalanceDialog *) user_data;
-
-  /*  Set the transfer arrays  (for speed)  */
-  cyan_red_transfer[SHADOWS] = (cbd->cyan_red[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  cyan_red_transfer[MIDTONES] = (cbd->cyan_red[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  cyan_red_transfer[HIGHLIGHTS] = (cbd->cyan_red[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  magenta_green_transfer[SHADOWS] = (cbd->magenta_green[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  magenta_green_transfer[MIDTONES] = (cbd->magenta_green[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  magenta_green_transfer[HIGHLIGHTS] = (cbd->magenta_green[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  yellow_blue_transfer[SHADOWS] = (cbd->yellow_blue[SHADOWS] > 0) ? shadows_add : shadows_sub;
-  yellow_blue_transfer[MIDTONES] = (cbd->yellow_blue[MIDTONES] > 0) ? midtones_add : midtones_sub;
-  yellow_blue_transfer[HIGHLIGHTS] = (cbd->yellow_blue[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
 
   h = srcPR->h;
   src = srcPR->data;
@@ -151,30 +141,14 @@ color_balance (PixelRegion *srcPR,
       d = dest;
       while (w--)
 	{
-	  r = r_n = s[RED_PIX];
-	  g = g_n = s[GREEN_PIX];
-	  b = b_n = s[BLUE_PIX];
+	  r = s[RED_PIX];
+	  g = s[GREEN_PIX];
+	  b = s[BLUE_PIX];
 
-	  r_n += cbd->cyan_red[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
-	  r_n = CLAMP0255 (r_n);
-	  r_n += cbd->cyan_red[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
-	  r_n = CLAMP0255 (r_n);
-	  r_n += cbd->cyan_red[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
-	  r_n = CLAMP0255 (r_n);
+	  r_n = cbd->r_lookup[r];
+	  g_n = cbd->g_lookup[g];
+	  b_n = cbd->b_lookup[b];
 
-	  g_n += cbd->magenta_green[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
-	  g_n = CLAMP0255 (g_n);
-	  g_n += cbd->magenta_green[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
-	  g_n = CLAMP0255 (g_n);
-	  g_n += cbd->magenta_green[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
-	  g_n = CLAMP0255 (g_n);
-
-	  b_n += cbd->yellow_blue[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
-	  b_n = CLAMP0255 (b_n);
-	  b_n += cbd->yellow_blue[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
-	  b_n = CLAMP0255 (b_n);
-	  b_n += cbd->yellow_blue[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
-	  b_n = CLAMP0255 (b_n);
 
 	  if (cbd->preserve_luminosity)
 	    {
@@ -617,11 +591,64 @@ color_balance_update (ColorBalanceDialog *cbd,
 }
 
 static void
+color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
+{
+  double *cyan_red_transfer[3];
+  double *magenta_green_transfer[3];
+  double *yellow_blue_transfer[3];
+  int i, r_n, g_n, b_n;
+  /*  Set the transfer arrays  (for speed)  */
+  cyan_red_transfer[SHADOWS] = (cbd->cyan_red[SHADOWS] > 0) ? shadows_add : shadows_sub;
+  cyan_red_transfer[MIDTONES] = (cbd->cyan_red[MIDTONES] > 0) ? midtones_add : midtones_sub;
+  cyan_red_transfer[HIGHLIGHTS] = (cbd->cyan_red[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+  magenta_green_transfer[SHADOWS] = (cbd->magenta_green[SHADOWS] > 0) ? shadows_add : shadows_sub;
+  magenta_green_transfer[MIDTONES] = (cbd->magenta_green[MIDTONES] > 0) ? midtones_add : midtones_sub;
+  magenta_green_transfer[HIGHLIGHTS] = (cbd->magenta_green[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+  yellow_blue_transfer[SHADOWS] = (cbd->yellow_blue[SHADOWS] > 0) ? shadows_add : shadows_sub;
+  yellow_blue_transfer[MIDTONES] = (cbd->yellow_blue[MIDTONES] > 0) ? midtones_add : midtones_sub;
+  yellow_blue_transfer[HIGHLIGHTS] = (cbd->yellow_blue[HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+
+  for (i = 0; i < 256; i++)
+  {
+    r_n = i;
+    g_n = i;
+    b_n = i;
+
+    r_n += cbd->cyan_red[SHADOWS] * cyan_red_transfer[SHADOWS][r_n];
+    r_n = CLAMP0255 (r_n);
+    r_n += cbd->cyan_red[MIDTONES] * cyan_red_transfer[MIDTONES][r_n];
+    r_n = CLAMP0255 (r_n);
+    r_n += cbd->cyan_red[HIGHLIGHTS] * cyan_red_transfer[HIGHLIGHTS][r_n];
+    r_n = CLAMP0255 (r_n);
+
+    g_n += cbd->magenta_green[SHADOWS] * magenta_green_transfer[SHADOWS][g_n];
+    g_n = CLAMP0255 (g_n);
+    g_n += cbd->magenta_green[MIDTONES] * magenta_green_transfer[MIDTONES][g_n];
+    g_n = CLAMP0255 (g_n);
+    g_n += cbd->magenta_green[HIGHLIGHTS] * magenta_green_transfer[HIGHLIGHTS][g_n];
+    g_n = CLAMP0255 (g_n);
+
+    b_n += cbd->yellow_blue[SHADOWS] * yellow_blue_transfer[SHADOWS][b_n];
+    b_n = CLAMP0255 (b_n);
+    b_n += cbd->yellow_blue[MIDTONES] * yellow_blue_transfer[MIDTONES][b_n];
+    b_n = CLAMP0255 (b_n);
+    b_n += cbd->yellow_blue[HIGHLIGHTS] * yellow_blue_transfer[HIGHLIGHTS][b_n];
+    b_n = CLAMP0255 (b_n);
+
+    cbd->r_lookup[i] = r_n;
+    cbd->g_lookup[i] = g_n;
+    cbd->b_lookup[i] = b_n;
+  }
+
+}
+
+static void
 color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
     g_message (_("color_balance_preview(): No image map"));
   active_tool->preserve = TRUE;
+  color_balance_create_lookup_tables(cbd);
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
   active_tool->preserve = FALSE;
 }

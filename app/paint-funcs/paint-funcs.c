@@ -983,12 +983,19 @@ dissolve_pixels (const unsigned char *src,
 {
   int alpha, b;
   int rand_val;
-
+#ifdef ENABLE_MP
+  /* if we are running with multiple threads rand_r give _much_
+     better performance than rand */
+  unsigned int seed;
+  seed = random_table [y % RANDOM_TABLE_SIZE];
+  for (b = 0; b < x; b++)
+    rand_r(&seed);
+#else
   /*  Set up the random number generator  */
   srand (random_table [y % RANDOM_TABLE_SIZE]);
   for (b = 0; b < x; b++)
     rand ();
-
+#endif
   alpha = db - 1;
 
   while (length --)
@@ -998,8 +1005,11 @@ dissolve_pixels (const unsigned char *src,
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
+#ifdef ENABLE_MP
+      rand_val = (rand_r(&seed) & 0xFF);
+#else
       rand_val = (rand() & 0xFF);
-
+#endif
       if (has_alpha)
 	dest[alpha] = (rand_val > src[alpha]) ? 0 : src[alpha];
       else
@@ -4637,53 +4647,65 @@ swap_region (PixelRegion *src,
 
 
 void
+apply_mask_to_sub_region (int *opacityp,
+			  PixelRegion *src,
+			  PixelRegion *mask)
+{
+  int h;
+  unsigned char * s, * m;
+  int opacity = *opacityp;
+  
+  s = src->data;
+  m = mask->data;
+  h = src->h;
+
+  while (h --)
+  {
+    apply_mask_to_alpha_channel (s, m, opacity, src->w, src->bytes);
+    s += src->rowstride;
+    m += mask->rowstride;
+  }
+}
+
+void
 apply_mask_to_region (PixelRegion *src,
 		      PixelRegion *mask,
 		      int          opacity)
 {
-  int h;
-  unsigned char * s, * m;
-  void * pr;
-
-  for (pr = pixel_regions_register (2, src, mask); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      s = src->data;
-      m = mask->data;
-      h = src->h;
-
-      while (h --)
-	{
-	  apply_mask_to_alpha_channel (s, m, opacity, src->w, src->bytes);
-	  s += src->rowstride;
-	  m += mask->rowstride;
-	}
-    }
+  pixel_regions_process_parallel ((p_func)apply_mask_to_sub_region,
+				  &opacity, 2, src, mask);
 }
 
+
+void
+combine_mask_and_sub_region (int *opacityp,
+			     PixelRegion *src,
+			     PixelRegion *mask)
+{
+  int h;
+  unsigned char * s, * m;
+  int opacity = *opacityp;
+  
+  s = src->data;
+  m = mask->data;
+  h = src->h;
+
+  while (h --)
+  {
+    combine_mask_and_alpha_channel (s, m, opacity, src->w, src->bytes);
+    s += src->rowstride;
+    m += mask->rowstride;
+  }
+}
 
 void
 combine_mask_and_region (PixelRegion *src,
 			 PixelRegion *mask,
 			 int          opacity)
 {
-  int h;
-  unsigned char * s, * m;
-  void * pr;
 
-  for (pr = pixel_regions_register (2, src, mask); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      s = src->data;
-      s = src->data;
-      m = mask->data;
-      h = src->h;
-
-      while (h --)
-	{
-	  combine_mask_and_alpha_channel (s, m, opacity, src->w, src->bytes);
-	  s += src->rowstride;
-	  m += mask->rowstride;
-	}
-    }
+  pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region,
+				  &opacity, 2, src, mask);
 }
 
 
@@ -4711,6 +4733,93 @@ copy_gray_to_region (PixelRegion *src,
 }
 
 
+struct initial_regions_struct
+{
+  int opacity;
+  int mode;
+  int *affect;
+  int type;
+  unsigned char *data;
+};
+
+void
+initial_sub_region(struct initial_regions_struct *st, 
+		   PixelRegion   *src,
+		   PixelRegion   *dest,
+		   PixelRegion   *mask)
+{
+  int h;
+  unsigned char * s, * d, * m;
+  unsigned char buf[512];
+  unsigned char *data;
+  int            opacity;
+  int            mode;
+  int           *affect;
+  int            type;
+
+  data = st->data;
+  opacity = st->opacity;
+  mode = st->mode;
+  affect = st->affect;
+  type = st->type;
+
+  if (src->w * (src->bytes + 1) > 512)
+    fprintf(stderr, "initial_sub_region:: error :: src->w * (src->bytes + 1) > 512");
+
+  s = src->data;
+  d = dest->data;
+  m = (mask) ? mask->data : NULL;
+
+  for (h = 0; h < src->h; h++)
+  {
+    /*  based on the type of the initial image...  */
+    switch (type)
+    {
+     case INITIAL_CHANNEL_MASK:
+     case INITIAL_CHANNEL_SELECTION:
+       initial_channel_pixels (s, d, src->w, dest->bytes);
+       break;
+
+     case INITIAL_INDEXED:
+       initial_indexed_pixels (s, d, data, src->w);
+       break;
+
+     case INITIAL_INDEXED_ALPHA:
+       initial_indexed_a_pixels (s, d, m, data, opacity, src->w);
+       break;
+
+     case INITIAL_INTENSITY:
+       if (mode == DISSOLVE_MODE)
+       {
+	 dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
+			  src->bytes + 1, 0);
+	 initial_inten_pixels (buf, d, m, opacity, affect,
+			       src->w, src->bytes);
+       }
+       else
+	 initial_inten_pixels (s, d, m, opacity, affect, src->w, src->bytes);
+       break;
+
+     case INITIAL_INTENSITY_ALPHA:
+       if (mode == DISSOLVE_MODE)
+       {
+	 dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
+			  src->bytes, 1);
+	 initial_inten_a_pixels (buf, d, m, opacity, affect,
+				 src->w, src->bytes);
+       }
+       else
+	 initial_inten_a_pixels (s, d, m, opacity, affect, src->w, src->bytes);
+       break;
+    }
+
+    s += src->rowstride;
+    d += dest->rowstride;
+    if (mask)
+      m += mask->rowstride;
+  }
+}
+
 void
 initial_region (PixelRegion   *src,
 		PixelRegion   *dest,
@@ -4721,68 +4830,16 @@ initial_region (PixelRegion   *src,
 		int           *affect,
 		int            type)
 {
-  int h;
-  unsigned char * s, * d, * m;
-  unsigned char * buf;
-  void * pr;
+  struct initial_regions_struct st;
 
-  buf = paint_funcs_get_buffer (src->w * (src->bytes + 1));
-
-  for (pr = pixel_regions_register (3, src, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      s = src->data;
-      d = dest->data;
-      m = (mask) ? mask->data : NULL;
-
-      for (h = 0; h < src->h; h++)
-	{
-	  /*  based on the type of the initial image...  */
-	  switch (type)
-	    {
-	    case INITIAL_CHANNEL_MASK:
-	    case INITIAL_CHANNEL_SELECTION:
-	      initial_channel_pixels (s, d, src->w, dest->bytes);
-	      break;
-
-	    case INITIAL_INDEXED:
-	      initial_indexed_pixels (s, d, data, src->w);
-	      break;
-
-	    case INITIAL_INDEXED_ALPHA:
-	      initial_indexed_a_pixels (s, d, m, data, opacity, src->w);
-	      break;
-
-	    case INITIAL_INTENSITY:
-	      if (mode == DISSOLVE_MODE)
-		{
-		  dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
-				   src->bytes + 1, 0);
-		  initial_inten_pixels (buf, d, m, opacity, affect,
-					src->w, src->bytes);
-		}
-	      else
-		initial_inten_pixels (s, d, m, opacity, affect, src->w, src->bytes);
-	      break;
-
-	    case INITIAL_INTENSITY_ALPHA:
-	      if (mode == DISSOLVE_MODE)
-		{
-		  dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes,
-				   src->bytes, 1);
-		  initial_inten_a_pixels (buf, d, m, opacity, affect,
-					  src->w, src->bytes);
-		}
-	      else
-		initial_inten_a_pixels (s, d, m, opacity, affect, src->w, src->bytes);
-	      break;
-	    }
-
-	  s += src->rowstride;
-	  d += dest->rowstride;
-	  if (mask)
-	    m += mask->rowstride;
-	}
-    }
+  st.opacity = opacity;
+  st.mode = mode;
+  st.affect = affect;
+  st.type = type;
+  st.data = data;
+  
+  pixel_regions_process_parallel ((p_func)initial_sub_region, &st, 3,
+				    src, dest, mask);
 }
 
 struct combine_regions_struct
@@ -4815,9 +4872,6 @@ combine_sub_region(struct combine_regions_struct *st,
   unsigned char * d, * m;
   unsigned char buf[512];
 
-/*   fprintf (stderr, "combine_whack_region: %p, %p, %p, %p, %p, %p\n", */
-/* 	   (p4_func)combine_whack_region, */
-/* 	   &st, src1, src2, dest, mask); */
   opacity = st->opacity;
   mode = st->mode;
   affect = st->affect;
