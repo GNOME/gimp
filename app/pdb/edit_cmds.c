@@ -40,6 +40,7 @@
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
+static ProcRecord edit_copy_visible_proc;
 static ProcRecord edit_paste_proc;
 static ProcRecord edit_clear_proc;
 static ProcRecord edit_fill_proc;
@@ -52,6 +53,7 @@ register_edit_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &edit_cut_proc);
   procedural_db_register (gimp, &edit_copy_proc);
+  procedural_db_register (gimp, &edit_copy_visible_proc);
   procedural_db_register (gimp, &edit_paste_proc);
   procedural_db_register (gimp, &edit_clear_proc);
   procedural_db_register (gimp, &edit_fill_proc);
@@ -198,6 +200,69 @@ static ProcRecord edit_copy_proc =
   1,
   edit_copy_outargs,
   { { edit_copy_invoker } }
+};
+
+static Argument *
+edit_copy_visible_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *image;
+  gboolean non_empty = FALSE;
+
+  image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (image))
+    success = FALSE;
+
+  if (success)
+    {
+      non_empty = gimp_edit_copy_visible (image, context) != NULL;
+    }
+
+  return_args = procedural_db_return_args (&edit_copy_visible_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = non_empty;
+
+  return return_args;
+}
+
+static ProcArg edit_copy_visible_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image to copy from"
+  }
+};
+
+static ProcArg edit_copy_visible_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "non_empty",
+    "TRUE if the copy was successful, FALSE if the selection contained only transparent pixels"
+  }
+};
+
+static ProcRecord edit_copy_visible_proc =
+{
+  "gimp_edit_copy_visible",
+  "Copy from the projection.",
+  "If there is a selection in the image, then the area specified by the selection is copied from the projection and placed in an internal GIMP edit buffer. It can subsequently be retrieved using the 'gimp-edit-paste' command. If there is no selection, then the projection's contents will be stored in the internal GIMP edit buffer.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  edit_copy_visible_inargs,
+  1,
+  edit_copy_visible_outargs,
+  { { edit_copy_visible_invoker } }
 };
 
 static Argument *

@@ -30,6 +30,8 @@ void   edit_cut_cmd_callback          (GtkAction *action,
                                        gpointer   data);
 void   edit_copy_cmd_callback         (GtkAction *action,
                                        gpointer   data);
+void   edit_copy_visible_cmd_callback (GtkAction *action,
+                                       gpointer   data);
 void   edit_paste_cmd_callback        (GtkAction *action,
                                        gpointer   data);
 void   edit_paste_into_cmd_callback   (GtkAction *action,

@@ -26,6 +26,8 @@ const GimpBuffer * gimp_edit_cut          (GimpImage    *gimage,
 const GimpBuffer * gimp_edit_copy         (GimpImage    *gimage,
                                            GimpDrawable *drawable,
                                            GimpContext  *context);
+const GimpBuffer * gimp_edit_copy_visible (GimpImage    *gimage,
+                                           GimpContext  *context);
 GimpLayer        * gimp_edit_paste        (GimpImage    *gimage,
                                            GimpDrawable *drawable,
                                            GimpBuffer   *paste,

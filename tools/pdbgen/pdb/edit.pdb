@@ -98,6 +98,36 @@ HELP
     &invoke('non_empty = gimp_edit_copy (gimage, drawable, context) != NULL');
 }
 
+sub edit_copy_visible {
+    $blurb = 'Copy from the projection.';
+
+    $help = <<'HELP';
+If there is a selection in the image, then the area specified by the
+selection is copied from the projection and placed in an internal GIMP
+edit buffer. It can subsequently be retrieved using the
+'gimp-edit-paste' command.  If there is no selection, then the
+projection's contents will be stored in the internal GIMP edit buffer.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date   = '2004';
+    $since  = '2.2';
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => "The image to copy from" }
+    );
+    &outargs('copy');
+
+    %invoke = (
+	code => <<CODE
+{
+  non_empty = gimp_edit_copy_visible (image, context) != NULL;
+}
+CODE
+    );
+}
+
 sub edit_paste {
     $blurb = 'Paste buffer to the specified drawable.';
 
@@ -381,7 +411,7 @@ CODE
               "core/gimpprogress.h"
               "gimp-intl.h");
 
-@procs = qw(edit_cut edit_copy edit_paste edit_clear
+@procs = qw(edit_cut edit_copy edit_copy_visible edit_paste edit_clear
             edit_fill edit_bucket_fill edit_blend edit_stroke);
 %exports = (app => [@procs], lib => [@procs]);
 

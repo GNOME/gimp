@@ -43,6 +43,7 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 #include "gimppattern.h"
+#include "gimpprojection.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -87,6 +88,71 @@ gimp_edit_copy (GimpImage    *gimage,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return gimp_edit_extract (gimage, drawable, context, FALSE);
+}
+
+const GimpBuffer *
+gimp_edit_copy_visible (GimpImage   *gimage,
+                        GimpContext *context)
+{
+  PixelRegion  srcPR, destPR;
+  TileManager *tiles;
+  gboolean     non_empty;
+  gint         x1, y1, x2, y2;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage),
+                                   &x1, &y1, &x2, &y2);
+  if ((x1 == x2) || (y1 == y2))
+    {
+      g_message (_("Unable to cut or copy because the "
+		   "selected region is empty."));
+      return NULL;
+    }
+
+  tiles = tile_manager_new (x2 - x1, y2 - y1,
+                            gimp_projection_get_bytes (gimage->projection));
+  tile_manager_set_offsets (tiles, x1, y1);
+
+  pixel_region_init (&srcPR, gimp_projection_get_tiles (gimage->projection),
+		     x1, y1,
+                     x2 - x1, y2 - y1,
+                     FALSE);
+  pixel_region_init (&destPR, tiles,
+                     0, 0,
+                     x2 - x1, y2 - y1,
+                     TRUE);
+
+  /*  use EEKy no-COW copying because sharing tiles with the projection
+   *  is buggy as hell, probably because tile_invalidate() doesn't
+   *  do what it should  --mitch
+   */
+  copy_region_nocow (&srcPR, &destPR);
+
+  /*  Only crop if the gimage mask wasn't empty  */
+  if (non_empty)
+    {
+      TileManager *crop = tile_manager_crop (tiles, 0);
+
+      if (crop != tiles)
+        {
+          tile_manager_unref (tiles);
+          tiles = crop;
+        }
+    }
+
+  if (tiles)
+    {
+      GimpBuffer *buffer = gimp_buffer_new (tiles, "Global Buffer", FALSE);
+
+      gimp_set_global_buffer (gimage->gimp, buffer);
+      g_object_unref (buffer);
+
+      return gimage->gimp->global_buffer;
+    }
+
+  return NULL;
 }
 
 GimpLayer *

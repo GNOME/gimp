@@ -1,3 +1,35 @@
+2004-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.[ch]: added new function
+	copy_region_nocow() as a workaround for the fact that sharing
+	tiles with the projection is heavily broken.
+
+	* app/base/tile-manager.c (tile_invalidate): added a warning when
+	entering the code path that breaks badly.
+
+	* app/core/gimp-edit.[ch]: added gimp_edit_copy_visible(), using
+	the non-COW copying function above.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_COPY_VISIBLE.
+
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.[ch]: added action & callback for
+	"edit-copy-visible".
+
+	* menus/image-menu.xml.in: added "edit-copy-visible" to the image
+	menu.
+
+	* tools/pdbgen/pdb/edit.pdb: added gimp_edit_copy_visible()
+	PDB wrapper.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpedit_pdb.[ch]: regenerated.
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: removed all code
+	and made it a backward compat wrapper around gimp-edit-copy-visible.
+	Fixes bug #138662.
+
 2004-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_private):

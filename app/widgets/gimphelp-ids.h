@@ -45,6 +45,7 @@
 #define GIMP_HELP_EDIT_UNDO_CLEAR                 "gimp-edit-undo-clear"
 #define GIMP_HELP_EDIT_CUT                        "gimp-edit-cut"
 #define GIMP_HELP_EDIT_COPY                       "gimp-edit-copy"
+#define GIMP_HELP_EDIT_COPY_VISIBLE               "gimp-edit-copy-visible"
 #define GIMP_HELP_EDIT_PASTE                      "gimp-edit-paste"
 #define GIMP_HELP_EDIT_PASTE_INTO                 "gimp-edit-paste-into"
 #define GIMP_HELP_EDIT_PASTE_AS_NEW               "gimp-edit-paste-as-new"

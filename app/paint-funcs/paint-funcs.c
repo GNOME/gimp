@@ -2225,6 +2225,33 @@ copy_region (PixelRegion *src,
 #endif
 }
 
+void
+copy_region_nocow (PixelRegion *src,
+                   PixelRegion *dest)
+{
+  gint    h;
+  gint    pixelwidth;
+  guchar *s, *d;
+  void   *pr;
+
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      pixelwidth = src->w * src->bytes;
+      s = src->data;
+      d = dest->data;
+      h = src->h;
+
+      while (h --)
+        {
+          memcpy (d, s, pixelwidth);
+          s += src->rowstride;
+          d += dest->rowstride;
+        }
+    }
+}
+
 
 void
 add_alpha_region (PixelRegion *src,

@@ -29,48 +29,17 @@
 ;        cyn-merge.scm   version 0.02   10/10/97
 ;        Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de)
 ;
+; Removed all code and made it a backward-compat wrapper around
+;     (gimp-edit-copy-visible)
+;     2004-12-12 Michael Natterer <mitch@gimp.org>
 ; 
 
-(define (script-fu-copy-visible orig-image
+(define (script-fu-copy-visible image
 				drawable)
-  (let* ((image (car (gimp-image-duplicate orig-image)))
-	 (layers (gimp-image-get-layers image))
-	 (num-layers (car layers))
-	 (num-visible-layers 0)
-	 (visible-layer -1)
-	 (layer-array (cadr layers)))
-  
-    (gimp-image-undo-disable image)
-
-    ; count the number of visible layers
-    (while (> num-layers 0)
-	   (let* ((layer (aref layer-array (- num-layers 1)))
-		  (is-visible (car (gimp-drawable-get-visible layer))))
-	     (if (= is-visible TRUE)
-		 (begin
-		   (set! num-visible-layers (+ num-visible-layers 1))
-		   (set! visible-layer layer)))
-	     (set! num-layers (- num-layers 1))))
-
-    ; if there are several visible layers, merge them
-    ; if there is only one layer and it has a layer mask, apply the mask
-    (if (> num-visible-layers 1)
-	(set! visible-layer (car (gimp-image-merge-visible-layers
-				  image
-				  EXPAND-AS-NECESSARY)))
-        (if (= num-visible-layers 1)
-            (if (not (= (car (gimp-layer-get-mask visible-layer)) -1))
-                (car (gimp-layer-remove-mask visible-layer MASK-APPLY)))))
-
-    ; copy the visible layer
-    (if (> num-visible-layers 0)
-	(gimp-edit-copy visible-layer))
-
-    ; delete the temporary copy of the image
-    (gimp-image-delete image)))
+  (gimp-edit-copy-visible image))
 
 (script-fu-register "script-fu-copy-visible"
-		    _"Copy _Visible"
+		    "Copy Visible"
 		    "Copy the visible selection"
 		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>, Raphael Quinet <raphael@gimp.org>"
 		    "Sven Neumann, Adrian Likins, Raphael Quinet"
@@ -78,6 +47,3 @@
 		    "RGB* INDEXED* GRAY*"
 		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)
-
-(script-fu-menu-register "script-fu-copy-visible"
-			 "<Image>/Edit/Copy")

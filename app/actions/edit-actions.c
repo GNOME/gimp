@@ -89,6 +89,11 @@ static GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_copy_cmd_callback),
     GIMP_HELP_EDIT_COPY },
 
+  { "edit-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
+    N_("Copy _Visible"), "", NULL,
+    G_CALLBACK (edit_copy_visible_cmd_callback),
+    GIMP_HELP_EDIT_COPY_VISIBLE },
+
   { "edit-paste", GTK_STOCK_PASTE,
     N_("_Paste"), "<control>V", NULL,
     G_CALLBACK (edit_paste_cmd_callback),
@@ -234,6 +239,7 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("edit-cut",          drawable);
   SET_SENSITIVE ("edit-copy",         drawable);
+  SET_SENSITIVE ("edit-copy-visible", gimage);
   SET_SENSITIVE ("edit-paste",        gimage);
   SET_SENSITIVE ("edit-paste-into",   gimage);
 

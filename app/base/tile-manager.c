@@ -376,6 +376,8 @@ tile_invalidate (Tile        **tile_ptr,
       /* This tile is shared.  Replace it with a new, invalid tile. */
       Tile *newtile = g_new (Tile, 1);
 
+      g_print ("invalidating shared tile (executing buggy code!!!)\n");
+
       tile_init (newtile, tile->bpp);
       newtile->ewidth  = tile->ewidth;
       newtile->eheight = tile->eheight;

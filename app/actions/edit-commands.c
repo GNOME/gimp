@@ -149,6 +149,17 @@ edit_copy_cmd_callback (GtkAction *action,
 }
 
 void
+edit_copy_visible_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  if (gimp_edit_copy_visible (gimage, action_data_get_context (data)))
+    gimp_image_flush (gimage);
+}
+
+void
 edit_paste_cmd_callback (GtkAction *action,
                          gpointer   data)
 {

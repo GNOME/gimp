@@ -96,6 +96,43 @@ gimp_edit_copy (gint32 drawable_ID)
 }
 
 /**
+ * gimp_edit_copy_visible:
+ * @image_ID: The image to copy from.
+ *
+ * Copy from the projection.
+ *
+ * If there is a selection in the image, then the area specified by the
+ * selection is copied from the projection and placed in an internal
+ * GIMP edit buffer. It can subsequently be retrieved using the
+ * 'gimp-edit-paste' command. If there is no selection, then the
+ * projection's contents will be stored in the internal GIMP edit
+ * buffer.
+ *
+ * Returns: TRUE if the copy was successful, FALSE if the selection contained only transparent pixels.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_edit_copy_visible (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean non_empty = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_edit_copy_visible",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    non_empty = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return non_empty;
+}
+
+/**
  * gimp_edit_paste:
  * @drawable_ID: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
