@@ -1,5 +1,7 @@
 2000-01-18  David Monniaux  <monniaux@quatramaran.ens.fr>
 
+	* app/tools.c: clearer tool-tip for transform tool.
+
 	* plug-ins/gflare/Makefile.am
 	* plug-ins/gflare/gflare.c
 	* po-plug-ins/POTFILES.in: i18n of GFlare
