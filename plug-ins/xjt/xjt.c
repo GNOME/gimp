@@ -1,4 +1,4 @@
-/* WARNING: XJT code and Fileformat under construction
+/* xjt.c
  *
  * XJT (JPEG-TAR fileformat) loading and saving file filter for the GIMP
  *  -hof (Wolfgang Hofer)
@@ -35,6 +35,8 @@
  */
 
 /* revision history:
+ * version 1.3.14a; 2003/06/03  hof: bugfix: using setlocale independent float conversion procedures
+ *                                   p_my_ascii_strtod (g_ascii_strtod()) and g_ascii_formatd()
  * version 1.1.18a; 2000/03/07  hof: tattoo_state
  * version 1.1.16a; 2000/02/04  hof: load paths continued, load tattos, load/save unit
  * version 1.1.15b; 2000/01/28  hof: save/load paths  (load is not activated PDB-bug)
@@ -623,6 +625,58 @@ run (gchar   *name,
   values[0].data.d_status = status;
 }
 
+
+/* ------------------------
+ * p_my_ascii_strtod
+ * ------------------------
+ * call  g_ascii_strtod
+ * with XJT private modification:
+ *  g_ascii_strtod accepts both "." and "," as radix character (decimalpoint)
+ *  for float numbers (at least for GERMAN LANG)
+ *  because XJT PRP files have comma (,) seperated lists of float numbers this cant be accepted here.
+ *  the private version substitutes a '\0' character for the next comma
+ *  before calling g_ascii_strtod, and puts back the comma after the call
+ */
+static gdouble
+p_my_ascii_strtod (gchar   *nptr,
+		   gchar   **endptr)
+{
+   gint ii;  
+   gint ic;
+   gdouble l_rc;
+
+   /* check for comma (is a terminating character for the NON locale float string)
+    */
+   ii=0;
+   ic = -1;
+   while(nptr)
+   {
+     if (nptr[ii] == ',')
+     {
+       ic = ii;
+       nptr[ii] = '\0';  /* temporary use 0 as terminator for the call of g_ascii_strtod */
+       break;
+     }
+     if ((nptr[ii] == '\0')
+     ||  (nptr[ii] == ' ')
+     ||  (nptr[ii] == '\n'))
+     {
+       break;
+     }
+     ii++;
+   }
+
+   l_rc = g_ascii_strtod(nptr, endptr);
+   
+   if(ic >= 0)
+   {
+       nptr[ii] = ',';   /* restore the comma */
+   }
+
+   return(l_rc);
+   
+}  /* end p_my_ascii_strtod */
+
 /* -- type transformer routines XJT -- GIMP internal enums ----------------- */
 
 gint32
@@ -916,11 +970,18 @@ p_get_property_index(t_proptype proptype)
 gchar *
 p_float_to_str(gdouble  flt_val)
 {
+   gchar l_dbl_str[G_ASCII_DTOSTR_BUF_SIZE];
    gchar *l_str;
    gint  l_idx;
 
    /* XJT float precision is limited to 5 digits */
-   l_str = g_strdup_printf("%.5f", (float)flt_val);
+   /* print setlocale independent float string */
+   g_ascii_formatd(&l_dbl_str[0]
+                  ,G_ASCII_DTOSTR_BUF_SIZE
+                  ,"%.5f"
+                  ,flt_val
+                  );
+   l_str = g_strdup(l_dbl_str);
 
    /* delete trailing '0' and '.' characters */
    l_idx = strlen(l_str) -1;
@@ -2206,7 +2267,7 @@ p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
            else
            {
               l_ptr++;
-              param->flt_val1 = strtod(l_ptr, &l_ptr2);
+              param->flt_val1 = p_my_ascii_strtod(l_ptr, &l_ptr2);
               if (l_ptr == l_ptr2 )
               {
                  fprintf(stderr, "XJT: PRP syntax error (float property %s :float value missing)\n",
@@ -2228,7 +2289,7 @@ p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
  		    return(l_ptr);
                  }
                  l_ptr++;
-                 param->flt_val2 = strtod(l_ptr, &l_ptr2);
+                 param->flt_val2 = p_my_ascii_strtod(l_ptr, &l_ptr2);
                  if (l_ptr == l_ptr2 )
                  {
                     fprintf(stderr, "XJT: PRP syntax error (float property %s : 2.nd float value missing)\n",
@@ -2249,7 +2310,7 @@ p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
  		       return(l_ptr);
                     }
                     l_ptr++;
-                    param->flt_val3 = strtod(l_ptr, &l_ptr2);
+                    param->flt_val3 = p_my_ascii_strtod(l_ptr, &l_ptr2);
                     if (l_ptr == l_ptr2 )
                     {
                        fprintf(stderr, "XJT: PRP syntax error (float property %s : 3.rd float value missing)\n",
@@ -2294,7 +2355,7 @@ p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
 	      param->flt_val_list = g_malloc0(sizeof(gdouble) * l_num_fvals);
 	      while(1)
 	      {
-        	param->flt_val_list[param->num_fvals] = strtod(l_ptr, &l_ptr2);
+        	param->flt_val_list[param->num_fvals] = p_my_ascii_strtod(l_ptr, &l_ptr2);
         	if (l_ptr == l_ptr2 )
         	{
 		   if(param->num_fvals == 0)
