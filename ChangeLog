@@ -1,3 +1,8 @@
+2001-02-07  Daniel Egger  <egger@suse.de>
+
+        * configure.in: Changed link order in gtkxmhtml check
+	to fix bug #12653.
+		
 2001-02-06  Sven Neumann  <sven@gimp.org>
 
 	* data/brushes/hsparks.gih
