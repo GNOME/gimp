@@ -238,7 +238,7 @@ run (char    *name,
   else if (strcmp (name, "file_tiff_save") == 0)
     {
       image = orig_image = param[1].data.d_int32;
-      drawable = param[1].data.d_int32;
+      drawable = param[2].data.d_int32;
 
 /* Do this right this time, if POSSIBLE query for parasites, otherwise
    or if there isn't one, choose the DEFAULT_COMMENT */

@@ -1,3 +1,7 @@
+Sun Oct 25 01:58:24 BST 1999 Nick Lamb <njl195@zepler.org>
+
+	* plug-ins/common/tiff.c: Fix Sven's one-liner (Save now works!)
+
 Sun Oct 24 14:58:25 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimpcompat.h: added GIMP_DISABLE_COMPAT_H test, and C++
