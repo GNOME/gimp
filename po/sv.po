@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-09-04 20:50+0200\n"
-"PO-Revision-Date: 2000-09-04 21:13+0200\n"
+"POT-Creation-Date: 2000-09-08 17:42+0200\n"
+"PO-Revision-Date: 2000-09-08 17:50+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2331,7 +2331,7 @@ msgid ""
 "Click to open the Brushes Dialog."
 msgstr ""
 "Den aktiva penseln.\n"
-"Klicka för att öppna pensel-fönstret."
+"Klicka för att öppna penselfönstret."
 
 #: app/indicator_area.c:156
 msgid ""
@@ -2339,7 +2339,7 @@ msgid ""
 "Click to open the Patterns Dialog."
 msgstr ""
 "Det aktiva mönstret.\n"
-"Klicka för att öppna mönster-fönstret."
+"Klicka för att öppna mönsterfönstret."
 
 #: app/indicator_area.c:175
 msgid ""
@@ -2347,7 +2347,7 @@ msgid ""
 "Click to open the Gradients Dialog."
 msgstr ""
 "Den aktiva färgskalan.\n"
-"Klicka för att öppna färgskale-fönstret."
+"Klicka för att öppna färgskalefönstret."
 
 #: app/info_dialog.c:185 app/preferences_dialog.c:1794
 #: app/preferences_dialog.c:1900
@@ -2480,7 +2480,7 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"Förgrunds- och bakgrunds-färger.  De svarta och vita rutorna återställer "
+"Förgrunds- och bakgrundsfärger.  De svarta och vita rutorna återställer "
 "färgerna. Pilarna byter plats på färgerna. Dubbelklicka för att få upp en "
 "färgväljare."
 
@@ -2986,7 +2986,7 @@ msgstr "Mätverktyg"
 
 #: app/measure.c:130
 msgid "Use Info Window"
-msgstr "Använd infofönster"
+msgstr "Använd informationsfönster"
 
 #: app/measure.c:316
 msgid "Distance:"
@@ -4475,7 +4475,7 @@ msgstr "Navigationsfönster per display"
 
 #: app/preferences_dialog.c:1879
 msgid "Info Window Follows Mouse"
-msgstr "Info-fönster följer musen"
+msgstr "Informationsfönstret följer musen"
 
 #: app/preferences_dialog.c:1890 app/preferences_dialog.c:1892
 msgid "Help System"
@@ -6240,7 +6240,7 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Såg du några felmeddelanden i konsoll-fönstret?\n"
+"Såg du några felmeddelanden i konsollfönstret?\n"
 "Om inte så lyckades installationen! Annars, avsluta\n"
 "och undersök vad som kan ha gått fel..."
 
@@ -6250,7 +6250,7 @@ msgid ""
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"Såg du några felmeddelanden i konsoll-fönstret?\n"
+"Såg du några felmeddelanden i konsollfönstret?\n"
 "Om inte så lyckades installationen! Annars, avsluta\n"
 "och undersök vad som kan ha gått fel..."
 
