@@ -42,7 +42,6 @@ struct _GimpTextTool
   gint           offset_x;
   gint           offset_y;
 
-  GimpDisplay   *gdisp;
   GimpText      *text;
 
   GtkWidget     *editor;

@@ -34,6 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
 #include "config/gimpconfig.h"
@@ -177,6 +178,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->offset_y = 0;
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
 }
 
@@ -185,6 +187,8 @@ gimp_text_tool_control (GimpTool       *tool,
 			GimpToolAction  action,
 			GimpDisplay    *gdisp)
 {
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);;
+
   switch (action)
     {
     case PAUSE:
@@ -194,10 +198,10 @@ gimp_text_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      if (GIMP_TEXT_TOOL (tool)->editor)
-        gtk_widget_destroy (GIMP_TEXT_TOOL (tool)->editor);
+      if (text_tool->editor)
+        gtk_widget_destroy (text_tool->editor);
 
-      gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), NULL, 0, 0);
+      gimp_text_tool_connect (text_tool, NULL, 0, 0);
       break;
 
     default:
@@ -214,15 +218,11 @@ gimp_text_tool_button_press (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpTextTool *text_tool;
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);;
   GimpDrawable *drawable;
   GimpText     *text  = NULL;
   gint          off_x = 0;
   gint          off_y = 0;
-
-  text_tool = GIMP_TEXT_TOOL (tool);
-
-  text_tool->gdisp = gdisp;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -232,7 +232,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (drawable && GIMP_IS_TEXT_LAYER (drawable))
+  if (GIMP_IS_TEXT_LAYER (drawable))
     {
       GimpItem *item = GIMP_ITEM (drawable);
 
@@ -280,13 +280,16 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
+  GimpTool    *tool = GIMP_TOOL (text_tool);
   GimpVectors *vectors;
   GimpImage   *gimage;
 
   if (! text_tool->text)
     return;
 
-  gimage = text_tool->gdisp->gimage;
+  gimage = tool->gdisp->gimage;
+
+  gimp_tool_control_set_preserve (tool->control, TRUE);
 
   vectors = gimp_text_vectors_new (gimage, text_tool->text);
 
@@ -295,12 +298,15 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 
   gimp_image_add_vectors (gimage, vectors, -1);
 
+  gimp_tool_control_set_preserve (tool->control, FALSE);
+
   gimp_image_flush (gimage);
 }
 
 static void
 gimp_text_tool_create_layer (GimpTextTool *text_tool)
 {
+  GimpTool        *tool = GIMP_TOOL (text_tool);
   GimpTextOptions *options;
   GimpImage       *gimage;
   GimpText        *text;
@@ -310,7 +316,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
   options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
-  gimage = text_tool->gdisp->gimage;
+  gimage = tool->gdisp->gimage;
 
   text = gimp_config_duplicate (GIMP_CONFIG (options->text));
 
@@ -318,13 +324,18 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
   g_object_unref (text);
 
-  if (!layer)
+  if (! layer)
     return;
 
   gimp_text_tool_connect (text_tool, text, text_tool->x1, text_tool->y1);
 
+  gimp_tool_control_set_preserve (tool->control, TRUE);
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
+
+  if (gimp_image_floating_sel (gimage))
+    floating_sel_anchor (gimp_image_floating_sel (gimage));
 
   GIMP_ITEM (layer)->offset_x = text_tool->x1;
   GIMP_ITEM (layer)->offset_y = text_tool->y1;
@@ -333,68 +344,75 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
   gimp_image_undo_group_end (gimage);
 
+  gimp_tool_control_set_preserve (tool->control, FALSE);
+
   gimp_image_flush (gimage);
 }
 
 static void
-gimp_text_tool_connect (GimpTextTool *tool,
+gimp_text_tool_connect (GimpTextTool *text_tool,
                         GimpText     *text,
                         gint          off_x,
                         gint          off_y)
 {
+  GimpTool        *tool = GIMP_TOOL (text_tool);
   GimpTextOptions *options;
   GtkWidget       *button;
 
-  if (tool->text == text)
+  if (text_tool->text == text)
     return;
 
-  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
+  options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
 
   button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
 
-  if (tool->text)
+  if (text_tool->text)
     {
       if (button)
         {
           gtk_widget_set_sensitive (button, FALSE);
           g_signal_handlers_disconnect_by_func (button,
                                                 gimp_text_tool_create_vectors,
-                                                tool);
+                                                text_tool);
         }
 
       gimp_config_disconnect (G_OBJECT (options->text),
-                              G_OBJECT (tool->text));
+                              G_OBJECT (text_tool->text));
 
-      g_object_unref (tool->text);
-      tool->text = NULL;
+      g_object_unref (text_tool->text);
+      text_tool->text = NULL;
 
-      tool->offset_x = 0;
-      tool->offset_y = 0;
+      text_tool->offset_x = 0;
+      text_tool->offset_y = 0;
 
       g_object_set (options->text, "text", NULL, NULL);
     }
 
   if (text)
     {
-      tool->text = g_object_ref (text);
+      text_tool->text = g_object_ref (text);
 
-      gimp_config_sync (GIMP_CONFIG (tool->text),
+      gimp_config_sync (GIMP_CONFIG (text_tool->text),
                         GIMP_CONFIG (options->text), 0);
 
       gimp_config_connect (G_OBJECT (options->text),
-                           G_OBJECT (tool->text),
+                           G_OBJECT (text_tool->text),
                            NULL);
 
-      tool->offset_x = off_x;
-      tool->offset_y = off_y;
+      text_tool->offset_x = off_x;
+      text_tool->offset_y = off_y;
 
       if (button)
         {
           g_signal_connect_swapped (button, "clicked",
                                     G_CALLBACK (gimp_text_tool_create_vectors),
-                                    tool);
+                                    text_tool);
           gtk_widget_set_sensitive (button, TRUE);
         }
+    }
+  else
+    {
+      tool->gdisp = NULL;
     }
 }
 

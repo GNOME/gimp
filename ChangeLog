@@ -1,5 +1,14 @@
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_create_layer): if there
+	is a floating selection, anchor it before adding the text layer.
+	Fixes bug #127451.
+
+	Also fixed some issues with undo. Addresses, but does not fix
+	bug #124969 and bug #130985.
+
+2004-01-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/bz2.c
 	* plug-ins/common/gz.c
 	* plug-ins/common/hrz.c
