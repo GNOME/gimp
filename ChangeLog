@@ -1,5 +1,14 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/resize-dialog.c (resize_dialog_reset): fixed most of
+	the Reset functionality (bug #157495). The offset box is still not
+	working correctly.
+
+	* app/widgets/gimpsizebox.c (gimp_size_box_update_resolution):
+	check for availability of the size entry before accessing it.
+
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
 	New Win32 icons contributed by Jernej Simoncic:
 	
 	* app/Makefile.am

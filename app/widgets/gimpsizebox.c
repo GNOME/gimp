@@ -549,6 +549,12 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
 {
   GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
+  if (priv->size_entry)
+    {
+      gimp_size_entry_set_refval (priv->size_entry, 0, box->width);
+      gimp_size_entry_set_refval (priv->size_entry, 1, box->height);
+    }
+
   if (priv->res_label)
     {
       gchar *text;

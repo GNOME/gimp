@@ -48,6 +48,7 @@ struct _ResizeDialog
   GimpViewable          *viewable;
   gint                   old_width;
   gint                   old_height;
+  GimpUnit               old_unit;
   GimpUnit               unit;
   GtkWidget             *box;
   GtkWidget             *offset;
@@ -151,6 +152,7 @@ resize_dialog_new (GimpViewable       *viewable,
   private->viewable   = viewable;
   private->old_width  = width;
   private->old_height = height;
+  private->old_unit   = unit;
   private->callback   = callback;
   private->user_data  = user_data;
 
@@ -307,8 +309,11 @@ static void
 resize_dialog_reset (ResizeDialog *private)
 {
   g_object_set (private->box,
-                "width",   private->old_width,
-                "height",  private->old_height,
+                "keep-aspect", FALSE,
+                "width",       private->old_width,
+                "height",      private->old_height,
+                "unit",        private->old_unit,
+                "keep-aspect", TRUE,
                 NULL);
 }
 
