@@ -92,6 +92,7 @@ app/pdb/procedural_db.c
 app/pdb/procedural_db_cmds.c
 
 app/plug-in/plug-in.c
+app/plug-in/plug-in-rc.c
 
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c

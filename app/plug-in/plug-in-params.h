@@ -62,6 +62,18 @@ struct _PlugIn
 };
 
 
+struct _PlugInDef
+{
+  gchar    *prog;
+  GSList   *proc_defs;
+  gchar    *locale_domain;
+  gchar    *locale_path;
+  gchar    *help_path;
+  time_t    mtime;
+  gboolean  query;
+};
+
+
 /* Initialize the plug-ins */
 void            plug_in_init                 (Gimp               *gimp,
                                               GimpInitStatusFunc  status_callback);

@@ -108,6 +108,7 @@
 
 #include "plug-in.h"
 #include "plug-in-proc.h"
+#include "plug-in-rc.h"
 
 #include "app_procs.h"
 #include "gimpprogress.h"
@@ -115,17 +116,6 @@
 
 #include "libgimp/gimpintl.h"
 
-
-struct _PlugInDef
-{
-  gchar    *prog;
-  GSList   *proc_defs;
-  gchar    *locale_domain;
-  gchar    *locale_path;
-  gchar    *help_path;
-  time_t    mtime;
-  gboolean  query;
-};
 
 
 typedef struct _PlugInBlocked PlugInBlocked;
@@ -364,7 +354,7 @@ plug_in_init (Gimp               *gimp,
     filename = gimp_personal_rc_file ("pluginrc");
 
   (* status_callback) (_("Resource configuration"), filename, -1);
-  gimprc_parse_file (filename);
+  plug_in_rc_parse (filename);
 
   /* query any plug-ins that have changed since we last wrote out
    *  the pluginrc file.

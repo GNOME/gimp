@@ -47,8 +47,6 @@
 #include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
-#include "plug-in/plug-in.h"
-
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 
@@ -68,8 +66,6 @@
 #define ERROR      0
 #define DONE       1
 #define OK         2
-#define LOCALE_DEF 3
-#define HELP_DEF   4
 
 
 #define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
@@ -90,7 +86,6 @@ typedef enum
   TT_INTERP,
   TT_XPREVSIZE,
   TT_XUNIT,
-  TT_XPLUGINDEF,
   TT_XMENUPATH,
   TT_XDEVICE,
   TT_XSESSIONINFO,
@@ -141,7 +136,6 @@ static gint           parse_interpolation_type  (gpointer val1p, gpointer val2p)
 static gint           parse_preview_size        (gpointer val1p, gpointer val2p);
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
-static gint           parse_plug_in_def         (gpointer val1p, gpointer val2p);
 static gint           parse_device              (gpointer val1p, gpointer val2p);
 static gint           parse_menu_path           (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
@@ -152,10 +146,6 @@ static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p)
 static gint           parse_color_history       (gpointer val1p, gpointer val2p);
 static gint           parse_document            (gpointer val1p, gpointer val2p);
 
-static gint           parse_locale_def          (PlugInDef      *plug_in_def);
-static gint           parse_help_def            (PlugInDef      *plug_in_def);
-static gint           parse_proc_def            (PlugInProcDef **proc_def);
-static gint           parse_proc_arg            (ProcArg        *arg);
 static gint           parse_color               (GimpRGB        *color);
 static gint           parse_unknown             (gchar          *token_sym);
 
@@ -302,7 +292,6 @@ static ParseFunc funcs[] =
   { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
 
   { "parasite",                      TT_XPARASITE,     NULL, NULL },
-  { "plug-in-def",                   TT_XPLUGINDEF,    NULL, NULL },
   { "menu-path",                     TT_XMENUPATH,     NULL, NULL },
   { "device",                        TT_XDEVICE,       NULL, NULL },
   { "session-info",                  TT_XSESSIONINFO,  NULL, NULL },
@@ -915,8 +904,6 @@ parse_statement (void)
 	  return parse_nav_preview_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
-	case TT_XPLUGINDEF:
-	  return parse_plug_in_def (func->val1p, func->val2p);
 	case TT_XMENUPATH:
 	  return parse_menu_path (func->val1p, func->val2p);
 	case TT_XDEVICE:
@@ -1397,333 +1384,6 @@ parse_units (gpointer val1p,
   token = get_next_token ();
 
   return OK;
-}
-
-static gint
-parse_plug_in_def (gpointer val1p,
-		   gpointer val2p)
-{
-  PlugInDef     *plug_in_def;
-  PlugInProcDef *proc_def;
-  gint           token;
-  gint           success;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-  token = get_next_token ();
-
-  plug_in_def = plug_in_def_new (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    goto error;
-  token = get_next_token ();
-
-  plug_in_def_set_mtime (plug_in_def, token_int);
-
-  success = OK;
-  while (success == OK)
-    {
-      success = parse_proc_def (&proc_def);
-      if (success == OK)
-        plug_in_def_add_proc_def (plug_in_def, proc_def);
-      else if (success == LOCALE_DEF)
-	success = parse_locale_def (plug_in_def);
-      else if (success == HELP_DEF)
-	success = parse_help_def (plug_in_def);
-    }
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  plug_in_def_add (plug_in_def);
-
-  return OK;
-
- error:
-  g_message (_("error parsing pluginrc"));
-  plug_in_def_free (plug_in_def, TRUE);
-
-  return ERROR;
-}
-
-static gint
-parse_locale_def (PlugInDef *plug_in_def)
-{
-  gint token;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-
-  token = get_next_token ();
-  plug_in_def_set_locale_domain_name (plug_in_def, token_str);
-      
-  token = peek_next_token ();
-  if (token && token == TOKEN_STRING)
-    {
-      token = get_next_token ();
-      plug_in_def_set_locale_domain_path (plug_in_def, token_str);
-      token = peek_next_token ();
-    }
-
-  if (!token || token != TOKEN_RIGHT_PAREN)
-    goto error;
-  token = get_next_token ();
-
-  return OK;
-
- error:
-  plug_in_def_set_locale_domain_name (plug_in_def, NULL);
-  plug_in_def_set_locale_domain_path (plug_in_def, NULL);
-  return ERROR;
-}
-
-static gint
-parse_help_def (PlugInDef *plug_in_def)
-{
-  gint token;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-  token = get_next_token ();
-
-  plug_in_def_set_help_path (plug_in_def, token_str);
-
-  token = peek_next_token ();
-  if (!token || token != TOKEN_RIGHT_PAREN)
-    goto error;
-  token = get_next_token ();
-
-  return OK;
-
- error:
-  plug_in_def_set_help_path (plug_in_def, NULL);
-  return ERROR;
-}
-
-static gint
-parse_proc_def (PlugInProcDef **proc_def)
-{
-  PlugInProcDef *pd;
-  gint           token;
-  gint           i;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_LEFT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_SYMBOL))
-    return ERROR;
-  
-  if ((strcmp ("locale-def", token_sym) == 0))
-    {
-      token = get_next_token ();
-
-      /* it's a locale_def, let parse_locale_def do the rest */
-      return LOCALE_DEF;
-    }
-  if ((strcmp ("help-def", token_sym) == 0))
-    {
-      token = get_next_token ();
-
-      /* it's a help_def, let parse_help_def do the rest */
-      return HELP_DEF;
-    }
-  else if (strcmp ("proc-def", token_sym) != 0)
-    return ERROR;
-
-  token = get_next_token ();
-
-  pd = g_new0 (PlugInProcDef, 1);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.name = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.proc_type = token_int;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.blurb = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.help = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.author = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.copyright = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.date = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  if (token_str[0] != '\0')
-    pd->menu_path = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  if (token_str[0] != '\0')
-    pd->extensions = g_strdup (token_str);
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-  if (token_str[0] != '\0')
-    pd->prefixes = g_strdup (token_str);
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-  if (token_str[0] != '\0')
-    pd->magics = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  if (token_str[0] != '\0')
-    {
-      pd->image_types = g_strdup (token_str);
-      pd->image_types_val = plug_in_image_types_parse (token_str);
-    }
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.num_args = token_int;
-  pd->db_info.args = g_new0 (ProcArg, pd->db_info.num_args);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    goto error;
-  token = get_next_token ();
-
-  pd->db_info.num_values = token_int;
-  pd->db_info.values = NULL;
-  if (pd->db_info.num_values > 0)
-    pd->db_info.values = g_new (ProcArg, pd->db_info.num_values);
-
-  for (i = 0; i < pd->db_info.num_args; i++)
-    if (!parse_proc_arg (&pd->db_info.args[i]))
-      goto error;
-
-  for (i = 0; i < pd->db_info.num_values; i++)
-    if (!parse_proc_arg (&pd->db_info.values[i]))
-      goto error;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  *proc_def = pd;
-
-  return OK;
-
- error:
-  plug_in_proc_def_destroy (pd, FALSE);
-  return ERROR;
-}
-
-static gint
-parse_proc_arg (ProcArg *arg)
-{
-  gint token;
-
-  arg->arg_type    = -1;
-  arg->name        = NULL;
-  arg->description = NULL;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_LEFT_PAREN))
-    return ERROR;
-  token = get_next_token ();
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_SYMBOL) ||
-      (strcmp ("proc-arg", token_sym) != 0))
-    return ERROR;
-  token = get_next_token ();
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_NUMBER))
-    return ERROR;
-  token = get_next_token ();
-
-  arg->arg_type = token_int;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-  token = get_next_token ();
-
-  arg->name = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  arg->description = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  return OK;
-
- error:
-  g_free (arg->name);
-  g_free (arg->description);
-
-  return ERROR;
 }
 
 static gint
@@ -2803,7 +2463,6 @@ gimprc_value_to_str (const gchar *name)
 	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (func->val1p, func->val2p);
-	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:

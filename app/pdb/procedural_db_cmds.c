@@ -133,6 +133,9 @@ static int
 match_strings (regex_t *preg,
 	       gchar   *a)
 {
+  if (!a)
+    return 0;
+
   return regexec (preg, a, 0, NULL, 0);
 }
 
