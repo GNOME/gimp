@@ -178,15 +178,19 @@ quit_dialog_container_changed (GimpContainer  *images,
       g_object_set (button,
                     "label",     GTK_STOCK_QUIT,
                     "use-stock", TRUE,
+                    "image",     NULL,
                     NULL);
       gtk_widget_grab_default (button);
     }
   else
     {
+      GtkWidget *icon = gtk_image_new_from_stock (GTK_STOCK_DELETE,
+                                                  GTK_ICON_SIZE_BUTTON);
       gtk_widget_show (label);
       g_object_set (button,
                     "label",     _("_Discard Changes"),
                     "use-stock", FALSE,
+                    "image",     icon,
                     NULL);
       gtk_window_set_default (GTK_WINDOW (dialog), NULL);
     }

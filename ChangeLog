@@ -1,3 +1,8 @@
+2005-03-31  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/quit-dialog.c: use GTK_STOCK_DELETE for the "Discard
+	Changes" button.
+
 2005-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-close.c
