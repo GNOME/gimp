@@ -1179,6 +1179,8 @@ bezier_select_button_release (Tool           *tool,
   paths_newpoint_current(bezier_sel,gdisp);
 }
 
+
+/* unused
 static void
 bez_copy_points(BezierSelect *tobez,
 		BezierSelect *frombez)
@@ -1210,7 +1212,6 @@ bez_copy_points(BezierSelect *tobez,
 
       if(pts->next_curve)
 	{
-/* 	  g_print ("bezier_paste_bezierselect_to_current:: Close last curve off \n"); */
 	  tobez->last_point->next = bpnt;
 	  bpnt->prev = tobez->last_point;
 	  bpnt = NULL;
@@ -1230,6 +1231,7 @@ bez_copy_points(BezierSelect *tobez,
       tobez->closed = 1;
     }
 }
+*/
 
 static void
 bezier_select_motion (Tool           *tool,
