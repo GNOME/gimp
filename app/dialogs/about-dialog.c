@@ -316,8 +316,8 @@ about_dialog_center (GtkWindow *window)
 
   gtk_window_set_screen (window, screen);
   gtk_window_move (window,
-                   (rect.width  - about_info.pixmaparea.width)  / 2,
-                   (rect.height - about_info.pixmaparea.height) / 2);
+                   rect.x + (rect.width  - about_info.pixmaparea.width)  / 2,
+                   rect.y + (rect.height - about_info.pixmaparea.height) / 2);
 }
 
 static gboolean
