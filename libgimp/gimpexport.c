@@ -38,11 +38,25 @@ typedef struct
 
 
 /* the functions that do the actual export */
+
 static void
 export_merge (gint32  image_ID,
 	      gint32 *drawable_ID)
 {
-  *drawable_ID = gimp_image_merge_visible_layers (image_ID, GIMP_EXPAND_AS_NECESSARY);
+  gint nlayers;
+  gint i;
+  gint32 *layers;
+
+  *drawable_ID = gimp_image_merge_visible_layers (image_ID, GIMP_CLIP_TO_IMAGE);
+  
+  /* remove any remaining (invisible) layers */ 
+  layers = gimp_image_get_layers (image_ID, &nlayers);
+  for (i = 0; i < nlayers; i++)
+    {
+      if (layers[i] != *drawable_ID)
+	gimp_image_remove_layer (image_ID, layers[i]);
+    }
+  g_free (layers);  
 }
 
 static void
@@ -96,6 +110,7 @@ export_add_alpha (gint32  image_ID,
     }
   g_free (layers);  
 }
+
 
 /* a set of predefined actions */
 
@@ -189,6 +204,7 @@ static ExportAction export_action_add_alpha =
   { N_("Add alpha channel"), NULL},
   0
 };
+
 
 /* dialog functions */
 
@@ -416,7 +432,7 @@ gimp_export_image (gint32 *image_ID_ptr,
   /* check multiple layers */
   if (!added_flatten && nlayers > 1)
     {
-      if ((cap & CAN_HANDLE_LAYERS_AS_ANIMATION))
+      if (cap & CAN_HANDLE_LAYERS_AS_ANIMATION)
 	actions = g_slist_prepend (actions, &export_action_animate_or_merge);
       else if ( !(cap & CAN_HANDLE_LAYERS))
 	actions = g_slist_prepend (actions, &export_action_merge);
@@ -483,6 +499,7 @@ gimp_export_image (gint32 *image_ID_ptr,
 	    action->alt_action (*image_ID_ptr, drawable_ID_ptr);
 	}
     }
+  g_slist_free (actions);
 
   return (dialog_return);
 }

@@ -43,6 +43,7 @@ ops_button_box_new (GtkWidget     *parent,
   GtkStyle  *style;
   GSList    *group = NULL;
   GSList    *box_list = NULL;
+  GSList    *list;
   gint       max_width = 0;
   gint       width;
   gint       height;
@@ -115,10 +116,10 @@ ops_button_box_new (GtkWidget     *parent,
       ops_button++;
     }
 
-  for (; box_list; box_list = box_list->next)
+  for (list = box_list; list; list = list->next)
     {
-      gtk_widget_set_usize (GTK_WIDGET (box_list->data), max_width, -1);
-      gtk_widget_show (GTK_WIDGET (box_list->data));
+      gtk_widget_set_usize (GTK_WIDGET (list->data), max_width, -1);
+      gtk_widget_show (GTK_WIDGET (list->data));
     }
   g_slist_free (box_list);
   

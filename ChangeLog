@@ -1,3 +1,14 @@
+Sun Oct 24 15:24:15 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpexport.c: get rid of remaining (invisible) layers
+	after merging visible layers
+
+	* app/channel_ops.[ch]: applied a patch from Garry R. Osgood that seems
+	to fix bugs #2261 and #2382 (crashes when using offset). 
+	A few more changes made the dialog actually work...
+
+	* app/ops_buttons.c: plugged a memleak I introduced yesterday
+
 Sat Oct 23 22:26:59 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c

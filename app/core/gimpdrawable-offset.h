@@ -31,13 +31,14 @@ typedef enum
 void  channel_ops_offset    (GimpImage *gimage);
 void  channel_ops_duplicate (GimpImage *gimage);
 
-void        offset    (GimpImage    *gimage,
-		       GimpDrawable *drawable,
-		       gboolean      wrap_around,
-		       gint          fill_type,
-		       gint          offset_x,
-		       gint          offset_y);
+void        offset    (GimpImage         *gimage,
+		       GimpDrawable      *drawable,
+		       gboolean           wrap_around,
+		       ChannelOffsetType  fill_type,
+		       gint               offset_x,
+		       gint               offset_y);
 
-GimpImage * duplicate (GimpImage    *gimage);
+GimpImage * duplicate (GimpImage         *gimage);
 
 #endif  /*  __CHANNEL_OPS_H__  */
+
