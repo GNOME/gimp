@@ -1,3 +1,12 @@
+2002-02-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpmath/Makefile.am
+	* libgimpmath/gimpmath.h
+	* libgimpmath/gimpmd5.[ch]
+	* libgimpmath/test-md5.c: added MD5 digest algorithm (based on code
+	taken from evolution). We will need this to implement the thumbnail
+	standard (http://triq.net/~pearl/thumb-spec.php).
+
 2002-02-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimprc.[ch]

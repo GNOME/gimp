@@ -35,6 +35,7 @@
 #include <libgimpmath/gimpmathtypes.h>
 
 #include <libgimpmath/gimpmatrix.h>
+#include <libgimpmath/gimpmd5.h>
 #include <libgimpmath/gimpvector.h>
 
 G_BEGIN_DECLS

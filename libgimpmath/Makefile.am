@@ -29,6 +29,8 @@ libgimpmath_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
 	gimpmatrix.h	\
+	gimpmd5.c	\
+	gimpmd5.h	\
 	gimpvector.c	\
 	gimpvector.h	\
 @STRIP_END@
@@ -37,6 +39,7 @@ libgimpmathinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.h	\
+	gimpmd5.h	\
 	gimpvector.h	\
 @STRIP_END@
 
@@ -47,3 +50,20 @@ libgimpmath_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) -lm
+
+
+#
+# test programs, not to be built by default and never installed
+#
+
+TESTS = test-md5
+
+EXTRA_PROGRAMS = test-md5
+
+test_md5_DEPENDENCIES = \
+	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la
+
+test_md5_LDADD = @STRIP_BEGIN@ 	\
+	$(GLIB_LIBS) 			\
+	$(test_md5_DEPENDENCIES)	\
+@STRIP_END@
