@@ -133,7 +133,7 @@ static const GOptionEntry main_entries[] =
   {
     "no-data", 'd', 0,
     G_OPTION_ARG_NONE, &no_data,
-    N_("Do not load brushes, gradients, palettes, patterns"), NULL
+    N_("Do not load brushes, gradients, patterns, ..."), NULL
   },
   {
     "no-fonts", 'f', 0,
@@ -178,7 +178,7 @@ static const GOptionEntry main_entries[] =
   {
     "batch-interpreter", 0, 0,
     G_OPTION_ARG_STRING, &batch_interpreter,
-    N_("The procedure to process batch commands with"), "<procedure>"
+    N_("The procedure to process batch commands with"), "<proc>"
   },
   {
     "console-messages", 0, 0,
@@ -188,12 +188,14 @@ static const GOptionEntry main_entries[] =
   {
     "pdb-compat-mode", 0, 0,
     G_OPTION_ARG_CALLBACK, gimp_option_pdb_compat_mode,
-    N_("PDB compatibility mode"), "<never|query|always>"
+    /*  don't translate the mode names (off|on|warn)  */
+    N_("PDB compatibility mode (off|on|warn)"), "<mode>"
   },
   {
     "stack-trace-mode", 0, 0,
     G_OPTION_ARG_CALLBACK, gimp_option_stack_trace_mode,
-    N_("Debugging mode for fatal signals"), NULL
+    /*  don't translate the mode names (never|query|always)  */
+    N_("Debug in case of a crash (never|query|always)"), "<mode>"
   },
   {
     "debug-handlers", 0, 0,

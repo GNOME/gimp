@@ -1,4 +1,4 @@
-.TH GIMP 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "April 6 2005" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp - an image manipulation and paint program.
@@ -6,13 +6,14 @@ gimp - an image manipulation and paint program.
 
 .SH SYNOPSIS
 .B gimp
-[\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
-[\-\-no\-cpu\-accel] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
-[\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
-[\-\-session \fI<name>\fP] [\-g] [\-\-gimprc \fI<gimprc>\fP]
-[\-\-system\-gimprc \fI<gimprc>\fP] [\-\-dump\-gimprc\fP]
-[\-\-console\-messages] [\-\-debug\-handlers]
-[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<commands>\fP]
+[\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
+[\-\-verbose] [\-\-no\-shm] [\-\-no\-cpu\-accel] [\-\-display \fIdisplay\fP]
+[\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface]
+[\-s] [\-\-no\-splash] [\-\-session \fI<name>\fP]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
+[\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
+[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<command>\fP]
 [\fIfilename\fP] ...
 
 
@@ -42,7 +43,13 @@ advanced non-interactive processing and creation of images.
 The \fIgimp\fP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
-Display a list of all commandline options.
+Show GIMP commandline options.
+.TP 8
+.B  \-\-help\-all
+Show all commandline options.
+.TP 8
+.B  \-\-help-gtk
+Show GTK+ commandline options.
 .TP 8
 .B \-v, \-\-version
 Output the version info.
@@ -107,12 +114,11 @@ If the PDB should provide aliases for deprecated functions.
 Speficies the procedure to use to process batch events. The default is
 to let Script-Fu evaluate the commands.
 .TP 8
-.B \-b, \-\-batch \fI<commands>\fP
-Execute the set of \fI<commands>\fP non-interactively. The set
-of \fI<commands>\fP is typically in the form of a script that
-can be executed by one of the GIMP scripting extensions. When
-\fI<commands>\fP is \fB-\fP the commands are read from standard
-input.
+.B \-b, \-\-batch \fI<command>\fP
+Execute \fI<command>\fP non-interactively. This option may appear
+multiple times.  The \fI<command>\fP is passed to the batch
+interpreter. When \fI<command>\fP is \fB-\fP the commands are read
+from standard input.
 .TP 8
 
 

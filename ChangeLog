@@ -1,3 +1,9 @@
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: improved "--help" output.
+
+	* docs/gimp.1.in: updated.
+
 2005-04-05  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
