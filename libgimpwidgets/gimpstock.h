@@ -53,6 +53,10 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_PATH_STROKE          "gimp-path-stroke"
 
+#define GIMP_STOCK_COLOR_PICKER_BLACK   "gimp-color-picker-black"
+#define GIMP_STOCK_COLOR_PICKER_GRAY    "gimp-color-picker-gray"
+#define GIMP_STOCK_COLOR_PICKER_WHITE   "gimp-color-picker-white"
+
 #define GIMP_STOCK_CHAR_PICKER          "gimp-char-picker"
 #define GIMP_STOCK_LETTER_SPACING       "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING         "gimp-line-spacing"

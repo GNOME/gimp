@@ -127,6 +127,10 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESIZE,         N_("_Resize"),         0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_SCALE,          N_("_Scale"),          0, 0, "gimp14-libgimp" },
 
+  { GIMP_STOCK_COLOR_PICKER_BLACK,       NULL,        0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, "gimp14-libgimp" },
+  { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, "gimp14-libgimp" },
+
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, "gimp14-libgimp" },
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, "gimp14-libgimp" },
@@ -200,6 +204,10 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },
   { GIMP_STOCK_VCHAIN,                   stock_vchain_24                   },
   { GIMP_STOCK_VCHAIN_BROKEN,            stock_vchain_broken_24            },
+
+  { GIMP_STOCK_COLOR_PICKER_BLACK,       stock_color_picker_black_18       },
+  { GIMP_STOCK_COLOR_PICKER_GRAY,        stock_color_picker_gray_18        },
+  { GIMP_STOCK_COLOR_PICKER_WHITE,       stock_color_picker_white_18       },
 
   { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
   { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },

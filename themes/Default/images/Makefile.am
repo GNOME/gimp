@@ -42,6 +42,9 @@ WILBER_VARIABLES = \
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
 	stock-char-picker-22.png		\
+	stock-color-picker-black-18.png		\
+	stock-color-picker-gray-18.png		\
+	stock-color-picker-white-18.png		\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\

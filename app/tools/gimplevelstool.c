@@ -321,6 +321,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget      *vbox2;
   GtkWidget      *vbox3;
   GtkWidget      *hbox;
+  GtkWidget      *hbox2;
   GtkWidget      *label;
   GtkWidget      *frame;
   GtkWidget      *channel_hbox;
@@ -390,7 +391,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                                                GIMP_HISTOGRAM_VIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (l_tool->histogram));
 
-  /* ignore button_events, since we don't want the user to be able to set the range */
+  /* ignore button_events,
+     since we don't want the user to be able to set the range */
   gtk_widget_set_events (GTK_WIDGET (l_tool->histogram), 
 			 (GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK));
 
@@ -440,12 +442,22 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  low input spin  */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
+  button = gtk_toggle_button_new_with_label (GIMP_STOCK_COLOR_PICKER_BLACK);
+  gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
+  gimp_help_set_help_data (button, _("Pick Black Point"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   data = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
   l_tool->low_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->low_input_data, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (G_OBJECT (l_tool->low_input_data), "value_changed",
@@ -453,12 +465,22 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     l_tool);
 
   /*  input gamma spin  */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), hbox2, TRUE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
+  button = gtk_toggle_button_new_with_label (GIMP_STOCK_COLOR_PICKER_GRAY);
+  gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
+  gimp_help_set_help_data (button, _("Pick Gray Point"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   data = gtk_adjustment_new (1, 0.1, 10, 0.1, 1, 1);
   l_tool->gamma_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->gamma_data, 0.5, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
 
@@ -467,12 +489,22 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     l_tool);
 
   /*  high input spin  */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
+  button = gtk_toggle_button_new_with_label (GIMP_STOCK_COLOR_PICKER_WHITE);
+  gtk_button_set_use_stock (GTK_BUTTON (button), TRUE);
+  gimp_help_set_help_data (button, _("Pick White Point"), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   data = gtk_adjustment_new (255, 0, 255, 1, 10, 10);
   l_tool->high_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->high_input_data, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (G_OBJECT (l_tool->high_input_data), "value_changed",

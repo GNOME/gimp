@@ -1,3 +1,15 @@
+2002-10-13  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-color-picker-black-18.png
+	* themes/Default/images/stock-color-picker-gray-18.png
+	* themes/Default/images/stock-color-picker-white-18.png: new icons.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am: added the new color picker icons.
+
+	* app/tools/gimplevelstool.c: added the GUI that will allow to pick
+	the white, gray and black point from the image.
+
 2002-10-13  Manish Singh  <yosh@gimp.org>
 
 	* app/tools/gimptexttool.c: #include <stdio.h>

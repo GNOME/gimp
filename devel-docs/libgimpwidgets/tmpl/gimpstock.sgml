@@ -42,6 +42,27 @@ Prebuilt common menu/toolbar items and corresponding icons
 
 
 
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_GRAY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_WHITE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
 <para>
 
