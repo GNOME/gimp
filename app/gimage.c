@@ -166,6 +166,9 @@ gimage_cmap_change_handler (GimpImage *gimage,
 			    gpointer   user_data)
 {
   gdisplays_update_full (gimage);
+
+  if (gimp_image_base_type (gimage) == INDEXED)
+    paint_funcs_invalidate_color_hash_table (gimage, ncol);
 }
 
 static void

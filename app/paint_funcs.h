@@ -32,6 +32,8 @@
 void  paint_funcs_setup     (void);
 void  paint_funcs_free      (void);
 
+void paint_funcs_invalidate_color_hash_table (GimpImage* gimage,
+					      gint       index);
 
 /*  Paint functions  */
 

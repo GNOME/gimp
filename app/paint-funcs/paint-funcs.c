@@ -128,15 +128,17 @@ static void   run_length_encode  (unsigned char *, int *, int, int);
 static void   draw_segments      (PixelRegion *, BoundSeg *, int, int, int, int);
 #endif
 static double cubic              (double, int, int, int, int);
-static void apply_layer_mode_replace (unsigned char *, unsigned char *,
-				      unsigned char *, unsigned char *,
-				      int, int, int,
-				      int, int, int, int *);
-static void   rotate_pointers(void **p, guint32 n);
+static void   apply_layer_mode_replace (unsigned char *, unsigned char *,
+					unsigned char *, unsigned char *,
+					int, int, int,
+					int, int, int, int *);
+static void   rotate_pointers    (void **p, guint32 n);
 
 
 void
-update_tile_rowhints (Tile* tile, int ymin, int ymax)
+update_tile_rowhints (Tile *tile, 
+		      int   ymin, 
+		      int   ymax)
 {
   int bpp, ewidth, eheight;
   int x,y;
@@ -583,6 +585,29 @@ paint_funcs_free ()
       printf ("RGB->indexed hash table hit rate: %f\n",
       100.0 * color_hash_hits / (color_hash_hits + color_hash_misses));
       */
+}
+
+void
+paint_funcs_invalidate_color_hash_table (GimpImage* gimage,
+					 gint       index)
+{
+  gint i;
+
+  g_return_if_fail (gimage != NULL);
+
+  if (index == -1) /* invalidate all entries */
+    {
+      for (i = 0; i < HASH_TABLE_SIZE; i++)
+	if (color_hash_table[i].gimage == gimage)
+	  color_hash_table[i].gimage = NULL;
+    }
+  else
+    {
+      for (i = 0; i < HASH_TABLE_SIZE; i++)
+	if (color_hash_table[i].gimage == gimage && 
+	    color_hash_table[i].index  == index)
+	  color_hash_table[i].gimage = NULL;      
+    }
 }
 
 

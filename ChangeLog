@@ -1,3 +1,10 @@
+Thu Feb 10 17:20:05 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimage.c
+	* app/paint_funcs.[ch]: Invalidate the color_hash_table used
+	for rgb->indexed conversions if the colormap of the indexed
+	image changes. Fixes bug #2683.
+
 Thu Feb 10 15:43:02 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/edit_selection.c: fixed bug #6092.
@@ -8,8 +15,7 @@ Thu Feb 10 15:20:13 CET 2000  Sven Neumann <sven@gimp.org>
 	guides again. Layer moves are slightly faster than before, if no 
 	guides are present.
 	
-	* app/gdisplay.c
-	* app/gdisplay.h
+	* app/gdisplay.[ch]
 	* app/gdisplayP.h: Use doubles for snap_to_point. Less rounding
 	makes the result much better on low resolution. If it snaps, the
 	result should be exactly the guide in almost all cases now. Only
