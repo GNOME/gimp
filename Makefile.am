@@ -6,6 +6,7 @@ bin_SCRIPTS = gimptool
 
 EXTRA_DIST = \
 	README.i18n		\
+	ChangeLog.pre-1-0	\
 	MAINTAINERS		\
 	TODO			\
 	gtkrc			\

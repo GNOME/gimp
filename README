@@ -1,59 +1,6 @@
 The GIMP: the GNU Image Manipulation Program
 --------------------------------------------
 
-The main difference between v1.0 and much earlier versions is the
-use of a tile based memory management for images. This allows the GIMP
-to work with images much larger than physical memory in a usable
-fashion. Before such memory management, the GIMP was nearly unusable
-for large images. (Large being something on the order of
-4000x3000). With the tile memory management, image size is effectively
-limited by disk space. It is due to the switch to a tile based memory
-management system that old plug-ins will not work with this version of
-the GIMP.
-
-The plug-in API has changed drastically from previous versions. The
-result is that it is now possible to access much of the GIMP's
-internals through a database of procedures aptly named the procedure
-database. Plug-ins fit into the procedure database by inserting
-themselves into it. The result is that plug-ins can call GIMP internal
-procedures and other plug-ins. Most plug-ins now fully support the
-procedural database, so that you can call them from scripts and other
-places as well.
-
-The procedure database is self-documenting. To add a procedure to the
-procedure database the programmer must specify a help string and help
-strings for the arguments and return values. This allows us to
-automatically create documentation for the procedures in the procedure
-database. The documentation resides in "docs" and is provided in
-texinfo format.
-
-A new type of plug-in called an extension has been created. Extensions
-are similar to plug-ins in that they are external program, but they
-differ in when and how they are run. The essential difference is that
-plug-ins are associated with a particular image/drawable, while
-extensions are not.
-
-A good example of a complex extension is Script-fu, which resides in
-the "plug-ins/script-fu" directory.  Script-fu is a simple Scheme
-interpreter that provides bindings to the GIMP's procedural database.
-This way you can write useful scripts that call the GIMP's functions
-and plug-ins, thus allowing automatization of repetitive tasks.  Many
-scripts are included for your enjoyment in the
-"plug-ins/script-fu/scripts" directory.
-
-Another extension is the "dbbrowser" utility, which lets you
-interactively browse through the procedures installed in the
-procedural database.  This will mainly be of use to Script-fu
-programmers.  Dbbrowser is also nicely integrated in the interactive
-Script-fu console.
-
-Lastly, there is new file format (xcf) designed specifically for
-saving GIMP images. It handles layers, channels and tiles as well as
-saving all of the state information about the image, such as the
-active channel, the selection, etc.  It also will probably change
-sometime in the future to implement some form of compression for the
-tiles.
-
 The GIMP's home page is at 
 
 	http://www.gimp.org
@@ -93,10 +40,7 @@ And finally, for the real junkies, there is an IRC channel devoted to
 the GIMP :-) On Byxnet (a private mostly-GIMP network) there is #gimp.
 Many of the developers hang out there.  Some of the Byxnet servers are:
 
-	irc.mint.net:6666
-	irc.canweb.net:6667
-	rudolf.canberra.edu.au:6666
-	levien.com:6666
+	irc.gimp.org:6667
 
 You can customize the look of the interface quite a bit my editing the
 ~/.gimp/gtkrc file. A sample file, gtkrc.forest, is included (Thanks to
@@ -113,7 +57,7 @@ this).
 
 Have fun,
 
-  Spencer Kimball <spencer@xcf.berkeley.edu>
-  Peter Mattis <petm@xcf.berkeley.edu>
-  Federico Mena <federico@nuclecu.unam.mx>
-  Manish Singh <yosh@gimp.org>
+  Spencer Kimball
+  Peter Mattis
+  Federico Mena
+  Manish Singh
