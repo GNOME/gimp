@@ -157,7 +157,7 @@ static void        add_list_item_callback (GtkWidget *widget,
 static void        del_list_item_callback (GtkWidget *widget,
 					   GtkWidget *list);
 
-static GtkWidget * add_image_list         (gint       add_box_flag,
+static GtkWidget * add_image_list         (gboolean   add_box_flag,
 					   gint       n,
 					   gint32    *image_id,
 					   GtkWidget *hbox);
@@ -1072,7 +1072,7 @@ del_list_item_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-add_image_list (gint       add_box_flag,
+add_image_list (gboolean   add_box_flag,
                 gint       n,
                 gint32    *image_id,
                 GtkWidget *hbox)
@@ -1089,8 +1089,9 @@ add_image_list (gint       add_box_flag,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (add_box_flag ? _("Available Images:")
-                                      : _("On Film:"));
+  label = gtk_label_new (add_box_flag ?
+                         _("Available Images:") :
+                         _("On Film:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1107,6 +1108,8 @@ add_image_list (gint       add_box_flag,
 					 list);
   gtk_widget_show (list);
 
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), scrolled_win);
+
   for (i = 0; i < n; i++)
     {
       gchar *name = compose_image_name (image_id[i]);
@@ -1121,8 +1124,8 @@ add_image_list (gint       add_box_flag,
       gtk_widget_show (list_item);
     }
 
-  button = gtk_button_new_with_label (add_box_flag ? _("Add >>"):_("Remove"));
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+  button = gtk_button_new_from_stock (add_box_flag ?
+                                      GTK_STOCK_ADD : GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1149,14 +1152,14 @@ create_selection_tab (GtkWidget *notebook,
   GtkObject *adj;
   GtkWidget *button;
   GtkWidget *entry;
-  GtkWidget *label;
   gint32    *image_id_list;
   gint       nimages, j;
 
   hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), hbox,
+                            gtk_label_new_with_mnemonic (_("_Selection")));
   gtk_widget_show (hbox);
-  label = gtk_label_new_with_mnemonic (_("_Selection"));
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hbox, label);
 
   vbox2 = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
@@ -1239,7 +1242,7 @@ create_selection_tab (GtkWidget *notebook,
   spinbutton = gimp_spin_button_new (&adj, filmvals.number_start, 0,
 				     G_MAXINT, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("St_art Index:"), 1.0, 0.5,
+			     _("Start _Index:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value_changed",
@@ -1260,7 +1263,7 @@ create_selection_tab (GtkWidget *notebook,
 				  &filmvals.number_color, 
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Colo_r:"), 1.0, 0.5,
+			     _("Co_lor:"), 1.0, 0.5,
 			     button, 1, TRUE);
 
   g_signal_connect (button, "color_changed",
@@ -1269,9 +1272,8 @@ create_selection_tab (GtkWidget *notebook,
 
   for (j = 0; j < 2; j++)
     {
-      toggle =
-	gtk_check_button_new_with_mnemonic (j ? _("At _Bottom") 
-					    : _("At _Top"));
+      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _Bottom") 
+                                                   : _("At _Top"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    filmvals.number_pos[j]);
@@ -1279,7 +1281,7 @@ create_selection_tab (GtkWidget *notebook,
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
-                        &(filmvals.number_pos[j]));
+                        &filmvals.number_pos[j]);
     }
 
 
@@ -1294,10 +1296,10 @@ create_selection_tab (GtkWidget *notebook,
 
   /* Get a list of all image names */
   image_id_list = gimp_image_list (&nimages);
-  filmint.image_list_all = add_image_list (1, nimages, image_id_list, hbox);
+  filmint.image_list_all = add_image_list (TRUE, nimages, image_id_list, hbox);
 
   /* Get a list of the images used for the film */
-  filmint.image_list_film = add_image_list (0, 1, &image_ID, hbox);
+  filmint.image_list_film = add_image_list (FALSE, 1, &image_ID, hbox);
 
   gtk_widget_show (hbox);
 }
@@ -1305,29 +1307,30 @@ create_selection_tab (GtkWidget *notebook,
 static void
 create_advanced_tab (GtkWidget *notebook)
 {
+  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkObject *adj;
-  GtkWidget *label;
   GtkWidget *sep;
+  GtkWidget *button;
   gint       row;
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_widget_show (hbox);
-  label = gtk_label_new_with_mnemonic (_("_Advanced"));
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hbox, label);
-
-  frame = gtk_frame_new (_("Advanced Settings (All Values are Fractions "
-			   "of the Film Height)"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  frame = gtk_frame_new (_("All Values are Fractions of the Film Heigh"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
+                            gtk_label_new_with_mnemonic (_("Ad_vanced")));
   gtk_widget_show (frame);
 
-  table = gtk_table_new (11, 3, FALSE);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   row = 0;
@@ -1422,6 +1425,18 @@ create_advanced_tab (GtkWidget *notebook)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (film_reset_callback),
+                    NULL);
 }
 
 static gint
@@ -1438,9 +1453,6 @@ film_dialog (gint32 image_ID)
 			 GTK_WIN_POS_NONE,
 			 FALSE, TRUE, FALSE,
 
-			 GIMP_STOCK_RESET, film_reset_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
@@ -1455,11 +1467,10 @@ film_dialog (gint32 image_ID)
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  notebook = gtk_notebook_new();
+  notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, TRUE, TRUE, 0);
 
   create_selection_tab (notebook, image_ID);
