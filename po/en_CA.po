@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 02:29-0500\n"
-"PO-Revision-Date: 2005-02-01 14:29-0400\n"
+"POT-Creation-Date: 2005-02-02 20:17-0500\n"
+"PO-Revision-Date: 2005-02-02 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(This console window will close in ten seconds)\n"
 
-#: app/app_procs.c:238
+#: app/app_procs.c:237
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -30,7 +30,7 @@ msgstr ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 
-#: app/app_procs.c:289
+#: app/app_procs.c:288
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -41,7 +41,7 @@ msgstr ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 
-#: app/app_procs.c:348 app/core/gimppalette-import.c:441
+#: app/app_procs.c:343 app/core/gimppalette-import.c:441
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Opening '%s' failed: %s"
@@ -51,159 +51,97 @@ msgstr "Opening '%s' failed: %s"
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
 msgstr "The batch interpreter '%s' is not available; batch mode disabled."
 
-#: app/main.c:211
-msgid ""
-"GIMP could not initialize the graphical user interface.\n"
-"Make sure a proper setup for your display environment exists."
-msgstr ""
-"GIMP could not initialize the graphical user interface.\n"
-"Make sure a proper setup for your display environment exists."
+#: app/main.c:148
+msgid "Show version information and exit."
+msgstr "Show version information and exit."
 
-#: app/main.c:222 app/widgets/gimptoolbox.c:558
-#: data/misc/gimp.desktop.in.in.h:3
+#: app/main.c:153
+msgid "Be more verbose."
+msgstr "Be more verbose."
+
+#: app/main.c:158 app/main.c:267
+msgid "Run without a user interface."
+msgstr "Run without a user interface."
+
+#: app/main.c:163
+msgid "Do not load brushes, gradients, palettes, patterns."
+msgstr "Do not load brushes, gradients, palettes, or patterns."
+
+#: app/main.c:168
+msgid "Do not load any fonts."
+msgstr "Do not load any fonts."
+
+#: app/main.c:173
+msgid "Do not show a startup window."
+msgstr "Do not show a startup window."
+
+#: app/main.c:178
+msgid "Do not use shared memory between GIMP and plugins."
+msgstr "Do not use shared memory between GIMP and plugins."
+
+#: app/main.c:183
+msgid "Do not use special CPU acceleration functions."
+msgstr "Do not use special CPU acceleration functions."
+
+#: app/main.c:188
+msgid "Use an alternate sessionrc file."
+msgstr "Use an alternate sessionrc file."
+
+#: app/main.c:193
+msgid "Use an alternate user gimprc file."
+msgstr "Use an alternate user gimprc file."
+
+#: app/main.c:198
+msgid "Use an alternate system gimprc file."
+msgstr "Use an alternate system gimprc file."
+
+#: app/main.c:203
+msgid "Batch command to run (can be used multiple times)."
+msgstr "Batch command to run (can be used multiple times)."
+
+#: app/main.c:208
+msgid "The procedure to process batch commands with."
+msgstr "The procedure to process batch commands with."
+
+#: app/main.c:213
+msgid "Send messages to console instead of using a dialog box."
+msgstr "Send messages to console instead of using a dialogue box."
+
+#: app/main.c:218
+msgid "Procedural Database compatibility mode."
+msgstr "Procedural Database compatibility mode."
+
+#: app/main.c:224
+msgid "Debugging mode for fatal signals."
+msgstr "Debugging mode for fatal signals."
+
+#: app/main.c:229
+msgid "Enable non-fatal debugging signal handlers."
+msgstr "Enable non-fatal debugging signal handlers."
+
+#: app/main.c:242
+msgid "Output a gimprc file with default settings."
+msgstr "Output a gimprc file with default settings."
+
+#. set the application name
+#: app/main.c:301 app/widgets/gimptoolbox.c:558
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#.
-#. *  anything else starting with a '-' is an error.
-#.
-#: app/main.c:422
+#: app/main.c:316
+msgid ""
+"GIMP could not initialize the graphical user interface.\n"
+"Make sure a proper setup for your display environment exists."
+msgstr ""
+"GIMP could not initialize the graphical user interface.\n"
+"Make sure a proper setup for your display environment exists."
+
+#: app/main.c:491
 #, c-format
-msgid ""
-"\n"
-"Invalid option \"%s\"\n"
-msgstr ""
-"\n"
-"Invalid option \"%s\"\n"
+msgid "GIMP version %s"
+msgstr "GIMP version %s"
 
-#: app/main.c:501
-msgid "GIMP version"
-msgstr "GIMP version"
-
-#: app/main.c:509
-#, c-format
-msgid ""
-"\n"
-"Usage: %s [option ... ] [file ... ]\n"
-"\n"
-msgstr ""
-"\n"
-"Usage: %s [option ... ] [file ... ]\n"
-"\n"
-
-#: app/main.c:511
-msgid "Options:\n"
-msgstr "Options:\n"
-
-#: app/main.c:512
-msgid "  -h, --help               Output this help.\n"
-msgstr "  -h, --help               Output this help.\n"
-
-#: app/main.c:513
-msgid "  -v, --version            Output version information.\n"
-msgstr "  -v, --version            Output version information.\n"
-
-#: app/main.c:514
-msgid "  --verbose                Show startup messages.\n"
-msgstr "  --verbose                Show startup messages.\n"
-
-#: app/main.c:515
-msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and "
-"plugins.\n"
-msgstr ""
-"  --no-shm                 Do not use shared memory between GIMP and "
-"plugins.\n"
-
-#: app/main.c:516
-msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-
-#: app/main.c:517
-msgid ""
-"  -d, --no-data            Do not load brushes, gradients, palettes, "
-"patterns.\n"
-msgstr ""
-"  -d, --no-data            Do not load brushes, gradients, palettes, "
-"patterns.\n"
-
-#: app/main.c:518
-msgid "  -f, --no-fonts           Do not load any fonts.\n"
-msgstr "  -f, --no-fonts           Do not load any fonts.\n"
-
-#: app/main.c:519
-msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -i, --no-interface       Run without a user interface.\n"
-
-#: app/main.c:520
-msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <display>      Use the designated X display.\n"
-
-#: app/main.c:521
-msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          Do not show the startup window.\n"
-
-#: app/main.c:522
-msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  --session <name>         Use an alternate sessionrc file.\n"
-
-#: app/main.c:523
-msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-
-#: app/main.c:524
-msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-
-#: app/main.c:525
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
-
-#: app/main.c:526
-msgid ""
-"  -c, --console-messages   Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  -c, --console-messages   Display warnings to console instead of a dialogue "
-"box.\n"
-
-#: app/main.c:527
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-
-#: app/main.c:528
-msgid ""
-"  --stack-trace-mode <never | query | always>\n"
-"                           Debugging mode for fatal signals.\n"
-msgstr ""
-"  --stack-trace-mode <never | query | always>\n"
-"                           Debugging mode for fatal signals.\n"
-
-#: app/main.c:530
-msgid ""
-"  --pdb-compat-mode <off | on | warn>\n"
-"                           Procedural Database compatibility mode.\n"
-msgstr ""
-"  --pdb-compat-mode <off | on | warn>\n"
-"                           Procedural Database compatibility mode.\n"
-
-#: app/main.c:532
-msgid ""
-"  --batch-interpreter <procedure>\n"
-"                           The procedure to process batch commands with.\n"
-msgstr ""
-"  --batch-interpreter <procedure>\n"
-"                           The procedure to process batch commands with.\n"
-
-#: app/main.c:534
-msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
-msgstr "  -b, --batch <commands>   Process commands in batch mode.\n"
-
-#: app/sanity.c:194
+#: app/sanity.c:192
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -214,7 +152,7 @@ msgstr ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 
-#: app/sanity.c:213
+#: app/sanity.c:211
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -4366,23 +4304,23 @@ msgstr "Change Colourmap entry"
 msgid "Add Color to Colormap"
 msgstr "Add Colour to Colourmap"
 
-#: app/core/gimpimage-convert.c:788
+#: app/core/gimpimage-convert.c:789
 msgid "Convert Image to RGB"
 msgstr "Convert Image to RGB"
 
-#: app/core/gimpimage-convert.c:792
+#: app/core/gimpimage-convert.c:793
 msgid "Convert Image to Grayscale"
 msgstr "Convert Image to Grayscale"
 
-#: app/core/gimpimage-convert.c:796
+#: app/core/gimpimage-convert.c:797
 msgid "Convert Image to Indexed"
 msgstr "Convert Image to Indexed"
 
-#: app/core/gimpimage-convert.c:875
+#: app/core/gimpimage-convert.c:879
 msgid "Converting to indexed (stage 2)..."
 msgstr "Converting to indexed (stage 2)..."
 
-#: app/core/gimpimage-convert.c:919
+#: app/core/gimpimage-convert.c:923
 msgid "Converting to indexed (stage 3)..."
 msgstr "Converting to indexed (stage 3)..."
 
@@ -10086,5 +10024,9 @@ msgid "Create images and edit photographs"
 msgstr "Create images and edit photographs"
 
 #: data/misc/gimp.desktop.in.in.h:2
+msgid "GNU Image Manipulation Program"
+msgstr "GNU Image Manipulation Program"
+
+#: data/misc/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Image Editor"
