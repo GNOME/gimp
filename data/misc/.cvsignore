@@ -3,3 +3,5 @@ Makefile
 gimp.desktop
 gimp.desktop.in
 gimp.desktop.in.in.h
+gimp.keys
+gimp.applications

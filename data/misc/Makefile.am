@@ -13,8 +13,8 @@ miscdata_DATA = \
 
 EXTRA_DIST = \
 	$(miscdata_in_files)	\
-	gimp.applications	\
-	gimp.keys
+	gimp.applications.in	\
+	gimp.keys.in
 
 gen_sources = desktop-foo
 CLEANFILES = $(gen_sources)
@@ -30,18 +30,18 @@ install-data-local:
 if DESKTOP_DATADIR
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
-		&& rm -f gimp-$(GIMP_APP_VERSION).desktop \
-		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-$(GIMP_APP_VERSION).desktop \
+		&& rm -f gimp-@GIMP_APP_VERSION@.desktop \
+		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-@GIMP_APP_VERSION@.desktop \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
-		&& rm -f gimp-$(GIMP_APP_VERSION).applications \
-		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-$(GIMP_APP_VERSION).applications \
+		&& rm -f gimp-@GIMP_APP_VERSION@.applications \
+		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-@GIMP_APP_VERSION@.applications \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
-		&& rm -f gimp-$(GIMP_APP_VERSION).keys \
-		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-$(GIMP_APP_VERSION).keys \
+		&& rm -f gimp-@GIMP_APP_VERSION@.keys \
+		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-@GIMP_APP_VERSION@.keys \
 	; fi
 endif
 
@@ -49,15 +49,15 @@ uninstall-local:
 if DESKTOP_DATADIR
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
-		&& rm -f gimp-$(GIMP_APP_VERSION).desktop \
+		&& rm -f gimp-@GIMP_APP_VERSION@.desktop \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
-		&& rm -f gimp-$(GIMP_APP_VERSION).applications \
+		&& rm -f gimp-@GIMP_APP_VERSION@.applications \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
-		&& rm -f gimp-$(GIMP_APP_VERSION).keys \
+		&& rm -f gimp-@GIMP_APP_VERSION@.keys \
 	; fi
 endif
 

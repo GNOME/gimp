@@ -1,3 +1,16 @@
+2004-01-26  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: add m4_defines for gimp_unstable and gimp_full_name,
+	and define a GIMP_VISIBLE_NAME based on that.
+
+	* data/misc/Makefile.am
+	* data/misc/gimp.applications.in
+	* data/misc/gimp.keys.in: made these configured files, so they can 
+	use GIMP_APP_VERSION and GIMP_VISIBLE_NAME.
+
+	* data/misc/gimp.desktop.in.in: use GIMP_APP_VERSION and
+	GIMP_VISIBLE_NAME.
+
 2004-01-27  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-layer-mask-32.png

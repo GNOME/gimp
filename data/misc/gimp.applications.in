@@ -1,6 +1,6 @@
-gimp-1.3
-	command=gimp-remote-1.3
-	name=The GIMP (unstable)
+gimp-@GIMP_APP_VERSION@
+	command=gimp-remote-@GIMP_APP_VERSION@
+	name=@GIMP_VISIBLE_NAME@
 	can_open_multiple_files=true
 	expects_uris=non-file
 	requires_terminal=false

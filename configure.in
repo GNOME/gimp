@@ -35,6 +35,11 @@ m4_define([gimp_data_version], [1.3])
 m4_define([gimp_sysconf_version], [1.3])
 m4_define([gimp_user_version], [1.3])
 
+m4_define([gimp_unstable],
+          m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
+
+m4_define([gimp_full_name], [The GIMP])
+
 # required versions of other packages
 m4_define([glib_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.2.2])
@@ -73,6 +78,8 @@ GIMP_PKGCONFIG_VERSION=gimp_pkgconfig_version
 GIMP_DATA_VERSION=gimp_data_version
 GIMP_SYSCONF_VERSION=gimp_sysconf_version
 GIMP_USER_VERSION=gimp_user_version
+GIMP_UNSTABLE=gimp_unstable
+GIMP_FULL_NAME="gimp_full_name"
 AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
 AC_SUBST(GIMP_MICRO_VERSION)
@@ -89,6 +96,8 @@ AC_SUBST(GIMP_PKGCONFIG_VERSION)
 AC_SUBST(GIMP_DATA_VERSION)
 AC_SUBST(GIMP_SYSCONF_VERSION)
 AC_SUBST(GIMP_USER_VERSION)
+AC_SUBST(GIMP_UNSTABLE)
+AC_SUBST(GIMP_FULL_NAME)
 
 
 # libtool versioning
@@ -105,6 +114,14 @@ LT_VERSION_INFO="lt_current:lt_revision:lt_age"
 LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
 AC_SUBST(LT_VERSION_INFO)
 AC_SUBST(LT_CURRENT_MINUS_AGE)
+
+
+if test "gimp_unstable" = "yes"; then
+  GIMP_VISIBLE_NAME="gimp_full_name (unstable)"
+else
+  GIMP_VISIBLE_NAME="gimp_full_name"
+fi
+AC_SUBST(GIMP_VISIBLE_NAME)
 
 
 GETTEXT_PACKAGE=gimp20
@@ -1536,6 +1553,8 @@ data/Makefile
 data/environ/Makefile
 data/misc/Makefile
 data/misc/gimp.desktop.in
+data/misc/gimp.keys
+data/misc/gimp.applications
 data/images/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
