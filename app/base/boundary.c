@@ -21,8 +21,6 @@
 #include "boundary.h"
 #include "tile.h"
 
-#include "libgimp/gimpintl.h"
-
 /* half intensity for mask */
 #define HALF_WAY 127
 

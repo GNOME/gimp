@@ -32,6 +32,7 @@
 #include "tools.h"
 #include "gimage.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define FIELD_COLS    4

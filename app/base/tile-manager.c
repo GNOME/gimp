@@ -25,8 +25,6 @@
 #include "tile_manager_pvt.h"
 #include "tile_pvt.h"			/* ick. */
 
-#include "libgimp/gimpintl.h"
-
 
 static int tile_manager_get_tile_num (TileManager *tm,
 				       int xpixel,

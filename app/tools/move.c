@@ -27,6 +27,7 @@
 #include "move.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  the move structures  */

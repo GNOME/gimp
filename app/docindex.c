@@ -22,6 +22,7 @@
 #include "gimpdnd.h"
 #include "gimprc.h"
 
+#include "config.h"
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 

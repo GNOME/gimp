@@ -22,8 +22,6 @@
 #include "gimphelp.h"
 #include "ops_buttons.h"
 
-#include "libgimp/gimpintl.h"
-
 static void ops_button_pressed_callback  (GtkWidget*, GdkEventButton*, gpointer);
 static void ops_button_extended_callback (GtkWidget*, gpointer);
 

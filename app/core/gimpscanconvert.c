@@ -20,7 +20,6 @@
 
 #include "scan_convert.h"
 #include "libgimp/gimpmath.h"
-#include "libgimp/gimpintl.h"
 
 
 #ifdef DEBUG

@@ -14,6 +14,7 @@
 #include "gimpdnd.h"
 #include "gimpui.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  Add these features:

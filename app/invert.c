@@ -26,6 +26,7 @@
 #include "gimplut.h"
 #include "lut_funcs.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 

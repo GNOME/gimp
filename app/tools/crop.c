@@ -32,6 +32,7 @@
 #include "info_dialog.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 

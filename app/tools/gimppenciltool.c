@@ -31,8 +31,6 @@
 #include "selection.h"
 #include "tools.h"
 
-#include "libgimp/gimpintl.h"
-
 /*  the pencil tool options  */
 typedef struct _PencilOptions PencilOptions;
 

@@ -26,6 +26,7 @@
 #include "curves.h"
 #include "gimplut.h"
 
+#include "config.h"
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"

@@ -24,6 +24,7 @@
 #include "image_map.h"
 #include "lut_funcs.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define SLIDER_WIDTH 200

@@ -26,6 +26,7 @@
 #include "indicator_area.h"
 #include "pattern_select.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define CELL_SIZE        23  /*  The size of the previews  */

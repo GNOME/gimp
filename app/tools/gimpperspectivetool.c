@@ -25,6 +25,7 @@
 #include "transform_tool.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "tile_manager_pvt.h"

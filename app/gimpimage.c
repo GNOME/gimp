@@ -33,6 +33,7 @@
 #include "pathsP.h"
 #include "gimprc.h"
 
+#include "config.h"
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"

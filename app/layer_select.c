@@ -26,6 +26,7 @@
 #include "layer_select.h"
 #include "layers_dialogP.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 

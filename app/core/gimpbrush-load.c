@@ -25,6 +25,7 @@
 #include "gimprc.h"
 #include "brush_header.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 enum{

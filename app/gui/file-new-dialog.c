@@ -20,6 +20,7 @@
 #include "gimpui.h"
 #include "gdisplay.h"
 
+#include "config.h"
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpsizeentry.h"

@@ -22,6 +22,7 @@
 #include "lut_funcs.h"
 #include "gimphistogram.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 void

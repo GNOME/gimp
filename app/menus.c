@@ -540,6 +540,13 @@ static GimpItemFactoryEntry image_entries[] =
   { { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
     NULL, NULL },
 
+  { { N_("/Tools/Select Tools"), NULL, NULL, 0, "<Branch>" },
+    NULL, NULL },
+  { { N_("/Tools/Transform Tools"), NULL, NULL, 0, "<Branch>" },
+    NULL, NULL },
+  { { N_("/Tools/Paint Tools"), NULL, NULL, 0, "<Branch>" },
+    NULL, NULL },
+
   /*  <Image>/Dialogs  */
 
   { { N_("/Dialogs"), NULL, NULL, 0, "<Branch>" },
@@ -1607,8 +1614,6 @@ menus_init (void)
   GtkWidget *menu_item;
   gchar     *filename;
   gint       i;
-  GimpItemFactoryEntry tool_separator = 
-  { { "/Tools/---", NULL, NULL, 0, "<Separator>" }, NULL, NULL };
 
   if (! initialize)
     return;
@@ -1690,13 +1695,6 @@ menus_init (void)
 
   for (i = 0; i < num_tools; i++)
     {
-      /* insert separators between tool_groups */
-      if (tool_info[i].tool_id == TEXT ||
-	  tool_info[i].tool_id == BUCKET_FILL ||
-	  tool_info[i].tool_id == MEASURE)
-	{
-	  menus_create_item (image_factory, &tool_separator, NULL, 2);
-	}
       /* FIXME this need to use access functions to check a flag */
       if (tool_info[i].menu_path)
 	menus_tools_create (&tool_info[i]);

@@ -25,6 +25,7 @@
 #include "brush_edit.h"
 #include "gimpui.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 static void brush_edit_close_callback (GtkWidget *, gpointer);

@@ -35,6 +35,7 @@
 #include "paint_funcs.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/eye.xbm"

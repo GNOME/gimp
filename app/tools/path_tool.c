@@ -37,6 +37,7 @@
 #include "path_toolP.h"
 #include "path_curves.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*

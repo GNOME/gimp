@@ -44,8 +44,6 @@
 #include "gimpbrushlistP.h"
 #include "general.h"
 
-#include "libgimp/gimpintl.h"
-
 /*  global variables  */
 GimpBrushList    *brush_list     = NULL;
 

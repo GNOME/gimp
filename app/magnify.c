@@ -26,6 +26,7 @@
 #include "magnify.h"
 #include "scale.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  types of magnify operations  */

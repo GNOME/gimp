@@ -26,8 +26,6 @@
 #define _O_TEMPORARY 0
 #endif
 
-#include "libgimp/gimpintl.h"
-
 #define MAX_OPEN_SWAP_FILES  16
 
 #include "tile.h"

@@ -43,7 +43,6 @@
 #include "temp_buf.h"
 
 #include "libgimp/gimpcolorspace.h"
-#include "libgimp/gimpintl.h"
 
 static unsigned char *   temp_buf_allocate (unsigned int);
 static void              temp_buf_to_color (TempBuf *, TempBuf *);

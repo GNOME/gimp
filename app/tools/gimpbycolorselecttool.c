@@ -31,6 +31,7 @@
 
 #include "tile.h"			/* ick. */
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define DEFAULT_FUZZINESS    15

@@ -1,3 +1,16 @@
+Tue Feb  1 22:42:26 CET 2000
+
+	* app/regex.c
+	* plug-ins/script-fu/regex.c: remove occurences of gettext, since 
+	we don't translate error messages
+
+	* app/[lotsa files]: only include libgimp/gimpintl.h if needed; but 
+	if it gets included, include config.h too
+
+	* po/POTFILES.in
+	* po-plug-ins/POTFILES.in: only list files that mark strings for 
+	translation
+
 2000-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c

@@ -27,7 +27,6 @@
 #include "gimpui.h"
 
 #include "libgimp/parasite.h"
-#include "libgimp/gimpintl.h"
 
 #include <gtk/gtk.h>
 

@@ -40,8 +40,6 @@
 #include "errors.h"
 #include "gimpui.h"
 
-#include "libgimp/gimpintl.h"
-
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif

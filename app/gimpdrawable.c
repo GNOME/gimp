@@ -26,6 +26,7 @@
 #include "parasitelist.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
 

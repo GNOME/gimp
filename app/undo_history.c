@@ -49,6 +49,7 @@
 #include "gimage_mask.h"
 #include "dialog_handler.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 

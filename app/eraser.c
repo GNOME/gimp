@@ -33,6 +33,7 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /* Defaults */

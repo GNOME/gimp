@@ -23,6 +23,7 @@
 #include "interface.h"
 #include "threshold.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define HISTOGRAM_WIDTH  256

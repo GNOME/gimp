@@ -27,6 +27,7 @@
 #include "gimpui.h"
 #include "interface.h"
 
+#include "config.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"

@@ -21,6 +21,7 @@
 #include "paint_funcs.h"
 #include "gimage.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 void

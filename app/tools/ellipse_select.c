@@ -26,8 +26,6 @@
 #include "rect_selectP.h"
 #include "selection_options.h"
 
-#include "libgimp/gimpintl.h"
-
 
 /*  the ellipse selection tool options  */
 SelectionOptions * ellipse_options = NULL;

@@ -35,7 +35,7 @@
 #include "gimpsignal.h"
 #include "gimppreviewcache.h"
 
-
+#include "config.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/parasite.h"
 

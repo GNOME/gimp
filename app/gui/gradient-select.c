@@ -43,6 +43,7 @@
 #include "gradient_select.h"
 #include "session.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 static void gradient_change_callbacks            (GradientSelect *gsp,

@@ -236,7 +236,6 @@ plug-ins/print/print.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_callback.c
 plug-ins/rcm/rcm_dialog.c
-plug-ins/script-fu/regex.c
 plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c

@@ -54,7 +54,6 @@
 #include "bezier_selectP.h"
 #include "scan_convert.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
 #ifdef DEBUG

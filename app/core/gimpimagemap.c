@@ -29,8 +29,6 @@
 
 #include "tile_manager_pvt.h"
 
-#include "libgimp/gimpintl.h"
-
 #define WAITING 0
 #define WORKING 1
 

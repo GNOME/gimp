@@ -34,6 +34,7 @@
 #include "paint_options.h"
 #include "session.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define MIN_CELL_SIZE     25

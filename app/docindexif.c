@@ -21,6 +21,7 @@
 #include "gimage.h"
 #include "gimphelp.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 void

@@ -29,6 +29,7 @@
 #include "hue_saturation.h"
 #include "interface.h"
 
+#include "config.h"
 #include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpintl.h"
 

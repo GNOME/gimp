@@ -44,6 +44,7 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
+#include "config.h"
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 

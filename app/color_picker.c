@@ -28,6 +28,7 @@
 #include "tools.h"
 #include "gimprc.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  maximum information buffer size  */

@@ -6,8 +6,6 @@
 #include "tile_manager.h"
 #include "tile_swap.h"
 
-#include "libgimp/gimpintl.h"
-
 
 static void tile_destroy (Tile *tile);
 

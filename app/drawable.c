@@ -22,8 +22,6 @@
 #include "gdisplay.h"
 #include "undo.h"
 
-#include "libgimp/gimpintl.h"
-
 gint
 drawable_ID (GimpDrawable *drawable)
 {

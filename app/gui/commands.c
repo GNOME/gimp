@@ -56,6 +56,7 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define return_if_no_display(gdisp) \

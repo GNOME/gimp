@@ -30,6 +30,7 @@
 #include "paint_options.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "layer_pvt.h"

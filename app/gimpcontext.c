@@ -28,8 +28,6 @@
 #include "gradient_header.h"
 #include "patterns.h"
 
-#include "libgimp/gimpintl.h"
-
 #define context_return_if_fail(context) \
         g_return_if_fail ((context) != NULL); \
         g_return_if_fail (GIMP_IS_CONTEXT (context))

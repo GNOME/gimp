@@ -32,6 +32,7 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /*  The maximum amount of pressure that can be exerted  */

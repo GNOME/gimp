@@ -51,8 +51,6 @@ Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 # include <wctype.h>
 #endif
 
-#include "libgimp/stdplugins-intl.h"
-
 /* The `emacs' switch turns on certain matching commands
    that make sense only in Emacs. */
 #ifdef emacs
@@ -962,23 +960,23 @@ re_set_syntax (syntax)
 
 static const char *re_error_msgid[] =
   {
-    N_("Success"),	/* REG_NOERROR */
-    N_("No match"),	/* REG_NOMATCH */
-    N_("Invalid regular expression"), /* REG_BADPAT */
-    N_("Invalid collation character"), /* REG_ECOLLATE */
-    N_("Invalid character class name"), /* REG_ECTYPE */
-    N_("Trailing backslash"), /* REG_EESCAPE */
-    N_("Invalid back reference"), /* REG_ESUBREG */
-    N_("Unmatched [ or [^"),	/* REG_EBRACK */
-    N_("Unmatched ( or \\("), /* REG_EPAREN */
-    N_("Unmatched \\{"), /* REG_EBRACE */
-    N_("Invalid content of \\{\\}"), /* REG_BADBR */
-    N_("Invalid range end"),	/* REG_ERANGE */
-    N_("Memory exhausted"), /* REG_ESPACE */
-    N_("Invalid preceding regular expression"), /* REG_BADRPT */
-    N_("Premature end of regular expression"), /* REG_EEND */
-    N_("Regular expression too big"), /* REG_ESIZE */
-    N_("Unmatched ) or \\)"), /* REG_ERPAREN */
+    "Success",	/* REG_NOERROR */
+    "No match",	/* REG_NOMATCH */
+    "Invalid regular expression", /* REG_BADPAT */
+    "Invalid collation character", /* REG_ECOLLATE */
+    "Invalid character class name", /* REG_ECTYPE */
+    "Trailing backslash", /* REG_EESCAPE */
+    "Invalid back reference", /* REG_ESUBREG */
+    "Unmatched [ or [^",	/* REG_EBRACK */
+    "Unmatched ( or \\(", /* REG_EPAREN */
+    "Unmatched \\{", /* REG_EBRACE */
+    "Invalid content of \\{\\}", /* REG_BADBR */
+    "Invalid range end",	/* REG_ERANGE */
+    "Memory exhausted", /* REG_ESPACE */
+    "Invalid preceding regular expression", /* REG_BADRPT */
+    "Premature end of regular expression", /* REG_EEND */
+    "Regular expression too big", /* REG_ESIZE */
+    "Unmatched ) or \\)", /* REG_ERPAREN */
   };
 
 /* Avoiding alloca during matching, to placate r_alloc.  */
@@ -5402,7 +5400,7 @@ re_compile_pattern (pattern, length, bufp)
 
   if (!ret)
     return NULL;
-  return gettext (re_error_msgid[(int) ret]);
+  return re_error_msgid[(int) ret];
 }
 
 /* Entry points compatible with 4.2 BSD regex library.  We don't define
@@ -5428,7 +5426,7 @@ re_comp (s)
   if (!s)
     {
       if (!re_comp_buf.buffer)
-	return gettext (_("No previous regular expression"));
+	return "No previous regular expression";
       return 0;
     }
 
@@ -5436,12 +5434,12 @@ re_comp (s)
     {
       re_comp_buf.buffer = (unsigned char *) malloc (200);
       if (re_comp_buf.buffer == NULL)
-        return gettext (re_error_msgid[(int) REG_ESPACE]);
+        return re_error_msgid[(int) REG_ESPACE];
       re_comp_buf.allocated = 200;
 
       re_comp_buf.fastmap = (char *) malloc (1 << BYTEWIDTH);
       if (re_comp_buf.fastmap == NULL)
-	return gettext (re_error_msgid[(int) REG_ESPACE]);
+	return re_error_msgid[(int) REG_ESPACE];
     }
 
   /* Since `re_exec' always passes NULL for the `regs' argument, we
@@ -5456,7 +5454,7 @@ re_comp (s)
     return NULL;
 
   /* Yes, we're discarding `const' here if !HAVE_LIBINTL.  */
-  return (char *) gettext (re_error_msgid[(int) ret]);
+  return (char *) re_error_msgid[(int) ret];
 }
 
 
@@ -5674,7 +5672,7 @@ regerror (errcode, preg, errbuf, errbuf_size)
        Dump core so we can fix it.  */
     abort ();
 
-  msg = gettext (re_error_msgid[errcode]);
+  msg = re_error_msgid[errcode];
 
   msg_size = strlen (msg) + 1; /* Includes the null.  */
 

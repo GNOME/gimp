@@ -27,6 +27,7 @@
 #include "plug_in.h"
 #include "regex.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 static ProcRecord progress_init_proc;

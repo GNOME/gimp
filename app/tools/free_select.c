@@ -28,7 +28,6 @@
 #include "selection_options.h"
 #include "scan_convert.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
 #define DEFAULT_MAX_INC  1024

@@ -30,6 +30,7 @@
 #include "gimprc.h"
 #include "paths_dialogP.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE

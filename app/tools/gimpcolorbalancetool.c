@@ -23,6 +23,7 @@
 #include "gimpui.h"
 #include "image_map.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimpcolorspace.h"
