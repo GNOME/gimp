@@ -43,7 +43,7 @@ fi)
 AC_DEFUN(AC_GIMP_CHECK,
 [
 	AM_PATH_GTK(0.99.7,,
- 	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS))
+ 	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
         X_LIBS=$GTK_LIBS
         X_CFLAGS=$GTK_CFLAGS
         AC_SUBST(X_LIBS)
@@ -61,6 +61,12 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_GIMP_CHECK
+
+gimp_save_CFLAGS="$CFLAGS"
+gimp_save_LIBS="$LIBS"
+
+CFLAGS="$GTK_CFLAGS $CFLAGS"
+LIBS="$LIBS $GTK_LIBS"
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then

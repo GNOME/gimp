@@ -1,3 +1,9 @@
+Mon Mar 23 20:51:53 1998  Owen Taylor  <owt1@cornell.edu>
+
+	* INSTALL configure.in: Added some documentation
+	about why the configuration for GTK could be failing,
+	and pointed to it in the failure message.
+
 Sun Mar 22 18:27:57 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* plugins/dbbrowser/dbbrowser_utils.c:

@@ -1,7 +1,7 @@
 There are three basic steps to building and installing the
 GIMP on unix:
 
-  1. You need to have installed GTK version 0.99.5 or better
+  1. You need to have installed GTK version 0.99.7 or better
   2. You may want to install other third party libraries that
      are needed for some of the available plugins: TIFF, PNG,
      JPEG, MPEG, etc.
@@ -67,6 +67,48 @@ files and libraries, the gimp header files associated with libgimp and
 the libgimp library, the plug-ins, and the GIMP executable. After
 running `make install' and assuming the build process was successful
 you should be able to run `gimp'.
+
+When ./configure fails
+======================
+
+'configure' tries to compile and run a short GTK program. There are
+several reasons why this might fail:
+
+* The 'gtk-config' script installed with GTK could not be found.
+  (This script is used to get information about where GTK is
+   installed.)
+
+  Fix: Either make sure that this program is in your path, or set
+  the environment variable GTK_CONFIG to the full pathname to
+  this program before running configure.
+
+* The GTK libraries were not found at run time. The details
+  of how to fix this problem will depend on the system:
+
+  Fix: On Linux and other systems using ELF libraries, add the
+  directory to /etc/ld.so.conf or to the environment variable 
+  LD_LIBRARY_PATH, and run 'ldconfig'.
+
+  On other systems, it may be necessary to encode this path
+  into the executable, by setting the LDFLAGS environment variable
+  before running configure. For example:
+
+    LDFLAGS="-R/home/joe/lib" ./configure
+  or
+    LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
+
+* An old version of the GTK libraries was found instead of 
+  your newly installed version. This commonly happens if a
+  binary package of GTK was previously installed on your system,
+  and you later compiled GTK from source.
+
+  Fix: remove the old libraries and include files.
+
+A detailed log of the ./configure output is written to the file
+config.log. This may help diagnose problems.
+
+After fixing a problem, it is safest to delete the file 'config.cache'
+before re-running ./configure.
 
 
       Generic Instructions for Building Auto-Configured Packages
