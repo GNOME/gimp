@@ -5,7 +5,7 @@
  * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
  *                    Michael Natterer <mitschel@cs.tu-berlin.de>
  *
- * Some code & ideas stolen from the GNOME help browser.
+ * queue.c - a history queue
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +22,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <glib.h>
+
 #include "queue.h"
 
 struct _Queue
 {
   GList *queue;
   GList *current;
-};
-
-typedef struct _QueueElement QueueElement;
-
-struct _QueueElement
-{
-  gchar *ref;
-  gint   pos;
 };
 
 Queue *
@@ -51,14 +47,6 @@ queue_new (void)
   return (h);
 }
 
-static void
-queue_free_element (QueueElement *el,
-		    gpointer      foo)
-{
-  g_free (el->ref);
-  g_free (el);
-}
-
 void
 queue_free (Queue *h)
 {
@@ -67,7 +55,7 @@ queue_free (Queue *h)
   /* needs to free data in list as well! */
   if (h->queue)
     {
-      g_list_foreach (h->queue, (GFunc) queue_free_element, NULL);
+      g_list_foreach (h->queue, (GFunc) g_free, NULL);
       g_list_free (h->queue);
     }
 
@@ -92,9 +80,8 @@ queue_move_next (Queue *h)
   h->current = g_list_next (h->current);
 }
 
-gchar *
-queue_prev (Queue *h,
-	    gint  *pos)
+const gchar *
+queue_prev (Queue *h)
 {
   GList *p;
 
@@ -102,16 +89,12 @@ queue_prev (Queue *h,
     return NULL;
 
   p = g_list_previous (h->current);
-	
-  if (pos)
-    *pos = ((QueueElement *)p->data)->pos;
 
-  return ((QueueElement *)p->data)->ref;
+  return (const gchar *) p->data;
 }
 
-gchar *
-queue_next (Queue *h,
-	    gint  *pos)
+const gchar *
+queue_next (Queue *h)
 {
   GList *p;
 
@@ -120,27 +103,14 @@ queue_next (Queue *h,
 
   p = g_list_next (h->current);
 
-  if (pos)
-    *pos = ((QueueElement *)p->data)->pos;
-
-  return ((QueueElement *)p->data)->ref;
+  return (const gchar *) p->data;
 }
 
 void 
-queue_mark_current (Queue *h,
-		    gint   pos)
+queue_add (Queue       *h,
+	   const gchar *ref)
 {
-  if (h->current)
-    ((QueueElement *)(h->current->data))->pos = pos;
-}
-
-void 
-queue_add (Queue *h,
-	   gchar *ref,
-	   gint   pos)
-{
-  GList *trash=NULL;
-  QueueElement *el;
+  GList *trash = NULL;
 
   g_return_if_fail (h != NULL);
   g_return_if_fail (ref != NULL);
@@ -151,30 +121,27 @@ queue_add (Queue *h,
       h->current->next = NULL;
     }
 
-  el = g_malloc (sizeof (*el));
-  el->pos = pos;
-  el->ref = g_strdup (ref);
-  h->queue = g_list_append (h->queue, el);
+  h->queue   = g_list_append (h->queue, g_strdup (ref));
   h->current = g_list_last (h->queue);
 
   if (trash)
     {
-      g_list_foreach (trash, (GFunc)queue_free_element, NULL);
+      g_list_foreach (trash, (GFunc) g_free, NULL);
       g_list_free (trash);
     }	
 }
 
 gboolean
-queue_isnext (Queue *h)
+queue_has_next (Queue *h)
 {
   if (!h || !h->queue || (h->current == g_list_last (h->queue)))
     return FALSE;
   
-  return (g_list_next(h->current) != NULL);
+  return (g_list_next (h->current) != NULL);
 }
 
 gboolean
-queue_isprev (Queue *h)
+queue_has_prev (Queue *h)
 {
   if (!h || !h->queue || (h->current == g_list_first (h->queue)))
     return FALSE;

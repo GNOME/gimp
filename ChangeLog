@@ -1,3 +1,11 @@
+2002-05-25  Sven Neumann  <sven@gimp.org>
+
+	* NEWS: updated.
+
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/helpbrowser/queue.[ch]: simplified user interface and
+	code. Still work in progress...
+
 2002-05-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: a first start at

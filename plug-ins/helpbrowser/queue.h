@@ -5,7 +5,7 @@
  * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
  *                    Michael Natterer <mitschel@cs.tu-berlin.de>
  *
- * Some code & ideas stolen from the GNOME help browser.
+ * queue.h - a history queue
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,19 +25,17 @@
 #ifndef _GIMP_HELP_QUEUE_H_
 #define _GIMP_HELP_QUEUE_H_
 
-#include <glib.h>
-
 typedef struct _Queue Queue;
 
-Queue    * queue_new          (void);
-void       queue_free         (Queue *h);
-gchar    * queue_prev         (Queue *h, gint *pos);
-gchar    * queue_next         (Queue *h, gint *pos);
-void       queue_move_prev    (Queue *h);
-void       queue_move_next    (Queue *h);
-void       queue_add          (Queue *h, gchar *ref, gint pos);
-void       queue_mark_current (Queue *h, gint pos);
-gboolean   queue_isnext       (Queue *h);
-gboolean   queue_isprev       (Queue *h);
+Queue       * queue_new       (void);
+void          queue_free      (Queue       *queue);
+void          queue_add       (Queue       *queue,
+                               const gchar *ref);
+const gchar * queue_prev      (Queue       *queue);
+const gchar * queue_next      (Queue       *queue);
+void          queue_move_prev (Queue       *queue);
+void          queue_move_next (Queue       *queue);
+gboolean      queue_has_next  (Queue       *queue);
+gboolean      queue_has_prev  (Queue       *queue);
 
 #endif /* _GIMP_HELP_QUEUE_H_ */

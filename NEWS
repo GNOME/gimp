@@ -10,19 +10,29 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.6
 =================================
+- Temporary switch to the Move tool when Space is pressed [Mitch]
+- Cleanup of display code [Mitch]
+- Added mnemonics to lots of plug-ins and fixed some bugs [Maurits Rijk]
+- Added new PDB function gimp_image_get_name and corrected behaviour of
+  gimp_image_get_filename [Yosh, Sven]
+- Navigation dialog redone as dockable [Mitch]
+- Updated print plug-in to new version and depend on libgimpprint [Sven]
+- Generalized and improved the new config framework; use it for parasites,
+  documents and devices  [Mitch, Sven]
 - Started to port the help browser to GtkHtml2 [Sven]
 - Finished implementation of the Thumbnail Managing Standard [Mitch, Sven]
 - Improved Open dialog using the new thumbnails [Mitch, Sven]
 - Use UTF-8 encoded URIs where we used to use filenames [Mitch]
 - Plug-in fixes [Iccii]
 - Added shortcuts to crop layer or image to selection boundary [Mitch]
-- Changes for build on Win32 [Tor Lillqvist]
+- Changes for build on Win32 [Tor Lillqvist, Hans Breuer]
 - Started framework for tools loaded as modules or plug-ins [Nathan]
-- Bugfixes
+- Lots of bugfixes
 - More stuff not mentioned here (see the ChangeLog)
 
 Other contributors:
-  Manish Singh, Zbigniew Chyla, OEyvind Kolaas, Nick Lamb
+  Zbigniew Chyla, OEyvind Kolaas, Nick Lamb, David Monniaux, Raphael Quinet,
+  Jakub Steiner, Simon Budig
 
 
 Overview of Changes in GIMP 1.3.5
