@@ -298,7 +298,7 @@ gimp_convolve_default (gint32         drawable_ID,
  *
  * Dodgeburn image with varying exposure.
  *
- * Dodgebure. More details here later.
+ * Dodgeburn. More details here later.
  *
  * Returns: TRUE on success.
  */
