@@ -662,7 +662,7 @@ prefs_color_button_add (GObject     *config,
   GtkWidget *button;
 
   button = gimp_prop_color_button_new (config, property_name, title,
-                                       20, 20, GIMP_COLOR_AREA_SMALL_CHECKS);
+                                       20, 20, GIMP_COLOR_AREA_FLAT);
 
   if (button)
     gimp_table_attach_aligned (table, 0, table_row,

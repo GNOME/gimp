@@ -1,3 +1,8 @@
+2002-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c (prefs_color_button_add): create the
+	color button for the canvas padding color using GIMP_COLOR_AREA_FLAT.
+
 2002-12-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/ripply-anim.scm: applied a patch from
