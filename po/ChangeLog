@@ -1,3 +1,7 @@
+2004-07-23  Roman Joost	<roman@bromeco.de>
+
+	* de.po: removed all the fuzzyness
+
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: updated.
