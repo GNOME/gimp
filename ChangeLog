@@ -1,3 +1,8 @@
+2004-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpvectorstreeview.c (gimp_vectors_tree_view_drag_svg):
+	return the proper type.
+
 2004-07-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c: connect to

@@ -47,24 +47,24 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
-static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
+static void    gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
+static void    gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
 
-static void   gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
+static void    gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
-static GObject * gimp_vectors_tree_view_constructor (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
-static void    gimp_vectors_tree_view_set_container (GimpContainerView *view,
-                                                     GimpContainer     *container);
-static void    gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView *tree_view,
-                                                     const gchar           *svg_data,
-                                                     gsize                  svg_data_len,
-                                                     GimpViewable          *dest_viewable,
-                                                     GtkTreeViewDropPosition  drop_pos);
-static gchar * gimp_vectors_tree_view_drag_svg      (GtkWidget           *widget,
-                                                     gsize               *svg_data_len,
-                                                     gpointer             data);
+static GObject * gimp_vectors_tree_view_constructor   (GType                  type,
+                                                       guint                  n_params,
+                                                       GObjectConstructParam *params);
+static void      gimp_vectors_tree_view_set_container (GimpContainerView     *view,
+                                                       GimpContainer         *container);
+static void      gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView *tree_view,
+                                                       const gchar           *svg_data,
+                                                       gsize                  svg_data_len,
+                                                       GimpViewable          *dest_viewable,
+                                                       GtkTreeViewDropPosition  drop_pos);
+static guchar  * gimp_vectors_tree_view_drag_svg      (GtkWidget             *widget,
+                                                       gsize                 *svg_data_len,
+                                                       gpointer               data);
 
 
 static GimpItemTreeViewClass      *parent_class      = NULL;
@@ -305,7 +305,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
     }
 }
 
-static gchar *
+static guchar *
 gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
                                  gsize     *svg_data_len,
                                  gpointer   data)
@@ -327,5 +327,5 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
         *svg_data_len = strlen (svg_data) + 1;
     }
 
-  return svg_data;
+  return (guchar *) svg_data;
 }
