@@ -1,3 +1,9 @@
+2001-10-26  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.po: Updated traditional Chinese translation, merged from
+	  independent efforts of object@mis.mgt.ncu.edu.tw and
+	  cjj@u.washington.edu .
+
 2001-10-24  Christophe Merlet  <redfox@eikonex.org>
 
 	* fr.po: Updated French translation
