@@ -3,8 +3,7 @@
 noinst_LIBRARIES = libapppaint-funcs.a
 
 if HAVE_ASM_MMX
-mmx_sources = \
-	paint-funcs-simd.S
+mmx_sources = paint-funcs-simd.S
 else
 mmx_sources =
 endif
@@ -27,6 +26,10 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 	@GIMP_THREAD_FLAGS@ 			\
 	@GIMP_MP_FLAGS@				\
 @STRIP_END@
+
+AM_ASFLAGS = \
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app
 
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
