@@ -30,17 +30,17 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-
-#include "errors.h"
-#include "floating_sel.h"
-#include "gdisplay.h"
-#include "scan_convert.h"
+#include "core/gimpscanconvert.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "errors.h"
+#include "floating_sel.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -73,12 +73,12 @@ static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel
                                                     gint                x,
                                                     gint                y);
 
-static GimpChannel * scan_convert (GimpImage        *gimage,
-                                   gint              num_pts,
-                                   ScanConvertPoint *pts,
-                                   gint              width,
-                                   gint              height,
-                                   gboolean          antialias);
+static GimpChannel *                  scan_convert (GimpImage      *gimage,
+						    gint            n_points,
+						    GimpVector2    *points,
+						    gint            width,
+						    gint            height,
+						    gboolean        antialias);
 
 
 static GimpSelectionToolClass *parent_class = NULL;
@@ -126,13 +126,13 @@ gimp_free_select_tool_get_type (void)
 }
 
 void
-free_select (GimpImage        *gimage,
-	     gint              num_pts,
-	     ScanConvertPoint *pts,
-	     SelectOps         op,
-	     gboolean          antialias,
-	     gboolean          feather,
-	     gdouble           feather_radius)
+free_select (GimpImage   *gimage,
+	     gint         n_points,
+	     GimpVector2 *points,
+	     SelectOps    op,
+	     gboolean     antialias,
+	     gboolean     feather,
+	     gdouble      feather_radius)
 {
   GimpChannel *mask;
 
@@ -143,7 +143,7 @@ free_select (GimpImage        *gimage,
   else
     gimage_mask_undo (gimage);
 
-  mask = scan_convert (gimage, num_pts, pts,
+  mask = scan_convert (gimage, n_points, points,
 		       gimage->width, gimage->height, antialias);
 
   if (mask)
@@ -269,7 +269,7 @@ gimp_free_select_tool_button_release (GimpTool       *tool,
                                       GDisplay       *gdisp)
 {
   GimpFreeSelectTool *free_sel;
-  ScanConvertPoint   *pts;
+  GimpVector2        *points;
   gint                i;
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
@@ -297,26 +297,26 @@ gimp_free_select_tool_button_release (GimpTool       *tool,
 	  return;
 	}
 
-      pts = g_new (ScanConvertPoint, free_sel->num_points);
+      points = g_new (GimpVector2, free_sel->num_points);
 
       for (i = 0; i < free_sel->num_points; i++)
 	{
 	  gdisplay_untransform_coords_f (gdisp,
                                          free_sel->points[i].x,
                                          free_sel->points[i].y,
-					 &pts[i].x,
-                                         &pts[i].y,
+					 &points[i].x,
+                                         &points[i].y,
                                          FALSE);
 	}
 
       free_select (gdisp->gimage,
-                   free_sel->num_points, pts,
+                   free_sel->num_points, points,
                    GIMP_SELECTION_TOOL (tool)->op,
 		   free_options->antialias,
                    free_options->feather,
 		   free_options->feather_radius);
 
-      g_free (pts);
+      g_free (points);
 
       gdisplays_flush ();
     }
@@ -403,21 +403,22 @@ gimp_free_select_tool_add_point (GimpFreeSelectTool *free_sel,
 }
 
 static GimpChannel *
-scan_convert (GimpImage        *gimage,
-	      gint              num_pts,
-	      ScanConvertPoint *pts,
-	      gint              width,
-	      gint              height,
-	      gboolean          antialias)
+scan_convert (GimpImage   *gimage,
+	      gint         n_points,
+	      GimpVector2 *points,
+	      gint         width,
+	      gint         height,
+	      gboolean     antialias)
 {
-  GimpChannel   *mask;
-  ScanConverter *sc;
+  GimpChannel     *mask;
+  GimpScanConvert *sc;
 
-  sc = scan_converter_new (width, height, antialias ? SUPERSAMPLE : 1);
-  scan_converter_add_points (sc, num_pts, pts);
+  sc = gimp_scan_convert_new (width, height, antialias ? SUPERSAMPLE : 1);
 
-  mask = scan_converter_to_channel (sc, gimage);
-  scan_converter_free (sc);
+  gimp_scan_convert_add_points (sc, n_points, points);
+  mask = gimp_scan_convert_to_channel (sc, gimage);
+
+  gimp_scan_convert_free (sc);
 
   return mask;
 }

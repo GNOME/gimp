@@ -1715,7 +1715,7 @@ free_select_invoker (Argument *args)
   feather_radius = args[6].value.pdb_float;
 
   if (success)
-    free_select (gimage, num_segs, (ScanConvertPoint *) segs, operation,
+    free_select (gimage, num_segs, (GimpVector2 *) segs, operation,
 		 antialias, feather, feather_radius);
 
   return procedural_db_return_args (&free_select_proc, success);

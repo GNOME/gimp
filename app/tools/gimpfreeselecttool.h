@@ -54,8 +54,8 @@ GtkType    gimp_free_select_tool_get_type (void);
 
 
 void       free_select                    (GimpImage        *gimage,
-                                           gint              num_pts,
-                                           ScanConvertPoint *pts,
+                                           gint              n_points,
+                                           GimpVector2      *points,
                                            SelectOps         op,
                                            gboolean          antialias,
                                            gboolean          feather,

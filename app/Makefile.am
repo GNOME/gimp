@@ -89,8 +89,6 @@ gimp_SOURCES = \
 	floating_sel.h		\
 	parasitelist.c		\
 	parasitelist.h		\
-	scan_convert.c		\
-	scan_convert.h		\
 ##
 ## stuff that needs to be sorted into yet undecided subsystems, split up,
 ## removed or otherwise tortured

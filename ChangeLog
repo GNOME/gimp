@@ -1,5 +1,22 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/scan_convert.[ch]: removed.
+
+	* app/core/Makefile.am
+	* app/core/gimpscanconvert.[ch]: added. Changed all function names
+	and use GimpVector2 instead of ScanConvertPoint.
+
+	* app/base/base-types.h: removed ScanConvertPoint (didn't belong
+	here anyway).
+
+	* app/pdb/tools_cmds.c
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpiscissorstool.c
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.[ch]: removed "num_processors".
 
 	* app/base/base-config.[ch]: and added it here.

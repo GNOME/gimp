@@ -768,7 +768,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimpfreeselecttool.h") ],
 	code => <<'CODE'
-free_select (gimage, num_segs, (ScanConvertPoint *) segs, operation,
+free_select (gimage, num_segs, (GimpVector2 *) segs, operation,
 	     antialias, feather, feather_radius);
 CODE
     );

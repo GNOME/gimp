@@ -55,16 +55,16 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
-
-#include "drawable.h"
-#include "gdisplay.h"
-#include "scan_convert.h"
+#include "core/gimpscanconvert.h"
 
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpeditselectiontool.h"
 #include "selection_options.h"
 #include "tool_manager.h"
+
+#include "drawable.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -562,16 +562,16 @@ static void
 iscissors_convert (GimpIscissorsTool *iscissors,
 		   GDisplay          *gdisp)
 {
-  ScanConverter    *sc;
-  ScanConvertPoint *pts;
-  guint             npts;
-  GSList           *list;
-  ICurve           *icurve;
-  guint             packed;
-  gint              i;
-  gint              index;
+  GimpScanConvert *sc;
+  GimpVector2     *points;
+  guint            n_points;
+  GSList          *list;
+  ICurve          *icurve;
+  guint            packed;
+  gint             i;
+  gint             index;
 
-  sc = scan_converter_new (gdisp->gimage->width, gdisp->gimage->height, 1);
+  sc = gimp_scan_convert_new (gdisp->gimage->width, gdisp->gimage->height, 1);
 
   /* go over the curves in reverse order, adding the points we have */
   list = iscissors->curves;
@@ -581,25 +581,25 @@ iscissors_convert (GimpIscissorsTool *iscissors,
       index--;
       icurve = (ICurve *) g_slist_nth_data (list, index);
 
-      npts = icurve->points->len;
-      pts = g_new (ScanConvertPoint, npts);
+      n_points = icurve->points->len;
+      points   = g_new (GimpVector2, n_points);
 
-      for (i = 0; i < npts; i ++)
+      for (i = 0; i < n_points; i ++)
 	{
 	  packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points, i));
-	  pts[i].x = packed & 0x0000ffff;
-	  pts[i].y = packed >> 16;
+	  points[i].x = packed & 0x0000ffff;
+	  points[i].y = packed >> 16;
 	}
 
-      scan_converter_add_points (sc, npts, pts);
-      g_free (pts);
+      gimp_scan_convert_add_points (sc, n_points, points);
+      g_free (points);
     }
 
   if (iscissors->mask)
     gtk_object_unref (GTK_OBJECT (iscissors->mask));
 
-  iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
-  scan_converter_free (sc);
+  iscissors->mask = gimp_scan_convert_to_channel (sc, gdisp->gimage);
+  gimp_scan_convert_free (sc);
 
   gimp_channel_invalidate_bounds (iscissors->mask);    
 }

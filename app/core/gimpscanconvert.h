@@ -16,35 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef SCAN_CONVERT_H
-#define SCAN_CONVERT_H
+#ifndef __GIMP_SCAN_CONVERT_H__
+#define __GIMP_SCAN_CONVERT_H__
 
 
-struct _ScanConvertPoint
-{
-  gdouble	x;
-  gdouble	y;
-};
-
-
-typedef struct ScanConverterPrivate ScanConverter;
+typedef struct _GimpScanConvert GimpScanConvert;
 
 
 /* Create a new scan conversion context.  Set "antialias" to 1 for no
  * supersampling, or the amount to supersample by otherwise.
  */
-ScanConverter * scan_converter_new        (guint             width,
-					   guint             height,
-					   guint             antialias);
+GimpScanConvert * gimp_scan_convert_new        (guint            width,
+						guint            height,
+						guint            antialias);
 
-void            scan_converter_free       (ScanConverter    *scan_converter);
+void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
 /* Add "npoints" from "pointlist" to the polygon currently being
  * described by "scan_converter".
  */
-void            scan_converter_add_points (ScanConverter    *scan_converter,
-					   guint             npoints,
-					   ScanConvertPoint *pointlist);
+void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
+						guint            n_points,
+						GimpVector2     *points);
 
 
 /* Scan convert the polygon described by the list of points passed to
@@ -53,8 +46,8 @@ void            scan_converter_add_points (ScanConverter    *scan_converter,
  * according to the even-odd rule.  The polygon is closed by
  * joining the final point to the initial point.
  */
-GimpChannel   * scan_converter_to_channel (ScanConverter    *scan_converter,
-					   GimpImage        *gimage);
+GimpChannel     * gimp_scan_convert_to_channel (GimpScanConvert *scan_converter,
+						GimpImage       *gimage);
 
 
-#endif /* SCAN_CONVERT_H */
+#endif /* __GIMP_SCAN_CONVERT_H__ */

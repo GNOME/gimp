@@ -24,14 +24,13 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
 #include "base/pixel-region.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-
-#include "scan_convert.h"
+#include "gimpchannel.h"
+#include "gimpimage.h"
+#include "gimpscanconvert.h"
 
 
 #ifdef DEBUG
@@ -41,22 +40,20 @@
 #endif
 
 
-/* Reveal our private structure */
-struct ScanConverterPrivate
+struct _GimpScanConvert
 {
-  guint             width;
-  guint             height;
-  GSList          **scanlines;   /* array of height*antialias scanlines */
+  guint        width;
+  guint        height;
+  GSList     **scanlines;   /* array of height*antialias scanlines */
 
-  guint             antialias;   /* how much to oversample by */
+  guint        antialias;   /* how much to oversample by */
 
   /* record the first and last points so we can close the curve */
-  gboolean          got_first;
-  ScanConvertPoint  first;
-  gboolean          got_last;
-  ScanConvertPoint  last;
+  gboolean     got_first;
+  GimpVector2  first;
+  gboolean     got_last;
+  GimpVector2  last;
 };
-
 
 
 /* Local helper routines to scan convert the polygon */
@@ -94,11 +91,11 @@ insert_into_sorted_list (GSList *list,
 
 
 static void
-convert_segment (ScanConverter *sc,
-		 gint           x1,
-		 gint           y1,
-		 gint           x2,
-		 gint           y2)
+convert_segment (GimpScanConvert *sc,
+		 gint             x1,
+		 gint             y1,
+		 gint             x2,
+		 gint             y2)
 {
   gint     ydiff, y, tmp;
   gint     width;
@@ -143,22 +140,20 @@ convert_segment (ScanConverter *sc,
 }
 
 
-/**************************************************************/
-/* Exported functions */
+/*  public functions  */
 
-/* Create a new scan conversion context */
-ScanConverter *
-scan_converter_new (guint width,
-		    guint height,
-		    guint antialias)
+GimpScanConvert *
+gimp_scan_convert_new (guint width,
+		       guint height,
+		       guint antialias)
 {
-  ScanConverter *sc;
+  GimpScanConvert *sc;
 
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
   g_return_val_if_fail (antialias > 0, NULL);
 
-  sc = g_new0 (ScanConverter, 1);
+  sc = g_new0 (GimpScanConvert, 1);
 
   sc->antialias = antialias;
   sc->width     = width;
@@ -169,63 +164,64 @@ scan_converter_new (guint width,
 }
 
 void
-scan_converter_free (ScanConverter *sc)
+gimp_scan_convert_free (GimpScanConvert *sc)
 {
   g_free (sc->scanlines);
   g_free (sc);
 }
 
-/* Add "npoints" from "pointlist" to the polygon currently being
- * described by "scan_converter".  */
+/* Add "n_points" from "points" to the polygon currently being
+ * described by "scan_converter".
+ */
 void
-scan_converter_add_points (ScanConverter    *sc,
-			   guint             npoints,
-			   ScanConvertPoint *pointlist)
+gimp_scan_convert_add_points (GimpScanConvert *sc,
+			      guint            n_points,
+			      GimpVector2     *points)
 {
   gint  i;
   guint antialias;
 
   g_return_if_fail (sc != NULL);
-  g_return_if_fail (pointlist != NULL);
+  g_return_if_fail (points != NULL);
 
   antialias = sc->antialias;
 
-  if (!sc->got_first && npoints > 0)
+  if (!sc->got_first && n_points > 0)
     {
       sc->got_first = TRUE;
-      sc->first = pointlist[0];
+      sc->first = points[0];
     }
 
   /* link from previous point */
-  if (sc->got_last && npoints > 0)
+  if (sc->got_last && n_points > 0)
     {
       TRC (("|| %g,%g -> %g,%g\n",
 	    sc->last.x, sc->last.y,
-	    pointlist[0].x, pointlist[0].y));
+	    points[0].x, points[0].y));
       convert_segment (sc,
-		       (int)sc->last.x * antialias,
-		       (int)sc->last.y * antialias,
-		       (int)pointlist[0].x * antialias,
-		       (int)pointlist[0].y * antialias);
+		       (gint) sc->last.x * antialias,
+		       (gint) sc->last.y * antialias,
+		       (gint) points[0].x * antialias,
+		       (gint) points[0].y * antialias);
     }
 
-  for (i = 0; i < (npoints - 1); i++)
+  for (i = 0; i < (n_points - 1); i++)
     {
       convert_segment (sc,
-		       (int) pointlist[i].x * antialias,
-		       (int) pointlist[i].y * antialias,
-		       (int) pointlist[i + 1].x * antialias,
-		       (int) pointlist[i + 1].y * antialias);
+		       (gint) points[i].x * antialias,
+		       (gint) points[i].y * antialias,
+		       (gint) points[i + 1].x * antialias,
+		       (gint) points[i + 1].y * antialias);
     }
 
   TRC (("[] %g,%g -> %g,%g\n",
-	pointlist[0].x, pointlist[0].y,
-	pointlist[npoints-1].x, pointlist[npoints-1].y));
+	points[0].x, points[0].y,
+	points[n_points-1].x, points[n_points-1].y));
 
-  if (npoints > 0)
+  if (n_points > 0)
     {
       sc->got_last = TRUE;
-      sc->last = pointlist[npoints - 1];
+      sc->last = points[n_points - 1];
     }
 }
 
@@ -237,8 +233,8 @@ scan_converter_add_points (ScanConverter    *sc,
  * joining the final point to the initial point.
  */
 GimpChannel *
-scan_converter_to_channel (ScanConverter *sc,
-			   GimpImage     *gimage)
+gimp_scan_convert_to_channel (GimpScanConvert *sc,
+			      GimpImage       *gimage)
 {
   GimpChannel *mask;
   GSList      *list;
@@ -254,7 +250,7 @@ scan_converter_to_channel (ScanConverter *sc,
   gint         x, x2, w;
   gint         i, j;
 
-  antialias = sc->antialias;
+  antialias  = sc->antialias;
   antialias2 = antialias * antialias;
 
   /*  do we need to close the polygon? */
@@ -262,10 +258,10 @@ scan_converter_to_channel (ScanConverter *sc,
       (sc->first.x != sc->last.x || sc->first.y != sc->last.y))
     {
       convert_segment (sc,
-		       (int) sc->last.x * antialias,
-		       (int) sc->last.y * antialias,
-		       (int) sc->first.x * antialias,
-		       (int) sc->first.y * antialias);
+		       (gint) sc->last.x * antialias,
+		       (gint) sc->last.y * antialias,
+		       (gint) sc->first.x * antialias,
+		       (gint) sc->first.y * antialias);
     }
 
   mask = gimp_channel_new_mask (gimage, sc->width, sc->height);
