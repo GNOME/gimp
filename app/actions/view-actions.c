@@ -96,7 +96,7 @@ static GimpActionEntry view_actions[] =
     GIMP_HELP_INFO_DIALOG },
 
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
-    N_("Na_vigation Window"), "<control><shift>N", NULL,
+    N_("Na_vigation Window"), NULL, NULL,
     G_CALLBACK (view_navigation_window_cmd_callback),
     GIMP_HELP_NAVIGATION_DIALOG },
 

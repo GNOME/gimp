@@ -1,5 +1,12 @@
 2005-02-11  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/layers-actions.c
+	* app/actions/view-actions.c: added shortcuts for New
+	Layer (Shift-Ctrl-N, used to be the Navigation Dialog) and
+	Duplicate Layer (Shift-Ctrl-D).
+
+2005-02-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptoolbox.c: allow to paste URLs and filenames to
 	the toolbox using the middle mouse button.
 

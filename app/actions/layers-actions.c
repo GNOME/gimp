@@ -71,7 +71,7 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-new", GTK_STOCK_NEW,
-    N_("_New Layer..."), "",
+    N_("_New Layer..."), "<control><shift>N",
     N_("New layer..."),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
@@ -83,7 +83,8 @@ static GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW },
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
-    N_("D_uplicate Layer"), NULL,
+    N_("D_uplicate Layer"), "<control><shift>D",
+    NULL,
     N_("Duplicate layer"),
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
