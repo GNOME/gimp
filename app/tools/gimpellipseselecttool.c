@@ -39,8 +39,6 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -186,8 +184,7 @@ gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
   tool     = GIMP_TOOL (rect_tool);
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
 
-  sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (the_gimp, tool)->tool_options;
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   gimp_image_mask_select_ellipse (tool->gdisp->gimage,
                                   x, y, w, h,

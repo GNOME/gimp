@@ -75,13 +75,13 @@ static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool)
 
 static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 						   GdkEventMotion    *mevent,
-						   GDisplay          *gdisp);
+						   GimpDisplay       *gdisp);
 static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
 						   GdkEventKey       *kevent,
-						   GDisplay          *gdisp);
+						   GimpDisplay       *gdisp);
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
-						   GDisplay          *gdisp,
+						   GimpDisplay       *gdisp,
 						   TransformState     state);
 
 static FlipOptions * flip_options_new             (void);
@@ -259,7 +259,7 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
 static void
 gimp_flip_tool_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
-			      GDisplay       *gdisp)
+			      GimpDisplay    *gdisp)
 {
   GimpDrawable       *drawable;
   GdkCursorType       ctype       = GIMP_BAD_CURSOR;
@@ -305,7 +305,7 @@ gimp_flip_tool_cursor_update (GimpTool       *tool,
 static void
 gimp_flip_tool_modifier_key (GimpTool    *tool,
 			     GdkEventKey *kevent,
-			     GDisplay    *gdisp)
+			     GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -330,7 +330,7 @@ gimp_flip_tool_modifier_key (GimpTool    *tool,
 
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
-			  GDisplay          *gdisp,
+			  GimpDisplay       *gdisp,
 			  TransformState     state)
 {
   GimpTool *tool;

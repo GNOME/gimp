@@ -205,11 +205,12 @@ gimp_document_view_open_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      file_open_with_display (gimp_object_get_name (GIMP_OBJECT (imagefile)));
+      file_open_with_display (editor->view->context->gimp,
+                              gimp_object_get_name (GIMP_OBJECT (imagefile)));
     }
   else
     {
-      file_open_dialog_show ();
+      file_open_dialog_show (editor->view->context->gimp);
     }
 }
 
@@ -259,7 +260,7 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
     {
       if (state & GDK_CONTROL_MASK)
         {
-          file_open_dialog_show ();
+          file_open_dialog_show (editor->view->context->gimp);
         }
       else if (state & GDK_SHIFT_MASK)
         {
@@ -272,13 +273,14 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
 
           if (! closure.found)
             {
-              file_open_with_display (closure.name);
+              file_open_with_display (editor->view->context->gimp,
+                                      closure.name);
             }
         }
     }
   else
     {
-      file_open_dialog_show ();
+      file_open_dialog_show (editor->view->context->gimp);
     }
 }
 

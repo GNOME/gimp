@@ -62,11 +62,11 @@
 static void   gimp_threshold_tool_class_init (GimpThresholdToolClass *klass);
 static void   gimp_threshold_tool_init       (GimpThresholdTool      *threshold_tool);
 
-static void   gimp_threshold_tool_initialize (GimpTool   *tool,
-					      GDisplay   *gdisp);
-static void   gimp_threshold_tool_control    (GimpTool   *tool,
-					      ToolAction  action,
-					      GDisplay   *gdisp);
+static void   gimp_threshold_tool_initialize (GimpTool    *tool,
+					      GimpDisplay *gdisp);
+static void   gimp_threshold_tool_control    (GimpTool    *tool,
+					      ToolAction   action,
+					      GimpDisplay *gdisp);
 
 static ThresholdDialog * threshold_dialog_new (void);
 
@@ -179,8 +179,8 @@ gimp_threshold_tool_init (GimpThresholdTool *bc_tool)
 }
 
 static void
-gimp_threshold_tool_initialize (GimpTool *tool,
-				GDisplay *gdisp)
+gimp_threshold_tool_initialize (GimpTool    *tool,
+				GimpDisplay *gdisp)
 {
   if (! gdisp)
     {
@@ -228,9 +228,9 @@ gimp_threshold_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_threshold_tool_control (GimpTool   *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+gimp_threshold_tool_control (GimpTool    *tool,
+			     ToolAction   action,
+			     GimpDisplay *gdisp)
 {
   switch (action)
     {

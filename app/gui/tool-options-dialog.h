@@ -20,8 +20,8 @@
 #define __TOOL_OPTIONS_DIALOG_H__
 
 
-GtkWidget * tool_options_dialog_create (void);
-void        tool_options_dialog_free   (void);
+GtkWidget * tool_options_dialog_create (Gimp *gimp);
+void        tool_options_dialog_free   (Gimp *gimp);
 
 
 #endif  /*  __TOOL_OPTIONS_DIALOG_H__  */

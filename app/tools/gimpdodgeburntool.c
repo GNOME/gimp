@@ -88,10 +88,10 @@ static void     gimp_dodgeburn_tool_make_luts  (GimpPaintTool     *paint_tool,
 
 static void     gimp_dodgeburn_tool_modifier_key  (GimpTool       *tool,
 						   GdkEventKey    *kevent,
-						   GDisplay       *gdisp);
+						   GimpDisplay    *gdisp);
 static void     gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
 						   GdkEventMotion *mevent,
-						   GDisplay       *gdisp);
+						   GimpDisplay    *gdisp);
 
 static void     gimp_dodgeburn_tool_paint         (GimpPaintTool  *paint_tool,
 						   GimpDrawable   *drawable,
@@ -254,7 +254,7 @@ gimp_dodgeburn_tool_make_luts (GimpPaintTool    *paint_tool,
 static void
 gimp_dodgeburn_tool_modifier_key (GimpTool    *tool,
 				  GdkEventKey *kevent,
-				  GDisplay    *gdisp)
+				  GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -309,7 +309,7 @@ gimp_dodgeburn_tool_modifier_key (GimpTool    *tool,
 static void
 gimp_dodgeburn_tool_cursor_update (GimpTool       *tool,
 				   GdkEventMotion *mevent,
-				   GDisplay       *gdisp)
+				   GimpDisplay    *gdisp)
 {
   tool->toggled = (dodgeburn_options->type == BURN);
 

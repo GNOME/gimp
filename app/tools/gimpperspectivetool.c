@@ -48,12 +48,12 @@ static void          gimp_perspective_tool_class_init  (GimpPerspectiveToolClass
 static void          gimp_perspective_tool_init        (GimpPerspectiveTool      *perspective_tool);
 
 static TileManager * gimp_perspective_tool_transform   (GimpTransformTool *transform_tool,
-							GDisplay       *gdisp,
+							GimpDisplay    *gdisp,
 							TransformState  state);
 static void          perspective_tool_recalc           (GimpTool       *tool,
-							GDisplay       *gdisp);
+							GimpDisplay    *gdisp);
 static void          perspective_tool_motion           (GimpTool       *tool,
-							GDisplay       *gdisp);
+							GimpDisplay    *gdisp);
 static void          perspective_info_update           (GimpTool       *tool);
 
 
@@ -158,7 +158,7 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 TileManager *
 gimp_perspective_tool_perspective (GimpImage    *gimage,
 				   GimpDrawable *drawable,
-				   GDisplay     *gdisp,
+				   GimpDisplay  *gdisp,
 				   TileManager  *float_tiles,
 				   gboolean      interpolation,
 				   GimpMatrix3   matrix)
@@ -230,7 +230,7 @@ gimp_perspective_tool_find_transform (gdouble     *coords,
 
 static TileManager *
 gimp_perspective_tool_transform (GimpTransformTool  *transform_tool,
-				 GDisplay           *gdisp,
+				 GimpDisplay        *gdisp,
 				 TransformState      state)
 {
   GimpTool *tool;
@@ -317,8 +317,8 @@ perspective_info_update (GimpTool *tool)
 }
 
 static void
-perspective_tool_motion (GimpTool *tool,
-			 GDisplay *gdisp)
+perspective_tool_motion (GimpTool    *tool,
+			 GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   gint               diff_x, diff_y;
@@ -352,8 +352,8 @@ perspective_tool_motion (GimpTool *tool,
 }
 
 static void
-perspective_tool_recalc (GimpTool *tool,
-			 GDisplay *gdisp)
+perspective_tool_recalc (GimpTool    *tool,
+			 GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   GimpMatrix3        m;

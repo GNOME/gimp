@@ -51,9 +51,9 @@
 
 #define REVERT_DATA_KEY "revert-confirm-dialog"
 
-#define return_if_no_display(gdisp) \
-        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
-        if (!gdisp) return
+#define return_if_no_display(gdisp,data) \
+  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (!gdisp) return
 
 
 /*  local function prototypes  */
@@ -70,21 +70,18 @@ file_new_cmd_callback (GtkWidget *widget,
 		       gpointer   data,
 		       guint      action)
 {
-  GimpDisplay *gdisp;
-  GimpImage   *gimage = NULL;
+  Gimp      *gimp;
+  GimpImage *gimage = NULL;
 
-  /*  Before we try to determine the responsible gdisplay,
-   *  make sure this wasn't called from the toolbox
-   */
+  gimp = GIMP (data);
+
+  /*  if called from the image menu  */
   if (action)
     {
-      gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp));
-
-      if (gdisp)
-        gimage = gdisp->gimage;
+      gimage = gimp_context_get_image (gimp_get_user_context (gimp));
     }
 
-  file_new_dialog_create (gimage);
+  file_new_dialog_create (gimp, gimage);
 }
 
 void
@@ -98,7 +95,7 @@ void
 file_open_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  file_open_dialog_show ();
+  file_open_dialog_show (GIMP (data));
 }
 
 void
@@ -106,21 +103,25 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 			       gpointer   data,
 			       guint      action)
 {
+  Gimp          *gimp;
   GimpImagefile *imagefile;
   guint          num_entries;
   gint           status;
 
-  num_entries = gimp_container_num_children (the_gimp->documents);
+  gimp = GIMP (data);
+
+  num_entries = gimp_container_num_children (gimp->documents);
 
   if (action >= num_entries)
     return;
 
   imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_index (the_gimp->documents, action);
+    gimp_container_get_child_by_index (gimp->documents, action);
 
   if (imagefile)
     {
-      status = file_open_with_display (GIMP_OBJECT (imagefile)->name);
+      status = file_open_with_display (gimp,
+                                       GIMP_OBJECT (imagefile)->name);
 
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
@@ -143,7 +144,7 @@ file_save_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   if (! gimp_image_active_drawable (gdisp->gimage))
     return;
@@ -169,6 +170,7 @@ file_save_cmd_callback (GtkWidget *widget,
 	  status = file_save (gdisp->gimage,
 			      filename,
 			      basename,
+                              NULL,
 			      RUN_WITH_LAST_VALS,
 			      TRUE);
 
@@ -190,7 +192,7 @@ file_save_as_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   file_save_dialog_show (gdisp->gimage);
 }
@@ -200,7 +202,7 @@ file_save_a_copy_as_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   file_save_a_copy_dialog_show (gdisp->gimage);
 }
@@ -213,7 +215,7 @@ file_revert_cmd_callback (GtkWidget *widget,
   GtkWidget   *query_box;
   const gchar *filename;
 
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   filename = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
 
@@ -268,7 +270,7 @@ file_close_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gdisplay_close_window (gdisp, FALSE);
 }
@@ -296,14 +298,15 @@ file_revert_confirm_callback (GtkWidget *widget,
 
   if (revert)
     {
-      GimpImage   *new_gimage;
-      const gchar *filename;
-      gint         status;
+      GimpImage         *new_gimage;
+      const gchar       *filename;
+      GimpPDBStatusType  status;
 
       filename = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
       new_gimage = file_open_image (old_gimage->gimp,
-				    filename, filename,
+				    filename,
+                                    filename,
 				    _("Revert"),
 				    NULL,
 				    RUN_INTERACTIVE,

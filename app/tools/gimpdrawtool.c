@@ -42,7 +42,7 @@ static void   gimp_draw_tool_finalize   (GObject           *object);
 
 static void   gimp_draw_tool_control    (GimpTool          *tool,
 					 ToolAction         action,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 
 
 static guint gimp_draw_tool_signals[LAST_SIGNAL] = { 0 };
@@ -133,9 +133,9 @@ gimp_draw_tool_finalize (GObject *object)
 }
 
 static void
-gimp_draw_tool_control (GimpTool   *tool,
-			ToolAction  action,
-			GDisplay   *gdisp)
+gimp_draw_tool_control (GimpTool    *tool,
+			ToolAction   action,
+			GimpDisplay *gdisp)
 {
   GimpDrawTool *draw_tool;
 

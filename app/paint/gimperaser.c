@@ -67,7 +67,7 @@ static void   gimp_eraser_tool_init         (GimpEraserTool       *eraser);
 
 static void   gimp_eraser_tool_modifier_key (GimpTool             *tool,
                                              GdkEventKey          *kevent,
-                                             GDisplay             *gdisp);
+                                             GimpDisplay          *gdisp);
 
 static void   gimp_eraser_tool_paint        (GimpPaintTool        *paint_tool,
                                              GimpDrawable         *drawable,
@@ -179,7 +179,7 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
 static void
 gimp_eraser_tool_modifier_key (GimpTool    *tool,
                                GdkEventKey *kevent,
-                               GDisplay    *gdisp)
+                               GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {

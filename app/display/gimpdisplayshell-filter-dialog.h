@@ -15,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GDISPLAY_COLOR_UI_H__
 #define __GDISPLAY_COLOR_UI_H__
 
-#include "gdisplayF.h"
 
-void gdisplay_color_ui_new (GDisplay *gdisp);
+void gdisplay_color_ui_new (GimpDisplay *gdisp);
+
 
 #endif /* __GDISPLAY_COLOR_UI_H__ */

@@ -142,7 +142,7 @@ path_stroke (GimpImage *gimage,
 	     Path      *bzp)
 {
   GimpBezierSelectTool *bezier_sel;
-  GDisplay     *gdisp;
+  GimpDisplay     *gdisp;
 
   gdisp = gdisplays_check_valid (pl->gdisp, gimage);
   bezier_sel = path_to_beziersel (bzp);

@@ -1,3 +1,133 @@
+2001-10-29  Michael Natterer  <mitch@gimp.org>
+
+	Cleanup weekend...
+
+	* app/app_procs.c: pass "no_interface" to gimp_new().
+
+	* app/core/gimp.[ch]: added "gboolean no_interface" and the
+	load_procs and save_procs GSLists.
+
+	* app/core/gimptoolinfo.[ch]: added a "Gimp" pointer to the
+	GimpToolInfo object so more functions find their context without
+	accessing the global "the_gimp" variable.
+
+	* app/display/display-types.h: removed the GDisplay -> GimpDisplay
+	typedef.
+
+	* app/display/gimpdisplay.c: look at gimp->no_interface, don't
+	include "appenv.h".
+
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]: don't use "the_gimp" any more. Instead,
+	pass around lots of "Gimp" pointers. Removed the global load_procs
+	and save_procs variables here. Use access() to find out whether a
+	file is readable/writable, removed the manual voodoo and it's
+	Win32 wrappers. Added an optional (can be NULL) "PlunInProcDef"
+	parameter to file_save(), removed file_save_with_proc().
+
+	* app/gui/menus.c: Use the unused "gpointer data" parameter of the
+	GtkItemFactory callbacks to pass a "Gimp" pointer to all of them.
+	This reduces the usage of the global "the_gimp" hack to zero
+	in app/gui/... yeah.
+
+	* app/gui/channels-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/palettes-commands.c
+	* app/gui/select-commands.c
+	* app/gui/test-commands.c
+	* app/gui/tools-commands.c
+	* app/gui/view-commands.c: use the passed "Gimp" pointer.
+
+	* app/gui/color-area.[ch]
+	* app/gui/convert-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-new-dialog.[ch]
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]
+	* app/gui/gui.c
+	* app/gui/info-window.[ch]
+	* app/gui/module-browser.[ch]
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.[ch]
+	* app/gui/paths-dialog.c
+	* app/gui/preferences-dialog.[ch]
+	* app/gui/resize-dialog.[ch]
+	* app/gui/tool-options-dialog.[ch]
+	* app/gui/toolbox.c: pass around lots more "Gimp" and
+	"GimpContext" pointers and don't use "the_gimp" any more.
+
+	* app/tools/gimptool.h: added a pointer to the corresponding
+	GimpToolInfo object (which in turn has a pointer to a Gimp).
+
+	* app/tools/tool_manager.[ch]: set the pointer after creating the
+	tool object. Removed tool_manager_get_info_by_tool() as there is a
+	tool->tool_info pointer now.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/path_tool.c
+	* app/tools/xinput_airbrush.c: s/GDisplay/GimpDisplay/g.
+	Use tool->tool_info and tool_info->gimp in some places to get
+	rid of using "the_gimp".
+
+	Removing the remaining ones involves changing the tool options
+	system and is scheduled next...
+
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdocumentview.c: pass a "Gimp" pointer to all
+	file_open_*() functions.
+
+	* app/gdisplay_color.[ch]
+	* app/gdisplay_color_ui.[ch]
+	* app/image_map.[ch]
+	* app/nav_window.[ch]
+	* app/path.c
+	* app/path_bezier.c
+	* app/path_transform.h
+	* app/qmask.[ch]: s/GDisplay/GimpDisplay/g
+
+	* tools/pdbgen/pdb/fileops.pdb: load_procs and save_procs are
+	members of the "Gimp" object now.
+
+	* tools/pdbgen/pdb/plug_in.pdb: use gimp->no_interface, don't
+	include "appenv.h".
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2001-10-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/webbrowser/web-browser.scm: updated links

@@ -78,7 +78,7 @@ static void   gui_really_quit_callback        (GtkWidget            *button,
                                                gpointer              data);
 
 static void   gui_display_changed             (GimpContext          *context,
-                                               GDisplay             *display,
+                                               GimpDisplay          *display,
                                                gpointer              data);
 
 static void   gui_image_disconnect            (GimpImage            *gimage,
@@ -284,8 +284,8 @@ gui_restore (Gimp     *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  file_open_dialog_menu_init ();
-  file_save_dialog_menu_init ();
+  file_open_dialog_menu_init (gimp);
+  file_save_dialog_menu_init (gimp);
 
   menus_restore (gimp);
 
@@ -338,7 +338,7 @@ gui_exit (Gimp *gimp)
   dialogs_exit (gimp);
 
   /*  handle this in the dialog factory:  */
-  tool_options_dialog_free ();
+  tool_options_dialog_free (gimp);
   toolbox_free (gimp);
 
   gimp_help_free ();
@@ -397,7 +397,7 @@ gboolean double_speed = FALSE;
 static void
 gui_display_new (GimpImage *gimage)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   gdisp = gdisplay_new (gimage, 0x0101);
 
@@ -496,7 +496,7 @@ gui_really_quit_callback (GtkWidget *button,
 
 static void
 gui_display_changed (GimpContext *context,
-		     GDisplay    *display,
+		     GimpDisplay *display,
 		     gpointer     data)
 {
   Gimp *gimp;

@@ -37,7 +37,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
-#include "app_procs.h"
 #include "convert-dialog.h"
 #include "offset-dialog.h"
 #include "resize-dialog.h"
@@ -47,9 +46,15 @@
 #include "libgimp/gimpintl.h"
 
 
-#define return_if_no_display(gdisp) \
-        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
-        if (!gdisp) return
+#define return_if_no_display(gdisp,data) \
+  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (! gdisp) \
+    return
+
+#define return_if_no_image(gimage,data) \
+  gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! gimage) \
+    return
 
 
 /*  local functions  */
@@ -70,42 +75,41 @@ void
 image_convert_rgb_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  convert_to_rgb (gdisp->gimage);
+  convert_to_rgb (gimage);
 }
 
 void
 image_convert_grayscale_cmd_callback (GtkWidget *widget,
 				      gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  convert_to_grayscale (gdisp->gimage);
+  convert_to_grayscale (gimage);
 }
 
 void
 image_convert_indexed_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  convert_to_indexed (gdisp->gimage);
+  convert_to_indexed (gimage);
 }
 
 void
 image_desaturate_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  GimpDisplay  *gdisp;
+  GimpImage    *gimage;
   GimpDrawable *drawable;
+  return_if_no_image (gimage, data);
 
-  return_if_no_display (gdisp);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (! gimp_drawable_is_rgb (drawable))
     {
@@ -122,14 +126,13 @@ void
 image_invert_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GimpDisplay  *gdisp;
+  GimpImage    *gimage;
   GimpDrawable *drawable;
   Argument     *return_vals;
   gint          nreturn_vals;
+  return_if_no_image (gimage, data);
 
-  return_if_no_display (gdisp);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (gimp_drawable_is_indexed (drawable))
     {
@@ -138,7 +141,7 @@ image_invert_cmd_callback (GtkWidget *widget,
     }
 
   return_vals =
-    procedural_db_run_proc (gdisp->gimage->gimp,
+    procedural_db_run_proc (gimage->gimp,
 			    "gimp_invert",
 			    &nreturn_vals,
 			    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
@@ -156,12 +159,11 @@ void
 image_equalize_cmd_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GimpDisplay  *gdisp;
+  GimpImage    *gimage;
   GimpDrawable *drawable;
+  return_if_no_image (gimage, data);
 
-  return_if_no_display (gdisp);
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
+  drawable = gimp_image_active_drawable (gimage);
 
   if (gimp_drawable_is_indexed (drawable))
     {
@@ -178,10 +180,10 @@ void
 image_offset_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  offset_dialog_create (gdisp->gimage);
+  offset_dialog_create (gimage);
 }
 
 void
@@ -191,15 +193,15 @@ image_resize_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   GimpImage   *gimage;
   ImageResize *image_resize;
-
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimage = gdisp->gimage;
 
   image_resize = g_new0 (ImageResize, 1);
 
   image_resize->gimage = gimage;
-  image_resize->resize = resize_widget_new (ResizeWidget,
+  image_resize->resize = resize_widget_new (gimage,
+                                            ResizeWidget,
 					    ResizeImage,
 					    G_OBJECT (gimage),
 					    "destroy",
@@ -227,15 +229,15 @@ image_scale_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   GimpImage   *gimage;
   ImageResize *image_scale;
-
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimage = gdisp->gimage;
 
   image_scale = g_new0 (ImageResize, 1);
 
   image_scale->gimage = gimage;
-  image_scale->resize = resize_widget_new (ScaleWidget,
+  image_scale->resize = resize_widget_new (gimage,
+                                           ScaleWidget,
 					   ResizeImage,
 					   G_OBJECT (gimage),
 					   "destroy",
@@ -260,14 +262,13 @@ void
 image_duplicate_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GimpDisplay *gdisp;
-  GimpImage   *gimage;
+  GimpImage *gimage;
+  GimpImage *new_gimage;
+  return_if_no_image (gimage, data);
 
-  return_if_no_display (gdisp);
+  new_gimage = gimp_image_duplicate (gimage);
 
-  gimage = gimp_image_duplicate (gdisp->gimage);
-
-  gimp_create_display (gimage->gimp, gimage);
+  gimp_create_display (new_gimage->gimp, new_gimage);
 }
 
 

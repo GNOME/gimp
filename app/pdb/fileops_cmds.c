@@ -42,9 +42,8 @@
 #include "procedural_db.h"
 
 #include "base/base-config.h"
+#include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "file/file-open.h"
-#include "file/file-save.h"
 #include "file/file-utils.h"
 #include "plug_in.h"
 
@@ -77,8 +76,9 @@ file_load_invoker (Gimp     *gimp,
   PlugInProcDef *file_proc;
   ProcRecord *proc;
 
-  file_proc = file_proc_find (load_procs, (gchar *) args[2].value.pdb_pointer);
-  if (!file_proc)
+  file_proc = file_proc_find (gimp->load_procs, (gchar *) args[2].value.pdb_pointer);
+
+  if (! file_proc)
     return procedural_db_return_args (&file_load_proc, FALSE);
 
   proc = &file_proc->db_info;
@@ -140,8 +140,9 @@ file_save_invoker (Gimp     *gimp,
   ProcRecord *proc;
   gint i;
 
-  file_proc = file_proc_find (save_procs, (gchar *) args[4].value.pdb_pointer);
-  if (!file_proc) 
+  file_proc = file_proc_find (gimp->save_procs, (gchar *) args[4].value.pdb_pointer);
+
+  if (! file_proc) 
     return procedural_db_return_args (&file_save_proc, FALSE);
 
   proc = &file_proc->db_info;
@@ -396,7 +397,7 @@ temp_name_invoker (Gimp     *gimp,
   if (success)
     {
       if (id == 0)
-	pid = getpid();
+	pid = getpid ();
     
       filename = g_strdup_printf ("gimp_temp.%d%d.%s",
 				  pid, id++, extension);
@@ -490,15 +491,15 @@ register_magic_load_handler_invoker (Gimp     *gimp,
     
       file_proc = plug_in_file_handler (name, extensions, prefixes, magics);
     
-      if (!file_proc)
+      if (! file_proc)
 	{
 	  g_message ("attempt to register non-existant load handler \"%s\"",
 		     name);
 	  goto done;
 	}
     
-      if (! g_slist_find (load_procs, file_proc))
-	load_procs = g_slist_prepend (load_procs, file_proc);
+      if (! g_slist_find (gimp->load_procs, file_proc))
+	gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
     
       success = TRUE;
     
@@ -638,15 +639,15 @@ register_save_handler_invoker (Gimp     *gimp,
     
       file_proc = plug_in_file_handler (name, extensions, prefixes, NULL);
     
-      if (!file_proc)
+      if (! file_proc)
 	{
 	  g_message ("attempt to register non-existant save handler \"%s\"",
 		     name);
 	  goto done;
 	}
     
-      if (! g_slist_find (save_procs, file_proc))
-	save_procs = g_slist_prepend (save_procs, file_proc);
+      if (! g_slist_find (gimp->save_procs, file_proc))
+	gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
     
       success = TRUE;
     

@@ -623,7 +623,7 @@ xinput_airbrush_button_press (Tool           *tool,
 			      gpointer        gdisp_ptr)
 {
   gdouble             x, y;
-  GDisplay            *gdisp;
+  GimpDisplay         *gdisp;
   XinputAirbrushTool  *xinput_airbrush_tool;
   GimpDrawable        *drawable;
   AirBlob             *airblob;
@@ -635,7 +635,7 @@ xinput_airbrush_button_press (Tool           *tool,
 
 
 
-  gdisp = (GDisplay *) gdisp_ptr;
+  gdisp = (GimpDisplay *) gdisp_ptr;
   xinput_airbrush_tool = (XinputAirbrushTool *) tool->private;
   
   /*  Keep the coordinates of the target  */
@@ -729,11 +729,11 @@ static void
                                   GdkEventButton *bevent,
                                   gpointer        gdisp_ptr)
   {
-    GDisplay * gdisp;
+    GimpDisplay * gdisp;
     GImage * gimage;
     XinputAirbrushTool * xinput_airbrush_tool;
 
-    gdisp = (GDisplay *) gdisp_ptr;
+    gdisp = (GimpDisplay *) gdisp_ptr;
     gimage = gdisp->gimage;
     xinput_airbrush_tool = (XinputAirbrushTool *) tool->private;
 
@@ -834,7 +834,7 @@ static void
                           GdkEventMotion *mevent,
                           gpointer        gdisp_ptr)
   {
-    GDisplay *gdisp;
+    GimpDisplay *gdisp;
     XinputAirbrushTool  *xinput_airbrush_tool;
     GimpDrawable *drawable;
     AirBlob *airblob;
@@ -856,7 +856,7 @@ static void
 #endif /* GTK_HAVE_SIX_VALUATORS */
     double height;
 
-    gdisp = (GDisplay *) gdisp_ptr;
+    gdisp = (GimpDisplay *) gdisp_ptr;
     xinput_airbrush_tool = (XinputAirbrushTool *) tool->private;
 
     gdisplay_untransform_coords_f (gdisp, mevent->x, mevent->y, &x, &y, TRUE);
@@ -971,12 +971,12 @@ static void
                                  GdkEventMotion *mevent,
                                  gpointer        gdisp_ptr)
   {
-    GDisplay *gdisp;
+    GimpDisplay *gdisp;
     Layer *layer;
     GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
     int x, y;
 
-    gdisp = (GDisplay *) gdisp_ptr;
+    gdisp = (GimpDisplay *) gdisp_ptr;
 
     gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
     if ((layer = gimage_get_active_layer (gdisp->gimage)))

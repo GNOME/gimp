@@ -61,13 +61,13 @@ static void          gimp_rotate_tool_class_init  (GimpRotateToolClass *klass);
 static void          gimp_rotate_tool_init        (GimpRotateTool      *rotate_tool);
 
 static TileManager * gimp_rotate_tool_transform (GimpTransformTool *transform_tool,
-						 GDisplay          *gdisp,
+						 GimpDisplay       *gdisp,
 						 TransformState     state);
 
 static void          rotate_tool_recalc         (GimpTool       *tool,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void          rotate_tool_motion         (GimpTool       *tool,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void          rotate_info_update         (GimpTool       *tool);
 
 static void          rotate_angle_changed       (GtkWidget      *entry,
@@ -176,7 +176,7 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 TileManager *
 gimp_rotate_tool_rotate (GimpImage    *gimage,
 			 GimpDrawable *drawable,
-			 GDisplay     *gdisp,
+			 GimpDisplay  *gdisp,
 			 gdouble       angle,
 			 TileManager  *float_tiles,
 			 gboolean      interpolation,
@@ -201,7 +201,7 @@ gimp_rotate_tool_rotate (GimpImage    *gimage,
 
 static TileManager *
 gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
-			    GDisplay           *gdisp,
+			    GimpDisplay        *gdisp,
 			    TransformState      state)
 {
   GimpTool      *tool;
@@ -404,8 +404,8 @@ rotate_center_changed (GtkWidget *widget,
 }
 
 static void
-rotate_tool_motion (GimpTool *tool,
-		    GDisplay *gdisp)
+rotate_tool_motion (GimpTool    *tool,
+		    GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   gdouble            angle1, angle2, angle;
@@ -463,8 +463,8 @@ rotate_tool_motion (GimpTool *tool,
 }
 
 static void
-rotate_tool_recalc (GimpTool *tool,
-		    GDisplay *gdisp)
+rotate_tool_recalc (GimpTool    *tool,
+		    GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   gdouble            cx, cy;

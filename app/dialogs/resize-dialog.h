@@ -71,7 +71,8 @@ typedef struct
  *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
  */
 
-Resize * resize_widget_new (ResizeType    type,
+Resize * resize_widget_new (GimpImage    *gimage,
+                            ResizeType    type,
 			    ResizeTarget  target,
 			    GObject      *object,
 			    const gchar  *signal,

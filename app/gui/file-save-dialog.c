@@ -32,8 +32,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -44,7 +45,6 @@
 #include "file-save-dialog.h"
 #include "menus.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 #include "plug_in.h"
 #include "undo.h"
@@ -63,8 +63,8 @@ struct _OverwriteData
 
 static void    file_save_dialog_create      (void);
 
-static void    file_overwrite               (gchar         *filename,
-					     gchar         *raw_filename);
+static void    file_overwrite               (const gchar   *filename,
+					     const gchar   *raw_filename);
 static void    file_overwrite_callback      (GtkWidget     *widget,
 					     gboolean       overwrite,
 					     gpointer       data);
@@ -88,15 +88,17 @@ static gboolean   set_filename = TRUE;
 /*  public functions  */
 
 void
-file_save_dialog_menu_init (void)
+file_save_dialog_menu_init (Gimp *gimp)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
   GSList               *list;
 
-  save_procs = g_slist_reverse (save_procs);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  for (list = save_procs; list; list = g_slist_next (list))
+  gimp->save_procs = g_slist_reverse (gimp->save_procs);
+
+  for (list = gimp->save_procs; list; list = g_slist_next (list))
     {
       gchar *basename;
       gchar *filename;
@@ -143,6 +145,8 @@ file_save_dialog_show (GimpImage *gimage)
 {
   const gchar *filename;
 
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   if (! gimp_image_active_drawable (gimage))
     return;
 
@@ -150,7 +154,7 @@ file_save_dialog_show (GimpImage *gimage)
 
   set_filename = TRUE;
 
-  filename = gimp_object_get_name (GIMP_OBJECT (the_gimage));
+  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
 
   if (! filesave)
     file_save_dialog_create ();
@@ -169,22 +173,22 @@ file_save_dialog_show (GimpImage *gimage)
   switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
     case RGB_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_RGB_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
       break;
     case RGBA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_RGBA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
       break;
     case GRAY_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_GRAY_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
       break;
     case GRAYA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_GRAYA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
       break;
     case INDEXED_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_INDEXED_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
       break;
     case INDEXEDA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_INDEXEDA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
       break;
     }
 
@@ -196,6 +200,8 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 {
   const gchar *filename;
 
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   if (! gimp_image_active_drawable (gimage))
     return;
 
@@ -203,7 +209,7 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 
   set_filename = FALSE;
 
-  filename = gimp_object_get_name (GIMP_OBJECT (the_gimage));
+  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
 
   if (! filesave)
     file_save_dialog_create ();
@@ -222,22 +228,22 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
   switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
     case RGB_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_RGB_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
       break;
     case RGBA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_RGBA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
       break;
     case GRAY_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_GRAY_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
       break;
     case GRAYA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_GRAYA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
       break;
     case INDEXED_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_INDEXED_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
       break;
     case INDEXEDA_GIMAGE:
-      file_dialog_update_menus (save_procs, PLUG_IN_INDEXEDA_IMAGE);
+      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
       break;
     }
 
@@ -362,7 +368,8 @@ file_save_ok_callback (GtkWidget *widget,
 	  if (!the_drawable)
 	    return;
 
-	  proc_rec = procedural_db_lookup (the_gimp, "plug_in_the_slimy_egg");
+	  proc_rec = procedural_db_lookup (the_gimage->gimp,
+                                           "plug_in_the_slimy_egg");
 	  if (!proc_rec)
 	    break;
 
@@ -404,36 +411,48 @@ file_save_ok_callback (GtkWidget *widget,
       else
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-	  file_overwrite (g_strdup (filename), g_strdup (raw_filename));
+	  file_overwrite (filename, raw_filename);
 	}
     }
   else
     {
+      GimpPDBStatusType status;
+
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
-      if (file_save_with_proc (the_gimage,
-			       filename, raw_filename,
-			       save_file_proc,
-			       set_filename))
+      status = file_save (the_gimage,
+                          filename,
+                          raw_filename,
+                          save_file_proc,
+                          RUN_INTERACTIVE,
+                          set_filename);
+
+      if (status != GIMP_PDB_SUCCESS &&
+          status != GIMP_PDB_CANCEL)
 	{
-	  file_dialog_hide (GTK_WIDGET (fs));
+          g_message (_("Save failed:\n%s"), filename);
 	}
+      else
+        {
+	  file_dialog_hide (GTK_WIDGET (fs));
+        }
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
 }
 
 static void
-file_overwrite (gchar *filename,
-		gchar *raw_filename)
+file_overwrite (const gchar *filename,
+		const gchar *raw_filename)
 {
   OverwriteData *overwrite_data;
   GtkWidget     *query_box;
   gchar         *overwrite_text;
 
-  overwrite_data = g_new (OverwriteData, 1);
-  overwrite_data->full_filename = filename;
-  overwrite_data->raw_filename  = raw_filename;
+  overwrite_data = g_new0 (OverwriteData, 1);
+
+  overwrite_data->full_filename = g_strdup (filename);
+  overwrite_data->raw_filename  = g_strdup (raw_filename);
 
   overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
 
@@ -463,11 +482,21 @@ file_overwrite_callback (GtkWidget *widget,
 
   if (overwrite)
     {
-      if (file_save_with_proc (the_gimage,
-			       overwrite_data->full_filename,
-			       overwrite_data->raw_filename,
-			       save_file_proc,
-			       set_filename))
+      GimpPDBStatusType status;
+
+      status = file_save (the_gimage,
+                          overwrite_data->full_filename,
+                          overwrite_data->raw_filename,
+                          save_file_proc,
+                          RUN_INTERACTIVE,
+                          set_filename);
+
+      if (status != GIMP_PDB_SUCCESS &&
+          status != GIMP_PDB_CANCEL)
+        {
+          g_message (_("Save failed:\n%s"), overwrite_data->full_filename);
+        }
+      else
 	{
 	  file_dialog_hide (GTK_WIDGET (filesave));
 	}

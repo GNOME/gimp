@@ -44,7 +44,6 @@
 #include "info-dialog.h"
 #include "info-window.h"
 
-#include "app_procs.h"
 #include "colormaps.h"
 
 #include "libgimp/gimpintl.h"
@@ -56,22 +55,22 @@ typedef struct _InfoWinData InfoWinData;
 
 struct _InfoWinData
 {
-  GDisplay  *gdisp;
+  GimpDisplay *gdisp;
 
-  gchar      dimensions_str[MAX_BUF];
-  gchar      real_dimensions_str[MAX_BUF];
-  gchar      scale_str[MAX_BUF];
-  gchar      color_type_str[MAX_BUF];
-  gchar      visual_class_str[MAX_BUF];
-  gchar      visual_depth_str[MAX_BUF];
-  gchar      resolution_str[MAX_BUF];
+  gchar        dimensions_str[MAX_BUF];
+  gchar        real_dimensions_str[MAX_BUF];
+  gchar        scale_str[MAX_BUF];
+  gchar        color_type_str[MAX_BUF];
+  gchar        visual_class_str[MAX_BUF];
+  gchar        visual_depth_str[MAX_BUF];
+  gchar        resolution_str[MAX_BUF];
 
-  gchar     *unit_str;
-  GtkWidget *pos_labels[4];
-  GtkWidget *unit_labels[2];
-  GtkWidget *color_labels[4];
+  gchar       *unit_str;
+  GtkWidget   *pos_labels[4];
+  GtkWidget   *unit_labels[2];
+  GtkWidget   *color_labels[4];
 
-  gboolean   showing_extended;
+  gboolean     showing_extended;
 };
 
 /*  The different classes of visuals  */
@@ -85,7 +84,7 @@ static gchar *visual_classes[] =
   N_("Direct Color"),
 };
 
-static gchar * info_window_title (GDisplay *gdisp);
+static gchar * info_window_title (GimpDisplay *gdisp);
 
 
 static void
@@ -94,14 +93,14 @@ info_window_image_renamed_callback (GimpImage *gimage,
 {
   InfoDialog  *id;
   gchar       *title;
-  GDisplay    *gdisp;
+  GimpDisplay *gdisp;
   InfoWinData *iwd;
 
   id = (InfoDialog *) data;
 
   iwd = (InfoWinData *) id->user_data;
 
-  gdisp = (GDisplay *) iwd->gdisp;
+  gdisp = (GimpDisplay *) iwd->gdisp;
 
   title = info_window_title (gdisp);
   gtk_window_set_title (GTK_WINDOW (id->shell), title);
@@ -146,7 +145,8 @@ info_window_page_switch (GtkWidget       *widget,
  */
 
 static void
-info_window_create_extended (InfoDialog *info_win)
+info_window_create_extended (InfoDialog  *info_win,
+                             Gimp        *gimp)
 {
   GtkWidget   *main_table;
   GtkWidget   *hbox;
@@ -184,7 +184,7 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
   
-  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_MOVE_TOOL)), 22, 0, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (gimp, GIMP_TYPE_MOVE_TOOL)), 22, 0, FALSE);
   gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);
@@ -244,7 +244,7 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_COLOR_PICKER_TOOL)), 22, 0, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (gimp, GIMP_TYPE_COLOR_PICKER_TOOL)), 22, 0, FALSE);
   gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);
@@ -304,18 +304,9 @@ info_window_create_extended (InfoDialog *info_win)
 		    NULL);
 }
 
-/*  displays information:
- *    image name
- *    image width, height
- *    zoom ratio
- *    image color type
- *    Display info:
- *      visual class
- *      visual depth
- */
 
 InfoDialog *
-info_window_create (GDisplay *gdisp)
+info_window_create (GimpDisplay *gdisp)
 {
   InfoDialog  *info_win;
   InfoWinData *iwd;
@@ -362,7 +353,7 @@ info_window_create (GDisplay *gdisp)
   info_window_update (gdisp);
 
   /*  Add extra tabs  */
-  info_window_create_extended (info_win);
+  info_window_create_extended (info_win, gdisp->gimage->gimp);
 
   /*  keep track of image name changes  */
   g_signal_connect (G_OBJECT (gdisp->gimage), "name_changed",
@@ -375,7 +366,7 @@ info_window_create (GDisplay *gdisp)
 static InfoDialog *info_window_auto = NULL;
 
 static gchar *
-info_window_title (GDisplay *gdisp)
+info_window_title (GimpDisplay *gdisp)
 {
   gchar *basename;
   gchar *title;
@@ -394,17 +385,17 @@ info_window_title (GDisplay *gdisp)
 
 static void
 info_window_change_display (GimpContext *context,
-			    GDisplay    *newdisp,
+			    GimpDisplay *newdisp,
 			    gpointer     data)
 {
-  GDisplay    *gdisp = newdisp;
-  GDisplay    *old_gdisp;
+  GimpDisplay *gdisp = newdisp;
+  GimpDisplay *old_gdisp;
   GimpImage   *gimage;
   InfoWinData *iwd;
 
   iwd = (InfoWinData *) info_window_auto->user_data;
 
-  old_gdisp = (GDisplay *) iwd->gdisp;
+  old_gdisp = (GimpDisplay *) iwd->gdisp;
 
   if (!info_window_auto || gdisp == old_gdisp || !gdisp)
     return;
@@ -420,12 +411,14 @@ info_window_change_display (GimpContext *context,
 }
 
 void
-info_window_follow_auto (void)
+info_window_follow_auto (Gimp *gimp)
 {
   GimpContext *context;
-  GDisplay    *gdisp;
+  GimpDisplay *gdisp;
 
-  context = gimp_get_user_context (the_gimp);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  context = gimp_get_user_context (gimp);
 
   gdisp = gimp_context_get_display (context);
 
@@ -450,9 +443,9 @@ info_window_follow_auto (void)
 /* Updates all extended information. */
 
 void  
-info_window_update_extended (GDisplay *gdisp,
-                             gdouble   tx,
-                             gdouble   ty)
+info_window_update_extended (GimpDisplay *gdisp,
+                             gdouble      tx,
+                             gdouble      ty)
 {
   InfoWinData   *iwd;
   gdouble        unit_factor;
@@ -591,7 +584,7 @@ info_window_free (InfoDialog *info_win)
 }
 
 void
-info_window_update (GDisplay *gdisp)
+info_window_update (GimpDisplay *gdisp)
 {
   InfoWinData *iwd;
   gint         type;

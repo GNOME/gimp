@@ -55,7 +55,6 @@
 #include "file-open-dialog.h"
 #include "menus.h"
 
-#include "app_procs.h"
 #include "plug_in.h"
 #include "undo.h"
 
@@ -64,14 +63,16 @@
 
 /*  local function prototypes  */
 
-static gint     file_open_with_proc_and_display (const gchar   *filename,
+static gint     file_open_with_proc_and_display (Gimp          *gimp,
+                                                 const gchar   *filename,
 						 const gchar   *raw_filename,
 						 PlugInProcDef *file_proc);
-static void     file_open_dialog_create         (void);
+static void     file_open_dialog_create         (Gimp          *gimp);
 static void     file_open_genbutton_callback    (GtkWidget     *widget,
 						 gpointer       data);
 static void     file_open_clistrow_callback     (GtkWidget     *widget,
-						 gint           row);
+						 gint           row,
+                                                 gpointer       data);
 static void     file_open_ok_callback           (GtkWidget     *widget,
 						 gpointer       data);
 static void     file_open_type_callback         (GtkWidget     *widget,
@@ -100,15 +101,17 @@ extern GSList *display_list; /* from gdisplay.c */
 /*  public functions  */
 
 void
-file_open_dialog_menu_init (void)
+file_open_dialog_menu_init (Gimp *gimp)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
   GSList               *list;
 
-  load_procs = g_slist_reverse (load_procs);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  for (list = load_procs; list; list = g_slist_next (list))
+  gimp->load_procs = g_slist_reverse (gimp->load_procs);
+
+  for (list = gimp->load_procs; list; list = g_slist_next (list))
     {
       gchar *basename;
       gchar *lowercase_basename;
@@ -149,10 +152,12 @@ file_open_dialog_menu_reset (void)
 }
 
 void
-file_open_dialog_show (void)
+file_open_dialog_show (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (! fileload)
-    file_open_dialog_create ();
+    file_open_dialog_create (gimp);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   if (GTK_WIDGET_VISIBLE (fileload))
@@ -165,25 +170,29 @@ file_open_dialog_show (void)
   file_dialog_show (fileload);
 }
 
-gint
-file_open_with_display (const gchar *filename)
+GimpPDBStatusType
+file_open_with_display (Gimp        *gimp,
+                        const gchar *filename)
 {
-  return file_open_with_proc_and_display (filename, filename, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
+
+  return file_open_with_proc_and_display (gimp, filename, filename, NULL);
 }
 
 
 /*  private functions  */
 
 static gint
-file_open_with_proc_and_display (const gchar   *filename,
+file_open_with_proc_and_display (Gimp          *gimp,
+                                 const gchar   *filename,
                                  const gchar   *raw_filename,
                                  PlugInProcDef *file_proc)
 {
-  GimpImage *gimage;
-  gchar     *absolute;
-  gint       status;
+  GimpImage         *gimage;
+  gchar             *absolute;
+  GimpPDBStatusType  status;
 
-  if ((gimage = file_open_image (the_gimp,
+  if ((gimage = file_open_image (gimp,
 				 filename,
 				 raw_filename,
 				 _("Open"),
@@ -200,9 +209,9 @@ file_open_with_proc_and_display (const gchar   *filename,
       /* display the image */
       gimp_create_display (gimage->gimp, gimage);
 
-      absolute = file_open_absolute_filename (filename);
+      absolute = file_open_absolute_filename (gimp, filename);
 
-      gimp_documents_add (the_gimp, filename);
+      gimp_documents_add (gimp, filename);
 
       g_free (absolute);
     }
@@ -211,11 +220,14 @@ file_open_with_proc_and_display (const gchar   *filename,
 }
 
 static void
-file_open_dialog_create (void)
+file_open_dialog_create (Gimp *gimp)
 {
   GtkFileSelection *file_sel;
 
   fileload = gtk_file_selection_new (_("Open Image"));
+
+  g_object_set_data (G_OBJECT (fileload), "gimp", gimp);
+
   gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
 
@@ -448,7 +460,8 @@ make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
 
 /* don't call with preview_fullname as parameter!  will be clobbered! */
 static void
-set_preview (const gchar *fullfname,
+set_preview (Gimp        *gimp,
+             const gchar *fullfname,
 	     guchar      *RGB_source,
 	     gint         RGB_w,
 	     gint         RGB_h)
@@ -544,7 +557,7 @@ set_preview (const gchar *fullfname,
 	}
       else
 	{
-	  switch (the_gimp->config->thumbnail_mode)
+	  switch (gimp->config->thumbnail_mode)
 	    {
 	    case 0:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
@@ -591,14 +604,21 @@ set_preview (const gchar *fullfname,
 
 static void
 file_open_clistrow_callback (GtkWidget *widget,
-			     gint       row)
+			     gint       row,
+                             gpointer   data)
 {
-  const gchar *fullfname;
+  GtkFileSelection *fileload;
+  Gimp             *gimp;
+  const gchar      *fullfname;
 
-  fullfname = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fileload));
+  fileload = GTK_FILE_SELECTION (data);
+
+  gimp = GIMP (g_object_get_data (G_OBJECT (fileload), "gimp"));
+
+  fullfname = gtk_file_selection_get_filename (fileload);
 
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
-  set_preview (fullfname, NULL, 0, 0);
+  set_preview (gimp, fullfname, NULL, 0, 0);
 }
 
 static void
@@ -610,6 +630,7 @@ file_open_genbutton_callback (GtkWidget *widget,
   TempBuf   *tempbuf;
   gint       RGBbuf_w;
   gint       RGBbuf_h;
+  Gimp      *gimp;
 
   /* added for multi-file preview generation... */
   GtkFileSelection *fs;
@@ -620,13 +641,15 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   fs = GTK_FILE_SELECTION (data);
 
+  gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
+
   if (! preview_fullname)
     {
       g_warning ("Tried to generate thumbnail for NULL filename.");
       return;
     }
 
-  gimp_set_busy (the_gimp);
+  gimp_set_busy (gimp);
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
 
   /* new mult-file preview make: */  
@@ -654,9 +677,9 @@ file_open_genbutton_callback (GtkWidget *widget,
 	if (! (err == 0 && (buf.st_mode & S_IFDIR)))
 	  {
 	    /* Is not directory. */
-	    gint dummy;
+	    GimpPDBStatusType dummy;
 
-	    gimage_to_be_thumbed = file_open_image (the_gimp,
+	    gimage_to_be_thumbed = file_open_image (gimp,
 						    full_filename,
 						    list->data,
 						    NULL,
@@ -670,12 +693,14 @@ file_open_genbutton_callback (GtkWidget *widget,
 		RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
 						    &RGBbuf_w,
 						    &RGBbuf_h);
-		if (the_gimp->config->thumbnail_mode)
+		if (gimp->config->thumbnail_mode)
 		  {
 		    file_save_thumbnail (gimage_to_be_thumbed,
 					 full_filename, tempbuf);
 		  }
-		set_preview (full_filename, RGBbuf, RGBbuf_w, RGBbuf_h);
+
+		set_preview (gimp, full_filename,
+                             RGBbuf, RGBbuf_w, RGBbuf_h);
 
 		g_object_unref (G_OBJECT (gimage_to_be_thumbed));
 
@@ -713,22 +738,25 @@ file_open_genbutton_callback (GtkWidget *widget,
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
-  gimp_unset_busy (the_gimp);
+  gimp_unset_busy (gimp);
 }
 
 static void
 file_open_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  GtkFileSelection *fs;
-  gchar            *full_filename;
-  gchar            *raw_filename;
-  const gchar      *filedirname;
-  struct stat       buf;
-  gint              err;
-  gint              status;
+  GtkFileSelection  *fs;
+  Gimp              *gimp;
+  gchar             *full_filename;
+  gchar             *raw_filename;
+  const gchar       *filedirname;
+  struct stat        buf;
+  gint               err;
+  GimpPDBStatusType  status;
 
   fs = GTK_FILE_SELECTION (data);
+
+  gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
 
   full_filename = g_strdup (gtk_file_selection_get_filename (fs));
   raw_filename  = g_strdup (gtk_entry_get_text (GTK_ENTRY(fs->selection_entry)));
@@ -761,7 +789,8 @@ file_open_ok_callback (GtkWidget *widget,
   if (err) /* e.g. http://server/filename.jpg */
     full_filename = raw_filename;
 
-  status = file_open_with_proc_and_display (full_filename, 
+  status = file_open_with_proc_and_display (gimp,
+                                            full_filename, 
                                             raw_filename, 
                                             load_file_proc);
 
@@ -808,7 +837,8 @@ file_open_ok_callback (GtkWidget *widget,
             if (! (err == 0 && (buf.st_mode & S_IFDIR)))
               { /* Is not directory. */
 
-                status = file_open_with_proc_and_display (full_filename,
+                status = file_open_with_proc_and_display (gimp,
+                                                          full_filename,
                                                           (const gchar *) list->data,
                                                           load_file_proc);
 

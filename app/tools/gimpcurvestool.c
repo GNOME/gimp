@@ -91,22 +91,22 @@ static void   gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
 static void   gimp_curves_tool_init           (GimpCurvesTool      *bc_tool);
 
 static void   gimp_curves_tool_initialize     (GimpTool       *tool,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   gimp_curves_tool_control        (GimpTool       *tool,
 					       ToolAction      action,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   gimp_curves_tool_button_press   (GimpTool       *tool,
 					       GdkEventButton *bevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   gimp_curves_tool_button_release (GimpTool       *tool,
 					       GdkEventButton *bevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 static void   gimp_curves_tool_motion         (GimpTool       *tool,
 					       GdkEventMotion *mevent,
-					       GDisplay       *gdisp);
+					       GimpDisplay    *gdisp);
 
 static void   curves_colour_update            (GimpTool       *tool,
-					       GDisplay       *gdisp,
+					       GimpDisplay    *gdisp,
 					       GimpDrawable   *drawable,
 					       gint            x,
 					       gint            y);
@@ -271,8 +271,8 @@ gimp_curves_tool_init (GimpCurvesTool *bc_tool)
 }
 
 static void
-gimp_curves_tool_initialize (GimpTool *tool,
-			     GDisplay *gdisp)
+gimp_curves_tool_initialize (GimpTool    *tool,
+			     GimpDisplay *gdisp)
 {
   gint i, j;
 
@@ -339,9 +339,9 @@ gimp_curves_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_curves_tool_control (GimpTool   *tool,
-			  ToolAction  action,
-			  GDisplay   *gdisp)
+gimp_curves_tool_control (GimpTool    *tool,
+			  ToolAction   action,
+			  GimpDisplay *gdisp)
 {
   switch (action)
     {
@@ -366,7 +366,7 @@ gimp_curves_tool_control (GimpTool   *tool,
 static void
 gimp_curves_tool_button_press (GimpTool       *tool,
 			       GdkEventButton *bevent,
-			       GDisplay       *gdisp)
+			       GimpDisplay    *gdisp)
 {
   gint          x, y;
   GimpDrawable *drawable;
@@ -399,7 +399,7 @@ gimp_curves_tool_button_press (GimpTool       *tool,
 static void
 gimp_curves_tool_button_release (GimpTool       *tool,
 				 GdkEventButton *bevent,
-				 GDisplay       *gdisp)
+				 GimpDisplay    *gdisp)
 {
   gint          x, y;
   GimpDrawable *drawable;
@@ -434,7 +434,7 @@ gimp_curves_tool_button_release (GimpTool       *tool,
 static void
 gimp_curves_tool_motion (GimpTool       *tool,
 			 GdkEventMotion *mevent,
-			 GDisplay       *gdisp)
+			 GimpDisplay    *gdisp)
 {
   gint          x, y;
   GimpDrawable *drawable;
@@ -499,7 +499,7 @@ curves_lut_func (CurvesDialog *cd,
 
 static void
 curves_colour_update (GimpTool       *tool,
-		      GDisplay       *gdisp,
+		      GimpDisplay    *gdisp,
 		      GimpDrawable   *drawable,
 		      gint            x,
 		      gint            y)

@@ -138,16 +138,16 @@ static void    gradient_type_callback            (GtkWidget       *widget,
 
 static void    gimp_blend_tool_button_press      (GimpTool        *tool,
 						  GdkEventButton  *bevent,
-						  GDisplay        *gdisp);
+						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_button_release    (GimpTool        *tool,
 						  GdkEventButton  *bevent,
-						  GDisplay        *gdisp);
+						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_motion            (GimpTool        *tool,
 						  GdkEventMotion  *mevent,
-						  GDisplay        *gdisp);
+						  GimpDisplay     *gdisp);
 static void    gimp_blend_tool_cursor_update     (GimpTool        *tool,
 						  GdkEventMotion  *mevent,
-						  GDisplay        *gdisp);
+						  GimpDisplay     *gdisp);
 
 static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
 
@@ -266,8 +266,6 @@ static GtkTargetEntry blend_target_table[] =
   GIMP_TARGET_GRADIENT,  
   GIMP_TARGET_TOOL
 };
-static guint blend_n_targets = (sizeof (blend_target_table) /
-				sizeof (blend_target_table[0]));
 
 
 void
@@ -370,7 +368,7 @@ gimp_blend_tool_finalize (GObject *object)
 static void
 gimp_blend_tool_button_press (GimpTool       *tool,
                               GdkEventButton *bevent,
-                              GDisplay       *gdisp)
+                              GimpDisplay    *gdisp)
 {
   GimpBlendTool *blend_tool;
 
@@ -419,7 +417,7 @@ gimp_blend_tool_button_press (GimpTool       *tool,
 static void
 gimp_blend_tool_button_release (GimpTool       *tool,
                                 GdkEventButton *bevent,
-                                GDisplay       *gdisp)
+                                GimpDisplay    *gdisp)
 {
   GimpImage     *gimage;
   GimpBlendTool *blend_tool;
@@ -510,7 +508,7 @@ gimp_blend_tool_button_release (GimpTool       *tool,
 static void
 gimp_blend_tool_motion (GimpTool       *tool,
                         GdkEventMotion *mevent,
-                        GDisplay       *gdisp)
+                        GimpDisplay    *gdisp)
 {
   GimpBlendTool *blend_tool;
   gchar          vector[STATUSBAR_SIZE];
@@ -584,7 +582,7 @@ gimp_blend_tool_motion (GimpTool       *tool,
 static void
 gimp_blend_tool_cursor_update (GimpTool       *tool,
                                GdkEventMotion *mevent,
-                               GDisplay       *gdisp)
+                               GimpDisplay    *gdisp)
 {
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -680,7 +678,8 @@ blend_options_new (void)
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
 		     GTK_DEST_DEFAULT_DROP,
-		     blend_target_table, blend_n_targets,
+		     blend_target_table,
+                     G_N_ELEMENTS (blend_target_table),
 		     GDK_ACTION_COPY); 
   gimp_dnd_viewable_dest_set (vbox,
                               GIMP_TYPE_GRADIENT,

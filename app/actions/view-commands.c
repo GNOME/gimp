@@ -38,14 +38,14 @@
 #include "info-window.h"
 #include "view-commands.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 #include "nav_window.h"
 
 
-#define return_if_no_display(gdisp) \
-        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
-        if (!gdisp) return
+#define return_if_no_display(gdisp, data) \
+  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (! gdisp) \
+    return
 
 
 void
@@ -53,7 +53,7 @@ view_zoomin_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimp_display_scale (gdisp, GIMP_ZOOM_IN);
 }
@@ -63,7 +63,7 @@ view_zoomout_cmd_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimp_display_scale (gdisp, GIMP_ZOOM_OUT);
 }
@@ -74,7 +74,7 @@ view_zoom_cmd_callback (GtkWidget *widget,
 			guint      action)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimp_display_scale (gdisp, action);
 }
@@ -84,7 +84,7 @@ view_dot_for_dot_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gdisplay_set_dot_for_dot (gdisp, GTK_CHECK_MENU_ITEM (widget)->active);
 }
@@ -94,7 +94,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   if (! gimprc.info_window_follows_mouse)
     {
@@ -106,7 +106,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
     }
   else
     {
-      info_window_follow_auto ();
+      info_window_follow_auto (gdisp->gimage->gimp);
     }
 }
 
@@ -115,7 +115,7 @@ view_nav_window_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   if (gimprc.nav_window_per_display)
     {
@@ -137,7 +137,7 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   gint         new_val;
 
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   new_val = GTK_CHECK_MENU_ITEM (widget)->active;
 
@@ -155,7 +155,7 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
@@ -186,7 +186,7 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
@@ -205,9 +205,8 @@ view_toggle_guides_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   GimpDisplay *gdisp;
-  gint         old_val;
-
-  return_if_no_display (gdisp);
+  gboolean     old_val;
+  return_if_no_display (gdisp, data);
 
   old_val = gdisp->draw_guides;
   gdisp->draw_guides = GTK_CHECK_MENU_ITEM (widget)->active;
@@ -224,7 +223,7 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gdisp->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
 }
@@ -234,7 +233,7 @@ view_new_view_cmd_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gdisplay_new_view (gdisp);
 }
@@ -244,7 +243,7 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   GimpDisplay *gdisp;
-  return_if_no_display (gdisp);
+  return_if_no_display (gdisp, data);
 
   gimp_display_scale_shrink_wrap (gdisp);
 }

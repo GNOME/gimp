@@ -44,7 +44,6 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"
@@ -65,13 +64,13 @@ static void   gimp_rect_select_tool_init       (GimpRectSelectTool      *rect_se
 
 static void   gimp_rect_select_tool_button_press     (GimpTool       *tool,
                                                       GdkEventButton *bevent,
-                                                      GDisplay       *gdisp);
+                                                      GimpDisplay    *gdisp);
 static void   gimp_rect_select_tool_button_release   (GimpTool       *tool,
                                                       GdkEventButton *bevent,
-                                                      GDisplay       *gdisp);
+                                                      GimpDisplay    *gdisp);
 static void   gimp_rect_select_tool_motion           (GimpTool       *tool,
                                                       GdkEventMotion *mevent,
-                                                      GDisplay       *gdisp);
+                                                      GimpDisplay    *gdisp);
 
 static void   gimp_rect_select_tool_draw             (GimpDrawTool   *draw_tool);
 
@@ -197,7 +196,7 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 static void
 gimp_rect_select_tool_button_press (GimpTool       *tool,
                                     GdkEventButton *bevent,
-                                    GDisplay       *gdisp)
+                                    GimpDisplay    *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
@@ -210,8 +209,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
-  sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (gdisp->gimage->gimp, tool)->tool_options;
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
@@ -303,7 +301,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
 static void
 gimp_rect_select_tool_button_release (GimpTool       *tool,
                                       GdkEventButton *bevent,
-                                      GDisplay       *gdisp)
+                                      GimpDisplay    *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
@@ -359,7 +357,7 @@ gimp_rect_select_tool_button_release (GimpTool       *tool,
 static void
 gimp_rect_select_tool_motion (GimpTool       *tool,
                               GdkEventMotion *mevent,
-                              GDisplay       *gdisp)
+                              GimpDisplay    *gdisp)
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
@@ -569,8 +567,7 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
   tool     = GIMP_TOOL (rect_tool);
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
 
-  sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (the_gimp, tool)->tool_options;
+  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   gimp_image_mask_select_rectangle (tool->gdisp->gimage,
                                     x, y, w, h,

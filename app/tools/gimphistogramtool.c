@@ -79,11 +79,11 @@ struct _HistogramToolDialog
 static void   gimp_histogram_tool_class_init (GimpHistogramToolClass *klass);
 static void   gimp_histogram_tool_init       (GimpHistogramTool      *bc_tool);
 
-static void   gimp_histogram_tool_initialize (GimpTool   *tool,
-					      GDisplay   *gdisp);
-static void   gimp_histogram_tool_control    (GimpTool   *tool,
-					      ToolAction  action,
-					      GDisplay   *gdisp);
+static void   gimp_histogram_tool_initialize (GimpTool             *tool,
+					      GimpDisplay          *gdisp);
+static void   gimp_histogram_tool_control    (GimpTool             *tool,
+					      ToolAction            action,
+					      GimpDisplay          *gdisp);
 
 static HistogramToolDialog *  histogram_tool_dialog_new (void);
 
@@ -190,8 +190,8 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
 }
 
 static void
-gimp_histogram_tool_initialize (GimpTool *tool,
-				GDisplay *gdisp)
+gimp_histogram_tool_initialize (GimpTool    *tool,
+				GimpDisplay *gdisp)
 {
   PixelRegion PR;
 
@@ -230,9 +230,9 @@ gimp_histogram_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_histogram_tool_control (GimpTool   *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+gimp_histogram_tool_control (GimpTool    *tool,
+			     ToolAction   action,
+			     GimpDisplay *gdisp)
 {
   switch (action)
     {

@@ -25,27 +25,26 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "app_procs.h"
-
 
 void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   data)
 {
-  gimp_context_set_default_colors (gimp_get_user_context (the_gimp));
+  gimp_context_set_default_colors (gimp_get_user_context (GIMP (data)));
 }
 
 void
 tools_swap_colors_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  gimp_context_swap_colors (gimp_get_user_context (the_gimp));
+  gimp_context_swap_colors (gimp_get_user_context (GIMP (data)));
 }
 
 void
@@ -55,21 +54,25 @@ tools_swap_contexts_cmd_callback (GtkWidget *widget,
   static GimpContext *swap_context = NULL;
   static GimpContext *temp_context = NULL;
 
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
   if (! swap_context)
     {
-      swap_context = gimp_create_context (the_gimp,
+      swap_context = gimp_create_context (gimp,
 					  "Swap Context",
-					  gimp_get_user_context (the_gimp));
-      temp_context = gimp_create_context (the_gimp,
+					  gimp_get_user_context (gimp));
+      temp_context = gimp_create_context (gimp,
 					  "Temp Context",
 					  NULL);
     }
 
-  gimp_context_copy_properties (gimp_get_user_context (the_gimp),
+  gimp_context_copy_properties (gimp_get_user_context (gimp),
 				temp_context,
 				GIMP_CONTEXT_ALL_PROPS_MASK);
   gimp_context_copy_properties (swap_context,
-				gimp_get_user_context (the_gimp),
+				gimp_get_user_context (gimp),
 				GIMP_CONTEXT_ALL_PROPS_MASK);
   gimp_context_copy_properties (temp_context,
 				swap_context,
@@ -81,23 +84,21 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   data,
 			   guint      action)
 {
-  GtkType       tool_type;
   GimpToolInfo *tool_info;
   GimpTool     *active_tool;
   GimpDisplay  *gdisp;
 
-  tool_type = (GtkType) action;
+  tool_info = GIMP_TOOL_INFO (data);
 
-  tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
-  gdisp     = gimp_context_get_display (gimp_get_user_context (the_gimp));
+  gdisp = gimp_context_get_display (gimp_get_user_context (tool_info->gimp));
 
-  gimp_context_set_tool (gimp_get_user_context (the_gimp), tool_info);
+  gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
 
 #ifdef __GNUC__
 #warning FIXME (let the tool manager to this stuff)
 #endif
 
-  active_tool = tool_manager_get_active (the_gimp);
+  active_tool = tool_manager_get_active (tool_info->gimp);
 
   /*  Paranoia  */
   active_tool->drawable = NULL;

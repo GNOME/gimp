@@ -105,10 +105,10 @@ static void   gimp_convolve_tool_paint         (GimpPaintTool        *paint_tool
 						PaintState            state);
 static void   gimp_convolve_tool_cursor_update (GimpTool             *tool,
 						GdkEventMotion       *mevent,
-						GDisplay             *gdisp);
+						GimpDisplay          *gdisp);
 static void   gimp_convolve_tool_modifier_key  (GimpTool             *tool,
 					        GdkEventKey          *kevent,
-						GDisplay             *gdisp);
+						GimpDisplay          *gdisp);
 static void   gimp_convolve_tool_motion        (GimpPaintTool        *paint_tool,
 						GimpDrawable         *drawable, 
 						PaintPressureOptions *pressure_options,
@@ -267,7 +267,7 @@ gimp_convolve_tool_paint (GimpPaintTool    *paint_tool,
 static void
 gimp_convolve_tool_modifier_key (GimpTool    *tool,
 				 GdkEventKey *kevent,
-				 GDisplay    *gdisp)
+				 GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -324,7 +324,7 @@ gimp_convolve_tool_modifier_key (GimpTool    *tool,
 static void
 gimp_convolve_tool_cursor_update (GimpTool       *tool,
 				  GdkEventMotion *mevent,
-				  GDisplay       *gdisp)
+				  GimpDisplay    *gdisp)
 {
   tool->toggled = (convolve_options->type == SHARPEN_CONVOLVE);
 

@@ -43,15 +43,20 @@
 #include "dialogs.h"
 #include "edit-commands.h"
 
-#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
 
-#define return_if_no_display(gdisp) \
-        gdisp = gimp_context_get_display (gimp_get_user_context (the_gimp)); \
-        if (!gdisp) return
+#define return_if_no_display(gdisp,data) \
+  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (! gdisp) \
+    return
+
+#define return_if_no_image(gimage,data) \
+  gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! gimage) \
+    return
 
 
 /*  local function prototypes  */
@@ -70,28 +75,28 @@ void
 edit_undo_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  undo_pop (gdisp->gimage);
+  undo_pop (gimage);
 }
 
 void
 edit_redo_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  undo_redo (gdisp->gimage);
+  undo_redo (gimage);
 }
 
 void
 edit_cut_cmd_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
   /*  stop any active tool  */
   tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
@@ -107,19 +112,18 @@ void
 edit_copy_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  gimp_edit_copy (gdisp->gimage,
-		  gimp_image_active_drawable (gdisp->gimage));
+  gimp_edit_copy (gimage, gimp_image_active_drawable (gimage));
 }
 
 void
 edit_paste_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
   if (gdisp->gimage->gimp->global_buffer)
     {
@@ -141,8 +145,8 @@ void
 edit_paste_into_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
   if (gdisp->gimage->gimp->global_buffer)
     {
@@ -164,8 +168,8 @@ void
 edit_paste_as_new_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
 
   if (gdisp->gimage->gimp->global_buffer)
     {
@@ -182,10 +186,9 @@ void
 edit_named_cut_cmd_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GDisplay  *gdisp;
-  GtkWidget *qbox;
-
-  return_if_no_display (gdisp);
+  GimpDisplay *gdisp;
+  GtkWidget   *qbox;
+  return_if_no_display (gdisp, data);
 
   /*  stop any active tool  */
   tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
@@ -204,18 +207,17 @@ void
 edit_named_copy_cmd_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  GDisplay  *gdisp;
+  GimpImage *gimage;
   GtkWidget *qbox;
-
-  return_if_no_display (gdisp);
+  return_if_no_image (gimage, data);
 
   qbox = gimp_query_string_box (_("Copy Named"),
 				gimp_standard_help_func,
 				"dialogs/copy_named.html",
 				_("Enter a name for this buffer"),
 				NULL,
-				G_OBJECT (gdisp->gimage), "disconnect",
-				copy_named_buffer_callback, gdisp->gimage);
+				G_OBJECT (gimage), "disconnect",
+				copy_named_buffer_callback, gimage);
   gtk_widget_show (qbox);
 }
 
@@ -223,9 +225,6 @@ void
 edit_named_paste_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
-
   gimp_dialog_factory_dialog_raise (global_dock_factory, "gimp:buffer-list");
 }
 
@@ -233,10 +232,10 @@ void
 edit_clear_cmd_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  gimp_edit_clear (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage));
+  gimp_edit_clear (gimage, gimp_image_active_drawable (gimage));
   gdisplays_flush ();
 }
 
@@ -245,15 +244,14 @@ edit_fill_cmd_callback (GtkWidget *widget,
 			gpointer   data,
 			guint      action)
 {
+  GimpImage    *gimage;
   GimpFillType  fill_type;
-  GDisplay     *gdisp;
-
-  return_if_no_display (gdisp);
+  return_if_no_image (gimage, data);
 
   fill_type = (GimpFillType) action;
 
-  gimp_edit_fill (gdisp->gimage,
-		  gimp_image_active_drawable (gdisp->gimage),
+  gimp_edit_fill (gimage,
+		  gimp_image_active_drawable (gimage),
 		  fill_type);
 
   gdisplays_flush ();
@@ -263,12 +261,12 @@ void
 edit_stroke_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GDisplay *gdisp;
-  return_if_no_display (gdisp);
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
 
-  gimage_mask_stroke (gdisp->gimage,
-		      gimp_image_active_drawable (gdisp->gimage),
-		      gimp_get_current_context (gdisp->gimage->gimp));
+  gimage_mask_stroke (gimage,
+		      gimp_image_active_drawable (gimage),
+		      gimp_get_current_context (gimage->gimp));
 
   gdisplays_flush ();
 }

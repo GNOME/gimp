@@ -46,6 +46,7 @@ struct _Gimp
 
   gboolean               be_verbose;
   gboolean               no_data;
+  gboolean               no_interface;
 
   GimpCreateDisplayFunc  create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
@@ -79,6 +80,9 @@ struct _Gimp
   GimpDataFactory       *palette_factory;
 
   GHashTable            *procedural_ht;
+
+  GSList                *load_procs;
+  GSList                *save_procs;
 
   GimpContainer         *tool_info_list;
   GimpToolInfo          *standard_tool_info;
@@ -117,7 +121,8 @@ struct _GimpClass
 GType         gimp_get_type             (void);
 
 Gimp        * gimp_new                  (gboolean            be_verbose,
-                                         gboolean            no_data);
+                                         gboolean            no_data,
+                                         gboolean            no_interface);
 
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);

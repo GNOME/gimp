@@ -50,21 +50,21 @@ static void   gimp_move_tool_init       (GimpMoveTool      *move_tool);
 
 static void   move_tool_button_press    (GimpTool          *tool,
 					 GdkEventButton    *bevent,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 static void   move_tool_button_release  (GimpTool          *tool,
 					 GdkEventButton    *bevent,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 static void   move_tool_motion          (GimpTool          *tool,
 					 GdkEventMotion    *mevent,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 static void   move_tool_cursor_update   (GimpTool          *tool,
 					 GdkEventMotion    *mevent,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 static void   move_tool_control	        (GimpTool          *tool,
 					 ToolAction         tool_action,
-					 GDisplay          *gdisp);
+					 GimpDisplay       *gdisp);
 
-static void   move_create_gc            (GDisplay          *gdisp);
+static void   move_create_gc            (GimpDisplay       *gdisp);
 
 
 /*  the move tool options  */
@@ -159,9 +159,9 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 }
 
 static void
-move_tool_control (GimpTool   *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
+move_tool_control (GimpTool    *tool,
+		   ToolAction   action,
+		   GimpDisplay *gdisp)
 {
   GimpMoveTool *move_tool;
 
@@ -193,7 +193,7 @@ move_tool_control (GimpTool   *tool,
 static void
 move_tool_button_press (GimpTool       *tool,
 			GdkEventButton *bevent,
-			GDisplay       *gdisp)
+			GimpDisplay    *gdisp)
 {
   GimpMoveTool *move;
   GimpLayer    *layer;
@@ -273,8 +273,8 @@ move_tool_button_press (GimpTool       *tool,
 }
 
 static void
-move_draw_guide (GDisplay  *gdisp, 
-		 GimpGuide *guide)
+move_draw_guide (GimpDisplay *gdisp, 
+		 GimpGuide   *guide)
 {
   gint x1, y1;
   gint x2, y2;
@@ -320,7 +320,7 @@ move_draw_guide (GDisplay  *gdisp,
 static void
 move_tool_button_release (GimpTool       *tool,
 			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
+			  GimpDisplay    *gdisp)
 {
   GimpMoveTool *move;
   gboolean      delete_guide;
@@ -401,7 +401,7 @@ move_tool_button_release (GimpTool       *tool,
 static void
 move_tool_motion (GimpTool       *tool,
 		  GdkEventMotion *mevent,
-		  GDisplay       *gdisp)
+		  GimpDisplay    *gdisp)
 
 {
   GimpMoveTool *move;
@@ -437,7 +437,7 @@ move_tool_motion (GimpTool       *tool,
 static void
 move_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
-			 GDisplay       *gdisp)
+			 GimpDisplay    *gdisp)
 {
   GimpMoveTool *move;
   GimpGuide    *guide;
@@ -520,7 +520,7 @@ move_tool_cursor_update (GimpTool       *tool,
 }
 
 static void
-move_create_gc (GDisplay *gdisp)
+move_create_gc (GimpDisplay *gdisp)
 {
   if (!move_gc)
     {
@@ -534,8 +534,8 @@ move_create_gc (GDisplay *gdisp)
 }
 
 void
-gimp_move_tool_start_hguide (GimpTool *tool,
-			     GDisplay *gdisp)
+gimp_move_tool_start_hguide (GimpTool    *tool,
+			     GimpDisplay *gdisp)
 {
   GimpMoveTool *move;
 
@@ -558,8 +558,8 @@ gimp_move_tool_start_hguide (GimpTool *tool,
 }
 
 void
-gimp_move_tool_start_vguide (GimpTool *tool,
-			     GDisplay *gdisp)
+gimp_move_tool_start_vguide (GimpTool    *tool,
+			     GimpDisplay *gdisp)
 {
   GimpMoveTool *move;
 

@@ -80,11 +80,11 @@ struct _BrightnessContrastDialog
 static void   gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass);
 static void   gimp_brightness_contrast_tool_init       (GimpBrightnessContrastTool      *bc_tool);
 
-static void   gimp_brightness_contrast_tool_initialize (GimpTool   *tool,
-							GDisplay   *gdisp);
-static void   gimp_brightness_contrast_tool_control    (GimpTool   *tool,
-							ToolAction  action,
-							GDisplay   *gdisp);
+static void   gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
+							GimpDisplay *gdisp);
+static void   gimp_brightness_contrast_tool_control    (GimpTool    *tool,
+							ToolAction   action,
+							GimpDisplay *gdisp);
 
 static BrightnessContrastDialog * brightness_contrast_dialog_new (void);
 
@@ -189,8 +189,8 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 }
 
 static void
-gimp_brightness_contrast_tool_initialize (GimpTool *tool,
-					  GDisplay *gdisp)
+gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
+					  GimpDisplay *gdisp)
 {
   if (! gdisp)
     {
@@ -223,9 +223,9 @@ gimp_brightness_contrast_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_brightness_contrast_tool_control (GimpTool   *tool,
-				       ToolAction  action,
-				       GDisplay   *gdisp)
+gimp_brightness_contrast_tool_control (GimpTool    *tool,
+				       ToolAction   action,
+				       GimpDisplay *gdisp)
 {
   switch (action)
     {

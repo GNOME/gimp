@@ -108,8 +108,6 @@ static GtkTargetEntry toolbox_target_table[] =
   GIMP_TARGET_TOOL,
   GIMP_TARGET_BUFFER
 };
-static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
-				  sizeof (toolbox_target_table[0]));
 
 
 static void
@@ -121,7 +119,7 @@ toolbox_tool_button_toggled (GtkWidget *widget,
   tool_info = GIMP_TOOL_INFO (data);
 
   if ((tool_info) && GTK_TOGGLE_BUTTON (widget)->active)
-    gimp_context_set_tool (gimp_get_user_context (the_gimp), tool_info);
+    gimp_context_set_tool (gimp_get_user_context (tool_info->gimp), tool_info);
 }
 
 static gint
@@ -185,7 +183,8 @@ create_indicator_area (GtkWidget   *parent,
 }
 
 static void
-create_color_area (GtkWidget *parent)
+create_color_area (GtkWidget   *parent,
+                   GimpContext *context)
 {
   GtkWidget *frame;
   GtkWidget *alignment;
@@ -218,7 +217,8 @@ create_color_area (GtkWidget *parent)
 
   gimp_help_set_help_data (alignment, NULL, "#color_area");
 
-  col_area = color_area_create (54, 42,
+  col_area = color_area_create (context,
+                                54, 42,
 				default_pixmap, default_mask,
 				swap_pixmap, swap_mask);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
@@ -392,14 +392,15 @@ toolbox_create (Gimp *gimp)
 			   G_OBJECT (wbox),
 			   0);
 
-  create_color_area (wbox);
+  create_color_area (wbox, context);
 
   if (gimprc.show_indicators)
     create_indicator_area (wbox, context);
 
   gtk_drag_dest_set (window,
 		     GTK_DEST_DEFAULT_ALL,
-		     toolbox_target_table, toolbox_n_targets,
+		     toolbox_target_table,
+                     G_N_ELEMENTS (toolbox_target_table),
 		     GDK_ACTION_COPY);
 
   gimp_dnd_file_dest_set (window, gimp_dnd_open_files, NULL);

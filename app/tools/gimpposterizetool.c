@@ -67,11 +67,11 @@ struct _PosterizeDialog
 static void   gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass);
 static void   gimp_posterize_tool_init       (GimpPosterizeTool      *bc_tool);
 
-static void   gimp_posterize_tool_initialize (GimpTool   *tool,
-					      GDisplay   *gdisp);
-static void   gimp_posterize_tool_control    (GimpTool   *tool,
-					      ToolAction  action,
-					      GDisplay   *gdisp);
+static void   gimp_posterize_tool_initialize (GimpTool    *tool,
+					      GimpDisplay *gdisp);
+static void   gimp_posterize_tool_control    (GimpTool    *tool,
+					      ToolAction   action,
+					      GimpDisplay *gdisp);
 
 static PosterizeDialog * posterize_dialog_new    (void);
 
@@ -172,8 +172,8 @@ gimp_posterize_tool_init (GimpPosterizeTool *bc_tool)
 }
 
 static void
-gimp_posterize_tool_initialize (GimpTool *tool,
-				GDisplay *gdisp)
+gimp_posterize_tool_initialize (GimpTool    *tool,
+				GimpDisplay *gdisp)
 {
   if (! gdisp)
     {
@@ -207,9 +207,9 @@ gimp_posterize_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_posterize_tool_control (GimpTool   *tool,
-			     ToolAction  action,
-			     GDisplay   *gdisp)
+gimp_posterize_tool_control (GimpTool    *tool,
+			     ToolAction   action,
+			     GimpDisplay *gdisp)
 {
   switch (action)
     {

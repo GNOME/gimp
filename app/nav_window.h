@@ -21,8 +21,8 @@
 #define __NAV_WINDOW_H__
 
 
-NavigationDialog * nav_dialog_create          (GDisplay         *gdisp);
-void               nav_dialog_free            (GDisplay         *gdisp,
+NavigationDialog * nav_dialog_create          (GimpDisplay      *gdisp);
+void               nav_dialog_free            (GimpDisplay      *gdisp,
 					       NavigationDialog *nav_dialog);
 
 void         nav_dialog_popup                 (NavigationDialog *nav_dialog);

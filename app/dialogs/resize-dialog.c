@@ -33,8 +33,6 @@
 
 #include "resize-dialog.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -102,7 +100,8 @@ static void  resolution_update           (Resize    *resize,
 
 
 Resize *
-resize_widget_new (ResizeType    type,
+resize_widget_new (GimpImage    *gimage,
+                   ResizeType    type,
 		   ResizeTarget  target,
 		   GObject      *object,
 		   const gchar  *signal,
@@ -128,7 +127,10 @@ resize_widget_new (ResizeType    type,
   GtkWidget     *abox;
   GtkObject     *adjustment;
 
-  abox = NULL;
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_OBJECT (object), NULL);
+
+  abox  = NULL;
   frame = NULL;
 
   private = g_new0 (ResizePrivate, 1);
@@ -587,7 +589,7 @@ resize_widget_new (ResizeType    type,
       gtk_widget_set_usize (spinbutton, 75, 0);
 
       private->resolution_se =
-	gimp_size_entry_new (1, the_gimp->config->default_resolution_units, 
+	gimp_size_entry_new (1, gimage->gimp->config->default_resolution_units, 
 			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);

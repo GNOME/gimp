@@ -56,11 +56,11 @@
 static void   gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass);
 static void   gimp_color_balance_tool_init       (GimpColorBalanceTool      *bc_tool);
 
-static void   gimp_color_balance_tool_initialize (GimpTool   *tool,
-						  GDisplay   *gdisp);
-static void   gimp_color_balance_tool_control    (GimpTool   *tool,
-						  ToolAction  action,
-						  GDisplay   *gdisp);
+static void   gimp_color_balance_tool_initialize (GimpTool    *tool,
+						  GimpDisplay *gdisp);
+static void   gimp_color_balance_tool_control    (GimpTool    *tool,
+						  ToolAction   action,
+						  GimpDisplay *gdisp);
 
 static ColorBalanceDialog * color_balance_dialog_new (void);
 
@@ -173,8 +173,8 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
 }
 
 static void
-gimp_color_balance_tool_initialize (GimpTool *tool,
-				    GDisplay *gdisp)
+gimp_color_balance_tool_initialize (GimpTool    *tool,
+				    GimpDisplay *gdisp)
 {
   gint i;
 
@@ -212,9 +212,9 @@ gimp_color_balance_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_color_balance_tool_control (GimpTool   *tool,
-				 ToolAction  action,
-				 GDisplay   *gdisp)
+gimp_color_balance_tool_control (GimpTool    *tool,
+				 ToolAction   action,
+				 GimpDisplay *gdisp)
 {
   switch (action)
     {

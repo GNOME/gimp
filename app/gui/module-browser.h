@@ -22,7 +22,7 @@
 #ifndef __MODULE_BROWSER_H__
 
 
-GtkWidget * module_browser_new (void);
+GtkWidget * module_browser_new (Gimp *gimp);
 
 
 #endif  /* __MODULE_BROWSER_H__ */

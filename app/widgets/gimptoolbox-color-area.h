@@ -35,23 +35,13 @@ extern GimpDisplay *color_area_gdisp; /* hack for color displays */
 /*
  *  Functions
  */
-GtkWidget * color_area_create    (gint       width,
-			          gint       height,
-			          GdkPixmap *default_pixmap,
-				  GdkBitmap *default_mask,
-				  GdkPixmap *swap_pixmap,
-				  GdkBitmap *swap_mask);
-
-/* Exported for use by color_select */
-void        color_area_draw_rect (GdkDrawable *drawable,
-				  GdkGC       *gc,
-				  gint         x,
-				  gint         y,
-				  gint         width,
-				  gint         height,
-				  guchar       r,
-				  guchar       g,
-				  guchar       b);
+GtkWidget * color_area_create (GimpContext *context,
+                               gint         width,
+                               gint         height,
+                               GdkPixmap   *default_pixmap,
+                               GdkBitmap   *default_mask,
+                               GdkPixmap   *swap_pixmap,
+                               GdkBitmap   *swap_mask);
 
 
 #endif  /*  __COLOR_AREA_H__  */

@@ -30,7 +30,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "appenv.h"
+#include "core/gimp.h"
 #include "plug_in.h"
 
 #ifdef HAVE_GLIBC_REGEX
@@ -80,7 +80,8 @@ progress_init_invoker (Gimp     *gimp,
   if (current_plug_in && current_plug_in->open)
     {
       success = TRUE;
-      if (!no_interface)
+
+      if (! gimp->no_interface)
 	plug_in_progress_init (current_plug_in, message, gdisplay);
     }
 
@@ -97,7 +98,7 @@ static ProcArg progress_init_inargs[] =
   {
     GIMP_PDB_INT32,
     "gdisplay",
-    "GDisplay to update progressbar in, or -1 for a seperate window"
+    "GimpDisplay to update progressbar in, or -1 for a seperate window"
   }
 };
 
@@ -129,7 +130,8 @@ progress_update_invoker (Gimp     *gimp,
   if (current_plug_in && current_plug_in->open)
     {
       success = TRUE;
-      if (!no_interface)
+
+      if (! gimp->no_interface)
 	plug_in_progress_update (current_plug_in, percentage);
     }
 

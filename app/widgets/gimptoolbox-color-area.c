@@ -39,8 +39,6 @@
 #include "color-area.h"
 #include "color-notebook.h"
 
-#include "app_procs.h"
-
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
@@ -57,20 +55,45 @@ typedef enum
   INVALID_AREA
 } ColorAreaTarget;
 
+
 /*  local function prototypes  */
-static void color_area_drop_color    (GtkWidget     *widget,
-				      const GimpRGB *color,
-				      gpointer       data);
-static void color_area_drag_color    (GtkWidget     *widget,
-				      GimpRGB       *color,
-				      gpointer       data);
-static void color_area_color_changed (GimpContext   *context,
-				      GimpRGB       *color,
-				      gpointer       data);
+
+static ColorAreaTarget   color_area_target (gint                x,
+                                            gint                y);
+static void   color_area_draw_rect         (GdkDrawable        *drawable,
+                                            GdkGC              *gc,
+                                            gint                x,
+                                            gint                y,
+                                            gint                width,
+                                            gint                height,
+                                            guchar              r,
+                                            guchar              g,
+                                            guchar              b);
+static void   color_area_draw              (GimpContext        *context);
+static void   color_area_select_callback   (ColorNotebook      *color_notebook,
+                                            const GimpRGB      *color,
+                                            ColorNotebookState  state,
+                                            gpointer            data);
+static void   color_area_edit              (GimpContext        *context);
+static gint   color_area_events            (GtkWidget          *widget,
+                                            GdkEvent           *event,
+                                            gpointer            data);
+static void   color_area_realize           (GtkWidget          *widget,
+                                            gpointer            data);
+static void   color_area_drop_color        (GtkWidget          *widget,
+                                            const GimpRGB      *color,
+                                            gpointer            data);
+static void   color_area_drag_color        (GtkWidget          *widget,
+                                            GimpRGB            *color,
+                                            gpointer            data);
+static void   color_area_color_changed     (GimpContext        *context,
+                                            GimpRGB            *color,
+                                            gpointer            data);
+
 
 /*  Global variables  */
-gint      active_color     = FOREGROUND;
-GDisplay *color_area_gdisp = NULL;
+gint         active_color     = FOREGROUND;
+GimpDisplay *color_area_gdisp = NULL;
 
 /*  Static variables  */
 static GdkGC         *color_area_gc     = NULL;
@@ -98,7 +121,83 @@ static GtkTargetEntry color_area_target_table[] =
 };
 
 
-/*  Local functions  */
+/*  public functions  */
+
+GtkWidget *
+color_area_create (GimpContext *context,
+                   gint         width,
+		   gint         height,
+		   GdkPixmap   *default_pmap,
+		   GdkBitmap   *default_msk,
+		   GdkPixmap   *swap_pmap,
+		   GdkBitmap   *swap_msk)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  color_area = gtk_drawing_area_new ();
+  gtk_drawing_area_size (GTK_DRAWING_AREA (color_area), width, height);
+  gtk_widget_set_events (color_area,
+			 GDK_EXPOSURE_MASK |
+			 GDK_BUTTON_PRESS_MASK |
+			 GDK_BUTTON_RELEASE_MASK |
+			 GDK_ENTER_NOTIFY_MASK |
+			 GDK_LEAVE_NOTIFY_MASK);
+
+#ifndef GDK_WINDOWING_DIRECTFB
+  g_signal_connect (G_OBJECT (color_area), "event",
+		    G_CALLBACK (color_area_events),
+		    context);
+#endif
+
+  g_signal_connect (G_OBJECT (color_area), "realize",
+		    G_CALLBACK (color_area_realize),
+		    context);
+
+  default_pixmap = default_pmap;
+  default_mask   = default_msk;
+
+  swap_pixmap    = swap_pmap;
+  swap_mask      = swap_msk;
+
+  /*  dnd stuff  */
+  gtk_drag_source_set (color_area,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                       color_area_target_table,
+                       G_N_ELEMENTS (color_area_target_table),
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (color_area, color_area_drag_color, context);
+
+  gtk_drag_dest_set (color_area,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     color_area_target_table,
+                     G_N_ELEMENTS (color_area_target_table),
+		     GDK_ACTION_COPY);
+  gimp_dnd_color_dest_set (color_area, color_area_drop_color, context);
+
+  g_signal_connect (G_OBJECT (context), "foreground_changed",
+		    G_CALLBACK (color_area_color_changed),
+		    color_area);
+  g_signal_connect (G_OBJECT (context), "background_changed",
+		    G_CALLBACK (color_area_color_changed),
+		    color_area);
+
+#ifdef DISPLAY_FILTERS
+  /* display filter dummy gdisplay */
+  color_area_gdisp = g_new (GimpDisplay, 1);
+  color_area_gdisp->cd_list = NULL;
+  color_area_gdisp->cd_ui   = NULL;
+  color_area_gdisp->gimage = g_new (GimpImage, 1);
+  color_area_gdisp->gimage->base_type = RGB;
+#endif /* DISPLAY_FILTERS */
+
+  return color_area;
+}
+
+
+/*  private functions  */
+
 static ColorAreaTarget
 color_area_target (gint x,
 		   gint y)
@@ -128,7 +227,7 @@ color_area_target (gint x,
     return -1;
 }
 
-void
+static void
 color_area_draw_rect (GdkDrawable *drawable,
 		      GdkGC       *gc,
 		      gint         x,
@@ -192,7 +291,7 @@ color_area_draw_rect (GdkDrawable *drawable,
 }
 
 static void
-color_area_draw (void)
+color_area_draw (GimpContext *context)
 {
   gint      rect_w, rect_h;
   gint      width, height;
@@ -223,7 +322,7 @@ color_area_draw (void)
   gdk_gc_set_foreground (mask_gc, &mask_pattern);
 
   /*  draw the background area  */
-  gimp_context_get_background (gimp_get_user_context (the_gimp), &color);
+  gimp_context_get_background (context, &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			(width - rect_w), (height - rect_h), rect_w, rect_h,
@@ -241,7 +340,7 @@ color_area_draw (void)
 		     (width - rect_w), (height - rect_h), rect_w, rect_h);
 
   /*  draw the foreground area  */
-  gimp_context_get_foreground (gimp_get_user_context (the_gimp), &color);
+  gimp_context_get_foreground (context, &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			0, 0, rect_w, rect_h,
@@ -286,8 +385,12 @@ static void
 color_area_select_callback (ColorNotebook      *color_notebook,
 			    const GimpRGB      *color,
 			    ColorNotebookState  state,
-			    gpointer            client_data)
+			    gpointer            data)
 {
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
   if (color_notebook)
     {
       switch (state)
@@ -298,41 +401,34 @@ color_area_select_callback (ColorNotebook      *color_notebook,
 	  /* Fallthrough */
 	case COLOR_NOTEBOOK_UPDATE:
 	  if (edit_color == FOREGROUND)
-	    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
-					 color);
+	    gimp_context_set_foreground (context, color);
 	  else
-	    gimp_context_set_background (gimp_get_user_context (the_gimp),
-					 color);
+	    gimp_context_set_background (context, color);
 	  break;
 	case COLOR_NOTEBOOK_CANCEL:
 	  color_notebook_hide (color_notebook);
 	  color_notebook_active = FALSE;
-	  gimp_context_set_foreground (gimp_get_user_context (the_gimp),
-				       &revert_fg);
-	  gimp_context_set_background (gimp_get_user_context (the_gimp),
-				       &revert_bg);
+	  gimp_context_set_foreground (context, &revert_fg);
+	  gimp_context_set_background (context, &revert_bg);
 	}
     }
 }
 
 static void
-color_area_edit (void)
+color_area_edit (GimpContext *context)
 {
-  GimpContext *user_context;
-  GimpRGB      color;
-
-  user_context = gimp_get_user_context (the_gimp);
+  GimpRGB color;
 
   if (! color_notebook_active)
     {
-      gimp_context_get_foreground (user_context, &revert_fg);
-      gimp_context_get_background (user_context, &revert_bg);
+      gimp_context_get_foreground (context, &revert_fg);
+      gimp_context_get_background (context, &revert_bg);
     }
 
   if (active_color == FOREGROUND)
-    gimp_context_get_foreground (user_context, &color);
+    gimp_context_get_foreground (context, &color);
   else
-    gimp_context_get_background (user_context, &color);
+    gimp_context_get_background (context, &color);
 
   edit_color = active_color;
 
@@ -341,7 +437,7 @@ color_area_edit (void)
       color_notebook = color_notebook_new (_("Color Selection"),
 					   (const GimpRGB *) &color,
 					   color_area_select_callback,
-					   NULL, TRUE, FALSE);
+					   context, TRUE, FALSE);
       color_notebook_active = TRUE;
     }
   else
@@ -362,12 +458,16 @@ color_area_edit (void)
 
 static gint
 color_area_events (GtkWidget *widget,
-		   GdkEvent  *event)
+		   GdkEvent  *event,
+                   gpointer   data)
 {
+  GimpContext     *context;
   GdkEventButton  *bevent;
   ColorAreaTarget  target;
 
   static ColorAreaTarget press_target = INVALID_AREA;
+
+  context = GIMP_CONTEXT (data);
 
   switch (event->type)
     {
@@ -395,7 +495,7 @@ color_area_events (GtkWidget *widget,
 	      mask_gc = gdk_gc_new (color_area_mask);
 	    }
 
-	  color_area_draw ();
+	  color_area_draw (context);
 	}
       break;
 
@@ -414,7 +514,7 @@ color_area_events (GtkWidget *widget,
 	      if (target != active_color)
 		{
 		  active_color = target;
-		  color_area_draw ();
+		  color_area_draw (context);
 		}
 	      else
 		{
@@ -422,10 +522,10 @@ color_area_events (GtkWidget *widget,
 		}
 	      break;
 	    case SWAP_AREA:
-	      gimp_context_swap_colors (gimp_get_user_context (the_gimp));
+	      gimp_context_swap_colors (context);
 	      break;
 	    case DEF_AREA:
-	      gimp_context_set_default_colors (gimp_get_user_context (the_gimp));
+	      gimp_context_set_default_colors (context);
 	      break;
 	    default:
 	      break;
@@ -446,7 +546,7 @@ color_area_events (GtkWidget *widget,
 		{
 		case FORE_AREA:
 		case BACK_AREA:
-		  color_area_edit ();
+		  color_area_edit (context);
 		  break;
 		default:
 		  break;
@@ -475,86 +575,19 @@ color_area_realize (GtkWidget *widget,
   gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
 }
 
-GtkWidget *
-color_area_create (gint       width,
-		   gint       height,
-		   GdkPixmap *default_pmap,
-		   GdkBitmap *default_msk,
-		   GdkPixmap *swap_pmap,
-		   GdkBitmap *swap_msk)
-{
-  color_area = gtk_drawing_area_new ();
-  gtk_drawing_area_size (GTK_DRAWING_AREA (color_area), width, height);
-  gtk_widget_set_events (color_area,
-			 GDK_EXPOSURE_MASK |
-			 GDK_BUTTON_PRESS_MASK |
-			 GDK_BUTTON_RELEASE_MASK |
-			 GDK_ENTER_NOTIFY_MASK |
-			 GDK_LEAVE_NOTIFY_MASK);
-
-#ifndef GDK_WINDOWING_DIRECTFB
-  g_signal_connect (G_OBJECT (color_area), "event",
-		    G_CALLBACK (color_area_events),
-		    NULL);
-#endif
-
-  g_signal_connect (G_OBJECT (color_area), "realize",
-		    G_CALLBACK (color_area_realize),
-		    NULL);
-
-  default_pixmap = default_pmap;
-  default_mask   = default_msk;
-
-  swap_pixmap    = swap_pmap;
-  swap_mask      = swap_msk;
-
-  /*  dnd stuff  */
-  gtk_drag_source_set (color_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_area_target_table,
-                       G_N_ELEMENTS (color_area_target_table),
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (color_area, color_area_drag_color, NULL);
-
-  gtk_drag_dest_set (color_area,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     color_area_target_table,
-                     G_N_ELEMENTS (color_area_target_table),
-		     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
-
-  g_signal_connect (G_OBJECT (gimp_get_user_context (the_gimp)),
-		    "foreground_changed",
-		    G_CALLBACK (color_area_color_changed),
-		    color_area);
-  g_signal_connect (G_OBJECT (gimp_get_user_context (the_gimp)),
-		    "background_changed",
-		    G_CALLBACK (color_area_color_changed),
-		    color_area);
-
-#ifdef DISPLAY_FILTERS
-  /* display filter dummy gdisplay */
-  color_area_gdisp = g_new (GDisplay, 1);
-  color_area_gdisp->cd_list = NULL;
-  color_area_gdisp->cd_ui   = NULL;
-  color_area_gdisp->gimage = g_new (GimpImage, 1);
-  color_area_gdisp->gimage->base_type = RGB;
-#endif /* DISPLAY_FILTERS */
-
-  return color_area;
-}
-
 static void
 color_area_drag_color (GtkWidget *widget,
 		       GimpRGB   *color,
 		       gpointer   data)
 {
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
   if (active_color == FOREGROUND)
-    gimp_context_get_foreground (gimp_get_user_context (the_gimp), color);
+    gimp_context_get_foreground (context, color);
   else
-    gimp_context_get_background (gimp_get_user_context (the_gimp), color);
+    gimp_context_get_background (context, color);
 }
 
 static void
@@ -562,6 +595,10 @@ color_area_drop_color (GtkWidget     *widget,
 		       const GimpRGB *color,
 		       gpointer       data)
 {
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
   if (color_notebook_active &&
       active_color == edit_color)
     {
@@ -570,9 +607,9 @@ color_area_drop_color (GtkWidget     *widget,
   else
     {
       if (active_color == FOREGROUND)
-	gimp_context_set_foreground (gimp_get_user_context (the_gimp), color);
+	gimp_context_set_foreground (context, color);
       else
-	gimp_context_set_background (gimp_get_user_context (the_gimp), color);
+	gimp_context_set_background (context, color);
     }
 }
 
@@ -581,5 +618,5 @@ color_area_color_changed (GimpContext *context,
 			  GimpRGB     *color,
 			  gpointer     data)
 {
-  color_area_draw ();
+  color_area_draw (context);
 }

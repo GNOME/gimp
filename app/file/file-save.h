@@ -20,20 +20,12 @@
 #define __FILE_SAVE_H__
 
 
-extern GSList *save_procs;
-
-
-GimpPDBStatusType   file_save           (GimpImage     *gimage,
-					 const gchar   *filename,
-					 const gchar   *raw_filename,
-					 RunModeType    run_mode,
-					 gboolean       set_filename);
-
-gboolean            file_save_with_proc (GimpImage     *gimage,
-					 const gchar   *full_filename,
-					 const gchar   *raw_filename,
-					 PlugInProcDef *save_proc,
-					 gboolean       set_filename);
+GimpPDBStatusType   file_save (GimpImage     *gimage,
+                               const gchar   *filename,
+                               const gchar   *raw_filename,
+                               PlugInProcDef *file_proc,
+                               RunModeType    run_mode,
+                               gboolean       set_filename);
 
 
 #endif /* __FILE_SAVE_H__ */

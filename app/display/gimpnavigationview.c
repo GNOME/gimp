@@ -78,49 +78,49 @@ typedef enum
 
 struct _NavigationDialog
 {
-  NavWinType  ptype;
+  NavWinType   ptype;
 
-  GtkWidget  *shell;
+  GtkWidget   *shell;
 
-  GtkWidget  *new_preview;
+  GtkWidget   *new_preview;
 
-  GtkWidget  *preview_frame;
-  GtkWidget  *zoom_label;
-  GtkObject  *zoom_adjustment;
-  GtkWidget  *preview;
-  GDisplay   *gdisp;        /* I'm not happy 'bout this one */
-  GdkGC      *gc;
-  gint        dispx;        /* x pos of top left corner of display area */
-  gint        dispy;        /* y pos of top left corner of display area */
-  gint        dispwidth;    /* width of display area */
-  gint        dispheight;   /* height of display area */
+  GtkWidget   *preview_frame;
+  GtkWidget   *zoom_label;
+  GtkObject   *zoom_adjustment;
+  GtkWidget   *preview;
+  GimpDisplay *gdisp;        /* I'm not happy 'bout this one */
+  GdkGC       *gc;
+  gint         dispx;        /* x pos of top left corner of display area */
+  gint         dispy;        /* y pos of top left corner of display area */
+  gint         dispwidth;    /* width of display area */
+  gint         dispheight;   /* height of display area */
 
-  gboolean    sq_grabbed;   /* In the process of moving the preview square */
-  gint        motion_offsetx;
-  gint        motion_offsety;
+  gboolean     sq_grabbed;   /* In the process of moving the preview square */
+  gint         motion_offsetx;
+  gint         motion_offsety;
 
-  gint        pwidth;       /* real preview width */
-  gint        pheight;      /* real preview height */
-  gint        imagewidth;   /* width of the real image */
-  gint        imageheight;  /* height of real image */
-  gdouble     ratio;
-  gint        nav_preview_width;
-  gint        nav_preview_height;
-  gboolean    block_adj_sig; 
-  gboolean    frozen;       /* Has the dialog been frozen ? */
-  guint       idle_id;
+  gint         pwidth;       /* real preview width */
+  gint         pheight;      /* real preview height */
+  gint         imagewidth;   /* width of the real image */
+  gint         imageheight;  /* height of real image */
+  gdouble      ratio;
+  gint         nav_preview_width;
+  gint         nav_preview_height;
+  gboolean     block_adj_sig; 
+  gboolean     frozen;       /* Has the dialog been frozen ? */
+  guint        idle_id;
 };
 
 
-static NavigationDialog * nav_dialog_new      (GDisplay         *gdisp,
+static NavigationDialog * nav_dialog_new      (GimpDisplay      *gdisp,
 					       NavWinType        ptype);
-static gchar * nav_dialog_title               (GDisplay         *gdisp);
+static gchar * nav_dialog_title               (GimpDisplay      *gdisp);
 
 static GtkWidget * nav_create_button_area     (NavigationDialog *nav_dialog);
 static void   nav_dialog_close_callback       (GtkWidget        *widget,
 					       gpointer          data);
 static void   nav_dialog_disp_area            (NavigationDialog *nav_dialog,
-					       GDisplay         *gdisp);
+					       GimpDisplay      *gdisp);
 static void   nav_dialog_draw_sqr             (NavigationDialog *nav_dialog,
 					       gboolean          undraw,
 					       gint              x,
@@ -141,10 +141,10 @@ static void   nav_image_need_update           (GimpImage        *gimage,
 					       gpointer          data);
 
 static void   nav_dialog_display_changed      (GimpContext      *context,
-					       GDisplay         *gdisp,
+					       GimpDisplay      *gdisp,
 					       gpointer          data);
 
-static GDisplay * nav_dialog_get_gdisp        (void);
+static GimpDisplay * nav_dialog_get_gdisp     (void);
 
 static void   nav_dialog_grab_pointer         (NavigationDialog *nav_dialog,
 					       GtkWidget        *widget);
@@ -163,11 +163,11 @@ nav_dialog_marker_changed (GimpNavigationPreview *nav_preview,
 			   gint                   y,
 			   NavigationDialog      *nav_dialog)
 {
-  GDisplay *gdisp;
-  gdouble   xratio;
-  gdouble   yratio;
-  gint      xoffset;
-  gint      yoffset;
+  GimpDisplay *gdisp;
+  gdouble      xratio;
+  gdouble      yratio;
+  gint         xoffset;
+  gint         yoffset;
 
   gdisp = nav_dialog->gdisp;
 
@@ -234,7 +234,7 @@ nav_dialog_scroll (GimpNavigationPreview *nav_preview,
 }
 
 NavigationDialog *
-nav_dialog_create (GDisplay *gdisp)
+nav_dialog_create (GimpDisplay *gdisp)
 {
   NavigationDialog *nav_dialog;
   GtkWidget        *button_area;
@@ -333,7 +333,7 @@ nav_dialog_create (GDisplay *gdisp)
 }
 
 void
-nav_dialog_free (GDisplay         *del_gdisp,
+nav_dialog_free (GimpDisplay      *del_gdisp,
 		 NavigationDialog *nav_dialog)
 {
   /* So this functions works both ways..
@@ -345,7 +345,7 @@ nav_dialog_free (GDisplay         *del_gdisp,
     {
       if (nav_window_auto != NULL)
 	{
-	  GDisplay *gdisp;
+	  GimpDisplay *gdisp;
 
 	  nav_dialog = nav_window_auto;
 
@@ -411,7 +411,7 @@ void
 nav_dialog_follow_auto (void)
 {
   GimpContext *context;
-  GDisplay    *gdisp;
+  GimpDisplay *gdisp;
 
   context = gimp_get_user_context (the_gimp);
 
@@ -512,7 +512,7 @@ nav_popup_click_handler (GtkWidget      *widget,
 			 gpointer        data)
 {
   GdkEventButton   *bevent;
-  GDisplay         *gdisp = data;
+  GimpDisplay      *gdisp = data;
   NavigationDialog *nav_dialog;
   gint              x, y;
   gint              x_org, y_org;
@@ -606,8 +606,8 @@ nav_popup_click_handler (GtkWidget      *widget,
 /*  private functions  */
 
 static NavigationDialog *
-nav_dialog_new (GDisplay   *gdisp,
-		NavWinType  ptype)
+nav_dialog_new (GimpDisplay *gdisp,
+		NavWinType   ptype)
 {
   NavigationDialog *nav_dialog;
 
@@ -644,7 +644,7 @@ nav_dialog_new (GDisplay   *gdisp,
 }
 
 static gchar *
-nav_dialog_title (GDisplay *gdisp)
+nav_dialog_title (GimpDisplay *gdisp)
 {
   gchar *basename;
   gchar *title;
@@ -674,7 +674,7 @@ nav_dialog_close_callback (GtkWidget *widget,
 
 static void
 nav_dialog_disp_area (NavigationDialog *nav_dialog,
-		      GDisplay         *gdisp)
+		      GimpDisplay      *gdisp)
 {
   GimpImage *gimage;
   gint       newwidth;
@@ -829,12 +829,12 @@ nav_dialog_draw_sqr (NavigationDialog *nav_dialog,
 static void
 set_size_data (NavigationDialog *nav_dialog)
 {
-  GDisplay  *gdisp;
-  GimpImage *gimage;
-  gint       sel_width;
-  gint       sel_height;
-  gint       pwidth;
-  gint       pheight;
+  GimpDisplay *gdisp;
+  GimpImage  *gimage;
+  gint        sel_width;
+  gint        sel_height;
+  gint        pwidth;
+  gint        pheight;
 
   gdisp  = nav_dialog->gdisp;
   gimage = gdisp->gimage;
@@ -922,17 +922,17 @@ nav_dialog_idle_update_preview (NavigationDialog *nav_dialog)
 static void
 nav_dialog_update_preview (NavigationDialog *nav_dialog)
 {
-  GDisplay  *gdisp;
-  TempBuf   *preview_buf;
-  TempBuf   *preview_buf_ptr;
-  TempBuf   *preview_buf_notdot = NULL;
-  guchar    *src, *buf, *dest;
-  gint       x, y;
-  gint       pwidth, pheight;
-  GimpImage *gimage;
-  gdouble    r, g, b, a, chk;
-  gint       xoff = 0;
-  gint       yoff = 0;
+  GimpDisplay *gdisp;
+  TempBuf     *preview_buf;
+  TempBuf     *preview_buf_ptr;
+  TempBuf     *preview_buf_notdot = NULL;
+  guchar      *src, *buf, *dest;
+  gint         x, y;
+  gint         pwidth, pheight;
+  GimpImage   *gimage;
+  gdouble      r, g, b, a, chk;
+  gint         xoff = 0;
+  gint         yoff = 0;
 
   gdisp  = nav_dialog->gdisp;
   gimage = gdisp->gimage;
@@ -1172,13 +1172,13 @@ nav_dialog_update_real_view (NavigationDialog *nav_dialog,
 			     gint              tx,
 			     gint              ty)
 {
-  GDisplay *gdisp;
-  gdouble   xratio;
-  gdouble   yratio;
-  gint      xoffset;
-  gint      yoffset;
-  gint      xpnt;
-  gint      ypnt;
+  GimpDisplay *gdisp;
+  gdouble      xratio;
+  gdouble      yratio;
+  gint         xoffset;
+  gint         yoffset;
+  gint         xpnt;
+  gint         ypnt;
 
   gdisp = nav_dialog->gdisp;
 
@@ -1274,7 +1274,7 @@ nav_dialog_preview_events (GtkWidget *widget,
 			   gpointer   data)
 {
   NavigationDialog *nav_dialog;
-  GDisplay         *gdisp;
+  GimpDisplay      *gdisp;
   GdkEventButton   *bevent;
   GdkEventMotion   *mevent;
   GdkEventKey      *kevent;
@@ -1614,10 +1614,10 @@ nav_create_button_area (NavigationDialog *nav_dialog)
 
 static void
 nav_dialog_display_changed (GimpContext *context,
-			    GDisplay    *gdisp,
+			    GimpDisplay *gdisp,
 			    gpointer     data)
 {
-  GDisplay         *old_gdisp;
+  GimpDisplay      *old_gdisp;
   GimpImage        *gimage;
   NavigationDialog *nav_dialog;
   gchar            *title;
@@ -1672,7 +1672,7 @@ nav_dialog_display_changed (GimpContext *context,
     }
 }
 
-static GDisplay *
+static GimpDisplay *
 nav_dialog_get_gdisp (void)
 {
   GList *list;
@@ -1681,8 +1681,8 @@ nav_dialog_get_gdisp (void)
        list;
        list = g_list_next (list))
     {
-      GimpImage *gimage;
-      GDisplay  *gdisp;
+      GimpImage   *gimage;
+      GimpDisplay *gdisp;
 
       gimage = GIMP_IMAGE (list->data);
 

@@ -80,8 +80,9 @@ HELP
 	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  file_proc = file_proc_find (load_procs, %%raw_filename%%);
-  if (!file_proc)
+  file_proc = file_proc_find (gimp->load_procs, %%raw_filename%%);
+
+  if (! file_proc)
     return %%fail%%;
 
   proc = &file_proc->db_info;
@@ -128,8 +129,9 @@ HELP
 	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc', 'gint i' ],
 	code => <<'CODE'
 {
-  file_proc = file_proc_find (save_procs, %%raw_filename%%);
-  if (!file_proc) 
+  file_proc = file_proc_find (gimp->save_procs, %%raw_filename%%);
+
+  if (! file_proc) 
     return %%fail%%;
 
   proc = &file_proc->db_info;
@@ -276,7 +278,7 @@ HELP
 	code => <<'CODE'
 {
   if (id == 0)
-    pid = getpid();
+    pid = getpid ();
 
   filename = g_strdup_printf ("gimp_temp.%d%d.%s",
 			      pid, id++, extension);
@@ -324,15 +326,15 @@ HELP
 
   file_proc = plug_in_file_handler (name, extensions, prefixes, magics);
 
-  if (!file_proc)
+  if (! file_proc)
     {
       g_message ("attempt to register non-existant load handler \"%s\"",
 		 name);
       goto done;
     }
 
-  if (! g_slist_find (load_procs, file_proc))
-    load_procs = g_slist_prepend (load_procs, file_proc);
+  if (! g_slist_find (gimp->load_procs, file_proc))
+    gimp->load_procs = g_slist_prepend (gimp->load_procs, file_proc);
 
   success = TRUE;
 
@@ -395,15 +397,15 @@ HELP
 
   file_proc = plug_in_file_handler (name, extensions, prefixes, NULL);
 
-  if (!file_proc)
+  if (! file_proc)
     {
       g_message ("attempt to register non-existant save handler \"%s\"",
 		 name);
       goto done;
     }
 
-  if (! g_slist_find (save_procs, file_proc))
-    save_procs = g_slist_prepend (save_procs, file_proc);
+  if (! g_slist_find (gimp->save_procs, file_proc))
+    gimp->save_procs = g_slist_prepend (gimp->save_procs, file_proc);
 
   success = TRUE;
 
@@ -413,8 +415,8 @@ CODE
     );
 }
 
-@headers = qw("file/file-open.h" "file/file-save.h" "file/file-utils.h"
-              "plug_in.h" <sys/types.h> <unistd.h>);
+@headers = qw("core/gimp.h" "file/file-utils.h" "plug_in.h"
+              <sys/types.h> <unistd.h>);
 
 @procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler

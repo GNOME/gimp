@@ -19,48 +19,25 @@
 
 #include "config.h"
 
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
 #include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#ifndef S_IWUSR
-#define S_IWUSR _S_IWRITE
-#endif
-#ifndef S_IRUSR
-#define S_IRUSR _S_IREAD
-#endif
-#ifndef S_IWGRP
-#define S_IWGRP (_S_IWRITE>>3)
-#define S_IWOTH (_S_IWRITE>>6)
-#endif
-#ifndef S_IRGRP
-#define S_IRGRP (_S_IREAD>>3)
-#define S_IROTH (_S_IREAD>>6)
-#endif
-#define uid_t gint
-#define gid_t gint
-#define geteuid() 0
-#define getegid() 0
-#endif
-
 #include <glib-object.h>
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "file-open.h"
@@ -72,19 +49,16 @@
 #include "libgimp/gimpintl.h"
 
 
-GSList *load_procs = NULL;
-
-
 /*  public functions  */
 
 GimpImage *
-file_open_image (Gimp          *gimp,
-		 const gchar   *filename,
-		 const gchar   *raw_filename,
-		 const gchar   *open_mode,
-		 PlugInProcDef *file_proc,
-		 RunModeType    run_mode,
-		 gint          *status)
+file_open_image (Gimp              *gimp,
+		 const gchar       *filename,
+		 const gchar       *raw_filename,
+		 const gchar       *open_mode,
+		 PlugInProcDef     *file_proc,
+		 RunModeType        run_mode,
+		 GimpPDBStatusType *status)
 {
   ProcRecord    *proc;
   Argument      *args;
@@ -93,10 +67,13 @@ file_open_image (Gimp          *gimp,
   gint           i;
   struct stat    statbuf;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (status != NULL, NULL);
+
   *status = GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
 
   if (! file_proc)
-    file_proc = file_proc_find (load_procs, filename);
+    file_proc = file_proc_find (gimp->load_procs, filename);
 
   if (! file_proc)
     {
@@ -112,9 +89,6 @@ file_open_image (Gimp          *gimp,
   /* check if we are opening a file */
   if (stat (filename, &statbuf) == 0)
     {
-      uid_t euid;
-      gid_t egid;
-
       if (! (statbuf.st_mode & S_IFREG))
 	{
 	  /*  no errors when making thumbnails  */
@@ -126,23 +100,13 @@ file_open_image (Gimp          *gimp,
 	  return NULL;
 	}
 
-      euid = geteuid ();
-      egid = getegid ();
-
-      if (! ((statbuf.st_mode & S_IRUSR) ||
-
-	     ((statbuf.st_mode & S_IRGRP) &&
-	      (statbuf.st_uid != euid)) ||
-
-	     ((statbuf.st_mode & S_IROTH) &&
-	      (statbuf.st_uid != euid) &&
-	      (statbuf.st_gid != egid))))
+      if (access (filename, R_OK) != 0)
 	{
 	  /*  no errors when making thumbnails  */
 	  if (run_mode == RUN_INTERACTIVE)
 	    g_message (_("%s failed.\n"
-			 "%s: Permission denied."),
-		       open_mode, filename);
+			 "%s: %s."),
+		       open_mode, filename, g_strerror (errno));
 
 	  return NULL;
 	}
@@ -176,7 +140,8 @@ file_open_image (Gimp          *gimp,
 }
 
 gchar *
-file_open_absolute_filename (const gchar *name)
+file_open_absolute_filename (Gimp        *gimp,
+                             const gchar *name)
 {
   PlugInProcDef *proc;
   GSList        *procs;
@@ -184,10 +149,11 @@ file_open_absolute_filename (const gchar *name)
   gchar         *absolute;
   gchar         *current;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
   /*  check for prefixes like http or ftp  */
-  for (procs = load_procs; procs; procs = g_slist_next (procs))
+  for (procs = gimp->load_procs; procs; procs = g_slist_next (procs))
     {
       proc = (PlugInProcDef *)procs->data;
 

@@ -126,19 +126,19 @@ static void         ink_options_reset   (GimpToolOptions *tool_options);
 
 static void        ink_button_press     (GimpTool        *tool,
 					 GdkEventButton  *mevent,
-					 GDisplay        *gdisp);
+					 GimpDisplay     *gdisp);
 static void        ink_button_release   (GimpTool        *tool,
 					 GdkEventButton  *bevent,
-					 GDisplay        *gdisp);
+					 GimpDisplay     *gdisp);
 static void        ink_motion           (GimpTool        *tool,
 					 GdkEventMotion  *mevent,
-					 GDisplay        *gdisp);
+					 GimpDisplay     *gdisp);
 static void        ink_cursor_update    (GimpTool        *tool,
 					 GdkEventMotion  *mevent,
-					 GDisplay        *gdisp);
+					 GimpDisplay     *gdisp);
 static void        ink_control          (GimpTool        *tool,
 					 ToolAction       tool_action,
-					 GDisplay        *gdisp);
+					 GimpDisplay     *gdisp);
 
 static void        time_smoother_add    (GimpInkTool     *ink_tool,
 					 guint32          value);
@@ -927,7 +927,7 @@ ink_pen_ellipse (gdouble x_center,
 static void
 ink_button_press (GimpTool       *tool,
 		  GdkEventButton *bevent,
-		  GDisplay       *gdisp)
+		  GimpDisplay    *gdisp)
 {
   GimpInkTool  *ink_tool;
   GimpDrawable *drawable;
@@ -987,7 +987,7 @@ ink_button_press (GimpTool       *tool,
 static void
 ink_button_release (GimpTool       *tool,
 		    GdkEventButton *bevent,
-		    GDisplay       *gdisp)
+		    GimpDisplay    *gdisp)
 {
   GimpInkTool *ink_tool;
   GimpImage   *gimage;
@@ -1099,7 +1099,7 @@ time_smoother_add (GimpInkTool *ink_tool,
 static void
 ink_motion (GimpTool       *tool,
 	    GdkEventMotion *mevent,
-	    GDisplay       *gdisp)
+	    GimpDisplay    *gdisp)
 {
   GimpInkTool  *ink_tool;
   GimpDrawable *drawable;
@@ -1174,7 +1174,7 @@ ink_motion (GimpTool       *tool,
 static void
 ink_cursor_update (GimpTool       *tool,
 		   GdkEventMotion *mevent,
-		   GDisplay       *gdisp)
+		   GimpDisplay    *gdisp)
 {
   GimpLayer     *layer;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
@@ -1209,9 +1209,9 @@ ink_cursor_update (GimpTool       *tool,
 }
 
 static void
-ink_control (GimpTool   *tool,
-	     ToolAction  action,
-	     GDisplay   *gdisp)
+ink_control (GimpTool    *tool,
+	     ToolAction   action,
+	     GimpDisplay *gdisp)
 {
   GimpInkTool *ink_tool;
 

@@ -19,47 +19,21 @@
 
 #include "config.h"
 
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
 #include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#ifndef S_IWUSR
-#define S_IWUSR _S_IWRITE
-#endif
-#ifndef S_IRUSR
-#define S_IRUSR _S_IREAD
-#endif
-#ifndef S_IWGRP
-#define S_IWGRP (_S_IWRITE>>3)
-#define S_IWOTH (_S_IWRITE>>6)
-#endif
-#ifndef S_IRGRP
-#define S_IRGRP (_S_IREAD>>3)
-#define S_IROTH (_S_IREAD>>6)
-#endif
-#define uid_t gint
-#define gid_t gint
-#define geteuid() 0
-#define getegid() 0
-#endif
-
 #include <glib-object.h>
-
-#include <gtk/gtk.h> /* EEK */
 
 #include "core/core-types.h"
 
@@ -78,49 +52,55 @@
 #include "libgimp/gimpintl.h"
 
 
-GSList *save_procs = NULL;
-
-
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage   *gimage,
-	   const gchar *filename,
-	   const gchar *raw_filename,
-           RunModeType  run_mode,
-	   gboolean     set_filename)
+file_save (GimpImage     *gimage,
+	   const gchar   *filename,
+	   const gchar   *raw_filename,
+           PlugInProcDef *file_proc,
+           RunModeType    run_mode,
+	   gboolean       set_filename)
 {
-  PlugInProcDef *file_proc;
-  ProcRecord    *proc;
-  Argument      *args;
-  Argument      *return_vals;
-  gint           status;
-  gint           i;
-  struct stat    statbuf;
+  ProcRecord        *proc;
+  Argument          *args;
+  Argument          *return_vals;
+  GimpPDBStatusType  status;
+  gint               i;
+  struct stat        statbuf;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
 
   if (gimp_image_active_drawable (gimage) == NULL)
     return GIMP_PDB_EXECUTION_ERROR;
 
-  file_proc = gimp_image_get_save_proc (gimage);
-
-  if (!file_proc)
-    file_proc = file_proc_find (save_procs, raw_filename);
-
-  if (!file_proc)
+  /*  set the image's save_proc if we got passed one, otherwise
+   *  try to find a matching file_proc
+   */
+  if (file_proc)
     {
-      g_message (_("Save failed.\n"
-		   "%s: Unknown file type."),
-		 filename);
+      gimp_image_set_save_proc (gimage, file_proc);
+    }
+  else
+    {
+      file_proc = gimp_image_get_save_proc (gimage);
 
-      return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+      if (! file_proc)
+        file_proc = file_proc_find (gimage->gimp->save_procs, raw_filename);
+
+      if (! file_proc)
+        {
+          g_message (_("Save failed.\n"
+                       "%s: Unknown file type."),
+                     filename);
+
+          return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+        }
     }
 
   /* check if we are saving to a file */
   if (stat (filename, &statbuf) == 0)
     {
-      uid_t euid;
-      gid_t egid;
-
       if (! (statbuf.st_mode & S_IFREG))
         {
 	  g_message (_("Save failed.\n"
@@ -130,21 +110,12 @@ file_save (GimpImage   *gimage,
           return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
         }
 
-      euid = geteuid ();
-      egid = getegid ();
-
-      if (! ((statbuf.st_mode & S_IWUSR) ||
-
-             ((statbuf.st_mode & S_IWGRP) &&
-              (statbuf.st_uid != euid)) ||
-
-             ((statbuf.st_mode & S_IWOTH) &&
-              (statbuf.st_uid != euid) &&
-              (statbuf.st_gid != egid))))
+      if (access (filename, W_OK) != 0)
         {
 	  g_message (_("Save failed.\n"
-		       "%s: Permission denied."),
-		     filename);
+		       "%s: %s."),
+		     filename,
+                     g_strerror (errno));
 
           return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
         }
@@ -209,40 +180,4 @@ file_save (GimpImage   *gimage,
   g_object_unref (G_OBJECT (gimage));
 
   return status;
-}
-
-/* Set "gimage"s save handler to "save_proc", then save the image.  
- * Hide the dialog if all went well, otherwise make the user knows an
- * error happened and leave the dialog up.  Make sure it's sensitive.
- */
-gboolean
-file_save_with_proc (GimpImage     *gimage,
-		     const gchar   *full_filename,
-		     const gchar   *raw_filename,
-		     PlugInProcDef *save_proc,
-		     gboolean       set_filename)
-{
-  gint     status  = GIMP_PDB_EXECUTION_ERROR;
-  gboolean success = FALSE;
-
-  if (gimage != NULL)
-    {
-      gimp_image_set_save_proc (gimage, save_proc);
-      status = file_save (gimage,
-                          full_filename,
-                          raw_filename,
-                          RUN_INTERACTIVE,
-                          set_filename);
-
-      if (status == GIMP_PDB_SUCCESS)
-        success = TRUE;
-    }
-
-  /* If there was an error but file_save() didn't print an error
-   * message, then we'd better.
-   */
-  if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
-    g_message (_("Save failed.\n%s"), full_filename);
-
-  return success;
 }

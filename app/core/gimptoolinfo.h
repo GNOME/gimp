@@ -38,6 +38,8 @@ struct _GimpToolInfo
 {
   GimpData          parent_instance;
 
+  Gimp             *gimp;
+
   GType             tool_type;
 
   gchar            *blurb;
@@ -67,7 +69,8 @@ struct _GimpToolInfoClass
 
 GType          gimp_tool_info_get_type     (void);
 
-GimpToolInfo * gimp_tool_info_new          (GimpContext  *context,
+GimpToolInfo * gimp_tool_info_new          (Gimp         *gimp,
+                                            GimpContext  *context,
 					    GType         tool_type,
 					    gboolean      tool_context,
 					    const gchar  *identifier,

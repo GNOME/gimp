@@ -47,7 +47,6 @@
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
-#include "app_procs.h"
 #include "colormaps.h"
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -69,7 +68,7 @@ typedef enum
 
 
 /*  preferences local functions  */
-static PrefsState  prefs_check_settings          (void);
+static PrefsState  prefs_check_settings          (Gimp          *gimp);
 static void        prefs_ok_callback             (GtkWidget     *widget,
 						  GtkWidget     *dlg);
 static void        prefs_save_callback           (GtkWidget     *widget,
@@ -190,7 +189,7 @@ static gchar            * edit_theme_path     = NULL;
 /*  variables which will be changed _after_ closing the dialog  */
 static guint              edit_tile_cache_size;
 
-static GtkWidget        * prefs_dlg = NULL;
+static GtkWidget        * prefs_dialog = NULL;
 
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
@@ -273,13 +272,13 @@ prefs_strcmp (gchar *src1,
 }
 
 static PrefsState
-prefs_check_settings (void)
+prefs_check_settings (Gimp *gimp)
 {
   /*  First, check for invalid values...  */
-  if (the_gimp->config->levels_of_undo < 0) 
+  if (gimp->config->levels_of_undo < 0) 
     {
       g_message (_("Error: Levels of undo must be zero or greater."));
-      the_gimp->config->levels_of_undo = old_levels_of_undo;
+      gimp->config->levels_of_undo = old_levels_of_undo;
       return PREFS_CORRUPT;
     }
   if (gimprc.marching_speed < 50)
@@ -288,38 +287,38 @@ prefs_check_settings (void)
       gimprc.marching_speed = old_marching_speed;
       return PREFS_CORRUPT;
     }
-  if (the_gimp->config->default_width < 1)
+  if (gimp->config->default_width < 1)
     {
       g_message (_("Error: Default width must be one or greater."));
-      the_gimp->config->default_width = old_default_width;
+      gimp->config->default_width = old_default_width;
       return PREFS_CORRUPT;
     }
-  if (the_gimp->config->default_height < 1)
+  if (gimp->config->default_height < 1)
     {
       g_message (_("Error: Default height must be one or greater."));
-      the_gimp->config->default_height = old_default_height;
+      gimp->config->default_height = old_default_height;
       return PREFS_CORRUPT;
     }
-  if (the_gimp->config->default_units < GIMP_UNIT_INCH ||
-      the_gimp->config->default_units >= gimp_unit_get_number_of_units ())
+  if (gimp->config->default_units < GIMP_UNIT_INCH ||
+      gimp->config->default_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default unit must be within unit range."));
-      the_gimp->config->default_units = old_default_units;
+      gimp->config->default_units = old_default_units;
       return PREFS_CORRUPT;
     }
-  if (the_gimp->config->default_xresolution < GIMP_MIN_RESOLUTION ||
-      the_gimp->config->default_yresolution < GIMP_MIN_RESOLUTION)
+  if (gimp->config->default_xresolution < GIMP_MIN_RESOLUTION ||
+      gimp->config->default_yresolution < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: Default resolution must not be zero."));
-      the_gimp->config->default_xresolution = old_default_xresolution;
-      the_gimp->config->default_yresolution = old_default_yresolution;
+      gimp->config->default_xresolution = old_default_xresolution;
+      gimp->config->default_yresolution = old_default_yresolution;
       return PREFS_CORRUPT;
     }
-  if (the_gimp->config->default_resolution_units < GIMP_UNIT_INCH ||
-      the_gimp->config->default_resolution_units >= gimp_unit_get_number_of_units ())
+  if (gimp->config->default_resolution_units < GIMP_UNIT_INCH ||
+      gimp->config->default_resolution_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default resolution unit must be within unit range."));
-      the_gimp->config->default_resolution_units = old_default_resolution_units;
+      gimp->config->default_resolution_units = old_default_resolution_units;
       return PREFS_CORRUPT;
     }
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
@@ -375,7 +374,7 @@ static void
 prefs_restart_notification_save_callback (GtkWidget *widget,
 					       gpointer   data)
 {
-  prefs_save_callback (widget, prefs_dlg);
+  prefs_save_callback (widget, prefs_dialog);
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -431,9 +430,13 @@ static void
 prefs_ok_callback (GtkWidget *widget,
 		   GtkWidget *dlg)
 {
-  PrefsState state;
+  Gimp       *gimp;
+  PrefsState  state;
 
-  state = prefs_check_settings ();
+  gimp = GIMP (g_object_get_data (G_OBJECT (dlg), "gimp"));
+
+  state = prefs_check_settings (gimp);
+
   switch (state)
     {
     case PREFS_CORRUPT:
@@ -441,7 +444,7 @@ prefs_ok_callback (GtkWidget *widget,
       break;
 
     case PREFS_RESTART:
-      gtk_widget_set_sensitive (prefs_dlg, FALSE);
+      gtk_widget_set_sensitive (prefs_dialog, FALSE);
       prefs_restart_notification ();
       break;
 
@@ -462,10 +465,9 @@ prefs_ok_callback (GtkWidget *widget,
       break;
     }
 
-  if (prefs_dlg)
+  if (prefs_dialog)
     {
-      gtk_widget_destroy (prefs_dlg);
-      prefs_dlg = NULL;
+      gtk_widget_destroy (prefs_dialog);
     }
 }
 
@@ -473,30 +475,34 @@ static void
 prefs_save_callback (GtkWidget *widget,
 		     GtkWidget *dlg)
 {
-  GList *update = NULL; /*  options that should be updated in .gimprc  */
-  GList *remove = NULL; /*  options that should be commented out       */
+  Gimp       *gimp;
+  PrefsState  state;
 
-  PrefsState state;
+  GList      *update = NULL; /*  options that should be updated in .gimprc  */
+  GList      *remove = NULL; /*  options that should be commented out       */
 
-  gboolean  save_stingy_memory_use;
-  gint      save_min_colors;
-  gboolean  save_install_cmap;
-  gboolean  save_cycled_marching_ants;
-  gint      save_last_opened_size;
-  gboolean  save_show_indicators;
-  gboolean  save_nav_window_per_display;
-  gboolean  save_info_window_follows_mouse;
-  gchar    *save_temp_path;
-  gchar    *save_swap_path;
-  gchar    *save_plug_in_path;
-  gchar    *save_module_path;
-  gchar    *save_brush_path;
-  gchar    *save_pattern_path;
-  gchar    *save_palette_path;
-  gchar    *save_gradient_path;
-  gchar    *save_theme_path;
+  gboolean    save_stingy_memory_use;
+  gint        save_min_colors;
+  gboolean    save_install_cmap;
+  gboolean    save_cycled_marching_ants;
+  gint        save_last_opened_size;
+  gboolean    save_show_indicators;
+  gboolean    save_nav_window_per_display;
+  gboolean    save_info_window_follows_mouse;
+  gchar      *save_temp_path;
+  gchar      *save_swap_path;
+  gchar      *save_plug_in_path;
+  gchar      *save_module_path;
+  gchar      *save_brush_path;
+  gchar      *save_pattern_path;
+  gchar      *save_palette_path;
+  gchar      *save_gradient_path;
+  gchar      *save_theme_path;
 
-  state = prefs_check_settings ();
+  gimp = GIMP (g_object_get_data (G_OBJECT (dlg), "gimp"));
+
+  state = prefs_check_settings (gimp);
+
   switch (state)
     {
     case PREFS_CORRUPT:
@@ -504,7 +510,7 @@ prefs_save_callback (GtkWidget *widget,
       break;
 
     case PREFS_RESTART:
-      gtk_widget_set_sensitive (prefs_dlg, FALSE);
+      gtk_widget_set_sensitive (prefs_dialog, FALSE);
       g_message (_("You will need to restart GIMP for these "
 		   "changes to take effect."));
       /* don't break */
@@ -523,8 +529,7 @@ prefs_save_callback (GtkWidget *widget,
       break;
     }
 
-  gtk_widget_destroy (prefs_dlg);
-  prefs_dlg = NULL;
+  gtk_widget_destroy (prefs_dialog);
 
   /*  Save variables so that we can restore them later  */
   save_stingy_memory_use         = base_config->stingy_memory_use;
@@ -539,16 +544,16 @@ prefs_save_callback (GtkWidget *widget,
   save_temp_path      = base_config->temp_path;
   save_swap_path      = base_config->swap_path;
 
-  save_plug_in_path   = the_gimp->config->plug_in_path;
-  save_module_path    = the_gimp->config->module_path;
-  save_brush_path     = the_gimp->config->brush_path;
-  save_pattern_path   = the_gimp->config->pattern_path;
-  save_palette_path   = the_gimp->config->palette_path;
-  save_gradient_path  = the_gimp->config->gradient_path;
+  save_plug_in_path   = gimp->config->plug_in_path;
+  save_module_path    = gimp->config->module_path;
+  save_brush_path     = gimp->config->brush_path;
+  save_pattern_path   = gimp->config->pattern_path;
+  save_palette_path   = gimp->config->palette_path;
+  save_gradient_path  = gimp->config->gradient_path;
 
   save_theme_path     = gimprc.theme_path;
 
-  if (the_gimp->config->levels_of_undo != old_levels_of_undo)
+  if (gimp->config->levels_of_undo != old_levels_of_undo)
     {
       update = g_list_append (update, "undo-levels");
     }
@@ -609,32 +614,32 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "always-restore-session");
     }
-  if (the_gimp->config->default_width != old_default_width ||
-      the_gimp->config->default_height != old_default_height)
+  if (gimp->config->default_width != old_default_width ||
+      gimp->config->default_height != old_default_height)
     {
       update = g_list_append (update, "default-image-size");
     }
-  if (the_gimp->config->default_units != old_default_units)
+  if (gimp->config->default_units != old_default_units)
     {
       update = g_list_append (update, "default-units");
     }
-  if (ABS (the_gimp->config->default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (gimp->config->default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-xresolution");
     }
-  if (ABS (the_gimp->config->default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (gimp->config->default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-yresolution");
     }
-  if (the_gimp->config->default_resolution_units != old_default_resolution_units)
+  if (gimp->config->default_resolution_units != old_default_resolution_units)
     {
       update = g_list_append (update, "default-resolution-units");
     }
-  if (the_gimp->config->default_type != old_default_type)
+  if (gimp->config->default_type != old_default_type)
     {
       update = g_list_append (update, "default-image-type");
     }
-  if (prefs_strcmp (the_gimp->config->default_comment, old_default_comment))
+  if (prefs_strcmp (gimp->config->default_comment, old_default_comment))
     {
       update = g_list_append (update, "default-comment");
     }
@@ -693,7 +698,7 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "max-new-image-size");
     }
-  if (the_gimp->config->thumbnail_mode != old_thumbnail_mode)
+  if (gimp->config->thumbnail_mode != old_thumbnail_mode)
     {
       update = g_list_append (update, "thumbnail-mode");
     }
@@ -786,32 +791,32 @@ prefs_save_callback (GtkWidget *widget,
     }
   if (prefs_strcmp (old_plug_in_path, edit_plug_in_path))
     {
-      the_gimp->config->plug_in_path = edit_plug_in_path;
+      gimp->config->plug_in_path = edit_plug_in_path;
       update = g_list_append (update, "plug-in-path");
     }
   if (prefs_strcmp (old_module_path, edit_module_path))
     {
-      the_gimp->config->module_path = edit_module_path;
+      gimp->config->module_path = edit_module_path;
       update = g_list_append (update, "module-path");
     }
   if (prefs_strcmp (old_brush_path, edit_brush_path))
     {
-      the_gimp->config->brush_path = edit_brush_path;
+      gimp->config->brush_path = edit_brush_path;
       update = g_list_append (update, "brush-path");
     }
   if (prefs_strcmp (old_pattern_path, edit_pattern_path))
     {
-      the_gimp->config->pattern_path = edit_pattern_path;
+      gimp->config->pattern_path = edit_pattern_path;
       update = g_list_append (update, "pattern-path");
     }
   if (prefs_strcmp (old_palette_path, edit_palette_path))
     {
-      the_gimp->config->palette_path = edit_palette_path;
+      gimp->config->palette_path = edit_palette_path;
       update = g_list_append (update, "palette-path");
     }
   if (prefs_strcmp (old_gradient_path, edit_gradient_path))
     {
-      the_gimp->config->gradient_path = edit_gradient_path;
+      gimp->config->gradient_path = edit_gradient_path;
       update = g_list_append (update, "gradient-path");
     }
   if (prefs_strcmp (old_theme_path, edit_theme_path))
@@ -848,12 +853,12 @@ prefs_save_callback (GtkWidget *widget,
   base_config->temp_path     = save_temp_path;
   base_config->swap_path     = save_swap_path;
 
-  the_gimp->config->plug_in_path  = save_plug_in_path;
-  the_gimp->config->module_path   = save_module_path;
-  the_gimp->config->brush_path    = save_brush_path;
-  the_gimp->config->pattern_path  = save_pattern_path;
-  the_gimp->config->palette_path  = save_palette_path;
-  the_gimp->config->gradient_path = save_gradient_path;
+  gimp->config->plug_in_path  = save_plug_in_path;
+  gimp->config->module_path   = save_module_path;
+  gimp->config->brush_path    = save_brush_path;
+  gimp->config->pattern_path  = save_pattern_path;
+  gimp->config->palette_path  = save_palette_path;
+  gimp->config->gradient_path = save_gradient_path;
 
   gimprc.theme_path = save_theme_path;
 
@@ -867,44 +872,47 @@ static void
 prefs_cancel_callback (GtkWidget *widget,
 		       GtkWidget *dlg)
 {
+  Gimp *gimp;
+
+  gimp = GIMP (g_object_get_data (G_OBJECT (dlg), "gimp"));
+
   gtk_widget_destroy (dlg);
-  prefs_dlg = NULL;
 
   /*  restore ordinary gimprc variables  */
-  base_config->interpolation_type       = old_interpolation_type;
-  base_config->num_processors           = old_num_processors;
+  base_config->interpolation_type        = old_interpolation_type;
+  base_config->num_processors            = old_num_processors;
 
-  the_gimp->config->default_type             = old_default_type;
-  the_gimp->config->default_width            = old_default_width;
-  the_gimp->config->default_height           = old_default_height;
-  the_gimp->config->default_units            = old_default_units;
-  the_gimp->config->default_xresolution      = old_default_xresolution;
-  the_gimp->config->default_yresolution      = old_default_yresolution;
-  the_gimp->config->default_resolution_units = old_default_resolution_units;
-  the_gimp->config->levels_of_undo           = old_levels_of_undo;
-  the_gimp->config->thumbnail_mode           = old_thumbnail_mode;
+  gimp->config->default_type             = old_default_type;
+  gimp->config->default_width            = old_default_width;
+  gimp->config->default_height           = old_default_height;
+  gimp->config->default_units            = old_default_units;
+  gimp->config->default_xresolution      = old_default_xresolution;
+  gimp->config->default_yresolution      = old_default_yresolution;
+  gimp->config->default_resolution_units = old_default_resolution_units;
+  gimp->config->levels_of_undo           = old_levels_of_undo;
+  gimp->config->thumbnail_mode           = old_thumbnail_mode;
 
-  gimprc.marching_speed                 = old_marching_speed;
-  gimprc.allow_resize_windows           = old_allow_resize_windows;
-  gimprc.auto_save                      = old_auto_save;
-  gimprc.no_cursor_updating             = old_no_cursor_updating;
-  gimprc.perfectmouse                   = old_perfectmouse;
-  gimprc.show_tool_tips                 = old_show_tool_tips;
-  gimprc.show_rulers                    = old_show_rulers;
-  gimprc.show_statusbar                 = old_show_statusbar;
-  gimprc.confirm_on_close               = old_confirm_on_close;
-  gimprc.save_session_info              = old_save_session_info;
-  gimprc.save_device_status             = old_save_device_status;
-  gimprc.default_dot_for_dot            = old_default_dot_for_dot;
-  gimprc.monitor_xres                   = old_monitor_xres;
-  gimprc.monitor_yres                   = old_monitor_yres;
-  gimprc.using_xserver_resolution       = old_using_xserver_resolution;
-  gimprc.max_new_image_size             = old_max_new_image_size;
-  gimprc.trust_dirty_flag               = old_trust_dirty_flag;
-  gimprc.use_help                       = old_use_help;
-  gimprc.help_browser                   = old_help_browser;
-  gimprc.cursor_mode                    = old_cursor_mode;
-  gimprc.default_threshold              = old_default_threshold;
+  gimprc.marching_speed                  = old_marching_speed;
+  gimprc.allow_resize_windows            = old_allow_resize_windows;
+  gimprc.auto_save                       = old_auto_save;
+  gimprc.no_cursor_updating              = old_no_cursor_updating;
+  gimprc.perfectmouse                    = old_perfectmouse;
+  gimprc.show_tool_tips                  = old_show_tool_tips;
+  gimprc.show_rulers                     = old_show_rulers;
+  gimprc.show_statusbar                  = old_show_statusbar;
+  gimprc.confirm_on_close                = old_confirm_on_close;
+  gimprc.save_session_info               = old_save_session_info;
+  gimprc.save_device_status              = old_save_device_status;
+  gimprc.default_dot_for_dot             = old_default_dot_for_dot;
+  gimprc.monitor_xres                    = old_monitor_xres;
+  gimprc.monitor_yres                    = old_monitor_yres;
+  gimprc.using_xserver_resolution        = old_using_xserver_resolution;
+  gimprc.max_new_image_size              = old_max_new_image_size;
+  gimprc.trust_dirty_flag                = old_trust_dirty_flag;
+  gimprc.use_help                        = old_use_help;
+  gimprc.help_browser                    = old_help_browser;
+  gimprc.cursor_mode                     = old_cursor_mode;
+  gimprc.default_threshold               = old_default_threshold;
 
   /*  restore variables which need some magic  */
   if (gimprc.preview_size != old_preview_size)
@@ -925,7 +933,7 @@ prefs_cancel_callback (GtkWidget *widget,
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
-      gimp_container_foreach (the_gimp->images,
+      gimp_container_foreach (gimp->images,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
 
@@ -933,10 +941,10 @@ prefs_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  prefs_strset (&gimprc.image_title_format,         old_image_title_format);
-  prefs_strset (&the_gimp->config->default_comment, old_default_comment);
+  prefs_strset (&gimprc.image_title_format,     old_image_title_format);
+  prefs_strset (&gimp->config->default_comment, old_default_comment);
 
-  tool_manager_set_global_paint_options (the_gimp, old_global_paint_options);
+  tool_manager_set_global_paint_options (gimp, old_global_paint_options);
 
   /*  restore values which need a restart  */
   edit_stingy_memory_use         = old_stingy_memory_use;
@@ -968,7 +976,13 @@ static void
 prefs_toggle_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  gint *val;
+  GtkWidget *dialog;
+  Gimp      *gimp;
+  gint      *val;
+
+  dialog = gtk_widget_get_toplevel (widget);
+
+  gimp = GIMP (g_object_get_data (G_OBJECT (dialog), "gimp"));
 
   val = (gint *) data;
 
@@ -1000,8 +1014,8 @@ prefs_toggle_callback (GtkWidget *widget,
 
   /*  radio buttons  */
   else if (data == &base_config->interpolation_type ||
-	   data == &the_gimp->config->default_type       ||
-	   data == &the_gimp->config->thumbnail_mode     ||
+	   data == &gimp->config->default_type      ||
+	   data == &gimp->config->thumbnail_mode    ||
            data == &gimprc.trust_dirty_flag         ||
 	   data == &gimprc.help_browser             ||
 	   data == &gimprc.cursor_mode)
@@ -1018,7 +1032,7 @@ prefs_toggle_callback (GtkWidget *widget,
 			      "user_data"));
 
       render_setup (gimprc.transparency_type, gimprc.transparency_size);
-      gimp_container_foreach (the_gimp->images,
+      gimp_container_foreach (gimp->images,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
       gdisplays_expose_full ();
@@ -1026,7 +1040,7 @@ prefs_toggle_callback (GtkWidget *widget,
     }
   else if (data == &gimprc.global_paint_options)
     {
-      tool_manager_set_global_paint_options (the_gimp,
+      tool_manager_set_global_paint_options (gimp,
 					     GTK_TOGGLE_BUTTON (widget)->active);
     }
 
@@ -1158,22 +1172,35 @@ static void
 prefs_default_size_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  the_gimp->config->default_width =
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
+  gimp->config->default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  the_gimp->config->default_height =
+
+  gimp->config->default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
-  the_gimp->config->default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+
+  gimp->config->default_units =
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void
 prefs_default_resolution_callback (GtkWidget *widget,
 				   gpointer   data)
 {
+  GtkWidget      *dialog;
+  Gimp           *gimp;
   GtkWidget      *size_sizeentry;
   static gdouble  xres = 0.0;
   static gdouble  yres = 0.0;
   gdouble         new_xres;
   gdouble         new_yres;
+
+  dialog = gtk_widget_get_toplevel (widget);
+
+  gimp = GIMP (g_object_get_data (G_OBJECT (dialog), "gimp"));
 
   new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -1207,15 +1234,15 @@ prefs_default_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry),
 				  1, yres, FALSE);
 
-  the_gimp->config->default_width =
+  gimp->config->default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0));
-  the_gimp->config->default_height =
+  gimp->config->default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1));
 
-  the_gimp->config->default_xresolution = xres;
-  the_gimp->config->default_yresolution = yres;
+  gimp->config->default_xresolution = xres;
+  gimp->config->default_yresolution = yres;
 
-  the_gimp->config->default_resolution_units = 
+  gimp->config->default_resolution_units = 
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
@@ -1389,7 +1416,7 @@ prefs_help_func (const gchar *help_data)
   GtkWidget *event_box;
   gint       page_num;
 
-  notebook  = g_object_get_data (G_OBJECT (prefs_dlg), "notebook");
+  notebook  = g_object_get_data (G_OBJECT (prefs_dialog), "notebook");
   page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
   event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
@@ -1401,7 +1428,7 @@ prefs_help_func (const gchar *help_data)
  *  create the preferences dialog
  */
 GtkWidget *
-preferences_dialog_create (void)
+preferences_dialog_create (Gimp *gimp)
 {
   GtkWidget        *tv;
   GtkTreeStore     *tree;
@@ -1438,8 +1465,10 @@ preferences_dialog_create (void)
   gint   i;
   gchar *pixels_per_unit;
 
-  if (prefs_dlg)
-    return prefs_dlg;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (prefs_dialog)
+    return prefs_dialog;
 
   if (edit_temp_path == NULL)
     {
@@ -1459,12 +1488,12 @@ preferences_dialog_create (void)
       edit_temp_path      = prefs_strdup (base_config->temp_path);	
       edit_swap_path      = prefs_strdup (base_config->swap_path);
 
-      edit_plug_in_path   = prefs_strdup (the_gimp->config->plug_in_path);
-      edit_module_path    = prefs_strdup (the_gimp->config->module_path);
-      edit_brush_path     = prefs_strdup (the_gimp->config->brush_path);
-      edit_pattern_path   = prefs_strdup (the_gimp->config->pattern_path);
-      edit_palette_path   = prefs_strdup (the_gimp->config->palette_path);
-      edit_gradient_path  = prefs_strdup (the_gimp->config->gradient_path);
+      edit_plug_in_path   = prefs_strdup (gimp->config->plug_in_path);
+      edit_module_path    = prefs_strdup (gimp->config->module_path);
+      edit_brush_path     = prefs_strdup (gimp->config->brush_path);
+      edit_pattern_path   = prefs_strdup (gimp->config->pattern_path);
+      edit_palette_path   = prefs_strdup (gimp->config->palette_path);
+      edit_gradient_path  = prefs_strdup (gimp->config->gradient_path);
 
       edit_theme_path     = prefs_strdup (gimprc.theme_path);
     }
@@ -1478,15 +1507,15 @@ preferences_dialog_create (void)
   old_interpolation_type       = base_config->interpolation_type;
   old_num_processors           = base_config->num_processors;
 
-  old_default_type             = the_gimp->config->default_type;
-  old_default_width            = the_gimp->config->default_width;
-  old_default_height           = the_gimp->config->default_height;
-  old_default_units            = the_gimp->config->default_units;
-  old_default_xresolution      = the_gimp->config->default_xresolution;
-  old_default_yresolution      = the_gimp->config->default_yresolution;
-  old_default_resolution_units = the_gimp->config->default_resolution_units;
-  old_levels_of_undo           = the_gimp->config->levels_of_undo;
-  old_thumbnail_mode           = the_gimp->config->thumbnail_mode;
+  old_default_type             = gimp->config->default_type;
+  old_default_width            = gimp->config->default_width;
+  old_default_height           = gimp->config->default_height;
+  old_default_units            = gimp->config->default_units;
+  old_default_xresolution      = gimp->config->default_xresolution;
+  old_default_yresolution      = gimp->config->default_yresolution;
+  old_default_resolution_units = gimp->config->default_resolution_units;
+  old_levels_of_undo           = gimp->config->levels_of_undo;
+  old_thumbnail_mode           = gimp->config->thumbnail_mode;
 
   old_perfectmouse             = gimprc.perfectmouse;
   old_transparency_type        = gimprc.transparency_type;
@@ -1517,7 +1546,7 @@ preferences_dialog_create (void)
   old_default_threshold        = gimprc.default_threshold;
 
   prefs_strset (&old_image_title_format, gimprc.image_title_format);	
-  prefs_strset (&old_default_comment,    the_gimp->config->default_comment);	
+  prefs_strset (&old_default_comment,    gimp->config->default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -1544,25 +1573,30 @@ preferences_dialog_create (void)
   old_tile_cache_size = edit_tile_cache_size;
 
   /* Create the dialog */
-  prefs_dlg = gimp_dialog_new (_("Preferences"), "gimp_preferences",
-                               prefs_help_func,
-                               "dialogs/preferences/preferences.html",
-                               GTK_WIN_POS_NONE,
-                               FALSE, TRUE, FALSE,
+  prefs_dialog = gimp_dialog_new (_("Preferences"), "gimp_preferences",
+                                  prefs_help_func,
+                                  "dialogs/preferences/preferences.html",
+                                  GTK_WIN_POS_NONE,
+                                  FALSE, TRUE, FALSE,
 
-                               GTK_STOCK_OK, prefs_ok_callback,
-                               NULL, NULL, NULL, TRUE, FALSE,
-                               GTK_STOCK_SAVE, prefs_save_callback,
-                               NULL, NULL, NULL, FALSE, FALSE,
-                               GTK_STOCK_CANCEL, prefs_cancel_callback,
-                               NULL, NULL, NULL, FALSE, TRUE,
+                                  GTK_STOCK_OK, prefs_ok_callback,
+                                  NULL, NULL, NULL, TRUE, FALSE,
+                                  GTK_STOCK_SAVE, prefs_save_callback,
+                                  NULL, NULL, NULL, FALSE, FALSE,
+                                  GTK_STOCK_CANCEL, prefs_cancel_callback,
+                                  NULL, NULL, NULL, FALSE, TRUE,
 
-                               NULL);
+                                  NULL);
+
+  g_object_set_data (G_OBJECT (prefs_dialog), "gimp", gimp);
+
+  g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
+                             (gpointer) &prefs_dialog);
 
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (prefs_dlg)->vbox), hbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (prefs_dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   /* The categories tree */
@@ -1593,7 +1627,7 @@ preferences_dialog_create (void)
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
   gtk_container_add (GTK_CONTAINER (frame), notebook);
 
-  g_object_set_data (G_OBJECT (prefs_dlg), "notebook", notebook);
+  g_object_set_data (G_OBJECT (prefs_dialog), "notebook", notebook);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   g_signal_connect (G_OBJECT (sel), "changed",
@@ -1627,7 +1661,7 @@ preferences_dialog_create (void)
   gtk_widget_show (hbox);
 
   sizeentry =
-    gimp_size_entry_new (2, the_gimp->config->default_units, "%p",
+    gimp_size_entry_new (2, gimp->config->default_units, "%p",
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
@@ -1639,9 +1673,9 @@ preferences_dialog_create (void)
 				_("Pixels"), 1, 4, 0.0);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-				  the_gimp->config->default_xresolution, FALSE);
+				  gimp->config->default_xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-				  the_gimp->config->default_yresolution, FALSE);
+				  gimp->config->default_yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry), 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
@@ -1649,19 +1683,19 @@ preferences_dialog_create (void)
     (GIMP_SIZE_ENTRY (sizeentry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-			      the_gimp->config->default_width);
+			      gimp->config->default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-			      the_gimp->config->default_height);
+			      gimp->config->default_height);
 
   g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
 		    G_CALLBACK (prefs_default_size_callback),
-		    NULL);
+		    gimp);
   g_signal_connect (G_OBJECT (sizeentry), "value_changed",
 		    G_CALLBACK (prefs_default_size_callback),
-		    NULL);
+		    gimp);
   g_signal_connect (G_OBJECT (sizeentry), "refval_changed",
 		    G_CALLBACK (prefs_default_size_callback),
-		    NULL);
+		    gimp);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
@@ -1677,14 +1711,14 @@ preferences_dialog_create (void)
 
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
-  sizeentry2 = gimp_size_entry_new (2, the_gimp->config->default_resolution_units,
+  sizeentry2 = gimp_size_entry_new (2, gimp->config->default_resolution_units,
 				    pixels_per_unit,
 				    FALSE, FALSE, TRUE, 75,
 				    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (ABS (the_gimp->config->default_xresolution -
-	   the_gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION)
+  if (ABS (gimp->config->default_xresolution -
+	   gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (sizeentry2), button, 1, 3, 3, 4);
   gtk_widget_show (button);
@@ -1704,9 +1738,9 @@ preferences_dialog_create (void)
     (GIMP_SIZE_ENTRY (sizeentry2), 1, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2), 0,
-			      the_gimp->config->default_xresolution);
+			      gimp->config->default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2), 1,
-			      the_gimp->config->default_yresolution);
+			      gimp->config->default_yresolution);
 
   g_signal_connect (G_OBJECT (sizeentry2), "unit_changed",
 		    G_CALLBACK (prefs_default_resolution_callback),
@@ -1735,8 +1769,8 @@ preferences_dialog_create (void)
   optionmenu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (prefs_toggle_callback),
-			   &the_gimp->config->default_type,
-			   GINT_TO_POINTER (the_gimp->config->default_type),
+			   &gimp->config->default_type,
+			   GINT_TO_POINTER (gimp->config->default_type),
 
 			   _("RGB"),       GINT_TO_POINTER (RGB),  NULL,
 			   _("Grayscale"), GINT_TO_POINTER (GRAY), NULL,
@@ -1785,7 +1819,7 @@ preferences_dialog_create (void)
   gtk_widget_show (scrolled_window);
 
   text_buffer = gtk_text_buffer_new (NULL);
-  gtk_text_buffer_set_text (text_buffer, the_gimp->config->default_comment, -1);
+  gtk_text_buffer_set_text (text_buffer, gimp->config->default_comment, -1);
 
   text_view = gtk_text_view_new_with_buffer (text_buffer);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
@@ -1796,7 +1830,7 @@ preferences_dialog_create (void)
 
   g_signal_connect (G_OBJECT (text_buffer), "changed",
 		    G_CALLBACK (prefs_text_callback),
-		    &the_gimp->config->default_comment);
+		    &gimp->config->default_comment);
 
   /* Display page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -2336,7 +2370,7 @@ preferences_dialog_create (void)
 
   /*  Levels of Undo  */
   spinbutton = gimp_spin_button_new (&adjustment,
-				     the_gimp->config->levels_of_undo,
+				     gimp->config->levels_of_undo,
 				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Levels of Undo:"), 1.0, 0.5,
@@ -2344,7 +2378,7 @@ preferences_dialog_create (void)
 
   g_signal_connect (G_OBJECT (adjustment), "value_changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
-		    &the_gimp->config->levels_of_undo);
+		    &gimp->config->levels_of_undo);
 
   /*  The tile cache size  */
   adjustment = gtk_adjustment_new (edit_tile_cache_size, 
@@ -2421,8 +2455,8 @@ preferences_dialog_create (void)
   optionmenu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (prefs_toggle_callback),
-			   &the_gimp->config->thumbnail_mode,
-			   GINT_TO_POINTER (the_gimp->config->thumbnail_mode),
+			   &gimp->config->thumbnail_mode,
+			   GINT_TO_POINTER (gimp->config->thumbnail_mode),
 
 			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
 			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,
@@ -2751,5 +2785,5 @@ preferences_dialog_create (void)
 
   gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
-  return prefs_dlg;
+  return prefs_dialog;
 }

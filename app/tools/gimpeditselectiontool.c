@@ -103,19 +103,19 @@ static void      gimp_edit_selection_tool_init       (GimpEditSelectionTool *edi
 
 static void      gimp_edit_selection_tool_button_release (GimpTool       *tool,
 							  GdkEventButton *bevent,
-							  GDisplay       *gdisp);
+							  GimpDisplay    *gdisp);
 static void      gimp_edit_selection_tool_motion         (GimpTool       *tool,
 							  GdkEventMotion *mevent,
-							  GDisplay       *gdisp);
+							  GimpDisplay    *gdisp);
 static void      gimp_edit_selection_tool_control        (GimpTool       *tool,
 							  ToolAction      action,
-							  GDisplay       *gdisp);
+							  GimpDisplay    *gdisp);
 static void      gimp_edit_selection_tool_cursor_update  (GimpTool       *tool,
 							  GdkEventMotion *mevent,
-							  GDisplay       *gdisp);
+							  GimpDisplay    *gdisp);
 void             gimp_edit_selection_tool_arrow_key      (GimpTool       *tool,
 							  GdkEventKey    *kevent,
-							  GDisplay       *gdisp);
+							  GimpDisplay    *gdisp);
 
 static void      gimp_edit_selection_tool_draw           (GimpDrawTool   *tool);
 
@@ -191,7 +191,7 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 
 static void
 gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
-			       GDisplay              *gdisp,
+			       GimpDisplay           *gdisp,
 			       gdouble                x,
 			       gdouble                y)
 {
@@ -228,7 +228,7 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
 
 void
 init_edit_selection (GimpTool       *tool,
-		     GDisplay       *gdisp,
+		     GimpDisplay    *gdisp,
 		     GdkEventButton *bevent,
 		     EditType        edit_type)
 {
@@ -309,7 +309,7 @@ init_edit_selection (GimpTool       *tool,
 static void
 gimp_edit_selection_tool_button_release (GimpTool       *tool,
 					 GdkEventButton *bevent,
-					 GDisplay       *gdisp)
+					 GimpDisplay    *gdisp)
 {
   GimpEditSelectionTool *edit_select;
   gint                   x;
@@ -402,7 +402,7 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
 static void
 gimp_edit_selection_tool_motion (GimpTool       *tool,
 				 GdkEventMotion *mevent,
-				 GDisplay       *gdisp)
+				 GimpDisplay    *gdisp)
 {
   GimpEditSelectionTool *edit_select;
   gchar                  offset[STATUSBAR_SIZE];
@@ -577,7 +577,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 
 static void
 selection_transform_segs (GimpEditSelectionTool *edit_select,
-			  GDisplay              *gdisp,
+			  GimpDisplay           *gdisp,
 			  BoundSeg              *src_segs,
 			  GdkSegment            *dest_segs,
 			  gint                   num_segs)
@@ -610,7 +610,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpEditSelectionTool *edit_select;
   GimpTool              *tool;
-  GDisplay              *gdisp;
+  GimpDisplay           *gdisp;
   Selection             *select;
   GimpLayer             *layer;
   GList                 *layer_list;
@@ -745,9 +745,9 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
 
 static void
-gimp_edit_selection_tool_control (GimpTool   *tool,
-				  ToolAction  action,
-				  GDisplay   *gdisp)
+gimp_edit_selection_tool_control (GimpTool    *tool,
+				  ToolAction   action,
+				  GimpDisplay *gdisp)
 {
   switch (action)
     {
@@ -772,7 +772,7 @@ gimp_edit_selection_tool_control (GimpTool   *tool,
 static void
 gimp_edit_selection_tool_cursor_update (GimpTool       *tool,
 					GdkEventMotion *mevent,
-					GDisplay       *gdisp)
+					GimpDisplay    *gdisp)
 {
   gdisplay_install_tool_cursor (gdisp,
 				GIMP_MOUSE_CURSOR,
@@ -876,7 +876,7 @@ process_event_queue_keys (GdkEventKey *kevent,
 void
 gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 				    GdkEventKey *kevent,
-				    GDisplay    *gdisp)
+				    GimpDisplay *gdisp)
 {
   gint       inc_x, inc_y, mask_inc_x, mask_inc_y;
   GimpLayer *layer;

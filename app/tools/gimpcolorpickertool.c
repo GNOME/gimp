@@ -83,23 +83,23 @@ static void       gimp_color_picker_tool_finalize       (GObject        *object)
 
 static void       gimp_color_picker_tool_button_press   (GimpTool       *tool,
 							 GdkEventButton *bevent,
-							 GDisplay       *gdisp);
+							 GimpDisplay    *gdisp);
 							
 static void       gimp_color_picker_tool_button_release (GimpTool       *tool,
 					        	 GdkEventButton *bevent,
-					        	 GDisplay       *gdisp);
+					        	 GimpDisplay    *gdisp);
 					        	
 static void       gimp_color_picker_tool_motion         (GimpTool       *tool,
 					       		 GdkEventMotion *mevent,
-					       		 GDisplay       *gdisp);
+					       		 GimpDisplay    *gdisp);
 					       		
 static void       gimp_color_picker_tool_cursor_update  (GimpTool       *tool,
 					       		 GdkEventMotion *mevent,
-					       		 GDisplay       *gdisp);
+					       		 GimpDisplay    *gdisp);
 					       		
 static void       gimp_color_picker_tool_control        (GimpTool       *tool,
                                                          ToolAction      action,
-					       		 GDisplay       *gdisp);
+					       		 GimpDisplay    *gdisp);
 
 static void       gimp_color_picker_tool_draw           (GimpDrawTool   *draw_tool);
 
@@ -247,9 +247,9 @@ gimp_color_picker_tool_finalize (GObject *object)
 }
 
 static void
-gimp_color_picker_tool_control (GimpTool    *tool,
-				ToolAction  action,
-		      		GDisplay   *gdisp)
+gimp_color_picker_tool_control (GimpTool     *tool,
+				ToolAction   action,
+		      		GimpDisplay *gdisp)
 {
   switch (action)
     {
@@ -274,7 +274,7 @@ gimp_color_picker_tool_control (GimpTool    *tool,
 static void
 gimp_color_picker_tool_button_press (GimpTool       *tool,
 				     GdkEventButton *bevent,
-			   	     GDisplay       *gdisp)
+			   	     GimpDisplay    *gdisp)
 {
   GimpColorPickerTool *cp_tool;
   gint                 x, y;
@@ -407,7 +407,7 @@ gimp_color_picker_tool_button_press (GimpTool       *tool,
 static void
 gimp_color_picker_tool_button_release (GimpTool       *tool,
 				       GdkEventButton *bevent,
-				       GDisplay       *gdisp)
+				       GimpDisplay    *gdisp)
 {
   GimpColorPickerTool *cp_tool;
   gint             x, y;
@@ -436,7 +436,7 @@ gimp_color_picker_tool_button_release (GimpTool       *tool,
 static void
 gimp_color_picker_tool_motion (GimpTool       *tool,
 		               GdkEventMotion *mevent,
-		               GDisplay       *gdisp)
+		               GimpDisplay    *gdisp)
 {
   GimpColorPickerTool *cp_tool;
   gint             x, y;
@@ -469,7 +469,7 @@ gimp_color_picker_tool_motion (GimpTool       *tool,
 static void
 gimp_color_picker_tool_cursor_update (GimpTool       *tool,
 			              GdkEventMotion *mevent,
-			              GDisplay       *gdisp)
+			              GimpDisplay    *gdisp)
 {
   gint x, y;
 

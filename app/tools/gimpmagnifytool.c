@@ -61,19 +61,19 @@ static void   gimp_magnify_tool_init            (GimpMagnifyTool      *tool);
 
 static void   gimp_magnify_tool_button_press    (GimpTool       *tool,
 						 GdkEventButton *bevent,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void   gimp_magnify_tool_button_release  (GimpTool       *tool,
 						 GdkEventButton *bevent,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void   gimp_magnify_tool_motion          (GimpTool       *tool,
 						 GdkEventMotion *mevent,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void   gimp_magnify_tool_modifier_key    (GimpTool       *tool,
 						 GdkEventKey    *kevent,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 static void   gimp_magnify_tool_cursor_update   (GimpTool       *tool,
 						 GdkEventMotion *mevent,
-						 GDisplay       *gdisp);
+						 GimpDisplay    *gdisp);
 
 static void   gimp_magnify_tool_draw            (GimpDrawTool   *draw_tool);
 
@@ -288,7 +288,7 @@ zoom_out (gint *src,
 static void
 gimp_magnify_tool_button_press (GimpTool       *tool,
 				GdkEventButton *bevent,
-				GDisplay       *gdisp)
+				GimpDisplay    *gdisp)
 {
   GimpMagnifyTool *magnify;
   gint             x, y;
@@ -318,7 +318,7 @@ gimp_magnify_tool_button_press (GimpTool       *tool,
 static void
 gimp_magnify_tool_button_release (GimpTool       *tool,
 				  GdkEventButton *bevent,
-				  GDisplay       *gdisp)
+				  GimpDisplay    *gdisp)
 {
   GimpMagnifyTool *magnify;
   gint             win_width, win_height;
@@ -387,7 +387,7 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
 static void
 gimp_magnify_tool_motion (GimpTool       *tool,
 			  GdkEventMotion *mevent,
-			  GDisplay       *gdisp)
+			  GimpDisplay    *gdisp)
 {
   GimpMagnifyTool *magnify;
   gint             x, y;
@@ -409,7 +409,7 @@ gimp_magnify_tool_motion (GimpTool       *tool,
 static void
 gimp_magnify_tool_modifier_key (GimpTool    *tool,
 				GdkEventKey *kevent,
-				GDisplay    *gdisp)
+				GimpDisplay *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -431,7 +431,7 @@ gimp_magnify_tool_modifier_key (GimpTool    *tool,
 static void
 gimp_magnify_tool_cursor_update (GimpTool       *tool,
 				 GdkEventMotion *mevent,
-				 GDisplay       *gdisp)
+				 GimpDisplay    *gdisp)
 {
   if (magnify_options->type == GIMP_ZOOM_IN)
     {

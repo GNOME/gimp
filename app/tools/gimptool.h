@@ -43,6 +43,8 @@ struct _GimpTool
 {
   GimpObject	parent_instance;
 
+  GimpToolInfo *tool_info;
+
   gint          ID;           /*  unique tool ID                              */
 
   ToolState     state;        /*  state of tool activity                      */

@@ -61,13 +61,13 @@ static void          gimp_shear_tool_class_init (GimpShearToolClass *klass);
 static void          gimp_shear_tool_init      (GimpShearTool       *shear_tool);
 
 static TileManager * gimp_shear_tool_transform (GimpTransformTool *transform_tool,
-						GDisplay       *gdisp,
+						GimpDisplay    *gdisp,
 						TransformState  state);
 
 static void          shear_tool_recalc         (GimpTool       *tool,
-						GDisplay       *gdisp);
+						GimpDisplay    *gdisp);
 static void          shear_tool_motion         (GimpTool       *tool,
-						GDisplay       *gdisp);
+						GimpDisplay    *gdisp);
 static void          shear_info_update         (GimpTool       *tool);
 
 static void          shear_x_mag_changed       (GtkWidget      *widget,
@@ -169,7 +169,7 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
 TileManager *
 gimp_shear_tool_shear (GimpImage    *gimage,
 		       GimpDrawable *drawable,
-		       GDisplay     *gdisp,
+		       GimpDisplay  *gdisp,
 		       TileManager  *float_tiles,
 		       gboolean      interpolation,
 		       GimpMatrix3   matrix)
@@ -193,7 +193,7 @@ gimp_shear_tool_shear (GimpImage    *gimage,
 
 static TileManager *
 gimp_shear_tool_transform (GimpTransformTool       *transform_tool,
-			   GDisplay                *gdisp,
+			   GimpDisplay             *gdisp,
 			   TransformState          state)
 {
   GimpTool *tool;
@@ -324,8 +324,8 @@ shear_y_mag_changed (GtkWidget *widget,
 }
 
 static void
-shear_tool_motion (GimpTool     *tool,
-		   GDisplay *gdisp)
+shear_tool_motion (GimpTool    *tool,
+		   GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   gint               diffx, diffy;
@@ -400,8 +400,8 @@ shear_tool_motion (GimpTool     *tool,
 }
 
 static void
-shear_tool_recalc (GimpTool     *tool,
-		   GDisplay *gdisp)
+shear_tool_recalc (GimpTool    *tool,
+		   GimpDisplay *gdisp)
 {
   GimpTransformTool *transform_tool;
   gfloat             width, height;

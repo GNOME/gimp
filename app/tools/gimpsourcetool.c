@@ -93,7 +93,7 @@ static void       gimp_clone_tool_paint        (GimpPaintTool   *paint_tool,
 static void       gimp_clone_tool_draw         (GimpDrawTool    *draw_tool);
 static void       gimp_clone_tool_cursor_update (GimpTool        *tool,
 						 GdkEventMotion  *mevent,
-						 GDisplay        *gdisp);
+						 GimpDisplay     *gdisp);
 static void       gimp_clone_tool_motion       (GimpPaintTool   *paint_tool,
 						GimpDrawable    *drawable,
 						GimpDrawable    *src_drawable,
@@ -140,7 +140,7 @@ static gint          offset_y      = 0;        /*  offset for cloning     */
 static gint          first         = TRUE;
 static gint          trans_tx      = 0;        /*                         */
 static gint          trans_ty      = 0;        /*  transformed target     */
-static GDisplay     *the_src_gdisp = NULL;     /*  ID of source gdisplay  */
+static GimpDisplay  *the_src_gdisp = NULL;     /*  ID of source gdisplay  */
 static GimpDrawable *src_drawable_ = NULL;     /*  source drawable        */
 
 static GimpDrawable *non_gui_src_drawable;
@@ -275,14 +275,14 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 		       GimpDrawable  *drawable,
 		       PaintState     state)
 {
-  GDisplay     *gdisp;
-  GDisplay     *src_gdisp;
+  GimpDisplay  *gdisp;
+  GimpDisplay  *src_gdisp;
   gint          x1, y1, x2, y2;
   static gint   orig_src_x, orig_src_y;
   GimpDrawTool *draw_tool;
   GimpContext  *context;
 
-  gdisp = (GDisplay *) tool_manager_get_active (drawable->gimage->gimp)->gdisp;
+  gdisp = (GimpDisplay *) tool_manager_get_active (drawable->gimage->gimp)->gdisp;
 
   draw_tool = GIMP_DRAW_TOOL (paint_tool);
 
@@ -393,7 +393,7 @@ gimp_clone_tool_paint (GimpPaintTool *paint_tool,
 void
 gimp_clone_tool_cursor_update (GimpTool       *tool,
 			       GdkEventMotion *mevent,
-			       GDisplay       *gdisp)
+			       GimpDisplay    *gdisp)
 {
   GimpLayer     *layer;
   GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;

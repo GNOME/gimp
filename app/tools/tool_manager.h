@@ -64,8 +64,6 @@ void           tool_manager_register_tool_options (GType             tool_type,
 
 GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
 						   GType             tool_type);
-GimpToolInfo * tool_manager_get_info_by_tool      (Gimp             *gimp,
-						   GimpTool         *tool);
 
 
 void	       tool_manager_help_func             (const gchar      *help_data);

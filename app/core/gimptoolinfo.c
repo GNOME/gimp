@@ -232,7 +232,8 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 }
 
 GimpToolInfo *
-gimp_tool_info_new (GimpContext  *context,
+gimp_tool_info_new (Gimp         *gimp,
+                    GimpContext  *context,
 		    GType         tool_type,
                     gboolean      tool_context,
 		    const gchar  *identifier,
@@ -248,6 +249,7 @@ gimp_tool_info_new (GimpContext  *context,
 {
   GimpToolInfo *tool_info;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
@@ -256,10 +258,18 @@ gimp_tool_info_new (GimpContext  *context,
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
-  tool_info = g_object_new (GIMP_TYPE_TOOL_INFO, NULL);
+  tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
+                            "name", identifier,
+                            NULL);
 
-  gimp_object_set_name (GIMP_OBJECT (tool_info), identifier);
+  if (tool_context)
+    {
+      tool_info->context = gimp_create_context (context->gimp,
+						identifier,
+						context);
+    }
 
+  tool_info->gimp          = gimp;
   tool_info->tool_type     = tool_type;
 
   tool_info->blurb         = g_strdup (blurb);
@@ -278,13 +288,6 @@ gimp_tool_info_new (GimpContext  *context,
   tool_info->stock_pixbuf  = stock_pixbuf;
 
   g_object_ref (G_OBJECT (stock_pixbuf));
-
-  if (tool_context)
-    {
-      tool_info->context = gimp_create_context (context->gimp,
-						identifier,
-						context);
-    }
 
   return tool_info;
 }

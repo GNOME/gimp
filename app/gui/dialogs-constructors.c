@@ -78,7 +78,6 @@
 #include "tool-options-dialog.h"
 #include "toolbox.h"
 
-#include "app_procs.h"
 #include "devices.h"
 #include "gimprc.h"
 #include "undo_history.h"
@@ -168,7 +167,7 @@ GtkWidget *
 dialogs_tool_options_get (GimpDialogFactory *factory,
 			  GimpContext       *context)
 {
-  return tool_options_dialog_create ();
+  return tool_options_dialog_create (context->gimp);
 }
 
 GtkWidget *
@@ -210,7 +209,7 @@ GtkWidget *
 dialogs_preferences_get (GimpDialogFactory *factory,
 			 GimpContext       *context)
 {
-  return preferences_dialog_create ();
+  return preferences_dialog_create (context->gimp);
 }
 
 GtkWidget *
@@ -224,7 +223,7 @@ GtkWidget *
 dialogs_module_browser_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
-  return module_browser_new ();
+  return module_browser_new (context->gimp);
 }
 
 GtkWidget *
@@ -256,7 +255,7 @@ dialogs_display_filters_get (GimpDialogFactory *factory,
 			     GimpContext       *context)
 {
 #ifdef DISPLAY_FILTERS
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   gdisp = gimp_context_get_display (context);
 

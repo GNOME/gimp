@@ -33,7 +33,7 @@ typedef void (* ImageMapApplyFunc) (PixelRegion *srcPR,
  */
 
 
-ImageMap * image_map_create       (GDisplay          *gdisp,
+ImageMap * image_map_create       (GimpDisplay       *gdisp,
 				   GimpDrawable      *drawable);
 void       image_map_apply        (ImageMap          *image_map,
 				   ImageMapApplyFunc  apply_func,

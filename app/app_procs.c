@@ -91,7 +91,7 @@ app_init (gint    gimp_argc,
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new (be_verbose, no_data);
+  the_gimp = gimp_new (be_verbose, no_data, no_interface);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -150,7 +150,7 @@ app_init (gint    gimp_argc,
   /*  Now we are ready to draw the splash-screen-image
    *  to the start-up window
    */
-  if (! no_interface && ! no_splash_image)
+  if (! no_interface && ! no_splash && ! no_splash_image)
     {
       splash_logo_load ();
     }
@@ -186,12 +186,17 @@ app_init (gint    gimp_argc,
   /*  Parse the rest of the command line arguments as images to load
    */
   if (gimp_argc > 0)
-    while (gimp_argc--)
-      {
-	if (*gimp_argv)
-	  file_open_with_display (*gimp_argv);
-	gimp_argv++;
-      }
+    {
+      gint i;
+
+      for (i = 0; i < gimp_argc; i++)
+        {
+          if (gimp_argv[i])
+            {
+              file_open_with_display (the_gimp, gimp_argv[i]);
+            }
+        }
+    }
 
   batch_init (the_gimp);
 

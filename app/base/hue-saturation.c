@@ -64,11 +64,11 @@
 static void   gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
 static void   gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *bc_tool);
 
-static void   gimp_hue_saturation_tool_initialize (GimpTool   *tool,
-						  GDisplay   *gdisp);
-static void   gimp_hue_saturation_tool_control    (GimpTool   *tool,
-						  ToolAction  action,
-						  GDisplay   *gdisp);
+static void   gimp_hue_saturation_tool_initialize (GimpTool    *tool,
+                                                   GimpDisplay *gdisp);
+static void   gimp_hue_saturation_tool_control    (GimpTool    *tool,
+                                                   ToolAction   action,
+                                                   GimpDisplay *gdisp);
 
 static HueSaturationDialog * hue_saturation_dialog_new (void);
 
@@ -195,8 +195,8 @@ gimp_hue_saturation_tool_init (GimpHueSaturationTool *bc_tool)
 }
 
 static void
-gimp_hue_saturation_tool_initialize (GimpTool *tool,
-				     GDisplay *gdisp)
+gimp_hue_saturation_tool_initialize (GimpTool    *tool,
+				     GimpDisplay *gdisp)
 {
   gint i;
 
@@ -234,9 +234,9 @@ gimp_hue_saturation_tool_initialize (GimpTool *tool,
 }
 
 static void
-gimp_hue_saturation_tool_control (GimpTool   *tool,
-				  ToolAction  action,
-				  GDisplay   *gdisp)
+gimp_hue_saturation_tool_control (GimpTool    *tool,
+				  ToolAction   action,
+				  GimpDisplay *gdisp)
 {
   switch (action)
     {

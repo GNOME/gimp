@@ -50,7 +50,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "app_procs.h"
 #include "libgimp_glue.h"
 #include "floating_sel.h"
 #include "undo_types.h"
@@ -95,16 +94,16 @@ static void   gimp_text_tool_finalize        (GObject         *object);
 
 static void   text_tool_control              (GimpTool        *tool,
 					      ToolAction       tool_action,
-					      GDisplay        *gdisp);
+					      GimpDisplay     *gdisp);
 static void   text_tool_button_press         (GimpTool        *tool,
 					      GdkEventButton  *bevent,
-					      GDisplay        *gdisp);
+					      GimpDisplay     *gdisp);
 static void   text_tool_button_release       (GimpTool        *tool,
 					      GdkEventButton  *bevent,
-					      GDisplay        *gdisp);
+					      GimpDisplay     *gdisp);
 static void   text_tool_cursor_update        (GimpTool        *tool,
 					      GdkEventMotion  *mevent,
-					      GDisplay        *gdisp);
+					      GimpDisplay     *gdisp);
 static void   text_tool_render               (GimpTextTool    *text_tool);
 
 static TextOptions * text_tool_options_new   (GimpTextTool    *text_tool);
@@ -323,9 +322,9 @@ text_tool_options_new (GimpTextTool *text_tool)
 }
 
 static void
-text_tool_control (GimpTool   *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
+text_tool_control (GimpTool    *tool,
+		   ToolAction   action,
+		   GimpDisplay *gdisp)
 {
   switch (action)
     {
@@ -346,7 +345,7 @@ text_tool_control (GimpTool   *tool,
 static void
 text_tool_button_press (GimpTool       *tool,
 			GdkEventButton *bevent,
-			GDisplay       *gdisp)
+			GimpDisplay    *gdisp)
 {
   GimpTextTool *text_tool;
   GimpLayer    *layer;
@@ -378,7 +377,7 @@ text_tool_button_press (GimpTool       *tool,
 static void
 text_tool_button_release (GimpTool       *tool,
 			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
+			  GimpDisplay    *gdisp)
 {
   tool->state = INACTIVE;
 }
@@ -386,7 +385,7 @@ text_tool_button_release (GimpTool       *tool,
 static void
 text_tool_cursor_update (GimpTool       *tool,
 			 GdkEventMotion *mevent,
-			 GDisplay       *gdisp)
+			 GimpDisplay    *gdisp)
 {
   GimpLayer *layer;
   gint x, y;
@@ -412,7 +411,7 @@ text_tool_cursor_update (GimpTool       *tool,
 static void
 text_tool_render (GimpTextTool *text_tool)
 {
-  GDisplay             *gdisp;
+  GimpDisplay          *gdisp;
   PangoFontDescription *font_desc;
   gchar                *fontname;
   gchar                *text;

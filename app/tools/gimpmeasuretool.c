@@ -77,19 +77,19 @@ static void   gimp_measure_tool_init            (GimpMeasureTool      *tool);
 
 static void   gimp_measure_tool_control         (GimpTool       *tool,
                                                  ToolAction      action,
-                                                 GDisplay       *gdisp);
+                                                 GimpDisplay    *gdisp);
 static void   gimp_measure_tool_button_press    (GimpTool       *tool,
                                                  GdkEventButton *bevent,
-                                                 GDisplay       *gdisp);
+                                                 GimpDisplay    *gdisp);
 static void   gimp_measure_tool_button_release  (GimpTool       *tool,
                                                  GdkEventButton *bevent,
-                                                 GDisplay       *gdisp);
+                                                 GimpDisplay    *gdisp);
 static void   gimp_measure_tool_motion          (GimpTool       *tool,
                                                  GdkEventMotion *mevent,
-                                                 GDisplay       *gdisp);
+                                                 GimpDisplay    *gdisp);
 static void   gimp_measure_tool_cursor_update   (GimpTool       *tool,
                                                  GdkEventMotion *mevent,
-                                                 GDisplay       *gdisp);
+                                                 GimpDisplay    *gdisp);
 
 static void   gimp_measure_tool_draw            (GimpDrawTool   *draw_tool);
 
@@ -198,9 +198,9 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 }
 
 static void
-gimp_measure_tool_control (GimpTool   *tool,
-                           ToolAction  action,
-                           GDisplay   *gdisp)
+gimp_measure_tool_control (GimpTool    *tool,
+                           ToolAction   action,
+                           GimpDisplay *gdisp)
 {
   GimpMeasureTool *measure_tool;
 
@@ -231,7 +231,7 @@ gimp_measure_tool_control (GimpTool   *tool,
 static void
 gimp_measure_tool_button_press (GimpTool       *tool,
                                 GdkEventButton *bevent,
-                                GDisplay       *gdisp)
+                                GimpDisplay    *gdisp)
 {
   GimpMeasureTool *measure_tool;
   gint             x[3];
@@ -243,7 +243,7 @@ gimp_measure_tool_button_press (GimpTool       *tool,
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (tool->state == ACTIVE && gdisp != tool->gdisp)
     {
-      GDisplay *old_gdisp = tool->gdisp;
+      GimpDisplay *old_gdisp = tool->gdisp;
 
       gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar),
 			 measure_tool->context_id);
@@ -412,7 +412,7 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 static void
 gimp_measure_tool_button_release (GimpTool       *tool,
                                   GdkEventButton *bevent,
-                                  GDisplay       *gdisp)
+                                  GimpDisplay    *gdisp)
 {
   GimpMeasureTool *measure_tool;
 
@@ -427,7 +427,7 @@ gimp_measure_tool_button_release (GimpTool       *tool,
 static void
 gimp_measure_tool_motion (GimpTool       *tool,
                           GdkEventMotion *mevent,
-                          GDisplay       *gdisp)
+                          GimpDisplay    *gdisp)
 {
   GimpMeasureTool *measure_tool;
   gint             x, y;
@@ -637,7 +637,7 @@ gimp_measure_tool_motion (GimpTool       *tool,
 static void
 gimp_measure_tool_cursor_update (GimpTool       *tool,
                                  GdkEventMotion *mevent,
-                                 GDisplay       *gdisp)
+                                 GimpDisplay    *gdisp)
 {
   GimpMeasureTool *measure_tool;
   gint             x[3];

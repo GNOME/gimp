@@ -17,6 +17,7 @@
  */
 
 #include "config.h"
+
 #include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +57,6 @@
 #include "gimpdisplayshell.h"
 #include "gximage.h"
 
-#include "appenv.h"
 #include "colormaps.h"
 #include "gimprc.h"
 #include "nav_window.h"
@@ -279,8 +279,10 @@ gdisplay_new (GimpImage *gimage,
   GimpDisplay *gdisp;
   gchar        title [MAX_TITLE_BUF];
 
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
   /*  If there isn't an interface, never create a gdisplay  */
-  if (no_interface)
+  if (gimage->gimp->no_interface)
     return NULL;
 
   /*

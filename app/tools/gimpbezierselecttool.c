@@ -3172,7 +3172,7 @@ bezier_tool_selected (void)
 }
 
 void
-bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
+bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 				      GimpBezierSelectTool *bsel)
 {
   GimpBezierSelectPoint *pts;
@@ -3281,7 +3281,7 @@ bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
 static void
 bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
                         GimpTool             *tool,
-                        GDisplay             *gdisp,
+                        GimpDisplay          *gdisp,
                         ChannelOps            op)
 {
   /*  If we're antialiased, then recompute the mask...
@@ -3552,7 +3552,7 @@ bezier_select_mode (gint mode)
 
 void
 bezier_to_selection (GimpBezierSelectTool *bezier_sel,
-		     GDisplay             *gdisp)
+		     GimpDisplay          *gdisp)
 {
   /* Call the internal function */
   if (!bezier_sel->closed)
@@ -3792,7 +3792,7 @@ bezier_gen_points (GimpBezierSelectTool     *bezier_sel,
 
 void
 bezier_stroke (GimpBezierSelectTool *bezier_sel,
-	       GDisplay     *gdisp,
+	       GimpDisplay  *gdisp,
 	       gint          subdivisions,
 	       gint          open_path)
 {

@@ -20,7 +20,8 @@
 #define __FILE_NEW_DIALOG_H__
 
 
-void   file_new_dialog_create (GimpImage *gimage);
+void   file_new_dialog_create (Gimp      *gimp,
+                               GimpImage *gimage);
 
 
 #endif /* __FILE_NEW_DIALOG_H__ */

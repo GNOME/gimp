@@ -39,8 +39,6 @@
 #include "channels-commands.h"
 #include "menus.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -317,7 +315,7 @@ new_channel_query_ok_callback (GtkWidget *widget,
 				      &channel_color);
 
       gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-				  gimp_get_user_context (the_gimp),
+				  gimp_get_user_context (gimage->gimp),
 				  TRANSPARENT_FILL);
 
       gimp_image_add_channel (gimage, new_channel, -1);

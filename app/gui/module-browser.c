@@ -34,8 +34,6 @@
 
 #include "module-browser.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -52,6 +50,7 @@ typedef struct
   GtkWidget         *load_inhibit_check;
 
   GQuark             modules_handler_id;
+  Gimp              *gimp;
 } BrowserState;
 
 
@@ -86,7 +85,7 @@ static void   browser_info_init             (BrowserState      *st,
 /*  public functions  */
 
 GtkWidget *
-module_browser_new (void)
+module_browser_new (Gimp *gimp)
 {
   GtkWidget    *shell;
   GtkWidget    *hbox;
@@ -94,6 +93,8 @@ module_browser_new (void)
   GtkWidget    *listbox;
   GtkWidget    *button;
   BrowserState *st;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   shell = gimp_dialog_new (_("Module DB"), "module_db_dialog",
 			   gimp_standard_help_func,
@@ -121,12 +122,14 @@ module_browser_new (void)
 
   st = g_new0 (BrowserState, 1);
 
+  st->gimp = gimp;
+
   st->list = gtk_list_new ();
   gtk_list_set_selection_mode (GTK_LIST (st->list), GTK_SELECTION_BROWSE);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox),
 					 st->list);
 
-  gimp_container_foreach (the_gimp->modules, make_list_item, st);
+  gimp_container_foreach (gimp->modules, make_list_item, st);
 
   gtk_widget_show (st->list);
 
@@ -144,7 +147,8 @@ module_browser_new (void)
   button = gtk_button_new_with_label (_("Refresh"));
   gtk_widget_show (button);
   g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (browser_refresh_callback), st);
+                    G_CALLBACK (browser_refresh_callback),
+                    st);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   st->button = gtk_button_new_with_label ("");
@@ -152,7 +156,8 @@ module_browser_new (void)
   gtk_box_pack_start (GTK_BOX (hbox), st->button, TRUE, TRUE, 0);
   gtk_widget_show (st->button);
   g_signal_connect (G_OBJECT (st->button), "clicked",
-                    G_CALLBACK (browser_load_unload_callback), st);
+                    G_CALLBACK (browser_load_unload_callback),
+                    st);
 
   browser_info_init (st, st->table);
   browser_info_update (st->last_update, st);
@@ -166,13 +171,13 @@ module_browser_new (void)
    * appropriately.
    */
   st->modules_handler_id =
-    gimp_container_add_handler (the_gimp->modules, "modified", 
+    gimp_container_add_handler (gimp->modules, "modified", 
                                 G_CALLBACK (browser_info_update), st);
 
-  g_signal_connect (G_OBJECT (the_gimp->modules), "add", 
+  g_signal_connect (G_OBJECT (gimp->modules), "add", 
                     G_CALLBACK (browser_info_add), 
                     st);
-  g_signal_connect (G_OBJECT (the_gimp->modules), "remove", 
+  g_signal_connect (G_OBJECT (gimp->modules), "remove", 
                     G_CALLBACK (browser_info_remove), 
                     st);
 
@@ -199,13 +204,13 @@ browser_destroy_callback (GtkWidget *widget,
 {
   BrowserState *st = data;
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (the_gimp->modules),
+  g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimp->modules),
                                         browser_info_add,
                                         data);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (the_gimp->modules), 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimp->modules), 
                                         browser_info_remove,
                                         data);
-  gimp_container_remove_handler (the_gimp->modules, st->modules_handler_id);
+  gimp_container_remove_handler (st->gimp->modules, st->modules_handler_id);
   g_free (data);
 }
 
@@ -226,7 +231,7 @@ browser_load_inhibit_callback (GtkWidget *widget,
   st->last_update->load_inhibit = new_value;
   gimp_module_info_modified (st->last_update);
 
-  the_gimp->write_modulerc = TRUE;
+  st->gimp->write_modulerc = TRUE;
 }
 
 static void
@@ -265,16 +270,18 @@ static void
 browser_refresh_callback (GtkWidget *widget, 
 			  gpointer   data)
 {
-  gimp_modules_refresh (the_gimp);
+  BrowserState *st = data;
+
+  gimp_modules_refresh (st->gimp);
 }
 
 static void
 make_list_item (gpointer data, 
 		gpointer user_data)
 {
-  GimpModuleInfoObj   *info = data;
-  BrowserState *st = user_data;
-  GtkWidget    *list_item;
+  GimpModuleInfoObj *info = data;
+  BrowserState      *st   = user_data;
+  GtkWidget         *list_item;
 
   if (!st->last_update)
     st->last_update = info;

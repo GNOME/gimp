@@ -119,6 +119,7 @@ gimp_init (Gimp *gimp)
 
   gimp->be_verbose          = FALSE;
   gimp->no_data             = FALSE;
+  gimp->no_interface        = FALSE;
 
   gimp->create_display_func = NULL;
   gimp->gui_set_busy_func   = NULL;
@@ -151,6 +152,9 @@ gimp_init (Gimp *gimp)
   gimp->palette_factory     = NULL;
 
   procedural_db_init (gimp);
+
+  gimp->load_procs          = NULL;
+  gimp->save_procs          = NULL;
 
   xcf_init (gimp);
 
@@ -231,8 +235,19 @@ gimp_finalize (GObject *object)
 
   xcf_exit (gimp);
 
-  if (gimp->procedural_ht)
-    procedural_db_free (gimp);
+  procedural_db_free (gimp);
+
+  if (gimp->load_procs)
+    {
+      g_slist_free (gimp->load_procs);
+      gimp->load_procs = NULL;
+    }
+
+  if (gimp->save_procs)
+    {
+      g_slist_free (gimp->save_procs);
+      gimp->save_procs = NULL;
+    }
 
   if (gimp->brush_factory)
     {
@@ -302,14 +317,16 @@ gimp_finalize (GObject *object)
 
 Gimp *
 gimp_new (gboolean be_verbose,
-          gboolean no_data)
+          gboolean no_data,
+          gboolean no_interface)
 {
   Gimp *gimp;
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
-  gimp->be_verbose = be_verbose ? TRUE : FALSE;
-  gimp->no_data    = no_data    ? TRUE : FALSE;
+  gimp->be_verbose   = be_verbose   ? TRUE : FALSE;
+  gimp->no_data      = no_data      ? TRUE : FALSE;
+  gimp->no_interface = no_interface ? TRUE : FALSE;
 
   return gimp;
 }

@@ -39,7 +39,7 @@ typedef struct _ColorDisplayDialog ColorDisplayDialog;
 
 struct _ColorDisplayDialog
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   GtkWidget *shell;
 
@@ -236,7 +236,7 @@ color_display_ok_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   GList *list;
 
   dialog_unregister(cdd->shell);
@@ -266,7 +266,7 @@ color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   GList *list;
   GList *next;
 
@@ -306,7 +306,7 @@ color_display_add_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   gchar              *name = NULL;
   ColorDisplayNode   *node;
   gint row;
@@ -336,7 +336,7 @@ color_display_remove_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -364,7 +364,7 @@ color_display_up_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 1)
@@ -388,7 +388,7 @@ color_display_down_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -415,7 +415,7 @@ color_display_configure_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   ColorDisplayDialog *cdd = data;
-  GDisplay           *gdisp = cdd->gdisp;
+  GimpDisplay        *gdisp = cdd->gdisp;
   ColorDisplayNode   *node;
 
   if (cdd->dest_row < 0)
@@ -433,7 +433,7 @@ color_display_configure_callback (GtkWidget *widget,
 }
 
 void
-gdisplay_color_ui_new (GDisplay *gdisp)
+gdisplay_color_ui_new (GimpDisplay *gdisp)
 {
   ColorDisplayDialog *cdd;
 

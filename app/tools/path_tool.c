@@ -153,13 +153,13 @@ void     path_tool_draw_segment    (Tool *, PathSegment *);
 gdouble  path_tool_on_curve        (Tool *, gint, gint, gint,
 				    NPath**, PathCurve**, PathSegment**);
 
-gint path_tool_button_press_canvas (Tool *, GdkEventButton *, GDisplay *);
-gint path_tool_button_press_anchor (Tool *, GdkEventButton *, GDisplay *);
-gint path_tool_button_press_handle (Tool *, GdkEventButton *, GDisplay *);
-gint path_tool_button_press_curve  (Tool *, GdkEventButton *, GDisplay *);
-void path_tool_motion_anchor       (Tool *, GdkEventMotion *, GDisplay *);
-void path_tool_motion_handle       (Tool *, GdkEventMotion *, GDisplay *);
-void path_tool_motion_curve        (Tool *, GdkEventMotion *, GDisplay *);
+gint path_tool_button_press_canvas (Tool *, GdkEventButton *, GimpDisplay *);
+gint path_tool_button_press_anchor (Tool *, GdkEventButton *, GimpDisplay *);
+gint path_tool_button_press_handle (Tool *, GdkEventButton *, GimpDisplay *);
+gint path_tool_button_press_curve  (Tool *, GdkEventButton *, GimpDisplay *);
+void path_tool_motion_anchor       (Tool *, GdkEventMotion *, GimpDisplay *);
+void path_tool_motion_handle       (Tool *, GdkEventMotion *, GimpDisplay *);
+void path_tool_motion_curve        (Tool *, GdkEventMotion *, GimpDisplay *);
 
 #endif
 
@@ -766,7 +766,7 @@ path_tool_cursor_position (NPath *path,
 void
 path_tool_button_press (Tool           *tool,
 			GdkEventButton *bevent,
-			GDisplay       *gdisp)
+			GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
    gint grab_pointer=0;
@@ -842,7 +842,7 @@ path_tool_button_press (Tool           *tool,
 gint
 path_tool_button_press_anchor (Tool *tool,
                                GdkEventButton *bevent,
-                               GDisplay *gdisp)
+                               GimpDisplay *gdisp)
 {
    static guint32 last_click_time=0;
    gboolean doubleclick=FALSE;
@@ -967,7 +967,7 @@ path_tool_button_press_anchor (Tool *tool,
 gint
 path_tool_button_press_handle (Tool *tool,
                                GdkEventButton *bevent,
-                               GDisplay *gdisp)
+                               GimpDisplay *gdisp)
 {
    static guint32 last_click_time=0;
    gboolean doubleclick=FALSE;
@@ -1009,7 +1009,7 @@ path_tool_button_press_handle (Tool *tool,
 gint
 path_tool_button_press_canvas (Tool *tool,
                                GdkEventButton *bevent,
-                               GDisplay *gdisp)
+                               GimpDisplay *gdisp)
 {
    PathTool *path_tool = tool->private;
    
@@ -1065,7 +1065,7 @@ path_tool_button_press_canvas (Tool *tool,
 gint
 path_tool_button_press_curve (Tool *tool,
 			      GdkEventButton *bevent,
-			      GDisplay *gdisp)
+			      GimpDisplay *gdisp)
 {
    PathTool *path_tool = tool->private;
    
@@ -1108,7 +1108,7 @@ path_tool_button_press_curve (Tool *tool,
 void
 path_tool_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
+			  GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
  
@@ -1132,7 +1132,7 @@ path_tool_button_release (Tool           *tool,
 void
 path_tool_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
-		  GDisplay       *gdisp)
+		  GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
 
@@ -1159,7 +1159,7 @@ path_tool_motion (Tool           *tool,
 void
 path_tool_motion_anchor (Tool           *tool,
 		         GdkEventMotion *mevent,
-		         GDisplay       *gdisp)
+		         GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
    gdouble dx, dy, d;
@@ -1229,7 +1229,7 @@ path_tool_motion_anchor (Tool           *tool,
 void
 path_tool_motion_handle (Tool           *tool,
 		         GdkEventMotion *mevent,
-		         GDisplay       *gdisp)
+		         GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
    gdouble dx, dy;
@@ -1278,7 +1278,7 @@ path_tool_motion_handle (Tool           *tool,
 void
 path_tool_motion_curve (Tool           *tool,
 		        GdkEventMotion *mevent,
-		        GDisplay       *gdisp)
+		        GimpDisplay    *gdisp)
 {
    PathTool * path_tool;
    gdouble dx, dy;
@@ -1319,7 +1319,7 @@ path_tool_motion_curve (Tool           *tool,
 void
 path_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
-			 GDisplay       *gdisp)
+			 GimpDisplay    *gdisp)
 {
    PathTool *path_tool;
    gint     x, y, halfwidth, dummy, cursor_location;
@@ -1362,9 +1362,9 @@ path_tool_cursor_update (Tool           *tool,
  */
 
 void
-path_tool_control (Tool       *tool,
-		   ToolAction  action,
-		   GDisplay   *gdisp)
+path_tool_control (Tool        *tool,
+		   ToolAction   action,
+		   GimpDisplay *gdisp)
 {
    PathTool * path_tool;
 
@@ -1456,7 +1456,7 @@ tools_new_path_tool (void)
 void
 tools_free_path_tool (Tool *tool)
 {
-   GDisplay * gdisp;
+   GimpDisplay * gdisp;
    PathTool * path_tool;
 
 #ifdef PATH_TOOL_DEBUG
@@ -1840,7 +1840,7 @@ path_tool_draw_helper (NPath *path,
 {
 #if 0
    Tool     * tool = (Tool *) tool_ptr;
-   GDisplay * gdisp;
+   GimpDisplay * gdisp;
    PathTool * path_tool;
    DrawCore * core;
    gint x1, y1;
@@ -1891,7 +1891,7 @@ path_tool_draw_helper (NPath *path,
 void
 path_tool_draw (Tool *tool)
 {
-   GDisplay * gdisp;
+   GimpDisplay * gdisp;
    NPath * cur_path;
    PathTool * path_tool;
   

@@ -45,7 +45,6 @@
 #include "menus.h"
 #include "resize-dialog.h"
 
-#include "app_procs.h"
 #include "floating_sel.h"
 #include "undo.h"
 
@@ -997,7 +996,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_scale_layer_query (GimpImage *gimage,
-				 GimpLayer *layer)
+                          GimpLayer *layer)
 {
   ScaleLayerOptions *options;
 
@@ -1005,7 +1004,8 @@ layers_scale_layer_query (GimpImage *gimage,
   options = g_new (ScaleLayerOptions, 1);
   options->layer  = layer;
   options->resize =
-    resize_widget_new (ScaleWidget,
+    resize_widget_new (gimage,
+                       ScaleWidget,
 		       ResizeLayer,
 		       G_OBJECT (layer),
 		       "removed",
@@ -1085,7 +1085,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
 static void
 layers_resize_layer_query (GimpImage *gimage,
-				  GimpLayer *layer)
+                           GimpLayer *layer)
 {
   ResizeLayerOptions *options;
 
@@ -1093,7 +1093,8 @@ layers_resize_layer_query (GimpImage *gimage,
   options = g_new (ResizeLayerOptions, 1);
   options->layer  = layer;
   options->resize =
-    resize_widget_new (ResizeWidget,
+    resize_widget_new (gimage,
+                       ResizeWidget,
 		       ResizeLayer,
 		       G_OBJECT (layer),
 		       "removed",

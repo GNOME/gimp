@@ -22,8 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "tools/tools-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
@@ -37,7 +36,6 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
-#include "app_procs.h"
 #include "palette-select.h"
 
 #include "libgimp/gimpintl.h"
@@ -75,7 +73,7 @@ static void indexed_custom_palette_button_callback  (GtkWidget *widget,
 static void indexed_palette_select_destroy_callback (GtkWidget *widget,
 						     gpointer   data);
 
-static GtkWidget * build_palette_button             (void);
+static GtkWidget * build_palette_button             (Gimp      *gimp);
 
 
 static gboolean     UserHasWebPal    = FALSE;
@@ -219,7 +217,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (hbox);
 
   /* 'custom' palette from dialog */
-  dialog->custom_palette_button = build_palette_button ();
+  dialog->custom_palette_button = build_palette_button (gimage->gimp);
   if (dialog->custom_palette_button)
     {
       /* create the custom_frame here, it'll be added later */
@@ -423,7 +421,7 @@ convert_to_indexed (GimpImage *gimage)
 
 
 static GtkWidget *
-build_palette_button (void)
+build_palette_button (Gimp *gimp)
 {
   GList       *list;
   GimpPalette *palette;
@@ -433,7 +431,7 @@ build_palette_button (void)
 
   UserHasWebPal = FALSE;
 
-  list = GIMP_LIST (the_gimp->palette_factory->container)->list;
+  list = GIMP_LIST (gimp->palette_factory->container)->list;
 
   if (! list)
     {
@@ -476,7 +474,7 @@ build_palette_button (void)
 	 }
        else
 	 {
-	   for (i = 0, list = GIMP_LIST (the_gimp->palette_factory->container)->list;
+	   for (i = 0, list = GIMP_LIST (gimp->palette_factory->container)->list;
 		list && default_palette == -1;
 		i++, list = g_list_next (list))
 	     {
@@ -623,7 +621,7 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
   if (dialog->palette_select == NULL)
     {
       dialog->palette_select =
-	palette_select_new (the_gimp,
+	palette_select_new (dialog->gimage->gimp,
                             _("Select Custom Palette"), 
 			    GIMP_OBJECT (theCustomPalette)->name,
                             NULL);

@@ -24,11 +24,10 @@ gboolean   qmask_button_press_callback (GtkWidget      *widget,
 					GdkEventButton *event,
 					gpointer        data);
 void       qmask_activate_callback     (GtkWidget      *widget,
-					GDisplay       *gdisp);
+					GimpDisplay    *gdisp);
 void       qmask_deactivate_callback   (GtkWidget      *widget,
-					GDisplay       *gdisp);
-void       qmask_buttons_update        (GDisplay       *gdisp);
+					GimpDisplay    *gdisp);
+void       qmask_buttons_update        (GimpDisplay    *gdisp);
 
 
 #endif  /*  __QMASK_H__ */
-

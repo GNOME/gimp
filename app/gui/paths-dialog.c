@@ -697,7 +697,7 @@ paths_select_row (GtkWidget      *widget,
   PathWidget *pwidget;
   Path* bzp;
   GimpBezierSelectTool * bsel;
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   gint last_row;
 
   pwidget = (PathWidget *) gtk_clist_get_row_data (GTK_CLIST (widget), row);
@@ -1080,7 +1080,7 @@ paths_dialog_new_path_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpBezierSelectTool * bsel;
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   Path* bzp;
 
   bzp = paths_dialog_new_path (&paths_dialog->current_path_list,
@@ -1111,7 +1111,7 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
   gboolean new_sz;
   gint row = paths_dialog->selected_row_num;
   GimpBezierSelectTool *bsel  = NULL;
-  GDisplay     *gdisp = NULL;
+  GimpDisplay     *gdisp = NULL;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
 
@@ -1172,7 +1172,7 @@ paths_dialog_paste_path_callback (GtkWidget *widget,
   PathPoint* pp;
   GimpBezierSelectTool * bezier_sel;
   gint tmprow;
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   gint row = paths_dialog->selected_row_num;
 
@@ -1333,7 +1333,7 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   ProcRecord *proc_rec;
   Argument   *args;
   GimpImage  *gimage;
-  GDisplay   *gdisp;
+  GimpDisplay   *gdisp;
 
   gimage = paths_dialog->gimage;
 
@@ -1371,7 +1371,7 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
   Path* bzp;
   PathList* plp;
   GimpBezierSelectTool * bezier_sel;
-  GDisplay  * gdisp;
+  GimpDisplay  * gdisp;
   gint row = paths_dialog->selected_row_num;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
@@ -1748,7 +1748,7 @@ paths_dialog_flush (void)
 
 void 
 paths_first_button_press (GimpBezierSelectTool *bezier_sel,
-			  GDisplay     *gdisp)
+			  GimpDisplay     *gdisp)
 {
   /* First time a button is pressed in this display */
   /* We have two choices here 
@@ -1796,7 +1796,7 @@ paths_first_button_press (GimpBezierSelectTool *bezier_sel,
 
 void
 paths_newpoint_current (GimpBezierSelectTool *bezier_sel,
-			GDisplay     *gdisp)
+			GimpDisplay     *gdisp)
 {
   /*  Check if currently showing the paths we are updating  */
   if (paths_dialog &&
@@ -2388,7 +2388,7 @@ path_transform_current_path (GimpImage   *gimage,
 }
 
 void
-path_transform_draw_current (GDisplay    *gdisp, 
+path_transform_draw_current (GimpDisplay    *gdisp, 
 			     GimpDrawTool    *draw_tool,
 			     GimpMatrix3  transform)
 {
@@ -2602,7 +2602,7 @@ path_set_path_points (GimpImage *gimage,
     }
   else
     {
-      GDisplay *gdisp;
+      GimpDisplay *gdisp;
 
       if (!plist)
 	{

@@ -85,7 +85,7 @@ path_bezier_draw_handles (GimpDrawTool *tool,
 #if 0
    PathTool *path_tool = (PathTool *) (tool->private);
    PathBezierData *data = (PathBezierData *) segment->data;
-   GDisplay * gdisp = tool->gdisp;
+   GimpDisplay * gdisp = tool->gdisp;
 
    gint sx, sy, hx, hy;
    

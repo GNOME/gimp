@@ -52,15 +52,9 @@
 #include "dialogs.h"
 #include "gradient-editor.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
-
-
-#define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
-        if (!gdisp) return
 
 
 /*****  Container View Test Dialogs  *****/
@@ -104,7 +98,7 @@ static void
 images_callback (GtkWidget         *widget,
 		 GimpContainerView *view)
 {
-  gimp_container_view_set_container (view, the_gimp->images);
+  gimp_container_view_set_container (view, view->context->gimp->images);
 }
 
 /*
@@ -270,20 +264,28 @@ container_multi_view_new (gboolean       list,
 
 void
 test_multi_container_list_view_cmd_callback (GtkWidget *widget,
-					     gpointer   client_data)
+					     gpointer   data)
 {
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
   container_multi_view_new (TRUE, "Multi List",
-			    the_gimp->brush_factory->container,
-			    gimp_get_user_context (the_gimp),
+			    gimp->brush_factory->container,
+			    gimp_get_user_context (gimp),
 			    24);
 }
 
 void
 test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
-					     gpointer   client_data)
+					     gpointer   data)
 {
+  Gimp *gimp;
+
+  gimp = GIMP (data);
+
   container_multi_view_new (FALSE, "Multi Grid",
-			    the_gimp->brush_factory->container,
-			    gimp_get_user_context (the_gimp),
+			    gimp->brush_factory->container,
+			    gimp_get_user_context (gimp),
 			    32);
 }

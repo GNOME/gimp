@@ -27,7 +27,7 @@ void         info_window_update          (GimpDisplay *gdisp);
 void         info_window_update_extended (GimpDisplay *gdisp,
                                           gdouble      tx,
                                           gdouble      ty);
-void         info_window_follow_auto     (void);
+void         info_window_follow_auto     (Gimp        *gimp);
 
 
 #endif /*  __INFO_WINDOW_H__  */

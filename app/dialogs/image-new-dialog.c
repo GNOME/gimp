@@ -28,11 +28,11 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
+#include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 
 #include "file-new-dialog.h"
 
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -55,10 +55,13 @@ typedef struct
 
   GimpImageNewValues *values;
   gdouble             size;
+
+  Gimp               *gimp;
 } NewImageInfo;
 
 
-/*  new image local functions  */
+/*  local function prototypes  */
+
 static void   file_new_confirm_dialog      (NewImageInfo *info);
 
 static void   file_new_ok_callback         (GtkWidget    *widget,
@@ -73,249 +76,11 @@ static void   file_new_image_size_callback (GtkWidget    *widget,
 					    gpointer      data);
 
 
-static void
-file_new_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  NewImageInfo *info;
-  GimpImageNewValues *values;
-
-  info = (NewImageInfo*) data;
-  values = info->values;
-
-  /* get the image size in pixels */
-  values->width = 
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
-  values->height = 
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
-
-  /* get the resolution in dpi */
-  values->xresolution =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0);
-  values->yresolution =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1);
-
-  /* get the units */
-  values->unit =
-    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->size_se));
-  values->res_unit =
-    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->resolution_se));
-
-  if (info->size > gimprc.max_new_image_size)
-    {
-      file_new_confirm_dialog (info);
-    }
-  else
-    {
-      gtk_widget_destroy (info->dialog);
-      gimp_image_new_create_image (the_gimp, values);
-      gimp_image_new_values_free (values);
-      g_free (info);
-    }
-}
-
-static void
-file_new_reset_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  NewImageInfo *info;
-
-  info = (NewImageInfo*) data;
-
-  gtk_signal_handler_block_by_data (GTK_OBJECT (info->resolution_se), info);
-
-  gimp_chain_button_set_active
-    (GIMP_CHAIN_BUTTON (info->couple_resolutions),
-     ABS (the_gimp->config->default_xresolution -
-	  the_gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION);
-
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0,
-			      the_gimp->config->default_xresolution);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
-			      the_gimp->config->default_yresolution);
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
-			    the_gimp->config->default_resolution_units);
-
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (info->resolution_se), info);
-
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
-				  the_gimp->config->default_xresolution, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
-				  the_gimp->config->default_yresolution, TRUE);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0,
-			      the_gimp->config->default_width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
-			      the_gimp->config->default_height);
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
-			    the_gimp->config->default_units);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[the_gimp->config->default_type]),
-				TRUE);
-  gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
-}
-
-static void
-file_new_cancel_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  NewImageInfo *info;
-
-  info = (NewImageInfo*) data;
-
-  gtk_widget_destroy (info->dialog);
-  gimp_image_new_values_free (info->values);
-  g_free (info);
-}
-
-/*  local callback of file_new_confirm_dialog()  */
-static void
-file_new_confirm_dialog_callback (GtkWidget *widget,
-				  gboolean   create,
-				  gpointer   data)
-{
-  NewImageInfo *info;
-
-  info = (NewImageInfo*) data;
-
-  info->confirm_dialog = NULL;
-
-  if (create)
-    {
-      gtk_widget_destroy (info->dialog);
-      gimp_image_new_create_image (the_gimp, info->values);
-      gimp_image_new_values_free (info->values);
-      g_free (info);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (info->dialog, TRUE);
-    }
-}
-
-static void
-file_new_confirm_dialog (NewImageInfo *info)
-{
-  gchar *size;
-  gchar *max_size;
-  gchar *text;
-
-  gtk_widget_set_sensitive (info->dialog, FALSE);
-
-  size     = gimp_image_new_get_size_string (info->size);
-  max_size = gimp_image_new_get_size_string (gimprc.max_new_image_size);
-
-  /* xgettext:no-c-format */
-	    
-  text = g_strdup_printf (_("You are trying to create an image which\n"
-			    "has an initial size of %s.\n\n"
-			    "Choose OK to create this image anyway.\n"
-			    "Choose Cancel if you didn't mean to\n"
-			    "create such a large image.\n\n"
-			    "To prevent this dialog from appearing,\n"
-			    "increase the \"Maximum Image Size\"\n"
-			    "setting (currently %s) in the\n"
-			    "preferences dialog."),
-                          size, max_size);
-
-  info->confirm_dialog =
-    gimp_query_boolean_box (_("Confirm Image Size"),
-			    gimp_standard_help_func,
-			    "dialogs/file_new.html#confirm_size",
-			    FALSE,
-			    text,
-			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
-			    NULL, NULL,
-			    file_new_confirm_dialog_callback,
-			    info);
-
-  g_free (text);
-  g_free (max_size);
-  g_free (size);
-
-  gtk_widget_show (info->confirm_dialog);
-}
-
-static void
-file_new_resolution_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  NewImageInfo *info;
-
-  static gdouble xres = 0.0;
-  static gdouble yres = 0.0;
-  gdouble new_xres;
-  gdouble new_yres;
-
-  info = (NewImageInfo *) data;
-
-  new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-
-  if (gimp_chain_button_get_active
-      (GIMP_CHAIN_BUTTON (info->couple_resolutions)))
-    {
-      gtk_signal_handler_block_by_data
-	(GTK_OBJECT (info->resolution_se), info);
-
-      if (new_xres != xres)
-	{
-	  yres = new_yres = xres = new_xres;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, yres);
-	}
-
-      if (new_yres != yres)
-	{
-	  xres = new_xres = yres = new_yres;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
-	}
-
-      gtk_signal_handler_unblock_by_data
-	(GTK_OBJECT (info->resolution_se), info);
-    }
-  else
-    {
-      if (new_xres != xres)
-	xres = new_xres;
-      if (new_yres != yres)
-	yres = new_yres;
-    }
-
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
-				  xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
-				  yres, FALSE);
-
-  file_new_image_size_callback (widget, data);
-}
-
-static void
-file_new_image_size_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  NewImageInfo *info;
-  gchar *text;
-  gchar *label;
-
-  info = (NewImageInfo*) data;
-
-  info->values->width = 
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
-  info->values->height =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
-
-  info->size = gimp_image_new_calculate_size (info->values);
-
-  label = g_strdup_printf (_("Image Size: %s"),
-			   text = gimp_image_new_get_size_string (info->size));
-  gtk_frame_set_label (GTK_FRAME (info->size_frame), label);
-
-  g_free (label);
-  g_free (text);
-}
+/*  public functions  */
 
 void
-file_new_dialog_create (GimpImage *gimage)
+file_new_dialog_create (Gimp      *gimp,
+                        GimpImage *gimage)
 {
   NewImageInfo *info;
   GtkWidget    *top_vbox;
@@ -334,9 +99,14 @@ file_new_dialog_create (GimpImage *gimage)
   GSList       *group;
   GList        *list;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
+
   info = g_new0 (NewImageInfo, 1);
 
-  info->values = gimp_image_new_values_new (the_gimp, gimage);
+  info->gimp           = gimp;
+
+  info->values         = gimp_image_new_values_new (gimp, gimage);
 
   info->confirm_dialog = NULL;
   info->size           = 0.0;
@@ -531,7 +301,7 @@ file_new_dialog_create (GimpImage *gimage)
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   info->resolution_se =
-    gimp_size_entry_new (1, the_gimp->config->default_resolution_units,
+    gimp_size_entry_new (1, gimp->config->default_resolution_units,
 			 _("pixels/%a"),
 		         FALSE, FALSE, FALSE, 75,
 		         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
@@ -590,7 +360,7 @@ file_new_dialog_create (GimpImage *gimage)
 
   group = NULL;
 
-  for (list = gimp_image_new_get_base_type_names (the_gimp);
+  for (list = gimp_image_new_get_base_type_names (gimp);
        list;
        list = g_list_next (list))
     {
@@ -630,7 +400,7 @@ file_new_dialog_create (GimpImage *gimage)
 
   group = NULL;
 
-  for (list = gimp_image_new_get_fill_type_names (the_gimp);
+  for (list = gimp_image_new_get_fill_type_names (gimp);
        list;
        list = g_list_next (list))
     {
@@ -662,4 +432,248 @@ file_new_dialog_create (GimpImage *gimage)
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (info->size_se));
 
   gtk_widget_show (info->dialog);
+}
+
+
+/*  private functions  */
+
+static void
+file_new_ok_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  NewImageInfo       *info;
+  GimpImageNewValues *values;
+
+  info = (NewImageInfo*) data;
+  values = info->values;
+
+  /* get the image size in pixels */
+  values->width = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
+  values->height = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
+
+  /* get the resolution in dpi */
+  values->xresolution =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0);
+  values->yresolution =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1);
+
+  /* get the units */
+  values->unit =
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->size_se));
+  values->res_unit =
+    gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->resolution_se));
+
+  if (info->size > gimprc.max_new_image_size)
+    {
+      file_new_confirm_dialog (info);
+    }
+  else
+    {
+      gtk_widget_destroy (info->dialog);
+      gimp_image_new_create_image (info->gimp, values);
+      gimp_image_new_values_free (values);
+      g_free (info);
+    }
+}
+
+static void
+file_new_reset_callback (GtkWidget *widget,
+			 gpointer   data)
+{
+  NewImageInfo *info;
+
+  info = (NewImageInfo *) data;
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (info->resolution_se), info);
+
+  gimp_chain_button_set_active
+    (GIMP_CHAIN_BUTTON (info->couple_resolutions),
+     ABS (info->gimp->config->default_xresolution -
+	  info->gimp->config->default_yresolution) < GIMP_MIN_RESOLUTION);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0,
+			      info->gimp->config->default_xresolution);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
+			      info->gimp->config->default_yresolution);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
+			    info->gimp->config->default_resolution_units);
+
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (info->resolution_se), info);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+				  info->gimp->config->default_xresolution, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+				  info->gimp->config->default_yresolution, TRUE);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0,
+			      info->gimp->config->default_width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
+			      info->gimp->config->default_height);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
+			    info->gimp->config->default_units);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[info->gimp->config->default_type]),
+				TRUE);
+  gtk_toggle_button_set_active
+    (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
+}
+
+static void
+file_new_cancel_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  NewImageInfo *info;
+
+  info = (NewImageInfo*) data;
+
+  gtk_widget_destroy (info->dialog);
+  gimp_image_new_values_free (info->values);
+  g_free (info);
+}
+
+/*  local callback of file_new_confirm_dialog()  */
+static void
+file_new_confirm_dialog_callback (GtkWidget *widget,
+				  gboolean   create,
+				  gpointer   data)
+{
+  NewImageInfo *info;
+
+  info = (NewImageInfo*) data;
+
+  info->confirm_dialog = NULL;
+
+  if (create)
+    {
+      gtk_widget_destroy (info->dialog);
+      gimp_image_new_create_image (info->gimp, info->values);
+      gimp_image_new_values_free (info->values);
+      g_free (info);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (info->dialog, TRUE);
+    }
+}
+
+static void
+file_new_confirm_dialog (NewImageInfo *info)
+{
+  gchar *size;
+  gchar *max_size;
+  gchar *text;
+
+  gtk_widget_set_sensitive (info->dialog, FALSE);
+
+  size     = gimp_image_new_get_size_string (info->size);
+  max_size = gimp_image_new_get_size_string (gimprc.max_new_image_size);
+
+  /* xgettext:no-c-format */
+	    
+  text = g_strdup_printf (_("You are trying to create an image which\n"
+			    "has an initial size of %s.\n\n"
+			    "Choose OK to create this image anyway.\n"
+			    "Choose Cancel if you didn't mean to\n"
+			    "create such a large image.\n\n"
+			    "To prevent this dialog from appearing,\n"
+			    "increase the \"Maximum Image Size\"\n"
+			    "setting (currently %s) in the\n"
+			    "preferences dialog."),
+                          size, max_size);
+
+  info->confirm_dialog =
+    gimp_query_boolean_box (_("Confirm Image Size"),
+			    gimp_standard_help_func,
+			    "dialogs/file_new.html#confirm_size",
+			    FALSE,
+			    text,
+			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
+			    NULL, NULL,
+			    file_new_confirm_dialog_callback,
+			    info);
+
+  g_free (text);
+  g_free (max_size);
+  g_free (size);
+
+  gtk_widget_show (info->confirm_dialog);
+}
+
+static void
+file_new_resolution_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  NewImageInfo *info;
+
+  static gdouble xres = 0.0;
+  static gdouble yres = 0.0;
+  gdouble new_xres;
+  gdouble new_yres;
+
+  info = (NewImageInfo *) data;
+
+  new_xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+
+  if (gimp_chain_button_get_active
+      (GIMP_CHAIN_BUTTON (info->couple_resolutions)))
+    {
+      gtk_signal_handler_block_by_data
+	(GTK_OBJECT (info->resolution_se), info);
+
+      if (new_xres != xres)
+	{
+	  yres = new_yres = xres = new_xres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, yres);
+	}
+
+      if (new_yres != yres)
+	{
+	  xres = new_xres = yres = new_yres;
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, xres);
+	}
+
+      gtk_signal_handler_unblock_by_data
+	(GTK_OBJECT (info->resolution_se), info);
+    }
+  else
+    {
+      if (new_xres != xres)
+	xres = new_xres;
+      if (new_yres != yres)
+	yres = new_yres;
+    }
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+				  xres, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+				  yres, FALSE);
+
+  file_new_image_size_callback (widget, data);
+}
+
+static void
+file_new_image_size_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  NewImageInfo *info;
+  gchar *text;
+  gchar *label;
+
+  info = (NewImageInfo*) data;
+
+  info->values->width = 
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0));
+  info->values->height =
+    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
+
+  info->size = gimp_image_new_calculate_size (info->values);
+
+  label = g_strdup_printf (_("Image Size: %s"),
+			   text = gimp_image_new_get_size_string (info->size));
+  gtk_frame_set_label (GTK_FRAME (info->size_frame), label);
+
+  g_free (label);
+  g_free (text);
 }

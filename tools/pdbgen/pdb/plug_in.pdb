@@ -48,7 +48,7 @@ HELP
 	{ name => 'message', type => 'string', no_success => 1,
 	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'int32',
-	  desc => 'GDisplay to update progressbar in, or -1 for a seperate
+	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
 		   window',
 	  implicit_fill => 'gimp_default_display ()', no_id_lookup => 1 }
     );
@@ -60,7 +60,8 @@ HELP
   if (current_plug_in && current_plug_in->open)
     {
       success = TRUE;
-      if (!no_interface)
+
+      if (! gimp->no_interface)
 	plug_in_progress_init (current_plug_in, message, gdisplay);
     }
 }
@@ -90,7 +91,8 @@ HELP
   if (current_plug_in && current_plug_in->open)
     {
       success = TRUE;
-      if (!no_interface)
+
+      if (! gimp->no_interface)
 	plug_in_progress_update (current_plug_in, percentage);
     }
 }
@@ -333,7 +335,7 @@ CODE
 }
 
 
-@headers = qw("plug_in.h" "regexrepl/regex.h" "appenv.h" 
+@headers = qw("core/gimp.h" "plug_in.h" "regexrepl/regex.h"
 	      <string.h> <stdlib.h>);
 
 $extra{app}->{code} = <<'CODE';
@@ -352,6 +354,3 @@ CODE
 $desc = 'Plug-in';
 
 1;
-
-
-

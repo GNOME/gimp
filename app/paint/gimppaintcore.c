@@ -86,19 +86,19 @@ static void   gimp_paint_tool_init            (GimpPaintTool       *paint_tool);
 
 static void   gimp_paint_tool_control         (GimpTool	           *tool,
 					       ToolAction           action,
-					       GDisplay            *gdisp);
+					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_press    (GimpTool            *tool,
 					       GdkEventButton      *bevent,
-					       GDisplay            *gdisp);
+					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_release  (GimpTool            *tool,
 					       GdkEventButton      *bevent,
-					       GDisplay            *gdisp);
+					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_motion          (GimpTool            *tool,
 					       GdkEventMotion      *mevent,
-					       GDisplay            *gdisp);
+					       GimpDisplay         *gdisp);
 static void   gimp_paint_tool_cursor_update   (GimpTool            *tool,
 					       GdkEventMotion      *mevent,
-					       GDisplay            *gdisp);
+					       GimpDisplay         *gdisp);
 
 static void   gimp_paint_tool_draw            (GimpDrawTool        *draw_tool);
 
@@ -279,9 +279,9 @@ gimp_paint_tool_init (GimpPaintTool *tool)
 }
 
 static void
-gimp_paint_tool_control (GimpTool   *tool,
-			 ToolAction  action,
-			 GDisplay   *gdisp)
+gimp_paint_tool_control (GimpTool    *tool,
+			 ToolAction   action,
+			 GimpDisplay *gdisp)
 {
   GimpPaintTool *paint_tool;
   GimpDrawable  *drawable;
@@ -313,7 +313,7 @@ gimp_paint_tool_control (GimpTool   *tool,
 static void
 gimp_paint_tool_button_press (GimpTool       *tool,
 			      GdkEventButton *bevent,
-			      GDisplay       *gdisp)
+			      GimpDisplay    *gdisp)
 {
   GimpPaintTool *paint_tool;
   GimpBrush    	*current_brush;
@@ -498,7 +498,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 static void
 gimp_paint_tool_button_release (GimpTool       *tool,
 				GdkEventButton *bevent,
-				GDisplay       *gdisp)
+				GimpDisplay    *gdisp)
 {
   GimpImage     *gimage;
   GimpPaintTool *paint_tool;
@@ -532,7 +532,7 @@ gimp_paint_tool_button_release (GimpTool       *tool,
 static void
 gimp_paint_tool_motion (GimpTool       *tool,
 			GdkEventMotion *mevent,
-			GDisplay       *gdisp)
+			GimpDisplay    *gdisp)
 {
   GimpPaintTool *paint_tool;
 
@@ -585,7 +585,7 @@ gimp_paint_tool_motion (GimpTool       *tool,
 static void
 gimp_paint_tool_cursor_update (GimpTool       *tool,
 			       GdkEventMotion *mevent,
-			       GDisplay       *gdisp)
+			       GimpDisplay    *gdisp)
 {
   GimpLayer     *layer;
   GimpPaintTool *paint_tool;
@@ -765,7 +765,7 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  GDisplay      *gdisp;
+  GimpDisplay   *gdisp;
   GimpPaintTool *paint_tool;
   GimpTool      *tool;
   gint           tx1, ty1, tx2, ty2;

@@ -157,8 +157,6 @@ static GtkTargetEntry color_palette_target_table[] =
   GIMP_TARGET_COLOR,
   GIMP_TARGET_PALETTE
 };
-static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
-					sizeof (color_palette_target_table[0]));
 
 
 /*  called from color_picker.h  *********************************************/
@@ -326,7 +324,8 @@ palette_editor_new (Gimp *gimp)
   /*  dnd stuff  */
   gtk_drag_source_set (palette_region,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_palette_target_table, n_color_palette_targets,
+                       color_palette_target_table,
+                       G_N_ELEMENTS (color_palette_target_table),
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (palette_region, palette_editor_drag_color,
 			     palette_editor);
@@ -335,7 +334,8 @@ palette_editor_new (Gimp *gimp)
                      GTK_DEST_DEFAULT_HIGHLIGHT |
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP,
-                     color_palette_target_table, n_color_palette_targets,
+                     color_palette_target_table,
+                     G_N_ELEMENTS (color_palette_target_table),
                      GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (eventbox, palette_editor_drop_color, palette_editor);
   gimp_dnd_viewable_dest_set (eventbox, GIMP_TYPE_PALETTE,

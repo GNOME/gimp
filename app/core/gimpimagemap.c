@@ -46,7 +46,7 @@ typedef enum
 
 struct _ImageMap
 {
-  GDisplay            *gdisp;
+  GimpDisplay         *gdisp;
   GimpDrawable        *drawable;
   TileManager         *undo_tiles;
   ImageMapApplyFunc    apply_func;
@@ -67,7 +67,7 @@ static gboolean   image_map_do (gpointer data);
 /*  public functions  */
 
 ImageMap *
-image_map_create (GDisplay     *gdisp,
+image_map_create (GimpDisplay  *gdisp,
 		  GimpDrawable *drawable)
 {
   ImageMap *image_map;

@@ -133,9 +133,7 @@ tool_manager_init (Gimp *gimp)
 
   if (! gimprc.global_paint_options && tool_manager->active_tool)
     {
-      tool_context =
-	tool_manager_get_info_by_tool (gimp,
-				       tool_manager->active_tool)->context;
+      tool_context = tool_manager->active_tool->tool_info->context;
 
       if (tool_context)
 	{
@@ -230,7 +228,7 @@ tool_manager_select_tool (Gimp     *gimp,
 {
   GimpToolManager *tool_manager;
 
-  g_return_if_fail (tool != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
   tool_manager = tool_manager_get (gimp);
@@ -247,7 +245,7 @@ tool_manager_push_tool (Gimp     *gimp,
 {
   GimpToolManager *tool_manager;
 
-  g_return_if_fail (tool != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
   tool_manager = tool_manager_get (gimp);
@@ -468,7 +466,8 @@ tool_manager_register_tool (Gimp         *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  tool_info = gimp_tool_info_new (tool_manager->global_tool_context,
+  tool_info = gimp_tool_info_new (gimp,
+                                  tool_manager->global_tool_context,
 				  tool_type,
 				  tool_context,
 				  identifier,
@@ -531,16 +530,6 @@ tool_manager_get_info_by_type (Gimp  *gimp,
   return NULL;
 }
 
-GimpToolInfo *
-tool_manager_get_info_by_tool (Gimp     *gimp,
-			       GimpTool *tool)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
-
-  return tool_manager_get_info_by_type (gimp, G_TYPE_FROM_INSTANCE (tool));
-}
-
 const gchar *
 tool_manager_active_get_help_data (Gimp *gimp)
 {
@@ -553,8 +542,7 @@ tool_manager_active_get_help_data (Gimp *gimp)
   if (! tool_manager->active_tool)
     return NULL;
 
-  return tool_manager_get_info_by_tool (gimp,
-					tool_manager->active_tool)->help_data;
+  return tool_manager->active_tool->tool_info->help_data;
 }
 
 void
@@ -613,8 +601,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
 	  /*  explicitly set the current tool  */
 	  gimp_context_set_tool (user_context,
-				 tool_manager_get_info_by_tool (user_context->gimp,
-								tool_manager->active_tool));
+                                 tool_manager->active_tool->tool_info);
 
 	  g_signal_handlers_unblock_by_func (G_OBJECT (user_context),
 					     tool_manager_tool_changed,
@@ -624,13 +611,15 @@ tool_manager_tool_changed (GimpContext  *user_context,
       return;
     }
 
-  if (tool_info->tool_type != G_TYPE_NONE)
+  if (g_type_is_a (tool_info->tool_type, GIMP_TYPE_TOOL))
     {
       new_tool = g_object_new (tool_info->tool_type, NULL);
+
+      new_tool->tool_info = tool_info;
     }
   else
     {
-      g_warning ("%s(): tool_info contains no valid GType",
+      g_warning ("%s(): tool_info->tool_type is no GimpTool subclass",
 		 G_GNUC_FUNCTION);
       return;
     }
@@ -638,8 +627,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
   if (! gimprc.global_paint_options)
     {
       if (tool_manager->active_tool &&
-	  (tool_context = tool_manager_get_info_by_tool (user_context->gimp,
-							 tool_manager->active_tool)->context))
+	  (tool_context = tool_manager->active_tool->tool_info->context))
 	{
 	  gimp_context_unset_parent (tool_context);
 	}

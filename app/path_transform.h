@@ -28,7 +28,7 @@ void       path_transform_do_undo       (GimpImage   *gimage,
 void       path_transform_current_path  (GimpImage   *gimage,  
 					 GimpMatrix3  transform,
 					 gboolean     forpreview);
-void       path_transform_draw_current  (GDisplay    *gimage, 
+void       path_transform_draw_current  (GimpDisplay *gimage, 
 					 GimpDrawTool    *core,
 					 GimpMatrix3  transform);
 

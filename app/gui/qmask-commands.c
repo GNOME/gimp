@@ -61,7 +61,7 @@ struct _EditQmaskOptions
 
 
 /*  Prototypes */
-static void edit_qmask_channel_query         (GDisplay        *gdisp);
+static void edit_qmask_channel_query         (GimpDisplay     *gdisp);
 static void edit_qmask_query_ok_callback     (GtkWidget       *widget, 
                                               gpointer         client_data);
 static void edit_qmask_query_cancel_callback (GtkWidget       *widget, 
@@ -101,7 +101,7 @@ static void
 qmask_removed_callback (GtkObject *qmask,
 			gpointer   data)
 {
-  GDisplay *gdisp = (GDisplay*) data;
+  GimpDisplay *gdisp = (GimpDisplay *) data;
   
   if (!gdisp->gimage)
     return;
@@ -113,7 +113,7 @@ qmask_removed_callback (GtkObject *qmask,
 
 
 void
-qmask_buttons_update (GDisplay *gdisp)
+qmask_buttons_update (GimpDisplay *gdisp)
 {
   g_assert (gdisp);
   g_assert (gdisp->gimage);
@@ -150,9 +150,9 @@ qmask_button_press_callback (GtkWidget      *widget,
 			     GdkEventButton *event,
 			     gpointer        data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if ((event->type == GDK_2BUTTON_PRESS) &&
       (event->button == 1))
@@ -166,8 +166,8 @@ qmask_button_press_callback (GtkWidget      *widget,
 }
 
 void
-qmask_deactivate_callback (GtkWidget *widget,
-			   GDisplay  *gdisp)
+qmask_deactivate_callback (GtkWidget   *widget,
+			   GimpDisplay *gdisp)
 {
   GimpImage   *gimage;
   GimpChannel *gmask;
@@ -202,8 +202,8 @@ qmask_deactivate_callback (GtkWidget *widget,
 }
 
 void
-qmask_activate_callback (GtkWidget *widget,
-			 GDisplay  *gdisp)
+qmask_activate_callback (GtkWidget   *widget,
+			 GimpDisplay *gdisp)
 {
   GimpImage   *gimage;
   GimpChannel *gmask;
@@ -274,7 +274,7 @@ qmask_activate_callback (GtkWidget *widget,
 }
 
 static void
-edit_qmask_channel_query (GDisplay * gdisp)
+edit_qmask_channel_query (GimpDisplay *gdisp)
 {
   EditQmaskOptions *options;
   GtkWidget        *hbox;

@@ -20,12 +20,13 @@
 #define __FILE_OPEN_DIALOG_H__
 
 
-void   file_open_dialog_menu_init  (void);
-void   file_open_dialog_menu_reset (void);
+void                file_open_dialog_menu_init  (Gimp        *gimp);
+void                file_open_dialog_menu_reset (void);
 
-void   file_open_dialog_show       (void);
+void                file_open_dialog_show       (Gimp        *gimp);
 
-gint   file_open_with_display      (const gchar *filename);
+GimpPDBStatusType   file_open_with_display      (Gimp        *gimp,
+                                                 const gchar *filename);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */

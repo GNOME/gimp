@@ -46,7 +46,7 @@ static GHashTable *color_display_table = NULL;
 static void       color_display_foreach_real (gpointer          key,
 					      gpointer          value,
 					      gpointer          user_data);
-static void       gdisplay_color_detach_real (GDisplay         *gdisp,
+static void       gdisplay_color_detach_real (GimpDisplay      *gdisp,
 					      ColorDisplayNode *node,
 					      gboolean          unref);
 static gint       node_name_compare          (ColorDisplayNode *node,
@@ -87,7 +87,7 @@ G_MODULE_EXPORT gboolean
 gimp_color_display_unregister (const gchar *name)
 {
   ColorDisplayInfo *info;
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
   GList *node;
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
@@ -96,7 +96,7 @@ gimp_color_display_unregister (const gchar *name)
 
       while (refs)
 	{
-	  gdisp = (GDisplay *) refs->data;
+	  gdisp = (GimpDisplay *) refs->data;
 
 	  node = g_list_find_custom (gdisp->cd_list, (gpointer) name,
 	      			     (GCompareFunc) node_name_compare);
@@ -150,7 +150,7 @@ color_display_foreach_real (gpointer key,
 }
 
 ColorDisplayNode *
-gdisplay_color_attach (GDisplay    *gdisp,
+gdisplay_color_attach (GimpDisplay *gdisp,
 		       const gchar *name)
 {
   ColorDisplayInfo *info;
@@ -186,7 +186,7 @@ gdisplay_color_attach (GDisplay    *gdisp,
 }
 
 ColorDisplayNode *
-gdisplay_color_attach_clone (GDisplay         *gdisp,
+gdisplay_color_attach_clone (GimpDisplay      *gdisp,
 			     ColorDisplayNode *node)
 {
   ColorDisplayInfo *info;
@@ -220,7 +220,7 @@ gdisplay_color_attach_clone (GDisplay         *gdisp,
 }
 
 void
-gdisplay_color_detach (GDisplay         *gdisp,
+gdisplay_color_detach (GimpDisplay      *gdisp,
 		       ColorDisplayNode *node)
 {
   g_return_if_fail (gdisp != NULL);
@@ -229,7 +229,7 @@ gdisplay_color_detach (GDisplay         *gdisp,
 }
 
 void
-gdisplay_color_detach_destroy (GDisplay         *gdisp,
+gdisplay_color_detach_destroy (GimpDisplay      *gdisp,
 			       ColorDisplayNode *node)
 {
   g_return_if_fail (gdisp != NULL);
@@ -239,7 +239,7 @@ gdisplay_color_detach_destroy (GDisplay         *gdisp,
 }
 
 void
-gdisplay_color_detach_all (GDisplay *gdisp)
+gdisplay_color_detach_all (GimpDisplay *gdisp)
 {
   GList *list;
 
@@ -258,7 +258,7 @@ gdisplay_color_detach_all (GDisplay *gdisp)
 }
 
 static void
-gdisplay_color_detach_real (GDisplay         *gdisp,
+gdisplay_color_detach_real (GimpDisplay      *gdisp,
 			    ColorDisplayNode *node,
 			    gboolean          unref)
 {
@@ -284,7 +284,7 @@ gdisplay_color_detach_real (GDisplay         *gdisp,
 }  
 
 void
-gdisplay_color_reorder_up (GDisplay         *gdisp,
+gdisplay_color_reorder_up (GimpDisplay      *gdisp,
 			   ColorDisplayNode *node)
 {
   GList *node_list;
@@ -299,7 +299,7 @@ gdisplay_color_reorder_up (GDisplay         *gdisp,
 }
 
 void
-gdisplay_color_reorder_down (GDisplay         *gdisp,
+gdisplay_color_reorder_down (GimpDisplay      *gdisp,
 			     ColorDisplayNode *node)
 {
   GList *node_list;

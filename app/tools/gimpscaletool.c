@@ -46,12 +46,12 @@
 
 /*  forward function declarations  */
 static TileManager * gimp_scale_tool_transform      (GimpTransformTool  *tool,
-					             GDisplay           *gdisp,
+					             GimpDisplay        *gdisp,
 					             TransformState      state);
 static void          gimp_scale_tool_recalc         (GimpScaleTool      *tool,
-					             GDisplay           *gdisp);
+					             GimpDisplay        *gdisp);
 static void          gimp_scale_tool_motion         (GimpScaleTool      *tool,
- 					             GDisplay           *gdisp);
+ 					             GimpDisplay        *gdisp);
 static void          gimp_scale_tool_info_update    (GimpScaleTool      *tool);
 
 static void          gimp_scale_tool_size_changed   (GtkWidget          *widget,
@@ -168,7 +168,7 @@ gimp_scale_tool_init (GimpScaleTool *sc_tool)
 
 static TileManager *
 gimp_scale_tool_transform (GimpTransformTool  *tr_tool,
-		           GDisplay           *gdisp,
+		           GimpDisplay        *gdisp,
 		           TransformState      state)
 {
   GimpScaleTool   *sc_tool;
@@ -413,7 +413,7 @@ gimp_scale_tool_unit_changed (GtkWidget *widget,
 
 static void
 gimp_scale_tool_motion (GimpScaleTool *sc_tool,
-		        GDisplay      *gdisp)
+		        GimpDisplay   *gdisp)
 {
   GimpTransformTool *tr_tool;
   gdouble            ratio;
@@ -522,7 +522,7 @@ gimp_scale_tool_motion (GimpScaleTool *sc_tool,
 
 static void
 gimp_scale_tool_recalc (GimpScaleTool *sc_tool,
-		        GDisplay      *gdisp)
+		        GimpDisplay   *gdisp)
 {
   GimpTransformTool *tr_tool;
   gint               x1, y1, x2, y2;
@@ -592,7 +592,7 @@ gimp_scale_tool_recalc (GimpScaleTool *sc_tool,
 TileManager *
 gimp_scale_tool_scale (GimpImage    *gimage,
 		       GimpDrawable *drawable,
-		       GDisplay     *gdisp,
+		       GimpDisplay  *gdisp,
 		       gdouble      *trans_info,
 		       TileManager  *float_tiles,
 		       gboolean      interpolation,

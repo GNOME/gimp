@@ -63,7 +63,7 @@ palettes_import_palette_cmd_callback (GtkWidget *widget,
   if (! editor)
     return;
 
-  palette_import_dialog_show ();
+  palette_import_dialog_show (editor->view->context->gimp);
 }
 
 void
