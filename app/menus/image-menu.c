@@ -487,12 +487,13 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Image/Transform/---"),
 
-  { { N_("/Image/Transform/Rotate Right"), NULL,
+  /*  please use the degree symbol in the translation  */
+  { { N_("/Image/Transform/Rotate 90 degrees CW"), NULL,
       image_rotate_cmd_callback, GIMP_ROTATE_90,
       "<StockItem>", GIMP_STOCK_ROTATE_90 },
     NULL,
     "image/dialogs/rotate_image.html", NULL },
-  { { N_("/Image/Transform/Rotate Left"), NULL,
+  { { N_("/Image/Transform/Rotate 90 degrees CCW"), NULL,
       image_rotate_cmd_callback, GIMP_ROTATE_270,
       "<StockItem>", GIMP_STOCK_ROTATE_270 },
     NULL,
@@ -699,12 +700,12 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/Layer/Transform/---"),
 
-  { { N_("/Layer/Transform/Rotate Right"), NULL,
+  { { N_("/Layer/Transform/Rotate 90 degrees CW"), NULL,
       drawable_rotate_cmd_callback, GIMP_ROTATE_90,
       "<StockItem>", GIMP_STOCK_ROTATE_90 },
     NULL,
     "layers/rotate_layer.html", NULL },
-  { { N_("/Layer/Transform/Rotate Left"), NULL,
+  { { N_("/Layer/Transform/Rotate 90 degrees CCW"), NULL,
       drawable_rotate_cmd_callback, GIMP_ROTATE_270,
       "<StockItem>", GIMP_STOCK_ROTATE_270 },
     NULL,
@@ -1306,9 +1307,11 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Edit/Paste",                 gdisp && gimp->global_buffer);
   SET_SENSITIVE ("/Edit/Paste Into",            gdisp && gimp->global_buffer);
   SET_SENSITIVE ("/Edit/Paste as New",          gimp->global_buffer);
+
   SET_SENSITIVE ("/Edit/Buffer/Cut Named...",   lp);
   SET_SENSITIVE ("/Edit/Buffer/Copy Named...",  lp);
   SET_SENSITIVE ("/Edit/Buffer/Paste Named...", lp);
+
   SET_SENSITIVE ("/Edit/Clear",                 lp);
   SET_SENSITIVE ("/Edit/Fill with FG Color",    lp);
   SET_SENSITIVE ("/Edit/Fill with BG Color",    lp);
@@ -1316,21 +1319,26 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  Select  */
 
-  SET_SENSITIVE ("/Select/Invert",           lp && sel);
   SET_SENSITIVE ("/Select/All",              lp);
   SET_SENSITIVE ("/Select/None",             lp && sel);
+  SET_SENSITIVE ("/Select/Invert",           lp && sel);
   SET_SENSITIVE ("/Select/Float",            lp && sel);
+
   SET_SENSITIVE ("/Select/Feather...",       lp && sel);
   SET_SENSITIVE ("/Select/Sharpen",          lp && sel);
   SET_SENSITIVE ("/Select/Shrink...",        lp && sel);
   SET_SENSITIVE ("/Select/Grow...",          lp && sel);
   SET_SENSITIVE ("/Select/Border...",        lp && sel);
+
   SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
   SET_SENSITIVE ("/Select/Save to Channel",  lp && sel && !fs);
 
   /*  View  */
 
   SET_SENSITIVE ("/View/New View",   gdisp);
+
+  SET_SENSITIVE ("/View/Dot for Dot", gdisp);
+  SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
 
   SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
   SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
@@ -1351,9 +1359,6 @@ image_menu_update (GtkItemFactory *item_factory,
   if (gdisp)
     image_menu_set_zoom (item_factory, shell);
 
-  SET_SENSITIVE ("/View/Dot for Dot", gdisp);
-  SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
-
   SET_SENSITIVE ("/View/Info Window...",       gdisp);
   SET_SENSITIVE ("/View/Navigation Window...", gdisp);
   SET_SENSITIVE ("/View/Display Filters...",   gdisp);
@@ -1362,23 +1367,19 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_ACTIVE    ("/View/Show Selection",      gdisp && visibility->selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
   SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && visibility->active_layer);
+  SET_SENSITIVE ("/View/Show Guides",         gdisp);
+  SET_ACTIVE    ("/View/Show Guides",         gdisp && visibility->guides);
+  SET_SENSITIVE ("/View/Snap to Guides",      gdisp);
+  SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
 
-  SET_SENSITIVE ("/View/Show Guides",    gdisp);
-  SET_ACTIVE    ("/View/Show Guides",    gdisp && visibility->guides);
-  SET_SENSITIVE ("/View/Snap to Guides", gdisp);
-  SET_ACTIVE    ("/View/Snap to Guides", gdisp && shell->snap_to_guides);
-
-  SET_SENSITIVE ("/View/Show Menubar", gdisp);
-  SET_ACTIVE    ("/View/Show Menubar", gdisp && visibility->menubar);
-
-  SET_SENSITIVE ("/View/Show Rulers", gdisp);
-  SET_ACTIVE    ("/View/Show Rulers", gdisp && visibility->rulers);
-
+  SET_SENSITIVE ("/View/Show Menubar",    gdisp);
+  SET_ACTIVE    ("/View/Show Menubar",    gdisp && visibility->menubar);
+  SET_SENSITIVE ("/View/Show Rulers",     gdisp);
+  SET_ACTIVE    ("/View/Show Rulers",     gdisp && visibility->rulers);
   SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
   SET_ACTIVE    ("/View/Show Scrollbars", gdisp && visibility->scrollbars);
-
-  SET_SENSITIVE ("/View/Show Statusbar", gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar", gdisp && visibility->statusbar);
+  SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
+  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && visibility->statusbar);
 
   SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
 
@@ -1391,8 +1392,11 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Mode/Grayscale",  gdisp && ! is_gray);
   SET_SENSITIVE ("/Image/Mode/Indexed...", gdisp && ! is_indexed);
 
-  SET_SENSITIVE ("/Image/Transform/Flip Horizontally", gdisp);
-  SET_SENSITIVE ("/Image/Transform/Flip Vertically",   gdisp);
+  SET_SENSITIVE ("/Image/Transform/Flip Horizontally",     gdisp);
+  SET_SENSITIVE ("/Image/Transform/Flip Vertically",       gdisp);
+  SET_SENSITIVE ("/Image/Transform/Rotate 90 degrees CW",  gdisp);
+  SET_SENSITIVE ("/Image/Transform/Rotate 90 degrees CCW", gdisp);
+  SET_SENSITIVE ("/Image/Transform/Rotate 180 degrees",    gdisp);
 
   SET_SENSITIVE ("/Image/Canvas Size...",          gdisp);
   SET_SENSITIVE ("/Image/Scale Image...",          gdisp);
@@ -1453,9 +1457,12 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Transparency/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);
   SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection", lp && !aux && alpha);
 
-  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally", lp);
-  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",   lp);
-  SET_SENSITIVE ("/Layer/Transform/Offset...",         lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally",     lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",       lp);
+  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CW",  lp);
+  SET_SENSITIVE ("/Layer/Transform/Rotate 90 degrees CCW", lp);
+  SET_SENSITIVE ("/Image/Transform/Rotate 180 degrees",    lp);
+  SET_SENSITIVE ("/Layer/Transform/Offset...",             lp);
 
 #undef SET_ACTIVE
 #undef SET_LABEL

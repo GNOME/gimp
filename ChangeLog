@@ -1,3 +1,8 @@
+2003-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/image-menu.c: added CW/CCW to the "Rotate" menu entries
+	as suggested in bug #57797. Cleaned up image_menu_update().
+
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/CML_explorer.c (CML_save_to_file_callback): use
