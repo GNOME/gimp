@@ -1,3 +1,20 @@
+2004-06-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]
+	* libgimpwidgets/gimpwidgets.def: added new utility function
+	gimp_label_set_attributes().
+
+	* app/display/gimpdisplayshell.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpwidgets-utils.c: use the new function.
+
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimphistogrameditor.c: display the name in italic.
+
+	* plug-ins/common/jpeg.c: display the file size in italic.
+
 2004-06-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/url.c: if url does not end in a recognized

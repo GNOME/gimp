@@ -112,6 +112,7 @@ EXPORTS
 	gimp_int_store_get_type
 	gimp_int_store_lookup_by_value
 	gimp_int_store_new
+	gimp_label_set_attributes
 	gimp_memsize_entry_get_type
 	gimp_memsize_entry_get_value
 	gimp_memsize_entry_new

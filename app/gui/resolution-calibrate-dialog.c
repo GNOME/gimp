@@ -49,15 +49,13 @@ void
 resolution_calibrate_dialog (GtkWidget  *resolution_entry,
                              GdkPixbuf  *pixbuf)
 {
-  GtkWidget      *dialog;
-  GtkWidget      *table;
-  GtkWidget      *vbox;
-  GtkWidget      *hbox;
-  GtkWidget      *ruler;
-  GtkWidget      *label;
-  GdkScreen      *screen;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
+  GtkWidget *dialog;
+  GtkWidget *table;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *ruler;
+  GtkWidget *label;
+  GdkScreen *screen;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
@@ -122,23 +120,12 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
     gtk_label_new (_("Measure the rulers and enter their lengths:"));
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  gtk_label_set_attributes (GTK_LABEL (label), attrs);
-  pango_attr_list_unref (attrs);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

@@ -140,6 +140,9 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   editor->name = label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (editor->name),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_start (GTK_BOX (editor), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

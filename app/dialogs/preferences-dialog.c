@@ -950,8 +950,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *image;
   GtkWidget         *sizeentry;
   GtkWidget         *calibrate_button;
-  PangoAttrList     *attrs;
-  PangoAttribute    *attr;
   GSList            *group;
   GtkWidget         *editor;
   gint               i;
@@ -1040,23 +1038,12 @@ prefs_dialog_new (Gimp       *gimp,
 
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
   gtk_widget_show (label);
-
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  gtk_label_set_attributes (GTK_LABEL (label), attrs);
-  pango_attr_list_unref (attrs);
 
   image = gtk_image_new ();
   gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);

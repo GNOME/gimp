@@ -204,6 +204,9 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   grid_view->name_label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (grid_view->name_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_start (GTK_BOX (grid_view), grid_view->name_label,
 		      FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (grid_view), grid_view->name_label, 0);

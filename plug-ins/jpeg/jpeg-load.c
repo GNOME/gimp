@@ -1720,6 +1720,9 @@ save_dialog (void)
 
   preview_size = gtk_label_new (_("File size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (preview_size),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
   gtk_widget_show (preview_size);
 

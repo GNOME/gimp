@@ -77,16 +77,14 @@ gimp_message_box (const gchar *stock_id,
 		  GtkCallback  callback,
 		  gpointer     data)
 {
-  MessageBox     *msg_box;
-  GtkWidget      *dialog;
-  GtkWidget      *hbox;
-  GtkWidget      *vbox;
-  GtkWidget      *image;
-  GtkWidget      *label;
-  GList          *list;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
-  gchar          *str;
+  MessageBox *msg_box;
+  GtkWidget  *dialog;
+  GtkWidget  *hbox;
+  GtkWidget  *vbox;
+  GtkWidget  *image;
+  GtkWidget  *label;
+  GList      *list;
+  gchar      *str;
 
   g_return_if_fail (stock_id != NULL);
   g_return_if_fail (message != NULL);
@@ -120,21 +118,14 @@ gimp_message_box (const gchar *stock_id,
 	    {
               GtkWidget *label;
 
-              attrs = pango_attr_list_new ();
-
-              attr = pango_attr_style_new (PANGO_STYLE_OBLIQUE);
-              attr->start_index = 0;
-              attr->end_index   = -1;
-              pango_attr_list_insert (attrs, attr);
-
               label = gtk_label_new (_("Message repeated once."));
               gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-              gtk_label_set_attributes (GTK_LABEL (label), attrs);
+              gimp_label_set_attributes (GTK_LABEL (label),
+                                         PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+                                         -1);
 	      gtk_box_pack_end (GTK_BOX (msg_box->vbox), label,
                                 FALSE, FALSE, 0);
 	      gtk_widget_show (label);
-
-              pango_attr_list_unref (attrs);
 
 	      msg_box->repeat_label = label;
 	    }
@@ -184,28 +175,17 @@ gimp_message_box (const gchar *stock_id,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
   str = g_strdup_printf (_("%s Message"), domain);
   label = gtk_label_new (str);
   g_free (str);
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  pango_attr_list_unref (attrs);
 
   label = gtk_label_new (message);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

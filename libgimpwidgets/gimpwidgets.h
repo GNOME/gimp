@@ -267,6 +267,10 @@ GtkWidget * gimp_table_attach_aligned    (GtkTable        *table,
 					  gboolean         left_align);
 
 
+void        gimp_label_set_attributes    (GtkLabel        *label,
+                                          ...);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_WIDGETS_H__ */

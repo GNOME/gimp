@@ -355,3 +355,12 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_label_set_attributes ##### -->
+<para>
+
+</para>
+
+@label: 
+@Varargs: 
+
+

@@ -1474,8 +1474,6 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
   GtkWidget *vbox;
   GtkWidget *image;
   GtkWidget *label;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
   gchar     *name;
   gchar     *title;
   gchar     *message;
@@ -1526,18 +1524,6 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
   message = g_strdup_printf (_("Changes were made to '%s'."), name);
 
   label = gtk_label_new (message);
@@ -1546,11 +1532,12 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
   g_free (name);
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  pango_attr_list_unref (attrs);
 
   label = gtk_label_new (_("Unsaved changes will be lost."));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

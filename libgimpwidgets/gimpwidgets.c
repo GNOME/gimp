@@ -1406,3 +1406,134 @@ gimp_table_attach_aligned (GtkTable    *table,
 
   return label;
 }
+
+/**
+ * gimp_label_set_attributes:
+ * @label: a #GtkLabel
+ * @...:   a list of PangoAttrType and value pairs terminated by -1.
+ *
+ * Sets Pango attributes on a #GtkLabel in a more convenient way than
+ * gtk_label_set_attributes().
+ *
+ * This function is useful if you want to change the font attributes
+ * of a #GtkLabel. This is an alternative to using PangoMarkup which
+ * is slow to parse and akward to handle in an i18n-friendly way.
+ *
+ * The attributes are set on the complete label, from start to end. If
+ * you need to set attributes on part of the label, you will have to
+ * use the PangoAttributes API directly.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_label_set_attributes (GtkLabel *label,
+                           ...)
+{
+  PangoAttribute *attr  = NULL;
+  PangoAttrList  *attrs;
+  va_list         args;
+
+  g_return_if_fail (GTK_IS_LABEL (label));
+
+  attrs = pango_attr_list_new ();
+
+  va_start (args, label);
+
+  do
+    {
+      PangoAttrType   attr_type = va_arg (args, PangoAttrType);
+
+      switch (attr_type)
+        {
+        case PANGO_ATTR_LANGUAGE:
+          attr = pango_attr_language_new (va_arg (args, PangoLanguage *));
+          break;
+
+        case PANGO_ATTR_FAMILY:
+          attr = pango_attr_family_new (va_arg (args, const gchar *));
+          break;
+
+        case PANGO_ATTR_STYLE:
+          attr = pango_attr_style_new (va_arg (args, PangoStyle));
+          break;
+
+        case PANGO_ATTR_WEIGHT:
+          attr = pango_attr_weight_new (va_arg (args, PangoWeight));
+          break;
+
+        case PANGO_ATTR_VARIANT:
+          attr = pango_attr_variant_new (va_arg (args, PangoVariant));
+          break;
+
+        case PANGO_ATTR_STRETCH:
+          attr = pango_attr_stretch_new (va_arg (args, PangoStretch));
+          break;
+
+        case PANGO_ATTR_SIZE:
+          attr = pango_attr_stretch_new (va_arg (args, gint));
+          break;
+
+        case PANGO_ATTR_FONT_DESC:
+          attr = pango_attr_font_desc_new (va_arg (args,
+                                                   const PangoFontDescription *));
+          break;
+
+        case PANGO_ATTR_FOREGROUND:
+          {
+            const PangoColor *color = va_arg (args, const PangoColor *);
+
+            attr = pango_attr_foreground_new (color->red,
+                                              color->green,
+                                              color->blue);
+          }
+          break;
+
+        case PANGO_ATTR_BACKGROUND:
+          {
+            const PangoColor *color = va_arg (args, const PangoColor *);
+
+            attr = pango_attr_background_new (color->red,
+                                              color->green,
+                                              color->blue);
+          }
+          break;
+
+        case PANGO_ATTR_UNDERLINE:
+          attr = pango_attr_underline_new (va_arg (args, PangoUnderline));
+          break;
+
+        case PANGO_ATTR_STRIKETHROUGH:
+          attr = pango_attr_underline_new (va_arg (args, gboolean));
+          break;
+
+        case PANGO_ATTR_RISE:
+          attr = pango_attr_rise_new (va_arg (args, gint));
+          break;
+
+        case PANGO_ATTR_SCALE:
+          attr = pango_attr_scale_new (va_arg (args, gdouble));
+          break;
+
+        default:
+          g_warning ("%s: invalid PangoAttribute type %d",
+                     G_STRFUNC, attr_type);
+        case -1:
+        case PANGO_ATTR_INVALID:
+          attr = NULL;
+          break;
+        }
+
+      if (attr)
+        {
+          attr->start_index = 0;
+          attr->end_index   = -1;
+          pango_attr_list_insert (attrs, attr);
+        }
+    }
+  while (attr);
+
+  va_end (args);
+
+  gtk_label_set_attributes (label, attrs);
+  pango_attr_list_unref (attrs);
+}
