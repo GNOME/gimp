@@ -24,9 +24,7 @@
 #ifndef __GIMPMATH_H__
 #define __GIMPMATH_H__
 
-#ifdef HAVE_MATH_H
 #include <math.h>
-#endif
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
