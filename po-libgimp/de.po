@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.1.3\n"
+"Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-08-31 00:44+0200\n"
-"PO-Revision-Date: 2004-07-29 11:27+0200\n"
+"PO-Revision-Date: 2004-08-31 00:47+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -412,7 +412,7 @@ msgstr "Hexadezimale Schreibweise wie in HTML und CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML _Form:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -461,7 +461,7 @@ msgstr ""
 #. a toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:236
 msgid "_Preview"
-msgstr ""
+msgstr "_Vorschau"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -689,13 +689,12 @@ msgid "Black"
 msgstr "Schwarz (Key)"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Schwarz-Auszug (%):"
+msgstr "Schwarzauszug:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Der Prozentsatz an Schwarz, der aus den farbigen Tinten gezogen werden soll."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
