@@ -18,8 +18,9 @@
  */
 
 /*
- *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if you prefer)
- *          version about .85 I would say... give or take a few decimal points
+ *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if
+ *   you prefer) version about .85 I would say... give or take a few
+ *   decimal points
  *
  *
  *   by Adrian Likins <adrian@gimp.org>
@@ -29,8 +30,8 @@
  *
  *   Based heavily on gz.c by Daniel Risacher
  *
- *     Lets you choose to send a image to the mail from the file save as dialog.
- *      images are piped to uuencode and then to mail...
+ *     Lets you choose to send a image to the mail from the file save
+ *     as dialog.  images are piped to uuencode and then to mail...
  *
  *
  *   This works fine for .99.10. I havent actually tried it in
@@ -72,7 +73,8 @@
  *      11) better handling of filesave errors
  *
  *
- * As always: The utility of this plugin is left as an exercise for the reader
+ * As always: The utility of this plugin is left as an exercise for
+ * the reader
  *
  */
 
@@ -212,7 +214,7 @@ m_info;
 
 static m_info mail_info =
 {
-  /* I would a assume there is a better way to do this, but this works for now */
+  /* I would assume there is a better way to do this, but this works for now */
   "\0",
   "\0",
   "\0",
@@ -304,8 +306,8 @@ run (const gchar      *name,
 	    }
 	  else
 	    {
-	      /* this hasnt been tested yet */
-	      strncpy (mail_info.filename, param[3].data.d_string, BUFFER_SIZE);
+	      strncpy (mail_info.filename,
+                       param[3].data.d_string, BUFFER_SIZE);
 	      strncpy (mail_info.receipt, param[4].data.d_string, BUFFER_SIZE);
 	      strncpy (mail_info.receipt, param[5].data.d_string, BUFFER_SIZE);
 	      strncpy (mail_info.subject, param[6].data.d_string, BUFFER_SIZE);
@@ -330,7 +332,7 @@ run (const gchar      *name,
 			       run_mode);
 
 	  if (status == GIMP_PDB_SUCCESS)
-	    gimp_set_data (PLUG_IN_NAME, &mail_info, sizeof(m_info));
+	    gimp_set_data (PLUG_IN_NAME, &mail_info, sizeof (m_info));
 	}
     }
   else
@@ -372,7 +374,9 @@ save_image (const gchar *filename,
 
   create_headers (mailpipe);
 
-  /* This is necessary to make the comments and headers work correctly. Not real sure why */
+  /* This is necessary to make the comments and headers work
+   * correctly. Not real sure why
+   */
   fflush (mailpipe);
 
   if (! (gimp_file_save (run_mode,
@@ -430,11 +434,10 @@ save_image (const gchar *filename,
     {  /* This must be MIME stuff. Base64 away... */
       infile = fopen(tmpname,"r");
       to64(infile,mailpipe);
+
       /* close off mime */
-      if( mail_info.encapsulation == ENCAPSULATION_MIME )
-	{
-	  fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
-	}
+      if(mail_info.encapsulation == ENCAPSULATION_MIME)
+        fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
     }
 
   /* delete the tmpfile that was generated */
@@ -672,25 +675,18 @@ find_extension (const gchar *filename)
   gchar *filename_copy;
   gchar *ext;
 
-  /* this whole routine needs to be redone so it works for xccfgz and gz files*/
-  /* not real sure where to start......                                       */
-  /* right now saving for .xcfgz works but not .xcf.gz                        */
-  /* this is all pretty close to straight from gz. It needs to be changed to  */
-  /* work better for this plugin                                              */
-  /* ie, FIXME */
-
   /* we never free this copy - aren't we evil! */
-  filename_copy = malloc (strlen (filename) + 1);
-  strcpy (filename_copy, filename);
+  filename_copy = g_strdup (filename);
 
   /* find the extension, boy! */
   ext = strrchr (filename_copy, '.');
 
-  while (1)
+  while (TRUE)
     {
       if (!ext || ext[1] == 0 || strchr (ext, '/'))
 	{
-	  g_message (_("some sort of error with the file extension or lack thereof"));
+	  g_message (_("some sort of error with the file extension "
+                       "or lack thereof"));
 
 	  return NULL;
 	}
@@ -705,6 +701,7 @@ find_extension (const gchar *filename)
 	  ext = strrchr (filename_copy, '.');
 	}
     }
+
   return ext;
 }
 
@@ -712,7 +709,8 @@ static void
 mail_entry_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  strncpy ((gchar *) data, gtk_entry_get_text (GTK_ENTRY (widget)), BUFFER_SIZE);
+  strncpy ((gchar *) data,
+           gtk_entry_get_text (GTK_ENTRY (widget)), BUFFER_SIZE);
 }
 
 static void
