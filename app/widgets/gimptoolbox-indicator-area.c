@@ -65,7 +65,11 @@ brush_preview_drop_brush (GtkWidget    *widget,
 			  GimpViewable *viewable,
 			  gpointer      data)
 {
-  gimp_context_set_brush (gimp_context_get_user (), GIMP_BRUSH (viewable));
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
+  gimp_context_set_brush (context, GIMP_BRUSH (viewable));
 }
 
 static void
@@ -80,7 +84,11 @@ pattern_preview_drop_pattern (GtkWidget    *widget,
 			      GimpViewable *viewable,
 			      gpointer      data)
 {
-  gimp_context_set_pattern (gimp_context_get_user (), GIMP_PATTERN (viewable));
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
+  gimp_context_set_pattern (context, GIMP_PATTERN (viewable));
 }
 
 static void
@@ -95,16 +103,20 @@ gradient_preview_drop_gradient (GtkWidget    *widget,
 				GimpViewable *viewable,
 				gpointer      data)
 {
-  gimp_context_set_gradient (gimp_context_get_user (), GIMP_GRADIENT (viewable));
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (data);
+
+  gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
 }
 
 GtkWidget *
-indicator_area_create (void)
+indicator_area_create (GimpContext *context)
 {
-  GimpContext *context;
-  GtkWidget   *indicator_table;
+  GtkWidget *indicator_table;
 
-  context = gimp_context_get_user ();
+  g_return_val_if_fail (context != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   indicator_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (indicator_table), 0, CELL_PADDING);
@@ -136,7 +148,7 @@ indicator_area_create (void)
   gimp_dnd_viewable_dest_set (brush_preview,
                               GIMP_TYPE_BRUSH,
                               brush_preview_drop_brush,
-                              NULL);
+                              context);
 
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
 			     0, 1, 0, 1);
@@ -168,7 +180,7 @@ indicator_area_create (void)
   gimp_dnd_viewable_dest_set (pattern_preview,
                               GIMP_TYPE_PATTERN,
                               pattern_preview_drop_pattern,
-                              NULL);
+                              context);
 
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
 			     1, 2, 0, 1);
@@ -200,7 +212,7 @@ indicator_area_create (void)
   gimp_dnd_viewable_dest_set (gradient_preview,
                               GIMP_TYPE_GRADIENT,
                               gradient_preview_drop_gradient,
-                              NULL);
+                              context);
 
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_preview,
 			     0, 2, 1, 2);
@@ -210,7 +222,5 @@ indicator_area_create (void)
   gtk_widget_show (gradient_preview);
   gtk_widget_show (indicator_table);
 
-  return (indicator_table);
+  return indicator_table;
 }
-
-

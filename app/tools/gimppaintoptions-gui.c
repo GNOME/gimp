@@ -24,7 +24,6 @@
 
 #include "apptypes.h"
 
-#include "brush_select.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "gtkhwrapbox.h"
@@ -271,9 +270,6 @@ paint_options_set_global (gboolean global)
 	    gtk_widget_hide (options->global);
 	}
     }
-
-  /*  NULL means the main brush selection  */
-  brush_select_show_paint_options (NULL, global);
 }
 
 GtkWidget *

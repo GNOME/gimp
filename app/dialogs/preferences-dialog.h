@@ -20,8 +20,7 @@
 #define __PREFERENCES_DIALOG_H__
 
 
-void   prefs_cmd_callback (GtkWidget *widget,
-			   gpointer   data);
+void   preferences_dialog_create (void);
 
 
 #endif /* __PREFERENCES_DIALOG_H__ */

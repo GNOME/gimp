@@ -28,6 +28,7 @@
 #include "tools/tool_manager.h"
 
 #include "appenv.h"
+#include "brush_select.h"
 #include "cursorutil.h"
 #include "context_manager.h"
 #include "gdisplay.h"
@@ -65,6 +66,7 @@ static GimpContext *global_tool_context = NULL;
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
                            GIMP_CONTEXT_PAINT_MODE_MASK
 
+
 static void
 context_manager_display_changed (GimpContext *context,
 				 GDisplay    *display,
@@ -97,7 +99,7 @@ context_manager_tool_changed (GimpContext  *user_context,
 
 	  /*  explicitly set the current tool  */
 	  gimp_context_set_tool (user_context,
-				 tool_manager_get_info_by_type (GTK_OBJECT (active_tool)->klass->type));
+				 tool_manager_get_info_by_tool (active_tool));
 
 	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (user_context),
 					      context_manager_tool_changed,
@@ -150,10 +152,10 @@ context_manager_init (void)
 
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
-    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION },
-    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION },
+    { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
+    { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION    },
     { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
-    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION }
+    { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
   };
   static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
 					sizeof (brush_loader_entries[0]));
@@ -176,7 +178,7 @@ context_manager_init (void)
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
     { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
-    { gimp_palette_load, NULL /* legacy loader */     }
+    { gimp_palette_load, NULL /* legacy loader */    }
   };
   static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
 					  sizeof (palette_loader_entries[0]));
@@ -299,6 +301,9 @@ context_manager_set_global_paint_options (gboolean global)
     return;
 
   paint_options_set_global (global);
+
+  /*  NULL is the main brush selection  */
+  brush_select_show_paint_options (NULL, global);
 
   tool_info = gimp_context_get_tool (gimp_context_get_user ());
 

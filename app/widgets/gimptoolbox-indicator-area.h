@@ -20,7 +20,7 @@
 #define __INDICATOR_AREA_H__
 
 
-GtkWidget * indicator_area_create (void);
+GtkWidget * indicator_area_create (GimpContext *context);
 
 
 #endif  /*  __INDICATOR_AREA_H__  */

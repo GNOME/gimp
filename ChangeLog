@@ -1,3 +1,30 @@
+2001-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.[ch]: added cmd_callbacks for the toolbox and
+	the preferences dialog.
+
+	* app/context_manager.c: cleanup.
+
+	* app/gimppreview.[ch]: made gimp_preview_render() public.
+
+	* app/gimptoolinfopreview.c
+	* app/tools/gimptoolinfo.c: the tool previews look nice now but
+	are still ugly implemented (it renders tons of temp_bufs on each
+	state change).
+
+	* app/indicator_area.[ch]: pass a context to the constructor.
+
+	* app/menus.c: don't call the toolbox and the prefs dialog
+	directly but dispatch via commands.[ch]
+
+	* app/preferences_dialog.[ch]
+	* app/toolbox.[ch]: renamed the constructor / raise function, cleanup.
+
+	* app/tools/color_picker.c: tried to get the shortcut working again.
+
+	* app/tools/paint_options.c: the brush dialog's paint options
+	are shown/hidden from the context manager now.
+
 2001-02-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c: removed crap from ancient times when tools
@@ -20,7 +47,7 @@
 	untranslated string with a meaningful prefix and name, e.g.
 	"gimp:color_picker_tool". Renamed "tool_name" and "tool_desc"
 	to "blurb" and "help", changed the constructor accordingly.
-	Added gimp_tool_info_get_standards() to make the context work
+	Added gimp_tool_info_get_standard() to make the context work
 	with tool refresh.
 
 	* app/tools/tool_manager.[ch]

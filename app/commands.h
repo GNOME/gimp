@@ -46,49 +46,49 @@ void edit_fill_cmd_callback         (GtkWidget *widget,
 				     guint      callback_action);
 void edit_stroke_cmd_callback       (GtkWidget *, gpointer);
 
-void select_invert_cmd_callback   (GtkWidget *, gpointer);
-void select_all_cmd_callback      (GtkWidget *, gpointer);
-void select_none_cmd_callback     (GtkWidget *, gpointer);
-void select_float_cmd_callback    (GtkWidget *, gpointer);
-void select_feather_cmd_callback  (GtkWidget *, gpointer);
-void select_sharpen_cmd_callback  (GtkWidget *, gpointer);
-void select_shrink_cmd_callback   (GtkWidget *, gpointer);
-void select_border_cmd_callback   (GtkWidget *, gpointer);
-void select_grow_cmd_callback     (GtkWidget *, gpointer);
-void select_save_cmd_callback     (GtkWidget *, gpointer);
+void select_invert_cmd_callback            (GtkWidget *, gpointer);
+void select_all_cmd_callback               (GtkWidget *, gpointer);
+void select_none_cmd_callback              (GtkWidget *, gpointer);
+void select_float_cmd_callback             (GtkWidget *, gpointer);
+void select_feather_cmd_callback           (GtkWidget *, gpointer);
+void select_sharpen_cmd_callback           (GtkWidget *, gpointer);
+void select_shrink_cmd_callback            (GtkWidget *, gpointer);
+void select_border_cmd_callback            (GtkWidget *, gpointer);
+void select_grow_cmd_callback              (GtkWidget *, gpointer);
+void select_save_cmd_callback              (GtkWidget *, gpointer);
 
-void view_zoomin_cmd_callback            (GtkWidget *, gpointer);
-void view_zoomout_cmd_callback           (GtkWidget *, gpointer);
-void view_zoom_16_1_cmd_callback         (GtkWidget *, gpointer);
-void view_zoom_8_1_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_4_1_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_2_1_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_1_1_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_1_2_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_1_4_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_1_8_cmd_callback          (GtkWidget *, gpointer);
-void view_zoom_1_16_cmd_callback         (GtkWidget *, gpointer);
-void view_dot_for_dot_cmd_callback       (GtkWidget *, gpointer);
-void view_info_window_cmd_callback       (GtkWidget *, gpointer);
-void view_nav_window_cmd_callback        (GtkWidget *, gpointer);
-void view_toggle_selection_cmd_callback  (GtkWidget *, gpointer);
-void view_toggle_rulers_cmd_callback     (GtkWidget *, gpointer);
-void view_toggle_statusbar_cmd_callback  (GtkWidget *, gpointer);
-void view_toggle_guides_cmd_callback     (GtkWidget *, gpointer);
-void view_snap_to_guides_cmd_callback    (GtkWidget *, gpointer);
-void view_new_view_cmd_callback          (GtkWidget *, gpointer);
-void view_shrink_wrap_cmd_callback       (GtkWidget *, gpointer);
+void view_zoomin_cmd_callback              (GtkWidget *, gpointer);
+void view_zoomout_cmd_callback             (GtkWidget *, gpointer);
+void view_zoom_16_1_cmd_callback           (GtkWidget *, gpointer);
+void view_zoom_8_1_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_4_1_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_2_1_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_1_1_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_1_2_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_1_4_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_1_8_cmd_callback            (GtkWidget *, gpointer);
+void view_zoom_1_16_cmd_callback           (GtkWidget *, gpointer);
+void view_dot_for_dot_cmd_callback         (GtkWidget *, gpointer);
+void view_info_window_cmd_callback         (GtkWidget *, gpointer);
+void view_nav_window_cmd_callback          (GtkWidget *, gpointer);
+void view_toggle_selection_cmd_callback    (GtkWidget *, gpointer);
+void view_toggle_rulers_cmd_callback       (GtkWidget *, gpointer);
+void view_toggle_statusbar_cmd_callback    (GtkWidget *, gpointer);
+void view_toggle_guides_cmd_callback       (GtkWidget *, gpointer);
+void view_snap_to_guides_cmd_callback      (GtkWidget *, gpointer);
+void view_new_view_cmd_callback            (GtkWidget *, gpointer);
+void view_shrink_wrap_cmd_callback         (GtkWidget *, gpointer);
 
-void image_convert_rgb_cmd_callback       (GtkWidget *, gpointer);
-void image_convert_grayscale_cmd_callback (GtkWidget *, gpointer);
-void image_convert_indexed_cmd_callback   (GtkWidget *, gpointer);
-void image_desaturate_cmd_callback        (GtkWidget *, gpointer);
-void image_invert_cmd_callback            (GtkWidget *, gpointer);
-void image_equalize_cmd_callback          (GtkWidget *, gpointer);
-void image_offset_cmd_callback            (GtkWidget *, gpointer);
-void image_resize_cmd_callback            (GtkWidget *, gpointer);
-void image_scale_cmd_callback             (GtkWidget *, gpointer);
-void image_duplicate_cmd_callback         (GtkWidget *, gpointer);
+void image_convert_rgb_cmd_callback        (GtkWidget *, gpointer);
+void image_convert_grayscale_cmd_callback  (GtkWidget *, gpointer);
+void image_convert_indexed_cmd_callback    (GtkWidget *, gpointer);
+void image_desaturate_cmd_callback         (GtkWidget *, gpointer);
+void image_invert_cmd_callback             (GtkWidget *, gpointer);
+void image_equalize_cmd_callback           (GtkWidget *, gpointer);
+void image_offset_cmd_callback             (GtkWidget *, gpointer);
+void image_resize_cmd_callback             (GtkWidget *, gpointer);
+void image_scale_cmd_callback              (GtkWidget *, gpointer);
+void image_duplicate_cmd_callback          (GtkWidget *, gpointer);
 
 void layers_previous_cmd_callback          (GtkWidget *, gpointer);
 void layers_next_cmd_callback              (GtkWidget *, gpointer);
@@ -104,31 +104,33 @@ void layers_add_alpha_channel_cmd_callback (GtkWidget *, gpointer);
 void layers_alpha_select_cmd_callback      (GtkWidget *, gpointer);
 void layers_resize_to_image_cmd_callback   (GtkWidget *, gpointer);
 
-void tools_default_colors_cmd_callback (GtkWidget *, gpointer);
-void tools_swap_colors_cmd_callback    (GtkWidget *, gpointer);
-void tools_swap_contexts_cmd_callback  (GtkWidget *, gpointer);
-void tools_select_cmd_callback         (GtkWidget *widget,
-					gpointer   callback_data,
-					guint      callback_action);
+void tools_toolbox_raise_cmd_callback      (GtkWidget *, gpointer);
+void tools_default_colors_cmd_callback     (GtkWidget *, gpointer);
+void tools_swap_colors_cmd_callback        (GtkWidget *, gpointer);
+void tools_swap_contexts_cmd_callback      (GtkWidget *, gpointer);
+void tools_select_cmd_callback             (GtkWidget *widget,
+					    gpointer   callback_data,
+					    guint      callback_action);
 
-void filters_repeat_cmd_callback (GtkWidget *widget,
-				  gpointer   callback_data,
-				  guint      callback_action);
+void filters_repeat_cmd_callback           (GtkWidget *widget,
+					    gpointer   callback_data,
+					    guint      callback_action);
 
-void dialogs_lc_cmd_callback              (GtkWidget *, gpointer);
-void dialogs_tool_options_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_brushes_cmd_callback         (GtkWidget *, gpointer);
-void dialogs_patterns_cmd_callback        (GtkWidget *, gpointer);
-void dialogs_gradients_cmd_callback       (GtkWidget *, gpointer);
-void dialogs_palette_cmd_callback         (GtkWidget *, gpointer);
-void dialogs_indexed_palette_cmd_callback (GtkWidget *, gpointer);
-void dialogs_input_devices_cmd_callback   (GtkWidget *, gpointer);
-void dialogs_device_status_cmd_callback   (GtkWidget *, gpointer);
-void dialogs_document_index_cmd_callback  (GtkWidget *, gpointer);
-void dialogs_error_console_cmd_callback   (GtkWidget *, gpointer);
-void dialogs_undo_history_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_preferences_cmd_callback      (GtkWidget *, gpointer);
+void dialogs_lc_cmd_callback               (GtkWidget *, gpointer);
+void dialogs_tool_options_cmd_callback     (GtkWidget *, gpointer);
+void dialogs_brushes_cmd_callback          (GtkWidget *, gpointer);
+void dialogs_patterns_cmd_callback         (GtkWidget *, gpointer);
+void dialogs_gradients_cmd_callback        (GtkWidget *, gpointer);
+void dialogs_palette_cmd_callback          (GtkWidget *, gpointer);
+void dialogs_indexed_palette_cmd_callback  (GtkWidget *, gpointer);
+void dialogs_input_devices_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_device_status_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_document_index_cmd_callback   (GtkWidget *, gpointer);
+void dialogs_error_console_cmd_callback    (GtkWidget *, gpointer);
+void dialogs_undo_history_cmd_callback     (GtkWidget *, gpointer);
 
-void dialogs_module_browser_cmd_callback  (GtkWidget *, gpointer);
+void dialogs_module_browser_cmd_callback   (GtkWidget *, gpointer);
 
 void dialogs_test_image_container_list_view_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_test_image_container_grid_view_cmd_callback    (GtkWidget *, gpointer);

@@ -57,9 +57,9 @@
 
 
 /*  local functions  */
-static void        tools_select_update        (GtkWidget      *widget,
+static void       toolbox_tool_button_toggled (GtkWidget      *widget,
 					       gpointer        data);
-static gint        tools_button_press         (GtkWidget      *widget,
+static gint       toolbox_tool_button_press   (GtkWidget      *widget,
 					       GdkEventButton *bevent,
 					       gpointer        data);
 
@@ -74,7 +74,6 @@ static gint        toolbox_check_device       (GtkWidget      *widget,
 static void        toolbox_style_set_callback (GtkWidget      *window,
 					       GtkStyle       *previous_style,
 					       gpointer        data);
-static void        toolbox_set_drag_dest      (GtkWidget      *widget);
 static gboolean    toolbox_drag_drop          (GtkWidget      *widget,
 					       GdkDragContext *context,
 					       gint            x,
@@ -107,8 +106,8 @@ static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 
 
 static void
-tools_select_update (GtkWidget *widget,
-		     gpointer   data)
+toolbox_tool_button_toggled (GtkWidget *widget,
+			     gpointer   data)
 {
   GimpToolInfo *tool_info;
 
@@ -119,9 +118,9 @@ tools_select_update (GtkWidget *widget,
 }
 
 static gint
-tools_button_press (GtkWidget      *widget,
-		    GdkEventButton *event,
-		    gpointer        data)
+toolbox_tool_button_press (GtkWidget      *widget,
+			   GdkEventButton *event,
+			   gpointer        data)
 {
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     tool_options_dialog_show ();
@@ -156,14 +155,12 @@ toolbox_check_device (GtkWidget *widget,
 }
 
 static void
-create_indicator_area (GtkWidget *parent)
+create_indicator_area (GtkWidget   *parent,
+		       GimpContext *context)
 {
   GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *ind_area;
-
-  if (! GTK_WIDGET_REALIZED (parent))
-    gtk_widget_realize (parent);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -175,7 +172,7 @@ create_indicator_area (GtkWidget *parent)
 
   gimp_help_set_help_data (alignment, NULL, "#indicator_area");
 
-  ind_area = indicator_area_create ();
+  ind_area = indicator_area_create (context);
   gtk_container_add (GTK_CONTAINER (alignment), ind_area);
 
   gtk_widget_show (ind_area);
@@ -248,12 +245,14 @@ toolbox_tool_changed (GimpContext  *context,
       if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
 	{
 	  gtk_signal_handler_block_by_func (GTK_OBJECT (toolbox_button),
-					    tools_select_update, tool_info);
+					    toolbox_tool_button_toggled,
+					    tool_info);
 
 	  gtk_widget_activate (toolbox_button);
 
 	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (toolbox_button),
-					      tools_select_update, tool_info);
+					      toolbox_tool_button_toggled,
+					      tool_info);
 	}
     }
 }
@@ -304,11 +303,11 @@ create_tools (GtkWidget   *parent,
       gtk_widget_show (preview);
 
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (tools_select_update),
+			  GTK_SIGNAL_FUNC (toolbox_tool_button_toggled),
 			  tool_info);
 
       gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			  GTK_SIGNAL_FUNC (tools_button_press),
+			  GTK_SIGNAL_FUNC (toolbox_tool_button_press),
 			  tool_info);
 
       gimp_help_set_help_data (button,
@@ -355,11 +354,11 @@ toolbox_create (void)
    */
   for (list = gdk_input_list_devices (); list; list = g_list_next (list))
     {
-      if (!((GdkDeviceInfo *) (list->data))->has_cursor)
+      if (! ((GdkDeviceInfo *) (list->data))->has_cursor)
 	break;
     }
 
-  if (!list)  /* all devices have cursor */
+  if (! list)  /* all devices have cursor */
     {
       gtk_signal_connect (GTK_OBJECT (window), "motion_notify_event",
 			  GTK_SIGNAL_FUNC (toolbox_check_device),
@@ -423,11 +422,25 @@ toolbox_create (void)
 				  GTK_OBJECT (wbox));
 
   create_color_area (wbox);
+
   if (show_indicators)
-    create_indicator_area (wbox);
+    create_indicator_area (wbox, gimp_context_get_user ());
+
+  gtk_drag_dest_set (window,
+		     GTK_DEST_DEFAULT_ALL,
+		     toolbox_target_table, toolbox_n_targets,
+		     GDK_ACTION_COPY);
+
+  gimp_dnd_file_dest_set (window);
+
+  gtk_signal_connect (GTK_OBJECT (window), "drag_drop",
+		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
+		      NULL);
+
+  gimp_dnd_viewable_dest_set (window, GIMP_TYPE_TOOL_INFO,
+			      toolbox_drop_tool, NULL);
 
   gtk_widget_show (window);
-  toolbox_set_drag_dest (window);
 
   toolbox_shell = window;
 }
@@ -443,8 +456,7 @@ toolbox_free (void)
 }
 
 void
-toolbox_raise_callback (GtkWidget *widget,
-			gpointer   data)
+toolbox_raise (void)
 {
   gdk_window_raise (toolbox_shell->window);
 }
@@ -472,24 +484,6 @@ toolbox_style_set_callback (GtkWidget *window,
 				 NULL,
 				 &geometry, 
 				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
-}
-
-static void
-toolbox_set_drag_dest (GtkWidget *object)
-{
-  gtk_drag_dest_set (object,
-		     GTK_DEST_DEFAULT_ALL,
-		     toolbox_target_table, toolbox_n_targets,
-		     GDK_ACTION_COPY);
-
-  gimp_dnd_file_dest_set (object);
-
-  gtk_signal_connect (GTK_OBJECT (object), "drag_drop",
-		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
-		      NULL);
-
-  gimp_dnd_viewable_dest_set (object, GIMP_TYPE_TOOL_INFO,
-			      toolbox_drop_tool, NULL);
 }
 
 static gboolean

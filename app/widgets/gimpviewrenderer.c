@@ -86,7 +86,6 @@ static gint        gimp_preview_enter_notify_event   (GtkWidget        *widget,
 static gint        gimp_preview_leave_notify_event   (GtkWidget        *widget,
 						      GdkEventCrossing *event);
 
-static void        gimp_preview_render               (GimpPreview      *preview);
 static void        gimp_preview_real_render          (GimpPreview      *preview);
 static void        gimp_preview_get_size             (GimpPreview      *preview,
 						      gint              size,
@@ -482,6 +481,12 @@ gimp_preview_set_viewable (GimpPreview  *preview,
     }
 }
 
+void
+gimp_preview_render (GimpPreview *preview)
+{
+  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[RENDER]);
+}
+
 static gint
 gimp_preview_button_press_event (GtkWidget      *widget,
 				 GdkEventButton *bevent)
@@ -597,12 +602,6 @@ gimp_preview_leave_notify_event (GtkWidget        *widget,
     }
 
   return FALSE;
-}
-
-static void
-gimp_preview_render (GimpPreview *preview)
-{
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[RENDER]);
 }
 
 static void

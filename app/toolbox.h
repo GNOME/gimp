@@ -20,11 +20,10 @@
 #define __TOOLBOX_H__
 
 
-void   toolbox_create         (void);
-void   toolbox_free           (void);
+void   toolbox_create  (void);
+void   toolbox_free    (void);
 
-void   toolbox_raise_callback (GtkWidget *widget,
-			       gpointer   data);
+void   toolbox_raise   (void);
 
 
 #endif /* __TOOLBOX_H__ */

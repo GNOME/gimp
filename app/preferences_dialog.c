@@ -1343,8 +1343,7 @@ prefs_help_func (const gchar *help_data)
  *  create the preferences dialog
  */
 void
-prefs_cmd_callback (GtkWidget *widget,
-		    gpointer   client_data)
+preferences_dialog_create (void)
 {
   GtkWidget    *ctree;
   gchar        *titles[1];

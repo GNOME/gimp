@@ -130,6 +130,7 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 {
   GimpToolInfo *tool_info;
   TempBuf      *temp_buf;
+  TempBuf      *return_buf;
   guchar        opaque[4] = { 0, 0, 0, 0 };
   gint          offset_x = 0;
   gint          offset_y = 0;
@@ -155,21 +156,15 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 #define TOOL_INFO_WIDTH  22
 #define TOOL_INFO_HEIGHT 22
 
-  if (width > TOOL_INFO_WIDTH)
-    offset_x = (width - TOOL_INFO_WIDTH) / 2;
-
-  if (height > TOOL_INFO_HEIGHT)
-    offset_y = (height - TOOL_INFO_HEIGHT) / 2;
-
-  temp_buf = temp_buf_new (width, height, 4, 0, 0, opaque);
+  temp_buf = temp_buf_new (TOOL_INFO_WIDTH, TOOL_INFO_HEIGHT, 4, 0, 0, opaque);
 
   data = temp_buf_data (temp_buf);
 
-  p = data + (offset_y * temp_buf->width * temp_buf->bytes);
+  p = data;
 
-  for (r = 0; r < height; r++)
+  for (r = 0; r < TOOL_INFO_HEIGHT; r++)
     {
-      for (s = 0, cnt = 0; s < width; s++)
+      for (s = 0, cnt = 0; s < TOOL_INFO_WIDTH; s++)
         {
           value = tool_info->icon_data[r][s];
 
@@ -187,7 +182,17 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 	}
     }
 
-  return temp_buf;
+  if (width > TOOL_INFO_WIDTH)
+    offset_x = (width - TOOL_INFO_WIDTH) / 2;
+
+  if (height > TOOL_INFO_HEIGHT)
+    offset_y = (height - TOOL_INFO_HEIGHT) / 2;
+
+  return_buf = temp_buf_scale (temp_buf, width, height);
+
+  temp_buf_free (temp_buf);
+
+  return return_buf;
 }
 
 GimpToolInfo *

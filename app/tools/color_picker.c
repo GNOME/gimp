@@ -129,14 +129,14 @@ gint col_value[5] = { 0, 0, 0, 0, 0 };
 static gint           update_type;
 static GimpImageType  sample_type;
 static InfoDialog    *color_picker_info = NULL;
-static GtkWidget     *color_area = NULL;
-static gchar          red_buf   [MAX_INFO_BUF];
-static gchar          green_buf [MAX_INFO_BUF];
-static gchar          blue_buf  [MAX_INFO_BUF];
-static gchar          alpha_buf [MAX_INFO_BUF];
-static gchar          index_buf [MAX_INFO_BUF];
-static gchar          gray_buf  [MAX_INFO_BUF];
-static gchar          hex_buf   [MAX_INFO_BUF];
+static GtkWidget     *color_area        = NULL;
+static gchar          red_buf  [MAX_INFO_BUF];
+static gchar          green_buf[MAX_INFO_BUF];
+static gchar          blue_buf [MAX_INFO_BUF];
+static gchar          alpha_buf[MAX_INFO_BUF];
+static gchar          index_buf[MAX_INFO_BUF];
+static gchar          gray_buf [MAX_INFO_BUF];
+static gchar          hex_buf  [MAX_INFO_BUF];
 
 BitmapCursor tool_cursor =
 {
@@ -156,7 +156,7 @@ gimp_color_picker_register (void)
 			      "gimp:color_picker_tool",
 			      _("Color Picker"),
 			      _("Pick colors from the image"),
-			      N_("/Tools/Color Picker"), "O",
+			      N_("/Tools/Color Picker"), "<shift>O",
 			      NULL, "tools/color_picker.html",
 			      (const gchar **) colorpicker_bits);
 }

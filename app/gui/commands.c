@@ -73,10 +73,12 @@
 #include "palette.h"
 #include "pattern_select.h"
 #include "plug_in.h"
+#include "preferences_dialog.h"
 #include "resize.h"
 #include "scale.h"
 #include "selection.h"
 #include "tips_dialog.h"
+#include "toolbox.h"
 #include "undo.h"
 #include "undo_history.h"
 
@@ -1098,6 +1100,13 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
 /*****  Tools  *****/
 
 void
+tools_toolbox_raise_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  toolbox_raise ();
+}
+
+void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
@@ -1141,10 +1150,13 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   callback_data,
 			   guint      callback_action)
 {
+  GtkType       tool_type;
   GimpToolInfo *tool_info;
   GDisplay     *gdisp;
 
-  tool_info = GIMP_TOOL_INFO (callback_action);
+  tool_type = callback_action;
+
+  tool_info = tool_manager_get_info_by_type (tool_type);
   gdisp     = gdisplay_active ();
 
   gimp_context_set_tool (gimp_context_get_user (), tool_info);
@@ -1183,6 +1195,13 @@ filters_repeat_cmd_callback (GtkWidget *widget,
 }
 
 /*****  Dialogs  ******/
+
+void
+dialogs_preferences_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  preferences_dialog_create ();
+}
 
 void
 dialogs_lc_cmd_callback (GtkWidget *widget,

@@ -42,8 +42,6 @@
 #include "layers_dialog.h"
 #include "menus.h"
 #include "paths_dialog.h"
-#include "preferences_dialog.h"
-#include "toolbox.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -79,6 +77,7 @@ static void   tearoff_cmd_callback  (GtkWidget            *widget,
 static gint   tearoff_delete_cb     (GtkWidget		  *widget, 
     				     GdkEvent		  *event,
 				     gpointer		   data);
+
 #ifdef ENABLE_DEBUG_ENTRY
 static void   menus_debug_recurse_menu (GtkWidget *menu,
 					gint       depth,
@@ -88,7 +87,9 @@ static void   menus_debug_cmd_callback (GtkWidget *widget,
 					guint      callback_action);
 #endif  /*  ENABLE_DEBUG_ENTRY  */
 
+
 static GSList *last_opened_raw_filenames = NULL;
+
 
 /*****  <Toolbox>  *****/
 
@@ -113,7 +114,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Preferences..."), NULL, prefs_cmd_callback, 0 },
+  { { N_("/File/Preferences..."), NULL, dialogs_preferences_cmd_callback, 0 },
     "file/dialogs/preferences/preferences.html", NULL },
 
   /*  <Toolbox>/File/Dialogs  */
@@ -524,7 +525,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/Tools  */
 
-  { { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
+  { { N_("/Tools/Toolbox"), NULL, tools_toolbox_raise_cmd_callback, 0 },
     "toolbox/toolbox.html", NULL },
   { { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
     "toolbox/toolbox.html#default_colors", NULL },
@@ -1004,12 +1005,12 @@ static void
 menus_filters_subdirs_to_top (GtkMenu *menu)
 {
   GtkMenuItem *menu_item;
-  GList *list;
-  gboolean submenus_passed = FALSE;
-  gint pos;
-  gint items;
+  GList       *list;
+  gboolean     submenus_passed = FALSE;
+  gint         pos;
+  gint         items;
 
-  pos = 1;
+  pos   = 1;
   items = 0;
 
   for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
@@ -1247,10 +1248,10 @@ menus_tools_create (GimpToolInfo *tool_info)
   if (tool_info->menu_path == NULL)
     return;
 
-  entry.entry.path            = gettext (tool_info->menu_path);
+  entry.entry.path            = tool_info->menu_path;
   entry.entry.accelerator     = tool_info->menu_accel;
   entry.entry.callback        = tools_select_cmd_callback;
-  entry.entry.callback_action = tool_info;
+  entry.entry.callback_action = tool_info->tool_type;
   entry.entry.item_type       = NULL;
   entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
@@ -1309,7 +1310,7 @@ menus_set_state (gchar    *path,
     }
 
   if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set state for menu which doesn't exist:\n%s\n",
+    g_warning ("Unable to set state for menu which doesn't exist:\n%s",
 	       path);
 }
 
@@ -1469,9 +1470,9 @@ menus_init_mru (void)
 {
   GimpItemFactoryEntry *last_opened_entries;
   GtkWidget	       *menu_item;
-  gchar	*paths;
-  gchar *accelerators;
-  gint	 i;
+  gchar                *paths;
+  gchar                *accelerators;
+  gint                  i;
   
   last_opened_entries = g_new (GimpItemFactoryEntry, last_opened_size);
 
@@ -1537,11 +1538,11 @@ menus_item_key_press (GtkWidget   *widget,
 {
   GtkItemFactory *item_factory     = NULL;
   GtkWidget      *active_menu_item = NULL;
-  gchar *factory_path = NULL;
-  gchar *help_path    = NULL;
-  gchar *help_page    = NULL;
+  gchar          *factory_path     = NULL;
+  gchar          *help_path        = NULL;
+  gchar          *help_page        = NULL;
 
-  item_factory = (GtkItemFactory *) data;
+  item_factory     = (GtkItemFactory *) data;
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
   /*  first, get the help page from the item
@@ -1699,11 +1700,11 @@ menus_create_items (GtkItemFactory       *item_factory,
 static void
 menus_init (void)
 {
-  GtkWidget    *menu_item;
+  /*GtkWidget    *menu_item;*/
   gchar        *filename;
-  gint          i;
+  /*  gint          i;*/
   GList        *list;
-  GimpToolInfo *tool_info;
+  /*  GimpToolInfo *tool_info;*/
 
   if (menus_initialized)
     return;
@@ -1791,7 +1792,7 @@ menus_init (void)
       menus_tools_create (GIMP_TOOL_INFO (list->data));
     }
   /*  reorder <Image>/Image/Colors  */
-#warning FIXME
+#warning FIXME (reorder <Image>/Image/Colors)
 #if 0 
    menu_item = gtk_item_factory_get_widget (image_factory,
 					   tool_info[POSTERIZE].menu_path);

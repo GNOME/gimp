@@ -33,11 +33,14 @@
 
 
 /* FIXME: make tool icons nicer */
-#define TOOL_INFO_SIZE 22
+#define TOOL_INFO_WIDTH  22
+#define TOOL_INFO_HEIGHT 22
 
 
 static void     gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass);
 static void     gimp_tool_info_preview_init       (GimpToolInfoPreview      *preview);
+static void     gimp_tool_info_preview_state_changed (GtkWidget    *widget,
+						      GtkStateType  previous_state);
 
 static void           gimp_tool_info_preview_render        (GimpPreview *preview);
 static GtkWidget    * gimp_tool_info_preview_create_popup  (GimpPreview *preview);
@@ -79,12 +82,16 @@ static void
 gimp_tool_info_preview_class_init (GimpToolInfoPreviewClass *klass)
 {
   GtkObjectClass   *object_class;
+  GtkWidgetClass   *widget_class;
   GimpPreviewClass *preview_class;
 
   object_class  = (GtkObjectClass *) klass;
+  widget_class  = (GtkWidgetClass *) klass;
   preview_class = (GimpPreviewClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
+
+  widget_class->state_changed = gimp_tool_info_preview_state_changed;
 
   preview_class->render       = gimp_tool_info_preview_render;
   preview_class->create_popup = gimp_tool_info_preview_create_popup;
@@ -105,18 +112,34 @@ gimp_tool_info_preview_init (GimpToolInfoPreview *tool_info_preview)
 }
 
 static void
+gimp_tool_info_preview_state_changed (GtkWidget    *widget,
+				      GtkStateType  previous_state)
+{
+  gimp_preview_render (GIMP_PREVIEW (widget));
+}
+
+static void
 gimp_tool_info_preview_render (GimpPreview *preview)
 {
+  GtkWidget    *widget;
   GimpToolInfo *tool_info;
   TempBuf      *temp_buf;
+  TempBuf      *render_buf;
+  guchar        color[3];
   gint          width;
   gint          height;
   gint          tool_info_width;
   gint          tool_info_height;
+  gint          x, y;
+  guchar       *src;
+  guchar       *dest;
+  gboolean      new_buf = FALSE;
+
+  widget = GTK_WIDGET (preview);
 
   tool_info        = GIMP_TOOL_INFO (preview->viewable);
-  tool_info_width  = TOOL_INFO_SIZE;
-  tool_info_height = TOOL_INFO_SIZE;
+  tool_info_width  = TOOL_INFO_WIDTH;
+  tool_info_height = TOOL_INFO_HEIGHT;
 
   width  = preview->width;
   height = preview->height;
@@ -124,22 +147,53 @@ gimp_tool_info_preview_render (GimpPreview *preview)
   if (width  == tool_info_width &&
       height == tool_info_height)
     {
-      /* TODO once tool icons are finished */
+      temp_buf = gimp_viewable_get_preview (preview->viewable,
+					    width, height);
     }
-  else if (width  <= tool_info_width &&
-	   height <= tool_info_height)
+  else
     {
-      /* dito */
+      temp_buf = gimp_viewable_get_new_preview (preview->viewable,
+						width, height);
+      new_buf = TRUE;
     }
 
-  temp_buf = gimp_viewable_get_new_preview (preview->viewable,
-					    width, height);
+  color[0] = widget->style->bg[widget->state].red   >> 8;
+  color[1] = widget->style->bg[widget->state].green >> 8;
+  color[2] = widget->style->bg[widget->state].blue  >> 8;
+
+  render_buf = temp_buf_new (width, height, 3, 0, 0, color);
+
+  src  = temp_buf_data (temp_buf);
+  dest = temp_buf_data (render_buf);
+
+  for (y = 0; y < height; y++)
+    {
+      for (x = 0; x < width; x++)
+	{
+	  if (src[3] != 0)
+	    {
+	      *dest++ = *src++;
+	      *dest++ = *src++;
+	      *dest++ = *src++;
+
+	      src++;
+	    }
+	  else
+	    {
+	      src  += 4;
+	      dest += 3;
+	    }
+	}
+    }
+
+  if (new_buf)
+    temp_buf_free (temp_buf);
 
   gimp_preview_render_and_flush (preview,
-                                 temp_buf,
+                                 render_buf,
                                  -1);
 
-  temp_buf_free (temp_buf);
+  temp_buf_free (render_buf);
 }
 
 static GtkWidget *
@@ -148,8 +202,8 @@ gimp_tool_info_preview_create_popup (GimpPreview *preview)
   gint popup_width;
   gint popup_height;
 
-  popup_width  = TOOL_INFO_SIZE;
-  popup_height = TOOL_INFO_SIZE;
+  popup_width  = TOOL_INFO_WIDTH;
+  popup_height = TOOL_INFO_HEIGHT;
 
   return gimp_preview_new_full (preview->viewable,
 				popup_width,
@@ -166,8 +220,8 @@ gimp_tool_info_preview_needs_popup (GimpPreview *preview)
   gint          tool_info_height;
 
   tool_info        = GIMP_TOOL_INFO (preview->viewable);
-  tool_info_width  = TOOL_INFO_SIZE;
-  tool_info_height = TOOL_INFO_SIZE;
+  tool_info_width  = TOOL_INFO_WIDTH;
+  tool_info_height = TOOL_INFO_HEIGHT;
 
   if (tool_info_width > preview->width || tool_info_height > preview->height)
     return TRUE;
