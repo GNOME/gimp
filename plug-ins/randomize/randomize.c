@@ -1,8 +1,8 @@
 /****************************************************************************
- * This is a plugin for the GIMP v 0.99.8 or later.  Documentation is
+ * This is a plugin for the GIMP v 1.0 or later.  Documentation is
  * available at http://www.rru.com/~meo/gimp/ .
  *
- * Copyright (C) 1997 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
+ * Copyright (C) 1997-8 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
  * GUI based on GTK code from:
  *    alienmap (Copyright (C) 1996, 1997 Daniel Cotting)
  *    plasma   (Copyright (C) 1996 Stephen Norris),
@@ -29,62 +29,7 @@
 /****************************************************************************
  * Randomize:
  *
- * randomize version 1.6 (29 Apr 1998, MEO)
- * history
- *     1.6 -  29 Apr 1998 MEO
- *         moved blur to separate plugin (blur 2.0)
- *     1.5 -  5 Feb 1998 MEO
- *         added alpha layer handling to blur code
- *     1.4 -  3 Feb 1998 MEO
- *         added details to PDB parameter help strings
- *     1.3 -  3 Feb 1998 MEO
- *         removed tooltips from action buttons
- *         fixed param[5] type (was int32, should have been float)
- *     1.2 -  2 Feb 1998 MEO
- *         converted macro'd functions from 0.5 to inline functions
- *         2 casts added for portability by 0.99.18 release coordinator
- *         moved from Distorts to Noise menu
- *         went to GUI convenience routines as much as reasonable
- *         broke out GUI convenience routines into gpc.h and gpc.c
- *     1.1 - 30 Nov 1997 MEO
- *         added tooltips
- *     1.0 - 19 Nov 1997 MEO
- *         final cleanup for 1.0 GIMP release
- *         - added email and URL info for author
- *         - added doc URL info
- *         - final FCS comment cleanup
- *         - standardized constant strings
- *         - restored proper behavior when repeating
- *         - final UI labels
- *         - better help text (for when GIMP help arrives)
- *     0.5 - 20 May 1997 MEO
- *         added seed initialization choices (current time or user value)
- *         added randomization type to progress label
- *         added RNDM_VERSION macro so version changes made in one place
- *         speed optimizations:
- *             - changed randomize_prepare_row to #define
- *             - moved updates back outside main loop
- *             - less frequent progress updates
- *         minor intialization string and comment cleanup
- *     0.4c - 17 May 1997 MEO
- *         minor comment cleanup
- *     0.4b - 17 May 1997 MEO
- *         minor comment cleanup
- *     0.4a - 16 May 1997 MEO
- *         added, corrected & cleaned up comments
- *         removed unused variables, code
- *         cleaned up wrong names
- *         added version to popups
- *     0.4 - 13 May 1997 MEO
- *         added SLUR function
- *     0.3 - 12 May 1997 MEO
- *         added HURL function
- *         moved from Blurs menu to Distorts menu.
- *     0.2 - 11 May 1997 MEO
- *         converted percentage control from text to scale
- *         standardized tab stops, style
- *     0.1 - 10 May 1997 MEO
- *         initial release, with BLUR and PICK
+ * randomize version 1.7 (1 May 1998, MEO)
  *
  * Please send any patches or suggestions to the author: meo@rru.com .
  * 
@@ -120,7 +65,6 @@
  * TODO List
  * 
  *  - add a real melt function
- *  - split into multiple files
  ****************************************************************************/
 
 #include <stdio.h>
@@ -129,6 +73,10 @@
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 #include <plug-ins/gpc/gpc.h>
+
+#if ! defined(__GNUC__)
+#   define inline
+#endif
 
 /*********************************
  *
@@ -142,8 +90,16 @@
  */
 #define PROG_UPDATE_TIME ((row % 10) == 0)
 
-#define PLUG_IN_NAME "plug_in_randomize"
-#define RNDM_VERSION "Randomize 1.6"
+char *PLUG_IN_NAME[] = {
+    "plug_in_randomize_hurl",
+    "plug_in_randomize_pick",
+    "plug_in_randomize_slur",
+};
+char *RNDM_VERSION[] = {
+    "Random Hurl 1.7",
+    "Random Pick 1.7",
+    "Random Slur 1.7",
+};
 
 #define RNDM_HURL 1
 #define RNDM_PICK 2
@@ -155,6 +111,8 @@
 #define ENTRY_WIDTH 75
 #define SCALE_WIDTH 100
 
+gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
+
 /*********************************
  *
  *  PLUGIN-SPECIFIC STRUCTURES AND DATA
@@ -162,19 +120,17 @@
  ********************************/
 
 typedef struct {
-    gint rndm_type;       /* type of randomization to apply */
     gdouble rndm_pct;     /* likelihood of randomization (as %age) */
+    gdouble rndm_rcount;  /* repeat count */
     gint seed_type;       /* seed init. type - current time or user value */
     gint rndm_seed;       /* seed value for rand() function */
-    gdouble rndm_rcount;  /* repeat count */
 } RandomizeVals;
 
 static RandomizeVals pivals = {
-    RNDM_HURL,
     50.0,
+    1.0,
     SEED_TIME,
     0,
-    1.0,
 };
 
 typedef struct {
@@ -245,28 +201,64 @@ query()
         { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
         { PARAM_IMAGE, "image", "Input image (unused)" },
         { PARAM_DRAWABLE, "drawable", "Input drawable" },
-        { PARAM_INT32, "rndm_type",
-            "Randomization type (1=hurl 2=pick 3=slur)" },
-        { PARAM_FLOAT, "rndm_pct", "Randomization percentage (1 - 100)" },
-        { PARAM_FLOAT, "rndm_rcount", "Repeat count(1 - 100)" },
+        { PARAM_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
+        { PARAM_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
+        { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
+        { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" },
     };
     static GParamDef *return_vals = NULL;
     static int nargs = sizeof(args) / sizeof (args[0]);
     static int nreturn_vals = 0;
 
-    const char *blurb = "Add a random factor to the image, by picking a nearby pixel, slurring (similar to melting), or just hurling on it.";
-    const char *help = "This function randomly modified the drawable, either by picking a nearby pixel, slurring (cheezy melting), or hurling (spewing colors).  The type and percentage are user selectable.";
+    const char *hurl_blurb =
+        "Add a random factor to the image by hurling random data at it.";
+    const char *pick_blurb =
+        "Add a random factor to the image by picking a random adjacent pixel.";
+    const char *slur_blurb =
+        "Add a random factor to the image by slurring (similar to melting).";
+
+    const char *hurl_help =
+        "This plug-in ``hurls'' randomly-valued pixels onto the selection or image.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+    const char *pick_help =
+        "This plug-in replaces a pixel with a random adjacent pixel.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+    const char *slur_help =
+        "This plug-in slurs (melts like a bunch of icicles) an image.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+
     const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
     const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
-    const char *copyright_date = "1995-1997";
+    const char *copyright_date = "1995-1998";
 
-    gimp_install_procedure(PLUG_IN_NAME,
-        (char *) blurb,
-        (char *) help,
+    gimp_install_procedure(PLUG_IN_NAME[0],
+        (char *) hurl_blurb,
+        (char *) hurl_help,
         (char *) author,
         (char *) copyrights,
         (char *) copyright_date,
-        "<Image>/Filters/Noise/Randomize",
+        "<Image>/Filters/Random/Hurl",
+        "RGB*, GRAY*, INDEXED*",
+        PROC_PLUG_IN,
+        nargs, nreturn_vals,
+        args, return_vals);
+
+    gimp_install_procedure(PLUG_IN_NAME[1],
+        (char *) pick_blurb,
+        (char *) pick_help,
+        (char *) author,
+        (char *) copyrights,
+        (char *) copyright_date,
+        "<Image>/Filters/Random/Pick",
+        "RGB*, GRAY*, INDEXED*",
+        PROC_PLUG_IN,
+        nargs, nreturn_vals,
+        args, return_vals);
+
+    gimp_install_procedure(PLUG_IN_NAME[2],
+        (char *) slur_blurb,
+        (char *) slur_help,
+        (char *) author,
+        (char *) copyrights,
+        (char *) copyright_date,
+        "<Image>/Filters/Random/Slur",
         "RGB*, GRAY*, INDEXED*",
         PROC_PLUG_IN,
         nargs, nreturn_vals,
@@ -288,7 +280,6 @@ static void
 run(char *name, int nparams, GParam *param, int *nreturn_vals,
     GParam **return_vals)
 {
-
     GDrawable *drawable;
     GRunModeType run_mode;
     GStatusType status = STATUS_SUCCESS;        /* assume the best! */
@@ -298,6 +289,13 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
 /*
  *  Get the specified drawable, do standard initialization.
  */
+    if (strcmp(name, PLUG_IN_NAME[0]) == 0)
+        rndm_type = RNDM_HURL;
+    else if (strcmp(name, PLUG_IN_NAME[1]) == 0)
+        rndm_type = RNDM_PICK;
+    else if (strcmp(name, PLUG_IN_NAME[2]) == 0)
+        rndm_type = RNDM_SLUR;
+
     run_mode = param[0].data.d_int32;
     drawable = gimp_drawable_get(param[2].data.d_drawable);
 
@@ -317,7 +315,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  If we're running interactively, pop up the dialog box.
  */
             case RUN_INTERACTIVE:
-                gimp_get_data(PLUG_IN_NAME, &pivals);
+                gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
                 if (!randomize_dialog())        /* return on Cancel */
                     return;
                 break;
@@ -328,18 +326,19 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  parameters have legitimate values.
  */
             case RUN_NONINTERACTIVE:
-                if (nparams != 6) {
+                if (nparams != 7) {
                     status = STATUS_CALLING_ERROR;
                 }
                 if (status == STATUS_SUCCESS) {
-                    pivals.rndm_type = (gint) param[3].data.d_int32;
-                    pivals.rndm_pct = (gdouble) param[4].data.d_float;
-                    pivals.rndm_rcount = (gdouble) param[5].data.d_float;
+                    pivals.rndm_pct = (gdouble) param[3].data.d_float;
+                    pivals.rndm_rcount = (gdouble) param[4].data.d_float;
+                    pivals.seed_type = (gint) param[5].data.d_int32;
+                    pivals.rndm_seed = (gint) param[6].data.d_int32;
                 }
                 if (status == STATUS_SUCCESS &&
-                  ((pivals.rndm_type != RNDM_PICK &&
-                    pivals.rndm_type != RNDM_SLUR &&
-                    pivals.rndm_type != RNDM_HURL) ||
+                  ((rndm_type != RNDM_PICK &&
+                    rndm_type != RNDM_SLUR &&
+                    rndm_type != RNDM_HURL) ||
                   (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
                   (pivals.rndm_rcount < 1.0 || pivals.rndm_rcount > 100.0))) {
                     status = STATUS_CALLING_ERROR;
@@ -349,7 +348,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  If we're running with the last set of values, get those values.
  */
             case RUN_WITH_LAST_VALS:
-                gimp_get_data(PLUG_IN_NAME, &pivals);
+                gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
                 break;
 /*
  *  Hopefully we never get here!
@@ -361,12 +360,13 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
 /*
  *  JUST DO IT!
  */
-            switch (pivals.rndm_type) {
+            switch (rndm_type) {
                 case RNDM_HURL: rndm_type_str = "hurl"; break;
                 case RNDM_PICK: rndm_type_str = "pick"; break;
                 case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
-            sprintf(prog_label, "%s (%s)", RNDM_VERSION, rndm_type_str);
+            sprintf(prog_label, "%s (%s)", RNDM_VERSION[rndm_type - 1],
+                rndm_type_str);
             gimp_progress_init(prog_label);
             gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 /*
@@ -388,7 +388,8 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  *  If we use the dialog popup, set the data for future use.
  */
             if (run_mode == RUN_INTERACTIVE) {
-                gimp_set_data(PLUG_IN_NAME, &pivals, sizeof(RandomizeVals));
+                gimp_set_data(PLUG_IN_NAME[rndm_type - 1], &pivals,
+                    sizeof(RandomizeVals));
             }
         }
     } else {
@@ -515,7 +516,7 @@ randomize(GDrawable *drawable)
             ind = 0;
             for (col = 0; col < (x2 - x1) * bytes; col++) {
                 if (((rand() % 100)) <= (gint) pivals.rndm_pct) {
-                    switch (pivals.rndm_type) {
+                    switch (rndm_type) {
 /*
  *  HURL
  *      Just assign a random value.
@@ -648,8 +649,7 @@ static gint
 randomize_dialog()
 {
     GtkWidget *dlg, *entry, *frame,
-        *seed_hbox, *seed_vbox, *table, *toggle_hbox;
-    GSList *type_group = NULL;
+        *seed_hbox, *seed_vbox, *table;
     GSList *seed_group = NULL;
     gchar **argv;
     gint argc;
@@ -657,9 +657,6 @@ randomize_dialog()
 /*
  *  various initializations
  */
-    gint do_pick = (pivals.rndm_type == RNDM_PICK);
-    gint do_hurl = (pivals.rndm_type == RNDM_HURL);
-    gint do_slur = (pivals.rndm_type == RNDM_SLUR);
 
     gint do_time = (pivals.seed_type == SEED_TIME);
     gint do_user = (pivals.seed_type == SEED_USER);
@@ -670,13 +667,12 @@ randomize_dialog()
 
     gtk_init(&argc, &argv);
     gtk_rc_parse(gimp_gtkrc());
-
 /*
  *  Open a new dialog, label it and set up its
  *  destroy callback.
  */
     dlg = gtk_dialog_new();
-    gtk_window_set_title(GTK_WINDOW(dlg), RNDM_VERSION);
+    gtk_window_set_title(GTK_WINDOW(dlg), RNDM_VERSION[rndm_type - 1]);
     gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
         (GtkSignalFunc) gpc_close_callback, NULL);
@@ -701,24 +697,6 @@ randomize_dialog()
         "Accept settings and apply filter to image");
     gpc_add_action_button("Cancel", (GtkSignalFunc) gpc_cancel_callback, dlg,
         "Close plug-in without making any changes");
-/*
- *  Randomization Type - label & radio buttons
- */
-    gpc_add_label("Randomization Type:", table, 0, 1, 0, 1);
-
-    toggle_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_container_border_width(GTK_CONTAINER(toggle_hbox), 5);
-    gtk_table_attach(GTK_TABLE(table), toggle_hbox, 1, 2, 0, 1,
-        GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
-/*
- *  Hurl, Pick and Slur buttons
- */
-    gpc_add_radio_button(&type_group, "Hurl", toggle_hbox, &do_hurl,
-        "Hurl random colors onto pixels");
-    gpc_add_radio_button(&type_group, "Pick", toggle_hbox, &do_pick,
-        "Pick at random from neighboring pixels");
-    gpc_add_radio_button(&type_group, "Slur", toggle_hbox, &do_slur,
-        "Simplistic melt");
 /*
  *  Randomization seed initialization controls
  */
@@ -783,16 +761,6 @@ randomize_dialog()
 
     gtk_main();
     gdk_flush();
-/*
- *  Figure out which type of randomization to apply.
- */
-    if (do_pick) {
-        pivals.rndm_type = RNDM_PICK;
-    } else if (do_slur) {
-        pivals.rndm_type = RNDM_SLUR;
-    } else {
-        pivals.rndm_type = RNDM_HURL;
-    }
 /*
  *  Figure out which type of seed initialization to apply.
  */

@@ -2,7 +2,7 @@
  * This is a plugin for the GIMP v 0.99.8 or later.  Documentation is
  * available at http://www.rru.com/~meo/gimp/ .
  *
- * Copyright (C) 1997 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
+ * Copyright (C) 1997-98 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
  * Blur code Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * GUI based on GTK code from:
  *    alienmap (Copyright (C) 1996, 1997 Daniel Cotting)
@@ -30,10 +30,10 @@
 /****************************************************************************
  * Blur:
  *
- * blur version 2.0 (6 Feb 1998, MEO)
+ * blur version 2.0 (1 May 1998, MEO)
  * history
- *     2.0 -  6 Feb 1998 MEO
- *         based on randomize 1.5
+ *     2.0 -  1 May 1998 MEO
+ *         based on randomize 1.7
  *
  * Please send any patches or suggestions to the author: meo@rru.com .
  * 
@@ -87,16 +87,16 @@
 
 typedef struct {
     gdouble blur_pct;     /* likelihood of randomization (as %age) */
+    gdouble blur_rcount;  /* repeat count */
     gint seed_type;       /* seed init. type - current time or user value */
     gint blur_seed;       /* seed value for rand() function */
-    gdouble blur_rcount;  /* repeat count */
 } BlurVals;
 
 static BlurVals pivals = {
     50.0,
+    1.0,
     SEED_TIME,
     0,
-    1.0,
 };
 
 typedef struct {
@@ -176,6 +176,8 @@ query()
         { PARAM_DRAWABLE, "drawable", "Input drawable" },
         { PARAM_FLOAT, "blur_pct", "Randomization percentage (1 - 100)" },
         { PARAM_FLOAT, "blur_rcount", "Repeat count(1 - 100)" },
+        { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
+        { PARAM_INT32, "blur_seed", "Seed value (used only if seed type is 11)" },
     };
     static int nargs = sizeof(args) / sizeof (args[0]);
 
@@ -183,7 +185,7 @@ query()
     static int nreturn_vals = 0;
 
     const char *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
-    const char *help = "This function randomly blurs the specified drawable, using a 3x3 blur.  The type and percentage are user selectable.  Blurring is not supported for indexed images.";
+    const char *help = "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.";
     const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
     const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
     const char *copyright_date = "1995-1998";
@@ -266,18 +268,24 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
  */
             case RUN_NONINTERACTIVE:
                 if ((strcmp(name, "plug_in_blur_randomize") == 0) &&
-                  (nparams == 5)) {
+                  (nparams == 7)) {
                     pivals.blur_pct = (gdouble)param[3].data.d_float;
                     pivals.blur_pct = (gdouble)MIN(100.0, pivals.blur_pct);
                     pivals.blur_pct = (gdouble)MAX(1.0, pivals.blur_pct);
                     pivals.blur_rcount = (gdouble)param[4].data.d_float;
                     pivals.blur_rcount = (gdouble)MIN(100.0,pivals.blur_rcount);
                     pivals.blur_rcount = (gdouble)MAX(1.0, pivals.blur_rcount);
+                    pivals.seed_type = (gint) param[5].data.d_int32;
+                    pivals.seed_type = (gint) MIN(SEED_USER, param[5].data.d_int32);
+                    pivals.seed_type = (gint) MAX(SEED_TIME, param[5].data.d_int32);
+                    pivals.blur_seed = (gint) param[6].data.d_int32;
                     status = STATUS_SUCCESS;
                 } else if ((strcmp(name, PLUG_IN_NAME) == 0) &&
                   (nparams == 3)) {
                     pivals.blur_pct = (gdouble) 100.0;
                     pivals.blur_rcount = (gdouble) 1.0;
+                    pivals.seed_type = SEED_TIME;
+                    pivals.blur_seed = 0;
                     status = STATUS_SUCCESS;
                 } else {
                     status = STATUS_CALLING_ERROR;
@@ -570,7 +578,6 @@ blur_dialog()
 
     gtk_init(&argc, &argv);
     gtk_rc_parse(gimp_gtkrc());
-
 /*
  *  Open a new dialog, label it and set up its
  *  destroy callback.
