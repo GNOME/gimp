@@ -276,7 +276,7 @@ context_brush_radius_cmd_callback (GtkAction *action,
 
       radius = action_select_value ((GimpActionSelectType) value,
                                     radius,
-                                    1.0, 4096.0,
+                                    1.0, 256.0,
                                     1.0, 10.0, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
     }
@@ -328,7 +328,7 @@ context_brush_aspect_cmd_callback (GtkAction *action,
 
       aspect = action_select_value ((GimpActionSelectType) value,
                                     aspect,
-                                    1.0, 1000.0,
+                                    1.0, 20.0,
                                     1.0, 4.0, FALSE);
       gimp_brush_generated_set_aspect_ratio (generated, aspect);
     }

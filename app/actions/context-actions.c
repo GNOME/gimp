@@ -409,6 +409,10 @@ static GimpEnumActionEntry context_font_select_actions[] =
 
 static GimpEnumActionEntry context_brush_radius_actions[] =
 {
+  { "context-brush-radius-set", NULL,
+    "Set Brush Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
   { "context-brush-radius-minimum", GTK_STOCK_GOTO_FIRST,
     "Minumum Radius", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
@@ -437,6 +441,10 @@ static GimpEnumActionEntry context_brush_radius_actions[] =
 
 static GimpEnumActionEntry context_brush_hardness_actions[] =
 {
+  { "context-brush-hardness-set", NULL,
+    "Set Brush Hardness", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
   { "context-brush-hardness-minimum", GTK_STOCK_GOTO_FIRST,
     "Minumum Hardness", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
@@ -465,6 +473,10 @@ static GimpEnumActionEntry context_brush_hardness_actions[] =
 
 static GimpEnumActionEntry context_brush_aspect_actions[] =
 {
+  { "context-brush-aspect-set", NULL,
+    "Set Brush Aspect", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
   { "context-brush-aspect-minimum", GTK_STOCK_GOTO_FIRST,
     "Minumum Aspect", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
@@ -493,6 +505,10 @@ static GimpEnumActionEntry context_brush_aspect_actions[] =
 
 static GimpEnumActionEntry context_brush_angle_actions[] =
 {
+  { "context-brush-angle-set", NULL,
+    "Set Brush Angle", NULL, NULL,
+    GIMP_ACTION_SELECT_SET,
+    NULL },
   { "context-brush-angle-minimum", GIMP_STOCK_FLIP_HORIZONTAL,
     "Horizontal", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,

@@ -1,5 +1,13 @@
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c: added GIMP_ACTION_SELECT_SET
+	actions which set a generated brush's properties directly.
+
+	* app/actions/context-commands.c: adjust the range of possible
+	brush radius and aspect_ratio values to be actually usable.
+
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrushgenerated.[ch]: reordered parameters and
 	members to be consistent with other places where generated
 	brushes are used. Check for errors when loading a brush and
