@@ -336,6 +336,31 @@ CODE
     );
 }
 
+sub image_resize_to_layers {
+    $blurb = 'Resize the image to fit all layers.';
+
+    $help = <<'HELP';
+This procedure resizes the image so that it exactly fits all layers of the
+image. All channels within the image are resized to the new size; this includes
+the image selection mask. All layers within the image are repositioned to the
+new image area.
+HELP
+
+    $author = $copyright = 'Simon Budig';
+    $date = '2004';
+
+    @inargs = ( &std_image_arg );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-resize.h") ],
+	code => <<'CODE'
+{
+  gimp_image_resize_to_layers (gimage, context, NULL);
+}
+CODE
+    );
+}
+
 sub image_scale {
     $blurb = 'Scale the image to the specified extents.';
 
@@ -1509,7 +1534,8 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_base_type
                    image_width image_height
 		   image_free_shadow
-                   image_resize image_scale image_crop image_flip image_rotate
+                   image_resize image_resize_to_layers image_scale
+		   image_crop image_flip image_rotate
                    image_get_layers image_get_channels
 		   image_get_active_drawable
                    image_unset_active_channel
@@ -1525,7 +1551,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_get_cmap image_set_cmap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..33,36..60]]);
+%exports = (app => [@procs], lib => [@procs[0..34,37..61]]);
 
 $desc = 'Image';
 

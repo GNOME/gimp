@@ -72,6 +72,11 @@ static GimpActionEntry image_actions[] =
     G_CALLBACK (image_resize_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE },
 
+  { "image-resize-to-layers", NULL,
+    N_("F_it Canvas to Layers"), NULL, NULL,
+    G_CALLBACK (image_resize_to_layers_cmd_callback),
+    GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
+
   { "image-scale", GIMP_STOCK_SCALE,
     N_("_Scale Image..."), NULL, NULL,
     G_CALLBACK (image_scale_cmd_callback),
@@ -233,13 +238,14 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-rotate-180",      gimage);
   SET_SENSITIVE ("image-rotate-270",      gimage);
 
-  SET_SENSITIVE ("image-resize",         gimage);
-  SET_SENSITIVE ("image-scale",          gimage);
-  SET_SENSITIVE ("image-crop",           gimage && sel);
-  SET_SENSITIVE ("image-duplicate",      gimage);
-  SET_SENSITIVE ("image-merge-layers",   gimage && !fs && !aux && lp);
-  SET_SENSITIVE ("image-flatten",        gimage && !fs && !aux && lp);
-  SET_SENSITIVE ("image-configure-grid", gimage);
+  SET_SENSITIVE ("image-resize",           gimage);
+  SET_SENSITIVE ("image-resize-to-layers", gimage);
+  SET_SENSITIVE ("image-scale",            gimage);
+  SET_SENSITIVE ("image-crop",             gimage && sel);
+  SET_SENSITIVE ("image-duplicate",        gimage);
+  SET_SENSITIVE ("image-merge-layers",     gimage && !fs && !aux && lp);
+  SET_SENSITIVE ("image-flatten",          gimage && !fs && !aux && lp);
+  SET_SENSITIVE ("image-configure-grid",   gimage);
 
 #undef SET_SENSITIVE
 }

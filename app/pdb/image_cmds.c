@@ -60,6 +60,7 @@ static ProcRecord image_width_proc;
 static ProcRecord image_height_proc;
 static ProcRecord image_free_shadow_proc;
 static ProcRecord image_resize_proc;
+static ProcRecord image_resize_to_layers_proc;
 static ProcRecord image_scale_proc;
 static ProcRecord image_crop_proc;
 static ProcRecord image_flip_proc;
@@ -125,6 +126,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_height_proc);
   procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_resize_proc);
+  procedural_db_register (gimp, &image_resize_to_layers_proc);
   procedural_db_register (gimp, &image_scale_proc);
   procedural_db_register (gimp, &image_crop_proc);
   procedural_db_register (gimp, &image_flip_proc);
@@ -738,6 +740,52 @@ static ProcRecord image_resize_proc =
   0,
   NULL,
   { { image_resize_invoker } }
+};
+
+static Argument *
+image_resize_to_layers_invoker (Gimp         *gimp,
+                                GimpContext  *context,
+                                GimpProgress *progress,
+                                Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    {
+      gimp_image_resize_to_layers (gimage, context, NULL);
+    }
+
+  return procedural_db_return_args (&image_resize_to_layers_proc, success);
+}
+
+static ProcArg image_resize_to_layers_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcRecord image_resize_to_layers_proc =
+{
+  "gimp_image_resize_to_layers",
+  "Resize the image to fit all layers.",
+  "This procedure resizes the image so that it exactly fits all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
+  "Simon Budig",
+  "Simon Budig",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  image_resize_to_layers_inargs,
+  0,
+  NULL,
+  { { image_resize_to_layers_invoker } }
 };
 
 static Argument *

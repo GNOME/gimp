@@ -1,3 +1,19 @@
+2004-09-05  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpimage-resize.[ch]: Implement function to resize
+	the image to contain all layers completely. Untabified.
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: Make it available in the GUI.
+
+	* tools/pdbgen/pdb/image.pdb: Make it available in the PDB.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
 2004-09-04  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/noisify.c: ported to GimpDrawablePreview.

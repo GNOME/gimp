@@ -39,10 +39,10 @@
 void
 gimp_image_resize (GimpImage    *gimage,
                    GimpContext  *context,
-		   gint          new_width,
-		   gint          new_height,
-		   gint          offset_x,
-		   gint          offset_y,
+                   gint          new_width,
+                   gint          new_height,
+                   gint          offset_x,
+                   gint          offset_y,
                    GimpProgress *progress)
 {
   GList   *list;
@@ -134,22 +134,22 @@ gimp_image_resize (GimpImage    *gimage,
       list = g_list_next (list);
 
       switch (guide->orientation)
-	{
-	case GIMP_ORIENTATION_HORIZONTAL:
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
           new_position += offset_y;
-	  if (new_position < 0 || new_position > new_height)
+          if (new_position < 0 || new_position > new_height)
             remove_guide = TRUE;
-	  break;
-
-	case GIMP_ORIENTATION_VERTICAL:
-          new_position += offset_x;
-	  if (new_position < 0 || new_position > new_width)
-            remove_guide = TRUE;
-	  break;
-
-	default:
           break;
-	}
+
+        case GIMP_ORIENTATION_VERTICAL:
+          new_position += offset_x;
+          if (new_position < 0 || new_position > new_width)
+            remove_guide = TRUE;
+          break;
+
+        default:
+          break;
+        }
 
       if (remove_guide)
         gimp_image_remove_guide (gimage, guide, TRUE);
@@ -164,3 +164,42 @@ gimp_image_resize (GimpImage    *gimage,
 
   gimp_unset_busy (gimage->gimp);
 }
+
+void
+gimp_image_resize_to_layers (GimpImage    *gimage,
+                             GimpContext  *context,
+                             GimpProgress *progress)
+{
+  gint   min_x, max_x, min_y, max_y;
+  GList *list = GIMP_LIST (gimage->layers)->list;
+  GimpItem *item;
+  
+  if (!list)
+    return;
+
+  /* figure out starting values */
+  item = list->data;
+  min_x = item->offset_x;
+  min_y = item->offset_y;
+  max_x = item->offset_x + item->width;
+  max_y = item->offset_y + item->height;
+
+  /*  Respect all layers  */
+  for (list = g_list_next (list);
+       list;
+       list = g_list_next (list))
+    {
+      item = list->data;
+
+      min_x = MIN (min_x, item->offset_x);
+      min_y = MIN (min_y, item->offset_y);
+      max_x = MAX (max_x, item->offset_x + item->width);
+      max_y = MAX (max_y, item->offset_y + item->height);
+    }
+
+  gimp_image_resize (gimage, context,
+                     max_x - min_x, max_y - min_y,
+                     - min_x, - min_y,
+                     progress);
+}
+

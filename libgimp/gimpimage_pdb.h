@@ -44,6 +44,7 @@ gboolean          gimp_image_resize                   (gint32                ima
 						       gint                  new_height,
 						       gint                  offx,
 						       gint                  offy);
+gboolean          gimp_image_resize_to_layers         (gint32                image_ID);
 gboolean          gimp_image_scale                    (gint32                image_ID,
 						       gint                  new_width,
 						       gint                  new_height);

@@ -343,6 +343,38 @@ gimp_image_resize (gint32 image_ID,
 }
 
 /**
+ * gimp_image_resize_to_layers:
+ * @image_ID: The image.
+ *
+ * Resize the image to fit all layers.
+ *
+ * This procedure resizes the image so that it exactly fits all layers
+ * of the image. All channels within the image are resized to the new
+ * size; this includes the image selection mask. All layers within the
+ * image are repositioned to the new image area.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_resize_to_layers (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_resize_to_layers",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_scale:
  * @image_ID: The image.
  * @new_width: New image width.

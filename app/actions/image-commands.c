@@ -218,6 +218,28 @@ image_resize_cmd_callback (GtkAction *action,
 }
 
 void
+image_resize_to_layers_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpDisplay  *gdisp;
+  GimpProgress *progress;
+
+  return_if_no_display (gdisp, data);
+
+  progress = gimp_progress_start (GIMP_PROGRESS (gdisp),
+                                  _("Resizing..."), FALSE);
+
+  gimp_image_resize_to_layers (gdisp->gimage,
+                               action_data_get_context (data),
+                               progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (gdisp->gimage);
+}
+
+void
 image_scale_cmd_callback (GtkAction *action,
 			  gpointer   data)
 {
