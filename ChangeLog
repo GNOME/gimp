@@ -1,3 +1,8 @@
+2004-09-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw): some
+	code cleanup.
+
 2004-09-07  DindinX  <david@dindinx.org>
 
 	* libgimpwidgets/test-preview-area.c: added some tests for

@@ -248,12 +248,8 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
                             const guchar        *buf)
 {
   GimpPreview  *gimp_preview;
-  GimpDrawable *drawable, *selection;
-  gint32        image_id, selection_id;
-  GimpPixelRgn  selection_rgn, drawable_rgn;
-  guchar       *sel, *s;
-  guchar       *src, *saved_sel;
-  gint          x1, y1;
+  GimpDrawable *drawable;
+  gint32        image_id;
   gint          width, height;
   gint          bytes;
 
@@ -263,13 +259,12 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
 
   gimp_preview = GIMP_PREVIEW (preview);
   drawable     = preview->drawable;
-  x1 = gimp_preview->xoff + gimp_preview->xmin;
-  y1 = gimp_preview->yoff + gimp_preview->ymin;
+
   width  = gimp_preview->width;
   height = gimp_preview->height;
   bytes  = drawable->bpp;
 
-  image_id     = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_drawable_get_image (drawable->drawable_id);
 
   if (gimp_selection_is_empty (image_id))
     {
@@ -281,23 +276,30 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
     }
   else
     {
+      GimpPixelRgn  selection_rgn;
+      GimpPixelRgn  drawable_rgn;
+      guchar       *sel;
+      guchar       *src;
+      gint          selection_id;
+      gint          x1, y1;
+
       selection_id = gimp_image_get_selection (image_id);
-      selection    = gimp_drawable_get (selection_id);
+
+      x1 = gimp_preview->xoff + gimp_preview->xmin;
+      y1 = gimp_preview->yoff + gimp_preview->ymin;
 
       gimp_pixel_rgn_init (&drawable_rgn, drawable,
                            x1, y1, width, height,
                            FALSE, FALSE);
-      gimp_pixel_rgn_init (&selection_rgn, selection,
+      gimp_pixel_rgn_init (&selection_rgn, gimp_drawable_get (selection_id),
                            x1, y1, width, height,
                            FALSE, FALSE);
 
-      saved_sel  = sel  = g_new (guchar, width * height);
-      src  = s  = g_new (guchar, width * height * bytes);
+      sel = g_new (guchar, width * height);
+      src = g_new (guchar, width * height * bytes);
 
-      gimp_pixel_rgn_get_rect (&drawable_rgn, src,
-                               x1, y1, width, height);
-      gimp_pixel_rgn_get_rect (&selection_rgn, sel,
-                               x1, y1, width, height);
+      gimp_pixel_rgn_get_rect (&drawable_rgn, src,  x1, y1, width, height);
+      gimp_pixel_rgn_get_rect (&selection_rgn, sel, x1, y1, width, height);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
                               0, 0, width, height,
@@ -306,7 +308,7 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
                               buf, width * bytes,
                               sel, width);
 
-      g_free (saved_sel);
+      g_free (sel);
       g_free (src);
     }
 }
