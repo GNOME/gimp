@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-08-29 19:28+0300\n"
+"POT-Creation-Date: 2000-09-07 08:58+0300\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -3524,7 +3524,7 @@ msgstr "/Ф╕льтри/Вид╕лен╕ кра╖"
 
 #: app/menus.c:533
 msgid "/Filters/Enhance"
-msgstr "/Ф╕льтри/Enhance"
+msgstr "/Ф╕льтри/Покращення"
 
 #: app/menus.c:535
 msgid "/Filters/Generic"
@@ -3548,7 +3548,7 @@ msgstr "/Ф╕льтри/╤м╕тац╕я"
 
 #: app/menus.c:548
 msgid "/Filters/Map"
-msgstr "/Ф╕льтри/Карта"
+msgstr "/Ф╕льтри/Мапа"
 
 #: app/menus.c:550
 msgid "/Filters/Render"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-08-23 13:16+0300\n"
+"POT-Creation-Date: 2000-09-07 09:31+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -18,7 +18,7 @@ msgstr "Консольний режим Скрипт-Фу дозволя╓ лише ╕нтерактивну роботу"
 
 #: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
-msgstr "Консоль Script-Fu"
+msgstr "Консоль Скрипт-Фу"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
@@ -174,11 +174,11 @@ msgstr "<Toolbox>/Розширення/Скрипт-Фу/Консоль..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Розширення/Скрипт-Фу/Сервер..."
 
-#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
+#: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
 msgstr "Перечитати ус╕ ╕снуюч╕ скрипти"
 
-#: plug-ins/script-fu/script-fu.c:1021
+#: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Розширення/Скрипт-Фу/Поновити"
 
@@ -1343,11 +1343,11 @@ msgstr "Кол╕р переднього плану"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
-msgstr ""
+msgstr "Кол╕р кадру"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Size"
-msgstr ""
+msgstr "Розм╕р кадру"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Frames"
@@ -1387,24 +1387,24 @@ msgstr "Град╕╓нт"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Зернистисть (1 -- низька)"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
-msgstr ""
+msgstr "Зернистисть"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
-msgstr ""
+msgstr "Масштаб граф╕ка"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr ""
+msgstr "С╕тка по X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr ""
+msgstr "Стка по Y"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1632,20 +1632,20 @@ msgstr "Рад╕ус зм╕щення"
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset X"
-msgstr ""
+msgstr "Зм╕щення по X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
-msgstr ""
+msgstr "Зм╕щення по Y"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "Offsets (pixels * 2)"
-msgstr ""
+msgstr "Зм╕щення (точок * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "Розм╕р маски ол╕йно╖ фарби"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0

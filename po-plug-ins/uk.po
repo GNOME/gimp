@@ -1079,9 +1079,8 @@ msgid "Environment Image:"
 msgstr "Зображення середовища:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
-#, fuzzy
 msgid "Environment image to use"
-msgstr "Зображення середовища:"
+msgstr "Зображення середовища"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
@@ -4338,7 +4337,7 @@ msgstr "Оптим╕зувати"
 
 #: plug-ins/common/jpeg.c:1751
 msgid "Progressive"
-msgstr "Про╜ресивна"
+msgstr "Про╜ресивний"
 
 #: plug-ins/common/jpeg.c:1768
 msgid "Force baseline JPEG (Readable by all decoders)"
@@ -5155,25 +5154,27 @@ msgstr "Поляризувати"
 
 #: plug-ins/common/polar.c:971
 msgid "Circle Depth in Percent:"
-msgstr ""
+msgstr "Глибина кола у в╕дсотках:"
 
 #: plug-ins/common/polar.c:980
 msgid "Offset Angle:"
-msgstr ""
+msgstr "Кут зм╕щення:"
 
 #: plug-ins/common/polar.c:992
 msgid "Map Backwards"
-msgstr ""
+msgstr "В╕добразити назад"
 
 #: plug-ins/common/polar.c:1000
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
+"Якщо в╕дм╕чено, в╕дображення розпочнеться з право╖ сторони, в ╕ншому випадку - "
+"з л╕во╖."
 
 #: plug-ins/common/polar.c:1004
 msgid "Map from Top"
-msgstr ""
+msgstr "В╕добразити згори"
 
 #: plug-ins/common/polar.c:1012
 msgid ""
