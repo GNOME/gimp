@@ -268,8 +268,8 @@ typedef enum
 
 typedef enum
 {
-  GIMP_SIZE_PIXELS,
-  GIMP_SIZE_POINTS
+  GIMP_PIXELS,
+  GIMP_POINTS
 } GimpSizeType;
 
 
