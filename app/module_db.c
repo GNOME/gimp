@@ -597,15 +597,16 @@ module_initialize (gchar *filename)
   mod->load_inhibit = module_inhibited (mod->fullpath, module_db_load_inhibit);
   if (!mod->load_inhibit)
     {
-      if ((be_verbose == TRUE) || (no_splash == TRUE))
+      if (be_verbose)
 	g_print (_("load module: \"%s\"\n"), filename);
 
       mod_load (mod, TRUE);
     }
   else
     {
-      if ((be_verbose == TRUE) || (no_splash == TRUE))
+      if (be_verbose)
 	g_print (_("skipping module: \"%s\"\n"), filename);
+
       mod->state = ST_UNLOADED_OK;
     }
 

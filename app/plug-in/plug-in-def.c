@@ -345,10 +345,13 @@ plug_in_init (void)
       if (plug_in_def->query)
 	{
 	  write_pluginrc = TRUE;
-	  if ((be_verbose == TRUE) || (no_splash == TRUE))
+
+	  if (be_verbose)
 	    g_print (_("query plug-in: \"%s\"\n"), plug_in_def->prog);
+
 	  plug_in_query (plug_in_def);
 	}
+
       app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
     }
@@ -381,8 +384,9 @@ plug_in_init (void)
   /* write the pluginrc file if necessary */
   if (write_pluginrc)
     {
-      if ((be_verbose == TRUE) || (no_splash == TRUE))
+      if (be_verbose)
 	g_print (_("writing \"%s\"\n"), filename);
+
       plug_in_write_rc (filename);
     }
 
@@ -395,10 +399,12 @@ plug_in_init (void)
   plug_in_make_menu ();
 
   /* run the available extensions */
-  tmp = proc_defs;
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
+  if (be_verbose)
     g_print (_("Starting extensions: "));
+
   app_init_update_status (_("Extensions"), "", 0);
+
+  tmp = proc_defs;
   nplugins = g_slist_length (tmp); nth = 0;
 
   while (tmp)
@@ -410,15 +416,17 @@ plug_in_init (void)
 	  (proc_def->db_info.num_args == 0) &&
 	  (proc_def->db_info.proc_type == PDB_EXTENSION))
 	{
-	  if ((be_verbose == TRUE) || (no_splash == TRUE))
+	  if (be_verbose)
 	    g_print ("%s ", proc_def->db_info.name);
+
 	  app_init_update_status (NULL, proc_def->db_info.name,
 				  nth / nplugins);
 
 	  plug_in_run (&proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}
     }
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
+
+  if (be_verbose)
     g_print ("\n");
 
   /* create help path list and free up stuff */

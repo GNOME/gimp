@@ -1,5 +1,15 @@
 2000-08-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c
+	* app/gimprc.c
+	* app/module_db.c
+	* app/plug_in.c: s/if(be_verbose || no_splash)/if(be_verbose)/g
+
+	Changed because nobody on #gimp could explain why "no_splash"
+	should imply "be_verbose".
+
+2000-08-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/*
 	* po-plug-ins/POTFILES.in: updated to the current CVS version
 	from sourceforge (something after 4.0a1).

@@ -448,7 +448,7 @@ parse_absolute_gimprc_file (char *filename)
   if (!parse_info.fp)
     return FALSE;
 
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
+  if (be_verbose)
     g_print (_("parsing \"%s\"\n"), filename);
 
   cur_token = -1;

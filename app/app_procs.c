@@ -485,7 +485,7 @@ app_init (void)
 
   filename = gimp_gtkrc ();
 
-  if (be_verbose || no_splash)
+  if (be_verbose)
     g_print (_("parsing \"%s\"\n"), filename);
 
   gtk_rc_parse (filename);
