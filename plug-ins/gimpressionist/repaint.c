@@ -130,11 +130,12 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
     dev /= thissum;
 
     if((best == -1) || (dev < bestdev)) {
-      g_list_free(brlist);
+      if(brlist)
+	g_list_free(brlist);
       brlist = NULL;
     }
     
-    if(dev < bestdev || best < 0) {
+    if(dev <= bestdev || best < 0) {
       best = i;
       bestdev = dev;
       brlist = g_list_append(brlist, (void *)i);
@@ -663,7 +664,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 4: /* Flowing */
     case 5: /* Hue */
     case 7: /* Manual */
-      on = runningvals.orientnum * dirmap.col[ty*dirmap.width*3+tx*3] / 255;
+      on = runningvals.orientnum * dirmap.col[ty*dirmap.width*3+tx*3] / 256;
       break;
     case 6: /* Adaptive */
       break; /* Handled below */
@@ -683,7 +684,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 4: /* Flowing */
     case 5: /* Hue */
     case 7: /* Manual */
-      sn = runningvals.sizenum * sizmap.col[ty*sizmap.width*3+tx*3] / 255;
+      sn = runningvals.sizenum * sizmap.col[ty*sizmap.width*3+tx*3] / 256;
       break;
     case 6: /* Adaptive */
       break; /* Handled below */
