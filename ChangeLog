@@ -1,3 +1,13 @@
+2004-08-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpsheartool.[ch]: applied (modified) patch from Ari
+	Pollak which enables controlling the shear direction from the
+	dialog and changing the shear direction without hitting "Reset".
+	Fixes bug #149467.
+
+	Also moved all static variables to the GimpShearTool struct and
+	converted tabs to spaces.
+
 2004-08-06  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/nova.c: ported to GimpPreviewArea.

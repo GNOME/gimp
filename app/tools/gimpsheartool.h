@@ -37,6 +37,9 @@ typedef struct _GimpShearToolClass GimpShearToolClass;
 struct _GimpShearTool
 {
   GimpTransformTool  parent_instance;
+
+  gdouble            xshear_val;
+  gdouble            yshear_val;
 };
 
 struct _GimpShearToolClass
