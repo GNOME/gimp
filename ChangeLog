@@ -1,3 +1,21 @@
+2001-12-31  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpenv.c (gimp_directory): (Win32) When no home
+	directory has been found, and we use a user-specific directory in
+	the GIMP installation directory: If the user name contains
+	characters that are illegal in file (or folder) names, replace
+	those characters with underscores (bug# 64491).
+
+	Actually also some legal, but odd, characters get replaced.
+	Hmm. There are problems here related to i18n. In multi-byte
+	locales g_get_user_name() presumably, at least currently, returns
+	a multi-byte string encoded in some Windows multi-byte code page,
+	and the code here will think that some or most characters in it
+	are "odd", and replace them with underscores. This will cause
+	different user names in Japanese, for instance, that happen to
+	have the same length, to be convered to the same string of
+	underscores.)
+
 2001-12-30  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimphelp.c (gimp_help_netscape): Check help_data

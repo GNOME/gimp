@@ -24,6 +24,7 @@
 
 #include <glib.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -136,15 +137,36 @@ gimp_directory (void)
 	}
       else
 	{
+	  gchar *user_name = g_strdup (g_get_user_name ());
+	  gchar *p;
+
 #ifndef G_OS_WIN32
 	  g_message ("warning: no home directory.");
 #endif
+
+#ifdef G_OS_WIN32
+	  p = user_name;
+	  while (*p)
+	    {
+	      /* Replace funny characters in the user name with an
+	       * underscore. The code below also replaces some
+	       * characters that in fact are legal in file names, but
+	       * who cares, as long as the definitely illegal ones are
+	       * caught.
+	       */
+	      if (!isalnum (*p) && !strchr ("-.,@=", *p))
+		*p = '_';
+	      p++;
+	    }
+#endif
+
 	  gimp_dir = g_strconcat (gimp_data_directory (),
 				  G_DIR_SEPARATOR_S,
 				  GIMPDIR,
 				  ".",
-				  g_get_user_name (),
+				  user_name,
 				  NULL);
+	  g_free (user_name);
 	}
     }
 
