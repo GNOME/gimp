@@ -253,12 +253,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      format++;
 	      break;
 
-	    case 'B': /* dirty flag (long) */
-	      if (gimage->dirty)
-                i += print (title, title_len, i, "%s",
-                            _("(modified)"));
-	      break;
-
 	    case 'C': /* clean flag */
 	      if (format[1] == 0)
 		{
